@@ -84,7 +84,7 @@ footer, header, hgroup, menu, nav, section {
 	#background, #foreground { margin:0; padding:0;}
     
     #achievements nav::selection {background:transparent;text-decoration:none;color:transparent;}
-    #canvas, #bar-container, #bubbles, #canvasborder, #foreground, #background, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
+    #canvas, #bubbles, #canvasborder, #foreground, #background, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
     
     .started #canvas {cursor:none;}
     
@@ -118,7 +118,6 @@ footer, header, hgroup, menu, nav, section {
     #parchment input.field-error {background:rgba(255,0,0,0.1);border-color:#f84444;}
     #character div {-moz-transition:0.4s opacity linear;-webkit-transition:0.4s opacity linear;-o-transition:0.4s opacity linear;-ms-transition:0.4s opacity linear;transition:0.4s opacity linear;}
     #mask {height:100%;width:100%;position:fixed;top:0;left:0;background:rgba(20,20,20,1);opacity:1;z-index:20;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;pointer-events:none;}
-    #bar-container {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:relative;width:100%;z-index:10;}
 
     #notifications {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel';overflow:hidden;}
     #notifications div {position:absolute;-moz-transition:none;-webkit-transition:none;top:0;width:100%;}
@@ -130,9 +129,7 @@ footer, header, hgroup, menu, nav, section {
     
     #guild-name span:nth-child(1) {color:#FCE045;}
     #guild-population {height:0;overflow:hidden;}
-    
-    .barbutton {background:url('../img/1/barsheet.png');image-rendering:-moz-crispt-edges;position:absolute;}
-    
+ 
   
     div.clear{
       float: left;
@@ -439,8 +436,7 @@ footer, header, hgroup, menu, nav, section {
 	@media screen and (min-width: 1501px) {
 	      
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/3/spritesheet.png');}
-	    .upscaled #bar-container, .upscaled .barbutton div{background-image:url('../img/3/barsheet.png');}
-	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/3/achievements.png');}
+	     .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/3/achievements.png');}
 	    
 	    
         body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood2.png') no-repeat 1587px 138px, url('../img/1/wood2.png') no-repeat 51px 519px, url('../img/1/wood3.png') no-repeat 228px 219px, url('../img/1/wood.png') repeat, #000; background-size:auto, 15px auto, 15px auto, 60px auto, 384px;}
@@ -692,26 +688,13 @@ tr:hover {
 		p {font-family:arial, sans-serif;font-size:12px;margin:0;padding:12px 0}
 	    .bubble p {font-family:"GraphicPixel"; font-size:18px;line-height:24px;}
 	    
-	    
-	    #bar-container {height:51px;top:-3px;background-size:1440px;}
-                
+	
 		
         
         #notifications {width:601px;margin-left:-301px;font-size:20px;color:#eee;top:6px;height:45px;}
         #notifications div.top {top:-45px;}
         #notifications span {line-height:45px;height:45px;}
-                        #expbar{
-      position: absolute;
-      bottom: 20.5%;
-      left: 0%;
-      width: 100%;
-      background: rgba(0,110,0,0.5);
-      height: 100%;
-      margin-left: 0px;
-      padding: 0px;
-      border: 0px;
-    }
-        
+
 
         .barbutton {background-size:1440px;height:45px;width:42px;}
        
@@ -773,7 +756,6 @@ tr:hover {
 	}
 	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
-	    .upscaled #bar-container, .upscaled .barbutton div{background-image:url('../img/2/barsheet.png');}
 	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/2/achievements.png');}
         body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
         body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/2/wood.png') repeat, #000; background-size:auto, 256px;}
@@ -1034,20 +1016,7 @@ tr:hover {
 	    .bubble p {font-family:"GraphicPixel"; font-size:14px;}
 	    
 	    
-		#bar-container {height:34px;top:-2px;background-size:960px;}
-		
-        
-        #expbar{
-      position: absolute;
-      bottom: 20.5%;
-      left: 0%;
-      width: 100%;
-      background: rgba(0,110,0,0.5);
-      height: 100%;
-      margin-left: 0px;
-      padding: 0px;
-      border: 0px;
-    }
+           
         #notifications {width:405px;margin-left:-204px;font-size:16px;color:#eee;top:4px;height:30px;}
         #notifications div.top {top:-30px;}
         #notifications span {line-height:30px;height:30px;}
@@ -1113,19 +1082,8 @@ tr:hover {
         
         #name-tooltip {font-size:14px;width:280px;margin-left:-140px;height:20px;line-height:18px;top:-30px;}
         #name-tooltip:after {bottom:-8px;}
-	         #expbar{
-      position: absolute;
-      bottom: 20.5%;
-      left: 0%;
-      width: 100%;
-      background: rgba(0,110,0,0.5);
-      height: 100%;
-      margin-left: 0px;
-      padding: 0px;
-      border: 0px;
-    }
-}
-	
+
+        }
 	@media screen and (max-width: 1000px) {
         canvas {image-rendering:optimizeSpeed;}
         body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
@@ -1203,7 +1161,6 @@ tr:hover {
 	    .bubble p {font-family:"GraphicPixel"; font-size:10px;}
 	    
 	    
-	    #bar-container {height:17px;top:-1px;background-size:480px;}
 	
         #notifications {width:204px;margin-left:-102px;font-size:10px;color:#eee;top:2px;height:15px;}
         #notifications div.top {top:-15px;}
@@ -1345,7 +1302,6 @@ tr:hover {
 		#playerimage {display:none;}
 		
 		
-		#bar-container {height:34px;top:-2px;background-size:960px;background-position:0 -96px;}
 		
         #notifications {display:none;}
         .barbutton {background-size:960px;height:30px;width:28px;}
