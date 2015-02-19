@@ -696,9 +696,7 @@ tr:hover {
 	    #bar-container {height:51px;top:-3px;background-size:1440px;}
                 
 		
-        #armor, #weapon {width:48px;height:48px;position:absolute;background-size:288px;background-position:-96px;}
-        #weapon {left:312px;top:3px;background-size:288px;}
-        #armor {left:363px;top:3px;}
+        
         #notifications {width:601px;margin-left:-301px;font-size:20px;color:#eee;top:6px;height:45px;}
         #notifications div.top {top:-45px;}
         #notifications span {line-height:45px;height:45px;}
@@ -1038,9 +1036,7 @@ tr:hover {
 	    
 		#bar-container {height:34px;top:-2px;background-size:960px;}
 		
-        #armor, #weapon {width:32px;height:32px;position:absolute;background-size:192px;background-position:-64px;}
-        #weapon {left:208px;top:2px;}
-        #armor {left:242px;top:2px;}
+        
         #expbar{
       position: absolute;
       bottom: 20.5%;
@@ -1209,9 +1205,6 @@ tr:hover {
 	    
 	    #bar-container {height:17px;top:-1px;background-size:480px;}
 	
-        #armor, #weapon {width:16px;height:16px;position:absolute;background-size:96px;background-position:-32px;}
-        #weapon {left:104px;top:1px;}
-        #armor {left:121px;top:1px;}
         #notifications {width:204px;margin-left:-102px;font-size:10px;color:#eee;top:2px;height:15px;}
         #notifications div.top {top:-15px;}
         #notifications span {line-height:15px;height:15px;}
@@ -1354,9 +1347,6 @@ tr:hover {
 		
 		#bar-container {height:34px;top:-2px;background-size:960px;background-position:0 -96px;}
 		
-        #armor, #weapon {width:32px;height:32px;position:absolute;background-size:192px;background-position:-64px;}
-        #weapon {left:208px;top:2px;}
-        #armor {left:242px;top:2px;}
         #notifications {display:none;}
         .barbutton {background-size:960px;height:30px;width:28px;}
 
