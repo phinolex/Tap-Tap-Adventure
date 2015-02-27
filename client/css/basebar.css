@@ -60,7 +60,13 @@ footer, header, hgroup, menu, nav, section {
         font-weight: normal;
         font-style: normal;
 }
+
+@media screen and (max-width: 600px) {
     
+    
+}
+
+
 @media screen and (min-width: 1501px) {
 
     
@@ -360,7 +366,7 @@ footer, header, hgroup, menu, nav, section {
     
 }
 
-    @media screen and (max-width: 1000px) {
+@media screen and (max-width: 1000px) {
  
      #basebarcontainer {
       position: absolute;
@@ -559,7 +565,7 @@ footer, header, hgroup, menu, nav, section {
     }
     #inventorybackground0 { margin-left: 0px; }
     #inventorybackground1 { margin-left: 17px; }
-    #inventorybackground2 { margin-left: 24px; }
+    #inventorybackground2 { margin-left: 33px; }
     #inventorybackground3 { margin-left: 51px; display: none; }
     #inventorybackground4 { margin-left: 68px; display: none; }
     #inventorybackground5 { margin-left: 85px; display: none; }

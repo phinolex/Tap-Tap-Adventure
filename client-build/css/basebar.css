@@ -58,6 +58,10 @@ footer, header, hgroup, menu, nav, section {
         font-weight: normal;
         font-style: normal;
 }
+@media screen and (max-width: 600px) {
+    
+    
+}
 @media screen and (min-width: 1501px) {
     
 }
@@ -366,7 +370,7 @@ footer, header, hgroup, menu, nav, section {
       text-align: center;
       font-size: 7px;
       background-image: url('../img/1/main.png' );
-      background-position: 0px -585px;
+      background-position: 0px -256px;
       -moz-user-select: none;
       -webkit-user-select: none;
     }
@@ -643,11 +647,6 @@ footer, header, hgroup, menu, nav, section {
       padding: 0px;
       margin: 0px;
     }
-        
-    
-}
-@media screen and (max-width: 600px) {
-    
 }
 @media screen and (max-width: 400px) {
     
