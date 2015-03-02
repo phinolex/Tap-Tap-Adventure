@@ -370,7 +370,7 @@ define(['jquery', 'storage'], function($, Storage) {
         },
         initManaBar: function() {
           var maxWidth = $('#manabar').width();
-            $('#manabar').html("<p>MP: " + "100" + "/" + "100" + "</p>");
+            $('#manatext').html("<p>MP: " + "100" + "/" + "100" + "</p>");
             /* this.game.onPlayerManaChange(function(mana, maxMana) {
                 var barWidth = Math.round((maxWidth / maxMana) * (mana > 0 ? mana : 0));
                 $('#mana').css('width', barWidth + "px");
@@ -401,7 +401,7 @@ define(['jquery', 'storage'], function($, Storage) {
             this.game.onPlayerHealthChange(function(hp, maxHp) {
                 var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));
                 $("#health").css('width', barWidth + "px");
-                $('#healthbar').html("<p>HP: " + hp + "/" + maxHp + "</p>");
+                $('#healthtext').html("<p>HP: " + hp + "/" + maxHp + "</p>");
             });
 
             this.game.onPlayerHurt(this.blinkHealthBar.bind(this));
