@@ -320,7 +320,7 @@ define(['jquery', 'storage'], function($, Storage) {
             }
         },
         //Init the hud that makes it show what creature you are mousing over and attacking
-        initTargetHud: function(){
+         initTargetHud: function(){
             var self = this;
             var scale = self.game.renderer.getScaleFactor(),
                 healthMaxWidth = $("#inspector .health").width() - (12 * scale),
@@ -368,34 +368,53 @@ define(['jquery', 'storage'], function($, Storage) {
                 self.game.player.inspecting = null;
             });
         },
-         initExpBar: function(){
-            var maxHeight = $("#expbar").height();
+        initManaBar: function() {
+          var maxWidth = $('#manabar').width();
+            $('#manabar').html("<p>MP: " + "100" + "/" + "100" + "</p>");
+            /* this.game.onPlayerManaChange(function(mana, maxMana) {
+                var barWidth = Math.round((maxWidth / maxMana) * (mana > 0 ? mana : 0));
+                $('#mana').css('width', barWidth + "px");
+               
+            }); */
+        },
+          
+        initExpBar: function(){
+            var maxWidth = $("#expbar").width();
 
             this.game.onPlayerExpChange(function(expInThisLevel, expForLevelUp){
-               var barHeight = Math.round((maxHeight / expForLevelUp) * (expInThisLevel > 0 ? expInThisLevel : 0));
-               $("#expbar").css('height', barHeight + "px");
+                var rate = expInThisLevel/expForLevelUp;
+                    if(rate > 1){
+                        rate = 1;
+                    } else if(rate < 0){
+                        rate = 0;
+                    }
+                $('#exp').css('width', (rate*maxWidth).toFixed(0) + "px");
+                $('#expbar').attr("title", "Exp: " + (rate*100).toFixed(3) + "%");
             });
         },
 
         initHealthBar: function() {
+            
             var scale = this.game.renderer.getScaleFactor(),
                 healthMaxWidth = $("#healthbar").width() - (12 * scale);
 
             this.game.onPlayerHealthChange(function(hp, maxHp) {
                 var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));
-                $("#hitpoints").css('width', barWidth + "px");
+                $("#health").css('width', barWidth + "px");
+                $('#healthbar').html("<p>HP: " + hp + "/" + maxHp + "</p>");
             });
 
             this.game.onPlayerHurt(this.blinkHealthBar.bind(this));
         },
 
+
         blinkHealthBar: function() {
-            var $hitpoints = $('#hitpoints');
+            var $hitpoints = $('#health');
 
             $hitpoints.addClass('white');
             setTimeout(function() {
                 $hitpoints.removeClass('white');
-            }, 500)
+            }, 500);
         },
 
         toggleButton: function() {

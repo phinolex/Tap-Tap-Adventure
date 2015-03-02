@@ -84,11 +84,12 @@ define(['jquery'], function(){
         var isChecked = $('#ishtml').attr('checked');
         var replyAsText = null;
         var replyAsHtml = null;
-        if(isChecked){
-          replyAsText = $('#reply').attr('value');
-          replyAsHtml = self.textToHtml(replyAsText);
-          $('#reply').attr('value', replyAsHtml);
-        } else{
+        if(isChecked) {
+            
+            replyAsText = $('#reply').attr('value');
+            replyAsHtml = self.textToHtml(replyAsText);
+            $('#reply').attr('value', replyAsHtml);
+        } else {
           replyAsHtml = $('#reply').attr('value');
           replyAsText = self.htmlToText(replyAsHtml);
           $('#reply').attr('value', replyAsText);

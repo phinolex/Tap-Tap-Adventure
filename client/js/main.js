@@ -260,30 +260,19 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 
             game.onNbPlayersChange(function(worldPlayers, totalPlayers) {
                 
-                /* var setWorldPlayersString = function(string) {
-                        $("#instance-population").find("span:nth-child(2)").text(string);
-                        $("#playercount").find("span:nth-child(2)").text(string);
-                    },
-                    setTotalPlayersString = function(string) {
-                        $("#world-population").find("span:nth-child(2)").text(string);
+                 /* var setTotalPlayersString = function(string) {
+                        $("#users").find("span:nth-child(2)").text(string);
                     };
 
-                $("#playercount").find("span.count").text(worldPlayers);
-
-                $("#instance-population").find("span").text(worldPlayers);
-                if(worldPlayers === 1) {
-                    setWorldPlayersString("player");
-                } else {
-                    setWorldPlayersString("players");
-                }
-
-                $("#world-population").find("span:nth-child(1)").text(totalPlayers);
+                $("#users").find("span:nth-child(1)").text(totalPlayers);
                 if(totalPlayers === 1) {
                     setTotalPlayersString("player");
                 } else {
                     setTotalPlayersString("players");
                 } */
             });
+            
+            
             					
             game.onGuildPopulationChange( function(guildName, guildPopulation) {
 
@@ -298,7 +287,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             });
 
             app.initHealthBar();
-            app.initTargetHud();
+            app.initManaBar();
             app.initExpBar();
             $('#nameinput').attr('value', '');
             $('#pwinput').attr('value', '');

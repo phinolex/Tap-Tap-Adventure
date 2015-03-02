@@ -3,13 +3,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'tile', 'warrior', 'gameclient', 'audio', 'updater', 'transition',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
-        'menu', 'boardhandler', 'kkhandler', 'guild', 'shophandler',
+        'menu', 'boardhandler', 'kkhandler', 'guild', 'shophandler', 'playerpopupmenu',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
-         Guild, ShopHandler) {
+         Guild, ShopHandler, PlayerPopupMenu) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -75,6 +75,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.chathandler = new ChatHandler(this, this.kkhandler);
             this.shopHandler = new ShopHandler(this);
             this.boardhandler = new BoardHandler(this);
+            this.playerPopupMenu = new PlayerPopupMenu(this);
 
             // TextWindow Handler
             //this.textWindowHandler = new TextWindowHandler();
@@ -277,6 +278,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         initPlayer: function() {
+           
             if(this.storage.hasAlreadyPlayed() && this.storage.data.player) {
                 if(this.storage.data.player.armor && this.storage.data.player.weapon) {
                     this.player.setSpriteName(this.storage.data.player.armor);
@@ -421,7 +423,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             _.each(this.achievements, function(obj){
                 if(!obj.isCompleted){
-                    obj.isCompleted = function() { return true; }
+                    obj.isCompleted = function() { return true;
+                    };
                 }
                 if(!obj.hidden){
                     obj.hidden = false;
@@ -506,10 +509,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
             
             if(this.hoveringPlayer && this.started) {
-                if(this.player.pvpFlag)
+                if(this.player.pvpFlag) {
                     this.setCursor("sword");
-                else
+                } else {
                     this.setCursor("hand");
+                }
                 this.hoveringTarget = false;
                 this.hoveringMob = false;
                 this.targetCellVisible = false;
@@ -2201,9 +2205,10 @@ self.player.onCheckAggro(function() {
 
         getPlayerAt: function(x, y) {
           var entity = this.getEntityAt(x, y);
-            if(entity && (entity instanceof Player) && (entity !== this.player) && this.player.pvpFlag) {
+            if(entity && (entity instanceof Player) && (entity !== this.player) && (this.player.pvpFlag && this.pvpFlag)) {
                 return entity;
             }
+            
             return null;
         },
 
@@ -2521,6 +2526,7 @@ self.player.onCheckAggro(function() {
          */
         processInput: function(pos) {
             var entity;
+            this.playerPopupMenu.close();
             this.menu.close();
             if(this.started
             && this.player
@@ -2531,16 +2537,20 @@ self.player.onCheckAggro(function() {
             && !this.hoveringPlateauTile) {
                 entity = this.getEntityAt(pos.x, pos.y);
 
-        	    if(entity instanceof Mob || (entity instanceof Player && entity !== this.player && this.player.pvpFlag || this.pvpFlag)) {
-                    this.makePlayerAttack(entity);
-                }
-                else if(entity instanceof Item) {
+        	if(entity instanceof Player && entity !== this.player && (!this.player.pvpFlag || !this.pvpFlag)){
+                  this.playerPopupMenu.click(entity);
+                  
+                } else if((entity instanceof Mob) || (entity instanceof Player && entity !== this.player && (this.player.pvpFlag && this.pvpFlag))) {
+        	        this.makePlayerAttack(entity);
+        	} else if(entity instanceof Item) {
                     this.makePlayerGoToItem(entity);
-                }
-                else if(entity instanceof Npc) {
+                } else if(entity instanceof Npc) {
+                    
                     if(this.player.isAdjacentNonDiagonal(entity) === false) {
                         this.makePlayerTalkTo(entity);
+                        
                     } else {
+                        
                         if(!this.player.disableKeyboardNpcTalk) {
                             this.makeNpcTalk(entity);
 
@@ -2548,12 +2558,12 @@ self.player.onCheckAggro(function() {
                                 this.player.disableKeyboardNpcTalk = true;
                         }
                     }
-                }
-                else if(entity instanceof Chest) {
+                } else if(entity instanceof Chest) {
                     this.makePlayerOpenChest(entity);
-                }
-                else {
+                    
+                } else {
                     this.makePlayerGoTo(pos.x, pos.y);
+                
                 }
             }
         },
@@ -2917,8 +2927,6 @@ self.player.onCheckAggro(function() {
 
             
             this.player = new Warrior("player", this.username);
-            this.player.pvpFlag = false;
-            this.pvpFlag = false;
 
             this.player.pw = this.userpw;
             this.player.email = this.email;
