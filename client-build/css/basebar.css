@@ -63,6 +63,297 @@ footer, header, hgroup, menu, nav, section {
     
 }
 @media screen and (min-width: 1501px) {
+ 
+     #basebarcontainer {
+      position: absolute;
+      width: 1440px;
+      height: 66px;
+      top: 684px;
+      left: 15px;
+      margin-left: 0px;
+      border: 0px;
+      text-align: center;
+      font-size: 21px;
+      background-image: url('../img/3/main.png' );
+      background-position: 0px -768px;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+    }
+    
+    #hpcontainer, #mpcontainer{
+      position: absolute;
+      top: 9px;
+      width: 264px;
+      height: -18px;
+      border: 0px;
+      margin-left: 0px;
+      text-align: center;
+      cursor: default;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+    }
+    #hpcontainer {
+      left: 3px;
+    }
+    #mpcontainer {
+      left: 279px;
+    }
+    #expcontainer {
+      position: absolute;
+      left: 0px;
+      top: 51px;
+      width: 564px;
+      height: 15px;
+      border: 0px;
+      margin-left: 0px;
+      text-align: center;
+      cursor: default;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+    }
+    #health, #mana {
+      position: absolute;
+      top: 3px;
+      left: 30px;
+      width: 230px;
+      height: 30px;
+      border: 0px;
+      margin: 0px;
+      padding: 0px;
+      text-align: center;
+    }
+    #health {
+      
+      background: -webkit-linear-gradient(top, #FF8888, #FF0000);
+      
+      background: -moz-linear-gradient(top, #FF8888, #FF0000);
+    }
+    #mana {
+      
+      background: -webkit-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
+      
+      background: -moz-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
+    }
+    #exp {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 564px;
+      height: 15px;
+      border: 0px;
+      margin: 0px;
+      padding: 0px;
+      
+      background: -webkit-linear-gradient(top, #44FF44, #008800);
+      
+      background: -moz-linear-gradient(top, #44FF44, #008800);
+    }
+    #healthbar, #manabar {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 264px;
+      height: 39px;
+      border: 0px;
+      margin: 0px;
+      padding: 0px;
+      text-align: center;
+      color: white;
+    }
+    #healthbar, #manabar p{
+      font-size: 6px;
+      line-height: 0%;
+    }
+    #healthbar {
+      background-image: url('../img/3/main.png' );
+      background-position: 0px -834px;
+    }
+    #manabar {
+      background-image: url('../img/3/main.png' );
+      background-position: -264px -834px;
+    }
+    
+    #expbar {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 564px;
+      height: 15px;
+      border: 0px;
+      margin: 0px;
+      padding: 0px;
+      background-image: url('../img/3/main.png' );
+      background-position: 0px -873px;
+    }
+    #healthtext, #manatext {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 264px;
+      height: 39px;
+      border: 0px;
+      margin: 0px;
+      padding: 0px;
+      line-height: 39px;
+      text-align: center;
+      color: white;
+    }
+    #hpguide{
+      background: rgb(128,64,64);
+      position: absolute;
+      display: none;
+      height: 33px;
+      width: 3px;
+      top: 3px;
+      left: 0px;
+    }
+    #inventorybackground0, #inventorybackground1, #inventorybackground2, #inventorybackground3, #inventorybackground4, #inventorybackground5 {
+      position: absolute;
+      width: 48px;
+      height: 60px;
+      top: 6px;
+      left: 549px;
+      margin: 0px;
+      border: 0px;
+      background-image: url('../img/3/main.png' );
+    }
+    #inventorybackground0 {
+      margin-left: 0px;
+      background-position: -597px -834px;
+    }
+    #inventorybackground0.empty {
+      background-position: -549px -834px;
+    }
+    #inventorybackground1 {
+      margin-left: 34px;
+      background-position: -645px -834px;
+    }
+    #inventorybackground1.empty {
+      background-position: -549px -834px;
+    }
+    #inventorybackground2 {
+      margin-left: 68px;
+      background-position: -693px -834px;
+    }
+    #inventorybackground2.empty {
+      background-position: -549px -834px;
+    }
+    #inventorybackground3 {
+      margin-left: 102px;
+      background-position: -741px -834px;
+    }
+    #inventorybackground3.empty {
+      background-position: -549px -834px;
+    }
+    #inventorybackground4 {
+      margin-left: 136px;
+      background-position: -789px -834px;
+    }
+    #inventorybackground4.empty {
+      background-position: -549px -834px;
+    }
+    #inventorybackground5 {
+      margin-left: 170px;
+      background-position: -837px -834px;
+      display: none;
+    }
+    #inventorybackground5.empty {
+      background-position: -549px -834px;
+    }
+    #inventorybackground0 { margin-left: 0px; }
+    #inventorybackground1 { margin-left: 51px; }
+    #inventorybackground2 { margin-left: 99px; }
+    #inventorybackground3 { margin-left: 153px; display: none; }
+    #inventorybackground4 { margin-left: 204px; display: none; }
+    #inventorybackground5 { margin-left: 255px; display: none; }
+    #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
+      position: absolute;
+      top: -7.5px;
+      left: 0px;
+      width: 48px;
+      height: 48px;
+      background-color: rgba(0, 0, 0, 0);
+    }
+    #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
+      position: absolute;
+      width: 48px;
+      height: 12px;
+      left: 0px;
+      top: 87px;
+      border: 0px;
+      color: rgba(255, 255, 255, 1);
+      font-size: 13.5px;
+      text-align: center;
+      padding: 0px;
+      margin: 0px;
+    }
+    #moreinventorybutton{
+      position: absolute;
+      display: none;
+      width: 48px;
+      height: 51px;
+      top: 0px;
+      left: 852px;
+      margin: 0px;
+      border: 0px;
+      background: url('../img/3/main.png') no-repeat -591px -556px;
+    }
+      #characterButton {
+      position: absolute;
+      width: 42px;
+      height: 45px;
+      top: 3px;
+      left: 1305px;
+      margin: 0px;
+      border: 0px;
+      background-color: rgba(0, 0, 0, 0);
+      background: url('../img/3/main.png') no-repeat -0px -945px;
+    }
+    #helpbutton {
+      position: absolute;
+      width: 42px;
+      height: 45px;
+      top: 3px;
+      left: 1350px;
+      margin: 0px;
+      border: 0px;
+      background-color: rgba(0, 0, 0, 0);
+      background: url('../img/3/main.png' ) no-repeat -421px -945px;
+    }
+    #soundbutton {
+      position: absolute;
+      width: 42px;
+      height: 45px;
+      top: 3px;
+      left: 1395px;
+      margin: 0px;
+      border: 0px;
+      background: url('../img/3/main.png' ) no-repeat -379px -945px;
+    }
+    
+    #users {
+      position: absolute;
+      width: 96px;
+      height: 60px;
+      top: 18px;
+      left: 1203px;
+      margin: 0px;
+      border: 0px;
+      color: white;
+    }
+    #fps {
+      position: absolute;
+      width: 132px;
+      height: 12px;
+      left: 1305px;
+      top: 49.5px;
+      border: 0px;
+      color: rgba(255, 255, 255, 1);
+      font-size: 13.5px;
+      text-align: center;
+      padding: 0px;
+      margin: 0px;
+    }
     
 }
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
@@ -174,6 +465,7 @@ footer, header, hgroup, menu, nav, section {
       background-image: url('../img/2/main.png' );
       background-position: -176px -556px;
     }
+    
     #expbar {
       position: absolute;
       top: 0px;
@@ -556,7 +848,7 @@ footer, header, hgroup, menu, nav, section {
     }
     #inventorybackground0 { margin-left: 0px; }
     #inventorybackground1 { margin-left: 17px; }
-    #inventorybackground2 { margin-left: 24px; }
+    #inventorybackground2 { margin-left: 33px; }
     #inventorybackground3 { margin-left: 51px; display: none; }
     #inventorybackground4 { margin-left: 68px; display: none; }
     #inventorybackground5 { margin-left: 85px; display: none; }
@@ -601,6 +893,8 @@ footer, header, hgroup, menu, nav, section {
       margin: 0px;
       border: 0px;
       background-color: rgba(0, 0, 0, 0);
+      background: url('../img/1/main.png') no-repeat -0px -314px;
+      background: url('../img/1/main.png') no-repeat -0px -628px;
       background: url('../img/1/main.png') no-repeat -0px -628px;
     }
     #helpbutton {
@@ -612,6 +906,8 @@ footer, header, hgroup, menu, nav, section {
       margin: 0px;
       border: 0px;
       background-color: rgba(0, 0, 0, 0);
+      background: url('../img/1/main.png' ) no-repeat -140px -314px;
+      background: url('../img/1/main.png' ) no-repeat -280px -628px;
       background: url('../img/1/main.png' ) no-repeat -280px -628px;
     }
     #soundbutton {
@@ -622,6 +918,8 @@ footer, header, hgroup, menu, nav, section {
       left: 465px;
       margin: 0px;
       border: 0px;
+      background: url('../img/1/main.png' ) no-repeat -126px -314px;
+      background: url('../img/1/main.png' ) no-repeat -252px -628px;
       background: url('../img/1/main.png' ) no-repeat -252px -628px;
     }
     #users {
@@ -659,4 +957,8 @@ footer, header, hgroup, menu, nav, section {
 @media screen and (max-width: 640px) and (orientation: portrait) { 
                                                                     
                                                                     
+}
+@media screen and (max-width: 600px) {
+    
+    
 }

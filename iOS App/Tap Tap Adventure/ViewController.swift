@@ -15,7 +15,7 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
     var loadingIndicator = UIActivityIndicatorView()
     var adsRemoved = false
     let product_id = "taptap25111998removeads"
-    var requestObj = NSURLRequest(URL: NSURL(string: "http://taptapadventure.com/iOSClientJGHS_JFN_D/")!)
+    var requestObj = NSURLRequest(URL: NSURL(string: "http://127.0.0.1:8080")!)
     
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var adView: ADBannerView!

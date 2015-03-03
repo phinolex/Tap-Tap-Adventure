@@ -614,6 +614,7 @@ js/boardhandler.js
 js/kkhandler.js
 js/guild.js
 js/shophandler.js
+js/playerpopupmenu.js
 js/../../shared/js/gametypes.js
 js/game.js
 
