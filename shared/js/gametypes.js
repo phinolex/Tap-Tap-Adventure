@@ -58,7 +58,8 @@ Types = {
 	ACHIEVEMENT: 36,
 	TALKTONPC: 37,
 	INVENTORY: 38,
-        MAGIC: 39
+        MAGIC: 39,
+        MANA: 40
     },
 
     Entities: {

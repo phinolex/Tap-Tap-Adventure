@@ -22,6 +22,11 @@ var Character = Entity.extend({
 
         return basestate.concat(state);
     },
+    
+    resetMana: function(maxMana) {
+        this.maxMana = maxMana;
+        this.mana = this.maxMana;
+    },
 
     resetHitPoints: function (maxHitPoints) {
         this.maxHitPoints = maxHitPoints;
@@ -41,9 +46,28 @@ var Character = Entity.extend({
             }
         }
     },
+    regenManaBy: function(value) {
+        var mana = this.mana,
+            max = this.maxMana;
+        
+        if (mana < max) {
+            if (mana + value <= max) {
+                
+                this.mana += value;
+            } else {
+                
+                this.mana = max;
+            }
+        }   
+    },
 
     hasFullHealth: function () {
+        
         return this.hitPoints === this.maxHitPoints;
+    },
+    hasFullMana: function() {
+      
+        return this.mana === this.maxMana;
     },
 
     setTarget: function (entity) {

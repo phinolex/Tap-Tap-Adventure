@@ -406,13 +406,15 @@ module.exports = Player = Character.extend({
                         self.server.removeEntity(item);
                         
                         if(kind === Types.Entities.FIREPOTION) {
+                            //Note: updateHitPoints() works similarly to resetHPandMana
                             self.updateHitPoints();
                             self.broadcast(self.equip(Types.Entities.FIREBENEF));
                             self.firepotionTimeout = setTimeout(function() {
                                 self.broadcast(self.equip(Types.Entities.DEBENEF)); // return to normal after 15 sec
                                 self.firepotionTimeout = null;
                             }, 7500);
-                            self.send(new Messages.HitPoints(self.maxHitPoints).serialize());
+                            this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
+                            //self.send(new Messages.HitPoints(self.maxHitPoints).serialize());
                         } else if(Types.isHealingItem(kind)) {
                             self.putInventory(item);
                         } else if(Types.isWeapon(kind)) {
@@ -848,7 +850,7 @@ module.exports = Player = Character.extend({
                     databaseHandler.equipArmor(this.name, Types.getKindAsString(itemKind));
                     this.equipArmor(itemKind);
                 }
-                this.updateHitPoints();
+                //this.updateHitPoints();
                 this.send(new Messages.HitPoints(this.maxHitPoints).serialize());
             } else if(Types.isWeapon(itemKind)) {
                 databaseHandler.equipWeapon(this.name, Types.getKindAsString(itemKind));
@@ -859,8 +861,18 @@ module.exports = Player = Character.extend({
 
     updateHitPoints: function() {
         this.resetHitPoints(Formulas.hp(this.level));
+        this.resetMana(Formulas.mana(this.level));
     },
-
+    //NOTE HERE - HP HERE
+    //This needs to be looked over and change everything necessary.
+    //
+    /* resetHPandMana: function() {
+        this.resetHitpoints(Formulas.hp(this.kind ,this.level));
+        this.resetMana(Formulas.mana(this.kind, this.level));
+    }, */
+    //^ ALREADY COVERED BY updateHitPoints
+    
+    
     updatePosition: function() {
         if(this.requestpos_callback) {
             var pos = this.requestpos_callback();
@@ -888,8 +900,11 @@ module.exports = Player = Character.extend({
         var origLevel = this.level;
         this.level = Types.getLevel(this.experience);
         if(origLevel !== this.level) {
+            //this.resetHPandMana();
             this.updateHitPoints();
-            this.send(new Messages.HitPoints(this.maxHitPoints).serialize());
+            this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
+            //NOTE 3
+            //this.send(new Messages.HitPoints(this.maxHitPoints).serialize());
         }
     },
 
@@ -993,7 +1008,7 @@ module.exports = Player = Character.extend({
             achievementFound[3], achievementProgress[3], achievementFound[4],
             achievementProgress[4], achievementFound[5], achievementProgress[5],
             achievementFound[6], achievementProgress[6], achievementFound[7],
-            achievementProgress[7]
+            achievementProgress[7], self.mana
         ]);
 
         self.hasEnteredGame = true;

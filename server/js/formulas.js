@@ -20,6 +20,12 @@ Formulas.hp = function(entityLevel) {
     return hp;
 };
 
+Formulas.mana = function(entityLevel) {
+    //Do not check kind yet, will be implemented later on.
+    return 50 + entityLevel * 2;
+    //This requires more work, look around "kind".
+};
+
 if(!(typeof exports === 'undefined')) {
     module.exports = Formulas;
 }

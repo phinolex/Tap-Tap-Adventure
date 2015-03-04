@@ -43,6 +43,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.NOTIFY] = this.receiveNotify;
             this.handlers[Types.Messages.KUNG] = this.receiveKung;
             this.handlers[Types.Messages.ACHIEVEMENT] = this.receiveAchievement;
+            this.handlers[Types.Messages.MANA] = this.receiveMana;
             this.useBison = false;
             
             this.enable();
@@ -202,16 +203,27 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 data[24], data[26], data[28], data[30]];
             var achievementProgress = [data[17], data[19], data[21], data[23],
                 data[25], data[27], data[29], data[31]];
-                
+                var mana = data[32];
                 //var moderator = data[32];
             if(this.welcome_callback) {
-                this.welcome_callback(id, name, x, y, hp, armor, weapon, avatar,
+                this.welcome_callback(id, name, x, y, hp, mana, armor, weapon, avatar,
                 weaponAvatar, experience, admin, achievementFound, achievementProgress,
                 inventory0, inventory0Number,
                       inventory1, inventory1Number);
             }
         },
 
+        receiveMana: function(data) {
+            if (this.mana_callback) {
+                
+                var mana = data[1];
+                var maxMana = data[2];
+                this.mana_callback(mana, maxMana);
+            }
+        },
+        
+        
+        
         receiveMove: function(data) {
             var id = data[1],
                 x = data[2],
@@ -404,9 +416,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 
         receiveHitPoints: function(data) {
             var maxHp = data[1];
+            var maxMana = data[2];
 
             if(this.hp_callback) {
-                this.hp_callback(maxHp);
+                this.hp_callback(maxHp, maxMana);
             }
         },
 
@@ -604,44 +617,42 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.kung_callback = callback;
         },
         onGuildError: function(callback) {
-			this.guilderror_callback = callback;
-		},
-		
-		onGuildCreate: function(callback) {
-			this.guildcreate_callback = callback;
-		},
-		
-		onGuildInvite: function(callback) {
-			this.guildinvite_callback = callback;
-		},
-		
-		onGuildJoin: function(callback) {
-			this.guildjoin_callback = callback;
-		},
-		
-		onGuildLeave: function(callback) {
-			this.guildleave_callback = callback;
-		},
-		
-		onGuildTalk: function(callback) {
-			this.guildtalk_callback = callback;
-		},
-		
-		onMemberConnect: function(callback) {
-			this.guildmemberconnect_callback = callback;
-		},
-		
-		onMemberDisconnect: function(callback) {
-			this.guildmemberdisconnect_callback = callback;
-		},
-		
-		onReceiveGuildMembers: function(callback) {
-			this.guildonlinemembers_callback = callback;
-		},
-		
-		onGuildPopulation: function(callback) {
-			this.guildpopulation_callback = callback;
-		},
+            this.guilderror_callback = callback;
+        },
+	onGuildCreate: function(callback) {
+            this.guildcreate_callback = callback;
+	},
+	onGuildInvite: function(callback) {
+            this.guildinvite_callback = callback;
+	},
+	onGuildJoin: function(callback) {
+            this.guildjoin_callback = callback;
+	},
+        onGuildLeave: function(callback) {
+            this.guildleave_callback = callback;
+	},
+	onGuildTalk: function(callback) {
+            this.guildtalk_callback = callback;
+	},  
+	onMemberConnect: function(callback) {
+            this.guildmemberconnect_callback = callback;
+	},
+	onMemberDisconnect: function(callback) {
+            this.guildmemberdisconnect_callback = callback;
+	},
+	onReceiveGuildMembers: function(callback) {
+            this.guildonlinemembers_callback = callback;
+	},
+	onGuildPopulation: function(callback) {
+            this.guildpopulation_callback = callback;
+	},
+        onMana: function(callback) {
+            this.mana_callback = callback;
+        },
+        
+                
+                
+                
 
         sendCreate: function(player) {
             this.sendMessage([Types.Messages.CREATE,

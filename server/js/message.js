@@ -80,12 +80,14 @@ Messages.Health = Message.extend({
 });
 
 Messages.HitPoints = Message.extend({
-    init: function (maxHitPoints) {
+    init: function (maxHitPoints, maxMana) {
         this.maxHitPoints = maxHitPoints;
+        this.maxMana = maxMana;
     },
     serialize: function () {
         return [Types.Messages.HP,
-                this.maxHitPoints];
+                this.maxHitPoints,
+                this.maxMana];
     }
 });
 
@@ -244,3 +246,16 @@ Messages.PVP = Message.extend({
                 this.isPVP];
     }
 });
+   
+Messages.Mana = Message.extend({
+    init: function(player) {
+        this.mana = player.mana;
+        this.maxMana = player.maxMana;
+    },
+    serialize: function() {
+        
+        return [Types.Messages.MANA, this.mana, this.maxMana];
+    }  
+    
+});
+    

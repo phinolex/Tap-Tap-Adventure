@@ -929,7 +929,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
             });
 
-            this.client.onWelcome(function(id, name, x, y, hp, armor, weapon,
+            this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon,
                                            avatar, weaponAvatar, experience, admin, achievementFound, achievementProgress,
                                             inventory0, inventory0Number,
                                            inventory1, inventory1Number) {
@@ -943,6 +943,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 //self.player.moderator = moderator;
                 self.player.setGridPosition(x, y);
                 self.player.setMaxHitPoints(hp);
+                self.player.setMaxMana(mana);
                 self.player.setArmorName(armor);
                 self.player.setSpriteName(avatar);
                 self.player.setWeaponName(weapon);
@@ -1660,9 +1661,11 @@ self.player.onCheckAggro(function() {
                     }
                 });
 
-                self.client.onPlayerChangeMaxHitPoints(function(hp) {
+                self.client.onPlayerChangeMaxHitPoints(function(hp, mana) {
                     self.player.maxHitPoints = hp;
                     self.player.hitPoints = hp;
+                    self.player.mana = mana;
+                    self.player.maxMana = mana;
                     self.updateBars();
                 });
 
@@ -1822,6 +1825,11 @@ self.player.onCheckAggro(function() {
                 });
                 self.client.onKung(function(msg){
                     self.kkhandler.add(msg, self.player);
+                });
+                self.client.onMana(function(mana, maxMana) {
+                    self.player.mana = mana;
+                    self.player.maxMana = maxMana;
+                    self.updateBars();
                 });
                 
                 self.gamestart_callback();
@@ -2981,7 +2989,12 @@ self.player.onCheckAggro(function() {
         onPlayerHealthChange: function(callback) {
             this.playerhp_callback = callback;
         },
-
+        
+        onPlayerManaChange: function(callback) {
+            
+            this.playermana_callback = callback;
+        },
+        
         onPlayerHurt: function(callback) {
             this.playerhurt_callback = callback;
         },
@@ -3020,8 +3033,9 @@ self.player.onCheckAggro(function() {
         },
 
         updateBars: function() {
-            if(this.player && this.playerhp_callback) {
+            if(this.player && this.playerhp_callback && this.playermana_callback) {
                 this.playerhp_callback(this.player.hitPoints, this.player.maxHitPoints);
+                this.playermana_callback(this.player.mana, this.player.maxMana);
             }
         },
         updateExpBar: function(){

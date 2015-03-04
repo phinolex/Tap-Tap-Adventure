@@ -158,8 +158,8 @@ module.exports = World = cls.Class.extend({
         this.onRegenTick(function() {
             self.forEachCharacter(function(character) {
                 if(!character.hasFullHealth()) {
-                    character.regenHealthBy(Math.floor(character.maxHitPoints / 25));
-
+                    character.regenHealthBy(Math.floor(character.maxHitPoints / 25));   
+                    //Handle Mana Regen
                     if(character.type === 'player') {
                         self.pushToPlayer(character, character.regen());
                     }
