@@ -202,9 +202,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 achievementFound = [data[16], data[18], data[20], data[22],
                 data[24], data[26], data[28], data[30]],
                 achievementProgress = [data[17], data[19], data[21], data[23],
-                data[25], data[27], data[29], data[31]];
-                var mana = data[32];
-                //var moderator = data[32];
+                data[25], data[27], data[29], data[31]],
+                mana = data[32];
+                //moderator = data[32];
             if(this.welcome_callback) {
                 this.welcome_callback(id, name, x, y, hp, mana, armor, weapon, avatar,
                 weaponAvatar, experience, admin, achievementFound, achievementProgress,
