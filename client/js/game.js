@@ -1171,9 +1171,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.client.onPVPChange(function(pvpFlag){
                     self.player.flagPVP(pvpFlag);
                     if(pvpFlag){
-                        self.showNotification("PVP is on.");
+                        self.chathandler.addNotification("PVP is on.");
                     } else{
-                        self.showNotification("PVP is off.");
+                        self.chathandler.addNotification("PVP is off.");
                     }
                 });
 
