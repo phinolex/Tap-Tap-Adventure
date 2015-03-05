@@ -962,31 +962,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                 self.addEntity(self.player);
                 self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
+
+                //Welcome message
                 self.chathandler.show();
                 self.chathandler.addNotification("Welcome to Tap Tap Adventure");
+                self.chathandler.addNotification("Make sure you sign up on the forum!");
                 
-                self.chathandler.addNotification("Make sure you sign up on the forum");
-                
-                
-                setTimeout(function() {
-                    //self.tryUnlockingAchievement("STILL_ALIVE");
-                }, 1500);
-                self.showNotification("Welcome, you are level " + self.player.level + ".");
-                
-                /* if(!self.storage.hasAlreadyPlayed()) {
-                    
-                    
-                    self.storage.initPlayer(self.player.name);
-                    self.storage.savePlayer(self.renderer.getPlayerImage(),
-                                            self.player.getSpriteName(),
-                                            self.player.getWeaponName(),
-                                            self.player.getGuild());
-                    
-                    //self.storage.setPlayerName(self.player.name + " (" + self.player.level) + ")";
-                }  else {
-                    self.showNotification("Welcome back. You are level " + self.player.level + ".");
-                    self.storage.setPlayerName(name);
-                } */
 
 
                 self.player.onStartPathing(function(path) {
@@ -1015,7 +996,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                 });
 
-self.player.onCheckAggro(function() {
+                self.player.onCheckAggro(function() {
                     self.forEachMob(function(mob) {
                         if(mob.isAggressive && !mob.isAttacking() && self.player.isNear(mob, mob.aggroRange)) {
                             self.player.aggro(mob);
