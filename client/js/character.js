@@ -53,7 +53,10 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             this.maxHitPoints = hp;
             this.hitPoints = hp;
         },
-
+        setMaxMana: function(mana) {
+            this.maxMana = mana;
+            this.mana = mana;
+	},
         setDefaultAnimation: function() {
             this.idle();
         },

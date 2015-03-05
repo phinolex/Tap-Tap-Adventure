@@ -31,7 +31,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             level: datas[22],
             maxHitPoints: datas[23],
             hitPoints: datas[24],
-            admin: datas[25],
+            admin: datas[25]
           },
           weapon, armor,
           width1, height1, width2, height2, width3, height3;

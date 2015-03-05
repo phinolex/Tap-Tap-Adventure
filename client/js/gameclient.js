@@ -198,10 +198,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 inventory0 = data[12],
                 inventory0Number = data[13],
                 inventory1 = data[14],
-                inventory1Number = data[15];
-            var achievementFound = [data[16], data[18], data[20], data[22],
-                data[24], data[26], data[28], data[30]];
-            var achievementProgress = [data[17], data[19], data[21], data[23],
+                inventory1Number = data[15],
+                achievementFound = [data[16], data[18], data[20], data[22],
+                data[24], data[26], data[28], data[30]],
+                achievementProgress = [data[17], data[19], data[21], data[23],
                 data[25], data[27], data[29], data[31]];
                 var mana = data[32];
                 //var moderator = data[32];

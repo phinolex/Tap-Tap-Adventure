@@ -370,12 +370,12 @@ define(['jquery', 'storage'], function($, Storage) {
         },
         initManaBar: function() {
           var maxWidth = $('#manabar').width();
-            $('#mana').html("<p>MP: " + "100" + "/" + "100" + "</p>");
-            /* this.game.onPlayerManaChange(function(mana, maxMana) {
+            
+             this.game.onPlayerManaChange(function(mana, maxMana) {
                 var barWidth = Math.round((maxWidth / maxMana) * (mana > 0 ? mana : 0));
                 $('#mana').css('width', barWidth + "px");
-               
-            }); */
+               $('#mana').html("<p>MP: " + mana + "/" + maxMana + "</p>");
+            }); 
         },
           
         initExpBar: function(){

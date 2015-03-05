@@ -413,8 +413,8 @@ module.exports = Player = Character.extend({
                                 self.broadcast(self.equip(Types.Entities.DEBENEF)); // return to normal after 15 sec
                                 self.firepotionTimeout = null;
                             }, 7500);
-                            this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
-                            //self.send(new Messages.HitPoints(self.maxHitPoints).serialize());
+                            //this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
+                            self.send(new Messages.HitPoints(self.maxHitPoints, self.maxMana).serialize());
                         } else if(Types.isHealingItem(kind)) {
                             self.putInventory(item);
                         } else if(Types.isWeapon(kind)) {
@@ -851,7 +851,7 @@ module.exports = Player = Character.extend({
                     this.equipArmor(itemKind);
                 }
                 //this.updateHitPoints();
-                this.send(new Messages.HitPoints(this.maxHitPoints).serialize());
+                //this.send(new Messages.HitPoints(this.maxHitPoints).serialize());
             } else if(Types.isWeapon(itemKind)) {
                 databaseHandler.equipWeapon(this.name, Types.getKindAsString(itemKind));
                 this.equipWeapon(itemKind);
@@ -902,9 +902,9 @@ module.exports = Player = Character.extend({
         if(origLevel !== this.level) {
             //this.resetHPandMana();
             this.updateHitPoints();
-            this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
+            //this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
             //NOTE 3
-            //this.send(new Messages.HitPoints(this.maxHitPoints).serialize());
+            this.send(new Messages.HitPoints(this.maxHitPoints, this.maxMana).serialize());
         }
     },
 
@@ -999,16 +999,39 @@ module.exports = Player = Character.extend({
         self.server.enter_callback(self);
 
         self.send([
-            Types.Messages.WELCOME, self.id, self.name, self.x, self.y,
-            self.hitPoints, armor, weapon, avatar, weaponAvatar,
-            self.experience, self.admin,
-            inventory[0], inventoryNumber[0], inventory[1], inventoryNumber[1],
-            achievementFound[0], achievementProgress[0], achievementFound[1],
-            achievementProgress[1], achievementFound[2], achievementProgress[2],
-            achievementFound[3], achievementProgress[3], achievementFound[4],
-            achievementProgress[4], achievementFound[5], achievementProgress[5],
-            achievementFound[6], achievementProgress[6], achievementFound[7],
-            achievementProgress[7], self.mana
+            Types.Messages.WELCOME, 
+            self.id, // 1
+            self.name, //2
+            self.x, //3
+            self.y, //4
+            self.hitPoints, //5
+            armor, //6
+            weapon, //7
+            avatar, //8
+            weaponAvatar, //9
+            self.experience, //10
+            self.admin, //11
+            inventory[0], //12
+            inventoryNumber[0], //13
+            inventory[1], //14
+            inventoryNumber[1], //15
+            achievementFound[0], //16
+            achievementProgress[0], //17
+            achievementFound[1], //18
+            achievementProgress[1], //19
+            achievementFound[2], //20
+            achievementProgress[2], //21
+            achievementFound[3], //22
+            achievementProgress[3], //23
+            achievementFound[4], //24
+            achievementProgress[4], //25
+            achievementFound[5], //26
+            achievementProgress[5], //27
+            achievementFound[6], //28
+            achievementProgress[6], // 29
+            achievementFound[7], //30
+            achievementProgress[7], //31
+            self.mana //32
         ]);
 
         self.hasEnteredGame = true;

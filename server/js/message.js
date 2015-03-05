@@ -80,14 +80,14 @@ Messages.Health = Message.extend({
 });
 
 Messages.HitPoints = Message.extend({
-    init: function (maxHitPoints, maxMana) {
+    init: function(maxHitPoints, maxMana) {
         this.maxHitPoints = maxHitPoints;
         this.maxMana = maxMana;
     },
-    serialize: function () {
+    serialize: function() {
         return [Types.Messages.HP,
-                this.maxHitPoints,
-                this.maxMana];
+            this.maxHitPoints,
+            this.maxMana];
     }
 });
 
