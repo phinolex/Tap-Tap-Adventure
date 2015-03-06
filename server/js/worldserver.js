@@ -8,7 +8,6 @@ var cls = require("./lib/class"),
     Map = require('./map'),
     Npc = require('./npc'),
     Player = require('./player'),
-    Guild = require('./guild'),
     Item = require('./item'),
     MobArea = require('./mobarea'),
     ChestArea = require('./chestarea'),
@@ -34,7 +33,6 @@ module.exports = World = cls.Class.extend({
 
         this.entities = {};
         this.players = {};
-        this.guilds = {};
         this.mobs = {};
         this.attackers = {};
         this.items = {};
@@ -63,7 +61,7 @@ module.exports = World = cls.Class.extend({
         });
 
         this.onPlayerEnter(function(player) {
-            log.info(player.name + "(" + player.connection._connection.remoteAddress + ") has joined " + self.id + " in guild " + player.guildId);
+            log.info(player.name + "(" + player.connection._connection.remoteAddress + ") has joined ");
 
             if(!player.hasEnteredGame) {
                 self.incrementPlayerCount();
@@ -71,13 +69,7 @@ module.exports = World = cls.Class.extend({
 
             // Number of players in this world
             self.pushToPlayer(player, new Messages.Population(self.playerCount));
-            if(player.hasGuild()){
-				self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.CONNECT, player.name),player);
-				var names = _.without(player.getGuild().memberNames(), player.name);
-				if(names.length > 0){
-					self.pushToPlayer(player, new Messages.Guild(Types.Messages.GUILDACTION.ONLINE, names));
-				}
-			}
+            
             self.pushRelevantEntityListTo(player);
 
             var move_callback = function(x, y) {
@@ -130,9 +122,7 @@ module.exports = World = cls.Class.extend({
 
             player.onExit(function() {
                 log.info(player.name + " has left the game.");
-                if(player.hasGuild()){
-					self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.DISCONNECT, player.name), player);
-				}
+                
                 self.removePlayer(player);
                 self.decrementPlayerCount();
 
@@ -290,27 +280,6 @@ module.exports = World = cls.Class.extend({
         }
     },
     
-    pushToGuild: function(guild, message, except) {
-		var	self = this;
-
-		if(guild){
-			if(typeof except === "undefined"){
-				guild.forEachMember(function (player, id){
-					self.pushToPlayer(self.getEntityById(id), message);
-				});
-			}
-			else {
-				guild.forEachMember(function (player, id){
-					if(parseInt(id,10)!== except.id){
-						self.pushToPlayer(self.getEntityById(id), message);
-					}
-				});
-			}
-		} else {
-			log.error("pushToGuild: guild was undefined");
-		}
-	},
-
     pushToGroup: function(groupId, message, ignoredPlayer) {
         var self = this,
             group = this.groups[groupId];
@@ -392,86 +361,19 @@ module.exports = World = cls.Class.extend({
         log.debug("Removed "+ Types.getKindAsString(entity.kind) +" : "+ entity.id);
     },
 
-	joinGuild: function(player, guildId, answer){
-		if( typeof this.guilds[guildId] === 'undefined' ){
-			this.pushToPlayer(player, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.DOESNOTEXIST,guildId));
-		}
-		//#guildupdate (guildrules)
-		else {
-			if(player.hasGuild()){
-				var formerGuildId = player.guildId;
-			}
-			var res=this.guilds[guildId].addMember(player, answer);
-			if(res!==false && typeof formerGuildId !== "undefined"){
-				this.guilds[formerGuildId].removeMember(player);
-			}
-			return res;
-		}
-		return false;
-	},
-	
-	reloadGuild: function(guildId, guildName){
-			var res = false;
-			var lastItem = 0;
-			if(typeof this.guilds[guildId] !== "undefined"){
-				if(this.guilds[guildId].name === guildName){
-					res = guildId;
-				}
-			}
-			if(res===false){
-				_.every(this.guilds, function(guild, key){
-					if(guild.name === guildName){
-						res = parseInt(key,10);
-						return false;
-					}
-					else{
-						lastItem = key;
-						return true;
-					}
-				});
-			}
-
-			if(res===false){//first connected after reboot.
-				if(typeof this.guilds[guildId] !== "undefined"){
-					guildId = parseInt(lastItem,10)+1;
-				}
-				this.guilds[guildId] = new Guild(guildId, guildName, this);
-				res = guildId;
-			}
-		return res;
-	},
-	
-	addGuild: function(guildName){
-		var res = true;
-		var id=0;//an ID here
-		res = _.every(this.guilds,function(guild, key){
-			id = parseInt(key,10)+1;
-			return (guild.name !== guildName);
-		});
-		if (res) { 
-			this.guilds[id] = new Guild(id, guildName, this);
-			res = id;
-		}
-		return res;
-	},
-
-    addPlayer: function(player, guildId) {
+    
+    addPlayer: function(player) {
         this.addEntity(player);
         this.players[player.id] = player;
         this.outgoingQueues[player.id] = [];
         var res = true;
-        if(typeof guildId !== 'undefined'){
-			res = this.joinGuild(player, guildId);
-		}
-		return res;
+	return res;
     },
 
     removePlayer: function(player) {
         player.broadcast(player.despawn());
         this.removeEntity(player);
-        if(player.hasGuild()){
-			player.getGuild().removeMember(player);
-		}
+       
         delete this.players[player.id];
         delete this.outgoingQueues[player.id];
     },

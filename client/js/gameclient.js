@@ -1,4 +1,6 @@
 
+/* global Types, log, Class */
+
 define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory, BISON) {
 
     var GameClient = Class.extend({
@@ -36,8 +38,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.KILL] = this.receiveKill;
             this.handlers[Types.Messages.HP] = this.receiveHitPoints;
             this.handlers[Types.Messages.BLINK] = this.receiveBlink;
-            this.handlers[Types.Messages.GUILDERROR] = this.receiveGuildError;
-            this.handlers[Types.Messages.GUILD] = this.receiveGuild;
             this.handlers[Types.Messages.PVP] = this.receivePVP;
             this.handlers[Types.Messages.BOARD] = this.receiveBoard;
             this.handlers[Types.Messages.NOTIFY] = this.receiveNotify;
@@ -462,54 +462,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.kung_callback(msg);
             }
         },
-        receiveGuildError: function(data) {
-			var errorType = data[1];
-			var guildName = data[2];
-			if(this.guilderror_callback) {
-				this.guilderror_callback(errorType, guildName);
-			}
-		},
-		
-		receiveGuild: function(data) {
-			if( (data[1] === Types.Messages.GUILDACTION.CONNECT) &&
-				this.guildmemberconnect_callback ){
-				this.guildmemberconnect_callback(data[2]); //member name
-			}
-			else if( (data[1] === Types.Messages.GUILDACTION.DISCONNECT) &&
-				this.guildmemberdisconnect_callback ){
-				this.guildmemberdisconnect_callback(data[2]); //member name
-			}
-			else if( (data[1] === Types.Messages.GUILDACTION.ONLINE) &&
-				this.guildonlinemembers_callback ){
-					data.splice(0,2);
-				this.guildonlinemembers_callback(data); //member names
-			}
-			else if( (data[1] === Types.Messages.GUILDACTION.CREATE) &&
-				this.guildcreate_callback){
-				this.guildcreate_callback(data[2], data[3]);//id, name
-			}
-			else if( (data[1] === Types.Messages.GUILDACTION.INVITE) &&
-				this.guildinvite_callback){
-				this.guildinvite_callback(data[2], data[3], data[4]);//id, name, invitor name
-			}
-			else if( (data[1] === Types.Messages.GUILDACTION.POPULATION) &&
-				this.guildpopulation_callback){
-				this.guildpopulation_callback(data[2], data[3]);//name, count
-			}
-			else if( (data[1] === Types.Messages.GUILDACTION.JOIN) &&
-				this.guildjoin_callback){				
-					this.guildjoin_callback(data[2], data[3], data[4], data[5]);//name, (id, (guildId, guildName))
-			}
-			else if( (data[1] === Types.Messages.GUILDACTION.LEAVE) &&
-				this.guildleave_callback){
-					this.guildleave_callback(data[2], data[3], data[4]);//name, id, guildname
-			}
-			else if( (data[1] === Types.Messages.GUILDACTION.TALK) &&
-				this.guildtalk_callback){
-					this.guildtalk_callback(data[2], data[3], data[4]);//name, id, message
-			}
-		},
-
+        
         onDispatched: function(callback) {
             this.dispatched_callback = callback;
         },
@@ -616,36 +569,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onKung: function(callback){
             this.kung_callback = callback;
         },
-        onGuildError: function(callback) {
-            this.guilderror_callback = callback;
-        },
-	onGuildCreate: function(callback) {
-            this.guildcreate_callback = callback;
-	},
-	onGuildInvite: function(callback) {
-            this.guildinvite_callback = callback;
-	},
-	onGuildJoin: function(callback) {
-            this.guildjoin_callback = callback;
-	},
-        onGuildLeave: function(callback) {
-            this.guildleave_callback = callback;
-	},
-	onGuildTalk: function(callback) {
-            this.guildtalk_callback = callback;
-	},  
-	onMemberConnect: function(callback) {
-            this.guildmemberconnect_callback = callback;
-	},
-	onMemberDisconnect: function(callback) {
-            this.guildmemberdisconnect_callback = callback;
-	},
-	onReceiveGuildMembers: function(callback) {
-            this.guildonlinemembers_callback = callback;
-	},
-	onGuildPopulation: function(callback) {
-            this.guildpopulation_callback = callback;
-	},
+        
         onMana: function(callback) {
             this.mana_callback = callback;
         },
@@ -667,25 +591,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                               player.pw]);
         },
 
-      //  sendHello: function(player) {
-			//if(player.hasGuild()){
-			//	this.sendMessage([Types.Messages.HELLO,
-			//					  player.name,
-      //            player.pw,
-       //           player.email,
-			//					  Types.getKindFromString(player.getSpriteName()),
-			//					  Types.getKindFromString(player.getWeaponName()),
-			//					  player.guild.id, player.guild.name]);
-			//}
-			//else{
-				//this.sendMessage([Types.Messages.HELLO,
-								  //player.name,
-                  //player.pw,
-                  //player.email,
-								  //Types.getKindFromString(player.getSpriteName()),
-								  //Types.getKindFromString(player.getWeaponName())]);
-			//}
-       // },
 
         sendMove: function(x, y) {
             this.sendMessage([Types.Messages.MOVE,
@@ -787,25 +692,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.sendMessage([Types.Messages.KUNG,
                               word]);
         },
-        sendNewGuild: function(name) {
-			this.sendMessage([Types.Messages.GUILD, Types.Messages.GUILDACTION.CREATE, name]);
-		},
-		
-		sendGuildInvite: function(invitee) {
-			this.sendMessage([Types.Messages.GUILD, Types.Messages.GUILDACTION.INVITE, invitee]);
-		},
-		
-		sendGuildInviteReply: function(guild, answer) {
-			this.sendMessage([Types.Messages.GUILD, Types.Messages.GUILDACTION.JOIN, guild, answer]);
-		},
-		
-		talkToGuild: function(message){
-			this.sendMessage([Types.Messages.GUILD, Types.Messages.GUILDACTION.TALK, message]);
-		},
-		
-		sendLeaveGuild: function(){
-			this.sendMessage([Types.Messages.GUILD, Types.Messages.GUILDACTION.LEAVE]);
-		}
+        
     });
 
     return GameClient;

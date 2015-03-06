@@ -23,7 +23,6 @@ define(function() {
                     name: "",
                     weapon: "",
                     armor: "",
-                    guild: "",
                     image: ""
                 },
                 achievements: {
@@ -84,23 +83,11 @@ define(function() {
             this.data.player.weapon = weapon;
             this.save();
         },
-        
-        setPlayerGuild: function(guild) {
-			if(typeof guild !== "undefined") {
-				this.data.player.guild={id:guild.id, name:guild.name,members:JSON.stringify(guild.members)};
-				this.save();
-			}
-			else{
-				delete this.data.player.guild;
-				this.save();
-			}
-		},
 
-        savePlayer: function(img, armor, weapon, guild) {
+        savePlayer: function(img, armor, weapon) {
             this.setPlayerImage(img);
             this.setPlayerArmor(armor);
             this.setPlayerWeapon(weapon);
-            this.setPlayerGuild(guild);
         },
 
         // Achievements

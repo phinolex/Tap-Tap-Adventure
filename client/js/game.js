@@ -3,13 +3,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'tile', 'warrior', 'gameclient', 'audio', 'updater', 'transition',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
-        'menu', 'boardhandler', 'kkhandler', 'guild', 'shophandler', 'playerpopupmenu',
+        'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
-         Guild, ShopHandler, PlayerPopupMenu) {
+         ShopHandler, PlayerPopupMenu) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -98,8 +98,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             // pvp
             this.pvpFlag = false;
 
-            //Guild Handling
-            this.playerGuild = "";
             
             // sprites
             this.spriteNames = [
@@ -283,9 +281,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 if(this.storage.data.player.armor && this.storage.data.player.weapon) {
                     this.player.setSpriteName(this.storage.data.player.armor);
                     this.player.setWeaponName(this.storage.data.player.weapon);
-                }
-                if(this.storage.data.player.guild) {
-                    this.player.setGuild(this.storage.data.player.guild);
                 }
             }
 
@@ -968,6 +963,17 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.chathandler.addNotification("Welcome to Tap Tap Adventure");
                 self.chathandler.addNotification("Make sure you sign up on the forum!");
                 
+<<<<<<< HEAD
+                self.chathandler.addNotification("Make sure you sign up on the forum");
+                
+                
+                setTimeout(function() {
+                    //self.tryUnlockingAchievement("STILL_ALIVE");
+                }, 1500);
+                self.showNotification("Welcome, you are level " + self.player.level + ".");
+                
+=======
+>>>>>>> origin/master
 
 
                 self.player.onStartPathing(function(path) {
@@ -1184,8 +1190,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.onSwitchItem(function() {
                     self.storage.savePlayer(self.renderer.getPlayerImage(),
                                             self.player.getArmorName(),
-                                            self.player.getWeaponName(),
-                                            self.player.getGuild());
+                                            self.player.getWeaponName());
                     if(self.equipment_callback) {
                         self.equipment_callback();
                     }
@@ -1404,94 +1409,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                 });
                 
-                self.client.onGuildError(function(errorType, info) {
-					if(errorType === Types.Messages.GUILDERRORTYPE.BADNAME){
-						self.showNotification(info + " seems to be an inappropriate guild nameâ€¦");
-					}
-					else if(errorType === Types.Messages.GUILDERRORTYPE.ALREADYEXISTS){
-						self.showNotification(info + " already existsâ€¦");
-						setTimeout(function(){self.showNotification("Either change the name of YOUR guild")},2500);
-						setTimeout(function(){self.showNotification("Or ask a member of " + info + " if you can join them.")},5000);
-					}
-					else if(errorType === Types.Messages.GUILDERRORTYPE.IDWARNING){
-						self.showNotification("WARNING: the server was rebooted.");
-						setTimeout(function(){self.showNotification(info + " has changed ID.")},2500);
-					}
-					else if(errorType === Types.Messages.GUILDERRORTYPE.BADINVITE){
-						self.showNotification(info+" is ALREADY a member of â€œ"+self.player.getGuild().name+"â€");
-					}
-				});
-				
-				self.client.onGuildCreate(function(guildId, guildName) {
-					self.player.setGuild(new Guild(guildId, guildName));
-					self.storage.setPlayerGuild(self.player.getGuild());
-					self.showNotification("You successfully created and joinedâ€¦");
-					setTimeout(function(){self.showNotification("â€¦" + self.player.getGuild().name)},2500);
-				});
-				
-				self.client.onGuildInvite(function(guildId, guildName, invitorName) {
-					self.showNotification(invitorName + " invited you to join â€œ"+guildName+"â€.");
-					self.player.addInvite(guildId);
-					setTimeout(function(){$("#chatinput").attr("placeholder", "Do you want to join "+guildName+" ? Type /guild accept yes or /guild accept no");
-					self.app.showChat();},2500);
-				});
-				
-				self.client.onGuildJoin(function(playerName, id, guildId, guildName) {
-					if(typeof id === "undefined"){
-						self.showNotification(playerName + " failed to answer to your invitation in time.");
-						setTimeout(function(){self.showNotification("Might have to send another inviteâ€¦")},2500);
-					}
-					else if(id === false){
-						self.showNotification(playerName + " respectfully declined your offerâ€¦");
-						setTimeout(function(){self.showNotification("â€¦to join â€œ"+self.player.getGuild().name+"â€.")},2500);
-					}
-					else if(id === self.player.id){
-						self.player.setGuild(new Guild(guildId, guildName));
-						self.storage.setPlayerGuild(self.player.getGuild());
-						self.showNotification("You just joined â€œ"+guildName+"â€.");
-					}
-					else{
-						self.showNotification(playerName+" is now a jolly member of â€œ"+guildName+"â€.");//#updateguild
-					}
-				});
-				
-				self.client.onGuildLeave(function(name, playerId, guildName) {
-					if(self.player.id===playerId){
-						if(self.player.hasGuild()){
-							if(self.player.getGuild().name === guildName){//do not erase new guild on create
-								self.player.unsetGuild();
-								self.storage.setPlayerGuild();
-								self.showNotification("You successfully left â€œ"+guildName+"â€.");
-							}
-						}
-						//missing elses above should not happen (errors)
-					}
-					else{
-						self.showNotification(name + " has left â€œ"+guildName+"â€.");//#updateguild
-					}
-				});
-				
-				self.client.onGuildTalk(function(name, id, message) {
-					if(id===self.player.id){
-						self.showNotification("YOU: "+message);
-					}
-					else{
-						self.showNotification(name+": "+message);
-					}
-				});
-
-				self.client.onMemberConnect(function(name) {
-					self.showNotification(name + " connected to your world.");//#updateguild
-				});
-				
-				self.client.onMemberDisconnect(function(name) {
-					self.showNotification(name + " lost connection with your world.");
-				});
-				
-				self.client.onReceiveGuildMembers(function(memberNames) {
-					self.showNotification(memberNames.join(", ") + ((memberNames.length===1) ? " is " : " are ") +"currently online.");//#updateguild
-				});
-
                 self.client.onEntityMove(function(id, x, y) {
                     var entity = null;
 
@@ -1711,12 +1628,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                 });
                 
-                self.client.onGuildPopulation(function(guildName, guildPopulation) {
-					if(self.nbguildplayers_callback) {
-						self.nbguildplayers_callback(guildName, guildPopulation);
-					}
-				});
-
                 self.client.onDisconnected(function(message) {
                     if(self.player) {
                         self.player.die();
@@ -2797,66 +2708,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.resetZone();
         },
 
-        say: function(message) {
-			//#cli guilds
-			var regexp = /^\/guild\ (invite|create|accept)\s+([^\s]*)|(guild:)\s*(.*)$|^\/guild\ (leave)$/i;
-			var args = message.match(regexp);
-			if(args != undefined){
-				switch(args[1]){
-					case "invite":
-						if(this.player.hasGuild()){
-							this.client.sendGuildInvite(args[2]);
-						}
-						else{
-							this.showNotification("Invite "+args[2]+" to where?");
-						}
-						break;
-					case "create":
-						this.client.sendNewGuild(args[2]);
-						break;
-					case undefined:
-						if(args[5]==="leave"){
-							this.client.sendLeaveGuild();
-						}
-						else if(this.player.hasGuild()){
-							this.client.talkToGuild(args[4]);
-						}
-						else{
-							this.showNotification("You got no-one to talk toâ€¦");
-						}
-						break;
-					case "accept":
-						var status;
-						if(args[2] === "yes") {
-							status = this.player.checkInvite();
-							if(status === false){
-								this.showNotification("You were not invited anywayâ€¦");
-							}
-							else if (status < 0) {
-								this.showNotification("Sorry to say it's too lateâ€¦");
-								setTimeout(function(){self.showNotification("Find someone and ask for another invite.");},2500);
-							}
-							else{
-								this.client.sendGuildInviteReply(this.player.invite.guildId, true);
-							}
-						}
-						else if(args[2] === "no"){
-							status = this.player.checkInvite();
-							if(status!==false){
-								this.client.sendGuildInviteReply(this.player.invite.guildId, false);
-								this.player.deleteInvite();
-							}
-							else{
-								this.showNotification("Whateverâ€¦");
-							}
-						}
-						else{
-							this.showNotification("â€œguild acceptâ€ is a YES or NO question!!");
-						}
-						break;
-				}	
-			}
-           
+        say: function(message) {           
             if(!this.chathandler.processSendMessage(message)){
                 this.client.sendChat(message);
             }
@@ -2988,10 +2840,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.nbplayers_callback = callback;
         },
         
-        onGuildPopulationChange: function(callback) {
-			this.nbguildplayers_callback = callback;
-		},
-
         onNotification: function(callback) {
             this.notification_callback = callback;
         },

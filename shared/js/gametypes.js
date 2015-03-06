@@ -29,37 +29,15 @@ Types = {
         OPEN: 26,
         CHECK: 27,
         PVP: 28,
-        GUILD: 29,
-        GUILDERROR: 30,
-        GUILDERRORTYPE: {
-        	DOESNOTEXIST: 1,
-        	BADNAME: 2,
-        	ALREADYEXISTS: 3,
-        	NOLEAVE: 4,
-        	BADINVITE: 5,
-        	GUILDRULES: 6,
-        	IDWARNING: 7
-        },
-        GUILDACTION: {
-			CONNECT: 8,
-			ONLINE: 9,
-			DISCONNECT: 10,
-			INVITE: 11,
-			LEAVE: 12,
-			CREATE: 13,
-			TALK: 14,
-			JOIN: 15,
-			POPULATION: 16
-	},
-        BOARD: 32,
-        BOARDWRITE: 33,
-        NOTIFY: 34,
-        KUNG: 35,
-	ACHIEVEMENT: 36,
-	TALKTONPC: 37,
-	INVENTORY: 38,
-        MAGIC: 39,
-        MANA: 40
+        BOARD: 29,
+        BOARDWRITE: 30,
+        NOTIFY: 31,
+        KUNG: 32,
+	ACHIEVEMENT: 33,
+	TALKTONPC: 34,
+	INVENTORY: 35,
+        MAGIC: 36,
+        MANA: 37
     },
 
     Entities: {

@@ -273,11 +273,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             });
             
             
-            					
-            game.onGuildPopulationChange( function(guildName, guildPopulation) {
-
-			});
-
+            	
             game.onAchievementUnlock(function(id, name, description) {
                 app.unlockAchievement(id, name);
             });

@@ -126,10 +126,6 @@ footer, header, hgroup, menu, nav, section {
     #notifications span {display:block;text-align:center;width:100%;opacity:1;-moz-user-select:none;-webkit-user-select:none;}
     
 
-    
-    #guild-name span:nth-child(1) {color:#FCE045;}
-    #guild-population {height:0;overflow:hidden;}
- 
   
     div.clear{
       float: left;
