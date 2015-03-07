@@ -13,7 +13,7 @@
         <meta property="og:description" content="Play the massively MMORPG today!">
         <link rel="stylesheet" href="css/main.css" type="text/css">
         <link rel="stylesheet" href="css/basebar.css" type="text/css">
-        <link rel="stylesheet" href="css/chatbox.css" type="text/css">
+        <link rel="stylesheet" href="css/gameinterfaces.css" type="text/css">
         <link rel="stylesheet" href="css/achievements.css" type="text/css">
         
 
@@ -194,7 +194,7 @@
         
              <div id="container">
                    
-		    <div id="mainborder">
+                 <div id="mainborder">
  
                        
 		       <article id="instructions" class="clickable">
@@ -233,20 +233,28 @@
 		        </article>
     			<div id="canvas">
     				<canvas id="background"></canvas>
-                                <div id="chatLog"></div>  
     				<canvas id="entities"></canvas>
     				<canvas id="foreground" class="clickable"></canvas>
+                                <div id="chatLog"></div>  
     			</div>
     			<div id="bubbles"></div>
-     			
-    			<div id="inspector">
-                    <div class="headshot"><div> </div></div>
-                    <div class="details">
-                        <div class="name"></div>
-                        <div class="level"></div>
-                        <div class="health"></div>
-                    </div>
-                </div>
+                        <div id="target">
+                        <div class="headshot"><div></div></div>
+                            <div class="details">
+                                <div class="name"></div>
+                                <div class="health"></div>
+                            </div>
+                        </div>
+                        <div id="inspector">
+                        <div class="headshot"><div> </div></div>
+                            <div class="details">
+                                <div class="name"></div>
+                                <div class="health"></div>
+                            </div>
+                        </div>
+                        
+                        
+                        
                 <div id="dropDialog">
                     <div id="dropTitle">Input drop count.</div>
                     <div align="center">
@@ -268,11 +276,13 @@
                             <div id="hpcontainer">
                                 <div id="health"> </div>
                                 <div id="healthbar"></div>
+                                <div id="healthtext"></div>
                                 <div id="hpguide"></div>
                             </div>
                             <div id="mpcontainer">
                                 <div id="mana"> </div>
                                 <div id="manabar"></div>
+                                <div id="manatext"></div>
                             </div>
                             <div id="expcontainer">
                                 <div id="exp"></div>

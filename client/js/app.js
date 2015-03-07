@@ -1,4 +1,6 @@
 
+/* global Mob, Types, Item, log, _, TRANSITIONEND, Class */
+
 define(['jquery', 'storage'], function($, Storage) {
 
     var App = Class.extend({
@@ -12,11 +14,7 @@ define(['jquery', 'storage'], function($, Storage) {
             this.initFormFields();
             this.inventoryNumber = 0;
             this.dropDialogPopuped = false;
-            if(localStorage && localStorage.data) {
-                this.frontPage = 'loadcharacter';
-            } else {
-                this.frontPage = 'createcharacter';
-            }
+            this.frontPage = 'loadcharacter';
             
         },
 
@@ -34,7 +32,7 @@ define(['jquery', 'storage'], function($, Storage) {
 
             // Play button
             this.$play = $('.play');
-            this.getPlayButton = function() { return this.getActiveForm().find('.play span') };
+            this.getPlayButton = function() { return this.getActiveForm().find('.play span'); };
             this.setPlayButtonState(true);
 
             // Login form fields
@@ -320,52 +318,66 @@ define(['jquery', 'storage'], function($, Storage) {
             }
         },
         //Init the hud that makes it show what creature you are mousing over and attacking
-         initTargetHud: function(){
+        initTargetHud: function(){
             var self = this;
             var scale = self.game.renderer.getScaleFactor(),
-                healthMaxWidth = $("#inspector .health").width() - (12 * scale),
+                healthMaxWidth = $("#target .health").width() - (12 * scale),
                 timeout;
 
-            this.game.player.onSetTarget(function(target, name, mouseover){
-                var el = '#inspector';
-                var sprite = target.sprite,
-                    x = ((sprite.animationData.idle_down.length-1)*sprite.width),
-                    y = ((sprite.animationData.idle_down.row)*sprite.height);
-                $(el+' .name').text(name);
+            this.game.player.onSetTarget(function(target, name, mouseover) {
+                var el = '#target';
+                if(mouseover) el = '#inspector';
+                var sprite = target.sprite;
+                var x, y;
+                if(Types.isItem(target.kind)){
+                    x = ((sprite.animationData['idle'].length-1)*sprite.width),
+                    y = ((sprite.animationData['idle'].row)*sprite.height);
+                } else if(Types.isMob(target.kind)){
+                    x = ((sprite.animationData['idle_down'].length-1)*sprite.width),
+                    y = ((sprite.animationData['idle_down'].row)*sprite.height);
+                } else {
+                    return;
+                }
+            $(el+' .name').text(name);
+            $(el+' .name').css('text-transform', 'capitalize');
 
-                //Show how much Health creature has left. Currently does not work. The reason health doesn't currently go down has to do with the lines below down to initExpBar...
-                if(target.healthPoints){
-                    $(el+" .health").css('width', Math.round(target.healthPoints/target.maxHp*100)+'%');
-                } else{
-                    $(el+" .health").css('width', '0%');
-                }
-                var level = Types.getMobLevel(Types.getKindFromString(name));
-                if(level !== undefined) {
-                    $(el + ' .level').text("Level " + level);
-                }
-                else {
-                    $('#inspector .level').text('');
-                }
+            if(el === '#inspector'){
+                 $(el + ' .details').text((target instanceof Mob ? "Level." + Types.getMobLevel(Types.getKindFromString(name)) : (target instanceof Item ? target.getInfoMsg(self.game.language): "1")));
+            }
+            $(el+' .headshot div').height(sprite.height).width(sprite.width);
+            $(el+' .headshot div').css('margin-left', -sprite.width/2).css('margin-top', -sprite.height/2);
+            $(el+' .headshot div').css('background', 'url(img/1/'+(target instanceof Item ? 'item-'+name : name)+'.png) no-repeat -'+x+'px -'+y+'px');
 
-                $(el).fadeIn('fast');
-                if(mouseover) {
+            if(target.healthPoints){
+                $(el+" .health").css('width', Math.round(target.healthPoints/target.maxHp*100)+'%');
+            } else {
+                $(el+" .health").css('width', '100%');
+            }
+
+            $(el).fadeIn('fast');
+                if(mouseover){
                     clearTimeout(timeout);
                     timeout = null;
-                    timeout = setTimeout(function(){
-                        $('#inspector').fadeOut('fast');
+                    timeout = setTimeout(function() {
+                    $('#inspector').fadeOut('fast');
                         self.game.player.inspecting = null;
-                    }, 1350);
+                    }, 2000);
                 }
             });
 
-            self.game.onUpdateTarget(function(target){
-                $("#inspector .health").css('width', Math.round(target.healthPoints/target.maxHp*100) + "%");
+            this.game.onUpdateTarget(function(target){
+                $("#target .health").css('width', Math.round(target.healthPoints/target.maxHp*100) + "%");
+                if(self.game.player.inspecting && self.game.player.inspecting.id === target.id){
+                    $("#inspector .health").css('width', Math.round(target.healthPoints/target.maxHp*100) + "%");
+                }
             });
 
-            self.game.player.onRemoveTarget(function(targetId){
-                $('#inspector').fadeOut('fast');
-                $('#inspector .level').text('');
-                self.game.player.inspecting = null;
+            this.game.player.onRemoveTarget(function(targetId){
+                $('#target').fadeOut('fast');
+                if(self.game.player.inspecting && self.game.player.inspecting.id === targetId){
+                    $('#inspector').fadeOut('fast');
+                    self.game.player.inspecting = null;
+                }
             });
         },
         initManaBar: function() {
@@ -375,7 +387,7 @@ define(['jquery', 'storage'], function($, Storage) {
             this.game.onPlayerManaChange(function(mana, maxMana) {
                 var barWidth = Math.round((maxWidth / maxMana) * (mana > 0 ? mana : 0));
                 $('#mana').css('width', barWidth + "px");
-                $('#mana').html("<p>MP: " + mana + "/" + maxMana + "</p>");
+                $('#manatext').html("<p>MP: " + mana + "/" + maxMana + "</p>");
             }); 
         },
           
@@ -402,7 +414,7 @@ define(['jquery', 'storage'], function($, Storage) {
             this.game.onPlayerHealthChange(function(hp, maxHp) {
                 var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));
                 $("#health").css('width', barWidth + "px");
-                $('#health').html("<p>HP: " + hp + "/" + maxHp + "</p>");
+                $('#healthtext').html("<p>HP: " + hp + "/" + maxHp + "</p>");
             });
 
             this.game.onPlayerHurt(this.blinkHealthBar.bind(this));
@@ -709,7 +721,7 @@ define(['jquery', 'storage'], function($, Storage) {
             left = (w / 2) - (popupWidth / 2);
 
             newwindow = window.open(url,'name','height=' + popupHeight + ',width=' + popupWidth + ',top=' + top + ',left=' + left);
-            if (window.focus) {newwindow.focus()}
+            if (window.focus) {newwindow.focus();}
         },
 
         animateParchment: function(origin, destination) {

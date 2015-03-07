@@ -78,7 +78,92 @@ footer, header, hgroup, menu, nav, section {
 
 //Upscale - 2
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
-    
+    #target{
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 140px;
+        margin-left: 0px;
+        padding: 4px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border: 2px solid #000;
+        border-radius: 0 0 6px 0;
+        pointer-events: none;
+    }
+    #target .headshot {
+        float: left;
+        height: 32px;
+        width: 32px;
+        border: 2px solid #000;
+        margin-right: 3px;
+        background: #FFF;
+        overflow: hidden;
+    }
+    #target .headshot div {
+        position: relative;
+        top: 50%;
+        left: 50%;
+    }
+    #target .details {
+        float: left;
+        margin-bottom: 8px;
+        width: 100px;
+        text-transform: capitalize;
+    }
+    #target .name {
+        float: left;
+        margin-bottom: 8px;
+        text-transform: capitalize;
+    }
+    #target .health {
+        float: left;
+        height: 10px;
+        width: 100%;
+        background: red;
+        clear: left;
+    }
+    #inspector {
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        width: 140px;
+        margin-left: -70px;
+        padding: 4px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border-radius: 0 0 6px 6px;
+        pointer-events: none;
+    }
+    #inspector .headshot {
+        float: left;
+        height: 32px;
+        width: 32px;
+        border: 2px solid #000;
+        margin-right: 3px;
+        background: #FFF;
+        overflow: hidden;
+    }
+    #inspector .headshot div {
+        position: relative;
+        top: 50%;
+        left: 50%;
+    }
+    #inspector .details {
+        float: left;
+        width: 100px;
+    }
+    #inspector .health {
+        float: left;
+        height: 10px;
+        width: 100%;
+        background: red;
+        clear: left;
+    }
     
 }
 

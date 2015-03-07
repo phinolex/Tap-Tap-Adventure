@@ -183,7 +183,7 @@ footer, header, hgroup, menu, nav, section {
     }
     #healthtext, #manatext {
       position: absolute;
-      top: 0px;
+      top: -0.25px;
       left: 0px;
       width: 264px;
       height: 39px;
@@ -476,7 +476,7 @@ footer, header, hgroup, menu, nav, section {
     }
     #healthtext, #manatext {
       position: absolute;
-      top: 0px;
+      top: 6.5px;
       left: 0px;
       width: 176px;
       height: 26px;
@@ -769,7 +769,7 @@ footer, header, hgroup, menu, nav, section {
     }
     #healthtext, #manatext {
       position: absolute;
-      top: 0px;
+      top: 3.25px;
       left: 0px;
       width: 88px;
       height: 13px;
