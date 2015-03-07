@@ -106,7 +106,7 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         initFPS: function() {
-            this.FPS = this.mobile ? 60 : 30;
+            this.FPS = this.mobile ? 60 : 60;
         },
 
         initFont: function() {

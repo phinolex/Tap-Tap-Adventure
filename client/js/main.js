@@ -1,4 +1,6 @@
 
+/* global Types */
+
 define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
     var app, game;
 

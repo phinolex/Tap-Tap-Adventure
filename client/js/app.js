@@ -369,12 +369,13 @@ define(['jquery', 'storage'], function($, Storage) {
             });
         },
         initManaBar: function() {
-          var maxWidth = $('#manabar').width();
-            
-             this.game.onPlayerManaChange(function(mana, maxMana) {
+            var scale = this.game.renderer.getScaleFactor(),
+                maxWidth = $("#manabar").width() - (11 * scale);
+
+            this.game.onPlayerManaChange(function(mana, maxMana) {
                 var barWidth = Math.round((maxWidth / maxMana) * (mana > 0 ? mana : 0));
                 $('#mana').css('width', barWidth + "px");
-               $('#mana').html("<p>MP: " + mana + "/" + maxMana + "</p>");
+                $('#mana').html("<p>MP: " + mana + "/" + maxMana + "</p>");
             }); 
         },
           
@@ -396,7 +397,7 @@ define(['jquery', 'storage'], function($, Storage) {
         initHealthBar: function() {
             
             var scale = this.game.renderer.getScaleFactor(),
-                healthMaxWidth = $("#healthbar").width() - (12 * scale);
+                healthMaxWidth = $("#healthbar").width() - (11 * scale);
 
             this.game.onPlayerHealthChange(function(hp, maxHp) {
                 var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));

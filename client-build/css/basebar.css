@@ -58,10 +58,6 @@ footer, header, hgroup, menu, nav, section {
         font-weight: normal;
         font-style: normal;
 }
-@media screen and (max-width: 600px) {
-    
-    
-}
 @media screen and (min-width: 1501px) {
  
      #basebarcontainer {
@@ -945,20 +941,4 @@ footer, header, hgroup, menu, nav, section {
       padding: 0px;
       margin: 0px;
     }
-}
-@media screen and (max-width: 400px) {
-    
-    
-}
-@media screen and (max-width: 400px) and (orientation: portrait) {
-    
-    
-}
-@media screen and (max-width: 640px) and (orientation: portrait) { 
-                                                                    
-                                                                    
-}
-@media screen and (max-width: 600px) {
-    
-    
 }

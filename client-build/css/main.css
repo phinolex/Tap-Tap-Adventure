@@ -124,10 +124,6 @@ footer, header, hgroup, menu, nav, section {
     #notifications div.top #message1 {opacity:0;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
     #notifications span {display:block;text-align:center;width:100%;opacity:1;-moz-user-select:none;-webkit-user-select:none;}
     
-    
-    #guild-name span:nth-child(1) {color:#FCE045;}
-    #guild-population {height:0;overflow:hidden;}
- 
   
     div.clear{
       float: left;
@@ -468,30 +464,31 @@ footer, header, hgroup, menu, nav, section {
         .validation-error {font-size:22px;}
         
 		#container {width:1470px;margin:0 auto;position:absolute;top:50%;margin-top:-378px;left:50%;margin-left:-735px;}
-    
-                #chatLog{
-      position: absolute; 
-      width: 311px;
-      left: 65.6%;
-      margin-left: -950px;
-      top: 78%;
-      bottom: 9.17%;
-      border: 1px solid #9C9898;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 5px;
-      overflow-y: scroll;
-      overflow-x: hide;
-      display: none;
+    #chatLog{
+        position: absolute; 
+        width: 390px;
+        left: 64.29%;
+        margin-left: -950px;
+        top: 74%;
+        bottom: 10.309%;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+        overflow-y: scroll;
+        overflow-x: hide;
+        z-index: 10;
+        display: none;
     }
     #chatLog p{
-      margin-bottom: 3px;
-      padding: 0;
-      line-height: 1;
-      color: rgba(255,255,255,1);
+        margin-bottom: 3px;
+        padding: 0;
+        line-height: 1;
+        color: rgba(255,255,255,1);
     }
     #chatLog p .name{
-      font-weight: bold;
+        font-weight: bold;
     }
+    
     #kungLog{
       position: absolute; 
       width: 180px;
@@ -804,6 +801,29 @@ tr:hover {
         
 		#container {width:980px;margin:0 auto;position:absolute;top:50%;margin-top:-252px;left:50%;margin-left:-490px;}
  
+#chatLog{
+        position: absolute; 
+        width: 274px;
+        left: 65.6%;
+        margin-left: -648px;
+        top: 74%;
+        bottom: 10.79%;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+        overflow-y: scroll;
+        overflow-x: hide;
+        display: none;
+    }
+    #chatLog p{
+        margin-bottom: 3px;
+        padding: 0;
+        line-height: 1;
+        color: rgba(255,255,255,1);
+    }
+    #chatLog p .name{
+        font-weight: bold;
+    }
     #kungLog{
       position: absolute; 
       width: 180px;
@@ -823,30 +843,6 @@ tr:hover {
       padding: 0;
       line-height: 1;
       color: rgba(255,255,255,1);
-    }
-    
-    #chatLog{
-      position: absolute; 
-      width: 176px;
-      left: 65.6%;
-      margin-left: -950px;
-      top: 78%;
-      bottom: 9.17%;
-      border: 1px solid #9C9898;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 5px;
-      overflow-y: scroll;
-      overflow-x: hide;
-      display: none;
-    }
-    #chatLog p{
-      margin-bottom: 3px;
-      padding: 0;
-      line-height: 1;
-      color: rgba(255,255,255,1);
-    }
-    #chatLog p .name{
-      font-weight: bold;
     }
     
     #board{

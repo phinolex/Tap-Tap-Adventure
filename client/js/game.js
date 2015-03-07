@@ -962,18 +962,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.chathandler.show();
                 self.chathandler.addNotification("Welcome to Tap Tap Adventure");
                 self.chathandler.addNotification("Make sure you sign up on the forum!");
-                
-<<<<<<< HEAD
-                self.chathandler.addNotification("Make sure you sign up on the forum");
-                
-                
-                setTimeout(function() {
-                    //self.tryUnlockingAchievement("STILL_ALIVE");
-                }, 1500);
-                self.showNotification("Welcome, you are level " + self.player.level + ".");
-                
-=======
->>>>>>> origin/master
 
 
                 self.player.onStartPathing(function(path) {
