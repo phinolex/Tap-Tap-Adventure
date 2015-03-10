@@ -1,6 +1,6 @@
 {
   "name": "TTA",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "dependencies": {
     "bcrypt": ">=0",
@@ -14,7 +14,7 @@
     "sanitizer": "~0.1.2",
     "semver": ">=0",
     "serve-static": "^1.7.1",
-    "socket.io": "1.3.2",
+    "socket.io": "1.3.5",
     "underscore": "~1.7.0"
   },
   "devDependencies": {
