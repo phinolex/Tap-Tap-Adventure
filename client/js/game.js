@@ -1478,8 +1478,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     var expForLevelUp = Types.expForLevel[self.player.level] - Types.expForLevel[self.player.level-1];
                     var expPercentThisLevel = (100*expInThisLevel/expForLevelUp);
 
-                    self.showNotification( "Total xp: " + self.player.experience + ". " + expPercentThisLevel.toFixed(0) + "% of this level done." );
-
                     var mobName = Types.getKindAsString(kind);
 
                     if(mobName === 'skeleton2') {
@@ -1494,9 +1492,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         mobName = 'death knight';
                     }
 
-                    if(mobName === 'boss') {
+                    /* if(mobName === 'boss') {
                         self.showNotification("You killed the skeleton king");
-                    }
+                    } */
 
                     self.storage.incrementTotalKills();
                     //self.tryUnlockingAchievement("HUNTER");
@@ -3058,12 +3056,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
               if(this.player.magicCoolTimeCheck("heal")){
                 if(this.player.healTargetName){
                   this.client.sendMagic("heal", "empty");
-                  this.showNotification(this.player.healTargetName + " healed you");
+                   self.chathandler.addNotification(this.player.healTargetName + " healed you!");
+                   //Make sure you remove this and all showNotification related code.
                 } else{
-                  this.showNotification("You heal");
+                  self.chathandler.addNotification("You heal some health");
                 }
               } else{
-                this.showNotification("Player is at full health.");
+                self.chathandler.addNotification("Player is at full health.");
+               
               }
             }
         },
