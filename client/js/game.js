@@ -1,4 +1,6 @@
 
+/* global Types */
+
 define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'tile', 'warrior', 'gameclient', 'audio', 'updater', 'transition',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
@@ -74,6 +76,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.kkhandler = new KkHandler();
             this.chathandler = new ChatHandler(this, this.kkhandler);
             this.shopHandler = new ShopHandler(this);
+            this.inventoryHandler = new InventoryHandler(this);
             this.boardhandler = new BoardHandler(this);
             this.playerPopupMenu = new PlayerPopupMenu(this);
 
@@ -925,9 +928,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             });
 
             this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon,
-                                           avatar, weaponAvatar, experience, admin, achievementFound, achievementProgress,
-                                            inventory0, inventory0Number,
-                                           inventory1, inventory1Number) {
+                                           avatar, weaponAvatar, experience, admin, inventory, inventoryNumber, questFound, questProgress,
+                                           maxInventoryNumber, kind, inventorySkillKind, inventorySkillLevel) {
                 log.info("Received player ID from server : "+ id);
                 self.player.id = id;
                 self.playerId = id;
@@ -942,9 +944,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.setArmorName(armor);
                 self.player.setSpriteName(avatar);
                 self.player.setWeaponName(weapon);
-                self.initAchievements(achievementFound, achievementProgress);
-                self.player.setInventory(Types.getKindFromString(inventory0), 0, inventory0Number);
-                self.player.setInventory(Types.getKindFromString(inventory1), 1, inventory1Number);
+                self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
+                self.shopHandler.setMaxInventoryNumber(maxInventoryNumber);
                 self.initPlayer();
                 self.player.experience = experience;
                 self.player.level = Types.getLevel(experience);
@@ -1622,6 +1623,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.disconnect_callback(message);
                     }
                 });
+                self.client.onInventory(function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+                  self.shopHandler.initSellInventory();
+                  if(itemKind){
+                    self.inventoryHandler.setInventory(itemKind, inventoryNumber, itemNumber, itemSkillKind, itemSkillLevel);
+                  } else if(itemKind === null){
+                    self.inventoryHandler.makeEmptyInventory(inventoryNumber);
+                  }
+                });
                 self.client.onAchievement(function(id, type){
                     var achievement = null;
 
@@ -1703,6 +1712,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
                 self.client.onKung(function(msg){
                     self.kkhandler.add(msg, self.player);
+                });
+                self.client.onShop(function(message){
+                  self.shopHandler.handleShop(message);
                 });
                 self.client.onMana(function(mana, maxMana) {
                     self.player.mana = mana;
@@ -1876,65 +1888,28 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         /**
          *
          */
-       makeNpcTalk: function(npc) {
-           var msg;
-
+               makeNpcTalk: function(npc) {
+            var msg;
+        
             if(npc) {
-                msg = npc.talk(this);
+              if(npc.kind === Types.Entities.VENDINGMACHINE){
+                this.shopHandler.show();
+              } else if(npc.kind === Types.Entities.REDSTOREMANNPC ||
+                        npc.kind === Types.Entities.BLUESTOREMANNPC){
+                this.storeDialog.show();
+              } else{
+                msg = this.questhandler.talkToNPC(npc);
                 this.previousClickPosition = {};
                 if(msg) {
-                    this.createBubble(npc.id, msg);
-                    this.assignBubbleTo(npc);
-                    this.audioManager.playSound("npc");
+                  this.createBubble(npc.id, msg);
+                  this.assignBubbleTo(npc);
+                  this.audioManager.playSound("npc");
                 } else {
-                    this.destroyBubble(npc.id);
-                    this.audioManager.playSound("npc-end");
+                  this.destroyBubble(npc.id);
+                  this.audioManager.playSound("npc-end");
                 }
-         
-                /*
-                 * Convert the following into switch() form
-                 */
-
-                if(npc.kind === Types.Entities.VILLAGEGIRL && this.achievements['KILL_RAT'].hidden){
-                    this.unhiddenAchievement(this.achievements['KILL_RAT']);
-                } else if(npc.kind === Types.Entities.VILLAGEGIRL && this.achievements['KILL_RAT'].completed){
-                    this.client.sendTalkToNPC(npc.kind);
-                    
-                    
-                } else if(npc.kind === Types.Entities.KING && this.achievements['SAVE_PRINCESS'].hidden){
-                    this.unhiddenAchievement(this.achievements['SAVE_PRINCESS']);
-                    
-                } else if(npc.kind === Types.Entities.KING && this.achievements['SAVE_PRINCESS'].completed){
-                    this.client.sendTalkToNPC(npc.kind);
-                    
-                } else if(npc.kind === Types.Entities.VILLAGER && this.achievements['BRING_LEATHERARMOR'].hidden) {
-                    this.unhiddenAchievement(this.achievements['BRING_LEATHERARMOR']);
-                } else if(npc.kind === Types.Entities.VILLAGER && !this.achievements['BRING_LEATHERARMOR'].hidden) {
-                    this.client.sendTalkToNPC(npc.kind);
-                    
-                } else if(npc.kind === Types.Entities.BEACHNPC && this.achievements['KILL_CRAB'].hidden){
-                    this.unhiddenAchievement(this.achievements['KILL_CRAB']);
-                } else if(npc.kind === Types.Entities.BEACHNPC && this.achievements['KILL_CRAB'].completed){
-                    this.client.sendTalkToNPC(npc.kind);   
-                    
-                } else if(npc.kind === Types.Entities.AGENT && this.achievements['FIND_CAKE'].hidden){
-                    this.unhiddenAchievement(this.achievements['FIND_CAKE']);
-                } else if(npc.kind === Types.Entities.AGENT && !this.achievements['FIND_CAKE'].hidden) {
-                    this.client.sendTalkToNPC(npc.kind);
-                
-                } else if(npc.kind === Types.Entities.PRIEST && this.achievements['KILL_SKELETON'].hidden){
-                    this.unhiddenAchievement(this.achievements['KILL_SKELETON']);
-                } else if(npc.kind === Types.Entities.PRIEST && this.achievements['KILL_SKELETON'].completed){
-                    this.client.sendTalkToNPC(npc.kind);
-                    
-                    
-                } else if(npc.kind === Types.Entities.DESERTNPC && this.achievements['BRING_AXE'].hidden){
-                    this.unhiddenAchievement(this.achievements['BRING_AXE']);
-                } else if(npc.kind === Types.Entities.DESERTNPC && !this.achievements['BRING_AXE'].hidden){
-                    this.client.sendTalkToNPC(npc.kind);
-                }
+              }
             }
-          
         },
         /*
          * 
@@ -2290,85 +2265,68 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function() {
             var pos = this.getMouseGridPosition(),
                 entity;
-
-
-            if(pos.x === this.camera.gridX+this.camera.gridW-2
-            && pos.y === this.camera.gridY+this.camera.gridH-1){
-                if(this.player.inventory[0]){
-                    this.menu.clickInventory0();
-                }
-                return;
-            } else if(pos.x === this.camera.gridX+this.camera.gridW-1
-                   && pos.y === this.camera.gridY+this.camera.gridH-1){
-                if(this.player.inventory[1]){
-                    this.menu.clickInventory1();
-                }
-                return;
-            } else if(this.menu.inventoryOn){
-                var inventoryNumber;
+                this.inventoryHandler.hideAllInventory();
+                this.playerPopupMenu.close();
+        
+        
+                if(this.menu.selectedInventory !== null){
+                var inventoryNumber = this.menu.selectedInventory;
                 var clickedMenu;
+                var itemKind;
 
-                if(this.menu.inventoryOn === "inventory0"){
-                    inventoryNumber = 0;
-                } else if(this.menu.inventoryOn === "inventory1"){
-                    inventoryNumber = 1;
-                } else{
-                    return;
-                }
                 clickedMenu = this.menu.isClickedInventoryMenu(pos, this.camera);
-                
-                
-            if(clickedMenu === 3
-                && this.player.inventory[inventoryNumber] !== Types.Entities.CAKE
-                && this.player.inventory[inventoryNumber] !== Types.Entities.CD){
-                    if(Types.isHealingItem(this.player.inventory[inventoryNumber])) {
-                        this.healShortCut = inventoryNumber;
+                itemKind = this.inventoryHandler.inventory[inventoryNumber];
+                if(clickedMenu === 4){
+                    if(itemKind === Types.Entities.SNOWPOTION){
+                        this.enchantPendant(inventoryNumber);
                         this.menu.close();
-                        this.renderer.clearScreen(this.renderer.context);
                     }
-                    else {
-                        this.equip(inventoryNumber);
-                    }
-                    this.menu.close();
-                    this.renderer.clearScreen(this.renderer.context);
                     return;
-            } else if(clickedMenu === 2
-                       && this.player.inventory[inventoryNumber] !== Types.Entities.CAKE
-                       && this.player.inventory[inventoryNumber] !== Types.Entities.CD){
-                    if(Types.isArmor(this.player.inventory[inventoryNumber])){
-                        this.avatar(inventoryNumber);
-                        return;
-                    } else if(Types.isHealingItem(this.player.inventory[inventoryNumber])){
+                } else if(clickedMenu === 3
+                       && itemKind !== Types.Entities.CAKE
+                       && itemKind !== Types.Entities.BLACKPOTION
+                       && itemKind !== Types.Entities.CD){
+                    if(Types.isHealingItem(itemKind)) {
+                        this.healShortCut = inventoryNumber === this.healShortCut ? -1 : inventoryNumber;
+                        this.menu.close();
+                    } else if(itemKind === Types.Entities.SNOWPOTION){
+                        this.enchantRing(inventoryNumber);
+                        this.menu.close();
+                    }
+                    return;
+                } else if(clickedMenu === 2
+                       && itemKind !== Types.Entities.CAKE
+                       && itemKind !== Types.Entities.CD){
+                    if(Types.isHealingItem(itemKind)){
                         this.eat(inventoryNumber);
                         return;
+                    } else if(itemKind === Types.Entities.SNOWPOTION){
+                        this.enchantWeapon(inventoryNumber);
+                        return;
+                    } else if(itemKind === Types.Entities.BLACKPOTION){
+                        this.enchantBloodsucking(inventoryNumber);
+                        return;
+                    } else{
+                        this.equip(inventoryNumber);
+                        return;
                     }
-                    
-                    this.menu.close();
-                    this.renderer.clearScreen(this.renderer.context);
                 } else if(clickedMenu === 1){
-                    if(Types.isHealingItem(this.player.inventory[inventoryNumber]) && (this.player.inventoryCount[inventoryNumber] > 1)) {
-                        $('#dropCount').val(this.player.inventoryCount[inventoryNumber]);
+                    if(Types.isHealingItem(itemKind) && (this.inventoryHandler.inventoryCount[inventoryNumber] > 1)) {
+                        $('#dropCount').val(this.inventoryHandler.inventoryCount[inventoryNumber]);
                         this.app.showDropDialog(inventoryNumber);
-                        
                     } else {
                         this.client.sendInventory("empty", inventoryNumber, 1);
-                        this.player.makeEmptyInventory(inventoryNumber);
+                        this.inventoryHandler.makeEmptyInventory(inventoryNumber);
                     }
                     this.menu.close();
-                    this.renderer.clearScreen(this.renderer.context);
                     return;
-                } else {
+                } else{
                     this.menu.close();
-                    this.renderer.clearScreen(this.renderer.context);
                 }
             } else{
-                
                 this.menu.close();
-
-                
             }
-            
-                            setTimeout(function(){this.renderer.clearScreen(this.renderer.context);}, 750);
+  
             
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
@@ -2385,24 +2343,21 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
             if(pos.x === this.camera.gridX+this.camera.gridW-2
             && pos.y === this.camera.gridY+this.camera.gridH-1){
-                if(this.player.inventory[0]){
-                    if(Types.isHealingItem(this.player.inventory[0]))
+                if(this.inventoryHandler.inventory[0]){
+                    if(Types.isHealingItem(this.inventoryHandler.inventory[0]))
                         this.eat(0);
-                        this.menu.close();
                 }
                 return;
             } else if(pos.x === this.camera.gridX+this.camera.gridW-1
                    && pos.y === this.camera.gridY+this.camera.gridH-1){
-                if(this.player.inventory[1]){
-                    if(Types.isHealingItem(this.player.inventory[1]))
+                if(this.inventoryHandler.inventory[1]){
+                    if(Types.isHealingItem(this.inventoryHandler.inventory[1]))
                         this.eat(1);
-                        this.menu.close();
                 }
             } else {
-                if((this.healShortCut >= 0) && this.player.inventory[this.healShortCut]) {
-                    if(Types.isHealingItem(this.player.inventory[this.healShortCut]))
+                if((this.healShortCut >= 0) && this.inventoryHandler.inventory[this.healShortCut]) {
+                    if(Types.isHealingItem(this.inventoryHandler.inventory[this.healShortCut]))
                         this.eat(this.healShortCut);
-                        this.menu.close();
                 }
             }
         },
@@ -3040,18 +2995,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         keyDown: function(key){
             var self = this;
-            if(key === 49 || key === 50){ // 1, 2
-              var inventoryNumber;
-              if(key === 49){ // 1
-                inventoryNumber = 0;
-              } else if(key === 50){ // 2
-                inventoryNumber = 1;
-              } else{
-                return;
-              }
-              if(Types.isHealingItem(this.player.inventory[inventoryNumber])){
+            if(key >= 49 && key <= 54){ // 1, 2, 3, 4, 5, 6
+              var inventoryNumber = key - 49;
+              if(Types.isHealingItem(this.inventoryHandler.inventory[inventoryNumber])){
                 this.eat(inventoryNumber);
               }
+<<<<<<< HEAD
+=======
             } else if(key === 54){ // 6
               if(this.player.magicCoolTimeCheck("heal")){
                 if(this.player.healTargetName){
@@ -3065,33 +3015,65 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.chathandler.addNotification("Player is at full health.");
                
               }
+>>>>>>> origin/master
             }
         },
-         equip: function(inventoryNumber){
-            if(Types.isArmor(this.player.inventory[inventoryNumber])){
+        equip: function(inventoryNumber){
+            var itemKind = this.inventoryHandler.inventory[inventoryNumber];
+            if(Types.isArmor(itemKind) && this.player.kind !== Types.Entities.WARRIOR){
+              this.showNotification("You must be a warrior to equip this.");
+            } else if(Types.isArcherArmor(itemKind) && this.player.kind !== Types.Entities.ARCHER){
+              this.showNotification("You must be an archer to equip this.");
+            } else if(Types.isWeapon(itemKind) && this.player.kind !== Types.Entities.WARRIOR){
+              this.showNotification("You must be a warrior to wield this.");
+            } else if(Types.isArcherWeapon(itemKind) && this.player.kind !== Types.Entities.ARCHER){
+              this.showNotification("You must be an archer to wield this.");
+            } else{
+              if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)){
                 this.client.sendInventory("armor", inventoryNumber, 1);
-                this.player.equipFromInventory("armor", inventoryNumber, this.sprites);
-                if(this.equipment_callback) {
-                     this.equipment_callback();
-                }
-                this.menu.close();
+              } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)){
+                this.client.sendInventory("weapon", inventoryNumber, 1);
+              } else if(Types.isPendant(itemKind)) {
+                this.client.sendInventory("pendant", inventoryNumber, 0);
+              } else if(Types.isRing(itemKind)) {
+                this.client.sendInventory("ring", inventoryNumber, 0);
+              }
             }
+            this.menu.close();
         },
         avatar: function(inventoryNumber){
             this.client.sendInventory("avatar", inventoryNumber, 1);
-            this.player.equipFromInventory("avatar", inventoryNumber, this.sprites);
+            this.audioManager.playSound("loot");
             this.menu.close();
         },
         eat: function(inventoryNumber){
-            if(this.player.hitPoints < this.player.maxHitPoints) {
-                if(this.player.decInventory(inventoryNumber)){
+            if(this.inventoryHandler.inventory[inventoryNumber] === Types.Entities.ROYALAZALEA
+            || this.player.hitPoints < this.player.maxHitPoints) {
+                if(this.inventoryHandler.decInventory(inventoryNumber)){
                     this.client.sendInventory("eat", inventoryNumber, 1);
-                } else{
-                    this.showNotification("You heal.");
+                    this.audioManager.playSound("heal");
                 }
-            } else {
-                this.showNotification("You have maximum hitpoints.");
             }
+            this.menu.close();
+        },
+        enchantWeapon: function(inventoryNumber){
+            this.client.sendInventory("enchantweapon", inventoryNumber, 1);
+            this.menu.close();
+        },
+        enchantRing: function(inventoryNumber){
+            this.client.sendInventory("enchantring", inventoryNumber, 1);
+            this.menu.close();
+        },
+        enchantPendant: function(inventoryNumber){
+            this.client.sendInventory("enchantpendant", inventoryNumber, 1);
+            this.menu.close();
+        },
+        enchantBloodsucking: function(inventoryNumber){
+            this.client.sendInventory("enchantbloodsucking", inventoryNumber, 1);
+            this.menu.close();
+        },
+        enchantArmor: function(inventoryNumber){
+            this.client.sendInventory("enchantarmor", inventoryNumber, 1);
             this.menu.close();
         },
     

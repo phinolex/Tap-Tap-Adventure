@@ -1,3 +1,5 @@
+/* global log, Types */
+
 var Utils = require('../utils');
 
 var cls = require("../lib/class"),
@@ -76,10 +78,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var avatar = replies[7];
                             var pubTopName = replies[8];
                             var nextNewArmor = replies[9];
-                            var inventory = [replies[10], replies[12]];
-                            var inventoryNumber = [
-                              Utils.NaN2Zero(replies[11]),
-                              Utils.NaN2Zero(replies[13])];
+                          
                             var achievementFound = [
                               Utils.trueFalse(replies[14]),
                               Utils.trueFalse(replies[16]),
@@ -207,7 +206,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 player.sendWelcome(armor, weapon,
                                     avatar, weaponAvatar, exp, admin,
                                     bannedTime, banUseTime,
-                                    inventory, inventoryNumber,
+                                   
                                     achievementFound, achievementProgress,
                                     x, y,
                                     chatBanEndTime);
@@ -221,6 +220,37 @@ module.exports = DatabaseHandler = cls.Class.extend({
             player.connection.sendUTF8("invalidlogin");
             player.connection.close("User does not exist: " + player.name);
             return;
+        });
+    },
+
+
+    getAllInventory: function(player, callback){
+        var userKey = "u:" + player.name;
+        client.hget(userKey, "maxInventoryNumber", function(err, maxInventoryNumber){
+          maxInventoryNumber = Utils.NaN2Zero(maxInventoryNumber) === 0 ? 5 : Utils.NaN2Zero(maxInventoryNumber);
+
+        var i=0;
+        var multi = client.multi();
+        for(i=0; i<maxInventoryNumber; i++){
+            multi.hget(userKey, "inventory"+i);
+            multi.hget(userKey, "inventory" + i + ":number");
+            multi.hget(userKey, "inventory" + i + ":skillKind");
+            multi.hget(userKey, "inventory" + i + ":skillLevel");
+        }
+            multi.exec(function(err, data){
+                var i=0;
+                var itemKinds = [];
+                var itemNumbers = [];
+                var itemSkillKinds = [];
+                var itemSkillLevels = [];
+                for(i=0; i<maxInventoryNumber; i++){
+                    itemKinds.push(Types.getKindFromString(data.shift()));
+                    itemNumbers.push(Utils.NaN2Zero(data.shift()));
+                    itemSkillKinds.push(Utils.NaN2Zero(data.shift()));
+                    itemSkillLevels.push(Utils.NaN2Zero(data.shift()));
+                }
+                callback(maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels);
+            });
         });
     },
 
@@ -483,25 +513,92 @@ module.exports = DatabaseHandler = cls.Class.extend({
         log.info("Set Exp: " + name + " " + exp);
         client.hset("u:" + name, "exp", exp);
     },
-   setInventory: function(name, itemKind, inventoryNumber, itemNumber){
-        log.info(itemNumber, "is the Item Number.");
+    putBurgerOfflineUser: function(name, itemNumber, successCallback, failCallback){
+        var i=0;
+        var multi = client.multi();
+        for(i=0; i<30; i++){
+            
+            multi.hget("u:" + name, "inventory"+i);
+        }
+        for(i=0; i<30; i++){
+            
+            multi.hget("u:" + name, "inventory"+i+":number");
+        }
+        multi.hget("u:" + name, "maxInventoryNumber");
+        multi.exec(function(err, replies){
+            log.info("putBurgerOfflineUser(" + name + ", " + itemNumber + ")");
+            var i=0;
+            var maxInventoryNumber = parseInt(replies[60]);
+            if(isNaN(maxInventoryNumber) || maxInventoryNumber < 5){
+                
+                maxInventoryNumber = 5;
+            }
+            for(i=0; i<maxInventoryNumber; i++){
+                if(replies[i] === "burger") {
+                    client.hset("u:" + name, "inventory" + i + ":number", parseInt(replies[i+30]) + itemNumber);
+                    if(successCallback){
+                        
+                        successCallback();
+                    }
+                    return;
+                }
+            }
+            for(i=0; i<maxInventoryNumber; i++){
+                if(replies[i]){
+                    
+                    continue;
+                } else{
+                    client.multi()
+                    .hset("u:" + name, "inventory" + i, "burger")
+                    .hset("u:" + name, "inventory" + i + ":number", itemNumber)
+                    .exec();
+                    if(successCallback){
+                        
+                        successCallback();
+                    }
+                  return;
+                }
+            }
+            if(failCallback){
+                
+                failCallback();
+            }
+        });
+    },
+    setInventory: function(player, inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
         if(itemKind){
-            client.hset("u:" + name, "inventory" + inventoryNumber, Types.getKindAsString(itemKind));
-            client.hset("u:" + name, "inventory" + inventoryNumber + ":number", itemNumber);
-           log.info("SetInventory: " + name + ", "
-                                     + Types.getKindAsString(itemKind) + ", "
-                                     + inventoryNumber + ", "
-                                     + itemNumber);
-        } else if (itemNumber === 0) {
-            this.makeEmptyInventory(name, inventoryNumber);
+            
+            client.hset("u:" + player.name, "inventory" + inventoryNumber, Types.getKindAsString(itemKind));
+            client.hset("u:" + player.name, "inventory" + inventoryNumber + ":number", itemNumber);
+            client.hset("u:" + player.name, "inventory" + inventoryNumber + ":skillKind", itemSkillKind);
+            client.hset("u:" + player.name, "inventory" + inventoryNumber + ":skillLevel", itemSkillLevel);
+            player.server.pushToPlayer(player, new Messages.Inventory(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel));
+            log.info("SetInventory: " + player.name + ", "
+                   + Types.getKindAsString(itemKind) + ", "
+                   + inventoryNumber + ", "
+                   + itemNumber + ", "
+                   + itemSkillKind + ", "
+                   + itemSkillLevel);
         } else {
-            this.makeEmptyInventory(name, inventoryNumber);
+
+              this.makeEmptyInventory(player, inventoryNumber);
+        }
+        var i=0;
+        for(i=0; i<player.maxInventoryNumber; i++) {
+            
+            log.info("Inventory " + i + ": " + player.inventory.rooms[i].itemKind
+                     + " " + player.inventory.rooms[i].itemNumber
+                     + " " + player.inventory.rooms[i].itemSkillKind
+                     + " " + player.inventory.rooms[i].itemSkillLevel);
         }
     },
-    makeEmptyInventory: function(name, number){
-        log.info("Empty Inventory: " + name + " " + number);
-        client.hdel("u:" + name, "inventory" + number);
-        client.hdel("u:" + name, "inventory" + number + ":number");
+    makeEmptyInventory: function(player, number){
+        log.info("Empty Inventory: " + player.name + " " + number);
+        client.hdel("u:" + player.name, "inventory" + number);
+        client.hdel("u:" + player.name, "inventory" + number + ":number");
+        client.hdel("u:" + player.name, "inventory" + number + ":skillKind");
+        client.hdel("u:" + player.name, "inventory" + number + ":skillLevel");
+        player.send([Types.Messages.INVENTORY, number, null, 0]);
     },
     foundAchievement: function(name, number){
         log.info("Found Achievement: " + name + " " + number);
@@ -719,6 +816,118 @@ module.exports = DatabaseHandler = cls.Class.extend({
           });
         });
       }
+    },
+    
+    buyInventory: function(player) {
+        var self = this;
+        client.zscore("adrank", player.name, function(err, reply) {
+            var userKey = "u:" + player.name;
+            var pubPoint = Utils.NaN2Zero(reply);
+            log.info(player.name + ' pubPoint: ' + pubPoint);
+            if(pubPoint >= 100) {
+                if(player.inventory.number < 30) {
+                    
+                    player.inventory.incInventoryRoom();
+                    client.zincrby("adrank", -100, player.name);
+                    client.hset(userKey, "maxInventoryNumber", player.inventory.number);
+                    player.send([Types.Messages.STATE, 'maxInventoryNumber', player.inventory.number]);
+                    self.getState(player);
+                }
+            }
+        });
+    },
+    
+    
+    sell: function(player, inventoryNumber, burgerCount){
+        var self = this;
+        client.hget('u:'+player.name+':shop0', 'itemKind', function(err, itemKindInShop){
+            itemKindInShop = Utils.NaN2Zero(itemKindInShop);
+            var multi = client.multi();
+            multi.hset('u:'+player.name+':shop0', 'itemKind', player.inventory.rooms[inventoryNumber].itemKind);
+            multi.hset('u:'+player.name+':shop0', 'burgerCount', burgerCount);
+            if(!itemKindInShop){
+              
+                multi.lpush('shop:id', player.name+':'+0)
+            }
+            multi.exec();
+            player.inventory.makeEmptyInventory(inventoryNumber);
+            if(itemKindInShop){
+              
+                player.inventory.putInventory(itemKindInShop, 0, 0, 0);
+            }
+            self.getShop(player, 0);
+        });
+    },
+    getShop: function(player, number){
+        client.lrange('shop:id', number, number+5, function(err, ids) {
+            var i=0;
+            var multi = client.multi();
+
+            for(i=0; i < ids.length; i++){
+                var splitedId = ids[i].split(':');
+                multi.hget('u:' + splitedId[0] + ':shop'+ splitedId[1], 'itemKind');
+                multi.hget('u:' + splitedId[0] + ':shop'+ splitedId[1], 'burgerCount');
+            }
+
+            multi.exec(function(err, items){
+                var msg = [Types.Messages.SHOP, number];
+                for(i=0; i < ids.length; i++){
+                    msg.push(ids[i]);
+                    msg.push(items[i*2]);
+                    msg.push(items[i*2+1]);
+                }
+                player.send(msg);
+            });
+        });
+    },
+    buy: function(player, id, itemKind, burgerCount){
+        var self = this;
+        var splitedId = id.split(':');
+        var name = splitedId[0];
+        var number = splitedId[1];
+        if(!player.inventory.hasEmptyInventory()){
+            
+            player.server.pushToPlayer(player, new Messages.Notify("인벤토리에 빈 칸이 없습니다."));
+            return;
+        }
+
+        var multi = client.multi();
+        multi.hget('u:' + name + ':shop'+number, 'itemKind');
+        multi.hget('u:' + name + ':shop'+number, 'burgerCount');
+        multi.exec(function(err, replies) {
+            var databaseItemKind = parseInt(replies[0]);
+            var databaseBurgerCount = parseInt(replies[1]);
+            var playerBurgerCount = player.inventory.getItemNumber(Types.Entities.BURGER);
+
+            if(parseInt(databaseItemKind) === itemKind
+            && parseInt(databaseBurgerCount) === burgerCount
+            && playerBurgerCount >= databaseBurgerCount){
+                if(player.inventory.putInventory(itemKind, 0, 0, 0)){
+                    client.multi()
+                    .hdel('u:'+name+':shop0', 'itemKind')
+                    .hdel('u:'+name+':shop0', 'burgerCount')
+                    .lrem('shop:id', 0, name+':'+0)
+                    .exec();
+                    var soldPlayer = player.server.getPlayerByName(name);
+                    if(soldPlayer){
+                        
+                        soldPlayer.inventory.putInventory(Types.Entities.BURGER, burgerCount, 0, 0);
+                    } else{
+                        
+                        self.putBurgerOfflineUser(name, burgerCount);
+                    }
+                    player.inventory.putInventory(Types.Entities.BURGER, -1 * burgerCount, 0, 0);
+                }
+            }
+            self.getShop(player, 0);
+        });
+    },
+    delInventory: function(name, callback){
+        client.hdel("u:" + name, "maxInventoryNumber", function(err, reply){
+            if(parseInt(reply) === 1){
+                callback();
+            }
+        });
     },
     writeBoard: function(player, title, content){
       log.info("Write Board: " + player.name + " " + title);

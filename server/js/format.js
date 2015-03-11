@@ -25,7 +25,10 @@ var Types = require('../../shared/js/gametypes');
             this.formats[Types.Messages.BOARDWRITE] = ['s', 's', 's'],
             this.formats[Types.Messages.KUNG] = ['s'],
             this.formats[Types.Messages.MAGIC] = ['s', 's'],
-            this.formats[Types.Messages.TALKTONPC] = ['n'];
+            this.formats[Types.Messages.TALKTONPC] = ['n'],
+            this.formats[Types.Messages.SELL] = ['n', 'n'],
+            this.formats[Types.Messages.SHOP] = ['s', 'n'],
+            this.formats[Types.Messages.BUY] = ['s', 'n', 'n'];
         },
 
         check: function (msg) {
