@@ -44,7 +44,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.KUNG] = this.receiveKung;
             this.handlers[Types.Messages.ACHIEVEMENT] = this.receiveAchievement;
             this.handlers[Types.Messages.MANA] = this.receiveMana;
-            this.handlers[Types.Messages.SHOP] = this.receiveShop;
             this.useBison = false;
             
             this.enable();
@@ -223,12 +222,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             }
         },
         
-        receiveShop: function(data){
-            data.shift();
-            if(this.shop_callback){
-                this.shop_callback(data);
-            }
-        },
+        
         
         receiveMove: function(data) {
             var id = data[1],
@@ -579,9 +573,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onMana: function(callback) {
             this.mana_callback = callback;
         },
-        onShop: function (callback) {
-            this.shop_callback = callback;
-        },
+        
                 
                 
                 
@@ -700,22 +692,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.sendMessage([Types.Messages.KUNG,
                               word]);
         },
-        sendSell: function(inventoryNumber, count){
-            this.sendMessage([Types.Messages.SELL,
-                              inventoryNumber,
-                              count]);
-        },
-        sendShop: function(command, number){
-            this.sendMessage([Types.Messages.SHOP,
-                              command,
-                              number]);
-        },
-        sendBuy: function(number, itemKind, burgerCount){
-            this.sendMessage([Types.Messages.BUY,
-                              number,
-                              itemKind,
-                              burgerCount]);
-        }
         
     });
 

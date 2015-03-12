@@ -37,13 +37,7 @@ Types = {
 	TALKTONPC: 34,
 	INVENTORY: 35,
         MAGIC: 36,
-        MANA: 37,
-        SELL: 38,
-        SHOP: 39,
-        BUY: 40,
-        STOREOPEN: 41,
-        STORESELL: 42,
-        STOREBUY: 43
+        MANA: 37
     },
 
     Entities: {
