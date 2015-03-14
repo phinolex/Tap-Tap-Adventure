@@ -91,6 +91,21 @@ Messages.HitPoints = Message.extend({
     }
 });
 
+Messages.TalkToNPC = Message.extend({
+    init: function(questNumber, isCompleted) {
+        this.questNumber = questNumber;
+        this.isCompleted = isCompleted;
+    },
+    
+    serialize: function() {
+        
+        return [Types.Messages.TALKTONPC,
+                this.questNumber,
+                this.isCompleted];
+    }
+    
+});
+
 Messages.EquipItem = Message.extend({
     init: function (player, itemKind) {
         this.playerId = player.id;

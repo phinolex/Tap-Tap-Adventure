@@ -1,3 +1,5 @@
+/* global Types */
+
 define(['character'], function(Character) {
   var Npc = Character.extend({
     init: function(id, kind) {
@@ -22,7 +24,7 @@ define(['character'], function(Character) {
             return msg;
         } else {
             
-        return "안생겨요";
+        return "Hello.";
         }
     }
 });

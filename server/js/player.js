@@ -1,4 +1,6 @@
 
+/* global require, module, log, databaseHandler */
+
 var cls = require("./lib/class"),
     _ = require("underscore"),
     Character = require('./character'),
@@ -276,56 +278,7 @@ module.exports = Player = Character.extend({
                         if(mob.type !== "player"){
                             mob.receiveDamage(dmg, self.id);
                             if (mob.hitPoints <= 0) {
-                                switch (mob.kind) {
-                                    case Types.Entities.RAT:
-                                        if(self.achievement[2].found && self.achievement[2].progress !== 999){
-                                            if(isNaN(self.achievement[2].progress)){
-                                                self.achievement[2].progress = 0;
-                                            } else{
-                                                self.achievement[2].progress++;
-                                            }
-                                            if(self.achievement[2].progress >= 10){
-                                                self.send([Types.Messages.ACHIEVEMENT, 2, "complete"]);
-                                                self.achievement[2].progress = 999;
-                                                self.incExp(50);
-                                            }
-                                            databaseHandler.progressAchievement(self.name, 2, self.achievement[2].progress);
-                                        }
-                                    break;
-                                 
-                                    case Types.Entities.CRAB:
-                                        if(self.achievement[4].found && self.achievement[4].progress !== 999){
-                                            if(isNaN(self.achievement[4].progress)){
-                                                self.achievement[4].progress = 0;
-                                            } else{
-                                                self.achievement[4].progress++;
-                                            }
-                                            if(self.achievement[4].progress >= 5){
-                                                self.send([Types.Messages.ACHIEVEMENT, 4, "complete"]);
-                                                self.achievement[4].progress = 999;
-                                                self.incExp(50);
-                                            }
-                                            databaseHandler.progressAchievement(self.name, 4, self.achievement[4].progress);
-                                        }    
-  
-                                    break;
-                                    
-                                    case Types.Entities.SKELETON:
-                                        if(self.achievement[7].found && self.achievement[7].progress !== 999){
-                                            if(isNaN(self.achievement[7].progress)){
-                                                self.achievement[7].progress = 0;
-                                            } else{
-                                                self.achievement[7].progress++;
-                                            }
-                                            if(self.achievement[7].progress >= 10){
-                                                self.send([Types.Messages.ACHIEVEMENT, 7, "complete"]);
-                                                self.achievement[7].progress = 999;
-                                                self.incExp(200);
-                                            }
-                                            databaseHandler.progressAchievement(self.name, 7, self.achievement[7].progress);
-                                        }
-                                    break;
-                                }
+                                this.questAboutKill(mob);
                             }
                             
                             self.server.handleMobHate(mob.id, self.id, dmg);
@@ -522,67 +475,24 @@ module.exports = Player = Character.extend({
                         databaseHandler.setInventory(self.name, self.inventory[inventoryNumber], inventoryNumber, self.inventoryCount[inventoryNumber]);
                     }
                 }
-            }
+            } //DEPRACATE ACHIEVEMENT
             else if(action === Types.Messages.ACHIEVEMENT){
                 log.info("ACHIEVEMENT: " + self.name + " " + message[1] + " " + message[2]);
                 if(message[2] === "found"){
                     self.achievement[message[1]].found = true;
                     databaseHandler.foundAchievement(self.name, message[1]);
                 }
-            } else if(action === Types.Messages.TALKTONPC){
+            } else if(action === Types.Messages.QUEST) {
+                log.info("QUEST: " + self.name + " " + message[1] + " " + message[2]);
+                self.handleQuest(message);
+            }
+            
+    
+            else if(action === Types.Messages.TALKTONPC){
                 log.info("TALKTONPC: " + self.name + " " + message[1]);
                 //Handling things using Switch Statement.
                 
-                switch(message[1]) {
-                    case Types.Entities.VILLAGER:
-                        if((self.armor !== Types.Entities.CLOTHARMOR)
-                    && self.achievement[3].found === true
-                    && self.achievement[3].progress !== 999){
-                        //self.equipItem(Types.Entities.CLOTHARMOR);
-                        self.send([Types.Messages.ACHIEVEMENT, 3, "complete"]);
-                        self.achievement[3].progress = 999;
-                        self.incExp(50);
-                        databaseHandler.progressAchievement(self.name, 3, self.achievement[3].progress);
-                    }
-                    break;
-                    
-                    case Types.Entities.AGENT:
-                        if((self.inventory[0] === Types.Entities.CAKE
-                             || self.inventory[1] === Types.Entities.CAKE)
-                            && self.achievement[5].found === true
-                            && self.achievement[5].progress !== 999) {
-                                if(self.inventory[0] === Types.Entities.CAKE){
-                                    self.inventory[0] = null;
-                                    databaseHandler.makeEmptyInventory(self.name, 0);
-                                } else {
-                                    self.inventory[1] = null;
-                                    databaseHandler.makeEmptyInventory(self.name, 1);
-                                }
-
-                                self.send([Types.Messages.ACHIEVEMENT, 5, "complete"]);
-                                self.achievement[5].progress = 999;
-                                self.incExp(50);
-                                databaseHandler.progressAchievement(self.name, 5, self.achievement[5].progress);
-                        }
-                        
-                        break;
-                        
-                        
-                    case Types.Entities.DESERTNPC:
-                        if(self.weapon !== Types.Entities.SWORD1 && self.weapon !== Types.Entities.SWORD2
-                    && self.achievement[8].found === true
-                    && self.achievement[8].progress !== 999){
-                        //self.equipItem(Types.Entities.SWORD2);
-                        //Let's just not unequip it k?
-                        self.send([Types.Messages.ACHIEVEMENT, 8, "complete"]);
-                        self.achievement[8].progress = 999;
-                        self.incExp(200);
-                        databaseHandler.progressAchievement(self.name, 8, self.achievement[8].progress);
-                    }
-                    
-                        break;
-                }
-                
+                self.handleTalkToNPC(message);
             }
             
             else if(action === Types.Messages.MAGIC){
@@ -825,12 +735,217 @@ module.exports = Player = Character.extend({
     onRequestPosition: function(callback) {
         this.requestpos_callback = callback;
     },
+    handleQuest: function(message){ // 29
+        if(message[2] === "found") {
+            var questId = message[1];
+            if(!this.achievement[questId].found){
+                this.foundQuest(questId);
+            }
+        } else if(message[2] === "show") { 
+            var self = this;
+            databaseHandler.loadQuest(this, function(){
+                var i=0;
+                var msg = [Types.Messages.QUEST, "show"];
+                for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
+                    msg.push(self.achievement[i+1].found);
+                    msg.push(self.achievement[i+1].progress);
+                }
+                for(i=0; i<4; i++){
+                    msg.push(self.achievement[i+101].found);
+                    msg.push(self.achievement[i+101].progress);
+                }
+            self.send(msg);
+            });
+        }
+    },
+    handleTalkToNPC: function(message){ // 30
+        var self = this;
+        var npcKind = message[1];
 
+        if(npcKind === Types.Entities.CODER){
+            this.getDailyQuest();
+        } else if(npcKind === Types.Entities.VILLAGER){
+            this.questAboutItem(npcKind, 3, Types.Entities.LEATHERARMOR, function(){ self.incExp(50); });
+        } else if(npcKind === Types.Entities.AGENT){
+            this.questAboutItem(npcKind, 5, Types.Entities.CAKE, function(){ self.incExp(50); });
+        } else if(npcKind === Types.Entities.NYAN){
+            this.questAboutItem(npcKind, 6, Types.Entities.CD, function(){ self.incExp(100); });
+        } else if(npcKind === Types.Entities.DESERTNPC){
+            this.questAboutItem(npcKind, 8, Types.Entities.AXE, function(){ self.incExp(200); });
+        } else if(npcKind === Types.Entities.ODDEYECAT){
+            this.questAboutItem(npcKind, 14, Types.Entities.RATARMOR, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.OCTOCAT){
+            this.questAboutItem(npcKind, 15, Types.Entities.HAMMER, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.FAIRYNPC){
+            this.questAboutItem(npcKind, 21, Types.Entities.REDLIGHTSABER, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.ZOMBIEGF){
+            this.questAboutItem(npcKind, 23, Types.Entities.BLUEWINGARMOR, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.PIRATEGIRLNPC){
+            this.questAboutItem(npcKind, 24, Types.Entities.BASTARDSWORD, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.IAMVERYCOLDNPC){
+            this.questAboutItem(npcKind, 25, Types.Entities.REDMETALSWORD, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.ICEELFNPC){
+            this.questAboutItem(npcKind, 26, Types.Entities.ICEROSE, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.ELFNPC){
+            this.questAboutItem(npcKind, 27, Types.Entities.FORESTGUARDIANSWORD, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.MOMANGELNPC){
+            this.questAboutItem(npcKind, 30, Types.Entities.FROSTARMOR, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.SUPERIORANGELNPC){
+            this.questAboutItem(npcKind, 31, Types.Entities.SHADOWREGIONARMOR, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.FIRSTSONANGELNPC){
+            this.questAboutItem(npcKind, 32, Types.Entities.BREAKER, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.SECONDSONANGELNPC){
+            this.questAboutItem(npcKind, 33, Types.Entities.DAMBOARMOR, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.MOJOJOJONPC){
+            this.questAboutItem2(npcKind, 34, Types.Entities.SQUIDARMOR, Types.Entities.TYPHOON, function(){ self.setAbility(); });
+        } else if(npcKind === Types.Entities.ANCIENTMANUMENTNPC){
+            this.questAboutItem(npcKind, 35, Types.Entities.MEMME, function(){ self.setAbility(); });
+        } else{
+            this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, false));
+        }
+    },
+    questAboutItem: function(npcKind, questNumber, itemKind, callback){
+        if(this.achievement[questNumber].found === true
+        && this.achievement[questNumber].progress !== 999) {
+            if(this.inventory.hasItem(itemKind)){
+                this.inventory.makeEmptyInventory(this.inventory.getInventoryNumber(itemKind));
+                this.send([Types.Messages.QUEST, "complete", questNumber]);
+                this.achievement[questNumber].progress = 999;
+                if(callback){
+                    callback();
+                    this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, true));
+                }
+            databaseHandler.progressAchievement(this.name, questNumber, this.achievement[questNumber].progress);
+            } else{
+                this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, false));
+            }
+        }
+    },
+    questAboutItem2: function(npcKind, questNumber, itemKind, item2Kind, callback){
+        if(this.achievement[questNumber].found === true
+        && this.achievement[questNumber].progress !== 999) {
+            if(this.inventory.hasItem(itemKind) && this.inventory.hasItem(item2Kind)){
+                this.inventory.makeEmptyInventory(this.inventory.getInventoryNumber(itemKind));
+                this.inventory.makeEmptyInventory(this.inventory.getInventoryNumber(item2Kind));
+                this.send([Types.Messages.QUEST, "complete", questNumber]);
+                this.achievement[questNumber].progress = 999;
+                if(callback){
+                    callback();
+                    this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, true));
+                }
+            databaseHandler.progressAchievement(this.name, questNumber, this.achievement[questNumber].progress);
+            } else{
+                this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, false));
+            } 
+        }
+    },
     resetTimeout: function() {
         clearTimeout(this.disconnectTimeout);
         this.disconnectTimeout = setTimeout(this.timeout.bind(this), 1000 * 60 * 5); // 5 min.
     },
-
+    questAboutKill: function(mob){
+    var self = this;
+    // Daily Quest
+        if(this.achievement[101].found){
+            if(this.achievement[101].progress < 999){
+                this._questAboutKill(mob.kind, 0, 101, 25, function(){
+                    log.info("Quest 101 Completed");
+                    self.inventory.putInventory(Types.Entities.FLASK, 100, 0, 0);
+            });
+            return;
+            } else if(this.achievement[102].found){
+                if(this.achievement[102].progress < 999){
+                    this._questAboutKill(mob.kind, 0, 102, 100, function(){
+                        log.info("Quest 102 Completed");
+                        self.inventory.putInventory(Types.Entities.BURGER, 100, 0, 0);
+                    });
+                    return;
+                } else if(this.achievement[103].found){
+                    if(this.achievement[103].progress < 999){
+                        this._questAboutKill(mob.kind, 0, 103, 200, function(){
+                            log.info("Quest 103 Completed");
+                            self.inventory.putInventory(Types.Entities.ROYALAZALEA, 50, 0, 0);
+                        });
+                    return;
+                    } else if(this.achievement[104].found){
+                        if(this.achievement[104].progress < 999){
+                            this._questAboutKill(mob.kind, 0, 104, 500, function(){
+                                log.info("Quest 104 Completed");
+                                self.inventory.putInventory(Types.Entities.SNOWPOTION, 1, 0, 0);
+                        });
+                        return;
+                        }
+                    }
+                }
+            }
+        }
+        this._questAboutKill(mob.kind, Types.Entities.RAT, 2, 10, function(){
+             self.incExp(200);
+        });
+        this._questAboutKill(mob.kind, Types.Entities.CRAB, 4, 5, function(){
+            self.incExp(100);
+        });
+        this._questAboutKill(mob.kind, Types.Entities.SKELETON, 7, 10, function(){
+            self.incExp(400);
+        });
+        this._questAboutKill(mob.kind, Types.Entities.SKELETONKING, 9, 2, function(){
+            self.incExp(1000);
+        });
+        this._questAboutKill(mob.kind, Types.Entities.ORC, 10, 10, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.GOLEM, 11, 10, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.HOBGOBLIN, 12, 13, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.YELLOWMOUSE, 13, 12, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.MERMAID, 16, 15, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.LIVINGARMOR, 17, 9, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.PENGUIN, 18, 12, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.DARKSKELETON, 19, 20, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.MINIKNIGHT, 20, 30, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.WOLF, 22, 50, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.SNOWWOLF, 28, 60, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.SNOWLADY, 29, 70, function(){ self.setAbility(); });
+        },
+    _questAboutKill: function(mobKind, questMobKind, questId, completeNumber, callback){
+        if((questMobKind === 0 && Types.getMobLevel(mobKind)*2 > this.level) || mobKind === questMobKind) {
+            var achievement = this.achievement[questId];
+            if(achievement.found && achievement.progress !== 999) {
+                if(isNaN(achievement.progress)){
+                    achievement.progress = 0;
+                } else{
+                    achievement.progress++;
+                }
+            if(achievement.progress >= completeNumber) {
+                this.send([Types.Messages.QUEST, "complete", questId]);
+                achievement.progress = 999;
+                if(callback){
+                    callback();
+                }
+            }
+                databaseHandler.progressAchievement(this.name, questId, achievement.progress);
+                if(achievement.progress < completeNumber){
+                    this.send([Types.Messages.QUEST, "progress", questId, achievement.progress]);
+                }
+            }
+        }
+    },
+    getDailyQuest: function(){
+        var i=0;
+        for(i=0; i<4; i++){
+            if(this.achievement[i+101].found){
+                if(this.achievement[i+101].progress !== 999){
+                    break;
+                }
+            } else {
+                this.foundQuest(i+101);
+                break;
+            }
+        }
+    },
+    foundQuest: function(questId){
+        this.achievement[questId].found = true;
+        databaseHandler.foundAchievement(this.name, questId);
+        this.send([Types.Messages.QUEST, "found", questId]);
+    },
+    
     timeout: function() {
         this.connection.sendUTF8("timeout");
         this.connection.close("Player was idle for too long");
