@@ -1,5 +1,8 @@
 Types = {
     Messages: {
+            Quest: {
+                TOTAL_QUEST_NUMBER: 35
+             },
         CREATE: 0,
         LOGIN: 1,
         WELCOME: 2,
@@ -33,7 +36,7 @@ Types = {
         BOARDWRITE: 30,
         NOTIFY: 31,
         KUNG: 32,
-	ACHIEVEMENT: 33,
+	QUEST: 33,
 	TALKTONPC: 34,
 	INVENTORY: 35,
         MAGIC: 36,

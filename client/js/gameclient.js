@@ -44,6 +44,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.KUNG] = this.receiveKung;
             this.handlers[Types.Messages.ACHIEVEMENT] = this.receiveAchievement;
             this.handlers[Types.Messages.MANA] = this.receiveMana;
+            this.handlers[Types.Messages.QUEST] = this.receiveQuest;
             this.useBison = false;
             
             this.enable();
@@ -204,10 +205,19 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 achievementProgress = [data[17], data[19], data[21], data[23],
                 data[25], data[27], data[29], data[31]],
                 mana = data[32];
+        
+            var i=0;
+            var questFound = [];
+            var questProgress = [];
+            for(i=0; i < Types.Quest.TOTAL_QUEST_NUMBER + 4; i++){
+              questFound.push(data.shift());
+              questProgress.push(data.shift());
+            }
+
                 //moderator = data[32];
             if(this.welcome_callback) {
                 this.welcome_callback(id, name, x, y, hp, mana, armor, weapon, avatar,
-                weaponAvatar, experience, admin, achievementFound, achievementProgress,
+                weaponAvatar, experience, admin, questFound, questProgress,
                 inventory0, inventory0Number,
                       inventory1, inventory1Number);
             }
@@ -222,7 +232,12 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             }
         },
         
-        
+        receiveQuest: function(data){
+            data.shift();
+            if(this.quest_callback){
+                this.quest_callback(data);
+            }
+        },
         
         receiveMove: function(data) {
             var id = data[1],
@@ -550,7 +565,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onPlayerChangeMaxHitPoints: function(callback) {
             this.hp_callback = callback;
         },
-
+        
         onItemBlink: function(callback) {
             this.blink_callback = callback;
         },
@@ -574,8 +589,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.mana_callback = callback;
         },
         
-                
-                
+        onQuest: function(callback) {
+            this.quest_callback = callback; 
+        },        
+                 
                 
 
         sendCreate: function(player) {
@@ -692,6 +709,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.sendMessage([Types.Messages.KUNG,
                               word]);
         },
+        
+        sendQuest: function(id, type){
+            this.sendMessage([Types.Messages.QUEST,
+                              id, type]);
+        }
         
     });
 

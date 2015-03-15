@@ -505,11 +505,20 @@ module.exports = DatabaseHandler = cls.Class.extend({
     },
     foundAchievement: function(name, number){
         log.info("Found Achievement: " + name + " " + number);
-        client.hset("u:" + name, "achievement" + number + ":found", "true");
+        if(number < 100){
+          client.hset("u:" + name, "achievement" + number + ":found", "true");
+        } else{
+          client.hset("u:" + name, "dailyQuest" + (number-100) + ":found", "true");
+          client.hset("u:" + name, "dailyQuest" + (number-100) + ":foundTime", (new Date()).getTime());
+        }
     },
     progressAchievement: function(name, number, progress){
         log.info("Progress Achievement: " + name + " " + number + " " + progress);
-        client.hset("u:" + name, "achievement" + number + ":progress", progress);
+        if(number < 100){
+          client.hset("u:" + name, "achievement" + number + ":progress", progress);
+        } else{
+          client.hset("u:" + name, "dailyQuest" + (number-100) + ":progress", progress);
+        }
     },
     setUsedPubPts: function(name, usedPubPts){
         log.info("Set Used Pub Points: " + name + " " + usedPubPts);
@@ -547,6 +556,56 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "x", x);
         client.hset("u:" + name, "y", y);
     },
+    
+    loadQuest: function(player, callback){
+        var userKey = "u:" + player.name;
+        var multi = client.multi();
+        var i=0;
+        for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
+          multi.hget(userKey, "achievement" + (i+1) + ":found");
+          multi.hget(userKey, "achievement" + (i+1) + ":progress");
+        }
+        for(i=0; i<4; i++){
+          multi.hget(userKey, "dailyQuest" + (i+1) + ":found");
+          multi.hget(userKey, "dailyQuest" + (i+1) + ":progress");
+          multi.hget(userKey, "dailyQuest" + (i+1) + ":foundTime");
+        }
+        multi.exec(function(err, replies){
+          var i=0;
+          var dFound, dProgress, foundTime;
+
+          for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
+            dFound = Utils.trueFalse(replies.shift());
+            dProgress = Utils.NaN2Zero(replies.shift());
+
+            player.achievement[i+1] = {
+              found: dFound,
+              progress: dProgress,
+            };
+          }
+
+          for(i=0; i<4; i++){
+            dFound = Utils.trueFalse(replies.shift());
+            dProgress = Utils.NaN2Zero(replies.shift());
+            foundTime = Utils.NaN2Zero(replies.shift());
+
+            if((new Date(foundTime)).getDate() !== (new Date()).getDate()){
+              dFound = false;
+              dProgress = 0;
+              client.hset(userKey, "dailyQuest" + (i+1) + ":found", "false");
+              client.hset(userKey, "dailyQuest" + (i+1) + ":progress", 0);
+            }
+
+            player.achievement[i+101] = {
+              found: dFound,
+              progress: dProgress,
+              foundTime: foundTime,
+            }
+          }
+          callback();
+        });
+      },
+    
     loadBoard: function(player, command, number, replyNumber){
       log.info("Load Board: " + player.name + " " + command + " " + number + " " + replyNumber);
       if(command === 'view'){

@@ -3,13 +3,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'tile', 'warrior', 'gameclient', 'audio', 'updater', 'transition',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
-        'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu',
+        'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'questhandler',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
-         ShopHandler, PlayerPopupMenu) {
+         ShopHandler, PlayerPopupMenu, QuestHandler) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -71,6 +71,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             // combat
             this.infoManager = new InfoManager(this);
 
+            this.questhandler = new QuestHandler(this);
             this.kkhandler = new KkHandler();
             this.chathandler = new ChatHandler(this, this.kkhandler);
             this.shopHandler = new ShopHandler(this);
@@ -925,7 +926,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             });
 
             this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon,
-                                           avatar, weaponAvatar, experience, admin, achievementFound, achievementProgress,
+                                           avatar, weaponAvatar, experience, admin, questFound, questProgress,
                                             inventory0, inventory0Number,
                                            inventory1, inventory1Number) {
                 log.info("Received player ID from server : "+ id);
@@ -957,7 +958,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                 self.addEntity(self.player);
                 self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
-
+                
+                self.questhandler.initQuest(questFound, questProgress);
+                
                 //Welcome message
                 self.chathandler.show();
                 self.chathandler.addNotification("Welcome to Tap Tap Adventure");
@@ -1492,26 +1495,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         mobName = 'death knight';
                     }
 
-                    /* if(mobName === 'boss') {
-                        self.showNotification("You killed the skeleton king");
-                    } */
-
-                    self.storage.incrementTotalKills();
-                    //self.tryUnlockingAchievement("HUNTER");
-
-                    if(kind === Types.Entities.RAT) {
-                        //self.storage.incrementRatCount();
-                        //self.tryUnlockingAchievement("ANGRY_RATS");
-                    }
-
-                    if(kind === Types.Entities.SKELETON || kind === Types.Entities.SKELETON2) {
-                      //  self.storage.incrementSkeletonCount();
-                        //self.tryUnlockingAchievement("SKULL_COLLECTOR");
-                    }
-
-                    if(kind === Types.Entities.BOSS) {
-                        //self.tryUnlockingAchievement("HERO");
-                    }
                 });
 
                 self.client.onPlayerChangeHealth(function(points, isRegen) {
@@ -1534,7 +1517,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             self.infoManager.addDamageInfo(diff, player.x, player.y - 15, "received");
                             self.audioManager.playSound("hurt");
                             self.storage.addDamage(-diff);
-                            //self.tryUnlockingAchievement("MEATSHIELD");
+                            
                             if(self.playerhurt_callback) {
                                 self.playerhurt_callback();
                             }
@@ -1622,78 +1605,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.disconnect_callback(message);
                     }
                 });
-                self.client.onAchievement(function(id, type){
-                    var achievement = null;
-
-                    if(type === "complete" && id === 2){
-                        achievement = self.achievements['KILL_RAT'];
-                        achievement.completed = true;
-                        self.app.displayUnlockedAchievement(achievement);
-                        self.app.showAchievementNotification(achievement.id, achievement.name, "Kill Rats!");
-                        setTimeout(function() {
-                            self.infoManager.addDamageInfo("+50 exp", self.player.x, self.player.y - 15, "exp", 3000);
-                        }, 200);
-                    } else if(type === "complete" && id === 3){
-                        achievement = self.achievements['BRING_LEATHERARMOR'];
-                        achievement.completed = true;
-                        self.app.displayUnlockedAchievement(achievement);
-                        self.app.showAchievementNotification(achievement.id, achievement.name, "Leathery Situation!");
-                        //self.player.switchArmor("clotharmor", self.sprites["clotharmor"]);
-                        setTimeout(function() {
-                            self.infoManager.addDamageInfo("+50 exp", self.player.x, self.player.y - 15, "exp", 3000);
-                        }, 1000);
-                    } else if(type === "complete" && id === 4){
-                        achievement = self.achievements['KILL_CRAB'];
-                        achievement.completed = true;
-                        self.app.displayUnlockedAchievement(achievement);
-                        self.app.showAchievementNotification(achievement.id, achievement.name, "Crab Infestation!");
-                        setTimeout(function() {
-                            self.infoManager.addDamageInfo("+50 exp", self.player.x, self.player.y - 15, "exp", 3000);
-                        }, 1000);
-                    } else if(type === "complete" && id === 5){
-                        achievement = self.achievements['FIND_CAKE'];
-                        achievement.completed = true;
-                        self.app.displayUnlockedAchievement(achievement);
-                        self.app.showAchievementNotification(achievement.id, achievement.name, "The cake is a lie!");
-                        if(self.player.inventory[0] === Types.Entities.CAKE){
-                            self.player.inventory[0] = null;
-                        } else if(self.player.inventory[1] === Types.Entities.CAKE){
-                            self.player.inventory[1] = null;
-                        }
-                        setTimeout(function() {
-                            self.infoManager.addDamageInfo("+50 exp", self.player.x, self.player.y - 15, "exp", 3000);
-                        }, 1000);
-                    } else if(type === "complete" && id === 6){
-                        achievement = self.achievements['FIND_CD'];
-                        achievement.completed = true;
-                        self.app.displayUnlockedAchievement(achievement);
-                        self.app.showAchievementNotification(achievement.id, achievement.name, "CD!");
-                        if(self.player.inventory[0] === Types.Entities.CD){
-                            self.player.inventory[0] = null;
-                        } else if(self.player.inventory[1] === Types.Entities.CD){
-                            self.player.inventory[1] = null;
-                        }
-                        setTimeout(function() {
-                            self.infoManager.addDamageInfo("+100 exp", self.player.x, self.player.y - 15, "exp", 3000);
-                        }, 1000);
-                    } else if(type === "complete" && id === 7){
-                        achievement = self.achievements['KILL_SKELETON'];
-                        achievement.completed = true;
-                        self.app.displayUnlockedAchievement(achievement);
-                        self.app.showAchievementNotification(achievement.id, achievement.name, "Bony situation!");
-                        setTimeout(function() {
-                            self.infoManager.addDamageInfo("+200 exp", self.player.x, self.player.y - 15, "exp", 3000);
-                        }, 1000);
-                    } else if(type === "complete" && id === 8){
-                        achievement = self.achievements['BRING_AXE'];
-                        achievement.completed = true;
-                        self.app.displayUnlockedAchievement(achievement);
-                        self.app.showAchievementNotification(achievement.id, achievement.name, "Picking up the Weaponry!");
-                        //self.player.switchWeapon("sword2");
-                        setTimeout(function() {
-                            self.infoManager.addDamageInfo("+200 exp", self.player.x, self.player.y - 15, "exp", 3000);
-                        }, 1000);
-                    }
+                self.client.onQuest(function(data){
+                  self.questhandler.handleQuest(data);
                 });
                 self.client.onBoard(function(data){
                   self.boardhandler.handleBoard(data, self.player.level);
@@ -1876,98 +1789,30 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         /**
          *
          */
-       makeNpcTalk: function(npc) {
-           var msg;
-
+        makeNpcTalk: function(npc) {
+            var msg;
+        
             if(npc) {
-                msg = npc.talk(this);
-                this.previousClickPosition = {};
-                if(msg) {
-                    this.createBubble(npc.id, msg);
-                    this.assignBubbleTo(npc);
-                    this.audioManager.playSound("npc");
-                } else {
-                    this.destroyBubble(npc.id);
-                    this.audioManager.playSound("npc-end");
-                }
-         
-                /*
-                 * Convert the following into switch() form
-                 */
-
-                if(npc.kind === Types.Entities.VILLAGEGIRL && this.achievements['KILL_RAT'].hidden){
-                    this.unhiddenAchievement(this.achievements['KILL_RAT']);
-                } else if(npc.kind === Types.Entities.VILLAGEGIRL && this.achievements['KILL_RAT'].completed){
-                    this.client.sendTalkToNPC(npc.kind);
-                    
-                    
-                } else if(npc.kind === Types.Entities.KING && this.achievements['SAVE_PRINCESS'].hidden){
-                    this.unhiddenAchievement(this.achievements['SAVE_PRINCESS']);
-                    
-                } else if(npc.kind === Types.Entities.KING && this.achievements['SAVE_PRINCESS'].completed){
-                    this.client.sendTalkToNPC(npc.kind);
-                    
-                } else if(npc.kind === Types.Entities.VILLAGER && this.achievements['BRING_LEATHERARMOR'].hidden) {
-                    this.unhiddenAchievement(this.achievements['BRING_LEATHERARMOR']);
-                } else if(npc.kind === Types.Entities.VILLAGER && !this.achievements['BRING_LEATHERARMOR'].hidden) {
-                    this.client.sendTalkToNPC(npc.kind);
-                    
-                } else if(npc.kind === Types.Entities.BEACHNPC && this.achievements['KILL_CRAB'].hidden){
-                    this.unhiddenAchievement(this.achievements['KILL_CRAB']);
-                } else if(npc.kind === Types.Entities.BEACHNPC && this.achievements['KILL_CRAB'].completed){
-                    this.client.sendTalkToNPC(npc.kind);   
-                    
-                } else if(npc.kind === Types.Entities.AGENT && this.achievements['FIND_CAKE'].hidden){
-                    this.unhiddenAchievement(this.achievements['FIND_CAKE']);
-                } else if(npc.kind === Types.Entities.AGENT && !this.achievements['FIND_CAKE'].hidden) {
-                    this.client.sendTalkToNPC(npc.kind);
-                
-                } else if(npc.kind === Types.Entities.PRIEST && this.achievements['KILL_SKELETON'].hidden){
-                    this.unhiddenAchievement(this.achievements['KILL_SKELETON']);
-                } else if(npc.kind === Types.Entities.PRIEST && this.achievements['KILL_SKELETON'].completed){
-                    this.client.sendTalkToNPC(npc.kind);
-                    
-                    
-                } else if(npc.kind === Types.Entities.DESERTNPC && this.achievements['BRING_AXE'].hidden){
-                    this.unhiddenAchievement(this.achievements['BRING_AXE']);
-                } else if(npc.kind === Types.Entities.DESERTNPC && !this.achievements['BRING_AXE'].hidden){
-                    this.client.sendTalkToNPC(npc.kind);
-                }
-            }
-          
-        },
-        /*
-         * 
-         * @param {type} callback
-         * @returns {undefined}
-         *  var msg;
-
-            if(npc) {
-                msg = npc.talk(this);
-                this.previousClickPosition = {};
-                if(msg) {
-                    this.createBubble(npc.id, msg);
-                    this.assignBubbleTo(npc);
-                    this.audioManager.playSound("npc");
-                } else {
-                    this.destroyBubble(npc.id);
-                    this.audioManager.playSound("npc-end");
-                }
-                this.tryUnlockingAchievement("SMALL_TALK");
-
-                if(npc.kind === Types.Entities.RICK) {
-                    this.tryUnlockingAchievement("RICKROLLD");
-                }
-            }
-         * 
-         * 
-         */
-        unhiddenAchievement: function(achievement){
-            if(achievement.hidden){
-                this.app.displayUnhiddenAchievement(achievement);
-                achievement.hidden = false;
+                if(npc.kind === Types.Entities.VENDINGMACHINE){
+                        this.shopHandler.show();
+                } else if(npc.kind === Types.Entities.REDSTOREMANNPC ||
+                        npc.kind === Types.Entities.BLUESTOREMANNPC){
+                        this.storeDialog.show();
+                } else{
+                    msg = this.questhandler.talkToNPC(npc);
+                    this.previousClickPosition = {};
+                        if(msg) {
+                            this.createBubble(npc.id, msg);
+                            this.assignBubbleTo(npc);
+                            this.audioManager.playSound("npc");
+                        } else {
+                            this.destroyBubble(npc.id);
+                            this.audioManager.playSound("npc-end");
+                        }
+                    }
             }
         },
+        
 
         /**
          * Loops through all the entities currently present in the game.

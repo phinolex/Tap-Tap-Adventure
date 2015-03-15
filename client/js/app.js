@@ -467,38 +467,7 @@ define(['jquery', 'storage'], function($, Storage) {
             }
         },
 
-        toggleInstructions: function() {
-            if($('#achievements').hasClass('active')) {
-                
-                this.toggleAchievements();
-                
-                $('#achievementsbutton').removeClass('active');
-            }
-            $('#instructions').toggleClass('active');
-        },
-
-        toggleAchievements: function() {
-            if($('#instructions').hasClass('active')) {
-                this.toggleInstructions();
-                $('#helpbutton').removeClass('active');
-                this.game.closeItemInfo();
-            }
-            this.resetPage();
-            $('#achievements').toggleClass('active');
-        },
-
-        resetPage: function() {
-            var self = this,
-                $achievements = $('#achievements');
-
-            if($achievements.hasClass('active')) {
-                $achievements.bind(TRANSITIONEND, function() {
-                    $achievements.removeClass('page' + self.currentPage).addClass('page1');
-                    self.currentPage = 1;
-                    $achievements.unbind(TRANSITIONEND);
-                });
-            }
-        },
+        
         showDropDialog: function(inventoryNumber) {
             if(this.game.started) {
                 $('#dropDialog').addClass('active');
@@ -535,14 +504,7 @@ define(['jquery', 'storage'], function($, Storage) {
         },
 
         hideWindows: function() {
-            if($('#achievements').hasClass('active')) {
-                this.toggleAchievements();
-                $('#achievementsbutton').removeClass('active');
-            }
-            if($('#instructions').hasClass('active')) {
-                this.toggleInstructions();
-                $('#helpbutton').removeClass('active');
-            }
+            
             if($('body').hasClass('credits')) {
                 this.closeInGameScroll('credits');
             }
@@ -553,107 +515,6 @@ define(['jquery', 'storage'], function($, Storage) {
                 this.closeInGameScroll('about');
             }
             this.game.closeItemInfo();
-        },
-
-        showAchievementNotification: function(id, name) {
-            var $notif = $('#achievement-notification'),
-                $name = $notif.find('.name'),
-                $button = $('#achievementsbutton');
-
-            $notif.removeClass().addClass('active achievement' + id);
-            $name.text(name);
-            if(this.game.storage.getAchievementCount() === 1) {
-                this.blinkInterval = setInterval(function() {
-                    $button.toggleClass('blink');
-                }, 500);
-            }
-            setTimeout(function() {
-                $notif.removeClass('active');
-                $button.removeClass('blink');
-            }, 5000);
-        },
-
-        displayUnlockedAchievement: function(achievement){
-            var $achievement = $('#achievements li.achievement' + achievement.id);
-            if(achievement){
-                this.setAchievementData($achievement, achievement.name, achievement.desc);
-            }
-            $achievement.addClass('unlocked');
-            var nb = parseInt($('#unlocked-achievements').text());
-            $('#unlocked-achievements').text(nb+1);
-        },
-
-        unlockAchievement: function(id, name) {
-            this.showAchievementNotification(id, name);
-            this.displayUnlockedAchievement(id);
-
-            var nb = parseInt($('#unlocked-achievements').text());
-            $('#unlocked-achievements').text(nb + 1);
-        },
-
-       initAchievementList: function(achievements){
-            var self = this,
-                $lists = $('#lists'),
-                $page = $('#page-tmpl'),
-                $achievement = $('#achievement-tmpl'),
-                page = 0,
-                count = 0,
-                $p = null;
-
-            _.each(achievements, function(achievement){
-                count++;
-
-                var $a = $achievement.clone();
-                $a.removeAttr('id');
-                $a.addClass('achievement'+count);
-                if(!achievement.hidden){
-                    self.setAchievementData($a, achievement.name, achievement.desc);
-                }
-                $a.find('.twitter').attr('href', 'https://twitter.com/home?status=I%20just%20unlocked%20a%20quest:%20' + achievement.name + '%20on%20%23TapTapAdventure%20join%20today%20at%20www.taptapadventure.com!');
-                $a.show();
-                $a.find('a').click(function(){
-                    var url = $(this).attr('href');
-
-                    self.openPopup('twitter', url);
-                    return false;
-                });
-
-                if((count - 1) % 4 === 0){
-                    page++;
-                    $p = $page.clone();
-                    $p.attr('id', 'page'+page);
-                    $p.show();
-                    $lists.append($p);
-                }
-                $p.append($a);
-            });
-//            $('#total-achievements').text($('#achievements').find('li').length);
-            $('#total-achievements').text(8);
-        },
-
-        initUnlockedAchievements: function(achievements){
-            var self = this,
-                count = 0;
-            _.each(achievements, function(achievement){
-                if(achievement.completed){
-                    self.displayUnlockedAchievement(achievement);
-                    count++;
-                }
-            });
-            $('#unlocked-achievements').text(count);
-        },
-        setAchievementData: function($el, name, desc){
-            $el.find('.achievement-name').html(name);
-            $el.find('.achievement-description').html(desc);
-        },
-        displayUnhiddenAchievement: function(achievement){
-            var $achievement = $('#achievements li.achievement' + achievement.id);
-
-            if(achievement && achievement.hidden){
-                this.setAchievementData($achievement, achievement.name, achievement.desc);
-                this.showAchievementNotification(achievement.id, achievement.name, "퀘스트 발견!");
-                this.game.client.sendAchievement(achievement.id, "found");
-            }
         },
         
 

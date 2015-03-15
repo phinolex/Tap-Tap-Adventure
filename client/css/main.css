@@ -83,8 +83,7 @@ footer, header, hgroup, menu, nav, section {
 	
 	#background, #foreground { margin:0; padding:0;}
     
-    #achievements nav::selection {background:transparent;text-decoration:none;color:transparent;}
-    #canvas, #bubbles, #canvasborder, #foreground, #background, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
+       #canvas, #bubbles, #canvasborder, #foreground, #background, footer, #container {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
     
     .started #canvas {cursor:none;}
     
@@ -193,26 +192,10 @@ footer, header, hgroup, menu, nav, section {
     .bubble p {-moz-user-select:none;-webkit-user-select:none;}
     
     #instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
-    #instructions.active, #achievements.active {opacity:1;pointer-events:auto;}
+    #instructions.active {opacity:1;pointer-events:auto;}
     
     #weapon, #armor {image-rendering:-moz-crisp-edges;}
-    #achievements, #achievements li, .coin, #achievement-notification, #coinsparks, .achievement-sharing a, #previous, #next {background:url('../img/1/achievements.png');image-rendering:-moz-crisp-edges;}
-    #achievements {font-family:'GraphicPixel'; position:absolute;top:50%;left:50%;z-index:1000;opacity:0;pointer-events:none;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
-    #achievements li {clear:both;position:relative;}
-    #achievements li .coin, #achievements li .achievement-name {float:left;}
-    #achievements li .coin {opacity:0;}
-    #achievements li.unlocked .achievement-name {color:#fce045;}
-    #achievements li.unlocked .coin {opacity:1;}
-    #achievements .achievement-name {color:#fff;}
-    #achievements .achievement-description {float:right;width:65%;}
-    #achievement-notification {position:absolute;z-index:8;bottom:0;left:50%;text-align:center;font-family:'GraphicPixel';pointer-events:none;-moz-transition:0.3s height ease;-webkit-transition:0.3s height ease;-o-transition:0.3s height ease;-ms-transition:0.3s height ease;}
-    #achievement-notification .name, #achievement-notification .title {opacity:0;-moz-transition:0.3s opacity linear;-webkit-transition:0.3s opacity linear;-o-transition:0.3s opacity linear;-ms-transition:0.3s opacity linear;transition:0.3s opacity linear;}
-    #achievement-notification.active .name, #achievement-notification.active .title {opacity:1;}
-    #achievement-info {overflow:hidden;height:100%;}
-    .achievement-sharing {position:absolute;display:none;}
-    #achievements li.unlocked:hover .achievement-sharing {display:block;}
-    .achievement-sharing a {display:block;float:left;}
-    
+   
 	#bubbles a {pointer-events:auto;text-decoration:none;color:#fcda5c;}
     .link:hover {cursor:pointer;color:#d83939;}
     .play img {display:none;}
@@ -268,7 +251,7 @@ footer, header, hgroup, menu, nav, section {
 	.thingy {height:10px;width:11px;background:url('../img/common/thingy.png');margin:0 auto;margin-top:-10px;top:10px;position:relative;}
     
     .alert {height:50px;background:#d83939;width:100%;color:#eee;font-size:20px;font-family:'GraphicPixel', arial, sans-serif;text-align:center;line-height:50px;border-bottom:1px solid #000;}
-    #instructions, #achievements, #lists, #about, #credits, .ribbon, .play, .play div, .barbutton {-webkit-tap-highlight-color:transparent;}
+    #instructions, #lists, #about, #credits, .ribbon, .play, .play div, .barbutton {-webkit-tap-highlight-color:transparent;}
     #nameinput::-webkit-input-placeholder  {color:#fff;}
     #resize-check {position:absolute;height:0;top:0;left:0;-moz-transition:0.001s height ease;-webkit-transition:0.001s height ease;-o-transition:0.001s height ease;-ms-transition:0.001s height ease;transition:0.001s height ease;}
     #death p em {display:block;font-style:normal;}
@@ -432,8 +415,7 @@ footer, header, hgroup, menu, nav, section {
 	@media screen and (min-width: 1501px) {
 	      
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/3/spritesheet.png');}
-	     .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/3/achievements.png');}
-	    
+
 	    
         body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood2.png') no-repeat 1587px 138px, url('../img/1/wood2.png') no-repeat 51px 519px, url('../img/1/wood3.png') no-repeat 228px 219px, url('../img/1/wood.png') repeat, #000; background-size:auto, 15px auto, 15px auto, 60px auto, 384px;}
         body {background:-webkit-gradient(radial, center center, 360, center center, 1200, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/3/wood2.png') no-repeat 1587px 138px, url('../img/3/wood2.png') no-repeat 51px 519px, url('../img/3/wood3.png') no-repeat 228px 219px, url('../img/3/wood.png') repeat, #000; background-size:auto, 15px auto, 15px auto, 60px auto, 384px;}
@@ -456,7 +438,7 @@ footer, header, hgroup, menu, nav, section {
         .play div:active {background-position:-687px -459px;}
         .play.loading div {background-position:-681px -2178px;}
         .play.loading img {width:24px;height:24px;}
-        .stroke, .achievement-name {text-shadow:3px 3px 0 #373737, 3px -3px 0 #373737, 0 3px 0 #373737, 3px 0 0 #373737, -3px 3px 0 #373737, -3px -3px 0 #373737, 0 -3px 0 #373737, 0 3px 0 #373737, -3px 0 0 #373737;}
+        .stroke {text-shadow:3px 3px 0 #373737, 3px -3px 0 #373737, 0 3px 0 #373737, 3px 0 0 #373737, -3px 3px 0 #373737, -3px -3px 0 #373737, 0 -3px 0 #373737, 0 3px 0 #373737, -3px 0 0 #373737;}
         #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {margin-top:30px;}
         #playername {margin-top:15px;}
         .loadcharacter .play, .confirmation .delete {margin:15px auto 15px auto;}
@@ -713,10 +695,7 @@ tr:hover {
 
         .barbutton {background-size:1440px;height:45px;width:42px;}
        
-        #achievementsbutton {background-position:-432px -51px;top:3px;left:1305px;}
-        #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-474px -51px;}
-        #achievementsbutton.blink {background-position:-864px -51px;}
-        #achievementsbutton.active {background-position:-516px -51px;}
+        
         #helpbutton {background-position:-558px -51px;top:3px;left:1350px;}
         #helpbutton:hover {background-position:-600px -51px;}
         #helpbutton.active {background-position:-642px -51px;}
@@ -771,8 +750,7 @@ tr:hover {
 	}
 	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
-	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/2/achievements.png');}
-        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
+	      body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
         body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/2/wood.png') repeat, #000; background-size:auto, 256px;}
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
         #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
@@ -793,7 +771,7 @@ tr:hover {
         .play div:active {background-position:-458px -306px;}
         .play.loading div {background-position:-454px -1452px;}
         .play.loading img {height:16px;width:16px;}
-        .stroke, .achievement-name {text-shadow:2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;}
+        .stroke {text-shadow:2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;}
         
         #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {margin-top:20px;}
         #playername {margin-top:10px;}
@@ -1057,10 +1035,7 @@ tr:hover {
         
         .windows #notifications span {line-height:34px;}
         .barbutton {background-size:960px;height:30px;width:28px;}
-        #achievementsbutton {background-position:-288px -34px;top:2px;left:870px;}
-        #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-316px -34px;}
-        #achievementsbutton.blink {background-position:-576px -34px;}
-        #achievementsbutton.active {background-position:-344px -34px;}
+       
         #helpbutton {background-position:-372px -34px;top:2px;left:900px;}
         #helpbutton:hover {background-position:-400px -34px;}
         #helpbutton.active {background-position:-428px -34px;}
@@ -1140,7 +1115,7 @@ tr:hover {
         .play div:active {background-position:-229px -153px;}
         .play.loading div {background-position:-227px -726px;}
         .play.loading img {height:11px;width:11px;}
-        .stroke, .achievement-name {text-shadow:1px 1px 0 #373737, 1px -1px 0 #373737, 0 1px 0 #373737, 1px 0 0 #373737, -1px 1px 0 #373737, -1px -1px 0 #373737, 0 -1px 0 #373737, 0 1px 0 #373737, -1px 0 0 #373737;}
+        .stroke {text-shadow:1px 1px 0 #373737, 1px -1px 0 #373737, 0 1px 0 #373737, 1px 0 0 #373737, -1px 1px 0 #373737, -1px -1px 0 #373737, 0 -1px 0 #373737, 0 1px 0 #373737, -1px 0 0 #373737;}
         
         #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {margin-top:20px;}
         #playername {margin-top:5px;}
@@ -1218,10 +1193,7 @@ tr:hover {
         #notifications div.top {top:-15px;}
         #notifications span {line-height:15px;height:15px;}
         .barbutton {background-size:480px;height:15px;width:14px;}
-        #achievementsbutton {background-position:-144px -17px;top:1px;left:435px;}
-        #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-158px -17px;}
-        #achievementsbutton.blink {background-position:-288px -17px;}
-        #achievementsbutton.active {background-position:-172px -17px;}
+        
         #helpbutton {background-position:-186px -17px;top:1px;left:450px;}
         #helpbutton:hover {background-position:-200px -17px;}
         #helpbutton.active {background-position:-214px -17px;}
@@ -1358,9 +1330,6 @@ tr:hover {
         #notifications {display:none;}
         .barbutton {background-size:960px;height:30px;width:28px;}
 
-        #achievementsbutton {background-position:-288px -34px;top:2px;left:390px;}
-        #achievementsbutton:hover, #achievementsbutton.blink {background-position:-316px -34px;}
-        #achievementsbutton.active {background-position:-344px -34px;}
         #helpbutton {background-position:-372px -34px;top:2px;left:420px;}
         #helpbutton:hover {background-position:-400px -34px;}
         #helpbutton.active {background-position:-428px -34px;}
@@ -1378,7 +1347,7 @@ tr:hover {
         .game.death #death {position:relative;top:0;left:0;margin-top:0;margin-left:0;width:100%;}
         .game.death #death p {padding-top:30px;color:#373737;font-size:20px;margin-top:0;width:80%;margin:0 auto;}
         .game.death #death p em {display:block;margin-top:15px;font-style:normal;}
-        #instructions, #achievements, #lists, #about {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
+        #instructions, #lists, #about {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
 		.game.death #death {height:172px;width:417px;margin-left:-208px;margin-top:-93px;color:#373737;background:url('../img/1/spritesheet.png') 0 -527px;margin:-10px 0 0 0;}
         #respawn { background-position: -204px -1398px; background-size: 844px auto; width: 204px; height: 54px;}
 		#respawn:active {background-position:-408px -1398px;}
@@ -1415,20 +1384,19 @@ tr:hover {
         #logo {height:42px;width:229px;position:absolute;top:10%;left:50%;margin-left:-114px;z-index:3;background-size:422px;}
     }
     .tablet .animate .parchment-left, .tablet .animate .parchment-right, .tablet .animate .parchment-middle {-webkit-animation:none;-moz-animation:none;-o-animation:none;-ms-animation:none;}
-    .tablet #instructions, .tablet #achievements, .tablet #lists {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
-    .tablet #achievements li.unlocked .achievement-sharing {display:block;}
+    .tablet #instructions, .tablet #lists {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
+    
     .tablet #coinsparks {display:none; -moz-animation:none;}
     
     .tablet #logo, .tablet #parchment, .tablet #container {-moz-transition:none;}
-    .tablet #achievement-notification .name, .tablet #achievement-notification .title, .tablet #achievement-notification .coin, .tablet #achievement-notification {-moz-transition:none;}
     
-    .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
+    .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, 
     .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, .windows #legal, 
     .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows .bubble p {font-family:'AdvoCut';}
     .opera.intro #bubbles, .opera.intro #canvas, .opera.intro #container { z-index: -30000;}
     .opera .credits #credits, .opera .createcharacter #createcharacter, .opera .loadcharacter #loadcharacter, .opera .confirmation #confirmation, .opera .death #death, 
     .opera .error #error, .opera .about #about, .opera .legal #legal { z-index: 30000; }
-    .opera #instructions, .opera #achievements { z-index: -30000;}
-    .opera #achievements.active, .opera #instructions.active { z-index: 30000;}
+    .opera #instructions { z-index: -30000;}
+    .opera #instructions.active { z-index: 30000;}
     .opera #coinsparks {display:none;}
     .opera #death, .opera #about, .opera #credits, .opera #error, .opera #confirmation, .opera #loadcharacter, .opera #legal { z-index: -30000; }
