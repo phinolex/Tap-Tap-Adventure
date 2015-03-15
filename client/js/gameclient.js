@@ -185,26 +185,23 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
 
         receiveWelcome: function(data) {
-            var id = data[1],
-                name = data[2],
-                x = data[3],
-                y = data[4],
-                hp = data[5],
-                armor = data[6],
-                weapon = data[7],
-                avatar = data[8],
-                weaponAvatar = data[9],
-                experience = data[10],
-                admin = data[11],
-                inventory0 = data[12],
-                inventory0Number = data[13],
-                inventory1 = data[14],
-                inventory1Number = data[15],
-                achievementFound = [data[16], data[18], data[20], data[22],
-                data[24], data[26], data[28], data[30]],
-                achievementProgress = [data[17], data[19], data[21], data[23],
-                data[25], data[27], data[29], data[31]],
-                mana = data[32];
+            data.shift();
+            var id = data.shift(),
+                name = data.shift(),
+                x = data.shift(),
+                y = data.shift(),
+                hp = data.shift(),
+                armor = Types.getKindAsString(data.shift()),
+                weapon = Types.getKindAsString(data.shift()),
+                avatar = Types.getKindAsString(data.shift()),
+                weaponAvatar = Types.getKindAsString(data.shift()),
+                experience = data.shift(),
+                admin = data.shift(),
+                inventory0 = data.shift(),
+                inventory0Number = data.shift(),
+                inventory1 = data.shift(),
+                inventory1Number = data.shift(),
+                mana = data.shift();
         
             var i=0;
             var questFound = [];

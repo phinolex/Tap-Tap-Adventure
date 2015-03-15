@@ -78,13 +78,6 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 }
             });
 
-            $('#achievementsbutton').click(function() {
-                app.toggleAchievements();
-                if(app.blinkInterval) {
-                    clearInterval(app.blinkInterval);
-                }
-                $(this).removeClass('blink');
-            });
 
             $('#instructions').click(function() {
                 app.hideWindows();
@@ -149,29 +142,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 app.toggleButton();
             });
 
-            $('#previous').click(function() {
-                var $achievements = $('#achievements');
-
-                if(app.currentPage === 1) {
-                    return false;
-                } else {
-                    app.currentPage -= 1;
-                    $achievements.removeClass().addClass('active page' + app.currentPage);
-                }
-            });
-
-            $('#next').click(function() {
-                var $achievements = $('#achievements'),
-                    $lists = $('#lists'),
-                    nbPages = $lists.children('ul').length;
-
-                if(app.currentPage === nbPages) {
-                    return false;
-                } else {
-                    app.currentPage += 1;
-                    $achievements.removeClass().addClass('active page' + app.currentPage);
-                }
-            });
+           
 
             $('#notifications div').bind(TRANSITIONEND, app.resetMessagesPosition.bind(app));
 
@@ -275,13 +246,15 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             });
             
             
-            	
-            game.onAchievementUnlock(function(id, name, description) {
-                app.unlockAchievement(id, name);
-            });
-
+            /*$('#questbutton').click(function(event){
+                if(app.game && app.ready && app.game.ready){
+                    app.game.client.sendQuest(0, "show");
+                    app.hideAllSubwindow();
+                    app.game.questhandler.show();
+                }
+            }); */
             game.onNotification(function(message) {
-				app.showMessage(message);
+		app.showMessage(message);
             });
 
             app.initHealthBar();

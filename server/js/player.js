@@ -40,7 +40,7 @@ module.exports = Player = Character.extend({
 
         this.inventory = [];
         this.inventoryCount = [];
-        this.achievement = [];
+      
 
         this.chatBanEndTime = 0;
 
@@ -474,13 +474,6 @@ module.exports = Player = Character.extend({
                         }
                         databaseHandler.setInventory(self.name, self.inventory[inventoryNumber], inventoryNumber, self.inventoryCount[inventoryNumber]);
                     }
-                }
-            } //DEPRACATE ACHIEVEMENT
-            else if(action === Types.Messages.ACHIEVEMENT){
-                log.info("ACHIEVEMENT: " + self.name + " " + message[1] + " " + message[2]);
-                if(message[2] === "found"){
-                    self.achievement[message[1]].found = true;
-                    databaseHandler.foundAchievement(self.name, message[1]);
                 }
             } else if(action === Types.Messages.QUEST) {
                 log.info("QUEST: " + self.name + " " + message[1] + " " + message[2]);
@@ -988,8 +981,7 @@ module.exports = Player = Character.extend({
 
     sendWelcome: function(armor, weapon, avatar, weaponAvatar, exp, admin,
                           bannedTime, banUseTime,
-                          inventory, inventoryNumber, achievementFound, achievementProgress,
-                          x, y,
+                          inventory, inventoryNumber, x, y,
                           chatBanEndTime) {
         var self = this;
         self.kind = Types.Entities.WARRIOR;
@@ -1002,14 +994,7 @@ module.exports = Player = Character.extend({
         self.inventory[1] = Types.getKindFromString(inventory[1]);
         self.inventoryCount[0] = inventoryNumber[0];
         self.inventoryCount[1] = inventoryNumber[1];
-        self.achievement[1] = {found: achievementFound[0], progress: achievementProgress[0]};
-        self.achievement[2] = {found: achievementFound[1], progress: achievementProgress[1]};
-        self.achievement[3] = {found: achievementFound[2], progress: achievementProgress[2]};
-        self.achievement[4] = {found: achievementFound[3], progress: achievementProgress[3]};
-        self.achievement[5] = {found: achievementFound[4], progress: achievementProgress[4]};
-        self.achievement[6] = {found: achievementFound[5], progress: achievementProgress[5]};
-        self.achievement[7] = {found: achievementFound[6], progress: achievementProgress[6]};
-        self.achievement[8] = {found: achievementFound[7], progress: achievementProgress[7]};
+
         self.bannedTime = bannedTime;
         self.banUseTime = banUseTime;
         self.experience = exp;
@@ -1043,22 +1028,6 @@ module.exports = Player = Character.extend({
             inventoryNumber[0], //13
             inventory[1], //14
             inventoryNumber[1], //15
-            achievementFound[0], //16
-            achievementProgress[0], //17
-            achievementFound[1], //18
-            achievementProgress[1], //19
-            achievementFound[2], //20
-            achievementProgress[2], //21
-            achievementFound[3], //22
-            achievementProgress[3], //23
-            achievementFound[4], //24
-            achievementProgress[4], //25
-            achievementFound[5], //26
-            achievementProgress[5], //27
-            achievementFound[6], //28
-            achievementProgress[6], // 29
-            achievementFound[7], //30
-            achievementProgress[7], //31
             self.mana //32
         ]);
 

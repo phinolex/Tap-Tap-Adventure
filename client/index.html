@@ -11,11 +11,12 @@
         <meta property="og:image" content="img/common/promo-title.jpg">
         <meta property="og:site_name" content="Tap Tap Adventure">
         <meta property="og:description" content="Play the massively MMORPG today!">
+        
         <link rel="stylesheet" href="css/main.css" type="text/css">
         <link rel="stylesheet" href="css/basebar.css" type="text/css">
         <link rel="stylesheet" href="css/gameinterfaces.css" type="text/css">
         <link rel="stylesheet" href="css/achievements.css" type="text/css">
-        
+        <link rel="stylesheet" href="css/quest.css" type="text/css">
 
         <link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
         <link href="img/common/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72">
@@ -265,15 +266,7 @@
                         <span id="dropCancel">&nbsp;Cancel&nbsp;</span>
                     </div>
                 </div>
-                <div id="achievement-notification">
-    			    <div class="coin">
-    			        
-    			    </div>
-    			    <div id="achievement-info">
-        			    <div class="title">New Achievement Unlocked!</div>
-        			    <div class="name"></div>
-    			    </div>
-    			</div>
+                <div id="questalarm"></div>
     			<div id="basebarcontainer">
                             <div id="hpcontainer">
                                 <div id="health"> </div>
@@ -386,7 +379,7 @@
             <div id="credits-link" class="clickable">
                 <span id="toggle-credits">Credits</span>
             </div>
-            
+            <div id="questbutton">Quests</div>
    
    
         </footer>
@@ -429,5 +422,9 @@
                 var require = { waitSeconds: 60 };
         </script>
         <script data-main="js/home" src="js/lib/require-jquery.js"></script>
+        
+        
+        <div id="quest"></div>
+        
 	</body>
 </html>
