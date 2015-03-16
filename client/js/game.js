@@ -943,7 +943,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.setArmorName(armor);
                 self.player.setSpriteName(avatar);
                 self.player.setWeaponName(weapon);
-                self.initAchievements(achievementFound, achievementProgress);
                 self.player.setInventory(Types.getKindFromString(inventory0), 0, inventory0Number);
                 self.player.setInventory(Types.getKindFromString(inventory1), 1, inventory1Number);
                 self.initPlayer();

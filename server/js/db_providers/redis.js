@@ -207,9 +207,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 player.sendWelcome(armor, weapon,
                                     avatar, weaponAvatar, exp, admin,
                                     bannedTime, banUseTime,
-                                    inventory, inventoryNumber,
-                                    achievementFound, achievementProgress,
-                                    x, y,
+                                    inventory, inventoryNumber, x, y,
                                     chatBanEndTime);
                             });
                     });
