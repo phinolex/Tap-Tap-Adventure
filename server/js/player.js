@@ -1010,8 +1010,7 @@ module.exports = Player = Character.extend({
 
         self.server.addPlayer(self);
         self.server.enter_callback(self);
-
-        self.send([
+        var sendMessage = [
             Types.Messages.WELCOME, 
             self.id, // 1
             self.name, //2
@@ -1029,7 +1028,25 @@ module.exports = Player = Character.extend({
             inventory[1], //14
             inventoryNumber[1], //15
             self.mana //32
-        ]);
+        ]; 
+        
+        for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
+          sendMessage.push(self.achievement[i+1].found);
+          sendMessage.push(self.achievement[i+1].progress);
+        }
+        for(i=0; i<4; i++){
+          sendMessage.push(self.achievement[i+101].found);
+          sendMessage.push(self.achievement[i+101].progress);
+        }
+        sendMessage.push(self.kind);
+        sendMessage.push(self.inventory.number);
+        for(i=0; i<self.inventory.number; i++){
+          sendMessage.push(self.inventory.rooms[i].itemKind);
+          sendMessage.push(self.inventory.rooms[i].itemNumber);
+          sendMessage.push(self.inventory.rooms[i].itemSkillKind);
+          sendMessage.push(self.inventory.rooms[i].itemSkillLevel);
+        }
+        self.send(sendMessage);
 
         self.hasEnteredGame = true;
         self.isDead = false;
