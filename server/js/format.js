@@ -21,7 +21,6 @@ var Types = require('../../shared/js/gametypes');
             this.formats[Types.Messages.OPEN] = ['n'],
             this.formats[Types.Messages.CHECK] = ['n'],
             this.formats[Types.Messages.INVENTORY] = ['s', 'n', 'n'],
-            this.formats[Types.Messages.ACHIEVEMENT] = ['n', 's'],
             this.formats[Types.Messages.BOARD] = ['s', 'n', 'n'],
             this.formats[Types.Messages.BOARDWRITE] = ['s', 's', 's'],
             this.formats[Types.Messages.KUNG] = ['s'],

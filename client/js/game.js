@@ -331,117 +331,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             self.sprites["item-cake"].createSilhouette();
         },
 
-        initAchievements: function(achievementFound, achievementProgress) {
-            var self = this;
-
-            this.achievements = {
-                SAVE_PRINCESS: {
-                    id: 1,
-                    name: "Save the princess",
-                    desc: "In Development",
-                    hidden: !achievementFound[0],
-                    completed: achievementProgress[0] === 999 ? true : false,
-                    isCompleted: function(){
-                        return this.completed;
-                    }
-                },
-                KILL_RAT: {
-                    id: 2,
-                    name: "Kill Rats",
-                    desc: "Kill 10 Rats",
-                    hidden: !achievementFound[1],
-                    completed: achievementProgress[1] === 999 ? true : false,
-                    isCompleted: function(){
-                        return this.completed;
-                    }
-                },
-                BRING_LEATHERARMOR: {
-                    id: 3,
-                    name: "Leather Armour",
-                    desc: "Find leather armour and talk to the Villager.",
-                    hidden: !achievementFound[2],
-                    completed: achievementProgress[2] === 999 ? true : false,
-                    isCompleted: function(){
-                        return this.completed;
-                    }
-                },
-                KILL_CRAB: {
-                    id: 4,
-                    name: "Kill Crabs",
-                    desc: "Slay 5 Crabs",
-                    hidden: !achievementFound[3],
-                    completed: achievementProgress[3] === 999 ? true : false,
-                    isCompleted: function(){
-                        return this.completed;
-                    }
-                },
-                FIND_CAKE: {
-                    id: 5,
-                    name: "Cake!?",
-                    desc: "Find the secret cake.",
-                    hidden: !achievementFound[4],
-                    completed: achievementProgress[4] === 999 ? true : false,
-                    isCompleted: function(){
-                        return this.completed;
-                    }
-                },
-                FIND_CD: {
-                    id: 6,
-                    name: "FutureQuest",
-                    desc: "Ideas",
-                    hidden: !achievementFound[5],
-                    completed: achievementProgress[5] === 999 ? true : false,
-                    isCompleted: function(){
-                        return this.completed;
-                    }
-                },
-                KILL_SKELETON: {
-                    id: 7,
-                    name: "A bony situation..",
-                    desc: "Kill 10 skeletons",
-                    hidden: !achievementFound[6],
-                    completed: achievementProgress[6] === 999 ? true : false,
-                    isCompleted: function(){
-                        return this.completed;
-                    }
-                },
-                BRING_AXE: {
-                    id: 8,
-                    name: "Path to Weaponry",
-                    desc: "Find an Axe.",
-                    hidden: !achievementFound[7],
-                    completed: achievementProgress[7] === 999 ? true : false,
-                    isCompleted: function(){
-                        return this.completed;
-                    }
-                }
-            };
-
-            _.each(this.achievements, function(obj){
-                if(!obj.isCompleted){
-                    obj.isCompleted = function() { return true;
-                    };
-                }
-                if(!obj.hidden){
-                    obj.hidden = false;
-                }
-            });
-
-            this.app.initAchievementList(this.achievements);
-            this.app.initUnlockedAchievements(this.achievements);
         
-        },
-
-        getAchievementById: function(id) {
-            var found = null;
-            _.each(this.achievements, function(achievement, key) {
-                if(achievement.id === parseInt(id)) {
-                    found = achievement;
-                }
-            });
-            return found;
-        },
-
         loadSprite: function(name) {
             if(this.renderer.upscaledRendering) {
                 this.spritesets[0][name] = new Sprite(name, 1);
@@ -784,7 +674,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.loadAudio();
 
                     self.initMusicAreas();
-                    //self.initAchievements();
+                    
                     self.initCursors();
                     self.initAnimations();
                     self.initShadows();
@@ -1407,7 +1297,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                         if(entity) {
                             if(self.player.isAttackedBy(entity)) {
-                                //self.tryUnlockingAchievement("COWARD");
+                                //Do this for some sort of future achievements on the side of quests
                             }
                             entity.disengage();
                             entity.idle();
@@ -2726,23 +2616,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             return position;
         },
 
-        onAchievementUnlock: function(callback) {
-            this.unlock_callback = callback;
-        },
-
-        tryUnlockingAchievement: function(name) {
-            var achievement = null;
-            if(name in this.achievements) {
-                achievement = this.achievements[name];
-
-                if(achievement.isCompleted() && this.storage.unlockAchievement(achievement.id)) {
-                    if(this.unlock_callback) {
-                        this.unlock_callback(achievement.id, achievement.name, achievement.desc);
-                        this.audioManager.playSound("achievement");
-                    }
-                }
-            }
-        }, 
 
         showNotification: function(message) {
             if(this.notification_callback) {
@@ -2810,7 +2683,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             if(music) {
                 if(music.name === 'cave') {
-                    this.tryUnlockingAchievement("UNDERGROUND");
+                    
                 }
             }
         }, 
@@ -2947,20 +2820,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 this.removeItem(item);
                 this.showNotification(item.getLootMessage());
 
-                /* if(item.type === "armor") {
-                    //this.tryUnlockingAchievement("FAT_LOOT");
-                }
-
-                if(item.type === "weapon") {
-                    //this.tryUnlockingAchievement("A_TRUE_WARRIOR");
-                }
-
-                if(item.kind === Types.Entities.CAKE) {
-                    //this.tryUnlockingAchievement("FOR_SCIENCE");
-                } */
 
                 if(item.kind === Types.Entities.FIREPOTION) {
-                   // this.tryUnlockingAchievement("FOXY");
+                   
                     this.audioManager.playSound("firefox");
                 }
 
@@ -2970,9 +2832,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     this.audioManager.playSound("loot");
                 }
 
-                if(item.wasDropped && !_(item.playersInvolved).include(this.playerId)) {
-                    //this.tryUnlockingAchievement("NINJA_LOOT");
-                }
+                /* if(item.wasDropped && !_(item.playersInvolved).include(this.playerId)) {
+                    
+                } */
             } catch(e) {
                 if(e instanceof Exceptions.LootException) {
                     this.showNotification(e.message);

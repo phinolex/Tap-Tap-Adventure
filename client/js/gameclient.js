@@ -42,7 +42,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.BOARD] = this.receiveBoard;
             this.handlers[Types.Messages.NOTIFY] = this.receiveNotify;
             this.handlers[Types.Messages.KUNG] = this.receiveKung;
-            this.handlers[Types.Messages.ACHIEVEMENT] = this.receiveAchievement;
             this.handlers[Types.Messages.MANA] = this.receiveMana;
             this.handlers[Types.Messages.QUEST] = this.receiveQuest;
             this.useBison = false;
@@ -448,13 +447,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.pvp_callback(pvp);
             }
         },
-        receiveAchievement: function(data){
-            var id = data[1],
-                type = data[2];
-            if(this.achievement_callback){
-                this.achievement_callback(id, type);
-            }
-        },
+
        
        receiveBoard: function(data){
             if(this.board_callback){
@@ -569,9 +562,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onPVPChange: function(callback){
             this.pvp_callback = callback;
         },
-        onAchievement: function(callback){
-            this.achievement_callback = callback;
-        },
+
         onBoard: function(callback){
             this.board_callback = callback;
         },
@@ -676,11 +667,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         sendWho: function(ids) {
             ids.unshift(Types.Messages.WHO);
             this.sendMessage(ids);
-        },
-        
-        sendAchievement: function(id, type){
-            this.sendMessage([Types.Messages.ACHIEVEMENT,
-                              id, type]);
         },
         sendTalkToNPC: function(kind){
             this.sendMessage([Types.Messages.TALKTONPC,
