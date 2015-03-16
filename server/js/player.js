@@ -1010,44 +1010,39 @@ module.exports = Player = Character.extend({
 
         self.server.addPlayer(self);
         self.server.enter_callback(self);
-        var sendMessage = [
-            Types.Messages.WELCOME, 
-            self.id, // 1
-            self.name, //2
-            self.x, //3
-            self.y, //4
-            self.hitPoints, //5
-            armor, //6
-            weapon, //7
-            avatar, //8
-            weaponAvatar, //9
-            self.experience, //10
-            self.admin, //11
-            inventory[0], //12
-            inventoryNumber[0], //13
-            inventory[1], //14
-            inventoryNumber[1], //15
-            self.mana //32
-        ]; 
-        
-        for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
-          sendMessage.push(self.achievement[i+1].found);
-          sendMessage.push(self.achievement[i+1].progress);
+        databaseHandler.loadQuest(self, function(){
+            var i = 0;
+            var sendMessage = [
+                Types.Messages.WELCOME, 
+                self.id, // 1
+                self.name, //2
+                self.x, //3
+                self.y, //4
+                self.hitPoints, //5
+                armor, //6
+                weapon, //7
+                avatar, //8
+                weaponAvatar, //9
+                self.experience, //10
+                self.admin, //11
+                inventory[0], //12
+                inventoryNumber[0], //13
+                inventory[1], //14
+                inventoryNumber[1], //15
+                self.mana //32
+            ]; 
+            
+            for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
+              sendMessage.push(self.achievement[i+1].found);
+              sendMessage.push(self.achievement[i+1].progress);
+            }
+            for(i=0; i<4; i++){
+              sendMessage.push(self.achievement[i+101].found);
+              sendMessage.push(self.achievement[i+101].progress);
+            }
+            
+            self.send(sendMessage);
         }
-        for(i=0; i<4; i++){
-          sendMessage.push(self.achievement[i+101].found);
-          sendMessage.push(self.achievement[i+101].progress);
-        }
-        sendMessage.push(self.kind);
-        sendMessage.push(self.inventory.number);
-        for(i=0; i<self.inventory.number; i++){
-          sendMessage.push(self.inventory.rooms[i].itemKind);
-          sendMessage.push(self.inventory.rooms[i].itemNumber);
-          sendMessage.push(self.inventory.rooms[i].itemSkillKind);
-          sendMessage.push(self.inventory.rooms[i].itemSkillLevel);
-        }
-        self.send(sendMessage);
-
         self.hasEnteredGame = true;
         self.isDead = false;
 
