@@ -35,30 +35,14 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "inventory0:number") // 11
                         .hget(userKey, "inventory1") // 12
                         .hget(userKey, "inventory1:number") // 13
-                        .hget(userKey, "achievement1:found") // 14
-                        .hget(userKey, "achievement1:progress") // 15
-                        .hget(userKey, "achievement2:found") // 16
-                        .hget(userKey, "achievement2:progress") // 17
-                        .hget(userKey, "achievement3:found") // 18
-                        .hget(userKey, "achievement3:progress") // 19
-                        .hget(userKey, "achievement4:found") // 20
-                        .hget(userKey, "achievement4:progress") // 21
-                        .hget(userKey, "achievement5:found") // 22
-                        .hget(userKey, "achievement5:progress") // 23
-                        .hget(userKey, "achievement6:found") // 24
-                        .hget(userKey, "achievement6:progress") // 25
-                        .smembers("adminname") // 26
-                        .zscore("adrank", player.name) // 27
-                        .hget(userKey, "weaponAvatar") // 28
-                        .hget(userKey, "x") // 29
-                        .hget(userKey, "y") // 30
-                        .hget(userKey, "achievement7:found") // 31
-                        .hget(userKey, "achievement7:progress") // 32
-                        .hget(userKey, "achievement8:found") // 33
-                        .hget(userKey, "achievement8:progress") // 34
-                        .hget("cb:" + player.connection._connection.remoteAddress, "etime") // 35
-                        .smembers("moderators") // 36
-                        .hget("b:" + player.connection._connection.remoteAddress, "rtime") //37
+                        .smembers("adminname") // 14
+                        .zscore("adrank", player.name) // 15
+                        .hget(userKey, "weaponAvatar") // 16
+                        .hget(userKey, "x") // 17
+                        .hget(userKey, "y") // 18
+                        .hget("cb:" + player.connection._connection.remoteAddress, "etime") // 19
+                        .smembers("moderators") // 20
+                        .hget("b:" + player.connection._connection.remoteAddress, "rtime") //21
                         //.get(userKey, "userGuild")
                         /*
                          * Add a .hget here to select the guild the player is in, use
@@ -82,35 +66,15 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var inventoryNumber = [
                               Utils.NaN2Zero(replies[11]),
                               Utils.NaN2Zero(replies[13])];
-                            var achievementFound = [
-                              Utils.trueFalse(replies[14]),
-                              Utils.trueFalse(replies[16]),
-                              Utils.trueFalse(replies[18]),
-                              Utils.trueFalse(replies[20]),
-                              Utils.trueFalse(replies[22]),
-                              Utils.trueFalse(replies[24]),
-                              Utils.trueFalse(replies[31]),
-                              Utils.trueFalse(replies[33])
-                            ];
-                            var achievementProgress = [
-                              Utils.NaN2Zero(replies[15]),
-                              Utils.NaN2Zero(replies[17]),
-                              Utils.NaN2Zero(replies[19]),
-                              Utils.NaN2Zero(replies[21]),
-                              Utils.NaN2Zero(replies[23]),
-                              Utils.NaN2Zero(replies[25]),
-                              Utils.NaN2Zero(replies[32]),
-                              Utils.NaN2Zero(replies[34])
-                            ];
-                            var adminnames = replies[26];
-                            var pubPoint =  Utils.NaN2Zero(replies[27]);
-                            var weaponAvatar = replies[28] ? replies[28] : weapon;
+                            var adminnames = replies[14];
+                            var pubPoint =  Utils.NaN2Zero(replies[15]);
+                            var weaponAvatar = replies[16] ? replies[16] : weapon;
                             
-                            var x = Utils.NaN2Zero(replies[29]);
-                            var y = Utils.NaN2Zero(replies[30]);
-                            var chatBanEndTime = Utils.NaN2Zero(replies[35]);
-                            var moderators = replies[36];
-                            var banTime = replies[37];
+                            var x = Utils.NaN2Zero(replies[17]);
+                            var y = Utils.NaN2Zero(replies[18]);
+                            var chatBanEndTime = Utils.NaN2Zero(replies[19]);
+                            var moderators = replies[20];
+                            var banTime = replies[21];
                             //var curTime = new Date();
                             //Check ban here
                             
