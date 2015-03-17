@@ -1,4 +1,6 @@
 
+/* global Types, log, _ */
+
 define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs, Warrior, Chest) {
 
     var EntityFactory = {};

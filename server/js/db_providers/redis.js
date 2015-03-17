@@ -1,3 +1,5 @@
+/* global Types, log */
+
 var Utils = require('../utils');
 
 var cls = require("../lib/class"),
@@ -578,7 +580,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
             player.achievement[i+1] = {
               found: dFound,
-              progress: dProgress,
+              progress: dProgress
             };
           }
 
@@ -597,7 +599,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
             player.achievement[i+101] = {
               found: dFound,
               progress: dProgress,
-              foundTime: foundTime,
+              foundTime: foundTime
             }
           }
           callback();

@@ -1,3 +1,5 @@
+/* global module */
+
 var Entity = require('./entity');
 
 var Npc = Entity.extend({

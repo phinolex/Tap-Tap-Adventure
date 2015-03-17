@@ -1,4 +1,6 @@
 
+/* global Types */
+
 define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'tile', 'warrior', 'gameclient', 'audio', 'updater', 'transition',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
@@ -1496,6 +1498,18 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
                 self.client.onQuest(function(data){
                   self.questhandler.handleQuest(data);
+                });
+                self.client.onTalkToNPC(function(npcKind, isCompleted){
+                  var npc = self.getEntityByKind(npcKind);
+                  var msg = npc.talk(self.language, isCompleted);
+                  if(msg) {
+                    self.createBubble(npc.id, msg);
+                    self.assignBubbleTo(npc);
+                    self.audioManager.playSound("npc");
+                  } else {
+                    self.destroyBubble(npc.id);
+                    self.audioManager.playSound("npc-end");
+                  }
                 });
                 self.client.onBoard(function(data){
                   self.boardhandler.handleBoard(data, self.player.level);

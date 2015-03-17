@@ -1,8 +1,9 @@
 Types = {
+    Quest: {
+            TOTAL_QUEST_NUMBER: 35
+    },
     Messages: {
-            Quest: {
-                TOTAL_QUEST_NUMBER: 35
-             },
+
         CREATE: 0,
         LOGIN: 1,
         WELCOME: 2,

@@ -44,6 +44,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.KUNG] = this.receiveKung;
             this.handlers[Types.Messages.MANA] = this.receiveMana;
             this.handlers[Types.Messages.QUEST] = this.receiveQuest;
+            this.handlers[Types.Messages.TALKTONPC] = this.receiveTalkToNPC;
             this.useBison = false;
             
             this.enable();
@@ -214,8 +215,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             if(this.welcome_callback) {
                 this.welcome_callback(id, name, x, y, hp, mana, armor, weapon, avatar,
                 weaponAvatar, experience, admin, questFound, questProgress,
-                inventory0, inventory0Number,
-                      inventory1, inventory1Number);
+                inventory0, inventory0Number, inventory1, inventory1Number);
             }
         },
 
@@ -234,7 +234,14 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.quest_callback(data);
             }
         },
-        
+        receiveTalkToNPC: function(data){
+            data.shift();
+            var npcKind = data.shift();
+            var isCompleted = data.shift();
+            if(this.talkToNPC_callback){
+                this.talkToNPC_callback(npcKind, isCompleted);
+            }
+        },
         receiveMove: function(data) {
             var id = data[1],
                 x = data[2],
@@ -579,7 +586,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         
         onQuest: function(callback) {
             this.quest_callback = callback; 
-        },        
+        },  
+        onTalkToNPC: function(callback) {
+            this.talkToNPC_callback = callback;
+        },
                  
                 
 

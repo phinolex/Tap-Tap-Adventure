@@ -37,7 +37,7 @@ module.exports = Player = Character.extend({
         this.experience = 0;
         this.level = 0;
         this.lastWorldChatMinutes = 99;
-
+        this.achievement = [];
         this.inventory = [];
         this.inventoryCount = [];
       
@@ -483,8 +483,6 @@ module.exports = Player = Character.extend({
     
             else if(action === Types.Messages.TALKTONPC){
                 log.info("TALKTONPC: " + self.name + " " + message[1]);
-                //Handling things using Switch Statement.
-                
                 self.handleTalkToNPC(message);
             }
             
@@ -1010,7 +1008,7 @@ module.exports = Player = Character.extend({
 
         self.server.addPlayer(self);
         self.server.enter_callback(self);
-        databaseHandler.loadQuest(self, function(){
+        databaseHandler.loadQuest(self, function() {
             var i = 0;
             var sendMessage = [
                 Types.Messages.WELCOME, 
@@ -1032,17 +1030,17 @@ module.exports = Player = Character.extend({
                 self.mana //32
             ]; 
             
-            for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
+            for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){
               sendMessage.push(self.achievement[i+1].found);
               sendMessage.push(self.achievement[i+1].progress);
             }
-            for(i=0; i<4; i++){
+            for(i = 0; i < 4; i++){
               sendMessage.push(self.achievement[i+101].found);
               sendMessage.push(self.achievement[i+101].progress);
             }
             
             self.send(sendMessage);
-        }
+        });
         self.hasEnteredGame = true;
         self.isDead = false;
 
