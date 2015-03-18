@@ -185,30 +185,29 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
 
         receiveWelcome: function(data) {
-            data.shift();
-            var id = data.shift(),
-                name = data.shift(),
-                x = data.shift(),
-                y = data.shift(),
-                hp = data.shift(),
-                armor = Types.getKindAsString(data.shift()),
-                weapon = Types.getKindAsString(data.shift()),
-                avatar = Types.getKindAsString(data.shift()),
-                weaponAvatar = Types.getKindAsString(data.shift()),
-                experience = data.shift(),
-                admin = data.shift(),
-                inventory0 = data.shift(),
-                inventory0Number = data.shift(),
-                inventory1 = data.shift(),
-                inventory1Number = data.shift(),
-                mana = data.shift();
+            var id = data[1],
+                name = data[2],
+                x = data[3],
+                y = data[4],
+                hp = data[5],
+                armor = data[6],
+                weapon = data[7],
+                avatar = data[8],
+                weaponAvatar = data[9],
+                experience = data[10],
+                admin = data[11],
+                inventory0 = data[12],
+                inventory0Number = data[13],
+                inventory1 = data[14],
+                inventory1Number = data[15],
+                mana = data[16];
         
             var i=0;
             var questFound = [];
             var questProgress = [];
             for(i=0; i < Types.Quest.TOTAL_QUEST_NUMBER + 4; i++){
-              questFound.push(data.shift());
-              questProgress.push(data.shift());
+              questFound.push(data[17 + i];
+              questProgress.push(data[18  + i];
             }
 
                 //moderator = data[32];
