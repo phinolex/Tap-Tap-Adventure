@@ -206,8 +206,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             var questFound = [];
             var questProgress = [];
             for(i=0; i < Types.Quest.TOTAL_QUEST_NUMBER + 4; i++){
-              questFound.push(data[17 + i];
-              questProgress.push(data[18  + i];
+              questFound.push(data[17 + (2 * i)];
+              questProgress.push(data[18  + (2 * i)];
             }
 
                 //moderator = data[32];
