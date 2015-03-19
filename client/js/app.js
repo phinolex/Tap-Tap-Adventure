@@ -156,7 +156,7 @@ define(['jquery', 'storage'], function($, Storage) {
                                 self.addValidationError(self.getUsernameField(), 'A player with the specified username is already logged in.');
                                 break;
                             case 'ban':
-                                self.addValidationError(self.getUsernameField(), 'You have been banned, appeal on the forum for further assistance.');
+                                self.addValidationError(self.getUsernameField(), 'You have been banned.');
                             break;
                             
                             default:
