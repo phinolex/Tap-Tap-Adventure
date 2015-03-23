@@ -615,6 +615,8 @@ js/kkhandler.js
 js/shophandler.js
 js/playerpopupmenu.js
 js/questhandler.js
+js/partyhandler.js
+js/rankinghandler.js
 js/../../shared/js/gametypes.js
 js/game.js
 

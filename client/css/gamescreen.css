@@ -1,0 +1,296 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 6-Mar-2015, 5:26:35 PM
+    Author     : Mami_Tati
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+:focus {
+	outline: 0;
+}
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+@font-face {
+        font-family: 'GraphicPixel';
+        src: url('../fonts/graphicpixel-webfont.eot');
+        src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../fonts/graphicpixel-webfont.woff') format('woff'),
+             url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
+             url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    
+@font-face {
+        font-family: 'AdvoCut';
+        src: url('../fonts/advocut-webfont.eot');
+        src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../fonts/advocut-webfont.woff') format('woff'),
+             url('../fonts/advocut-webfont.ttf') format('truetype'),
+             url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+}
+
+//Upscale - 3
+@media screen and (min-width: 1501px) {
+    
+}
+
+//Upscale - 2
+@media screen and (max-width: 1500px), screen and (max-height: 870px) {
+
+    #bubbles{
+        width:960px;
+        height:448px;
+        margin-bottom:-448px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        pointer-events:none;
+        overflow: hidden;
+      }
+      .bubble {
+        background:rgba(45,45,45,0.8);
+        padding:0px 8px 0px 8px;
+        border-radius:8px;
+        color:rgba(255,255,255,0.8);
+        display:inline-block;
+        text-align:center;
+        position:absolute;
+        -moz-user-select:none;
+        -webkit-user-select:none;
+      }
+      .thingy {
+        height:10px;
+        width:11px;
+        background:url('../img/common/thingy.png');
+        margin:0 auto;
+        margin-top:-6px;
+        top:6px;
+        position:relative;
+      }
+      #bubbles a {
+        pointer-events:auto;
+        text-decoration:none;
+        color:#fcda5c;
+      }
+      #target{
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 140px;
+        margin-left: 0px;
+        padding: 4px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border: 2px solid #000;
+        border-radius: 0 0 6px 0;
+        pointer-events: none;
+      }
+      #target .headshot {
+        float: left;
+        height: 32px;
+        width: 32px;
+        border: 2px solid #000;
+        margin-right: 3px;
+        background: #FFF;
+        overflow: hidden;
+      }
+      #target .headshot div {
+        position: relative;
+        top: 50%;
+        left: 50%;
+      }
+      #target .details {
+        float: left;
+        margin-bottom: 8px;
+        width: 100px;
+        text-transform: capitalize;
+      }
+      #target .name {
+        float: left;
+        margin-bottom: 8px;
+        text-transform: capitalize;
+      }
+      #target .health {
+        float: left;
+        height: 10px;
+        width: 100%;
+        background: red;
+        clear: left;
+      }
+      #inspector {
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        width: 140px;
+        margin-left: -70px;
+        padding: 4px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border-radius: 0 0 6px 6px;
+        pointer-events: none;
+      }
+      #inspector .headshot {
+        float: left;
+        height: 32px;
+        width: 32px;
+        border: 2px solid #000;
+        margin-right: 3px;
+        background: #FFF;
+        overflow: hidden;
+      }
+      #inspector .headshot div {
+        position: relative;
+        top: 50%;
+        left: 50%;
+      }
+      #inspector .details {
+        float: left;
+        width: 100px;
+      }
+      #inspector .health {
+        float: left;
+        height: 10px;
+        width: 100%;
+        background: red;
+        clear: left;
+      }
+      
+      #allinventorywindow{
+        display: none;
+        position: absolute;
+        width: 192px;
+        height: 192px;
+        top: 256px;
+        left: 50%;
+        margin-left: 86px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+      }
+      #inventory6, #inventory7, #inventory8, #inventory9, #inventory10, #inventory11, #inventory12, #inventory13, #inventory14, #inventory15, #inventory16, #inventory17, #inventory18, #inventory19, #inventory20, #inventory21, #inventory22, #inventory23, #inventory24, #inventory25, #inventory26, #inventory27, #inventory28, #inventory29 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 32px;
+        height: 32px;
+        background-color: rgba(0, 0, 0, 0);
+      }
+      #inventorybackground6, #inventorybackground7, #inventorybackground8, #inventorybackground9, #inventorybackground10, #inventorybackground11, #inventorybackground12, #inventorybackground13, #inventorybackground14, #inventorybackground15, #inventorybackground16, #inventorybackground17, #inventorybackground18, #inventorybackground19, #inventorybackground20, #inventorybackground21, #inventorybackground22, #inventorybackground23, #inventorybackground24, #inventorybackground25, #inventorybackground26, #inventorybackground27, #inventorybackground28, #inventorybackground29 {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        border: 1px solid #9C9898;
+        background-image: url('../img/2/main.png' );
+        background-position: -366px -556px;
+        display: none;
+      }
+      #inventorybackground6, #inventorybackground7, #inventorybackground8, #inventorybackground9, #inventorybackground10, #inventorybackground11{ top: 0px; }
+      #inventorybackground12, #inventorybackground13, #inventorybackground14, #inventorybackground15, #inventorybackground16, #inventorybackground17{ top: 48px; }
+      #inventorybackground18, #inventorybackground19, #inventorybackground20, #inventorybackground21, #inventorybackground22, #inventorybackground23{ top: 96px; }
+      #inventorybackground24, #inventorybackground25, #inventorybackground26, #inventorybackground27, #inventorybackground28, #inventorybackground29{ top: 144px; }
+      #inventorybackground6, #inventorybackground12, #inventorybackground18, #inventorybackground24{ left: 0px; }
+      #inventorybackground7, #inventorybackground13, #inventorybackground19, #inventorybackground25{ left: 32px; }
+      #inventorybackground8, #inventorybackground14, #inventorybackground20, #inventorybackground26{ left: 64px; }
+      #inventorybackground9, #inventorybackground15, #inventorybackground21, #inventorybackground27{ left: 96px; }
+      #inventorybackground10, #inventorybackground16, #inventorybackground22, #inventorybackground28{ left: 128px; }
+      #inventorybackground11, #inventorybackground17, #inventorybackground23, #inventorybackground29{ left: 160px; }
+      #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11, #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17, #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23, #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29 {
+        position: absolute;
+        left: 0px;
+        width: 32px;
+        height: 14px;
+        border: 1px solid #9C9898;
+        color: rgba(255, 255, 255, 1);
+        font-size: 9px;
+        text-align: center;
+        padding-top: 2px;
+      }
+      #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11{ top: 32px; }
+      #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17{ top: 80px; }
+      #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23{ top: 128px; }
+      #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29{ top: 176px; }
+      #inventorynumber6, #inventorynumber12, #inventorynumber18, #inventorynumber24{ left: 0px; }
+      #inventorynumber7, #inventorynumber13, #inventorynumber19, #inventorynumber25{ left: 32px; }
+      #inventorynumber8, #inventorynumber14, #inventorynumber20, #inventorynumber26{ left: 64px; }
+      #inventorynumber9, #inventorynumber15, #inventorynumber21, #inventorynumber27{ left: 96px; }
+      #inventorynumber10, #inventorynumber16, #inventorynumber22, #inventorynumber28{ left: 128px; }
+      #inventorynumber11, #inventorynumber17, #inventorynumber23, #inventorynumber29{ left: 160px; }
+
+      #playerPopupMenuContainer{
+        position: absolute;
+        width: 64px;
+        height: 128px;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+      }
+      #playerPopupMenuName, #playerPopupMenuMove, #playerPopupMenuPartyInvite, #playerPopupMenuPartyOut{
+        position: absolute;
+        left: 0px;
+        width: 64px;
+        height: 32px;
+        background: rgba(0, 0, 0, 0);
+        color: rgba(255, 255, 255, 1);
+        font-size: 14px;
+        text-align: center;
+        margin-top: 8px;
+      }
+      #playerPopupMenuName{ top: 0px; }
+      #playerPopupMenuMove{ top: 32px; }
+      #playerPopupMenuPartyInvite{ top: 64px; }
+      #playerPopupMenuPartyOut{ top: 96px; }
+
+
+}
+
+//Upscale - 1
+@media screen and (max-width: 1000px) {
+    
+    
+}

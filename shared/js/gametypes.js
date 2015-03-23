@@ -41,7 +41,8 @@ Types = {
 	TALKTONPC: 34,
 	INVENTORY: 35,
         MAGIC: 36,
-        MANA: 37
+        MANA: 37,
+        RANKING: 38
     },
 
     Entities: {

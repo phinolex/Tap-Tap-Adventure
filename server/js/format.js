@@ -15,6 +15,7 @@ var Types = require('../../shared/js/gametypes');
             this.formats[Types.Messages.HURT] = ['n'],
             this.formats[Types.Messages.CHAT] = ['s'],
             this.formats[Types.Messages.LOOT] = ['n'],
+            this.formats[Types.Messages.RANKING] = ['s'],
             this.formats[Types.Messages.TELEPORT] = ['n', 'n'],
             this.formats[Types.Messages.ZONE] = [],
             this.formats[Types.Messages.QUEST] = ['n', 's'],

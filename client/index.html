@@ -11,11 +11,9 @@
         <meta property="og:image" content="img/common/promo-title.jpg">
         <meta property="og:site_name" content="Tap Tap Adventure">
         <meta property="og:description" content="Play the massively MMORPG today!">
-        
+        <link rel="stylesheet" href="css/gamescreen.css" type="text/css">
         <link rel="stylesheet" href="css/main.css" type="text/css">
-        <link rel="stylesheet" href="css/basebar.css" type="text/css">
-        <link rel="stylesheet" href="css/gameinterfaces.css" type="text/css">
-    
+        <link rel="stylesheet" href="css/basebar.css" type="text/css">  
         <link rel="stylesheet" href="css/quest.css" type="text/css">
 
         <link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
@@ -191,64 +189,37 @@
 	        </section>
 	    </div>      
             
-        
-        
-             <div id="container">
-                   
-                 <div id="mainborder">
- 
-                       
-		       <article id="instructions" class="clickable">
-		            <div class="close"></div>
-		            <h1>
-     	               <span class="left-ornament"></span>
-     	               How to play
-     	               <span class="right-ornament"></span>
-	                </h1>
-	                <ul>
-	                   <li><span class="icon"></span>Left click or tap to move, attack and pick up items. Hold SHIFT to attack another player.</li>
-	                   <li><span class="icon"></span>Press ENTER to chat.</li>
-	                   <li><span class="icon"></span>Your character is automatically saved as you play. The blue line on the right is your exp bar.</li>
-	                </ul>
-	                    <p>- click anywhere to close -</p>
-		        </article>
-		        
-    			<div id="canvas">
+            <div id="container">
+                <div id="mainborder">
+                    <div id="canvas">
+                        <canvas id="background"></canvas>
+    			<canvas id="entities"></canvas>
+    			<canvas id="foreground" class="clickable"></canvas>
                         
-    				<canvas id="background"></canvas>
-    				<canvas id="entities"></canvas>
-    				<canvas id="foreground" class="clickable"></canvas>
-                            <div id="chatLog"></div>  
-                            <div id="bubbles"></div>
-                            <div id="target">
-                            <div class="headshot"><div></div></div>
-                            <div class="details">
-                                <div class="name"></div>
-                                <div class="health"></div>
-                            </div>
-                            </div>
-                            <div id="inspector">
+                        
+                    </div>
+                        			<div id="bubbles">				
+    			</div>
+                    <div id="chatLog"></div>  
+                    <div id="inspector">
                             <div class="headshot"><div> </div></div>
                             <div class="details">
                                 <div class="name"></div>
+                                <div class="level"></div>
                                 <div class="health"></div>
                             </div>
-                        </div>
-    			</div>
+                            <div id="questalarm"></div>
 
-                        
-                        
-                        
-                <div id="dropDialog">
-                    <div id="dropTitle">Input drop count.</div>
-                    <div align="center">
-                        <input type="text" id="dropCount" size="6" maxlength="6">
-                        <span id="dropAccept">&nbsp;Accept&nbsp;</span>
-                        <span id="dropCancel">&nbsp;Cancel&nbsp;</span>
+                        </div>            
+                    <div id="dropDialog">
+                            <div id="dropTitle">Input drop count.</div>
+                            <div align="center">
+                                <input type="text" id="dropCount" size="6" maxlength="6">
+                                <span id="dropAccept">&nbsp;Accept&nbsp;</span>
+                                <span id="dropCancel">&nbsp;Cancel&nbsp;</span>
+                            </div>
                     </div>
-                </div>
-                <div id="questalarm"></div>
-    			<div id="basebarcontainer">
+                    <div id="basebarcontainer">
                             <div id="hpcontainer">
                                 <div id="health"> </div>
                                 <div id="healthbar"></div>
@@ -337,13 +308,14 @@
                             <div id="soundbutton"></div>
                             <div id="fps">FPS: 60</div>
     			</div>
-				
+				    <div id="questbutton">Quests</div>
+                                    <div id="rankingbutton">Ranking</div>
 				<!-- TODO div id="dialogbox">
 					Right now this happens in the footer.
 				</div to accept members for instance… -->
-
-		    </div>
-		</div>
+                 
+	    </div>
+	</div>
 
         <footer>
 
@@ -358,11 +330,9 @@
             
             
             <div id="credits-link" class="clickable">
-                <span id="toggle-credits">Credits</span>
+                <span class="dash">&ndash;</span><span id="toggle-credits">Credits</span>
             </div>
-            <div id="questbutton">Quests</div>
-   
-   
+
         </footer>
 
             
@@ -397,6 +367,6 @@
         
         
         <div id="quest"></div>
-        
+        <div id="ranking"></div>
 	</body>
 </html>

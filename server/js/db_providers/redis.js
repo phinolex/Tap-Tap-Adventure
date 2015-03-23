@@ -1,4 +1,4 @@
-/* global Types, log */
+/* global Types, log, inventory */
 
 var Utils = require('../utils');
 
@@ -43,6 +43,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget("cb:" + player.connection._connection.remoteAddress, "etime") // 19
                         .smembers("moderators") // 20
                         .hget("b:" + player.connection._connection.remoteAddress, "rtime") //21
+                        .zrevrank("ranking", player.name) // 22
                         //.get(userKey, "userGuild")
                         /*
                          * Add a .hget here to select the guild the player is in, use
@@ -75,6 +76,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var chatBanEndTime = Utils.NaN2Zero(replies[19]);
                             var moderators = replies[20];
                             var banTime = replies[21];
+                            var rank = isNaN(parseInt(replies[22])) ? 0 : parseInt(replies[22]);
                             //var curTime = new Date();
                             //Check ban here
                             
@@ -174,7 +176,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                     avatar, weaponAvatar, exp, admin,
                                     bannedTime, banUseTime,
                                     inventory, inventoryNumber, x, y,
-                                    chatBanEndTime);
+                                    chatBanEndTime, rank);
                             });
                     });
                     return;
@@ -236,9 +238,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             "clotharmor", "sword1", "clotharmor", "sword1", 0,
                              null, 0, 0,
                              [null, null], [0, 0],
-                             [false, false, false, false, false, false],
-                             [0, 0, 0, 0, 0, 0],
-                             player.x, player.y, 0);
+                             player.x, player.y, 0, 0);
                     });
                     
             }
@@ -765,6 +765,67 @@ module.exports = DatabaseHandler = cls.Class.extend({
                      curTime]);
       });
     },
+    
+    getRanking: function(player){
+    var self = this;
+
+        client.multi()
+        .zadd("ranking", player.experience, player.name)
+        .zrevrank("ranking", player.name)
+        .zcount("ranking", '-inf', '+inf')
+        .exec(function(err, replies){
+          var playerRank = replies[1];
+          var numOfRankers = replies[2];
+          var bottomRank = playerRank - 5;
+          var topRank = playerRank + 5;
+          if(bottomRank < 0){
+            bottomRank = 0;
+          }
+          if(topRank > numOfRankers-1){
+            topRank = numOfRankers-1;
+          }
+          log.info("bottomRank: " + bottomRank);
+          log.info("topRank: " + topRank);
+          client.zrevrange("ranking", bottomRank, topRank, function(error, rankers){
+            var i = 0;
+
+            client.multi()
+            .zscore("ranking", rankers[0])
+            .zscore("ranking", rankers[1])
+            .zscore("ranking", rankers[2])
+            .zscore("ranking", rankers[3])
+            .zscore("ranking", rankers[4])
+            .zscore("ranking", rankers[5])
+            .zscore("ranking", rankers[6])
+            .zscore("ranking", rankers[7])
+            .zscore("ranking", rankers[8])
+            .zscore("ranking", rankers[9])
+            .zscore("ranking", rankers[10])
+            .zscore("ranking", rankers[11])
+            .exec(function(err, scores){
+              log.info("" + rankers);
+              log.info("" + scores);
+              var msg = [Types.Messages.RANKING, bottomRank+1];
+              for(i=0; i < 11; i++){
+                msg.push(rankers[i]);
+                msg.push(scores[i]);
+              }
+              player.send(msg);
+            });
+          });
+        });
+      },
+      getPlayerRanking: function(player, callback) {
+        var result = -1;
+        var multi = client.multi();
+
+        multi.zadd("ranking", player.experience, player.name);
+        multi.zrevrank("ranking", player.name);
+        multi.exec(function(err, ranking) {
+          callback(parseInt(ranking[1]));
+        });
+      },
+
     writeReply: function(player, content, number){
       log.info("Write Reply: " + player.name + " " + content + " " + number);
       var self = this;

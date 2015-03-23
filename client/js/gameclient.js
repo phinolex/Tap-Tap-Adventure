@@ -44,7 +44,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.KUNG] = this.receiveKung;
             this.handlers[Types.Messages.MANA] = this.receiveMana;
             this.handlers[Types.Messages.QUEST] = this.receiveQuest;
+            this.handlers[Types.Messages.PARTY] = this.receiveParty;
             this.handlers[Types.Messages.TALKTONPC] = this.receiveTalkToNPC;
+            this.handlers[Types.Messages.RANKING] = this.receiveRanking;
             this.useBison = false;
             
             this.enable();
@@ -206,8 +208,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             var questFound = [];
             var questProgress = [];
             for(i=0; i < Types.Quest.TOTAL_QUEST_NUMBER + 4; i++){
-              questFound.push(data[17 + (2 * i)];
-              questProgress.push(data[18  + (2 * i)];
+              questFound.push(data[17 + (2 * i)]);
+              questProgress.push(data[18  + (2 * i)]);
             }
 
                 //moderator = data[32];
@@ -268,7 +270,12 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.attack_callback(attacker, target);
             }
         },
-
+        receiveParty: function (data) {
+            data.shift();
+            if(this.party_callback) {
+                this.party_callback(data);
+            }
+        },
         receiveSpawn: function(data) {
             var id = data[1],
                 kind = data[2],
@@ -447,14 +454,19 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.blink_callback(id);
             }
         },
-         receivePVP: function(data){
+        receivePVP: function(data){
             var pvp = data[1];
             if(this.pvp_callback){
                 this.pvp_callback(pvp);
             }
         },
 
-       
+        receiveRanking: function(data){
+            data.shift();
+            if(this.ranking_callback){
+                this.ranking_callback(data);
+            }
+        },
        receiveBoard: function(data){
             if(this.board_callback){
                 this.board_callback(data);
@@ -589,7 +601,12 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onTalkToNPC: function(callback) {
             this.talkToNPC_callback = callback;
         },
-                 
+        onParty: function (callback) { 
+            this.party_callback = callback; 
+        },         
+        onRanking: function (callback) {
+            this.ranking_callback = callback; 
+        },
                 
 
         sendCreate: function(player) {
@@ -701,7 +718,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.sendMessage([Types.Messages.KUNG,
                               word]);
         },
-        
+        sendRanking: function(command){
+            this.sendMessage([Types.Messages.RANKING,
+                              command]);
+        },
         sendQuest: function(id, type){
             this.sendMessage([Types.Messages.QUEST,
                               id, type]);

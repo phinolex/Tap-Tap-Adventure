@@ -1,4 +1,6 @@
 
+/* global log, mob */
+
 var cls = require("./lib/class"),
     _ = require("underscore"),
     Log = require('log'),
@@ -73,9 +75,10 @@ module.exports = World = cls.Class.extend({
             self.pushRelevantEntityListTo(player);
 
             var move_callback = function(x, y) {
-               log.debug(player.name + "has moved to position: x:" + x + " y:" + y);
-               var isPVP = self.map.isPVP(x, y);
-               player.flagPVP(isPVP); 
+                log.debug(player.name + "has moved to position: x:" + x + " y:" + y);
+               
+                var isPVP = self.map.isPVP(x, y);
+                player.flagPVP(isPVP); 
                
                /*
                 * Basically 
@@ -371,6 +374,23 @@ module.exports = World = cls.Class.extend({
     },
 
     removePlayer: function(player) {
+        var party = player.party;
+
+        if(party){
+          if(party.players.length < 3){
+            party.removePlayer(player);
+            if(party.players[0]){
+              party.players[0].party = null;
+              party.players[0].send([Types.Messages.PARTY]);
+              delete party;
+            }
+          } else{
+            party.removePlayer(player);
+          }
+        }
+        
+        
+        
         player.broadcast(player.despawn());
         this.removeEntity(player);
        

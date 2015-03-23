@@ -10,8 +10,10 @@ var cls = require("./lib/class"),
     Properties = require("./properties"),
     Formulas = require("./formulas"),
     check = require("./format").check,
+    Party = require("./party"),
     Types = require("../../shared/js/gametypes");
     bcrypt = require('bcrypt');
+    
     Mob = require('./mob');
     
 
@@ -278,7 +280,9 @@ module.exports = Player = Character.extend({
                         if(mob.type !== "player"){
                             mob.receiveDamage(dmg, self.id);
                             if (mob.hitPoints <= 0) {
-                                this.questAboutKill(mob);
+                                //CLASS
+                                self.questAboutKill(mob);
+                                
                             }
                             
                             self.server.handleMobHate(mob.id, self.id, dmg);
@@ -311,13 +315,6 @@ module.exports = Player = Character.extend({
                         self.isDead = true;
                         if(self.level >= 45){ // Don't forget
                             self.incExp(Math.floor(self.level*self.level*(-2)));
-/*                            var dice = Utils.randomInt(0, 19);
-                            if(dice === 3){
-                                self.equipArmor(Types.Entities.CLOTHARMOR);
-                                databaseHandler.equipArmor(self.name, Types.getKindAsString(Types.Entities.CLOTHARMOR));
-                                self.equipAvatar(Types.Entities.CLOTHARMOR);
-                                databaseHandler.equipAvatar(self.name, Types.getKindAsString(Types.Entities.CLOTHARMOR));
-                            } */
                         }
                         if(self.firepotionTimeout) {
                             clearTimeout(self.firepotionTimeout);
@@ -504,13 +501,15 @@ module.exports = Player = Character.extend({
                   }
                 }
               }
-          }
-           else if(action === Types.Messages.BOARD){
+          } else if(action === Types.Messages.BOARD){
               log.info("BOARD: " + self.name + " " + message[1] + " " + message[2]);
               var command = message[1];
               var number = message[2];
               var replyNumber = message[3];
               databaseHandler.loadBoard(self, command, number, replyNumber);
+            } else if(action === Types.Messages.RANKING){
+                log.info("RANKING: " + self.name + " " + message[1]);
+                self.handleRanking(message);
             } else if(action === Types.Messages.BOARDWRITE){
               log.info("BOARDWRITE: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
               var command = message[1];
@@ -548,6 +547,71 @@ module.exports = Player = Character.extend({
 
         this.connection.sendUTF8("go"); // Notify client that the HELLO/WELCOME handshake can start
     },
+    potatoFunction: function(mob) {
+        
+    },
+    
+    questAboutKill: function(mob){
+    var self = this;
+    // Daily Quest
+        if(this.achievement[101].found){
+            if(this.achievement[101].progress < 999){
+                this._questAboutKill(mob.kind, 0, 101, 25, function(){
+                    log.info("Quest 101 Completed");
+                    self.inventory.putInventory(Types.Entities.FLASK, 100, 0, 0);
+            });
+            return;
+            } else if(this.achievement[102].found){
+                if(this.achievement[102].progress < 999){
+                    this._questAboutKill(mob.kind, 0, 102, 100, function(){
+                        log.info("Quest 102 Completed");
+                        self.inventory.putInventory(Types.Entities.BURGER, 100, 0, 0);
+                    });
+                    return;
+                } else if(this.achievement[103].found){
+                    if(this.achievement[103].progress < 999){
+                        this._questAboutKill(mob.kind, 0, 103, 200, function(){
+                            log.info("Quest 103 Completed");
+                            self.inventory.putInventory(Types.Entities.ROYALAZALEA, 50, 0, 0);
+                        });
+                    return;
+                    } else if(this.achievement[104].found){
+                        if(this.achievement[104].progress < 999){
+                            this._questAboutKill(mob.kind, 0, 104, 500, function(){
+                                log.info("Quest 104 Completed");
+                                self.inventory.putInventory(Types.Entities.SNOWPOTION, 1, 0, 0);
+                        });
+                        return;
+                        }
+                    }
+                }
+            }
+        }
+        this._questAboutKill(mob.kind, Types.Entities.RAT, 2, 10, function(){
+             self.incExp(200);
+        });
+        this._questAboutKill(mob.kind, Types.Entities.CRAB, 4, 5, function(){
+            self.incExp(100);
+        });
+        this._questAboutKill(mob.kind, Types.Entities.SKELETON, 7, 10, function(){
+            self.incExp(400);
+        });
+        this._questAboutKill(mob.kind, Types.Entities.SKELETONKING, 9, 2, function(){
+            self.incExp(1000);
+        });
+        this._questAboutKill(mob.kind, Types.Entities.ORC, 10, 10, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.GOLEM, 11, 10, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.HOBGOBLIN, 12, 13, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.YELLOWMOUSE, 13, 12, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.MERMAID, 16, 15, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.LIVINGARMOR, 17, 9, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.PENGUIN, 18, 12, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.DARKSKELETON, 19, 20, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.MINIKNIGHT, 20, 30, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.WOLF, 22, 50, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.SNOWWOLF, 28, 60, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.SNOWLADY, 29, 70, function(){ self.setAbility(); });
+    },
 
     destroy: function() {
         var self = this;
@@ -578,18 +642,12 @@ module.exports = Player = Character.extend({
         this.connection.send(message);
     },
 
-    flagPVP: function(pvpFlag){
+  flagPVP: function(pvpFlag){
         if(this.pvpFlag !== pvpFlag){
-            this.pvpFlag = pvpFlag;
-            if (this.pvpFlag) {
-                log.info('PVP Enabled - ServerSide');
-            } else {
-                log.info('PVP Disabled - ServerSide');
-            }
-            
-            this.send(new Messages.PVP(this.pvpFlag).serialize());
+          this.pvpFlag = pvpFlag;
+          this.send(new Messages.PVP(this.pvpFlag).serialize());
         }
-    },
+  },
 
     broadcast: function(message, ignoreSelf) {
         if(this.broadcast_callback) {
@@ -726,6 +784,13 @@ module.exports = Player = Character.extend({
     onRequestPosition: function(callback) {
         this.requestpos_callback = callback;
     },
+    handleRanking: function(message){ // 40
+        var type = message[1];
+
+        if(type === 'get'){
+            databaseHandler.getRanking(this);
+        }
+    },
     handleQuest: function(message){ // 29
         if(message[2] === "found") {
             var questId = message[1];
@@ -834,67 +899,7 @@ module.exports = Player = Character.extend({
         clearTimeout(this.disconnectTimeout);
         this.disconnectTimeout = setTimeout(this.timeout.bind(this), 1000 * 60 * 5); // 5 min.
     },
-    questAboutKill: function(mob){
-    var self = this;
-    // Daily Quest
-        if(this.achievement[101].found){
-            if(this.achievement[101].progress < 999){
-                this._questAboutKill(mob.kind, 0, 101, 25, function(){
-                    log.info("Quest 101 Completed");
-                    self.inventory.putInventory(Types.Entities.FLASK, 100, 0, 0);
-            });
-            return;
-            } else if(this.achievement[102].found){
-                if(this.achievement[102].progress < 999){
-                    this._questAboutKill(mob.kind, 0, 102, 100, function(){
-                        log.info("Quest 102 Completed");
-                        self.inventory.putInventory(Types.Entities.BURGER, 100, 0, 0);
-                    });
-                    return;
-                } else if(this.achievement[103].found){
-                    if(this.achievement[103].progress < 999){
-                        this._questAboutKill(mob.kind, 0, 103, 200, function(){
-                            log.info("Quest 103 Completed");
-                            self.inventory.putInventory(Types.Entities.ROYALAZALEA, 50, 0, 0);
-                        });
-                    return;
-                    } else if(this.achievement[104].found){
-                        if(this.achievement[104].progress < 999){
-                            this._questAboutKill(mob.kind, 0, 104, 500, function(){
-                                log.info("Quest 104 Completed");
-                                self.inventory.putInventory(Types.Entities.SNOWPOTION, 1, 0, 0);
-                        });
-                        return;
-                        }
-                    }
-                }
-            }
-        }
-        this._questAboutKill(mob.kind, Types.Entities.RAT, 2, 10, function(){
-             self.incExp(200);
-        });
-        this._questAboutKill(mob.kind, Types.Entities.CRAB, 4, 5, function(){
-            self.incExp(100);
-        });
-        this._questAboutKill(mob.kind, Types.Entities.SKELETON, 7, 10, function(){
-            self.incExp(400);
-        });
-        this._questAboutKill(mob.kind, Types.Entities.SKELETONKING, 9, 2, function(){
-            self.incExp(1000);
-        });
-        this._questAboutKill(mob.kind, Types.Entities.ORC, 10, 10, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.GOLEM, 11, 10, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.HOBGOBLIN, 12, 13, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.YELLOWMOUSE, 13, 12, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.MERMAID, 16, 15, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.LIVINGARMOR, 17, 9, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.PENGUIN, 18, 12, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.DARKSKELETON, 19, 20, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.MINIKNIGHT, 20, 30, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.WOLF, 22, 50, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.SNOWWOLF, 28, 60, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.SNOWLADY, 29, 70, function(){ self.setAbility(); });
-        },
+    
     _questAboutKill: function(mobKind, questMobKind, questId, completeNumber, callback){
         if((questMobKind === 0 && Types.getMobLevel(mobKind)*2 > this.level) || mobKind === questMobKind) {
             var achievement = this.achievement[questId];
@@ -1076,8 +1081,15 @@ module.exports = Player = Character.extend({
             this.inventoryCount[1] = item.count;
             databaseHandler.setInventory(this.name, item.kind, 1, item.count);
         }
+    },
+    
+    setAbility: function() {
+        
+    },
+    
+    getRanking: function() {
+        databaseHandler.getPlayerRanking(this, function(ranking){
+             log.debug("Ranking: " + ranking);
+        });
     }
-    
-    
-
 });

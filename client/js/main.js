@@ -41,7 +41,20 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             $('.barbutton').click(function() {
                 $(this).toggleClass('active');
             });
-
+            $('#rankingbutton').click(function(event){
+              if(app.game && app.ready && app.game.ready){
+                app.game.client.sendRanking('get');
+                app.hideAllSubwindow();
+                app.game.rankingHandler.show();
+              }
+            });
+            $('#questbutton').click(function(event){
+              if(app.game && app.ready && app.game.ready){
+                app.game.client.sendQuest(0, "show");
+                app.hideAllSubwindow();
+                app.game.questhandler.show();
+              }
+            });
             $('#chatbutton').click(function() {
                 if($('#chatbutton').hasClass('active')) {
                     app.showChat();

@@ -1,3 +1,5 @@
+/* global Detect, Class, _, log, Types, font */
+
 define(['camera', 'item', 'character', 'player', 'timer'],
 function(Camera, Item, Character, Player, Timer) {
 

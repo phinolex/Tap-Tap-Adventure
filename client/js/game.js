@@ -6,12 +6,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'questhandler',
+        'partyhandler', 'rankinghandler',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
-         ShopHandler, PlayerPopupMenu, QuestHandler) {
+         ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -79,6 +80,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.shopHandler = new ShopHandler(this);
             this.boardhandler = new BoardHandler(this);
             this.playerPopupMenu = new PlayerPopupMenu(this);
+            this.partyhandler = new PartyHandler(this);
+            this.rankingHandler = new RankingHandler(this);
 
             // TextWindow Handler
             //this.textWindowHandler = new TextWindowHandler();
@@ -1519,6 +1522,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
                 self.client.onKung(function(msg){
                     self.kkhandler.add(msg, self.player);
+                });
+                self.client.onRanking(function(message){
+                  self.rankingHandler.handleRanking(message);
+                });
+                self.client.onParty(function (members) {
+                  self.partyhandler.setMembers(members);
                 });
                 self.client.onMana(function(mana, maxMana) {
                     self.player.mana = mana;
