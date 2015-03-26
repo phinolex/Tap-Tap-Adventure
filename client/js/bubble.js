@@ -43,8 +43,8 @@ define(['jquery', 'timer'], function($, Timer) {
                 $("#"+id+" p").html(message);
             }
             else {
-                var el = $("<div id=\""+id+"\" class=\"bubble\"><p>"+message+"</p><div class=\"thingy\"></div></div>"); //.attr('id', id);
-                $(el).appendTo(this.container);
+var el = $("<div id=\""+id+"\" class=\"bubble\"><p>"+message+"</p><div class=\"thingy\"></div></div>"); //.attr('id', id);
+        $(el).appendTo(this.container);
 
                 this.bubbles[id] = new Bubble(id, el, time);
             }

@@ -1504,7 +1504,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
                 self.client.onTalkToNPC(function(npcKind, isCompleted){
                   var npc = self.getEntityByKind(npcKind);
-                  var msg = npc.talk(self.language, isCompleted);
+                  var msg = npc.talk(isCompleted);
                   if(msg) {
                     self.createBubble(npc.id, msg);
                     self.assignBubbleTo(npc);

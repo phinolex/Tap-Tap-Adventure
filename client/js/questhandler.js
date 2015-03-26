@@ -1,4 +1,6 @@
 
+/* global Types, Class, _, questSerial */
+
 define(['jquery'], function() {
   var QuestHandler = Class.extend({
     init: function(game) {
@@ -10,7 +12,7 @@ define(['jquery'], function() {
           name: "공주를 구하라",
           desc: "공주를 구해오세요",
           found: false,
-          completed: false,
+          completed: false
         },
         KILL_RAT: {
           id: 2,
@@ -19,7 +21,7 @@ define(['jquery'], function() {
           desc: "쥐 10마리를 잡으세요",
           found: false,
           completed: false,
-          completeNumber: 10,
+          completeNumber: 10
         },
         BRING_LEATHERARMOR: {
           id: 3,
@@ -27,7 +29,7 @@ define(['jquery'], function() {
           name: "가죽갑옷",
           desc: "Villager에게 가죽갑옷을 구해주세요",
           found: false,
-          completed: false,
+          completed: false
         },
         KILL_CRAB: {
           id: 4,
@@ -36,7 +38,7 @@ define(['jquery'], function() {
           desc: "게 5마리를 잡으세요",
           found: false,
           completed: false,
-          completeNumber: 5,
+          completeNumber: 5
         },
         FIND_CAKE: {
           id: 5,
@@ -44,7 +46,7 @@ define(['jquery'], function() {
           name: "케이크를 찾아라",
           desc: "케이크를 찾으세요",
           found: false,
-          completed: false,
+          completed: false
         },
         FIND_CD: {
           id: 6,
@@ -52,7 +54,7 @@ define(['jquery'], function() {
           name: "시디를 찾아라",
           desc: "시디를 찾으세요",
           found: false,
-          completed: false,
+          completed: false
         },
         KILL_SKELETON: {
           id: 7,
@@ -61,7 +63,7 @@ define(['jquery'], function() {
           desc: "스켈레톤을 10마리 잡으세요",
           found: false,
           completed: false,
-          completeNumber: 10,
+          completeNumber: 10
         },
         BRING_AXE: {
           id: 8,
@@ -69,7 +71,7 @@ define(['jquery'], function() {
           name: "도끼",
           desc: "도끼를 가져다 주세요",
           found: false,
-          completed: false,
+          completed: false
         },
         KILL_SKELETONKING: {
           id: 9,
@@ -77,7 +79,7 @@ define(['jquery'], function() {
           name: "스켈레톤 킹",
           desc: "스켈레톤 킹을 잡아라",
           found: false,
-          completed: false,
+          completed: false
         },
         KILL_ORC: {
           id: 10,
@@ -86,7 +88,7 @@ define(['jquery'], function() {
           desc: "오크를 잡아라",
           found: false,
           completed: false,
-          completeNumber: 10,
+          completeNumber: 10
         },
         KILL_GOLEM: {
           id: 11,
@@ -95,7 +97,7 @@ define(['jquery'], function() {
           desc: "골렘을 잡아라",
           found: false,
           completed: false,
-          completeNumber: 10,
+          completeNumber: 10
         },
         KILL_HOBGOBLIN: {
           id: 12,
@@ -104,7 +106,7 @@ define(['jquery'], function() {
           desc: "홉고블린을 잡아라",
           found: false,
           completed: false,
-          completeNumber: 13,
+          completeNumber: 13
         },
         KILL_YELLOWMOUSE: {
           id: 13,
@@ -113,7 +115,7 @@ define(['jquery'], function() {
           desc: "노랑쥐를 잡아라",
           found: false,
           completed: false,
-          completeNumber: 12,
+          completeNumber: 12
         },
         BRING_RATARMOR: {
           id: 14,
@@ -121,7 +123,7 @@ define(['jquery'], function() {
           name: "랫아머",
           desc: "랫아머를 가져다 주세요.",
           found: false,
-          completed: false,
+          completed: false
         },
         BRING_HAMMER: {
           id: 15,
@@ -129,7 +131,7 @@ define(['jquery'], function() {
           name: "망치",
           desc: "망치를 가져다 주세요.",
           found: false,
-          completed: false,
+          completed: false
         },
         KILL_MERMAID: {
           id: 16,
@@ -138,7 +140,7 @@ define(['jquery'], function() {
           desc: "인어를 잡아 주세요.",
           found: false,
           completed: false,
-          completeNumber: 15,
+          completeNumber: 15
         },
         KILL_LIVINGARMOR: {
           id: 17,
@@ -147,7 +149,7 @@ define(['jquery'], function() {
           desc: "리빙아머를 잡아 주세요.",
           found: false,
           completed: false,
-          completeNumber: 9,
+          completeNumber: 9
         },
         KILL_PENGUIN: {
           id: 18,
@@ -156,7 +158,7 @@ define(['jquery'], function() {
           desc: "펭귄을 잡아 주세요.",
           found: false,
           completed: false,
-          completeNumber: 12,
+          completeNumber: 12
         },
         KILL_DARKSKELETON: {
           id: 19,
@@ -165,7 +167,7 @@ define(['jquery'], function() {
           desc: "다크 스켈레톤을 잡아 주세요.",
           found: false,
           completed: false,
-          completeNumber: 20,
+          completeNumber: 20
         },
         KILL_MINIKNIGHT: {
           id: 20,
@@ -174,7 +176,7 @@ define(['jquery'], function() {
           desc: "미니나이트를 잡아 주세요.",
           found: false,
           completed: false,
-          completeNumber: 30,
+          completeNumber: 30
         },
         BRING_REDLIGHTSABER: {
           id: 21,
@@ -183,7 +185,7 @@ define(['jquery'], function() {
           desc: "빨강형광등을 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 30,
+          completeNumber: 30
         },
         KILL_WOLF: {
           id: 22,
@@ -192,7 +194,7 @@ define(['jquery'], function() {
           desc: "늑대를 잡아주세요.",
           found: false,
           completed: false,
-          completeNumber: 50,
+          completeNumber: 50
         },
         BRING_BLUEWINGARMOR: {
           id: 23,
@@ -201,7 +203,7 @@ define(['jquery'], function() {
           desc: "파랑날개갑옷을 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 50,
+          completeNumber: 50
         },
         BRING_BASTARDSWORD: {
           id: 24,
@@ -210,7 +212,7 @@ define(['jquery'], function() {
           desc: "바스타드소드를 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 50,
+          completeNumber: 50
         },
         BRING_REDMETALSWORD: {
           id: 25,
@@ -219,7 +221,7 @@ define(['jquery'], function() {
           desc: "레드메탈소드를 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 50,
+          completeNumber: 50
         },
         BRING_ICEROSE: {
           id: 26,
@@ -228,7 +230,7 @@ define(['jquery'], function() {
           desc: "얼음장미를 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 50,
+          completeNumber: 50
         },
         BRING_FORESTGUARDIANSWORD: {
           id: 27,
@@ -237,7 +239,7 @@ define(['jquery'], function() {
           desc: "포레스트 가디언 소드를 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 50,
+          completeNumber: 50
         },
         KILL_SNOWWOLF: {
           id: 28,
@@ -246,7 +248,7 @@ define(['jquery'], function() {
           desc: "눈늑대를 잡아주세요.",
           found: false,
           completed: false,
-          completeNumber: 60,
+          completeNumber: 60
         },
         KILL_SNOWLADY: {
           id: 29,
@@ -255,7 +257,7 @@ define(['jquery'], function() {
           desc: "설녀를 잡아주세요.",
           found: false,
           completed: false,
-          completeNumber: 70,
+          completeNumber: 70
         },
         BRING_FROSTARMOR: {
           id: 30,
@@ -264,7 +266,7 @@ define(['jquery'], function() {
           desc: "서리갑옷을 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 70,
+          completeNumber: 70
         },
         BRING_SHADOWREGIONARMOR: {
           id: 31,
@@ -273,7 +275,7 @@ define(['jquery'], function() {
           desc: "섀도우 레기온 갑옷을 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 70,
+          completeNumber: 70
         },
         BRING_BREAKER: {
           id: 32,
@@ -282,7 +284,7 @@ define(['jquery'], function() {
           desc: "브레이커를 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 70,
+          completeNumber: 70
         },
         BRING_DAMBOARMOR: {
           id: 33,
@@ -291,7 +293,7 @@ define(['jquery'], function() {
           desc: "담보갑옷을 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 70,
+          completeNumber: 70
         },
         BRING_SQUIDANDTYPHOON: {
           id: 34,
@@ -300,7 +302,7 @@ define(['jquery'], function() {
           desc: "오징어갑옷과 타이푼을 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 70,
+          completeNumber: 70
         },
         BRING_MEMME: {
           id: 35,
@@ -309,7 +311,7 @@ define(['jquery'], function() {
           desc: "맴매를 가져다 주세요.",
           found: false,
           completed: false,
-          completeNumber: 70,
+          completeNumber: 70
         },
 
         KILL_25: {
@@ -319,7 +321,7 @@ define(['jquery'], function() {
           desc: "몬스터 25마리를 잡으세요.",
           found: false,
           completed: false,
-          completeNumber: 25,
+          completeNumber: 25
         },
         KILL_100: {
           id: 102,
@@ -328,7 +330,7 @@ define(['jquery'], function() {
           desc: "몬스터 100마리를 잡으세요.",
           found: false,
           completed: false,
-          completeNumber: 100,
+          completeNumber: 100
         },
         KILL_200: {
           id: 103,
@@ -337,7 +339,7 @@ define(['jquery'], function() {
           desc: "몬스터 200마리를 잡으세요.",
           found: false,
           completed: false,
-          completeNumber: 200,
+          completeNumber: 200
         },
         KILL_500: {
           id: 104,
@@ -346,8 +348,8 @@ define(['jquery'], function() {
           desc: "몬스터 500마리를 잡으세요.",
           found: false,
           completed: false,
-          completeNumber: 500,
-        },
+          completeNumber: 500
+        }
       };
     },
     show: function(){
@@ -502,7 +504,7 @@ define(['jquery'], function() {
         this.show();
       } else if(type === "found"){
         questId = data[1];
-        quest = _.find(this.quests, function(q){ return q.id === questId });
+        quest = _.find(this.quests, function(q){ return q.id === questId; });
         quest.found = true;
         htmlStr = '<p><h2>' + quest.name + ' 퀘스트 발견</h2></p><p>'
                     + quest.desc + '</p>';
@@ -513,7 +515,7 @@ define(['jquery'], function() {
         }, 5000);
       } else if(type === "complete"){
         questId = data[1];
-        quest = _.find(this.quests, function(q){ return q.id === questId });
+        quest = _.find(this.quests, function(q){ return q.id === questId; });
         quest.completed = true;
         htmlStr = '<p><h2>' + quest.name + ' 퀘스트 완료</h2></p><p>'
                     + quest.desc + '</p>';
@@ -526,7 +528,7 @@ define(['jquery'], function() {
         this.initSkill();
       } else if(type === "progress"){
         questId = data[1];
-        quest = _.find(this.quests, function(q){ return q.id === questId });
+        quest = _.find(this.quests, function(q){ return q.id === questId; });
         htmlStr = '<p><h2>' + quest.name + ' 퀘스트</h2></p><p>'
                     + data[2] + ' / ' + quest.completeNumber + ' 완료' + '</p>';
         $('#questalarm').html(htmlStr);
@@ -538,27 +540,27 @@ define(['jquery'], function() {
       }
     },
     talkToNPC: function(npc){
-      if(npc.kind === Types.Entities.CODER){
+      if(npc.kind === Types.Entities.CODER) {
         this.game.client.sendTalkToNPC(npc.kind);
-        return npc.talk(this.game.language, false);
-      } else{
+        return npc.talk(false);
+      } else {
         for(questSerial in this.quests){
-          var quest = this.quests[questSerial];
-          if(quest.npcKind === npc.kind){
-            if(!quest.found){
-              this.game.client.sendQuest(quest.id, "found");
-              return npc.talk(this.game.language, false);
-            } else if(!quest.completed){
-              this.game.client.sendTalkToNPC(npc.kind);
-              return null;
-            } else{
-              return npc.talk(this.game.language, true);
+            var quest = this.quests[questSerial];
+            if(quest.npcKind === npc.kind){
+                if(!quest.found) {
+                    this.game.client.sendQuest(quest.id, "found");
+                    return npc.talk(false);
+                } else if(!quest.completed) {
+                    this.game.client.sendTalkToNPC(npc.kind);
+                    return null;
+                } else { 
+                    return npc.talk(true);
+                }
             }
-          }
         }
       }
-      return npc.talk(this.game.language, false);
-    },
+      return npc.talk(false);
+    }
   });
 
   return QuestHandler;

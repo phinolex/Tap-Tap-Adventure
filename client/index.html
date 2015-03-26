@@ -11,9 +11,10 @@
         <meta property="og:image" content="img/common/promo-title.jpg">
         <meta property="og:site_name" content="Tap Tap Adventure">
         <meta property="og:description" content="Play the massively MMORPG today!">
-        <link rel="stylesheet" href="css/gamescreen.css" type="text/css">
+        
         <link rel="stylesheet" href="css/main.css" type="text/css">
         <link rel="stylesheet" href="css/basebar.css" type="text/css">  
+        <link rel="stylesheet" href="css/gamescreen.css" type="text/css">
         <link rel="stylesheet" href="css/quest.css" type="text/css">
 
         <link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
@@ -29,19 +30,11 @@
         <link href="img/common/apple-touch-startup-image-1496x2048.png" rel="apple-touch-startup-image" media="(device-width: 1536px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)">
 
         <script src="js/lib/modernizr.js" type="text/javascript"></script>
-        <!--[if lt IE 9]>
-                <link rel="stylesheet" href="css/ie.css" type="text/css">
-                <script src="js/lib/css3-mediaqueries.js" type="text/javascript"></script>
-                <script type="text/javascript">
-                document.getElementById('parchment').className = ('error');
-                </script>
-        <![endif]-->
+
         <script src="js/detect.js" type="text/javascript"></script>
         <title>Tap Tap Adventure</title>
 	</head>
-    <!--[if lt IE 9]>
-	<body class="intro upscaled">
-    <![endif]-->
+
     
 	<body class="intro">
 	    <noscript>
@@ -195,12 +188,12 @@
                         <canvas id="background"></canvas>
     			<canvas id="entities"></canvas>
     			<canvas id="foreground" class="clickable"></canvas>
-                        
-                        
+              
                     </div>
-                        			<div id="bubbles">				
-    			</div>
-                    <div id="chatLog"></div>  
+                    <div id="bubbles"></div>
+                    <div id="chatLog"></div> 
+                    <div id="questalarm"></div>
+
                     <div id="inspector">
                             <div class="headshot"><div> </div></div>
                             <div class="details">
@@ -208,7 +201,6 @@
                                 <div class="level"></div>
                                 <div class="health"></div>
                             </div>
-                            <div id="questalarm"></div>
 
                         </div>            
                     <div id="dropDialog">
@@ -308,8 +300,8 @@
                             <div id="soundbutton"></div>
                             <div id="fps">FPS: 60</div>
     			</div>
-				    <div id="questbutton">Quests</div>
-                                    <div id="rankingbutton">Ranking</div>
+                    <div id="questbutton">Quests</div>
+                    <div id="rankingbutton">Ranking</div>
 				<!-- TODO div id="dialogbox">
 					Right now this happens in the footer.
 				</div to accept members for instance… -->

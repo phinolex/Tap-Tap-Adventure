@@ -19,12 +19,12 @@ define(['character'], function(Character) {
             if(this.talkIndex < talkCount) {
                 msg = msgs[this.talkIndex];
             }
-        this.talkIndex += 1;
+            this.talkIndex += 1;
 
             return msg;
         } else {
             
-        return "Hello.";
+            return "Hello.";
         }
     }
 });

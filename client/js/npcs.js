@@ -26,13 +26,7 @@ define(['npc'], function(Npc) {
         Villager: Npc.extend({
             init: function(id) {
                 this._super(id, Types.Entities.VILLAGER, 1);
-                this.beforeQuestCompleteTalk = [
-                    ["Ex..cu..se me. I really want to become a warrior."],
-                    ["Can you please give me one leather armor?"]
-                ];
-                this.afterQuestCompleteTalk = [
-                    ["Thank you."]
-                ];
+
             }
         }),
         BeachNpc: Npc.extend({
