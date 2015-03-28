@@ -342,7 +342,7 @@ define(['jquery', 'storage'], function($, Storage) {
             $(el+' .name').css('text-transform', 'capitalize');
 
             if(el === '#inspector'){
-                 $(el + ' .details').text((target instanceof Mob ? "Level." + Types.getMobLevel(Types.getKindFromString(name)) : (target instanceof Item ? target.getInfoMsg(self.game.language): "1")));
+                 $(el + ' .details').text((target instanceof Mob ? "Level." + Types.getMobLevel(Types.getKindFromString(name)) : (target instanceof Item ? target.getInfoMsg(): "1")));
             }
             $(el+' .headshot div').height(sprite.height).width(sprite.width);
             $(el+' .headshot div').css('margin-left', -sprite.width/2).css('margin-top', -sprite.height/2);

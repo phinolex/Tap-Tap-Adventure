@@ -237,7 +237,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
         receiveTalkToNPC: function(data){
             var npcKind = data[1];
-            var isCompleted = data.shift[2];
+            var isCompleted = data[2];
             if(this.talkToNPC_callback){
                 this.talkToNPC_callback(npcKind, isCompleted);
             }

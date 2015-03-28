@@ -22,12 +22,11 @@ define(['character'], function(Character) {
             this.talkIndex += 1;
 
             return msg;
-        } else {
-            
-            return "Hello.";
+        } else  {
+            return "안생겨요";
         }
-    }
-});
+      }
+    });
     
   return Npc;
 });

@@ -2189,18 +2189,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     this.makePlayerGoToItem(entity);
                 } else if(entity instanceof Npc) {
                     
-                    if(this.player.isAdjacentNonDiagonal(entity) === false) {
-                        this.makePlayerTalkTo(entity);
-                        
-                    } else {
-                        
-                        if(!this.player.disableKeyboardNpcTalk) {
+        	        if(this.player.isAdjacentNonDiagonal(entity) === false) {
+                            this.makePlayerTalkTo(entity);
+        	        } else {
                             this.makeNpcTalk(entity);
-
-                            if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
-                                this.player.disableKeyboardNpcTalk = true;
-                        }
-                    }
+        	        }
                 } else if(entity instanceof Chest) {
                     this.makePlayerOpenChest(entity);
                     
