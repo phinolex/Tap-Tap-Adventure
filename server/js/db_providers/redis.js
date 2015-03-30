@@ -202,7 +202,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         player.sendWelcome(
                             "clotharmor", "sword1", "clotharmor", "sword1", 0,
                              null, 0, 0,
-                             [null, null], [0, 0],
                              player.x, player.y, 0, 0);
                     });
                     
