@@ -170,7 +170,23 @@ Messages.Damage = Message.extend({
                 this.maxHitPoints];
     }
 });
-
+Messages.Inventory = Message.extend({
+  init: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+    this.inventoryNumber = inventoryNumber;
+    this.itemKind = itemKind;
+    this.itemNumber = itemNumber;
+    this.itemSkillKind = itemSkillKind;
+    this.itemSkillLevel = itemSkillLevel;
+  },
+  serialize: function(){
+    return [Types.Messages.INVENTORY,
+            this.inventoryNumber,
+            this.itemKind,
+            this.itemNumber,
+            this.itemSkillKind,
+            this.itemSkillLevel];
+  }
+});
 Messages.Population = Message.extend({
     init: function (world, total) {
         this.world = world;

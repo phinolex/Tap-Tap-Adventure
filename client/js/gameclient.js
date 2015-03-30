@@ -47,6 +47,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.PARTY] = this.receiveParty;
             this.handlers[Types.Messages.TALKTONPC] = this.receiveTalkToNPC;
             this.handlers[Types.Messages.RANKING] = this.receiveRanking;
+            this.handlers[Types.Messages.INVENTORY] = this.receiveInventory;
             this.useBison = false;
             
             this.enable();
@@ -187,36 +188,46 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
 
         receiveWelcome: function(data) {
-            var id = data[1],
-                name = data[2],
-                x = data[3],
-                y = data[4],
-                hp = data[5],
-                armor = data[6],
-                weapon = data[7],
-                avatar = data[8],
-                weaponAvatar = data[9],
-                experience = data[10],
-                admin = data[11],
-                inventory0 = data[12],
-                inventory0Number = data[13],
-                inventory1 = data[14],
-                inventory1Number = data[15],
-                mana = data[16];
-        
+            data.shift();
+            var id = data.shift(),
+                name = data.shift(),
+                x = data.shift(),
+                y = data.shift(),
+                hp = data.shift(),
+                armor = data.shift(),
+                weapon = data.shift(),
+                avatar = data.shift(),
+                weaponAvatar = data.shift(),
+                experience = data.shift(),
+                admin = data.shift(),
+                mana = data.shift();
+       
             var i=0;
             var questFound = [];
             var questProgress = [];
             for(i=0; i < Types.Quest.TOTAL_QUEST_NUMBER + 4; i++){
-              questFound.push(data[17 + (2 * i)]);
-              questProgress.push(data[18  + (2 * i)]);
+                questFound.push(data.shift());
+                questProgress.push(data.shift());
             }
+            
+            var maxInventoryNumber = data.shift();
+            var inventory = [];
+            var inventoryNumber = [];
+            var inventorySkillKind = [];
+            var inventorySkillLevel = [];
+            while(data.length > 0){
+                inventory.push(data.shift());
+                inventoryNumber.push(data.shift());
+                inventorySkillKind.push(data.shift());
+                inventorySkillLevel.push(data.shift());
+            }
+            
 
-                //moderator = data[32];
             if(this.welcome_callback) {
                 this.welcome_callback(id, name, x, y, hp, mana, armor, weapon, avatar,
                 weaponAvatar, experience, admin, questFound, questProgress,
-                inventory0, inventory0Number, inventory1, inventory1Number);
+                inventory, inventoryNumber, maxInventoryNumber,
+                inventorySkillKind, inventorySkillLevel);
             }
         },
 
@@ -233,6 +244,16 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             data.shift();
             if(this.quest_callback){
                 this.quest_callback(data);
+            }
+        },
+        receiveInventory: function(data){
+            var inventoryNumber = data[1];
+            var itemKind = data[2];
+            var itemCount = data[3];
+            var itemSkillKind = data[4];
+            var itemSkillLevel = data[5];
+            if(this.inventory_callback){
+                this.inventory_callback(inventoryNumber, itemKind, itemCount, itemSkillKind, itemSkillLevel);
             }
         },
         receiveTalkToNPC: function(data){
@@ -606,6 +627,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onRanking: function (callback) {
             this.ranking_callback = callback; 
         },
+        onInventory: function(callback) {
+            this.inventory_callback = callback; 
+        },
                 
 
         sendCreate: function(player) {
@@ -654,11 +678,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.sendMessage([Types.Messages.HURT,
                               mob.id]);
         },
-        sendInventory: function(type, inventoryNumber, count){
-            this.sendMessage([Types.Messages.INVENTORY,
-                              type, inventoryNumber, count]);
-        },
-
         sendChat: function(text) {
             this.sendMessage([Types.Messages.CHAT,
                               text]);
@@ -724,6 +743,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         sendQuest: function(id, type){
             this.sendMessage([Types.Messages.QUEST,
                               id, type]);
+        },
+        sendInventory: function(type, inventoryNumber, count){
+            this.sendMessage([Types.Messages.INVENTORY,
+                              type, inventoryNumber, count]);
         }
         
     });

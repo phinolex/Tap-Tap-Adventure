@@ -749,6 +749,69 @@ tr:hover {
         #resize-check {height:3px;}
 	}
 	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
+            
+            
+            #quest {
+                position: absolute;
+                width: 960px;
+                left: 50%;
+                margin-left: -480px;
+                top: 518px;
+                bottom: 10px;
+                border: 1px solid #9C9898;
+                background: rgba(255, 255, 255, 1);
+                padding: 5px;
+                overflow-y: scroll;
+                overflow-x: hide;
+                color: rgba(0, 0, 0, 1);
+                display: none;
+                font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+                border-collapse:collapse;
+            }
+            #quest td, #quest th{
+                font-size:1.2em;
+                border:1px solid #98bf21;
+                padding:3px 7px 2px 7px;
+            }
+            #quest th{
+                font-size:1.4em;
+                text-align:left;
+                padding-top:5px;
+                padding-bottom:4px;
+                background-color:#A7C942;
+                color:#fff;
+            }
+            #quest tr.alt td{
+                color:#000;
+                background-color:#EAF2D3;
+            }
+            #questalarm{
+                position: absolute;
+                width: 321px;
+                height: 55px;
+                top: 404px;
+                left: 336px;
+                background: rgba(0, 0, 0, 0.5);
+                text-align: center;
+                color: rgba(255, 255, 255, 1);
+                display: none;
+                pointer-events: none;
+            }
+            #questalarm h2{
+                font-size: 20px;
+                text-shadow: 0px 1px 0px #000000;
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
 	      body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
         body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/2/wood.png') repeat, #000; background-size:auto, 256px;}
@@ -788,10 +851,10 @@ tr:hover {
  
 #chatLog{
         position: absolute; 
-        width: 274px;
+        width: 250px;
         left: 65.6%;
         margin-left: -648px;
-        top: 74%;
+        top: 78%;
         bottom: 10.79%;
         border: 1px solid #9C9898;
         background: rgba(0, 0, 0, 0.5);

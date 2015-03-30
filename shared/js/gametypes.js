@@ -39,10 +39,10 @@ Types = {
         KUNG: 32,
 	QUEST: 33,
 	TALKTONPC: 34,
-	INVENTORY: 35,
         MAGIC: 36,
         MANA: 37,
-        RANKING: 38
+        RANKING: 38,
+        INVENTORY: 39
     },
 
     Entities: {

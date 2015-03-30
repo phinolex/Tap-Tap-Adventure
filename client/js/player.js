@@ -19,14 +19,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             this.armorName = "clotharmor";
             this.weaponName = "sword1";
  
-             // Inventory
-            this.inventory = [];
-            this.inventoryCount = [];
-            this.healingCoolTimeCallback = null;
 
-            this.magicCoolTimeCallback = null;
-            this.healTargetName = null;
-        
             
             // modes
             this.isLootMoving = false;
@@ -57,9 +50,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
                     }
                 } else if(item.type === "armor"){
                    
-                    if(this.level > 45){
-                      this.putInventory(item.kind, 1);
-                    } else {
+
                       rank = Types.getArmorRank(item.kind);
                       currentRank = Types.getArmorRank(Types.getKindFromString(this.armorName));
                       msg = "You are wielding a better armor";
@@ -74,16 +65,10 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
                         } else if(rank <= currentRank) {
                            
                             throw new Exceptions.LootException(msg);
-                        }
+                        
                       }
                     }
-                } else if(item.kind === Types.Entities.CAKE){
-                    this.putInventory(item.kind, 1);
-                } else if(Types.isHealingItem(item.kind)){
-                    this.putInventory(item.kind, item.count);
-                } else if(item.kind === Types.Entities.CD) {
-                    this.putInventory(item.kind, 1);
-                }
+                } 
             
                 log.info('Player '+this.id+' has looted '+item.id);
                 if(Types.isArmor(item.kind) && this.invincible) {
@@ -92,82 +77,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
                 item.onLoot(this);
             }
         },
-        putInventory: function(itemKind, count){
-            if(Types.isHealingItem(itemKind)){
-                
-                if(this.inventory[0] === itemKind){
-                    if (this.inventoryCount[0] < 25) {
-                        this.inventoryCount[0] += count;
-                    } else {
-                        throw new Exceptions.LootException("You cannot hold any more items in your inventory.");
-                    }
-                } else if(this.inventory[1] === itemKind){
-                    if (this.inventoryCount[1] < 25) {
-                        this.inventoryCount[1] += count;
-                    } else {
-                        throw new Exceptions.LootException("You cannot hold any more items in your inventory.");
-                    }
-                } else{
-                    this._putInventory(itemKind, count);
-                }
-            } else{
-                this._putInventory(itemKind, count);
-            }
-        },
-        _putInventory: function(itemKind, count){
-            if(!this.inventory[0]){
-                this.inventory[0] = itemKind;
-                this.inventoryCount[0] = count;
-            } else if(!this.inventory[1]){
-                this.inventory[1] = itemKind;
-                this.inventoryCount[1] = count;
-            } else{
-                throw new Exceptions.LootException("Your inventory is currently full.");
-            }
-        },
-        setInventory: function(itemKind, inventoryNumber, number){
-            if (number === 0) {
-                 this.makeEmptyInventory(inventoryNumber);
-                 this.emptyInventoryCompletely();
-            }
-            
-            this.inventory[inventoryNumber] = itemKind;
-            this.inventoryCount[inventoryNumber] = number;
-        },
-        makeEmptyInventory: function(inventoryNumber){
-            if(inventoryNumber === 0 || inventoryNumber === 1){
-                this.inventory[inventoryNumber] = null;
-            }
-        },
-        emptyInventoryCompletely: function() {
-            this.inventory[0] = null;
-            this.inventory[1] = null;
-        },
-        decInventory: function(inventoryNumber){
-            var self = this;
-
-            if(this.healingCoolTimeCallback === null){
-                this.healingCoolTimeCallback = setTimeout(function(){
-                    self.healingCoolTimeCallback = null;
-                }, 500);
-                this.inventoryCount[inventoryNumber] -= 1;
-                if(this.inventoryCount[inventoryNumber] <= 0){
-                    this.inventory[inventoryNumber] = null;
-                }
-                return true;
-            }
-            return false;
-        },
-        magicCoolTimeCheck: function(){
-          var self = this;
-          if(this.magicCoolTimeCallback === null){
-            this.magicCoolTimeCallback = setTimeout(function(){
-              self.magicCoolTimeCallback = null;
-            }, 10000000);
-            return true;
-          }
-          return false;
-        },
+        
         /**
          * Returns true if the character is currently walking towards an item in order to loot it.
          */
@@ -212,52 +122,6 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             return this.weaponName !== null;
         },
         
-         equipFromInventory: function(type, inventoryNumber, sprites){
-            var itemString = Types.getKindAsString(this.inventory[inventoryNumber]);
-            var currentArmour = Types.getKindFromString(this.getArmorName());
-
-            /*if(this.level > 100){
-                      
-                    } else{
-                      rank = Types.getArmorRank(item.kind);
-                      currentRank = Types.getArmorRank(Types.getKindFromString(this.armorName));
-                      msg = "You are wielding a better armor";
-                      var rankRequirement = (rank * 5) + rank;
-                      if(rank && currentRank) {
-                        if(rank === currentRank) {
-                            throw new Exceptions.LootException("You already have this "+item.type);
-                        } else if (this.level < rankRequirement) {
-                            throw new Exceptions.LootException("You need to be level " + rankRequirement + " to wield this.");
-                        } else if(rank <= currentRank) {
-                            throw new Exceptions.LootException(msg);
-                        }
-                      }
-                    }*/
-            if(itemString){
-                var itemSprite = sprites[itemString];
-                if(itemSprite){
-                   
-                        
-                        if(type === "armor") {
-
-
-                            this.inventory[inventoryNumber] = Types.getKindFromString(this.getArmorName());
-                            
-                            this.switchArmor(itemString, itemSprite);
-                            
-
-                        } else if(type === "avatar"){
-                            
-                            this.inventory[inventoryNumber] = null;
-                            
-                            this.setSpriteName(itemString);
-                            this.setSprite(itemSprite);
-                            
-                        }
-                    
-                }
-            }
-        },
         switchArmor: function(armorName, sprite){
             this.setSpriteName(armorName);
             this.setSprite(sprite);

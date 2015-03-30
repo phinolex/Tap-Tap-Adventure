@@ -617,6 +617,8 @@ js/playerpopupmenu.js
 js/questhandler.js
 js/partyhandler.js
 js/rankinghandler.js
+js/button2.js
+js/inventoryhandler.js
 js/../../shared/js/gametypes.js
 js/game.js
 

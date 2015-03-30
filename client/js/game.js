@@ -6,13 +6,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'questhandler',
-        'partyhandler', 'rankinghandler',
+        'partyhandler', 'rankinghandler', 'inventoryhandler',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
-         ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler) {
+         ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler, InventoryHandler) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -27,7 +27,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.chatinput = null;
             this.bubbleManager = null;
             this.audioManager = null;
-
+            
             // Player
             this.player = new Warrior("player", "");
             this.player.moveUp = false;
@@ -82,6 +82,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.playerPopupMenu = new PlayerPopupMenu(this);
             this.partyhandler = new PartyHandler(this);
             this.rankingHandler = new RankingHandler(this);
+            this.inventoryHandler = new InventoryHandler(this);
 
             // TextWindow Handler
             //this.textWindowHandler = new TextWindowHandler();
@@ -821,9 +822,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             });
 
             this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon,
-                                           avatar, weaponAvatar, experience, admin, questFound, questProgress,
-                                            inventory0, inventory0Number,
-                                           inventory1, inventory1Number) {
+                                           avatar, weaponAvatar, experience, admin,
+                                           questFound, questProgress, inventory, inventoryNumber,
+                                           maxInventoryNumber, inventorySkillKind, inventorySkillLevel) {
                 log.info("Received player ID from server : "+ id);
                 self.player.id = id;
                 self.playerId = id;
@@ -838,8 +839,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.setArmorName(armor);
                 self.player.setSpriteName(avatar);
                 self.player.setWeaponName(weapon);
-                self.player.setInventory(Types.getKindFromString(inventory0), 0, inventory0Number);
-                self.player.setInventory(Types.getKindFromString(inventory1), 1, inventory1Number);
+
+                self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
+
                 self.initPlayer();
                 self.player.experience = experience;
                 self.player.level = Types.getLevel(experience);
@@ -1502,6 +1504,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.client.onQuest(function(data){
                   self.questhandler.handleQuest(data);
                 });
+                self.client.onInventory(function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+                  self.shopHandler.initSellInventory();
+                  if(itemKind){
+                    self.inventoryHandler.setInventory(itemKind, inventoryNumber, itemNumber, itemSkillKind, itemSkillLevel);
+                  } else if(itemKind === null){
+                    self.inventoryHandler.makeEmptyInventory(inventoryNumber);
+                  }
+                });
                 self.client.onTalkToNPC(function(npcKind, isCompleted){
                   var npc = self.getEntityByKind(npcKind);
                   var msg = npc.talk(isCompleted);
@@ -2049,84 +2059,69 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 entity;
 
 
-            if(pos.x === this.camera.gridX+this.camera.gridW-2
-            && pos.y === this.camera.gridY+this.camera.gridH-1){
-                if(this.player.inventory[0]){
-                    this.menu.clickInventory0();
-                }
-                return;
-            } else if(pos.x === this.camera.gridX+this.camera.gridW-1
-                   && pos.y === this.camera.gridY+this.camera.gridH-1){
-                if(this.player.inventory[1]){
-                    this.menu.clickInventory1();
-                }
-                return;
-            } else if(this.menu.inventoryOn){
-                var inventoryNumber;
-                var clickedMenu;
+            this.inventoryHandler.hideAllInventory();
+            this.playerPopupMenu.close();
 
-                if(this.menu.inventoryOn === "inventory0"){
-                    inventoryNumber = 0;
-                } else if(this.menu.inventoryOn === "inventory1"){
-                    inventoryNumber = 1;
-                } else{
-                    return;
-                }
+
+            if(this.menu.selectedInventory !== null){
+                var inventoryNumber = this.menu.selectedInventory;
+                var clickedMenu;
+                var itemKind;
+
                 clickedMenu = this.menu.isClickedInventoryMenu(pos, this.camera);
-                
-                
-            if(clickedMenu === 3
-                && this.player.inventory[inventoryNumber] !== Types.Entities.CAKE
-                && this.player.inventory[inventoryNumber] !== Types.Entities.CD){
-                    if(Types.isHealingItem(this.player.inventory[inventoryNumber])) {
-                        this.healShortCut = inventoryNumber;
+                itemKind = this.inventoryHandler.inventory[inventoryNumber];
+                if(clickedMenu === 4){
+                    if(itemKind === Types.Entities.SNOWPOTION){
+                        this.enchantPendant(inventoryNumber);
                         this.menu.close();
-                        this.renderer.clearScreen(this.renderer.context);
                     }
-                    else {
-                        this.equip(inventoryNumber);
-                    }
-                    this.menu.close();
-                    this.renderer.clearScreen(this.renderer.context);
                     return;
-            } else if(clickedMenu === 2
-                       && this.player.inventory[inventoryNumber] !== Types.Entities.CAKE
-                       && this.player.inventory[inventoryNumber] !== Types.Entities.CD){
-                    if(Types.isArmor(this.player.inventory[inventoryNumber])){
-                        this.avatar(inventoryNumber);
-                        return;
-                    } else if(Types.isHealingItem(this.player.inventory[inventoryNumber])){
+                } else if(clickedMenu === 3
+                       && itemKind !== Types.Entities.CAKE
+                       && itemKind !== Types.Entities.BLACKPOTION
+                       && itemKind !== Types.Entities.CD){
+                    if(Types.isHealingItem(itemKind)) {
+                        this.healShortCut = inventoryNumber === this.healShortCut ? -1 : inventoryNumber;
+                        this.menu.close();
+                    } else if(itemKind === Types.Entities.SNOWPOTION){
+                        this.enchantRing(inventoryNumber);
+                        this.menu.close();
+                    }
+                    return;
+                } else if(clickedMenu === 2
+                       && itemKind !== Types.Entities.CAKE
+                       && itemKind !== Types.Entities.CD){
+                    if(Types.isHealingItem(itemKind)){
                         this.eat(inventoryNumber);
                         return;
+                    } else if(itemKind === Types.Entities.SNOWPOTION){
+                        this.enchantWeapon(inventoryNumber);
+                        return;
+                    } else if(itemKind === Types.Entities.BLACKPOTION){
+                        this.enchantBloodsucking(inventoryNumber);
+                        return;
+                    } else{
+                        this.equip(inventoryNumber);
+                        return;
                     }
-                    
-                    this.menu.close();
-                    this.renderer.clearScreen(this.renderer.context);
                 } else if(clickedMenu === 1){
-                    if(Types.isHealingItem(this.player.inventory[inventoryNumber]) && (this.player.inventoryCount[inventoryNumber] > 1)) {
-                        $('#dropCount').val(this.player.inventoryCount[inventoryNumber]);
+                    if(Types.isHealingItem(itemKind) && (this.inventoryHandler.inventoryCount[inventoryNumber] > 1)) {
+                        $('#dropCount').val(this.inventoryHandler.inventoryCount[inventoryNumber]);
                         this.app.showDropDialog(inventoryNumber);
-                        
                     } else {
                         this.client.sendInventory("empty", inventoryNumber, 1);
-                        this.player.makeEmptyInventory(inventoryNumber);
+                        this.inventoryHandler.makeEmptyInventory(inventoryNumber);
                     }
                     this.menu.close();
-                    this.renderer.clearScreen(this.renderer.context);
                     return;
-                } else {
+                } else{
                     this.menu.close();
-                    this.renderer.clearScreen(this.renderer.context);
                 }
             } else{
-                
                 this.menu.close();
-
-                
             }
-            
-                            setTimeout(function(){this.renderer.clearScreen(this.renderer.context);}, 750);
-            
+
+
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
@@ -2137,33 +2132,31 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.processInput(pos);
         },
         
-        rightClick: function() {
+        
+        
+                rightClick: function() {
             var pos = this.getMouseGridPosition();
-            
+
             if(pos.x === this.camera.gridX+this.camera.gridW-2
             && pos.y === this.camera.gridY+this.camera.gridH-1){
-                if(this.player.inventory[0]){
-                    if(Types.isHealingItem(this.player.inventory[0]))
+                if(this.inventoryHandler.inventory[0]){
+                    if(Types.isHealingItem(this.inventoryHandler.inventory[0]))
                         this.eat(0);
-                        this.menu.close();
                 }
                 return;
             } else if(pos.x === this.camera.gridX+this.camera.gridW-1
                    && pos.y === this.camera.gridY+this.camera.gridH-1){
-                if(this.player.inventory[1]){
-                    if(Types.isHealingItem(this.player.inventory[1]))
+                if(this.inventoryHandler.inventory[1]){
+                    if(Types.isHealingItem(this.inventoryHandler.inventory[1]))
                         this.eat(1);
-                        this.menu.close();
                 }
             } else {
-                if((this.healShortCut >= 0) && this.player.inventory[this.healShortCut]) {
-                    if(Types.isHealingItem(this.player.inventory[this.healShortCut]))
+                if((this.healShortCut >= 0) && this.inventoryHandler.inventory[this.healShortCut]) {
+                    if(Types.isHealingItem(this.inventoryHandler.inventory[this.healShortCut]))
                         this.eat(this.healShortCut);
-                        this.menu.close();
                 }
             }
         },
-
         /**
          * Processes game logic when the user triggers a click/touch event during the game.
          */
@@ -2508,15 +2501,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.player.pw = this.userpw;
             this.player.email = this.email;
 
-            
-                    
-
-               /*this.player.makeEmptyInventory(0);
-                this.player.makeEmptyInventory(1);
-                this.player.setArmorName("clotharmor");
-                this.player.setSpriteName("clotharmor");
-                this.player.setWeaponName("sword2");
-                */
             this.initPlayer();
             this.app.initTargetHud();
 
@@ -2773,60 +2757,72 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         keyDown: function(key){
             var self = this;
-            if(key === 49 || key === 50){ // 1, 2
-              var inventoryNumber;
-              if(key === 49){ // 1
-                inventoryNumber = 0;
-              } else if(key === 50){ // 2
-                inventoryNumber = 1;
-              } else{
-                return;
-              }
-              if(Types.isHealingItem(this.player.inventory[inventoryNumber])){
+            if(key >= 49 && key <= 54){ // 1, 2, 3, 4, 5, 6
+              var inventoryNumber = key - 49;
+              if(Types.isHealingItem(this.inventoryHandler.inventory[inventoryNumber])){
                 this.eat(inventoryNumber);
-              }
-            } else if(key === 54){ // 6
-              if(this.player.magicCoolTimeCheck("heal")){
-                if(this.player.healTargetName){
-                  this.client.sendMagic("heal", "empty");
-                   self.chathandler.addNotification(this.player.healTargetName + " healed you!");
-                   //Make sure you remove this and all showNotification related code.
-                } else{
-                  self.chathandler.addNotification("You heal some health");
-                }
-              } else{
-                self.chathandler.addNotification("Player is at full health.");
-               
               }
             }
         },
-         equip: function(inventoryNumber){
-            if(Types.isArmor(this.player.inventory[inventoryNumber])){
+        equip: function(inventoryNumber){
+            var itemKind = this.inventoryHandler.inventory[inventoryNumber];
+            if(Types.isArmor(itemKind) && this.player.kind !== Types.Entities.WARRIOR){
+              this.showNotification("검사 갑옷은 검사만 착용할 수 있습니다.");
+            } else if(Types.isArcherArmor(itemKind) && this.player.kind !== Types.Entities.ARCHER){
+              this.showNotification("궁수 갑옷은 궁수만 착용할 수 있습니다.");
+            } else if(Types.isWeapon(itemKind) && this.player.kind !== Types.Entities.WARRIOR){
+              this.showNotification("검사 무기는 검사만 착용할 수 있습니다.");
+            } else if(Types.isArcherWeapon(itemKind) && this.player.kind !== Types.Entities.ARCHER){
+              this.showNotification("궁수 무기는 궁수만 착용할 수 있습니다.");
+            } else{
+              if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)){
                 this.client.sendInventory("armor", inventoryNumber, 1);
-                this.player.equipFromInventory("armor", inventoryNumber, this.sprites);
-                if(this.equipment_callback) {
-                     this.equipment_callback();
-                }
-                this.menu.close();
+              } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)){
+                this.client.sendInventory("weapon", inventoryNumber, 1);
+              } else if(Types.isPendant(itemKind)) {
+                this.client.sendInventory("pendant", inventoryNumber, 0);
+              } else if(Types.isRing(itemKind)) {
+                this.client.sendInventory("ring", inventoryNumber, 0);
+              }
             }
+            this.menu.close();
         },
         avatar: function(inventoryNumber){
             this.client.sendInventory("avatar", inventoryNumber, 1);
-            this.player.equipFromInventory("avatar", inventoryNumber, this.sprites);
+            this.audioManager.playSound("loot");
             this.menu.close();
         },
         eat: function(inventoryNumber){
-            if(this.player.hitPoints < this.player.maxHitPoints) {
-                if(this.player.decInventory(inventoryNumber)){
+            if(this.inventoryHandler.inventory[inventoryNumber] === Types.Entities.ROYALAZALEA
+            || this.player.hitPoints < this.player.maxHitPoints) {
+                if(this.inventoryHandler.decInventory(inventoryNumber)){
                     this.client.sendInventory("eat", inventoryNumber, 1);
-                } else{
-                    this.showNotification("You heal.");
+                    this.audioManager.playSound("heal");
                 }
-            } else {
-                this.showNotification("You have maximum hitpoints.");
             }
             this.menu.close();
         },
+        enchantWeapon: function(inventoryNumber){
+            this.client.sendInventory("enchantweapon", inventoryNumber, 1);
+            this.menu.close();
+        },
+        enchantRing: function(inventoryNumber){
+            this.client.sendInventory("enchantring", inventoryNumber, 1);
+            this.menu.close();
+        },
+        enchantPendant: function(inventoryNumber){
+            this.client.sendInventory("enchantpendant", inventoryNumber, 1);
+            this.menu.close();
+        },
+        enchantBloodsucking: function(inventoryNumber){
+            this.client.sendInventory("enchantbloodsucking", inventoryNumber, 1);
+            this.menu.close();
+        },
+        enchantArmor: function(inventoryNumber){
+            this.client.sendInventory("enchantarmor", inventoryNumber, 1);
+            this.menu.close();
+        },
+
     
     
         tryLootingItem: function(item) {

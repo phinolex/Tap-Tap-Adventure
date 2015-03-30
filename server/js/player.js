@@ -13,7 +13,7 @@ var cls = require("./lib/class"),
     Party = require("./party"),
     Types = require("../../shared/js/gametypes");
     bcrypt = require('bcrypt');
-    
+    Inventory = require("./inventory"),
     Mob = require('./mob');
     
 
@@ -32,7 +32,7 @@ module.exports = Player = Character.extend({
         this.lastCheckpoint = null;
         this.formatChecker = new FormatChecker();
         this.disconnectTimeout = null;
-
+        this.inventory = null;
         this.pvpFlag = false;
         this.bannedTime = 0;
         this.banUseTime = 0;
@@ -40,9 +40,7 @@ module.exports = Player = Character.extend({
         this.level = 0;
         this.lastWorldChatMinutes = 99;
         this.achievement = [];
-        this.inventory = [];
-        this.inventoryCount = [];
-      
+
 
         this.chatBanEndTime = 0;
 
@@ -343,20 +341,14 @@ module.exports = Player = Character.extend({
                             }, 7500);
                             //this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
                             self.send(new Messages.HitPoints(self.maxHitPoints, self.maxMana).serialize());
-                        } else if(Types.isHealingItem(kind)) {
-                            self.putInventory(item);
                         } else if(Types.isWeapon(kind)) {
                             self.equipItem(item.kind);
                             self.broadcast(self.equip(kind));
                         } else if(Types.isArmor(kind)) {
-                            if(self.level < 45){
-                              self.equipItem(item.kind);
+                            
+                             self.equipItem(item.kind);
                              self.broadcast(self.equip(kind));
-                            } else {
-                              self.putInventory(item);
-                            }
-                        } else if(kind === Types.Entities.CAKE || kind === Types.Entities.CD){
-                           self.putInventory(item);
+                            
                         }
                     }
                 }
@@ -390,100 +382,16 @@ module.exports = Player = Character.extend({
                     self.lastCheckpoint = checkpoint;
                     databaseHandler.setCheckpoint(self.name, self.x, self.y);
                 }
-            }
-            else if(action === Types.Messages.INVENTORY){
-                log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                var inventoryNumber = message[2],
-                    count = message[3];
-
-                if(inventoryNumber !== 0 && inventoryNumber !== 1){
-                    return;
-                }
-
-                var itemKind = self.inventory[inventoryNumber];
-                if(itemKind){
-                    if(message[1] === "avatar" || message[1] === "armor"){
-                        if(message[1] === "avatar"){
-                            self.inventory[inventoryNumber] = null;
-                            databaseHandler.makeEmptyInventory(self.name, inventoryNumber);
-                            self.equipItem(itemKind, true);
-                        } else{
-                            self.inventory[inventoryNumber] = self.armor;
-                            databaseHandler.setInventory(self.name, self.armor, inventoryNumber, 1);
-                            self.equipItem(itemKind, false);
-                        }
-                        self.broadcast(self.equip(itemKind));
-                    } else if(message[1] === "empty"){
-                        //var item = self.server.addItem(self.server.createItem(itemKind, self.x, self.y));
-                        var item = self.server.addItemFromChest(itemKind, self.x + 1, self.y);
-                        if (self.x + 1 === self.server.map.collisions) {
-                            item = self.server.addItemFromChest(itemKind, self.x - 1, self.y);
-                        } else if (self.x - 1 === self.server.map.collisions) {
-                            log.info("Dropping First");
-                        } else if (self.y + 1 === self.server.map.collisions) {
-                            item = self.server.addItemFromChest(itemKind, self.x - 1, self.y);
-                        } else if (self.y - 1 === self.server.map.collisions) {
-                            item = self.server.addItemFromChest(itemKind, self.x + 1, self.y);
-                        }
-                        if(Types.isHealingItem(item.kind)){
-                            if(count < 0)
-                                count = 0;
-                            else if(count > self.inventoryCount[inventoryNumber])
-                                count = self.inventoryCount[inventoryNumber];
-                            item.count = count;
-                        }
-
-                        if(item.count > 0) {
-                            self.server.handleItemDespawn(item);
-                            
-                            if(Types.isHealingItem(item.kind)) {
-                                if(item.count === self.inventoryCount[inventoryNumber]) {
-                                    self.inventory[inventoryNumber] = null;
-                                    databaseHandler.makeEmptyInventory(self.name, inventoryNumber);
-                                } else {
-                                    self.inventoryCount[inventoryNumber] -= item.count;
-                                    databaseHandler.setInventory(self.name, self.inventory[inventoryNumber], inventoryNumber, self.inventoryCount[inventoryNumber]);
-                                }
-                            } else {
-                                self.inventory[inventoryNumber] = null;
-                                databaseHandler.makeEmptyInventory(self.name, inventoryNumber);
-                            }
-                        }
-                    } else if(message[1] === "eat"){
-                        var amount;
-                            
-                        switch(itemKind) {
-                            case Types.Entities.FLASK: 
-                                amount = 50;
-                                break;
-                            case Types.Entities.BURGER: 
-                                amount = 125;
-                                break;
-                        }
-                            
-                        if(!self.hasFullHealth()) {
-                            self.regenHealthBy(amount);
-                            self.server.pushToPlayer(self, self.health());
-                        }
-                        self.inventoryCount[inventoryNumber] -= 1;
-                        if(self.inventoryCount[inventoryNumber] <= 0){
-                            self.inventory[inventoryNumber] = null;
-                        }
-                        databaseHandler.setInventory(self.name, self.inventory[inventoryNumber], inventoryNumber, self.inventoryCount[inventoryNumber]);
-                    }
-                }
             } else if(action === Types.Messages.QUEST) {
                 log.info("QUEST: " + self.name + " " + message[1] + " " + message[2]);
                 self.handleQuest(message);
-            }
-            
-    
-            else if(action === Types.Messages.TALKTONPC){
+            } else if(action === Types.Messages.INVENTORY){
+                log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
+                self.handleInventory(message);
+            } else if(action === Types.Messages.TALKTONPC){
                 log.info("TALKTONPC: " + self.name + " " + message[1]);
                 self.handleTalkToNPC(message);
-            }
-            
-            else if(action === Types.Messages.MAGIC){
+            } else if(action === Types.Messages.MAGIC){
               log.info("MAGIC: " + self.name + " " + message[1] + " " + message[2]);
               var magicName = message[1];
               var magicTargetName = message[2];
@@ -759,7 +667,24 @@ module.exports = Player = Character.extend({
             }
         }
     },
-
+    takeOffAvatar: function(){
+        this.inventory.putInventory(this.avatar, this.avatarEnchantedPoint, this.avatarSkillKind, this.avatarSkillLevel);
+        this.avatar = null;
+        this.avatarEnchantedPoint = 0;
+        this.avatarSkillKind = 0;
+        this.avatarSkillLevel = 0;
+        databaseHandler.takeOffAvatar(this.name);
+        this.broadcastToZone(new Messages.EquipItem(this, this.armor), false);
+    },
+    takeOffWeaponAvatar: function(){
+        this.inventory.putInventory(this.weaponAvatar, this.weaponAvatarEnchantedPoint, this.weaponAvatarSkillKind, this.weaponAvatarSkillLevel);
+        this.weaponAvatar = null;
+        this.weaponAvatarEnchantedPoint = 0;
+        this.weaponAvatarSkillKind = 0;
+        this.weaponAvatarSkillLevel = 0;
+        databaseHandler.takeOffWeaponAvatar(this.name);
+        this.broadcastToZone(new Messages.EquipItem(this, this.weapon), false);
+    },
     updateHitPoints: function() {
         this.resetHitPoints(Formulas.hp(this.level));
         this.resetMana(Formulas.mana(this.level));
@@ -983,8 +908,7 @@ module.exports = Player = Character.extend({
     },
 
     sendWelcome: function(armor, weapon, avatar, weaponAvatar, exp, admin,
-                          bannedTime, banUseTime,
-                          inventory, inventoryNumber, x, y,
+                          bannedTime, banUseTime, x, y,
                           chatBanEndTime) {
         var self = this;
         self.kind = Types.Entities.WARRIOR;
@@ -993,10 +917,7 @@ module.exports = Player = Character.extend({
         self.equipArmor(Types.getKindFromString(armor));
         self.equipAvatar(Types.getKindFromString(avatar));
         self.equipWeapon(Types.getKindFromString(weapon));
-        self.inventory[0] = Types.getKindFromString(inventory[0]);
-        self.inventory[1] = Types.getKindFromString(inventory[1]);
-        self.inventoryCount[0] = inventoryNumber[0];
-        self.inventoryCount[1] = inventoryNumber[1];
+
 
         self.bannedTime = bannedTime;
         self.banUseTime = banUseTime;
@@ -1013,76 +934,441 @@ module.exports = Player = Character.extend({
 
         self.server.addPlayer(self);
         self.server.enter_callback(self);
-        databaseHandler.loadQuest(self, function() {
-            var i = 0;
-            var sendMessage = [
-                Types.Messages.WELCOME, 
-                self.id, // 1
-                self.name, //2
-                self.x, //3
-                self.y, //4
-                self.hitPoints, //5
-                armor, //6
-                weapon, //7
-                avatar, //8
-                weaponAvatar, //9
-                self.experience, //10
-                self.admin, //11
-                inventory[0], //12
-                inventoryNumber[0], //13
-                inventory[1], //14
-                inventoryNumber[1], //15
-                self.mana //32
-            ]; 
-            
-            for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){
-              sendMessage.push(self.achievement[i+1].found);
-              sendMessage.push(self.achievement[i+1].progress);
-            }
-            for(i = 0; i < 4; i++){
-              sendMessage.push(self.achievement[i+101].found);
-              sendMessage.push(self.achievement[i+101].progress);
-            }
-            
-            self.send(sendMessage);
+        databaseHandler.getAllInventory(this, function(maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels) {
+            self.inventory = new Inventory(self, maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels);
+            databaseHandler.loadQuest(self, function() {
+                var i = 0;
+                var sendMessage = [
+                    Types.Messages.WELCOME, 
+                    self.id, // 1
+                    self.name, //2
+                    self.x, //3
+                    self.y, //4
+                    self.hitPoints, //5
+                    armor, //6
+                    weapon, //7
+                    avatar, //8
+                    weaponAvatar, //9
+                    self.experience, //10
+                    self.admin, //11
+                    self.mana //12
+                ]; 
+
+                for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){
+                    sendMessage.push(self.achievement[i+1].found);
+                    sendMessage.push(self.achievement[i+1].progress);
+                }
+                for(i = 0; i < 4; i++){
+                    sendMessage.push(self.achievement[i+101].found);
+                    sendMessage.push(self.achievement[i+101].progress);
+                }
+                sendMessage.push(self.inventory.number);
+                for(i=0; i<self.inventory.number; i++){
+                  sendMessage.push(self.inventory.rooms[i].itemKind);
+                  sendMessage.push(self.inventory.rooms[i].itemNumber);
+                  sendMessage.push(self.inventory.rooms[i].itemSkillKind);
+                  sendMessage.push(self.inventory.rooms[i].itemSkillLevel);
+                }
+                
+
+                self.send(sendMessage);
+            });
         });
         self.hasEnteredGame = true;
-        self.isDead = false;
+        self.isDead = false;  
+    },
+    handleLoot: function(message){ // 12
+        var self = this;
+        var item = this.server.getEntityById(message[1]);
 
-    }, 
-    
+        if(item) {
+            var kind = item.kind;
+            var itemRank = 0;
 
-    putInventory: function(item){
-        if(Types.isHealingItem(item.kind)){
-            if(this.inventory[0] === item.kind){
-                if (this.inventoryCount[0] < 25) {
-                    this.inventoryCount[0] += item.count;
-                    databaseHandler.setInventory(this.name, item.kind, 0, this.inventoryCount[0]);
+            if(Types.isItem(kind)) {
+                if(kind === Types.Entities.FIREPOTION) {
+                    this.resetHPandMana();
+                    this.broadcast(this.equip(Types.Entities.FIREBENEF), false);
+                    this.broadcast(item.despawn(), false);
+                    this.server.removeEntity(item);
+                    this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
+                } else if(Types.isHealingItem(kind)
+                       || Types.isWeapon(kind)
+                       || Types.isArmor(kind)
+                       || Types.isArcherArmor(kind)
+                       || Types.isArcherWeapon(kind)
+                       || Types.isPendant(kind)
+                       || Types.isRing(kind)
+                       || Types.isBoots(kind)
+                       || kind === Types.Entities.CAKE
+                       || kind === Types.Entities.CD
+                       || kind === Types.Entities.SNOWPOTION
+                       || kind === Types.Entities.BLACKPOTION) {
+                    if(this.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel)){
+                        this.logHandler.addItemLog(this, "loot", item);
+                        this.broadcast(item.despawn(), false);
+                        this.server.removeEntity(item);
+                    }
                 }
-            } else if(this.inventory[1] === item.kind){
-                if (this.inventoryCount[1] < 25) {
-                    this.inventoryCount[1] += item.count;
-                    databaseHandler.setInventory(this.name, item.kind, 1, this.inventoryCount[1]);
-                }
-            } else{
-                this._putInventory(item);
             }
+        }
+      },
+      handleInventory: function(message){ // 28
+        var inventoryNumber = message[2],
+            count = message[3];
+        var self = this;
+
+        if(inventoryNumber > this.inventory.number){
+            
+              return;
+        }
+
+        var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
+        if(itemKind){
+            if(message[1] === "armor"){
+                  this.handleInventoryArmor(itemKind, inventoryNumber);
+            } else if(message[1] === "weapon"){
+                  this.handleInventoryWeapon(itemKind, inventoryNumber);
+            } else if(message[1] === "pendant") {
+                  this.handleInventoryPendant(itemKind, inventoryNumber);
+            } else if(message[1] === "ring") {
+                  this.handleInventoryRing(itemKind, inventoryNumber);
+            } else if(message[1] === "boots") {
+                  this.handleInventoryBoots(itemKind, inventoryNumber);
+            } else if(message[1] === "empty"){
+                  this.handleInventoryEmpty(itemKind, inventoryNumber, count);
+            } else if(message[1] === "eat"){
+                  this.handleInventoryEat(itemKind, inventoryNumber);
+            } else if(message[1] === "enchantweapon"){
+                  this.handleInventoryEnchantWeapon(itemKind, inventoryNumber);
+            } else if(message[1] === "enchantbloodsucking"){
+                  this.handleInventoryEnchantBloodsucking(itemKind, inventoryNumber);
+            } else if(message[1] === "enchantring"){
+                  this.handleInventoryEnchantRing(itemKind, inventoryNumber);
+            } else if(message[1] === "enchantpendant"){
+                  this.handleInventoryEnchantPendant(itemKind, inventoryNumber);
+            }
+        }
+    },
+    handleInventoryAvatar: function(inventoryNumber){
+        var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
+        var itemEnchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
+        var itemSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+        var itemSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillKind;
+
+        if(!this.canEquipArmor(itemKind)){
+          return;
+        }
+        if(this.avatar){
+          this.inventory.setInventory(inventoryNumber, this.avatar, this.avatarEnchantedPoint, this.avatarSkillKind, this.avatarSkillLevel);
+        } else{
+          this.inventory.makeEmptyInventory(inventoryNumber);
+        }
+        this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
+        this.broadcast(this.equip(itemKind), false);
+    },
+    handleInventoryWeaponAvatar: function(inventoryNumber){
+        var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
+        var itemEnchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
+        var itemSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+        var itemSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+
+        if(!this.canEquipWeapon(itemKind)){
+          return;
+        }
+        if(this.weaponAvatar){
+          this.inventory.setInventory(inventoryNumber, this.weaponAvatar, this.weaponAvatarEnchantedPoint, this.weaponAvatarSkillKind, this.weaponAvatarSkillLevel);
+        } else{
+          this.inventory.makeEmptyInventory(inventoryNumber);
+        }
+        this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
+        this.broadcast(this.equip(itemKind), false);
+    },
+    handleInventoryArmor: function(itemKind, inventoryNumber){
+        if(!this.canEquipArmor(itemKind)){
+          return;
+        }
+        this.inventory.setInventory(inventoryNumber, this.armor, 0, 0, 0);
+        this.equipItem(itemKind, 0, 0, 0, false);
+        if(!this.avatar){
+          this.broadcast(this.equip(itemKind), false);
+        }
+    },
+    handleInventoryWeapon: function(itemKind, inventoryNumber){
+        if(this.kind === Types.Entities.ARCHER && Types.isWeapon(itemKind)){
+          this.server.pushToPlayer(this, new Messages.Notify("궁수는 궁수용 무기만 착용할 수 있습니다."));
+          return;
+        } else if(this.kind === Types.Entities.WARRIOR && Types.isArcherWeapon(itemKind)){
+          this.server.pushToPlayer(this, new Messages.Notify("검사는 검사용 무기만 착용할 수 있습니다."));
+          return;
+        }
+        var weaponLevel = Types.getWeaponRank(itemKind)+1;
+        if(weaponLevel*2 > this.level){
+          this.server.pushToPlayer(this, new Messages.Notify(""+weaponLevel+"레벨 무기는 " + (weaponLevel*2) + "레벨 이상만 착용할 수 있습니다."));
+          return;
+        }
+
+        var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
+        var weaponSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+        var weaponSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+
+        this.inventory.setInventory(inventoryNumber, this.weapon, this.weaponEnchantedPoint, this.weaponSkillKind, this.weaponSkillLevel);
+
+        this.equipItem(itemKind, enchantedPoint, weaponSkillKind, weaponSkillLevel, false);
+        this.setAbility();
+        if(!this.weaponAvatar){
+          this.broadcast(this.equip(itemKind), false);
+        }
+    },
+    handleInventoryPendant: function(itemKind, inventoryNumber){
+        if(!Types.isPendant(itemKind)) {
+          this.server.pushToPlayer(this, new Messages.Notify("펜던트가 아닙니다.."));
+          return;
+        }
+        var pendantLevel = Properties.getPendantLevel(itemKind);
+        if((pendantLevel * 10) > this.level) {
+          this.server.pushToPlayer(this, new Messages.Notify("" + pendantLevel + "레벨 펜던트는 " + (pendantLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
+          return;
+        }
+        var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
+        var pendantSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+        var pendantSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+
+        if(this.pendant) {
+          this.inventory.setInventory(inventoryNumber, this.pendant, this.pendantEnchantedPoint, this.pendantSkillKind, this.pendantSkillLevel);
         } else {
-            this._putInventory(item);
+          this.inventory.makeEmptyInventory(inventoryNumber);
+        }
+        this.equipItem(itemKind, enchantedPoint, pendantSkillKind, pendantSkillLevel, false);
+        this.server.pushToPlayer(this, this.equip(itemKind));
+
+    },
+    handleInventoryRing: function(itemKind, inventoryNumber){
+        if(!Types.isRing(itemKind)) {
+          this.server.pushToPlayer(this, new Messages.Notify("반지가 아닙니다."));
+          return;
+        }
+        var ringLevel = Properties.getRingLevel(itemKind);
+        if((ringLevel * 10) > this.level) {
+          this.server.pushToPlayer(this, new Messages.Notify("" + ringLevel + "레벨 반지는 " + (ringLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
+          return;
+        }
+        var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
+        var ringSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+        var ringSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+
+        if(this.ring) {
+          this.inventory.setInventory(inventoryNumber, this.ring, this.ringEnchantedPoint, this.ringSkillKind, this.ringSkillLevel);
+        } else {
+          this.inventory.makeEmptyInventory(inventoryNumber);
+
+        }
+        this.equipItem(itemKind, enchantedPoint, ringSkillKind, ringSkillLevel, false);
+        this.server.pushToPlayer(this, this.equip(itemKind));
+    },
+    handleInventoryBoots: function(itemKind, inventoryNumber){
+        if(!Types.isBoots(itemKind)) {
+          this.server.pushToPlayer(this, new Messages.Notify("부츠가 아닙니다.."));
+          return;
+        }
+        var bootsLevel = Properties.getBootsLevel(itemKind);
+        if((bootsLevel * 10) > this.level) {
+          this.server.pushToPlayer(this, new Messages.Notify("" + bootsLevel + "레벨 부츠는 " + (bootsLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
+          return;
+        }
+
+        var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
+        var bootsSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+        var bootsSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+
+        if(this.boots) {
+          this.inventory.setInventory(inventoryNumber, this.boots, this.bootsEnchantedPoint, this.bootsSkillKind, this.bootsSkillLevel);
+        } else {
+          this.inventory.makeEmptyInventory(inventoryNumber);
+        }
+        this.equipItem(itemKind, enchantedPoint, bootsSkillKind, bootsSkillLevel, false);
+        this.server.pushToPlayer(this, this.equip(itemKind));
+    },
+    handleInventoryEmpty: function(itemKind, inventoryNumber, count){
+        var item = this.server.addItem(this.server.createItem(itemKind, this.x, this.y));
+        if(Types.isHealingItem(item.kind)){
+          if(count < 0){
+            count = 0;
+          } else if(count > this.inventory.rooms[inventoryNumber].itemNumber){
+            count = this.inventory.rooms[inventoryNumber].itemNumber;
+          }
+          item.count = count;
+        } else if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind) ||
+                  Types.isPendant(item.kind) || Types.isRing(item.kind) || Types.isBoots(item.kind)){
+          item.count = this.inventory.rooms[inventoryNumber].itemNumber;
+          item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+          item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+        }
+
+        if(item.count >= 0) {
+          this.server.pushToAdjacentGroups(this.group, new Messages.Drop(this, item));
+          this.server.handleItemDespawn(item);
+
+          if(Types.isHealingItem(item.kind)) {
+            this.inventory.takeOutInventory(inventoryNumber, item.count);
+          } else {
+            this.inventory.makeEmptyInventory(inventoryNumber);
+          }
+        } else{
+          this.server.removeEntity(item);
+          this.inventory.makeEmptyInventory(inventoryNumber);
+        }
+        this.logHandler.addItemLog(this, "drop", item);
+    },
+    handleInventoryEat: function(itemKind, inventoryNumber){
+        var self = this;
+        if(itemKind === Types.Entities.ROYALAZALEA){
+            this.broadcast(this.equip(Types.Entities.ROYALAZALEABENEF), false);
+            if(this.royalAzaleaBenefTimeout){
+                clearTimeout(this.royalAzaleaBenefTimeout);
+            }
+            this.royalAzaleaBenefTimeout = setTimeout(function(){
+                self.royalAzaleaBenefTimeout = null;
+            }, 15000);
+        } else {
+            var amount;
+
+            switch(itemKind) {
+                case Types.Entities.FLASK: 
+                    amount = 80;
+                    break;
+                case Types.Entities.BURGER: 
+                    amount = 200;
+                    break;
+            }
+
+            if(!this.hasFullHealth()) {
+                this.regenHealthBy(amount);
+                this.server.pushToPlayer(this, this.health());
+            }
+        }
+
+        this.inventory.takeOutInventory(inventoryNumber, 1);
+    },
+    handleInventoryEnchantWeapon: function(itemKind, inventoryNumber){
+        if(itemKind !== Types.Entities.SNOWPOTION){
+            this.server.pushToPlayer(this, new Messages.Notify("스노우포션이 아닙니다."));
+            return;
+        }
+        if(this.weaponEnchantedPoint + this.weaponSkillLevel>= 30){
+            this.server.pushToPlayer(this, new Messages.Notify("무기의 강화도와 무기 속성 레벨의 합은 30을 넘을 수 없습니다."));
+            return;
+        }
+        this.inventory.makeEmptyInventory(inventoryNumber);
+        if(Utils.ratioToBool(0.1)){
+            this.server.pushToPlayer(this, new Messages.Notify("강화에 성공했습니다."));
+            if(this.weaponEnchantedPoint){
+              this.weaponEnchantedPoint += 1;
+            } else{
+              this.weaponEnchantedPoint = 1;
+            }
+            databaseHandler.enchantWeapon(this.name, this.weaponEnchantedPoint);
+        } else{
+            this.server.pushToPlayer(this, new Messages.Notify("강화에 실패했습니다."));
         }
     },
-    _putInventory: function(item){
-        if(!this.inventory[0]){
-            this.inventory[0] = item.kind;
-            this.inventoryCount[0] = item.count;
-            databaseHandler.setInventory(this.name, item.kind, 0, item.count);
-        } else if(!this.inventory[1]){
-            this.inventory[1] = item.kind;
-            this.inventoryCount[1] = item.count;
-            databaseHandler.setInventory(this.name, item.kind, 1, item.count);
+    handleInventoryEnchantBloodsucking: function(itemKind, inventoryNumber){
+        if(itemKind !== Types.Entities.BLACKPOTION){
+            this.server.pushToPlayer(this, new Messages.Notify("블랙포션이 아닙니다."));
+            return;
+        }
+        if(this.weaponEnchantedPoint + this.weaponSkillLevel >= 30){
+            this.server.pushToPlayer(this, new Messages.Notify("무기의 강화도와 흡혈률의 합은 30을 넘을 수 없습니다."));
+            return;
+        }
+        if(this.weaponSkillLevel >= 7){
+            this.server.pushToPlayer(this, new Messages.Notify("흡혈률이 7이상일 경우 더이상 흡혈률을 올릴 수 없습니다."));
+            return;
+        }
+        if(this.weaponSkillKind !== Types.Skills.BLOODSUCKING){
+            this.server.pushToPlayer(this, new Messages.Notify("무기의 속성이 흡혈인 경우에만 블랙포션을 사용할 수 있습니다."));
+            return;
+        }
+
+        this.inventory.makeEmptyInventory(inventoryNumber);
+        if(Utils.ratioToBool(0.1)){
+            this.server.pushToPlayer(this, new Messages.Notify("흡혈률 강화에 성공했습니다."));
+            this.weaponSkillKind = Types.Skills.BLOODSUCKING;
+            if(this.weaponSkillLevel){
+              this.weaponSkillLevel += 1;
+            } else{
+              this.weaponSkillLevel = 1;
+            }
+            databaseHandler.setWeaponSkill(this.name, this.weaponSkillKind, this.weaponSkillLevel);
+        } else{
+            this.server.pushToPlayer(this, new Messages.Notify("흡혈률 강화에 실패했습니다."));
         }
     },
-    
+    handleInventoryEnchantRing: function(itemKind, inventoryNumber){
+        if(itemKind !== Types.Entities.SNOWPOTION){
+            this.server.pushToPlayer(this, new Messages.Notify("스노우포션이 아닙니다."));
+            return;
+        }
+        if(this.ringEnchantedPoint >= 9){
+            this.server.pushToPlayer(this, new Messages.Notify("반지의 강화도는 9을 넘을 수 없습니다."));
+            return;
+        }
+        this.inventory.makeEmptyInventory(inventoryNumber);
+        if(Utils.ratioToBool(0.3)){
+            this.server.pushToPlayer(this, new Messages.Notify("강화에 성공했습니다."));
+            if(this.ringEnchantedPoint){
+                this.ringEnchantedPoint += 1;
+            } else{
+                this.ringEnchantedPoint = 1;
+            }
+            databaseHandler.enchantRing(this.name, this.ringEnchantedPoint);
+        } else if(this.ringEnchantedPoint && Utils.ratioToBool(0.3/0.7)){
+            this.server.pushToPlayer(this, new Messages.Notify("반지가 약해졌습니다."));
+            if(this.ringEnchantedPoint >= 1){
+                this.ringEnchantedPoint -= 1;
+            } else{
+                this.ringEnchantedPoint = 0;
+            }
+            databaseHandler.enchantRing(this.name, this.ringEnchantedPoint);
+        } else{
+            this.server.pushToPlayer(this, new Messages.Notify("강화에 실패했습니다."));
+        }
+    },
+    handleInventoryEnchantPendant: function(itemKind, inventoryNumber){
+        if(itemKind !== Types.Entities.SNOWPOTION){
+            this.server.pushToPlayer(this, new Messages.Notify("스노우포션이 아닙니다."));
+            return;
+        }
+        if(this.pendantEnchantedPoint >= 9){
+            this.server.pushToPlayer(this, new Messages.Notify("펜던트의 강화도는 9을 넘을 수 없습니다."));
+            return;
+        }
+        this.inventory.makeEmptyInventory(inventoryNumber);
+        if(Utils.ratioToBool(0.3)){
+            this.server.pushToPlayer(this, new Messages.Notify("강화에 성공했습니다."));
+            if(this.pendantEnchantedPoint){
+                this.pendantEnchantedPoint += 1;
+            } else{
+                this.pendantEnchantedPoint = 1;
+            }
+            databaseHandler.enchantPendant(this.name, this.pendantEnchantedPoint);
+        } else if(this.pendantEnchantedPoint && Utils.ratioToBool(0.3/0.7)){
+            this.server.pushToPlayer(this, new Messages.Notify("펜던트가 약해졌습니다."));
+            if(this.pendantEnchantedPoint >= 1){
+                this.pendantEnchantedPoint -= 1;
+            } else{
+                this.pendantEnchantedPoint = 0;
+            }
+            databaseHandler.enchantPendant(this.name, this.pendantEnchantedPoint);
+        
+          } else {
+            this.server.pushToPlayer(this, new Messages.Notify("강화에 실패했습니다."));
+        }
+    },
+
+
+
+
     setAbility: function() {
         
     },

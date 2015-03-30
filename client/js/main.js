@@ -62,26 +62,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     app.hideChat();
                 }
             });
-            $('#dropAccept').click(function(event) {
-                try {
-                    var count = parseInt($('#dropCount').val());
-                    if(count > 0) {
-                        if(count > game.player.inventoryCount[app.inventoryNumber])
-                            count = game.player.inventoryCount[app.inventoryNumber];
-
-                        game.client.sendInventory("empty", app.inventoryNumber, count);
-
-                        game.player.inventoryCount[app.inventoryNumber] -= count;
-                        if(game.player.inventoryCount[app.inventoryNumber] === 0)
-                            game.player.inventory[app.inventoryNumber] = null;
-                    }
-                } catch(e) {
-                }
-
-                setTimeout(function () {
-                    app.hideDropDialog();
-                }, 950);
-            });
+            
             $('#helpbutton').click(function() {
                 if($('body').hasClass('about')) {
                     app.closeInGameScroll('about');
@@ -493,7 +474,26 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     this.setSelectionRange(0, 0);
                 }
             });
+            $('#dropAccept').click(function(event) {
+                try {
+                    var count = parseInt($('#dropCount').val());
+                    if(count > 0) {
+                        if(count > game.inventoryHandler.inventoryCount[app.inventoryNumber])
+                            count = game.inventoryHandler.inventoryCount[app.inventoryNumber];
 
+                        game.client.sendInventory("empty", app.inventoryNumber, count);
+
+                        game.inventoryHandler.inventoryCount[app.inventoryNumber] -= count;
+                        if(game.inventoryHandler.inventoryCount[app.inventoryNumber] === 0)
+                            game.inventoryHandler.inventory[app.inventoryNumber] = null;
+                    }
+                } catch(e) {
+                }
+
+                setTimeout(function () {
+                    app.hideDropDialog();
+                }, 100);
+            });
             $('#nameinput').focusin(function() {
                 $('#name-tooltip').addClass('visible');
             });

@@ -113,56 +113,7 @@ footer, header, hgroup, menu, nav, section {
 //Upscale - 2
 
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
-    #quest {
-        position: absolute;
-        width: 960px;
-        left: 50%;
-        margin-left: -480px;
-        top: 518px;
-        bottom: 10px;
-        border: 1px solid #9C9898;
-        background: rgba(255, 255, 255, 1);
-        padding: 5px;
-        overflow-y: scroll;
-        overflow-x: hide;
-        color: rgba(0, 0, 0, 1);
-        display: none;
-        font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-        border-collapse:collapse;
-    }
-    #quest td, #quest th{
-        font-size:1.2em;
-        border:1px solid #98bf21;
-        padding:3px 7px 2px 7px;
-    }
-    #quest th{
-        font-size:1.4em;
-        text-align:left;
-        padding-top:5px;
-        padding-bottom:4px;
-        background-color:#A7C942;
-        color:#fff;
-    }
-    #quest tr.alt td{
-        color:#000;
-        background-color:#EAF2D3;
-    }
-    #questalarm{
-        position: absolute;
-        width: 480px;
-        height: 100px;
-        top: 348px;
-        left: 240px;
-        background: rgba(0, 0, 0, 0.5);
-        text-align: center;
-        color: rgba(255, 255, 255, 1);
-        display: none;
-        pointer-events: none;
-    }
-    #questalarm h2{
-        font-size: 24px;
-        text-shadow: 0px 1px 0px #000000;
-    }
+    
 }
 
 //Upscale - 1

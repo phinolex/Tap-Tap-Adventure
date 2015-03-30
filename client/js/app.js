@@ -12,10 +12,9 @@ define(['jquery', 'storage'], function($, Storage) {
             this.storage = new Storage();
             this.watchNameInputInterval = setInterval(this.toggleButton.bind(this), 100);
             this.initFormFields();
-            this.inventoryNumber = 0;
             this.dropDialogPopuped = false;
             this.frontPage = 'loadcharacter';
-            
+            this.inventoryNumber = 0;
         },
 
         setGame: function(game) {
@@ -469,23 +468,22 @@ define(['jquery', 'storage'], function($, Storage) {
 
         
         showDropDialog: function(inventoryNumber) {
-            if(this.game.started) {
-                $('#dropDialog').addClass('active');
-                $('#dropCount').focus();
-                $('#dropCount').select();
-                
-                this.inventoryNumber = inventoryNumber;
-                this.dropDialogPopuped = true;
-            }
-        },
-        
-        hideDropDialog: function() {
-            if(this.game.started) {
-                $('#dropDialog').removeClass('active');
-                $('#dropCount').blur();
+          if(this.game.started) {
+            $('#dropDialog').addClass('active');
+            $('#dropCount').focus();
+            $('#dropCount').select();
 
-                this.dropDialogPopuped = false;
-            }
+            this.inventoryNumber = inventoryNumber;
+            this.dropDialogPopuped = true;
+          }
+        },
+        hideDropDialog: function() {
+          if(this.game.started) {
+            $('#dropDialog').removeClass('active');
+            $('#dropCount').blur();
+
+            this.dropDialogPopuped = false;
+          }
         },
         initEquipmentIcons: function() {
             var scale = this.game.renderer.getScaleFactor(),
