@@ -142,6 +142,8 @@ module.exports = Player = Character.extend({
                     };
                     var targetPalyer = self.server.getPlayerByName(msg.split(' ')[1]);  
                     // Chat command handling
+
+                    
                     
                     if(msg.startsWith("/1 ")) {
                         
@@ -239,35 +241,7 @@ module.exports = Player = Character.extend({
                     }
                 }
             }
-            else if(action === Types.Messages.LOOTMOVE) {
-                log.info("LOOTMOVE: " + self.name + "(" + message[1] + ", " + message[2] + ")");
-                if(self.lootmove_callback) {
-                    self.setPosition(message[1], message[2]);
-
-                    var item = self.server.getEntityById(message[3]);
-                    if(item) {
-                        self.clearTarget();
-
-                        self.broadcast(new Messages.LootMove(self, item));
-                        self.lootmove_callback(self.x, self.y);
-                    }
-                }
-            }
-            else if(action === Types.Messages.AGGRO) {
-                log.info("AGGRO: " + self.name + " " + message[1]);
-                if(self.move_callback) {
-                    self.server.handleMobHate(message[1], self.id, 5);
-                }
-            }
-            else if(action === Types.Messages.ATTACK) {
-                log.info("ATTACK: " + self.name + " " + message[1]);
-                var mob = self.server.getEntityById(message[1]);
-
-                if(mob) {
-                    self.setTarget(mob);
-                    self.server.broadcastAttacker(self);
-                }
-            }
+            
             else if(action === Types.Messages.HIT) {
                 log.info("HIT: " + self.name + " " + message[1]);
                 var mob = self.server.getEntityById(message[1]);
@@ -319,45 +293,17 @@ module.exports = Player = Character.extend({
                         }
                     }
                 }
-            }
-            else if(action === Types.Messages.LOOT) {
+            } else if(action === Types.Messages.LOOTMOVE) {
+                log.info("LOOTMOVE: " + this.name + "(" + message[1] + ", " + message[2] + ")");
+                self.handleLootMove(message);
+            } else if(action === Types.Messages.LOOT) {
                 log.info("LOOT: " + self.name + " " + message[1]);
-                var item = self.server.getEntityById(message[1]);
-                
-                if(item) {
-                    var kind = item.kind;
-                    
-                    if(Types.isItem(kind)) {
-                        self.broadcast(item.despawn());
-                        self.server.removeEntity(item);
-                        
-                        if(kind === Types.Entities.FIREPOTION) {
-                            //Note: updateHitPoints() works similarly to resetHPandMana
-                            self.updateHitPoints();
-                            self.broadcast(self.equip(Types.Entities.FIREBENEF));
-                            self.firepotionTimeout = setTimeout(function() {
-                                self.broadcast(self.equip(Types.Entities.DEBENEF)); // return to normal after 15 sec
-                                self.firepotionTimeout = null;
-                            }, 7500);
-                            //this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
-                            self.send(new Messages.HitPoints(self.maxHitPoints, self.maxMana).serialize());
-                        } else if(Types.isWeapon(kind)) {
-                            self.equipItem(item.kind);
-                            self.broadcast(self.equip(kind));
-                        } else if(Types.isArmor(kind)) {
-                            
-                             self.equipItem(item.kind);
-                             self.broadcast(self.equip(kind));
-                            
-                        }
-                    }
-                }
-            }
-            else if(action === Types.Messages.TELEPORT) {
+                self.handleLoot(message);
+            } else if(action === Types.Messages.TELEPORT) {
                 log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
                 var x = message[1],
                     y = message[2];
-
+                    
                 if(self.server.isValidPosition(x, y)) {
                     self.setPosition(x, y);
                     self.clearTarget();
@@ -455,9 +401,9 @@ module.exports = Player = Character.extend({
 
         this.connection.sendUTF8("go"); // Notify client that the HELLO/WELCOME handshake can start
     },
-    potatoFunction: function(mob) {
-        
-    },
+    
+    
+    
     
     questAboutKill: function(mob){
     var self = this;
@@ -977,43 +923,23 @@ module.exports = Player = Character.extend({
         self.hasEnteredGame = true;
         self.isDead = false;  
     },
-    handleLoot: function(message){ // 12
-        var self = this;
-        var item = this.server.getEntityById(message[1]);
+   
+    handleLootMove: function(message){ 
+        if(this.lootmove_callback) {
+            this.setPosition(message[1], message[2]);
 
-        if(item) {
-            var kind = item.kind;
-            var itemRank = 0;
+            var item = this.server.getEntityById(message[3]);
+            if(item) {
+                this.clearTarget();
 
-            if(Types.isItem(kind)) {
-                if(kind === Types.Entities.FIREPOTION) {
-                    this.resetHPandMana();
-                    this.broadcast(this.equip(Types.Entities.FIREBENEF), false);
-                    this.broadcast(item.despawn(), false);
-                    this.server.removeEntity(item);
-                    this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
-                } else if(Types.isHealingItem(kind)
-                       || Types.isWeapon(kind)
-                       || Types.isArmor(kind)
-                       || Types.isArcherArmor(kind)
-                       || Types.isArcherWeapon(kind)
-                       || Types.isPendant(kind)
-                       || Types.isRing(kind)
-                       || Types.isBoots(kind)
-                       || kind === Types.Entities.CAKE
-                       || kind === Types.Entities.CD
-                       || kind === Types.Entities.SNOWPOTION
-                       || kind === Types.Entities.BLACKPOTION) {
-                    if(this.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel)){
-                        this.logHandler.addItemLog(this, "loot", item);
-                        this.broadcast(item.despawn(), false);
-                        this.server.removeEntity(item);
-                    }
-                }
+                this.broadcast(new Messages.LootMove(this, item));
+                this.lootmove_callback(this.x, this.y);
             }
-        }
-      },
-      handleInventory: function(message){ // 28
+        }     
+    },
+   
+   
+    handleInventory: function(message){ // 28
         var inventoryNumber = message[2],
             count = message[3];
         var self = this;
@@ -1368,7 +1294,31 @@ module.exports = Player = Character.extend({
 
 
 
+    handleLoot: function(message){
+        var item = this.server.getEntityById(message[1]);
+                
+        if(item) {
+            var kind = item.kind;
+            var itemRank = 0;
 
+            if(Types.isItem(kind)) {
+                if(kind === Types.Entities.FIREPOTION) {
+                    this.updateHitPoints();
+                    this.broadcast(this.equip(Types.Entities.FIREBENEF), false);
+                    this.broadcast(item.despawn(), false);
+                    this.server.removeEntity(item);
+                    this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
+                } else  {
+                    if(this.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel)) {                     
+                        this.broadcast(item.despawn(), false);
+                        this.server.removeEntity(item);
+                    }
+                }
+            }
+        }
+    },
+    
+    
     setAbility: function() {
         
     },

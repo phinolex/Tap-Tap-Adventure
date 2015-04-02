@@ -392,10 +392,13 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             var mobId = data[1],
                 id = data[2],
                 kind = data[3],
-                item = EntityFactory.createEntity(kind, id);
-
+                count = data[4],
+                skillKind = data[5],
+                skillLevel = data[6];
+            
+            var item = EntityFactory.createEntity(kind, id, '', skillKind, skillLevel);
+            item.count = count;
             item.wasDropped = true;
-            item.playersInvolved = data[4];
 
             if(this.drop_callback) {
                 this.drop_callback(item, mobId);

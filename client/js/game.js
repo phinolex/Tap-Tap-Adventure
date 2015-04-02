@@ -1,5 +1,5 @@
 
-/* global Types */
+/* global Types, log, _, self */
 
 define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'tile', 'warrior', 'gameclient', 'audio', 'updater', 'transition',
@@ -108,136 +108,136 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
             // sprites
             this.spriteNames = [
-  "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
-  "bearseonbiarmor", "item-bearseonbiarmor", "frankensteinarmor",
-  "item-gayarcherarmor", "redsicklebow", "item-redsicklebow", "jirisanmoonbear",
-  "halloweenjkarmor", "item-halloweenjkarmor", "mojojojonpc", "gayarcherarmor",
-  "combatuniform", "item-combatuniform", "bloodbow", "item-bloodbow",
-  "item-paewoldo", "cursedhahoemask", "secondsonangelnpc", "item-essentialrage",
-  "sicklebow", "item-sicklebow", "radisharmor", "item-radisharmor", "paewoldo",
-  "firstsonangelnpc", "archerschooluniform", "item-archerschooluniform",
-  "item-forestbow", "adhererarcherarmor", "item-adhererarcherarmor",
-  "supercateffect", "burgerarmor", "item-burgerarmor", "item-marblependant",
-  "friedpotatoarmor", "item-friedpotatoarmor", "superiorangelnpc", "forestbow",
-  "frogarmor", "legolasarmor", "item-legolasarmor", "gaybow", "item-gaybow",
-  "crystalbow", "item-crystalbow", "momangelnpc", "frog", "item-frogarmor",
-  "crystalarcherarmor", "item-crystalarcherarmor", "item-cokearmor",
-  "item-blackspiderarmor", "item-rainbowapro", "item-spiritring", "cokearmor",
-  "fallenarcherarmor", "hellspider", "blackspiderarmor", "rainbowapro",
-  "item-rosebow", "item-pearlpendant", "angelnpc", "item-fallenarcherarmor",
-  "bluewingarcherarmor", "item-bamboospear", "item-bluewingarcherarmor",
-  "item-justicebow", "snowshepherdboy", "suicideghost", "bamboospear",
-  "item-pearlring", "wolfarcherarmor", "item-wolfarcherarmor", "justicebow",
-  "item-snowfoxarcherarmor", "marinebow", "item-marinebow", "cursedjangseung",
-  "redwingarcherarmor", "bridalmask", "item-bridalmask", "snowfoxarcherarmor",
-  "item-redmetalbow", "item-devilkazyasword", "item-redwingarcherarmor",
-  "item-gbwingarcherarmor", "item-captainbow", "redmetalbow", "devilkazyasword",
-  "devilkazyaarmor", "item-devilkazyaarmor", "gbwingarcherarmor", "captainbow",
-  "dovakinarcherarmor", "item-dovakinarcherarmor", "devilkazya", "elfnpc",
-  "skylightbow", "item-greenpendant", "redlightbow", "item-redlightbow",
-  "cheoliarcherarmor", "item-cheoliarcherarmor", "item-skylightbow", "rosebow",
-  "item-piratearcherarmor", "item-greenlightbow", "item-cactusaxe",
-  "item-hunterbow", "item-sproutring", "piratearcherarmor", "greenlightbow",
-  "bluestoremannpc", "ratarcherarmor", "item-ratarcherarmor", "hunterbow",
-  "seahorsebow", "item-seahorsebow", "iceelfnpc", "redstoremannpc",
-  "item-conferencecall", "whitearcherarmor", "item-whitearcherarmor", "cactus",
-  "item-redguardarcherarmor", "skydinosaur", "conferencecall", "cactusaxe",
-  "item-reddamboarmor", "mermaidbow", "item-mermaidbow", "redguardarcherarmor",
-  "iamverycoldnpc", "item-blackpotion", "queenspider", "reddamboarmor",
-  "bluebikinigirlnpc", "babyspider", "redenelbow", "item-redenelbow",
-  "item-guardarcherarmor", "item-greenbow", "pirategirlnpc", "redbikinigirlnpc",
-  "greendamboarmor", "item-greendamboarmor", "guardarcherarmor", "greenbow",
-  "mantis", "item-pinksword", "item-greenwingarcherarmor", "poisonspider",
-  "watermelonbow", "item-watermelonbow", "pinksword", "greenwingarcherarmor",
-  "shepherdboy", "zombiegf", "greenarcherarmor", "item-greenarcherarmor",
-  "item-ironknightarmor", "goldenbow", "item-goldenbow", "item-evilarmor",
-  "weastaff", "item-weastaff", "smalldevil", "ironknightarmor", "fairynpc",
-  "item-goldenarcherarmor", "blackwizard", "wizardrobe", "item-wizardrobe",
-  "whitetiger", "tigerarmor", "item-tigerarmor", "goldenarcherarmor", "pierrot",
-  "deathbow", "item-deathbow", "fireplay", "item-fireplay", "blazespider",
-  "squeakyhammer", "item-squeakyhammer", "violetbow", "item-violetbow",
-  "item-redbow", "hongcheol", "hongcheolarmor", "item-hongcheolarmor",
-  "item-platearcherarmor", "item-beetlearmor", "item-redarcherarmor", "redbow",
-  "mailarcherarmor", "item-mailarcherarmor", "queenant", "platearcherarmor",
-  "snowmanarmor", "item-snowmanarmor", "plasticbow", "item-plasticbow", "comb",
-  "goldmedal", "silvermedal", "bronzemedal", "sponge", "snowman", "item-comb",
-  "item-archerarmor", "firespider", "fireshot", "item-fireshot", "item-ironbow",
-  "item-catarmor", "leatherarcherarmor", "item-leatherarcherarmor", "ironbow",
-  "item-dinosaurarmor", "mermaidnpc", "healeffect", "cat", "catarmor", "beetle",
-  "soldier", "fisherman", "octopus", "earthworm", "dinosaurarmor", "evilarmor",
-  "item-butcherknife", "shieldbenef", "bucklerbenef", "criticaleffect",
-  "cockroachsuit", "item-cockroachsuit", "soybeanbug", "butcherknife",
-  "item-pinkcockroacharmor", "vendingmachine", "bluecockroach", "beetlearmor",
-  "item-robocoparmor", "redcockroach", "pinkcockroacharmor", "oddeyecat",
-  "candybar", "item-candybar", "vampire", "christmasarmor", "santa",
-  "item-christmasarmor", "doctor", "soldierant", "robocoparmor", "stuneffect",
-  "rudolf", "rudolfarmor", "item-rudolfarmor", "boxingman", "santaelf",
-  "ant", "bluedamboarmor", "item-bluedamboarmor", "archerarmor", "woodenbow",
-  "rhaphidophoridae", "memme", "item-memme", "bee", "beearmor", "item-beearmor",
-  "typhoon", "item-typhoon", "windguardian", "squid", "squidarmor",
-  "kaonashi", "damboarmor", "item-damboarmor", "item-royalazalea",
-  "rainbowsword", "item-rainbowsword", "item-sword1", "item-squidarmor",
-  "miniemperor", "huniarmor", "item-huniarmor", "slime", "item-woodenbow",
-  "miniseadragon", "miniseadragonarmor", "item-miniseadragonarmor",
-  "eneltrident", "item-eneltrident", "item-snowpotion", "minidragon",
-  "magicspear", "item-magicspear", "enelarmor", "item-enelarmor",
-  "lightningguardian", "breaker", "item-breaker", "enel", "flaredanceeffect",
-  "shadowregion", "shadowregionarmor", "item-shadowregionarmor",
-  "seadragon", "seadragonarmor", "item-seadragonarmor", "searage",
-  "item-searage", "purplecloudkallege", "item-purplecloudkallege",
-  "snowlady", "daywalker", "item-daywalker", "pirateking", "item-pirateking",
-  "hermitcrab", "zombie", "piratecaptain", "ironogre", "ogrelord", "adherer",
-  "icegolem", "flaredeathknight", "redsickle", "item-redsickle",
-  "regionhenchman", "plunger", "item-plunger", "purplepreta", "sickle",
-  "item-sickle", "icevulture", "portalarmor", "item-portalarmor",
-  "item-adminarmor", "adminarmor", "pain", "rabbitarmor", "item-rabbitarmor",
-  "crystalscolpion", "eliminator", "firebenef", "taekwondo", "item-taekwondo",
-  "darkogre", "item-book", "item-cd", "frostqueen", "snowrabbit", "snowwolf",
-  "iceknight", "miniiceknight", "snowelf", "whitebear", "cobra", "goldgolem",
-  "darkregion", "darkregionillusion", "nightmareregion", "justicehammer",
-  "item-justicehammer", "firesword", "item-firesword", "whip", "item-whip",
-  "forestguardiansword", "item-forestguardiansword", "gayarmor",
-  "item-gayarmor", "schooluniform", "item-schooluniform", "beautifullife",
-  "item-beautifullife", "regionarmor", "item-regionarmor", "ghostrider",
-  "item-ghostrider", "desertscolpion", "darkscolpion", "vulture",
-  "forestdragon", "bluewingarmor", "item-bluewingarmor", "thiefarmor",
-  "item-thiefarmor", "ninjaarmor", "item-ninjaarmor", "dragonarmor",
-  "item-dragonarmor", "fallenarmor", "item-fallenarmor", "paladinarmor",
-  "item-paladinarmor", "crystalarmor", "item-crystalarmor", "adhererrobe",
-  "item-adhererrobe", "frostarmor", "item-frostarmor", "redmetalsword",
-  "item-redmetalsword", "bastardsword", "item-bastardsword", "halberd",
-  "item-halberd", "rose", "item-rose", "icerose", "item-icerose", "hand",
-  "sword", "loot", "target", "talk", "sparks", "shadow16", "rat", "skeleton",
-  "skeleton2", "spectre", "skeletonking", "deathknight", "ogre", "crab",
-  "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl",
-  "villager", "coder", "agent", "rick", "scientist", "nyan", "priest", 
-  "sorcerer", "octocat", "beachnpc", "forestnpc", "desertnpc", "lavanpc",
-  "clotharmor", "item-clotharmor", "leatherarmor", "mailarmor", "platearmor",
-  "redarmor", "goldenarmor", "firefox", "death", "sword1", "axe", "chest",
-  "sword2", "redsword", "bluesword", "goldensword", "item-sword2", "item-axe",
-  "item-redsword", "item-bluesword", "item-goldensword", "item-leatherarmor",
-  "item-mailarmor", "item-platearmor", "item-redarmor", "item-goldenarmor",
-  "item-flask", "item-cake", "item-burger", "morningstar", "item-morningstar",
-  "item-firepotion", "orc", "oldogre", "golem", "mimic", "hobgoblin",
-  "greenarmor", "greenwingarmor", "item-greenarmor", "item-greenwingarmor",
-  "redmouse", "redguard", "scimitar", "item-scimitar", "redguardarmor",
-  "item-redguardarmor", "whitearmor", "item-whitearmor", "infectedguard",
-  "livingarmor", "mermaid", "trident", "item-trident", "ratarmor",
-  "item-ratarmor", "yellowfish", "greenfish", "redfish", "clam", "preta",
-  "pirateskeleton", "bluescimitar", "item-bluescimitar", "bluepiratearmor",
-  "item-bluepiratearmor", "penguin", "moleking", "cheoliarmor",
-  "item-cheoliarmor", "hammer", "item-hammer", "darkskeleton", "redarcherarmor",
-  "greenpirateskeleton", "blackpirateskeleton", "redpirateskeleton",
-  "yellowpreta", "bluepreta", "miniknight", "wolf", "dovakinarmor",
-  "item-dovakinarmor", "gbwingarmor", "item-gbwingarmor", "redwingarmor",
-  "item-redwingarmor", "snowfoxarmor", "item-snowfoxarmor", "wolfarmor",
-  "item-wolfarmor", "pinkelf", "greenlightsaber", "item-greenlightsaber",
-  "skyelf", "skylightsaber", "item-skylightsaber", "redelf", "redlightsaber",
-  "item-redlightsaber", "item-sidesword", "sidesword", "yellowmouse",
-  "whitemouse", "brownmouse", "spear", "item-spear", "guardarmor",
-  "item-guardarmor",
-  "item-pendant1", "item-ring1"];
-    },
+                    "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
+                    "bearseonbiarmor", "item-bearseonbiarmor", "frankensteinarmor",
+                    "item-gayarcherarmor", "redsicklebow", "item-redsicklebow", "jirisanmoonbear",
+                    "halloweenjkarmor", "item-halloweenjkarmor", "mojojojonpc", "gayarcherarmor",
+                    "combatuniform", "item-combatuniform", "bloodbow", "item-bloodbow",
+                    "item-paewoldo", "cursedhahoemask", "secondsonangelnpc", "item-essentialrage",
+                    "sicklebow", "item-sicklebow", "radisharmor", "item-radisharmor", "paewoldo",
+                    "firstsonangelnpc", "archerschooluniform", "item-archerschooluniform",
+                    "item-forestbow", "adhererarcherarmor", "item-adhererarcherarmor",
+                    "supercateffect", "burgerarmor", "item-burgerarmor", "item-marblependant",
+                    "friedpotatoarmor", "item-friedpotatoarmor", "superiorangelnpc", "forestbow",
+                    "frogarmor", "legolasarmor", "item-legolasarmor", "gaybow", "item-gaybow",
+                    "crystalbow", "item-crystalbow", "momangelnpc", "frog", "item-frogarmor",
+                    "crystalarcherarmor", "item-crystalarcherarmor", "item-cokearmor",
+                    "item-blackspiderarmor", "item-rainbowapro", "item-spiritring", "cokearmor",
+                    "fallenarcherarmor", "hellspider", "blackspiderarmor", "rainbowapro",
+                    "item-rosebow", "item-pearlpendant", "angelnpc", "item-fallenarcherarmor",
+                    "bluewingarcherarmor", "item-bamboospear", "item-bluewingarcherarmor",
+                    "item-justicebow", "snowshepherdboy", "suicideghost", "bamboospear",
+                    "item-pearlring", "wolfarcherarmor", "item-wolfarcherarmor", "justicebow",
+                    "item-snowfoxarcherarmor", "marinebow", "item-marinebow", "cursedjangseung",
+                    "redwingarcherarmor", "bridalmask", "item-bridalmask", "snowfoxarcherarmor",
+                    "item-redmetalbow", "item-devilkazyasword", "item-redwingarcherarmor",
+                    "item-gbwingarcherarmor", "item-captainbow", "redmetalbow", "devilkazyasword",
+                    "devilkazyaarmor", "item-devilkazyaarmor", "gbwingarcherarmor", "captainbow",
+                    "dovakinarcherarmor", "item-dovakinarcherarmor", "devilkazya", "elfnpc",
+                    "skylightbow", "item-greenpendant", "redlightbow", "item-redlightbow",
+                    "cheoliarcherarmor", "item-cheoliarcherarmor", "item-skylightbow", "rosebow",
+                    "item-piratearcherarmor", "item-greenlightbow", "item-cactusaxe",
+                    "item-hunterbow", "item-sproutring", "piratearcherarmor", "greenlightbow",
+                    "bluestoremannpc", "ratarcherarmor", "item-ratarcherarmor", "hunterbow",
+                    "seahorsebow", "item-seahorsebow", "iceelfnpc", "redstoremannpc",
+                    "item-conferencecall", "whitearcherarmor", "item-whitearcherarmor", "cactus",
+                    "item-redguardarcherarmor", "skydinosaur", "conferencecall", "cactusaxe",
+                    "item-reddamboarmor", "mermaidbow", "item-mermaidbow", "redguardarcherarmor",
+                    "iamverycoldnpc", "item-blackpotion", "queenspider", "reddamboarmor",
+                    "bluebikinigirlnpc", "babyspider", "redenelbow", "item-redenelbow",
+                    "item-guardarcherarmor", "item-greenbow", "pirategirlnpc", "redbikinigirlnpc",
+                    "greendamboarmor", "item-greendamboarmor", "guardarcherarmor", "greenbow",
+                    "mantis", "item-pinksword", "item-greenwingarcherarmor", "poisonspider",
+                    "watermelonbow", "item-watermelonbow", "pinksword", "greenwingarcherarmor",
+                    "shepherdboy", "zombiegf", "greenarcherarmor", "item-greenarcherarmor",
+                    "item-ironknightarmor", "goldenbow", "item-goldenbow", "item-evilarmor",
+                    "weastaff", "item-weastaff", "smalldevil", "ironknightarmor", "fairynpc",
+                    "item-goldenarcherarmor", "blackwizard", "wizardrobe", "item-wizardrobe",
+                    "whitetiger", "tigerarmor", "item-tigerarmor", "goldenarcherarmor", "pierrot",
+                    "deathbow", "item-deathbow", "fireplay", "item-fireplay", "blazespider",
+                    "squeakyhammer", "item-squeakyhammer", "violetbow", "item-violetbow",
+                    "item-redbow", "hongcheol", "hongcheolarmor", "item-hongcheolarmor",
+                    "item-platearcherarmor", "item-beetlearmor", "item-redarcherarmor", "redbow",
+                    "mailarcherarmor", "item-mailarcherarmor", "queenant", "platearcherarmor",
+                    "snowmanarmor", "item-snowmanarmor", "plasticbow", "item-plasticbow", "comb",
+                    "goldmedal", "silvermedal", "bronzemedal", "sponge", "snowman", "item-comb",
+                    "item-archerarmor", "firespider", "fireshot", "item-fireshot", "item-ironbow",
+                    "item-catarmor", "leatherarcherarmor", "item-leatherarcherarmor", "ironbow",
+                    "item-dinosaurarmor", "mermaidnpc", "healeffect", "cat", "catarmor", "beetle",
+                    "soldier", "fisherman", "octopus", "earthworm", "dinosaurarmor", "evilarmor",
+                    "item-butcherknife", "shieldbenef", "bucklerbenef", "criticaleffect",
+                    "cockroachsuit", "item-cockroachsuit", "soybeanbug", "butcherknife",
+                    "item-pinkcockroacharmor", "vendingmachine", "bluecockroach", "beetlearmor",
+                    "item-robocoparmor", "redcockroach", "pinkcockroacharmor", "oddeyecat",
+                    "candybar", "item-candybar", "vampire", "christmasarmor", "santa",
+                    "item-christmasarmor", "doctor", "soldierant", "robocoparmor", "stuneffect",
+                    "rudolf", "rudolfarmor", "item-rudolfarmor", "boxingman", "santaelf",
+                    "ant", "bluedamboarmor", "item-bluedamboarmor", "archerarmor", "woodenbow",
+                    "rhaphidophoridae", "memme", "item-memme", "bee", "beearmor", "item-beearmor",
+                    "typhoon", "item-typhoon", "windguardian", "squid", "squidarmor",
+                    "kaonashi", "damboarmor", "item-damboarmor", "item-royalazalea",
+                    "rainbowsword", "item-rainbowsword", "item-sword1", "item-squidarmor",
+                    "miniemperor", "huniarmor", "item-huniarmor", "slime", "item-woodenbow",
+                    "miniseadragon", "miniseadragonarmor", "item-miniseadragonarmor",
+                    "eneltrident", "item-eneltrident", "item-snowpotion", "minidragon",
+                    "magicspear", "item-magicspear", "enelarmor", "item-enelarmor",
+                    "lightningguardian", "breaker", "item-breaker", "enel", "flaredanceeffect",
+                    "shadowregion", "shadowregionarmor", "item-shadowregionarmor",
+                    "seadragon", "seadragonarmor", "item-seadragonarmor", "searage",
+                    "item-searage", "purplecloudkallege", "item-purplecloudkallege",
+                    "snowlady", "daywalker", "item-daywalker", "pirateking", "item-pirateking",
+                    "hermitcrab", "zombie", "piratecaptain", "ironogre", "ogrelord", "adherer",
+                    "icegolem", "flaredeathknight", "redsickle", "item-redsickle",
+                    "regionhenchman", "plunger", "item-plunger", "purplepreta", "sickle",
+                    "item-sickle", "icevulture", "portalarmor", "item-portalarmor",
+                    "item-adminarmor", "adminarmor", "pain", "rabbitarmor", "item-rabbitarmor",
+                    "crystalscolpion", "eliminator", "firebenef", "taekwondo", "item-taekwondo",
+                    "darkogre", "item-book", "item-cd", "frostqueen", "snowrabbit", "snowwolf",
+                    "iceknight", "miniiceknight", "snowelf", "whitebear", "cobra", "goldgolem",
+                    "darkregion", "darkregionillusion", "nightmareregion", "justicehammer",
+                    "item-justicehammer", "firesword", "item-firesword", "whip", "item-whip",
+                    "forestguardiansword", "item-forestguardiansword", "gayarmor",
+                    "item-gayarmor", "schooluniform", "item-schooluniform", "beautifullife",
+                    "item-beautifullife", "regionarmor", "item-regionarmor", "ghostrider",
+                    "item-ghostrider", "desertscolpion", "darkscolpion", "vulture",
+                    "forestdragon", "bluewingarmor", "item-bluewingarmor", "thiefarmor",
+                    "item-thiefarmor", "ninjaarmor", "item-ninjaarmor", "dragonarmor",
+                    "item-dragonarmor", "fallenarmor", "item-fallenarmor", "paladinarmor",
+                    "item-paladinarmor", "crystalarmor", "item-crystalarmor", "adhererrobe",
+                    "item-adhererrobe", "frostarmor", "item-frostarmor", "redmetalsword",
+                    "item-redmetalsword", "bastardsword", "item-bastardsword", "halberd",
+                    "item-halberd", "rose", "item-rose", "icerose", "item-icerose", "hand",
+                    "sword", "loot", "target", "talk", "sparks", "shadow16", "rat", "skeleton",
+                    "skeleton2", "spectre", "skeletonking", "deathknight", "ogre", "crab",
+                    "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl",
+                    "villager", "coder", "agent", "rick", "scientist", "nyan", "priest", 
+                    "sorcerer", "octocat", "beachnpc", "forestnpc", "desertnpc", "lavanpc",
+                    "clotharmor", "item-clotharmor", "leatherarmor", "mailarmor", "platearmor",
+                    "redarmor", "goldenarmor", "firefox", "death", "sword1", "axe", "chest",
+                    "sword2", "redsword", "bluesword", "goldensword", "item-sword2", "item-axe",
+                    "item-redsword", "item-bluesword", "item-goldensword", "item-leatherarmor",
+                    "item-mailarmor", "item-platearmor", "item-redarmor", "item-goldenarmor",
+                    "item-flask", "item-cake", "item-burger", "morningstar", "item-morningstar",
+                    "item-firepotion", "orc", "oldogre", "golem", "mimic", "hobgoblin",
+                    "greenarmor", "greenwingarmor", "item-greenarmor", "item-greenwingarmor",
+                    "redmouse", "redguard", "scimitar", "item-scimitar", "redguardarmor",
+                    "item-redguardarmor", "whitearmor", "item-whitearmor", "infectedguard",
+                    "livingarmor", "mermaid", "trident", "item-trident", "ratarmor",
+                    "item-ratarmor", "yellowfish", "greenfish", "redfish", "clam", "preta",
+                    "pirateskeleton", "bluescimitar", "item-bluescimitar", "bluepiratearmor",
+                    "item-bluepiratearmor", "penguin", "moleking", "cheoliarmor",
+                    "item-cheoliarmor", "hammer", "item-hammer", "darkskeleton", "redarcherarmor",
+                    "greenpirateskeleton", "blackpirateskeleton", "redpirateskeleton",
+                    "yellowpreta", "bluepreta", "miniknight", "wolf", "dovakinarmor",
+                    "item-dovakinarmor", "gbwingarmor", "item-gbwingarmor", "redwingarmor",
+                    "item-redwingarmor", "snowfoxarmor", "item-snowfoxarmor", "wolfarmor",
+                    "item-wolfarmor", "pinkelf", "greenlightsaber", "item-greenlightsaber",
+                    "skyelf", "skylightsaber", "item-skylightsaber", "redelf", "redlightsaber",
+                    "item-redlightsaber", "item-sidesword", "sidesword", "yellowmouse",
+                    "whitemouse", "brownmouse", "spear", "item-spear", "guardarmor",
+                    "item-guardarmor",
+                    "item-pendant1", "item-ring1"];
+        },
 
 
         setup: function($bubbleContainer, canvas, background, foreground, input) {
@@ -924,10 +924,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                     self.player.forEachAttacker(self.makeAttackerFollow);
 
-                    var item = self.getItemAt(self.player.gridX, self.player.gridY);
+                    /*var item = self.getItemAt(self.player.gridX, self.player.gridY);
                     if(item instanceof Item) {
                         self.tryLootingItem(item);
-                    }
+                    }*/
 
 
                     
@@ -947,7 +947,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                     if(self.isItemAt(x, y)) {
                         var item = self.getItemAt(x, y);
-                        self.tryLootingItem(item);
+                        self.client.sendLoot(item);
+
                     }
 
                     if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
@@ -1135,7 +1136,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                             self.registerEntityDualPosition(entity);
 
                                             if(self.player && self.player.target === entity) {
-                                                self.makeAttackerFollow(self.player)
+                                                self.makeAttackerFollow(self.player);
                                             }
 
 
@@ -1435,13 +1436,35 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.client.onPlayerEquipItem(function(playerId, itemKind) {
                     var player = self.getEntityById(playerId),
                         itemName = Types.getKindAsString(itemKind);
-
+                
                     if(player) {
-                        if(Types.isArmor(itemKind)) {
-                            
-                            player.setSprite(self.sprites[itemName]);
-                        } else if(Types.isWeapon(itemKind)) {
+                        if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
+                            player.switchArmor(itemName, self.sprites[itemName]);
+                            if(self.player.id === player.id){
+                              self.showNotification('' + (Types.getArmorRank(itemKind)+1) + "레벨 갑옷 착용");
+                              self.audioManager.playSound("loot");
+                            }
+                        } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
                             player.setWeaponName(itemName);
+                            if(self.player.id === player.id){
+                              self.showNotification('' + (Types.getWeaponRank(itemKind)+1) + "레벨 무기 착용");
+                              self.audioManager.playSound("loot");
+                            }
+                        } else if(Types.isPendant(itemKind)) {
+                          if(self.player.id === player.id) {
+                            self.showNotification("" + (Types.getPendantRank(itemKind) + 1) + "레벨 펜던트 착용");
+                            self.audioManager.playSound("loot");
+                          }
+                        } else if(Types.isRing(itemKind)) {
+                          if(self.player.id === player.id) {
+                            self.showNotification("" + (Types.getRingRank(itemKind) + 1) + "레벨 반지 착용");
+                            self.audioManager.playSound("loot");
+                          }
+                        } else if(Types.isBenef(itemKind)){
+                            player.setBenef(itemKind);
+                            if(self.player.id === player.id){
+                              self.audioManager.playSound("firefox");
+                            }
                         }
                     }
                 });
@@ -2825,37 +2848,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
     
     
-        tryLootingItem: function(item) {
-            try {
-                this.player.loot(item);
-                this.client.sendLoot(item); // Notify the server that this item has been looted
-                this.removeItem(item);
-                this.showNotification(item.getLootMessage());
-
-
-                if(item.kind === Types.Entities.FIREPOTION) {
-                   
-                    this.audioManager.playSound("firefox");
-                }
-
-                if(Types.isHealingItem(item.kind)) {
-                    this.audioManager.playSound("heal");
-                } else {
-                    this.audioManager.playSound("loot");
-                }
-
-                /* if(item.wasDropped && !_(item.playersInvolved).include(this.playerId)) {
-                    
-                } */
-            } catch(e) {
-                if(e instanceof Exceptions.LootException) {
-                    this.showNotification(e.message);
-                    this.audioManager.playSound("noloot");
-                } else {
-                    throw e;
-                }
-            }
-        }
     });
 
     return Game;

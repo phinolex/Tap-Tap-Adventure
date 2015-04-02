@@ -1,3 +1,5 @@
+/* global bootKind */
+
 Types = {
     Quest: {
             TOTAL_QUEST_NUMBER: 35
@@ -466,7 +468,19 @@ Types = {
         KEYPAD_6: 102,
         KEYPAD_8: 104,
         KEYPAD_2: 98
+    },
+    
+    Skills: {
+      BLOODSUCKING: 1,
+      RECOVERHEALTH: 2,
+      HEALANDHEAL: 3,
+      AVOIDATTACK: 4,
+      ADDEXPERIENCE: 5,
+      ATTACKWITHBLOOD: 6,
+      CRITICALATTACK: 7,
+      CRITICALRATIO: 8,
     }
+    
 };
 
 var kinds = {
@@ -597,214 +611,214 @@ var kinds = {
     cursedhahoemask:    [Types.Entities.CURSEDHAHOEMASK,     "mob", 146526,360],
     jirisanmoonbear:    [Types.Entities.JIRISANMOONBEAR,     "mob", 150730,364],
 
-    woodenbow: [Types.Entities.WOODENBOW, "weapon"],
-    plasticbow: [Types.Entities.PLASTICBOW, "weapon"],
-    ironbow: [Types.Entities.IRONBOW, "weapon"],
-    redbow: [Types.Entities.REDBOW, "weapon"],
-    violetbow: [Types.Entities.VIOLETBOW, "weapon"],
-    deathbow: [Types.Entities.DEATHBOW, "weapon"],
-    goldenbow: [Types.Entities.GOLDENBOW, "weapon"],
-    watermelonbow: [Types.Entities.WATERMELONBOW, "weapon"],
-    greenbow: [Types.Entities.GREENBOW, "weapon"],
-    redenelbow: [Types.Entities.REDENELBOW, "weapon"],
-    mermaidbow: [Types.Entities.MERMAIDBOW, "weapon"],
-    seahorsebow: [Types.Entities.SEAHORSEBOW, "weapon"],
-    hunterbow: [Types.Entities.HUNTERBOW, "weapon"],
-    greenlightbow: [Types.Entities.GREENLIGHTBOW, "weapon"],
-    skylightbow: [Types.Entities.SKYLIGHTBOW, "weapon"],
-    redlightbow: [Types.Entities.REDLIGHTBOW, "weapon"],
-    captainbow: [Types.Entities.CAPTAINBOW, "weapon"],
-    redmetalbow: [Types.Entities.REDMETALBOW, "weapon"],
-    marinebow: [Types.Entities.MARINEBOW, "weapon"],
-    justicebow: [Types.Entities.JUSTICEBOW, "weapon"],
-    rosebow: [Types.Entities.ROSEBOW, "weapon"],
-    crystalbow: [Types.Entities.CRYSTALBOW, "weapon"],
-    gaybow: [Types.Entities.GAYBOW, "weapon"],
-    forestbow: [Types.Entities.FORESTBOW, "weapon"],
-    sicklebow: [Types.Entities.SICKLEBOW, "weapon"],
-    bloodbow: [Types.Entities.BLOODBOW, "weapon"],
-    redsicklebow: [Types.Entities.REDSICKLEBOW, "weapon"],
+    woodenbow: [Types.Entities.WOODENBOW, "weapon", 0, 0],
+    plasticbow: [Types.Entities.PLASTICBOW, "weapon", 0, 0],
+    ironbow: [Types.Entities.IRONBOW, "weapon", 0, 0],
+    redbow: [Types.Entities.REDBOW, "weapon", 0, 0],
+    violetbow: [Types.Entities.VIOLETBOW, "weapon", 0, 0],
+    deathbow: [Types.Entities.DEATHBOW, "weapon", 0, 0],
+    goldenbow: [Types.Entities.GOLDENBOW, "weapon", 0, 0],
+    watermelonbow: [Types.Entities.WATERMELONBOW, "weapon", 0, 0],
+    greenbow: [Types.Entities.GREENBOW, "weapon", 0, 0],
+    redenelbow: [Types.Entities.REDENELBOW, "weapon", 0, 0],
+    mermaidbow: [Types.Entities.MERMAIDBOW, "weapon", 0, 0],
+    seahorsebow: [Types.Entities.SEAHORSEBOW, "weapon", 0, 0],
+    hunterbow: [Types.Entities.HUNTERBOW, "weapon", 0, 0],
+    greenlightbow: [Types.Entities.GREENLIGHTBOW, "weapon", 0, 0],
+    skylightbow: [Types.Entities.SKYLIGHTBOW, "weapon", 0, 0],
+    redlightbow: [Types.Entities.REDLIGHTBOW, "weapon", 0, 0],
+    captainbow: [Types.Entities.CAPTAINBOW, "weapon", 0, 0],
+    redmetalbow: [Types.Entities.REDMETALBOW, "weapon", 0, 0],
+    marinebow: [Types.Entities.MARINEBOW, "weapon", 0, 0],
+    justicebow: [Types.Entities.JUSTICEBOW, "weapon", 0, 0],
+    rosebow: [Types.Entities.ROSEBOW, "weapon", 0, 0],
+    crystalbow: [Types.Entities.CRYSTALBOW, "weapon", 0, 0],
+    gaybow: [Types.Entities.GAYBOW, "weapon", 0, 0],
+    forestbow: [Types.Entities.FORESTBOW, "weapon", 0, 0],
+    sicklebow: [Types.Entities.SICKLEBOW, "weapon", 0, 0],
+    bloodbow: [Types.Entities.BLOODBOW, "weapon", 0, 0],
+    redsicklebow: [Types.Entities.REDSICKLEBOW, "weapon", 0, 0],
 
 
 
-    archerarmor: [Types.Entities.ARCHERARMOR, "armor"],
-    leatherarcherarmor: [Types.Entities.LEATHERARCHERARMOR, "armor"],
-    mailarcherarmor: [Types.Entities.MAILARCHERARMOR, "armor"],
-    platearcherarmor: [Types.Entities.PLATEARCHERARMOR, "armor"],
-    redarcherarmor: [Types.Entities.REDARCHERARMOR, "armor"],
-    goldenarcherarmor: [Types.Entities.GOLDENARCHERARMOR, "armor"],
-    greenarcherarmor: [Types.Entities.GREENARCHERARMOR, "armor"],
-    greenwingarcherarmor: [Types.Entities.GREENWINGARCHERARMOR, "armor"],
-    guardarcherarmor: [Types.Entities.GUARDARCHERARMOR, "armor"],
-    redguardarcherarmor: [Types.Entities.REDGUARDARCHERARMOR, "armor"],
-    whitearcherarmor: [Types.Entities.WHITEARCHERARMOR, "armor"],
-    ratarcherarmor: [Types.Entities.RATARCHERARMOR, "armor"],
-    piratearcherarmor: [Types.Entities.PIRATEARCHERARMOR, "armor"],
-    cheoliarcherarmor: [Types.Entities.CHEOLIARCHERARMOR, "armor"],
-    dovakinarcherarmor: [Types.Entities.DOVAKINARCHERARMOR, "armor"],
-    gbwingarcherarmor: [Types.Entities.GBWINGARCHERARMOR, "armor"],
-    redwingarcherarmor: [Types.Entities.REDWINGARCHERARMOR, "armor"],
-    snowfoxarcherarmor: [Types.Entities.SNOWFOXARCHERARMOR, "armor"],
-    wolfarcherarmor: [Types.Entities.WOLFARCHERARMOR, "armor"],
-    bluewingarcherarmor: [Types.Entities.BLUEWINGARCHERARMOR, "armor"],
-    fallenarcherarmor: [Types.Entities.FALLENARCHERARMOR, "armor"],
-    crystalarcherarmor: [Types.Entities.CRYSTALARCHERARMOR, "armor"],
-    legolasarmor: [Types.Entities.LEGOLASARMOR, "armor"],
-    adhererarcherarmor: [Types.Entities.ADHERERARCHERARMOR, "armor"],
-    archerschooluniform: [Types.Entities.ARCHERSCHOOLUNIFORM, "armor"],
-    combatuniform: [Types.Entities.COMBATUNIFORM, "armor"],
-    gayarcherarmor: [Types.Entities.GAYARCHERARMOR, "armor"],
+    archerarmor: [Types.Entities.ARCHERARMOR, "armor", 0, 0],
+    leatherarcherarmor: [Types.Entities.LEATHERARCHERARMOR, "armor", 0, 0],
+    mailarcherarmor: [Types.Entities.MAILARCHERARMOR, "armor", 0, 0],
+    platearcherarmor: [Types.Entities.PLATEARCHERARMOR, "armor", 0, 0],
+    redarcherarmor: [Types.Entities.REDARCHERARMOR, "armor", 0, 0],
+    goldenarcherarmor: [Types.Entities.GOLDENARCHERARMOR, "armor", 0, 0],
+    greenarcherarmor: [Types.Entities.GREENARCHERARMOR, "armor", 0, 0],
+    greenwingarcherarmor: [Types.Entities.GREENWINGARCHERARMOR, "armor", 0, 0],
+    guardarcherarmor: [Types.Entities.GUARDARCHERARMOR, "armor", 0, 0],
+    redguardarcherarmor: [Types.Entities.REDGUARDARCHERARMOR, "armor", 0, 0],
+    whitearcherarmor: [Types.Entities.WHITEARCHERARMOR, "armor", 0, 0],
+    ratarcherarmor: [Types.Entities.RATARCHERARMOR, "armor", 0, 0],
+    piratearcherarmor: [Types.Entities.PIRATEARCHERARMOR, "armor", 0, 0],
+    cheoliarcherarmor: [Types.Entities.CHEOLIARCHERARMOR, "armor", 0, 0],
+    dovakinarcherarmor: [Types.Entities.DOVAKINARCHERARMOR, "armor", 0, 0],
+    gbwingarcherarmor: [Types.Entities.GBWINGARCHERARMOR, "armor", 0, 0],
+    redwingarcherarmor: [Types.Entities.REDWINGARCHERARMOR, "armor", 0, 0],
+    snowfoxarcherarmor: [Types.Entities.SNOWFOXARCHERARMOR, "armor", 0, 0],
+    wolfarcherarmor: [Types.Entities.WOLFARCHERARMOR, "armor", 0, 0],
+    bluewingarcherarmor: [Types.Entities.BLUEWINGARCHERARMOR, "armor", 0, 0],
+    fallenarcherarmor: [Types.Entities.FALLENARCHERARMOR, "armor", 0, 0],
+    crystalarcherarmor: [Types.Entities.CRYSTALARCHERARMOR, "armor", 0, 0],
+    legolasarmor: [Types.Entities.LEGOLASARMOR, "armor", 0, 0],
+    adhererarcherarmor: [Types.Entities.ADHERERARCHERARMOR, "armor", 0, 0],
+    archerschooluniform: [Types.Entities.ARCHERSCHOOLUNIFORM, "armor", 0, 0],
+    combatuniform: [Types.Entities.COMBATUNIFORM, "armor", 0, 0],
+    gayarcherarmor: [Types.Entities.GAYARCHERARMOR, "armor", 0, 0],
 
-    sword1: [Types.Entities.SWORD1, "weapon"],
-    sword2: [Types.Entities.SWORD2, "weapon"],
-    axe: [Types.Entities.AXE, "weapon"],
-    redsword: [Types.Entities.REDSWORD, "weapon"],
-    bluesword: [Types.Entities.BLUESWORD, "weapon"],
-    goldensword: [Types.Entities.GOLDENSWORD, "weapon"],
-    morningstar: [Types.Entities.MORNINGSTAR, "weapon"],
-    sidesword: [Types.Entities.SIDESWORD, "weapon"],
-    spear: [Types.Entities.SPEAR, "weapon"],
-    scimitar: [Types.Entities.SCIMITAR, "weapon"],
-    trident: [Types.Entities.TRIDENT, "weapon"],
-    bluescimitar: [Types.Entities.BLUESCIMITAR, "weapon"],
-    hammer: [Types.Entities.HAMMER, "weapon"],
-    greenlightsaber: [Types.Entities.GREENLIGHTSABER, "weapon"],
-    skylightsaber: [Types.Entities.SKYLIGHTSABER, "weapon"],
-    redlightsaber: [Types.Entities.REDLIGHTSABER, "weapon"],
-    redmetalsword: [Types.Entities.REDMETALSWORD, "fweapon"],
-    bastardsword: [Types.Entities.BASTARDSWORD, "weapon"],
-    halberd: [Types.Entities.HALBERD, "weapon"],
-    rose: [Types.Entities.ROSE, "weapon"],
-    icerose: [Types.Entities.ICEROSE, "weapon"],
-    justicehammer: [Types.Entities.JUSTICEHAMMER, "weapon"],
-    firesword: [Types.Entities.FIRESWORD, "weapon"],
-    whip: [Types.Entities.WHIP, "weapon"],
-    forestguardiansword: [Types.Entities.FORESTGUARDIANSWORD, "weapon"],
-    sickle: [Types.Entities.SICKLE, "weapon"],
-    plunger: [Types.Entities.PLUNGER, "weapon"],
-    redsickle: [Types.Entities.REDSICKLE, "weapon"],
-    daywalker: [Types.Entities.DAYWALKER, "weapon"],
-    purplecloudkallege: [Types.Entities.PURPLECLOUDKALLEGE, "weapon"],
-    searage: [Types.Entities.SEARAGE, "weapon"],
-    magicspear: [Types.Entities.MAGICSPEAR, "weapon"],
-    breaker: [Types.Entities.BREAKER, "weapon"],
-    eneltrident: [Types.Entities.ENELTRIDENT, "weapon"],
-    rainbowsword: [Types.Entities.RAINBOWSWORD, "weapon"],
-    typhoon: [Types.Entities.TYPHOON, "weapon"],
-    memme: [Types.Entities.MEMME, "weapon"],
-    candybar: [Types.Entities.CANDYBAR, "weapon"],
-    butcherknife: [Types.Entities.BUTCHERKNIFE, "weapon"],
-    fireshot: [Types.Entities.FIRESHOT, "weapon"],
-    comb: [Types.Entities.COMB, "weapon"],
-    squeakyhammer: [Types.Entities.SQUEAKYHAMMER, "weapon"],
-    fireplay: [Types.Entities.FIREPLAY, "weapon"],
-    weastaff: [Types.Entities.WEASTAFF, "weapon"],
-    pinksword: [Types.Entities.PINKSWORD, "weapon"],
-    conferencecall: [Types.Entities.CONFERENCECALL, "weapon"],
-    cactusaxe: [Types.Entities.CACTUSAXE, "weapon"],
-    devilkazyasword: [Types.Entities.DEVILKAZYASWORD, "weapon"],
-    bamboospear: [Types.Entities.BAMBOOSPEAR, "weapon"],
-    paewoldo: [Types.Entities.PAEWOLDO, "weapon"],
+    sword1: [Types.Entities.SWORD1, "weapon", 0, 0],
+    sword2: [Types.Entities.SWORD2, "weapon", 0, 0],
+    axe: [Types.Entities.AXE, "weapon", 0, 0],
+    redsword: [Types.Entities.REDSWORD, "weapon", 0, 0],
+    bluesword: [Types.Entities.BLUESWORD, "weapon", 0, 0],
+    goldensword: [Types.Entities.GOLDENSWORD, "weapon", 0, 0],
+    morningstar: [Types.Entities.MORNINGSTAR, "weapon", 0, 0],
+    sidesword: [Types.Entities.SIDESWORD, "weapon", 0, 0],
+    spear: [Types.Entities.SPEAR, "weapon", 0, 0],
+    scimitar: [Types.Entities.SCIMITAR, "weapon", 0, 0],
+    trident: [Types.Entities.TRIDENT, "weapon", 0, 0],
+    bluescimitar: [Types.Entities.BLUESCIMITAR, "weapon", 0, 0],
+    hammer: [Types.Entities.HAMMER, "weapon", 0, 0],
+    greenlightsaber: [Types.Entities.GREENLIGHTSABER, "weapon", 0, 0],
+    skylightsaber: [Types.Entities.SKYLIGHTSABER, "weapon", 0, 0],
+    redlightsaber: [Types.Entities.REDLIGHTSABER, "weapon", 0, 0],
+    redmetalsword: [Types.Entities.REDMETALSWORD, "fweapon", 0, 0],
+    bastardsword: [Types.Entities.BASTARDSWORD, "weapon", 0, 0],
+    halberd: [Types.Entities.HALBERD, "weapon", 0, 0],
+    rose: [Types.Entities.ROSE, "weapon", 0, 0],
+    icerose: [Types.Entities.ICEROSE, "weapon", 0, 0],
+    justicehammer: [Types.Entities.JUSTICEHAMMER, "weapon", 0, 0],
+    firesword: [Types.Entities.FIRESWORD, "weapon", 0, 0],
+    whip: [Types.Entities.WHIP, "weapon", 0, 0],
+    forestguardiansword: [Types.Entities.FORESTGUARDIANSWORD, "weapon", 0, 0],
+    sickle: [Types.Entities.SICKLE, "weapon", 0, 0],
+    plunger: [Types.Entities.PLUNGER, "weapon", 0, 0],
+    redsickle: [Types.Entities.REDSICKLE, "weapon", 0, 0],
+    daywalker: [Types.Entities.DAYWALKER, "weapon", 0, 0],
+    purplecloudkallege: [Types.Entities.PURPLECLOUDKALLEGE, "weapon", 0, 0],
+    searage: [Types.Entities.SEARAGE, "weapon", 0, 0],
+    magicspear: [Types.Entities.MAGICSPEAR, "weapon", 0, 0],
+    breaker: [Types.Entities.BREAKER, "weapon", 0, 0],
+    eneltrident: [Types.Entities.ENELTRIDENT, "weapon", 0, 0],
+    rainbowsword: [Types.Entities.RAINBOWSWORD, "weapon", 0, 0],
+    typhoon: [Types.Entities.TYPHOON, "weapon", 0, 0],
+    memme: [Types.Entities.MEMME, "weapon", 0, 0],
+    candybar: [Types.Entities.CANDYBAR, "weapon", 0, 0],
+    butcherknife: [Types.Entities.BUTCHERKNIFE, "weapon", 0, 0],
+    fireshot: [Types.Entities.FIRESHOT, "weapon", 0, 0],
+    comb: [Types.Entities.COMB, "weapon", 0, 0],
+    squeakyhammer: [Types.Entities.SQUEAKYHAMMER, "weapon", 0, 0],
+    fireplay: [Types.Entities.FIREPLAY, "weapon", 0, 0],
+    weastaff: [Types.Entities.WEASTAFF, "weapon", 0, 0],
+    pinksword: [Types.Entities.PINKSWORD, "weapon", 0, 0],
+    conferencecall: [Types.Entities.CONFERENCECALL, "weapon", 0, 0],
+    cactusaxe: [Types.Entities.CACTUSAXE, "weapon", 0, 0],
+    devilkazyasword: [Types.Entities.DEVILKAZYASWORD, "weapon", 0, 0],
+    bamboospear: [Types.Entities.BAMBOOSPEAR, "weapon", 0, 0],
+    paewoldo: [Types.Entities.PAEWOLDO, "weapon", 0, 0],
     
-    clotharmor: [Types.Entities.CLOTHARMOR, "armor"],
-    leatherarmor: [Types.Entities.LEATHERARMOR, "armor"],
-    mailarmor: [Types.Entities.MAILARMOR, "armor"],
-    platearmor: [Types.Entities.PLATEARMOR, "armor"],
-    redarmor: [Types.Entities.REDARMOR, "armor"],
-    goldenarmor: [Types.Entities.GOLDENARMOR, "armor"],
-    greenarmor: [Types.Entities.GREENARMOR, "armor"],
-    greenwingarmor: [Types.Entities.GREENWINGARMOR, "armor"],
-    guardarmor: [Types.Entities.GUARDARMOR, "armor"],
-    redguardarmor: [Types.Entities.REDGUARDARMOR, "armor"],
-    whitearmor: [Types.Entities.WHITEARMOR, "armor"],
-    ratarmor: [Types.Entities.RATARMOR, "armor"],
-    bluepiratearmor: [Types.Entities.BLUEPIRATEARMOR, "armor"],
-    cheoliarmor: [Types.Entities.CHEOLIARMOR, "armor"],
-    dovakinarmor: [Types.Entities.DOVAKINARMOR, "armor"],
-    gbwingarmor: [Types.Entities.GBWINGARMOR, "armor"],
-    redwingarmor: [Types.Entities.REDWINGARMOR, "armor"],
-    snowfoxarmor: [Types.Entities.SNOWFOXARMOR, "armor"],
-    wolfarmor: [Types.Entities.WOLFARMOR, "armor"],
-    bluewingarmor: [Types.Entities.BLUEWINGARMOR, "armor"],
-    thiefarmor: [Types.Entities.THIEFARMOR, "armor"],
-    ninjaarmor: [Types.Entities.NINJAARMOR, "armor"],
-    dragonarmor: [Types.Entities.DRAGONARMOR, "armor"],
-    fallenarmor: [Types.Entities.FALLENARMOR, "armor"],
-    paladinarmor: [Types.Entities.PALADINARMOR, "armor"],
-    crystalarmor: [Types.Entities.CRYSTALARMOR, "armor"],
-    adhererrobe: [Types.Entities.ADHERERROBE, "armor"],
-    frostarmor: [Types.Entities.FROSTARMOR, "armor"],
-    gayarmor: [Types.Entities.GAYARMOR, "armor"],
-    schooluniform: [Types.Entities.SCHOOLUNIFORM, "armor"],
-    beautifullife: [Types.Entities.BEAUTIFULLIFE, "armor"],
-    regionarmor: [Types.Entities.REGIONARMOR, "armor"],
-    ghostrider: [Types.Entities.GHOSTRIDER, "armor"],
-    taekwondo: [Types.Entities.TAEKWONDO, "armor"],
-    adminarmor: [Types.Entities.ADMINARMOR, "armor"],
-    rabbitarmor: [Types.Entities.RABBITARMOR, "armor"],
-    portalarmor: [Types.Entities.PORTALARMOR, "armor"],
-    seadragonarmor: [Types.Entities.SEADRAGONARMOR, "armor"],
-    pirateking: [Types.Entities.PIRATEKING, "armor"],
-    shadowregionarmor: [Types.Entities.SHADOWREGIONARMOR, "armor"],
-    enelarmor: [Types.Entities.ENELARMOR, "armor"],
-    miniseadragonarmor: [Types.Entities.MINISEADRAGONARMOR, "armor"],
-    huniarmor: [Types.Entities.HUNIARMOR, "armor"],
-    damboarmor: [Types.Entities.DAMBOARMOR, "armor"],
-    squidarmor: [Types.Entities.SQUIDARMOR, "armor"],
-    beearmor: [Types.Entities.BEEARMOR, "armor"],
-    bluedamboarmor: [Types.Entities.BLUEDAMBOARMOR, "armor"],
-    rudolfarmor: [Types.Entities.RUDOLFARMOR, "armor"],
-    christmasarmor: [Types.Entities.CHRISTMASARMOR, "armor"],
-    robocoparmor: [Types.Entities.ROBOCOPARMOR, "armor"],
-    pinkcockroacharmor: [Types.Entities.PINKCOCKROACHARMOR, "armor"],
-    cockroachsuit: [Types.Entities.COCKROACHSUIT, "armor"],
-    dinosaurarmor: [Types.Entities.DINOSAURARMOR, "armor"],
-    catarmor: [Types.Entities.CATARMOR, "armor"],
-    snowmanarmor: [Types.Entities.SNOWMANARMOR, "armor"],
-    beetlearmor: [Types.Entities.BEETLEARMOR, "armor"],
-    hongcheolarmor: [Types.Entities.HONGCHEOLARMOR, "armor"],
-    tigerarmor: [Types.Entities.TIGERARMOR, "armor"],
-    wizardrobe: [Types.Entities.WIZARDROBE, "armor"],
-    ironknightarmor: [Types.Entities.IRONKNIGHTARMOR, "armor"],
-    evilarmor: [Types.Entities.EVILARMOR, "armor"],
-    greendamboarmor: [Types.Entities.GREENDAMBOARMOR, "armor"],
-    reddamboarmor: [Types.Entities.REDDAMBOARMOR, "armor"],
-    devilkazyaarmor: [Types.Entities.DEVILKAZYAARMOR, "armor"],
-    bridalmask: [Types.Entities.BRIDALMASK, "armor"],
-    blackspiderarmor: [Types.Entities.BLACKSPIDERARMOR, "armor"],
-    frogarmor: [Types.Entities.FROGARMOR, "armor"],
-    bearseonbiarmor: [Types.Entities.BEARSEONBIARMOR, "armor"],
+    clotharmor: [Types.Entities.CLOTHARMOR, "armor", 0, 0],
+    leatherarmor: [Types.Entities.LEATHERARMOR, "armor", 0, 0],
+    mailarmor: [Types.Entities.MAILARMOR, "armor", 0, 0],
+    platearmor: [Types.Entities.PLATEARMOR, "armor", 0, 0],
+    redarmor: [Types.Entities.REDARMOR, "armor", 0, 0],
+    goldenarmor: [Types.Entities.GOLDENARMOR, "armor", 0, 0],
+    greenarmor: [Types.Entities.GREENARMOR, "armor", 0, 0],
+    greenwingarmor: [Types.Entities.GREENWINGARMOR, "armor", 0, 0],
+    guardarmor: [Types.Entities.GUARDARMOR, "armor", 0, 0],
+    redguardarmor: [Types.Entities.REDGUARDARMOR, "armor", 0, 0],
+    whitearmor: [Types.Entities.WHITEARMOR, "armor", 0, 0],
+    ratarmor: [Types.Entities.RATARMOR, "armor", 0, 0],
+    bluepiratearmor: [Types.Entities.BLUEPIRATEARMOR, "armor", 0, 0],
+    cheoliarmor: [Types.Entities.CHEOLIARMOR, "armor", 0, 0],
+    dovakinarmor: [Types.Entities.DOVAKINARMOR, "armor", 0, 0],
+    gbwingarmor: [Types.Entities.GBWINGARMOR, "armor", 0, 0],
+    redwingarmor: [Types.Entities.REDWINGARMOR, "armor", 0, 0],
+    snowfoxarmor: [Types.Entities.SNOWFOXARMOR, "armor", 0, 0],
+    wolfarmor: [Types.Entities.WOLFARMOR, "armor", 0, 0],
+    bluewingarmor: [Types.Entities.BLUEWINGARMOR, "armor", 0, 0],
+    thiefarmor: [Types.Entities.THIEFARMOR, "armor", 0, 0],
+    ninjaarmor: [Types.Entities.NINJAARMOR, "armor", 0, 0],
+    dragonarmor: [Types.Entities.DRAGONARMOR, "armor", 0, 0],
+    fallenarmor: [Types.Entities.FALLENARMOR, "armor", 0, 0],
+    paladinarmor: [Types.Entities.PALADINARMOR, "armor", 0, 0],
+    crystalarmor: [Types.Entities.CRYSTALARMOR, "armor", 0, 0],
+    adhererrobe: [Types.Entities.ADHERERROBE, "armor", 0, 0],
+    frostarmor: [Types.Entities.FROSTARMOR, "armor", 0, 0],
+    gayarmor: [Types.Entities.GAYARMOR, "armor", 0, 0],
+    schooluniform: [Types.Entities.SCHOOLUNIFORM, "armor", 0, 0],
+    beautifullife: [Types.Entities.BEAUTIFULLIFE, "armor", 0, 0],
+    regionarmor: [Types.Entities.REGIONARMOR, "armor", 0, 0],
+    ghostrider: [Types.Entities.GHOSTRIDER, "armor", 0, 0],
+    taekwondo: [Types.Entities.TAEKWONDO, "armor", 0, 0],
+    adminarmor: [Types.Entities.ADMINARMOR, "armor", 0, 0],
+    rabbitarmor: [Types.Entities.RABBITARMOR, "armor", 0, 0],
+    portalarmor: [Types.Entities.PORTALARMOR, "armor", 0, 0],
+    seadragonarmor: [Types.Entities.SEADRAGONARMOR, "armor", 0, 0],
+    pirateking: [Types.Entities.PIRATEKING, "armor", 0, 0],
+    shadowregionarmor: [Types.Entities.SHADOWREGIONARMOR, "armor", 0, 0],
+    enelarmor: [Types.Entities.ENELARMOR, "armor", 0, 0],
+    miniseadragonarmor: [Types.Entities.MINISEADRAGONARMOR, "armor", 0, 0],
+    huniarmor: [Types.Entities.HUNIARMOR, "armor", 0, 0],
+    damboarmor: [Types.Entities.DAMBOARMOR, "armor", 0, 0],
+    squidarmor: [Types.Entities.SQUIDARMOR, "armor", 0, 0],
+    beearmor: [Types.Entities.BEEARMOR, "armor", 0, 0],
+    bluedamboarmor: [Types.Entities.BLUEDAMBOARMOR, "armor", 0, 0],
+    rudolfarmor: [Types.Entities.RUDOLFARMOR, "armor", 0, 0],
+    christmasarmor: [Types.Entities.CHRISTMASARMOR, "armor", 0, 0],
+    robocoparmor: [Types.Entities.ROBOCOPARMOR, "armor", 0, 0],
+    pinkcockroacharmor: [Types.Entities.PINKCOCKROACHARMOR, "armor", 0, 0],
+    cockroachsuit: [Types.Entities.COCKROACHSUIT, "armor", 0, 0],
+    dinosaurarmor: [Types.Entities.DINOSAURARMOR, "armor", 0, 0],
+    catarmor: [Types.Entities.CATARMOR, "armor", 0, 0],
+    snowmanarmor: [Types.Entities.SNOWMANARMOR, "armor", 0, 0],
+    beetlearmor: [Types.Entities.BEETLEARMOR, "armor", 0, 0],
+    hongcheolarmor: [Types.Entities.HONGCHEOLARMOR, "armor", 0, 0],
+    tigerarmor: [Types.Entities.TIGERARMOR, "armor", 0, 0],
+    wizardrobe: [Types.Entities.WIZARDROBE, "armor", 0, 0],
+    ironknightarmor: [Types.Entities.IRONKNIGHTARMOR, "armor", 0, 0],
+    evilarmor: [Types.Entities.EVILARMOR, "armor", 0, 0],
+    greendamboarmor: [Types.Entities.GREENDAMBOARMOR, "armor", 0, 0],
+    reddamboarmor: [Types.Entities.REDDAMBOARMOR, "armor", 0, 0],
+    devilkazyaarmor: [Types.Entities.DEVILKAZYAARMOR, "armor", 0, 0],
+    bridalmask: [Types.Entities.BRIDALMASK, "armor", 0, 0],
+    blackspiderarmor: [Types.Entities.BLACKSPIDERARMOR, "armor", 0, 0],
+    frogarmor: [Types.Entities.FROGARMOR, "armor", 0, 0],
+    bearseonbiarmor: [Types.Entities.BEARSEONBIARMOR, "armor", 0, 0],
 
-    rainbowapro: [Types.Entities.RAINBOWAPRO, "armor"],
-    cokearmor: [Types.Entities.COKEARMOR, "armor"],
-    friedpotatoarmor: [Types.Entities.FRIEDPOTATOARMOR, "armor"],
-    burgerarmor: [Types.Entities.BURGERARMOR, "armor"],
-    radisharmor: [Types.Entities.RADISHARMOR, "armor"],
-    halloweenjkarmor: [Types.Entities.HALLOWEENJKARMOR, "armor"],
-    frankensteinarmor: [Types.Entities.FRANKENSTEINARMOR, "armor"],
+    rainbowapro: [Types.Entities.RAINBOWAPRO, "armor", 0, 0],
+    cokearmor: [Types.Entities.COKEARMOR, "armor", 0, 0],
+    friedpotatoarmor: [Types.Entities.FRIEDPOTATOARMOR, "armor", 0, 0],
+    burgerarmor: [Types.Entities.BURGERARMOR, "armor", 0, 0],
+    radisharmor: [Types.Entities.RADISHARMOR, "armor", 0, 0],
+    halloweenjkarmor: [Types.Entities.HALLOWEENJKARMOR, "armor", 0, 0],
+    frankensteinarmor: [Types.Entities.FRANKENSTEINARMOR, "armor", 0, 0],
     
     
-    pendant1: [Types.Entities.PENDANT1, "object"],
-    greenpendant: [Types.Entities.GREENPENDANT, "object"],
-    pearlpendant: [Types.Entities.PEARLPENDANT, "object"],
-    marblependant: [Types.Entities.MARBLEPENDANT, "object"],
+    pendant1: [Types.Entities.PENDANT1, "object", 0, 0],
+    greenpendant: [Types.Entities.GREENPENDANT, "object", 0, 0],
+    pearlpendant: [Types.Entities.PEARLPENDANT, "object", 0, 0],
+    marblependant: [Types.Entities.MARBLEPENDANT, "object", 0, 0],
     
-    ring1: [Types.Entities.RING1, "object"],
-    sproutring: [Types.Entities.SPROUTRING, "object"],
-    pearlring: [Types.Entities.PEARLRING, "object"],
-    spiritring: [Types.Entities.SPIRITRING, "object"],
-    essentialrage: [Types.Entities.ESSENTIALRAGE, "object"],
+    ring1: [Types.Entities.RING1, "object", 0, 0],
+    sproutring: [Types.Entities.SPROUTRING, "object", 0, 0],
+    pearlring: [Types.Entities.PEARLRING, "object", 0, 0],
+    spiritring: [Types.Entities.SPIRITRING, "object", 0, 0],
+    essentialrage: [Types.Entities.ESSENTIALRAGE, "object", 0, 0],
 
-    flask: [Types.Entities.FLASK, "object"],
-    cake: [Types.Entities.CAKE, "object"],
-    burger: [Types.Entities.BURGER, "object"],
-    chest: [Types.Entities.CHEST, "object"],
-    firepotion: [Types.Entities.FIREPOTION, "object"],
-    book: [Types.Entities.BOOK, "object"],
-    cd: [Types.Entities.CD, "object"],
-    snowpotion: [Types.Entities.SNOWPOTION, "object"],
-    royalazalea: [Types.Entities.ROYALAZALEA, "object"],
-    blackpotion: [Types.Entities.BLACKPOTION, "object"],
+    flask: [Types.Entities.FLASK, "object", 0, 0],
+    cake: [Types.Entities.CAKE, "object", 0, 0],
+    burger: [Types.Entities.BURGER, "object", 0, 0],
+    chest: [Types.Entities.CHEST, "object", 0, 0],
+    firepotion: [Types.Entities.FIREPOTION, "object", 0, 0],
+    book: [Types.Entities.BOOK, "object", 0, 0],
+    cd: [Types.Entities.CD, "object", 0, 0],
+    snowpotion: [Types.Entities.SNOWPOTION, "object", 0, 0],
+    royalazalea: [Types.Entities.ROYALAZALEA, "object", 0, 0],
+    blackpotion: [Types.Entities.BLACKPOTION, "object", 0, 0],
 
     guard: [Types.Entities.GUARD, "npc"],
     villagegirl: [Types.Entities.VILLAGEGIRL, "npc"],
@@ -999,7 +1013,83 @@ Types.rankedArmors = [
     Types.Entities.FROGARMOR,
     Types.Entities.BEARSEONBIARMOR
 ];
+Types.rankedArcherWeapons = [
+    Types.Entities.WOODENBOW,
+    Types.Entities.PLASTICBOW,
+    Types.Entities.IRONBOW,
+    Types.Entities.REDBOW,
+    Types.Entities.VIOLETBOW,
+    Types.Entities.DEATHBOW,
+    Types.Entities.GOLDENBOW,
+    Types.Entities.WATERMELONBOW,
+    Types.Entities.GREENBOW,
+    Types.Entities.REDENELBOW,
+    Types.Entities.MERMAIDBOW,
+    Types.Entities.SEAHORSEBOW,
+    Types.Entities.HUNTERBOW,
+    Types.Entities.GREENLIGHTBOW,
+    Types.Entities.SKYLIGHTBOW,
+    Types.Entities.REDLIGHTBOW,
+    Types.Entities.CAPTAINBOW,
+    Types.Entities.REDMETALBOW,
+    Types.Entities.JUSTICEBOW,
+    Types.Entities.ROSEBOW,
+    Types.Entities.MARINEBOW,
+    Types.Entities.CRYSTALBOW,
+    Types.Entities.GAYBOW,
+    Types.Entities.FORESTBOW,
+    Types.Entities.SICKLEBOW,
+    Types.Entities.BLOODBOW,
+    Types.Entities.REDSICKLEBOW,
+];
+Types.rankedArcherArmors = [
+    Types.Entities.ARCHERARMOR,
+    Types.Entities.LEATHERARCHERARMOR,
+    Types.Entities.MAILARCHERARMOR,
+    Types.Entities.PLATEARCHERARMOR,
+    Types.Entities.REDARCHERARMOR,
+    Types.Entities.GOLDENARCHERARMOR,
+    Types.Entities.GREENARCHERARMOR,
+    Types.Entities.GREENWINGARCHERARMOR,
+    Types.Entities.GUARDARCHERARMOR,
+    Types.Entities.REDGUARDARCHERARMOR,
+    Types.Entities.WHITEARCHERARMOR,
+    Types.Entities.RATARCHERARMOR,
+    Types.Entities.PIRATEARCHERARMOR,
+    Types.Entities.CHEOLIARCHERARMOR,
+    Types.Entities.DOVAKINARCHERARMOR,
+    Types.Entities.GBWINGARCHERARMOR,
+    Types.Entities.REDWINGARCHERARMOR,
+    Types.Entities.SNOWFOXARCHERARMOR,
+    Types.Entities.WOLFARCHERARMOR,
+    Types.Entities.BLUEWINGARCHERARMOR,
+    Types.Entities.FALLENARCHERARMOR,
+    Types.Entities.CRYSTALARCHERARMOR,
+    Types.Entities.LEGOLASARMOR,
+    Types.Entities.ADHERERARCHERARMOR,
+    Types.Entities.ARCHERSCHOOLUNIFORM,
+    Types.Entities.COMBATUNIFORM,
+    Types.Entities.GAYARCHERARMOR,
+];
 
+
+Types.rankedPendants = [
+    Types.Entities.PENDANT1,
+    Types.Entities.GREENPENDANT,
+    Types.Entities.PEARLPENDANT,
+    Types.Entities.MARBLEPENDANT,
+];
+
+Types.rankedRings = [
+    Types.Entities.RING1,
+    Types.Entities.SPROUTRING,
+    Types.Entities.PEARLRING,
+    Types.Entities.SPIRITRING,
+    Types.Entities.ESSENTIALRAGE,
+];
+
+Types.rankedBoots = [
+];
 
 Types.expForLevel = [
     1, 2, 5, 16, 39,
@@ -1034,6 +1124,18 @@ Types.getWeaponRank = function(weaponKind) {
 Types.getArmorRank = function(armorKind) {
     return _.indexOf(Types.rankedArmors, armorKind);
 };
+
+Types.getPendantRank = function(pendantKind) {
+    return Types.isPendant(pendantKind) ? _.indexOf(Types.rankedPendants, pendantKind): 0;
+};
+
+Types.getRingRank = function(ringKind) {
+    return Types.isRing(ringKind) ? _.indexOf(Types.rankedRings, ringKind) : 0;
+};
+
+Types.getBootsRank = function(bootsKind) {
+    return Types.isBoots(bootKind) ? _.indexOf(Types.rankedBoots, bootsKind) : -1;
+};
 Types.getMobExp = function(mobKind){
     return kinds.getMobExp(mobKind);
 };
@@ -1053,6 +1155,11 @@ Types.isNpc = function(kind) {
     return kinds.getType(kind) === "npc";
 };
 
+Types.isBenef = function(kind) {
+    return kinds.getType(kind) === "benef";
+};
+
+
 Types.isCharacter = function(kind) {
     return Types.isMob(kind) || Types.isNpc(kind) || Types.isPlayer(kind);
 };
@@ -1061,8 +1168,26 @@ Types.isArmor = function(kind) {
     return kinds.getType(kind) === "armor";
 };
 
+Types.isArcherArmor = function(kind) {
+    return kinds.getType(kind) === "archerarmor";
+};
+
 Types.isWeapon = function(kind) {
     return kinds.getType(kind) === "weapon";
+};
+Types.isArcherWeapon = function(kind) {
+    return kinds.getType(kind) === "archerweapon";
+};
+
+Types.isPendant = function(kind) {
+    return kinds.getType(kind) === "pendant";
+};
+Types.isRing = function(kind) {
+    return kinds.getType(kind) === "ring";
+};
+
+Types.isBoots = function(kind) {
+    return kinds.getType(kind) === "boots";
 };
 
 Types.isObject = function(kind) {
@@ -1074,14 +1199,19 @@ Types.isChest = function(kind) {
 };
 
 Types.isItem = function(kind) {
-    return Types.isWeapon(kind)
-        || Types.isArmor(kind)
+    return Types.isWeapon(kind) 
+        || Types.isArmor(kind) 
+        || Types.isArcherWeapon(kind) 
+        || Types.isArcherArmor(kind) 
+        || Types.isPendant(kind)
+        || Types.isRing(kind)
         || (Types.isObject(kind) && !Types.isChest(kind));
 };
 
 Types.isHealingItem = function(kind) {
-    return kind === Types.Entities.FLASK
-        || kind === Types.Entities.BURGER;
+    return kind === Types.Entities.FLASK 
+        || kind === Types.Entities.BURGER
+        || kind === Types.Entities.ROYALAZALEA;
 };
 
 Types.isExpendableItem = function(kind) {
@@ -1141,6 +1271,23 @@ Types.forEachWeaponKind = function(callback) {
     });
 };
 
+
+Types.forEachArcherArmorKind = function(callback) {
+    Types.forEachKind(function(kind, kindName) {
+        if(Types.isArcherArmor(kind)) {
+            callback(kind, kindName);
+        }
+    });
+};
+Types.forEachArcherWeaponKind = function(callback) {
+    Types.forEachKind(function(kind, kindName) {
+        if(Types.isArcherWeapon(kind)) {
+            callback(kind, kindName);
+        }
+    });
+};
+
+
 Types.getOrientationAsString = function(orientation) {
     switch(orientation) {
         case Types.Orientations.LEFT: return "left"; break;
@@ -1171,6 +1318,310 @@ Types.getMessageTypeAsString = function(type) {
     }
     return typeName;
 };
+
+Types.Store = {
+    ItemTypes: {
+        POTION: 1,
+        ARMOR: 2,
+        WEAPON: 3
+    },
+  // [Count, Price, Options(1: Buy, 2: Sell, 10: Multiple)]
+    Potions: {
+        flask: [5, 1, 11],
+        royalazalea: [1, 25, 0],
+        snowpotion: [0, 1000, 0],
+        blackpotion: [0, 1000, 0]
+    },
+    Armors: {
+        clotharmor: [0, 0, 3],
+        leatherarmor: [0, 0, 2],
+        mailarmor: [0, 0, 3],
+        platearmor: [0, 0, 3],
+        redarmor: [0, 0, 3],
+        goldenarmor: [0, 0, 3],
+        greenarmor: [0, 0, 3],
+        greenwingarmor: [0, 0, 3],
+        guardarmor: [0, 0, 3],
+        redguardarmor: [0, 0, 3],
+        whitearmor: [0, 0, 3],
+        ratarmor: [0, 0, 2],
+        bluepiratearmor: [0, 0, 3],
+        cheoliarmor: [0, 0, 3],
+        dovakinarmor: [0, 0, 3],
+        gbwingarmor: [0, 0, 3],
+        redwingarmor: [0, 0, 3],
+        snowfoxarmor: [0, 0, 3],
+        wolfarmor: [0, 0, 3],
+        bluewingarmor: [0, 0, 2],
+        thiefarmor: [0, 0, 0],
+        ninjaarmor: [0, 0, 0],
+        dragonarmor: [0, 0, 0],
+        fallenarmor: [0, 0, 0],
+        paladinarmor: [0, 0, 0],
+        crystalarmor: [0, 0, 0],
+        adhererrobe: [0, 0, 0],
+        frostarmor: [0, 0, 0],
+        gayarmor: [0, 0, 0],
+        schooluniform: [0, 0, 0],
+        beautifullife: [0, 0, 0],
+        regionarmor: [0, 0, 0],
+        ghostrider: [0, 0, 0],
+        taekwondo: [0, 0, 0],
+        rabbitarmor: [0, 0, 0],
+        portalarmor: [0, 0, 0],
+        seadragonarmor: [0, 0, 0],
+        pirateking: [0, 0, 0],
+        shadowregionarmor: [0, 0, 0],
+        enelarmor: [0, 0, 0],
+        miniseadragonarmor: [0, 0, 0],
+        huniarmor: [0, 0, 0],
+        damboarmor: [0, 0, 0],
+        squidarmor: [0, 0, 0],
+        beearmor: [0, 0, 0],
+        bluedamboarmor: [0, 0, 0],
+        rudolfarmor: [0, 0, 0],
+        christmasarmor: [0, 0, 0],
+        robocoparmor: [0, 0, 0],
+        pinkcockroacharmor: [0, 0, 0],
+        cockroachsuit: [0, 0, 0],
+        dinosaurarmor: [0, 0, 0],
+        catarmor: [0, 0, 0],
+        snowmanarmor: [0, 0, 0],
+        beetlearmor: [0, 0, 0],
+        hongcheolarmor: [0, 0, 0],
+        tigerarmor: [0, 0, 0],
+        wizardrobe: [0, 0, 0],
+        ironknightarmor: [0, 0, 0],
+        evilarmor: [0, 0, 0],
+        greendamboarmor: [0, 0, 0],
+        reddamboarmor: [0, 0, 0]
+    },
+    Weapons: {
+        sword1: [0, 0, 3],
+        sword2: [0, 0, 3],
+        axe: [0, 0, 2],
+        morningstar: [0, 0, 3],
+        bluesword: [0, 0, 3],
+        redsword: [0, 0, 3],
+        goldensword: [0, 0, 3],
+        sidesword: [0, 0, 3],
+        spear: [0, 0, 3],
+        scimitar: [0, 0, 3],
+        trident: [0, 0, 3],
+        bluescimitar: [0, 0, 3],
+        hammer: [0, 0, 2],
+        greenlightsaber: [0, 0, 3],
+        skylightsaber: [0, 0, 3],
+        redlightsaber: [0, 0, 2],
+        bastardsword: [0, 0, 2],
+        redmetalsword: [0, 0, 2],
+        justicehammer: [0, 0, 3],
+        rose: [0, 0, 3],
+        halberd: [0, 0, 0],
+        icerose: [0, 0, 0],
+        firesword: [0, 0, 0],
+        whip: [0, 0, 0],
+        forestguardiansword: [0, 0, 0],
+        sickle: [0, 0, 0],
+        plunger: [0, 0, 0],
+        redsickle: [0, 0, 0],
+        daywalker: [0, 0, 0],
+        purplecloudkallege: [0, 0, 0],
+        searage: [0, 0, 0],
+        magicspear: [0, 0, 0],
+        breaker: [0, 0, 0],
+        eneltrident: [0, 0, 0],
+        rainbowsword: [0, 0, 0],
+        typhoon: [0, 0, 0],
+        memme: [0, 0, 0],
+        candybar: [0, 0, 0],
+        butcherknife: [0, 0, 0],
+        fireshot: [0, 0, 0],
+        comb: [0, 0, 0],
+        squeakyhammer: [0, 0, 0],
+        fireplay: [0, 0, 0],
+        weastaff: [0, 0, 0],
+        pinksword: [0, 0, 0]
+    },
+
+    isBuyByItem: function(item) {
+        
+        return ((item[2] % 10) & 1) == 1;
+    },
+    isBuy: function(itemName) {
+        if(Types.Store.Potions[itemName]) {
+            return Types.Store.isBuyByItem(Types.Store.Potions[itemName]);
+        }
+        if(Types.Store.Armors[itemName]) {
+            return Types.Store.isBuyByItem(Types.Store.Armors[itemName]);
+        }
+        if(Types.Store.Weapons[itemName]) {
+            return Types.Store.isBuyByItem(Types.Store.Weapons[itemName]);
+        }
+    },
+    isBuyMultipleByItem: function(item) {
+        
+        return item[2] > 10;
+    },
+    isBuyMultiple: function(itemName) {
+        if(Types.Store.Potions[itemName]) {
+            return Types.Store.isBuyMultipleByItem(Types.Store.Potions[itemName]);
+        }
+        if(Types.Store.Armors[itemName]) {
+            return Types.Store.isBuyMultipleByItem(Types.Store.Armors[itemName]);
+        }
+        if(Types.Store.Weapons[itemName]) {
+            return Types.Store.isBuyMultipleByItem(Types.Store.Weapons[itemName]);
+        }
+    },
+    isSellByItem: function(item) {
+        
+        return ((item[2] % 10) & 2) == 2;
+    },
+    isSell: function(itemName) {
+        if(Types.Store.Potions[itemName]) {
+            return Types.Store.isSellByItem(Types.Store.Potions[itemName]);
+        }
+        if(Types.Store.Armors[itemName]) {
+            return Types.Store.isSellByItem(Types.Store.Armors[itemName]);
+        }
+        if(Types.Store.Weapons[itemName]) {
+            return Types.Store.isSellByItem(Types.Store.Weapons[itemName]);
+        }
+    },
+    getBuyCountByItem: function(item) {
+        return item[0];
+    },
+    getBuyCount: function(itemName) {
+        if(Types.Store.Potions[itemName]) {
+            return Types.Store.getBuyCountByItem(Types.Store.Potions[itemName]);
+        }
+        if(Types.Store.Armors[itemName]) {
+            return Types.Store.getBuyCountByItem(Types.Store.Armors[itemName]);
+        }
+        if(Types.Store.Weapons[itemName]) {
+            return Types.Store.getBuyCountByItem(Types.Store.Weapons[itemName]);
+        }
+        return 0;
+    },
+    getBuyPriceByItem: function(item) {
+        return item[1];
+    },
+    getBuyPrice: function(itemName) {
+        if(Types.Store.Potions[itemName]) {
+            if(Types.Store.isBuyByItem(Types.Store.Potions[itemName])) {
+                return Types.Store.getBuyPriceByItem(Types.Store.Potions[itemName]);
+            }
+        }
+        if(Types.Store.Armors[itemName]) {
+            if(Types.Store.isBuyByItem(Types.Store.Armors[itemName])) {
+                var result = Types.Store.getBuyPriceByItem(Types.Store.Armors[itemName]);
+                if(result > 0) {
+                    return result;
+                } else {
+                    var itemKind = Types.getKindFromString(itemName),
+                        itemLevel = Types.getArmorRank(itemKind) + 1;
+                    return Math.ceil((itemLevel * itemLevel) / 1.5);
+                }
+            }
+        }
+        if(Types.Store.Weapons[itemName]) {
+            if(Types.Store.isBuyByItem(Types.Store.Weapons[itemName])) {
+                var result = Types.Store.getBuyPriceByItem(Types.Store.Weapons[itemName]);
+                if(result > 0) {
+                    return result;
+                } else {
+                    var itemKind = Types.getKindFromString(itemName),
+                        itemLevel = Types.getWeaponRank(itemKind) + 1;
+                    return Math.ceil((itemLevel * itemLevel) / 1.5);
+                }
+            }
+        }
+        return 0;
+    },
+    getSellPrice: function(itemName) {
+        var itemKind = Types.getKindFromString(itemName),
+            itemLevel = 0;
+        if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
+            itemLevel = Types.getArmorRank(itemKind) + 1;
+            if(itemLevel < 20) {
+                itemLevel = 0;
+            }
+        } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
+            itemLevel = Types.getWeaponRank(itemKind) + 1;
+            if(itemLevel < 20) {
+                itemLevel = 0;
+            }
+        } else if(Types.isPendant(itemKind)) {
+            itemLevel = Types.getPendantRank(itemKind) + 1;
+        } else if(Types.isRing(itemKind)) {
+            itemLevel = Types.getRingRank(itemKind) + 1;
+        } else if(Types.isBoots(itemKind)) {
+            itemLevel = Types.getBootsRank(itemKind) + 1;
+        }
+
+        return Math.ceil(itemLevel / 2);
+    }
+},
+
+Types.Player = {};
+Types.Player.Skills = {
+    evasion: [1, '회피', 'Evasion'],
+    bloodSucking: [1, '흡혈', 'Bloodsucking'],
+    criticalStrike: [1, '크리티컬 스트라이크', 'Critical Strike'],
+    heal: [2, '힐링', 'Heal'],
+    flareDance: [2, '불꽃의 춤', 'Flare Dance'],
+    stun: [2, '스턴', 'Stun'],
+    superCat: [2, '슈퍼캣', 'Super Cat'],
+    provocation: [2, '도발', 'Provocation'],
+
+    isExists: function(name) {
+        
+        return name in Types.Player.Skills;
+    },
+    getKind: function(name) {
+        
+        return Types.Player.Skills.isExists(name) ? Types.Player.Skills[name][0] : 0;
+    },
+    getComment: function(name, language) {
+        if(Types.Player.Skills.isExists(name)){
+            if(language === Types.Language.Type.ENGLISH){
+                return Types.Player.Skills[name][2];
+            } else{
+                return Types.Player.Skills[name][1];
+            }
+        } else{
+            
+            return '';
+        }
+    }
+};
+
+var itemSkillName = {
+    bloodsucking: [Types.Skills.BLOODSUCKING, "Bloodsucking", "흡혈"],
+    recoverhealth: [Types.Skills.RECOVERHEALTH, "RecoverHealth", "회복"],
+    healandheal: [Types.Skills.HEALANDHEAL, "HealAndHeal", "봉사"],
+    avoidattack: [Types.Skills.AVOIDATTACK, "AvoidAttack", "회피"],
+    addexperience: [Types.Skills.ADDEXPERIENCE, "AddExperience", "능숙"],
+    attackwithblood: [Types.Skills.ATTACKWITHBLOOD, "AttackWithBlood", "혈투"],
+    criticalattack: [Types.Skills.CRITICALATTACK, "CriticalAttack", "한방"],
+    criticalratio: [Types.Skills.CRITICALRATIO, "CriticalRatio", "크리티컬"],
+};
+
+Types.getItemSkillNameByKind = function(kind, language){
+    for(var k in itemSkillName) {
+        if(itemSkillName[k][0] === kind) {
+            if(language === Types.Language.Type.ENGLISH){
+                return itemSkillName[k][1];
+            } else{
+                return itemSkillName[k][2];
+            }
+        }
+    }
+    return 'NoSkill';
+};
+
+
 
 if(!(typeof exports === 'undefined')) {
     module.exports = Types;

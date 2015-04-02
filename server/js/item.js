@@ -1,3 +1,5 @@
+/* global Types, module */
+
 var Entity = require('./entity');
 
 module.exports = Item = Entity.extend({
@@ -5,7 +7,8 @@ module.exports = Item = Entity.extend({
         this._super(id, 'item', kind, x, y);
         this.isStatic = false;
         this.isFromChest = false;
-        
+        this.skillKind = 0;
+        this.skillLevel = 0;
         this.count = 1;
     },
 
@@ -52,5 +55,13 @@ module.exports = Item = Entity.extend({
             this.y,
             this.count
         ];
-    }
+    },
+    toString: function(){
+    return Types.getKindAsString(this.kind) + " "
+         + this.count + " "
+         + Types.getItemSkillNameByKind(this.skillKind) + " "
+         + this.skillLevel + " "
+         + this.x + " "
+         + this.y;
+  }
 });

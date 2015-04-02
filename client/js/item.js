@@ -3,13 +3,14 @@
 define(['entity'], function(Entity) {
 
     var Item = Entity.extend({
-        init: function(id, kind, type) {
+        init: function(id, kind, type, skillKind, skillLevel) {
     	    this._super(id, kind);
 
             this.itemKind = Types.getKindAsString(kind);
     	    this.type = type;
     	    this.wasDropped = false;
-    	    
+    	    this.skillKind = skillKind;
+            this.skillLevel = skillLevel;
     	    this.count = 1;
         },
 
@@ -21,7 +22,7 @@ define(['entity'], function(Entity) {
             if(this.type === "weapon") {
                 player.switchWeapon(this.itemKind);
             } else if(this.type === "armor"){
-                if(player.level < 45){
+                if(player.level < 100){
                     player.armorloot_callback(this.itemKind);
                 }
             }
@@ -31,9 +32,6 @@ define(['entity'], function(Entity) {
             return "item-"+ this.itemKind;
         },
 
-        getLootMessage: function() {
-            return this.lootMessage;
-        },
         getInfoMsg: function(){
             return 'default';
         },

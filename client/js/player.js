@@ -30,54 +30,6 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         },
 
         
-        loot: function(item) {
-            if(item) {
-                var rank, currentRank, msg;
-            
-                if(item.type === "weapon") {
-                    rank = Types.getWeaponRank(item.kind);
-                    currentRank = Types.getWeaponRank(Types.getKindFromString(this.weaponName));
-                    msg = "You are wielding a better weapon";
-                    var rankRequirement = (rank * 5) + rank;
-                    if(rank && currentRank) {
-                        if(rank === currentRank) {
-                            throw new Exceptions.LootException("You already have this "+item.type);
-                        } else if (this.level < rankRequirement) {
-                            throw new Exceptions.LootException("You need to be level " + rankRequirement + " to wield this.");
-                        } else if(rank <= currentRank) {
-                            throw new Exceptions.LootException(msg);
-                        }
-                    }
-                } else if(item.type === "armor"){
-                   
-
-                      rank = Types.getArmorRank(item.kind);
-                      currentRank = Types.getArmorRank(Types.getKindFromString(this.armorName));
-                      msg = "You are wielding a better armor";
-                      var rankRequirement = (rank * 5) + rank ;
-                      if(rank && currentRank) {
-                        if(rank === currentRank) {
-                            //this.putInventory(item.kind, 1);
-                            throw new Exceptions.LootException("You already have this " + item.type);
-                            
-                        } else if (this.level < rankRequirement) {
-                            throw new Exceptions.LootException("You need to be level " + rankRequirement + " to wield this.");
-                        } else if(rank <= currentRank) {
-                           
-                            throw new Exceptions.LootException(msg);
-                        
-                      }
-                    }
-                } 
-            
-                log.info('Player '+this.id+' has looted '+item.id);
-                if(Types.isArmor(item.kind) && this.invincible) {
-                    this.stopInvincibility();
-                }
-                item.onLoot(this);
-            }
-        },
-        
         /**
          * Returns true if the character is currently walking towards an item in order to loot it.
          */

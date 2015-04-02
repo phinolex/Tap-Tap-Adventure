@@ -125,7 +125,10 @@ Messages.Drop = Message.extend({
                     this.mob.id,
                     this.item.id,
                     this.item.kind,
-                    _.pluck(this.mob.hatelist, 'id')];
+                    
+                    this.item.count,
+                    this.item.skillKind,
+                    this.item.skillLevel];
 
         return drop;
     }

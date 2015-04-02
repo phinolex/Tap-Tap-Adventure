@@ -5,7 +5,7 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
 
     var EntityFactory = {};
 
-    EntityFactory.createEntity = function(kind, id, name) {
+    EntityFactory.createEntity = function(kind, id, name, skillKind, skillLevel) {
         if(!kind) {
             log.error("kind is undefined", true);
             return;
@@ -15,7 +15,7 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
             throw Error(kind + " is not a valid Entity type");
         }
 
-        return EntityFactory.builders[kind](id, name);
+        return EntityFactory.builders[kind](id, name, skillKind, skillLevel);
     };
 
     //===== mobs ======
@@ -106,88 +106,88 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
     };
 
     //===== archer weapons ======
-    EntityFactory.builders[Types.Entities.WOODENBOW] = function(id) {
-        return new Items.WoodenBow(id);
+    EntityFactory.builders[Types.Entities.WOODENBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.WoodenBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.PLASTICBOW] = function(id) {
-        return new Items.PlasticBow(id);
+    EntityFactory.builders[Types.Entities.PLASTICBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.PlasticBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.IRONBOW] = function(id) {
-        return new Items.IronBow(id);
+    EntityFactory.builders[Types.Entities.IRONBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.IronBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.REDBOW] = function(id) {
-        return new Items.RedBow(id);
+    EntityFactory.builders[Types.Entities.REDBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.RedBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.VIOLETBOW] = function(id) {
-        return new Items.VioletBow(id);
+    EntityFactory.builders[Types.Entities.VIOLETBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.VioletBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.DEATHBOW] = function(id) {
-        return new Items.DeathBow(id);
+    EntityFactory.builders[Types.Entities.DEATHBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.DeathBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.GOLDENBOW] = function(id) {
-        return new Items.GoldenBow(id);
+    EntityFactory.builders[Types.Entities.GOLDENBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.GoldenBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.WATERMELONBOW] = function(id) {
-        return new Items.WatermelonBow(id);
+    EntityFactory.builders[Types.Entities.WATERMELONBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.WatermelonBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.GREENBOW] = function(id) {
-        return new Items.GreenBow(id);
+    EntityFactory.builders[Types.Entities.GREENBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.GreenBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.REDENELBOW] = function(id) {
-        return new Items.RedenelBow(id);
+    EntityFactory.builders[Types.Entities.REDENELBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.RedenelBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.MERMAIDBOW] = function(id) {
-        return new Items.MermaidBow(id);
+    EntityFactory.builders[Types.Entities.MERMAIDBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.MermaidBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SEAHORSEBOW] = function(id) {
-        return new Items.SeahorseBow(id);
+    EntityFactory.builders[Types.Entities.SEAHORSEBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.SeahorseBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.HUNTERBOW] = function(id) {
-        return new Items.HunterBow(id);
+    EntityFactory.builders[Types.Entities.HUNTERBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.HunterBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.GREENLIGHTBOW] = function(id) {
-        return new Items.GreenlightBow(id);
+    EntityFactory.builders[Types.Entities.GREENLIGHTBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.GreenlightBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SKYLIGHTBOW] = function(id) {
-        return new Items.SkylightBow(id);
+    EntityFactory.builders[Types.Entities.SKYLIGHTBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.SkylightBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.REDLIGHTBOW] = function(id) {
-        return new Items.RedlightBow(id);
+    EntityFactory.builders[Types.Entities.REDLIGHTBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.RedlightBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.CAPTAINBOW] = function(id) {
-        return new Items.CaptainBow(id);
+    EntityFactory.builders[Types.Entities.CAPTAINBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.CaptainBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.REDMETALBOW] = function(id) {
-        return new Items.RedmetalBow(id);
+    EntityFactory.builders[Types.Entities.REDMETALBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.RedmetalBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.MARINEBOW] = function(id) {
-        return new Items.MarineBow(id);
+    EntityFactory.builders[Types.Entities.MARINEBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.MarineBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.JUSTICEBOW] = function(id) {
-        return new Items.JusticeBow(id);
+    EntityFactory.builders[Types.Entities.JUSTICEBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.JusticeBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.ROSEBOW] = function(id) {
-        return new Items.RoseBow(id);
+    EntityFactory.builders[Types.Entities.ROSEBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.RoseBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.CRYSTALBOW] = function(id) {
-        return new Items.CrystalBow(id);
+    EntityFactory.builders[Types.Entities.CRYSTALBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.CrystalBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.GAYBOW] = function(id) {
-        return new Items.GayBow(id);
+    EntityFactory.builders[Types.Entities.GAYBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.GayBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.FORESTBOW] = function(id) {
-        return new Items.ForestBow(id);
+    EntityFactory.builders[Types.Entities.FORESTBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.ForestBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SICKLEBOW] = function(id) {
-        return new Items.SickleBow(id);
+    EntityFactory.builders[Types.Entities.SICKLEBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.SickleBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.BLOODBOW] = function(id) {
-        return new Items.BloodBow(id);
+    EntityFactory.builders[Types.Entities.BLOODBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.BloodBow(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.REDSICKLEBOW] = function(id) {
-        return new Items.RedsickleBow(id);
+    EntityFactory.builders[Types.Entities.REDSICKLEBOW] = function(id, name, skillKind, skillLevel) {
+        return new Items.RedsickleBow(id, skillKind, skillLevel);
     };
-
+    
     //===== mobs ======
 
 
@@ -582,160 +582,160 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
 
     //===== items ======
  
-    EntityFactory.builders[Types.Entities.SWORD1] = function(id) {
-        return new Items.Sword1(id);
+    EntityFactory.builders[Types.Entities.SWORD1] = function(id, name, skillKind, skillLevel) {
+        return new Items.Sword1(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SWORD2] = function(id) {
-        return new Items.Sword2(id);
-    };
-
-    EntityFactory.builders[Types.Entities.AXE] = function(id) {
-        return new Items.Axe(id);
+    EntityFactory.builders[Types.Entities.SWORD2] = function(id, name, skillKind, skillLevel) {
+        return new Items.Sword2(id, skillKind, skillLevel);
     };
 
-    EntityFactory.builders[Types.Entities.REDSWORD] = function(id) {
-        return new Items.RedSword(id);
+    EntityFactory.builders[Types.Entities.AXE] = function(id, name, skillKind, skillLevel) {
+        return new Items.Axe(id, skillKind, skillLevel);
     };
 
-    EntityFactory.builders[Types.Entities.BLUESWORD] = function(id) {
-        return new Items.BlueSword(id);
+    EntityFactory.builders[Types.Entities.REDSWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.RedSword(id, skillKind, skillLevel);
     };
 
-    EntityFactory.builders[Types.Entities.GOLDENSWORD] = function(id) {
-        return new Items.GoldenSword(id);
+    EntityFactory.builders[Types.Entities.BLUESWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.BlueSword(id, skillKind, skillLevel);
     };
 
-    EntityFactory.builders[Types.Entities.MORNINGSTAR] = function(id) {
-        return new Items.MorningStar(id);
+    EntityFactory.builders[Types.Entities.GOLDENSWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.GoldenSword(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SIDESWORD] = function(id) {
-        return new Items.SideSword(id);
+
+    EntityFactory.builders[Types.Entities.MORNINGSTAR] = function(id, name, skillKind, skillLevel) {
+        return new Items.MorningStar(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SPEAR] = function(id) {
-        return new Items.Spear(id);
+    EntityFactory.builders[Types.Entities.SIDESWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.SideSword(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SCIMITAR] = function(id) {
-        return new Items.Scimitar(id);
+    EntityFactory.builders[Types.Entities.SPEAR] = function(id, name, skillKind, skillLevel) {
+        return new Items.Spear(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.TRIDENT] = function(id) {
-        return new Items.Trident(id);
+    EntityFactory.builders[Types.Entities.SCIMITAR] = function(id, name, skillKind, skillLevel) {
+        return new Items.Scimitar(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.BLUESCIMITAR] = function(id) {
-        return new Items.Bluescimitar(id);
+    EntityFactory.builders[Types.Entities.TRIDENT] = function(id, name, skillKind, skillLevel) {
+        return new Items.Trident(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.HAMMER] = function(id) {
-        return new Items.Hammer(id);
+    EntityFactory.builders[Types.Entities.BLUESCIMITAR] = function(id, name, skillKind, skillLevel) {
+        return new Items.Bluescimitar(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.GREENLIGHTSABER] = function(id) {
-        return new Items.Greenlightsaber(id);
+    EntityFactory.builders[Types.Entities.HAMMER] = function(id, name, skillKind, skillLevel) {
+        return new Items.Hammer(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SKYLIGHTSABER] = function(id) {
-        return new Items.Skylightsaber(id);
+    EntityFactory.builders[Types.Entities.GREENLIGHTSABER] = function(id, name, skillKind, skillLevel) {
+        return new Items.Greenlightsaber(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.REDLIGHTSABER] = function(id) {
-        return new Items.Redlightsaber(id);
+    EntityFactory.builders[Types.Entities.SKYLIGHTSABER] = function(id, name, skillKind, skillLevel) {
+        return new Items.Skylightsaber(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.REDMETALSWORD] = function(id) {
-        return new Items.Redmetalsword(id);
+    EntityFactory.builders[Types.Entities.REDLIGHTSABER] = function(id, name, skillKind, skillLevel) {
+        return new Items.Redlightsaber(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.BASTARDSWORD] = function(id) {
-        return new Items.Bastardsword(id);
+    EntityFactory.builders[Types.Entities.REDMETALSWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.Redmetalsword(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.HALBERD] = function(id) {
-        return new Items.Halberd(id);
+    EntityFactory.builders[Types.Entities.BASTARDSWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.Bastardsword(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.ROSE] = function(id) {
-        return new Items.Rose(id);
+    EntityFactory.builders[Types.Entities.HALBERD] = function(id, name, skillKind, skillLevel) {
+        return new Items.Halberd(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.ICEROSE] = function(id) {
-        return new Items.Icerose(id);
+    EntityFactory.builders[Types.Entities.ROSE] = function(id, name, skillKind, skillLevel) {
+        return new Items.Rose(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.JUSTICEHAMMER] = function(id) {
-        return new Items.Justicehammer(id);
+    EntityFactory.builders[Types.Entities.ICEROSE] = function(id, name, skillKind, skillLevel) {
+        return new Items.Icerose(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.FIRESWORD] = function(id) {
-        return new Items.Firesword(id);
+    EntityFactory.builders[Types.Entities.JUSTICEHAMMER] = function(id, name, skillKind, skillLevel) {
+        return new Items.Justicehammer(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.WHIP] = function(id) {
-        return new Items.Whip(id);
+    EntityFactory.builders[Types.Entities.FIRESWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.Firesword(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.FORESTGUARDIANSWORD] = function(id) {
-        return new Items.Forestguardiansword(id);
+    EntityFactory.builders[Types.Entities.WHIP] = function(id, name, skillKind, skillLevel) {
+        return new Items.Whip(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SICKLE] = function(id) {
-        return new Items.Sickle(id);
+    EntityFactory.builders[Types.Entities.FORESTGUARDIANSWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.Forestguardiansword(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.PLUNGER] = function(id) {
-        return new Items.Plunger(id);
+    EntityFactory.builders[Types.Entities.SICKLE] = function(id, name, skillKind, skillLevel) {
+        return new Items.Sickle(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.REDSICKLE] = function(id) {
-        return new Items.Redsickle(id);
+    EntityFactory.builders[Types.Entities.PLUNGER] = function(id, name, skillKind, skillLevel) {
+        return new Items.Plunger(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.DAYWALKER] = function(id) {
-        return new Items.Daywalker(id);
+    EntityFactory.builders[Types.Entities.REDSICKLE] = function(id, name, skillKind, skillLevel) {
+        return new Items.Redsickle(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.PURPLECLOUDKALLEGE] = function(id) {
-        return new Items.Purplecloudkallege(id);
+    EntityFactory.builders[Types.Entities.DAYWALKER] = function(id, name, skillKind, skillLevel) {
+        return new Items.Daywalker(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SEARAGE] = function(id) {
-        return new Items.Searage(id);
+    EntityFactory.builders[Types.Entities.PURPLECLOUDKALLEGE] = function(id, name, skillKind, skillLevel) {
+        return new Items.Purplecloudkallege(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.MAGICSPEAR] = function(id) {
-        return new Items.Magicspear(id);
+    EntityFactory.builders[Types.Entities.SEARAGE] = function(id, name, skillKind, skillLevel) {
+        return new Items.Searage(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.BREAKER] = function(id) {
-        return new Items.Breaker(id);
+    EntityFactory.builders[Types.Entities.MAGICSPEAR] = function(id, name, skillKind, skillLevel) {
+        return new Items.Magicspear(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.ENELTRIDENT] = function(id) {
-        return new Items.Eneltrident(id);
+    EntityFactory.builders[Types.Entities.BREAKER] = function(id, name, skillKind, skillLevel) {
+        return new Items.Breaker(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.RAINBOWSWORD] = function(id) {
-        return new Items.Rainbowsword(id);
+    EntityFactory.builders[Types.Entities.ENELTRIDENT] = function(id, name, skillKind, skillLevel) {
+        return new Items.Eneltrident(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.TYPHOON] = function(id) {
-        return new Items.Typhoon(id);
+    EntityFactory.builders[Types.Entities.RAINBOWSWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.Rainbowsword(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.MEMME] = function(id) {
-        return new Items.Memme(id);
+    EntityFactory.builders[Types.Entities.TYPHOON] = function(id, name, skillKind, skillLevel) {
+        return new Items.Typhoon(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.CANDYBAR] = function(id) {
-        return new Items.Candybar(id);
+    EntityFactory.builders[Types.Entities.MEMME] = function(id, name, skillKind, skillLevel) {
+        return new Items.Memme(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.BUTCHERKNIFE] = function(id) {
-        return new Items.Butcherknife(id);
+    EntityFactory.builders[Types.Entities.CANDYBAR] = function(id, name, skillKind, skillLevel) {
+        return new Items.Candybar(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.FIRESHOT] = function(id) {
-        return new Items.Fireshot(id);
+    EntityFactory.builders[Types.Entities.BUTCHERKNIFE] = function(id, name, skillKind, skillLevel) {
+        return new Items.Butcherknife(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.COMB] = function(id) {
-        return new Items.Comb(id);
+    EntityFactory.builders[Types.Entities.FIRESHOT] = function(id, name, skillKind, skillLevel) {
+        return new Items.Fireshot(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SQUEAKYHAMMER] = function(id) {
-        return new Items.Squeakyhammer(id);
+    EntityFactory.builders[Types.Entities.COMB] = function(id, name, skillKind, skillLevel) {
+        return new Items.Comb(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.FIREPLAY] = function(id) {
-        return new Items.Fireplay(id);
+    EntityFactory.builders[Types.Entities.SQUEAKYHAMMER] = function(id, name, skillKind, skillLevel) {
+        return new Items.Squeakyhammer(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.WEASTAFF] = function(id) {
-        return new Items.Weastaff(id);
+    EntityFactory.builders[Types.Entities.FIREPLAY] = function(id, name, skillKind, skillLevel) {
+        return new Items.Fireplay(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.PINKSWORD] = function(id) {
-        return new Items.Pinksword(id);
+    EntityFactory.builders[Types.Entities.WEASTAFF] = function(id, name, skillKind, skillLevel) {
+        return new Items.Weastaff(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.CONFERENCECALL] = function(id) {
-        return new Items.Conferencecall(id);
+    EntityFactory.builders[Types.Entities.PINKSWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.Pinksword(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.CACTUSAXE] = function(id) {
-        return new Items.Cactusaxe(id);
+    EntityFactory.builders[Types.Entities.CONFERENCECALL] = function(id, name, skillKind, skillLevel) {
+        return new Items.Conferencecall(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.DEVILKAZYASWORD] = function(id) {
-        return new Items.Devilkazyasword(id);
+    EntityFactory.builders[Types.Entities.CACTUSAXE] = function(id, name, skillKind, skillLevel) {
+        return new Items.Cactusaxe(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.BAMBOOSPEAR] = function(id) {
-        return new Items.Bamboospear(id);
+    EntityFactory.builders[Types.Entities.DEVILKAZYASWORD] = function(id, name, skillKind, skillLevel) {
+        return new Items.Devilkazyasword(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.PAEWOLDO] = function(id) {
-        return new Items.Paewoldo(id);
+    EntityFactory.builders[Types.Entities.BAMBOOSPEAR] = function(id, name, skillKind, skillLevel) {
+        return new Items.Bamboospear(id, skillKind, skillLevel);
+    };
+    EntityFactory.builders[Types.Entities.PAEWOLDO] = function(id, name, skillKind, skillLevel) {
+        return new Items.Paewoldo(id, skillKind, skillLevel);
     };
 
     EntityFactory.builders[Types.Entities.CLOTHARMOR] = function(id) {
@@ -969,33 +969,33 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
         return new Items.FrankensteinArmor(id);
     };
 
-    EntityFactory.builders[Types.Entities.PENDANT1] = function(id) {
-        return new Items.Pendant1(id);
+    EntityFactory.builders[Types.Entities.PENDANT1] = function(id, name, skillKind, skillLevel) {
+        return new Items.Pendant1(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.GREENPENDANT] = function(id) {
-        return new Items.GreenPendant(id);
+    EntityFactory.builders[Types.Entities.GREENPENDANT] = function(id, name, skillKind, skillLevel) {
+        return new Items.GreenPendant(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.PEARLPENDANT] = function(id) {
-        return new Items.PearlPendant(id);
+    EntityFactory.builders[Types.Entities.PEARLPENDANT] = function(id, name, skillKind, skillLevel) {
+        return new Items.PearlPendant(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.MARBLEPENDANT] = function(id) {
-        return new Items.MarblePendant(id);
+    EntityFactory.builders[Types.Entities.MARBLEPENDANT] = function(id, name, skillKind, skillLevel) {
+        return new Items.MarblePendant(id, skillKind, skillLevel);
     };
 
-    EntityFactory.builders[Types.Entities.RING1] = function(id) {
-        return new Items.Ring1(id);
+    EntityFactory.builders[Types.Entities.RING1] = function(id, name, skillKind, skillLevel) {
+        return new Items.Ring1(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SPROUTRING] = function(id) {
-        return new Items.SproutRing(id);
+    EntityFactory.builders[Types.Entities.SPROUTRING] = function(id, name, skillKind, skillLevel) {
+        return new Items.SproutRing(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.PEARLRING] = function(id) {
-        return new Items.PearlRing(id);
+    EntityFactory.builders[Types.Entities.PEARLRING] = function(id, name, skillKind, skillLevel) {
+        return new Items.PearlRing(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.SPIRITRING] = function(id) {
-        return new Items.SpiritRing(id);
+    EntityFactory.builders[Types.Entities.SPIRITRING] = function(id, name, skillKind, skillLevel) {
+        return new Items.SpiritRing(id, skillKind, skillLevel);
     };
-    EntityFactory.builders[Types.Entities.ESSENTIALRAGE] = function(id) {
-        return new Items.EssentialRage(id);
+    EntityFactory.builders[Types.Entities.ESSENTIALRAGE] = function(id, name, skillKind, skillLevel) {
+        return new Items.EssentialRage(id, skillKind, skillLevel);
     };
 
     EntityFactory.builders[Types.Entities.FLASK] = function(id) {
