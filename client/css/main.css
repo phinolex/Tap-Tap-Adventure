@@ -81,12 +81,15 @@ footer, header, hgroup, menu, nav, section {
 	#background { background:url('../img/common/loading.png') no-repeat center center, #000;}
 	.error #background { background:url('../img/common/loading-error.png') no-repeat center center, #000;}
 	
-	#background, #foreground { margin:0; padding:0;}
+	#background, #foreground, #textcanvas, #toptextcanvas { margin:0; padding:0;}
     
-       #canvas, #bubbles, #canvasborder, #foreground, #background, footer, #container {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
+       #canvas, #bubbles, #canvasborder, #foreground, #background, #textcanvas, #toptextcanvas, footer, #container {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
     
     .started #canvas {cursor:none;}
-    
+    /*#toptextcanvas {
+       -webkit-tap-highlight-color:rgba(0,0,0,0);
+
+    }*/
     #foreground { 
        -webkit-tap-highlight-color:rgba(0,0,0,0);
        
@@ -189,6 +192,8 @@ footer, header, hgroup, menu, nav, section {
       background: rgb(120, 120, 120);
       cursor: hand;
     }
+    
+    
     .bubble p {-moz-user-select:none;-webkit-user-select:none;}
     
     #instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
@@ -413,9 +418,45 @@ footer, header, hgroup, menu, nav, section {
     @-o-keyframes invincible { from {background:#fa6a00;} to {background:#fabc00;} }
     @-ms-keyframes invincible { from {background:#fa6a00;} to {background:#fabc00;} }
 	@media screen and (min-width: 1501px) {
-	      
+	      #chatbkground-ox{
+  position: absolute;
+  left: 50%;
+  bottom: 84px;
+  width: 1182px;
+  height: 48px;
+  margin-left: -591px;
+  background-image: url('../img/3/main.png');
+  background-position: 0px -894px;
+  display: none;
+}
+#chatbox.active {
+  display: block;
+}
+#chatbox input {
+  font-size:30px;
+  color:#eee;
+  background:none;
+  width:90%;
+  border:0;
+  margin-left:2%;
+  padding:10.5px 0;
+}
+#chatbox .legend{
+  position: absoute;
+  top: -10px;
+  left: 15px;
+  padding: 6px 9px;
+  color: #FFF;
+  background: rgba(45,45,45,0.8);
+  z_index: 6;
+  border-radius: 3px 3px 0 0;
+  diplay: none;
+}
+#chatbox .legend p{
+  line-height: 1;
+}
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/3/spritesheet.png');}
-
+          
 	    
         body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood2.png') no-repeat 1587px 138px, url('../img/1/wood2.png') no-repeat 51px 519px, url('../img/1/wood3.png') no-repeat 228px 219px, url('../img/1/wood.png') repeat, #000; background-size:auto, 15px auto, 15px auto, 60px auto, 384px;}
         body {background:-webkit-gradient(radial, center center, 360, center center, 1200, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/3/wood2.png') no-repeat 1587px 138px, url('../img/3/wood2.png') no-repeat 51px 519px, url('../img/3/wood3.png') no-repeat 228px 219px, url('../img/3/wood.png') repeat, #000; background-size:auto, 15px auto, 15px auto, 60px auto, 384px;}
@@ -702,7 +743,6 @@ tr:hover {
         #mutebutton {background-position:-684px -51px;top:3px;left:1395px;}
         #mutebutton:hover {background-position:-726px -51px;}
         #mutebutton.active {background-position:-768px -51px;}
-        
 
         #credits, #death, #about {width:1266px;height:546px;margin-left:-633px;margin-top:-273px;font-size:30px;}
         .parchment-left, .parchment-right, .parchment-middle {background-size:1266px;}
@@ -749,7 +789,44 @@ tr:hover {
         #resize-check {height:3px;}
 	}
 	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
-            
+            #chatbox{
+  position: absolute;
+  left: 50%;
+  bottom: 56px;
+  width: 788px;
+  height: 32px;
+  margin-left: -394px;
+  background-image: url('../img/2/main.png');
+  background-position: 0px -596px;
+  display: none;
+}
+#chatbox.active {
+  display: block;
+}
+#chatbox input {
+  font-size:20px;
+  color:#eee;
+  background:none;
+  width:90%;
+  border:0;
+  margin-left:2%;
+  padding:7px 0;
+}
+#chatbox .legend{
+  position: absoute;
+  top: -20px;
+  left: 10px;
+  padding: 4px 6px;
+  color: #FFF;
+  background: rgba(45,45,45,0.8);
+  z_index: 4;
+  border-radius: 3px 3px 0 0;
+  diplay: none;
+}
+#chatbox .legend p{
+  line-height: 1;
+}
+               
             
             #quest {
                 position: absolute;
@@ -800,17 +877,7 @@ tr:hover {
             #questalarm h2{
                 font-size: 20px;
                 text-shadow: 0px 1px 0px #000000;
-            }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            } //Downscale and upscale this.
             
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
 	      body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
@@ -1157,6 +1224,72 @@ tr:hover {
 
         }
 	@media screen and (max-width: 1000px) {
+            
+            #chatLog{
+        position: absolute; 
+        width: 138px;
+        left: 130.6%;
+        margin-left: -648px;
+        top: 71%;
+        bottom: 9.79%;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+        overflow-y: scroll;
+        overflow-x: hide;
+        display: none;
+    }
+    #chatLog p{
+        margin-bottom: 3px;
+        padding: 0;
+        line-height: 1;
+        color: rgba(255,255,255,1);
+        font-size: 8.5;
+    }
+    #chatLog p .name{
+        font-weight: bold;
+    }
+            
+            #chatbox{
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: 394px;
+  height: 16px;
+  margin-left: -197px;
+  background-image: url('../img/1/main.png');
+  background-position: 0px -298px;
+  display: none;
+}
+#chatbox.active {
+  display: block;
+}
+#chatbox input {
+  font-size:10px;
+  color:#eee;
+  background:none;
+  width:90%;
+  border:0;
+  margin-left:2%;
+  padding:3.5px 0;
+}
+#chatbox .legend{
+  position: absoute;
+  top: -10px;
+  left: 5px;
+  padding: 2px 3px;
+  color: #FFF;
+  background: rgba(45,45,45,0.8);
+  z_index: 2;
+  border-radius: 3px 3px 0 0;
+  diplay: none;
+}
+#chatbox .legend p{
+  line-height: 1;
+}
+       
+            
+            
         canvas {image-rendering:optimizeSpeed;}
         body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
         body {background:-webkit-gradient(radial, center center, 200, center center, 600, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
@@ -1221,8 +1354,8 @@ tr:hover {
         #instructions li:nth-child(2) span {height:16px;width:13px;background-position:-393px -12px; display:block;float:left;margin: 0 12px 14px 20px;position: relative;top: -3px;}
         #instructions li:nth-child(3) span {height:21px;width:16px;background-position:-406px -12px; display:block;float:left;margin: 0 9px 0 20px;position: relative;top: -6px;}
         #instructions p {text-align:center;font-family:'GraphicPixel';font-size:10px;clear:left;margin:0;}
-        #foreground { cursor: default;}
-        
+        //#foreground { cursor: default;}
+        #toptextcanvas { cursor: default;}
         #playerimage {height: 32px; width: 32px;}
         
         .close {height:16px;width:16px;top:-4px;right:-5px;background-position:-354px -126px;}
@@ -1310,142 +1443,8 @@ tr:hover {
         #name-tooltip {font-size:10px;width:180px;margin-left:-90px;height:10px;line-height:10px;top:-30px;border-radius:4px;}
         #name-tooltip:after {bottom:-8px;}
 	}
-	@media screen and (max-width: 400px) {
-        body {border-top:0px;}
-        .intro #container, .game #logo, .game #parchment {display:none;}
-        .game.about #parchment {display:block;left:50%;background:url('../img/1/spritesheet.png') no-repeat 0 -527px;height:172px;width:417px;top:50%;margin-left:-208px;margin-top:-98px;position:absolute;}
-        .game.about .parchment-middle {top:50%;left:50%;color:#000;position:absolute;}
-        #about .right {width:34%;}
-        #about #game-desc {margin:8px auto 16px;line-height:12px;}
-        #close-about {margin-top:83px;}
-        .game #container {display:block;padding:0;}
-        #mask, #fade {display:none;}
-        .game.death #parchment {display:block;}
-        .game .createcharacter #createcharacter, .game .loadcharacter #loadcharacter, .game .confirmation #confirmation, .game .error #error, .game .legal #legal {display:none;}
-        
-		.ribbon {display:none;}
-        
-        canvas {image-rendering:optimizeSpeed;}
-        #moztab {display:none;}
-        body.intro {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
-        body.intro {background:-webkit-gradient(radial, center center, 120, center center, 400, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
-        body {background:#000;}
-        #logosparks {-moz-animation:none;-webkit-animation:none;-o-animation:none;-ms-animation:none;display:none;}
-		#container {height:258px;width:480px;position:relative;left:50%;top:50%;margin:-128px auto 0 -240px;}
-		#canvasborder {background:none;padding:0;}
-		
-		#parchment, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon {background-size:422px auto;}
-        #parchment {background:none;}
-        #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;background-size:844px;}
-        #parchment {width:100%;height:auto;position:absolute;left:0;top:125px;margin-left:0;margin-top:0;font-size:10px;text-align:center;z-index:2;color:#eee;}
-        #parchment h1 {margin-top:0px;font-weight:normal;}
-        #instructions h1 {margin-top:15px;font-size:14px;}
-        .left-ornament, .right-ornament {height:12px;width:31px;display:inline-block;margin:0 10px;position:relative;top:3px;}
-        .left-ornament {background-position:-354px 0;}
-        .right-ornament {background-position:-385px 0;}
-        #character {height:21px;width:12px;margin:0 auto;background-position:-354px -12px;margin-top:15px;position:relative;display:none;}
-        #character div {height:21px;width:12px;position:absolute;top:0;left:0;background-position:-366px -12px;opacity:1;}
-        #character.disabled div {opacity:0;pointer-events:none;}
-        #parchment input {margin-top:10px; padding-bottom:5px; border-bottom:1px dashed #b2af9b; font-size:14px;-moz-animation:none;-webkit-animation:none;-o-animation:none;-ms-animation:none;color:#eee;}
-        #parchment.createcharacter input {margin-top:4px;height:15px;}
-        .button {height:54px;width:204px;background-position:-500px -952px;margin:20px auto 0 auto;position:relative;background-size:844px;}
-        .play, #create-new {font-size:16px;}
-        .play div {height:54px;width:204px;background-position:-458px -512px; background-size:844px;}
-        .play div:active {background-position:0px -1398px;}
-        #create-new {margin-top:0;}
-        .stroke {text-shadow:1px 1px 0 #373737, 1px -1px 0 #373737, 0 1px 0 #373737, 1px 0 0 #373737, -1px 1px 0 #373737, -1px -1px 0 #373737, 0 -1px 0 #373737, 0 1px 0 #373737, -1px 0 0 #373737;}
-        .validation-error {color:#ffc2c2;}
-		
-		#instructions {height:172px;width:417px;background-position:0 -527px;margin-left:-208px;margin-top:-93px;color:#373737;}
-		#instructions h1 {font-size:20px;text-align:center;margin-bottom:0;}
-        #instructions ul {font-size:13px;margin-top:15px;}
-        #instructions ul li {margin:10px 0; clear:left;}
-        #instructions li:nth-child(1) span {height:29px;width:15px;background-position:-378px -12px; display:block;float:left;margin: 0 10px 3px 20px;position: relative;top: -13px;}
-        #instructions li:nth-child(2) span {height:16px;width:13px;background-position:-393px -12px; display:block;float:left;margin: 0 12px 14px 20px;position: relative;top: -3px;}
-        #instructions li:nth-child(3) span {height:21px;width:16px;background-position:-406px -12px; display:block;float:left;margin: 0 9px 0 20px;position: relative;top: -6px;}
-        #instructions p {text-align:center;font-family:'GraphicPixel';font-size:10px;clear:left;margin:0;}
-		
-		#foreground { cursor: default;}
-		
-		#parchment.animate {-moz-animation:none;-webkit-animation:none;-o-animation:none;-webkit-animation:none;}
-		
-		#loadcharacter, #confirmation, #createcharacter, #error, #legal {display:none;margin-top:0;margin-left:0;left:0;width:auto;}
-		.loadcharacter #loadcharacter, .confirmation #confirmation, .createcharacter #createcharacter, .error #error, .legal #legal {display:block;width:100%;}
-		
-		#loadcharacter h1, #confirmation h1, #error h1, #legal h1 {font-size:12px;font-weight:normal;}
-		
-		#loadcharacter, #confirmation, #error, #legal {height:auto;}
 	
-	    #loadcharacter h1, #confirmation h1, #createcharacter h1, #error h1, #legal h1 {font-size:12px;}
-	    #createcharacter{padding-bottom:20px;}
-		#playername {font-size:20px;margin:10px 0px;}
-		#continue {margin:20px 0px;font-size:16px;}
-		#cancel {margin:20px 0;font-size:16px;}
-		.button.delete {background-position:-612px -1398px;}
-		.button.delete:active {background-position:-250px -1452px;}
-		#confirmation, #error {top:70%;}
-		#confirmation p, #error p {margin:10px 0;line-height:12px;font-size:12px;}
-		
-		#playerimage {display:none;}
-		
-		
-		
-        #notifications {display:none;}
-        .barbutton {background-size:960px;height:30px;width:28px;}
-
-        #helpbutton {background-position:-372px -34px;top:2px;left:420px;}
-        #helpbutton:hover {background-position:-400px -34px;}
-        #helpbutton.active {background-position:-428px -34px;}
-        #mutebutton {background-position:-456px -34px;top:2px;left:450px;}
-        #mutebutton:hover {background-position:-484px -34px;}
-        #mutebutton.active {background-position:-512px -34px;}
-
-        .parchment-left, .upscaled .parchment-left, .parchment-middle, .upscaled .parchment-middle, .parchment-right, .upscaled .parchment-right {background:none;}
-        .parchment-left, .parchment-right {display:none;}
-		.parchment-middle {width:100%;left:0px;margin-left:0px;height:auto;position:relative;}
-		#toggle-credits, #credits {display:none;}
-		
-		.game.death #parchment {background:url('../img/spritesheet.png') 0 -294px;height:182px;width:422px;position:absolute;top:50%;left:50%;margin-top:-91px;margin-left:-211px;}
-        .game.death .parchment-middle {width:100%;position:relative;top:0;left:0;margin-left:0;margin-top:0;}
-        .game.death #death {position:relative;top:0;left:0;margin-top:0;margin-left:0;width:100%;}
-        .game.death #death p {padding-top:30px;color:#373737;font-size:20px;margin-top:0;width:80%;margin:0 auto;}
-        .game.death #death p em {display:block;margin-top:15px;font-style:normal;}
-        #instructions, #lists, #about {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
-		.game.death #death {height:172px;width:417px;margin-left:-208px;margin-top:-93px;color:#373737;background:url('../img/1/spritesheet.png') 0 -527px;margin:-10px 0 0 0;}
-        #respawn { background-position: -204px -1398px; background-size: 844px auto; width: 204px; height: 54px;}
-		#respawn:active {background-position:-408px -1398px;}
-        #sharing, #credits-link, .dash {display:none;}
-        #legal-link .dash {display:inline;}
-        #bubbles {overflow:hidden;}
-        
-        .intro footer, .intro footer {display:block;}
-        footer {display:none;position:absolute;top:290px;left:0;z-index:9000;height:30px;width:100%;bottom:auto;}
-        .returning footer, .returning footer {top:300px;}
-        #close-legal {display:none;}
-        
-        #privacy-link span:hover, #forum-link span:hover, #legal-link span:hover {color:#C6C0A3;}
-        #legal p {font-size:12px;width:80%;line-height:14px;}
-        
-        #name-tooltip {display:none;}
-	}
-	@media screen and (max-width: 400px) and (orientation: portrait) {
-        #portrait {display:block;height:300px;width:300px;position:absolute;top:55%; left:50%; margin:-150px 0 0 -150px;}
-        #parchment {display:none;}
-        #container, .game #container {display:none;}
-        
-        #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;background-size:844px;}
-        #portrait p {color:#eee;font-family:'GraphicPixel', sans-serif;font-size:20px;text-align:center;}
-        
-        #tilt {height:120px;width:132px;background-position:-710px -82px;background-size:844px;margin:25px auto 0 auto;}
-        
-        .intro #toggle-legal, #toggle-legal, .intro #legal-link, #legal-link {display:none;}
-    }
     
-    @media screen and (max-width: 640px) and (orientation: portrait) {
-        #portrait {display:block;height:300px;width:300px;position:absolute;top:70%; left:50%; margin:-150px 0 0 -150px;}
-        
-        #logo {height:42px;width:229px;position:absolute;top:10%;left:50%;margin-left:-114px;z-index:3;background-size:422px;}
-    }
     .tablet .animate .parchment-left, .tablet .animate .parchment-right, .tablet .animate .parchment-middle {-webkit-animation:none;-moz-animation:none;-o-animation:none;-ms-animation:none;}
     .tablet #instructions, .tablet #lists {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
     

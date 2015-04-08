@@ -267,18 +267,18 @@ footer, header, hgroup, menu, nav, section {
     #inventorybackground5 { margin-left: 255px; display: none; }
     #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
       position: absolute;
-      top: -7.5px;
-      left: 0px;
-      width: 48px;
-      height: 48px;
+      top: 2.5px;
+      left: 10px;
+      width: 33px;
+      height: 33px;
       background-color: rgba(0, 0, 0, 0);
     }
     #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
       position: absolute;
       width: 48px;
       height: 12px;
-      left: 0px;
-      top: 87px;
+      left: 1px;
+      top: 42px;
       border: 0px;
       color: rgba(255, 255, 255, 1);
       font-size: 13.5px;
@@ -298,7 +298,7 @@ footer, header, hgroup, menu, nav, section {
       background: url('../img/3/main.png') no-repeat -591px -556px;
     }
 
-      #characterButton {
+    #characterButton {
       position: absolute;
       width: 42px;
       height: 45px;
@@ -786,6 +786,13 @@ footer, header, hgroup, menu, nav, section {
       line-height: 13px;
       text-align: center;
       color: white;
+     
+    }
+    #healthtext p {
+        font-size: 9;
+    }
+    #manatext p {
+        font-size: 9;       
     }
     #hpguide{
       background: rgb(128,64,64);
@@ -868,7 +875,7 @@ footer, header, hgroup, menu, nav, section {
       width: 16px;
       height: 4px;
       left: 0px;
-      top: 29px;
+      top: 15.5px;
       border: 0px;
       color: rgba(255, 255, 255, 1);
       font-size: 4.5px;

@@ -382,6 +382,11 @@ define(['jquery', 'storage'], function($, Storage) {
         initManaBar: function() {
             var scale = this.game.renderer.getScaleFactor(),
                 maxWidth = $("#manabar").width() - (11 * scale);
+                
+                if (scale === 1) {
+                    maxWidth = $("#manabar").width() - (9 * scale);
+                }
+
 
             this.game.onPlayerManaChange(function(mana, maxMana) {
                 var barWidth = Math.round((maxWidth / maxMana) * (mana > 0 ? mana : 0));
@@ -407,8 +412,13 @@ define(['jquery', 'storage'], function($, Storage) {
 
         initHealthBar: function() {
             
-            var scale = this.game.renderer.getScaleFactor(),
-                healthMaxWidth = $("#healthbar").width() - (11 * scale);
+            var scale = this.game.renderer.getScaleFactor();
+            var healthMaxWidth = $("#healthbar").width() - (11 * scale);
+            
+            if (scale === 1) {
+                healthMaxWidth = $("#healthbar").width() - (9 * scale);
+            }
+            
 
             this.game.onPlayerHealthChange(function(hp, maxHp) {
                 var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));

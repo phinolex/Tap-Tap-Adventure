@@ -4,16 +4,19 @@ define(['camera', 'item', 'character', 'player', 'timer'],
 function(Camera, Item, Character, Player, Timer) {
 
     var Renderer = Class.extend({
-        init: function(game, canvas, background, foreground) {
+        init: function(game, canvas, background, foreground, textcanvas, toptextcanvas) {
             this.game = game;
             this.context = (canvas && canvas.getContext) ? canvas.getContext("2d") : null;
             this.background = (background && background.getContext) ? background.getContext("2d") : null;
             this.foreground = (foreground && foreground.getContext) ? foreground.getContext("2d") : null;
+            this.textcontext = (textcanvas && textcanvas.getContext) ? textcanvas.getContext("2d") : null;
+            this.toptextcontext = (toptextcanvas && toptextcanvas.getContext) ? toptextcanvas.getContext("2d") : null;
 
             this.canvas = canvas;
             this.backcanvas = background;
             this.forecanvas = foreground;
-
+            this.textcanvas = textcanvas;
+            this.toptextcanvas = toptextcanvas;
             this.initFPS();
             this.tilesize = 16;
 
@@ -38,11 +41,11 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         getWidth: function() {
-            return this.canvas.width;
+            return this.toptextcanvas.width;
         },
 
         getHeight: function() {
-            return this.canvas.height;
+            return this.toptextcanvas.height;
         },
 
         setTileset: function(tileset) {
@@ -78,7 +81,8 @@ function(Camera, Item, Character, Player, Timer) {
             this.context.mozImageSmoothingEnabled = false;
             this.background.mozImageSmoothingEnabled = false;
             this.foreground.mozImageSmoothingEnabled = false;
-
+            this.textcontext.mozImageSmoothingEnabled = false;
+            this.toptextcontext.mozImageSmoothingEnabled = false;
             this.initFont();
             this.initFPS();
 
@@ -105,6 +109,15 @@ function(Camera, Item, Character, Player, Timer) {
             this.forecanvas.width = this.canvas.width;
             this.forecanvas.height = this.canvas.height;
             log.debug("#foreground set to "+this.forecanvas.width+" x "+this.forecanvas.height);
+        
+            this.textcanvas.width = this.camera.gridW * this.tilesize * this.scale;
+            this.textcanvas.height = this.camera.gridH * this.tilesize * this.scale;
+            log.debug("#textcontext set to " + this.textcanvas.width + " x " + this.textcanvas.height);
+            
+            this.toptextcanvas.width = this.textcanvas.width;
+            this.toptextcanvas.height = this.textcanvas.height;
+            log.debug("#toptextcontext set to " + this.toptextcanvas.width + " x " + this.toptextcanvas.height);
+        
         },
 
         initFPS: function() {
@@ -130,11 +143,12 @@ function(Camera, Item, Character, Player, Timer) {
 
             this.context.font = font;
             this.background.font = font;
+            this.textcontext.font = font;
+            this.toptextcontext.font = font;
         },
 
-        drawText: function(text, x, y, centered, color, strokeColor) {
-            var ctx = this.context,
-                strokeSize;
+        drawText: function(ctx, text, x, y, centered, color, strokeColor) {
+            var strokeSize = 5;
 
             switch(this.scale) {
                 case 1:
@@ -625,7 +639,7 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         drawEntityName: function(entity) {
-            this.context.save();
+            this.textcontext.save();
             //"#00CCFF" : "#78AB46
              if(entity.name && entity instanceof Player) {
                var color =  entity.isWanted ? "red" : (entity.id === this.game.playerId) ? "#fcda5c" : "white";
@@ -636,15 +650,15 @@ function(Camera, Item, Character, Player, Timer) {
                 }
                 
                 
-                this.drawText(name,
+                this.drawText(this.textcontext, name,
                               (entity.x + 8) * this.scale,
                               (entity.y + entity.nameOffsetY) * this.scale,
                               true,
                               color);
             }
-            this.context.restore();
+            this.textcontext.restore();
         },
-drawInventory: function(){
+    drawInventory: function(){
             var i=0;
             var s = this.scale;
 
@@ -667,7 +681,7 @@ drawInventory: function(){
                     this.drawRect(366,
                                   (this.camera.gridH-1)*this.realTilesize,
                                   2, 1, "rgba(0, 0, 0, 0.8)");
-                    this.drawText("Drop",
+                    this.drawText(this.toptextcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");
@@ -675,19 +689,19 @@ drawInventory: function(){
                     this.drawRect(366,
                                   (this.camera.gridH-4)*this.realTilesize,
                                   2, 4, "rgba(0, 0, 0, 0.8)");
-                    this.drawText("Enchant Pendant",
+                    this.drawText(this.toptextcontext, "Enchant Pendant",
                                   398,
                                   (this.camera.gridH-3.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText("Enchant Ring",
+                    this.drawText(this.toptextcontext, "Enchant Ring",
                                   398,
                                   (this.camera.gridH-2.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText("Enchant Weapon",
+                    this.drawText(this.toptextcontext, "Enchant Weapon",
                                   398,
                                   (this.camera.gridH-1.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText("Drop",
+                    this.drawText(this.toptextcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");
@@ -695,11 +709,11 @@ drawInventory: function(){
                     this.drawRect(366,
                                   (this.camera.gridH-2)*this.realTilesize,
                                   2, 2, "rgba(0, 0, 0, 0.8)");
-                    this.drawText("Enchant Bloodsucking",
+                    this.drawText(this.toptextcontext, "Enchant Bloodsucking",
                                   398,
                                   (this.camera.gridH-1.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText("Drop",
+                    this.drawText(this.toptextcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");
@@ -708,15 +722,15 @@ drawInventory: function(){
                     this.drawRect(366,
                                   (this.camera.gridH-3)*this.realTilesize,
                                   2, 3, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(inventoryNumber === this.game.healShortCut ? "Manual" : "Auto",
+                    this.drawText(this.toptextcontext, inventoryNumber === this.game.healShortCut ? "Manual" : "Auto",
                                   398,
                                   (this.camera.gridH-2.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText("Eat",
+                    this.drawText(this.toptextcontext, "Eat",
                                   398,
                                   (this.camera.gridH-1.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText("Drop",
+                    this.drawText(this.toptextcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");
@@ -724,12 +738,12 @@ drawInventory: function(){
                     this.drawRect(366,
                                   (this.camera.gridH-2)*this.realTilesize,
                                   2, 2, "rgba(0, 0, 0, 0.8)");
-                    this.drawText("Equip",
+                    this.drawText(this.toptextcontext, "Equip",
                                   398,
                                   (this.camera.gridH-1.4)*this.realTilesize,
                                   true, "white", "black");
 
-                    this.drawText("Drop",
+                    this.drawText(this.toptextcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");
@@ -801,15 +815,15 @@ drawInventory: function(){
             }
             this.frameCount++;
 
-            //this.drawText("FPS: " + this.realFPS + " / " + this.maxFPS, 30, 30, false);
-            this.drawText("FPS: " + this.realFPS, 30, 30, false);
+            //this.drawText(this.toptextcontext, "FPS: " + this.realFPS + " / " + this.maxFPS, 30, 30, false);
+            this.drawText(this.toptextcontext, "FPS: " + this.realFPS, 30, 30, false);
         },
 
         drawDebugInfo: function() {
             if(this.isDebugInfoVisible) {
                 this.drawFPS();
-                //this.drawText("A: " + this.animatedTileCount, 100, 30, false);
-                //this.drawText("H: " + this.highTileCount, 140, 30, false);
+                //this.drawText(this.toptextcontext, "A: " + this.animatedTileCount, 100, 30, false);
+                //this.drawText(this.toptextcontext, "H: " + this.highTileCount, 140, 30, false);
             }
         },
 
@@ -821,10 +835,10 @@ drawInventory: function(){
                 case 3: this.setFontSize(30); break;
             }
             this.game.infoManager.forEachInfo(function(info) {
-                self.context.save();
-                self.context.globalAlpha = info.opacity;
-                self.drawText(info.value, (info.x + 8) * self.scale, Math.floor(info.y * self.scale), true, info.fillColor, info.strokeColor);
-                self.context.restore();
+                self.textcontext.save();
+                self.textcontext.globalAlpha = info.opacity;
+                self.drawText(self.textcontext, info.value, (info.x + 8) * self.scale, Math.floor(info.y * self.scale), true, info.fillColor, info.strokeColor);
+                self.textcontext.restore();
             });
             this.initFont();
         },
@@ -832,9 +846,15 @@ drawInventory: function(){
         setCameraView: function(ctx) {
             ctx.translate(-this.camera.x * this.scale, -this.camera.y * this.scale);
         },
+        setCameraViewText: function(ctx) {
+            ctx.translate(-this.camera.x * this.scale, -this.camera.y * this.scale);
+        },
 
         clearScreen: function(ctx) {
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        },
+        clearScreenText: function(ctx) {
+            ctx.clearRect(0, 0, this.textcanvas.width, this.textcanvas.height);
         },
 
         getPlayerImage: function() {
@@ -899,8 +919,15 @@ drawInventory: function(){
         },
 
         renderFrameDesktop: function() {
+            this.clearScreenText(this.textcontext);
+            this.clearScreenText(this.toptextcontext);
             this.clearScreen(this.context);
 
+            this.textcontext.save();
+            this.toptextcontext.save();
+            this.setCameraViewText(this.textcontext);
+            this.setCameraViewText(this.toptextcontext);
+            
             this.context.save();
                 this.setCameraView(this.context);
                 this.drawAnimatedTiles();
@@ -915,23 +942,34 @@ drawInventory: function(){
                 this.drawEntities();
                 this.drawCombatInfo();
                 this.drawInventory();
-                //if(this.game.itemInfoOn){
-                //    this.drawItemInfo();
-                //}
+
                 
                 this.drawHighTiles(this.context);
+            
             this.context.restore();
-
+            this.textcontext.restore();
+            this.toptextcontext.restore();
             // Overlay UI elements
             if(this.game.cursorVisible)
                 this.drawCursor();
 
             this.drawDebugInfo();
+            
+            
+            
+            
         },
 
         renderFrameMobile: function() {
+            this.clearScreenText(this.textcontext);
+            this.clearScreenText(this.toptextcontext);
             this.clearDirtyRects();
             this.preventFlickeringBug();
+            this.textcontext.save();
+            this.toptextcontext.save();
+            this.setCameraViewText(this.textcontext);
+            this.setCameraViewText(this.toptextcontext);
+            this.drawCombatInfo();
             this.context.save();
             this.setCameraView(this.context);
             this.drawDirtyAnimatedTiles();
@@ -939,6 +977,8 @@ drawInventory: function(){
             this.drawInventory();
             this.drawDirtyEntities();
             this.context.restore();
+            this.textcontext.restore();
+            this.toptextcontext.restore();
         },
 
         preventFlickeringBug: function() {

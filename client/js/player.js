@@ -119,39 +119,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             }
         },
 
-        switchArmor: function(newArmorSprite) {
-            var count = 14,
-                value = false,
-                self = this;
-
-            var toggle = function() {
-                value = !value;
-                return value;
-            };
-
-            if(newArmorSprite && newArmorSprite.id !== this.getSpriteName()) {
-                if(this.isSwitchingArmor) {
-                    clearInterval(blanking);
-                }
-
-                this.isSwitchingArmor = true;
-                self.setSprite(newArmorSprite);
-                self.setSpriteName(newArmorSprite.id);
-                var blanking = setInterval(function() {
-                    self.setVisible(toggle());
-
-                    count -= 1;
-                    if(count === 1) {
-                        clearInterval(blanking);
-                        self.isSwitchingArmor = false;
-
-                        if(self.switch_callback) {
-                            self.switch_callback();
-                        }
-                    }
-                }, 90);
-            }
-        },
+        
 
         onArmorLoot: function(callback) {
             this.armorloot_callback = callback;

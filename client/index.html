@@ -187,13 +187,22 @@
                     <div id="canvas">
                         <canvas id="background"></canvas>
     			<canvas id="entities"></canvas>
-    			<canvas id="foreground" class="clickable"></canvas>
+                        <canvas id="textcanvas"></canvas>
+                        <canvas id="foreground" class="clickable"></canvas>
+                        <canvas id="toptextcanvas"></canvas> 
+    			
+
+                        
               
                     </div>
                     <div id="bubbles"></div>
                     <div id="chatLog"></div> 
                     <div id="questalarm"></div>
-
+                    <div id="chatbox">
+                        <form action="none" method="get" accept-charset="utf-8">
+                            <input id="chatinput" class="gp" type="text" maxlength="60">
+                        </form>
+                    </div>
                     <div id="inspector">
                             <div class="headshot"><div> </div></div>
                             <div class="details">
@@ -300,11 +309,6 @@
                             <div id="soundbutton"></div>
                             <div id="fps">FPS: 60</div>
     			</div>
-                    <div id="questbutton">Quests</div>
-                    <div id="rankingbutton">Ranking</div>
-				<!-- TODO div id="dialogbox">
-					Right now this happens in the footer.
-				</div to accept members for instance… -->
                  
 	    </div>
 	</div>

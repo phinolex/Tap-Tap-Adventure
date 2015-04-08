@@ -48,6 +48,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
         },
         setInventory: function(itemKind, inventoryNumber, number, itemSkillKind, itemSkillLevel) {
             this.inventory[inventoryNumber] = itemKind;
+            
             if(number){
                   this.inventoryCount[inventoryNumber] = number;
             } else{
@@ -58,9 +59,10 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
 
                       $('#inventorybackground' + inventoryNumber).attr('class', 'empty');
                   }
-                  $('#inventory' + inventoryNumber).css('background-image', "url('img/2/item-" + Types.getKindAsString(itemKind) + ".png')");
+                  var scale = this.game.renderer.getScaleFactor();
+                  $('#inventory' + inventoryNumber).css('background-image', "url('img/" + scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
                   //$('#inventory' + inventoryNumber).attr('title', Item.getInfoMsgEx(itemKind, number, itemSkillKind, itemSkillLevel));
-                  $('#sellInventory' + inventoryNumber).css('background-image', "url('img/2/item-" + Types.getKindAsString(itemKind) + ".png')");
+                  $('#sellInventory' + inventoryNumber).css('background-image', "url('img/" + scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
                   $('#inventorynumber' + inventoryNumber).html('' + this.inventoryCount[inventoryNumber]);
             } 
 

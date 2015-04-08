@@ -240,9 +240,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
 
-        setup: function($bubbleContainer, canvas, background, foreground, input) {
+        setup: function($bubbleContainer, canvas, background, foreground, textcanvas, toptextcanvas, input) {
             this.setBubbleManager(new BubbleManager($bubbleContainer));
-            this.setRenderer(new Renderer(this, canvas, background, foreground));
+            this.setRenderer(new Renderer(this, canvas, background, foreground, textcanvas, toptextcanvas));
             this.setChatInput(input);
         },
 

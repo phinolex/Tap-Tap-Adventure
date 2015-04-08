@@ -188,10 +188,12 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             var canvas = document.getElementById("entities"),
                 background = document.getElementById("background"),
                 foreground = document.getElementById("foreground"),
+                textcanvas = document.getElementById("textcanvas"),
+                toptextcanvas = document.getElementById("toptextcanvas"),
                 input = document.getElementById("chatinput");
 
             game = new Game(app);
-            game.setup('#bubbles', canvas, background, foreground, input);
+            game.setup('#bubbles', canvas, background, foreground, textcanvas, toptextcanvas, input);
             game.setStorage(app.storage);
             app.setGame(game);
 
