@@ -201,6 +201,12 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 game.loadMap();
             }
 
+
+            game.onNbPlayersChange(function(worldPlayers, totalPlayers){
+                $('#users').html("" + worldPlayers + " players");
+            });
+                
+                
             game.onGameStart(function() {
                 app.initEquipmentIcons();
                 var entry = new EntryPoint();

@@ -1,3 +1,5 @@
+/* global module */
+
 var cls = require('./lib/class');
 var Messages = require('./message');
 var Utils = require('./utils');

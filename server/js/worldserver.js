@@ -213,7 +213,7 @@ module.exports = World = cls.Class.extend({
             } else {
                 if(self.regen_callback) {
                     self.regen_callback();
-                }
+                } //NOTE
                 updateCount = 0;
             }
         }, 1000 / this.ups);
@@ -359,7 +359,6 @@ module.exports = World = cls.Class.extend({
             this.clearMobHateLinks(entity);
         }
 
-        entity.destroy();
         this.removeFromGroups(entity);
         log.debug("Removed "+ Types.getKindAsString(entity.kind) +" : "+ entity.id);
     },

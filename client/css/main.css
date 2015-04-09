@@ -1354,8 +1354,8 @@ tr:hover {
         #instructions li:nth-child(2) span {height:16px;width:13px;background-position:-393px -12px; display:block;float:left;margin: 0 12px 14px 20px;position: relative;top: -3px;}
         #instructions li:nth-child(3) span {height:21px;width:16px;background-position:-406px -12px; display:block;float:left;margin: 0 9px 0 20px;position: relative;top: -6px;}
         #instructions p {text-align:center;font-family:'GraphicPixel';font-size:10px;clear:left;margin:0;}
-        //#foreground { cursor: default;}
-        #toptextcanvas { cursor: default;}
+        #foreground { cursor: default;}
+        //#toptextcanvas { cursor: default;}
         #playerimage {height: 32px; width: 32px;}
         
         .close {height:16px;width:16px;top:-4px;right:-5px;background-position:-354px -126px;}

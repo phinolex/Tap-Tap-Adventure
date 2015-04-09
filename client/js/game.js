@@ -2078,8 +2078,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         click: function() {
-            var pos = this.getMouseGridPosition(),
-                entity;
+            var pos = this.getMouseGridPosition();
 
 
             this.inventoryHandler.hideAllInventory();

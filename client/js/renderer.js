@@ -986,6 +986,8 @@ function(Camera, Item, Character, Player, Timer) {
                 this.background.fillRect(0, 0, 0, 0);
                 this.context.fillRect(0, 0, 0, 0);
                 this.foreground.fillRect(0, 0, 0, 0);
+                this.textcontext.fillRect(0, 0, 0, 0);
+		this.toptextcontext.fillRect(0, 0, 0, 0);
             }
         }
     });
