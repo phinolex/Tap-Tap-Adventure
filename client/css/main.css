@@ -90,11 +90,11 @@ footer, header, hgroup, menu, nav, section {
        -webkit-tap-highlight-color:rgba(0,0,0,0);
 
     }*/
-    #foreground { 
-       -webkit-tap-highlight-color:rgba(0,0,0,0);
-       
-       
-    }
+        #foreground { 
+           -webkit-tap-highlight-color:rgba(0,0,0,0);
+
+
+        }
 	@media screen and (max-width: 600px) {
 		
 		#entities {

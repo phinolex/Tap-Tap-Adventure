@@ -36,6 +36,8 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
         loadingIndicator.startAnimating()
         webView.addSubview(loadingIndicator)
         
+        
+        
         if adsRemoved {
             
             webView.loadRequest(requestObj)
@@ -60,7 +62,7 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
     
     func fetchAvailableProducts() {
         let productID:NSSet = NSSet(object: product_id);
-        let productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productID);
+        let productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productID as Set<NSObject>);
         productsRequest.delegate = self;
         productsRequest.start();
     }
@@ -90,7 +92,7 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
         var count : Int = response.products.count
         if (count>0) {
             var validProducts = response.products
-            var validProduct: SKProduct = response.products[0] as SKProduct
+            var validProduct: SKProduct = response.products[0] as! SKProduct
             if (validProduct.productIdentifier == product_id) {
                 println(validProduct.localizedTitle)
                 println(validProduct.localizedDescription)
@@ -141,16 +143,16 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
                 switch trans.transactionState {
                 case .Purchased:
                     println("Product Purchased");
-                    SKPaymentQueue.defaultQueue().finishTransaction(transaction as SKPaymentTransaction)
+                    SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
                     removeAds()
                     break;
                 case .Failed:
                     println("Purchased Failed");
-                    SKPaymentQueue.defaultQueue().finishTransaction(transaction as SKPaymentTransaction)
+                    SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
                     break;
                     
                 case .Restored:
-                    SKPaymentQueue.defaultQueue().finishTransaction(transaction as SKPaymentTransaction)
+                    SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
                     println("Purchase Restored")
                     removeAds()
                     break;
@@ -216,7 +218,7 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
                 // We check that we are allow to make the purchase.
                 if (SKPaymentQueue.canMakePayments()) {
                     var productID:NSSet = NSSet(object: product_id);
-                    var productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productID);
+                    var productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productID as Set<NSObject>);
                     productsRequest.delegate = self;
                     productsRequest.start();
                     println("Fething Products");
@@ -231,13 +233,7 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
                 alertView.dismissWithClickedButtonIndex(buttonIndex, animated: true)
             break;
         }
-        
-        
-        
     }
-    
-    
-    
     override func shouldAutorotate() -> Bool {
         return true
     }

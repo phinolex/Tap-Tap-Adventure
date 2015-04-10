@@ -2207,7 +2207,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         	        if(this.player.isAdjacentNonDiagonal(entity) === false) {
                             this.makePlayerTalkTo(entity);
         	        } else {
-                            this.makeNpcTalk(entity);
+                            if(!this.player.disableKeyboardNpcTalk) {
+                                this.makeNpcTalk(entity);
+
+                                if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
+                                    this.player.disableKeyboardNpcTalk = true;
+                            }
         	        }
                 } else if(entity instanceof Chest) {
                     this.makePlayerOpenChest(entity);
