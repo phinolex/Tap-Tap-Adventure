@@ -269,14 +269,14 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
            $('#chatbox').attr('value', '');
 
             if(game.renderer.mobile || game.renderer.tablet) {
-                $('#foreground').bind('touchstart', function(event) {
+                $('#canvas .clickable').bind('touchstart', function(event) {
                     app.center();
                     app.setMouseCoordinates(event.originalEvent.touches[0]);
                     game.click();
                     app.hideWindows();
                 });
             } else {
-                $('#foreground').click(function(event) {
+                $('#canvas .clickable').click(function(event) {
                     app.center();
                     app.setMouseCoordinates(event);
                      if(game && !app.dropDialogPopuped) {
