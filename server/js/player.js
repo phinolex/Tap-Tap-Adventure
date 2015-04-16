@@ -277,7 +277,7 @@ module.exports = Player = Character.extend({
                 log.info("HURT: " + self.name + " " + message[1]);
                 var mob = self.server.getEntityById(message[1]);
                 
-                
+                 
                 if(mob && self.hitPoints > 0 && mob instanceof Mob) {
                     self.hitPoints -= Formulas.dmg(mob, self);
                     self.server.handleHurtEntity(self);
@@ -285,7 +285,7 @@ module.exports = Player = Character.extend({
                     
                     if(self.hitPoints <= 0) {
                         self.isDead = true;
-                        if(self.level >= 45){ // Don't forget
+                        if(self.level >= 45) { // Don't forget
                             self.incExp(Math.floor(self.level*self.level*(-2)));
                         }
                         if(self.firepotionTimeout) {

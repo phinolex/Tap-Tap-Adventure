@@ -708,10 +708,33 @@ module.exports = World = cls.Class.extend({
         
         for(var itemName in drops) {
             var percentage = drops[itemName];
-            
+
             p += percentage;
             if(v <= p) {
                 item = this.addItem(this.createItem(Types.getKindFromString(itemName), mob.x, mob.y));
+                function addSkillOnItem(item, skillKinds) {
+                    var i = 0,
+                        probability = Math.random(),
+                        probabilityList = [0.02, 0.0466, 0.082, 0.1292, 0.1922,
+                                            0.2752, 0.387, 0.536, 0.7345];
+                    for(i=0; i<9; i++){
+                        if(probability < probabilityList[i]){
+                            item.skillKind = skillKinds[Utils.randomInt(0, skillKinds.length - 1)];
+                            item.skillLevel = 9 - i;
+                            break;
+                        }
+                    }
+                }
+                if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind)) {
+                    addSkillOnItem(item, [Types.Skills.BLOODSUCKING, Types.Skills.CRITICALRATIO]);
+                } else if(Types.isPendant(item.kind)) {
+                    addSkillOnItem(item, [Types.Skills.RECOVERHEALTH, Types.Skills.HEALANDHEAL,
+                                            Types.Skills.AVOIDATTACK, Types.Skills.ADDEXPERIENCE]);
+                } else if(Types.isRing(item.kind)) {
+                    addSkillOnItem(item, [Types.Skills.RECOVERHEALTH, Types.Skills.HEALANDHEAL,
+                                            Types.Skills.ATTACKWITHBLOOD, Types.Skills.CRITICALATTACK]);
+                }
+
                 break;
             }
         }

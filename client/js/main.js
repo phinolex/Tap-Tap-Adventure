@@ -109,7 +109,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             });
 
             $('#continue span').click(function() {
-                app.storage.clear();
+                
                 app.animateParchment('confirmation', 'createcharacter');
                 $('body').removeClass('returning');
                 app.clearValidationErrors();
@@ -158,13 +158,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                return false;
             });
 
-            var data = app.storage.data;
-            if(data.hasAlreadyPlayed) {
-                if(data.player.name && data.player.name !== "") {
-                    $('#playername').html(data.player.name);
-                    $('#playerimage').attr('src', data.player.image);
-                }
-            }
+            
 
             $('.play span').click(function(event) {
                 app.tryStartingGame();
@@ -194,7 +188,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 
             game = new Game(app);
             game.setup('#bubbles', canvas, background, foreground, textcanvas, toptextcanvas, input);
-            game.setStorage(app.storage);
+            
             app.setGame(game);
 
             if(app.isDesktop && app.supportsWorkers) {

@@ -11,8 +11,7 @@ module.exports = Inventory = cls.Class.extend({
         this.owner = owner;
         this.number = number;
         this.rooms = [];
-        for(i=0; i<number; i++) {
-            
+        for(i=0; i<number; i++){
             this.rooms.push(new InventoryRoom(itemKinds[i], itemNumbers[i], itemSkillKinds[i], itemSkillLevels[i]));
         }
     },
@@ -20,7 +19,6 @@ module.exports = Inventory = cls.Class.extend({
         var i = 0;
         for(i=0; i<this.number; i++){
             if(this.rooms[i].itemKind === itemKind){
-                
                 return true;
             }
         }
@@ -30,7 +28,6 @@ module.exports = Inventory = cls.Class.extend({
         var i=0;
         for(i=0; i<this.number; i++){
             if(this.rooms[i].itemKind === null){
-                
                 return true;
             }
         }
@@ -48,6 +45,7 @@ module.exports = Inventory = cls.Class.extend({
 
         for(i=0; i<this.number; i++){
             if(this.rooms[i].itemKind === itemKind){
+                
                 return this.rooms[i].itemNumber;
             }
         }
@@ -66,6 +64,7 @@ module.exports = Inventory = cls.Class.extend({
     getEmptyInventoryNumber: function() {
         for(var index = 0; index < this.number; index++) {
             if(this.rooms[index].itemKind === null) {
+                
                 return index;
             }
         }
@@ -78,24 +77,28 @@ module.exports = Inventory = cls.Class.extend({
                 if(this.rooms[i].itemKind === itemKind){
                     this.rooms[i].itemNumber += itemNumber;
                     if(this.rooms[i].itemNumber <= 0){
-                          this.makeEmptyInventory(i);
-                    } else {
-                          databaseHandler.setInventory(this.owner, i, itemKind, this.rooms[i].itemNumber, 0, 0);
+                        
+                        this.makeEmptyInventory(i);
+                    } else{
+                        
+                        databaseHandler.setInventory(this.owner, i, itemKind, this.rooms[i].itemNumber, 0, 0);
                     }
                     return true;
                 }
-          }
-          if(i === this.number){
+            }
+            if(i === this.number){
+                
                 return this._putInventory(itemKind, itemNumber, 0, 0);
-          }
-        } else {
+            }
+        } else{
+            
             return this._putInventory(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
         }
     },
     _putInventory: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel){
         var i=0;
         for(i=0; i<this.number; i++){
-            if(this.rooms[i].itemKind === null){
+            if(this.rooms[i].itemKind === null) {
                 this.rooms[i].itemKind = itemKind;
                 this.rooms[i].itemNumber = itemNumber;
                 this.rooms[i].itemSkillKind = itemSkillKind;
@@ -104,7 +107,7 @@ module.exports = Inventory = cls.Class.extend({
                 return true;
             }
         } 
-        //this.owner.server.pushToPlayer(this.owner, new Messages.Notify("인벤토리에 빈 칸이 없습니다."));
+        this.owner.server.pushToPlayer(this.owner, new Messages.Notify("Inventory is full."));
         return false;
     },
     setInventory: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
@@ -133,7 +136,6 @@ module.exports = Inventory = cls.Class.extend({
             inventoryString += Types.getItemSkillNameByKind(this.rooms[i].itemSkillKind) + " ";
             inventoryString += this.rooms[i].itemSkillLevel;
         }
-
         return inventoryString;
     }
 });

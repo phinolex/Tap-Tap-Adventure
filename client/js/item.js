@@ -31,22 +31,46 @@ define(['entity'], function(Entity) {
         getSpriteName: function() {
             return "item-"+ this.itemKind;
         },
+        
 
         getInfoMsg: function(){
-            return 'default';
+            
+            return this.getInfoMsgEx(this.kind, this.count, this.skillKind, this.skillLevel);
         },
         getInfoMsgEx: function(itemKind, enchantedPoint, skillKind, skillLevel) {
             var msg = '';
-            if(Types.isWeapon(itemKind)) {
-                msg = Types.getName(itemKind) + ": Attack +" + Types.getWeaponRank(itemKind) + 1;
+            if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)){
+                msg = Types.getName(itemKind) + ": Attack +" + (Types.getWeaponRank(itemKind) + 1) + (enchantedPoint ? "(" + enchantedPoint + ")" : "");
+                if(skillKind === Types.Skills.BLOODSUCKING) {
+                    msg += " " + Types.getItemSkillNameByKind(skillKind) + " " + "+" + skillLevel*2 + "%";
+                } else if(skillKind === Types.Skills.CRITICALRATIO) {
+                    msg += " " + Types.getItemSkillNameByKind(skillKind) + " " + "+" + skillLevel + "%";
+                }
+                return msg;
+            } else if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)){
+                return Types.getName(itemKind) + ": Armor +" + (Types.getArmorRank(itemKind)+1)+(enchantedPoint ? "(" + enchantedPoint + ")" : "");
+            } else if(Types.isPendant(itemKind)) {
+                msg = Types.getName(itemKind) + ": Armor +" + ((Types.getPendantRank(itemKind) + 1) * 0.5).toFixed(2) + "%" + (enchantedPoint ? "(" + enchantedPoint + ")" : "");
+                msg += " " + Types.getItemSkillNameByKind(skillKind) + " +" + skillLevel;
+                return msg;
+            } else if(Types.isRing(itemKind)) {
+                msg = Types.getName(itemKind) + ": Attack +" + ((Types.getRingRank(itemKind) + 1) * 0.5).toFixed(2) + "%" + (enchantedPoint ? "(" + enchantedPoint + ")" : "");
+                msg += " " + Types.getItemSkillNameByKind(skillKind) + " +" + skillLevel;
+                return msg;
+            } else if(Types.isBoots(itemKind)) {
+                msg = Types.getName(itemKind);
+                return msg;
             }
-            switch(itemKind){
+            switch(itemKind) {
                 case Types.Entities.FLASK: return Types.getName(itemKind) + ": HP +80";
                 case Types.Entities.BURGER: return Types.getName(itemKind) + ": HP +200";
+                case Types.Entities.ROYALAZALEA: return Types.getName(itemKind) + ": Damage x0.66";
+                case Types.Entities.SNOWPOTION: return Types.getName(itemKind);
+                case Types.Entities.BLACKPOTION: return Types.getName(itemKind);
             }
-        return '';
-    }
-  });
+            return '';
+        }
+    });
   Item.getInfoMsgEx = Item.prototype.getInfoMsgEx;
   return Item;
 });

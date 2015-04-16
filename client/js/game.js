@@ -1,5 +1,5 @@
 
-/* global Types, log, _, self */
+/* global Types, log, _, self, Class */
 
 define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'tile', 'warrior', 'gameclient', 'audio', 'updater', 'transition',
@@ -107,8 +107,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             
             // sprites
-            this.spriteNames = [
-                    "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
+            this.spriteNames = [ "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
                     "bearseonbiarmor", "item-bearseonbiarmor", "frankensteinarmor",
                     "item-gayarcherarmor", "redsicklebow", "item-redsicklebow", "jirisanmoonbear",
                     "halloweenjkarmor", "item-halloweenjkarmor", "mojojojonpc", "gayarcherarmor",
@@ -246,9 +245,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.setChatInput(input);
         },
 
-        setStorage: function(storage) {
-            this.storage = storage;
-        },
 
         setRenderer: function(renderer) {
             this.renderer = renderer;
@@ -284,12 +280,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         initPlayer: function() {
            
-            if(this.storage.hasAlreadyPlayed() && this.storage.data.player) {
-                if(this.storage.data.player.armor && this.storage.data.player.weapon) {
-                    this.player.setSpriteName(this.storage.data.player.armor);
-                    this.player.setWeaponName(this.storage.data.player.weapon);
-                }
-            }
+            
 
             this.player.setSprite(this.sprites[this.player.getSpriteName()]);
             this.player.idle();
@@ -1076,9 +1067,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
 
                 self.player.onSwitchItem(function() {
-                    self.storage.savePlayer(self.renderer.getPlayerImage(),
-                                            self.player.getArmorName(),
-                                            self.player.getWeaponName());
+                    
                     if(self.equipment_callback) {
                         self.equipment_callback();
                     }
@@ -1413,7 +1402,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             player.hurt();
                             self.infoManager.addDamageInfo(diff, player.x, player.y - 15, "received");
                             self.audioManager.playSound("hurt");
-                            self.storage.addDamage(-diff);
+                            
                             
                             if(self.playerhurt_callback) {
                                 self.playerhurt_callback();
@@ -2535,8 +2524,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.started = true;
             this.client.enable();
             this.client.sendLogin(this.player);
-
-            //this.storage.incrementRevives();
 
             if(this.renderer.mobile || this.renderer.tablet) {
                 this.renderer.clearScreen(this.renderer.context);

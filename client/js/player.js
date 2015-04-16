@@ -3,12 +3,15 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
     var Player = Character.extend({
         MAX_LEVEL: 10,
 
-        init: function(id, name, pw, kind) {
+        init: function(id, name, pw, kind, game) {
             this._super(id, kind);
 
             this.name = name;
             this.pw = pw;
-            
+            if(game) {
+                
+                this.skillHandler = new SkillHandler(game);
+            }
 
             // Renderer
              this.nameOffsetY = -10;

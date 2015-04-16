@@ -624,7 +624,6 @@ js/game.js
 
 js/home.js
 ----------------
-js/storage.js
 js/app.js
 js/lib/sha1.js
 js/util.js

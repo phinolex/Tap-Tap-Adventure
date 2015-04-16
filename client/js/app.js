@@ -1,7 +1,7 @@
 
 /* global Mob, Types, Item, log, _, TRANSITIONEND, Class */
 
-define(['jquery', 'storage'], function($, Storage) {
+define(['jquery'], function($) {
 
     var App = Class.extend({
         init: function() {
@@ -9,7 +9,6 @@ define(['jquery', 'storage'], function($, Storage) {
             this.blinkInterval = null;
             this.isParchmentReady = true;
             this.ready = false;
-            this.storage = new Storage();
             this.watchNameInputInterval = setInterval(this.toggleButton.bind(this), 100);
             this.initFormFields();
             this.dropDialogPopuped = false;
@@ -98,8 +97,7 @@ define(['jquery', 'storage'], function($, Storage) {
 
         startGame: function(action, username, userpw, email) {
             var self = this;
-            //this.firstTimePlaying = !self.storage.hasAlreadyPlayed();
-
+            
             if(username && !this.game.started) {
                 var optionsSet = false,
                     config = this.config;

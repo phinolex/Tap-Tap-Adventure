@@ -61,7 +61,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
                   }
                   var scale = this.game.renderer.getScaleFactor();
                   $('#inventory' + inventoryNumber).css('background-image', "url('img/" + scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
-                  //$('#inventory' + inventoryNumber).attr('title', Item.getInfoMsgEx(itemKind, number, itemSkillKind, itemSkillLevel));
+                  $('#inventory' + inventoryNumber).attr('title', Item.getInfoMsgEx(itemKind, number, itemSkillKind, itemSkillLevel));
                   $('#sellInventory' + inventoryNumber).css('background-image', "url('img/" + scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
                   $('#inventorynumber' + inventoryNumber).html('' + this.inventoryCount[inventoryNumber]);
             } 
