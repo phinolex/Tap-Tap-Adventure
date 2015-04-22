@@ -110,18 +110,18 @@ var Map = cls.Class.extend({
         return this.grid[y][x] === 1;
     },
     isPVP: function(x,y){
-        log.info('1');
+        
         var id = 0;
         var area = null;
-        log.info('15');
+        
         area = _.detect(this.pvpAreas, function(area){
             return area.contains(x,y);
         });
         if(area){
-            log.info('2');
+            
             return true;
         } else{
-            log.info('3');
+            
             return false;
         }
     },

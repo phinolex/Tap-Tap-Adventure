@@ -1,4 +1,4 @@
-/* global databaseHandler */
+/* global databaseHandler, log */
 
 var cls = require("./lib/class"),
     InventoryRoom = require("./inventoryroom");
@@ -11,6 +11,9 @@ module.exports = Inventory = cls.Class.extend({
         this.owner = owner;
         this.number = number;
         this.rooms = [];
+        log.info("Owner: " + this.owner + " Number:" + this.number + " ItemKinds: " + itemKinds[i] + " "
+                + "itemNumbers: " + itemNumbers[i] + " itemSkillKinds: " + itemSkillKinds[i] + " itemSkillLevels"
+                + itemSkillLevels[i]);
         for(i=0; i<number; i++){
             this.rooms.push(new InventoryRoom(itemKinds[i], itemNumbers[i], itemSkillKinds[i], itemSkillLevels[i]));
         }
@@ -71,6 +74,9 @@ module.exports = Inventory = cls.Class.extend({
         return -1;
     },
     putInventory: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+        log.info("putInventory " + "Owner: " + this.owner + " Number:" + this.number + " ItemKinds: " + itemKind + " "
+                + "itemNumbers: " + itemNumber + " itemSkillKinds: " + itemSkillKind + " itemSkillLevels"
+                + itemSkillLevel);
         var i=0;
         if(Types.isHealingItem(itemKind)){
             for(i=0; i<this.number; i++){
@@ -96,6 +102,9 @@ module.exports = Inventory = cls.Class.extend({
         }
     },
     _putInventory: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+        log.info("putInventory " + "Owner: " + this.owner + " Number:" + this.number + " ItemKinds: " + itemKind + " "
+                + "itemNumbers: " + itemNumber + " itemSkillKinds: " + itemSkillKind + " itemSkillLevels"
+                + itemSkillLevel);
         var i=0;
         for(i=0; i<this.number; i++){
             if(this.rooms[i].itemKind === null) {
@@ -111,6 +120,9 @@ module.exports = Inventory = cls.Class.extend({
         return false;
     },
     setInventory: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+        log.info("putInventory " + "Owner: " + this.owner + " Number:" + this.number + " ItemKinds: " + itemKind + " "
+                + "itemNumbers: " + itemNumber + " itemSkillKinds: " + itemSkillKind + " itemSkillLevels"
+                + itemSkillLevel);
         this.rooms[inventoryNumber].set(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
         databaseHandler.setInventory(this.owner, inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel);
     },

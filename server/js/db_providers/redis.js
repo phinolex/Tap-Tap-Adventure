@@ -40,6 +40,34 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .smembers("moderators") // 16
                         .hget("b:" + player.connection._connection.remoteAddress, "rtime") //17
                         .zrevrank("ranking", player.name) // 18
+                        .hget(userKey, "armorEnchantedPoint")        // 19
+                        .hget(userKey, "armorkillKind")              // 20
+                        .hget(userKey, "armorSkillLevel")            // 21
+                        .hget(userKey, "avatarEnchantedPoint")       // 22
+                        .hget(userKey, "avatarkillKind")             // 23
+                        .hget(userKey, "avatarSkillLevel")           // 24
+                        .hget(userKey, "weaponEnchantedPoint")       // 25
+                        .hget(userKey, "weaponSkillKind")            // 26
+                        .hget(userKey, "weaponSkillLevel")           // 27
+                        .hget(userKey, "weaponAvatarEnchantedPoint") // 28
+                        .hget(userKey, "weaponAvatarSkillKind")      // 29
+                        .hget(userKey, "weaponAvatarSkillLevel")     // 30
+                        .hget(userKey, "pendant")                    // 31
+                        .hget(userKey, "pendantEnchantedPoint")      // 32
+                        .hget(userKey, "pendantSkillKind")           // 33
+                        .hget(userKey, "pendantSkillLevel")          // 34
+                        .hget(userKey, "ring")                       // 35
+                        .hget(userKey, "ringEnchantedPoint")         // 36
+                        .hget(userKey, "ringSkillKind")              // 37
+                        .hget(userKey, "ringSkillLevel")             // 38
+                        .hget(userKey, "boots")                      // 39
+                        .hget(userKey, "bootsEnchantedPoint")        // 40
+                        .hget(userKey, "bootsSkillKind")             // 41
+                        .hget(userKey, "bootsSkillLevel")            // 42
+                        
+                        
+                        
+                        
                         //.get(userKey, "userGuild")
                         /*
                          * Add a .hget here to select the guild the player is in, use
@@ -68,6 +96,32 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var moderators = replies[16];
                             var banTime = replies[17];
                             var rank = isNaN(parseInt(replies[18])) ? 0 : parseInt(replies[18]);
+                            
+                            var armorEnchantedPoint = Utils.NaN2Zero(replies[19]);
+                            var armorSkillKind = Utils.NaN2Zero(replies[20]);
+                            var armorSkillLevel = Utils.NaN2Zero(replies[21]);
+                            var avatarEnchantedPoint = Utils.NaN2Zero(replies[22]);
+                            var avatarSkillKind = Utils.NaN2Zero(replies[23]);
+                            var avatarSkillLevel = Utils.NaN2Zero(replies[24]);
+                            var weaponEnchantedPoint = Utils.NaN2Zero(replies[25]);
+                            var weaponSkillKind = Utils.NaN2Zero(replies[26]);
+                            var weaponSkillLevel = Utils.NaN2Zero(replies[27]);
+                            var weaponAvatarEnchantedPoint = Utils.NaN2Zero(replies[28]);
+                            var weaponAvatarSkillKind = Utils.NaN2Zero(replies[29]);
+                            var weaponAvatarSkillLevel = Utils.NaN2Zero(replies[30]);
+                            var pendant = replies[31];
+                            var pendantEnchantedPoint = Utils.NaN2Zero(replies[32]);
+                            var pendantSkillKind = Utils.NaN2Zero(replies[33]);
+                            var pendantSkillLevel = Utils.NaN2Zero(replies[34]);
+                            var ring = replies[35];
+                            var ringEnchantedPoint = Utils.NaN2Zero(replies[36]);
+                            var ringSkillKind = Utils.NaN2Zero(replies[37]);
+                            var ringSkillLevel = Utils.NaN2Zero(replies[38]);
+                            var boots = replies[39];
+                            var bootsEnchantedPoint = Utils.NaN2Zero(replies[40]);
+                            var bootsSkillKind = Utils.NaN2Zero(replies[41]);
+                            var bootsSkillLevel = Utils.NaN2Zero(replies[42]);
+                           
                             //var curTime = new Date();
                             //Check ban here
                             
@@ -138,10 +192,15 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 log.info("Last Login Time: " + lastLoginTimeDate.toString());
                                 log.info("Chatting Ban End Time: " + (new Date(chatBanEndTime)).toString());
 
-                                player.sendWelcome(armor, weapon,
-                                    avatar, weaponAvatar, exp, admin,
-                                    bannedTime, banUseTime, x, y,
-                                    chatBanEndTime, rank);
+                                 player.sendWelcome(armor, weapon, avatar, weaponAvatar, exp, admin,
+                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank, 
+                                    armorEnchantedPoint, armorSkillKind, armorSkillLevel,
+                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel, 
+                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel, 
+                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
+                                    pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
+                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
+                                    boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel);
                             });
                     });
                     return;
@@ -202,7 +261,14 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         player.sendWelcome(
                             "clotharmor", "sword1", "clotharmor", "sword1", 0,
                              null, 0, 0,
-                             player.x, player.y, 0, 0);
+                             player.x, player.y, 0, 0,
+                                     0, 0, 0,
+                                     0, 0, 0,
+                                     0, 0, 0,
+                                     0, 0, 0,
+                                     null, 0, 0, 0,
+                                     null, 0, 0, 0);
+                             
                     });
                     
             }
@@ -506,17 +572,85 @@ module.exports = DatabaseHandler = cls.Class.extend({
     banTerm: function(time){
         return Math.pow(2, time)*500*60;
     },
-    equipArmor: function(name, armor){
+    equipArmor: function(name, armor, enchantedPoint, skillKind, skillLevel){
         log.info("Set Armor: " + name + " " + armor);
         client.hset("u:" + name, "armor", armor);
+        client.hset("u:" + name, "armorEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "armorSkillKind", skillKind);
+        client.hset("u:" + name, "armorSkillLevel", skillLevel);
     },
-    equipAvatar: function(name, armor){
+    equipAvatar: function(name, armor, enchantedPoint, skillKind, skillLevel){
         log.info("Set Avatar: " + name + " " + armor);
         client.hset("u:" + name, "avatar", armor);
+        client.hset("u:" + name, "avatarEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "avatarSkillKind", skillKind);
+        client.hset("u:" + name, "avatarSkillLevel", skillLevel);
     },
-    equipWeapon: function(name, weapon){
-        log.info("Set Weapon: " + name + " " + weapon);
+    equipWeapon: function(name, weapon, enchantedPoint, skillKind, skillLevel){
+        log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
         client.hset("u:" + name, "weapon", weapon);
+        client.hset("u:" + name, "weaponEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "weaponSkillKind", skillKind);
+        client.hset("u:" + name, "weaponSkillLevel", skillLevel);
+    },
+    equipWeaponAvatar: function(name, weapon, enchantedPoint, skillKind, skillLevel){
+        log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
+        client.hset("u:" + name, "weaponAvatar", weapon);
+        client.hset("u:" + name, "weaponAvatarEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "weaponAvatarSkillKind", skillKind);
+        client.hset("u:" + name, "weaponAvatarSkillLevel", skillLevel);
+    },
+    takeOffAvatar: function(name){
+        log.info("Take Off Avatar: " + name);
+        client.hdel("u:" + name, "avatar");
+        client.hdel("u:" + name, "avatarEnchantedPoint");
+        client.hdel("u:" + name, "avatarSkillKind");
+        client.hdel("u:" + name, "avatarSkillLevel");
+    },
+    takeOffWeaponAvatar: function(name){
+        log.info("Take Off Weapon Avatar: " + name);
+        client.hdel("u:" + name, "weaponAvatar");
+        client.hdel("u:" + name, "weaponAvatarEnchantedPoint");
+        client.hdel("u:" + name, "weaponAvatarSkillKind");
+        client.hdel("u:" + name, "weaponAvatarSkillLevel");
+    },
+    enchantWeapon: function(name, enchantedPoint){
+        log.info("Enchant Weapon: " + name + " " + enchantedPoint);
+        client.hset("u:" + name, "weaponEnchantedPoint", enchantedPoint);
+    },
+    setWeaponSkill: function(name, skillKind, skillLevel){
+        log.info("Set Weapon Skill Level: " + name + " " + skillLevel);
+        client.hset("u:" + name, "weaponSkillKind", skillKind);
+        client.hset("u:" + name, "weaponSkillLevel", skillLevel);
+    },
+    equipPendant: function(name, pendant, enchantedPoint, skillKind, skillLevel) {
+        log.info("Set Pendant: " + name + " " + pendant + " " + skillKind + " " + skillLevel);
+        client.hset("u:" + name, "pendant", pendant);
+        client.hset("u:" + name, "pendantEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "pendantSkillKind", skillKind);
+        client.hset("u:" + name, "pendantSkillLevel", skillLevel);
+    },
+    equipRing: function(name, ring, enchantedPoint, skillKind, skillLevel) {
+        log.info("Set Ring: " + name + " " + ring + " " + skillKind + " " + skillLevel);
+        client.hset("u:" + name, "ring", ring);
+        client.hset("u:" + name, "ringEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "ringSkillKind", skillKind);
+        client.hset("u:" + name, "ringSkillLevel", skillLevel);
+    },
+    enchantPendant: function(name, enchantedPoint){
+        log.info("Enchant Pendant: " + name + " " + enchantedPoint);
+        client.hset("u:" + name, "pendantEnchantedPoint", enchantedPoint);
+    },
+    enchantRing: function(name, enchantedPoint){
+        log.info("Enchant Ring: " + name + " " + enchantedPoint);
+        client.hset("u:" + name, "ringEnchantedPoint", enchantedPoint);
+    },
+    equipBoots: function(name, boots, enchantedPoint, skillKind, skillLevel) {
+        log.info("Set Boots: " + name + " " + boots + " " + skillKind + " " + skillLevel); 
+        client.hset("u:" + name, "boots", boots);
+        client.hset("u:" + name, "bootsEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "bootsSkillKind", skillKind);
+        client.hset("u:" + name, "bootsSkillLevel", skillLevel);
     },
     setExp: function(name, exp){
         log.info("Set Exp: " + name + " " + exp);

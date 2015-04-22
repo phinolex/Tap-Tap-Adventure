@@ -40,14 +40,14 @@ Messages.Move = Message.extend({
 });
 
 Messages.LootMove = Message.extend({
-    init: function (entity, item) {
+    init: function(entity, item) {
         this.entity = entity;
         this.item = item;
     },
     serialize: function() {
         return [Types.Messages.LOOTMOVE,
-                this.entity.id,
-                this.item.id];
+            this.entity.id,
+            this.item.id];
     }
 });
 
@@ -77,6 +77,15 @@ Messages.Health = Message.extend({
         }
         return health;
     }
+});
+Messages.Notify = Message.extend({
+  init: function(message) {
+    this.message = message;
+  },
+  serialize: function() {
+    return [Types.Messages.NOTIFY,
+            this.message];
+  }
 });
 
 Messages.HitPoints = Message.extend({

@@ -3,14 +3,14 @@
 define(['entity'], function(Entity) {
 
     var Item = Entity.extend({
-        init: function(id, kind, type, skillKind, skillLevel) {
+        init: function(id, kind, type) {
     	    this._super(id, kind);
 
             this.itemKind = Types.getKindAsString(kind);
     	    this.type = type;
     	    this.wasDropped = false;
-    	    this.skillKind = skillKind;
-            this.skillLevel = skillLevel;
+    	    this.skillKind = 0;
+            this.skillLevel = 0;
     	    this.count = 1;
         },
 

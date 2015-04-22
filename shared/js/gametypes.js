@@ -44,7 +44,8 @@ Types = {
         MAGIC: 36,
         MANA: 37,
         RANKING: 38,
-        INVENTORY: 39
+        INVENTORY: 39,
+        NOTIFY: 40
     },
 
     Entities: {
