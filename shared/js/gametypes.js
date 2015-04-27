@@ -45,7 +45,10 @@ Types = {
         MANA: 37,
         RANKING: 38,
         INVENTORY: 39,
-        NOTIFY: 40
+        SKILL: 40,
+        SKILLINSTALL: 41,
+        DOUBLE_EXP: 42,
+        EXP_MULTIPLIER: 43
     },
 
     Entities: {

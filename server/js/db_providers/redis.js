@@ -711,6 +711,26 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "y", y);
     },
     
+    loadSkillSlots: function(player, callback) {
+        var userKey = "u:" + player.name,
+            multi = client.multi();
+
+        for(var index = 0; index < 5; index++) {
+            multi.hget(userKey, "skillSlot" + index);
+        }
+        multi.exec(function(err, replies) {
+            if(callback) {
+                callback(replies);
+            }
+        });
+    },
+    handleSkillInstall: function(player, index, name, callback) {
+        client.hset('u:' + player.name, 'skillSlot' + index, name, function(err, reply) {
+            if(callback) {
+                callback();
+            }
+        });
+    },
     loadQuest: function(player, callback){
         var userKey = "u:" + player.name;
         var multi = client.multi();

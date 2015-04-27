@@ -15,6 +15,8 @@ var cls = require("./lib/class"),
     bcrypt = require('bcrypt');
     Inventory = require("./inventory"),
     Mob = require('./mob');
+    SkillHandler = require("./skillhandler");
+    Variations = require('./variations');
     
 
 module.exports = Player = Character.extend({
@@ -40,7 +42,8 @@ module.exports = Player = Character.extend({
         this.level = 0;
         this.lastWorldChatMinutes = 99;
         this.achievement = [];
-
+        this.skillHandler = new SkillHandler();
+        this.variations = new Variations();
 
         this.chatBanEndTime = 0;
 
@@ -293,12 +296,15 @@ module.exports = Player = Character.extend({
                         }
                     }
                 }
-            } else if(action === Types.Messages.LOOTMOVE) {
-                log.info("LOOTMOVE: " + this.name + "(" + message[1] + ", " + message[2] + ")");
-                self.handleLootMove(message);
-            } else if(action === Types.Messages.LOOT) {
-                log.info("LOOT: " + self.name + " " + message[1]);
-                self.handleLoot(message);
+            } else if(action === Types.Messages.INVENTORY){
+                log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
+                self.handleInventory(message);
+            }  else if(action === Types.Messages.SKILL){
+                log.info("SKILL: " + self.name + " " + message[1] + " " + message[2]);
+                self.handleSkill(message);
+            } else if(action === Types.Messages.SKILLINSTALL) {
+                log.info("SKILLINSTALL: " + self.name + " " + message[1] + " " + message[2]);
+                self.handleSkillInstall(message);
             } else if(action === Types.Messages.TELEPORT) {
                 log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
                 var x = message[1],
@@ -320,8 +326,13 @@ module.exports = Player = Character.extend({
                 if(chest && chest instanceof Chest) {
                     self.server.handleOpenedChest(chest, self);
                 }
-            }
-            else if(action === Types.Messages.CHECK) {
+            } else if(action === Types.Messages.LOOTMOVE) {
+                log.info("LOOTMOVE: " + this.name + "(" + message[1] + ", " + message[2] + ")");
+                self.handleLootMove(message);
+            } else if(action === Types.Messages.LOOT) {
+                log.info("LOOT: " + self.name + " " + message[1]);
+                self.handleLoot(message);
+            } else if(action === Types.Messages.CHECK) {
                 log.info("CHECK: " + self.name + " " + message[1]);
                 var checkpoint = self.server.map.getCheckpoint(message[1]);
                 if(checkpoint) {
@@ -331,9 +342,6 @@ module.exports = Player = Character.extend({
             } else if(action === Types.Messages.QUEST) {
                 log.info("QUEST: " + self.name + " " + message[1] + " " + message[2]);
                 self.handleQuest(message);
-            } else if(action === Types.Messages.INVENTORY){
-                log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                self.handleInventory(message);
             } else if(action === Types.Messages.TALKTONPC){
                 log.info("TALKTONPC: " + self.name + " " + message[1]);
                 self.handleTalkToNPC(message);
@@ -933,7 +941,16 @@ module.exports = Player = Character.extend({
     },
 
     incExp: function(gotexp){
-        this.experience = parseInt(this.experience) + (parseInt(gotexp));
+        if (this.variations.doubleEXP) {
+            log.info("Double EXP Enabled");
+            this.experience = parseInt(this.experience) + (parseInt(gotexp) * 2);
+            log.info("Added: " + parseInt(gotexp) + " w/ double EXP: " + (parseInt(gotexp) * 2));
+        } else {
+            log.info("EXP Multiplier: " + this.variations.expMultiplier);
+            this.experience = parseInt(this.experience) + (parseInt(gotexp) * this.variations.expMultiplier);
+        }
+        
+        //NOTE
         databaseHandler.setExp(this.name, this.experience);
         var origLevel = this.level;
         this.level = Types.getLevel(this.experience);
@@ -1020,9 +1037,13 @@ module.exports = Player = Character.extend({
                     weaponAvatar, //9
                     self.experience, //10
                     self.admin, //11
-                    self.mana //12
+                    self.mana, //12
+                    self.variations.doubleEXP,
+                    self.variations.expMultiplier
                 ]; 
-
+                log.info("Sent Double EXP w/ value of: " + self.variations.doubleEXP);
+                log.info("Sent EXP Multiplier w/ value of: " + self.variations.expMultiplier);
+            
                 for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){
                     sendMessage.push(self.achievement[i+1].found);
                     sendMessage.push(self.achievement[i+1].progress);
@@ -1038,9 +1059,18 @@ module.exports = Player = Character.extend({
                   sendMessage.push(self.inventory.rooms[i].itemSkillKind);
                   sendMessage.push(self.inventory.rooms[i].itemSkillLevel);
                 }
-                
-
                 self.send(sendMessage);
+                
+                
+                /*databaseHandler.loadSkillSlots(self, function(names) {
+                    for(var index = 0; index < names.length; index++) {
+                        if(names[index]) {
+                            self.skillHandler.install(index, names[index]);
+                            self.send((new Messages.SkillInstall(index, names[index])).serialize());
+                        }
+                    }
+                self.setAbility();
+                });*/
             });
         });
         self.hasEnteredGame = true;
@@ -1241,33 +1271,32 @@ module.exports = Player = Character.extend({
     handleInventoryEmpty: function(itemKind, inventoryNumber, count){
         var item = this.server.addItem(this.server.createItem(itemKind, this.x, this.y));
         if(Types.isHealingItem(item.kind)){
-          if(count < 0){
-            count = 0;
-          } else if(count > this.inventory.rooms[inventoryNumber].itemNumber){
-            count = this.inventory.rooms[inventoryNumber].itemNumber;
-          }
-          item.count = count;
+            if(count < 0){
+                count = 0;
+            } else if(count > this.inventory.rooms[inventoryNumber].itemNumber){
+                count = this.inventory.rooms[inventoryNumber].itemNumber;
+            }
+            item.count = count;
         } else if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind) ||
                   Types.isPendant(item.kind) || Types.isRing(item.kind) || Types.isBoots(item.kind)){
-          item.count = this.inventory.rooms[inventoryNumber].itemNumber;
-          item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
-          item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+            item.count = this.inventory.rooms[inventoryNumber].itemNumber;
+            item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+            item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
         }
 
         if(item.count >= 0) {
-          this.server.pushToAdjacentGroups(this.group, new Messages.Drop(this, item));
-          this.server.handleItemDespawn(item);
+            this.server.pushToAdjacentGroups(this.group, new Messages.Drop(this, item));
+            this.server.handleItemDespawn(item);
 
-          if(Types.isHealingItem(item.kind)) {
-            this.inventory.takeOutInventory(inventoryNumber, item.count);
-          } else {
-            this.inventory.makeEmptyInventory(inventoryNumber);
-          }
+            if(Types.isHealingItem(item.kind)) {
+                this.inventory.takeOutInventory(inventoryNumber, item.count);
+            } else {
+                this.inventory.makeEmptyInventory(inventoryNumber);
+            }
         } else{
-          this.server.removeEntity(item);
-          this.inventory.makeEmptyInventory(inventoryNumber);
+            this.server.removeEntity(item);
+            this.inventory.makeEmptyInventory(inventoryNumber);
         }
-        this.logHandler.addItemLog(this, "drop", item);
     },
     handleInventoryEat: function(itemKind, inventoryNumber){
         var self = this;
@@ -1427,7 +1456,7 @@ module.exports = Player = Character.extend({
 
         if(Types.isItem(kind)) {
             if(kind === Types.Entities.FIREPOTION) {
-                this.resetHPandMana();
+                this.updateHitPoints();
                 this.broadcast(this.equip(Types.Entities.FIREBENEF), false);
                 this.broadcast(item.despawn(), false);
                 this.server.removeEntity(item);
@@ -1445,7 +1474,6 @@ module.exports = Player = Character.extend({
                    || kind === Types.Entities.SNOWPOTION
                    || kind === Types.Entities.BLACKPOTION) {
                 if(self.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel)){
-                    this.logHandler.addItemLog(this, "loot", item);
                     this.broadcast(item.despawn(), false);
                     this.server.removeEntity(item);
                 }
@@ -1455,10 +1483,272 @@ module.exports = Player = Character.extend({
   },
     
     
-    setAbility: function() {
-        
+    computeSkillLevel: function() {
+        if(this.achievement[10].progress === 999) {
+            if(this.achievement[11].progress === 999) {
+                if(this.achievement[14].progress === 999) {
+                    if(this.achievement[18].progress === 999) {
+                        
+                        this.skillHandler.add('evasion', 4);
+                    } else {
+                        
+                        this.skillHandler.add('evasion', 3);
+                    }
+                } else{
+                    
+                    this.skillHandler.add('evasion', 2);
+                }
+            } else {
+                
+                this.skillHandler.add('evasion', 1);
+            }
+        }
+        if(this.achievement[12].progress === 999) {
+            if(this.achievement[13].progress === 999) {
+                if(this.achievement[17].progress === 999) {
+                    if(this.achievement[20].progress === 999) {
+                        this.skillHandler.add('bloodSucking', 4);
+                    } else {
+                        this.skillHandler.add('bloodSucking', 3);
+                    }
+                } else {
+                    this.skillHandler.add('bloodSucking', 2);
+                }
+            } else {
+                this.skillHandler.add('bloodSucking', 1);
+            }
+        }
+        if(this.achievement[15].progress === 999) {
+            if(this.achievement[16].progress === 999) {
+                if(this.achievement[21].progress === 999) {
+                    if(this.achievement[24].progress === 999) {
+                        this.skillHandler.add('criticalStrike', 4);
+                    } else {
+                        this.skillHandler.add('criticalStrike', 3);
+                    }
+                } else {
+                    this.skillHandler.add('criticalStrike', 2);
+                }
+            } else {
+                this.skillHandler.add('criticalStrike', 1);
+            }
+        }
+        if(this.achievement[19].progress === 999) {
+            if(this.achievement[22].progress === 999) {
+                if(this.achievement[25].progress === 999) {
+                    if(this.achievement[28].progress === 999) {
+                        this.skillHandler.add('heal', 4);
+                    } else{
+                        this.skillHandler.add('heal', 3);
+                    }
+                } else {
+                    this.skillHandler.add('heal', 2);
+                }
+            } else {
+                this.skillHandler.add('heal', 1);
+            }
+        }
+        if(this.achievement[23].progress === 999) {
+            if(this.achievement[26].progress === 999) {
+                if(this.achievement[29].progress === 999) {
+                    if(this.achievement[32].progress === 999) {
+                        this.skillHandler.add('flareDance', 4);
+                    } else{
+                        this.skillHandler.add('flareDance', 3);
+                    }
+                } else{
+                      this.skillHandler.add('flareDance', 2);
+                }
+            } else {
+                this.skillHandler.add('flareDance', 1);
+            }
+        }
+        if(this.achievement[27].progress === 999) {
+            if(this.achievement[30].progress === 999) {
+                if(this.achievement[33].progress === 999) {
+                    this.skillHandler.add('stun', 3);
+                } else{
+                    this.skillHandler.add('stun', 2);
+                }
+            } else{
+                this.skillHandler.add('stun', 1);
+            }
+        }
+        if(this.achievement[31].progress === 999){
+            if(this.achievement[34].progress === 999) {
+                this.skillHandler.add('superCat', 2);
+            } else{
+                this.skillHandler.add('superCat', 1);
+            }
+        }
+        if(this.achievement[35].progress === 999){
+            this.skillHandler.add('provocation', 1);
+        }
+      },
+    setAbility: function(){
+        this.computeSkillLevel();
+
+        this.bloodsuckingRatio = 0;
+        if(this.weaponSkillKind === Types.Skills.BLOODSUCKING){
+              this.bloodsuckingRatio += this.weaponSkillLevel*0.02;
+        }
+
+        this.criticalRatio = 0;
+        if(this.skillHandler.getLevel("criticalStrike") > 0){
+              this.criticalRatio = 0.1;
+        }
+        if(this.weaponSkillKind === Types.Skills.CRITICALRATIO){
+              this.criticalRatio += this.weaponSkillLevel*0.01;
+        }
     },
-    
+    handleSkill: function(message){
+        var self = this;
+        var type = message[1];
+        var targetId = message[2];
+        if(type === "heal"){
+            if(this.party){
+                var healLevel = this.skillHandler.getLevel("heal"),
+                    now = (new Date()).getTime();
+                if((healLevel > 0) && ((now - this.healExecuted) > 30 * 1000) && this.mana >= 30) {
+                    var i = 0;
+                    var partyPlayers = this.party.players;
+                    var p = null;
+                    var amount = 0;
+                    switch(healLevel) {
+                        case 1: amount = this.level;
+                        case 2: amount = Math.floor(this.level * 1.5);
+                        case 3: amount = this.level * 2;
+                        case 4: amount = Math.floor(this.level * 2.5);
+                    }
+                    if(this.pendantSkillKind == Types.Skills.HEALANDHEAL) {
+                        amount += this.pendantSkillLevel * 10;
+                    }
+                    if(this.ringSkillKind == Types.Skills.HEALANDHEAL) {
+                        amount += this.ringSkillLevel * 10;
+                    }
+                    for(i=0; i < partyPlayers.length; i++){
+                        p = partyPlayers[i];
+                        if(p === this){
+                            continue;
+                        }
+                        if(!p.hasFullHealth()) {
+                            p.regenHealthBy(amount);
+                            p.server.pushToPlayer(p, p.health());
+                        }
+                    }
+                    this.healExecuted = now;
+                    this.broadcast(new Messages.Skill("heal", this.id, 0), false);
+                    this.mana -= 30;
+                    this.server.pushToPlayer(this, new Messages.Mana(this));
+                }
+            } else{
+                
+                this.server.pushToPlayer(this, new Messages.Notify("파티원이 없을 때는 힐링 스킬을 쓸 수 없습니다."));
+            }
+        } else if(type === "flareDance"){
+            var flareDanceLevel = this.skillHandler.getLevel("flareDance"),
+                now = (new Date).getTime();
+            if((flareDanceLevel > 0) && ((now - this.flareDanceExecuted1) > 10 * 1000) && this.mana >= 100) {
+                this.broadcast(new Messages.Skill("flareDance", this.id, 0), false);
+                self.flareDanceCallback = setTimeout(function () {
+                    self.flareDanceCallback = null;
+                    self.broadcast(new Messages.Skill("flareDanceOff", self.id, 0), false);
+                }, 5*1000);
+                this.flareDanceExecuted1 = now;
+                this.flareDanceExecuted2 = 0;
+                this.flareDanceCount = 0;
+                this.mana -= 100;
+                this.server.pushToPlayer(this, new Messages.Mana(this));
+            }
+        } else if(type === "stun"){
+            var target = this.server.getEntityById(targetId);
+            var stunLevel = this.skillHandler.getLevel("stun");
+            var now = (new Date).getTime();
+            if(target
+            && stunLevel > 0
+            && (now - this.stunExecuted) > 30 * 1000
+            && this.mana >= 150) {
+                this.broadcast(new Messages.Skill("stun", targetId, stunLevel), false);
+                this.stunExecuted = now;
+                this.mana -= 150;
+                this.server.pushToPlayer(this, new Messages.Mana(this));
+            }
+        } else if(type === "superCat"){
+            var superCatLevel = this.skillHandler.getLevel("superCat");
+            var now = (new Date).getTime();
+            if(superCatLevel > 0 && (now - this.superCatExecuted) > 90 * 1000
+            && this.mana >= 200 && this.superCatCallback == null){
+                this.broadcast(new Messages.Skill("superCat", this.id, superCatLevel), false);
+                this.superCatExecuted = now;
+                this.mana -= 200;
+                this.server.pushToPlayer(this, new Messages.Mana(this));
+                this.superCatCallback = setTimeout(function () {
+                    self.superCatCallback = null;
+                    self.broadcast(new Messages.Skill("superCatOff", self.id, 0), false);
+                }, 30*1000);
+            }
+        } else if(type === "provocation"){
+            var target = this.server.getEntityById(targetId);
+            var provocationLevel = this.skillHandler.getLevel("provocation");
+            var now = (new Date).getTime();
+            if(target
+            && provocationLevel > 0
+            && (now - this.provocationExecuted) > 15 * 1000
+            && this.mana >= 50) {
+                this.broadcast(new Messages.Skill("provocation", targetId, provocationLevel), false);
+                this.provocationExecuted = now;
+                this.mana -= 50;
+                this.server.pushToPlayer(this, new Messages.Mana(this));
+                this.server.provocateMob(this, target);
+            }
+        }
+      },
+    handleFlareDance: function(message){
+        if(this.flareDanceCallback) {
+            var flareDanceLevel = this.skillHandler.getLevel("flareDance"),
+                now = (new Date).getTime();
+            if((flareDanceLevel > 0) && ((now - this.flareDanceExecuted2) >= 720) && (this.flareDanceCount < 10)) {
+                var i=1;
+                var dmg = this.level;
+
+                this.flareDanceExecuted2 = now;
+                this.flareDanceCount++;
+
+                if(flareDanceLevel == 2) {
+                    dmg = Math.floor(this.level * 1.4);
+                } else if(flareDanceLevel == 3){
+                    dmg = Math.floor(this.level * 1.7);
+                } else if(flareDanceLevel == 4){
+                    dmg = Math.floor(this.level * 2);
+                }
+
+                for(i=1; i<5; i++){
+                    var mob = this.server.getEntityById(message[i]);
+                    if(mob){
+                        mob.receiveDamage(dmg, this.id);
+                        if(mob.hitPoints <= 0){
+                            this.questAboutKill(mob);
+                        }
+                        this.server.handleMobHate(mob.id, this.id, dmg);
+                        this.server.handleHurtEntity(mob, this, dmg);
+                    }
+                }
+            }
+        }
+    },
+    handleSkillInstall: function(message) {
+        var index = message[1],
+            name = message[2],
+            self = this;
+
+        if(((index >= 0) && (index < this.skillHandler.skillSlots.length)) && (name in Types.Player.Skills)) {
+            databaseHandler.handleSkillInstall(this, index, name, function() {
+                self.skillHandler.install(index, name);
+                self.server.pushToPlayer(self, new Messages.SkillInstall(index, name));
+            });
+        }
+    },
+  
     getRanking: function() {
         databaseHandler.getPlayerRanking(this, function(ranking){
              log.debug("Ranking: " + ranking);

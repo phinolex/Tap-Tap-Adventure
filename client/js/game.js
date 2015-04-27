@@ -104,7 +104,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.hpGuide = 0;
             // pvp
             this.pvpFlag = false;
+            
+            //New Stuff
 
+            this.doubleEXP = false;
+            this.expMultiplier = 1;
             
             // sprites
             this.spriteNames = [ "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
@@ -815,7 +819,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon,
                                            avatar, weaponAvatar, experience, admin,
                                            questFound, questProgress, inventory, inventoryNumber,
-                                           maxInventoryNumber, inventorySkillKind, inventorySkillLevel) {
+                                           maxInventoryNumber, inventorySkillKind, inventorySkillLevel, doubleExp,
+                                           expMultiplier) {
                 log.info("Received player ID from server : "+ id);
                 self.player.id = id;
                 self.playerId = id;
@@ -823,6 +828,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 // sanitize and shorten names exceeding the allowed length.
                 self.player.name = name;
                 self.player.admin = admin;
+                self.player.experience = experience;
+                self.player.level = Types.getLevel(experience);
+                self.doubleEXP = doubleExp;
+                self.expMultiplier = expMultiplier;
                 //self.player.moderator = moderator;
                 self.player.setGridPosition(x, y);
                 self.player.setMaxHitPoints(hp);
@@ -830,12 +839,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.setArmorName(armor);
                 self.player.setSpriteName(avatar);
                 self.player.setWeaponName(weapon);
-
+                
                 self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
                 //self.shopHandler.setMaxInventoryNumber(maxInventoryNumber);
                 self.initPlayer();
-                self.player.experience = experience;
-                self.player.level = Types.getLevel(experience);
+                
 
                 self.updateBars();
                 self.updateExpBar();
@@ -938,8 +946,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                     if(self.isItemAt(x, y)) {
                         var item = self.getItemAt(x, y);
-                        self.client.sendLoot(item);
-
+                    
+                        try {
+                            self.client.sendLoot(item);
+                        } catch(e) {
+                            throw e;
+                        }
                     }
 
                     if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
@@ -1356,7 +1368,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
 
                 self.client.onPlayerKillMob(function(kind, level, exp) {
-                    var mobExp = Types.getMobExp(kind);
+                    if (self.doubleEXP) {
+                        var mobExp = Types.getMobExp(kind) * 2;
+                    } else {
+                        var mobExp = Types.getMobExp(kind) * self.expMultiplier;
+                    }
                     self.player.level = level;
                     self.player.experience = exp;
                     self.updateExpBar();
@@ -1380,7 +1396,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     if(mobName === 'deathknight') {
                         mobName = 'death knight';
                     }
-
+                    
                 });
 
                 self.client.onPlayerChangeHealth(function(points, isRegen) {
@@ -2772,32 +2788,32 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         keyDown: function(key){
             var self = this;
             if(key >= 49 && key <= 54){ // 1, 2, 3, 4, 5, 6
-              var inventoryNumber = key - 49;
-              if(Types.isHealingItem(this.inventoryHandler.inventory[inventoryNumber])){
-                this.eat(inventoryNumber);
-              }
+                var inventoryNumber = key - 49;
+                if(Types.isHealingItem(this.inventoryHandler.inventory[inventoryNumber])){
+                      this.eat(inventoryNumber);
+                }
             }
         },
         equip: function(inventoryNumber){
             var itemKind = this.inventoryHandler.inventory[inventoryNumber];
             if(Types.isArmor(itemKind) && this.player.kind !== Types.Entities.WARRIOR){
-              this.showNotification("검사 갑옷은 검사만 착용할 수 있습니다.");
+                this.showNotification("검사 갑옷은 검사만 착용할 수 있습니다.");
             } else if(Types.isArcherArmor(itemKind) && this.player.kind !== Types.Entities.ARCHER){
-              this.showNotification("궁수 갑옷은 궁수만 착용할 수 있습니다.");
+                this.showNotification("궁수 갑옷은 궁수만 착용할 수 있습니다.");
             } else if(Types.isWeapon(itemKind) && this.player.kind !== Types.Entities.WARRIOR){
-              this.showNotification("검사 무기는 검사만 착용할 수 있습니다.");
+                this.showNotification("검사 무기는 검사만 착용할 수 있습니다.");
             } else if(Types.isArcherWeapon(itemKind) && this.player.kind !== Types.Entities.ARCHER){
-              this.showNotification("궁수 무기는 궁수만 착용할 수 있습니다.");
+                this.showNotification("궁수 무기는 궁수만 착용할 수 있습니다.");
             } else{
-              if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)){
-                this.client.sendInventory("armor", inventoryNumber, 1);
-              } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)){
-                this.client.sendInventory("weapon", inventoryNumber, 1);
-              } else if(Types.isPendant(itemKind)) {
-                this.client.sendInventory("pendant", inventoryNumber, 0);
-              } else if(Types.isRing(itemKind)) {
-                this.client.sendInventory("ring", inventoryNumber, 0);
-              }
+                if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)){
+                    this.client.sendInventory("armor", inventoryNumber, 1);
+                } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)){
+                    this.client.sendInventory("weapon", inventoryNumber, 1);
+                } else if(Types.isPendant(itemKind)) {
+                    this.client.sendInventory("pendant", inventoryNumber, 0);
+                } else if(Types.isRing(itemKind)) {
+                    this.client.sendInventory("ring", inventoryNumber, 0);
+                }
             }
             this.menu.close();
         },

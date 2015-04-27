@@ -9,11 +9,7 @@ module.exports = Item = Entity.extend({
         this.isFromChest = false;
         this.skillKind = 0;
         this.skillLevel = 0;
-        if(Types.isHealingItem(kind)){
-            this.count = 1;
-        } else{
-            this.count = 0;
-        }
+        this.count = 1;
     },
 
     handleDespawn: function (params) {

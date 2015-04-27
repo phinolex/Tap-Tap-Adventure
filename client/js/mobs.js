@@ -1,4 +1,6 @@
 
+/* global Types */
+
 define(['mob', 'timer'], function(Mob, Timer) {
 
     var Mobs = {
@@ -1138,7 +1140,7 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.aggroRange = 3;
                 this.setAttackRate(550);
             }
-        }),
+        })
     };
 
 

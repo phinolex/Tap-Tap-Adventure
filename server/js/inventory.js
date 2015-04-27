@@ -96,7 +96,7 @@ module.exports = Inventory = cls.Class.extend({
                 
                 return this._putInventory(itemKind, itemNumber, 0, 0);
             }
-        } else{
+        } else {
             
             return this._putInventory(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
         }
@@ -106,8 +106,9 @@ module.exports = Inventory = cls.Class.extend({
                 + "itemNumbers: " + itemNumber + " itemSkillKinds: " + itemSkillKind + " itemSkillLevels"
                 + itemSkillLevel);
         var i=0;
-        for(i=0; i<this.number; i++){
-            if(this.rooms[i].itemKind === null) {
+        for(i=0; i < this.number; i++){
+            
+            if(this.rooms[i].itemKind === null) { //NOTE <- THIS IS THE MAIN PROBLEM
                 this.rooms[i].itemKind = itemKind;
                 this.rooms[i].itemNumber = itemNumber;
                 this.rooms[i].itemSkillKind = itemSkillKind;

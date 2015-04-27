@@ -48,8 +48,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.TALKTONPC] = this.receiveTalkToNPC;
             this.handlers[Types.Messages.RANKING] = this.receiveRanking;
             this.handlers[Types.Messages.INVENTORY] = this.receiveInventory;
+            this.handlers[Types.Messages.DOUBLE_EXP] = this.receiveDoubleEXP;
+            this.handlers[Types.Messages.EXP_MULTIPLIER] = this.receiveEXPMultiplier;
             this.useBison = false;
-            
+           
             this.enable();
         },
 
@@ -200,8 +202,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 weaponAvatar = data.shift(),
                 experience = data.shift(),
                 admin = data.shift(),
-                mana = data.shift();
-       
+                mana = data.shift(),
+                doubleExp = data.shift(),
+                expMultiplier = data.shift();
+        
             var i=0;
             var questFound = [];
             var questProgress = [];
@@ -218,7 +222,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             while(data.length > 0){
                 inventory.push(data.shift());
                 inventoryNumber.push(data.shift());
-                inventorySkillKind.push(data.shift());
                 inventorySkillLevel.push(data.shift());
             }
             
@@ -227,7 +230,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.welcome_callback(id, name, x, y, hp, mana, armor, weapon, avatar,
                 weaponAvatar, experience, admin, questFound, questProgress,
                 inventory, inventoryNumber, maxInventoryNumber,
-                inventorySkillKind, inventorySkillLevel);
+                inventorySkillKind, inventorySkillLevel, doubleExp, expMultiplier);
             }
         },
 
@@ -508,6 +511,20 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.kung_callback(msg);
             }
         },
+        receiveDoubleEXP: function(data) {
+            var msg = data[1];
+            if (this.doubleexp_callback) {
+                this.doubleexp_callback(msg);
+            }
+        },
+        receiveEXPMultiplier: function(data) {
+            var msg = data[1];
+            //You're only sending and receiving a damn integer
+            if (this.expmultiplier_callback) {
+                this.expmultiplier_callback(msg);
+            }
+        },
+        
         
         onDispatched: function(callback) {
             this.dispatched_callback = callback;
@@ -633,6 +650,13 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onInventory: function(callback) {
             this.inventory_callback = callback; 
         },
+        onDoubleEXP: function(callback) {
+            this.doubleexp_callback = callback;
+        },
+        onEXPMultiplier: function(callback) {
+            this.expmultiplier_callback = callback;
+        },
+        
                 
 
         sendCreate: function(player) {
@@ -750,6 +774,14 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         sendInventory: function(type, inventoryNumber, count){
             this.sendMessage([Types.Messages.INVENTORY,
                               type, inventoryNumber, count]);
+        },
+        sendDoubleEXP: function(enabled) {
+            
+            this.sendMessage([Types.Messages.DOUBLE_EXP, enabled]);
+        },
+        sendEXPMultiplier: function(times) {
+            
+            this.sendMessage([Types.Messages.EXP_MULTIPLIER, times]);
         }
         
     });
