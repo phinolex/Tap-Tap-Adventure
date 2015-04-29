@@ -5,7 +5,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
         init: function(game) {
             this.game = game;
 
-            this.maxInventoryNumber = 2;
+            this.maxInventoryNumber = 5;
             this.inventory = [];
             this.inventoryCount = [];
             this.inventories = [];

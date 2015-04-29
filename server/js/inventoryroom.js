@@ -3,6 +3,7 @@ var cls = require("./lib/class"),
 
 module.exports = InventoryRoom = cls.Class.extend({
     init: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+        
         this.set(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
     },
     set: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel){

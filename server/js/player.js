@@ -99,6 +99,9 @@ module.exports = Player = Character.extend({
                             self.pw = hash;
                             //databaseHandler.checkBan(self);
                             databaseHandler.createPlayer(self);
+                            for (var i = 0; i < 5; i++) {
+                                self.inventory.makeEmptyInventory(i);
+                            }
                             
                         });
                     });
@@ -159,6 +162,7 @@ module.exports = Player = Character.extend({
                           
                       }
                           
+                    
                     } else if (msg.startsWith("/kick ")) {
                         var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
                         if (targetPlayer) {
@@ -1054,10 +1058,10 @@ module.exports = Player = Character.extend({
                 }
                 sendMessage.push(self.inventory.number);
                 for(i=0; i < self.inventory.number; i++){
-                  sendMessage.push(self.inventory.rooms[i].itemKind);
-                  sendMessage.push(self.inventory.rooms[i].itemNumber);
-                  sendMessage.push(self.inventory.rooms[i].itemSkillKind);
-                  sendMessage.push(self.inventory.rooms[i].itemSkillLevel);
+                    sendMessage.push(self.inventory.rooms[i].itemKind);
+                    sendMessage.push(self.inventory.rooms[i].itemNumber);
+                    sendMessage.push(self.inventory.rooms[i].itemSkillKind);
+                    sendMessage.push(self.inventory.rooms[i].itemSkillLevel);
                 }
                 self.send(sendMessage);
                 

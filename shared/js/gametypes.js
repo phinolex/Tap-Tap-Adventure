@@ -1,4 +1,4 @@
-/* global bootKind */
+/* global bootKind, _, exports, module */
 
 Types = {
     Quest: {
@@ -939,7 +939,7 @@ Types.rankedWeapons = [
     Types.Entities.CACTUSAXE,
     Types.Entities.DEVILKAZYASWORD,
     Types.Entities.BAMBOOSPEAR,
-    Types.Entities.PAEWOLDO,
+    Types.Entities.PAEWOLDO
 
 //    Types.Entities.MAGICSPEAR,
 //    Types.Entities.FIRESWORD,
@@ -1049,7 +1049,7 @@ Types.rankedArcherWeapons = [
     Types.Entities.FORESTBOW,
     Types.Entities.SICKLEBOW,
     Types.Entities.BLOODBOW,
-    Types.Entities.REDSICKLEBOW,
+    Types.Entities.REDSICKLEBOW
 ];
 Types.rankedArcherArmors = [
     Types.Entities.ARCHERARMOR,
@@ -1078,7 +1078,7 @@ Types.rankedArcherArmors = [
     Types.Entities.ADHERERARCHERARMOR,
     Types.Entities.ARCHERSCHOOLUNIFORM,
     Types.Entities.COMBATUNIFORM,
-    Types.Entities.GAYARCHERARMOR,
+    Types.Entities.GAYARCHERARMOR
 ];
 
 
@@ -1086,7 +1086,7 @@ Types.rankedPendants = [
     Types.Entities.PENDANT1,
     Types.Entities.GREENPENDANT,
     Types.Entities.PEARLPENDANT,
-    Types.Entities.MARBLEPENDANT,
+    Types.Entities.MARBLEPENDANT
 ];
 
 Types.rankedRings = [
@@ -1094,7 +1094,7 @@ Types.rankedRings = [
     Types.Entities.SPROUTRING,
     Types.Entities.PEARLRING,
     Types.Entities.SPIRITRING,
-    Types.Entities.ESSENTIALRAGE,
+    Types.Entities.ESSENTIALRAGE
 ];
 
 Types.rankedBoots = [
@@ -1114,17 +1114,49 @@ Types.expForLevel = [
     104976, 117135, 130321, 144590, 160000, // 40
 
     176610, 194481, 213675, 234256, 256289,
-    279841, 304980, 331776, 360300, 390625 //50
+    279841, 304980, 331776, 360300, 390625, // 50
+
+    422825, 456976, 493155, 531441, 571914,
+    614656, 659750, 707281, 757335, 810000, // 60
+
+    865365, 923521, 984560, 1048576, 1115664,
+    1185921, 1259445, 1336336, 1416695, 1500625, // 70
+
+    1588230, 1679616, 1774890, 1874161, 1977539,
+    2085136, 2197065, 2313441, 2434380, 2560000, // 80
+
+    2690420, 2825761, 2966145, 3111696, 3262539,
+    3418801, 3580610, 3748096, 3921390, 4100625, // 90
+
+    4285935, 4477456, 4675325, 4879681, 5090664,
+    5318416, 5553080, 5804801, 6083725, 6410000, // 100
+
+    6765201, 7311616, 7890481, 8503056, 9150625,
+    9834496, 10556001, 11316496, 12117361, 12960000, // 110
+
+    13845841, 14776336, 15752961, 16777216, 17850625,
+    18974736, 20151121, 21381376, 22667121, 24010000, // 120
+
+    25411681, 26873856, 28398241, 29986576, 31640625,
+    33362176, 35153041, 37015056, 38950081, 40960000, // 130
+
+    43046721, 45212176, 47458321, 49787136, 52200625,
+    54700816, 57289761, 59969536, 62742241, 65610000, // 140
+
+    68574961, 71639296, 74805201, 78074896, 81450625,
+    84934656, 88529281, 92236816, 96059601, 100000000, // 150
+
+    130000000, 169000000// 165
 ];
 
 Types.getLevel = function(exp){
     var i=1;
-    for(i=1; i<50; i++){
+    for(i=1; i<152; i++){
         if(exp < Types.expForLevel[i]){
             return i;
         }
     }
-    return 50;
+    return 152;
 };
 Types.getWeaponRank = function(weaponKind) {
     return _.indexOf(Types.rankedWeapons, weaponKind);
@@ -1233,6 +1265,7 @@ Types.getKindFromString = function(kind) {
     if(kind in kinds) {
         return kinds[kind][0];
     }
+    return null;
 };
 
 Types.getKindAsString = function(kind) {

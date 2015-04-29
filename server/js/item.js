@@ -10,6 +10,7 @@ module.exports = Item = Entity.extend({
         this.skillKind = 0;
         this.skillLevel = 0;
         this.count = 1;
+        
     },
 
     handleDespawn: function (params) {

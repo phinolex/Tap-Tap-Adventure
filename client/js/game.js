@@ -832,7 +832,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.level = Types.getLevel(experience);
                 self.doubleEXP = doubleExp;
                 self.expMultiplier = expMultiplier;
-                //self.player.moderator = moderator;
                 self.player.setGridPosition(x, y);
                 self.player.setMaxHitPoints(hp);
                 self.player.setMaxMana(mana);

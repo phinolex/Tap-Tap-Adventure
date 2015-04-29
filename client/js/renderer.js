@@ -681,7 +681,7 @@ function(Camera, Item, Character, Player, Timer) {
                     this.drawRect(366,
                                   (this.camera.gridH-1)*this.realTilesize,
                                   2, 1, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.toptextcontext, "Drop",
+                    this.drawText(this.textcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");
@@ -689,19 +689,19 @@ function(Camera, Item, Character, Player, Timer) {
                     this.drawRect(366,
                                   (this.camera.gridH-4)*this.realTilesize,
                                   2, 4, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.toptextcontext, "Enchant Pendant",
+                    this.drawText(this.textcontext, "Enchant Pendant",
                                   398,
                                   (this.camera.gridH-3.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText(this.toptextcontext, "Enchant Ring",
+                    this.drawText(this.textcontext, "Enchant Ring",
                                   398,
                                   (this.camera.gridH-2.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText(this.toptextcontext, "Enchant Weapon",
+                    this.drawText(this.textcontext, "Enchant Weapon",
                                   398,
                                   (this.camera.gridH-1.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText(this.toptextcontext, "Drop",
+                    this.drawText(this.textcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");
@@ -709,11 +709,11 @@ function(Camera, Item, Character, Player, Timer) {
                     this.drawRect(366,
                                   (this.camera.gridH-2)*this.realTilesize,
                                   2, 2, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.toptextcontext, "Enchant Bloodsucking",
+                    this.drawText(this.textcontext, "Enchant Bloodsucking",
                                   398,
                                   (this.camera.gridH-1.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText(this.toptextcontext, "Drop",
+                    this.drawText(this.textcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");
@@ -722,15 +722,15 @@ function(Camera, Item, Character, Player, Timer) {
                     this.drawRect(366,
                                   (this.camera.gridH-3)*this.realTilesize,
                                   2, 3, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.toptextcontext, inventoryNumber === this.game.healShortCut ? "Manual" : "Auto",
+                    this.drawText(this.textcontext, inventoryNumber === this.game.healShortCut ? "Manual" : "Auto",
                                   398,
                                   (this.camera.gridH-2.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText(this.toptextcontext, "Eat",
+                    this.drawText(this.textcontext, "Eat",
                                   398,
                                   (this.camera.gridH-1.4)*this.realTilesize,
                                   true, "white", "black");
-                    this.drawText(this.toptextcontext, "Drop",
+                    this.drawText(this.textcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");
@@ -738,12 +738,12 @@ function(Camera, Item, Character, Player, Timer) {
                     this.drawRect(366,
                                   (this.camera.gridH-2)*this.realTilesize,
                                   2, 2, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.toptextcontext, "Equip",
+                    this.drawText(this.textcontext, "Equip",
                                   398,
                                   (this.camera.gridH-1.4)*this.realTilesize,
                                   true, "white", "black");
 
-                    this.drawText(this.toptextcontext, "Drop",
+                    this.drawText(this.textcontext, "Drop",
                                   398,
                                   (this.camera.gridH-0.4)*this.realTilesize,
                                   true, "white", "black");

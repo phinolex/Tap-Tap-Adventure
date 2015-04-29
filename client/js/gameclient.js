@@ -222,6 +222,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             while(data.length > 0){
                 inventory.push(data.shift());
                 inventoryNumber.push(data.shift());
+                inventorySkillKind.push(data.shift());
                 inventorySkillLevel.push(data.shift());
             }
             
