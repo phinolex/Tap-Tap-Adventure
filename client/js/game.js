@@ -858,7 +858,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 //Welcome message
                 self.chathandler.show();
                 self.chathandler.addNotification("Welcome to Tap Tap Adventure");
-                self.chathandler.addNotification("Make sure you sign up on the forum!");
+                if (self.doubleEXP) {
+                    self.chathandler.addNotification("Double EXP is currently on.");
+                }
+                
 
 
                 self.player.onStartPathing(function(path) {
@@ -2083,12 +2086,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         click: function() {
             var pos = this.getMouseGridPosition();
-
+            var entity;
 
             this.inventoryHandler.hideAllInventory();
-            this.playerPopupMenu.close();
-
-
+            
             if(this.menu.selectedInventory !== null){
                 var inventoryNumber = this.menu.selectedInventory;
                 var clickedMenu;
@@ -2143,11 +2144,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 } else{
                     this.menu.close();
                 }
-            } else{
+            } else {
                 this.menu.close();
             }
-
-
+            
+            
+            
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
@@ -2160,7 +2162,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         
         
         
-                rightClick: function() {
+        rightClick: function() {
             var pos = this.getMouseGridPosition();
 
             if(pos.x === this.camera.gridX+this.camera.gridW-2

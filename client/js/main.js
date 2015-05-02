@@ -197,7 +197,11 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 
 
             game.onNbPlayersChange(function(worldPlayers, totalPlayers){
-                $('#users').html("" + worldPlayers + " players");
+                if (worldPlayers === 1) {
+                    $('#users').html("" + worldPlayers + " player");
+                } else {
+                    $('#users').html("" + worldPlayers + " players");
+                }
             });
                 
                 
@@ -330,6 +334,18 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                   game.movecursor();
                 }
             });
+             $(document).bind('mousedown', function(event){ 
+                if(event.button === 2){
+                    return false;
+                }
+            });
+            $(document).bind('mouseup', function(event) { 
+                if(event.button === 2) {
+                    app.setMouseCoordinates(event);
+                    game.rightClick();
+                }
+            });
+
 
             $(document).keyup(function(e) {
                 var key = e.which;
