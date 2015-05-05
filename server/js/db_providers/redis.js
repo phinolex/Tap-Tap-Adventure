@@ -65,6 +65,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "bootsEnchantedPoint")        // 40
                         .hget(userKey, "bootsSkillKind")             // 41
                         .hget(userKey, "bootsSkillLevel")            // 42
+                        .hget(userKey, "membership")                 // 43
+                        .hget(userKey, "membershipTime")             // 44
                         
                         
                         
@@ -122,6 +124,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var bootsEnchantedPoint = Utils.NaN2Zero(replies[40]);
                             var bootsSkillKind = Utils.NaN2Zero(replies[41]);
                             var bootsSkillLevel = Utils.NaN2Zero(replies[42]);
+                            var membership = replies[43];
+                            var membershipTime = replies[44];
                            
                             //var curTime = new Date();
                             //Check ban here
@@ -134,6 +138,14 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             
                                 return;
                             } 
+                            
+                            if (membershipTime > curTime) {
+                                
+                                player.membership = true;
+                            
+                            }
+                            
+                            
                             // Check Password
 
                             bcrypt.compare(player.pw, pw, function(err, res) {
@@ -146,9 +158,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                var d = new Date();
                                 var lastLoginTimeDate = new Date(lastLoginTime);
                                 
-                                //client.hset("adminname:" + "Flavius");
-                                //adminnames.push("Flavius");
-                                //client.sadd("adminname", "Flavius");
+                                client.sadd("adminname", "Flavius");
                                 //client.sadd("adminname", "AnonRobot");
                                 //client.sadd("adminname", "Paris");
                                 //client.sadd("moderators", "iEatRawMeat");
@@ -190,6 +200,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 log.info("Experience: " + exp);
                                 log.info("Banned Time: " + (new Date(bannedTime)).toString());
                                 log.info("Ban Use Time: " + (new Date(banUseTime)).toString());
+                                log.info("Membership Time: ") + (new Date(membershipTime).toString());
                                 log.info("Last Login Time: " + lastLoginTimeDate.toString());
                                 log.info("Chatting Ban End Time: " + (new Date(chatBanEndTime)).toString());
 
@@ -201,7 +212,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                     weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
                                     pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
                                     ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
-                                    boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel);
+                                    boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
+                                    membershipTime);
                             });
                     });
                     return;
@@ -268,7 +280,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                      0, 0, 0,
                                      0, 0, 0,
                                      null, 0, 0, 0,
-                                     null, 0, 0, 0);
+                                     null, 0, 0, 0,
+                                     false);
                         
                     });
                     
@@ -340,8 +353,11 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     adminPlayer.server.pushBroadcast(new Messages.Chat(banPlayer, "/1 " + adminPlayer.name + " has banned " + banPlayer.name + " for " + days + "days"));
                     setTimeout( function(){ banPlayer.connection.close("Added IP Banned player: " + banPlayer.name + " " + banPlayer.connection._connection.remoteAddress); }, 500);
                     client.hset("b:" + banPlayer.connection._connection.remoteAddress, "rtime", (curTime+(days*24*60*60*1000)).toString());
-                    
-                    banPlayer.chatBanEndTime = curTime + (days*24*60*60*1000);
+                    if (days !== 0) {
+                        banPlayer.chatBanEndTime = curTime + (days*24*60*60*1000);
+                    } else {
+                        adminPlayer.server.pushBroadcast(new Messages.NOTIFY(adminPlayer, "An error has occured whilst processing the command"));
+                    }
                     client.hset("cb:" + banPlayer.connection._connection.remoteAddress, "etime", (banPlayer.chatBanEndTime).toString());
                     log.info(adminPlayer.name + "-- BAN ->" + banPlayer.name + " to " + (new Date(curTime+(days*24*60*60*1000)).toString()));
                     return;
@@ -452,12 +468,26 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     client.hset("b:" + banPlayer.connection._connection.remoteAddress, "time", banPlayer.bannedTime.toString());
                     client.hset("b:" + adminPlayer.connection._connection.remoteAddress, "banUseTime", curTime.getTime().toString());
                     setTimeout( function(){ banPlayer.connection.close("Added IP Banned player: " + banPlayer.name + " " + banPlayer.connection._connection.remoteAddress); }, 500);
-                    adminPlayer.server.pushBroadcast(new Messages.Chat(banPlayer, "/1 " + banMsg));
+                    
                     log.info(banMsg);
                 }
                 return;
             });
         }
+    },
+    membershipOnPlayer: function(adminPlayer, otherPlayer) {
+        client.smembers("adminname", function(err, replies) {
+            for(var index = 0; index < replies.length; index++){
+                if(replies[index].toString() === adminPlayer.name) {
+                    var curTime = (new Date()).getTime();
+                    otherPlayer.membershipTime = curTime + (1000*60*60*24*30);
+                    client.hset("membershipTime:" (otherPlayer.membershipTime).toString());
+                    log.info("Membership on: " + otherPlayer.name + " until: " + (new Date(otherPlayer.membershipTime).toString()));
+                    return;
+                
+                }
+            }
+        });
     },
     
     

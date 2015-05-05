@@ -11,19 +11,20 @@ define(['jquery'], function() {
         },
         isClickedInventoryMenu: function(pos, camera){
             if(pos.x === camera.gridX + 11 || pos.x === camera.gridX + 12 || pos.x === camera.gridX + 13){
-                if(pos.y == camera.gridY + camera.gridH-1){
+                if(pos.y === camera.gridY + camera.gridH - 1){
 
                     return 1;
-                } else if(pos.y == camera.gridY + camera.gridH-2){
+                } else if(pos.y === camera.gridY + camera.gridH - 2){
 
                     return 2;
-                } else if(pos.y == camera.gridY + camera.gridH-3){
+                } else if(pos.y === camera.gridY + camera.gridH - 3){
 
                     return 3;
-                } else if(pos.y == camera.gridY + camera.gridH-4){
+                } else if(pos.y === camera.gridY + camera.gridH - 4){
 
                     return 4;
-                } else{
+                    
+                } else {
 
                     return 0;
                 }

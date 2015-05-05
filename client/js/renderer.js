@@ -19,6 +19,7 @@ function(Camera, Item, Character, Player, Timer) {
             this.toptextcanvas = toptextcanvas;
             this.initFPS();
             this.tilesize = 16;
+            
 
             this.upscaledRendering = this.context.mozImageSmoothingEnabled !== undefined;
             this.supportsSilhouettes = this.upscaledRendering;
@@ -89,6 +90,7 @@ function(Camera, Item, Character, Player, Timer) {
             if(!this.upscaledRendering && this.game.map && this.game.map.tilesets) {
                 this.setTileset(this.game.map.tilesets[this.scale - 1]);
             }
+            
             if(this.game.renderer) {
                 this.game.setSpriteScale(this.scale);
             }
@@ -661,10 +663,10 @@ function(Camera, Item, Character, Player, Timer) {
         drawInventory: function(){
             var i=0;
             var s = this.scale;
-            this.context.save();
-            this.context.translate(this.camera.x*s, this.camera.y*s);
+            this.textcontext.save();
+            this.textcontext.translate(this.camera.x * s, this.camera.y * s);
             this.drawInventoryMenu();
-            this.context.restore();
+            this.textcontext.restore();
         },
         drawInventoryMenu: function(){
             var s = this.scale;
@@ -673,28 +675,29 @@ function(Camera, Item, Character, Player, Timer) {
                 var itemKind = this.game.inventoryHandler.inventory[inventoryNumber];
 
                 if(itemKind === Types.Entities.CAKE || itemKind === Types.Entities.CD) {
-                    this.drawRect(366, (this.camera.gridH-1)*this.realTilesize, 2, 1, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.context, "Drop", 398, (this.camera.gridH-0.4) * this.realTilesize, true, "white", "black");
-                } else if(itemKind === Types.Entities.SNOWPOTION){
-                    this.drawRect(366, (this.camera.gridH-4)*this.realTilesize, 2, 4, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.context, "Enchant Pendant", 398, (this.camera.gridH-3.4)*this.realTilesize, true, "white", "black");
-                    this.drawText(this.context, "Enchant Ring",  398, (this.camera.gridH-2.4) * this.realTilesize, true, "white", "black");
-                    this.drawText(this.context, "Enchant Weapon", 398, (this.camera.gridH-1.4) * this.realTilesize, true, "white", "black");
-                    this.drawText(this.context, "Drop", 398, (this.camera.gridH-0.4) * this.realTilesize, true, "white", "black");
-                } else if(itemKind === Types.Entities.BLACKPOTION){
-                    this.drawRect(366, (this.camera.gridH-2) * this.realTilesize, 2, 2, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.context, "Enchant Bloodsucking", 398, (this.camera.gridH-1.4) * this.realTilesize, true, "white", "black");
-                    this.drawText(this.context, "Drop", 398, (this.camera.gridH-0.4) * this.realTilesize, true, "white", "black");
+                    this.drawRect(366, (this.camera.gridH-1) * this.tilesize * s, 2, 1, "rgba(0, 0, 0, 0.8)");
+                    this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-0.4) * this.tilesize * s, true, "white", "black");
+                } else if(itemKind === Types.Entities.BLACKPOTION) {
+                    this.drawRect(366, (this.camera.gridH - 2) * this.tilesize * s, 2, 2, "rgba(0, 0, 0, 0.8)");
+                    this.drawText(this.textcontext, "Enchant Bloodsucking", 398, (this.camera.gridH-1.4) * this.tilesize * s, true, "white", "black");
+                    this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-0.4) * this.tilesize * s, true, "white", "black");
 
-                } else if(Types.isHealingItem(itemKind)){
-                    this.drawRect(366, (this.camera.gridH-3) * this.realTilesize, 2, 3, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.context, inventoryNumber === this.game.healShortCut ? "Manual" : "Auto", 398, (this.camera.gridH-2.4)*this.realTilesize, true, "white", "black");
-                    this.drawText(this.context, "Eat", 398, (this.camera.gridH-1.4) * this.realTilesize, true, "white", "black");
-                    this.drawText(this.context, "Drop", 398, (this.camera.gridH-0.4) * this.realTilesize, true, "white", "black");
-                } else{
-                    this.drawRect(366, (this.camera.gridH-2) * this.realTilesize, 2, 2, "rgba(0, 0, 0, 0.8)");
-                    this.drawText(this.context, "Equip", 398, (this.camera.gridH-1.4) * this.realTilesize, true, "white", "black");
-                    this.drawText(this.context, "Drop", 398, (this.camera.gridH-0.4) * this.realTilesize, true, "white", "black");
+                } else if(Types.isHealingItem(itemKind)) {
+                    this.drawRect(366, (this.camera.gridH - 3) * this.tilesize * s, 2, 3, "rgba(0, 0, 0, 0.8)");
+                    this.drawText(this.textcontext, inventoryNumber === this.game.healShortCut ? "Manual" : "Auto", 398, (this.camera.gridH-2.4)*this.tilesize * s, true, "white", "black");
+                    this.drawText(this.textcontext, "Eat", 398, (this.camera.gridH-1.4) * this.tilesize * s, true, "white", "black");
+                    this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-0.4) * this.tilesize * s, true, "white", "black");
+                    
+                } else if(itemKind === Types.Entities.SNOWPOTION) {
+                    this.drawRect(366, (this.camera.gridH - 4) * this.tilesize * s, 2, 4, "rgba(0, 0, 0, 0.8)");
+                    this.drawText(this.textcontext, "Enchant Pendant", 398, (this.camera.gridH-3.4) * this.tilesize * s, true, "white", "black");
+                    this.drawText(this.textcontext, "Enchant Ring",  398, (this.camera.gridH-2.4) * this.tilesize * s, true, "white", "black");
+                    this.drawText(this.textcontext, "Enchant Weapon", 398, (this.camera.gridH-1.4) * this.tilesize * s, true, "white", "black");
+                    this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-1.4) * this.tilesize * s, true, "white", "black");
+                } else {
+                    this.drawRect(366, (this.camera.gridH - 2) * this.tilesize * s, 2, 2, "rgba(0, 0, 0, 0.8)");
+                    this.drawText(this.textcontext, "Equip", 398, (this.camera.gridH - 1.4) * this.tilesize * s, true, "white", "black");
+                    this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-0.4) * this.tilesize * s, true, "white", "black");
                 }
             }
         },

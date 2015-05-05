@@ -316,9 +316,9 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     }
                 }
 
-                if(game.started && !game.renderer.mobile && game.player && !hasClosedParchment) {
+                /*if(game.started && !game.renderer.mobile && game.player && !hasClosedParchment) {
                     game.click();
-                }
+                }*/
             });
 
             $('#respawn').click(function(event) {

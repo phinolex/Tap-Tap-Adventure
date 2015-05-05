@@ -16,7 +16,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
             var i=0;
             var self = this;
             for(i=0; i<30; i++) {
-                $('#inventory'+i).click(function(event) {
+                $('#inventory' + i).click(function(event) {
                     if(self.game.ready){
                         var inventoryNumber = parseInt(this.id.slice(9));
                         if(self.game.inventoryHandler.inventory[inventoryNumber]) {

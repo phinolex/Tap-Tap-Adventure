@@ -38,12 +38,14 @@ module.exports = Player = Character.extend({
         this.pvpFlag = false;
         this.bannedTime = 0;
         this.banUseTime = 0;
+        this.membershipTime = 0;
         this.experience = 0;
         this.level = 0;
         this.lastWorldChatMinutes = 99;
         this.achievement = [];
         this.skillHandler = new SkillHandler();
         this.variations = new Variations();
+        this.membership = false;
 
         this.chatBanEndTime = 0;
 
@@ -97,12 +99,8 @@ module.exports = Player = Character.extend({
                             log.info("CREATE: " + self.name);
                             self.email = Utils.sanitize(message[3]);
                             self.pw = hash;
-                            //databaseHandler.checkBan(self);
-                            databaseHandler.createPlayer(self);
-                            for (var i = 0; i < 5; i++) {
-                                self.inventory.makeEmptyInventory(i);
-                            }
                             
+                            databaseHandler.createPlayer(self);
                         });
                     });
                 } else {
@@ -146,91 +144,97 @@ module.exports = Player = Character.extend({
                             return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
                         };
                     };
-                    var targetPalyer = self.server.getPlayerByName(msg.split(' ')[1]);  
-                    // Chat command handling
-
                     
-                    
-                    if(msg.startsWith("/1 ")) {
+                    switch(msg) {
+                        case msg.startsWith("/1 "):
+                            if((new Date()).getTime() > self.chatBanEndTime) {
+                                self.server.pushBroadcast(new Messages.Chat(self, msg));
+                            } else {
+                                self.send([Types.Messages.NOTIFY, "You are currently muted."]);
+                            }
+                        break;
                         
+                        case msg.startsWith("/kick "):
+                            var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                            if (targetPlayer) {
+                                databaseHandler.kickPlayer(self, targetPlayer);
+                            }
+                        break;
                         
-                          if((new Date()).getTime() > self.chatBanEndTime) {
-                              self.server.pushBroadcast(new Messages.Chat(self, msg));
-                          } else {
-                              self.send([Types.Messages.NOTIFY, "You have been muted.."]);
+                        case msg.startsWith("/ban "):
+                            var banPlayer = self.server.getPlayerByName(msg.split(' '));
+                            var days = (msg.split(' ')[2]);
+                            if (banPlayer) {
+                                
+                                databaseHandler.banPlayer(self, banPlayer, days);
+                            }
+                        break;
+                        
+                        case msg.startsWith("/banbyname "):
+                            var banPlayer = self.server.getPlayerByName(msg.split(' '));
+                            if (banPlayer) {
+                                databaseHandler.newBanPlayer(self, banPlayer);
+                            }
+                        break;
+                        
+                        case msg.startsWith("/tele "):
+                            var playerName = self.server.getPlayerByName(msg.split(' ')[1]);
+                            var x = msg.split(' ')[2];
+                            var y = msg.split(' ')[3];
                             
-                          
-                      }
-                          
-                    
-                    } else if (msg.startsWith("/kick ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        if (targetPlayer) {
-                            databaseHandler.kickPlayer(self, targetPlayer);
-                        }
+                            if (playerName) {
+                                log.info("Teleported player: " + playerName + " to: X: " + x + " and Y: " + y);
+                                databaseHandler.teleportPlayer(self, playerName, x, y);
+                            }
+                        break;    
                         
-                    } else if(msg.startsWith("/ban ")) {
+                        case msg.startsWith("/mute "):
+                            var mutePlayer = self.server.getPlayerByName(msg.split(' '));
+                            if (mutePlayer) {
+                                
+                                databaseHandler.chatBan(self, mutePlayer);
+                            }
+                        break;
                         
-                        var banPlayer = self.server.getPlayerByName(msg.split(' ')[2]);
-                        var days = (msg.split(' ')[1])*1;
-                        if(banPlayer) {
+                        case msg.startsWith("/unmute "):
+                            var targetPlayer = self.server.getPlayerByName(msg.split(' '));
                             
-                            databaseHandler.banPlayer(self, banPlayer, days);
-                        }
-                    } else if(msg.startsWith("/banbyname ")) {
-                        var banPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        if(banPlayer){
-                            databaseHandler.newBanPlayer(self, banPlayer);
-                        }
-                    } else if(msg.startsWith("/move ")) {
-                        var playerName = self.server.getPlayerByName(msg.split(' ')[1]);
-                        var x = (msg.split(' ')[2]) * 1;
-                        var y = (msg.split(' ')[3]) * 1;
+                            if (targetPlayer) {
+                                
+                                databaseHandler.unmute(self, targetPlayer);
+                            }
+                        break;
                         
-                        if (playerName) {
-                            databaseHandler.teleportPlayer(self ,playerName, x, y);
-                            
-                            
-                        }
+                        case msg.startsWith("/pmute "):
+                            var targetPlayer = self.server.getPlayerByName(msg.split(' '));
+                            if (targetPlayer) {
+                                
+                                databaseHandler.permanentlyMute(self, targetPlayer);
+                            }
+                        break;
                         
-                    } else if(msg.startsWith("/unmute ")) {
-                        if (targetPalyer) {
+                        case msg.startsWith("/promote "):
+                            var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                            var rank = msg.split(' ')[2];
                             
-                            databaseHandler.unmute(self, targetPalyer);
-                        }
+                            if (targetPlayer) {
+                                databaseHandler.promotePlayer(self, targetPlayer, rank);
+                            }
+                        break;
+                        
+                        case msg.startsWith("/demote "):
+                            var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                            
+                            if (targetPlayer) {
+                                databaseHandler.demotePlayer(self, targetPlayer);
+                            }
+                        break;
+                        
+                        default:
+                        
+                            self.broadcastToZone(new Messages.Chat(self, msg), false);
+                        break;
                     }
-                    
-                    else if(msg.startsWith("/mute ")) {
-                        var mutePlayer1 = self.server.getPlayerByName(msg.split(' ')[1]);
-                        var mutePlayer2 = self.server.getPlayerByName(msg.split(' ')[2]);
-                        if(mutePlayer1) {
-                            
-                            databaseHandler.chatBan(self, mutePlayer1);
-                        } else if (mutePlayer1 && mutePlayer2) {
-                            
-                            databaseHandler.chatBan(self, mutePlayer1 + mutePlayer2);
-                        }
-                    } else if(msg.startsWith("/pmute ")) {
-                        if (targetPalyer) 
-                            databaseHandler.permanentlyMute(self, targetPalyer);
-                        
-                        
-                    } else if(msg.startsWith("/promote ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        var rank = (msg.split(' ')[2]) * 1;
-                        if (targetPlayer && rank) {
-                              databaseHandler.promotePlayer(self, targetPalyer, rank);
-                        }
-                    } else if (msg.startsWith("/demote ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        if (targetPlayer) {
-                            databaseHandler.demotePlayer(self, targetPlayer);
-                        }
-                        
-                    } else {
-                      self.broadcastToZone(new Messages.Chat(self, msg), false);              
-                    }
-                    
                 }
             }
             else if(action === Types.Messages.MOVE) {
@@ -996,7 +1000,7 @@ module.exports = Player = Character.extend({
                           weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
                           pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
                           ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
-                          boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel) {
+                          boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership, membershipTime) {
         var self = this;
         self.kind = Types.Entities.WARRIOR;
         self.admin = admin;
@@ -1008,9 +1012,10 @@ module.exports = Player = Character.extend({
         self.equipPendant(Types.getKindFromString(pendant), pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel);
         self.equipRing(Types.getKindFromString(ring), ringEnchantedPoint, ringSkillKind, ringSkillLevel);
         self.equipBoots(Types.getKindFromString(boots), bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel);
-
+        self.membership = membership;
         self.bannedTime = bannedTime;
         self.banUseTime = banUseTime;
+        self.membershipTime = membershipTime;
         self.experience = exp;
         self.level = Types.getLevel(self.experience);
         self.orientation = Utils.randomOrientation;
@@ -1043,7 +1048,8 @@ module.exports = Player = Character.extend({
                     self.admin, //11
                     self.mana, //12
                     self.variations.doubleEXP,
-                    self.variations.expMultiplier
+                    self.variations.expMultiplier,
+                    self.membership
                 ]; 
                 log.info("Sent Double EXP w/ value of: " + self.variations.doubleEXP);
                 log.info("Sent EXP Multiplier w/ value of: " + self.variations.expMultiplier);

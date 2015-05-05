@@ -789,6 +789,26 @@ tr:hover {
         #resize-check {height:3px;}
 	}
 	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
+            
+            
+            #iteminfo {
+  display: none;
+  position: absolute;
+  width: 900px;
+  height: 224px;
+  top: 32px;
+  left: 50%;
+  margin-left: -450px;
+  border: 1px solid #9C9898;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  font-size: 32px;
+  padding-top: 32px;
+}
+            
+            
+            
             #chatbox{
   position: absolute;
   left: 50%;

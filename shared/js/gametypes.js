@@ -48,7 +48,8 @@ Types = {
         SKILL: 40,
         SKILLINSTALL: 41,
         DOUBLE_EXP: 42,
-        EXP_MULTIPLIER: 43
+        EXP_MULTIPLIER: 43,
+        MEMBERSHIP: 44
     },
 
     Entities: {

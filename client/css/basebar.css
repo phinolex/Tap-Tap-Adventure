@@ -502,96 +502,98 @@ footer, header, hgroup, menu, nav, section {
       left: 0px;
     }
     #inventorybackground0, #inventorybackground1, #inventorybackground2, #inventorybackground3, #inventorybackground4, #inventorybackground5 {
-      position: absolute;
-      width: 32px;
-      height: 40px;
-      top: 4px;
-      left: 366px;
-      margin: 0px;
-      border: 0px;
-      background-image: url('../img/2/main.png' );
-    }
-    #inventorybackground0 {
-      margin-left: 0px;
-      background-position: -398px -556px;
-    }
-    #inventorybackground0.empty {
-      background-position: -366px -556px;
-    }
-    #inventorybackground1 {
-      margin-left: 34px;
-      background-position: -430px -556px;
-    }
-    #inventorybackground1.empty {
-      background-position: -366px -556px;
-    }
-    #inventorybackground2 {
-      margin-left: 68px;
-      background-position: -462px -556px;
-    }
-    #inventorybackground2.empty {
-      background-position: -366px -556px;
-    }
-    #inventorybackground3 {
-      margin-left: 102px;
-      background-position: -494px -556px;
-    }
-    #inventorybackground3.empty {
-      background-position: -366px -556px;
-    }
-    #inventorybackground4 {
-      margin-left: 136px;
-      background-position: -526px -556px;
-    }
-    #inventorybackground4.empty {
-      background-position: -366px -556px;
-    }
-    #inventorybackground5 {
-      margin-left: 170px;
-      background-position: -558px -556px;
-      display: none;
-    }
-    #inventorybackground5.empty {
-      background-position: -366px -556px;
-    }
-    #inventorybackground0 { margin-left: 0px; }
-    #inventorybackground1 { margin-left: 34px; }
-    #inventorybackground2 { margin-left: 68px; }
-    #inventorybackground3 { margin-left: 102px; display: none; }
-    #inventorybackground4 { margin-left: 136px; display: none; }
-    #inventorybackground5 { margin-left: 170px; display: none; }
-    #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
-      position: absolute;
-      top: -5px;
-      left: 0px;
-      width: 32px;
-      height: 32px;
-      background-color: rgba(0, 0, 0, 0);
-    }
-    #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
-      position: absolute;
-      width: 32px;
-      height: 8px;
-      left: 0px;
-      top: 29px;
-      border: 0px;
-      color: rgba(255, 255, 255, 1);
-      font-size: 9px;
-      text-align: center;
-      padding: 0px;
-      margin: 0px;
-    }
-    #moreinventorybutton{
-      position: absolute;
-      display: none;
-      width: 32px;
-      height: 34px;
-      top: 0px;
-      left: 568px;
-      margin: 0px;
-      border: 0px;
-      background: url('../img/2/main.png') no-repeat -591px -556px;
-    }
+        position: absolute;
+        width: 32px;
+        height: 40px;
+        top: 4px;
+        left: 366px;
+        margin: 0px;
+        border: 0px;
+        background-image: url('../img/2/main.png' );
+      }
+      #inventorybackground0 {
+        margin-left: 0px;
+        background-position: -398px -556px;
+      }
+      #inventorybackground0.empty {
+        background-position: -366px -556px;
+      }
+      #inventorybackground1 {
+        margin-left: 34px;
+        background-position: -430px -556px;
+      }
+      #inventorybackground1.empty {
+        background-position: -366px -556px;
+      }
+      #inventorybackground2 {
+        margin-left: 68px;
+        background-position: -462px -556px;
+      }
+      #inventorybackground2.empty {
+        background-position: -366px -556px;
+      }
+      #inventorybackground3 {
+        margin-left: 102px;
+        background-position: -494px -556px;
+      }
+      #inventorybackground3.empty {
+        background-position: -366px -556px;
+      }
+      #inventorybackground4 {
+        margin-left: 136px;
+        background-position: -526px -556px;
+      }
+      #inventorybackground4.empty {
+        background-position: -366px -556px;
+      }
+      #inventorybackground5 {
+        margin-left: 170px;
+        background-position: -558px -556px;
+        display: none;
+      }
+      #inventorybackground5.empty {
+        background-position: -366px -556px;
+      }
+      #inventorybackground0 { margin-left: 0px; }
+      #inventorybackground1 { margin-left: 34px; }
+      #inventorybackground2 { margin-left: 68px; }
+      #inventorybackground3 { margin-left: 102px; display: none; }
+      #inventorybackground4 { margin-left: 136px; display: none; }
+      #inventorybackground5 { margin-left: 170px; display: none; }
+      #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
+        position: absolute;
+        top: -5px;
+        left: 0px;
+        width: 32px;
+        height: 32px;
+        background-color: rgba(0, 0, 0, 0);
+      }
+      #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
+        position: absolute;
+        width: 32px;
+        height: 8px;
+        left: 0px;
+        top: 29px;
+        border: 0px;
+        color: rgba(255, 255, 255, 1);
+        font-size: 9px;
+        text-align: center;
+        padding: 0px;
+        margin: 0px;
+      }
+      #moreinventorybutton{
+        position: absolute;
+        display: none;
+        width: 32px;
+        height: 34px;
+        top: 0px;
+        left: 568px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/2/main.png') no-repeat -591px -556px;
+      }
+
+
 
     #characterButton {
       position: absolute;

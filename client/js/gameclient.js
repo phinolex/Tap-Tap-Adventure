@@ -50,6 +50,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.INVENTORY] = this.receiveInventory;
             this.handlers[Types.Messages.DOUBLE_EXP] = this.receiveDoubleEXP;
             this.handlers[Types.Messages.EXP_MULTIPLIER] = this.receiveEXPMultiplier;
+            this.handlers[Types.Messages.MEMBERSHIP] = this.receiveMembership;
             this.useBison = false;
            
             this.enable();
@@ -204,7 +205,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 admin = data.shift(),
                 mana = data.shift(),
                 doubleExp = data.shift(),
-                expMultiplier = data.shift();
+                expMultiplier = data.shift(),
+                membership = data.shift();
         
             var i=0;
             var questFound = [];
@@ -231,7 +233,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.welcome_callback(id, name, x, y, hp, mana, armor, weapon, avatar,
                 weaponAvatar, experience, admin, questFound, questProgress,
                 inventory, inventoryNumber, maxInventoryNumber,
-                inventorySkillKind, inventorySkillLevel, doubleExp, expMultiplier);
+                inventorySkillKind, inventorySkillLevel, doubleExp, expMultiplier, membership);
             }
         },
 
@@ -525,6 +527,12 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.expmultiplier_callback(msg);
             }
         },
+        receiveMembership: function(data) {
+            var msg = data[1];
+            if (this.membership_callback) {
+                this.membership_callback(msg);
+            }
+        },
         
         
         onDispatched: function(callback) {
@@ -657,7 +665,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onEXPMultiplier: function(callback) {
             this.expmultiplier_callback = callback;
         },
-        
+        onMembership: function(callback) {
+            this.membership_callback = callback;
+        },
                 
 
         sendCreate: function(player) {
@@ -783,6 +793,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         sendEXPMultiplier: function(times) {
             
             this.sendMessage([Types.Messages.EXP_MULTIPLIER, times]);
+        },
+        sendMembership: function(hasMembership) {
+            
+            this.sendMessage([Types.Messages.MEMBERSHIP, hasMembership]);
         }
         
     });

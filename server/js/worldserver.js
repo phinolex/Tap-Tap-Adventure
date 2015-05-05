@@ -772,14 +772,14 @@ module.exports = World = cls.Class.extend({
     removeFromGroups: function(entity) {
         var self = this,
             oldGroups = [];
-
+        
         if(entity && entity.group) {
-
+            
             var group = this.groups[entity.group];
             if(entity instanceof Player) {
                 group.players = _.reject(group.players, function(id) { return id === entity.id; });
             }
-
+            
             this.map.forEachAdjacentGroup(entity.group, function(id) {
                 if(entity.id in self.groups[id].entities) {
                     delete self.groups[id].entities[entity.id];

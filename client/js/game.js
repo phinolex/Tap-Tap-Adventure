@@ -104,11 +104,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.hpGuide = 0;
             // pvp
             this.pvpFlag = false;
+            //
+            this.dialogs = new Array();
+            //this.itemInfoDialog = new ItemInfoDialog(this);
+            //this.dialogs.push(this.itemInfoDialog);
             
             //New Stuff
 
             this.doubleEXP = false;
             this.expMultiplier = 1;
+            this.membership = false;
             
             // sprites
             this.spriteNames = [ "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
@@ -820,7 +825,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                            avatar, weaponAvatar, experience, admin,
                                            questFound, questProgress, inventory, inventoryNumber,
                                            maxInventoryNumber, inventorySkillKind, inventorySkillLevel, doubleExp,
-                                           expMultiplier) {
+                                           expMultiplier, membership) {
                 log.info("Received player ID from server : "+ id);
                 self.player.id = id;
                 self.playerId = id;
@@ -838,21 +843,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.setArmorName(armor);
                 self.player.setSpriteName(avatar);
                 self.player.setWeaponName(weapon);
-                
+                self.membership = membership;
                 self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
-                //self.shopHandler.setMaxInventoryNumber(maxInventoryNumber);
                 self.initPlayer();
-                
-
                 self.updateBars();
                 self.updateExpBar();
                 self.resetCamera();
                 self.updatePlateauMode();
                 self.audioManager.updateMusic();
-
                 self.addEntity(self.player);
                 self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
-                
                 self.questhandler.initQuest(questFound, questProgress);
                 
                 //Welcome message
@@ -861,9 +861,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 if (self.doubleEXP) {
                     self.chathandler.addNotification("Double EXP is currently on.");
                 }
-                
-
-
+                if (self.membership) {
+                    self.chathandler.addNotification("You are currently a member");
+                }
                 self.player.onStartPathing(function(path) {
                     var i = path.length - 1,
                         x =  path[i][0],
@@ -1530,6 +1530,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     if(self.disconnect_callback) {
                         self.disconnect_callback(message);
                     }
+                    for(var index = 0; index < self.dialogs.length; index++) {
+                        self.dialogs[index].hide();
+                    }
                 });
                 self.client.onQuest(function(data){
                   self.questhandler.handleQuest(data);
@@ -2089,14 +2092,19 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var entity;
 
             this.inventoryHandler.hideAllInventory();
+            this.playerPopupMenu.close();
+            
+            for(var i = 0; i < this.dialogs.length; i++) {
+                if(this.dialogs[i].visible){
+                    this.dialogs[i].hide();
+                }
+            }
             
             if(this.menu.selectedInventory !== null){
                 var inventoryNumber = this.menu.selectedInventory;
-                var clickedMenu;
-                var itemKind;
+                var clickedMenu = this.menu.isClickedInventoryMenu(pos, this.camera);
+                var itemKind = this.inventoryHandler.inventory[inventoryNumber];
 
-                clickedMenu = this.menu.isClickedInventoryMenu(pos, this.camera);
-                itemKind = this.inventoryHandler.inventory[inventoryNumber];
                 if(clickedMenu === 4){
                     if(itemKind === Types.Entities.SNOWPOTION){
                         this.enchantPendant(inventoryNumber);
@@ -2190,8 +2198,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          */
         processInput: function(pos) {
             var entity;
-            this.playerPopupMenu.close();
-            this.menu.close();
+            
             if(this.started
             && this.player
             && !this.isZoning()
@@ -2649,9 +2656,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
 
         showNotification: function(message) {
-            if(this.notification_callback) {
+            this.chathandler.addNotification(message);
+            /*if(this.notification_callback) {
                 this.notification_callback(message);
-            }
+            }*/
         },
 
         removeObsoleteEntities: function() {
@@ -2797,25 +2805,17 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         equip: function(inventoryNumber){
             var itemKind = this.inventoryHandler.inventory[inventoryNumber];
-            if(Types.isArmor(itemKind) && this.player.kind !== Types.Entities.WARRIOR){
-                this.showNotification("검사 갑옷은 검사만 착용할 수 있습니다.");
-            } else if(Types.isArcherArmor(itemKind) && this.player.kind !== Types.Entities.ARCHER){
-                this.showNotification("궁수 갑옷은 궁수만 착용할 수 있습니다.");
-            } else if(Types.isWeapon(itemKind) && this.player.kind !== Types.Entities.WARRIOR){
-                this.showNotification("검사 무기는 검사만 착용할 수 있습니다.");
-            } else if(Types.isArcherWeapon(itemKind) && this.player.kind !== Types.Entities.ARCHER){
-                this.showNotification("궁수 무기는 궁수만 착용할 수 있습니다.");
-            } else{
-                if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)){
-                    this.client.sendInventory("armor", inventoryNumber, 1);
-                } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)){
-                    this.client.sendInventory("weapon", inventoryNumber, 1);
-                } else if(Types.isPendant(itemKind)) {
-                    this.client.sendInventory("pendant", inventoryNumber, 0);
-                } else if(Types.isRing(itemKind)) {
-                    this.client.sendInventory("ring", inventoryNumber, 0);
-                }
+            
+            if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)){
+                this.client.sendInventory("armor", inventoryNumber, 1);
+            } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)){
+                this.client.sendInventory("weapon", inventoryNumber, 1);
+            } else if(Types.isPendant(itemKind)) {
+                this.client.sendInventory("pendant", inventoryNumber, 1);
+            } else if(Types.isRing(itemKind)) {
+                this.client.sendInventory("ring", inventoryNumber, 1);
             }
+            
             this.menu.close();
         },
         avatar: function(inventoryNumber){
