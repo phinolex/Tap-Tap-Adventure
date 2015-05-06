@@ -842,7 +842,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.setMaxMana(mana);
                 self.player.setArmorName(armor);
                 self.player.setSpriteName(avatar);
-                self.player.setWeaponName(weapon);
+                self.player.setWeaponName(weaponAvatar ? weaponAvatar : weapon);
                 self.membership = membership;
                 self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
                 self.initPlayer();
@@ -1077,16 +1077,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
 
                 self.player.onArmorLoot(function(armorName) {
-                    self.player.switchArmor(self.sprites[armorName]);
+                    self.player.switchArmor(armorName, self.sprites[armorName]);
                 });
 
-                self.player.onSwitchItem(function() {
-                    
-                    if(self.equipment_callback) {
-                        self.equipment_callback();
-                    }
-                });
-
+                
                 self.player.onInvincible(function() {
                     self.invincible_callback();
                     self.player.switchArmor(self.sprites["firefox"]);
@@ -2807,13 +2801,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var itemKind = this.inventoryHandler.inventory[inventoryNumber];
             
             if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)){
-                this.client.sendInventory("armor", inventoryNumber, 1);
+                this.client.sendInventory("armor", inventoryNumber, 0);
             } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)){
-                this.client.sendInventory("weapon", inventoryNumber, 1);
+                this.client.sendInventory("weapon", inventoryNumber, 0);
             } else if(Types.isPendant(itemKind)) {
-                this.client.sendInventory("pendant", inventoryNumber, 1);
+                this.client.sendInventory("pendant", inventoryNumber, 0);
             } else if(Types.isRing(itemKind)) {
-                this.client.sendInventory("ring", inventoryNumber, 1);
+                this.client.sendInventory("ring", inventoryNumber, 0);
             }
             
             this.menu.close();

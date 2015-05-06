@@ -621,6 +621,7 @@ module.exports = Player = Character.extend({
         if(enchantedPoint){
             
             this.weaponEnchantedPoint = enchantedPoint;
+            
         } else{
             
             this.weaponEnchantedPoint = 0;
@@ -1139,6 +1140,25 @@ module.exports = Player = Character.extend({
             }
         }
     },
+    canEquipArmor: function(itemKind){
+        
+        var armorLevel = Types.getArmorRank(itemKind)+1;
+        if(armorLevel * 2 > this.level){
+            this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + armorLevel * 2 + " to equip this."));
+            return false;
+        }
+        return true;
+        
+      },
+      canEquipWeapon: function(itemKind){
+        
+        var weaponLevel = Types.getWeaponRank(itemKind)+1;
+        if(weaponLevel * 2 > this.level){
+            this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + weaponLevel * 2 + " to equip this."));
+            return false;
+        }
+        return true;
+    },
     handleInventoryAvatar: function(inventoryNumber){
         var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
         var itemEnchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
@@ -1163,12 +1183,12 @@ module.exports = Player = Character.extend({
         var itemSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
 
         if(!this.canEquipWeapon(itemKind)){
-          return;
+            return;
         }
         if(this.weaponAvatar){
-          this.inventory.setInventory(inventoryNumber, this.weaponAvatar, this.weaponAvatarEnchantedPoint, this.weaponAvatarSkillKind, this.weaponAvatarSkillLevel);
+            this.inventory.setInventory(inventoryNumber, this.weaponAvatar, this.weaponAvatarEnchantedPoint, this.weaponAvatarSkillKind, this.weaponAvatarSkillLevel);
         } else{
-          this.inventory.makeEmptyInventory(inventoryNumber);
+            this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
         this.broadcast(this.equip(itemKind), false);
@@ -1185,14 +1205,14 @@ module.exports = Player = Character.extend({
     },
     handleInventoryWeapon: function(itemKind, inventoryNumber){
         if(this.kind === Types.Entities.ARCHER && Types.isWeapon(itemKind)){
-          this.server.pushToPlayer(this, new Messages.Notify("궁수는 궁수용 무기만 착용할 수 있습니다."));
-          return;
+            this.server.pushToPlayer(this, new Messages.Notify("궁수는 궁수용 무기만 착용할 수 있습니다."));
+            return;
         } else if(this.kind === Types.Entities.WARRIOR && Types.isArcherWeapon(itemKind)){
-          this.server.pushToPlayer(this, new Messages.Notify("검사는 검사용 무기만 착용할 수 있습니다."));
-          return;
+            this.server.pushToPlayer(this, new Messages.Notify("검사는 검사용 무기만 착용할 수 있습니다."));
+            return;
         }
         var weaponLevel = Types.getWeaponRank(itemKind)+1;
-        if(weaponLevel*2 > this.level){
+        if(weaponLevel * 2 > this.level){
           this.server.pushToPlayer(this, new Messages.Notify(""+weaponLevel+"레벨 무기는 " + (weaponLevel*2) + "레벨 이상만 착용할 수 있습니다."));
           return;
         }
@@ -1206,7 +1226,7 @@ module.exports = Player = Character.extend({
         this.equipItem(itemKind, enchantedPoint, weaponSkillKind, weaponSkillLevel, false);
         this.setAbility();
         if(!this.weaponAvatar){
-          this.broadcast(this.equip(itemKind), false);
+            this.broadcast(this.equip(itemKind), false);
         }
     },
     handleInventoryPendant: function(itemKind, inventoryNumber){

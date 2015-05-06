@@ -43,40 +43,33 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         getSpriteName: function() {
             return this.spriteName;
         },
-
         setSpriteName: function(name) {
-            this.spriteName = name;
-        },
-
-        getArmorName: function() {
-            var sprite = this.getArmorSprite();
-            return sprite.id;
-        },
-
-        getArmorSprite: function() {
-            if(this.invincible) {
-                return this.currentArmorSprite;
-            } else {
-                return this.sprite;
+            if(name){
+                this.spriteName = name;
+            } else{
+                this.spriteName = this.armorName;
             }
+        },
+        getArmorName: function() {
+            return this.armorName;
+        },
+        getArmorSprite: function() {
+            return this.sprite;
         },
         setArmorName: function(name){
             this.armorName = name;
         },
-
         getWeaponName: function() {
             return this.weaponName;
         },
-        
         setWeaponName: function(name) {
             this.weaponName = name;
         },
-
         hasWeapon: function() {
-
             return this.weaponName !== null;
         },
-        
+ 
+       
         switchArmor: function(armorName, sprite){
             this.setSpriteName(armorName);
             this.setSprite(sprite);
@@ -90,17 +83,17 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             var count = 14, 
                 value = false, 
                 self = this;
-        
+
             var toggle = function() {
                 value = !value;
                 return value;
             };
-        
+
             if(newWeaponName !== this.getWeaponName()) {
                 if(this.isSwitchingWeapon) {
                     clearInterval(blanking);
                 }
-            
+
                 this.switchingWeapon = true;
                 var blanking = setInterval(function() {
                     if(toggle()) {
@@ -113,7 +106,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
                     if(count === 1) {
                         clearInterval(blanking);
                         self.switchingWeapon = false;
-                    
+
                         if(self.switch_callback) {
                             self.switch_callback();
                         }
