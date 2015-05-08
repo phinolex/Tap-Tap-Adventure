@@ -11,11 +11,11 @@ var cls = require("./lib/class"),
     Formulas = require("./formulas"),
     check = require("./format").check,
     Party = require("./party"),
-    Types = require("../../shared/js/gametypes");
-    bcrypt = require('bcrypt');
+    Types = require("../../shared/js/gametypes"),
+    bcrypt = require('bcrypt'),
     Inventory = require("./inventory"),
-    Mob = require('./mob');
-    SkillHandler = require("./skillhandler");
+    Mob = require('./mob'),
+    SkillHandler = require("./skillhandler"),
     Variations = require('./variations');
     
 
@@ -1001,9 +1001,9 @@ module.exports = Player = Character.extend({
                           weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
                           pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
                           ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
-                          boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership, membershipTime) {
+                          boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership, membershipTime, kind) {
         var self = this;
-        self.kind = Types.Entities.WARRIOR;
+        self.kind = kind;
         self.admin = admin;
         //self.moderator = moderator;
         self.equipArmor(Types.getKindFromString(armor), armorEnchantedPoint, armorSkillKind, armorSkillLevel);

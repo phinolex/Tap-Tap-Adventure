@@ -67,6 +67,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "bootsSkillLevel")            // 42
                         .hget(userKey, "membership")                 // 43
                         .hget(userKey, "membershipTime")             // 44
+                        .hget(userKey, "kind")
                         
                         
                         
@@ -126,6 +127,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var bootsSkillLevel = Utils.NaN2Zero(replies[42]);
                             var membership = replies[43];
                             var membershipTime = replies[44];
+                            var kind = Utils.NaN2Zero(replies[45]) === 222 ? Types.Entities.ARCHER : Types.Entities.WARRIOR;
                            
                             //var curTime = new Date();
                             //Check ban here
@@ -213,7 +215,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                     pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
                                     ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
                                     boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
-                                    membershipTime);
+                                    membershipTime, kind);
                             });
                     });
                     return;
@@ -281,7 +283,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                      0, 0, 0,
                                      null, 0, 0, 0,
                                      null, 0, 0, 0,
-                                     false);
+                                     false, Types.Entities.WARRIOR);
                         
                     });
                     
