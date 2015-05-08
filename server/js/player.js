@@ -715,7 +715,7 @@ module.exports = Player = Character.extend({
     equipItem: function(itemKind, enchantedPoint, skillKind, skillLevel, isAvatar) {
         if(itemKind) {
             log.debug(this.name + " equips " + Types.getKindAsString(itemKind));
-
+            
             if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
                 if(isAvatar){
                     databaseHandler.equipAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
@@ -1200,7 +1200,7 @@ module.exports = Player = Character.extend({
         this.inventory.setInventory(inventoryNumber, this.armor, 0, 0, 0);
         this.equipItem(itemKind, 0, 0, 0, false);
         if(!this.avatar){
-          this.broadcast(this.equip(itemKind), false);
+            this.broadcast(this.equip(itemKind), false);
         }
     },
     handleInventoryWeapon: function(itemKind, inventoryNumber){

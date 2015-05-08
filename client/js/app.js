@@ -493,21 +493,7 @@ define(['jquery'], function($) {
             this.dropDialogPopuped = false;
           }
         },
-        initEquipmentIcons: function() {
-            var scale = this.game.renderer.getScaleFactor(),
-                getIconPath = function(spriteName) {
-                    return 'img/'+ scale +'/item-' + spriteName + '.png';
-                },
-                weapon = this.game.player.getWeaponName(),
-                armor = this.game.player.getSpriteName(),
-                weaponPath = getIconPath(weapon),
-                armorPath = getIconPath(armor);
-
-            $('#weapon').css('background-image', 'url("' + weaponPath + '")');
-            if(armor !== 'firefox') {
-                $('#armor').css('background-image', 'url("' + armorPath + '")');
-            }
-        },
+        
 
         hideWindows: function() {
             

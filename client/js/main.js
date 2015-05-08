@@ -206,7 +206,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 
                 
             game.onGameStart(function() {
-                app.initEquipmentIcons();
+                
                 var entry = new EntryPoint();
 				entry.execute(game);
             });
@@ -223,9 +223,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 $('body').addClass('death');
             });
 
-            game.onPlayerEquipmentChange(function() {
-                app.initEquipmentIcons();
-            });
+            
 
             game.onPlayerInvincible(function() {
                 $('#hitpoints').toggleClass('invincible');
@@ -511,6 +509,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 setTimeout(function () {
                     app.hideDropDialog();
                 }, 100);
+                
             });
             $('#nameinput').focusin(function() {
                 $('#name-tooltip').addClass('visible');

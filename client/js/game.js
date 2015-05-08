@@ -716,8 +716,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 this.updateCursorLogic();
                 this.updater.update();
                 this.renderer.renderFrame();
+                this.FPSCount++;
+                if(this.currentTime - this.lastFPSTime > 1000) {
+                    $('#fps').html("FPS: " + this.FPSCount);
+                    this.lastFPSTime = this.currentTime;
+                    this.FPSCount = 0;
+                }
             }
-
+            
             if(!this.isStopped) {
                 requestAnimFrame(this.tick.bind(this));
             }
@@ -1080,10 +1086,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.player.switchArmor(armorName, self.sprites[armorName]);
                 });
 
-                
                 self.player.onInvincible(function() {
                     self.invincible_callback();
-                    self.player.switchArmor(self.sprites["firefox"]);
+                    self.player.switchArmor("firefox", self.sprites["firefox"]);
                 });
 
                 self.client.onSpawnItem(function(item, x, y) {
@@ -1440,13 +1445,17 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 
                     if(player) {
                         if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
+                            self.showNotification("Attempting to Equip Armor - " + itemName);
                             player.switchArmor(itemName, self.sprites[itemName]);
+                            
                             if(self.player.id === player.id){
                               self.showNotification('' + (Types.getArmorRank(itemKind)+1) + "레벨 갑옷 착용");
                               self.audioManager.playSound("loot");
                             }
                         } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
+                            self.showNotification("Attempting to Equip Weapon - " + itemName);
                             player.setWeaponName(itemName);
+                            
                             if(self.player.id === player.id){
                               self.showNotification('' + (Types.getWeaponRank(itemKind)+1) + "레벨 무기 착용");
                               self.audioManager.playSound("loot");
@@ -2138,8 +2147,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         $('#dropCount').val(this.inventoryHandler.inventoryCount[inventoryNumber]);
                         this.app.showDropDialog(inventoryNumber);
                     } else {
-                        this.client.sendInventory("empty", inventoryNumber, 1);
+                        this.client.sendInventory("empty", inventoryNumber, 0);
                         this.inventoryHandler.makeEmptyInventory(inventoryNumber);
+                        this.camera.focusEntity(this.player);
+                        this.resetZone();
                     }
                     this.menu.close();
                     return;
@@ -2584,9 +2595,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.playerhurt_callback = callback;
         },
 
-        onPlayerEquipmentChange: function(callback) {
-            this.equipment_callback = callback;
-        },
 
         onNbPlayersChange: function(callback) {
             this.nbplayers_callback = callback;
@@ -2813,7 +2821,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.menu.close();
         },
         avatar: function(inventoryNumber){
-            this.client.sendInventory("avatar", inventoryNumber, 1);
+            this.client.sendInventory("avatar", inventoryNumber, 0);
             this.audioManager.playSound("loot");
             this.menu.close();
         },
@@ -2821,30 +2829,30 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(this.inventoryHandler.inventory[inventoryNumber] === Types.Entities.ROYALAZALEA
             || this.player.hitPoints < this.player.maxHitPoints) {
                 if(this.inventoryHandler.decInventory(inventoryNumber)){
-                    this.client.sendInventory("eat", inventoryNumber, 1);
+                    this.client.sendInventory("eat", inventoryNumber, 0);
                     this.audioManager.playSound("heal");
                 }
             }
             this.menu.close();
         },
         enchantWeapon: function(inventoryNumber){
-            this.client.sendInventory("enchantweapon", inventoryNumber, 1);
+            this.client.sendInventory("enchantweapon", inventoryNumber, 0);
             this.menu.close();
         },
         enchantRing: function(inventoryNumber){
-            this.client.sendInventory("enchantring", inventoryNumber, 1);
+            this.client.sendInventory("enchantring", inventoryNumber, 0);
             this.menu.close();
         },
         enchantPendant: function(inventoryNumber){
-            this.client.sendInventory("enchantpendant", inventoryNumber, 1);
+            this.client.sendInventory("enchantpendant", inventoryNumber, 0);
             this.menu.close();
         },
         enchantBloodsucking: function(inventoryNumber){
-            this.client.sendInventory("enchantbloodsucking", inventoryNumber, 1);
+            this.client.sendInventory("enchantbloodsucking", inventoryNumber, 0);
             this.menu.close();
         },
         enchantArmor: function(inventoryNumber){
-            this.client.sendInventory("enchantarmor", inventoryNumber, 1);
+            this.client.sendInventory("enchantarmor", inventoryNumber, 0);
             this.menu.close();
         },
 

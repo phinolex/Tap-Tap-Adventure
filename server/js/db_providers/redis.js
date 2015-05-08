@@ -620,6 +620,11 @@ module.exports = DatabaseHandler = cls.Class.extend({
         return Math.pow(2, time)*500*60;
     },
     equipArmor: function(name, armor, enchantedPoint, skillKind, skillLevel){
+        log.info("Set Avatar: " + name + " " + armor);
+        client.hset("u:" + name, "avatar", armor);
+        client.hset("u:" + name, "avatarEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "avatarSkillKind", skillKind);
+        client.hset("u:" + name, "avatarSkillLevel", skillLevel);
         log.info("Set Armor: " + name + " " + armor);
         client.hset("u:" + name, "armor", armor);
         client.hset("u:" + name, "armorEnchantedPoint", enchantedPoint);
@@ -632,6 +637,11 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "avatarEnchantedPoint", enchantedPoint);
         client.hset("u:" + name, "avatarSkillKind", skillKind);
         client.hset("u:" + name, "avatarSkillLevel", skillLevel);
+        log.info("Set Armor: " + name + " " + armor);
+        client.hset("u:" + name, "armor", armor);
+        client.hset("u:" + name, "armorEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "armorSkillKind", skillKind);
+        client.hset("u:" + name, "armorSkillLevel", skillLevel);
     },
     equipWeapon: function(name, weapon, enchantedPoint, skillKind, skillLevel){
         log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
@@ -639,8 +649,18 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "weaponEnchantedPoint", enchantedPoint);
         client.hset("u:" + name, "weaponSkillKind", skillKind);
         client.hset("u:" + name, "weaponSkillLevel", skillLevel);
+        log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
+        client.hset("u:" + name, "weaponAvatar", weapon);
+        client.hset("u:" + name, "weaponAvatarEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "weaponAvatarSkillKind", skillKind);
+        client.hset("u:" + name, "weaponAvatarSkillLevel", skillLevel);
     },
     equipWeaponAvatar: function(name, weapon, enchantedPoint, skillKind, skillLevel){
+        log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
+        client.hset("u:" + name, "weapon", weapon);
+        client.hset("u:" + name, "weaponEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "weaponSkillKind", skillKind);
+        client.hset("u:" + name, "weaponSkillLevel", skillLevel);
         log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
         client.hset("u:" + name, "weaponAvatar", weapon);
         client.hset("u:" + name, "weaponAvatarEnchantedPoint", enchantedPoint);

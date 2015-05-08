@@ -14,9 +14,9 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             }
 
             // Renderer
-             this.nameOffsetY = -10;
-             this.admin = null;
-             this.mod = null;
+            this.nameOffsetY = -10;
+            this.admin = null;
+            this.mod = null;
             // sprites
             this.spriteName = "clotharmor";
             this.armorName = "clotharmor";
@@ -46,7 +46,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         setSpriteName: function(name) {
             if(name){
                 this.spriteName = name;
-            } else{
+            } else {
                 this.spriteName = this.armorName;
             }
         },
@@ -67,18 +67,15 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         },
         hasWeapon: function() {
             return this.weaponName !== null;
-        },
- 
-       
+        },      
         switchArmor: function(armorName, sprite){
             this.setSpriteName(armorName);
-            this.setSprite(sprite);
+            this.setSprite(armorName);
             this.setArmorName(armorName);
             if(this.switch_callback) {
-              this.switch_callback();
+                this.switch_callback();
             }
         },
-    
         switchWeapon: function(newWeaponName) {
             var count = 14, 
                 value = false, 
@@ -91,7 +88,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
             if(newWeaponName !== this.getWeaponName()) {
                 if(this.isSwitchingWeapon) {
-                    clearInterval(blanking);
+                  clearInterval(blanking);
                 }
 
                 this.switchingWeapon = true;
@@ -114,15 +111,8 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
                 }, 90);
             }
         },
-
-        
-
         onArmorLoot: function(callback) {
             this.armorloot_callback = callback;
-        },
-
-        onSwitchItem: function(callback) {
-            this.switch_callback = callback;
         },
 
         onInvincible: function(callback) {
