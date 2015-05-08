@@ -1204,16 +1204,10 @@ module.exports = Player = Character.extend({
         }
     },
     handleInventoryWeapon: function(itemKind, inventoryNumber){
-        if(this.kind === Types.Entities.ARCHER && Types.isWeapon(itemKind)){
-            this.server.pushToPlayer(this, new Messages.Notify("궁수는 궁수용 무기만 착용할 수 있습니다."));
-            return;
-        } else if(this.kind === Types.Entities.WARRIOR && Types.isArcherWeapon(itemKind)){
-            this.server.pushToPlayer(this, new Messages.Notify("검사는 검사용 무기만 착용할 수 있습니다."));
-            return;
-        }
-        var weaponLevel = Types.getWeaponRank(itemKind)+1;
+        
+        var weaponLevel = Types.getWeaponRank(itemKind) + 1;
         if(weaponLevel * 2 > this.level){
-          this.server.pushToPlayer(this, new Messages.Notify(""+weaponLevel+"레벨 무기는 " + (weaponLevel*2) + "레벨 이상만 착용할 수 있습니다."));
+          this.server.pushToPlayer(this, new Messages.Notify("You need to be at least level: " + weaponLevel * 2 + " to weild this weapon."));
           return;
         }
 
