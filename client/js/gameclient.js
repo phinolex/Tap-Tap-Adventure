@@ -106,15 +106,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                         }
                         return;
                     }
-                    /* if (e === 'ban') {
-                        if (self.ban_callback) {
-                            self.ban_callback(e);
-                        }
-                        return;
-                    } */
-
                     
-                   self.receiveMessage(e);
+                    self.receiveMessage(e);
                 });
 
                 this.connection.on('error', function(e) {

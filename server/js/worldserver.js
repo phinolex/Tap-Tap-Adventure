@@ -318,7 +318,7 @@ module.exports = World = cls.Class.extend({
 
     pushBroadcast: function(message, ignoredPlayer) {
         for(var id in this.outgoingQueues) {
-            if(id !== ignoredPlayer) {
+            if(id != ignoredPlayer) {
                 this.outgoingQueues[id].push(message.serialize());
             }
         }

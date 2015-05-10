@@ -1,3 +1,5 @@
+/* global log, module */
+
 var cls = require("./lib/class"),
     Player = require("./player"),
     mysql = require("mysql");

@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/Flavius/Desktop/Tap%20Tap%20Adventure/server/js/ws.js</file>
+            <file>file:/Users/Flavius/Desktop/Tap%20Tap%20Adventure/server/js/player.js</file>
+            <file>file:/Users/Flavius/Desktop/Tap%20Tap%20Adventure/server/js/db_providers/redis.js</file>
+            <file>file:/Users/Flavius/Desktop/Tap%20Tap%20Adventure/server/js/worldserver.js</file>
+        </group>
     </open-files>
 </project-private>

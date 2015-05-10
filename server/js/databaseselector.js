@@ -1,3 +1,5 @@
+/* global module, __dirname */
+
 path = require('path');
 
 module.exports = function(config) {

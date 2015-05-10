@@ -101,6 +101,45 @@ footer, header, hgroup, menu, nav, section {
 			cursor: default;
 		}
 	}
+        /*iPhone 6 landscape*/
+        @media screen and (min-device-width : 1080px) and (max-device-width : 1920px) and (min-resolution: 401dpi) and (device-aspect-ratio:16/9) {
+            #canvas {width:100%;height:100%;}
+            
+            #mainborder {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 50%;
+                margin-left: -735px;
+                top: 15px;
+                border: 0px;
+                padding: 15px;
+                background: rgba(0, 0, 0, 1);
+                background-image: url('../img/3/main.png' );
+                background-repeat: no-repeat;
+                background-position: 0px 0px;
+            }
+        
+        }
+
+        @media screen and (min-device-width : 750px) and (max-device-width : 1334px) and (min-resolution: 326dpi) {
+            #canvas {width:100%;height:100%;}
+            
+            #mainborder {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 50%;
+                margin-left: -735px;
+                top: 15px;
+                border: 0px;
+                padding: 15px;
+                background: rgba(0, 0, 0, 1);
+                background-image: url('../img/3/main.png' );
+                background-repeat: no-repeat;
+                background-position: 0px 0px;
+            }
+        }
     h1 {font-weight:normal;}
     
     .preload {display:none;}
