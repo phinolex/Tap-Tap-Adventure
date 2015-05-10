@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "private": true,
   "dependencies": {
-    "bcrypt": ">=0",
+    "bcrypt": "0.8.3",
     "bison": "~1.1.1",
     "connect": "~3.3.3",
     "log": "~1.4.0",

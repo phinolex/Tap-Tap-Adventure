@@ -144,97 +144,89 @@ module.exports = Player = Character.extend({
                             return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
                         };
                     };
+                    var targetPalyer = self.server.getPlayerByName(msg.split(' ')[1]);  
+                    // Chat command handling
+
                     
-                    switch(msg) {
-                        case msg.startsWith("/1 "):
-                            if((new Date()).getTime() > self.chatBanEndTime) {
-                                self.server.pushBroadcast(new Messages.Chat(self, msg));
-                            } else {
-                                self.send([Types.Messages.NOTIFY, "You are currently muted."]);
-                            }
-                        break;
+                    
+                    if(msg.startsWith("/1 ")) {
                         
-                        case msg.startsWith("/kick "):
-                            var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                            if (targetPlayer) {
-                                databaseHandler.kickPlayer(self, targetPlayer);
-                            }
-                        break;
                         
-                        case msg.startsWith("/ban "):
-                            var banPlayer = self.server.getPlayerByName(msg.split(' '));
-                            var days = (msg.split(' ')[2]);
-                            if (banPlayer) {
-                                
-                                databaseHandler.banPlayer(self, banPlayer, days);
-                            }
-                        break;
+                          if((new Date()).getTime() > self.chatBanEndTime) {
+                              self.server.pushBroadcast(new Messages.Chat(self, msg));
+                          } else {
+                              self.send([Types.Messages.NOTIFY, "You have been muted.."]);
+                      }
+                          
+                    
+                    } else if (msg.startsWith("/kick ")) {
+                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                        if (targetPlayer) {
+                            databaseHandler.kickPlayer(self, targetPlayer);
+                        }
                         
-                        case msg.startsWith("/banbyname "):
-                            var banPlayer = self.server.getPlayerByName(msg.split(' '));
-                            if (banPlayer) {
-                                databaseHandler.newBanPlayer(self, banPlayer);
-                            }
-                        break;
+                    } else if(msg.startsWith("/ban ")) {
                         
-                        case msg.startsWith("/tele "):
-                            var playerName = self.server.getPlayerByName(msg.split(' ')[1]);
-                            var x = msg.split(' ')[2];
-                            var y = msg.split(' ')[3];
+                        var banPlayer = self.server.getPlayerByName(msg.split(' ')[2]);
+                        var days = (msg.split(' ')[1])*1;
+                        if(banPlayer) {
                             
-                            if (playerName) {
-                                log.info("Teleported player: " + playerName + " to: X: " + x + " and Y: " + y);
-                                databaseHandler.teleportPlayer(self, playerName, x, y);
-                            }
-                        break;    
+                            databaseHandler.banPlayer(self, banPlayer, days);
+                        }
+                    } else if(msg.startsWith("/banbyname ")) {
+                        var banPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                        if(banPlayer){
+                            databaseHandler.newBanPlayer(self, banPlayer);
+                        }
+                    } else if(msg.startsWith("/move ")) {
+                        var playerName = self.server.getPlayerByName(msg.split(' ')[1]);
+                        var x = (msg.split(' ')[2]) * 1;
+                        var y = (msg.split(' ')[3]) * 1;
                         
-                        case msg.startsWith("/mute "):
-                            var mutePlayer = self.server.getPlayerByName(msg.split(' '));
-                            if (mutePlayer) {
-                                
-                                databaseHandler.chatBan(self, mutePlayer);
-                            }
-                        break;
-                        
-                        case msg.startsWith("/unmute "):
-                            var targetPlayer = self.server.getPlayerByName(msg.split(' '));
+                        if (playerName) {
+                            databaseHandler.teleportPlayer(self ,playerName, x, y);
                             
-                            if (targetPlayer) {
-                                
-                                databaseHandler.unmute(self, targetPlayer);
-                            }
-                        break;
-                        
-                        case msg.startsWith("/pmute "):
-                            var targetPlayer = self.server.getPlayerByName(msg.split(' '));
-                            if (targetPlayer) {
-                                
-                                databaseHandler.permanentlyMute(self, targetPlayer);
-                            }
-                        break;
-                        
-                        case msg.startsWith("/promote "):
-                            var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                            var rank = msg.split(' ')[2];
                             
-                            if (targetPlayer) {
-                                databaseHandler.promotePlayer(self, targetPlayer, rank);
-                            }
-                        break;
+                        }
                         
-                        case msg.startsWith("/demote "):
-                            var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                    } else if(msg.startsWith("/unmute ")) {
+                        if (targetPalyer) {
                             
-                            if (targetPlayer) {
-                                databaseHandler.demotePlayer(self, targetPlayer);
-                            }
-                        break;
-                        
-                        default:
-                        
-                            self.broadcastToZone(new Messages.Chat(self, msg), false);
-                        break;
+                            databaseHandler.unmute(self, targetPalyer);
+                        }
                     }
+                    
+                    else if(msg.startsWith("/mute ")) {
+                        var mutePlayer1 = self.server.getPlayerByName(msg.split(' ')[1]);
+                        var mutePlayer2 = self.server.getPlayerByName(msg.split(' ')[2]);
+                        if(mutePlayer1) {
+                            
+                            databaseHandler.chatBan(self, mutePlayer1);
+                        } else if (mutePlayer1 && mutePlayer2) {
+                            
+                            databaseHandler.chatBan(self, mutePlayer1 + mutePlayer2);
+                        }
+                    } else if(msg.startsWith("/pmute ")) {
+                        if (targetPalyer) 
+                            databaseHandler.permanentlyMute(self, targetPalyer);
+                        
+                        
+                    } else if(msg.startsWith("/promote ")) {
+                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                        var rank = (msg.split(' ')[2]) * 1;
+                        if (targetPlayer && rank) {
+                              databaseHandler.promotePlayer(self, targetPalyer, rank);
+                        }
+                    } else if (msg.startsWith("/demote ")) {
+                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                        if (targetPlayer) {
+                            databaseHandler.demotePlayer(self, targetPlayer);
+                        }
+                        
+                    } else {
+                      self.broadcastToZone(new Messages.Chat(self, msg), false);              
+                    }
+                    
                 }
             }
             else if(action === Types.Messages.MOVE) {
@@ -1174,7 +1166,8 @@ module.exports = Player = Character.extend({
           this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
-        this.broadcast(this.equip(itemKind), false);
+        this.send(this.equip(itemKind));
+        //this.broadcast(this.equip(itemKind), false);
     },
     handleInventoryWeaponAvatar: function(inventoryNumber){
         var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
@@ -1191,7 +1184,8 @@ module.exports = Player = Character.extend({
             this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
-        this.broadcast(this.equip(itemKind), false);
+        this.send(this.equip(itemKind));
+        //this.broadcast(this.equip(itemKind), false);
     },
     handleInventoryArmor: function(itemKind, inventoryNumber){
         if(!this.canEquipArmor(itemKind)){
@@ -1200,7 +1194,8 @@ module.exports = Player = Character.extend({
         this.inventory.setInventory(inventoryNumber, this.armor, 0, 0, 0);
         this.equipItem(itemKind, 0, 0, 0, false);
         if(!this.avatar){
-            this.broadcast(this.equip(itemKind), false);
+            this.send(this.equip(itemKind));
+            //this.broadcast(this.equip(itemKind), false);
         }
     },
     handleInventoryWeapon: function(itemKind, inventoryNumber){
@@ -1220,7 +1215,8 @@ module.exports = Player = Character.extend({
         this.equipItem(itemKind, enchantedPoint, weaponSkillKind, weaponSkillLevel, false);
         this.setAbility();
         if(!this.weaponAvatar){
-            this.broadcast(this.equip(itemKind), false);
+            this.send(this.equip(itemKind));
+            //this.broadcast(this.equip(itemKind), false);
         }
     },
     handleInventoryPendant: function(itemKind, inventoryNumber){
@@ -1243,7 +1239,7 @@ module.exports = Player = Character.extend({
           this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, enchantedPoint, pendantSkillKind, pendantSkillLevel, false);
-        this.server.pushToPlayer(this, this.equip(itemKind));
+        this.server.pushToPlayer(this, this.equip(itemKind)); 
 
     },
     handleInventoryRing: function(itemKind, inventoryNumber){
