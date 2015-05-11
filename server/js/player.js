@@ -1166,7 +1166,6 @@ module.exports = Player = Character.extend({
           this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
-        //this.send(this.equip(itemKind));
         this.broadcast(this.equip(itemKind), false);
     },
     handleInventoryWeaponAvatar: function(inventoryNumber){
@@ -1184,7 +1183,6 @@ module.exports = Player = Character.extend({
             this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
-        //this.send(this.equip(itemKind));
         this.broadcast(this.equip(itemKind), false);
     },
     handleInventoryArmor: function(itemKind, inventoryNumber){
@@ -1194,7 +1192,6 @@ module.exports = Player = Character.extend({
         this.inventory.setInventory(inventoryNumber, this.armor, 0, 0, 0);
         this.equipItem(itemKind, 0, 0, 0, false);
         if(!this.avatar){
-            //this.send(this.equip(itemKind));
             this.broadcast(this.equip(itemKind), false);
         }
     },
@@ -1215,7 +1212,6 @@ module.exports = Player = Character.extend({
         this.equipItem(itemKind, enchantedPoint, weaponSkillKind, weaponSkillLevel, false);
         this.setAbility();
         if(!this.weaponAvatar){
-            //this.send(this.equip(itemKind));
             this.broadcast(this.equip(itemKind), false);
         }
     },
