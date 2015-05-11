@@ -200,7 +200,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 doubleExp = data.shift(),
                 expMultiplier = data.shift(),
                 membership = data.shift();
-        
+       
             var i=0;
             var questFound = [];
             var questProgress = [];

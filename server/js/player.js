@@ -999,9 +999,9 @@ module.exports = Player = Character.extend({
         self.admin = admin;
         //self.moderator = moderator;
         self.equipArmor(Types.getKindFromString(armor), armorEnchantedPoint, armorSkillKind, armorSkillLevel);
-        self.equipAvatar(Types.getKindFromString(avatar), avatarEnchantedPoint, avatarSkillKind, armorSkillLevel);
+        self.equipAvatar(null, avatarEnchantedPoint, avatarSkillKind, armorSkillLevel);
         self.equipWeapon(Types.getKindFromString(weapon), weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel);
-        self.equipWeaponAvatar(Types.getKindFromString(weaponAvatar), weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel);
+        self.equipWeaponAvatar(null, weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel);
         self.equipPendant(Types.getKindFromString(pendant), pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel);
         self.equipRing(Types.getKindFromString(ring), ringEnchantedPoint, ringSkillKind, ringSkillLevel);
         self.equipBoots(Types.getKindFromString(boots), bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel);

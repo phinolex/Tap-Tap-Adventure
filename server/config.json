@@ -10,8 +10,8 @@
     "redis_host": "127.0.0.1",
     "memcached_host": "127.0.0.1",
     "memcached_port": 11211,
-    "game_servers": [{"server": "localhost", "name": "localhost"}],
-    "server_name" : "localhost",
+    "game_servers": [{"server": "localhost", "name": "TTA1"}],
+    "server_name" : "TTA1",
     "production": "heroku",
     "database": "redis"
 }
