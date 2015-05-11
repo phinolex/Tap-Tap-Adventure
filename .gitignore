@@ -6,3 +6,4 @@
 /client/nbproject/private/
 /Learning/nbproject/private/
 *.js
+!/server/js/variations.js
