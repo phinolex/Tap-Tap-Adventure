@@ -174,10 +174,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 }
                                 client.hset("b:" + player.connection._connection.remoteAddress, "loginTime", curTime);
 
-                                if(player.name === pubTopName.toString()){
-                                    avatar = nextNewArmor;
-                                }
-
+                                
                                 var admin = null;
                                 var iA = 0; // Index - Administrators
                                 for(iA = 0; iA < adminnames.length; iA++){
@@ -199,6 +196,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 log.info("Player name: " + player.name);
                                 log.info("Armor: " + armor);
                                 log.info("Weapon: " + weapon);
+                                log.info("Weapon Avatar: " + weaponAvatar);
+                                log.info("Avatar: " + avatar)
                                 log.info("Experience: " + exp);
                                 log.info("Banned Time: " + (new Date(bannedTime)).toString());
                                 log.info("Ban Use Time: " + (new Date(banUseTime)).toString());
@@ -274,7 +273,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         } 
                         
                         player.sendWelcome(
-                            "clotharmor", "sword1", "clotharmor", "sword1", 0,
+                            "clotharmor", "sword1", null, null, 0,
                              null, 0, 0,
                              player.x, player.y, 0, 0,
                                      0, 0, 0,
@@ -283,7 +282,19 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                      0, 0, 0,
                                      null, 0, 0, 0,
                                      null, 0, 0, 0,
-                                     false, Types.Entities.WARRIOR);
+                                     null, 0, 0, 0,
+                                     false, 0, Types.Entities.WARRIOR);
+                       
+                                    /* player.sendWelcome(armor, weapon, avatar, weaponAvatar, exp, admin,
+                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank, 
+                                    armorEnchantedPoint, armorSkillKind, armorSkillLevel,
+                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel, 
+                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel, 
+                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
+                                    pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
+                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
+                                    boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
+                                    membershipTime, kind);*/
                         
                     });
                     

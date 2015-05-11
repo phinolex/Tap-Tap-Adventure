@@ -70,7 +70,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         },      
         switchArmor: function(armorName, sprite){
             this.setSpriteName(armorName);
-            this.setSprite(armorName);
+            this.setSprite(sprite);
             this.setArmorName(armorName);
             if(this.switch_callback) {
                 this.switch_callback();

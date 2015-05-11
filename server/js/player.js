@@ -491,7 +491,7 @@ module.exports = Player = Character.extend({
 
     getState: function() {
         var basestate = this._getBaseState(),
-            state = [this.name, this.orientation, this.armor, this.weapon, this.level];
+            state = [this.name, this.orientation, this.avatar ? this.avatar : this.armor, this.weaponAvatar ? this.weaponAvatar : this.weapon];
 
         if(this.target) {
             state.push(this.target);
@@ -709,18 +709,18 @@ module.exports = Player = Character.extend({
             log.debug(this.name + " equips " + Types.getKindAsString(itemKind));
             
             if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
-                if(isAvatar){
+                if(isAvatar) {
                     databaseHandler.equipAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
                     this.equipAvatar(itemKind, enchantedPoint, skillKind, skillLevel);
-                } else{
+                } else {
                     databaseHandler.equipArmor(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
                     this.equipArmor(itemKind, enchantedPoint, skillKind, skillLevel);
                 }
             } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
-                if(isAvatar){
+                if(isAvatar) {
                     databaseHandler.equipWeaponAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
                     this.equipWeaponAvatar(itemKind, enchantedPoint, skillKind, skillLevel);
-                } else{
+                } else {
                     databaseHandler.equipWeapon(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
                     this.equipWeapon(itemKind, enchantedPoint, skillKind, skillLevel);
                 }
@@ -1166,8 +1166,8 @@ module.exports = Player = Character.extend({
           this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
-        this.send(this.equip(itemKind));
-        //this.broadcast(this.equip(itemKind), false);
+        //this.send(this.equip(itemKind));
+        this.broadcast(this.equip(itemKind), false);
     },
     handleInventoryWeaponAvatar: function(inventoryNumber){
         var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
@@ -1184,8 +1184,8 @@ module.exports = Player = Character.extend({
             this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
-        this.send(this.equip(itemKind));
-        //this.broadcast(this.equip(itemKind), false);
+        //this.send(this.equip(itemKind));
+        this.broadcast(this.equip(itemKind), false);
     },
     handleInventoryArmor: function(itemKind, inventoryNumber){
         if(!this.canEquipArmor(itemKind)){
@@ -1194,8 +1194,8 @@ module.exports = Player = Character.extend({
         this.inventory.setInventory(inventoryNumber, this.armor, 0, 0, 0);
         this.equipItem(itemKind, 0, 0, 0, false);
         if(!this.avatar){
-            this.send(this.equip(itemKind));
-            //this.broadcast(this.equip(itemKind), false);
+            //this.send(this.equip(itemKind));
+            this.broadcast(this.equip(itemKind), false);
         }
     },
     handleInventoryWeapon: function(itemKind, inventoryNumber){
@@ -1215,8 +1215,8 @@ module.exports = Player = Character.extend({
         this.equipItem(itemKind, enchantedPoint, weaponSkillKind, weaponSkillLevel, false);
         this.setAbility();
         if(!this.weaponAvatar){
-            this.send(this.equip(itemKind));
-            //this.broadcast(this.equip(itemKind), false);
+            //this.send(this.equip(itemKind));
+            this.broadcast(this.equip(itemKind), false);
         }
     },
     handleInventoryPendant: function(itemKind, inventoryNumber){
