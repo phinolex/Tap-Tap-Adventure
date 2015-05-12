@@ -358,11 +358,34 @@ module.exports = World = cls.Class.extend({
             this.clearMobAggroLink(entity);
             this.clearMobHateLinks(entity);
         }
-
+        
+        entity.destroy();
         this.removeFromGroups(entity);
         log.debug("Removed "+ Types.getKindAsString(entity.kind) +" : "+ entity.id);
     },
+    samePlayerDisconnect: function(player){
+        var sameIpPlayerCount = 0;
+        for(var id in this.players) {
+            if(this.players[id].connection._connection.remoteAddress === player.connection._connection.remoteAddress
+            && this.players[id].name !== player.name){
 
+                if(player.connection._connection.remoteAddress === "192.35.39.67"
+                || player.connection._connection.remoteAddress === "112.161.25.194"){
+                    continue;
+                }
+                sameIpPlayerCount++;
+                if(sameIpPlayerCount > 1){
+                    this.players[id].connection.close("Same IP Player Logged In");
+                    continue;
+                }
+            }
+            if(this.players[id].name === player.name){
+                if(!this.players[id].isDead){
+                    this.players[id].connection.close("Same Player Logged In");
+                }
+            }
+        }
+    },
     
     addPlayer: function(player) {
         this.addEntity(player);
@@ -665,21 +688,19 @@ module.exports = World = cls.Class.extend({
     handlePlayerVanish: function(player) {
         var self = this,
             previousAttackers = [];
-            log.info("Handling player vanishment.");
+
         // When a player dies or teleports, all of his attackers go and attack their second most hated player.
         player.forEachAttacker(function(mob) {
-            log.info("Sending to second hated attacker");
             previousAttackers.push(mob);
             self.chooseMobTarget(mob, 2);
         });
-        
+
         _.each(previousAttackers, function(mob) {
-            log.info("Sending NPC to Spawn");
             player.removeAttacker(mob);
             mob.clearTarget();
             mob.forgetPlayer(player.id, 1000);
         });
-        
+
         this.handleEntityGroupMembership(player);
     },
 

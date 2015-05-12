@@ -491,7 +491,7 @@ module.exports = Player = Character.extend({
 
     getState: function() {
         var basestate = this._getBaseState(),
-            state = [this.name, this.orientation, this.avatar ? this.avatar : this.armor, this.weaponAvatar ? this.weaponAvatar : this.weapon];
+            state = [this.name, this.orientation, this.avatar ? this.avatar : this.armor, this.weaponAvatar ? this.weaponAvatar : this.weapon, this.level];
 
         if(this.target) {
             state.push(this.target);
@@ -581,14 +581,19 @@ module.exports = Player = Character.extend({
 
     equipArmor: function(kind, enchantedPoint, skillKind, skillLevel) {
         this.armor = kind;
+        this.avatar = kind;
         if(enchantedPoint){
             this.armorEnchantedPoint = enchantedPoint;
-        } else{
+            this.avatarEnchantedPoint = enchantedPoint;
+        } else {
             this.armorEnchantedPoint = 0;
+            this.avatarEnchantedPoint = 0;
         }
         this.armorLevel = Properties.getArmorLevel(kind) + this.armorEnchantedPoint;
         this.armorSkillKind = skillKind;
         this.armorSkillLevel = skillLevel;
+        this.avatarSkillKind = skillKind;
+        this.avatarSkillLevel = skillLevel;
     },
     equipAvatar: function(kind, enchantedPoint, skillKind, skillLevel) {
         if(kind){
@@ -610,36 +615,24 @@ module.exports = Player = Character.extend({
     },
     equipWeapon: function(kind, enchantedPoint, skillKind, skillLevel){
         this.weapon = kind;
+        this.weaponAvatar = kind;
         if(enchantedPoint){
             
             this.weaponEnchantedPoint = enchantedPoint;
-            
-        } else{
+            this.weaponAvatarEnchantedPoint = enchantedPoint;
+        } else {
             
             this.weaponEnchantedPoint = 0;
+            this.weaponAvatarEnchantedPoint = 0;
         }
         this.weaponLevel = Properties.getWeaponLevel(kind) + this.weaponEnchantedPoint;
         this.weaponSkillKind = skillKind;
         this.weaponSkillLevel = skillLevel;
+        this.weaponAvatarSkillKind = skillKind;
+        this.weaponAvatarSkillLevel = skillLevel;
     },
     equipWeaponAvatar: function(kind, enchantedPoint, skillKind, skillLevel){
-        if(kind){
-            this.weaponAvatar = kind;
-            if(enchantedPoint){
-                
-                this.weaponAvatarEnchantedPoint = enchantedPoint;
-            } else{
-                
-                this.weaponAvatarEnchantedPoint = 0;
-            }
-            this.weaponAvatarSkillKind = skillKind;
-            this.weaponAvatarSkillLevel = skillLevel;
-        } else{
-            this.weaponAvatar = null;
-            this.weaponAvatarEnchantedPoint = 0;
-            this.weaponAvatarSkillKind = 0;
-            this.weaponAvatarSkillLevel = 0;
-        }
+        
     },
     equipPendant: function(kind, enchantedPoint, skillKind, skillLevel) {
         if(kind) {
@@ -709,21 +702,16 @@ module.exports = Player = Character.extend({
             log.debug(this.name + " equips " + Types.getKindAsString(itemKind));
             
             if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
-                if(isAvatar) {
-                    databaseHandler.equipAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
-                    this.equipAvatar(itemKind, enchantedPoint, skillKind, skillLevel);
-                } else {
-                    databaseHandler.equipArmor(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
-                    this.equipArmor(itemKind, enchantedPoint, skillKind, skillLevel);
-                }
+                databaseHandler.equipAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
+                databaseHandler.equipArmor(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
+                this.equipArmor(itemKind, enchantedPoint, skillKind, skillLevel);
+                
             } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
-                if(isAvatar) {
-                    databaseHandler.equipWeaponAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
-                    this.equipWeaponAvatar(itemKind, enchantedPoint, skillKind, skillLevel);
-                } else {
-                    databaseHandler.equipWeapon(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
-                    this.equipWeapon(itemKind, enchantedPoint, skillKind, skillLevel);
-                }
+               
+                databaseHandler.equipWeaponAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
+                databaseHandler.equipWeapon(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
+                this.equipWeapon(itemKind, enchantedPoint, skillKind, skillLevel);
+               
             } else if(Types.isPendant(itemKind)) {
                 databaseHandler.equipPendant(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
                 this.equipPendant(itemKind, enchantedPoint, skillKind, skillLevel);
@@ -986,29 +974,25 @@ module.exports = Player = Character.extend({
     },
 
     sendWelcome: function(armor, weapon, avatar, weaponAvatar, exp, admin,
-                          bannedTime, banUseTime, x, y, chatBanEndTime, 
-                          armorEnchantedPoint, armorSkillKind, armorSkillLevel,
-                          avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel, 
-                          weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel, 
-                          weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
-                          pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
-                          ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
-                          boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership, membershipTime, kind) {
+                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank, 
+                                    armorEnchantedPoint, armorSkillKind, armorSkillLevel,
+                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel, 
+                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel, 
+                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
+                                    pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
+                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
+                                    boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
+                                    membershipTime, kind) {
         var self = this;
         self.kind = kind;
         self.admin = admin;
-        //self.moderator = moderator;
         self.equipArmor(Types.getKindFromString(armor), armorEnchantedPoint, armorSkillKind, armorSkillLevel);
-        self.equipAvatar(Types.getKindFromString(avatar), avatarEnchantedPoint, avatarSkillKind, armorSkillLevel);
         self.equipWeapon(Types.getKindFromString(weapon), weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel);
-        self.equipWeaponAvatar(Types.getKindFromString(weaponAvatar), weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel);
-        self.equipPendant(Types.getKindFromString(pendant), pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel);
-        self.equipRing(Types.getKindFromString(ring), ringEnchantedPoint, ringSkillKind, ringSkillLevel);
-        self.equipBoots(Types.getKindFromString(boots), bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel);
         self.membership = membership;
         self.bannedTime = bannedTime;
         self.banUseTime = banUseTime;
         self.membershipTime = membershipTime;
+        self.chatBanEndTime = chatBanEndTime;
         self.experience = exp;
         self.level = Types.getLevel(self.experience);
         self.orientation = Utils.randomOrientation;
@@ -1018,11 +1002,10 @@ module.exports = Player = Character.extend({
         } else {
             self.setPosition(x, y);
         }
-        self.chatBanEndTime = chatBanEndTime;
-
+        
         self.server.addPlayer(self);
         self.server.enter_callback(self);
-        databaseHandler.getAllInventory(this, function(maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels) {
+        databaseHandler.getAllInventory(self, function(maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels) {
             self.inventory = new Inventory(self, maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels);
             databaseHandler.loadQuest(self, function() {
                 var i = 0;
@@ -1033,10 +1016,10 @@ module.exports = Player = Character.extend({
                     self.x, //3
                     self.y, //4
                     self.hitPoints, //5
-                    armor, //6
-                    weapon, //7
-                    avatar, //8
-                    weaponAvatar, //9
+                    self.armor, //6
+                    self.weapon, //7
+                    self.avatar, //8
+                    self.weaponAvatar, //9
                     self.experience, //10
                     self.admin, //11
                     self.mana, //12
@@ -1046,6 +1029,10 @@ module.exports = Player = Character.extend({
                 ]; 
                 log.info("Sent Double EXP w/ value of: " + self.variations.doubleEXP);
                 log.info("Sent EXP Multiplier w/ value of: " + self.variations.expMultiplier);
+                log.info("Sent armor: " + self.armor + " sent weapon: " 
+                                        + self.weapon + " sent avatar: " 
+                                        + self.avatar + " sent weaponAvatar" 
+                                        + self.weaponAvatar);
             
                 for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){
                     sendMessage.push(self.achievement[i+1].found);
@@ -1179,7 +1166,7 @@ module.exports = Player = Character.extend({
         }
         if(this.weaponAvatar){
             this.inventory.setInventory(inventoryNumber, this.weaponAvatar, this.weaponAvatarEnchantedPoint, this.weaponAvatarSkillKind, this.weaponAvatarSkillLevel);
-        } else{
+        } else {
             this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
@@ -1191,9 +1178,9 @@ module.exports = Player = Character.extend({
         }
         this.inventory.setInventory(inventoryNumber, this.armor, 0, 0, 0);
         this.equipItem(itemKind, 0, 0, 0, false);
-        if(!this.avatar){
+        //if(!this.avatar){
             this.broadcast(this.equip(itemKind), false);
-        }
+        //}
     },
     handleInventoryWeapon: function(itemKind, inventoryNumber){
         
@@ -1211,9 +1198,9 @@ module.exports = Player = Character.extend({
 
         this.equipItem(itemKind, enchantedPoint, weaponSkillKind, weaponSkillLevel, false);
         this.setAbility();
-        if(!this.weaponAvatar){
+        //if(!this.weaponAvatar){
             this.broadcast(this.equip(itemKind), false);
-        }
+        //}
     },
     handleInventoryPendant: function(itemKind, inventoryNumber){
         if(!Types.isPendant(itemKind)) {
@@ -1285,7 +1272,7 @@ module.exports = Player = Character.extend({
         this.server.pushToPlayer(this, this.equip(itemKind));
     },
     handleInventoryEmpty: function(itemKind, inventoryNumber, count){
-        var item = this.server.addItem(this.server.createItem(itemKind, this.x, this.y));
+        var item = this.server.addItemFromChest(itemKind, this.x, this.y);
         if(Types.isHealingItem(item.kind)){
             if(count < 0){
                 count = 0;
@@ -1294,7 +1281,7 @@ module.exports = Player = Character.extend({
             }
             item.count = count;
         } else if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind) ||
-                  Types.isPendant(item.kind) || Types.isRing(item.kind) || Types.isBoots(item.kind)){
+                  Types.isPendant(item.kind) || Types.isRing(item.kind) || Types.isBoots(item.kind)) {
             item.count = this.inventory.rooms[inventoryNumber].itemNumber;
             item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
             item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
@@ -1302,6 +1289,7 @@ module.exports = Player = Character.extend({
 
         if(item.count >= 0) {
             this.server.pushToAdjacentGroups(this.group, new Messages.Drop(this, item));
+            //this.server.addItemFromChest(itemKind, this.x, this.y);
             this.server.handleItemDespawn(item);
 
             if(Types.isHealingItem(item.kind)) {
@@ -1309,7 +1297,7 @@ module.exports = Player = Character.extend({
             } else {
                 this.inventory.makeEmptyInventory(inventoryNumber);
             }
-        } else{
+        } else {
             this.server.removeEntity(item);
             this.inventory.makeEmptyInventory(inventoryNumber);
         }

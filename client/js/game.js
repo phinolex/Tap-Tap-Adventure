@@ -2147,7 +2147,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         $('#dropCount').val(this.inventoryHandler.inventoryCount[inventoryNumber]);
                         this.app.showDropDialog(inventoryNumber);
                     } else {
-                        this.client.sendInventory("empty", inventoryNumber, 0);
+                        this.client.sendInventory("empty", inventoryNumber, 1);
                         this.inventoryHandler.makeEmptyInventory(inventoryNumber);
                         this.camera.focusEntity(this.player);
                         this.resetZone();
@@ -2809,19 +2809,19 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var itemKind = this.inventoryHandler.inventory[inventoryNumber];
             
             if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)){
-                this.client.sendInventory("armor", inventoryNumber, 0);
+                this.client.sendInventory("armor", inventoryNumber, 1);
             } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)){
-                this.client.sendInventory("weapon", inventoryNumber, 0);
+                this.client.sendInventory("weapon", inventoryNumber, 1);
             } else if(Types.isPendant(itemKind)) {
-                this.client.sendInventory("pendant", inventoryNumber, 0);
+                this.client.sendInventory("pendant", inventoryNumber, 1);
             } else if(Types.isRing(itemKind)) {
-                this.client.sendInventory("ring", inventoryNumber, 0);
+                this.client.sendInventory("ring", inventoryNumber, 1);
             }
             
             this.menu.close();
         },
         avatar: function(inventoryNumber){
-            this.client.sendInventory("avatar", inventoryNumber, 0);
+            this.client.sendInventory("avatar", inventoryNumber, 1);
             this.audioManager.playSound("loot");
             this.menu.close();
         },
@@ -2829,32 +2829,32 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(this.inventoryHandler.inventory[inventoryNumber] === Types.Entities.ROYALAZALEA
             || this.player.hitPoints < this.player.maxHitPoints) {
                 if(this.inventoryHandler.decInventory(inventoryNumber)){
-                    this.client.sendInventory("eat", inventoryNumber, 0);
+                    this.client.sendInventory("eat", inventoryNumber, 1);
                     this.audioManager.playSound("heal");
                 }
             }
             this.menu.close();
         },
         enchantWeapon: function(inventoryNumber){
-            this.client.sendInventory("enchantweapon", inventoryNumber, 0);
+            this.client.sendInventory("enchantweapon", inventoryNumber, 1);
             this.menu.close();
         },
         enchantRing: function(inventoryNumber){
-            this.client.sendInventory("enchantring", inventoryNumber, 0);
+            this.client.sendInventory("enchantring", inventoryNumber, 1);
             this.menu.close();
         },
         enchantPendant: function(inventoryNumber){
-            this.client.sendInventory("enchantpendant", inventoryNumber, 0);
+            this.client.sendInventory("enchantpendant", inventoryNumber, 1);
             this.menu.close();
         },
         enchantBloodsucking: function(inventoryNumber){
-            this.client.sendInventory("enchantbloodsucking", inventoryNumber, 0);
+            this.client.sendInventory("enchantbloodsucking", inventoryNumber, 1);
             this.menu.close();
         },
         enchantArmor: function(inventoryNumber){
-            this.client.sendInventory("enchantarmor", inventoryNumber, 0);
+            this.client.sendInventory("enchantarmor", inventoryNumber, 1);
             this.menu.close();
-        },
+        }
 
     
     

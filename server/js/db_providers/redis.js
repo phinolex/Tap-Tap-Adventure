@@ -654,10 +654,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
     },
     equipWeaponAvatar: function(name, weapon, enchantedPoint, skillKind, skillLevel){
         log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
-        client.hset("u:" + name, "weapon", weapon);
-        client.hset("u:" + name, "weaponEnchantedPoint", enchantedPoint);
-        client.hset("u:" + name, "weaponSkillKind", skillKind);
-        client.hset("u:" + name, "weaponSkillLevel", skillLevel);
+        client.hset("u:" + name, "weaponAvatar", weapon);
+        client.hset("u:" + name, "weaponAvatarEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "weaponAvatarSkillKind", skillKind);
+        client.hset("u:" + name, "weaponAvatarSkillLevel", skillLevel);
     },
     takeOffAvatar: function(name){
         log.info("Take Off Avatar: " + name);
