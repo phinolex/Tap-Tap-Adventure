@@ -1,4 +1,4 @@
-/* global bootKind, _, exports, module */
+/* global bootKind, _, exports, module, Types */
 
 Types = {
     Quest: {
@@ -52,7 +52,28 @@ Types = {
         MEMBERSHIP: 44,
         FRIENDS: 45,
         IGNORES: 46,
-        LOBBY: 47
+        LOBBY: 47,
+        TRADE: 48,
+        TRADEINVALID: 49,
+        TRADEINVALIDTYPES: {
+            INVALIDKIND: 1,
+            UNKNOWNCOUNT: 2,
+            INVALIDLEVEL: 3,
+            UNTRADEABLE: 4
+        },
+        TRADESTATES: {
+            STARTED: 5,
+            INPROGRESS: 6,
+            PSENTREQUEST: 7,
+            OPSENTERQUEST: 8,
+            PACCEPTED: 9,
+            OPACCEPTED: 10,
+            PADDEDITEM: 11,
+            OPADDEDITEM: 12,
+            INVENTORYCOUNT: 13,
+            FINISHED: 14
+        },
+        TRADESCREEN: 50
     },
 
     Entities: {
