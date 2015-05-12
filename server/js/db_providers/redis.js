@@ -1122,6 +1122,11 @@ module.exports = DatabaseHandler = cls.Class.extend({
         });
       },
 
+
+    loadPlayerHighscores: function() {
+        //To be Handled.
+        
+    },
     writeReply: function(player, content, number){
       log.info("Write Reply: " + player.name + " " + content + " " + number);
       var self = this;

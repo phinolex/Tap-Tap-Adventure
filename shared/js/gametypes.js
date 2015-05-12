@@ -39,8 +39,8 @@ Types = {
         BOARDWRITE: 30,
         NOTIFY: 31,
         KUNG: 32,
-	QUEST: 33,
-	TALKTONPC: 34,
+	    QUEST: 33,
+	    TALKTONPC: 34,
         MAGIC: 36,
         MANA: 37,
         RANKING: 38,
@@ -49,7 +49,10 @@ Types = {
         SKILLINSTALL: 41,
         DOUBLE_EXP: 42,
         EXP_MULTIPLIER: 43,
-        MEMBERSHIP: 44
+        MEMBERSHIP: 44,
+        FRIENDS: 45,
+        IGNORES: 46,
+        LOBBY: 47
     },
 
     Entities: {

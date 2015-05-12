@@ -31,6 +31,10 @@ var cls = require("./lib/class"),
             }
             callback(results);
           });
+        },
+        
+        getPlayerPurchase: function(player) {
+            
         }
       
   });

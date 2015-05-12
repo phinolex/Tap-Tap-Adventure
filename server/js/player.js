@@ -33,6 +33,8 @@ module.exports = Player = Character.extend({
         this.haters = {};
         this.lastCheckpoint = null;
         this.formatChecker = new FormatChecker();
+        this.friends = {};
+        this.ignores = {};
         this.disconnectTimeout = null;
         this.inventory = null;
         this.pvpFlag = false;
