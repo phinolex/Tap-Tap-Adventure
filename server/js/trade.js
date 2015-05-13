@@ -14,16 +14,6 @@ module.exports = Trade = cls.Class.extend({
         this.currentState = null;
     },
     
-    startTradingProcess: function(player, otherPlayer) {
-        if (player.admin && player.name !== "Flavius") {
-            player.pushToPlayer(player)
-            return;
-        }
-        this.currentState = Types.Messages.INVENTORYSTATE.STARTED;
-        
-        otherPlayer.server.pushToPlayer(otherPlayer, Types.Messages.TRADESCREEN);
-        player.server.pushToPlayer(player, Types.Messages.TRADESCREEN);
-    },
     
     sendRequest: function(player, otherPlayer) {
         if ((this.otherPlayerSentRequest && this.currentPlayerSentRequest) || (this.currentPlayerSentRequest && this.otherPlayerSentRequest)) {
@@ -38,6 +28,18 @@ module.exports = Trade = cls.Class.extend({
         }
         log.info("An error has occured.");
     },
+    
+    startTradingProcess: function(player, otherPlayer) {
+        if (player.admin && player.name !== "Flavius") {
+            player.pushToPlayer(player)
+            return;
+        }
+        this.currentState = Types.Messages.INVENTORYSTATE.STARTED;
+        
+        otherPlayer.server.pushToPlayer(otherPlayer, Types.Messages.TRADESCREEN);
+        player.server.pushToPlayer(player, Types.Messages.TRADESCREEN);
+    },
+    
     
     
     addItemToTradeSession: function(itemKind, itemSkillLevel, itemSkillKind, itemCount, player, otherPlayer, inventoryNumber, playerCountChosen, otherPlayerChosenCount) {

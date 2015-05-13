@@ -67,7 +67,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "bootsSkillLevel")            // 42
                         .hget(userKey, "membership")                 // 43
                         .hget(userKey, "membershipTime")             // 44
-                        .hget(userKey, "kind")
+                        .hget(userKey, "membershipUseTime")          // 45
+                        .hget(userKey, "kind")                       // 46
                         
                         
                         
@@ -127,7 +128,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var bootsSkillLevel = Utils.NaN2Zero(replies[42]);
                             var membership = replies[43];
                             var membershipTime = replies[44];
-                            var kind = Utils.NaN2Zero(replies[45]) === 222 ? Types.Entities.ARCHER : Types.Entities.WARRIOR;
+                            var membershipUseTime = replies[45];
+                            var kind = Utils.NaN2Zero(replies[46]) === 222 ? Types.Entities.ARCHER : Types.Entities.WARRIOR;
                            
                             //var curTime = new Date();
                             //Check ban here
@@ -161,9 +163,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 var lastLoginTimeDate = new Date(lastLoginTime);
                                 
                                 client.sadd("adminname", "Flavius");
-                                //client.sadd("adminname", "AnonRobot");
-                                //client.sadd("adminname", "Paris");
-                                //client.sadd("moderators", "iEatRawMeat");
+                                
                                 // Check Ban
                                 d.setDate(d.getDate() - d.getDay());
                                 d.setHours(0, 0, 0);
