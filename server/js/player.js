@@ -16,7 +16,8 @@ var cls = require("./lib/class"),
     Inventory = require("./inventory"),
     Mob = require('./mob'),
     SkillHandler = require("./skillhandler"),
-    Variations = require('./variations');
+    Variations = require('./variations'),
+    Trade = require('./trade');
     
 
 module.exports = Player = Character.extend({
@@ -47,8 +48,7 @@ module.exports = Player = Character.extend({
         this.achievement = [];
         this.skillHandler = new SkillHandler();
         this.variations = new Variations();
-        this.membership = false;
-
+        this.membership = false;    
         this.chatBanEndTime = 0;
 
         this.connection.listen(function(message) {
@@ -223,6 +223,13 @@ module.exports = Player = Character.extend({
                         var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
                         if (targetPlayer) {
                             databaseHandler.demotePlayer(self, targetPlayer);
+                        }
+                        
+                    } else if (msg.startsWith("/sendrequest ")) {
+                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                        if (targetPlayer) {
+                            this.trade = new Trade(self, targetPlayer);
+                            this.trade.sendRequest(self, targetPlayer);
                         }
                         
                     } else {
@@ -999,6 +1006,8 @@ module.exports = Player = Character.extend({
         self.level = Types.getLevel(self.experience);
         self.orientation = Utils.randomOrientation;
         self.updateHitPoints();
+        
+        /*player, otherPlayer, itemKind, itemSkillKind, itemSkillLevel, itemCount, newPlayer*/
         if(x === 0 && y === 0) {
             self.updatePosition();
         } else {

@@ -4,14 +4,14 @@ var cls = require("./lib/class"),
 /* global Trade, log */
 
 module.exports = Trade = cls.Class.extend({
-    init: function(player, otherPlayer, itemKind, itemSkillKind, itemSkillLevel, itemCount, newPlayer) {
+    init: function(player, otherPlayer) {
         this.player = player;
         this.otherPlayer = otherPlayer;
-        this.itemKind = itemKind;
+        /*this.itemKind = itemKind;
         this.itemSkillKind = itemSkillKind;
         this.itemSkillLevel = itemSkillLevel;
         this.itemCount = itemCount;
-        this.newPlayer = newPlayer;
+        this.newPlayer = newPlayer;*/
         
         this.otherPlayerSentRequest = false;
         this.currentPlayerSentRequest = false;
@@ -24,7 +24,7 @@ module.exports = Trade = cls.Class.extend({
             this.player.send([Types.Messages.NOTIFY, "You can only trade after 24 hours."]);
             return;
         }
-        if (player.admin && player.name != "Flavius") {
+        if (player.admin && player.name !== "Flavius") {
             this.player.send([Types.Messages.NOTIFY, "Administrators are restricted to trading."]);
             return;
         }
@@ -40,24 +40,15 @@ module.exports = Trade = cls.Class.extend({
             return;
         }
         if (player && otherPlayer) {
-            player.server.pushToPlayer(otherPlayer, Types.Messages.TRADESTATE.PSENTREQUEST);
+            otherPlayer.server.pushToPlayer(otherPlayer, Types.Messages.NOTIFY, player.name + " has requested to trade you.");
+            player.server.pushToPlayer(player, Types.Messages.NOTIFY, "Trade request has been sent to " + otherPlayer.name);
+            this.currentPlayerSentRequest = true;
+            
             return;
         }
         log.info("An error has occured.");
     },
     
-    receiveRequest: function(player, otherPlayer) {
-        if ((this.otherPlayerSentRequest && this.currentPlayerSentRequest) || (this.currentPlayerSentRequest && this.otherPlayerSentRequest)) {
-            this.startTradingProcess(player, otherPlayer);
-            return;
-        }
-        
-        if (player && otherPlayer) {
-            otherPlayer.server.pushToPlayer(player, Types.Messages.TRADESTATE.OPSENTREQUEST);
-            return;
-        }
-        log.info("An error has occured.");
-    },
     
     addItemToTradeSession: function(itemKind, itemSkillLevel, itemSkillKind, itemCount, player, otherPlayer, inventoryNumber, playerCountChosen, otherPlayerChosenCount) {
         for(var iRooms = 0; iRooms < player.inventory.rooms; iRooms++) {
@@ -75,9 +66,9 @@ module.exports = Trade = cls.Class.extend({
                 
             }
         }
-    },
+    }, 
     
-    removeItemFromTradeSession: function(itemKind, itemSkillLevel, itemSkillKind, itemCount, player, ) {
+    removeItemFromTradeSession: function(itemKind, itemSkillLevel, itemSkillKind, itemCount, player, otherPlayer) {
         
     }
     

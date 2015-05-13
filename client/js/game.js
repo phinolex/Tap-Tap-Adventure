@@ -2142,17 +2142,17 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         this.equip(inventoryNumber);
                         return;
                     }
-                } else if(clickedMenu === 1){
+                } else if(clickedMenu === 1) {
+                    this.menu.close();
                     if(Types.isHealingItem(itemKind) && (this.inventoryHandler.inventoryCount[inventoryNumber] > 1)) {
                         $('#dropCount').val(this.inventoryHandler.inventoryCount[inventoryNumber]);
                         this.app.showDropDialog(inventoryNumber);
                     } else {
                         this.client.sendInventory("empty", inventoryNumber, 1);
                         this.inventoryHandler.makeEmptyInventory(inventoryNumber);
-                        this.camera.focusEntity(this.player);
-                        this.resetZone();
+                        
                     }
-                    this.menu.close();
+                    
                     return;
                 } else{
                     this.menu.close();

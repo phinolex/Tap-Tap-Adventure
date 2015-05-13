@@ -59,7 +59,8 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
 
                       $('#inventorybackground' + inventoryNumber).attr('class', 'empty');
                   }
-                  var scale = this.game.renderer.getScaleFactor();
+                  var scale = this.game.renderer.scale;
+                  
                   $('#inventory' + inventoryNumber).css('background-image', "url('img/" + scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
                   $('#inventory' + inventoryNumber).attr('title', Item.getInfoMsgEx(itemKind, number, itemSkillKind, itemSkillLevel));
                   $('#sellInventory' + inventoryNumber).css('background-image', "url('img/" + scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
@@ -73,6 +74,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
             this.inventories[inventoryNumber].skillLevel = itemSkillLevel ? itemSkillLevel : 0;
 
         },
+
         setMaxInventoryNumber: function(maxInventoryNumber){
             var i = 0;
             this.maxInventoryNumber = maxInventoryNumber;
