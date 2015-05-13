@@ -1,5 +1,7 @@
 var cls = require("./lib/class"),
-    Types = require("../../shared/js/gametypes");
+    Types = require("../../shared/js/gametypes"),
+    RequestHandler = require("./requesthandler"),
+    Messages = require("./message");
 
 /* global Trade, log */
 
@@ -7,25 +9,14 @@ module.exports = Trade = cls.Class.extend({
     init: function(player, otherPlayer) {
         this.player = player;
         this.otherPlayer = otherPlayer;
-        /*this.itemKind = itemKind;
-        this.itemSkillKind = itemSkillKind;
-        this.itemSkillLevel = itemSkillLevel;
-        this.itemCount = itemCount;
-        this.newPlayer = newPlayer;*/
-        
-        this.otherPlayerSentRequest = false;
-        this.currentPlayerSentRequest = false;
+        this.requestAssistant = new RequestHandler(player, otherPlayer);
         this.items = {};
         this.currentState = null;
     },
     
     startTradingProcess: function(player, otherPlayer) {
-        if (this.newPlayer) {
-            this.player.send([Types.Messages.NOTIFY, "You can only trade after 24 hours."]);
-            return;
-        }
         if (player.admin && player.name !== "Flavius") {
-            this.player.send([Types.Messages.NOTIFY, "Administrators are restricted to trading."]);
+            player.pushToPlayer(player)
             return;
         }
         this.currentState = Types.Messages.INVENTORYSTATE.STARTED;
@@ -40,10 +31,9 @@ module.exports = Trade = cls.Class.extend({
             return;
         }
         if (player && otherPlayer) {
-            otherPlayer.server.pushToPlayer(otherPlayer, Types.Messages.NOTIFY, player.name + " has requested to trade you.");
-            player.server.pushToPlayer(player, Types.Messages.NOTIFY, "Trade request has been sent to " + otherPlayer.name);
+            player.server.pushToPlayer(player, new Messages.Notify("You requested a trade with " + otherPlayer.name + "."));
+            otherPlayer.server.pushToPlayer(otherPlayer, new Messages.Notify(player.name + " has requested to trade you."))
             this.currentPlayerSentRequest = true;
-            
             return;
         }
         log.info("An error has occured.");

@@ -11,7 +11,6 @@ function(Camera, Item, Character, Player, Timer) {
             this.foreground = (foreground && foreground.getContext) ? foreground.getContext("2d") : null;
             this.textcontext = (textcanvas && textcanvas.getContext) ? textcanvas.getContext("2d") : null;
             this.toptextcontext = (toptextcanvas && toptextcanvas.getContext) ? toptextcanvas.getContext("2d") : null;
-
             this.canvas = canvas;
             this.backcanvas = background;
             this.forecanvas = foreground;
@@ -19,34 +18,28 @@ function(Camera, Item, Character, Player, Timer) {
             this.toptextcanvas = toptextcanvas;
             this.initFPS();
             this.tilesize = 16;
-            
-
+            this.enableExperimentalCanvas = this.game.trigger.showExperimentalCanvas;
             this.upscaledRendering = this.context.mozImageSmoothingEnabled !== undefined;
             this.supportsSilhouettes = this.upscaledRendering;
-
             this.rescale(this.getScaleFactor());
-
             this.lastTime = new Date();
             this.frameCount = 0;
             this.maxFPS = this.FPS;
             this.realFPS = 0;
             //Turn on or off Debuginfo (FPS Counter)
             this.isDebugInfoVisible = false;
-
             this.animatedTileCount = 0;
             this.highTileCount = 0;
-
             this.tablet = Detect.isTablet(window.innerWidth);
-
             this.fixFlickeringTimer = new Timer(100);
         },
 
         getWidth: function() {
-            return this.toptextcanvas.width;
+            return this.enableExperimentalCanvas ? this.toptextcanvas.width : this.canvas.width;
         },
 
         getHeight: function() {
-            return this.toptextcanvas.height;
+            return  this.enableExperimentalCanvas ? this.toptextcanvas.height : this.canvas.height;
         },
 
         setTileset: function(tileset) {
@@ -111,7 +104,7 @@ function(Camera, Item, Character, Player, Timer) {
             this.forecanvas.width = this.canvas.width;
             this.forecanvas.height = this.canvas.height;
             log.debug("#foreground set to "+this.forecanvas.width+" x "+this.forecanvas.height);
-        
+            
             this.textcanvas.width = this.camera.gridW * this.tilesize * this.scale;
             this.textcanvas.height = this.camera.gridH * this.tilesize * this.scale;
             log.debug("#textcontext set to " + this.textcanvas.width + " x " + this.textcanvas.height);
@@ -938,7 +931,7 @@ function(Camera, Item, Character, Player, Timer) {
                 this.context.fillRect(0, 0, 0, 0);
                 this.foreground.fillRect(0, 0, 0, 0);
                 this.textcontext.fillRect(0, 0, 0, 0);
-		this.toptextcontext.fillRect(0, 0, 0, 0);
+		        this.toptextcontext.fillRect(0, 0, 0, 0);
             }
         }
     });

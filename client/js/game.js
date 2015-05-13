@@ -6,13 +6,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'questhandler',
-        'partyhandler', 'rankinghandler', 'inventoryhandler',
+        'partyhandler', 'rankinghandler', 'inventoryhandler', 'bools',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
-         ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler, InventoryHandler) {
+         ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler, InventoryHandler, Bools) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -83,7 +83,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.partyhandler = new PartyHandler(this);
             this.rankingHandler = new RankingHandler(this);
             this.inventoryHandler = new InventoryHandler(this);
-
+            this.trigger = new Bools(this);
+            
+            
             // TextWindow Handler
             //this.textWindowHandler = new TextWindowHandler();
 

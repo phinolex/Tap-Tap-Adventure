@@ -3,16 +3,17 @@ var Metrics = require('./metrics');
 var ProductionConfig = require('./productionconfig');
 var _ = require('underscore');
 
+/* global log, Player, databaseHandler */
 
 function main(config) {
     var Log = require('log');
     switch(config.debug_level) {
         case "error":
-            log = new Log(Log.ERROR); break;
         case "debug":
-            log = new Log(Log.DEBUG); break;
         case "info":
             log = new Log(Log.INFO); break;
+            log = new Log(Log.DEBUG); break;
+            log = new Log(Log.ERROR); break;
     };
 
     var production_config = new ProductionConfig(config);

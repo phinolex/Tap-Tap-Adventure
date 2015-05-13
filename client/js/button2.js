@@ -1,6 +1,6 @@
 define(function() {
     function isUndefined(value) {
-
+      
         return (typeof value) == 'undefined';
     }
 
@@ -10,20 +10,20 @@ define(function() {
     }
 
     function assign(target, source1, source2, items) {
-      var index, item;
-      for(index = 0; index < items.length; index++) {
-        item = items[index];
-        if(isObject(source1) && !isUndefined(source1[item])) {
-          target[item] = source1[item];
-        } else if(isObject(source2) && !isUndefined(source2[item])) {
-          target[item] = source2[item];
+        var index, item;
+        for(index = 0; index < items.length; index++) {
+            item = items[index];
+            if(isObject(source1) && !isUndefined(source1[item])) {
+                target[item] = source1[item];
+            } else if(isObject(source2) && !isUndefined(source2[item])) {
+                target[item] = source2[item];
+            }
         }
-      }
     }
 
     function indexOf(array_, value, default_) {
-      var result = array_.indexOf(value);
-      return result >= 0 ? result : default_;
+        var result = array_.indexOf(value);
+        return result >= 0 ? result : default_;
     }
 
     var Button2 = Class.extend({
