@@ -7,5 +7,5 @@
 /Learning/nbproject/private/
 *.js
 !/server/js/variations.js
-!/client/js/dialog.js
 *.js
+!/client/js/dialog.js

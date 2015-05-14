@@ -83,8 +83,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.partyhandler = new PartyHandler(this);
             this.rankingHandler = new RankingHandler(this);
             this.inventoryHandler = new InventoryHandler(this);
-            this.trigger = new Bools(this);
-            
             
             // TextWindow Handler
             //this.textWindowHandler = new TextWindowHandler();

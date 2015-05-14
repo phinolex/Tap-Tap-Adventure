@@ -619,6 +619,7 @@ js/partyhandler.js
 js/rankinghandler.js
 js/button2.js
 js/inventoryhandler.js
+js/bools.js
 js/../../shared/js/gametypes.js
 js/game.js
 

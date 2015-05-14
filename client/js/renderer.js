@@ -6,19 +6,22 @@ function(Camera, Item, Character, Player, Timer) {
     var Renderer = Class.extend({
         init: function(game, canvas, background, foreground, textcanvas, toptextcanvas) {
             this.game = game;
+            
             this.context = (canvas && canvas.getContext) ? canvas.getContext("2d") : null;
             this.background = (background && background.getContext) ? background.getContext("2d") : null;
             this.foreground = (foreground && foreground.getContext) ? foreground.getContext("2d") : null;
             this.textcontext = (textcanvas && textcanvas.getContext) ? textcanvas.getContext("2d") : null;
             this.toptextcontext = (toptextcanvas && toptextcanvas.getContext) ? toptextcanvas.getContext("2d") : null;
+            
             this.canvas = canvas;
             this.backcanvas = background;
             this.forecanvas = foreground;
             this.textcanvas = textcanvas;
             this.toptextcanvas = toptextcanvas;
+            
             this.initFPS();
             this.tilesize = 16;
-            this.enableExperimentalCanvas = this.game.trigger.showExperimentalCanvas;
+            
             this.upscaledRendering = this.context.mozImageSmoothingEnabled !== undefined;
             this.supportsSilhouettes = this.upscaledRendering;
             this.rescale(this.getScaleFactor());
@@ -26,6 +29,7 @@ function(Camera, Item, Character, Player, Timer) {
             this.frameCount = 0;
             this.maxFPS = this.FPS;
             this.realFPS = 0;
+            
             //Turn on or off Debuginfo (FPS Counter)
             this.isDebugInfoVisible = false;
             this.animatedTileCount = 0;
@@ -35,11 +39,11 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         getWidth: function() {
-            return this.enableExperimentalCanvas ? this.toptextcanvas.width : this.canvas.width;
+            return this.toptextcanvas.width;
         },
 
         getHeight: function() {
-            return  this.enableExperimentalCanvas ? this.toptextcanvas.height : this.canvas.height;
+            return this.toptextcanvas.height;
         },
 
         setTileset: function(tileset) {
