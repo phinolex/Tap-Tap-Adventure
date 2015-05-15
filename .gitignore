@@ -9,3 +9,4 @@
 !/server/js/variations.js
 *.js
 !/client/js/dialog.js
+*.css
