@@ -6,13 +6,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'questhandler',
-        'partyhandler', 'rankinghandler', 'inventoryhandler', 'bools',
+        'partyhandler', 'rankinghandler', 'inventoryhandler', 'bools', 'iteminfodialog',
+        'characterdialog',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
-         ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler, InventoryHandler, Bools) {
+         ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler, 
+         InventoryHandler, Bools, ItemInfoDialog, CharacterDialog) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -73,7 +75,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         
             // combat
             this.infoManager = new InfoManager(this);
-
             this.questhandler = new QuestHandler(this);
             this.kkhandler = new KkHandler();
             this.chathandler = new ChatHandler(this, this.kkhandler);
@@ -106,8 +107,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.pvpFlag = false;
             //
             this.dialogs = new Array();
-            //this.itemInfoDialog = new ItemInfoDialog(this);
-            //this.dialogs.push(this.itemInfoDialog);
+            this.characterDialog = new CharacterDialog(this);
+            this.dialogs.push(this.characterDialog);
+            
+            this.itemInfoDialog = new ItemInfoDialog(this);
+            this.dialogs.push(this.itemInfoDialog);
             
             //New Stuff
 
@@ -1044,7 +1048,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                 self.player.onDeath(function() {
                     log.info(self.playerId + " is dead");
-
+                    self.player.skillHandler.clear();
                     self.player.stopBlinking();
                     self.player.setSprite(self.sprites["death"]);
                     self.player.animate("death", 120, 1, function() {
@@ -1568,6 +1572,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
                 self.client.onKung(function(msg){
                     self.kkhandler.add(msg, self.player);
+                });
+                self.client.onSkillInstall(function(datas) {
+                    self.player.skillHandler.install(datas[0], datas[1]);
+                });
+                self.client.onCharacterInfo(function(datas) {
+                    self.characterDialog.show(datas);
                 });
                 self.client.onRanking(function(message){
                   self.rankingHandler.handleRanking(message);

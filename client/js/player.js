@@ -8,10 +8,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
             this.name = name;
             this.pw = pw;
-            if(game) {
-                
-                this.skillHandler = new SkillHandler(game);
-            }
+            //this.skillHandler = new SkillHandler(game);
 
             // Renderer
             this.nameOffsetY = -10;

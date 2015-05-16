@@ -51,6 +51,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.DOUBLE_EXP] = this.receiveDoubleEXP;
             this.handlers[Types.Messages.EXP_MULTIPLIER] = this.receiveEXPMultiplier;
             this.handlers[Types.Messages.MEMBERSHIP] = this.receiveMembership;
+            this.handlers[Types.Messages.SKILL] = this.receiveSkill;
+            this.handlers[Types.Messages.SKILLINSTALL] = this.receiveSkillInstall;
+            this.handlers[Types.Messages.CHARACTERINFO] = this.receiveCharacterInfo;
             this.useBison = false;
            
             this.enable();
@@ -199,7 +202,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 mana = data.shift(),
                 doubleExp = data.shift(),
                 expMultiplier = data.shift(),
-                membership = data.shift();
+                membership = data.shift(),
+                kind = data.shift();
        
             var i=0;
             var questFound = [];
@@ -526,8 +530,24 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.membership_callback(msg);
             }
         },
-        
-        
+        receiveSkill: function(data){
+            data.shift();
+            if(this.skill_callback){
+                this.skill_callback(data);
+            }
+        },
+        receiveSkillInstall: function(data) {
+            if(this.skillInstall_callback) {
+                data.shift();
+                this.skillInstall_callback(data);
+            }
+        },
+        receiveCharacterInfo: function(data) {
+            if(this.characterInfo_callback) {
+                data.shift();
+                this.characterInfo_callback(data);
+            }
+        },
         onDispatched: function(callback) {
             this.dispatched_callback = callback;
         },
@@ -661,6 +681,15 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onMembership: function(callback) {
             this.membership_callback = callback;
         },
+        onSkill: function (callback) { 
+            this.skill_callback = callback; 
+        },
+        onSkillInstall: function(callback) {
+            this.skillInstall_callback = callback; 
+        },
+        onCharacterInfo: function(callback) {
+            this.characterInfo_callback = callback; 
+        },
                 
 
         sendCreate: function(player) {
@@ -768,16 +797,16 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                               word]);
         },
         sendRanking: function(command){
-            this.sendMessage([Types.Messages.RANKING,
-                              command]);
+            
+            this.sendMessage([Types.Messages.RANKING, command]);
         },
         sendQuest: function(id, type){
-            this.sendMessage([Types.Messages.QUEST,
-                              id, type]);
+            
+            this.sendMessage([Types.Messages.QUEST, id, type]);
         },
         sendInventory: function(type, inventoryNumber, count){
-            this.sendMessage([Types.Messages.INVENTORY,
-                              type, inventoryNumber, count]);
+            
+            this.sendMessage([Types.Messages.INVENTORY, type, inventoryNumber, count]);
         },
         sendDoubleEXP: function(enabled) {
             
@@ -790,6 +819,17 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         sendMembership: function(hasMembership) {
             
             this.sendMessage([Types.Messages.MEMBERSHIP, hasMembership]);
+        },
+        sendSkill: function(type, targetId){
+            
+            this.sendMessage([Types.Messages.SKILL, type, targetId]);
+        },
+        sendSkillInstall: function(index, name) {
+            
+            this.sendMessage([Types.Messages.SKILLINSTALL, index, name]);
+        },
+        sendCharacterInfo: function() {
+          this.sendMessage([Types.Messages.CHARACTERINFO]);
         }
         
     });

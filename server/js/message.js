@@ -8,6 +8,7 @@ module.exports = Messages;
 var Message = cls.Class.extend({
 });
 
+
 Messages.Spawn = Message.extend({
     init: function (entity) {
         this.entity = entity;
@@ -182,6 +183,45 @@ Messages.Damage = Message.extend({
                 this.maxHitPoints];
     }
 });
+
+
+
+Messages.CharacterInfo = Message.extend({
+    init: function(player) {
+        this.player = player;
+    },
+    serialize: function() {
+      return [Types.Messages.CHARACTERINFO,
+            this.player.kind,                 // 0
+            this.player.armor,                // 1
+            this.player.armorEnchantedPoint,  // 2
+            this.player.avatar,               // 3
+            this.player.weapon,               // 4
+            this.player.weaponEnchantedPoint, // 5
+            this.player.weaponSkillKind,      // 6
+            this.player.weaponSkillLevel,     // 7
+            this.player.weaponAvatar,         // 8
+            this.player.pendant,              // 9
+            this.player.pendantEnchantedPoint,// 10
+            this.player.pendantSkillKind,     // 11
+            this.player.pendantSkillLevel,    // 12
+            this.player.ring,                 // 13
+            this.player.ringEnchantedPoint,   // 14
+            this.player.ringSkillKind,        // 15
+            this.player.ringSkillLevel,       // 16
+            this.player.boots,                // 17
+            this.player.bootsEnchantedPoint,  // 18
+            this.player.bootsSkillKind,       // 19
+            this.player.bootsSkillLevel,      // 20
+            this.player.experience,           // 21
+            this.player.level,                // 22
+            this.player.maxHitPoints,         // 23
+            this.player.hitPoints,            // 24
+            this.player.admin];
+    }
+});
+
+
 Messages.Inventory = Message.extend({
   init: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
     this.inventoryNumber = inventoryNumber;

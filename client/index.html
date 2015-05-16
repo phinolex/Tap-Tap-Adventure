@@ -14,7 +14,7 @@
         
         <link rel="stylesheet" href="css/main.css" type="text/css">
         <link rel="stylesheet" href="css/basebar.css" type="text/css">  
-        <link rel="stylesheet" href="css/gamescreen.css" type="text/css">
+        <link rel="stylesheet" href="css/characterdialog.css" type="text/css">
         <link rel="stylesheet" href="css/quest.css" type="text/css">
 
         <link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
@@ -190,9 +190,9 @@
                         <canvas id="textcanvas"></canvas>
                         <canvas id="foreground"></canvas>
                         <canvas id="toptextcanvas" class="clickable"></canvas>
-                        
-                        
                     </div>
+                    
+                    
                     <div id="bubbles"></div>
                     <div id="chatLog"></div> 
                     <div id="questalarm"></div>
@@ -201,15 +201,20 @@
                             <input id="chatinput" class="gp" type="text" maxlength="60">
                         </form>
                     </div>
+                    <div id="target">
+                        <div class="headshot"><div></div></div>
+                        <div class="details">
+                            <div class="name"></div>
+                            <div class="health"></div>
+                        </div>
+                    </div>
                     <div id="inspector">
-                            <div class="headshot"><div> </div></div>
-                            <div class="details">
-                                <div class="name"></div>
-                                <div class="level"></div>
-                                <div class="health"></div>
-                            </div>
-
-                        </div>            
+                        <div class="headshot"><div> </div></div>
+                        <div class="details">
+                            <div class="name"></div>
+                            <div class="health"></div>
+                        </div>
+                    </div>           
                     <div id="dropDialog">
                             <div id="dropTitle">Input drop count.</div>
                             <div align="center">
@@ -218,6 +223,7 @@
                                 <span id="dropCancel">&nbsp;Cancel&nbsp;</span>
                             </div>
                     </div>
+                    <div id="iteminfo"></div>
                     <div id="basebarcontainer">
                             <div id="hpcontainer">
                                 <div id="health"> </div>
@@ -307,8 +313,147 @@
                             <div id="soundbutton"></div>
                             <div id="fps">FPS: 60</div>
     			</div>
-                 
+                    <div id="characterDialog">
+                        <div id="characterDialogFrame">
+                            <div id="characterDialogFrameStatePage">
+                                <div id="characterName">characterName</div>
+                                <div id="characterLevel">characterLevel</div>
+                                <div id="characterExp">characterExp</div>
+                                <div id="characterItemPendant"></div>
+                                <div id="characterItemWeapon"></div>
+                                <div id="characterItemArmor"></div>
+                                <div id="characterItemRing"></div>
+                                <div id="characterItemBoots"></div>
+                                <div id="characterLook">
+                                    <div id="characterLookShadow"></div>
+                                    <div id="characterLookArmor"></div>
+                                    <div id="characterLookWeapon"></div>
+                                </div>
+                            </div>
+                            <div id="characterDialogFrameSkillPage">
+                                <div id="characterSkill10">
+                                  <div id="characterSkill10Body"></div>
+                                  <div id="characterSkill10Level1"></div>
+                                  <div id="characterSkill10Level2"></div>
+                                  <div id="characterSkill10Level3"></div>
+                                  <div id="characterSkill10Level4"></div>
+                                </div>
+                                <div id="characterSkill11">
+                                  <div id="characterSkill11Body"></div>
+                                  <div id="characterSkill11Level1"></div>
+                                  <div id="characterSkill11Level2"></div>
+                                  <div id="characterSkill11Level3"></div>
+                                  <div id="characterSkill11Level4"></div>
+                                </div>
+                                <div id="characterSkill12">
+                                  <div id="characterSkill12Body"></div>
+                                  <div id="characterSkill12Level1"></div>
+                                  <div id="characterSkill12Level2"></div>
+                                  <div id="characterSkill12Level3"></div>
+                                  <div id="characterSkill12Level4"></div>
+                                </div>
+                                <div id="characterSkill13">
+                                  <div id="characterSkill13Body"></div>
+                                  <div id="characterSkill13Level1"></div>
+                                  <div id="characterSkill13Level2"></div>
+                                  <div id="characterSkill13Level3"></div>
+                                  <div id="characterSkill13Level4"></div>
+                                </div>
+                                <div id="characterSkill14">
+                                  <div id="characterSkill14Body"></div>
+                                  <div id="characterSkill14Level1"></div>
+                                  <div id="characterSkill14Level2"></div>
+                                  <div id="characterSkill14Level3"></div>
+                                  <div id="characterSkill14Level4"></div>
+                                </div>
+                                <div id="characterSkill15">
+                                  <div id="characterSkill15Body"></div>
+                                  <div id="characterSkill15Level1"></div>
+                                  <div id="characterSkill15Level2"></div>
+                                  <div id="characterSkill15Level3"></div>
+                                  <div id="characterSkill15Level4"></div>
+                                </div>
+                                <div id="characterSkill16">
+                                  <div id="characterSkill16Body"></div>
+                                  <div id="characterSkill16Level1"></div>
+                                  <div id="characterSkill16Level2"></div>
+                                  <div id="characterSkill16Level3"></div>
+                                  <div id="characterSkill16Level4"></div>
+                                </div>
+                                <div id="characterSkill17">
+                                  <div id="characterSkill17Body"></div>
+                                  <div id="characterSkill17Level1"></div>
+                                  <div id="characterSkill17Level2"></div>
+                                  <div id="characterSkill17Level3"></div>
+                                  <div id="characterSkill17Level4"></div>
+                                </div>
+                                <div id="characterSkill20">
+                                  <div id="characterSkill20Body"></div>
+                                  <div id="characterSkill20Level1"></div>
+                                  <div id="characterSkill20Level2"></div>
+                                  <div id="characterSkill20Level3"></div>
+                                  <div id="characterSkill20Level4"></div>
+                                </div>
+                                <div id="characterSkill21">
+                                  <div id="characterSkill21Body"></div>
+                                  <div id="characterSkill21Level1"></div>
+                                  <div id="characterSkill21Level2"></div>
+                                  <div id="characterSkill21Level3"></div>
+                                  <div id="characterSkill21Level4"></div>
+                                </div>
+                                <div id="characterSkill22">
+                                  <div id="characterSkill22Body"></div>
+                                  <div id="characterSkill22Level1"></div>
+                                  <div id="characterSkill22Level2"></div>
+                                  <div id="characterSkill22Level3"></div>
+                                  <div id="characterSkill22Level4"></div>
+                                </div>
+                                <div id="characterSkill23">
+                                  <div id="characterSkill23Body"></div>
+                                  <div id="characterSkill23Level1"></div>
+                                  <div id="characterSkill23Level2"></div>
+                                  <div id="characterSkill23Level3"></div>
+                                  <div id="characterSkill23Level4"></div>
+                                </div>
+                                <div id="characterSkill24">
+                                  <div id="characterSkill24Body"></div>
+                                  <div id="characterSkill24Level1"></div>
+                                  <div id="characterSkill24Level2"></div>
+                                  <div id="characterSkill24Level3"></div>
+                                  <div id="characterSkill24Level4"></div>
+                                </div>
+                                <div id="characterSkill25">
+                                  <div id="characterSkill25Body"></div>
+                                  <div id="characterSkill25Level1"></div>
+                                  <div id="characterSkill25Level2"></div>
+                                  <div id="characterSkill25Level3"></div>
+                                  <div id="characterSkill25Level4"></div>
+                                </div>
+                                <div id="characterSkill26">
+                                  <div id="characterSkill26Body"></div>
+                                  <div id="characterSkill26Level1"></div>
+                                  <div id="characterSkill26Level2"></div>
+                                  <div id="characterSkill26Level3"></div>
+                                  <div id="characterSkill26Level4"></div>
+                                </div>
+                                <div id="characterSkill27">
+                                  <div id="characterSkill27Body"></div>
+                                  <div id="characterSkill27Level1"></div>
+                                  <div id="characterSkill27Level2"></div>
+                                  <div id="characterSkill27Level3"></div>
+                                  <div id="characterSkill27Level4"></div>
+                                </div>
+                            </div>
+                            <div id="characterDialogFramePageNavigator">
+                              <div id="characterDialogFramePageNavigatorMovePreviousButton"></div>
+                              <div id="characterDialogFramePageNavigatorMoveNextButton"></div>
+                            </div>
+                        </div>
+                    </div>
 	    </div>
+                
+                
+                
 	</div>
 
         <footer>

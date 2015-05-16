@@ -14,6 +14,31 @@ define(function() {
             this.flipSpriteY = false;
             this.animations = null;
             this.currentAnimation = null;
+            /*
+            
+            
+            this.criticalAnimation = new Animation("atk_down", 10, 0, 48, 48);
+            this.criticalAnimation.setSpeed(30);
+            this.criticalAnimation.setCount(1, function(){
+                self.isCritical = false;
+                self.criticalAnimation.reset();
+                self.criticalAnimation.count = 1;
+            });
+            this.isCritical = false;
+            this.healAnimation = new Animation("atk_down", 10, 0, 32, 32);
+            this.healAnimation.setSpeed(120);
+            this.healAnimation.setCount(1, function(){
+                self.isHeal = false;
+                self.healAnimation.reset();
+                self.healAnimation.count = 1;
+            });
+            this.stunAnimation = new Animation("atk_down", 6, 0, 48, 48);
+            this.stunAnimation.setSpeed(30);
+
+            this.isHeal = false;
+*/            
+            
+            
             this.shadowOffsetY = 0;
 
             // Position

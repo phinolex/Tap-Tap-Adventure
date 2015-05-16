@@ -620,6 +620,11 @@ js/rankinghandler.js
 js/button2.js
 js/inventoryhandler.js
 js/bools.js
+js/dialog.js
+js/iteminfodialog.js
+js/tabbook.js
+js/tabpage.js
+js/characterdialog.js
 js/../../shared/js/gametypes.js
 js/game.js
 

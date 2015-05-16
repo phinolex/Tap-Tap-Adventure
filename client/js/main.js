@@ -63,14 +63,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 }
             });
             
-            $('#helpbutton').click(function() {
-                if($('body').hasClass('about')) {
-                    app.closeInGameScroll('about');
-                    $('#helpbutton').removeClass('active');
-                } else {
-                    app.toggleScrollContent('about');
-                }
-            });
+            
 
 
             $('#instructions').click(function() {
@@ -177,7 +170,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
     };
 
     var initGame = function() {
-        require(['game'], function(Game) {
+        require(['game', 'button2'], function(Game, Button2) {
 
             var canvas = document.getElementById("entities"),
                 background = document.getElementById("background"),
@@ -324,7 +317,47 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 game.respawn();
                 $('body').removeClass('death');
             });
+            
+            
+            Button2.configure = {background: {top: 628, width: 28}, kinds: [0, 3, 2]};
 
+            this.characterButton = new Button2('#characterButton', {background: {left: 0}});
+            this.characterButton.onClick(function(sender, event) {
+                if(game && game.ready) {
+                    if(game.characterDialog.visible) {
+                        game.characterDialog.hide();
+                    } else {
+                        game.client.sendCharacterInfo();
+                    }
+                }
+            });
+            game.characterDialog.button = this.characterButton;
+
+            this.helpButton = new Button2('#helpbutton', {background: {left: 280}});
+            this.helpButton.onClick(function(sender, event) {
+                if(game && game.ready) {
+                    if(game.itemInfoDialog.visible) {
+                        
+                        game.itemInfoDialog.hide();
+                    } else {
+                        game.itemInfoDialog.show();
+                    }
+                }
+            });
+            game.itemInfoDialog.button = this.helpButton;
+
+            this.soundButton = new Button2('#soundbutton', {background: {left: 196}, downed: true});
+            this.soundButton.onClick(function(sender, event) {
+                if(game && game.ready) {
+                    if(game.audioManager.toggle()) {
+                        sender.down();
+                    } else {
+                        sender.up();
+                    }
+                }
+            });
+            
+            
             $(document).mousemove(function(event) {
                 app.setMouseCoordinates(event);
                 if(game.started) {

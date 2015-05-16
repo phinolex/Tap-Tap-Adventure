@@ -83,7 +83,7 @@ footer, header, hgroup, menu, nav, section {
 	
 	#background, #foreground, #textcanvas, #toptextcanvas { margin:0; padding:0;}
     
-       #canvas, #bubbles, #canvasborder, #foreground, #background, #textcanvas, #toptextcanvas, footer, #container {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
+       #canvas, #bubbles, #mainborder, #foreground, #background, #textcanvas, #toptextcanvas, footer, #container {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
     
     .started #canvas {cursor:none;}
     #toptextcanvas {
@@ -135,40 +135,7 @@ footer, header, hgroup, menu, nav, section {
       clear: both;
       width: 100%;
     }
-        #inspector {
-      font-family:'GraphicPixel';
-      color:#e3e3e3;
-      background-color:rgba(0, 0, 0, 0.43);
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      width: 140px;
-      margin-left: 0px;
-      padding: 4px;
-      display: none;
-      border-radius: 0 0 6px 0;
-   }
-    #inspector .details {
-      margin-bottom: 8px;
-      text-transform: capitalize;
-    }
-     #inspector .name {
-      margin-bottom: 8px;
-      text-transform: capitalize;
-    }
-
-   #inspector .level {
-      margin-bottom: 8px;
-      text-transform: capitalize;
-   }
-
-   #inspector .health {
-      height: 10px;
-      width: 100%;
-      background: red;
-      clear: left;
-      margin-top: 8px;
-    }
+        
     #dropDialog {
       font-family:'GraphicPixel';
       font-size: 9pt;
@@ -792,6 +759,93 @@ tr:hover {
 	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
             
             
+            #target{
+  font-family:'GraphicPixel';
+  color:#e3e3e3;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 140px;
+  margin-left: 0px;
+  padding: 4px;
+  background: rgba(45,45,45,0.8);
+  display: none;
+  border: 2px solid #000;
+  border-radius: 0 0 6px 0;
+  pointer-events: none;
+}
+#target .headshot {
+  float: left;
+  height: 32px;
+  width: 32px;
+  border: 2px solid #000;
+  margin-right: 3px;
+  background: #FFF;
+  overflow: hidden;
+}
+#target .headshot div {
+  position: relative;
+  top: 50%;
+  left: 50%;
+}
+#target .details {
+  float: left;
+  margin-bottom: 8px;
+  width: 100px;
+  text-transform: capitalize;
+}
+#target .name {
+  float: left;
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+#target .health {
+  float: left;
+  height: 10px;
+  width: 100%;
+  background: red;
+  clear: left;
+}
+#inspector {
+  font-family:'GraphicPixel';
+  color:#e3e3e3;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 140px;
+  margin-left: -70px;
+  padding: 4px;
+  background: rgba(45,45,45,0.8);
+  display: none;
+  border-radius: 0 0 6px 6px;
+  pointer-events: none;
+}
+#inspector .headshot {
+  float: left;
+  height: 32px;
+  width: 32px;
+  border: 2px solid #000;
+  margin-right: 3px;
+  background: #FFF;
+  overflow: hidden;
+}
+#inspector .headshot div {
+  position: relative;
+  top: 50%;
+  left: 50%;
+}
+#inspector .details {
+  float: left;
+  width: 100px;
+}
+#inspector .health {
+  float: left;
+  height: 10px;
+  width: 100%;
+  background: red;
+  clear: left;
+}
+            
             #iteminfo {
   display: none;
   position: absolute;
@@ -807,8 +861,6 @@ tr:hover {
   font-size: 32px;
   padding-top: 32px;
 }
-            
-            
             
             #chatbox{
   position: absolute;
@@ -900,8 +952,8 @@ tr:hover {
                 text-shadow: 0px 1px 0px #000000;
             } //Downscale and upscale this.
             
-	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
-	      body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
+	.upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
+	body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
         body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/2/wood.png') repeat, #000; background-size:auto, 256px;}
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
         #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
@@ -1138,8 +1190,7 @@ tr:hover {
         background-repeat: no-repeat;
         background-position: 0px 0px;
     }
-
-                
+    
                 
                 
 		#fade {width:960px;height:448px;top:10px;left:10px;}

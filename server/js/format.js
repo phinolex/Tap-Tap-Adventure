@@ -29,6 +29,7 @@ var Types = require('../../shared/js/gametypes');
             this.formats[Types.Messages.INVENTORY] = ['s', 'n', 'n'];
             this.formats[Types.Messages.SKILL] = ['s', 'n'];
             this.formats[Types.Messages.SKILLINSTALL] = ['n', 's'];
+            this.formats[Types.Messages.CHARACTERINFO] = [];
         },
 
         check: function (msg) {

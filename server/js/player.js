@@ -314,6 +314,10 @@ module.exports = Player = Character.extend({
             } else if(action === Types.Messages.SKILLINSTALL) {
                 log.info("SKILLINSTALL: " + self.name + " " + message[1] + " " + message[2]);
                 self.handleSkillInstall(message);
+            } else if(action === Types.Messages.CHARACTERINFO) {
+                log.info("CHARACTERINFO: " + self.name);
+                self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
+                    
             } else if(action === Types.Messages.TELEPORT) {
                 log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
                 var x = message[1],
@@ -1036,14 +1040,9 @@ module.exports = Player = Character.extend({
                     self.mana, //12
                     self.variations.doubleEXP,
                     self.variations.expMultiplier,
-                    self.membership
+                    self.membership,
+                    self.kind
                 ]; 
-                log.info("Sent Double EXP w/ value of: " + self.variations.doubleEXP);
-                log.info("Sent EXP Multiplier w/ value of: " + self.variations.expMultiplier);
-                log.info("Sent armor: " + self.armor + " sent weapon: " 
-                                        + self.weapon + " sent avatar: " 
-                                        + self.avatar + " sent weaponAvatar" 
-                                        + self.weaponAvatar);
             
                 for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){
                     sendMessage.push(self.achievement[i+1].found);
@@ -1063,7 +1062,7 @@ module.exports = Player = Character.extend({
                 self.send(sendMessage);
                 
                 
-                /*databaseHandler.loadSkillSlots(self, function(names) {
+                databaseHandler.loadSkillSlots(self, function(names) {
                     for(var index = 0; index < names.length; index++) {
                         if(names[index]) {
                             self.skillHandler.install(index, names[index]);
@@ -1071,7 +1070,7 @@ module.exports = Player = Character.extend({
                         }
                     }
                 self.setAbility();
-                });*/
+                });
             });
         });
         self.hasEnteredGame = true;
@@ -1658,7 +1657,7 @@ module.exports = Player = Character.extend({
                 }
             } else{
                 
-                this.server.pushToPlayer(this, new Messages.Notify("파티원이 없을 때는 힐링 스킬을 쓸 수 없습니다."));
+                this.server.pushToPlayer(this, new Messages.Notify("You're not in a party."));
             }
         } else if(type === "flareDance"){
             var flareDanceLevel = this.skillHandler.getLevel("flareDance"),

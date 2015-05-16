@@ -1,7 +1,7 @@
 define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPage, Item) {
   var StatePage = TabPage.extend({
     init: function() {
-      this._super('#characterDialogFrameStatePage');
+        this._super('#characterDialogFrameStatePage');
     },
     assign: function(datas) {
       var game = this.parent.parent.game,
@@ -329,56 +329,52 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
     }
   });
 
-  var Frame = TabBook.extend({
-    init: function(parent) {
-      this._super('#characterDialogFrame');
+    var Frame = TabBook.extend({
+        init: function(parent) {
+            this._super('#characterDialogFrame');
 
-      this.parent = parent;
+            this.parent = parent;
 
-      this.add(new StatePage(this));
-      this.add(new SkillPage(this));
+            this.add(new StatePage(this));
+            this.add(new SkillPage(this));
 
-      this.pageNavigator = new PageNavigator();
-      this.pageNavigator.setCount(this.getPageCount());
+            this.pageNavigator = new PageNavigator();
+            this.pageNavigator.setCount(this.getPageCount());
 
-      var self = this;
+            var self = this;
 
-      this.pageNavigator.onChange(function(sender) {
-        self.setPageIndex(sender.getIndex() - 1);
-      });
-    },
+            this.pageNavigator.onChange(function(sender) {
+                self.setPageIndex(sender.getIndex() - 1);
+            });
+        },
 
-    open: function(datas) {
-      this.pages[0].assign(datas, this.parent.game.language);
-      this.pages[1].assign(this.parent.game.player, this.parent.game.language);
-      this.pageNavigator.setIndex(1);
-    }
-  });
+        open: function(datas) {
+            this.pages[0].assign(datas, this.parent.game.language);
+            this.pages[1].assign(this.parent.game.player, this.parent.game.language);
+            this.pageNavigator.setIndex(1);
+        }
+    });
 
-  CharacterDialog = Dialog.extend({
-    init: function(game) {
-      this._super(game, '#characterDialog');
+    CharacterDialog = Dialog.extend({
+        init: function(game) {
+            this._super(game, '#characterDialog');
+            this.frame = new Frame(this);
+        },
 
-      this.frame = new Frame(this);
-    },
+        show: function(datas) {
+            this.frame.open(datas);
+            if(this.button){
 
-    show: function(datas) {
-      this.frame.open(datas);
-
-      if(this.button){
-        this.button.down();
-      }
-
-      this._super();
-    },
-    hide: function() {
-      this._super();
-
-      if(this.button){
-        this.button.up();
-      }
-    }
-  });
-
-  return CharacterDialog;
+                this.button.down();
+            }
+            this._super();
+        },
+        hide: function() {
+            this._super();
+            if(this.button){
+                this.button.up();
+            }
+        }
+    });
+    return CharacterDialog;
 });

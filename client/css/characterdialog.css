@@ -1,0 +1,238 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+:focus {
+	outline: 0;
+}
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+@font-face {
+        font-family: 'GraphicPixel';
+        src: url('../fonts/graphicpixel-webfont.eot');
+        src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../fonts/graphicpixel-webfont.woff') format('woff'),
+             url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
+             url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    
+@font-face {
+        font-family: 'AdvoCut';
+        src: url('../fonts/advocut-webfont.eot');
+        src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../fonts/advocut-webfont.woff') format('woff'),
+             url('../fonts/advocut-webfont.ttf') format('truetype'),
+             url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+}
+
+//Upscale - 3
+@media screen and (min-width: 1501px) {
+    
+}
+
+//Upscale - 2
+@media screen and (max-width: 1500px), screen and (max-height: 870px) {
+    
+   #characterDialog {
+  position: absolute;
+  left: 100%;
+  top: 100%;
+  width: 248px;
+  height: 434px;
+  margin-left: -258px;
+  margin-top: -488px;
+  cursor: default;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  display: none;
+}
+#characterDialogFrame {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+#characterDialogFrameStatePage, #characterDialogFrameSkillPage {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-image: url('../img/2/characterdialogsheet.png');
+  display: none;
+}
+
+#characterDialogFrameStatePage {
+  background-position: 0px 0px;
+}
+#characterName, #characterLevel, #characterExp {
+  position: absolute;
+  width: 184px;
+  height: 25px;
+  line-height: 25px;
+  font-family: 'GraphicPixel';
+  font-size: 9pt;
+  font-weight: bold;
+  text-shadow: 1px 1px #808080;
+}
+#characterName {
+  left: 45px;
+  top: 16px;
+}
+#characterLevel {
+  left: 45px;
+  top: 58px;
+}
+#characterExp {
+  left: 45px;
+  top: 100px;
+}
+#characterItemPendant, #characterItemWeapon, #characterItemArmor, #characterItemRing, #characterItemBoots {
+  position: absolute;
+  width: 32px;
+  height: 30px;
+  background-position: 0px 0px;
+}
+#characterItemPendant {
+  left: 108px;
+  top: 156px;
+}
+#characterItemPendant.empty {
+  background-image: url('../img/2/characterdialogsheet.png');
+  background-position: 0px -434px;
+}
+#characterItemWeapon {
+  left: 8px;
+  top: 240px;
+  background-position: 0px -4px;
+}
+#characterItemWeapon.empty {
+  background-image: url('../img/2/characterdialogsheet.png');
+  background-position: -96px -434px;
+}
+#characterItemArmor {
+  left: 208px;
+  top: 240px;
+}
+#characterItemArmor.empty {
+  background-image: url('../img/2/characterdialogsheet.png');
+  background-position: -32px -434px;
+}
+#characterItemRing {
+  left: 54px;
+  top: 344px;
+}
+#characterItemRing.empty {
+  background-image: url('../img/2/characterdialogsheet.png');
+  background-position: -128px -434px;
+}
+#characterItemBoots {
+  left: 164px;
+  top: 346px;
+}
+#characterItemBoots.empty {
+  background-image: url('../img/2/characterdialogsheet.png');
+  background-position: -64px -434px;
+}
+#characterLook {
+  position: absolute;
+  left: 94px;
+  top: 250px;
+  width: 64px;
+  height: 64px;
+}
+#characterLookArmor, #characterLookWeapon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: 320px;
+  background-position: 0px -512px;
+}
+#characterLookShadow {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 32px;
+  height: 32px;
+  background-size: 32px;
+  background-image: url('../img/2/shadow16.png');
+}
+
+#characterDialogFrameSkillPage {
+  background-position: -248px 0px; 
+}
+
+#characterDialogFramePageNavigator {
+  position: absolute;
+  left: 160px;
+  top: 389px;
+  width: 84px;
+  height: 34px;
+}
+#characterDialogFramePageNavigatorMovePreviousButton, #characterDialogFramePageNavigatorMoveNextButton {
+  position: absolute;
+  top: 0px;
+  width: 42px;
+  height: 34px;
+  background-image: url('../img/2/characterdialogsheet.png');
+}
+#characterDialogFramePageNavigatorMovePreviousButton {
+  left: 0px;
+  background-position: -160px -434px;
+}
+#characterDialogFramePageNavigatorMovePreviousButton.enabled {
+  background-position: -160px -468px;
+  cursor: pointer;
+}
+#characterDialogFramePageNavigatorMoveNextButton {
+  left: 42px;
+  background-position: -202px -468px;
+}
+#characterDialogFramePageNavigatorMoveNextButton.enabled {
+  background-position: -202px -434px;
+  cursor: pointer;
+}
+                
+            
+}
+
+//Upscale - 1
+@media screen and (max-width: 1000px) {
+}

@@ -29,14 +29,14 @@ define(['dialog'], function(Dialog) {
             }
 
             for(i = 0; i < Math.floor(this.game.player.level / 2); i++) {
-                var imageUrl = "../client/img/2/item-" + Types.getKindAsString(rankedArmors[i]) + ".png";
+                var imageUrl = "img/2/item-" + Types.getKindAsString(rankedArmors[i]) + ".png";
                 htmlStr += '<div style="position: absolute; top: ' + y + 'px;';
                 htmlStr += 'left: ' + x + 'px; ';
                 htmlStr += 'width: 32px; height: 32px; background-image: url(';
                 htmlStr += "'" + imageUrl + "');"
                 htmlStr += 'background-color: rgba(128, 128, 128, 0.5);';
                 htmlStr += 'border: 1px solid #9c9898;"';
-                htmlStr += 'title="' + Types.getName(rankedArmors[i], this.game.language) + ': Armor +' + (i+1) + '"></div>';
+                htmlStr += 'title="' + Types.getName(rankedArmors[i]) + ': Armor +' + (i+1) + '"></div>';
 
                 if(i === rankedArmors.length-1){
                   break;
@@ -53,14 +53,14 @@ define(['dialog'], function(Dialog) {
             y += 32 + 32;
 
             for(i = 0; i < Math.floor(this.game.player.level / 2); i++) {
-                var imageUrl = "../client/img/2/item-" + Types.getKindAsString(rankedWeapons[i]) + ".png";
+                var imageUrl = "img/2/item-" + Types.getKindAsString(rankedWeapons[i]) + ".png";
                 htmlStr += '<div style="position: absolute; top: ' + y + 'px;';
                 htmlStr += 'left: ' + x + 'px; ';
                 htmlStr += 'width: 32px; height: 32px; background-image: url(';
                 htmlStr += "'" + imageUrl + "');"
                 htmlStr += 'background-color: rgba(128, 128, 128, 0.5);';
                 htmlStr += 'border: 1px solid #9c9898;"';
-                htmlStr += 'title="' + Types.getName(rankedWeapons[i], this.game.language) + ': Attack +' + (i+1) + '"></div>';
+                htmlStr += 'title="' + Types.getName(rankedWeapons[i]) + ': Attack +' + (i+1) + '"></div>';
 
                 if(i === rankedWeapons.length-1){
                     break;

@@ -73,7 +73,8 @@ Types = {
             INVENTORYCOUNT: 13,
             FINISHED: 14
         },
-        TRADESCREEN: 50
+        TRADESCREEN: 50,
+        CHARACTERINFO: 51
     },
 
     Entities: {
