@@ -482,6 +482,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             item.setGridPosition(x, y);
             item.setAnimation("idle", 150);
             this.addEntity(item);
+            
+            //Display info about the item upon creation (dropping, or any appearance on the ground)
+            this.createBubble(item.id, item.getInfoMsg());
+            this.assignBubbleTo(item);
         },
 
         removeItem: function(item) {

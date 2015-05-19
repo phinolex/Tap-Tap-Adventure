@@ -130,8 +130,10 @@ define(['jquery'], function($) {
                 this.center();
                 this.game.run(action, function(result) {
                     if(result.success === true) {
+                        
                         self.start();
                     } else {
+                        
                         self.setPlayButtonState(true);
 
                         switch(result.reason) {
@@ -167,7 +169,7 @@ define(['jquery'], function($) {
 
         start: function() {
             this.hideIntro();
-            $('body').addClass('started');
+            $('body').addClass('started'); //ASKY Doesn't use this, look furhter into whether this is necessary or not.
             //if(this.firstTimePlaying) {
                 //this.toggleInstructions();
             //}
