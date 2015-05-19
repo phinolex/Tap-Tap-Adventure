@@ -83,11 +83,11 @@ define(['dialog'], function(Dialog) {
             this._super();
         },
         hide: function() {
-          this._super();
+            this._super();
 
-          if(this.button){
-            this.button.up();
-          }
+            if(this.button){
+                this.button.up();
+            }
         }
     });
 

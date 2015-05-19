@@ -284,7 +284,7 @@ define(['mob'], function(Mob) {
           'background-image': 'url("img/2/main.png")',
           'background-position': SkillPositions[name]
         });
-        this.body.attr('title', Types.Player.Skills.getComment(name, this.parent.game.language));
+        this.body.attr('title', Types.Player.Skills.getComment(name));
 
         this.setLevel(this.skill.level);
 

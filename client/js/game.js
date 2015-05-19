@@ -7,14 +7,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'questhandler',
         'partyhandler', 'rankinghandler', 'inventoryhandler', 'bools', 'iteminfodialog',
-        'characterdialog',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
          ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler, 
-         InventoryHandler, Bools, ItemInfoDialog, CharacterDialog) {
+         InventoryHandler, Bools, ItemInfoDialog) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;

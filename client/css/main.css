@@ -168,8 +168,7 @@ footer, header, hgroup, menu, nav, section {
     #instructions.active {opacity:1;pointer-events:auto;}
     
     #weapon, #armor {image-rendering:-moz-crisp-edges;}
-   
-	#bubbles a {pointer-events:auto;text-decoration:none;color:#fcda5c;}
+    #bubbles a {pointer-events:auto;text-decoration:none;color:#fcda5c;}
     .link:hover {cursor:pointer;color:#d83939;}
     .play img {display:none;}
     .play.loading span:hover {color:inherit;cursor:default;}
@@ -470,7 +469,7 @@ footer, header, hgroup, menu, nav, section {
         background: rgba(0, 0, 0, 0.5);
         padding: 5px;
         overflow-y: scroll;
-        overflow-x: hide;
+        overflow-x: hidden;
         z-index: 10;
         display: none;
     }
@@ -495,7 +494,7 @@ footer, header, hgroup, menu, nav, section {
       background: rgba(45, 45, 45, 1);
       padding: 5px;
       overflow-y: scroll;
-      overflow-x: hide;
+      overflow-x: hidden;
       display: none;
     }
     #kungLog p{
@@ -515,7 +514,7 @@ footer, header, hgroup, menu, nav, section {
       background: rgba(255, 255, 2555, 1);
       padding: 5px;
       overflow-y: scroll;
-      overflow-x: hide;
+      overflow-x: hidden;
       display: none;
     }
 #board td, #board th
@@ -759,6 +758,7 @@ tr:hover {
 	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
             
             
+
             #target{
   font-family:'GraphicPixel';
   color:#e3e3e3;

@@ -191,10 +191,11 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 
             game.onNbPlayersChange(function(worldPlayers, totalPlayers){
                 if (worldPlayers === 1) {
-                    $('#users').html("" + worldPlayers + " player");
+                    $('#users').html("" + totalPlayers + " player");
                 } else {
-                    $('#users').html("" + worldPlayers + " players");
+                    $('#users').html("" + totalPlayers + " players");
                 }
+                $('#users').html("" + totalPlayers + " players");
             });
                 
                 
@@ -222,19 +223,6 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 $('#hitpoints').toggleClass('invincible');
             });
 
-            game.onNbPlayersChange(function(worldPlayers, totalPlayers) {
-                
-                 /* var setTotalPlayersString = function(string) {
-                        $("#users").find("span:nth-child(2)").text(string);
-                    };
-
-                $("#users").find("span:nth-child(1)").text(totalPlayers);
-                if(totalPlayers === 1) {
-                    setTotalPlayersString("player");
-                } else {
-                    setTotalPlayersString("players");
-                } */
-            });
             
             
             /*$('#questbutton').click(function(event){
@@ -332,6 +320,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 }
             });
             game.characterDialog.button = this.characterButton;
+
 
             this.helpButton = new Button2('#helpbutton', {background: {left: 280}});
             this.helpButton.onClick(function(sender, event) {
