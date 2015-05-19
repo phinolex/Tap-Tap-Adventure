@@ -2,23 +2,23 @@
 define(['jquery'], function() {
     var ChatHandler = Class.extend({
         init: function(game, kkhandler) {
-          var self = this;
-          this.game = game;
-          this.kkhandler = kkhandler;
-          this.chatLog = $('#chatLog');
-          this.board = $('#board');
-          setInterval(function(){
-            var randNumber = Math.random();
-            if(randNumber < 0.25){
-              self.addNotification('Make sure you sign up on the forum!');
-            } else if(randNumber < 0.5){
-              self.addNotification('This game is also playable on mobile devices as well as tablets!');
-            } else if(randNumber < 0.75){
-              self.addNotification('Invite your friends today!');
-            } else{
-              self.addNotification('We are welcome to suggestions.');
-            }
-          }, 1000*60*20);
+            var self = this;
+            this.game = game;
+            this.kkhandler = kkhandler;
+            this.chatLog = $('#chatLog');
+            this.board = $('#board');
+            setInterval(function(){
+                var randNumber = Math.random();
+                if(randNumber < 0.25){
+                    self.addNotification('Make sure you sign up on the forum!');
+                } else if(randNumber < 0.5){
+                    self.addNotification('This game is also playable on mobile devices, including tablets.');
+                } else if(randNumber < 0.75){
+                    self.addNotification('Invite your friends today!');
+                } else {
+                    self.addNotification('We are open to suggestions!');
+                }
+            }, 1000*60*20);
         },
         show: function(){
           $('#chatLog').css('display', 'block');
