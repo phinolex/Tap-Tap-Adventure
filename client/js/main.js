@@ -170,7 +170,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
     };
 
     var initGame = function() {
-        require(['game', 'button2'], function(Game, Button2) {
+        require(['game', 'button2', 'characterdialog'], function(Game, Button2, CharacterDialog) {
 
             var canvas = document.getElementById("entities"),
                 background = document.getElementById("background"),
