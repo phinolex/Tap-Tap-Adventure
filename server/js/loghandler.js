@@ -16,6 +16,18 @@ module.exports = LogHandler = cls.Class.extend({
 
     this.client = mysql.createConnection(mysqlConfig);
   },
+  
+  /*
+    Database Name: log
+    user
+    kind
+    action
+    content
+    date
+    time
+    
+  
+  */
   getLog: function(name, kind, action, time, callback){
     this.client.query('select * from log where user="' + name + '" and '
                     + ' kind="' + kind + '" and '

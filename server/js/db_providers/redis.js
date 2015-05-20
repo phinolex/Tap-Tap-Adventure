@@ -1,4 +1,4 @@
-/* global Types, log */
+/* global Types, log, client */
 
 var Utils = require('../utils');
 
@@ -159,10 +159,15 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                     return;
                                 }
 
-                               var d = new Date();
+                                var d = new Date();
                                 var lastLoginTimeDate = new Date(lastLoginTime);
-                                
-                                client.sadd("adminname", "Flavius");
+                                if (player.connection._connection.remoteAddress === "127.0.0.1") {
+                                    client.sadd("adminname", "Flavius");
+                                } else {
+                                    player.connection.sendUTF8("ban"); //Make sure you create another invalid connection. "You do not have access to this account."
+                                    player.connection.close("Invalid login, closing connection to: " + player.connection._connection.remoteAddress);
+                                    return;
+                                }
                                 
                                 // Check Ban
                                 d.setDate(d.getDate() - d.getDay());
@@ -192,6 +197,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                     }
                                     
                                 }
+                                //Remove both Moderators and Administrators and 
+                                // replace that with Ranks instead, using Rank 1 
+                                // for Moderator and Rank 2 for Administrators
+                                
                                 
                                 log.info("Player name: " + player.name);
                                 log.info("Armor: " + armor);
@@ -285,16 +294,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                      null, 0, 0, 0,
                                      false, 0, Types.Entities.WARRIOR);
                        
-                                    /* player.sendWelcome(armor, weapon, avatar, weaponAvatar, exp, admin,
-                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank, 
-                                    armorEnchantedPoint, armorSkillKind, armorSkillLevel,
-                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel, 
-                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel, 
-                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
-                                    pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
-                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
-                                    boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
-                                    membershipTime, kind);*/
                         
                     });
                     
@@ -315,38 +314,21 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget("u:" + player.name, "x")
                         .hget("u:" + player.name, "y")
                         .exec(function(err, replies){
-                             var curTime = new Date();
-                             var banEndTime = new Date(replies[0]*1);
-                             var posX = replies[2];
-                             var posY = replies[3];
-                             log.info("curTime: " + curTime.toString());
-                             log.info("banEndTime: " + banEndTime.toString());
+                            var curTime = new Date();
+                            var banEndTime = new Date(replies[0]*1);
+                            var posX = replies[2];
+                            var posY = replies[3];
+                            log.info("curTime: " + curTime.toString());
+                            log.info("banEndTime: " + banEndTime.toString());
                              
-                                 log.info("X: " + player.x + " y: " + player.y);
-                             if(banEndTime.getTime() > curTime.getTime()){
+                                log.info("X: " + player.x + " y: " + player.y);
+                            if(banEndTime.getTime() > curTime.getTime()){
                                  
                                 player.connection.sendUTF8("ban");
                                  
                                 player.connection.close("Closing connection to: " + player.name);
                                 return;
-                                 
-                                 /*log.info("Player " + player.name + " is banned. Sending to Black Hole.");
-                                 client.hset("u:" + player.name, "x", 154);
-                                 client.hset("u:" + player.name, "y", 4);
-                                 log.info("X: " + player.x + " y: " + player.y);
-                                 player.name = "Banned";*/
-                             } /*else {
-                                 log.info("Player isn't banned anymore.");
-                                
-                                 log.info("X: " + posX + " y: " + posY);
-                                if (posX == 154 && posY == 4) {
-                                    log.info("Player no longer banned, sending to world.");
-                                    client.hset("u:" + player.name, "x", 156);
-                                    client.hset("u:" + player.name, "y", 294);
-                                 
-                                 
-                                }
-                             }*/
+                            }
                         });
                     return;
                 }

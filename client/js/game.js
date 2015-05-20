@@ -1452,35 +1452,33 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 
                     if(player) {
                         if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
-                            self.showNotification("Attempting to Equip Armor - " + itemName);
+                            
                             player.switchArmor(itemName, self.sprites[itemName]);
                             
                             if(self.player.id === player.id){
-                              self.showNotification('' + (Types.getArmorRank(itemKind)+1) + "레벨 갑옷 착용");
-                              self.audioManager.playSound("loot");
+                                self.audioManager.playSound("loot");
                             }
                         } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
-                            self.showNotification("Attempting to Equip Weapon - " + itemName);
-                            player.setWeaponName(itemName);
                             
+                            player.setWeaponName(itemName);
                             if(self.player.id === player.id){
-                              self.showNotification('' + (Types.getWeaponRank(itemKind)+1) + "레벨 무기 착용");
-                              self.audioManager.playSound("loot");
+                                self.audioManager.playSound("loot");
                             }
                         } else if(Types.isPendant(itemKind)) {
-                          if(self.player.id === player.id) {
-                            self.showNotification("" + (Types.getPendantRank(itemKind) + 1) + "레벨 펜던트 착용");
-                            self.audioManager.playSound("loot");
-                          }
+                            
+                            if(self.player.id === player.id) {
+                                self.audioManager.playSound("loot");
+                            }
                         } else if(Types.isRing(itemKind)) {
-                          if(self.player.id === player.id) {
-                            self.showNotification("" + (Types.getRingRank(itemKind) + 1) + "레벨 반지 착용");
-                            self.audioManager.playSound("loot");
-                          }
+                            
+                            if(self.player.id === player.id) {
+                                self.audioManager.playSound("loot");
+                            }
                         } else if(Types.isBenef(itemKind)){
                             player.setBenef(itemKind);
                             if(self.player.id === player.id){
-                              self.audioManager.playSound("firefox");
+                                
+                                self.audioManager.playSound("firefox");
                             }
                         }
                     }
