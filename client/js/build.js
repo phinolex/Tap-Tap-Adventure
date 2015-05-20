@@ -25,7 +25,10 @@
             name: "home",
             // Exclude the jquery module since it is included already in require-jquery.js
             exclude: ["jquery", "game"]
-        }
+        },
+
+
+
     ],
 
     pragmas: {

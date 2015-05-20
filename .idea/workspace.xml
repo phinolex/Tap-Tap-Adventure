@@ -2,79 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb550f01-0ddd-4624-bd8b-1881f15acc0a" name="Default" comment="Character Dialog changes and certain attempts.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Tap_Tap_Adventure_node_modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/dialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Learning/public_html/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Learning/public_html/pageone.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Learning/public_html/pagetwo.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/documentation/Additions.rtf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/documentation/Changelog.rtf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/documentation/Classes/A - Index.rtf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/documentation/General Info.rtf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure.xcodeproj/project.pbxproj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure.xcodeproj/project.xcworkspace/contents.xcworkspacedata" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure.xcodeproj/project.xcworkspace/xcshareddata/Tap Tap Adventure.xccheckout" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure.xcodeproj/project.xcworkspace/xcuserdata/Flavius.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure.xcodeproj/project.xcworkspace/xcuserdata/Flavius.xcuserdatad/WorkspaceSettings.xcsettings" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure.xcodeproj/xcuserdata/Flavius.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure.xcodeproj/xcuserdata/Flavius.xcuserdatad/xcschemes/Tap Tap Adventure.xcscheme" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure.xcodeproj/xcuserdata/Flavius.xcuserdatad/xcschemes/xcschememanagement.plist" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/600px-No_ads.svg copy.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@1024x1024.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@120x120.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@152x152.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@180x180.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@29x29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@40x40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@58x58.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@60x60.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@76x76.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@80x80.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/App Icon/logo@87x87.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/AppDelegate.swift" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Base.lproj/LaunchScreen.xib" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Base.lproj/Main.storyboard" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/Contents.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@120x120-2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@120x120.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@152x152.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@180x180-2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@29x29.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@40x40.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@58x58.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@76x76.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@80x80-1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@80x80-2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/AppIcon.appiconset/logo@80x80.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/LaunchImage.launchimage/Contents.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/error.imageset/Contents.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/error.imageset/Error Screen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/loading.imageset/Contents.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/loading.imageset/Loading Screen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/video-record.imageset/Contents.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/video-record.imageset/video-512 copy copy.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/video.imageset/Contents.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Images.xcassets/video.imageset/video-512.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Info.plist" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/SAf.m" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Tap Tap Adventure-Bridging-Header.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Tap_Tap_Adventure.xcdatamodeld/.xccurrentversion" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/Tap_Tap_Adventure.xcdatamodeld/Tap_Tap_Adventure.xcdatamodel/contents" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/ViewController.swift" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/button_restore2xipad.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/ioSepp.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/video-512 copy copy.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iOS App/Tap Tap Adventure/video-512.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/bcrypt.o" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/bcrypt.o" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/bcrypt_lib.node" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/bcrypt_lib.node" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/bcrypt_node.o" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/bcrypt_node.o" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/blowfish.o" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/blowfish.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dump.rdb" afterPath="$PROJECT_DIR$/dump.rdb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/characterdialog.css" afterPath="$PROJECT_DIR$/client/css/characterdialog.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/characterdialog.js" afterPath="$PROJECT_DIR$/client/js/characterdialog.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/game.js" afterPath="$PROJECT_DIR$/client/js/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.html" afterPath="$PROJECT_DIR$/client/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/iteminfodialog.js" afterPath="$PROJECT_DIR$/client/js/iteminfodialog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Makefile" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Makefile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/bcrypt.o.d" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/bcrypt.o.d" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/bcrypt_lib.node.d" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/bcrypt_lib.node.d" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/bcrypt_lib.target.mk" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/bcrypt_lib.target.mk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/bcrypt_node.o.d" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/bcrypt_node.o.d" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/blowfish.o.d" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/blowfish.o.d" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/build.js" afterPath="$PROJECT_DIR$/client/js/build.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/build.sh" afterPath="$PROJECT_DIR$/bin/build.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.txt" afterPath="$PROJECT_DIR$/build.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/config.gypi" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/config.gypi" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/main.css" afterPath="$PROJECT_DIR$/client/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/main.js" afterPath="$PROJECT_DIR$/client/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/skillhandler.js" afterPath="$PROJECT_DIR$/client/js/skillhandler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Tap Tap Adventure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -95,11 +40,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.962963">
-              <caret line="331" column="51" selection-start-line="331" selection-start-column="51" selection-end-line="331" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.35828024">
+              <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/js/build.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -109,17 +64,19 @@
         <entry file="file://$PROJECT_DIR$/client/css/characterdialog.css">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="5" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
-              <folding />
+              <caret line="167" column="5" selection-start-line="8" selection-start-column="4" selection-end-line="167" selection-end-column="5" />
+              <folding>
+                <marker date="1432092886000" expanded="true" signature="119:4438" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="characterdialog.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="characterdialog.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/js/characterdialog.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="12.952853">
-              <caret line="348" column="8" selection-start-line="348" selection-start-column="8" selection-end-line="352" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="352" column="7" selection-start-line="352" selection-start-column="7" selection-end-line="352" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -140,8 +97,8 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="446" column="63" selection-start-line="446" selection-start-column="63" selection-end-line="446" selection-end-column="63" />
+            <state vertical-scroll-proportion="-22.148148">
+              <caret line="759" column="0" selection-start-line="759" selection-start-column="0" selection-end-line="759" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -151,8 +108,12 @@
         <entry file="file://$PROJECT_DIR$/client/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="113" column="12" selection-start-line="113" selection-start-column="12" selection-end-line="113" selection-end-column="12" />
-              <folding />
+              <caret line="118" column="12" selection-start-line="118" selection-start-column="12" selection-end-line="118" selection-end-column="12" />
+              <folding>
+                <marker date="1432085583000" expanded="true" signature="1011:117240" placeholder="{...}" />
+                <marker date="1432085583000" expanded="true" signature="1041:117218" placeholder="{...}" />
+                <marker date="1432085583000" expanded="true" signature="24083:24487" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -166,12 +127,13 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/client/js/game.js" />
-        <option value="$PROJECT_DIR$/client/js/main.js" />
-        <option value="$PROJECT_DIR$/client/css/characterdialog.css" />
-        <option value="$PROJECT_DIR$/client/css/main.css" />
         <option value="$PROJECT_DIR$/client/js/iteminfodialog.js" />
         <option value="$PROJECT_DIR$/client/js/skillhandler.js" />
         <option value="$PROJECT_DIR$/client/js/characterdialog.js" />
+        <option value="$PROJECT_DIR$/client/js/build.js" />
+        <option value="$PROJECT_DIR$/client/css/main.css" />
+        <option value="$PROJECT_DIR$/client/css/characterdialog.css" />
+        <option value="$PROJECT_DIR$/client/js/main.js" />
       </list>
     </option>
   </component>
@@ -184,7 +146,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1275" />
+    <option name="width" value="1280" />
     <option name="height" value="773" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -273,10 +235,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1275" height="773" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="773" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329429" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -289,11 +250,12 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329429" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -312,10 +274,68 @@
     <option name="LAST_COMMIT_MESSAGE" value="Character Dialog changes and certain attempts." />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/client/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="331" column="51" selection-start-line="331" selection-start-column="51" selection-end-line="331" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/characterdialog.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="5" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
+          <folding>
+            <marker date="1432092886000" expanded="true" signature="119:4438" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/characterdialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/iteminfodialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="446" column="63" selection-start-line="446" selection-start-column="63" selection-end-line="446" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="113" column="12" selection-start-line="113" selection-start-column="12" selection-end-line="113" selection-end-column="12" />
+          <folding>
+            <marker date="1432085583000" expanded="true" signature="1011:117240" placeholder="{...}" />
+            <marker date="1432085583000" expanded="true" signature="1041:117218" placeholder="{...}" />
+            <marker date="1432085583000" expanded="true" signature="24083:24487" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -328,7 +348,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1432092886000" expanded="true" signature="119:4438" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -352,7 +374,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="113" column="12" selection-start-line="113" selection-start-column="12" selection-end-line="113" selection-end-column="12" />
-          <folding />
+          <folding>
+            <marker date="1432085583000" expanded="true" signature="1011:117240" placeholder="{...}" />
+            <marker date="1432085583000" expanded="true" signature="1041:117218" placeholder="{...}" />
+            <marker date="1432085583000" expanded="true" signature="24083:24487" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -385,52 +411,31 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/README.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
         </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="13.567026">
           <caret line="587" column="36" selection-start-line="587" selection-start-column="32" selection-end-line="587" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/characterdialog.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="5" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="446" column="63" selection-start-line="446" selection-start-column="63" selection-end-line="446" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="113" column="12" selection-start-line="113" selection-start-column="12" selection-end-line="113" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.962963">
-          <caret line="331" column="51" selection-start-line="331" selection-start-column="51" selection-end-line="331" selection-end-column="51" />
-          <folding />
+          <caret line="118" column="12" selection-start-line="118" selection-start-column="12" selection-end-line="118" selection-end-column="12" />
+          <folding>
+            <marker date="1432085583000" expanded="true" signature="1011:117240" placeholder="{...}" />
+            <marker date="1432085583000" expanded="true" signature="1041:117218" placeholder="{...}" />
+            <marker date="1432085583000" expanded="true" signature="24083:24487" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -452,10 +457,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/build.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/playerpopupmenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22900763">
+          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-22.148148">
+          <caret line="759" column="0" selection-start-line="759" selection-start-column="0" selection-end-line="759" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/characterdialog.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="167" column="5" selection-start-line="8" selection-start-column="4" selection-end-line="167" selection-end-column="5" />
+          <folding>
+            <marker date="1432092886000" expanded="true" signature="119:4438" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/characterdialog.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="12.952853">
-          <caret line="348" column="8" selection-start-line="348" selection-start-column="8" selection-end-line="352" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="352" column="7" selection-start-line="352" selection-start-column="7" selection-end-line="352" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35828024">
+          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
           <folding />
         </state>
       </provider>

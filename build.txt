@@ -627,13 +627,13 @@ js/game.js
 
 js/home.js
 ----------------
-js/tabbook.js
-js/tabpage.js
-js/characterdialog.js
 js/app.js
 js/lib/sha1.js
 js/util.js
 js/entrypoint.js
+js/tabbook.js
+js/tabpage.js
+js/characterdialog.js
 js/main.js
 js/lib/class.js
 js/lib/underscore.min.js

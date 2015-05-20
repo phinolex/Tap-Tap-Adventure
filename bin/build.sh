@@ -16,6 +16,12 @@ echo "Removing unnecessary js files from the build directory"
 find "$BUILDDIR/js" -type f \
   -not \( -name "game.js" \
   -o -name "home.js" \
+  -o -name "button2.js" \
+  -o -name "dialog.js" \
+  -o -name "entity.js" \
+  -o -name "item.js" \
+  -o -name "iteminfodialog.js" \
+  -o -name "bubble.js" \
   -o -name "log.js" \
   -o -name "require-jquery.js" \
   -o -name "modernizr.js" \

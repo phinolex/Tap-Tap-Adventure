@@ -1,7 +1,8 @@
 
 /* global Types */
 
-define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
+define(['jquery', 'app', 'entrypoint', 'characterdialog',
+        'button2', 'dialog', 'iteminfodialog', 'game', 'bubble'], function($, App, EntryPoint) {
     var app, game;
 
     var initApp = function() {
@@ -170,7 +171,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
     };
 
     var initGame = function() {
-        require(['game', 'button2', 'characterdialog'], function(Game, Button2, CharacterDialog) {
+        require(['game', 'button2'], function(Game, Button2) {
 
             var canvas = document.getElementById("entities"),
                 background = document.getElementById("background"),
@@ -191,11 +192,10 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 
             game.onNbPlayersChange(function(worldPlayers, totalPlayers){
                 if (worldPlayers === 1) {
-                    $('#users').html("" + totalPlayers + " player");
+                    $('#users').html("" + worldPlayers + " player");
                 } else {
-                    $('#users').html("" + totalPlayers + " players");
+                    $('#users').html("" + worldPlayers + " players");
                 }
-                $('#users').html("" + totalPlayers + " players");
             });
                 
                 
