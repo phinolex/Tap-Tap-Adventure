@@ -28,7 +28,7 @@ function main(config) {
     var worlds = [];
     var lastTotalPlayers = 0;
     var DatabaseSelector = require("./databaseselector");
-    var checkPopulationInterval = setInterval(function() {
+    setInterval(function() {
         if(metrics && metrics.isReady) {
             metrics.updateWorldCount();
             metrics.getTotalPlayers(function(totalPlayers) {
@@ -36,11 +36,12 @@ function main(config) {
                     lastTotalPlayers = totalPlayers;
                     _.each(worlds, function(world) {
                         world.updatePopulation(totalPlayers);
+                        log.info("Updated player population");
                     });
                 }
             });
         }
-    }, 2500);
+    }, 1500);
 
     log.info("Starting Tap Tap Adventure game server...");
     var selector = DatabaseSelector(config);

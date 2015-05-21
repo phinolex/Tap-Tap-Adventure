@@ -191,10 +191,12 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
 
             game.onNbPlayersChange(function(worldPlayers, totalPlayers){
-                if (worldPlayers === 1) {
-                    $('#users').html("" + worldPlayers + " player");
-                } else {
+                if (worldPlayers !== 1) {
+
                     $('#users').html("" + worldPlayers + " players");
+                } else {
+
+                    $('#users').html("" + worldPlayers + " player");
                 }
             });
                 

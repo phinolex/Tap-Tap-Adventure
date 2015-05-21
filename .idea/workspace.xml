@@ -2,23 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb550f01-0ddd-4624-bd8b-1881f15acc0a" name="Default" comment="Character Dialog changes and certain attempts.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/bcrypt.o" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/bcrypt.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/bcrypt_lib.node" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/bcrypt_lib.node" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/bcrypt_node.o" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/bcrypt_node.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/blowfish.o" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/obj.target/bcrypt_lib/src/blowfish.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dump.rdb" afterPath="$PROJECT_DIR$/dump.rdb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Makefile" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/bcrypt.o.d" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/bcrypt.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/bcrypt_lib.node.d" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/bcrypt_lib.node.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/bcrypt_lib.target.mk" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/bcrypt_lib.target.mk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/bcrypt_node.o.d" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/bcrypt_node.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/blowfish.o.d" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/Release/.deps/Release/obj.target/bcrypt_lib/src/blowfish.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/build.js" afterPath="$PROJECT_DIR$/client/js/build.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/build.sh" afterPath="$PROJECT_DIR$/bin/build.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.txt" afterPath="$PROJECT_DIR$/build.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/bcrypt/build/config.gypi" afterPath="$PROJECT_DIR$/node_modules/bcrypt/build/config.gypi" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/main.css" afterPath="$PROJECT_DIR$/client/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/main.js" afterPath="$PROJECT_DIR$/client/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/main.js" afterPath="$PROJECT_DIR$/server/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Tap Tap Adventure.iws" />
@@ -40,11 +26,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35828024">
-              <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="190" column="0" selection-start-line="190" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/js/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5732484">
+              <caret line="51" column="34" selection-start-line="51" selection-start-column="34" selection-end-line="51" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="worldserver.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/worldserver.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-19.37037">
+              <caret line="218" column="28" selection-start-line="218" selection-start-column="28" selection-end-line="218" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -65,9 +71,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="167" column="5" selection-start-line="8" selection-start-column="4" selection-end-line="167" selection-end-column="5" />
-              <folding>
-                <marker date="1432092886000" expanded="true" signature="119:4438" placeholder="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -97,7 +101,7 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.148148">
+            <state vertical-scroll-proportion="0.0">
               <caret line="759" column="0" selection-start-line="759" selection-start-column="0" selection-end-line="759" selection-end-column="0" />
               <folding />
             </state>
@@ -109,11 +113,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="118" column="12" selection-start-line="118" selection-start-column="12" selection-end-line="118" selection-end-column="12" />
-              <folding>
-                <marker date="1432085583000" expanded="true" signature="1011:117240" placeholder="{...}" />
-                <marker date="1432085583000" expanded="true" signature="1041:117218" placeholder="{...}" />
-                <marker date="1432085583000" expanded="true" signature="24083:24487" placeholder="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -134,6 +134,8 @@
         <option value="$PROJECT_DIR$/client/css/main.css" />
         <option value="$PROJECT_DIR$/client/css/characterdialog.css" />
         <option value="$PROJECT_DIR$/client/js/main.js" />
+        <option value="$PROJECT_DIR$/server/js/worldserver.js" />
+        <option value="$PROJECT_DIR$/server/js/main.js" />
       </list>
     </option>
   </component>
@@ -236,7 +238,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -250,12 +252,12 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329429" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -283,6 +285,64 @@
     <entry file="file://$PROJECT_DIR$/client/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/build.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/characterdialog.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="167" column="5" selection-start-line="8" selection-start-column="4" selection-end-line="167" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/characterdialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="352" column="7" selection-start-line="352" selection-start-column="7" selection-end-line="352" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/iteminfodialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="759" column="0" selection-start-line="759" selection-start-column="0" selection-end-line="759" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="118" column="12" selection-start-line="118" selection-start-column="12" selection-end-line="118" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="331" column="51" selection-start-line="331" selection-start-column="51" selection-end-line="331" selection-end-column="51" />
           <folding />
         </state>
@@ -292,9 +352,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="36" column="5" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
-          <folding>
-            <marker date="1432092886000" expanded="true" signature="119:4438" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -328,11 +386,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="113" column="12" selection-start-line="113" selection-start-column="12" selection-end-line="113" selection-end-column="12" />
-          <folding>
-            <marker date="1432085583000" expanded="true" signature="1011:117240" placeholder="{...}" />
-            <marker date="1432085583000" expanded="true" signature="1041:117218" placeholder="{...}" />
-            <marker date="1432085583000" expanded="true" signature="24083:24487" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -348,9 +402,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1432092886000" expanded="true" signature="119:4438" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -374,11 +426,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="113" column="12" selection-start-line="113" selection-start-column="12" selection-end-line="113" selection-end-column="12" />
-          <folding>
-            <marker date="1432085583000" expanded="true" signature="1011:117240" placeholder="{...}" />
-            <marker date="1432085583000" expanded="true" signature="1041:117218" placeholder="{...}" />
-            <marker date="1432085583000" expanded="true" signature="24083:24487" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -411,13 +459,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
         </state>
-      </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/app.js">
@@ -431,11 +479,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="118" column="12" selection-start-line="118" selection-start-column="12" selection-end-line="118" selection-end-column="12" />
-          <folding>
-            <marker date="1432085583000" expanded="true" signature="1011:117240" placeholder="{...}" />
-            <marker date="1432085583000" expanded="true" signature="1041:117218" placeholder="{...}" />
-            <marker date="1432085583000" expanded="true" signature="24083:24487" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -453,7 +497,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33280253">
           <caret line="286" column="41" selection-start-line="286" selection-start-column="39" selection-end-line="286" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -469,13 +512,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22900763">
           <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.148148">
+        <state vertical-scroll-proportion="0.0">
           <caret line="759" column="0" selection-start-line="759" selection-start-column="0" selection-end-line="759" selection-end-column="0" />
           <folding />
         </state>
@@ -485,9 +527,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="167" column="5" selection-start-line="8" selection-start-column="4" selection-end-line="167" selection-end-column="5" />
-          <folding>
-            <marker date="1432092886000" expanded="true" signature="119:4438" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -499,10 +539,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/ws.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33280253">
+          <caret line="121" column="48" selection-start-line="121" selection-start-column="47" selection-end-line="121" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35828024">
-          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="190" column="0" selection-start-line="190" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33280253">
+          <caret line="1160" column="93" selection-start-line="1160" selection-start-column="90" selection-end-line="1160" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/worldserver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.37037">
+          <caret line="218" column="28" selection-start-line="218" selection-start-column="28" selection-end-line="218" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5732484">
+          <caret line="51" column="34" selection-start-line="51" selection-start-column="34" selection-end-line="51" selection-end-column="34" />
           <folding />
         </state>
       </provider>
