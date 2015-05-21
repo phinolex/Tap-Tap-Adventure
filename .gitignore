@@ -5,8 +5,3 @@
 /tools/nbproject/private/
 /client/nbproject/private/
 /Learning/nbproject/private/
-*.js
-!/server/js/variations.js
-*.js
-!/client/js/dialog.js
-*.css
