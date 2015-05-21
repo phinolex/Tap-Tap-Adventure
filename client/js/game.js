@@ -118,6 +118,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.expMultiplier = 1;
             this.membership = false;
             
+            /**
+             * Settings - For player
+             */
+             
+            this.showPlayerNames = true;
+            this.musicOn = true;
+            this.sfxOn = true;
+            this.frameColour = "default";
+            
+            
             // sprites
             this.spriteNames = [ "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
                     "bearseonbiarmor", "item-bearseonbiarmor", "frankensteinarmor",

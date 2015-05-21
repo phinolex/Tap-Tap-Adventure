@@ -327,11 +327,11 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
     });
 
     var Frame = TabBook.extend({
-        init: function(parent) {
+        init: function(parent, game) {
             this._super('#characterDialogFrame');
 
             this.parent = parent;
-
+            this.game = game;
             this.add(new StatePage(this));
             this.add(new SkillPage(this));
 
@@ -352,11 +352,11 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         }
     });
 
-    CharacterDialog = Dialog.extend({
+    var CharacterDialog = Dialog.extend({
         init: function(game) {
             this._super(game, '#characterDialog');
-
-            this.frame = new Frame(this);
+            this.game = game;
+            this.frame = new Frame(this, this.game); // send the game... easier right?
         },
 
         show: function(datas) {

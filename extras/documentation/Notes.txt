@@ -1,0 +1,10 @@
+Banking System:
+
+This is important, we should allow players to have a maximum of 20 banking spaces, members
+will receive an extra 30. The banking system must contain the following: 
+    - A way of having it organized (tabs)
+    - Counter (display the number of items in the bank)
+    - Anti-Dupe System
+    
+The bank system will be very similar to the way the Inventory System functions, in the sense that it'll
+be handled with slots, more than 5 and storing it over Redis.

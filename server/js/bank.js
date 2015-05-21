@@ -1,4 +1,5 @@
-var Inventory = require("inventory"),
+var cls = require('./lib/class'),
+    Inventory = require("inventory"),
     Messages = require("message"),
     Types = require("../../shared/js/gametypes");
 

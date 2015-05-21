@@ -829,7 +829,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.sendMessage([Types.Messages.SKILLINSTALL, index, name]);
         },
         sendCharacterInfo: function() {
-          this.sendMessage([Types.Messages.CHARACTERINFO]);
+            this.sendMessage([Types.Messages.CHARACTERINFO]);
         }
         
     });

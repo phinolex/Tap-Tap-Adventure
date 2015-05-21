@@ -49,7 +49,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "avatarSkillLevel")           // 24
                         .hget(userKey, "weaponEnchantedPoint")       // 25
                         .hget(userKey, "weaponSkillKind")            // 26
-                        .hget(userKey, "weaponSkillLevel")           // 27
+                        .hget(userKey, "weaponSkillLevel")           // 27 
                         .hget(userKey, "weaponAvatarEnchantedPoint") // 28
                         .hget(userKey, "weaponAvatarSkillKind")      // 29
                         .hget(userKey, "weaponAvatarSkillLevel")     // 30
@@ -68,7 +68,9 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "membership")                 // 43
                         .hget(userKey, "membershipTime")             // 44
                         .hget(userKey, "membershipUseTime")          // 45
-                        .hget(userKey, "kind")                       // 46
+                        .hget(userKey, "membershipLoginTime")        // 46
+                        .hget(userKey, "membershipRemainingTime")    // 47
+                        .hget(userKey, "kind")                       // 48
                         
                         
                         
@@ -129,7 +131,9 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var membership = replies[43];
                             var membershipTime = replies[44];
                             var membershipUseTime = replies[45];
-                            var kind = Utils.NaN2Zero(replies[46]) === 222 ? Types.Entities.ARCHER : Types.Entities.WARRIOR;
+                            var membershipLoginTime = replies[46];
+                            var membershipRemainingTime = replies[47];
+                            var kind = Utils.NaN2Zero(replies[48]) === 222 ? Types.Entities.ARCHER : Types.Entities.WARRIOR;
                            
                             //var curTime = new Date();
                             //Check ban here
