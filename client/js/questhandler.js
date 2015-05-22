@@ -545,7 +545,7 @@ define(['jquery'], function() {
             this.game.client.sendTalkToNPC(npc.kind);
             return npc.talk(false);
           } else {
-            for(questSerial in this.quests){
+            for(var questSerial in this.quests){
                 var quest = this.quests[questSerial];
                 if(quest.npcKind === npc.kind){
                     if(!quest.found) {

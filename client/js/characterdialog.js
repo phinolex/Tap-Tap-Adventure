@@ -352,7 +352,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         }
     });
 
-    var CharacterDialog = Dialog.extend({
+    CharacterDialog = Dialog.extend({
         init: function(game) {
             this._super(game, '#characterDialog');
             this.game = game;
