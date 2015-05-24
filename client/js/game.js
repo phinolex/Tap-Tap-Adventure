@@ -330,6 +330,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             this.sparksAnimation = new Animation("idle_down", 6, 0, 16, 16);
             this.sparksAnimation.setSpeed(120);
+
+            this.benefAnimation = new Animation("idle_down", 8, 0, 48, 48);
+            this.benefAnimation.setSpeed(120);
+
+            this.benef10Animation = new Animation("idle_down", 10, 0, 32, 32);
+            this.benef10Animation.setSpeed(80);
+
+            this.benef4Animation = new Animation("idle_down", 4, 0, 48, 48);
+            this.benef4Animation.setSpeed(80);
         },
 
         initHurtSprites: function() {

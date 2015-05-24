@@ -1,6 +1,4 @@
-
-define(function() {
-
+define(function(){
     var Animation = Class.extend({
         init: function(name, length, row, width, height) {
             this.name = name;
@@ -10,7 +8,10 @@ define(function() {
             this.height = height;
             this.reset();
         },
-
+        reset: function() {
+            this.lastTime = 0;
+            this.currentFrame = { index: 0, x: 0, y: this.row * this.height };
+        },
         tick: function() {
             var i = this.currentFrame.index;
 
@@ -31,20 +32,16 @@ define(function() {
             this.currentFrame.y = this.height * this.row;
             this.currentFrame.index = i;
         },
-
         setSpeed: function(speed) {
             this.speed = speed;
         },
-
         setCount: function(count, onEndCount) {
             this.count = count;
             this.endcount_callback = onEndCount;
         },
-
         isTimeToAnimate: function(time) {
             return (time - this.lastTime) > this.speed;
         },
-
         update: function(time) {
             if(this.lastTime === 0 && this.name.substr(0, 3) === "atk") {
                 this.lastTime = time;
@@ -58,11 +55,6 @@ define(function() {
                 return false;
             }
         },
-
-        reset: function() {
-            this.lastTime = 0;
-            this.currentFrame = { index: 0, x: 0, y: this.row * this.height };
-        }
     });
 
     return Animation;

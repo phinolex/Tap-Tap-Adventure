@@ -411,7 +411,7 @@ function(Camera, Item, Character, Player, Timer) {
             });
             this.context.restore();
         },
-        
+
         drawEntity: function(entity) {
             var sprite = entity.sprite,
                 shadow = this.game.shadows["small"],
@@ -438,9 +438,9 @@ function(Camera, Item, Character, Player, Timer) {
                     this.context.globalAlpha = entity.fadingAlpha;
                 }
 
-                
+
                 this.drawEntityName(entity);
-                
+
 
                 this.context.save();
                 if(entity.flipSpriteX) {

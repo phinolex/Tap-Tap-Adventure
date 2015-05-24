@@ -15,8 +15,8 @@ define(function() {
             this.animations = null;
             this.currentAnimation = null;
             /*
-            
-            
+
+
             this.criticalAnimation = new Animation("atk_down", 10, 0, 48, 48);
             this.criticalAnimation.setSpeed(30);
             this.criticalAnimation.setCount(1, function(){
@@ -36,7 +36,7 @@ define(function() {
             this.stunAnimation.setSpeed(30);
 
             this.isHeal = false;
-*/            
+*/
             
             
             this.shadowOffsetY = 0;

@@ -22,6 +22,8 @@ find "$BUILDDIR/js" -type f \
   -o -name "item.js" \
   -o -name "iteminfodialog.js" \
   -o -name "bubble.js" \
+  -o -name "timer.js" \
+  -o -name "animation.js" \
   -o -name "log.js" \
   -o -name "require-jquery.js" \
   -o -name "modernizr.js" \

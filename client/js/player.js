@@ -27,12 +27,75 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
             // PVP Flag
             this.pvpFlag = false;
+
+
+            // Benef
+            this.invincible = false;
+            this.isRoyalAzaleaBenef = false;
+
+            this.isWanted = false;
+
+            this.healCooltimeCallback = null;
+            this.healCooltimeCounter = 0;
+
+            this.flareDanceCooltimeCallback = null;
+            this.flareDanceCooltimeCounter = 0;
+            this.flareDanceMsgCooltimeCounter = 0;
         },
 
         
         /**
          * Returns true if the character is currently walking towards an item in order to loot it.
          */
+
+        setSkill: function(level){
+            this.skillHandler.add('evasion', level);
+        },
+        setBloodSuckingSkill: function(level){
+            this.skillHandler.add('bloodSucking', level);
+        },
+        setCriticalStrikeSkill: function(level){
+            this.skillHandler.add('criticalStrike', level);
+        },
+        setHealSkill: function(level){
+            this.skillHandler.add('heal', level);
+        },
+        setFlareDanceSkill: function(level){
+            this.skillHandler.add('flareDance', level);
+        },
+        setStunSkill: function(level){
+            this.skillHandler.add('stun', level);
+        },
+        setSuperCatSkill: function(level){
+            this.skillHandler.add('superCat', level);
+        },
+        setProvocationSkill: function(level){
+            this.skillHandler.add('provocation', level);
+        },
+        flareDanceAttack: function(){
+            var adjacentMobIds = [];
+            var entity = null;
+            var x = this.gridX-1;
+            var y = this.gridY-1;
+            for(x = this.gridX-1; x < this.gridX+2; x++){
+                for(y = this.gridY-1; y < this.gridY+2; y++){
+                    entity = this.game.getMobAt(x, y);
+                    if(entity){
+                        adjacentMobIds.push(entity.id);
+                    }
+                }
+            }
+            if(adjacentMobIds.length > 0){
+                var i = 4;
+                for(i = adjacentMobIds.length; i < 4; i++){
+                    adjacentMobIds.push(0);
+                }
+                if(adjacentMobIds.length > 4){
+                    adjacentMobIds = adjacentMobIds.slice(0,4);
+                }
+                this.game.client.sendFlareDance(adjacentMobIds);
+            }
+        },
         isMovingToLoot: function() {
             return this.isLootMoving;
         },
@@ -115,40 +178,52 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         onInvincible: function(callback) {
             this.invincible_callback = callback;
         },
-        
+
         startInvincibility: function() {
             var self = this;
 
             if(!this.invincible) {
-                this.currentArmorSprite = this.getSprite();
                 this.invincible = true;
-                this.invincible_callback();
             } else {
-                // If the player already has invincibility, just reset its duration.
                 if(this.invincibleTimeout) {
                     clearTimeout(this.invincibleTimeout);
                 }
             }
-
             this.invincibleTimeout = setTimeout(function() {
                 self.stopInvincibility();
                 self.idle();
-            }, 7500);
+            }, 15000);
         },
 
         stopInvincibility: function() {
-            this.invincible_callback();
             this.invincible = false;
 
-            if(this.currentArmorSprite) {
-                this.setSprite(this.currentArmorSprite);
-                this.setSpriteName(this.currentArmorSprite.id);
-                this.currentArmorSprite = null;
-            }
             if(this.invincibleTimeout) {
                 clearTimeout(this.invincibleTimeout);
             }
-         },
+        },
+        startRoyalAzaleaBenef: function() {
+            var self = this;
+
+            if(!this.isRoyalAzaleaBenef) {
+                this.isRoyalAzaleaBenef = true;
+            } else {
+                if(this.royalAzaleaBenefTimeout) {
+                    clearTimeout(this.royalAzaleaBenefTimeout);
+                }
+            }
+            this.royalAzaleaBenefTimeout = setTimeout(function() {
+                self.stopRoyalAzaleaBenef();
+                self.idle();
+            }, 15000);
+        },
+        stopRoyalAzaleaBenef: function(){
+            this.isRoyalAzaleaBenef = false;
+
+            if(this.royalAzaleaBenefTimeout) {
+                clearTimeout(this.royalAzaleaBenefTimeout);
+            }
+        },
         flagPVP: function(pvpFlag){
             this.pvpFlag = pvpFlag;
        }
