@@ -1,10 +1,12 @@
 define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPage, Item) {
     var StatePage = TabPage.extend({
-        init: function() {
+        init: function(parent, game) {
             this._super('#characterDialogFrameStatePage');
+            this.parent = parent;
+            this.game = game;
         },
         assign: function(datas) {
-            var game = this.parent.parent.game,
+            var game = this.game,
                 player = {
                     kind: datas[0],
                     armor: datas[1],
@@ -332,7 +334,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
 
             this.parent = parent;
             this.game = game;
-            this.add(new StatePage(this));
+            this.add(new StatePage(this, this.game));
             this.add(new SkillPage(this));
 
             this.pageNavigator = new PageNavigator();
@@ -347,7 +349,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
 
         open: function(datas) {
             this.pages[0].assign(datas);
-            this.pages[1].assign(this.parent.game.player);
+            this.pages[1].assign(this.game.player);
             this.pageNavigator.setIndex(1);
         }
     });

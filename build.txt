@@ -9,6 +9,7 @@ js/infomanager.js
 js/timer.js
 js/bubble.js
 js/camera.js
+js/Animation.js
 js/entity.js
 js/item.js
 js/transition.js
@@ -622,6 +623,7 @@ js/inventoryhandler.js
 js/bools.js
 js/dialog.js
 js/iteminfodialog.js
+js/skillhandler.js
 js/../../shared/js/gametypes.js
 js/game.js
 

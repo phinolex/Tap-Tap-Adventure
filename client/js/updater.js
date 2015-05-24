@@ -239,10 +239,22 @@ define(['character', 'timer'], function(Character, Timer) {
             this.game.forEachEntity(function(entity) {
                 var anim = entity.currentAnimation;
 
-                if(anim) {
+                if(anim && !entity.isStun) {
                     if(anim.update(t)) {
                         entity.setDirty();
                     }
+                }
+                anim = entity.criticalAnimation;
+                if(anim && entity.isCritical){
+                    anim.update(t);
+                }
+                anim = entity.healAnimation;
+                if(anim && entity.isHeal){
+                    anim.update(t);
+                }
+                anim = entity.stunAnimation;
+                if(anim && entity.isStun){
+                    anim.update(t);
                 }
             });
 
@@ -254,6 +266,21 @@ define(['character', 'timer'], function(Character, Timer) {
             var target = this.game.targetAnimation;
             if(target) {
                 target.update(t);
+            }
+
+            var benef = this.game.benefAnimation;
+            if(benef) {
+                benef.update(t);
+            }
+
+            var benef10 = this.game.benef10Animation;
+            if(benef10) {
+                benef10.update(t);
+            }
+
+            var benef4 = this.game.benef4Animation;
+            if(benef4) {
+                benef4.update(t);
             }
         },
 

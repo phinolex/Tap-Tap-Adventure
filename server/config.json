@@ -4,7 +4,7 @@
     "nb_players_per_world": 1000,
     "nb_worlds": 1,
     "map_filepath": "./server/maps/world_server.json",
-    "metrics_enabled": false,
+    "metrics_enabled": true,
     "use_one_port": true,
     "redis_port": 6379,
     "redis_host": "127.0.0.1",

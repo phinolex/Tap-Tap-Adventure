@@ -216,7 +216,7 @@ module.exports = World = cls.Class.extend({
                 } //NOTE
                 updateCount = 0;
             }
-        }, 1000 / this.ups);
+        }, 10000 / this.ups);
 
         log.info(""+this.id+" created (capacity: "+this.maxPlayers+" players).");
     },

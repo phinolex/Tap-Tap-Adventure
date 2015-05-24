@@ -1,5 +1,5 @@
 
-define(function() {
+define(['Animation'], function(Animation) {
 
     var Entity = Class.extend({
         init: function(id, kind) {
@@ -14,9 +14,9 @@ define(function() {
             this.flipSpriteY = false;
             this.animations = null;
             this.currentAnimation = null;
-            /*
 
-
+            this.isCritical = false;
+            this.isHeal = false;
             this.criticalAnimation = new Animation("atk_down", 10, 0, 48, 48);
             this.criticalAnimation.setSpeed(30);
             this.criticalAnimation.setCount(1, function(){
@@ -24,7 +24,7 @@ define(function() {
                 self.criticalAnimation.reset();
                 self.criticalAnimation.count = 1;
             });
-            this.isCritical = false;
+
             this.healAnimation = new Animation("atk_down", 10, 0, 32, 32);
             this.healAnimation.setSpeed(120);
             this.healAnimation.setCount(1, function(){
@@ -35,8 +35,8 @@ define(function() {
             this.stunAnimation = new Animation("atk_down", 6, 0, 48, 48);
             this.stunAnimation.setSpeed(30);
 
-            this.isHeal = false;
-*/
+
+
             
             
             this.shadowOffsetY = 0;

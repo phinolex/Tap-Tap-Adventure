@@ -6,14 +6,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'questhandler',
-        'partyhandler', 'rankinghandler', 'inventoryhandler', 'bools', 'iteminfodialog',
+        'partyhandler', 'rankinghandler', 'inventoryhandler', 'bools', 'iteminfodialog', 'skillhandler',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
          ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler, 
-         InventoryHandler, Bools, ItemInfoDialog) {
+         InventoryHandler, Bools, ItemInfoDialog, SkillHandler) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -83,6 +83,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.partyhandler = new PartyHandler(this);
             this.rankingHandler = new RankingHandler(this);
             this.inventoryHandler = new InventoryHandler(this);
+            this.player.skillHandler = new SkillHandler(this);
+
             
             // TextWindow Handler
             //this.textWindowHandler = new TextWindowHandler();
@@ -867,6 +869,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.admin = admin;
                 self.player.experience = experience;
                 self.player.level = Types.getLevel(experience);
+
                 self.doubleEXP = doubleExp;
                 self.expMultiplier = expMultiplier;
                 self.player.setGridPosition(x, y);

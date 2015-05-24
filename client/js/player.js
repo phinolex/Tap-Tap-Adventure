@@ -5,10 +5,9 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
         init: function(id, name, pw, kind, game) {
             this._super(id, kind);
-
+            this.game = game;
             this.name = name;
             this.pw = pw;
-            //this.skillHandler = new SkillHandler(game);
 
             // Renderer
             this.nameOffsetY = -10;
@@ -18,7 +17,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             this.spriteName = "clotharmor";
             this.armorName = "clotharmor";
             this.weaponName = "sword1";
- 
+
 
             
             // modes
