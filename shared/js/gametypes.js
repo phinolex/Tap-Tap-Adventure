@@ -74,7 +74,14 @@ Types = {
             FINISHED: 14
         },
         TRADESCREEN: 50,
-        CHARACTERINFO: 51
+        CHARACTERINFO: 51,
+        FLAREDANCE: 52,
+        SELL: 53,
+        SHOP: 54,
+        BUY: 55,
+        STOREOPEN: 56,
+        STORESELL: 57,
+        STOREBUY: 58
     },
 
     Entities: {

@@ -71,12 +71,10 @@ footer, header, hgroup, menu, nav, section {
         font-style: normal;
 }
 
-//Upscale - 3
 @media screen and (min-width: 1501px) {
     
 }
 
-//Upscale - 2
 
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
     #shopSell {
@@ -273,7 +271,6 @@ footer, header, hgroup, menu, nav, section {
     }
 }
 
-//Upscale - 1
 
 @media screen and (max-width: 1000px) {
     

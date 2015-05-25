@@ -165,13 +165,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
                                 var d = new Date();
                                 var lastLoginTimeDate = new Date(lastLoginTime);
-                                if (player.connection._connection.remoteAddress === "127.0.0.1") {
-                                    client.sadd("adminname", "Flavius");
-                                } else {
-                                    player.connection.sendUTF8("ban"); //Make sure you create another invalid connection. "You do not have access to this account."
-                                    player.connection.close("Invalid login, closing connection to: " + player.connection._connection.remoteAddress);
-                                    return;
-                                }
+                                
                                 
                                 // Check Ban
                                 d.setDate(d.getDate() - d.getDay());
@@ -480,7 +474,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                 if(replies[index].toString() === adminPlayer.name) {
                     var curTime = (new Date()).getTime();
                     otherPlayer.membershipTime = curTime + (1000*60*60*24*30);
-                    client.hset("membershipTime:" (otherPlayer.membershipTime).toString());
+                    client.hset("membershipTime: " + (otherPlayer.membershipTime).toString());
                     log.info("Membership on: " + otherPlayer.name + " until: " + (new Date(otherPlayer.membershipTime).toString()));
                     return;
                 
@@ -1020,7 +1014,85 @@ module.exports = DatabaseHandler = cls.Class.extend({
                      curTime]);
       });
     },
-    
+    sell: function(player, inventoryNumber, burgerCount){
+        var self = this;
+        client.hget('u:'+player.name+':shop0', 'itemKind', function(err, itemKindInShop){
+            itemKindInShop = Utils.NaN2Zero(itemKindInShop);
+            var multi = client.multi();
+            multi.hset('u:'+player.name+':shop0', 'itemKind', player.inventory.rooms[inventoryNumber].itemKind);
+            multi.hset('u:'+player.name+':shop0', 'burgerCount', burgerCount);
+            if(!itemKindInShop){
+                multi.lpush('shop:id', player.name+':'+0)
+            }
+            multi.exec();
+            player.inventory.makeEmptyInventory(inventoryNumber);
+            if(itemKindInShop){
+                player.inventory.putInventory(itemKindInShop, 0, 0, 0);
+            }
+            self.getShop(player, 0);
+        });
+    },
+    getShop: function(player, number){
+        client.lrange('shop:id', number, number+5, function(err, ids){
+            var i=0;
+            var multi = client.multi();
+
+            for(i=0; i < ids.length; i++){
+                var splitedId = ids[i].split(':');
+                multi.hget('u:' + splitedId[0] + ':shop'+ splitedId[1], 'itemKind');
+                multi.hget('u:' + splitedId[0] + ':shop'+ splitedId[1], 'burgerCount');
+            }
+
+            multi.exec(function(err, items){
+                var msg = [Types.Messages.SHOP, number];
+                for(i=0; i < ids.length; i++){
+                    msg.push(ids[i]);
+                    msg.push(items[i*2]);
+                    msg.push(items[i*2+1]);
+                }
+                player.send(msg);
+            });
+        });
+    },
+    buy: function(player, id, itemKind, burgerCount){
+        var self = this;
+        var splitedId = id.split(':');
+        var name = splitedId[0];
+        var number = splitedId[1];
+        if(!player.inventory.hasEmptyInventory()){
+            player.server.pushToPlayer(player, new Messages.Notify("인벤토리에 빈 칸이 없습니다."));
+            return;
+        }
+
+        var multi = client.multi();
+        multi.hget('u:' + name + ':shop'+number, 'itemKind');
+        multi.hget('u:' + name + ':shop'+number, 'burgerCount');
+        multi.exec(function(err, replies){
+            var databaseItemKind = parseInt(replies[0]);
+            var databaseBurgerCount = parseInt(replies[1]);
+            var playerBurgerCount = player.inventory.getItemNumber(Types.Entities.BURGER);
+
+            if(parseInt(databaseItemKind) === itemKind
+                && parseInt(databaseBurgerCount) === burgerCount
+                && playerBurgerCount >= databaseBurgerCount){
+                if(player.inventory.putInventory(itemKind, 0, 0, 0)){
+                    client.multi()
+                        .hdel('u:'+name+':shop0', 'itemKind')
+                        .hdel('u:'+name+':shop0', 'burgerCount')
+                        .lrem('shop:id', 0, name+':'+0)
+                        .exec();
+                    soldPlayer = player.server.getPlayerByName(name);
+                    if(soldPlayer){
+                        soldPlayer.inventory.putInventory(Types.Entities.BURGER, burgerCount, 0, 0);
+                    } else{
+                        self.putBurgerOfflineUser(name, burgerCount);
+                    }
+                    player.inventory.putInventory(Types.Entities.BURGER, -1 * burgerCount, 0, 0);
+                }
+            }
+            self.getShop(player, 0);
+        });
+    },
     buyInventory: function(player){
         var self = this;
         client.zscore("adrank", player.name, function(err, reply){

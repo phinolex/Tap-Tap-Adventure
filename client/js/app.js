@@ -1,7 +1,7 @@
 
 /* global Mob, Types, Item, log, _, TRANSITIONEND, Class */
 
-define(['jquery'], function($) {
+define(['jquery', 'mob', 'item'], function($, Mob, Item) {
 
     var App = Class.extend({
         init: function() {
@@ -323,42 +323,43 @@ define(['jquery'], function($) {
                 healthMaxWidth = $("#target .health").width() - (12 * scale),
                 timeout;
 
-            this.game.player.onSetTarget(function(target, name, mouseover) {
+            this.game.player.onSetTarget(function(target, name, mouseover){
                 var el = '#target';
                 if(mouseover) el = '#inspector';
                 var sprite = target.sprite;
                 var x, y;
                 if(Types.isItem(target.kind)){
                     x = ((sprite.animationData['idle'].length-1)*sprite.width),
-                    y = ((sprite.animationData['idle'].row)*sprite.height);
+                        y = ((sprite.animationData['idle'].row)*sprite.height);
                 } else if(Types.isMob(target.kind)){
                     x = ((sprite.animationData['idle_down'].length-1)*sprite.width),
-                    y = ((sprite.animationData['idle_down'].row)*sprite.height);
-                } else {
+                        y = ((sprite.animationData['idle_down'].row)*sprite.height);
+                } else{
                     return;
                 }
-            $(el+' .name').text(name);
-            $(el+' .name').css('text-transform', 'capitalize');
 
-            if(el === '#inspector'){
-                 $(el + ' .details').text((target instanceof Mob ? "Level." + Types.getMobLevel(Types.getKindFromString(name)) : (target instanceof Item ? target.getInfoMsg(): "1")));
-            }
-            $(el+' .headshot div').height(sprite.height).width(sprite.width);
-            $(el+' .headshot div').css('margin-left', -sprite.width/2).css('margin-top', -sprite.height/2);
-            $(el+' .headshot div').css('background', 'url(img/1/'+(target instanceof Item ? 'item-'+name : name)+'.png) no-repeat -'+x+'px -'+y+'px');
+                $(el+' .name').text(name);
+                $(el+' .name').css('text-transform', 'capitalize');
 
-            if(target.healthPoints){
-                $(el+" .health").css('width', Math.round(target.healthPoints/target.maxHp*100)+'%');
-            } else {
-                $(el+" .health").css('width', '100%');
-            }
+                if(el === '#inspector'){
+                    $(el + ' .details').text((target instanceof Mob ? "Level - " + Types.getMobLevel(Types.getKindFromString(name)) : (target instanceof Item ? target.getInfoMsg(): "1")));
+                }
+                $(el+' .headshot div').height(sprite.height).width(sprite.width);
+                $(el+' .headshot div').css('margin-left', -sprite.width/2).css('margin-top', -sprite.height/2);
+                $(el+' .headshot div').css('background', 'url(img/1/'+(target instanceof Item ? 'item-'+name : name)+'.png) no-repeat -'+x+'px -'+y+'px');
 
-            $(el).fadeIn('fast');
+                if(target.healthPoints){
+                    $(el+" .health").css('width', Math.round(target.healthPoints/target.maxHp*100)+'%');
+                } else{
+                    $(el+" .health").css('width', '100%');
+                }
+
+                $(el).fadeIn('fast');
                 if(mouseover){
                     clearTimeout(timeout);
                     timeout = null;
-                    timeout = setTimeout(function() {
-                    $('#inspector').fadeOut('fast');
+                    timeout = setTimeout(function(){
+                        $('#inspector').fadeOut('fast');
                         self.game.player.inspecting = null;
                     }, 2000);
                 }

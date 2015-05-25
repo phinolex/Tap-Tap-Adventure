@@ -633,6 +633,39 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 $('body').addClass('tablet');
             }
         });
+        $('#healthbar').bind('mousedown', function (event) {
+            if(event.button === 2) {
+                return false;
+            }
+        });
+
+        $('#healthbar').bind('mouseup', function (event) {
+            if(event.button === 2) {
+                if(game.autoEattingHandler) {
+                    clearInterval(game.autoEattingHandler);
+
+                    $('#hpguide').css('display', 'none');
+                }
+                return false;
+            }
+        });
+
+        $('#hpguide').bind('mousedown', function (event) {
+            if(event.button === 2) {
+                return false;
+            }
+        });
+
+        $('#hpguide').bind('mouseup', function (event) {
+            if(event.button === 2) {
+                if(game.autoEattingHandler) {
+                    clearInterval(game.autoEattingHandler);
+
+                    $('#hpguide').css('display', 'none');
+                }
+                return false;
+            }
+        });
     };
 
     initApp();

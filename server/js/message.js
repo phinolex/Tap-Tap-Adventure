@@ -144,6 +144,40 @@ Messages.Drop = Message.extend({
     }
 });
 
+
+Messages.Log = Message.extend({
+    init: function(message) {
+        this.message = message;
+        this.message.unshift(Types.Messages.LOG);
+    },
+    serialize: function() {
+        return this.message;
+    }
+});
+Messages.Skill = Message.extend({
+    init: function(type, id, level) {
+        this.type = type;
+        this.id = id;
+        this.level = level;
+    },
+    serialize: function() {
+        return [Types.Messages.SKILL,
+            this.type,
+            this.id,
+            this.level];
+    }
+});
+
+Messages.SkillInstall = Message.extend({
+    init: function(index, name) {
+        this.index = index;
+        this.name = name;
+    },
+    serialize: function() {
+        return [Types.Messages.SKILLINSTALL, this.index, this.name];
+    }
+});
+
 Messages.Chat = Message.extend({
     init: function (player, message) {
         this.playerId = player.id;

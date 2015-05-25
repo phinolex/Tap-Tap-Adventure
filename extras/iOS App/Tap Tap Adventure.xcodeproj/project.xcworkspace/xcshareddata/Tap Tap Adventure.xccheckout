@@ -14,11 +14,11 @@
 		<string>https://github.com/Flavius256/TapTapAdventure.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>iOS App/Tap Tap Adventure.xcodeproj</string>
+	<string>extras/iOS App/Tap Tap Adventure.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>7D4BB7B7EF6C1C7197E016CF4BCBC8E95C1A98ED</key>
-		<string>../../..</string>
+		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/Flavius256/TapTapAdventure.git</string>

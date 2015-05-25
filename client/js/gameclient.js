@@ -54,6 +54,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.SKILL] = this.receiveSkill;
             this.handlers[Types.Messages.SKILLINSTALL] = this.receiveSkillInstall;
             this.handlers[Types.Messages.CHARACTERINFO] = this.receiveCharacterInfo;
+            this.handlers[Types.Messages.SHOP] = this.receiveShop;
+            this.handlers[Types.Messages.STOREOPEN] = this.receiveStoreOpen;
             this.useBison = false;
            
             this.enable();
@@ -548,6 +550,18 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.characterInfo_callback(data);
             }
         },
+        receiveStoreOpen: function(data) {
+            if(this.storeOpen_callback) {
+                data.shift();
+                this.storeOpen_callback(data);
+            }
+        },
+        receiveShop: function(data){
+            data.shift();
+            if(this.shop_callback){
+                this.shop_callback(data);
+            }
+        },
         onDispatched: function(callback) {
             this.dispatched_callback = callback;
         },
@@ -690,6 +704,12 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onCharacterInfo: function(callback) {
             this.characterInfo_callback = callback; 
         },
+        onStoreOpen: function(callback) {
+            this.storeOpen_callback = callback;
+        },
+        onShop: function (callback) {
+            this.shop_callback = callback;
+        },
                 
 
         sendCreate: function(player) {
@@ -830,6 +850,28 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
         sendCharacterInfo: function() {
             this.sendMessage([Types.Messages.CHARACTERINFO]);
+        },
+        sendSell: function(inventoryNumber, count){
+            this.sendMessage([Types.Messages.SELL,
+                inventoryNumber,
+                count]);
+        },
+        sendShop: function(command, number){
+            this.sendMessage([Types.Messages.SHOP,
+                command,
+                number]);
+        },
+        sendBuy: function(number, itemKind, burgerCount){
+            this.sendMessage([Types.Messages.BUY,
+                number,
+                itemKind,
+                burgerCount]);
+        },
+        sendStoreSell: function(inventoryNumber) {
+            this.sendMessage([Types.Messages.STORESELL, inventoryNumber]);
+        },
+        sendStoreBuy: function(itemType, itemKind, itemCount) {
+            this.sendMessage([Types.Messages.STOREBUY, itemType, itemKind, itemCount]);
         }
         
     });

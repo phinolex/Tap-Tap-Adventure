@@ -277,6 +277,29 @@ define(['Animation'], function(Animation) {
 
         onDirty: function(dirty_callback) {
             this.dirty_callback = dirty_callback;
+        },
+        stun: function(level){
+            var self = this;
+            if(!this.isStun){
+                this.isStun = true;
+                if(this.attackCooldown){
+                    this.attackCooldown.lastTime += 500*level;
+                }
+                this.stunTimeout = setTimeout(function(){
+                    self.isStun = false;
+                    self.stunTimeout = null;
+                }, 500*level);
+            }
+        },
+        provocation: function(level){
+            var self = this;
+            if(!this.isProvocation){
+                this.isProvocation = true;
+                this.stunTimeout = setTimeout(function(){
+                    self.isProvocation = false;
+                    self.provocationTimeout = null;
+                }, 1000*level);
+            }
         }
     });
 

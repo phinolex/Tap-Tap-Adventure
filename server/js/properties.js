@@ -2,368 +2,368 @@
 var Types = require("../../shared/js/gametypes");
 
 var Properties = {
-  wizard: {
-    drops: {
-      flask: 50,
-      platearmor: 5,
-      firepotion: 5
+    wizard: {
+        drops: {
+            flask: 50,
+            platearmor: 5,
+            firepotion: 5
+        },
+        hp: 80,
+        armor: 1,
+        weapon: 1
     },
-    hp: 80,
-    armor: 1,
-    weapon: 1
-  },
-  crab: {
-    drops: {
-      flask: 50,
-      firepotion: 10
+    crab: {
+        drops: {
+            flask: 50,
+            firepotion: 10
+        },
+        hp: 25,
+        armor: 1,
+        weapon: 1
     },
-    hp: 25,
-    armor: 1,
-    weapon: 1
-  },
-  rat: {
-    drops: {
-      flask: 50,
-      sword2: 20,
-      plasticbow: 20,
-      firepotion: 10
+    rat: {
+        drops: {
+            flask: 50,
+            sword2: 20,
+            plasticbow: 20,
+            firepotion: 10
+        },
+        hp: 80,
+        armor: 1,
+        weapon: 1
     },
-    hp: 80,
-    armor: 1,
-    weapon: 1
-  },
-  bat: {
-    drops: {
-      flask: 50,
-      sword2: 19,
-      plasticbow: 19,
-      firepotion: 10,
-      
-      ring1: 1
+    bat: {
+        drops: {
+            flask: 50,
+            sword2: 19,
+            plasticbow: 19,
+            firepotion: 10,
+
+            ring1: 1
+        },
+        hp: 100,
+        armor: 1,
+        weapon: 1
     },
-    hp: 100,
-    armor: 1,
-    weapon: 1
-  },
-  goblin: {
-    drops: {
-      flask: 50,
-      leatherarmor: 19,
-      leatherarcherarmor: 19,
-      firepotion: 10,
-      
-      ring1: 1
+    goblin: {
+        drops: {
+            flask: 50,
+            leatherarmor: 19,
+            leatherarcherarmor: 19,
+            firepotion: 10,
+
+            ring1: 1
+        },
+        hp: 140,
+        armor: 1,
+        weapon: 1
     },
-    hp: 140,
-    armor: 1,
-    weapon: 1
-  },
-  yellowfish: {
-    drops: {
-      flask: 50,
-      leatherarmor: 20,
-      leatherarcherarmor: 20,
-      firepotion: 10
+    yellowfish: {
+        drops: {
+            flask: 50,
+            leatherarmor: 20,
+            leatherarcherarmor: 20,
+            firepotion: 10
+        },
+        hp: 140,
+        armor: 1,
+        weapon: 1
     },
-    hp: 140,
-    armor: 1,
-    weapon: 1
-  },
-  skeleton: {
-    drops: {
-      flask: 40,
-      axe: 19,
-      ironbow: 19,
-      firepotion: 10,
-      
-      ring1: 1
+    skeleton: {
+        drops: {
+            flask: 40,
+            axe: 19,
+            ironbow: 19,
+            firepotion: 10,
+
+            ring1: 1
+        },
+        hp: 240,
+        armor: 1,
+        weapon: 1
     },
-    hp: 240,
-    armor: 1,
-    weapon: 1
-  },
-  greenfish: {
-    drops: {
-      flask: 40,
-      axe: 20,
-      ironbow: 20,
-      firepotion: 10
+    greenfish: {
+        drops: {
+            flask: 40,
+            axe: 20,
+            ironbow: 20,
+            firepotion: 10
+        },
+        hp: 240,
+        armor: 1,
+        weapon: 1
     },
-    hp: 240,
-    armor: 1,
-    weapon: 1
-  },
-  snek: {
-    drops: {
-      flask: 50,
-      mailarmor: 19,
-      mailarcherarmor: 19,
-      firepotion: 10,
-      
-      ring1: 1
+    snek: {
+        drops: {
+            flask: 50,
+            mailarmor: 19,
+            mailarcherarmor: 19,
+            firepotion: 10,
+
+            ring1: 1
+        },
+        hp: 300,
+        armor: 1,
+        weapon: 1
     },
-    hp: 300,
-    armor: 1,
-    weapon: 1
-  },
-  redfish: {
-    drops: {
-      flask: 50,
-      mailarmor: 20,
-      mailarcherarmor: 20,
-      firepotion: 10
+    redfish: {
+        drops: {
+            flask: 50,
+            mailarmor: 20,
+            mailarcherarmor: 20,
+            firepotion: 10
+        },
+        hp: 300,
+        armor: 1,
+        weapon: 1
     },
-    hp: 300,
-    armor: 1,
-    weapon: 1
-  },
-  ogre: {
-    drops: {
-      burger: 10,
-      flask: 40,
-      morningstar: 19,
-      redbow: 19,
-      firepotion: 10,
-      
-      ring1: 1
+    ogre: {
+        drops: {
+            burger: 10,
+            flask: 40,
+            morningstar: 19,
+            redbow: 19,
+            firepotion: 10,
+
+            ring1: 1
+        },
+        hp: 300,
+        armor: 1,
+        weapon: 1
     },
-    hp: 300,
-    armor: 1,
-    weapon: 1
-  },
-  clam: {
-    drops: {
-      burger: 10,
-      flask: 40,
-      morningstar: 20,
-      redbow: 20,
-      firepotion: 10
+    clam: {
+        drops: {
+            burger: 10,
+            flask: 40,
+            morningstar: 20,
+            redbow: 20,
+            firepotion: 10
+        },
+        hp: 300,
+        armor: 1,
+        weapon: 1
     },
-    hp: 300,
-    armor: 1,
-    weapon: 1
-  },
-  skeleton2: {
-    drops: {
-      flask: 50,
-      platearmor: 19,
-      platearcherarmor: 19,
-      firepotion: 10,
-      
-      ring1: 1
+    skeleton2: {
+        drops: {
+            flask: 50,
+            platearmor: 19,
+            platearcherarmor: 19,
+            firepotion: 10,
+
+            ring1: 1
+        },
+        hp: 300,
+        armor: 1,
+        weapon: 1
     },
-    hp: 300,
-    armor: 1,
-    weapon: 1
-  },
-  hermitcrab: {
-    drops: {
-      flask: 50,
-      platearmor: 20,
-      platearcherarmor: 20,
-      firepotion: 10
+    hermitcrab: {
+        drops: {
+            flask: 50,
+            platearmor: 20,
+            platearcherarmor: 20,
+            firepotion: 10
+        },
+        hp: 300,
+        armor: 1,
+        weapon: 1
     },
-    hp: 300,
-    armor: 1,
-    weapon: 1
-  },
-  eye: {
-    drops: {
-      flask: 50,
-      bluesword: 19,
-      violetbow: 19,
-      firepotion: 10,
-      
-      ring1: 1
+    eye: {
+        drops: {
+            flask: 50,
+            bluesword: 19,
+            violetbow: 19,
+            firepotion: 10,
+
+            ring1: 1
+        },
+        hp: 300,
+        armor: 1,
+        weapon: 1
     },
-    hp: 300,
-    armor: 1,
-    weapon: 1
-  },
-  spectre: {
-    drops: {
-      flask: 30,
-      redarmor: 19,
-      redarcherarmor: 19,
-      firepotion: 10,
-      
-      ring1: 1
+    spectre: {
+        drops: {
+            flask: 30,
+            redarmor: 19,
+            redarcherarmor: 19,
+            firepotion: 10,
+
+            ring1: 1
+        },
+        hp: 300,
+        armor: 1,
+        weapon: 1
+
     },
-    hp: 300,
-    armor: 1,
-    weapon: 1
-    
-  },
-  deathknight: {
-    drops: {
-      burger: 30,
-      redsword: 19,
-      deathbow: 19,
-      firepotion: 10,
-      
-      ring1: 1
+    deathknight: {
+        drops: {
+            burger: 30,
+            redsword: 19,
+            deathbow: 19,
+            firepotion: 10,
+
+            ring1: 1
+        },
+        hp: 360,
+        armor: 1,
+        weapon: 1
     },
-    hp: 360,
-    armor: 1,
-    weapon: 1
-  },
-  skeletonking: {
-    drops: {
-      goldensword: 50,
-      goldenarcherarmor: 25,
-      goldenbow: 25
+    skeletonking: {
+        drops: {
+            goldensword: 50,
+            goldenarcherarmor: 25,
+            goldenbow: 25
+        },
+        hp: 1400,
+        armor: 1,
+        weapon: 1
     },
-    hp: 1400,
-    armor: 1,
-    weapon: 1
-  },
-  mimic: {
-    drops: {
-      greenarmor: 10,
-      greenarcherarmor: 10,
-      burger: 30,
-      firepotion: 5,
-      sproutring: 1
-      
+    mimic: {
+        drops: {
+            greenarmor: 10,
+            greenarcherarmor: 10,
+            burger: 30,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 540,
+        armor: 1,
+        weapon: 1
+
     },
-    hp: 540,
-    armor: 1,
-    weapon: 1
-    
-  },
-  orc: {
-    drops: {
-      burger: 30,
-      greenarmor: 10,
-      greenarcherarmor: 10,
-      firepotion: 5,
-      sproutring: 1
-      
+    orc: {
+        drops: {
+            burger: 30,
+            greenarmor: 10,
+            greenarcherarmor: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 540,
+        armor: 1,
+        weapon: 1
     },
-    hp: 540,
-    armor: 1,
-    weapon: 1
-  },
-  oldogre: {
-    drops: {
-      burger: 30,
-      greenwingarmor: 10,
-      greenwingarcherarmor: 10,
-      firepotion: 5,
-      sproutring: 1
-      
+    oldogre: {
+        drops: {
+            burger: 30,
+            greenwingarmor: 10,
+            greenwingarcherarmor: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 700,
+        armor: 1,
+        weapon: 1
     },
-    hp: 700,
-    armor: 1,
-    weapon: 1
-  },
-  golem: {
-    drops: {
-      burger: 30,
-      greenwingarmor: 10,
-      greenwingarcherarmor: 10,
-      firepotion: 5,
-      sproutring: 1
-      
+    golem: {
+        drops: {
+            burger: 30,
+            greenwingarmor: 10,
+            greenwingarcherarmor: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 700,
+        armor: 1,
+        weapon: 1
     },
-    hp: 700,
-    armor: 1,
-    weapon: 1
-  },
-  hobgoblin: {
-    drops: {
-      burger: 30,
-      sidesword: 10,
-      watermelonbow: 10,
-      firepotion: 5,
-      sproutring: 1
-      
+    hobgoblin: {
+        drops: {
+            burger: 30,
+            sidesword: 10,
+            watermelonbow: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 800,
+        armor: 1,
+        weapon: 1
+
     },
-    hp: 800,
-    armor: 1,
-    weapon: 1
-    
-  },
-  yellowmouse: {
-    drops: {
-      burger: 30,
-      spear: 10,
-      greenbow: 10,
-      firepotion: 5,
-      sproutring: 1
-     
+    yellowmouse: {
+        drops: {
+            burger: 30,
+            spear: 10,
+            greenbow: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 540,
+        armor: 1,
+        weapon: 1
     },
-    hp: 540,
-    armor: 1,
-    weapon: 1
-  },
-  brownmouse: {
-    drops: {
-      burger: 30,
-      guardarmor: 10,
-      guardarcherarmor: 10,
-      firepotion: 5,
-      sproutring: 1
-      
+    brownmouse: {
+        drops: {
+            burger: 30,
+            guardarmor: 10,
+            guardarcherarmor: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 740,
+        armor: 1,
+        weapon: 1
     },
-    hp: 740,
-    armor: 1,
-    weapon: 1
-  },
-  redguard: {
-    drops: {
-      burger: 30,
-      redguardarmor: 10,
-      redguardarcherarmor: 10,
-      firepotion: 5,
-      sproutring: 1
-      
+    redguard: {
+        drops: {
+            burger: 30,
+            redguardarmor: 10,
+            redguardarcherarmor: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 600,
+        armor: 1,
+        weapon: 1
     },
-    hp: 600,
-    armor: 1,
-    weapon: 1
-  },
-  redmouse: {
-    drops: {
-      burger: 30,
-      scimitar: 10,
-      redenelbow: 10,
-      firepotion: 5,
-      sproutring: 1
-      
+    redmouse: {
+        drops: {
+            burger: 30,
+            scimitar: 10,
+            redenelbow: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 800,
+        armor: 1,
+        weapon: 1
+
     },
-    hp: 800,
-    armor: 1,
-    weapon: 1
-    
-  },
-  infectedguard: {
-    drops: {
-      burger: 30,
-      whitearmor: 10,
-      whitearcherarmor: 10,
-      firepotion: 5,
-      sproutring: 1
-      
+    infectedguard: {
+        drops: {
+            burger: 30,
+            whitearmor: 10,
+            whitearcherarmor: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 800,
+        armor: 1,
+        weapon: 1
     },
-    hp: 800,
-    armor: 1,
-    weapon: 1
-  },
-  livingarmor: {
-    drops: {
-      burger: 30,
-      whitearmor: 10,
-      whitearcherarmor: 10,
-      firepotion: 5,
-      sproutring: 1
-      
+    livingarmor: {
+        drops: {
+            burger: 30,
+            whitearmor: 10,
+            whitearcherarmor: 10,
+            firepotion: 5,
+            sproutring: 1
+
+        },
+        hp: 800,
+        armor: 1,
+        weapon: 1
     },
-    hp: 800,
-    armor: 1,
-    weapon: 1
-  },
-  // Line
+    // Line
     whitemouse: {
         drops: {
             burger: 30,
@@ -371,11 +371,11 @@ var Properties = {
             ratarcherarmor: 10,
             firepotion: 5,
             sproutring: 1
-            
+
         },
         hp: 900,
         armor: 1,
-    weapon: 1
+        weapon: 1
     },
     mermaid: {
         drops: {
@@ -384,12 +384,12 @@ var Properties = {
             mermaidbow: 10,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1000,
         armor: 1,
         weapon: 1
-        
+
     },
     preta: {
         drops: {
@@ -398,7 +398,7 @@ var Properties = {
             seahorsebow: 10,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1000,
         armor: 1,
@@ -411,7 +411,7 @@ var Properties = {
             piratearcherarmor: 10,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1000,
         armor: 1,
@@ -422,7 +422,7 @@ var Properties = {
             burger: 30,
             firepotion: 10,
             pearlring: 1
-            
+
         },
         hp: 1150,
         armor: 1,
@@ -435,7 +435,7 @@ var Properties = {
             cheoliarcherarmor: 10,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1200,
         armor: 1,
@@ -446,7 +446,7 @@ var Properties = {
             burger: 30,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1300,
         armor: 1,
@@ -459,7 +459,7 @@ var Properties = {
             hunterbow: 10,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1400,
         armor: 1,
@@ -472,7 +472,7 @@ var Properties = {
             dovakinarcherarmor: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1500,
         armor: 1,
@@ -483,7 +483,7 @@ var Properties = {
             burger: 30,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1700,
         armor: 1,
@@ -496,7 +496,7 @@ var Properties = {
             gbwingarcherarmor: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1800,
         armor: 1,
@@ -509,7 +509,7 @@ var Properties = {
             gbwingarcherarmor: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 1900,
         armor: 1,
@@ -522,7 +522,7 @@ var Properties = {
             greenlightbow: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 2000,
         armor: 1,
@@ -535,7 +535,7 @@ var Properties = {
             gbwingarcherarmor: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 2100,
         armor: 1,
@@ -548,7 +548,7 @@ var Properties = {
             redwingarcherarmor: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 2200,
         armor: 1,
@@ -561,7 +561,7 @@ var Properties = {
             redwingarcherarmor: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 2300,
         armor: 1,
@@ -574,7 +574,7 @@ var Properties = {
             snowfoxarcherarmor: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 2438,
         armor: 1,
@@ -586,7 +586,7 @@ var Properties = {
             wolfarmor: 5,
             wolfarcherarmor: 5,
             pearlring: 1
-            
+
         },
         hp: 2584,
         armor: 1,
@@ -599,7 +599,7 @@ var Properties = {
             skylightbow: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 2739,
         armor: 1,
@@ -612,7 +612,7 @@ var Properties = {
             redlightbow: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 2903,
         armor: 1,
@@ -625,7 +625,7 @@ var Properties = {
             bluewingarcherarmor: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 3077,
         armor: 1,
@@ -638,7 +638,7 @@ var Properties = {
             captainbow: 5,
             firepotion: 5,
             pearlring: 1
-            
+
         },
         hp: 3201,
         armor: 1,
@@ -651,7 +651,7 @@ var Properties = {
             fallenarcherarmor: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 3329,
         armor: 1,
@@ -664,7 +664,7 @@ var Properties = {
             redmetalbow: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 3462,
         armor: 1,
@@ -677,7 +677,7 @@ var Properties = {
             crystalarcherarmor: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 3600,
         armor: 1,
@@ -692,7 +692,7 @@ var Properties = {
             justicebow: 2,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 3744,
         armor: 1,
@@ -705,7 +705,7 @@ var Properties = {
             adhererarcherarmor: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 3894,
         armor: 1,
@@ -719,7 +719,7 @@ var Properties = {
             rosebow: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 4050,
         armor: 1,
@@ -732,7 +732,7 @@ var Properties = {
             archerschooluniform: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 4212,
         armor: 1,
@@ -745,7 +745,7 @@ var Properties = {
             crystalbow: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 4380,
         armor: 1,
@@ -758,7 +758,7 @@ var Properties = {
             combatuniform: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 4556,
         armor: 1,
@@ -771,7 +771,7 @@ var Properties = {
             gaybow: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 4738,
         armor: 1,
@@ -784,7 +784,7 @@ var Properties = {
             gayarcherarmor: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 4927,
         armor: 1,
@@ -796,7 +796,7 @@ var Properties = {
             ninjaarmor: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 5124,
         armor: 1,
@@ -809,7 +809,7 @@ var Properties = {
             forestbow: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 5329,
         armor: 1,
@@ -821,7 +821,7 @@ var Properties = {
             beautifullife: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 5543,
         armor: 1,
@@ -833,7 +833,7 @@ var Properties = {
             thiefarmor: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 5764,
         armor: 1,
@@ -845,7 +845,7 @@ var Properties = {
             rabbitarmor: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 5995,
         armor: 1,
@@ -858,7 +858,7 @@ var Properties = {
             sicklebow: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 6235,
         armor: 1,
@@ -870,7 +870,7 @@ var Properties = {
             portalarmor: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 6484,
         armor: 1,
@@ -882,7 +882,7 @@ var Properties = {
             ghostrider: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 6744,
         armor: 1,
@@ -895,7 +895,7 @@ var Properties = {
             bloodbow: 5,
             royalazalea: 1,
             spiritring: 1
-            
+
         },
         hp: 6946,
         armor: 1,
@@ -1321,7 +1321,7 @@ var Properties = {
         hp: 22408,
         armor: 1,
         weapon: 1
-        
+
     },
     pierrot: {
         drops: {

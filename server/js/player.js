@@ -46,10 +46,30 @@ module.exports = Player = Character.extend({
         this.level = 0;
         this.lastWorldChatMinutes = 99;
         this.achievement = [];
+        this.royalAzaleaBenefTimeout = null;
+        this.cooltimeTimeout = null;
+
         this.skillHandler = new SkillHandler();
+
+        this.healExecuted = 0;
+
+        this.flareDanceCallback = null;
+        this.flareDanceExecuted1 = 0;
+        this.flareDanceExecuted2 = 0;
+        this.flareDanceCount = 0;
+
+        this.stunExecuted = 0;
+
+        this.superCatCallback = null;
+        this.superCatExecuted = 0;
+
+        this.provocationExecuted = 0;
+
+        this.pubPointBuyTimeout = null;
         this.variations = new Variations();
         this.membership = false;    
         this.chatBanEndTime = 0;
+
 
         this.connection.listen(function(message) {
             var action = parseInt(message[0]);
@@ -252,59 +272,11 @@ module.exports = Player = Character.extend({
                         self.move_callback(self.x, self.y);
                     }
                 }
-            }
-            
-            else if(action === Types.Messages.HIT) {
+            } else if(action === Types.Messages.HIT) {
                 log.info("HIT: " + self.name + " " + message[1]);
-                var mob = self.server.getEntityById(message[1]);
-                if(mob && self.id) {
-                    var dmg = Formulas.dmg(self, mob);
-                    
-                    if(dmg > 0) {
-                        if(mob.type !== "player"){
-                            mob.receiveDamage(dmg, self.id);
-                            if (mob.hitPoints <= 0) {
-                                //CLASS
-                                self.questAboutKill(mob);
-                                
-                            }
-                            
-                            self.server.handleMobHate(mob.id, self.id, dmg);
-                            self.server.handleHurtEntity(mob, self, dmg);
-                        } else {
-                            mob.hitPoints -= dmg;
-                            self.server.handleHurtEntity(mob);
-                            if(mob.hitPoints <= 0){
-                                mob.isDead = true;
-                                if(mob.firepotionTimeout){
-                                    clearTimeout(mob.firepotionTimeout);
-                                }
-                                self.server.pushBroadcast(new Messages.Chat(self, self.name + " killed " + mob.name));
-                            }
-                        }
-                    }
-                }
-            }
-            else if(action === Types.Messages.HURT) {
-                log.info("HURT: " + self.name + " " + message[1]);
-                var mob = self.server.getEntityById(message[1]);
-                
-                 
-                if(mob && self.hitPoints > 0 && mob instanceof Mob) {
-                    self.hitPoints -= Formulas.dmg(mob, self);
-                    self.server.handleHurtEntity(self);
-                    mob.addTanker(self.id);
-                    
-                    if(self.hitPoints <= 0) {
-                        self.isDead = true;
-                        if(self.level >= 45) { // Don't forget
-                            self.incExp(Math.floor(self.level*self.level*(-2)));
-                        }
-                        if(self.firepotionTimeout) {
-                            clearTimeout(self.firepotionTimeout);
-                        }
-                    }
-                }
+                self.handleHit(message);
+            } else if(action === Types.Messages.HURT) {
+                self.handleHurt(message);
             } else if(action === Types.Messages.INVENTORY){
                 log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
                 self.handleInventory(message);
@@ -314,6 +286,21 @@ module.exports = Player = Character.extend({
             } else if(action === Types.Messages.SKILLINSTALL) {
                 log.info("SKILLINSTALL: " + self.name + " " + message[1] + " " + message[2]);
                 self.handleSkillInstall(message);
+            } else if(action === Types.Messages.SELL){
+                log.info("SELL: " + self.name + " " + message[1] + " " + message[2]);
+                self.handleSell(message);
+            } else if(action === Types.Messages.SHOP){
+                log.info("SHOP: " + self.name + " " + message[1] + " " + message[2]);
+                self.handleShop(message);
+            } else if(action === Types.Messages.BUY){
+                log.info("BUY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
+                self.handleBuy(message);
+            } else if(action === Types.Messages.STORESELL) {
+                log.info("STORESELL: " + self.name + " " + message[1]);
+                self.handleStoreSell(message);
+            } else if(action === Types.Messages.STOREBUY) {
+                log.info("STOREBUY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
+                self.handleStoreBuy(message);
             } else if(action === Types.Messages.CHARACTERINFO) {
                 log.info("CHARACTERINFO: " + self.name);
                 self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
@@ -358,6 +345,9 @@ module.exports = Player = Character.extend({
             } else if(action === Types.Messages.TALKTONPC){
                 log.info("TALKTONPC: " + self.name + " " + message[1]);
                 self.handleTalkToNPC(message);
+            } else if (action === Types.Messages.FLAREDANCE) {
+                log.info("FLAREDANCE: " + self.name + " " + message[1] + ", " + message[2] + ", " + message[3] + ", " + message[4]);
+                self.handleFlareDance(message);
             } else if(action === Types.Messages.MAGIC){
               log.info("MAGIC: " + self.name + " " + message[1] + " " + message[2]);
               var magicName = message[1];
@@ -1093,7 +1083,93 @@ module.exports = Player = Character.extend({
             }
         }     
     },
-   
+    handleSell: function(message){ // 41
+        var inventoryNumber = message[1];
+        var burgerCount = message[2];
+
+        if(Types.isArmor(this.inventory.rooms[inventoryNumber].itemKind) && burgerCount > 0){
+            databaseHandler.sell(this, inventoryNumber, burgerCount);
+        }
+    },
+    handleShop: function(message){ // 42
+        var command = message[1];
+        var number = message[2];
+
+        if(command === 'get'){
+            databaseHandler.getShop(this, number);
+        }
+    },
+    handleBuy: function(message){ // 43
+        var id = message[1];
+        var itemKind = message[2];
+        var burgerCount = message[3];
+
+        databaseHandler.buy(this, id, itemKind, burgerCount);
+    },
+    handleStoreSell: function(message) {
+        var inventoryNumber1 = message[1],
+            itemKind = null,
+            price = 0,
+            inventoryNumber2 = -1;
+
+        if((inventoryNumber1 >= 0) && (inventoryNumber1 < this.inventory.number)) {
+            itemKind = this.inventory.rooms[inventoryNumber1].itemKind;
+            if(itemKind) {
+                price = Types.Store.getSellPrice(Types.getKindAsString(itemKind));
+                if(price > 0) {
+                    inventoryNumber2 = this.inventory.getInventoryNumber(Types.Entities.BURGER);
+                    if(inventoryNumber2 < 0) {
+                        inventoryNumber2 = this.inventory.getEmptyInventoryNumber();
+                    }
+                    if(inventoryNumber2 < 0) {
+                        this.server.pushToPlayer(this, new Messages.Notify("인벤토리에 공간이 부족 합니다."));
+                        return;
+                    }
+                    this.inventory.makeEmptyInventory(inventoryNumber1);
+                    this.inventory.putInventory(Types.Entities.BURGER, price, 0, 0);
+                }
+            }
+        }
+    },
+    handleStoreBuy: function(message) {
+        var itemType = message[1],
+            itemKind = message[2],
+            itemCount = message[3],
+            itemName = null,
+            price = 0,
+            burgerCount = 0,
+            inventoryNumber = -1,
+            buyCount = 0;
+
+        if(itemCount <= 0) {
+            return;
+        }
+        if(itemKind) {
+            itemName = Types.getKindAsString(itemKind);
+        }
+        if(itemName) {
+            price = Types.Store.getBuyPrice(itemName);
+            if(price > 0) {
+                if(Types.Store.isBuyMultiple(itemName)) {
+                    price = price * itemCount;
+                } else {
+                    itemCount = 1;
+                }
+                burgerCount = this.inventory.getItemNumber(Types.Entities.BURGER);
+                if(burgerCount < price) {
+                    this.server.pushToPlayer(this, new Messages.Notify("버거가 부족 합니다."));
+                    return;
+                }
+
+                if(this.inventory.hasEmptyInventory()) {
+                    this.inventory.putInventory(itemKind, Types.Store.getBuyCount(itemName) * itemCount, 0, 0);
+                    this.inventory.putInventory(Types.Entities.BURGER, -1 * price, 0, 0);
+                } else {
+                    this.server.pushToPlayer(this, new Messages.Notify("인벤토리에 빈 칸이 없습니다."));
+                }
+            }
+        }
+    },
    
     handleInventory: function(message){ // 28
         var inventoryNumber = message[2],
@@ -1616,6 +1692,133 @@ module.exports = Player = Character.extend({
         }
         if(this.weaponSkillKind === Types.Skills.CRITICALRATIO){
               this.criticalRatio += this.weaponSkillLevel*0.01;
+        }
+    },
+
+    handleHit: function(message){ // 8
+        var mobId = message[1];
+        var mob = this.server.getEntityById(message[1]);
+        var self = this;
+
+        if(this.cooltimeTimeout){
+            return;
+        } else{
+            this.cooltimeTimeout = setTimeout(function(){
+                self.cooltimeTimeout = null;
+            }, 720);
+        }
+
+        if(mob && this.id){
+            var dmg = Formulas.dmg(this, mob);
+            if(mob instanceof Player){
+                dmg = Formulas.newDmg(this, mob);
+            }
+
+            if(dmg > 0){
+                if(Utils.ratioToBool(this.criticalRatio)){
+                    var criticalStrikeLevel = this.skillHandler.getLevel("criticalStrike");
+                    var dmg2 = dmg * (1 + (0.5 * criticalStrikeLevel));
+                    dmg = Math.round(dmg2 + (this.ringSkillKind == Types.Skills.CRITICALATTACK ? dmg * (this.ringSkillLevel * 0.05) : 0));
+
+                    log.info('critical: ' + dmg);
+
+                    this.broadcast(new Messages.Skill("critical", mobId, 0), false);
+                }
+
+                var bloodsuckingAmount = dmg * (this.bloodsuckingRatio + this.skillHandler.getLevel("bloodSucking")*0.05);
+
+                if(this.ringSkillKind == Types.Skills.ATTACKWITHBLOOD) {
+                    var hitPoints = this.hitPoints,
+                        bleedingAmount = this.maxHitPoints * (this.ringSkillLevel * 0.01);
+                    if(hitPoints > bleedingAmount) {
+                        bloodsuckingAmount -= bleedingAmount;
+                    }
+                }
+
+                bloodsuckingAmount = Math.floor(bloodsuckingAmount);
+                if(bloodsuckingAmount != 0){
+                    this.regenHealthBy(bloodsuckingAmount);
+                    this.server.pushToPlayer(this, this.health());
+                }
+
+                if(mob.type !== "player"){
+                    mob.receiveDamage(dmg, this.id);
+                    if(mob.hitPoints <= 0){
+                        this.questAboutKill(mob);
+                    }
+                    this.server.handleMobHate(mob.id, this.id, dmg);
+                    this.server.handleHurtEntity(mob, this, dmg);
+                } else{
+                    mob.hitPoints -= dmg;
+                    mob.server.handleHurtEntity(mob, this, dmg);
+                    if(mob.hitPoints <= 0){
+                        mob.isDead = true;
+                        this.server.pushBroadcast(new Messages.Chat(this, "/1 " + this.name + "가(이) " + mob.name + "을(를) PK"));
+                    }
+                }
+            }
+        }
+    },
+    handleHurt: function(message){ // 9
+        var self = this;
+        log.info("HURT: " + this.name + " " + message[1]);
+        var mob = this.server.getEntityById(message[1]);
+        if(mob &&
+            (mob.kind === Types.Entities.FORESTDRAGON
+            || mob.kind == Types.Entities.SEADRAGON
+            || mob.kind == Types.Entities.HELLSPIDER
+            || mob.kind == Types.Entities.SKYDINOSAUR)){
+            var group = this.server.groups[this.group];
+            if(group){
+                _.each(group.players, function(playerId){
+                    var attackedPlayer = self.server.getEntityById(playerId);
+                    if(attackedPlayer){
+                        attackedPlayer.hitPoints -= Formulas.dmg(mob, attackedPlayer);
+                        self.server.handleHurtEntity(attackedPlayer, mob);
+
+                        if(attackedPlayer.hitPoints <= 0) {
+                            attackedPlayer.isDead = true;
+                            if(attackedPlayer.level >= 50){
+                                attackedPlayer.incExp(Math.floor(attackedPlayer.level*attackedPlayer.level*(-2)));
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        if(mob && this.hitPoints > 0 && mob instanceof Mob) {
+            var evasionLevel = this.skillHandler.getLevel("evasion");
+            if(evasionLevel > 0) {
+                var randNum = Math.random(),
+                    avoidChance = 0.05 * evasionLevel;
+
+                if(this.pendantSkillKind == Types.Skills.AVOIDATTACK){
+                    avoidChance += this.pendantSkillLevel * 0.01;
+                }
+
+                if(randNum < avoidChance){
+                    this.server.pushToPlayer(this, new Messages.Damage(this, 'MISS', this.hitPoints, this.maxHitPoints));
+                    return;
+                }
+            }
+
+            this.hitPoints -= Formulas.dmg(mob, this);
+            this.server.handleHurtEntity(this, mob);
+            mob.addTanker(this.id);
+
+            if(this.hitPoints <= 0) {
+                this.isDead = true;
+                if(this.level >= 50){
+                    this.incExp(Math.floor(this.level*this.level*(-2)));
+                }
+                if(this.flareDanceCallback) {
+                    clearTimeout(this.flareDanceCallback);
+                    this.flareDanceCallback = null;
+                    this.flareDanceExecuted1 = 0;
+                    this.flareDanceExecuted2 = 0;
+                    this.flareDanceCount = 0;
+                }
+            }
         }
     },
     handleSkill: function(message){

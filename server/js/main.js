@@ -36,12 +36,12 @@ function main(config) {
                     lastTotalPlayers = totalPlayers;
                     _.each(worlds, function(world) {
                         world.updatePopulation(totalPlayers);
-                        log.info("Updated player population");
+                        log.info("Player Population Updated - " + totalPlayers);
                     });
                 }
             });
         }
-    }, 1500);
+    }, 1000);
 
     log.info("Starting Tap Tap Adventure game server...");
     var selector = DatabaseSelector(config);

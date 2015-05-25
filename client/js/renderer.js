@@ -463,6 +463,82 @@ function(Camera, Item, Character, Player, Timer) {
                                                shadow.width * os * ds, shadow.height * os * ds);
                     }
 
+                    if(entity.isFlareDance){
+                        var benef = this.game.sprites["flaredanceeffect"];
+                        if(benef){
+                            var benefAnimData1 = benef.animationData[anim.name];
+                            if(benefAnimData1){
+                                var index = this.game.benef4Animation.currentFrame.index < benefAnimData1.length ? this.game.benef4Animation.currentFrame.index : this.game.benef4Animation.currentFrame.index % benefAnimData1.length,
+                                    bx = benef.width * index * os,
+                                    by = benef.height * benefAnimData1.row * os,
+                                    bw = benef.width * os,
+                                    bh = benef.height * os;
+
+                                this.context.drawImage(benef.image, bx, by, bw, bh,
+                                    benef.offsetX * s,
+                                    benef.offsetY * s,
+                                    bw * ds, bh * ds);
+                            }
+                        }
+                    }
+                    if(entity.isSuperCat){
+                        var benef = this.game.sprites["supercateffect"];
+                        if(benef){
+                            var benefAnimData2 = benef.animationData[anim.name];
+                            if(benefAnimData2){
+                                var index = this.game.benef10Animation.currentFrame.index < benefAnimData2.length ? this.game.benef10Animation.currentFrame.index : this.game.bene104Animation.currentFrame.index % benefAnimData2.length,
+                                    bx = benef.width * index * os,
+                                    by = benef.height * benefAnimData2.row * os,
+                                    bw = benef.width * os,
+                                    bh = benef.height * os;
+
+                                this.context.drawImage(benef.image, bx, by, bw, bh,
+                                    benef.offsetX * s,
+                                    benef.offsetY * s,
+                                    bw * ds, bh * ds);
+                            }
+                        }
+                    }
+                    if(entity.isProvocation){
+                        var benef = this.game.sprites["provocationeffect"];
+                        if(benef){
+                            var benefAnimData3 = benef.animationData[anim.name];
+                            if(benefAnimData3){
+                                var index = this.game.benef10Animation.currentFrame.index < benefAnimData3.length ? this.game.benef10Animation.currentFrame.index : this.game.bene104Animation.currentFrame.index % benefAnimData3.length,
+                                    bx = benef.width * index * os,
+                                    by = benef.height * benefAnimData3.row * os,
+                                    bw = benef.width * os,
+                                    bh = benef.height * os;
+
+                                this.context.drawImage(benef.image, bx, by, bw, bh,
+                                    benef.offsetX * s,
+                                    benef.offsetY * s,
+                                    bw * ds, bh * ds);
+                            }
+                        }
+                    }
+
+
+
+                    if(entity.isRoyalAzaleaBenef){
+                        var benef = this.game.sprites["bucklerbenef"];
+                        if(benef){
+                            var benefAnimData4 = benef.animationData[anim.name];
+                            if(benefAnimData4){
+                                var index = this.game.benef10Animation.currentFrame.index < benefAnimData4.length ? this.game.benef10Animation.currentFrame.index : this.game.benef10Animation.currentFrame.index % benefAnimData4.length,
+                                    bx = benef.width * index * os,
+                                    by = benef.height * benefAnimData4.row * os,
+                                    bw = benef.width * os,
+                                    bh = benef.height * os;
+
+                                this.context.drawImage(benef.image, bx, by, bw, bh,
+                                    benef.offsetX * s,
+                                    benef.offsetY * s,
+                                    bw * ds, bh * ds);
+                            }
+                        }
+                    }
+
                     this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
 
                     if(entity instanceof Item && entity.kind !== Types.Entities.CAKE) {
@@ -498,6 +574,86 @@ function(Camera, Item, Character, Player, Timer) {
                                                ww * ds, wh * ds);
                     }
                 }
+                if(entity instanceof Player){
+                    var medal = null;
+                    if(entity.rank < 3){
+                        medal = this.game.sprites["goldmedal"];
+                    } else if(entity.rank < 10){
+                        medal = this.game.sprites["silvermedal"];
+                    } else if(entity.rank < 30){
+                        medal = this.game.sprites["bronzemedal"];
+                    }
+                    if(medal){
+                        this.context.drawImage(medal.image, 0, 0, medal.width * os, medal.height * os,
+                            4 * ds,
+                            -56 * ds,
+                            medal.width * os * ds, medal.height * os * ds);
+                    }
+                }
+                if(entity.invincible){
+                    var benef = this.game.sprites["shieldbenef"];
+                    if(benef){
+                        var benefAnimData5 = benef.animationData[anim.name];
+                        if(benefAnimData5){
+                            var index = this.game.benefAnimation.currentFrame.index < benefAnimData5.length ? this.game.benefAnimation.currentFrame.index : this.game.benefAnimation.currentFrame.index % benefAnimData5.length,
+                                bx = benef.width * index * os,
+                                by = benef.height * benefAnimData5.row * os,
+                                bw = benef.width * os,
+                                bh = benef.height * os;
+
+                            this.context.drawImage(benef.image, bx, by, bw, bh,
+                                benef.offsetX * s,
+                                benef.offsetY * s,
+                                bw * ds, bh * ds);
+                        }
+                    }
+                }
+                if(entity.isStun){
+                    var benef = this.game.sprites["stuneffect"];
+                    if(benef){
+                        var index = entity.stunAnimation.currentFrame.index,
+                            bx = benef.width * index * os,
+                            by = benef.height * entity.stunAnimation.row,
+                            bw = benef.width * os,
+                            bh = benef.height * os;
+
+                        this.context.drawImage(benef.image, bx, by, bw, bh,
+                            benef.offsetX * s,
+                            (benef.offsetY - entity.sprite.height)*s,
+                            bw * ds, bh * ds);
+                    }
+                }
+                if(entity.isCritical){
+                    var benef = this.game.sprites["criticaleffect"];
+                    if(benef){
+                        var index = entity.criticalAnimation.currentFrame.index,
+                            bx = benef.width * index * os,
+                            by = benef.height * entity.criticalAnimation.row * os,
+                            bw = benef.width * os,
+                            bh = benef.height * os;
+
+                        this.context.drawImage(benef.image, bx, by, bw, bh,
+                            benef.offsetX * s,
+                            benef.offsetY * s,
+                            bw * ds, bh * ds);
+                    }
+                }
+                if(entity.isHeal){
+                    var benef = this.game.sprites["healeffect"];
+                    if(benef){
+                        var index = entity.healAnimation.currentFrame.index,
+                            bx = benef.width * index * os,
+                            by = benef.height * entity.healAnimation.row * os,
+                            bw = benef.width * os,
+                            bh = benef.height * os;
+
+                        this.context.drawImage(benef.image, bx, by, bw, bh,
+                            benef.offsetX * s,
+                            benef.offsetY * s,
+                            bw * ds, bh * ds);
+                    }
+                }
+
 
                 this.context.restore();
 

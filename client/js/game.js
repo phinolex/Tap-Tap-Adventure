@@ -303,9 +303,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         initPlayer: function() {
-           
-            
 
+
+            this.app.initTargetHud();
             this.player.setSprite(this.sprites[this.player.getSpriteName()]);
             this.player.idle();
 
@@ -2580,7 +2580,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.player.email = this.email;
 
             this.initPlayer();
-            this.app.initTargetHud();
+
 
             
             this.started = true;

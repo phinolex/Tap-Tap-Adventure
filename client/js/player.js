@@ -71,6 +71,19 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         setProvocationSkill: function(level){
             this.skillHandler.add('provocation', level);
         },
+        setBenef: function(itemKind){
+            switch(itemKind){
+                case Types.Entities.FIREBENEF:
+                    this.startInvincibility();
+                    break;
+                case Types.Entities.ROYALAZALEABENEF:
+                    this.startRoyalAzaleaBenef();
+                    break;
+                case Types.Entities.DEBENEF:
+                    this.stopInvincibility();
+                    break;
+            }
+        },
         flareDanceAttack: function(){
             var adjacentMobIds = [];
             var entity = null;
