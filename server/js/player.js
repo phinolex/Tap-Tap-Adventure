@@ -105,7 +105,8 @@ module.exports = Player = Character.extend({
                 // Always ensure that the name is not longer than a maximum length.
                 // (also enforced by the maxlength attribute of the name input element).
                 self.name = name.substr(0, 12).trim();
-                    
+                self.name = databaseHandler.prepareNameForDisplay(self.name);
+                
                     
                 // Validate the username
                 if(!self.checkName(self.name)){
@@ -132,8 +133,6 @@ module.exports = Player = Character.extend({
                         self.connection.close("Already logged in " + self.name);
                         return;
                     }
-                   //databaseHandler.checkBan(self);
-                   //^We now check ban upon login.
                    databaseHandler.loadPlayer(self);
                 }
                 
@@ -166,10 +165,7 @@ module.exports = Player = Character.extend({
                             return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
                         };
                     };
-                    var targetPalyer = self.server.getPlayerByName(msg.split(' ')[1]);  
-                    // Chat command handling
-
-                    
+                    var targetPalyer = self.server.getPlayerByName(msg.split(' ')[1]);
                     
                     if(msg.startsWith("/1 ")) {
                         
@@ -182,7 +178,12 @@ module.exports = Player = Character.extend({
                           
                     
                     } else if (msg.startsWith("/kick ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
+                        var targetPlayer = self.server.getPlayerByName(msg.split(' ').join('_')[1]);
+                        //Try this before applying it everywhere.
+                        //Players that have Spaces in their names 
+                        //have those replaced with "_" for them
+                        //to get kicked.
+                        
                         if (targetPlayer) {
                             databaseHandler.kickPlayer(self, targetPlayer);
                         }
