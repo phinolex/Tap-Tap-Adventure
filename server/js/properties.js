@@ -38,7 +38,7 @@ var Properties = {
             sword2: 19,
             plasticbow: 19,
             firepotion: 10,
-
+            pendant1: 1,
             ring1: 1
         },
         hp: 100,
@@ -51,7 +51,7 @@ var Properties = {
             leatherarmor: 19,
             leatherarcherarmor: 19,
             firepotion: 10,
-
+            pendant1: 1,
             ring1: 1
         },
         hp: 140,
@@ -75,7 +75,7 @@ var Properties = {
             axe: 19,
             ironbow: 19,
             firepotion: 10,
-
+            pendant1: 1,
             ring1: 1
         },
         hp: 240,
@@ -99,7 +99,7 @@ var Properties = {
             mailarmor: 19,
             mailarcherarmor: 19,
             firepotion: 10,
-
+            pendant1: 1,
             ring1: 1
         },
         hp: 300,
@@ -124,7 +124,7 @@ var Properties = {
             morningstar: 19,
             redbow: 19,
             firepotion: 10,
-
+            pendant1: 1,
             ring1: 1
         },
         hp: 300,
@@ -149,7 +149,7 @@ var Properties = {
             platearmor: 19,
             platearcherarmor: 19,
             firepotion: 10,
-
+            pendant1: 1,
             ring1: 1
         },
         hp: 300,
@@ -173,7 +173,7 @@ var Properties = {
             bluesword: 19,
             violetbow: 19,
             firepotion: 10,
-
+            pendant1: 1,
             ring1: 1
         },
         hp: 300,
@@ -186,7 +186,7 @@ var Properties = {
             redarmor: 19,
             redarcherarmor: 19,
             firepotion: 10,
-
+            pendant1: 1,
             ring1: 1
         },
         hp: 300,
@@ -200,7 +200,7 @@ var Properties = {
             redsword: 19,
             deathbow: 19,
             firepotion: 10,
-
+            pendant1: 1,
             ring1: 1
         },
         hp: 360,
@@ -223,8 +223,8 @@ var Properties = {
             greenarcherarmor: 10,
             burger: 30,
             firepotion: 5,
-            sproutring: 1
-
+            sproutring: 1,
+            greenpendant: 1
         },
         hp: 540,
         armor: 1,
@@ -237,7 +237,8 @@ var Properties = {
             greenarmor: 10,
             greenarcherarmor: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 540,
@@ -250,7 +251,8 @@ var Properties = {
             greenwingarmor: 10,
             greenwingarcherarmor: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 700,
@@ -263,7 +265,8 @@ var Properties = {
             greenwingarmor: 10,
             greenwingarcherarmor: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 700,
@@ -276,7 +279,8 @@ var Properties = {
             sidesword: 10,
             watermelonbow: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 800,
@@ -290,7 +294,8 @@ var Properties = {
             spear: 10,
             greenbow: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 540,
@@ -303,7 +308,8 @@ var Properties = {
             guardarmor: 10,
             guardarcherarmor: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 740,
@@ -316,7 +322,8 @@ var Properties = {
             redguardarmor: 10,
             redguardarcherarmor: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 600,
@@ -329,7 +336,8 @@ var Properties = {
             scimitar: 10,
             redenelbow: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 800,
@@ -343,7 +351,8 @@ var Properties = {
             whitearmor: 10,
             whitearcherarmor: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 800,
@@ -356,7 +365,8 @@ var Properties = {
             whitearmor: 10,
             whitearcherarmor: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 800,
@@ -370,7 +380,8 @@ var Properties = {
             ratarmor: 10,
             ratarcherarmor: 10,
             firepotion: 5,
-            sproutring: 1
+            sproutring: 1,
+            greenpendant: 1
 
         },
         hp: 900,
@@ -383,7 +394,8 @@ var Properties = {
             trident: 10,
             mermaidbow: 10,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1000,
@@ -397,7 +409,8 @@ var Properties = {
             bluescimitar: 10,
             seahorsebow: 10,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1000,
@@ -410,7 +423,8 @@ var Properties = {
             bluepiratearmor: 10,
             piratearcherarmor: 10,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1000,
@@ -421,7 +435,8 @@ var Properties = {
         drops: {
             burger: 30,
             firepotion: 10,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1150,
@@ -434,7 +449,8 @@ var Properties = {
             cheoliarmor: 10,
             cheoliarcherarmor: 10,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1200,
@@ -445,7 +461,8 @@ var Properties = {
         drops: {
             burger: 30,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1300,
@@ -458,7 +475,8 @@ var Properties = {
             hammer: 10,
             hunterbow: 10,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1400,
@@ -471,7 +489,8 @@ var Properties = {
             dovakinarmor: 5,
             dovakinarcherarmor: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1500,
@@ -482,7 +501,8 @@ var Properties = {
         drops: {
             burger: 30,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1700,
@@ -495,7 +515,8 @@ var Properties = {
             gbwingarmor: 5,
             gbwingarcherarmor: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1800,
@@ -508,7 +529,8 @@ var Properties = {
             gbwingarmor: 5,
             gbwingarcherarmor: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 1900,
@@ -521,7 +543,8 @@ var Properties = {
             greenlightsaber: 5,
             greenlightbow: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 2000,
@@ -534,7 +557,8 @@ var Properties = {
             gbwingarmor: 5,
             gbwingarcherarmor: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 2100,
@@ -547,7 +571,8 @@ var Properties = {
             redwingarmor: 5,
             redwingarcherarmor: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 2200,
@@ -560,7 +585,8 @@ var Properties = {
             redwingarmor: 5,
             redwingarcherarmor: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 2300,
@@ -573,7 +599,8 @@ var Properties = {
             snowfoxarmor: 5,
             snowfoxarcherarmor: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 2438,
@@ -585,7 +612,8 @@ var Properties = {
             burger: 30,
             wolfarmor: 5,
             wolfarcherarmor: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 2584,
@@ -598,7 +626,8 @@ var Properties = {
             skylightsaber: 5,
             skylightbow: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 2739,
@@ -611,7 +640,8 @@ var Properties = {
             redlightsaber: 5,
             redlightbow: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 2903,
@@ -624,7 +654,8 @@ var Properties = {
             bluewingarmor: 5,
             bluewingarcherarmor: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 3077,
@@ -637,7 +668,8 @@ var Properties = {
             bastardsword: 5,
             captainbow: 5,
             firepotion: 5,
-            pearlring: 1
+            pearlring: 1,
+            pearlpendant: 1
 
         },
         hp: 3201,
@@ -650,7 +682,8 @@ var Properties = {
             fallenarmor: 5,
             fallenarcherarmor: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 3329,
@@ -663,7 +696,8 @@ var Properties = {
             redmetalsword: 5,
             redmetalbow: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 3462,
@@ -676,7 +710,8 @@ var Properties = {
             crystalarmor: 5,
             crystalarcherarmor: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 3600,
@@ -691,7 +726,8 @@ var Properties = {
             justicehammer: 2,
             justicebow: 2,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 3744,
@@ -704,7 +740,8 @@ var Properties = {
             adhererrobe: 5,
             adhererarcherarmor: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 3894,
@@ -718,7 +755,8 @@ var Properties = {
             marinebow: 5,
             rosebow: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 4050,
@@ -731,7 +769,8 @@ var Properties = {
             schooluniform: 5,
             archerschooluniform: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 4212,
@@ -744,7 +783,8 @@ var Properties = {
             halberd: 5,
             crystalbow: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 4380,
@@ -757,7 +797,8 @@ var Properties = {
             taekwondo: 5,
             combatuniform: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 4556,
@@ -770,7 +811,8 @@ var Properties = {
             whip: 5,
             gaybow: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 4738,
@@ -783,7 +825,8 @@ var Properties = {
             gayarmor: 5,
             gayarcherarmor: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 4927,
@@ -795,7 +838,8 @@ var Properties = {
             burger: 30,
             ninjaarmor: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 5124,
@@ -808,7 +852,8 @@ var Properties = {
             forestguardiansword: 5,
             forestbow: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 5329,
@@ -820,7 +865,8 @@ var Properties = {
             burger: 30,
             beautifullife: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 5543,
@@ -832,7 +878,8 @@ var Properties = {
             burger: 30,
             thiefarmor: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 5764,
@@ -844,7 +891,8 @@ var Properties = {
             burger: 30,
             rabbitarmor: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 5995,
@@ -857,7 +905,8 @@ var Properties = {
             sickle: 5,
             sicklebow: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 6235,
@@ -869,7 +918,8 @@ var Properties = {
             burger: 30,
             portalarmor: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 6484,
@@ -881,7 +931,8 @@ var Properties = {
             burger: 30,
             ghostrider: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 6744,
@@ -894,7 +945,8 @@ var Properties = {
             plunger: 5,
             bloodbow: 5,
             royalazalea: 1,
-            spiritring: 1
+            spiritring: 1,
+            marblependant: 1
 
         },
         hp: 6946,

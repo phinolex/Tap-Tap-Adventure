@@ -23,6 +23,7 @@ find "$BUILDDIR/js" -type f \
   -o -name "iteminfodialog.js" \
   -o -name "bubble.js" \
   -o -name "mob.js" \
+  -o -name "character.js" \
   -o -name "timer.js" \
   -o -name "animation.js" \
   -o -name "log.js" \
