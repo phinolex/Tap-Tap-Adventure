@@ -235,6 +235,16 @@ module.exports = DatabaseHandler = cls.Class.extend({
         });
     },
 
+    prepareNameForDisplay: function(playerName) {
+        var name = this.capitalizeFirstLetter(playerName);
+
+        return name;
+    },
+    capitalizeFirstLetter: function(string) {
+
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+
     createPlayer: function(player) {
         
         var userKey = "u:" + player.name;

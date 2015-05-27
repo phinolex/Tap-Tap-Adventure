@@ -24,6 +24,7 @@ find "$BUILDDIR/js" -type f \
   -o -name "bubble.js" \
   -o -name "mob.js" \
   -o -name "character.js" \
+  -o -name "transition.js" \
   -o -name "timer.js" \
   -o -name "animation.js" \
   -o -name "log.js" \
