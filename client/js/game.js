@@ -675,11 +675,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         setServerOptions: function(host, port, username, userpw, email) {
             this.host = host;
             this.port = port;
-            this.username = username;
+            this.username = this.capitalizeFirstLetter(username.toLowerCase());
             this.userpw = userpw;
             this.email = email;
         },
- 
+
+        capitalizeFirstLetter: function(string) {
+
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+
         loadAudio: function() {
             this.audioManager = new AudioManager(this);
         },

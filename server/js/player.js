@@ -105,7 +105,7 @@ module.exports = Player = Character.extend({
                 // Always ensure that the name is not longer than a maximum length.
                 // (also enforced by the maxlength attribute of the name input element).
                 // After that, you capitalize the first letter.
-                var pName = databaseHandler.prepareNameForDisplay(name.substr(0, 12).trim());
+                var pName = name.substr(0, 12).trim();
                 self.name = pName;
                 
                     
