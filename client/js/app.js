@@ -383,9 +383,9 @@ define(['jquery', 'mob', 'item'], function($, Mob, Item) {
         initManaBar: function() {
             var scale = this.game.renderer.getScaleFactor(),
                 maxWidth = $("#manabar").width() - (11 * scale);
-                
-                if (scale === 1) {
-                    maxWidth = $("#manabar").width() - (9 * scale);
+
+                if (scale == 1) {
+                    maxWidth = 77;
                 }
 
 
@@ -414,12 +414,13 @@ define(['jquery', 'mob', 'item'], function($, Mob, Item) {
         initHealthBar: function() {
             
             var scale = this.game.renderer.getScaleFactor();
+
+
+
             var healthMaxWidth = $("#healthbar").width() - (11 * scale);
-            
-            if (scale === 1) {
-                healthMaxWidth = $("#healthbar").width() - (9 * scale);
+            if (scale == 1) {
+                healthMaxWidth = 77;
             }
-            
 
             this.game.onPlayerHealthChange(function(hp, maxHp) {
                 var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));

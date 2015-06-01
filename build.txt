@@ -624,6 +624,10 @@ js/bools.js
 js/dialog.js
 js/iteminfodialog.js
 js/skillhandler.js
+js/statehandler.js
+js/tabbook.js
+js/tabpage.js
+js/storedialog.js
 js/../../shared/js/gametypes.js
 js/game.js
 
@@ -633,8 +637,6 @@ js/app.js
 js/lib/sha1.js
 js/util.js
 js/entrypoint.js
-js/tabbook.js
-js/tabpage.js
 js/characterdialog.js
 js/main.js
 js/lib/class.js

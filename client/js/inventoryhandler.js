@@ -10,6 +10,15 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
             this.inventoryCount = [];
             this.inventories = [];
             this.moreInventoryButton = new Button2('#moreinventorybutton', {background: {left: 591, top: 556, width: 34}, kinds: [0, 2], visible: false});
+            if (this.game.renderer) {
+                if (this.game.renderer.mobile) {
+                    this.scale = 1;
+                } else {
+                    this.scale = this.game.renderer.getScaleFactor();
+                }
+            } else {
+                this.scale = 2;
+            }
 
             this.healingCoolTimeCallback = null;
 
@@ -59,11 +68,9 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
 
                       $('#inventorybackground' + inventoryNumber).attr('class', 'empty');
                   }
-                  var scale = this.game.renderer.scale;
-                  
-                  $('#inventory' + inventoryNumber).css('background-image', "url('img/" + scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
+                  $('#inventory' + inventoryNumber).css('background-image', "url('img/" + this.scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
                   $('#inventory' + inventoryNumber).attr('title', Item.getInfoMsgEx(itemKind, number, itemSkillKind, itemSkillLevel));
-                  $('#sellInventory' + inventoryNumber).css('background-image', "url('img/" + scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
+                  $('#sellInventory' + inventoryNumber).css('background-image', "url('img/" + this.scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
                   $('#inventorynumber' + inventoryNumber).html('' + this.inventoryCount[inventoryNumber]);
             } 
 

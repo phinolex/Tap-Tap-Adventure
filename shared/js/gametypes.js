@@ -71,7 +71,9 @@ Types = {
             PADDEDITEM: 11,
             OPADDEDITEM: 12,
             INVENTORYCOUNT: 13,
-            FINISHED: 14
+            ITEMADDED: 14,
+            ITEMREMOVED: 15,
+            FINISHED: 16
         },
         TRADESCREEN: 50,
         CHARACTERINFO: 51,

@@ -399,21 +399,19 @@ module.exports = World = cls.Class.extend({
         var party = player.party;
 
         if(party){
-          if(party.players.length < 3){
-            party.removePlayer(player);
-            if(party.players[0]){
-              party.players[0].party = null;
-              party.players[0].send([Types.Messages.PARTY]);
-              delete party;
+            if(party.players.length < 3){
+                party.removePlayer(player);
+                if(party.players[0]){
+                    party.players[0].party = null;
+                    party.players[0].send([Types.Messages.PARTY]);
+                    delete party;
+                }
+            } else{
+                party.removePlayer(player);
             }
-          } else{
-            party.removePlayer(player);
-          }
         }
-
         player.broadcast(player.despawn());
         this.removeEntity(player);
-       
         delete this.players[player.id];
         delete this.outgoingQueues[player.id];
     },

@@ -6,14 +6,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
         'mobs', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'questhandler',
-        'partyhandler', 'rankinghandler', 'inventoryhandler', 'bools', 'iteminfodialog', 'skillhandler',
+        'partyhandler', 'rankinghandler', 'inventoryhandler', 'bools', 'iteminfodialog',
+        'skillhandler', 'statehandler', 'storedialog',
         '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
          Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
          ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
          ShopHandler, PlayerPopupMenu, QuestHandler, PartyHandler, RankingHandler, 
-         InventoryHandler, Bools, ItemInfoDialog, SkillHandler) {
+         InventoryHandler, Bools, ItemInfoDialog, SkillHandler, StateHandler,
+         StoreDialog) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -71,7 +73,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             // Item Info
             this.itemInfoOn = true;
-        
+
             // combat
             this.infoManager = new InfoManager(this);
             this.questhandler = new QuestHandler(this);
@@ -82,12 +84,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.playerPopupMenu = new PlayerPopupMenu(this);
             this.partyhandler = new PartyHandler(this);
             this.rankingHandler = new RankingHandler(this);
-            this.inventoryHandler = new InventoryHandler(this);
-            this.player.skillHandler = new SkillHandler(this);
 
-            
-            // TextWindow Handler
-            //this.textWindowHandler = new TextWindowHandler();
+            this.player.skillHandler = new SkillHandler(this);
+            this.statehandler = new StateHandler(this);
+
 
             // zoning
             this.currentZoning = null;
@@ -101,9 +101,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             // debug
             this.debugPathing = false;
-            
+
+            // Shortcut Healing
             this.healShortCut = -1;
             this.hpGuide = 0;
+            this.autoEattingHandler = null;
             // pvp
             this.pvpFlag = false;
             //
@@ -113,6 +115,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
             this.itemInfoDialog = new ItemInfoDialog(this);
             this.dialogs.push(this.itemInfoDialog);
+
+            this.storeDialog = new StoreDialog(this);
+            this.dialogs.push(this.storeDialog);
             
             //New Stuff
 
@@ -307,6 +312,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             this.app.initTargetHud();
             this.player.setSprite(this.sprites[this.player.getSpriteName()]);
+            this.inventoryHandler = new InventoryHandler(this);
             this.player.idle();
 
             log.debug("Finished initPlayer");
@@ -719,9 +725,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.initShadows();
                     self.initHurtSprites();
 
-                    if(!self.renderer.mobile
-                    && !self.renderer.tablet
-                    && self.renderer.upscaledRendering) {
+                    if(!self.renderer.mobile && !self.renderer.tablet && self.renderer.upscaledRendering) {
                         self.initSilhouettes();
                     }
 
@@ -894,7 +898,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.addEntity(self.player);
                 self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
                 self.questhandler.initQuest(questFound, questProgress);
-                
+
                 //Welcome message
                 self.chathandler.show();
                 self.chathandler.addNotification("Welcome to Tap Tap Adventure");
@@ -1575,7 +1579,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.client.onInventory(function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
                   self.shopHandler.initSellInventory();
                   if(itemKind){
-                    self.inventoryHandler.setInventory(itemKind, inventoryNumber, itemNumber, itemSkillKind, itemSkillLevel);
+
+                    self.inventoryHandler.setInventory(itemKind, inventoryNumber, itemNumber, itemSkillKind, itemSkillLevel, this.scale);
                   } else if(itemKind === null){
                     self.inventoryHandler.makeEmptyInventory(inventoryNumber);
                   }
@@ -1613,12 +1618,51 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.client.onParty(function (members) {
                   self.partyhandler.setMembers(members);
                 });
+
                 self.client.onMana(function(mana, maxMana) {
                     self.player.mana = mana;
                     self.player.maxMana = maxMana;
                     self.updateBars();
                 });
-                
+                self.client.onShop(function(message){
+                    self.shopHandler.handleShop(message);
+                });
+
+                self.client.onSkill(function(message){
+                    var msgType = message[0];
+                    var id = message[1];
+                    var skillLevel = message[2];
+                    var entity = self.getEntityById(id);
+                    if(entity){
+                        if(msgType === "critical"){
+                            entity.isCritical = true;
+                        } else if(msgType === "heal"){
+                            entity.isHeal = true;
+                        } else if(msgType === "flareDance"){
+                            entity.isFlareDance = true;
+                        } else if(msgType === "flareDanceOff"){
+                            entity.isFlareDance = false;
+                        } else if(msgType === "stun"){
+                            entity.stun(skillLevel);
+                        } else if(msgType === "superCat"){
+                            entity.isSuperCat = true;
+                            if(skillLevel === 1){
+                                entity.moveSpeed -= 30;
+                            } else if(skillLevel === 2){
+                                entity.moveSpeed -= 40;
+                            }
+                        } else if(msgType === "superCatOff"){
+                            entity.isSuperCat = false;
+                            entity.moveSpeed = 120;
+                        } else if(msgType === "provocation"){
+                            entity.provocation(skillLevel);
+                        }
+                    }
+                });
+
+                self.client.onStoreOpen(function(datas) {
+                    self.storeDialog.show(datas);
+                });
                 self.gamestart_callback();
 
                 if(self.hasNeverStarted) {

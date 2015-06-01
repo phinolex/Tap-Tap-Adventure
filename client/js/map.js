@@ -61,7 +61,10 @@ define(['jquery', 'area'], function($, Area) {
                 this.tilesetCount = 1;
                 tileset1 = this._loadTileset('img/1/tilesheet.png');
             } else {
-                if(this.game.renderer.mobile || this.game.renderer.tablet) {
+                if(this.game.renderer.mobile) {
+                    this.tilesetCount = 1;
+                    tileset2 = this._loadTileset('img/2/tilesheet.png');
+                } else if (this.game.renderer.tablet) {
                     this.tilesetCount = 1;
                     tileset2 = this._loadTileset('img/2/tilesheet.png');
                 } else {

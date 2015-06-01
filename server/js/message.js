@@ -340,7 +340,32 @@ Messages.PVP = Message.extend({
                 this.isPVP];
     }
 });
-   
+
+
+Messages.TradeErrors = Message.extend({
+    init: function(errorType, playerName, otherPlayer) {
+        this.errorType = errorType;
+        this.playerName = playerName;
+        this.otherPlayer = otherPlayer;
+    },
+    serialize: function() {
+        return [Types.Messages.TRADEINVALID, this.errorType, this.playerName, this.otherPlayer];
+    }
+
+});
+
+Messages.TradeStates = Message.extend({
+    init: function(stateType, playerName, otherPlayer) {
+        this.stateType = stateType;
+        this.playerName = playerName;
+        this.otherPlayer = otherPlayer;
+    },
+    serialize: function() {
+
+        return [Types.Messages.TRADE, this.stateType, this.playerName, this.otherPlayer];
+    }
+});
+
 Messages.Mana = Message.extend({
     init: function(player) {
         this.mana = player.mana;

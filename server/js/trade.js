@@ -6,12 +6,14 @@ var cls = require("./lib/class"),
 /* global Trade, log */
 
 module.exports = Trade = cls.Class.extend({
-    init: function(player, otherPlayer) {
+    init: function(player, otherPlayer, rooms) {
         this.player = player;
         this.otherPlayer = otherPlayer;
         this.requestAssistant = new RequestHandler(player, otherPlayer);
         this.items = {};
         this.currentState = null;
+        this.rooms = rooms;
+        this.roomId = 0;
     },
     
     
@@ -49,6 +51,7 @@ module.exports = Trade = cls.Class.extend({
                     player.server.pushToPlayer(player, Types.Messages.TRADESTATES.TRADECOUNT);
                     if (itemCount > playerCountChosen) {
                         this.items.push(itemKind, itemSkillLevel, itemSkillKind, itemCount);
+                        player.server.pushToPlayer(player, new Messages.TradeStates)
                     } else {
                         this.items.push(itemKind, itemSkillLevel, itemSkillKind, playerCountChosen);
                     }
@@ -60,8 +63,12 @@ module.exports = Trade = cls.Class.extend({
         }
     }, 
     
-    removeItemFromTradeSession: function(itemKind, itemSkillLevel, itemSkillKind, itemCount, player, otherPlayer) {
-        
+    removeItemFromTradeSession: function(itemKind, itemSkillLevel, itemSkillKind, itemCount, player, otherPlayer, roomId) {
+        this.roomId = roomId;
+        for (roomId in this.rooms) {
+            roomId.delete(itemKind, itemSkillLevel, itemSkillKind, itemCount);
+            player.server.pushToPlayer(player, Types.Messages.TRADESTATES.ITEMREMOVED);
+        }
     }
     
     

@@ -58,13 +58,14 @@ function(Camera, Item, Character, Player, Timer) {
             this.mobile = false;
 
             if(w <= 1000) {
+
                 scale = 2;
                 this.mobile = true;
-            }
-            else if(w <= 1500 || h <= 870) {
+            } else if(w <= 1500 || h <= 870) {
+
                 scale = 2;
-            }
-            else {
+            } else {
+
                 scale = 3;
             }
 
@@ -90,6 +91,7 @@ function(Camera, Item, Character, Player, Timer) {
             
             if(this.game.renderer) {
                 this.game.setSpriteScale(this.scale);
+                this.game.inventoryHandler.scale = this.scale;
             }
         },
 

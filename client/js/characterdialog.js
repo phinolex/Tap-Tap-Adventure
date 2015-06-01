@@ -44,7 +44,15 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             if(!player.weaponAvatar){
                 player.weaponAvatar = player.weapon;
             }
-
+            if (this.game.renderer) {
+                if (this.game.renderer.mobile) {
+                    this.scale = 1;
+                } else {
+                    this.scale = this.game.renderer.getScaleFactor();
+                }
+            } else {
+                this.scale = 2;
+            }
             for(var i = 0; i < game.dialogs.length; i++) {
                 if((game.dialogs[i] != this) && game.dialogs[i].visible){
                     game.dialogs[i].hide();
@@ -58,7 +66,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             );
 
             if(player.pendant) {
-                $('#characterItemPendant').css('background-image', 'url("img/2/item-' + Types.getKindAsString(player.pendant) + '.png")');
+                $('#characterItemPendant').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.pendant) + '.png")');
                 $('#characterItemPendant').attr('class', '');
                 $('#characterItemPendant').attr(
                     'title',
@@ -68,20 +76,20 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                 $('#characterItemPendant').attr('class', 'empty');
             }
 
-            $('#characterItemWeapon').css('background-image', 'url("img/2/item-' + Types.getKindAsString(player.weapon) + '.png")');
+            $('#characterItemWeapon').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.weapon) + '.png")');
             $('#characterItemWeapon').attr(
                 'title',
                 Item.getInfoMsgEx(player.weapon, player.weaponEnchantedPoint, player.weaponSkillKind, player.weaponSkillLevel)
             );
 
-            $('#characterItemArmor').css('background-image', 'url("img/2/item-' + Types.getKindAsString(player.armor) + '.png")');
+            $('#characterItemArmor').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.armor) + '.png")');
             $('#characterItemArmor').attr(
                 'title',
                 Item.getInfoMsgEx(player.armor, 0, 0, 0)
             );
 
             if(player.ring) {
-                $('#characterItemRing').css('background-image', 'url("img/2/item-' + Types.getKindAsString(player.ring) + '.png")');
+                $('#characterItemRing').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.ring) + '.png")');
                 $('#characterItemRing').attr('class', '');
                 $('#characterItemRing').attr(
                     'title',
@@ -92,7 +100,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             }
 
             if(player.boots) {
-                $('#characterItemBoots').css('background-image', 'url("img/2/item-' + Types.getKindAsString(player.boots) + '.png")');
+                $('#characterItemBoots').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.boots) + '.png")');
                 $('#characterItemBoots').attr('class', '');
                 $('#characterItemBoots').attr(
                     'title',
@@ -104,23 +112,67 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
 
             weapon = game.sprites[Types.getKindAsString(player.weaponAvatar)];
             armor = game.sprites[Types.getKindAsString(player.avatar)];
+            switch (this.scale) {
+                case 1:
+                    width1 = weapon.width * 1;
+                    height1 = weapon.height * 1;
 
-            width1 = weapon.width * 2;
-            height1 = weapon.height * 2;
+                    width2 = armor.width * 1;
+                    height2 = armor.height * 1;
+                    break;
+                case 2:
+                    width1 = weapon.width * 2;
+                    height1 = weapon.height * 2;
 
-            width2 = armor.width * 2;
-            height2 = armor.height * 2;
+                    width2 = armor.width * 2;
+                    height2 = armor.height * 2;
+                    break;
+                case 3:
+                    width1 = weapon.width * 3;
+                    height1 = weapon.height * 3;
+
+                    width2 = armor.width * 3;
+                    height2 = armor.height * 3;
+                    break;
+            }
+
 
             width3 = Math.max(width1, width2);
             height3 = Math.max(height1, height2);
 
-            $('#characterLook').css('left', '' + (126 - parseInt(width3 / 2)) + 'px');
-            $('#characterLook').css('top', '' + (300 - height2) + 'px');
+            switch (this.scale) {
+                case 1:
+                    $('#characterLook').css('left', '' + (63 - parseInt(width3 / 2)) + 'px');
+                    $('#characterLook').css('top', '' + (150 - height2) + 'px');
+                    break;
+                case 2:
+                    $('#characterLook').css('left', '' + (126 - parseInt(width3 / 2)) + 'px');
+                    $('#characterLook').css('top', '' + (300 - height2) + 'px');
+                    break;
+                case 3:
+                    $('#characterLook').css('left', '' + (189 - parseInt(width3 / 2)) + 'px');
+                    $('#characterLook').css('top', '' + (450 - height2) + 'px');
+                    break;
+            }
+
+
             $('#characterLook').css('width', '' + width3 + 'px');
             $('#characterLook').css('height', '' + height3 + 'px');
+            switch (this.scale) {
+                case 1:
+                    $('#characterLookShadow').css('left', '' + parseInt(((width3 - width2) / 2) + ((width2 - 16) / 2)) + 'px');
+                    $('#characterLookShadow').css('top', '' + parseInt(((height3 - height2) / 2) + (height2 - 19)) + 'px');
+                    break;
+                case 2:
+                    $('#characterLookShadow').css('left', '' + parseInt(((width3 - width2) / 2) + ((width2 - 32) / 2)) + 'px');
+                    $('#characterLookShadow').css('top', '' + parseInt(((height3 - height2) / 2) + (height2 - 38)) + 'px');
+                    break;
+                case 3:
+                    $('#characterLookShadow').css('left', '' + parseInt(((width3 - width2) / 2) + ((width2 - 48) / 2)) + 'px');
+                    $('#characterLookShadow').css('top', '' + parseInt(((height3 - height2) / 2) + (height2 - 57)) + 'px');
+                    break;
+            }
 
-            $('#characterLookShadow').css('left', '' + parseInt(((width3 - width2) / 2) + ((width2 - 32) / 2)) + 'px');
-            $('#characterLookShadow').css('top', '' + parseInt(((height3 - height2) / 2) + (height2 - 38)) + 'px');
 
             $('#characterLookArmor').css('left', '' + parseInt((width3 - width2) / 2) + 'px');
             $('#characterLookArmor').css('top', '' + parseInt((height3 - height2) / 2) + 'px');
@@ -136,18 +188,33 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             $('#characterLookWeapon').css('background-size', '' + (width1 * 5) + 'px');
             $('#characterLookWeapon').css('background-position', '0px -' + (height1 * 8) + 'px');
 
-            $('#characterLookArmor').css('background-image', 'url("img/2/' + Types.getKindAsString(player.avatar) + '.png")');
-            $('#characterLookWeapon').css('background-image', 'url("img/2/' + Types.getKindAsString(player.weaponAvatar) + '.png")');
+            $('#characterLookArmor').css('background-image', 'url("img/' + this.scale + '/' + Types.getKindAsString(player.avatar) + '.png")');
+            $('#characterLookWeapon').css('background-image', 'url("img/' + this.scale + '/' + Types.getKindAsString(player.weaponAvatar) + '.png")');
         }
     });
 
     var Skill = Class.extend({
-        init: function(id, name, position) {
+        init: function(id, name, position, game) {
             this.background = $(id);
             this.body = $(id + 'Body');
             this.levels = [];
             this.name = name;
             this.level = 0;
+            this.game = game;
+
+            if (this.game.renderer) {
+
+                if (this.game.renderer.mobile) {
+
+                    this.scale = 1;
+                } else {
+
+                    this.scale = this.game.renderer.getScaleFactor();
+                }
+            } else {
+
+                this.scale = 2;
+            }
 
             this.body.css({
                 'position': 'absolute',
@@ -159,7 +226,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             });
             if(position) {
                 this.body.css({
-                    'background-image': 'url("img/2/characterdialogsheet.png")',
+                    'background-image': 'url("img/' + this.scale + '/characterdialogsheet.png")',
                     'background-position': position
                 });
             }
@@ -172,7 +239,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                     'top': '18px',
                     'width': '10px',
                     'height': '12px',
-                    'background-image': 'url("img/2/characterdialogsheet.png")',
+                    'background-image': 'url("img/' + this.scale + '/characterdialogsheet.png")',
                     'background-position': '-254px -438px',
                     'display': 'none'
                 });
@@ -221,14 +288,14 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
     var skill2Positions = ['-350px -454px', '-382px -454px', '-414px -454px', '-446px -454px', '-254px -484px', '', ''];
 
     var SkillPage = TabPage.extend({
-        init: function(frame) {
+        init: function(frame, game) {
             this._super('#characterDialogFrameSkillPage');
-
+            this.game = game;
             this.skills = [];
 
             for(var index = 0; index < 8; index++) {
                 if(skill1Names[index]) {
-                    var skill = new Skill('#characterSkill1' + index, skill1Names[index], skill1Positions[index]);
+                    var skill = new Skill('#characterSkill1' + index, skill1Names[index], skill1Positions[index], this.game);
                     skill.background.css({
                         'position': 'absolute',
                         'left': '' + ((index % 2) ? 140 : 28) + 'px',
@@ -242,7 +309,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             }
             for(var index = 0; index < 8; index++) {
                 if(skill2Names[index]) {
-                    var skill = new Skill('#characterSkill2' + index, skill2Names[index], skill2Positions[index]);
+                    var skill = new Skill('#characterSkill2' + index, skill2Names[index], skill2Positions[index], this.game);
                     skill.background.css({
                         'position': 'absolute',
                         'left': '' + ((index % 2) ? 140 : 28) + 'px',
@@ -335,7 +402,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.parent = parent;
             this.game = game;
             this.add(new StatePage(this, this.game));
-            this.add(new SkillPage(this));
+            this.add(new SkillPage(this, this.game));
 
             this.pageNavigator = new PageNavigator();
             this.pageNavigator.setCount(this.getPageCount());
