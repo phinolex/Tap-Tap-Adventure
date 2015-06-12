@@ -18,12 +18,12 @@ var cls = require("./lib/class"),
     SkillHandler = require("./skillhandler"),
     Variations = require('./variations'),
     Trade = require('./trade');
-    
+
 
 module.exports = Player = Character.extend({
     init: function(connection, worldServer, databaseHandler) {
         var self = this;
-        
+
         this.server = worldServer;
         this.connection = connection;
 
@@ -67,7 +67,7 @@ module.exports = Player = Character.extend({
 
         this.pubPointBuyTimeout = null;
         this.variations = new Variations();
-        this.membership = false;    
+        this.membership = false;
         this.chatBanEndTime = 0;
 
 
@@ -94,21 +94,21 @@ module.exports = Player = Character.extend({
             if(action === Types.Messages.CREATE || action === Types.Messages.LOGIN) {
                 var name = Utils.sanitize(message[1]);
                 var pw = Utils.sanitize(message[2]);
-                
-                
+
+
                 /**
                  * Implement RSA Authorization
                  */
-                
+
                 log.info("Starting Client/Server Handshake");
-                
+
                 // Always ensure that the name is not longer than a maximum length.
                 // (also enforced by the maxlength attribute of the name input element).
                 // After that, you capitalize the first letter.
                 var pName = name.substr(0, 12).trim();
                 self.name = pName;
-                
-                    
+
+
                 // Validate the username
                 if(!self.checkName(self.name)){
                     self.connection.sendUTF8("invalidusername");
@@ -116,14 +116,14 @@ module.exports = Player = Character.extend({
                     return;
                 }
                 self.pw = pw.substr(0, 15);
-                
+
                 if(action === Types.Messages.CREATE) {
                     bcrypt.genSalt(10, function(err, salt) {
                         bcrypt.hash(self.pw, salt, function(err, hash) {
                             log.info("CREATE: " + self.name);
                             self.email = Utils.sanitize(message[3]);
                             self.pw = hash;
-                            
+
                             databaseHandler.createPlayer(self);
                         });
                     });
@@ -136,7 +136,7 @@ module.exports = Player = Character.extend({
                     }
                    databaseHandler.loadPlayer(self);
                 }
-                
+
             }
             else if(action === Types.Messages.WHO) {
                 log.info("WHO: " + self.name);
@@ -167,34 +167,34 @@ module.exports = Player = Character.extend({
                         };
                     };
                     var targetPalyer = self.server.getPlayerByName(msg.split(' ')[1]);
-                    
+
                     if(msg.startsWith("/1 ")) {
-                        
-                        
+
+
                           if((new Date()).getTime() > self.chatBanEndTime) {
                               self.server.pushBroadcast(new Messages.Chat(self, msg));
                           } else {
                               self.send([Types.Messages.NOTIFY, "You have been muted.."]);
                       }
-                          
-                    
+
+
                     } else if (msg.startsWith("/kick ")) {
                         var targetPlayer = self.server.getPlayerByName(msg.split(' ').join('_')[1]);
                         //Try this before applying it everywhere.
                         //Players that have Spaces in their names 
                         //have those replaced with "_" for them
                         //to get kicked.
-                        
+
                         if (targetPlayer) {
                             databaseHandler.kickPlayer(self, targetPlayer);
                         }
-                        
+
                     } else if(msg.startsWith("/ban ")) {
-                        
+
                         var banPlayer = self.server.getPlayerByName(msg.split(' ')[2]);
                         var days = (msg.split(' ')[1])*1;
                         if(banPlayer) {
-                            
+
                             databaseHandler.banPlayer(self, banPlayer, days);
                         }
                     } else if(msg.startsWith("/banbyname ")) {
@@ -206,35 +206,35 @@ module.exports = Player = Character.extend({
                         var playerName = self.server.getPlayerByName(msg.split(' ')[1]);
                         var x = (msg.split(' ')[2]) * 1;
                         var y = (msg.split(' ')[3]) * 1;
-                        
+
                         if (playerName) {
                             databaseHandler.teleportPlayer(self ,playerName, x, y);
-                            
-                            
+
+
                         }
-                        
+
                     } else if(msg.startsWith("/unmute ")) {
                         if (targetPalyer) {
-                            
+
                             databaseHandler.unmute(self, targetPalyer);
                         }
                     }
-                    
+
                     else if(msg.startsWith("/mute ")) {
                         var mutePlayer1 = self.server.getPlayerByName(msg.split(' ')[1]);
                         var mutePlayer2 = self.server.getPlayerByName(msg.split(' ')[2]);
                         if(mutePlayer1) {
-                            
+
                             databaseHandler.chatBan(self, mutePlayer1);
                         } else if (mutePlayer1 && mutePlayer2) {
-                            
+
                             databaseHandler.chatBan(self, mutePlayer1 + mutePlayer2);
                         }
                     } else if(msg.startsWith("/pmute ")) {
-                        if (targetPalyer) 
+                        if (targetPalyer)
                             databaseHandler.permanentlyMute(self, targetPalyer);
-                        
-                        
+
+
                     } else if(msg.startsWith("/promote ")) {
                         var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
                         var rank = (msg.split(' ')[2]) * 1;
@@ -246,18 +246,20 @@ module.exports = Player = Character.extend({
                         if (targetPlayer) {
                             databaseHandler.demotePlayer(self, targetPlayer);
                         }
-                        
+
                     } else if (msg.startsWith("/sendrequest ")) {
                         var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
                         if (targetPlayer) {
                             this.trade = new Trade(self, targetPlayer);
                             this.trade.sendRequest(self, targetPlayer);
                         }
-                        
+
+                    } else if (msg.startsWith("/setability ")) {
+                        self.setAbility();
                     } else {
-                      self.broadcastToZone(new Messages.Chat(self, msg), false);              
+                      self.broadcastToZone(new Messages.Chat(self, msg), false);
                     }
-                    
+
                 }
             }
             else if(action === Types.Messages.MOVE) {
@@ -306,12 +308,12 @@ module.exports = Player = Character.extend({
             } else if(action === Types.Messages.CHARACTERINFO) {
                 log.info("CHARACTERINFO: " + self.name);
                 self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
-                    
+
             } else if(action === Types.Messages.TELEPORT) {
                 log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
                 var x = message[1],
                     y = message[2];
-                    
+
                 if(self.server.isValidPosition(x, y)) {
                     self.setPosition(x, y);
                     self.clearTarget();
@@ -414,10 +416,10 @@ module.exports = Player = Character.extend({
 
         this.connection.sendUTF8("go"); // Notify client that the HELLO/WELCOME handshake can start
     },
-    
-    
-    
-    
+
+
+
+
     questAboutKill: function(mob){
     var self = this;
     // Daily Quest
@@ -602,17 +604,17 @@ module.exports = Player = Character.extend({
     },
     equipAvatar: function(kind, enchantedPoint, skillKind, skillLevel) {
         if(kind){
-            
+
             this.avatar = kind;
         } else{
-            
+
             this.avatar = null;
         }
         if(enchantedPoint){
-            
+
             this.avatarEnchantedPoint = enchantedPoint;
         } else{
-            
+
             this.avatarEnchantedPoint = 0;
         }
         this.avatarSkillKind = skillKind;
@@ -622,14 +624,20 @@ module.exports = Player = Character.extend({
         this.weapon = kind;
         this.weaponAvatar = kind;
         if(enchantedPoint){
-            
+
             this.weaponEnchantedPoint = enchantedPoint;
             this.weaponAvatarEnchantedPoint = enchantedPoint;
         } else {
-            
+
             this.weaponEnchantedPoint = 0;
             this.weaponAvatarEnchantedPoint = 0;
         }
+        if (Types.isArcherWeapon(kind)) {
+            this.kind = Types.Entities.ARCHER;
+        } else {
+            this.kind = Types.Entities.WARRIOR;
+        }
+
         this.weaponLevel = Properties.getWeaponLevel(kind) + this.weaponEnchantedPoint;
         this.weaponSkillKind = skillKind;
         this.weaponSkillLevel = skillLevel;
@@ -637,16 +645,16 @@ module.exports = Player = Character.extend({
         this.weaponAvatarSkillLevel = skillLevel;
     },
     equipWeaponAvatar: function(kind, enchantedPoint, skillKind, skillLevel){
-        
+
     },
     equipPendant: function(kind, enchantedPoint, skillKind, skillLevel) {
         if(kind) {
             this.pendant = kind;
             if(enchantedPoint){
-                
+
                 this.pendantEnchantedPoint = enchantedPoint;
             } else{
-                
+
                 this.pendantEnchantedPoint = 0;
             }
             this.pendantLevel = Properties.getPendantLevel(kind);
@@ -664,10 +672,10 @@ module.exports = Player = Character.extend({
         if(kind) {
             this.ring = kind;
             if(enchantedPoint){
-                
+
                 this.ringEnchantedPoint = enchantedPoint;
             } else{
-                
+
                 this.ringEnchantedPoint = 0;
             }
             this.ringLevel = Properties.getRingLevel(kind);
@@ -685,10 +693,10 @@ module.exports = Player = Character.extend({
         if(kind) {
             this.boots = kind;
             if(enchantedPoint){
-                
+
                 this.bootsEnchantedPoint = enchantedPoint;
             } else{
-                
+
                 this.bootsEnchantedPoint = 0;
             }
             this.bootsLevel = Properties.getBootsLevel(kind);
@@ -705,18 +713,18 @@ module.exports = Player = Character.extend({
     equipItem: function(itemKind, enchantedPoint, skillKind, skillLevel, isAvatar) {
         if(itemKind) {
             log.debug(this.name + " equips " + Types.getKindAsString(itemKind));
-            
+
             if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
                 databaseHandler.equipAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
                 databaseHandler.equipArmor(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
                 this.equipArmor(itemKind, enchantedPoint, skillKind, skillLevel);
-                
+
             } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
-               
+
                 databaseHandler.equipWeaponAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
                 databaseHandler.equipWeapon(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
                 this.equipWeapon(itemKind, enchantedPoint, skillKind, skillLevel);
-               
+
             } else if(Types.isPendant(itemKind)) {
                 databaseHandler.equipPendant(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
                 this.equipPendant(itemKind, enchantedPoint, skillKind, skillLevel);
@@ -759,8 +767,8 @@ module.exports = Player = Character.extend({
         this.resetMana(Formulas.mana(this.kind, this.level));
     }, */
     //^ ALREADY COVERED BY updateHitPoints
-    
-    
+
+
     updatePosition: function() {
         if(this.requestpos_callback) {
             var pos = this.requestpos_callback();
@@ -784,7 +792,7 @@ module.exports = Player = Character.extend({
             if(!this.achievement[questId].found){
                 this.foundQuest(questId);
             }
-        } else if(message[2] === "show") { 
+        } else if(message[2] === "show") {
             var self = this;
             databaseHandler.loadQuest(this, function(){
                 var i=0;
@@ -809,6 +817,8 @@ module.exports = Player = Character.extend({
             this.getDailyQuest();
         } else if(npcKind === Types.Entities.VILLAGER){
             this.questAboutItem(npcKind, 3, Types.Entities.LEATHERARMOR, function(){ self.incExp(50); });
+        } else if(npcKind === Types.Entities.SNOWSHEPHERDBOY){
+            this.questAboutItem(npcKind, 28, Types.Entities.LEATHERARMOR, function(){ self.incExp(50); });
         } else if(npcKind === Types.Entities.AGENT){
             this.questAboutItem(npcKind, 5, Types.Entities.CAKE, function(){ self.incExp(50); });
         } else if(npcKind === Types.Entities.NYAN){
@@ -879,14 +889,14 @@ module.exports = Player = Character.extend({
             databaseHandler.progressAchievement(this.name, questNumber, this.achievement[questNumber].progress);
             } else{
                 this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, false));
-            } 
+            }
         }
     },
     resetTimeout: function() {
         clearTimeout(this.disconnectTimeout);
         this.disconnectTimeout = setTimeout(this.timeout.bind(this), 1000 * 60 * 5); // 5 min.
     },
-    
+
     _questAboutKill: function(mobKind, questMobKind, questId, completeNumber, callback){
         if((questMobKind === 0 && Types.getMobLevel(mobKind)*2 > this.level) || mobKind === questMobKind) {
             var achievement = this.achievement[questId];
@@ -928,7 +938,7 @@ module.exports = Player = Character.extend({
         databaseHandler.foundAchievement(this.name, questId);
         this.send([Types.Messages.QUEST, "found", questId]);
     },
-    
+
     timeout: function() {
         this.connection.sendUTF8("timeout");
         this.connection.close("Player was idle for too long");
@@ -943,7 +953,7 @@ module.exports = Player = Character.extend({
             log.info("EXP Multiplier: " + this.variations.expMultiplier);
             this.experience = parseInt(this.experience) + (parseInt(gotexp) * this.variations.expMultiplier);
         }
-        
+
         //NOTE
         databaseHandler.setExp(this.name, this.experience);
         var origLevel = this.level;
@@ -979,13 +989,13 @@ module.exports = Player = Character.extend({
     },
 
     sendWelcome: function(armor, weapon, avatar, weaponAvatar, exp, admin,
-                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank, 
+                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank,
                                     armorEnchantedPoint, armorSkillKind, armorSkillLevel,
-                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel, 
-                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel, 
-                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
+                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel,
+                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel,
+                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel,
                                     pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
-                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
+                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel,
                                     boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
                                     membershipTime, kind) {
         var self = this;
@@ -1005,14 +1015,14 @@ module.exports = Player = Character.extend({
         self.level = Types.getLevel(self.experience);
         self.orientation = Utils.randomOrientation;
         self.updateHitPoints();
-        
+
         /*player, otherPlayer, itemKind, itemSkillKind, itemSkillLevel, itemCount, newPlayer*/
         if(x === 0 && y === 0) {
             self.updatePosition();
         } else {
             self.setPosition(x, y);
         }
-        
+
         self.server.addPlayer(self);
         self.server.enter_callback(self);
         databaseHandler.getAllInventory(self, function(maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels) {
@@ -1020,7 +1030,7 @@ module.exports = Player = Character.extend({
             databaseHandler.loadQuest(self, function() {
                 var i = 0;
                 var sendMessage = [
-                    Types.Messages.WELCOME, 
+                    Types.Messages.WELCOME,
                     self.id, // 1
                     self.name, //2
                     self.x, //3
@@ -1037,8 +1047,8 @@ module.exports = Player = Character.extend({
                     self.variations.expMultiplier,
                     self.membership,
                     self.kind
-                ]; 
-            
+                ];
+
                 for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){
                     sendMessage.push(self.achievement[i+1].found);
                     sendMessage.push(self.achievement[i+1].progress);
@@ -1055,8 +1065,8 @@ module.exports = Player = Character.extend({
                     sendMessage.push(self.inventory.rooms[i].itemSkillLevel);
                 }
                 self.send(sendMessage);
-                
-                
+
+
                 databaseHandler.loadSkillSlots(self, function(names) {
                     for(var index = 0; index < names.length; index++) {
                         if(names[index]) {
@@ -1069,10 +1079,10 @@ module.exports = Player = Character.extend({
             });
         });
         self.hasEnteredGame = true;
-        self.isDead = false;  
+        self.isDead = false;
     },
-   
-    handleLootMove: function(message){ 
+
+    handleLootMove: function(message){
         if(this.lootmove_callback) {
             this.setPosition(message[1], message[2]);
 
@@ -1083,7 +1093,7 @@ module.exports = Player = Character.extend({
                 this.broadcast(new Messages.LootMove(this, item));
                 this.lootmove_callback(this.x, this.y);
             }
-        }     
+        }
     },
     handleSell: function(message){ // 41
         var inventoryNumber = message[1];
@@ -1172,14 +1182,14 @@ module.exports = Player = Character.extend({
             }
         }
     },
-   
+
     handleInventory: function(message){ // 28
         var inventoryNumber = message[2],
             count = message[3];
         var self = this;
 
         if(inventoryNumber > this.inventory.number){
-            
+
               return;
         }
 
@@ -1211,17 +1221,17 @@ module.exports = Player = Character.extend({
         }
     },
     canEquipArmor: function(itemKind){
-        
+
         var armorLevel = Types.getArmorRank(itemKind)+1;
         if(armorLevel * 2 > this.level){
             this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + armorLevel * 2 + " to equip this."));
             return false;
         }
         return true;
-        
+
       },
       canEquipWeapon: function(itemKind){
-        
+
         var weaponLevel = Types.getWeaponRank(itemKind)+1;
         if(weaponLevel * 2 > this.level){
             this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + weaponLevel * 2 + " to equip this."));
@@ -1274,7 +1284,7 @@ module.exports = Player = Character.extend({
         //}
     },
     handleInventoryWeapon: function(itemKind, inventoryNumber){
-        
+
         var weaponLevel = Types.getWeaponRank(itemKind) + 1;
         if(weaponLevel * 2 > this.level){
           this.server.pushToPlayer(this, new Messages.Notify("You need to be at least level: " + weaponLevel * 2 + " to weild this weapon."));
@@ -1313,7 +1323,7 @@ module.exports = Player = Character.extend({
           this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, enchantedPoint, pendantSkillKind, pendantSkillLevel, false);
-        this.server.pushToPlayer(this, this.equip(itemKind)); 
+        this.server.pushToPlayer(this, this.equip(itemKind));
 
     },
     handleInventoryRing: function(itemKind, inventoryNumber){
@@ -1407,10 +1417,10 @@ module.exports = Player = Character.extend({
             var amount;
 
             switch(itemKind) {
-                case Types.Entities.FLASK: 
+                case Types.Entities.FLASK:
                     amount = 80;
                     break;
-                case Types.Entities.BURGER: 
+                case Types.Entities.BURGER:
                     amount = 200;
                     break;
             }
@@ -1533,7 +1543,7 @@ module.exports = Player = Character.extend({
                 this.pendantEnchantedPoint = 0;
             }
             databaseHandler.enchantPendant(this.name, this.pendantEnchantedPoint);
-        
+
           } else {
             this.server.pushToPlayer(this, new Messages.Notify("강화에 실패했습니다."));
         }
@@ -1544,7 +1554,7 @@ module.exports = Player = Character.extend({
     handleLoot: function(message){
         var self = this;
         var item = this.server.getEntityById(message[1]);
-                
+
     if(item) {
         var kind = item.kind;
         var itemRank = 0;
@@ -1576,25 +1586,25 @@ module.exports = Player = Character.extend({
         }
     }
   },
-    
-    
+
+
     computeSkillLevel: function() {
         if(this.achievement[10].progress === 999) {
             if(this.achievement[11].progress === 999) {
                 if(this.achievement[14].progress === 999) {
                     if(this.achievement[18].progress === 999) {
-                        
+
                         this.skillHandler.add('evasion', 4);
                     } else {
-                        
+
                         this.skillHandler.add('evasion', 3);
                     }
                 } else{
-                    
+
                     this.skillHandler.add('evasion', 2);
                 }
             } else {
-                
+
                 this.skillHandler.add('evasion', 1);
             }
         }
@@ -1864,7 +1874,7 @@ module.exports = Player = Character.extend({
                     this.server.pushToPlayer(this, new Messages.Mana(this));
                 }
             } else{
-                
+
                 this.server.pushToPlayer(this, new Messages.Notify("You're not in a party."));
             }
         } else if(type === "flareDance"){
@@ -1970,7 +1980,7 @@ module.exports = Player = Character.extend({
             });
         }
     },
-  
+
     getRanking: function() {
         databaseHandler.getPlayerRanking(this, function(ranking){
              log.debug("Ranking: " + ranking);

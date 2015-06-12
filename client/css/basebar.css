@@ -268,10 +268,10 @@ footer, header, hgroup, menu, nav, section {
     #inventorybackground5 { margin-left: 255px; display: none; }
     #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
       position: absolute;
-      top: 2.5px;
-      left: 10px;
-      width: 33px;
-      height: 33px;
+      top: -7.5px;
+      left: 00px;
+      width: 48px;
+      height: 48px;
       background-color: rgba(0, 0, 0, 0);
     }
     #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
@@ -300,36 +300,36 @@ footer, header, hgroup, menu, nav, section {
     }
 
     #characterButton {
-      position: absolute;
-      width: 42px;
-      height: 45px;
-      top: 3px;
-      left: 1305px;
-      margin: 0px;
-      border: 0px;
-      background-color: rgba(0, 0, 0, 0);
-      background: url('../img/3/main.png') no-repeat -0px -945px;
+        position: absolute;
+        width: 42px;
+        height: 45px;
+        top: 3px;
+        left: 1305px;
+        margin: 0px;
+        border: 0px;
+        background-color: rgba(0, 0, 0, 0);
+        background: url('../img/3/main.png') no-repeat -0px -942px;
     }
     #helpbutton {
-      position: absolute;
-      width: 42px;
-      height: 45px;
-      top: 3px;
-      left: 1350px;
-      margin: 0px;
-      border: 0px;
-      background-color: rgba(0, 0, 0, 0);
-      background: url('../img/3/main.png' ) no-repeat -421px -945px;
+        position: absolute;
+        width: 42px;
+        height: 45px;
+        top: 3px;
+        left: 1350px;
+        margin: 0px;
+        border: 0px;
+        background-color: rgba(0, 0, 0, 0);
+        background: url('../img/3/main.png' ) no-repeat -420px -942px;
     }
     #soundbutton {
-      position: absolute;
-      width: 42px;
-      height: 45px;
-      top: 3px;
-      left: 1395px;
-      margin: 0px;
-      border: 0px;
-      background: url('../img/3/main.png' ) no-repeat -379px -945px;
+        position: absolute;
+        width: 42px;
+        height: 45px;
+        top: 3px;
+        left: 1395px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/3/main.png' ) no-repeat -438px -942px;
     }
     
     #users {
@@ -897,44 +897,37 @@ footer, header, hgroup, menu, nav, section {
       border: 0px;
       background: url('../img/1/main.png') no-repeat -591px -556px;
     }
-
     #characterButton {
-      position: absolute;
-      width: 14px;
-      height: 15px;
-      top: 1px;
-      left: 435px;
-      margin: 0px;
-      border: 0px;
-      background-color: rgba(0, 0, 0, 0);
-      background: url('../img/1/main.png') no-repeat -0px -314px;
-      background: url('../img/1/main.png') no-repeat -0px -628px;
-      background: url('../img/1/main.png') no-repeat -0px -628px;
+        position: absolute;
+        width: 14px;
+        height: 15px;
+        top: 1px;
+        left: 435px;
+        margin: 0px;
+        border: 0px;
+        background-color: rgba(0, 0, 0, 0);
+        background: url('../img/1/main.png') no-repeat -0px -314px;
     }
     #helpbutton {
-      position: absolute;
-      width: 14px;
-      height: 15px;
-      top: 1px;
-      left: 450px;
-      margin: 0px;
-      border: 0px;
-      background-color: rgba(0, 0, 0, 0);
-      background: url('../img/1/main.png' ) no-repeat -140px -314px;
-      background: url('../img/1/main.png' ) no-repeat -280px -628px;
-      background: url('../img/1/main.png' ) no-repeat -280px -628px;
+        position: absolute;
+        width: 14px;
+        height: 15px;
+        top: 1px;
+        left: 450px;
+        margin: 0px;
+        border: 0px;
+        background-color: rgba(0, 0, 0, 0);
+        background: url('../img/1/main.png' ) no-repeat -140px -314px;
     }
     #soundbutton {
-      position: absolute;
-      width: 14px;
-      height: 15px;
-      top: 1px;
-      left: 465px;
-      margin: 0px;
-      border: 0px;
-      background: url('../img/1/main.png' ) no-repeat -126px -314px;
-      background: url('../img/1/main.png' ) no-repeat -252px -628px;
-      background: url('../img/1/main.png' ) no-repeat -252px -628px;
+        position: absolute;
+        width: 14px;
+        height: 15px;
+        top: 1px;
+        left: 465px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/1/main.png' ) no-repeat -126px -314px;
     }
     #users {
       position: absolute;

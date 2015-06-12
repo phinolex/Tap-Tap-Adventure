@@ -111,11 +111,28 @@ WS.WebsocketServer = Server.extend({
             // Display errors (such as 404's) in the server log
             var logger = require('morgan');
             app.use(logger('dev'));
+            if ( typeof String.prototype.startsWith !== 'function' ) {
+                String.prototype.startsWith = function( str ) {
+                    return str.length > 0 && this.substring( 0, str.length ) === str;
+                };
+            };
 
+            if ( typeof String.prototype.endsWith !== 'function' ) {
+                String.prototype.endsWith = function( str ) {
+                    return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
+                };
+            };
             // Generate (on the fly) the pages needing special treatment
             app.use(function handleDynamicPageRequests(request, response) {
                 var path = url.parse(request.url).pathname;
+                var id = path.split('&')[1];
+                var name = path.split('&')[2];
+                path.concat(id).concat(name);
+                if (path.startsWith("/token")){
+                    log.info("Token received with ID: " + id + " and name: " + name);
+                }
                 switch (path) {
+
                     case '/status':
                         // The server status page
                         if (self.statusCallback) {

@@ -246,11 +246,11 @@ define(['jquery'], function() {
             KILL_SNOWWOLF: {
                 id: 28,
                 npcKind: Types.Entities.SNOWSHEPHERDBOY,
-                name: "Snow Wolf",
-                desc: "Kill Snow Wolves.",
+                name: "Snow Wolves",
+                desc: "Kill 5 Snow Wolves.",
                 found: false,
                 completed: false,
-                completeNumber: 60
+                completeNumber: 5
             },
             KILL_SNOWLADY: {
                 id: 29,
@@ -391,18 +391,28 @@ define(['jquery'], function() {
       this.initSkill();
     },
     initSkill: function(){
-        if(this.quests.KILL_ORC.completed){
-            if(this.quests.KILL_GOLEM.completed){
+        this.game.player.setSkill(4);
+        this.game.player.setBloodSuckingSkill(4);
+        this.game.player.setCriticalStrikeSkill(4);
+        this.game.player.setHealSkill(4);
+        this.game.player.setFlareDanceSkill(4);
+        this.game.player.setStunSkill(3);
+        this.game.player.setSuperCatSkill(2);
+        this.game.player.setProvocationSkill(1);
+        if(this.quests.KILL_ORC.completed) {
+            if(this.quests.KILL_GOLEM.completed) {
                 if(this.quests.BRING_RATARMOR.completed){
                     if(this.quests.KILL_PENGUIN.completed){
                         this.game.player.setSkill(4);
-                    } else{
+                    } else {
+
                         this.game.player.setSkill(3);
                     }
-                } else{
+                } else {
+
                     this.game.player.setSkill(2);
                 }
-            } else{
+            } else {
                 this.game.player.setSkill(1);
             }
         }

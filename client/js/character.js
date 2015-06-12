@@ -56,9 +56,12 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         setMaxMana: function(mana) {
             this.maxMana = mana;
             this.mana = mana;
-	},
+	    },
         setDefaultAnimation: function() {
             this.idle();
+        },
+        setAtkRange: function(range) {
+            this.atkRange = range;
         },
 
         hasWeapon: function() {
@@ -529,8 +532,14 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         },
 
         canReachTarget: function() {
-            if(this.hasTarget() && this.isAdjacentNonDiagonal(this.target)) {
-                return true;
+            if(this.atkRange > 1){
+                if(this.hasTarget() && this.getDistanceToEntity(this.target) < this.atkRange) {
+                    return true;
+                }
+            } else{
+                if(this.hasTarget() && this.isAdjacentNonDiagonal(this.target)) {
+                    return true;
+                }
             }
             return false;
         },

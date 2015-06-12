@@ -133,6 +133,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.musicOn = true;
             this.sfxOn = true;
             this.frameColour = "default";
+            this.autoRetaliate = false;
+
+
+            //Bank
+            this.bankShowing = false;
             
             
             // sprites
@@ -271,6 +276,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         setup: function($bubbleContainer, canvas, background, foreground, textcanvas, toptextcanvas, input) {
             this.setBubbleManager(new BubbleManager($bubbleContainer));
             this.setRenderer(new Renderer(this, canvas, background, foreground, textcanvas, toptextcanvas));
+            this.inventoryHandler = new InventoryHandler(this);
             this.setChatInput(input);
         },
 
@@ -312,7 +318,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             this.app.initTargetHud();
             this.player.setSprite(this.sprites[this.player.getSpriteName()]);
-            this.inventoryHandler = new InventoryHandler(this);
+
             this.player.idle();
 
             log.debug("Finished initPlayer");
@@ -789,6 +795,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 log.error("Unknown entity id : " + id, true);
             }
         },
+        getEntityByKind: function(kind){
+            for(id in this.entities){
+                var entity = this.entities[id];
+                if(entity.kind === kind){
+                    return entity;
+                }
+            }
+            return null;
+        },
 
         connect: function(action, started_callback) {
             var self = this,
@@ -878,7 +893,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.admin = admin;
                 self.player.experience = experience;
                 self.player.level = Types.getLevel(experience);
-
                 self.doubleEXP = doubleExp;
                 self.expMultiplier = expMultiplier;
                 self.player.setGridPosition(x, y);
@@ -1003,12 +1017,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
                         var dest = self.map.getDoorDestination(x, y);
 
-                        if(dest.level > self.player.level){
+                        if(dest.level > self.player.level) {
                             self.unregisterEntityPosition(self.player);
                             self.registerEntityPosition(self.player);
                             return;
                         }
-                        if(dest.admin === 1 && self.player.admin === null){
+                        if(dest.admin === 1 && self.player.admin === null) {
                             self.unregisterEntityPosition(self.player);
                             self.registerEntityPosition(self.player);
                             return;
@@ -1345,7 +1359,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                         if(entity) {
                             if(self.player.isAttackedBy(entity)) {
-                                //Do this for some sort of future achievements on the side of quests
+                                this.playerIsAttacked = true;
                             }
                             entity.disengage();
                             entity.idle();
@@ -1483,15 +1497,18 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 
                     if(player) {
                         if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
-                            
                             player.switchArmor(itemName, self.sprites[itemName]);
-                            
                             if(self.player.id === player.id){
                                 self.audioManager.playSound("loot");
                             }
                         } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
-                            
                             player.setWeaponName(itemName);
+                            if (Types.isArcherWeapon(itemKind)) {
+                                player.kind = Types.Entities.WARRIOR;
+                            } else {
+                                player.kind = Types.Entities.ARCHER;
+                            }
+
                             if(self.player.id === player.id){
                                 self.audioManager.playSound("loot");
                             }
@@ -1606,9 +1623,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.client.onKung(function(msg){
                     self.kkhandler.add(msg, self.player);
                 });
-                self.client.onSkillInstall(function(datas) {
-                    self.player.skillHandler.install(datas[0], datas[1]);
-                });
+
                 self.client.onCharacterInfo(function(datas) {
                     self.characterDialog.show(datas);
                 });
@@ -1659,7 +1674,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         }
                     }
                 });
-
+                self.client.onSkillInstall(function(datas) {
+                    self.player.skillHandler.install(datas[0], datas[1]);
+                });
                 self.client.onStoreOpen(function(datas) {
                     self.storeDialog.show(datas);
                 });

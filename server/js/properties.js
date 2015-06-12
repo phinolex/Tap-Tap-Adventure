@@ -283,9 +283,9 @@ var Properties = {
             greenpendant: 1
 
         },
-        hp: 800,
-        armor: 1,
-        weapon: 1
+        hp: 600,
+        armor: 4,
+        weapon: 2
 
     },
     yellowmouse: {
@@ -793,16 +793,17 @@ var Properties = {
     },
     snowwolf: {
         drops: {
-            burger: 30,
-            taekwondo: 5,
+            burger: 1,
+            leatherarmor: 95
+            /*taekwondo: 5,
             combatuniform: 5,
             royalazalea: 1,
             spiritring: 1,
-            marblependant: 1
+            marblependant: 1*/
 
         },
-        hp: 4556,
-        armor: 1,
+        hp: 50,
+        armor: 3,
         weapon: 1
     },
     cobra: {

@@ -41,7 +41,7 @@ function main(config) {
                 }
             });
         }
-    }, 1000);
+    }, 10);
 
     log.info("Starting Tap Tap Adventure game server...");
     var selector = DatabaseSelector(config);

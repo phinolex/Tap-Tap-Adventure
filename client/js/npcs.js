@@ -401,14 +401,17 @@ define(['npc'], function(Npc) {
             init: function(id) {
                 this._super(id, Types.Entities.SNOWSHEPHERDBOY, 1);
                 this.beforeQuestCompleteTalk = [
-                    "There are too many snow wolves..",
-                    "They are always hunting my sheep..",
-                    "Buy it's too cold to move as you see.",
-                    "Could you do me a favor?",
-                    "Can you kill 60 snow wolves?"
+                    "Hello Newcomer",
+                    "I'm here to welcome you to Tap Tap Adventure.",
+                    "Before continuing on to the main land, you must",
+                    "be introduced around firstly.",
+                    "Starting off, kill 5 snow wolves and bring me some",
+                    "leather armour.",
+                    "Head over into the cabin there and let the magic",
+                    "occur."
                 ];
                 this.afterQuestCompleteTalk = [
-                    "Thank you."
+                    "Great Job, you can now head down the ladder.."
                 ];
             }
         }),

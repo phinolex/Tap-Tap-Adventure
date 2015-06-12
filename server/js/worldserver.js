@@ -216,7 +216,7 @@ module.exports = World = cls.Class.extend({
                 } //NOTE
                 updateCount = 0;
             }
-        }, 10000 / this.ups);
+        }, 2500 / this.ups);
 
         log.info(""+this.id+" created (capacity: "+this.maxPlayers+" players).");
     },
@@ -628,7 +628,7 @@ module.exports = World = cls.Class.extend({
                     this.handleItemDespawn(item);
                 }
             }
-    
+
             if(entity.type === "player") {
                 this.handlePlayerVanish(entity);
                 this.pushToAdjacentGroups(entity.group, entity.despawn());

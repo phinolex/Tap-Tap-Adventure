@@ -307,9 +307,17 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 game.respawn();
                 $('body').removeClass('death');
             });
+            if (game.renderer) {
+                if (game.renderer.mobile) {
+                    this.scale = 1;
+                } else {
+                    this.scale = game.renderer.scale; //temporary fix - use getScaleFactor();
+                }
+            } else {
+                this.scale = 2;
+            }
             
-            
-            Button2.configure = {background: {top: 628, width: 28}, kinds: [0, 3, 2]};
+            Button2.configure = {background: {top: this.scale * 314, width: this.scale * 14}, kinds: [0, 3, 2]};
 
             this.characterButton = new Button2('#characterButton', {background: {left: 0}});
             this.characterButton.onClick(function(sender, event) {
@@ -324,7 +332,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             game.characterDialog.button = this.characterButton;
 
 
-            this.helpButton = new Button2('#helpbutton', {background: {left: 280}});
+            this.helpButton = new Button2('#helpbutton', {background: {left: this.scale * 140}});
             this.helpButton.onClick(function(sender, event) {
                 if(game && game.ready) {
                     if(game.itemInfoDialog.visible) {
@@ -337,7 +345,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
             game.itemInfoDialog.button = this.helpButton;
 
-            this.soundButton = new Button2('#soundbutton', {background: {left: 196}, downed: true});
+            this.soundButton = new Button2('#soundbutton', {background: {left: this.scale * 98}, downed: true});
             this.soundButton.onClick(function(sender, event) {
                 if(game && game.ready) {
                     if(game.audioManager.toggle()) {
@@ -585,6 +593,9 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         game.chathandler.incChatWindow();
                     } else if(key === 109 && game.started){ // -
                         game.chathandler.decChatWindow();
+                    } else if([81, 69, 82, 84, 89].indexOf(key) >= 0 && game.started) { // q, e, r, t, y
+                        game.player.skillHandler.execute(key);
+                        return false;
                     }
 
                     // The following may be uncommented for debugging purposes.

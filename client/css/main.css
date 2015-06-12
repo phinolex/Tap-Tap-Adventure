@@ -385,37 +385,142 @@ footer div  {display:inline-block;}
 @-o-keyframes invincible { from {background:#fa6a00;} to {background:#fabc00;} }
 @-ms-keyframes invincible { from {background:#fa6a00;} to {background:#fabc00;} }
 @media screen and (min-width: 1501px) {
-    #chatbkground-ox{
+
+    #target{
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        width: 210px;
+        margin-left: 0px;
+        padding: 6px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border: 3px solid #000;
+        border-radius: 0 0 9px 0;
+        pointer-events: none;
+    }
+    #target .headshot {
+        float: left;
+        height: 48px;
+        width: 48px;
+        border: 3px solid #000;
+        margin-right: 4.5px;
+        background: #FFF;
+        overflow: hidden;
+    }
+    #target .headshot div {
+        position: relative;
+        top: 50%;
+        left: 50%;
+    }
+    #target .details {
+        float: left;
+        margin-bottom: 12px;
+        width: 150px;
+        text-transform: capitalize;
+    }
+    #target .name {
+        float: left;
+        margin-bottom: 12px;
+        text-transform: capitalize;
+    }
+    #target .health {
+        float: left;
+        height: 15px;
+        width: 100%;
+        background: red;
+        clear: left;
+    }
+    #inspector {
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        width: 210px;
+        margin-left: -105px;
+        padding: 6px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border-radius: 0 0 9px 9px;
+        pointer-events: none;
+    }
+    #inspector .headshot {
+        float: left;
+        height: 48px;
+        width: 48px;
+        border: 3px solid #000;
+        margin-right: 4.5px;
+        background: #FFF;
+        overflow: hidden;
+    }
+    #inspector .headshot div {
+        position: relative;
+        top: 50%;
+        left: 50%;
+    }
+    #inspector .details {
+        float: left;
+        width: 150px;
+    }
+    #inspector .health {
+        float: left;
+        height: 15px;
+        width: 100%;
+        background: red;
+        clear: left;
+    }
+
+
+    #iteminfo {
+        display: none;
+        position: absolute;
+        width: 1350px;
+        height: 336px;
+        top: 48px;
+        left: 50%;
+        margin-left: -675px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+        font-size: 48px;
+        padding-top: 48px;
+    }
+
+    #chatbox{
         position: absolute;
         left: 50%;
         bottom: 84px;
-        width: 1182px;
-        height: 48px;
-        margin-left: -591px;
-        background-image: url('../img/3/main.png');
-        background-position: 0px -894px;
+        width: 788px;
+        height: 32px;
+        margin-left: -394px;
+        background-image: url('../img/2/main.png');
+        background-position: 0px -596px;
         display: none;
     }
     #chatbox.active {
         display: block;
     }
     #chatbox input {
-        font-size:30px;
+        font-size:20px;
         color:#eee;
         background:none;
         width:90%;
         border:0;
         margin-left:2%;
-        padding:10.5px 0;
+        padding:7px 0;
     }
     #chatbox .legend{
         position: absoute;
-        top: -10px;
-        left: 15px;
-        padding: 6px 9px;
+        top: -20px;
+        left: 10px;
+        padding: 4px 6px;
         color: #FFF;
         background: rgba(45,45,45,0.8);
-        z_index: 6;
+        z_index: 4;
         border-radius: 3px 3px 0 0;
         diplay: none;
     }
@@ -460,10 +565,10 @@ footer div  {display:inline-block;}
     #container {width:1470px;margin:0 auto;position:absolute;top:50%;margin-top:-378px;left:50%;margin-left:-735px;}
     #chatLog{
         position: absolute;
-        width: 390px;
+        width: 300px;
         left: 64.29%;
         margin-left: -950px;
-        top: 74%;
+        top: 77%;
         bottom: 10.309%;
         border: 1px solid #9C9898;
         background: rgba(0, 0, 0, 0.5);
@@ -1298,6 +1403,95 @@ footer div  {display:inline-block;}
 
 }
 @media screen and (max-width: 1000px) {
+
+#target{
+    font-family:'GraphicPixel';
+    color:#e3e3e3;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 70px;
+    margin-left: 0px;
+    padding: 2px;
+    background: rgba(45,45,45,0.8);
+    display: none;
+    border: 1px solid #000;
+    border-radius: 0 0 3px 0;
+    pointer-events: none;
+}
+    #target .headshot {
+        float: left;
+        height: 16px;
+        width: 16px;
+        border: 1px solid #000;
+        margin-right: 1.5px;
+        background: #FFF;
+        overflow: hidden;
+    }
+    #target .headshot div {
+        position: relative;
+        top: 50%;
+        left: 50%;
+    }
+    #target .details {
+        float: left;
+        margin-bottom: 4px;
+        width: 50px;
+        text-transform: capitalize;
+    }
+    #target .name {
+        float: left;
+        margin-bottom: 4px;
+        text-transform: capitalize;
+    }
+    #target .health {
+        float: left;
+        height: 5px;
+        width: 100%;
+        background: red;
+        clear: left;
+    }
+    #inspector {
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        width: 70px;
+        margin-left: -35px;
+        padding: 2px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border-radius: 0 0 3px 3px;
+        pointer-events: none;
+    }
+    #inspector .headshot {
+        float: left;
+        height: 16px;
+        width: 16px;
+        border: 1px solid #000;
+        margin-right: 1.5px;
+        background: #FFF;
+        overflow: hidden;
+    }
+    #inspector .headshot div {
+        position: relative;
+        top: 50%;
+        left: 50%;
+    }
+    #inspector .details {
+        float: left;
+        width: 50px;
+    }
+    #inspector .health {
+        float: left;
+        height: 5px;
+        width: 100%;
+        background: red;
+        clear: left;
+    }
+
+
 
     #iteminfo {
         display: none;

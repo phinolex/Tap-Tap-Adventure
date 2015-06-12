@@ -381,14 +381,21 @@ define(['jquery', 'mob', 'item'], function($, Mob, Item) {
             });
         },
         initManaBar: function() {
-            var scale = this.game.renderer.getScaleFactor(),
-                maxWidth = $("#manabar").width() - (11 * scale);
-
-                if (scale == 1) {
-                    maxWidth = 77;
+            var maxWidth = $("#manabar").width() - (11 * scale);
+            if (this.game.renderer) {
+                if (this.game.renderer.mobile) {
+                    var scale = 1;
+                } else {
+                    var scale = this.game.renderer.getScaleFactor();
                 }
+            } else {
+                var scale = 2;
+            }
 
 
+            if (scale == 1) {
+                maxWidth = 77;
+            }
             this.game.onPlayerManaChange(function(mana, maxMana) {
                 var barWidth = Math.round((maxWidth / maxMana) * (mana > 0 ? mana : 0));
                 $('#mana').css('width', barWidth + "px");
@@ -412,10 +419,16 @@ define(['jquery', 'mob', 'item'], function($, Mob, Item) {
         },
 
         initHealthBar: function() {
-            
-            var scale = this.game.renderer.getScaleFactor();
 
-
+            if (this.game.renderer) {
+                if (this.game.renderer.mobile) {
+                    var scale = 1;
+                } else {
+                    var scale = this.game.renderer.getScaleFactor();
+                }
+            } else {
+                var scale = 2;
+            }
 
             var healthMaxWidth = $("#healthbar").width() - (11 * scale);
             if (scale == 1) {

@@ -14,7 +14,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client = redis.createClient(config.redis_port, config.redis_host, {socket_nodelay: true});
         client.auth("klhjkHGBmnvzZXZXZhsdfsd66-124&^^%$^@--fbkbgdJGBGBG04y1bVXVXVXp49xk!i24");
     },
-    loadPlayer: function(player){
+    loadPlayer: function(player) {
         var self = this;
         var userKey = "u:" + player.name;
         var curTime = new Date().getTime();

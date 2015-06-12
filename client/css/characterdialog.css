@@ -1,6 +1,167 @@
 
 @media screen and (min-width: 1501px) {
-    
+
+    #characterDialog {
+        position: absolute;
+        left: 100%;
+        top: 100%;
+        width: 372px;
+        height: 651px;
+        margin-left: -426px;
+        margin-top: -733.5px;
+        cursor: default;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        display: none;
+    }
+    #characterDialogFrame {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+    }
+    #characterDialogFrameStatePage, #characterDialogFrameSkillPage {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        background-image: url('../img/3/characterdialogsheet.png');
+        display: none;
+    }
+
+    #characterDialogFrameStatePage {
+        background-position: 0px 0px;
+    }
+    #characterName, #characterLevel, #characterExp {
+        position: absolute;
+        width: 276px;
+        height: 37.5px;
+        line-height: 37.5px;
+        font-family: 'GraphicPixel';
+        font-size: 12pt;
+        font-weight: bold;
+        text-shadow: 3px 3px #808080;
+    }
+    #characterName {
+        left: 67.5px;
+        top: 24px
+    }
+    #characterLevel {
+        left: 67.5px;
+        top: 87px;
+    }
+    #characterExp {
+        left: 67.5px;
+        top: 150px;
+    }
+    #characterItemPendant, #characterItemWeapon, #characterItemArmor, #characterItemRing, #characterItemBoots {
+        position: absolute;
+        width: 48px;
+        height: 45px;
+        background-position: 0px 0px;
+    }
+    #characterItemPendant {
+        left: 162px;
+        top: 234px;
+    }
+    #characterItemPendant.empty {
+        background-image: url('../img/3/characterdialogsheet.png');
+        background-position: 0px -651px;
+    }
+    #characterItemWeapon {
+        left: 12px;
+        top: 360px;
+        background-position: 0px -6px;
+    }
+    #characterItemWeapon.empty {
+        background-image: url('../img/3/characterdialogsheet.png');
+        background-position: -144px -651px;
+    }
+    #characterItemArmor {
+        left: 312px;
+        top: 360px;
+    }
+    #characterItemArmor.empty {
+        background-image: url('../img/3/characterdialogsheet.png');
+        background-position: -48px -651px;
+    }
+    #characterItemRing {
+        left: 81px;
+        top: 516px;
+    }
+    #characterItemRing.empty {
+        background-image: url('../img/3/characterdialogsheet.png');
+        background-position: -192px -651px;
+    }
+    #characterItemBoots {
+        left: 246px;
+        top: 519px;
+    }
+    #characterItemBoots.empty {
+        background-image: url('../img/3/characterdialogsheet.png');
+        background-position: -96px -651px;
+    }
+    #characterLook {
+        position: absolute;
+        left: 141px;
+        top: 375px;
+        width: 96px;
+        height: 96px;
+    }
+    #characterLookArmor, #characterLookWeapon {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: 480px;
+        background-position: 0px -512px;
+    }
+    #characterLookShadow {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 48px;
+        height: 48px;
+        background-size: 48px;
+        background-image: url('../img/3/shadow16.png');
+    }
+
+    #characterDialogFrameSkillPage {
+        background-position: -372px 0px;
+    }
+
+    #characterDialogFramePageNavigator {
+        position: absolute;
+        left: 240px;
+        top: 583.5px;
+        width: 126px;
+        height: 51px;
+    }
+    #characterDialogFramePageNavigatorMovePreviousButton, #characterDialogFramePageNavigatorMoveNextButton {
+        position: absolute;
+        top: 0px;
+        width: 63px;
+        height: 51px;
+        background-image: url('../img/3/characterdialogsheet.png');
+    }
+    #characterDialogFramePageNavigatorMovePreviousButton {
+        left: 0px;
+        background-position: -240px -651px;
+    }
+    #characterDialogFramePageNavigatorMovePreviousButton.enabled {
+        background-position: -240px -702px;
+        cursor: pointer;
+    }
+    #characterDialogFramePageNavigatorMoveNextButton {
+        left: 63px;
+        background-position: -303px -702px;
+    }
+    #characterDialogFramePageNavigatorMoveNextButton.enabled {
+        background-position: -303px -651px;
+        cursor: pointer;
+    }
+
 }
 
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {

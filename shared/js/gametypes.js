@@ -585,7 +585,7 @@ var kinds = {
     miniiceknight:      [Types.Entities.MINIICEKNIGHT,       "mob", 7387, 144],
     iceknight:          [Types.Entities.ICEKNIGHT,           "mob", 8791, 148],
     icegolem:           [Types.Entities.ICEGOLEM,            "mob", 10461, 152],
-    snowwolf:           [Types.Entities.SNOWWOLF,            "mob", 12449, 156],
+    snowwolf:           [Types.Entities.SNOWWOLF,            "mob", 12, 4],
     cobra:              [Types.Entities.COBRA,               "mob", 14815, 160],
     darkogre:           [Types.Entities.DARKOGRE,            "mob", 17629, 164],
     snowelf:            [Types.Entities.SNOWELF,             "mob", 20979, 168],

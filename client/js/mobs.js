@@ -22,7 +22,10 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.idleSpeed = 800;
                 this.shadowOffsetY = 1;
                 this.setAttackRate(1300);
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
+
         }),
 
         Skeleton2: Mob.extend({
@@ -34,6 +37,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.walkSpeed = 200;
                 this.shadowOffsetY = 1;
                 this.setAttackRate(1300);
+                this.isAggressive = true;
+                this.aggroRange = 2;
             }
         }),
 
@@ -46,6 +51,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.walkSpeed = 200;
                 this.shadowOffsetY = 1;
                 this.setAttackRate(900);
+                this.isAggressive = true;
+                this.aggroRange = 2;
             }
         }),
         
@@ -76,6 +83,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.atkSpeed = 60;
                 this.idleSpeed = 600;
                 this.setAttackRate(700);
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
 
@@ -85,6 +94,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 300;
                 this.atkSpeed = 100;
                 this.idleSpeed = 600;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
 
@@ -106,6 +117,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.idleSpeed = 250;
                 this.walkSpeed = 100;
                 this.shadowOffsetY = -4;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
 
@@ -115,6 +128,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 40;
                 this.idleSpeed = 50;
+                this.isAggressive = true;
+                this.aggroRange = 2;
             }
         }),
 
@@ -163,6 +178,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Golem: Mob.extend({
@@ -171,6 +188,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Oldogre: Mob.extend({
@@ -179,6 +198,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Mimic: Mob.extend({
@@ -187,6 +208,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Hobgoblin: Mob.extend({
@@ -195,6 +218,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Yellowmouse: Mob.extend({
@@ -203,6 +228,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Whitemouse: Mob.extend({
@@ -211,6 +238,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Brownmouse: Mob.extend({
@@ -219,6 +248,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Redmouse: Mob.extend({
@@ -227,6 +258,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Redguard: Mob.extend({
@@ -235,6 +268,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 2;
             }
         }),
         Infectedguard: Mob.extend({
@@ -243,6 +278,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 3;
             }
         }),
         Livingarmor: Mob.extend({
@@ -251,6 +288,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 3;
             }
         }),
         Mermaid: Mob.extend({
@@ -259,6 +298,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Yellowfish: Mob.extend({
@@ -267,6 +308,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Greenfish: Mob.extend({
@@ -275,6 +318,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Redfish: Mob.extend({
@@ -283,6 +328,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Clam: Mob.extend({
@@ -291,6 +338,7 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = false;
             }
         }),
         Preta: Mob.extend({
@@ -299,6 +347,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 1;
             }
         }),
         Pirateskeleton: Mob.extend({
@@ -307,6 +357,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 250;
+                this.isAggressive = true;
+                this.aggroRange = 3;
             }
         }),
         Vulture: Mob.extend({
@@ -315,6 +367,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 2;
             }
         }),
         Penguin: Mob.extend({
@@ -323,6 +377,7 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = false;
             }
         }),
         Moleking: Mob.extend({
@@ -331,6 +386,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 150;
+                this.isAggressive = true;
+                this.aggroRange = 2;
             }
         }),
         Darkskeleton: Mob.extend({
@@ -339,6 +396,8 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 200;
                 this.atkSpeed = 100;
                 this.idleSpeed = 250;
+                this.isAggressive = true;
+                this.aggroRange = 3;
             }
         }),
         Darkscolpion: Mob.extend({

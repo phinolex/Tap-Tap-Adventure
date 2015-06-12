@@ -109,8 +109,10 @@ define(['jquery', 'area'], function($, Area) {
                         break;
                     case 'r': o = Types.Orientations.RIGHT;
                         break;
+
                     default : o = Types.Orientations.DOWN;
                 }
+
 
                 doors[self.GridPositionToTileIndex(door.x, door.y)] = {
                     x: door.tx,
@@ -119,7 +121,9 @@ define(['jquery', 'area'], function($, Area) {
                     cameraX: door.tcx,
                     cameraY: door.tcy,
                     portal: door.p === 1,
-                    level: door.l
+                    level: door.l,
+                    quest: door.q,
+                    admin: door.a
                 };
             });
 
