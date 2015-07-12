@@ -49,7 +49,6 @@ module.exports = World = cls.Class.extend({
 
         this.itemCount = 0;
         this.playerCount = 0;
-
         this.zoneGroupsReady = false;
 
         this.onPlayerConnect(function(player) {

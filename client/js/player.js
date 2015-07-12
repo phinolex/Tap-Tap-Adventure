@@ -187,10 +187,6 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             this.armorloot_callback = callback;
         },
 
-        onInvincible: function(callback) {
-            this.invincible_callback = callback;
-        },
-
         startInvincibility: function() {
             var self = this;
 
@@ -206,7 +202,6 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
                 self.idle();
             }, 15000);
         },
-
         stopInvincibility: function() {
             this.invincible = false;
 

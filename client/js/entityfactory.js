@@ -738,6 +738,7 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
         return new Items.Paewoldo(id, skillKind, skillLevel);
     };
 
+
     EntityFactory.builders[Types.Entities.CLOTHARMOR] = function(id) {
         return new Items.ClothArmor(id);
     };

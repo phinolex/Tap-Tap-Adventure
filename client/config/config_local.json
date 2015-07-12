@@ -1,5 +1,5 @@
 {
-    "host": "127.0.0.1",
-    "port": 8000,
+    "host": "tta.kbve.com",
+    "port": 1337,
     "dispatcher": false
 }

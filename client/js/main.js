@@ -220,12 +220,6 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
 
             
-
-            game.onPlayerInvincible(function() {
-                $('#hitpoints').toggleClass('invincible');
-            });
-
-            
             
             /*$('#questbutton').click(function(event){
                 if(app.game && app.ready && app.game.ready){
@@ -235,7 +229,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }
             }); */
             game.onNotification(function(message) {
-		app.showMessage(message);
+		        app.showMessage(message);
             });
 
             app.initHealthBar();

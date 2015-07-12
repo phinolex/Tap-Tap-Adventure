@@ -134,7 +134,7 @@ module.exports = Player = Character.extend({
                         self.connection.close("Already logged in " + self.name);
                         return;
                     }
-                   databaseHandler.loadPlayer(self);
+                    databaseHandler.loadPlayer(self);
                 }
 
             }
@@ -156,8 +156,8 @@ module.exports = Player = Character.extend({
                     msg = msg.substr(0, 60); // Enforce maxlength of chat input
                     var key = msg.substr(0);
                     if ( typeof String.prototype.startsWith !== 'function' ) {
-                                String.prototype.startsWith = function( str ) {
-                                    return str.length > 0 && this.substring( 0, str.length ) === str;
+                        String.prototype.startsWith = function( str ) {
+                            return str.length > 0 && this.substring( 0, str.length ) === str;
                         };
                     };
 
@@ -171,11 +171,11 @@ module.exports = Player = Character.extend({
                     if(msg.startsWith("/1 ")) {
 
 
-                          if((new Date()).getTime() > self.chatBanEndTime) {
-                              self.server.pushBroadcast(new Messages.Chat(self, msg));
-                          } else {
-                              self.send([Types.Messages.NOTIFY, "You have been muted.."]);
-                      }
+                        if((new Date()).getTime() > self.chatBanEndTime) {
+                            self.server.pushBroadcast(new Messages.Chat(self, msg));
+                        } else {
+                            self.send([Types.Messages.NOTIFY, "You have been muted.."]);
+                        }
 
 
                     } else if (msg.startsWith("/kick ")) {
@@ -239,7 +239,7 @@ module.exports = Player = Character.extend({
                         var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
                         var rank = (msg.split(' ')[2]) * 1;
                         if (targetPlayer && rank) {
-                              databaseHandler.promotePlayer(self, targetPalyer, rank);
+                            databaseHandler.promotePlayer(self, targetPalyer, rank);
                         }
                     } else if (msg.startsWith("/demote ")) {
                         var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
@@ -257,7 +257,7 @@ module.exports = Player = Character.extend({
                     } else if (msg.startsWith("/setability ")) {
                         self.setAbility();
                     } else {
-                      self.broadcastToZone(new Messages.Chat(self, msg), false);
+                        self.broadcastToZone(new Messages.Chat(self, msg), false);
                     }
 
                 }
@@ -353,50 +353,50 @@ module.exports = Player = Character.extend({
                 log.info("FLAREDANCE: " + self.name + " " + message[1] + ", " + message[2] + ", " + message[3] + ", " + message[4]);
                 self.handleFlareDance(message);
             } else if(action === Types.Messages.MAGIC){
-              log.info("MAGIC: " + self.name + " " + message[1] + " " + message[2]);
-              var magicName = message[1];
-              var magicTargetName = message[2];
+                log.info("MAGIC: " + self.name + " " + message[1] + " " + message[2]);
+                var magicName = message[1];
+                var magicTargetName = message[2];
 
-              if(magicName === "setheal"){
-                self.magicTarget = self.server.getPlayerByName(magicTargetName);
-                if(self.magicTarget === self){
-                  self.magicTarget = null;
+                if(magicName === "setheal"){
+                    self.magicTarget = self.server.getPlayerByName(magicTargetName);
+                    if(self.magicTarget === self){
+                        self.magicTarget = null;
+                    }
+                } else if(magicName === "heal"){
+                    if(self.magicTarget){
+                        if(!self.magicTarget.hasFullHealth()) {
+                            self.magicTarget.regenHealthBy(50);
+                            self.server.pushToPlayer(self.magicTarget, self.magicTarget.health());
+                        }
+                    }
                 }
-              } else if(magicName === "heal"){
-                if(self.magicTarget){
-                  if(!self.magicTarget.hasFullHealth()) {
-                      self.magicTarget.regenHealthBy(50);
-                      self.server.pushToPlayer(self.magicTarget, self.magicTarget.health());
-                  }
-                }
-              }
-          } else if(action === Types.Messages.BOARD){
-              log.info("BOARD: " + self.name + " " + message[1] + " " + message[2]);
-              var command = message[1];
-              var number = message[2];
-              var replyNumber = message[3];
-              databaseHandler.loadBoard(self, command, number, replyNumber);
+            } else if(action === Types.Messages.BOARD){
+                log.info("BOARD: " + self.name + " " + message[1] + " " + message[2]);
+                var command = message[1];
+                var number = message[2];
+                var replyNumber = message[3];
+                databaseHandler.loadBoard(self, command, number, replyNumber);
             } else if(action === Types.Messages.RANKING){
                 log.info("RANKING: " + self.name + " " + message[1]);
                 self.handleRanking(message);
             } else if(action === Types.Messages.BOARDWRITE){
-              log.info("BOARDWRITE: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-              var command = message[1];
-              if(command === "board"){
-                var title = message[2];
-                var content = message[3];
-                databaseHandler.writeBoard(self, title, content);
-              } else if(command === "reply"){
-                var reply = message[2];
-                var number = message[3]*1;
-                if(number > 0){
-                  databaseHandler.writeReply(self, reply, number);
+                log.info("BOARDWRITE: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
+                var command = message[1];
+                if(command === "board"){
+                    var title = message[2];
+                    var content = message[3];
+                    databaseHandler.writeBoard(self, title, content);
+                } else if(command === "reply"){
+                    var reply = message[2];
+                    var number = message[3]*1;
+                    if(number > 0){
+                        databaseHandler.writeReply(self, reply, number);
+                    }
                 }
-              }
             } else if(action === Types.Messages.KUNG){
-              log.info("KUNG: " + self.name + " " + message[1]);
-              var word = message[1];
-              databaseHandler.pushKungWord(self, word);
+                log.info("KUNG: " + self.name + " " + message[1]);
+                var word = message[1];
+                databaseHandler.pushKungWord(self, word);
             }  else {
                 if(self.message_callback) {
                     self.message_callback(message);
@@ -421,15 +421,15 @@ module.exports = Player = Character.extend({
 
 
     questAboutKill: function(mob){
-    var self = this;
-    // Daily Quest
+        var self = this;
+        // Daily Quest
         if(this.achievement[101].found){
             if(this.achievement[101].progress < 999){
                 this._questAboutKill(mob.kind, 0, 101, 25, function(){
                     log.info("Quest 101 Completed");
                     self.inventory.putInventory(Types.Entities.FLASK, 100, 0, 0);
-            });
-            return;
+                });
+                return;
             } else if(this.achievement[102].found){
                 if(this.achievement[102].progress < 999){
                     this._questAboutKill(mob.kind, 0, 102, 100, function(){
@@ -443,21 +443,21 @@ module.exports = Player = Character.extend({
                             log.info("Quest 103 Completed");
                             self.inventory.putInventory(Types.Entities.ROYALAZALEA, 50, 0, 0);
                         });
-                    return;
+                        return;
                     } else if(this.achievement[104].found){
                         if(this.achievement[104].progress < 999){
                             this._questAboutKill(mob.kind, 0, 104, 500, function(){
                                 log.info("Quest 104 Completed");
                                 self.inventory.putInventory(Types.Entities.SNOWPOTION, 1, 0, 0);
-                        });
-                        return;
+                            });
+                            return;
                         }
                     }
                 }
             }
         }
         this._questAboutKill(mob.kind, Types.Entities.RAT, 2, 10, function(){
-             self.incExp(200);
+            self.incExp(200);
         });
         this._questAboutKill(mob.kind, Types.Entities.CRAB, 4, 5, function(){
             self.incExp(100);
@@ -478,7 +478,7 @@ module.exports = Player = Character.extend({
         this._questAboutKill(mob.kind, Types.Entities.DARKSKELETON, 19, 20, function(){ self.setAbility(); });
         this._questAboutKill(mob.kind, Types.Entities.MINIKNIGHT, 20, 30, function(){ self.setAbility(); });
         this._questAboutKill(mob.kind, Types.Entities.WOLF, 22, 50, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.SNOWWOLF, 28, 60, function(){ self.setAbility(); });
+        this._questAboutKill(mob.kind, Types.Entities.GOBLIN, 28, 60, function(){ self.setAbility(); });
         this._questAboutKill(mob.kind, Types.Entities.SNOWLADY, 29, 70, function(){ self.setAbility(); });
     },
 
@@ -511,12 +511,12 @@ module.exports = Player = Character.extend({
         this.connection.send(message);
     },
 
-  flagPVP: function(pvpFlag){
+    flagPVP: function(pvpFlag){
         if(this.pvpFlag !== pvpFlag){
-          this.pvpFlag = pvpFlag;
-          this.send(new Messages.PVP(this.pvpFlag).serialize());
+            this.pvpFlag = pvpFlag;
+            this.send(new Messages.PVP(this.pvpFlag).serialize());
         }
-  },
+    },
 
     broadcast: function(message, ignoreSelf) {
         if(this.broadcast_callback) {
@@ -763,9 +763,9 @@ module.exports = Player = Character.extend({
     //This needs to be looked over and change everything necessary.
     //
     /* resetHPandMana: function() {
-        this.resetHitpoints(Formulas.hp(this.kind ,this.level));
-        this.resetMana(Formulas.mana(this.kind, this.level));
-    }, */
+     this.resetHitpoints(Formulas.hp(this.kind ,this.level));
+     this.resetMana(Formulas.mana(this.kind, this.level));
+     }, */
     //^ ALREADY COVERED BY updateHitPoints
 
 
@@ -805,7 +805,7 @@ module.exports = Player = Character.extend({
                     msg.push(self.achievement[i+101].found);
                     msg.push(self.achievement[i+101].progress);
                 }
-            self.send(msg);
+                self.send(msg);
             });
         }
     },
@@ -859,7 +859,7 @@ module.exports = Player = Character.extend({
     },
     questAboutItem: function(npcKind, questNumber, itemKind, callback){
         if(this.achievement[questNumber].found === true
-        && this.achievement[questNumber].progress !== 999) {
+            && this.achievement[questNumber].progress !== 999) {
             if(this.inventory.hasItem(itemKind)){
                 this.inventory.makeEmptyInventory(this.inventory.getInventoryNumber(itemKind));
                 this.send([Types.Messages.QUEST, "complete", questNumber]);
@@ -868,7 +868,7 @@ module.exports = Player = Character.extend({
                     callback();
                     this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, true));
                 }
-            databaseHandler.progressAchievement(this.name, questNumber, this.achievement[questNumber].progress);
+                databaseHandler.progressAchievement(this.name, questNumber, this.achievement[questNumber].progress);
             } else{
                 this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, false));
             }
@@ -876,7 +876,7 @@ module.exports = Player = Character.extend({
     },
     questAboutItem2: function(npcKind, questNumber, itemKind, item2Kind, callback){
         if(this.achievement[questNumber].found === true
-        && this.achievement[questNumber].progress !== 999) {
+            && this.achievement[questNumber].progress !== 999) {
             if(this.inventory.hasItem(itemKind) && this.inventory.hasItem(item2Kind)){
                 this.inventory.makeEmptyInventory(this.inventory.getInventoryNumber(itemKind));
                 this.inventory.makeEmptyInventory(this.inventory.getInventoryNumber(item2Kind));
@@ -886,7 +886,7 @@ module.exports = Player = Character.extend({
                     callback();
                     this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, true));
                 }
-            databaseHandler.progressAchievement(this.name, questNumber, this.achievement[questNumber].progress);
+                databaseHandler.progressAchievement(this.name, questNumber, this.achievement[questNumber].progress);
             } else{
                 this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, false));
             }
@@ -906,13 +906,13 @@ module.exports = Player = Character.extend({
                 } else{
                     achievement.progress++;
                 }
-            if(achievement.progress >= completeNumber) {
-                this.send([Types.Messages.QUEST, "complete", questId]);
-                achievement.progress = 999;
-                if(callback){
-                    callback();
+                if(achievement.progress >= completeNumber) {
+                    this.send([Types.Messages.QUEST, "complete", questId]);
+                    achievement.progress = 999;
+                    if(callback){
+                        callback();
+                    }
                 }
-            }
                 databaseHandler.progressAchievement(this.name, questId, achievement.progress);
                 if(achievement.progress < completeNumber){
                     this.send([Types.Messages.QUEST, "progress", questId, achievement.progress]);
@@ -989,15 +989,15 @@ module.exports = Player = Character.extend({
     },
 
     sendWelcome: function(armor, weapon, avatar, weaponAvatar, exp, admin,
-                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank,
-                                    armorEnchantedPoint, armorSkillKind, armorSkillLevel,
-                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel,
-                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel,
-                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel,
-                                    pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
-                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel,
-                                    boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
-                                    membershipTime, kind) {
+                          bannedTime, banUseTime, x, y, chatBanEndTime, rank,
+                          armorEnchantedPoint, armorSkillKind, armorSkillLevel,
+                          avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel,
+                          weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel,
+                          weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel,
+                          pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
+                          ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel,
+                          boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
+                          membershipTime, kind) {
         var self = this;
         self.kind = kind;
         self.admin = admin;
@@ -1074,10 +1074,11 @@ module.exports = Player = Character.extend({
                             self.send((new Messages.SkillInstall(index, names[index])).serialize());
                         }
                     }
-                self.setAbility();
+                    self.setAbility();
                 });
             });
         });
+
         self.hasEnteredGame = true;
         self.isDead = false;
     },
@@ -1190,33 +1191,33 @@ module.exports = Player = Character.extend({
 
         if(inventoryNumber > this.inventory.number){
 
-              return;
+            return;
         }
 
         var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
         if(itemKind){
             if(message[1] === "armor"){
-                  this.handleInventoryArmor(itemKind, inventoryNumber);
+                this.handleInventoryArmor(itemKind, inventoryNumber);
             } else if(message[1] === "weapon"){
-                  this.handleInventoryWeapon(itemKind, inventoryNumber);
+                this.handleInventoryWeapon(itemKind, inventoryNumber);
             } else if(message[1] === "pendant") {
-                  this.handleInventoryPendant(itemKind, inventoryNumber);
+                this.handleInventoryPendant(itemKind, inventoryNumber);
             } else if(message[1] === "ring") {
-                  this.handleInventoryRing(itemKind, inventoryNumber);
+                this.handleInventoryRing(itemKind, inventoryNumber);
             } else if(message[1] === "boots") {
-                  this.handleInventoryBoots(itemKind, inventoryNumber);
+                this.handleInventoryBoots(itemKind, inventoryNumber);
             } else if(message[1] === "empty"){
-                  this.handleInventoryEmpty(itemKind, inventoryNumber, count);
+                this.handleInventoryEmpty(itemKind, inventoryNumber, count);
             } else if(message[1] === "eat"){
-                  this.handleInventoryEat(itemKind, inventoryNumber);
+                this.handleInventoryEat(itemKind, inventoryNumber);
             } else if(message[1] === "enchantweapon"){
-                  this.handleInventoryEnchantWeapon(itemKind, inventoryNumber);
+                this.handleInventoryEnchantWeapon(itemKind, inventoryNumber);
             } else if(message[1] === "enchantbloodsucking"){
-                  this.handleInventoryEnchantBloodsucking(itemKind, inventoryNumber);
+                this.handleInventoryEnchantBloodsucking(itemKind, inventoryNumber);
             } else if(message[1] === "enchantring"){
-                  this.handleInventoryEnchantRing(itemKind, inventoryNumber);
+                this.handleInventoryEnchantRing(itemKind, inventoryNumber);
             } else if(message[1] === "enchantpendant"){
-                  this.handleInventoryEnchantPendant(itemKind, inventoryNumber);
+                this.handleInventoryEnchantPendant(itemKind, inventoryNumber);
             }
         }
     },
@@ -1229,8 +1230,8 @@ module.exports = Player = Character.extend({
         }
         return true;
 
-      },
-      canEquipWeapon: function(itemKind){
+    },
+    canEquipWeapon: function(itemKind){
 
         var weaponLevel = Types.getWeaponRank(itemKind)+1;
         if(weaponLevel * 2 > this.level){
@@ -1246,12 +1247,12 @@ module.exports = Player = Character.extend({
         var itemSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillKind;
 
         if(!this.canEquipArmor(itemKind)){
-          return;
+            return;
         }
         if(this.avatar){
-          this.inventory.setInventory(inventoryNumber, this.avatar, this.avatarEnchantedPoint, this.avatarSkillKind, this.avatarSkillLevel);
+            this.inventory.setInventory(inventoryNumber, this.avatar, this.avatarEnchantedPoint, this.avatarSkillKind, this.avatarSkillLevel);
         } else{
-          this.inventory.makeEmptyInventory(inventoryNumber);
+            this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
         this.broadcast(this.equip(itemKind), false);
@@ -1275,20 +1276,20 @@ module.exports = Player = Character.extend({
     },
     handleInventoryArmor: function(itemKind, inventoryNumber){
         if(!this.canEquipArmor(itemKind)){
-          return;
+            return;
         }
         this.inventory.setInventory(inventoryNumber, this.armor, 0, 0, 0);
         this.equipItem(itemKind, 0, 0, 0, false);
         //if(!this.avatar){
-            this.broadcast(this.equip(itemKind), false);
+        this.broadcast(this.equip(itemKind), false);
         //}
     },
     handleInventoryWeapon: function(itemKind, inventoryNumber){
 
         var weaponLevel = Types.getWeaponRank(itemKind) + 1;
         if(weaponLevel * 2 > this.level){
-          this.server.pushToPlayer(this, new Messages.Notify("You need to be at least level: " + weaponLevel * 2 + " to weild this weapon."));
-          return;
+            this.server.pushToPlayer(this, new Messages.Notify("You need to be at least level " + weaponLevel * 2 + " to wield this weapon."));
+            return;
         }
 
         var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
@@ -1300,27 +1301,27 @@ module.exports = Player = Character.extend({
         this.equipItem(itemKind, enchantedPoint, weaponSkillKind, weaponSkillLevel, false);
         this.setAbility();
         //if(!this.weaponAvatar){
-            this.broadcast(this.equip(itemKind), false);
+        this.broadcast(this.equip(itemKind), false);
         //}
     },
     handleInventoryPendant: function(itemKind, inventoryNumber){
         if(!Types.isPendant(itemKind)) {
-          this.server.pushToPlayer(this, new Messages.Notify("펜던트가 아닙니다.."));
-          return;
+            this.server.pushToPlayer(this, new Messages.Notify("펜던트가 아닙니다.."));
+            return;
         }
         var pendantLevel = Properties.getPendantLevel(itemKind);
         if((pendantLevel * 10) > this.level) {
-          this.server.pushToPlayer(this, new Messages.Notify("" + pendantLevel + "레벨 펜던트는 " + (pendantLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
-          return;
+            this.server.pushToPlayer(this, new Messages.Notify("" + pendantLevel + "레벨 펜던트는 " + (pendantLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
+            return;
         }
         var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
         var pendantSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
         var pendantSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
 
         if(this.pendant) {
-          this.inventory.setInventory(inventoryNumber, this.pendant, this.pendantEnchantedPoint, this.pendantSkillKind, this.pendantSkillLevel);
+            this.inventory.setInventory(inventoryNumber, this.pendant, this.pendantEnchantedPoint, this.pendantSkillKind, this.pendantSkillLevel);
         } else {
-          this.inventory.makeEmptyInventory(inventoryNumber);
+            this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, enchantedPoint, pendantSkillKind, pendantSkillLevel, false);
         this.server.pushToPlayer(this, this.equip(itemKind));
@@ -1328,22 +1329,22 @@ module.exports = Player = Character.extend({
     },
     handleInventoryRing: function(itemKind, inventoryNumber){
         if(!Types.isRing(itemKind)) {
-          this.server.pushToPlayer(this, new Messages.Notify("반지가 아닙니다."));
-          return;
+            this.server.pushToPlayer(this, new Messages.Notify("반지가 아닙니다."));
+            return;
         }
         var ringLevel = Properties.getRingLevel(itemKind);
         if((ringLevel * 10) > this.level) {
-          this.server.pushToPlayer(this, new Messages.Notify("" + ringLevel + "레벨 반지는 " + (ringLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
-          return;
+            this.server.pushToPlayer(this, new Messages.Notify("" + ringLevel + "레벨 반지는 " + (ringLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
+            return;
         }
         var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
         var ringSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
         var ringSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
 
         if(this.ring) {
-          this.inventory.setInventory(inventoryNumber, this.ring, this.ringEnchantedPoint, this.ringSkillKind, this.ringSkillLevel);
+            this.inventory.setInventory(inventoryNumber, this.ring, this.ringEnchantedPoint, this.ringSkillKind, this.ringSkillLevel);
         } else {
-          this.inventory.makeEmptyInventory(inventoryNumber);
+            this.inventory.makeEmptyInventory(inventoryNumber);
 
         }
         this.equipItem(itemKind, enchantedPoint, ringSkillKind, ringSkillLevel, false);
@@ -1351,13 +1352,13 @@ module.exports = Player = Character.extend({
     },
     handleInventoryBoots: function(itemKind, inventoryNumber){
         if(!Types.isBoots(itemKind)) {
-          this.server.pushToPlayer(this, new Messages.Notify("부츠가 아닙니다.."));
-          return;
+            this.server.pushToPlayer(this, new Messages.Notify("부츠가 아닙니다.."));
+            return;
         }
         var bootsLevel = Properties.getBootsLevel(itemKind);
         if((bootsLevel * 10) > this.level) {
-          this.server.pushToPlayer(this, new Messages.Notify("" + bootsLevel + "레벨 부츠는 " + (bootsLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
-          return;
+            this.server.pushToPlayer(this, new Messages.Notify("" + bootsLevel + "레벨 부츠는 " + (bootsLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
+            return;
         }
 
         var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
@@ -1365,9 +1366,9 @@ module.exports = Player = Character.extend({
         var bootsSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
 
         if(this.boots) {
-          this.inventory.setInventory(inventoryNumber, this.boots, this.bootsEnchantedPoint, this.bootsSkillKind, this.bootsSkillLevel);
+            this.inventory.setInventory(inventoryNumber, this.boots, this.bootsEnchantedPoint, this.bootsSkillKind, this.bootsSkillLevel);
         } else {
-          this.inventory.makeEmptyInventory(inventoryNumber);
+            this.inventory.makeEmptyInventory(inventoryNumber);
         }
         this.equipItem(itemKind, enchantedPoint, bootsSkillKind, bootsSkillLevel, false);
         this.server.pushToPlayer(this, this.equip(itemKind));
@@ -1382,7 +1383,7 @@ module.exports = Player = Character.extend({
             }
             item.count = count;
         } else if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind) ||
-                  Types.isPendant(item.kind) || Types.isRing(item.kind) || Types.isBoots(item.kind)) {
+            Types.isPendant(item.kind) || Types.isRing(item.kind) || Types.isBoots(item.kind)) {
             item.count = this.inventory.rooms[inventoryNumber].itemNumber;
             item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
             item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
@@ -1446,9 +1447,9 @@ module.exports = Player = Character.extend({
         if(Utils.ratioToBool(0.1)){
             this.server.pushToPlayer(this, new Messages.Notify("강화에 성공했습니다."));
             if(this.weaponEnchantedPoint){
-              this.weaponEnchantedPoint += 1;
+                this.weaponEnchantedPoint += 1;
             } else{
-              this.weaponEnchantedPoint = 1;
+                this.weaponEnchantedPoint = 1;
             }
             databaseHandler.enchantWeapon(this.name, this.weaponEnchantedPoint);
         } else{
@@ -1478,9 +1479,9 @@ module.exports = Player = Character.extend({
             this.server.pushToPlayer(this, new Messages.Notify("흡혈률 강화에 성공했습니다."));
             this.weaponSkillKind = Types.Skills.BLOODSUCKING;
             if(this.weaponSkillLevel){
-              this.weaponSkillLevel += 1;
+                this.weaponSkillLevel += 1;
             } else{
-              this.weaponSkillLevel = 1;
+                this.weaponSkillLevel = 1;
             }
             databaseHandler.setWeaponSkill(this.name, this.weaponSkillKind, this.weaponSkillLevel);
         } else{
@@ -1544,7 +1545,7 @@ module.exports = Player = Character.extend({
             }
             databaseHandler.enchantPendant(this.name, this.pendantEnchantedPoint);
 
-          } else {
+        } else {
             this.server.pushToPlayer(this, new Messages.Notify("강화에 실패했습니다."));
         }
     },
@@ -1555,37 +1556,37 @@ module.exports = Player = Character.extend({
         var self = this;
         var item = this.server.getEntityById(message[1]);
 
-    if(item) {
-        var kind = item.kind;
-        var itemRank = 0;
+        if(item) {
+            var kind = item.kind;
+            var itemRank = 0;
 
-        if(Types.isItem(kind)) {
-            if(kind === Types.Entities.FIREPOTION) {
-                this.updateHitPoints();
-                this.broadcast(this.equip(Types.Entities.FIREBENEF), false);
-                this.broadcast(item.despawn(), false);
-                this.server.removeEntity(item);
-                this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
-            } else if(Types.isHealingItem(kind)
-                   || Types.isWeapon(kind)
-                   || Types.isArmor(kind)
-                   || Types.isArcherArmor(kind)
-                   || Types.isArcherWeapon(kind)
-                   || Types.isPendant(kind)
-                   || Types.isRing(kind)
-                   || Types.isBoots(kind)
-                   || kind === Types.Entities.CAKE
-                   || kind === Types.Entities.CD
-                   || kind === Types.Entities.SNOWPOTION
-                   || kind === Types.Entities.BLACKPOTION) {
-                if(self.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel)){
+            if(Types.isItem(kind)) {
+                if(kind === Types.Entities.FIREPOTION) {
+                    this.updateHitPoints();
+                    this.broadcast(this.equip(Types.Entities.FIREBENEF), false);
                     this.broadcast(item.despawn(), false);
                     this.server.removeEntity(item);
+                    this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
+                } else if(Types.isHealingItem(kind)
+                    || Types.isWeapon(kind)
+                    || Types.isArmor(kind)
+                    || Types.isArcherArmor(kind)
+                    || Types.isArcherWeapon(kind)
+                    || Types.isPendant(kind)
+                    || Types.isRing(kind)
+                    || Types.isBoots(kind)
+                    || kind === Types.Entities.CAKE
+                    || kind === Types.Entities.CD
+                    || kind === Types.Entities.SNOWPOTION
+                    || kind === Types.Entities.BLACKPOTION) {
+                    if(self.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel)){
+                        this.broadcast(item.despawn(), false);
+                        this.server.removeEntity(item);
+                    }
                 }
             }
         }
-    }
-  },
+    },
 
 
     computeSkillLevel: function() {
@@ -1662,7 +1663,7 @@ module.exports = Player = Character.extend({
                         this.skillHandler.add('flareDance', 3);
                     }
                 } else{
-                      this.skillHandler.add('flareDance', 2);
+                    this.skillHandler.add('flareDance', 2);
                 }
             } else {
                 this.skillHandler.add('flareDance', 1);
@@ -1689,21 +1690,21 @@ module.exports = Player = Character.extend({
         if(this.achievement[35].progress === 999){
             this.skillHandler.add('provocation', 1);
         }
-      },
+    },
     setAbility: function(){
         this.computeSkillLevel();
 
         this.bloodsuckingRatio = 0;
         if(this.weaponSkillKind === Types.Skills.BLOODSUCKING){
-              this.bloodsuckingRatio += this.weaponSkillLevel*0.02;
+            this.bloodsuckingRatio += this.weaponSkillLevel*0.02;
         }
 
         this.criticalRatio = 0;
         if(this.skillHandler.getLevel("criticalStrike") > 0){
-              this.criticalRatio = 0.1;
+            this.criticalRatio = 0.1;
         }
         if(this.weaponSkillKind === Types.Skills.CRITICALRATIO){
-              this.criticalRatio += this.weaponSkillLevel*0.01;
+            this.criticalRatio += this.weaponSkillLevel*0.01;
         }
     },
 
@@ -1897,9 +1898,9 @@ module.exports = Player = Character.extend({
             var stunLevel = this.skillHandler.getLevel("stun");
             var now = (new Date).getTime();
             if(target
-            && stunLevel > 0
-            && (now - this.stunExecuted) > 30 * 1000
-            && this.mana >= 150) {
+                && stunLevel > 0
+                && (now - this.stunExecuted) > 30 * 1000
+                && this.mana >= 150) {
                 this.broadcast(new Messages.Skill("stun", targetId, stunLevel), false);
                 this.stunExecuted = now;
                 this.mana -= 150;
@@ -1909,7 +1910,7 @@ module.exports = Player = Character.extend({
             var superCatLevel = this.skillHandler.getLevel("superCat");
             var now = (new Date).getTime();
             if(superCatLevel > 0 && (now - this.superCatExecuted) > 90 * 1000
-            && this.mana >= 200 && this.superCatCallback == null){
+                && this.mana >= 200 && this.superCatCallback == null){
                 this.broadcast(new Messages.Skill("superCat", this.id, superCatLevel), false);
                 this.superCatExecuted = now;
                 this.mana -= 200;
@@ -1924,9 +1925,9 @@ module.exports = Player = Character.extend({
             var provocationLevel = this.skillHandler.getLevel("provocation");
             var now = (new Date).getTime();
             if(target
-            && provocationLevel > 0
-            && (now - this.provocationExecuted) > 15 * 1000
-            && this.mana >= 50) {
+                && provocationLevel > 0
+                && (now - this.provocationExecuted) > 15 * 1000
+                && this.mana >= 50) {
                 this.broadcast(new Messages.Skill("provocation", targetId, provocationLevel), false);
                 this.provocationExecuted = now;
                 this.mana -= 50;
@@ -1934,7 +1935,7 @@ module.exports = Player = Character.extend({
                 this.server.provocateMob(this, target);
             }
         }
-      },
+    },
     handleFlareDance: function(message){
         if(this.flareDanceCallback) {
             var flareDanceLevel = this.skillHandler.getLevel("flareDance"),
@@ -1983,7 +1984,7 @@ module.exports = Player = Character.extend({
 
     getRanking: function() {
         databaseHandler.getPlayerRanking(this, function(ranking){
-             log.debug("Ranking: " + ranking);
+            log.debug("Ranking: " + ranking);
         });
     }
 });

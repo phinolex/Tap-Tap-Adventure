@@ -47,10 +47,8 @@ var Properties = {
     },
     goblin: {
         drops: {
-            flask: 50,
-            leatherarmor: 19,
-            leatherarcherarmor: 19,
-            firepotion: 10,
+            flask: 25,
+            leatherarmor: 73,
             pendant1: 1,
             ring1: 1
         },

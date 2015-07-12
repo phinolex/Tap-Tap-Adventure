@@ -122,7 +122,7 @@ define(['jquery', 'area'], function($, Area) {
                     cameraY: door.tcy,
                     portal: door.p === 1,
                     level: door.l,
-                    quest: door.q,
+                    quest: door.tq,
                     admin: door.a
                 };
             });

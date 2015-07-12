@@ -1,14 +1,116 @@
 
 
 @media screen and (min-width: 1501px) {
-
+    #bubbles{
+        width:1440px;
+        height:672px;
+        margin-bottom:-672px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        pointer-events:none;
+        overflow: hidden;
+    }
+    .bubble {
+        background:rgba(45,45,45,0.8);
+        padding:0px 12px 0px 12px;
+        border-radius:12px;
+        color:rgba(255,255,255,0.8);
+        display:inline-block;
+        text-align:center;
+        position:absolute;
+        -moz-user-select:none;
+        -webkit-user-select:none;
+    }
+    .thingy {
+        height:15px;
+        width:16.5px;
+        background:url('../img/common/thingy.png');
+        margin:0 auto;
+        margin-top:-9px;
+        top:18px;
+        position:relative;
+    }
+    #bubbles a {
+        pointer-events:auto;
+        text-decoration:none;
+        color:#fcda5c;
+    }
 }
 
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
-
+    #bubbles{
+        width:960px;
+        height:448px;
+        margin-bottom:-448px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        pointer-events:none;
+        overflow: hidden;
+    }
+    .bubble {
+        background:rgba(45,45,45,0.8);
+        padding:0px 8px 0px 8px;
+        border-radius:8px;
+        color:rgba(255,255,255,0.8);
+        display:inline-block;
+        text-align:center;
+        position:absolute;
+        -moz-user-select:none;
+        -webkit-user-select:none;
+    }
+    .thingy {
+        height:10px;
+        width:11px;
+        background:url('../img/common/thingy.png');
+        margin:0 auto;
+        margin-top:-6px;
+        top:6px;
+        position:relative;
+    }
+    #bubbles a {
+        pointer-events:auto;
+        text-decoration:none;
+        color:#fcda5c;
+    }
 
 }
 
 @media screen and (max-width: 1000px) {
-
+    #bubbles{
+        width:480px;
+        height:224px;
+        margin-bottom:-224px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        pointer-events:none;
+        overflow: hidden;
+    }
+    .bubble {
+        background:rgba(45,45,45,0.8);
+        padding:0px 4px 0px 4px;
+        border-radius:4px;
+        color:rgba(255,255,255,0.8);
+        display:inline-block;
+        text-align:center;
+        position:absolute;
+        -moz-user-select:none;
+        -webkit-user-select:none;
+    }
+    .thingy {
+        height:5px;
+        width:5.5px;
+        background:url('../img/common/thingy.png');
+        margin:0 auto;
+        margin-top:-3px;
+        top:6px;
+        position:relative;
+    }
+    #bubbles a {
+        pointer-events:auto;
+        text-decoration:none;
+        color:#fcda5c;
+    }
 }

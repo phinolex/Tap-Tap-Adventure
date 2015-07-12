@@ -541,6 +541,38 @@ module.exports = DatabaseHandler = cls.Class.extend({
             }
         });
     },
+    getBankItems: function(player, callback) {
+        var userKey = "u:" + player.name;
+        client.hget(userKey, "maxBankNumber", function(err, maxBankNumber){
+            maxBankNumber = Utils.NaN2Zero(maxBankNumber) === 0 ? 15 : Utils.NaN2Zero(maxBankNumber);
+
+            var i = 0;
+            var multi = client.multi();
+
+            for (i = 0; i < maxBankNumber; i++) {
+                multi.hget(userKey, "bank" + i);
+                multi.hget(userKey, "bank" + i + ":number");
+                multi.hget(userKey, "bank" + i + ":skillKind");
+                multi.hget(userKey, "bank" + i + ":skillLevel");
+            }
+            multi.exec(function(err, data) {
+                var i = 0;
+                var itemKinds = [];
+                var itemNumbers = [];
+                var itemSkillKinds = [];
+                var itemSkillLevels = [];
+                for (i = 0; i < maxBankNumber; i++) {
+                    itemKinds.push(Types.getKindFromString(data.shift()));
+                    itemNumbers.push(Utils.NaN2Zero(data.shift()));
+                    itemSkillKinds.push(Utils.NaN2Zero(data.shift()));
+                    itemSkillLevels.push(Utils.NaN2Zero(data.shift()));
+                }
+                callback(maxBankNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels);
+
+            })
+        });
+
+    },
     getAllInventory: function(player, callback){
         var userKey = "u:" + player.name;
         client.hget(userKey, "maxInventoryNumber", function(err, maxInventoryNumber){
@@ -553,7 +585,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                 multi.hget(userKey, "inventory" + i + ":number");
                 multi.hget(userKey, "inventory" + i + ":skillKind");
                 multi.hget(userKey, "inventory" + i + ":skillLevel");
-                
+
             }
             multi.exec(function(err, data){
                 var i=0;
@@ -568,19 +600,19 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     itemSkillLevels.push(Utils.NaN2Zero(data.shift()));
                 }
                 callback(maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels);
-                if (itemKinds === null) { 
+                if (itemKinds === null) {
                     log.info("PRINTING OUT: " + "MaxInventoryNumber: " + maxInventoryNumber
-                         + "Item Kinds: " + "NULL ===" 
-                         + "Item Numbers: " + itemNumbers
-                         + "Item Skill Kinds: " + itemSkillKinds
-                         + "Item Skill Levels: " + itemSkillLevels);
-                
+                        + "Item Kinds: " + "NULL ==="
+                        + "Item Numbers: " + itemNumbers
+                        + "Item Skill Kinds: " + itemSkillKinds
+                        + "Item Skill Levels: " + itemSkillLevels);
+
                 } else {
-                log.info("PRINTING OUT: " + "MaxInventoryNumber: " + maxInventoryNumber
-                         + "Item Kinds: " + itemKinds 
-                         + "Item Numbers: " + itemNumbers
-                         + "Item Skill Kinds: " + itemSkillKinds
-                         + "Item Skill Levels: " + itemSkillLevels);
+                    log.info("PRINTING OUT: " + "MaxInventoryNumber: " + maxInventoryNumber
+                        + "Item Kinds: " + itemKinds
+                        + "Item Numbers: " + itemNumbers
+                        + "Item Skill Kinds: " + itemSkillKinds
+                        + "Item Skill Levels: " + itemSkillLevels);
                 }
             });
         });

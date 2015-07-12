@@ -405,10 +405,10 @@ define(['npc'], function(Npc) {
                     "I'm here to welcome you to Tap Tap Adventure.",
                     "Before continuing on to the main land, you must",
                     "be introduced around firstly.",
-                    "Starting off, kill 5 snow wolves and bring me some",
+                    "Starting off, kill 5 Goblins and bring me some",
                     "leather armour.",
                     "Head over into the cabin there and let the magic",
-                    "occur."
+                    "unfold."
                 ];
                 this.afterQuestCompleteTalk = [
                     "Great Job, you can now head down the ladder.."

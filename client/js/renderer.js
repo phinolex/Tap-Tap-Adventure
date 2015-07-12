@@ -658,7 +658,17 @@ function(Camera, Item, Character, Player, Timer) {
 
 
                 this.context.restore();
+                if(entity instanceof Item) {
+                    var item = entity;
+                    if(item.count >= 1) {
+                        this.drawText(this.textcontext, item.count,
+                            (entity.x + 8) * this.scale,
+                            (entity.y - 0.3) * this.scale,
+                            true,
+                            "white");
 
+                    }
+                }
                 if(entity.isFading) {
                     this.context.restore();
                 }

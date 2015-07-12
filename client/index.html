@@ -1,504 +1,508 @@
 <html lang="en">
-	<head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-        <link rel="icon" type="image/png" href="img/common/favicon.png">
-        <meta property="og:title" content="TapTap">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="http://taptapadventure.com">
-        <meta property="og:image" content="img/common/promo-title.jpg">
-        <meta property="og:site_name" content="Tap Tap Adventure">
-        <meta property="og:description" content="Play the massively MMORPG today!">
-        
-        <link rel="stylesheet" href="css/characterdialog.css" type="text/css">
-        <link rel="stylesheet" href="css/main.css" type="text/css">
-        <link rel="stylesheet" href="css/basebar.css" type="text/css">  
-        <link rel="stylesheet" href="css/quest.css" type="text/css">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" href="img/common/favicon.png">
+    <meta property="og:title" content="TapTap">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://taptapadventure.com">
+    <meta property="og:image" content="img/common/promo-title.jpg">
+    <meta property="og:site_name" content="Tap Tap Adventure">
+    <meta property="og:description" content="Play the massively MMORPG today!">
 
-        <link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
-        <link href="img/common/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72">
-        <link href="img/common/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
-        <link href="img/common/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+    <link rel="stylesheet" href="css/characterdialog.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <link rel="stylesheet" href="css/basebar.css" type="text/css">
+    <link rel="stylesheet" href="css/quest.css" type="text/css">
+    <link rel="stylesheet" href="css/game.css" type="text/css">
 
-        <script src="js/lib/modernizr.js" type="text/javascript"></script>
+    <link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
+    <link href="img/common/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+    <link href="img/common/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+    <link href="img/common/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
 
-        <script src="js/detect.js" type="text/javascript"></script>
-        <title>Tap Tap Adventure</title>
-	</head>
+    <script src="js/lib/modernizr.js" type="text/javascript"></script>
 
-    
-	<body class="intro">
-	    <noscript>
-	       <div class="alert">
-	           You need to enable JavaScript to play Tap Tap.
-	       </div>
-	    </noscript>
-	    
-	    <div id="intro">
-	        <h1 id="logo">
+    <script src="js/detect.js" type="text/javascript"></script>
+    <title>Tap Tap Adventure</title>
+</head>
+
+
+<body class="intro">
+<noscript>
+    <div class="alert">
+        You need to enable JavaScript to play Tap Tap.
+    </div>
+</noscript>
+
+<div id="intro">
+    <h1 id="logo">
 	           <span id="logosparks">
 
 	           </span>
-	        </h1>
-	        <article id="portrait">
-	            <p>
-	               Please rotate your device to landscape mode
-	            </p>
-	            <div id="tilt"></div>
-	        </article>
-	        <section id="parchment" class="createcharacter">
-	            <div class="parchment-left"></div>
-	            <div class="parchment-middle">
-                    <article id="createcharacter">
-          	           <h1>
-          	               <span class="left-ornament"></span>
-          	               Create New Character
-          	               <span class="right-ornament"></span>
-                         </h1>
-                         <form action="none" method="get" accept-charset="utf-8">
-                             <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="12">
-                             <input type="password" id="pwinput" class="stroke" name="player-pw" placeholder="Password" maxlength="15">
-                             <input type="password" id="pwinput2" class="stroke" name="player-pw2" placeholder="Confirm Password" maxlength="15">
-                             <input type="email" id="emailinput" class="stroke" name="player-email" placeholder="Email address" maxlength="48">
-                         </form>
-                         <div class="play">
-                           <span class="link">Create</span>
-                         </div>
-                         <div class="validation-summary"></div>
-                    </article>
-                    <article id="loadcharacter">
-          	           <h1>
-          	               <span class="left-ornament"></span>
-          	               Tap Tap Adventure
-          	               <span class="right-ornament"></span>
-                         </h1>
-                         <form action="none" method="get" accept-charset="utf-8">
-                             <input type="text" id="loginnameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="12" autofocus>
-                             <input type="password" id="loginpwinput" class="stroke" name="player-loginpw" placeholder="Password" maxlength="15">
-                         </form>
-                         <div class="play">
-                           <span class="link">Login</span>
-                           <img src="img/common/spinner2.gif">
-                         </div>
-                         <div class="validation-summary"></div>
-                         <div id="create-new">
-                            <span class="link">New Character</span>
-                         </div>
-                    </article>
-                    <article id="confirmation">
-          	           <h1>
-          	               <span class="left-ornament"></span>
-                           You need to accept the following terms of usage before creating a new character.<br>
-                           None right now - just Continue!<br><br>
-          	               <span class="right-ornament"></span>
-                         </h1>
-                         <div id="continue">
-                         <span class="link">Continue</span>
-                         </div>
-                         <div id="cancel">
-                            <span class="link">Cancel</span>
-                         </div>
-                    </article>
-                        
-                        
-                        
-    	            <article id="credits">
-        	        <h1>
-         	               <span class="left-ornament"></span>
+    </h1>
+    <article id="portrait">
+        <p>
+            Please rotate your device to landscape mode
+        </p>
+        <div id="tilt"></div>
+    </article>
+    <section id="parchment" class="createcharacter">
+        <div class="parchment-left"></div>
+        <div class="parchment-middle">
+            <article id="createcharacter">
+                <h1>
+                    <span class="left-ornament"></span>
+                    Create New Character
+                    <span class="right-ornament"></span>
+                </h1>
+                <form action="none" method="get" accept-charset="utf-8">
+                    <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="12">
+                    <input type="password" id="pwinput" class="stroke" name="player-pw" placeholder="Password" maxlength="15">
+                    <input type="password" id="pwinput2" class="stroke" name="player-pw2" placeholder="Confirm Password" maxlength="15">
+                    <input type="email" id="emailinput" class="stroke" name="player-email" placeholder="Email address" maxlength="48">
+                </form>
+                <div class="play">
+                    <span class="link">Create</span>
+                </div>
+                <div class="validation-summary"></div>
+            </article>
+            <article id="loadcharacter">
+                <h1>
+                    <span class="left-ornament"></span>
+                    Tap Tap Adventure
+                    <span class="right-ornament"></span>
+                </h1>
+                <form action="none" method="get" accept-charset="utf-8">
+                    <input type="text" id="loginnameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="12" autofocus>
+                    <input type="password" id="loginpwinput" class="stroke" name="player-loginpw" placeholder="Password" maxlength="15">
+                </form>
+                <div class="play">
+                    <span class="link">Login</span>
+                    <img src="img/common/spinner2.gif">
+                </div>
+                <div class="validation-summary"></div>
+                <div id="create-new">
+                    <span class="link">New Character</span>
+                </div>
+            </article>
+            <article id="confirmation">
+                <h1>
+                    <span class="left-ornament"></span>
+                    You need to accept the following terms of usage before creating a new character.<br>
+                    None right now - just Continue!<br><br>
+                    <span class="right-ornament"></span>
+                </h1>
+                <div id="continue">
+                    <span class="link">Continue</span>
+                </div>
+                <div id="cancel">
+                    <span class="link">Cancel</span>
+                </div>
+            </article>
+
+
+
+            <article id="credits">
+                <h1>
+                    <span class="left-ornament"></span>
          	               <span class="title">
          	                   Thanks to Little Workshop
          	               </span>
-         	               <span class="right-ornament"></span>
-                        </h1>
-                        <div id="authors">
-                                For the starting code and Pixel art.
-                                <br>
-                                <br>
-                                Music by <a class="clickable" target="_blank" href="http://opengameart.org/users/marcelofg55">Marcelofg55</a>, <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>
+                    <span class="right-ornament"></span>
+                </h1>
+                <div id="authors">
+                    For the starting code and Pixel art.
+                    <br>
+                    <br>
+                    Music by <a class="clickable" target="_blank" href="http://opengameart.org/users/marcelofg55">Marcelofg55</a>, <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>
 
-                        </div>
-	                    <div id="close-credits">
-	                        <span>- click anywhere to close -</span>
-                        </div>
-    	            </article>
-                    
-                    
-                    
-    	            <article id="about">
-                        <h1>
-                            <span class="left-ornament"></span>
+                </div>
+                <div id="close-credits">
+                    <span>- click anywhere to close -</span>
+                </div>
+            </article>
+
+
+
+            <article id="about">
+                <h1>
+                    <span class="left-ornament"></span>
                             <span class="title">
                                 What is Tap Tap Adventure?
                             </span>
-                            <span class="right-ornament"></span>
-                        </h1>
-                        <p id="game-desc">
-                        Tap Tap Adventure is a large 2D MMORPG.
-                        </p>
-                        <div class="left">
-                            <div class="img"></div>
-                            <p>
-                            Using HTML5 you can play this game from anywhere, any time on any device.
-                            </p>
-                           
-                        </div>
-                        <div class="right">
-                            <div class="img"></div>
-                            <p>
-                            It is compatible with all iOS Devices and Mac OS X, and can be played
-                            through Safari for iOS as well.
-                            </p>
-                        </div>
-                        <div id="close-about">
-                            <span>- click anywhere to close -</span>
-                        </div>
-                    </article>
-    	            <article id="death">
-                        <p>You are dead...</p>
-    					<div id="respawn" class="button"></div>
-    	            </article>
-                    <article id="error">
-          	           <h1>
-          	               <span class="left-ornament"></span>
-          	               Your browser cannot run Tap Tap Adventure!
-          	               <span class="right-ornament"></span>
-                         </h1>
-                         <p>
-                             We're sorry, but your browser does not support WebSockets.<br>
-                            To play, you need to have WebSockets enabled.
-                         </p>
-                    </article>
-	            </div>
-	            <div class="parchment-right"></div>
-	        </section>
-	    </div>      
-            
-            <div id="container">
-                <div id="mainborder">
-                    <div id="canvas">
-                        <canvas id="background"></canvas>
-    			<canvas id="entities"></canvas>
-                        <canvas id="textcanvas"></canvas>
-                        <canvas id="foreground"></canvas>
-                        <canvas id="toptextcanvas" class="clickable"></canvas>
-                    </div>
-                    
-                    
-                    <div id="bubbles"></div>
-                    <div id="chatLog"></div> 
-                    <div id="questalarm"></div>
-                    <div id="chatbox">
-                        <form action="none" method="get" accept-charset="utf-8">
-                            <input id="chatinput" class="gp" type="text" maxlength="60">
-                        </form>
-                    </div>
-                    <div id="target">
-                        <div class="headshot"><div></div></div>
-                        <div class="details">
-                            <div class="name"></div>
-                            <div class="health"></div>
-                        </div>
-                    </div>
-                    <div id="inspector">
-                        <div class="headshot"><div> </div></div>
-                        <div class="details">
-                            <div class="name"></div>
-                            <div class="health"></div>
-                        </div>
-                    </div>           
-                    <div id="dropDialog">
-                            <div id="dropTitle">Input drop count.</div>
-                            <div align="center">
-                                <input type="text" id="dropCount" size="6" maxlength="6">
-                                <span id="dropAccept">&nbsp;Accept&nbsp;</span>
-                                <span id="dropCancel">&nbsp;Cancel&nbsp;</span>
-                            </div>
-                    </div>
-                    <div id="iteminfo"></div>
-                    <div id="basebarcontainer">
-                            <div id="hpcontainer">
-                                <div id="health"> </div>
-                                <div id="healthbar"></div>
-                                <div id="healthtext"></div>
-                                <div id="hpguide"></div>
-                            </div>
-                            <div id="mpcontainer">
-                                <div id="mana"> </div>
-                                <div id="manabar"></div>
-                                <div id="manatext"></div>
-                            </div>
-                            <div id="expcontainer">
-                                <div id="exp"></div>
-                                <div id="expbar"></div>
-                            </div>
-                            <div id="inventorybackground0">
-                                <div id="inventory0"></div>
-                                <div id="inventorynumber0"></div>
-                            </div>
-                            <div id="inventorybackground1">
-                                <div id="inventory1"></div>
-                                <div id="inventorynumber1"></div>
-                            </div>
-                            <div id="inventorybackground2">
-                                <div id="inventory2"></div>
-                                <div id="inventorynumber2"></div>
-                            </div>
-                            <div id="inventorybackground3">
-                                <div id="inventory3"></div>
-                                <div id="inventorynumber3"></div>
-                            </div>
-                            <div id="inventorybackground4">
-                                <div id="inventory4"></div>
-                                <div id="inventorynumber4"></div>
-                            </div>
-                            <div id="inventorybackground5">
-                                <div id="inventory5"></div>
-                                <div id="inventorynumber5"></div>
-                            </div>
-                            
-                            <div id="moreinventorybutton"></div>
-                           
-                            <div id="skill0">
-                                <div id="skill0Body"></div>
-                                <div id="skill0Cooltime"></div>
-                                <div id="skill00"></div>
-                                <div id="skill01"></div>
-                                <div id="skill02"></div>
-                                <div id="skill03"></div>
-                            </div>
-                            <div id="skill1">
-                                <div id="skill1Body"></div>
-                                <div id="skill1Cooltime"></div>
-                                <div id="skill10"></div>
-                                <div id="skill11"></div>
-                                <div id="skill12"></div>
-                                <div id="skill13"></div>
-                            </div>
-                            <div id="skill2">
-                                <div id="skill2Body"></div>
-                                <div id="skill2Cooltime"></div>
-                                <div id="skill20"></div>
-                                <div id="skill21"></div>
-                                <div id="skill22"></div>
-                                <div id="skill23"></div>
-                            </div>
-                            <div id="skill3">
-                                <div id="skill3Body"></div>
-                                <div id="skill3Cooltime"></div>
-                                <div id="skill30"></div>
-                                <div id="skill31"></div>
-                                <div id="skill32"></div>
-                                <div id="skill33"></div>
-                            </div>
-                            <div id="skill4">
-                                <div id="skill4Body"></div>
-                                <div id="skill4Cooltime"></div>
-                                <div id="skill40"></div>
-                                <div id="skill41"></div>
-                                <div id="skill42"></div>
-                                <div id="skill43"></div>
-                            </div>
-                            <div id="users"></div>
-                            <div id="characterButton"></div>
-                            <div id="helpbutton"></div>
-                            <div id="soundbutton"></div>
-                            <div id="fps">FPS: 60</div>
-    			</div>
-                    <div id="characterDialog">
-                        <div id="characterDialogFrame">
-                            <div id="characterDialogFrameStatePage">
-                                <div id="characterName">characterName</div>
-                                <div id="characterLevel">characterLevel</div>
-                                <div id="characterExp">characterExp</div>
-                                <div id="characterItemPendant"></div>
-                                <div id="characterItemWeapon"></div>
-                                <div id="characterItemArmor"></div>
-                                <div id="characterItemRing"></div>
-                                <div id="characterItemBoots"></div>
-                                <div id="characterLook">
-                                    <div id="characterLookShadow"></div>
-                                    <div id="characterLookArmor"></div>
-                                    <div id="characterLookWeapon"></div>
-                                </div>
-                            </div>
-                            <div id="characterDialogFrameSkillPage">
-                                <div id="characterSkill10">
-                                  <div id="characterSkill10Body"></div>
-                                  <div id="characterSkill10Level1"></div>
-                                  <div id="characterSkill10Level2"></div>
-                                  <div id="characterSkill10Level3"></div>
-                                  <div id="characterSkill10Level4"></div>
-                                </div>
-                                <div id="characterSkill11">
-                                  <div id="characterSkill11Body"></div>
-                                  <div id="characterSkill11Level1"></div>
-                                  <div id="characterSkill11Level2"></div>
-                                  <div id="characterSkill11Level3"></div>
-                                  <div id="characterSkill11Level4"></div>
-                                </div>
-                                <div id="characterSkill12">
-                                  <div id="characterSkill12Body"></div>
-                                  <div id="characterSkill12Level1"></div>
-                                  <div id="characterSkill12Level2"></div>
-                                  <div id="characterSkill12Level3"></div>
-                                  <div id="characterSkill12Level4"></div>
-                                </div>
-                                <div id="characterSkill13">
-                                  <div id="characterSkill13Body"></div>
-                                  <div id="characterSkill13Level1"></div>
-                                  <div id="characterSkill13Level2"></div>
-                                  <div id="characterSkill13Level3"></div>
-                                  <div id="characterSkill13Level4"></div>
-                                </div>
-                                <div id="characterSkill14">
-                                  <div id="characterSkill14Body"></div>
-                                  <div id="characterSkill14Level1"></div>
-                                  <div id="characterSkill14Level2"></div>
-                                  <div id="characterSkill14Level3"></div>
-                                  <div id="characterSkill14Level4"></div>
-                                </div>
-                                <div id="characterSkill15">
-                                  <div id="characterSkill15Body"></div>
-                                  <div id="characterSkill15Level1"></div>
-                                  <div id="characterSkill15Level2"></div>
-                                  <div id="characterSkill15Level3"></div>
-                                  <div id="characterSkill15Level4"></div>
-                                </div>
-                                <div id="characterSkill16">
-                                  <div id="characterSkill16Body"></div>
-                                  <div id="characterSkill16Level1"></div>
-                                  <div id="characterSkill16Level2"></div>
-                                  <div id="characterSkill16Level3"></div>
-                                  <div id="characterSkill16Level4"></div>
-                                </div>
-                                <div id="characterSkill17">
-                                  <div id="characterSkill17Body"></div>
-                                  <div id="characterSkill17Level1"></div>
-                                  <div id="characterSkill17Level2"></div>
-                                  <div id="characterSkill17Level3"></div>
-                                  <div id="characterSkill17Level4"></div>
-                                </div>
-                                <div id="characterSkill20">
-                                  <div id="characterSkill20Body"></div>
-                                  <div id="characterSkill20Level1"></div>
-                                  <div id="characterSkill20Level2"></div>
-                                  <div id="characterSkill20Level3"></div>
-                                  <div id="characterSkill20Level4"></div>
-                                </div>
-                                <div id="characterSkill21">
-                                  <div id="characterSkill21Body"></div>
-                                  <div id="characterSkill21Level1"></div>
-                                  <div id="characterSkill21Level2"></div>
-                                  <div id="characterSkill21Level3"></div>
-                                  <div id="characterSkill21Level4"></div>
-                                </div>
-                                <div id="characterSkill22">
-                                  <div id="characterSkill22Body"></div>
-                                  <div id="characterSkill22Level1"></div>
-                                  <div id="characterSkill22Level2"></div>
-                                  <div id="characterSkill22Level3"></div>
-                                  <div id="characterSkill22Level4"></div>
-                                </div>
-                                <div id="characterSkill23">
-                                  <div id="characterSkill23Body"></div>
-                                  <div id="characterSkill23Level1"></div>
-                                  <div id="characterSkill23Level2"></div>
-                                  <div id="characterSkill23Level3"></div>
-                                  <div id="characterSkill23Level4"></div>
-                                </div>
-                                <div id="characterSkill24">
-                                  <div id="characterSkill24Body"></div>
-                                  <div id="characterSkill24Level1"></div>
-                                  <div id="characterSkill24Level2"></div>
-                                  <div id="characterSkill24Level3"></div>
-                                  <div id="characterSkill24Level4"></div>
-                                </div>
-                                <div id="characterSkill25">
-                                  <div id="characterSkill25Body"></div>
-                                  <div id="characterSkill25Level1"></div>
-                                  <div id="characterSkill25Level2"></div>
-                                  <div id="characterSkill25Level3"></div>
-                                  <div id="characterSkill25Level4"></div>
-                                </div>
-                                <div id="characterSkill26">
-                                  <div id="characterSkill26Body"></div>
-                                  <div id="characterSkill26Level1"></div>
-                                  <div id="characterSkill26Level2"></div>
-                                  <div id="characterSkill26Level3"></div>
-                                  <div id="characterSkill26Level4"></div>
-                                </div>
-                                <div id="characterSkill27">
-                                  <div id="characterSkill27Body"></div>
-                                  <div id="characterSkill27Level1"></div>
-                                  <div id="characterSkill27Level2"></div>
-                                  <div id="characterSkill27Level3"></div>
-                                  <div id="characterSkill27Level4"></div>
-                                </div>
-                            </div>
-                            <div id="characterDialogFramePageNavigator">
-                              <div id="characterDialogFramePageNavigatorMovePreviousButton"></div>
-                              <div id="characterDialogFramePageNavigatorMoveNextButton"></div>
-                            </div>
-                        </div>
-                    </div>
-	    </div>
-                
-                
-                
-	</div>
+                    <span class="right-ornament"></span>
+                </h1>
+                <p id="game-desc">
+                    Tap Tap Adventure is a large 2D MMORPG.
+                </p>
+                <div class="left">
+                    <div class="img"></div>
+                    <p>
+                        Using HTML5 you can play this game from anywhere, any time on any device.
+                    </p>
 
-        <footer>
+                </div>
+                <div class="right">
+                    <div class="img"></div>
+                    <p>
+                        It is compatible with all iOS Devices and Mac OS X, and can be played
+                        through Safari for iOS as well.
+                    </p>
+                </div>
+                <div id="close-about">
+                    <span>- click anywhere to close -</span>
+                </div>
+            </article>
+            <article id="death">
+                <p>You are dead...</p>
+                <div id="respawn" class="button"></div>
+            </article>
+            <article id="error">
+                <h1>
+                    <span class="left-ornament"></span>
+                    Your browser cannot run Tap Tap Adventure!
+                    <span class="right-ornament"></span>
+                </h1>
+                <p>
+                    We're sorry, but your browser does not support WebSockets.<br>
+                    To play, you need to have WebSockets enabled.
+                </p>
+            </article>
+        </div>
+        <div class="parchment-right"></div>
+    </section>
+</div>
 
-             <div id="legal-link" class="clickable">
-            <a class="clickable" target="_blank" href="http://taptapadventure.com/forum/">Forum</a>
+<div id="container">
+    <div id="mainborder">
+        <div id="canvas">
+            <canvas id="background"></canvas>
+            <canvas id="entities"></canvas>
+            <canvas id="textcanvas"></canvas>
+            <canvas id="foreground"></canvas>
+            <canvas id="toptextcanvas" class="clickable"></canvas>
+        </div>
+
+        <div id="bubbles"></div>
+
+        <div id="chatLog"></div>
+        <div id="questalarm"></div>
+
+        <div id="chatbox">
+            <form action="none" method="get" accept-charset="utf-8">
+                <input id="chatinput" class="gp" type="text" maxlength="60">
+            </form>
+        </div>
+        <div id="target">
+            <div class="headshot"><div></div></div>
+            <div class="details">
+                <div class="name"></div>
+                <div class="health"></div>
+            </div>
+        </div>
+        <div id="inspector">
+            <div class="headshot"><div> </div></div>
+            <div class="details">
+                <div class="name"></div>
+                <div class="health"></div>
+            </div>
+        </div>
+        <div id="dropDialog">
+            <div id="dropTitle">Input drop count.</div>
+            <div align="center">
+                <input type="text" id="dropCount" size="6" maxlength="6">
+                <span id="dropAccept">&nbsp;Accept&nbsp;</span>
+                <span id="dropCancel">&nbsp;Cancel&nbsp;</span>
+            </div>
+        </div>
+        <div id="iteminfo"></div>
+        <div id="basebarcontainer">
+            <div id="hpcontainer">
+                <div id="health"> </div>
+                <div id="healthbar"></div>
+                <div id="healthtext"></div>
+                <div id="hpguide"></div>
+            </div>
+            <div id="mpcontainer">
+                <div id="mana"> </div>
+                <div id="manabar"></div>
+                <div id="manatext"></div>
+            </div>
+            <div id="expcontainer">
+                <div id="exp"></div>
+                <div id="expbar"></div>
+            </div>
+            <div id="inventorybackground0">
+                <div id="inventory0"></div>
+                <div id="inventorynumber0"></div>
+            </div>
+            <div id="inventorybackground1">
+                <div id="inventory1"></div>
+                <div id="inventorynumber1"></div>
+            </div>
+            <div id="inventorybackground2">
+                <div id="inventory2"></div>
+                <div id="inventorynumber2"></div>
+            </div>
+            <div id="inventorybackground3">
+                <div id="inventory3"></div>
+                <div id="inventorynumber3"></div>
+            </div>
+            <div id="inventorybackground4">
+                <div id="inventory4"></div>
+                <div id="inventorynumber4"></div>
+            </div>
+            <div id="inventorybackground5">
+                <div id="inventory5"></div>
+                <div id="inventorynumber5"></div>
             </div>
 
+            <div id="moreinventorybutton"></div>
 
-            <div id="privacy-link" class="clickable">
-                <span class="dash">&ndash;</span> <span id="toggle-legal">Donate</span>
-            </div> 
-            
-            
-            <div id="credits-link" class="clickable">
-                <span class="dash">&ndash;</span><span id="toggle-credits">Credits</span>
+            <div id="skill0">
+                <div id="skill0Body"></div>
+                <div id="skill0Cooltime"></div>
+                <div id="skill00"></div>
+                <div id="skill01"></div>
+                <div id="skill02"></div>
+                <div id="skill03"></div>
             </div>
+            <div id="skill1">
+                <div id="skill1Body"></div>
+                <div id="skill1Cooltime"></div>
+                <div id="skill10"></div>
+                <div id="skill11"></div>
+                <div id="skill12"></div>
+                <div id="skill13"></div>
+            </div>
+            <div id="skill2">
+                <div id="skill2Body"></div>
+                <div id="skill2Cooltime"></div>
+                <div id="skill20"></div>
+                <div id="skill21"></div>
+                <div id="skill22"></div>
+                <div id="skill23"></div>
+            </div>
+            <div id="skill3">
+                <div id="skill3Body"></div>
+                <div id="skill3Cooltime"></div>
+                <div id="skill30"></div>
+                <div id="skill31"></div>
+                <div id="skill32"></div>
+                <div id="skill33"></div>
+            </div>
+            <div id="skill4">
+                <div id="skill4Body"></div>
+                <div id="skill4Cooltime"></div>
+                <div id="skill40"></div>
+                <div id="skill41"></div>
+                <div id="skill42"></div>
+                <div id="skill43"></div>
+            </div>
+            <div id="users"></div>
+            <div id="characterButton"></div>
+            <div id="helpbutton"></div>
+            <div id="soundbutton"></div>
+            <div id="fps">FPS: 60</div>
+        </div>
+        <div id="characterDialog">
+            <div id="characterDialogFrame">
+                <div id="characterDialogFrameStatePage">
+                    <div id="characterName">characterName</div>
+                    <div id="characterLevel">characterLevel</div>
+                    <div id="characterExp">characterExp</div>
+                    <div id="characterItemPendant"></div>
+                    <div id="characterItemWeapon"></div>
+                    <div id="characterItemArmor"></div>
+                    <div id="characterItemRing"></div>
+                    <div id="characterItemBoots"></div>
+                    <div id="characterLook">
+                        <div id="characterLookShadow"></div>
+                        <div id="characterLookArmor"></div>
+                        <div id="characterLookWeapon"></div>
+                    </div>
+                </div>
+                <div id="characterDialogFrameSkillPage">
+                    <div id="characterSkill10">
+                        <div id="characterSkill10Body"></div>
+                        <div id="characterSkill10Level1"></div>
+                        <div id="characterSkill10Level2"></div>
+                        <div id="characterSkill10Level3"></div>
+                        <div id="characterSkill10Level4"></div>
+                    </div>
+                    <div id="characterSkill11">
+                        <div id="characterSkill11Body"></div>
+                        <div id="characterSkill11Level1"></div>
+                        <div id="characterSkill11Level2"></div>
+                        <div id="characterSkill11Level3"></div>
+                        <div id="characterSkill11Level4"></div>
+                    </div>
+                    <div id="characterSkill12">
+                        <div id="characterSkill12Body"></div>
+                        <div id="characterSkill12Level1"></div>
+                        <div id="characterSkill12Level2"></div>
+                        <div id="characterSkill12Level3"></div>
+                        <div id="characterSkill12Level4"></div>
+                    </div>
+                    <div id="characterSkill13">
+                        <div id="characterSkill13Body"></div>
+                        <div id="characterSkill13Level1"></div>
+                        <div id="characterSkill13Level2"></div>
+                        <div id="characterSkill13Level3"></div>
+                        <div id="characterSkill13Level4"></div>
+                    </div>
+                    <div id="characterSkill14">
+                        <div id="characterSkill14Body"></div>
+                        <div id="characterSkill14Level1"></div>
+                        <div id="characterSkill14Level2"></div>
+                        <div id="characterSkill14Level3"></div>
+                        <div id="characterSkill14Level4"></div>
+                    </div>
+                    <div id="characterSkill15">
+                        <div id="characterSkill15Body"></div>
+                        <div id="characterSkill15Level1"></div>
+                        <div id="characterSkill15Level2"></div>
+                        <div id="characterSkill15Level3"></div>
+                        <div id="characterSkill15Level4"></div>
+                    </div>
+                    <div id="characterSkill16">
+                        <div id="characterSkill16Body"></div>
+                        <div id="characterSkill16Level1"></div>
+                        <div id="characterSkill16Level2"></div>
+                        <div id="characterSkill16Level3"></div>
+                        <div id="characterSkill16Level4"></div>
+                    </div>
+                    <div id="characterSkill17">
+                        <div id="characterSkill17Body"></div>
+                        <div id="characterSkill17Level1"></div>
+                        <div id="characterSkill17Level2"></div>
+                        <div id="characterSkill17Level3"></div>
+                        <div id="characterSkill17Level4"></div>
+                    </div>
+                    <div id="characterSkill20">
+                        <div id="characterSkill20Body"></div>
+                        <div id="characterSkill20Level1"></div>
+                        <div id="characterSkill20Level2"></div>
+                        <div id="characterSkill20Level3"></div>
+                        <div id="characterSkill20Level4"></div>
+                    </div>
+                    <div id="characterSkill21">
+                        <div id="characterSkill21Body"></div>
+                        <div id="characterSkill21Level1"></div>
+                        <div id="characterSkill21Level2"></div>
+                        <div id="characterSkill21Level3"></div>
+                        <div id="characterSkill21Level4"></div>
+                    </div>
+                    <div id="characterSkill22">
+                        <div id="characterSkill22Body"></div>
+                        <div id="characterSkill22Level1"></div>
+                        <div id="characterSkill22Level2"></div>
+                        <div id="characterSkill22Level3"></div>
+                        <div id="characterSkill22Level4"></div>
+                    </div>
+                    <div id="characterSkill23">
+                        <div id="characterSkill23Body"></div>
+                        <div id="characterSkill23Level1"></div>
+                        <div id="characterSkill23Level2"></div>
+                        <div id="characterSkill23Level3"></div>
+                        <div id="characterSkill23Level4"></div>
+                    </div>
+                    <div id="characterSkill24">
+                        <div id="characterSkill24Body"></div>
+                        <div id="characterSkill24Level1"></div>
+                        <div id="characterSkill24Level2"></div>
+                        <div id="characterSkill24Level3"></div>
+                        <div id="characterSkill24Level4"></div>
+                    </div>
+                    <div id="characterSkill25">
+                        <div id="characterSkill25Body"></div>
+                        <div id="characterSkill25Level1"></div>
+                        <div id="characterSkill25Level2"></div>
+                        <div id="characterSkill25Level3"></div>
+                        <div id="characterSkill25Level4"></div>
+                    </div>
+                    <div id="characterSkill26">
+                        <div id="characterSkill26Body"></div>
+                        <div id="characterSkill26Level1"></div>
+                        <div id="characterSkill26Level2"></div>
+                        <div id="characterSkill26Level3"></div>
+                        <div id="characterSkill26Level4"></div>
+                    </div>
+                    <div id="characterSkill27">
+                        <div id="characterSkill27Body"></div>
+                        <div id="characterSkill27Level1"></div>
+                        <div id="characterSkill27Level2"></div>
+                        <div id="characterSkill27Level3"></div>
+                        <div id="characterSkill27Level4"></div>
+                    </div>
+                </div>
+                <div id="characterDialogFramePageNavigator">
+                    <div id="characterDialogFramePageNavigatorMovePreviousButton"></div>
+                    <div id="characterDialogFramePageNavigatorMoveNextButton"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        </footer>
-
-            
-            <ul id="page-tmpl" class="clickable" style="display:none">
-        </ul>
 
 
-        <img src="img/common/thingy.png" alt="" class="preload">
-        
-        
-        <div id="resize-check"></div>
-        <script type="text/javascript" src="http://cdn.socket.io/socket.io-1.3.5.js"></script>
-        <script type="text/javascript" src="javascripts/cordova-2.6.0.js"></script>
-        <script type="text/javascript" src="javascripts/LowLatencyAudio.js"></script>
-        <script type="text/javascript">
-            var ctx = document.querySelector('canvas').getContext('2d'),
-                parchment = document.getElementById("parchment");
-            if(!Detect.supportsWebSocket()) {
-                parchment.className = "error";
-            }
-            if(ctx.mozImageSmoothingEnabled === undefined) {
-                document.querySelector('body').className += ' upscaled';
-            }
-            parchment.className = "loadcharacter";
-        </script>
+</div>
 
-        <script src="js/lib/log.js"></script>
-        <script>
-                var require = { waitSeconds: 60 };
-        </script>
-        <script data-main="js/home" src="js/lib/require-jquery.js"></script>
-        
-        
-        <div id="quest"></div>
-        <div id="ranking"></div>
-	</body>
+<footer>
+
+    <div id="legal-link" class="clickable">
+        <a class="clickable" target="_blank" href="http://taptapadventure.com/forum/">Forum</a>
+    </div>
+
+
+    <div id="privacy-link" class="clickable">
+        <span class="dash">&ndash;</span> <span id="toggle-legal">Donate</span>
+    </div>
+
+
+    <div id="credits-link" class="clickable">
+        <span class="dash">&ndash;</span><span id="toggle-credits">Credits</span>
+    </div>
+
+</footer>
+
+
+<ul id="page-tmpl" class="clickable" style="display:none">
+</ul>
+
+
+<img src="img/common/thingy.png" alt="" class="preload">
+
+
+<div id="resize-check"></div>
+<script type="text/javascript" src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+<script type="text/javascript" src="javascripts/cordova-2.6.0.js"></script>
+<script type="text/javascript" src="javascripts/LowLatencyAudio.js"></script>
+<script type='text/javascript' src='javascripts/gamecontroller.js'></script>
+
+<script type="text/javascript">
+    var ctx = document.querySelector('canvas').getContext('2d'),
+            parchment = document.getElementById("parchment");
+    if(!Detect.supportsWebSocket()) {
+        parchment.className = "error";
+    }
+    if(ctx.mozImageSmoothingEnabled === undefined) {
+        document.querySelector('body').className += ' upscaled';
+    }
+    parchment.className = "loadcharacter";
+</script>
+
+<script src="js/lib/log.js"></script>
+<script>
+    var require = { waitSeconds: 60 };
+</script>
+<script data-main="js/home" src="js/lib/require-jquery.js"></script>
+
+
+<div id="quest"></div>
+<div id="ranking"></div>
+</body>
 </html>

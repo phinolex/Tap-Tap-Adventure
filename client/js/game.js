@@ -997,6 +997,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                 });
 
+                self.client.onPVPChange(function(pvpFlag) {
+                    self.player.flagPVP(pvpFlag);
+                    //self.pvpFlag = pvpFlag;
+                });
                 self.player.onStopPathing(function(x, y) {
                     if(self.player.hasTarget()) {
                         self.player.lookAtTarget();
@@ -1014,8 +1018,27 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         }
                     }
 
+                    if (self.player.pvpFlag && !self.notifyPVPMessageSent) {
+                        self.chathandler.addNormalChat("Notification", "You are currently in a PvP area.");
+                        self.notifyPVPMessageSent = true;
+                        self.pvpFlag = true;
+                    } else {
+                        if (!self.player.pvpFlag && self.notifyPVPMessageSent) {
+                            self.chathandler.addNormalChat("Notification", "You are no longer in the PvP area.");
+                            self.notifyPVPMessageSent = false;
+                            self.pvpFlag = false;
+                        }
+                    }
+
                     if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
                         var dest = self.map.getDoorDestination(x, y);
+
+                        if(dest.quest && !self.questhandler.quests.KILL_SNOWWOLF.completed) {
+                            self.unregisterEntityPosition(self.player);
+                            self.registerEntityPosition(self.player);
+                            self.chathandler.addNormalChat("Notification", "You must finish the tutorial to proceed.");
+                            return;
+                        }
 
                         if(dest.level > self.player.level) {
                             self.unregisterEntityPosition(self.player);
@@ -1096,7 +1119,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                 self.player.onDeath(function() {
                     log.info(self.playerId + " is dead");
-                    self.player.skillHandler.clear();
+                    //self.player.skillHandler.clear();
                     self.player.stopBlinking();
                     self.player.setSprite(self.sprites["death"]);
                     self.player.animate("death", 120, 1, function() {
@@ -1125,22 +1148,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.onHasMoved(function(player) {
                     self.assignBubbleTo(player);
                 });
-                self.client.onPVPChange(function(pvpFlag){
-                    self.player.flagPVP(pvpFlag);
-                    if(pvpFlag){
-                        self.chathandler.addNotification("PVP is on.");
-                    } else{
-                        self.chathandler.addNotification("PVP is off.");
-                    }
-                });
+
 
                 self.player.onArmorLoot(function(armorName) {
                     self.player.switchArmor(armorName, self.sprites[armorName]);
-                });
-
-                self.player.onInvincible(function() {
-                    self.invincible_callback();
-                    self.player.switchArmor("firefox", self.sprites["firefox"]);
                 });
 
                 self.client.onSpawnItem(function(item, x, y) {
@@ -1205,6 +1216,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                     });
 
                                     entity.onStopPathing(function(x, y) {
+
                                         if(!entity.isDying) {
                                             if(entity.hasTarget() && entity.isAdjacent(entity.target)) {
                                                 entity.lookAtTarget();
@@ -2703,9 +2715,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.notification_callback = callback;
         },
 
-        onPlayerInvincible: function(callback) {
-            this.invincible_callback = callback
-        },
 
         resize: function() {
             var x = this.camera.x,

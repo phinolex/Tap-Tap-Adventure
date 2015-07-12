@@ -20,7 +20,7 @@ function main(config) {
     if(production_config.inProduction()) {
         _.extend(config, production_config.getProductionSettings());
     }
-
+    var worldId = config.world_id;
     var ws = require("./ws");
     var WorldServer = require("./worldserver");
     var server = new ws.WebsocketServer(config.port, config.use_one_port, config.ip);
@@ -41,9 +41,9 @@ function main(config) {
                 }
             });
         }
-    }, 10);
+    }, 1500);
 
-    log.info("Starting Tap Tap Adventure game server...");
+    log.info("Initializing TTA GameServer - World " + worldId);
     var selector = DatabaseSelector(config);
     databaseHandler = new selector(config);
 

@@ -974,27 +974,18 @@ Types.rankedWeapons = [
     Types.Entities.CACTUSAXE,
     Types.Entities.DEVILKAZYASWORD,
     Types.Entities.BAMBOOSPEAR,
-    Types.Entities.PAEWOLDO
-
-//    Types.Entities.MAGICSPEAR,
-//    Types.Entities.FIRESWORD,
+    Types.Entities.PAEWOLDO,
+    Types.Entities.MAGICSPEAR,
+    Types.Entities.FIRESWORD
 ];
 
 Types.rankedArmors = [
-//    Types.Entities.ADMINARMOR,
-//    Types.Entities.RAINBOWAPRO,
-//    Types.Entities.COKEARMOR,
-//    Types.Entities.FRIEDPOTATOARMOR,
-//    Types.Entities.BURGERARMOR,
-//    Types.Entities.RADISHARMOR,
-//    Types.Entities.HALLOWEENJKARMOR,
     Types.Entities.CLOTHARMOR,
     Types.Entities.LEATHERARMOR,
     Types.Entities.MAILARMOR,
     Types.Entities.PLATEARMOR,
     Types.Entities.REDARMOR,
     Types.Entities.GOLDENARMOR,
-    
     Types.Entities.GREENARMOR,
     Types.Entities.GREENWINGARMOR,
     Types.Entities.GUARDARMOR,
@@ -1055,7 +1046,14 @@ Types.rankedArmors = [
     Types.Entities.BRIDALMASK,
     Types.Entities.BLACKSPIDERARMOR,
     Types.Entities.FROGARMOR,
-    Types.Entities.BEARSEONBIARMOR
+    Types.Entities.BEARSEONBIARMOR,
+    Types.Entities.RAINBOWAPRO,
+    Types.Entities.COKEARMOR,
+    Types.Entities.FRIEDPOTATOARMOR,
+    Types.Entities.BURGERARMOR,
+    Types.Entities.RADISHARMOR,
+    Types.Entities.HALLOWEENJKARMOR,
+    Types.Entities.ADMINARMOR
 ];
 Types.rankedArcherWeapons = [
     Types.Entities.WOODENBOW,
@@ -1186,12 +1184,12 @@ Types.expForLevel = [
 
 Types.getLevel = function(exp){
     var i=1;
-    for(i=1; i<152; i++){
+    for(i=1; i<165; i++){
         if(exp < Types.expForLevel[i]){
             return i;
         }
     }
-    return 152;
+    return 165;
 };
 Types.getWeaponRank = function(weaponKind) {
     return _.indexOf(Types.rankedWeapons, weaponKind);
