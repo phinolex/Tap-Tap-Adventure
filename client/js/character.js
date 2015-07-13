@@ -14,10 +14,10 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
 
             // Speeds
             this.atkSpeed = 50;
-            this.moveSpeed = 70;
-            this.walkSpeed = 65;
+            this.moveSpeed = 120;
+            this.walkSpeed = 100;
             this.idleSpeed = 450;
-            this.setAttackRate(800);
+            this.setAttackRate(1000);
 
             // Pathing
             this.movement = new Transition();

@@ -293,6 +293,11 @@ module.exports = Player = Character.extend({
             } else if(action === Types.Messages.SELL){
                 log.info("SELL: " + self.name + " " + message[1] + " " + message[2]);
                 self.handleSell(message);
+            } else if(action === Types.Messages.AGGRO) {
+                log.info("AGGRO: " + self.name + " " + message[1]);
+                if(self.move_callback) {
+                    self.server.handleMobHate(message[1], self.id, 5);
+                }
             } else if(action === Types.Messages.SHOP){
                 log.info("SHOP: " + self.name + " " + message[1] + " " + message[2]);
                 self.handleShop(message);

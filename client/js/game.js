@@ -85,7 +85,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.partyhandler = new PartyHandler(this);
             this.rankingHandler = new RankingHandler(this);
 
-            this.player.skillHandler = new SkillHandler(this);
+
             this.statehandler = new StateHandler(this);
 
 
@@ -901,6 +901,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.setArmorName(armor);
                 self.player.setSpriteName(avatar);
                 self.player.setWeaponName(weaponAvatar ? weaponAvatar : weapon);
+                self.player.skillHandler = new SkillHandler(self);
                 self.membership = membership;
                 self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
                 self.initPlayer();
@@ -915,7 +916,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                 //Welcome message
                 self.chathandler.show();
-                self.chathandler.addNotification("Welcome to Tap Tap Adventure");
+                self.chathandler.addNotification("Welcome to Tap Tap Adventure!");
+
                 if (self.doubleEXP) {
                     self.chathandler.addNotification("Double EXP is currently on.");
                 }
@@ -1119,7 +1121,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                 self.player.onDeath(function() {
                     log.info(self.playerId + " is dead");
-                    //self.player.skillHandler.clear();
+                    self.player.skillHandler.clear();
                     self.player.stopBlinking();
                     self.player.setSprite(self.sprites["death"]);
                     self.player.animate("death", 120, 1, function() {

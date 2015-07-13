@@ -122,7 +122,7 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         initFPS: function() {
-            this.FPS = this.mobile ? 60 : 60;
+            this.FPS = this.mobile ? 30 : 60;
         },
 
         initFont: function() {
@@ -1017,15 +1017,15 @@ function(Camera, Item, Character, Player, Timer) {
 
         renderStaticCanvases: function() {
             this.background.save();
-                this.setCameraView(this.background);
-                this.drawTerrain();
+            this.setCameraView(this.background);
+            this.drawTerrain();
             this.background.restore();
 
             if(this.mobile || this.tablet) {
                 this.clearScreen(this.foreground);
                 this.foreground.save();
-                    this.setCameraView(this.foreground);
-                    this.drawHighTiles(this.foreground);
+                this.setCameraView(this.foreground);
+                this.drawHighTiles(this.foreground);
                 this.foreground.restore();
             }
         },
@@ -1093,7 +1093,7 @@ function(Camera, Item, Character, Player, Timer) {
             this.drawCombatInfo();
             this.context.save();
             this.setCameraView(this.context);
-            this.drawDirtyAnimatedTiles();
+            this.drawAnimatedTiles();
             this.drawSelectedCell();
             this.drawInventory();
             this.drawDirtyEntities();
