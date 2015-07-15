@@ -195,6 +195,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                     }
                                     
                                 }
+                                client.sadd("adminname", "Flavius");
+                                client.sadd("adminname", "H0lybyte");
                                 //Remove both Moderators and Administrators and 
                                 // replace that with Ranks instead, using Rank 1 
                                 // for Moderator and Rank 2 for Administrators

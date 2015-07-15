@@ -332,11 +332,13 @@ module.exports = World = cls.Class.extend({
             if (id != null && typeof id !== 'undefined') {
                 if (self.outgoingQueues.hasOwnProperty(id)) {
                     if (self.outgoingQueues[id].length > 0 && typeof self.outgoingQueues[id] !== 'undefined' && self.outgoingQueues[id] != null) {
-                        if (connection != null && typeof connection !== 'undefined') {
+                        if (self.server.getConnection(id) != null && typeof self.server.getConnection(id) !== 'undefined') {
                             connection = self.server.getConnection(id);
                             connection.send(self.outgoingQueues[id]);
                             self.outgoingQueues[id] = [];
                             log.info("Sent ID: " + id + " successfully.");
+                        } else {
+                            log.info("Received null packet: Skipping");
                         }
                     }
                 }
