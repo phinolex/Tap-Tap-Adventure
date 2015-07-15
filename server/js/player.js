@@ -263,7 +263,7 @@ module.exports = Player = Character.extend({
                 }
             }
             else if(action === Types.Messages.MOVE) {
-                log.info("MOVE: " + self.name + "(" + message[1] + ", " + message[2] + ")");
+                //log.info("MOVE: " + self.name + "(" + message[1] + ", " + message[2] + ")");
                 if(self.move_callback) {
                     var x = message[1],
                         y = message[2];
@@ -315,7 +315,7 @@ module.exports = Player = Character.extend({
                 self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
 
             } else if(action === Types.Messages.TELEPORT) {
-                log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
+                //log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
                 var x = message[1],
                     y = message[2];
 

@@ -593,7 +593,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.animatedTiles.push(tile);
                 }
             }, 1);
-            //log.info("Initialized animated tiles.");
+            log.info("Initialized animated tiles.");
         },
 
         addToRenderingGrid: function(entity, x, y) {

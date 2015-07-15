@@ -598,6 +598,7 @@ js/mobs.js
 js/items.js
 js/npc.js
 js/npcs.js
+js/archer.js
 js/chest.js
 js/entityfactory.js
 js/lib/bison.js

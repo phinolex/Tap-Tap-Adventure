@@ -23,7 +23,7 @@ define(['character'], function(Character) {
 
             return msg;
         } else  {
-            return "안생겨요";
+            return "Well, hello there!";
         }
       }
     });

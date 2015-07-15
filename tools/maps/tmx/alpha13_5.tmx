@@ -15622,7 +15622,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="chestareas" width="425" height="518">
+ <objectgroup name="chestareas" width="425" height="518" visible="0">
   <object x="1968" y="1808" width="128" height="80">
    <properties>
     <property name="items" value="mailarmor"/>
@@ -15853,7 +15853,7 @@
   <object x="528" y="4080" width="80" height="32"/>
   <object x="2800" y="3168" width="32" height="16"/>
  </objectgroup>
- <objectgroup name="doors" width="425" height="518">
+ <objectgroup name="doors" width="425" height="518" visible="0">
   <object x="2032" y="1920" width="16" height="16">
    <properties>
     <property name="o" value="d"/>

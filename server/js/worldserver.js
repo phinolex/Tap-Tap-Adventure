@@ -212,10 +212,10 @@ module.exports = World = cls.Class.extend({
             } else {
                 if(self.regen_callback) {
                     self.regen_callback();
-                } //NOTE
+                }
                 updateCount = 0;
             }
-        }, 2500 / this.ups);
+        }, 1000 / this.ups);
 
         log.info(""+this.id+" created (capacity: "+this.maxPlayers+" players).");
     },
@@ -317,21 +317,31 @@ module.exports = World = cls.Class.extend({
 
     pushBroadcast: function(message, ignoredPlayer) {
         for(var id in this.outgoingQueues) {
-            if(id != ignoredPlayer) {
-                this.outgoingQueues[id].push(message.serialize());
+            if (this.outgoingQueues.hasOwnProperty(id)) {
+                if (id != ignoredPlayer) {
+                    this.outgoingQueues[id].push(message.serialize());
+                }
             }
         }
     },
-
     processQueues: function() {
         var self = this,
             connection;
 
-        for(var id in this.outgoingQueues) {
-            if(this.outgoingQueues[id].length > 0) {
-                connection = this.server.getConnection(id);
-                connection.send(this.outgoingQueues[id]);
-                this.outgoingQueues[id] = [];
+        for(var id in self.outgoingQueues) {
+            if (id != null && typeof id !== 'undefined') {
+                if (self.outgoingQueues.hasOwnProperty(id)) {
+                    if (self.outgoingQueues[id].length > 0 && typeof self.outgoingQueues[id] !== 'undefined' && self.outgoingQueues[id] != null) {
+                        if (connection != null && typeof connection !== 'undefined') {
+                            connection = self.server.getConnection(id);
+                            connection.send(self.outgoingQueues[id]);
+                            self.outgoingQueues[id] = [];
+                            log.info("Sent ID: " + id + " successfully.");
+                        }
+                    }
+                }
+            } else {
+                log.info("ID is null");
             }
         }
     },
@@ -365,50 +375,39 @@ module.exports = World = cls.Class.extend({
     samePlayerDisconnect: function(player){
         var sameIpPlayerCount = 0;
         for(var id in this.players) {
-            if(this.players[id].connection._connection.remoteAddress === player.connection._connection.remoteAddress
-            && this.players[id].name !== player.name){
+            if (this.players.hasOwnProperty(id)) {
+                if (this.players[id].connection._connection.remoteAddress === player.connection._connection.remoteAddress
+                    && this.players[id].name !== player.name) {
 
-                if(player.connection._connection.remoteAddress === "192.35.39.67"
-                || player.connection._connection.remoteAddress === "112.161.25.194"){
-                    continue;
+                    if (player.connection._connection.remoteAddress === "192.35.39.67"
+                        || player.connection._connection.remoteAddress === "112.161.25.194") {
+                        continue;
+                    }
+                    sameIpPlayerCount++;
+                    if (sameIpPlayerCount > 1) {
+                        this.players[id].connection.close("Same IP Player Logged In");
+                        continue;
+                    }
                 }
-                sameIpPlayerCount++;
-                if(sameIpPlayerCount > 1){
-                    this.players[id].connection.close("Same IP Player Logged In");
-                    continue;
-                }
-            }
-            if(this.players[id].name === player.name){
-                if(!this.players[id].isDead){
-                    this.players[id].connection.close("Same Player Logged In");
+                if (this.players[id].name === player.name) {
+                    if (!this.players[id].isDead) {
+                        this.players[id].connection.close("Same Player Logged In");
+                    }
                 }
             }
         }
     },
-    
+
     addPlayer: function(player) {
         this.addEntity(player);
         this.players[player.id] = player;
         this.outgoingQueues[player.id] = [];
-        var res = true;
-	return res;
+
+        log.info("Added player : " + player.id);
     },
 
     removePlayer: function(player) {
-        var party = player.party;
 
-        if(party){
-            if(party.players.length < 3){
-                party.removePlayer(player);
-                if(party.players[0]){
-                    party.players[0].party = null;
-                    party.players[0].send([Types.Messages.PARTY]);
-                    delete party;
-                }
-            } else{
-                party.removePlayer(player);
-            }
-        }
         player.broadcast(player.despawn());
         this.removeEntity(player);
         delete this.players[player.id];
@@ -416,20 +415,14 @@ module.exports = World = cls.Class.extend({
     },
     loggedInPlayer: function(name){
         for(var id in this.players) {
-            if(this.players[id].name === name){
-                if(!this.players[id].isDead)
-                    return true;
+            if (this.players.hasOwnProperty(id)) {
+                if (this.players[id].name === name) {
+                    if (!this.players[id].isDead)
+                        return true;
+                }
             }
         }
         return false;
-    },
-    
-    playerBanned: function(name) {
-        for(var id in this.players) {
-            if(this.players[id].name === name){
-                
-            }
-        } 
     },
 
     addMob: function(mob) {
@@ -510,19 +503,26 @@ module.exports = World = cls.Class.extend({
 
     forEachEntity: function(callback) {
         for(var id in this.entities) {
-            callback(this.entities[id]);
+            if (this.entities.hasOwnProperty(id)) {
+
+                callback(this.entities[id]);
+            }
         }
     },
 
     forEachPlayer: function(callback) {
         for(var id in this.players) {
-            callback(this.players[id]);
+            if (this.players.hasOwnProperty(id)) {
+                callback(this.players[id]);
+            }
         }
     },
 
     forEachMob: function(callback) {
         for(var id in this.mobs) {
-            callback(this.mobs[id]);
+            if (this.mobs.hasOwnProperty(id)) {
+                callback(this.mobs[id]);
+            }
         }
     },
 
@@ -592,7 +592,7 @@ module.exports = World = cls.Class.extend({
         }
     },
 
- handleHurtEntity: function(entity, attacker, damage) {
+    handleHurtEntity: function(entity, attacker, damage) {
         var self = this;
         
         if(entity.type === 'player') {
@@ -723,35 +723,38 @@ module.exports = World = cls.Class.extend({
             item = null;
         
         for(var itemName in drops) {
-            var percentage = drops[itemName];
+            if (drops.hasOwnProperty(itemName)) {
+                var percentage = drops[itemName];
 
-            p += percentage;
-            if(v <= p) {
-                item = this.addItem(this.createItem(Types.getKindFromString(itemName), mob.x, mob.y));
-                function addSkillOnItem(item, skillKinds) {
-                    var i = 0,
-                        probability = Math.random(),
-                        probabilityList = [0.02, 0.0466, 0.082, 0.1292, 0.1922,
-                                            0.2752, 0.387, 0.536, 0.7345];
-                    for(i=0; i<9; i++){
-                        if(probability < probabilityList[i]){
-                            item.skillKind = skillKinds[Utils.randomInt(0, skillKinds.length - 1)];
-                            item.skillLevel = 9 - i;
-                            break;
+                p += percentage;
+                if (v <= p) {
+                    item = this.addItem(this.createItem(Types.getKindFromString(itemName), mob.x, mob.y));
+                    function addSkillOnItem(item, skillKinds) {
+                        var i = 0,
+                            probability = Math.random(),
+                            probabilityList = [0.02, 0.0466, 0.082, 0.1292, 0.1922,
+                                0.2752, 0.387, 0.536, 0.7345];
+                        for (i = 0; i < 9; i++) {
+                            if (probability < probabilityList[i]) {
+                                item.skillKind = skillKinds[Utils.randomInt(0, skillKinds.length - 1)];
+                                item.skillLevel = 9 - i;
+                                break;
+                            }
                         }
                     }
-                }
-                if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind)) {
-                    addSkillOnItem(item, [Types.Skills.BLOODSUCKING, Types.Skills.CRITICALRATIO]);
-                } else if(Types.isPendant(item.kind)) {
-                    addSkillOnItem(item, [Types.Skills.RECOVERHEALTH, Types.Skills.HEALANDHEAL,
-                                            Types.Skills.AVOIDATTACK, Types.Skills.ADDEXPERIENCE]);
-                } else if(Types.isRing(item.kind)) {
-                    addSkillOnItem(item, [Types.Skills.RECOVERHEALTH, Types.Skills.HEALANDHEAL,
-                                            Types.Skills.ATTACKWITHBLOOD, Types.Skills.CRITICALATTACK]);
-                }
 
-                break;
+                    if (Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind)) {
+                        addSkillOnItem(item, [Types.Skills.BLOODSUCKING, Types.Skills.CRITICALRATIO]);
+                    } else if (Types.isPendant(item.kind)) {
+                        addSkillOnItem(item, [Types.Skills.RECOVERHEALTH, Types.Skills.HEALANDHEAL,
+                            Types.Skills.AVOIDATTACK, Types.Skills.ADDEXPERIENCE]);
+                    } else if (Types.isRing(item.kind)) {
+                        addSkillOnItem(item, [Types.Skills.RECOVERHEALTH, Types.Skills.HEALANDHEAL,
+                            Types.Skills.ATTACKWITHBLOOD, Types.Skills.CRITICALATTACK]);
+                    }
+
+                    break;
+                }
             }
         }
         
@@ -908,11 +911,11 @@ module.exports = World = cls.Class.extend({
 
         if(item) {
             item.handleDespawn({
-                beforeBlinkDelay: 10000,
+                beforeBlinkDelay: 20000,
                 blinkCallback: function() {
                     self.pushToAdjacentGroups(item.group, new Messages.Blink(item));
                 },
-                blinkingDuration: 4000,
+                blinkingDuration: 8000,
                 despawnCallback: function() {
                     self.pushToAdjacentGroups(item.group, new Messages.Destroy(item));
                     self.removeEntity(item);
@@ -962,8 +965,10 @@ module.exports = World = cls.Class.extend({
     },
     getPlayerByName: function(name){
         for(var id in this.players) {
-            if(this.players[id].name === name){
-                return this.players[id];
+            if (this.players.hasOwnProperty(id)) {
+                if (this.players[id].name === name) {
+                    return this.players[id];
+                }
             }
         }
         return null;
@@ -981,27 +986,27 @@ module.exports = World = cls.Class.extend({
         this.pushBroadcast(new Messages.Population(this.playerCount, totalPlayers ? totalPlayers : this.playerCount));
     },
     pushKungWord: function(player, word){
-      if(this.kungTimeCallback){
-        clearTimeout(this.kungTimeCallback);
-      }
-
-      this.kungWords.push(word);
-      this.lastKungPlayer = player;
-      this.pushBroadcast(new Messages.Kung(player.name + " - " + word + " 쿵쿵따~!"));
-
-      var self = this;
-      this.kungTimeCallback = setTimeout(function(){
-        self.pushBroadcast(new Messages.Kung("쿵쿵따가 끝났습니다."));
-        if(self.lastKungPlayer && self.kungWords.length >= 10){
-          var item = self.createItem(Types.Entities.BURGER, 0, 0);
-          item.count = Math.floor(self.kungWords.length/2);
-          self.lastKungPlayer.putInventory(item);
-          self.pushBroadcast(new Messages.Kung(self.lastKungPlayer.name + ' : +' + item.count + ' burgers'));
+        if(this.kungTimeCallback){
+            clearTimeout(this.kungTimeCallback);
         }
-        self.lastKungPlayer = null;
-        self.kungWords = [];
-        self.kungTimeCallback = null;
-      }, 10000);
+
+        this.kungWords.push(word);
+        this.lastKungPlayer = player;
+        this.pushBroadcast(new Messages.Kung(player.name + " - " + word + " 쿵쿵따~!"));
+
+        var self = this;
+        this.kungTimeCallback = setTimeout(function(){
+            self.pushBroadcast(new Messages.Kung("쿵쿵따가 끝났습니다."));
+            if(self.lastKungPlayer && self.kungWords.length >= 10){
+                var item = self.createItem(Types.Entities.BURGER, 0, 0);
+                item.count = Math.floor(self.kungWords.length/2);
+                self.lastKungPlayer.putInventory(item);
+                self.pushBroadcast(new Messages.Kung(self.lastKungPlayer.name + ' : +' + item.count + ' burgers'));
+            }
+            self.lastKungPlayer = null;
+            self.kungWords = [];
+            self.kungTimeCallback = null;
+        }, 10000);
     },
     isAlreadyKung: function(word){
       var i=0;

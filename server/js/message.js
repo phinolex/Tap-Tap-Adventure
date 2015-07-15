@@ -51,16 +51,15 @@ Messages.LootMove = Message.extend({
             this.item.id];
     }
 });
-
 Messages.Attack = Message.extend({
-    init: function (attackerId, targetId) {
+    init: function(attackerId, targetId) {
         this.attackerId = attackerId;
         this.targetId = targetId;
     },
-    serialize: function () {
+    serialize: function() {
         return [Types.Messages.ATTACK,
-                this.attackerId,
-                this.targetId];
+            this.attackerId,
+            this.targetId];
     }
 });
 
