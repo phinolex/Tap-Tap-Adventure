@@ -108,6 +108,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         hit: function(orientation) {
             this.setOrientation(orientation);
             this.animate("atk", this.atkSpeed, 1);
+            this.stop();
         },
 
         walk: function(orientation) {
@@ -531,7 +532,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             return false;
         },
 
-        canReachTarget: function() {
+        atkTarget: function() {
             if(this.atkRange > 1){
                 if(this.hasTarget() && this.getDistanceToEntity(this.target) < this.atkRange) {
                     return true;
