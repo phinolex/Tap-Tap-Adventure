@@ -336,14 +336,14 @@ module.exports = World = cls.Class.extend({
                             connection = self.server.getConnection(id);
                             connection.send(self.outgoingQueues[id]);
                             self.outgoingQueues[id] = [];
-                            log.info("Sent ID: " + id + " successfully.");
+                            //log.info("Sent ID: " + id + " successfully.");
                         } else {
-                            log.info("Received null packet: Skipping");
+                            //log.info("Null Connection: Skipping");
                         }
                     }
                 }
             } else {
-                log.info("ID is null");
+                //log.info("ID is null");
             }
         }
     },

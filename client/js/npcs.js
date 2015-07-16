@@ -7,7 +7,7 @@ define(['npc'], function(Npc) {
                 this._super(id, Types.Entities.KING, 1);
                 this.beforeQuestCompleteTalk = [
                     "Cthulhu kinapped our Meyl princess.",
-                    "Please save her"
+                    "Please save her!"
                 ];
             }
         }),
@@ -33,7 +33,7 @@ define(['npc'], function(Npc) {
             init: function(id) {
                 this._super(id, Types.Entities.BEACHNPC, 1);
                 this.beforeQuestCompleteTalk = [
-                    "Hey there warrior! I can't have fun in the beach due to the crabs.",
+                    "Hey there warrior! I can't have fun on the beach due to those crabs.",
                     "Could you please kill five crabs for me?"
                 ];
                 this.afterQuestCompleteTalk = [
@@ -69,7 +69,18 @@ define(['npc'], function(Npc) {
             init: function(id) {
                 this._super(id, Types.Entities.RICK, 1);
                 this.beforeQuestCompleteTalk = [
-                    "Shake that body! Shake that body!"
+                    "We're no strangers to love",
+                    "You know the rules and so do I",
+                    "A full commitment's what I'm thinking of",
+                    "You wouldn't get this from any other guy",
+                    "I just wanna tell you how I'm feeling",
+                    "Gotta make you understand",
+                    "Never gonna give you up",
+                    "Never gonna let you down",
+                    "Never gonna run around and desert you",
+                    "Never gonna make you cry",
+                    "Never gonna say goodbye",
+                    "Never gonna tell a lie and hurt you"
                 ];
             }
         }),
@@ -77,8 +88,8 @@ define(['npc'], function(Npc) {
             init: function(id) {
                 this._super(id, Types.Entities.PRIEST, 1);
                 this.beforeQuestCompleteTalk = [
-                    "Damn those skeletons! Can't focus on my meditation!",
-                    "Please slaughter 10 skeletons."
+                    "Those skeletons keep disrupting my meditation!",
+                    "Kill 10 for me please."
                 ];
                 this.afterQuestCompleteTalk = [
                     "Thank you."
@@ -89,8 +100,8 @@ define(['npc'], function(Npc) {
             init: function(id) {
                 this._super(id, Types.Entities.GUARD, 1);
                 this.beforeQuestCompleteTalk = [
-                    "You are not the one we're",
-                    "looking for, move along."
+                    "You are not the one we're looking for",
+                    "Move along."
                     
                 ];
             }
@@ -115,7 +126,8 @@ define(['npc'], function(Npc) {
                 this._super(id, Types.Entities.DESERTNPC, 1);
                 this.beforeQuestCompleteTalk = [
                     "I've lost my axe today...",
-                    "I want my axe back..."
+                    "I want my axe back...",
+                    "Bring me my axe."
                 ];
                 this.afterQuestCompleteTalk = [
                     "Thank you."
@@ -126,9 +138,9 @@ define(['npc'], function(Npc) {
             init: function(id) {
                 this._super(id, Types.Entities.LAVANPC, 1);
                 this.beforeQuestCompleteTalk = [
-                    "Hey my comrade, there is a skeleton blocking its way to the princess.",
-                    "Crash it, crash it twice!",
-                    "one for you,.. and one for me."
+                    "Hey my comrade, there is a skeleton that will give you.",
+                    "Unknown Powers if you kill it, Destroy it!",
+                    "You must so you can save the princess!"
                 ];
                 this.afterQuestCompleteTalk = [
                     "Thank you, my comrade..."
