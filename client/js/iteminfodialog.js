@@ -26,16 +26,10 @@ define(['dialog'], function(Dialog) {
             } else {
                 this.scale = 2;
             }
-            var rankedArmors = null;
-            var rankedWeapons = null;
+            var rankedArmors = Types.rankedArmors;
+            var rankedWeapons = Types.rankedWeapons;
 
-            if(this.game.player.kind === Types.Entities.WARRIOR){
-                rankedArmors = Types.rankedArmors;
-                rankedWeapons = Types.rankedWeapons;
-            } else{
-                rankedArmors = Types.rankedArcherArmors;
-                rankedWeapons = Types.rankedArcherWeapons;
-            }
+
 
             switch (this.scale) {
 

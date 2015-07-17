@@ -9,6 +9,6 @@
  module.exports = Variations = cls.Class.extend({
     init: function() {    
         this.expMultiplier = 1;
-        this.doubleEXP = true;
+        this.doubleEXP = false;
     }
  });

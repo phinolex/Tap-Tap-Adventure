@@ -373,7 +373,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             self.sprites["item-cake"].createSilhouette();
         },
 
-        
+
         loadSprite: function(name) {
             if(this.renderer.upscaledRendering) {
                 this.spritesets[0][name] = new Sprite(name, 1);

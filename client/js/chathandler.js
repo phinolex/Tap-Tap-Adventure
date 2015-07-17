@@ -40,7 +40,11 @@ define(['jquery'], function() {
                 commandPatterns = {
                     'senders': {
                       "/1 ": function(message) {
-                          self.game.client.sendChat("/1 " + self.game.player.name + ": " + message);
+                          var name = self.game.player.name;
+                          if (self.game.player.admin) {
+                              name = "[Admin] " + name;
+                          }
+                          self.game.client.sendChat("/1 " + name + ": " + message);
                           return true;
                       },
                       "/2 ": function(message){

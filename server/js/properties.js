@@ -5,7 +5,7 @@ var Properties = {
     wizard: {
         drops: {
             flask: 50,
-            platearmor: 5,
+            platearmor: 25,
             firepotion: 5
         },
         hp: 80,
@@ -14,7 +14,7 @@ var Properties = {
     },
     crab: {
         drops: {
-            flask: 50,
+            flask: 90,
             firepotion: 10
         },
         hp: 25,
@@ -35,11 +35,10 @@ var Properties = {
     bat: {
         drops: {
             flask: 50,
-            sword2: 19,
-            plasticbow: 19,
-            firepotion: 10,
-            pendant1: 1,
-            ring1: 1
+            sword2: 20,
+            plasticbow: 20,
+            pendant1: 5,
+            ring1: 5
         },
         hp: 100,
         armor: 1,
@@ -47,10 +46,10 @@ var Properties = {
     },
     goblin: {
         drops: {
-            flask: 25,
-            leatherarmor: 73,
-            pendant1: 1,
-            ring1: 1
+            flask: 20,
+            leatherarmor: 70,
+            pendant1: 5,
+            ring1: 5
         },
         hp: 140,
         armor: 1,
@@ -70,11 +69,11 @@ var Properties = {
     skeleton: {
         drops: {
             flask: 40,
-            axe: 19,
-            ironbow: 19,
-            firepotion: 10,
-            pendant1: 1,
-            ring1: 1
+            axe: 20,
+            ironbow: 15,
+            firepotion: 15,
+            pendant1: 5,
+            ring1: 5
         },
         hp: 240,
         armor: 1,
@@ -93,12 +92,12 @@ var Properties = {
     },
     snek: {
         drops: {
-            flask: 50,
-            mailarmor: 19,
-            mailarcherarmor: 19,
+            flask: 40,
+            mailarmor: 20,
+            mailarcherarmor: 20,
             firepotion: 10,
-            pendant1: 1,
-            ring1: 1
+            pendant1: 5,
+            ring1: 5
         },
         hp: 300,
         armor: 1,
@@ -143,12 +142,12 @@ var Properties = {
     },
     skeleton2: {
         drops: {
-            flask: 50,
-            platearmor: 19,
-            platearcherarmor: 19,
+            flask: 40,
+            platearmor: 20,
+            platearcherarmor: 20,
             firepotion: 10,
-            pendant1: 1,
-            ring1: 1
+            pendant1: 5,
+            ring1: 5
         },
         hp: 300,
         armor: 1,
@@ -167,12 +166,12 @@ var Properties = {
     },
     eye: {
         drops: {
-            flask: 50,
-            bluesword: 19,
-            violetbow: 19,
+            flask: 40,
+            bluesword: 20,
+            violetbow: 20,
             firepotion: 10,
-            pendant1: 1,
-            ring1: 1
+            pendant1: 5,
+            ring1: 5
         },
         hp: 300,
         armor: 1,
@@ -181,11 +180,11 @@ var Properties = {
     spectre: {
         drops: {
             flask: 30,
-            redarmor: 19,
-            redarcherarmor: 19,
+            redarmor: 20,
+            redarcherarmor: 20,
             firepotion: 10,
-            pendant1: 1,
-            ring1: 1
+            pendant1: 10,
+            ring1: 10
         },
         hp: 300,
         armor: 1,
@@ -194,12 +193,12 @@ var Properties = {
     },
     deathknight: {
         drops: {
-            burger: 30,
-            redsword: 19,
-            deathbow: 19,
+            burger: 40,
+            redsword: 20,
+            deathbow: 20,
             firepotion: 10,
-            pendant1: 1,
-            ring1: 1
+            pendant1: 5,
+            ring1: 5
         },
         hp: 360,
         armor: 1,
@@ -207,7 +206,8 @@ var Properties = {
     },
     skeletonking: {
         drops: {
-            goldensword: 50,
+            goldensword: 25,
+            goldenarmor: 25,
             goldenarcherarmor: 25,
             goldenbow: 25
         },
@@ -217,12 +217,12 @@ var Properties = {
     },
     mimic: {
         drops: {
-            greenarmor: 10,
-            greenarcherarmor: 10,
+            greenarmor: 15,
+            greenarcherarmor: 15,
             burger: 30,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
         },
         hp: 540,
         armor: 1,
@@ -232,11 +232,11 @@ var Properties = {
     orc: {
         drops: {
             burger: 30,
-            greenarmor: 10,
-            greenarcherarmor: 10,
+            greenarmor: 15,
+            greenarcherarmor: 15,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 540,
@@ -246,11 +246,11 @@ var Properties = {
     oldogre: {
         drops: {
             burger: 30,
-            greenwingarmor: 10,
-            greenwingarcherarmor: 10,
+            greenwingarmor: 15,
+            greenwingarcherarmor: 15,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 700,
@@ -260,11 +260,11 @@ var Properties = {
     golem: {
         drops: {
             burger: 30,
-            greenwingarmor: 10,
-            greenwingarcherarmor: 10,
+            greenwingarmor: 15,
+            greenwingarcherarmor: 15,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 700,
@@ -277,8 +277,8 @@ var Properties = {
             sidesword: 10,
             watermelonbow: 10,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 600,
@@ -292,8 +292,8 @@ var Properties = {
             spear: 10,
             greenbow: 10,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 540,
@@ -303,11 +303,11 @@ var Properties = {
     brownmouse: {
         drops: {
             burger: 30,
-            guardarmor: 10,
-            guardarcherarmor: 10,
+            guardarmor: 15,
+            guardarcherarmor: 15,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 740,
@@ -317,11 +317,11 @@ var Properties = {
     redguard: {
         drops: {
             burger: 30,
-            redguardarmor: 10,
-            redguardarcherarmor: 10,
+            redguardarmor: 15,
+            redguardarcherarmor: 15,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 600,
@@ -334,8 +334,8 @@ var Properties = {
             scimitar: 10,
             redenelbow: 10,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 800,
@@ -346,11 +346,11 @@ var Properties = {
     infectedguard: {
         drops: {
             burger: 30,
-            whitearmor: 10,
-            whitearcherarmor: 10,
+            whitearmor: 15,
+            whitearcherarmor: 15,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 800,
@@ -360,11 +360,11 @@ var Properties = {
     livingarmor: {
         drops: {
             burger: 30,
-            whitearmor: 10,
-            whitearcherarmor: 10,
+            whitearmor: 15,
+            whitearcherarmor: 15,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 800,
@@ -375,11 +375,11 @@ var Properties = {
     whitemouse: {
         drops: {
             burger: 30,
-            ratarmor: 10,
-            ratarcherarmor: 10,
+            ratarmor: 15,
+            ratarcherarmor: 15,
             firepotion: 5,
-            sproutring: 1,
-            greenpendant: 1
+            sproutring: 5,
+            greenpendant: 5
 
         },
         hp: 900,
@@ -392,8 +392,8 @@ var Properties = {
             trident: 10,
             mermaidbow: 10,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1000,
@@ -407,8 +407,8 @@ var Properties = {
             bluescimitar: 10,
             seahorsebow: 10,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1000,
@@ -418,11 +418,11 @@ var Properties = {
     pirateskeleton: {
         drops: {
             burger: 30,
-            bluepiratearmor: 10,
-            piratearcherarmor: 10,
+            bluepiratearmor: 15,
+            piratearcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1000,
@@ -433,8 +433,8 @@ var Properties = {
         drops: {
             burger: 30,
             firepotion: 10,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1150,
@@ -444,11 +444,11 @@ var Properties = {
     penguin: {
         drops: {
             burger: 30,
-            cheoliarmor: 10,
-            cheoliarcherarmor: 10,
+            cheoliarmor: 15,
+            cheoliarcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1200,
@@ -459,8 +459,8 @@ var Properties = {
         drops: {
             burger: 30,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1300,
@@ -473,8 +473,8 @@ var Properties = {
             hammer: 10,
             hunterbow: 10,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1400,
@@ -484,11 +484,11 @@ var Properties = {
     darkskeleton: {
         drops: {
             burger: 30,
-            dovakinarmor: 5,
-            dovakinarcherarmor: 5,
+            dovakinarmor: 15,
+            dovakinarcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1500,
@@ -499,8 +499,8 @@ var Properties = {
         drops: {
             burger: 30,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1700,
@@ -510,11 +510,11 @@ var Properties = {
     greenpirateskeleton: {
         drops: {
             burger: 30,
-            gbwingarmor: 5,
-            gbwingarcherarmor: 5,
+            gbwingarmor: 15,
+            gbwingarcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1800,
@@ -524,11 +524,11 @@ var Properties = {
     blackpirateskeleton: {
         drops: {
             burger: 30,
-            gbwingarmor: 5,
-            gbwingarcherarmor: 5,
+            gbwingarmor: 15,
+            gbwingarcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 1900,
@@ -539,10 +539,10 @@ var Properties = {
         drops: {
             burger: 30,
             greenlightsaber: 5,
-            greenlightbow: 5,
+            greenlightbow: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 2000,
@@ -552,11 +552,11 @@ var Properties = {
     redpirateskeleton: {
         drops: {
             burger: 30,
-            gbwingarmor: 5,
-            gbwingarcherarmor: 5,
+            gbwingarmor: 15,
+            gbwingarcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 2100,
@@ -566,11 +566,11 @@ var Properties = {
     yellowpreta: {
         drops: {
             burger: 30,
-            redwingarmor: 5,
-            redwingarcherarmor: 5,
+            redwingarmor: 15,
+            redwingarcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 2200,
@@ -580,11 +580,11 @@ var Properties = {
     bluepreta: {
         drops: {
             burger: 30,
-            redwingarmor: 5,
-            redwingarcherarmor: 5,
+            redwingarmor: 15,
+            redwingarcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 2300,
@@ -594,11 +594,11 @@ var Properties = {
     miniknight: {
         drops: {
             burger: 30,
-            snowfoxarmor: 5,
-            snowfoxarcherarmor: 5,
+            snowfoxarmor: 15,
+            snowfoxarcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 2438,
@@ -608,10 +608,10 @@ var Properties = {
     wolf: {
         drops: {
             burger: 30,
-            wolfarmor: 5,
-            wolfarcherarmor: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            wolfarmor: 15,
+            wolfarcherarmor: 15,
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 2584,
@@ -622,10 +622,10 @@ var Properties = {
         drops: {
             burger: 30,
             skylightsaber: 5,
-            skylightbow: 5,
+            skylightbow: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 2739,
@@ -636,10 +636,10 @@ var Properties = {
         drops: {
             burger: 30,
             redlightsaber: 5,
-            redlightbow: 5,
+            redlightbow: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 2903,
@@ -649,11 +649,11 @@ var Properties = {
     zombie: {
         drops: {
             burger: 30,
-            bluewingarmor: 5,
-            bluewingarcherarmor: 5,
+            bluewingarmor: 15,
+            bluewingarcherarmor: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 3077,
@@ -663,11 +663,11 @@ var Properties = {
     piratecaptain: {
         drops: {
             burger: 30,
-            bastardsword: 5,
-            captainbow: 5,
+            bastardsword: 15,
+            captainbow: 15,
             firepotion: 5,
-            pearlring: 1,
-            pearlpendant: 1
+            pearlring: 5,
+            pearlpendant: 5
 
         },
         hp: 3201,
@@ -677,11 +677,11 @@ var Properties = {
     ironogre: {
         drops: {
             burger: 30,
-            fallenarmor: 5,
-            fallenarcherarmor: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            fallenarmor: 15,
+            fallenarcherarmor: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 3329,
@@ -691,11 +691,11 @@ var Properties = {
     ogrelord: {
         drops: {
             burger: 30,
-            redmetalsword: 5,
-            redmetalbow: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            redmetalsword: 15,
+            redmetalbow: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 3462,
@@ -705,11 +705,11 @@ var Properties = {
     crystalscolpion: {
         drops: {
             burger: 30,
-            crystalarmor: 5,
-            crystalarcherarmor: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            crystalarmor: 15,
+            crystalarcherarmor: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 3600,
@@ -719,13 +719,13 @@ var Properties = {
     eliminator: {
         drops: {
             burger: 30,
-            paladinarmor: 2,
-            legolasarmor: 2,
-            justicehammer: 2,
-            justicebow: 2,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            paladinarmor: 10,
+            legolasarmor: 10,
+            justicehammer: 10,
+            justicebow: 10,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 3744,
@@ -735,11 +735,11 @@ var Properties = {
     adherer: {
         drops: {
             burger: 30,
-            adhererrobe: 5,
-            adhererarcherarmor: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            adhererrobe: 10,
+            adhererarcherarmor: 10,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 3894,
@@ -749,12 +749,12 @@ var Properties = {
     miniiceknight: {
         drops: {
             burger: 30,
-            icerose: 5,
-            marinebow: 5,
-            rosebow: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            icerose: 10,
+            marinebow: 15,
+            rosebow: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 4050,
@@ -764,11 +764,11 @@ var Properties = {
     iceknight: {
         drops: {
             burger: 30,
-            schooluniform: 5,
-            archerschooluniform: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            schooluniform: 15,
+            archerschooluniform: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 4212,
@@ -779,10 +779,10 @@ var Properties = {
         drops: {
             burger: 30,
             halberd: 5,
-            crystalbow: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            crystalbow: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 4380,
@@ -791,27 +791,26 @@ var Properties = {
     },
     snowwolf: {
         drops: {
-            burger: 1,
-            leatherarmor: 95
-            /*taekwondo: 5,
+            burger: 10,
+            taekwondo: 5,
             combatuniform: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1*/
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
-        hp: 50,
+        hp: 12523,
         armor: 3,
         weapon: 1
     },
     cobra: {
         drops: {
             burger: 30,
-            whip: 5,
-            gaybow: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            whip: 15,
+            gaybow: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 4738,
@@ -821,11 +820,11 @@ var Properties = {
     darkogre: {
         drops: {
             burger: 30,
-            gayarmor: 5,
-            gayarcherarmor: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            gayarmor: 15,
+            gayarcherarmor: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 4927,
@@ -835,10 +834,10 @@ var Properties = {
     snowelf: {
         drops: {
             burger: 30,
-            ninjaarmor: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            ninjaarmor: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 5124,
@@ -848,11 +847,11 @@ var Properties = {
     forestdragon: {
         drops: {
             burger: 30,
-            forestguardiansword: 5,
-            forestbow: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            forestguardiansword: 15,
+            forestbow: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 5329,
@@ -863,9 +862,9 @@ var Properties = {
         drops: {
             burger: 30,
             beautifullife: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 5543,
@@ -875,10 +874,10 @@ var Properties = {
     whitebear: {
         drops: {
             burger: 30,
-            thiefarmor: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            thiefarmor: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 5764,
@@ -888,10 +887,10 @@ var Properties = {
     snowrabbit: {
         drops: {
             burger: 30,
-            rabbitarmor: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            rabbitarmor: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 5995,
@@ -902,10 +901,10 @@ var Properties = {
         drops: {
             burger: 30,
             sickle: 5,
-            sicklebow: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            sicklebow: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 6235,
@@ -915,10 +914,10 @@ var Properties = {
     darkregionillusion: {
         drops: {
             burger: 30,
-            portalarmor: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            portalarmor: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 6484,
@@ -929,9 +928,9 @@ var Properties = {
         drops: {
             burger: 30,
             ghostrider: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 6744,
@@ -942,10 +941,10 @@ var Properties = {
         drops: {
             burger: 30,
             plunger: 5,
-            bloodbow: 5,
-            royalazalea: 1,
-            spiritring: 1,
-            marblependant: 1
+            bloodbow: 15,
+            royalazalea: 5,
+            spiritring: 5,
+            marblependant: 5
 
         },
         hp: 6946,
@@ -956,9 +955,9 @@ var Properties = {
         drops: {
             burger: 30,
             redsickle: 5,
-            redsicklebow: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            redsicklebow: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 7154,
         armor: 1,
@@ -968,8 +967,8 @@ var Properties = {
         drops: {
             burger: 30,
             daywalker: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 7369,
         armor: 1,
@@ -978,9 +977,9 @@ var Properties = {
     frostqueen: {
         drops: {
             burger: 30,
-            frostarmor: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            frostarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 7590,
         armor: 1,
@@ -989,9 +988,9 @@ var Properties = {
     darkregion: {
         drops: {
             burger: 30,
-            regionarmor: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            regionarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 7818,
         armor: 1,
@@ -1001,8 +1000,8 @@ var Properties = {
         drops: {
             burger: 30,
             purplecloudkallege: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 8052,
         armor: 1,
@@ -1013,8 +1012,8 @@ var Properties = {
             burger: 30,
             searage: 3,
             seadragonarmor: 3,
-            royalazalea: 1,
-            essentialrage: 1
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 8294,
         armor: 1,
@@ -1023,9 +1022,9 @@ var Properties = {
     shadowregion: {
         drops: {
             burger: 30,
-            shadowregionarmor: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            shadowregionarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 8543,
         armor: 1,
@@ -1035,8 +1034,8 @@ var Properties = {
         drops: {
             burger: 30,
             pirateking: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 8799,
         armor: 1,
@@ -1046,8 +1045,8 @@ var Properties = {
         drops: {
             burger: 30,
             breaker: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 9063,
         armor: 1,
@@ -1058,8 +1057,8 @@ var Properties = {
             burger: 30,
             enelarmor: 3,
             eneltrident: 3,
-            royalazalea: 1,
-            essentialrage: 1
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 9426,
         armor: 1,
@@ -1068,9 +1067,9 @@ var Properties = {
     minidragon: {
         drops: {
             burger: 30,
-            dragonarmor: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            dragonarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 9803,
         armor: 1,
@@ -1079,9 +1078,9 @@ var Properties = {
     miniseadragon: {
         drops: {
             burger: 30,
-            miniseadragonarmor: 5,
-            royalazalea: 1,
-            essentialrage: 1
+            miniseadragonarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 10195,
         armor: 1,
@@ -1090,9 +1089,9 @@ var Properties = {
     miniemperor: {
         drops: {
             burger: 30,
-            huniarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            huniarmor: 20,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 10603,
         armor: 1,
@@ -1101,9 +1100,9 @@ var Properties = {
     slime: {
         drops: {
             burger: 30,
-            rainbowsword: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            rainbowsword: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 11027,
         armor: 1,
@@ -1112,9 +1111,9 @@ var Properties = {
     kaonashi: {
         drops: {
             burger: 30,
-            damboarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            damboarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 11468,
         armor: 1,
@@ -1123,9 +1122,9 @@ var Properties = {
     windguardian: {
         drops: {
             burger: 30,
-            typhoon: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            typhoon: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 11926,
         armor: 1,
@@ -1134,9 +1133,9 @@ var Properties = {
     squid: {
         drops: {
             burger: 30,
-            squidarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            squidarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 12404,
         armor: 1,
@@ -1146,8 +1145,8 @@ var Properties = {
         drops: {
             burger: 30,
             memme: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 12900,
         armor: 1,
@@ -1156,9 +1155,9 @@ var Properties = {
     bee: {
         drops: {
             burger: 30,
-            beearmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            beearmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 13416,
         armor: 1,
@@ -1167,9 +1166,9 @@ var Properties = {
     ant: {
         drops: {
             burger: 30,
-            bluedamboarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            bluedamboarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 13952,
         armor: 1,
@@ -1178,9 +1177,9 @@ var Properties = {
     rudolf: {
         drops: {
             burger: 30,
-            rudolfarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            rudolfarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 14510,
         armor: 1,
@@ -1189,9 +1188,9 @@ var Properties = {
     santaelf: {
         drops: {
             burger: 30,
-            candybar: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            candybar: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 15091,
         armor: 1,
@@ -1200,9 +1199,9 @@ var Properties = {
     santa: {
         drops: {
             burger: 30,
-            christmasarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            christmasarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 15695,
         armor: 1,
@@ -1211,9 +1210,9 @@ var Properties = {
     soldierant: {
         drops: {
             burger: 30,
-            robocoparmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            robocoparmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 16118,
         armor: 1,
@@ -1222,9 +1221,9 @@ var Properties = {
     redcockroach: {
         drops: {
             burger: 30,
-            pinkcockroacharmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            pinkcockroacharmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 16554,
         armor: 1,
@@ -1233,9 +1232,9 @@ var Properties = {
     bluecockroach: {
         drops: {
             burger: 30,
-            cockroachsuit: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            cockroachsuit: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 17000,
         armor: 1,
@@ -1244,9 +1243,9 @@ var Properties = {
     soybeanbug: {
         drops: {
             burger: 30,
-            butcherknife: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            butcherknife: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 17460,
         armor: 1,
@@ -1255,9 +1254,9 @@ var Properties = {
     earthworm: {
         drops: {
             burger: 30,
-            dinosaurarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            dinosaurarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 17931,
         armor: 1,
@@ -1266,9 +1265,9 @@ var Properties = {
     cat: {
         drops: {
             burger: 30,
-            catarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            catarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 18415,
         armor: 1,
@@ -1277,9 +1276,9 @@ var Properties = {
     firespider: {
         drops: {
             burger: 30,
-            fireshot: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            fireshot: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 18747,
         armor: 1,
@@ -1288,9 +1287,9 @@ var Properties = {
     snowman: {
         drops: {
             burger: 30,
-            snowmanarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            snowmanarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 19428,
         armor: 1,
@@ -1299,9 +1298,9 @@ var Properties = {
     queenant: {
         drops: {
             burger: 30,
-            comb: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            comb: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 20133,
         armor: 1,
@@ -1310,9 +1309,9 @@ var Properties = {
     beetle: {
         drops: {
             burger: 30,
-            beetlearmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            beetlearmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 20496,
         armor: 1,
@@ -1321,10 +1320,10 @@ var Properties = {
     hongcheol: {
         drops: {
             burger: 30,
-            hongcheolarmor: 2,
-            squeakyhammer: 2,
-            royalazalea: 1,
-            essentialrage: 1
+            hongcheolarmor: 15,
+            squeakyhammer: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 20865,
         armor: 1,
@@ -1333,9 +1332,9 @@ var Properties = {
     blazespider: {
         drops: {
             burger: 30,
-            fireplay: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            fireplay: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 21240,
         armor: 1,
@@ -1344,9 +1343,9 @@ var Properties = {
     whitetiger: {
         drops: {
             burger: 30,
-            tigerarmor: 4,
-            royalazalea: 1,
-            essentialrage: 1
+            tigerarmor: 15,
+            royalazalea: 5,
+            essentialrage: 5
         },
         hp: 21622,
         armor: 1,
@@ -1355,9 +1354,9 @@ var Properties = {
     blackwizard: {
         drops: {
             burger: 30,
-            weastaff: 2,
+            weastaff: 15,
             wizardrobe: 2,
-            royalazalea: 1
+            royalazalea: 5
         },
         hp: 22012,
         armor: 1,
@@ -1366,8 +1365,8 @@ var Properties = {
     smalldevil: {
         drops: {
             burger: 30,
-            ironknightarmor: 4,
-            royalazalea: 1
+            ironknightarmor: 15,
+            royalazalea: 5
         },
         hp: 22408,
         armor: 1,
@@ -1377,8 +1376,8 @@ var Properties = {
     pierrot: {
         drops: {
             burger: 30,
-            evilarmor: 4,
-            royalazalea: 1
+            evilarmor: 15,
+            royalazalea: 5
         },
         hp: 22811,
         armor: 1,
@@ -1387,8 +1386,8 @@ var Properties = {
     mantis: {
         drops: {
             burger: 30,
-            pinksword: 3,
-            royalazalea: 1
+            pinksword: 15,
+            royalazalea: 5
         },
         hp: 23195,
         armor: 1,
@@ -1397,8 +1396,8 @@ var Properties = {
     poisonspider: {
         drops: {
             burger: 30,
-            greendamboarmor: 3,
-            royalazalea: 1
+            greendamboarmor: 15,
+            royalazalea: 5
         },
         hp: 23980,
         armor: 1,
@@ -1407,7 +1406,7 @@ var Properties = {
     babyspider: {
         drops: {
             burger: 30,
-            royalazalea: 1
+            royalazalea: 5
         },
         hp: 7590,
         armor: 1,
@@ -1416,8 +1415,8 @@ var Properties = {
     queenspider: {
         drops: {
             burger: 30,
-            reddamboarmor: 3,
-            royalazalea: 1
+            reddamboarmor: 15,
+            royalazalea: 5
         },
         hp: 24793,
         armor: 1,
@@ -1426,8 +1425,8 @@ var Properties = {
     skydinosaur: {
         drops: {
             burger: 30,
-            conferencecall: 3,
-            royalazalea: 1
+            conferencecall: 15,
+            royalazalea: 5
         },
         hp: 25633,
         armor: 1,
@@ -1436,8 +1435,8 @@ var Properties = {
     cactus: {
         drops: {
             burger: 30,
-            cactusaxe: 3,
-            royalazalea: 1
+            cactusaxe: 15,
+            royalazalea: 5
         },
         hp: 26502,
         armor: 1,
@@ -1446,9 +1445,9 @@ var Properties = {
     devilkazya: {
         drops: {
             burger: 30,
-            devilkazyaarmor: 2,
-            devilkazyasword: 2,
-            royalazalea: 1
+            devilkazyaarmor: 15,
+            devilkazyasword: 15,
+            royalazalea: 5
         },
         hp: 27399,
         armor: 1,
@@ -1457,8 +1456,8 @@ var Properties = {
     cursedjangseung: {
         drops: {
             burger: 30,
-            bridalmask: 3,
-            royalazalea: 1
+            bridalmask: 15,
+            royalazalea: 5
         },
         hp: 28328,
         armor: 1,
@@ -1467,8 +1466,8 @@ var Properties = {
     suicideghost: {
         drops: {
             burger: 30,
-            bamboospear: 3,
-            royalazalea: 1
+            bamboospear: 15,
+            royalazalea: 5
         },
         hp: 29288,
         armor: 1,
@@ -1477,8 +1476,8 @@ var Properties = {
     hellspider: {
         drops: {
             burger: 30,
-            blackspiderarmor: 3,
-            royalazalea: 1
+            blackspiderarmor: 15,
+            royalazalea: 5
         },
         hp: 30280,
         armor: 1,
@@ -1487,8 +1486,8 @@ var Properties = {
     frog: {
         drops: {
             burger: 30,
-            frogarmor: 2,
-            royalazalea: 1
+            frogarmor: 15,
+            royalazalea: 5
         },
         hp: 31306,
         armor: 1,
@@ -1497,8 +1496,8 @@ var Properties = {
     cursedhahoemask: {
         drops: {
             burger: 30,
-            paewoldo: 2,
-            royalazalea: 1
+            paewoldo: 15,
+            royalazalea: 5
         },
         hp: 32367,
         armor: 1,
@@ -1507,8 +1506,8 @@ var Properties = {
     jirisanmoonbear: {
         drops: {
             burger: 30,
-            bearseonbiarmor: 2,
-            royalazalea: 1
+            bearseonbiarmor: 15,
+            royalazalea: 5
         },
         hp: 33763,
         armor: 1,

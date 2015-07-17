@@ -534,7 +534,7 @@ var kinds = {
     yellowfish:         [Types.Entities.YELLOWFISH,          "mob", 8, 5],
     skeleton:           [Types.Entities.SKELETON ,           "mob", 15, 8],
     greenfish:          [Types.Entities.GREENFISH,           "mob", 15, 8],
-    snek:               [Types.Entities.SNEK,               "mob", 25, 10],
+    snek:               [Types.Entities.SNEK,                "mob", 25, 10],
     redfish:            [Types.Entities.REDFISH,             "mob", 25, 10],
     ogre:               [Types.Entities.OGRE,                "mob", 27, 12],
     clam:               [Types.Entities.CLAM,                "mob", 27, 12],
@@ -585,7 +585,7 @@ var kinds = {
     miniiceknight:      [Types.Entities.MINIICEKNIGHT,       "mob", 7387, 144],
     iceknight:          [Types.Entities.ICEKNIGHT,           "mob", 8791, 148],
     icegolem:           [Types.Entities.ICEGOLEM,            "mob", 10461, 152],
-    snowwolf:           [Types.Entities.SNOWWOLF,            "mob", 12, 4],
+    snowwolf:           [Types.Entities.SNOWWOLF,            "mob", 12523, 154],
     cobra:              [Types.Entities.COBRA,               "mob", 14815, 160],
     darkogre:           [Types.Entities.DARKOGRE,            "mob", 17629, 164],
     snowelf:            [Types.Entities.SNOWELF,             "mob", 20979, 168],
@@ -925,6 +925,88 @@ var kinds = {
     //gayarmor: [Types.Entities.GAYARMOR, "armor", 0, 0, "게이 갑옷", "Sadist Armor"],
 
 };
+/*
+Types.Entities.WOODENBOW,
+ Types.Entities.PLASTICBOW,
+ Types.Entities.IRONBOW,
+ Types.Entities.REDBOW,
+ Types.Entities.VIOLETBOW,
+ Types.Entities.DEATHBOW,
+ Types.Entities.GOLDENBOW,
+ Types.Entities.WATERMELONBOW,
+ Types.Entities.GREENBOW,
+ Types.Entities.REDENELBOW,
+ Types.Entities.MERMAIDBOW,
+ Types.Entities.SEAHORSEBOW,
+ Types.Entities.HUNTERBOW,
+ Types.Entities.GREENLIGHTBOW,
+ Types.Entities.SKYLIGHTBOW,
+ Types.Entities.REDLIGHTBOW,
+ Types.Entities.CAPTAINBOW,
+ Types.Entities.REDMETALBOW,
+ Types.Entities.JUSTICEBOW,
+ Types.Entities.ROSEBOW,
+ Types.Entities.MARINEBOW,
+ Types.Entities.CRYSTALBOW,
+ Types.Entities.GAYBOW,
+ Types.Entities.FORESTBOW,
+ Types.Entities.SICKLEBOW,
+ Types.Entities.BLOODBOW,
+ Types.Entities.REDSICKLEBOW
+ */
+/*Types.mixedWeapons = [
+    Types.Entities.SWORD1,
+    Types.Entities.SWORD2,
+    Types.Entities.AXE,
+    Types.Entities.MORNINGSTAR,
+    Types.Entities.BLUESWORD,
+    Types.Entities.REDSWORD,
+    Types.Entities.GOLDENSWORD,
+    Types.Entities.SIDESWORD,
+    Types.Entities.SPEAR,
+    Types.Entities.SCIMITAR,
+    Types.Entities.TRIDENT,
+    Types.Entities.BLUESCIMITAR,
+    Types.Entities.HAMMER,
+    Types.Entities.GREENLIGHTSABER,
+    Types.Entities.SKYLIGHTSABER,
+    Types.Entities.REDLIGHTSABER,
+    Types.Entities.BASTARDSWORD,
+    Types.Entities.REDMETALSWORD,
+    Types.Entities.JUSTICEHAMMER,
+    Types.Entities.ROSE,
+    Types.Entities.ICEROSE,
+    Types.Entities.HALBERD,
+    Types.Entities.WHIP,
+    Types.Entities.FORESTGUARDIANSWORD,
+    Types.Entities.SICKLE,
+    Types.Entities.PLUNGER,
+    Types.Entities.REDSICKLE,
+    Types.Entities.DAYWALKER,
+    Types.Entities.PURPLECLOUDKALLEGE,
+    Types.Entities.SEARAGE,
+    Types.Entities.BREAKER,
+    Types.Entities.ENELTRIDENT,
+    Types.Entities.RAINBOWSWORD,
+    Types.Entities.TYPHOON,
+    Types.Entities.MEMME,
+    Types.Entities.CANDYBAR,
+    Types.Entities.BUTCHERKNIFE,
+    Types.Entities.FIRESHOT,
+    Types.Entities.COMB,
+    Types.Entities.SQUEAKYHAMMER,
+    Types.Entities.FIREPLAY,
+    Types.Entities.WEASTAFF,
+    Types.Entities.PINKSWORD,
+    Types.Entities.CONFERENCECALL,
+    Types.Entities.CACTUSAXE,
+    Types.Entities.DEVILKAZYASWORD,
+    Types.Entities.BAMBOOSPEAR,
+    Types.Entities.PAEWOLDO,
+    Types.Entities.MAGICSPEAR,
+    Types.Entities.FIRESWORD
+];
+Types.mixedArmours = [];*/
 
 Types.rankedWeapons = [
     Types.Entities.SWORD1,
@@ -1179,24 +1261,31 @@ Types.expForLevel = [
     68574961, 71639296, 74805201, 78074896, 81450625,
     84934656, 88529281, 92236816, 96059601, 100000000, // 150
 
-    130000000, 169000000// 165
 ];
 
 Types.getLevel = function(exp){
     var i=1;
-    for(i=1; i<165; i++){
+    for(i=1; i<150; i++){
         if(exp < Types.expForLevel[i]){
             return i;
         }
     }
-    return 165;
+    return 150;
 };
 Types.getWeaponRank = function(weaponKind) {
-    return _.indexOf(Types.rankedWeapons, weaponKind);
+    if(Types.isWeapon(weaponKind)){
+        return _.indexOf(Types.rankedWeapons, weaponKind);
+    } else{
+        return _.indexOf(Types.rankedArcherWeapons, weaponKind);
+    }
 };
 
 Types.getArmorRank = function(armorKind) {
-    return _.indexOf(Types.rankedArmors, armorKind);
+    if(Types.isArmor(armorKind)){
+        return _.indexOf(Types.rankedArmors, armorKind);
+    } else{
+        return _.indexOf(Types.rankedArcherArmors, armorKind);
+    }
 };
 
 Types.getPendantRank = function(pendantKind) {

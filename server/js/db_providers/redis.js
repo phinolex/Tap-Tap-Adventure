@@ -12,7 +12,7 @@ var cls = require("../lib/class"),
 module.exports = DatabaseHandler = cls.Class.extend({
     init: function(config){
         client = redis.createClient(config.redis_port, config.redis_host, {socket_nodelay: true});
-        client.auth("klhjkHGBmnvzZXZXZhsdfsd66-124&^^%$^@--fbkbgdJGBGBG04y1bVXVXVXp49xk!i24");
+        client.auth("ki24SimpleYetMisleading009109256256");
     },
     loadPlayer: function(player) {
         var self = this;

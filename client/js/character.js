@@ -17,7 +17,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             this.moveSpeed = 120;
             this.walkSpeed = 100;
             this.idleSpeed = 450;
-            this.setAttackRate(1000);
+            this.setAttackRate(800);
 
             // Pathing
             this.movement = new Transition();
@@ -108,7 +108,6 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         hit: function(orientation) {
             this.setOrientation(orientation);
             this.animate("atk", this.atkSpeed, 1);
-            this.stop();
         },
 
         walk: function(orientation) {
@@ -359,13 +358,11 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             this.setTarget(character);
             this.follow(character);
         },
-
         disengage: function() {
             this.attackingMode = false;
             this.followingMode = false;
             this.removeTarget();
         },
-
         /**
          * Returns true if the character is currently attacking.
          */
@@ -532,7 +529,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             return false;
         },
 
-        atkTarget: function() {
+        canReachTarget: function() {
             if(this.atkRange > 1){
                 if(this.hasTarget() && this.getDistanceToEntity(this.target) < this.atkRange) {
                     return true;
@@ -544,6 +541,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             }
             return false;
         },
+
 
         /**
          *

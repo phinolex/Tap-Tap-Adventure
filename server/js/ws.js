@@ -115,13 +115,13 @@ WS.WebsocketServer = Server.extend({
                 String.prototype.startsWith = function( str ) {
                     return str.length > 0 && this.substring( 0, str.length ) === str;
                 };
-            };
+            }
 
             if ( typeof String.prototype.endsWith !== 'function' ) {
                 String.prototype.endsWith = function( str ) {
                     return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
                 };
-            };
+            }
             // Generate (on the fly) the pages needing special treatment
             app.use(function handleDynamicPageRequests(request, response) {
                 var path = url.parse(request.url).pathname;
@@ -177,7 +177,7 @@ WS.WebsocketServer = Server.extend({
                         var newConfig = {
                             host: newHost,
                             port: newPort,
-                            dispatcher: false
+                            dispatcher: true
                         };
 
                         // Make it JSON

@@ -338,7 +338,8 @@ module.exports = World = cls.Class.extend({
                             self.outgoingQueues[id] = [];
                             //log.info("Sent ID: " + id + " successfully.");
                         } else {
-                            //log.info("Null Connection: Skipping");
+                            delete self.server.getConnection(id);
+                            
                         }
                     }
                 }
@@ -596,12 +597,12 @@ module.exports = World = cls.Class.extend({
 
     handleHurtEntity: function(entity, attacker, damage) {
         var self = this;
-        
+
         if(entity.type === 'player') {
             // A player is only aware of his own hitpoints
             this.pushToPlayer(entity, entity.health());
         }
-        
+
         if(entity.type === 'mob') {
             // Let the mob's attacker (player) know how much damage was inflicted
             this.pushToPlayer(attacker, new Messages.Damage(entity, damage, entity.hitPoints, entity.maxHitPoints));
@@ -616,11 +617,11 @@ module.exports = World = cls.Class.extend({
                 var mainTanker = this.getEntityById(mob.getMainTankerId());
 
                 if(mainTanker && mainTanker instanceof Player){
-                  mainTanker.incExp(Types.getMobExp(mob.kind));
-                  this.pushToPlayer(mainTanker, new Messages.Kill(mob, mainTanker.level, mainTanker.experience));
+                    mainTanker.incExp(Types.getMobExp(mob.kind));
+                    this.pushToPlayer(mainTanker, new Messages.Kill(mob, mainTanker.level, mainTanker.experience));
                 } else{
-                  attacker.incExp(Types.getMobExp(mob.kind));
-                  this.pushToPlayer(attacker, new Messages.Kill(mob, attacker.level, attacker.experience));
+                    attacker.incExp(Types.getMobExp(mob.kind));
+                    this.pushToPlayer(attacker, new Messages.Kill(mob, attacker.level, attacker.experience));
                 }
 
                 this.pushToAdjacentGroups(mob.group, mob.despawn()); // Despawn must be enqueued before the item drop
@@ -634,10 +635,11 @@ module.exports = World = cls.Class.extend({
                 this.handlePlayerVanish(entity);
                 this.pushToAdjacentGroups(entity.group, entity.despawn());
             }
-    
+
             this.removeEntity(entity);
         }
     },
+
 
     despawn: function(entity) {
         this.pushToAdjacentGroups(entity.group, entity.despawn());
