@@ -781,7 +781,7 @@ footer, header, hgroup, menu, nav, section {
     }
     #healthtext, #manatext {
         position: absolute;
-        top: 3.25px;
+        top: 4.25px;
         left: 0px;
         width: 88px;
         height: 13px;

@@ -173,6 +173,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
     var initGame = function() {
         require(['game', 'button2'], function(Game, Button2) {
 
+
+
             var canvas = document.getElementById("entities"),
                 background = document.getElementById("background"),
                 foreground = document.getElementById("foreground"),
@@ -578,30 +580,32 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         });
                         return false;
                         //use E and F for arrow keys and E F for WSAD
-                    } 
-                    if((key === 49 || key === 50) && game.started){ // 1, 2 for now
-                        game.keyDown(key);
-                        return false;
-                   
-                    } else if(key === 107 && game.started){ // +
-                        game.chathandler.incChatWindow();
-                    } else if(key === 109 && game.started){ // -
-                        game.chathandler.decChatWindow();
-                    } else if([81, 69, 82, 84, 89].indexOf(key) >= 0 && game.started) { // q, e, r, t, y
-                        game.player.skillHandler.execute(key);
-                        return false;
                     }
+                    if($('#chatinput:focus').size() == 0 && $('#nameinput:focus').size() == 0 && game.ready && !app.dropDialogPopuped && !game.statehandler.buyingArcher && !game.statehandler.changingPassword  && !game.shopHandler.shown && !game.storeDialog.visible) {
+                        if (key >= 49 && key <= 54) { // 1 to 6 for now
+                            game.keyDown(key);
+                            return false;
 
-                    // The following may be uncommented for debugging purposes.
-                    //
-                     if(key === 32 && game.started) { // Space
-                         game.togglePathingGrid();
-                         return false;
-                     }
-                     if(key === 70 && game.started) { // F
-                         game.toggleDebugInfo();
-                         return false;
-                     }
+                        } else if (key === 107) { // +
+                            game.chathandler.incChatWindow();
+                        } else if (key === 109) { // -
+                            game.chathandler.decChatWindow();
+                        } else if ([81, 69, 82, 84, 89].indexOf(key) >= 0) { // q, e, r, t, y
+                            game.player.skillHandler.execute(key);
+                            return false;
+                        }
+
+                        // The following may be uncommented for debugging purposes.
+                        //
+                        if (key === 32) { // Space
+                            game.togglePathingGrid();
+                            return false;
+                        }
+                        if (key === 70) { // F
+                            game.toggleDebugInfo();
+                            return false;
+                        }
+                    }
                 }
             });
 

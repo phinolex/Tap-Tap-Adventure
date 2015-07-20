@@ -591,8 +591,8 @@ var kinds = {
     snowelf:            [Types.Entities.SNOWELF,             "mob", 20979, 168],
     forestdragon:       [Types.Entities.FORESTDRAGON,        "mob", 24965, 113],
     pain:               [Types.Entities.PAIN,                "mob", 29459, 176],
-    whitebear:          [Types.Entities.WHITEBEAR,           "mob", 33878, 180],
-    snowrabbit:         [Types.Entities.SNOWRABBIT,          "mob", 38960, 184],
+    whitebear:          [Types.Entities.WHITEBEAR,           "mob", 30878, 180],
+    snowrabbit:         [Types.Entities.SNOWRABBIT,          "mob", 31960, 184],
     icevulture:         [Types.Entities.ICEVULTURE,          "mob", 40129, 188],
     darkregionillusion: [Types.Entities.DARKREGIONILLUSION,  "mob", 41333, 192],
     regionhenchman:     [Types.Entities.REGIONHENCHMAN,      "mob", 42573, 196],
@@ -616,7 +616,7 @@ var kinds = {
     squid:              [Types.Entities.SQUID,               "mob", 70256, 257],
     rhaphidophoridae:   [Types.Entities.RHAPHIDOPHORIDAE,    "mob", 72083, 260],
     bee:                [Types.Entities.BEE,                 "mob", 73957, 262],
-    ant:                [Types.Entities.ANT,                 "mob", 75880, 265],
+    ant:                [Types.Entities.ANT,                 "mob", 55880, 265],
     rudolf:             [Types.Entities.RUDOLF,              "mob", 77853, 267],
     santaelf:           [Types.Entities.SANTAELF,            "mob", 79877, 270],
     santa:              [Types.Entities.SANTA,               "mob", 81954, 272],
@@ -648,65 +648,65 @@ var kinds = {
     hellspider:         [Types.Entities.HELLSPIDER,          "mob", 139865,270],
     frog:               [Types.Entities.FROG,                "mob", 143157,356],
     cursedhahoemask:    [Types.Entities.CURSEDHAHOEMASK,     "mob", 146526,360],
-    jirisanmoonbear:    [Types.Entities.JIRISANMOONBEAR,     "mob", 150730,364],
+    jirisanmoonbear:    [Types.Entities.JIRISANMOONBEAR,     "mob", 250730,364],
 
-    woodenbow: [Types.Entities.WOODENBOW, "weapon", 0, 0, "Wooden Bow"],
-    plasticbow: [Types.Entities.PLASTICBOW, "weapon", 0, 0, "Plastic Bow"],
-    ironbow: [Types.Entities.IRONBOW, "weapon", 0, 0, "Iron Bow"],
-    redbow: [Types.Entities.REDBOW, "weapon", 0, 0, "Red Bow"],
-    violetbow: [Types.Entities.VIOLETBOW, "weapon", 0, 0, "Violet Bow"],
-    deathbow: [Types.Entities.DEATHBOW, "weapon", 0, 0, "Death Bow"],
-    goldenbow: [Types.Entities.GOLDENBOW, "weapon", 0, 0, "Golden Bow"],
-    watermelonbow: [Types.Entities.WATERMELONBOW, "weapon", 0, 0, "Watermelon Bow"],
-    greenbow: [Types.Entities.GREENBOW, "weapon", 0, 0, "Green Bow"],
-    redenelbow: [Types.Entities.REDENELBOW, "weapon", 0, 0, "Redenel Bow"],
-    mermaidbow: [Types.Entities.MERMAIDBOW, "weapon", 0, 0, "Mermaid Bow"],
-    seahorsebow: [Types.Entities.SEAHORSEBOW, "weapon", 0, 0, "Seahorse Bow"],
-    hunterbow: [Types.Entities.HUNTERBOW, "weapon", 0, 0, "Hunter Bow"],
-    greenlightbow: [Types.Entities.GREENLIGHTBOW, "weapon", 0, 0, "Green Light Bow"],
-    skylightbow: [Types.Entities.SKYLIGHTBOW, "weapon", 0, 0, "Sky Light Bow"],
-    redlightbow: [Types.Entities.REDLIGHTBOW, "weapon", 0, 0, "Red Light Bow"],
-    captainbow: [Types.Entities.CAPTAINBOW, "weapon", 0, 0, "Captain Bow"],
-    redmetalbow: [Types.Entities.REDMETALBOW, "weapon", 0, 0, "Red Metal Bow"],
-    marinebow: [Types.Entities.MARINEBOW, "weapon", 0, 0, "Marine Bow"],
-    justicebow: [Types.Entities.JUSTICEBOW, "weapon", 0, 0, "Justice Bow"],
-    rosebow: [Types.Entities.ROSEBOW, "weapon", 0, 0, "Rose Bow"],
-    crystalbow: [Types.Entities.CRYSTALBOW, "weapon", 0, 0, "Crystal Bow"],
-    gaybow: [Types.Entities.GAYBOW, "weapon", 0, 0, "Gay Bow"],
-    forestbow: [Types.Entities.FORESTBOW, "weapon", 0, 0, "Forest Bow"],
-    sicklebow: [Types.Entities.SICKLEBOW, "weapon", 0, 0, "Sickle Bow"],
-    bloodbow: [Types.Entities.BLOODBOW, "weapon", 0, 0, "Blood Bow"],
-    redsicklebow: [Types.Entities.REDSICKLEBOW, "weapon", 0, 0, "Red Sickle Bow"],
+    woodenbow: [Types.Entities.WOODENBOW, "archerweapon", 0, 0, "Wooden Bow"],
+    plasticbow: [Types.Entities.PLASTICBOW, "archerweapon", 0, 0, "Plastic Bow"],
+    ironbow: [Types.Entities.IRONBOW, "archerweapon", 0, 0, "Iron Bow"],
+    redbow: [Types.Entities.REDBOW, "archerweapon", 0, 0, "Red Bow"],
+    violetbow: [Types.Entities.VIOLETBOW, "archerweapon", 0, 0, "Violet Bow"],
+    deathbow: [Types.Entities.DEATHBOW, "archerweapon", 0, 0, "Death Bow"],
+    goldenbow: [Types.Entities.GOLDENBOW, "archerweapon", 0, 0, "Golden Bow"],
+    watermelonbow: [Types.Entities.WATERMELONBOW, "archerweapon", 0, 0, "Watermelon Bow"],
+    greenbow: [Types.Entities.GREENBOW, "archerweapon", 0, 0, "Green Bow"],
+    redenelbow: [Types.Entities.REDENELBOW, "archerweapon", 0, 0, "Redenel Bow"],
+    mermaidbow: [Types.Entities.MERMAIDBOW, "archerweapon", 0, 0, "Mermaid Bow"],
+    seahorsebow: [Types.Entities.SEAHORSEBOW, "archerweapon", 0, 0, "Seahorse Bow"],
+    hunterbow: [Types.Entities.HUNTERBOW, "archerweapon", 0, 0, "Hunter Bow"],
+    greenlightbow: [Types.Entities.GREENLIGHTBOW, "archerweapon", 0, 0, "Green Light Bow"],
+    skylightbow: [Types.Entities.SKYLIGHTBOW, "archerweapon", 0, 0, "Sky Light Bow"],
+    redlightbow: [Types.Entities.REDLIGHTBOW, "archerweapon", 0, 0, "Red Light Bow"],
+    captainbow: [Types.Entities.CAPTAINBOW, "archerweapon", 0, 0, "Captain Bow"],
+    redmetalbow: [Types.Entities.REDMETALBOW, "archerweapon", 0, 0, "Red Metal Bow"],
+    marinebow: [Types.Entities.MARINEBOW, "archerweapon", 0, 0, "Marine Bow"],
+    justicebow: [Types.Entities.JUSTICEBOW, "archerweapon", 0, 0, "Justice Bow"],
+    rosebow: [Types.Entities.ROSEBOW, "archerweapon", 0, 0, "Rose Bow"],
+    crystalbow: [Types.Entities.CRYSTALBOW, "archerweapon", 0, 0, "Crystal Bow"],
+    gaybow: [Types.Entities.GAYBOW, "archerweapon", 0, 0, "Gay Bow"],
+    forestbow: [Types.Entities.FORESTBOW, "archerweapon", 0, 0, "Forest Bow"],
+    sicklebow: [Types.Entities.SICKLEBOW, "archerweapon", 0, 0, "Sickle Bow"],
+    bloodbow: [Types.Entities.BLOODBOW, "archerweapon", 0, 0, "Blood Bow"],
+    redsicklebow: [Types.Entities.REDSICKLEBOW, "archerweapon", 0, 0, "Red Sickle Bow"],
 
 
 
-    archerarmor: [Types.Entities.ARCHERARMOR, "armor", 0, 0, "Archer Armour"],
-    leatherarcherarmor: [Types.Entities.LEATHERARCHERARMOR, "armor", 0, 0, "Leather Archer Armour"],
-    mailarcherarmor: [Types.Entities.MAILARCHERARMOR, "armor", 0, 0, "Mail Archer Armour"],
-    platearcherarmor: [Types.Entities.PLATEARCHERARMOR, "armor", 0, 0, "Plate Archer Armour"],
-    redarcherarmor: [Types.Entities.REDARCHERARMOR, "armor", 0, 0, "Red Archer Armour"],
-    goldenarcherarmor: [Types.Entities.GOLDENARCHERARMOR, "armor", 0, 0, "Golden Archer Armour"],
-    greenarcherarmor: [Types.Entities.GREENARCHERARMOR, "armor", 0, 0, "Green Archer Armour"],
-    greenwingarcherarmor: [Types.Entities.GREENWINGARCHERARMOR, "armor", 0, 0, "Green Wing Archer Armour"],
-    guardarcherarmor: [Types.Entities.GUARDARCHERARMOR, "armor", 0, 0, "Guard Archer Armour"],
-    redguardarcherarmor: [Types.Entities.REDGUARDARCHERARMOR, "armor", 0, 0, "Red Guard Archer Armour"],
-    whitearcherarmor: [Types.Entities.WHITEARCHERARMOR, "armor", 0, 0, "White Archer Armour"],
-    ratarcherarmor: [Types.Entities.RATARCHERARMOR, "armor", 0, 0, "Rat Archer Armour"],
-    piratearcherarmor: [Types.Entities.PIRATEARCHERARMOR, "armor", 0, 0, "Pirate Archer Armour"],
-    cheoliarcherarmor: [Types.Entities.CHEOLIARCHERARMOR, "armor", 0, 0, "Cheoli Archer Armour"],
-    dovakinarcherarmor: [Types.Entities.DOVAKINARCHERARMOR, "armor", 0, 0, "Dovakin Archer Armour"],
-    gbwingarcherarmor: [Types.Entities.GBWINGARCHERARMOR, "armor", 0, 0, "Wing Archer Armour"],
-    redwingarcherarmor: [Types.Entities.REDWINGARCHERARMOR, "armor", 0, 0, "Red Wing Archer Armour"],
-    snowfoxarcherarmor: [Types.Entities.SNOWFOXARCHERARMOR, "armor", 0, 0, "Snowfox Archer Armour"],
-    wolfarcherarmor: [Types.Entities.WOLFARCHERARMOR, "armor", 0, 0, "Wolf Archer Armour"],
-    bluewingarcherarmor: [Types.Entities.BLUEWINGARCHERARMOR, "armor", 0, 0, "Blue Wing Archer Armour"],
-    fallenarcherarmor: [Types.Entities.FALLENARCHERARMOR, "armor", 0, 0, "Fallen Archer Armour"],
-    crystalarcherarmor: [Types.Entities.CRYSTALARCHERARMOR, "armor", 0, 0, "Crystal Archer Armour"],
-    legolasarmor: [Types.Entities.LEGOLASARMOR, "armor", 0, 0, "Legolas Armour"],
-    adhererarcherarmor: [Types.Entities.ADHERERARCHERARMOR, "armor", 0, 0, "Adhere Archer Armour"],
-    archerschooluniform: [Types.Entities.ARCHERSCHOOLUNIFORM, "armor", 0, 0, "Archer School Uniform"],
-    combatuniform: [Types.Entities.COMBATUNIFORM, "armor", 0, 0, "Combat Uniform"],
-    gayarcherarmor: [Types.Entities.GAYARCHERARMOR, "armor", 0, 0, "Gay Archer Armour"],
+    archerarmor: [Types.Entities.ARCHERARMOR, "archerarmor", 0, 0, "Archer Armour"],
+    leatherarcherarmor: [Types.Entities.LEATHERARCHERARMOR, "archerarmor", 0, 0, "Leather Archer Armour"],
+    mailarcherarmor: [Types.Entities.MAILARCHERARMOR, "archerarmor", 0, 0, "Mail Archer Armour"],
+    platearcherarmor: [Types.Entities.PLATEARCHERARMOR, "archerarmor", 0, 0, "Plate Archer Armour"],
+    redarcherarmor: [Types.Entities.REDARCHERARMOR, "archerarmor", 0, 0, "Red Archer Armour"],
+    goldenarcherarmor: [Types.Entities.GOLDENARCHERARMOR, "archerarmor", 0, 0, "Golden Archer Armour"],
+    greenarcherarmor: [Types.Entities.GREENARCHERARMOR, "archerarmor", 0, 0, "Green Archer Armour"],
+    greenwingarcherarmor: [Types.Entities.GREENWINGARCHERARMOR, "archerarmor", 0, 0, "Green Wing Archer Armour"],
+    guardarcherarmor: [Types.Entities.GUARDARCHERARMOR, "archerarmor", 0, 0, "Guard Archer Armour"],
+    redguardarcherarmor: [Types.Entities.REDGUARDARCHERARMOR, "archerarmor", 0, 0, "Red Guard Archer Armour"],
+    whitearcherarmor: [Types.Entities.WHITEARCHERARMOR, "archerarmor", 0, 0, "White Archer Armour"],
+    ratarcherarmor: [Types.Entities.RATARCHERARMOR, "archerarmor", 0, 0, "Rat Archer Armour"],
+    piratearcherarmor: [Types.Entities.PIRATEARCHERARMOR, "archerarmor", 0, 0, "Pirate Archer Armour"],
+    cheoliarcherarmor: [Types.Entities.CHEOLIARCHERARMOR, "archerarmor", 0, 0, "Cheoli Archer Armour"],
+    dovakinarcherarmor: [Types.Entities.DOVAKINARCHERARMOR, "archerarmor", 0, 0, "Dovakin Archer Armour"],
+    gbwingarcherarmor: [Types.Entities.GBWINGARCHERARMOR, "archerarmor", 0, 0, "Wing Archer Armour"],
+    redwingarcherarmor: [Types.Entities.REDWINGARCHERARMOR, "archerarmor", 0, 0, "Red Wing Archer Armour"],
+    snowfoxarcherarmor: [Types.Entities.SNOWFOXARCHERARMOR, "archerarmor", 0, 0, "Snowfox Archer Armour"],
+    wolfarcherarmor: [Types.Entities.WOLFARCHERARMOR, "archerarmor", 0, 0, "Wolf Archer Armour"],
+    bluewingarcherarmor: [Types.Entities.BLUEWINGARCHERARMOR, "archerarmor", 0, 0, "Blue Wing Archer Armour"],
+    fallenarcherarmor: [Types.Entities.FALLENARCHERARMOR, "archerarmor", 0, 0, "Fallen Archer Armour"],
+    crystalarcherarmor: [Types.Entities.CRYSTALARCHERARMOR, "archerarmor", 0, 0, "Crystal Archer Armour"],
+    legolasarmor: [Types.Entities.LEGOLASARMOR, "archerarmor", 0, 0, "Legolas Armour"],
+    adhererarcherarmor: [Types.Entities.ADHERERARCHERARMOR, "archerarmor", 0, 0, "Adhere Archer Armour"],
+    archerschooluniform: [Types.Entities.ARCHERSCHOOLUNIFORM, "archerarmor", 0, 0, "Archer School Uniform"],
+    combatuniform: [Types.Entities.COMBATUNIFORM, "archerarmor", 0, 0, "Combat Uniform"],
+    gayarcherarmor: [Types.Entities.GAYARCHERARMOR, "archerarmor", 0, 0, "Gay Archer Armour"],
 
     sword1: [Types.Entities.SWORD1, "weapon", 0, 0, "Sword"],
     sword2: [Types.Entities.SWORD2, "weapon", 0, 0, "Big Sword"],
@@ -1217,60 +1217,65 @@ Types.rankedBoots = [
 
 Types.expForLevel = [
     1, 2, 5, 16, 39,
-    81, 150, 256, 410, 625, // 10
+    81, 150, 256, 410, 625,
 
     915, 1296, 1785, 2401, 3164,
-    4096, 5220, 6561, 8145, 10000, // 20
+    4096, 5220, 6561, 8145, 1e4,
 
     12155, 14641, 17490, 20736, 24414,
-    28561, 33215, 38416, 44205, 50625, // 30
+    28561, 33215, 38416, 44205, 50625,
 
     57720, 65536, 74120, 83521, 93789,
-    104976, 117135, 130321, 144590, 160000, // 40
+    104976, 117135, 130321, 144590, 16e4,
 
     176610, 194481, 213675, 234256, 256289,
-    279841, 304980, 331776, 360300, 390625, // 50
+    279841, 304980, 331776, 360300, 390625,
 
     422825, 456976, 493155, 531441, 571914,
-    614656, 659750, 707281, 757335, 810000, // 60
+    614656, 659750, 707281, 757335, 81e4,
 
     865365, 923521, 984560, 1048576, 1115664,
-    1185921, 1259445, 1336336, 1416695, 1500625, // 70
+    1185921, 1259445, 1336336, 1416695, 1500625,
 
     1588230, 1679616, 1774890, 1874161, 1977539,
-    2085136, 2197065, 2313441, 2434380, 2560000, // 80
+    2085136, 2197065, 2313441, 2434380, 256e4,
 
     2690420, 2825761, 2966145, 3111696, 3262539,
-    3418801, 3580610, 3748096, 3921390, 4100625, // 90
+    3418801, 3580610, 3748096, 3921390, 4100625,
 
     4285935, 4477456, 4675325, 4879681, 5090664,
-    5318416, 5553080, 5804801, 6083725, 6410000, // 100
+    5318416, 5553080, 5804801, 6083725, 641e4,
 
     6765201, 7311616, 7890481, 8503056, 9150625,
-    9834496, 10556001, 11316496, 12117361, 12960000, // 110
+    9834496, 10556001, 11316496, 12117361, 1296e4,
 
     13845841, 14776336, 15752961, 16777216, 17850625,
-    18974736, 20151121, 21381376, 22667121, 24010000, // 120
+    18974736, 20151121, 21381376, 22667121, 2401e4,
 
     25411681, 26873856, 28398241, 29986576, 31640625,
-    33362176, 35153041, 37015056, 38950081, 40960000, // 130
+    33362176, 35153041, 37015056, 38950081, 4096e4,
 
     43046721, 45212176, 47458321, 49787136, 52200625,
-    54700816, 57289761, 59969536, 62742241, 65610000, // 140
+    54700816, 57289761, 59969536, 62742241, 6561e4,
 
     68574961, 71639296, 74805201, 78074896, 81450625,
-    84934656, 88529281, 92236816, 96059601, 100000000, // 150
+    84934656, 88529281, 92236816, 96059601, 1e8,
+
+    13e7, 169e6, 2197e5, 28561e4, 371293e3,
+    482680900, 627485170, 815730721, 1060449937, 1378584918,
+
+    1792160393, 2329808510, 3028751063, 3937376382, 3937376383
 
 ];
 
 Types.getLevel = function(exp){
     var i=1;
-    for(i=1; i<150; i++){
+    for(i=1; i < 165; i++){
         if(exp < Types.expForLevel[i]){
             return i;
         }
     }
-    return 150;
+    return 165;
 };
 Types.getWeaponRank = function(weaponKind) {
     if(Types.isWeapon(weaponKind)){
@@ -1283,7 +1288,7 @@ Types.getWeaponRank = function(weaponKind) {
 Types.getArmorRank = function(armorKind) {
     if(Types.isArmor(armorKind)){
         return _.indexOf(Types.rankedArmors, armorKind);
-    } else{
+    } else {
         return _.indexOf(Types.rankedArcherArmors, armorKind);
     }
 };

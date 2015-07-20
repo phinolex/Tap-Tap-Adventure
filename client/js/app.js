@@ -328,16 +328,17 @@ define(['jquery', 'mob', 'item'], function($, Mob, Item) {
                 if(mouseover) el = '#inspector';
                 var sprite = target.sprite;
                 var x, y;
-                if(Types.isItem(target.kind)){
-                    x = ((sprite.animationData['idle'].length-1)*sprite.width),
-                        y = ((sprite.animationData['idle'].row)*sprite.height);
-                } else if(Types.isMob(target.kind)){
-                    x = ((sprite.animationData['idle_down'].length-1)*sprite.width),
-                        y = ((sprite.animationData['idle_down'].row)*sprite.height);
-                } else{
-                    return;
+                if (!self.game.renderer.isFirefox) {
+                    if (Types.isItem(target.kind)) {
+                        x = ((sprite.animationData['idle'].length - 1) * sprite.width),
+                            y = ((sprite.animationData['idle'].row) * sprite.height);
+                    } else if (Types.isMob(target.kind)) {
+                        x = ((sprite.animationData['idle_down'].length - 1) * sprite.width),
+                            y = ((sprite.animationData['idle_down'].row) * sprite.height);
+                    } else {
+                        return;
+                    }
                 }
-
                 $(el+' .name').text(name);
                 $(el+' .name').css('text-transform', 'capitalize');
 

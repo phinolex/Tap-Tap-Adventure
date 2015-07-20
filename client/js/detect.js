@@ -27,6 +27,10 @@ Detect.isChromeOnWindows = function() {
     return Detect.userAgentContains('Chrome') && Detect.userAgentContains('Windows');
 };
 
+Detect.isFirefox = function() {
+    return Detect.userAgentContains('Firefox');
+};
+
 Detect.canPlayMP3 = function() {
     return Modernizr.audio.mp3;
 };

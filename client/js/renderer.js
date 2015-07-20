@@ -24,11 +24,13 @@ function(Camera, Item, Character, Player, Timer) {
             
             this.upscaledRendering = this.context.mozImageSmoothingEnabled !== undefined;
             this.supportsSilhouettes = this.upscaledRendering;
+            this.isFirefox = Detect.isFirefox();
             this.rescale(this.getScaleFactor());
             this.lastTime = new Date();
             this.frameCount = 0;
             this.maxFPS = this.FPS;
             this.realFPS = 0;
+            this.fullscreen = false;
             
             //Turn on or off Debuginfo (FPS Counter)
             this.isDebugInfoVisible = false;

@@ -66,7 +66,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             var game = getGame(this);
             var sellPrice = Types.Store.getSellPrice(this.itemName);
             return Item.getInfoMsgEx(this.itemKind, this.itemCount, this.skillKind, this.skillLevel, game.language) +
-                (sellPrice > 0 ? '\r\n가격: 버거 ' + sellPrice + '개' : '\r\n팔 수 없는 장비입니다.')
+                (sellPrice > 0 ? '\r\nPrice: ' + sellPrice + 'Burgers' : '\r\nCan not sell equipment..')
         },
 
         assign: function(itemKind, itemCount, skillKind, skillLevel) {
@@ -129,7 +129,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                 if(self.selectedInventory) {
                     var game = getGame(self);
                     if(game && game.ready) {
-                        self.parent.confirm('정말로 파시겠습니까?', function(result) {
+                        self.parent.confirm('Are you sure?', function(result) {
                             if(result) {
                                 game.client.sendStoreSell(self.selectedInventory.getIndex());
                                 self.release();
@@ -285,7 +285,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                 'text-align': 'center',
                 'cursor': 'pointer'
             });
-            this.buyButton.text('사기');
+            this.buyButton.text('Buy');
 
             var self = this;
 

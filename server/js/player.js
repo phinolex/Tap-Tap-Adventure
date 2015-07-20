@@ -410,9 +410,7 @@ module.exports = Player = Character.extend({
         });
 
         this.connection.onClose(function() {
-            if(self.firepotionTimeout) {
-                clearTimeout(self.firepotionTimeout);
-            }
+
             clearTimeout(self.disconnectTimeout);
             if(self.exit_callback) {
                 self.exit_callback();
@@ -437,21 +435,21 @@ module.exports = Player = Character.extend({
                 return;
             } else if(this.achievement[102].found){
                 if(this.achievement[102].progress < 999){
-                    this._questAboutKill(mob.kind, 0, 102, 100, function(){
+                    this._questAboutKill(mob.kind, 0, 102, 50, function(){
                         log.info("Quest 102 Completed");
                         self.inventory.putInventory(Types.Entities.BURGER, 100, 0, 0);
                     });
                     return;
                 } else if(this.achievement[103].found){
                     if(this.achievement[103].progress < 999){
-                        this._questAboutKill(mob.kind, 0, 103, 200, function(){
+                        this._questAboutKill(mob.kind, 0, 103, 100, function(){
                             log.info("Quest 103 Completed");
                             self.inventory.putInventory(Types.Entities.ROYALAZALEA, 50, 0, 0);
                         });
                         return;
                     } else if(this.achievement[104].found){
                         if(this.achievement[104].progress < 999){
-                            this._questAboutKill(mob.kind, 0, 104, 500, function(){
+                            this._questAboutKill(mob.kind, 0, 104, 200, function(){
                                 log.info("Quest 104 Completed");
                                 self.inventory.putInventory(Types.Entities.SNOWPOTION, 1, 0, 0);
                             });
@@ -1140,7 +1138,7 @@ module.exports = Player = Character.extend({
                         inventoryNumber2 = this.inventory.getEmptyInventoryNumber();
                     }
                     if(inventoryNumber2 < 0) {
-                        this.server.pushToPlayer(this, new Messages.Notify("인벤토리에 공간이 부족 합니다."));
+                        this.server.pushToPlayer(this, new Messages.Notify("Not enough space in your inventory."));
                         return;
                     }
                     this.inventory.makeEmptyInventory(inventoryNumber1);
@@ -1175,7 +1173,7 @@ module.exports = Player = Character.extend({
                 }
                 burgerCount = this.inventory.getItemNumber(Types.Entities.BURGER);
                 if(burgerCount < price) {
-                    this.server.pushToPlayer(this, new Messages.Notify("버거가 부족 합니다."));
+                    this.server.pushToPlayer(this, new Messages.Notify("You don't have enough Burgers."));
                     return;
                 }
 
@@ -1183,7 +1181,7 @@ module.exports = Player = Character.extend({
                     this.inventory.putInventory(itemKind, Types.Store.getBuyCount(itemName) * itemCount, 0, 0);
                     this.inventory.putInventory(Types.Entities.BURGER, -1 * price, 0, 0);
                 } else {
-                    this.server.pushToPlayer(this, new Messages.Notify("인벤토리에 빈 칸이 없습니다."));
+                    this.server.pushToPlayer(this, new Messages.Notify("There is not enough space in your inventory."));
                 }
             }
         }
@@ -1311,12 +1309,12 @@ module.exports = Player = Character.extend({
     },
     handleInventoryPendant: function(itemKind, inventoryNumber){
         if(!Types.isPendant(itemKind)) {
-            this.server.pushToPlayer(this, new Messages.Notify("펜던트가 아닙니다.."));
+            this.server.pushToPlayer(this, new Messages.Notify("This isn't a pendant.."));
             return;
         }
         var pendantLevel = Properties.getPendantLevel(itemKind);
         if((pendantLevel * 10) > this.level) {
-            this.server.pushToPlayer(this, new Messages.Notify("" + pendantLevel + "레벨 펜던트는 " + (pendantLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + (pendantLevel * 10) + " to equip this."));
             return;
         }
         var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
@@ -1334,12 +1332,12 @@ module.exports = Player = Character.extend({
     },
     handleInventoryRing: function(itemKind, inventoryNumber){
         if(!Types.isRing(itemKind)) {
-            this.server.pushToPlayer(this, new Messages.Notify("반지가 아닙니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("This is not a ring."));
             return;
         }
         var ringLevel = Properties.getRingLevel(itemKind);
         if((ringLevel * 10) > this.level) {
-            this.server.pushToPlayer(this, new Messages.Notify("" + ringLevel + "레벨 반지는 " + (ringLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + (ringLevel * 10) + " to equip this."));
             return;
         }
         var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
@@ -1357,12 +1355,12 @@ module.exports = Player = Character.extend({
     },
     handleInventoryBoots: function(itemKind, inventoryNumber){
         if(!Types.isBoots(itemKind)) {
-            this.server.pushToPlayer(this, new Messages.Notify("부츠가 아닙니다.."));
+            this.server.pushToPlayer(this, new Messages.Notify("These are not boots.."));
             return;
         }
         var bootsLevel = Properties.getBootsLevel(itemKind);
         if((bootsLevel * 10) > this.level) {
-            this.server.pushToPlayer(this, new Messages.Notify("" + bootsLevel + "레벨 부츠는 " + (bootsLevel * 10) + "레벨 이상만 착용할 수 있습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + (bootsLevel * 10) + " to equop this."));
             return;
         }
 
@@ -1441,16 +1439,16 @@ module.exports = Player = Character.extend({
     },
     handleInventoryEnchantWeapon: function(itemKind, inventoryNumber){
         if(itemKind !== Types.Entities.SNOWPOTION){
-            this.server.pushToPlayer(this, new Messages.Notify("스노우포션이 아닙니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("This isn't a snowpotion."));
             return;
         }
         if(this.weaponEnchantedPoint + this.weaponSkillLevel>= 30){
-            this.server.pushToPlayer(this, new Messages.Notify("무기의 강화도와 무기 속성 레벨의 합은 30을 넘을 수 없습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("Weapon Enchantment cannot exceed 30."));
             return;
         }
         this.inventory.makeEmptyInventory(inventoryNumber);
         if(Utils.ratioToBool(0.1)){
-            this.server.pushToPlayer(this, new Messages.Notify("강화에 성공했습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("Your enchantment succeeded."));
             if(this.weaponEnchantedPoint){
                 this.weaponEnchantedPoint += 1;
             } else{
@@ -1458,30 +1456,30 @@ module.exports = Player = Character.extend({
             }
             databaseHandler.enchantWeapon(this.name, this.weaponEnchantedPoint);
         } else{
-            this.server.pushToPlayer(this, new Messages.Notify("강화에 실패했습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("Your enchantment Failed."));
         }
     },
     handleInventoryEnchantBloodsucking: function(itemKind, inventoryNumber){
         if(itemKind !== Types.Entities.BLACKPOTION){
-            this.server.pushToPlayer(this, new Messages.Notify("블랙포션이 아닙니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("This isn't a black potion."));
             return;
         }
         if(this.weaponEnchantedPoint + this.weaponSkillLevel >= 30){
-            this.server.pushToPlayer(this, new Messages.Notify("무기의 강화도와 흡혈률의 합은 30을 넘을 수 없습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("Weapon enchantment cannot exceed level 30."));
             return;
         }
         if(this.weaponSkillLevel >= 7){
-            this.server.pushToPlayer(this, new Messages.Notify("흡혈률이 7이상일 경우 더이상 흡혈률을 올릴 수 없습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("Weapon Skill Level cannot be raised beyond 7."));
             return;
         }
         if(this.weaponSkillKind !== Types.Skills.BLOODSUCKING){
-            this.server.pushToPlayer(this, new Messages.Notify("무기의 속성이 흡혈인 경우에만 블랙포션을 사용할 수 있습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("You can use a black potion."));
             return;
         }
 
         this.inventory.makeEmptyInventory(inventoryNumber);
         if(Utils.ratioToBool(0.1)){
-            this.server.pushToPlayer(this, new Messages.Notify("흡혈률 강화에 성공했습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("Enchantment successful."));
             this.weaponSkillKind = Types.Skills.BLOODSUCKING;
             if(this.weaponSkillLevel){
                 this.weaponSkillLevel += 1;
@@ -1490,21 +1488,21 @@ module.exports = Player = Character.extend({
             }
             databaseHandler.setWeaponSkill(this.name, this.weaponSkillKind, this.weaponSkillLevel);
         } else{
-            this.server.pushToPlayer(this, new Messages.Notify("흡혈률 강화에 실패했습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("The enchantment failed."));
         }
     },
     handleInventoryEnchantRing: function(itemKind, inventoryNumber){
         if(itemKind !== Types.Entities.SNOWPOTION){
-            this.server.pushToPlayer(this, new Messages.Notify("스노우포션이 아닙니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("This isn't a Snow Potion."));
             return;
         }
         if(this.ringEnchantedPoint >= 9){
-            this.server.pushToPlayer(this, new Messages.Notify("반지의 강화도는 9을 넘을 수 없습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("The ring enchantment cannot exceed level 9."));
             return;
         }
         this.inventory.makeEmptyInventory(inventoryNumber);
         if(Utils.ratioToBool(0.3)){
-            this.server.pushToPlayer(this, new Messages.Notify("강화에 성공했습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("Ring enchantment successful."));
             if(this.ringEnchantedPoint){
                 this.ringEnchantedPoint += 1;
             } else{
@@ -1512,7 +1510,7 @@ module.exports = Player = Character.extend({
             }
             databaseHandler.enchantRing(this.name, this.ringEnchantedPoint);
         } else if(this.ringEnchantedPoint && Utils.ratioToBool(0.3/0.7)){
-            this.server.pushToPlayer(this, new Messages.Notify("반지가 약해졌습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("The ring has been weakened."));
             if(this.ringEnchantedPoint >= 1){
                 this.ringEnchantedPoint -= 1;
             } else{
@@ -1520,21 +1518,21 @@ module.exports = Player = Character.extend({
             }
             databaseHandler.enchantRing(this.name, this.ringEnchantedPoint);
         } else{
-            this.server.pushToPlayer(this, new Messages.Notify("강화에 실패했습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("The enchantment failed."));
         }
     },
     handleInventoryEnchantPendant: function(itemKind, inventoryNumber){
         if(itemKind !== Types.Entities.SNOWPOTION){
-            this.server.pushToPlayer(this, new Messages.Notify("스노우포션이 아닙니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("This isn't a snow potion."));
             return;
         }
         if(this.pendantEnchantedPoint >= 9){
-            this.server.pushToPlayer(this, new Messages.Notify("펜던트의 강화도는 9을 넘을 수 없습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("The pendant enchantment cannot exceed level 9."));
             return;
         }
         this.inventory.makeEmptyInventory(inventoryNumber);
         if(Utils.ratioToBool(0.3)){
-            this.server.pushToPlayer(this, new Messages.Notify("강화에 성공했습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("Pendant enchantment successful."));
             if(this.pendantEnchantedPoint){
                 this.pendantEnchantedPoint += 1;
             } else{
@@ -1542,7 +1540,7 @@ module.exports = Player = Character.extend({
             }
             databaseHandler.enchantPendant(this.name, this.pendantEnchantedPoint);
         } else if(this.pendantEnchantedPoint && Utils.ratioToBool(0.3/0.7)){
-            this.server.pushToPlayer(this, new Messages.Notify("펜던트가 약해졌습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("The pendant has been weakened."));
             if(this.pendantEnchantedPoint >= 1){
                 this.pendantEnchantedPoint -= 1;
             } else{
@@ -1551,7 +1549,7 @@ module.exports = Player = Character.extend({
             databaseHandler.enchantPendant(this.name, this.pendantEnchantedPoint);
 
         } else {
-            this.server.pushToPlayer(this, new Messages.Notify("강화에 실패했습니다."));
+            this.server.pushToPlayer(this, new Messages.Notify("The enchantment failed."));
         }
     },
 
@@ -1735,12 +1733,26 @@ module.exports = Player = Character.extend({
             if(dmg > 0){
                 if(Utils.ratioToBool(this.criticalRatio)){
                     var criticalStrikeLevel = this.skillHandler.getLevel("criticalStrike");
-                    var dmg2 = dmg * (1 + (0.5 * criticalStrikeLevel));
-                    dmg = Math.round(dmg2 + (this.ringSkillKind == Types.Skills.CRITICALATTACK ? dmg * (this.ringSkillLevel * 0.05) : 0));
 
-                    log.info('critical: ' + dmg);
+                    if (isNaN(criticalStrikeLevel)) {
+                        criticalStrikeLevel = 1;
+                        var dmg2 = dmg * (1 + (0.5 * criticalStrikeLevel));
+                        var dmg3 = dmg;
+                        dmg = Math.round(dmg2 + (this.ringSkillKind == Types.Skills.CRITICALATTACK ? dmg * (this.ringSkillLevel * 0.05) : 0));
+                        if (isNaN(dmg)) {
+                            dmg = dmg3;
+                        }
+                        log.info('critical: ' + dmg);
 
-                    this.broadcast(new Messages.Skill("critical", mobId, 0), false);
+                        this.broadcast(new Messages.Skill("critical", mobId, 0), false);
+                    } else {
+                        var dmg2 = dmg * (1 + (0.5 * criticalStrikeLevel));
+                        dmg = Math.round(dmg2 + (this.ringSkillKind == Types.Skills.CRITICALATTACK ? dmg * (this.ringSkillLevel * 0.05) : 0));
+
+                        log.info('critical: ' + dmg);
+
+                        this.broadcast(new Messages.Skill("critical", mobId, 0), false);
+                    }
                 }
 
                 var bloodsuckingAmount = dmg * (this.bloodsuckingRatio + this.skillHandler.getLevel("bloodSucking")*0.05);

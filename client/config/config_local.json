@@ -1,5 +1,5 @@
 {
-    "host": "tta.kbve.com",
-    "port": 1337,
-    "dispatcher": true
+    "host": "kbve.com",
+    "port": 1338,
+    "dispatcher": false
 }

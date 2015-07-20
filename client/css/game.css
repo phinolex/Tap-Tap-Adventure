@@ -1,6 +1,20 @@
 
 
 @media screen and (min-width: 1501px) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #bubbles{
         width:1440px;
         height:672px;
@@ -39,6 +53,10 @@
 }
 
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
+
+
+
+
     #bubbles{
         width:960px;
         height:448px;
@@ -78,6 +96,14 @@
 }
 
 @media screen and (max-width: 1000px) {
+
+
+
+
+
+
+
+
     #bubbles{
         width:480px;
         height:224px;

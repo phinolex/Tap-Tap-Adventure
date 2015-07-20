@@ -249,6 +249,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             var self = this;
 
             this.body.unbind('dragstart').bind('dragstart', function(event) {
+                log.info("Began DragStart.")
                 event.originalEvent.dataTransfer.setData("skllName", self.name);
                 DragData = {};
                 DragData.skillName = self.name;

@@ -510,7 +510,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
             var i=0;
             var maxInventoryNumber = parseInt(replies[60]);
             if(isNaN(maxInventoryNumber) || maxInventoryNumber < 5){
-                maxInventoryNumber = 5;
+                maxInventoryNumber = 10;
             }
             for(i=0; i<maxInventoryNumber; i++){
                 if(replies[i] === "burger"){
@@ -578,7 +578,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
     getAllInventory: function(player, callback){
         var userKey = "u:" + player.name;
         client.hget(userKey, "maxInventoryNumber", function(err, maxInventoryNumber){
-            maxInventoryNumber = Utils.NaN2Zero(maxInventoryNumber) === 0 ? 5 : Utils.NaN2Zero(maxInventoryNumber);
+            maxInventoryNumber = Utils.NaN2Zero(maxInventoryNumber) === 0 ? 10 : Utils.NaN2Zero(maxInventoryNumber);
 
             var i=0;
             var multi = client.multi();

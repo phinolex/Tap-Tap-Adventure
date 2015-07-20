@@ -379,7 +379,90 @@ footer div  {display:inline-block;}
 @-o-keyframes invincible { from {background:#fa6a00;} to {background:#fabc00;} }
 @-ms-keyframes invincible { from {background:#fa6a00;} to {background:#fabc00;} }
 @media screen and (min-width: 1501px) {
+    #allinventorywindow{
+        display: none;
+        position: absolute;
+        width: 288px;
+        height: 288px;
+        top: 384px;
+        left: 50%;
+        margin-left: 129px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+    }
+    #inventory6, #inventory7, #inventory8, #inventory9, #inventory10, #inventory11, #inventory12, #inventory13, #inventory14, #inventory15, #inventory16, #inventory17, #inventory18, #inventory19, #inventory20, #inventory21, #inventory22, #inventory23, #inventory24, #inventory25, #inventory26, #inventory27, #inventory28, #inventory29 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 48px;
+        height: 48px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    #inventorybackground6, #inventorybackground7, #inventorybackground8, #inventorybackground9, #inventorybackground10, #inventorybackground11, #inventorybackground12, #inventorybackground13, #inventorybackground14, #inventorybackground15, #inventorybackground16, #inventorybackground17, #inventorybackground18, #inventorybackground19, #inventorybackground20, #inventorybackground21, #inventorybackground22, #inventorybackground23, #inventorybackground24, #inventorybackground25, #inventorybackground26, #inventorybackground27, #inventorybackground28, #inventorybackground29 {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        border: 1px solid #9C9898;
+        background-image: url('../img/3/main.png' );
+        background-position: -549px -834px;
+        display: none;
+    }
+    #inventorybackground6, #inventorybackground7, #inventorybackground8, #inventorybackground9, #inventorybackground10, #inventorybackground11{ top: 0px; }
+    #inventorybackground12, #inventorybackground13, #inventorybackground14, #inventorybackground15, #inventorybackground16, #inventorybackground17{ top: 72px; }
+    #inventorybackground18, #inventorybackground19, #inventorybackground20, #inventorybackground21, #inventorybackground22, #inventorybackground23{ top: 144px; }
+    #inventorybackground24, #inventorybackground25, #inventorybackground26, #inventorybackground27, #inventorybackground28, #inventorybackground29{ top: 216px; }
+    #inventorybackground6, #inventorybackground12, #inventorybackground18, #inventorybackground24{ left: 0px; }
+    #inventorybackground7, #inventorybackground13, #inventorybackground19, #inventorybackground25{ left: 48px; }
+    #inventorybackground8, #inventorybackground14, #inventorybackground20, #inventorybackground26{ left: 96px; }
+    #inventorybackground9, #inventorybackground15, #inventorybackground21, #inventorybackground27{ left: 144px; }
+    #inventorybackground10, #inventorybackground16, #inventorybackground22, #inventorybackground28{ left: 192px; }
+    #inventorybackground11, #inventorybackground17, #inventorybackground23, #inventorybackground29{ left: 240px; }
+    #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11, #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17, #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23, #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29 {
+        position: absolute;
+        left: 0px;
+        width: 48px;
+        height: 21px;
+        border: 1px solid #9C9898;
+        color: rgba(255, 255, 255, 1);
+        font-size: 13.5px;
+        text-align: center;
+        padding-top: 2px;
+    }
+    #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11{ top: 48px; }
+    #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17{ top: 120px; }
+    #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23{ top: 192px; }
+    #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29{ top: 264px; }
+    #inventorynumber6, #inventorynumber12, #inventorynumber18, #inventorynumber24{ left: 0px; }
+    #inventorynumber7, #inventorynumber13, #inventorynumber19, #inventorynumber25{ left: 48px; }
+    #inventorynumber8, #inventorynumber14, #inventorynumber20, #inventorynumber26{ left: 96px; }
+    #inventorynumber9, #inventorynumber15, #inventorynumber21, #inventorynumber27{ left: 144px; }
+    #inventorynumber10, #inventorynumber16, #inventorynumber22, #inventorynumber28{ left: 192px; }
+    #inventorynumber11, #inventorynumber17, #inventorynumber23, #inventorynumber29{ left: 240px; }
 
+    #playerPopupMenuContainer{
+        position: absolute;
+        width: 96px;
+        height: 192px;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+    }
+    #playerPopupMenuName, #playerPopupMenuMove, #playerPopupMenuPartyInvite, #playerPopupMenuPartyOut{
+        position: absolute;
+        left: 0px;
+        width: 96px;
+        height: 48px;
+        background: rgba(0, 0, 0, 0);
+        color: rgba(255, 255, 255, 1);
+        font-size: 21px;
+        text-align: center;
+        margin-top: 12px;
+    }
+    #playerPopupMenuName{ top: 0px; }
+    #playerPopupMenuMove{ top: 48px; }
+    #playerPopupMenuPartyInvite{ top: 96px; }
+    #playerPopupMenuPartyOut{ top: 144px; }
     #target{
         font-family:'GraphicPixel';
         color:#e3e3e3;
@@ -853,6 +936,91 @@ footer div  {display:inline-block;}
 }
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
 
+
+    #allinventorywindow{
+        display: none;
+        position: absolute;
+        width: 192px;
+        height: 192px;
+        top: 256px;
+        left: 50%;
+        margin-left: 86px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+    }
+    #inventory6, #inventory7, #inventory8, #inventory9, #inventory10, #inventory11, #inventory12, #inventory13, #inventory14, #inventory15, #inventory16, #inventory17, #inventory18, #inventory19, #inventory20, #inventory21, #inventory22, #inventory23, #inventory24, #inventory25, #inventory26, #inventory27, #inventory28, #inventory29 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 32px;
+        height: 32px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    #inventorybackground6, #inventorybackground7, #inventorybackground8, #inventorybackground9, #inventorybackground10, #inventorybackground11, #inventorybackground12, #inventorybackground13, #inventorybackground14, #inventorybackground15, #inventorybackground16, #inventorybackground17, #inventorybackground18, #inventorybackground19, #inventorybackground20, #inventorybackground21, #inventorybackground22, #inventorybackground23, #inventorybackground24, #inventorybackground25, #inventorybackground26, #inventorybackground27, #inventorybackground28, #inventorybackground29 {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        border: 1px solid #9C9898;
+        background-image: url('../img/2/main.png' );
+        background-position: -366px -556px;
+        display: none;
+    }
+    #inventorybackground6, #inventorybackground7, #inventorybackground8, #inventorybackground9, #inventorybackground10, #inventorybackground11{ top: 0px; }
+    #inventorybackground12, #inventorybackground13, #inventorybackground14, #inventorybackground15, #inventorybackground16, #inventorybackground17{ top: 48px; }
+    #inventorybackground18, #inventorybackground19, #inventorybackground20, #inventorybackground21, #inventorybackground22, #inventorybackground23{ top: 96px; }
+    #inventorybackground24, #inventorybackground25, #inventorybackground26, #inventorybackground27, #inventorybackground28, #inventorybackground29{ top: 144px; }
+    #inventorybackground6, #inventorybackground12, #inventorybackground18, #inventorybackground24{ left: 0px; }
+    #inventorybackground7, #inventorybackground13, #inventorybackground19, #inventorybackground25{ left: 32px; }
+    #inventorybackground8, #inventorybackground14, #inventorybackground20, #inventorybackground26{ left: 64px; }
+    #inventorybackground9, #inventorybackground15, #inventorybackground21, #inventorybackground27{ left: 96px; }
+    #inventorybackground10, #inventorybackground16, #inventorybackground22, #inventorybackground28{ left: 128px; }
+    #inventorybackground11, #inventorybackground17, #inventorybackground23, #inventorybackground29{ left: 160px; }
+    #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11, #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17, #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23, #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29 {
+        position: absolute;
+        left: 0px;
+        width: 32px;
+        height: 14px;
+        border: 1px solid #9C9898;
+        color: rgba(255, 255, 255, 1);
+        font-size: 9px;
+        text-align: center;
+        padding-top: 2px;
+    }
+    #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11{ top: 32px; }
+    #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17{ top: 80px; }
+    #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23{ top: 128px; }
+    #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29{ top: 176px; }
+    #inventorynumber6, #inventorynumber12, #inventorynumber18, #inventorynumber24{ left: 0px; }
+    #inventorynumber7, #inventorynumber13, #inventorynumber19, #inventorynumber25{ left: 32px; }
+    #inventorynumber8, #inventorynumber14, #inventorynumber20, #inventorynumber26{ left: 64px; }
+    #inventorynumber9, #inventorynumber15, #inventorynumber21, #inventorynumber27{ left: 96px; }
+    #inventorynumber10, #inventorynumber16, #inventorynumber22, #inventorynumber28{ left: 128px; }
+    #inventorynumber11, #inventorynumber17, #inventorynumber23, #inventorynumber29{ left: 160px; }
+
+    #playerPopupMenuContainer{
+        position: absolute;
+        width: 64px;
+        height: 128px;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+    }
+    #playerPopupMenuName, #playerPopupMenuMove, #playerPopupMenuPartyInvite, #playerPopupMenuPartyOut{
+        position: absolute;
+        left: 0px;
+        width: 64px;
+        height: 32px;
+        background: rgba(0, 0, 0, 0);
+        color: rgba(255, 255, 255, 1);
+        font-size: 14px;
+        text-align: center;
+        margin-top: 8px;
+    }
+    #playerPopupMenuName{ top: 0px; }
+    #playerPopupMenuMove{ top: 32px; }
+    #playerPopupMenuPartyInvite{ top: 64px; }
+    #playerPopupMenuPartyOut{ top: 96px; }
 
     #target{
         font-family:'GraphicPixel';
@@ -1391,7 +1559,97 @@ footer div  {display:inline-block;}
 }
 @media screen and (max-width: 1000px) {
 
-#target{
+    #allinventorywindow{
+        display: none;
+        position: absolute;
+        width: 96px;
+        height: 96px;
+        top: 128px;
+        left: 50%;
+        margin-left: 43px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+    }
+    #inventory6, #inventory7, #inventory8, #inventory9, #inventory10, #inventory11, #inventory12, #inventory13, #inventory14, #inventory15, #inventory16, #inventory17, #inventory18, #inventory19, #inventory20, #inventory21, #inventory22, #inventory23, #inventory24, #inventory25, #inventory26, #inventory27, #inventory28, #inventory29 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 16px;
+        height: 16px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    #inventorybackground6, #inventorybackground7, #inventorybackground8, #inventorybackground9, #inventorybackground10, #inventorybackground11, #inventorybackground12, #inventorybackground13, #inventorybackground14, #inventorybackground15, #inventorybackground16, #inventorybackground17, #inventorybackground18, #inventorybackground19, #inventorybackground20, #inventorybackground21, #inventorybackground22, #inventorybackground23, #inventorybackground24, #inventorybackground25, #inventorybackground26, #inventorybackground27, #inventorybackground28, #inventorybackground29 {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border: 1px solid #9C9898;
+        background-image: url('../img/1/main.png' );
+        background-position: -183px -278px;
+        display: none;
+    }
+    #inventorybackground6, #inventorybackground7, #inventorybackground8, #inventorybackground9, #inventorybackground10, #inventorybackground11{ top: 0px; }
+    #inventorybackground12, #inventorybackground13, #inventorybackground14, #inventorybackground15, #inventorybackground16, #inventorybackground17{ top: 24px; }
+    #inventorybackground18, #inventorybackground19, #inventorybackground20, #inventorybackground21, #inventorybackground22, #inventorybackground23{ top: 48px; }
+    #inventorybackground24, #inventorybackground25, #inventorybackground26, #inventorybackground27, #inventorybackground28, #inventorybackground29{ top: 72px; }
+    #inventorybackground6, #inventorybackground12, #inventorybackground18, #inventorybackground24{ left: 0px; }
+    #inventorybackground7, #inventorybackground13, #inventorybackground19, #inventorybackground25{ left: 16px; }
+    #inventorybackground8, #inventorybackground14, #inventorybackground20, #inventorybackground26{ left: 32px; }
+    #inventorybackground9, #inventorybackground15, #inventorybackground21, #inventorybackground27{ left: 48px; }
+    #inventorybackground10, #inventorybackground16, #inventorybackground22, #inventorybackground28{ left: 64px; }
+    #inventorybackground11, #inventorybackground17, #inventorybackground23, #inventorybackground29{ left: 80px; }
+    #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11, #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17, #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23, #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29 {
+        position: absolute;
+        left: 0px;
+        width: 16px;
+        height: 7px;
+        border: 1px solid #9C9898;
+        color: rgba(255, 255, 255, 1);
+        font-size: 4.5px;
+        text-align: center;
+        padding-top: 2px;
+    }
+    #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11{ top: 16px; }
+    #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17{ top: 40px; }
+    #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23{ top: 64px; }
+    #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29{ top: 88px; }
+    #inventorynumber6, #inventorynumber12, #inventorynumber18, #inventorynumber24{ left: 0px; }
+    #inventorynumber7, #inventorynumber13, #inventorynumber19, #inventorynumber25{ left: 16px; }
+    #inventorynumber8, #inventorynumber14, #inventorynumber20, #inventorynumber26{ left: 32px; }
+    #inventorynumber9, #inventorynumber15, #inventorynumber21, #inventorynumber27{ left: 48px; }
+    #inventorynumber10, #inventorynumber16, #inventorynumber22, #inventorynumber28{ left: 64px; }
+    #inventorynumber11, #inventorynumber17, #inventorynumber23, #inventorynumber29{ left: 80px; }
+
+    #playerPopupMenuContainer{
+        position: absolute;
+        width: 32px;
+        height: 64px;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+    }
+    #playerPopupMenuName, #playerPopupMenuMove, #playerPopupMenuPartyInvite, #playerPopupMenuPartyOut{
+        position: absolute;
+        left: 0px;
+        width: 32px;
+        height: 16px;
+        background: rgba(0, 0, 0, 0);
+        color: rgba(255, 255, 255, 1);
+        font-size: 7px;
+        text-align: center;
+        margin-top: 4px;
+    }
+    #playerPopupMenuName{ top: 0px; }
+    #playerPopupMenuMove{ top: 16px; }
+    #playerPopupMenuPartyInvite{ top: 32px; }
+    #playerPopupMenuPartyOut{ top: 48px; }
+
+
+
+
+
+
+    #target{
     font-family:'GraphicPixel';
     color:#e3e3e3;
     position: absolute;
@@ -1515,7 +1773,7 @@ footer div  {display:inline-block;}
         padding: 0;
         line-height: 1;
         color: rgba(255,255,255,1);
-        font-size: 8.5;
+        font-size: 5;
     }
     #chatLog p .name{
         font-weight: bold;

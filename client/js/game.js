@@ -88,6 +88,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             this.statehandler = new StateHandler(this);
 
+            // FPS
+            this.lastFPSTime = new Date().getTime();
+            this.FPSCount = 0;
 
             // zoning
             this.currentZoning = null;
@@ -109,7 +112,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             // pvp
             this.pvpFlag = false;
             //
-            this.dialogs = new Array();
+            this.dialogs = [];
             this.characterDialog = new CharacterDialog(this);
             this.dialogs.push(this.characterDialog);
             
@@ -242,7 +245,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     "item-halberd", "rose", "item-rose", "icerose", "item-icerose", "hand",
                     "sword", "loot", "target", "talk", "sparks", "shadow16", "rat", "skeleton",
                     "skeleton2", "spectre", "skeletonking", "deathknight", "ogre", "crab",
-                    "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl",
+                    "snek", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl",
                     "villager", "coder", "agent", "rick", "scientist", "nyan", "priest", 
                     "sorcerer", "octocat", "beachnpc", "forestnpc", "desertnpc", "lavanpc",
                     "clotharmor", "item-clotharmor", "leatherarmor", "mailarmor", "platearmor",
@@ -368,6 +371,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             Types.forEachMobOrNpcKind(function(kind, kindName) {
                 self.sprites[kindName].createSilhouette();
+                log.info("Loading... " + kindName);
             });
             self.sprites["chest"].createSilhouette();
             self.sprites["item-cake"].createSilhouette();
@@ -904,6 +908,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.skillHandler = new SkillHandler(self);
                 self.membership = membership;
                 self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
+                self.shopHandler.setMaxInventoryNumber(maxInventoryNumber);
                 self.initPlayer();
                 self.updateBars();
                 self.updateExpBar();
@@ -2154,7 +2159,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 this.hoveringOtherPlayer = this.isPlayerAt(x, y);
                 this.hoveringChest = this.isChestAt(x, y);
 
-                if(this.hoveringMob || this.hoveringPlayer || this.hoveringNpc || this.hoveringChest || this.hoveringOtherPlayer) {
+                if(this.hoveringMob || this.hoveringPlayer || this.hoveringNpc || this.hoveringChest || this.hoveringOtherPlayer || this.hoveringItem) {
                     var entity = this.getEntityAt(x, y);
 
                     this.player.showTarget(entity);
@@ -2768,7 +2773,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
 
         showNotification: function(message) {
-            this.chathandler.addNotification(message);
+            if(this.storeDialog.visible) {
+                this.storeDialog.notify(message);
+            } else {
+                this.chathandler.addNotification(message);
+            }
             /*if(this.notification_callback) {
                 this.notification_callback(message);
             }*/

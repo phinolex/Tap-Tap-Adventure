@@ -855,8 +855,8 @@ var Properties = {
 
         },
         hp: 5329,
-        armor: 1,
-        weapon: 1
+        armor: 10,
+        weapon: 2
     },
     pain: {
         drops: {
@@ -868,8 +868,8 @@ var Properties = {
 
         },
         hp: 5543,
-        armor: 1,
-        weapon: 1
+        armor: 10,
+        weapon: 7
     },
     whitebear: {
         drops: {
@@ -881,8 +881,8 @@ var Properties = {
 
         },
         hp: 5764,
-        armor: 1,
-        weapon: 1
+        armor: 5,
+        weapon: 3
     },
     snowrabbit: {
         drops: {
@@ -893,8 +893,8 @@ var Properties = {
             marblependant: 5
 
         },
-        hp: 5995,
-        armor: 1,
+        hp: 10995,
+        armor: 5,
         weapon: 1
     },
     icevulture: {
@@ -909,7 +909,7 @@ var Properties = {
         },
         hp: 6235,
         armor: 1,
-        weapon: 1
+        weapon: 4
     },
     darkregionillusion: {
         drops: {
@@ -1170,9 +1170,9 @@ var Properties = {
             royalazalea: 5,
             essentialrage: 5
         },
-        hp: 13952,
-        armor: 1,
-        weapon: 1
+        hp: 23952,
+        armor: 6,
+        weapon: 4
     },
     rudolf: {
         drops: {

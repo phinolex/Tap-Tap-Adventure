@@ -328,29 +328,29 @@ define(['jquery'], function() {
             KILL_100: {
                 id: 102,
                 npcKind: Types.Entities.CODER,
+                name: "Kill 50",
+                desc: "Slay 50 Monsters",
+                found: false,
+                completed: false,
+                completeNumber: 50
+            },
+            KILL_200: {
+                id: 103,
+                npcKind: Types.Entities.CODER,
                 name: "Kill 100",
                 desc: "Slay 100 Monsters",
                 found: false,
                 completed: false,
                 completeNumber: 100
             },
-            KILL_200: {
-                id: 103,
+            KILL_500: {
+                id: 104,
                 npcKind: Types.Entities.CODER,
                 name: "Kill 200",
                 desc: "Slay 200 Monsters",
                 found: false,
                 completed: false,
                 completeNumber: 200
-            },
-            KILL_500: {
-                id: 104,
-                npcKind: Types.Entities.CODER,
-                name: "Kill 500",
-                desc: "Slay 500 Monsters",
-                found: false,
-                completed: false,
-                completeNumber: 500
             }
         };
     },
@@ -391,6 +391,9 @@ define(['jquery'], function() {
       this.initSkill();
     },
     initSkill: function(){
+
+
+
 
         if(this.quests.KILL_ORC.completed) {
             if(this.quests.KILL_GOLEM.completed) {

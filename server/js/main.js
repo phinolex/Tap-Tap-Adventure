@@ -41,7 +41,7 @@ function main(config) {
                 }
             });
         }
-    }, 1500);
+    }, 1000);
 
     log.info("Initializing TTA GameServer - World " + worldId);
     var selector = DatabaseSelector(config);

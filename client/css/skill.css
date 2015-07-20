@@ -1,0 +1,185 @@
+/**
+ * Created by Flavius on 15-07-19.
+ */
+
+
+@media screen and (min-width: 1501px) {
+
+    #skill0, #skill1, #skill2, #skill3, #skill4 {
+        position: absolute;
+        top: 6px;
+        width: 51px;
+        height: 60px;
+        border: 0px;
+        padding: 0px;
+        margin: 0px;
+    }
+    #skill0 { left: 903px; }
+    #skill1 { left: 954px; }
+    #skill2 { left: 1005px; }
+    #skill3 { left: 1056px; }
+    #skill4 { left: 1207px; }
+
+    #skill0Body, #skill1Body, #skill2Body, #skill3Body, #skill4Body {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 48px;
+        height: 30px;
+    }
+    #skill0Cooltime, #skill1Cooltime, #skill2Cooltime, #skill3Cooltime, #skill4Cooltime {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 48px;
+        height: 45px;
+        background-color: rgba(255, 0, 0, 0.5);
+        text-align: center;
+        font-size: 21px;
+        padding-top: 12px;
+        color: white;
+        cursor: default;
+        display: none;
+    }
+
+    #skill00, #skill01, #skill02, #skill03,
+    #skill10, #skill11, #skill12, #skill13,
+    #skill20, #skill21, #skill22, #skill23,
+    #skill30, #skill31, #skill32, #skill33,
+    #skill40, #skill41, #skill42, #skill43{
+        position: absolute;
+        display: none;
+        top: 45px;
+        width: 9px;
+        height: 24px;
+        border: 0px;
+        background-image: url('../img/3/main.png');
+        background-position: -990px -837px;
+    }
+    #skill00, #skill10, #skill20, #skill30, #skill40 { left: 3px; }
+    #skill01, #skill11, #skill21, #skill31, #skill41 { left: 15px; }
+    #skill02, #skill12, #skill22, #skill32, #skill42 { left: 27px; }
+    #skill03, #skill13, #skill23, #skill33, #skill43 { left: 39px;}
+
+
+}
+
+
+@media screen and (max-width: 1500px), screen and (max-height: 870px) {
+
+    #skill0, #skill1, #skill2, #skill3, #skill4 {
+        position: absolute;
+        top: 4px;
+        width: 34px;
+        height: 40px;
+        border: 0px;
+        padding: 0px;
+        margin: 0px;
+    }
+    #skill0 { left: 602px; }
+    #skill1 { left: 636px; }
+    #skill2 { left: 670px; }
+    #skill3 { left: 704px; }
+    #skill4 { left: 738px; }
+
+    #skill0Body, #skill1Body, #skill2Body, #skill3Body, #skill4Body {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 32px;
+        height: 30px;
+    }
+    #skill0Cooltime, #skill1Cooltime, #skill2Cooltime, #skill3Cooltime, #skill4Cooltime {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 32px;
+        height: 30px;
+        background-color: rgba(255, 0, 0, 0.5);
+        text-align: center;
+        font-size: 14px;
+        padding-top: 8px;
+        color: white;
+        cursor: default;
+        display: none;
+    }
+
+    #skill00, #skill01, #skill02, #skill03,
+    #skill10, #skill11, #skill12, #skill13,
+    #skill20, #skill21, #skill22, #skill23,
+    #skill30, #skill31, #skill32, #skill33,
+    #skill40, #skill41, #skill42, #skill43{
+        position: absolute;
+        display: none;
+        top: 30px;
+        width: 6px;
+        height: 8px;
+        border: 0px;
+        background-image: url('../img/2/main.png');
+        background-position: -660px -558px;
+    }
+    #skill00, #skill10, #skill20, #skill30, #skill40 { left: 2px; }
+    #skill01, #skill11, #skill21, #skill31, #skill41 { left: 10px; }
+    #skill02, #skill12, #skill22, #skill32, #skill42 { left: 18px; }
+    #skill03, #skill13, #skill23, #skill33, #skill43 { left: 26px;}
+
+}
+
+@media screen and (max-width: 1000px) {
+
+    #skill0, #skill1, #skill2, #skill3, #skill4 {
+        position: absolute;
+        top: 2px;
+        width: 17px;
+        height: 20px;
+        border: 0px;
+        padding: 0px;
+        margin: 0px;
+    }
+    #skill0 { left: 301px; }
+    #skill1 { left: 318px; }
+    #skill2 { left: 335px; }
+    #skill3 { left: 352px; }
+    #skill4 { left: 369px; }
+
+    #skill0Body, #skill1Body, #skill2Body, #skill3Body, #skill4Body {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 16px;
+        height: 15px;
+    }
+    #skill0Cooltime, #skill1Cooltime, #skill2Cooltime, #skill3Cooltime, #skill4Cooltime {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 16px;
+        height: 15px;
+        background-color: rgba(255, 0, 0, 0.5);
+        text-align: center;
+        font-size: 7px;
+        padding-top: 4px;
+        color: white;
+        cursor: default;
+        display: none;
+    }
+
+    #skill00, #skill01, #skill02, #skill03,
+    #skill10, #skill11, #skill12, #skill13,
+    #skill20, #skill21, #skill22, #skill23,
+    #skill30, #skill31, #skill32, #skill33,
+    #skill40, #skill41, #skill42, #skill43{
+        position: absolute;
+        display: none;
+        top: 15px;
+        width: 3px;
+        height: 8px;
+        border: 0px;
+        background-image: url('../img/1/main.png');
+        background-position: -330px -279px;
+    }
+    #skill00, #skill10, #skill20, #skill30, #skill40 { left: 1px; }
+    #skill01, #skill11, #skill21, #skill31, #skill41 { left: 5px; }
+    #skill02, #skill12, #skill22, #skill32, #skill42 { left: 9px; }
+    #skill03, #skill13, #skill23, #skill33, #skill43 { left: 13px;}
+}
