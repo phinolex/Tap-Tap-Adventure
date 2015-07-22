@@ -27,7 +27,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             // PVP Flag
             this.pvpFlag = false;
 
-
+            this.isWanted = false;
             // Benef
             this.invincible = false;
             this.isRoyalAzaleaBenef = false;

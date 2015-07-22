@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/skill.css" type="text/css">
     <link rel="stylesheet" href="css/game.css" type="text/css">
     <link rel="stylesheet" href="css/storedialog.css" type="text/css">
+    <link rel="stylesheet" href="css/shop.css" type="text/css">
 
     <link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
     <link href="img/common/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72">
@@ -127,7 +128,19 @@
                 </div>
             </article>
 
-
+            <article id="legal">
+                <h1>
+                    <span class="left-ornament"></span>
+                    Privacy
+                    <span class="right-ornament"></span>
+                </h1>
+                <p>
+                    Donating will help the developers significantly, allowing us to support the servers thus keeping the server online, it also allows for website maintanance and more. If you wish to <a class="stroke clickable" target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=flavius256%40icloud%2ecom&lc=CA&item_name=Tap%20Tap%20Adventure&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3ataptapadventure%2ecom%3aNonHostedGuest">donate</a> please do so, every cent is welcome.
+                </p>
+                <div id="close-legal">
+                    <span>- click anywhere to close -</span>
+                </div>
+            </article>
 
             <article id="about">
                 <h1>
@@ -186,6 +199,73 @@
             <canvas id="textcanvas"></canvas>
             <canvas id="foreground"></canvas>
             <canvas id="toptextcanvas" class="clickable"></canvas>
+        </div>
+        <div id="shopSell">
+            <p>Sell</p>
+            <div id="sellInventorybackground0">
+                <div id="sellInventory0"></div>
+            </div>
+            <div id="sellInventorybackground1">
+                <div id="sellInventory1"></div>
+            </div>
+            <div id="sellInventorybackground2">
+                <div id="sellInventory2"></div>
+            </div>
+            <div id="sellInventorybackground3">
+                <div id="sellInventory3"></div>
+            </div>
+            <div id="sellInventorybackground4">
+                <div id="sellInventory4"></div>
+            </div>
+            <div id="sellSlot">
+                <div id="sellItem"></div>
+                <div id="burger"></div>
+                <input type="number" id="sellCount" size="6" maxlength="6">
+                <div id="sellButton">Sell</div>
+            </div>
+            <div id="sellInfo">
+                <li>When selling an item, the inventory slot you click on will be stored here.</li>
+                <li>There are certain items you cannot sell.</li>
+                <li>You can only sell one item at a time. When you offer a new item the one currently in the shop will be returned.</li>
+                <li>Shop is still in development.</li>
+            </div>
+            <div id="sellClose">X</div>
+        </div>
+        <div id="shopBuy">
+            <p>Buy</p>
+            <div id="buySlot0">
+                <div id="buyItem0"></div>
+                <div id="burger"></div>
+                <div id="buyCount0"></div>
+                <div id="buyButton0">Buy</div>
+            </div>
+            <div id="buySlot1">
+                <div id="buyItem1"></div>
+                <div id="burger"></div>
+                <div id="buyCount1"></div>
+                <div id="buyButton1">Buy</div>
+            </div>
+            <div id="buySlot2">
+                <div id="buyItem2"></div>
+                <div id="burger"></div>
+                <div id="buyCount2"></div>
+                <div id="buyButton2">Buy</div>
+            </div>
+            <div id="buySlot3">
+                <div id="buyItem3"></div>
+                <div id="burger"></div>
+                <div id="buyCount3"></div>
+                <div id="buyButton3">Buy</div>
+            </div>
+            <div id="buySlot4">
+                <div id="buyItem4"></div>
+                <div id="burger"></div>
+                <div id="buyCount4"></div>
+                <div id="buyButton4">Buy</div>
+            </div>
+            <div id="buyPrevButton">Previous</div>
+            <div id="buyNextButton">Next</div>
+            <div id="buyClose">X</div>
         </div>
         <div id="allinventorywindow">
             <div id="inventorybackground6"><div id="inventory6"></div></div>

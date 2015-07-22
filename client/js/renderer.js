@@ -811,10 +811,8 @@ function(Camera, Item, Character, Player, Timer) {
             this.textcontext.save();
             //"#00CCFF" : "#78AB46
              if(entity.name && entity instanceof Player) {
-                 var color =  entity.isWanted ? "red" : (entity.id === this.game.playerId) ? "#fcda5c" : entity.admin ? "#ff0000" : "white";
+                 var color =  entity.isWanted ? "red" : entity.admin ? "#ff0000" : (entity.id === this.game.playerId) ? "#fcda5c" : "white";
                  var name = (entity.level) ? entity.name + " (" + entity.level + ")" : entity.name;
-
-                
                 
                 this.drawText(this.textcontext, name,
                               (entity.x + 8) * this.scale,

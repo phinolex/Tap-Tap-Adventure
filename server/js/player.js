@@ -1783,7 +1783,7 @@ module.exports = Player = Character.extend({
                     mob.server.handleHurtEntity(mob, this, dmg);
                     if(mob.hitPoints <= 0){
                         mob.isDead = true;
-                        this.server.pushBroadcast(new Messages.Chat(this, "/1 " + this.name + "가(이) " + mob.name + "을(를) PK"));
+                        this.server.pushBroadcast(new Messages.Chat(this, "/1 " + this.name + " killed " + mob.name + " in combat."));
                     }
                 }
             }

@@ -63,6 +63,18 @@ Messages.Attack = Message.extend({
     }
 });
 
+Messages.Wanted = Message.extend({
+    init: function (player, isWanted) {
+        this.player = player;
+        this.isWanted = isWanted;
+    },
+    serialize: function () {
+        return [Types.Messages.WANTED,
+            this.player.id,
+            this.isWanted];
+    }
+});
+
 Messages.Health = Message.extend({
     init: function (points, isRegen) {
         this.points = points;

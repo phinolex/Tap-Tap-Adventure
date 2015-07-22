@@ -83,7 +83,8 @@ Types = {
         BUY: 55,
         STOREOPEN: 56,
         STORESELL: 57,
-        STOREBUY: 58
+        STOREBUY: 58,
+        WANTED: 59
     },
 
     Entities: {

@@ -441,7 +441,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
             
             if(this.hoveringPlayer && this.started) {
-                if(this.player.pvpFlag) {
+                if(this.player.pvpFlag || (this.namedEntity && this.namedEntity instanceof Player && this.namedEntity.isWanted)) {
                     this.setCursor("sword");
                 } else {
                     this.setCursor("hand");
@@ -1470,7 +1470,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                     
                 });
-
+                self.client.onWanted(function (id, isWanted) {
+                    var player = self.getEntityById(id);
+                    if(player && (player instanceof Player)) {
+                        player.isWanted = isWanted;
+                    }
+                });
                 self.client.onPlayerChangeHealth(function(points, isRegen) {
                     var player = self.player,
                         diff,
@@ -2012,10 +2017,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         getPlayerAt: function(x, y) {
           var entity = this.getEntityAt(x, y);
-            if(entity && (entity instanceof Player) && (entity !== this.player) && (this.player.pvpFlag && this.pvpFlag)) {
+            if(entity && (entity instanceof Player) && (entity !== this.player) && ((this.player.pvpFlag && this.pvpFlag) || entity.isWanted)) {
                 return entity;
             }
-            
             return null;
         },
 
@@ -2752,7 +2756,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         updateTarget: function(targetId, points, healthPoints, maxHp){
             if(this.player.hasTarget() && this.updatetarget_callback){
                 var target = this.getEntityById(targetId);
-                target.name = Types.getKindAsString(target.kind);
+                if(target instanceof Mob){
+                    target.name = Types.getKindAsString(target.kind);
+                }
                 target.points = points;
                 target.healthPoints = healthPoints;
                 target.maxHp = maxHp;

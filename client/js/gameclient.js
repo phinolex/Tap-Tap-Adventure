@@ -13,7 +13,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.spawn_callback = null;
             this.movement_callback = null;
             this.ban_callback = null;
-
+            this.wanted_callback = null;
             this.fail_callback = null;
 
             this.notify_callback = null;
@@ -56,6 +56,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.CHARACTERINFO] = this.receiveCharacterInfo;
             this.handlers[Types.Messages.SHOP] = this.receiveShop;
             this.handlers[Types.Messages.STOREOPEN] = this.receiveStoreOpen;
+            this.handlers[Types.Messages.WANTED] = this.receiveWanted;
             this.useBison = false;
            
             this.enable();
@@ -562,6 +563,13 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.shop_callback(data);
             }
         },
+        receiveWanted: function (data) {
+            var id = data[1],
+                isWanted = data[2];
+            if(this.wanted_callback) {
+                this.wanted_callback(id, isWanted);
+            }
+        },
         onDispatched: function(callback) {
             this.dispatched_callback = callback;
         },
@@ -709,6 +717,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
         onShop: function (callback) {
             this.shop_callback = callback;
+        },
+        onWanted: function (callback) {
+            this.wanted_callback = callback;
         },
                 
 

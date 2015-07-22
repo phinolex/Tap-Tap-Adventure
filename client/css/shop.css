@@ -273,6 +273,197 @@ footer, header, hgroup, menu, nav, section {
 
 
 @media screen and (max-width: 1000px) {
-    
+    #shopSell {
+        display: none;
+        position: absolute;
+        width: 225px;
+        height: 215px;
+        top: 4.5px;
+        left: 25%;
+        margin-left: -110px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+        font-size: 16px;
+    }
+    #sellInventorybackground0, #sellInventorybackground1, #sellInventorybackground2, #sellInventorybackground3, #sellInventorybackground4, #sellInventorybackground5 {
+        position: absolute;
+        width: 16px;
+        left: 50%;
+        top: 50px;
+        height: 16px;
+        bottom: 5px;
+        border: 1px solid #9C9898;
+        background-image: url('../img/1/inventory.png' );
+    }
+    #sellInventorybackground0 { margin-left: -96px; }
+    #sellInventorybackground1 { margin-left: -80px; }
+    #sellInventorybackground2 { margin-left: -64px; }
+    #sellInventorybackground3 { margin-left: -48px; }
+    #sellInventorybackground4 { margin-left: -32px; }
+    #sellInventorybackground5 { margin-left: -16px; }
+
+    #sellInventory0, #sellInventory1, #sellInventory2, #sellInventory3, #sellInventory4, #sellInventory5 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 16px;
+        height: 16px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    #sellSlot{
+        position: absolute;
+        width: 215px;
+        left: 50%;
+        margin-left: -107.5px;
+        top: 75px;
+        height: 25px;
+        border: 1px solid #9C9898;
+        background: rgba(255, 255, 255, 0.5);
+    }
+    #sellItem{
+        position: absolute;
+        width: 16px;
+        top: 4.5px;
+        left: 4.5px;
+        height: 16px;
+        border: 1px solid #9C9898;
+        background-image: url('../img/1/inventory.png' );
+    }
+    #sellInfo{
+        position: absolute;
+        width: 215px;
+        left: 50%;
+        margin-left: -107.5px;
+        top: 110px;
+        height: 100px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.5);
+        font-size: 8px;
+        text-align: left;
+    }
+    #burger{
+        position: absolute;
+        width: 16px;
+        top: 4.5px;
+        right: 73.5px;
+        height: 16px;
+        border: 1px solid #9C9898;
+        background-image: url('../img/1/item-burger.png' );
+    }
+    #sellCount{
+        position: absolute;
+        top: 4.5px;
+        right: 34px;
+        width: 35px;
+        height: 15px;
+    }
+    #sellButton{
+        position: absolute;
+        top: 4.5px;
+        right: 4.5px;
+        height: 15px;
+        width: 25px;
+        background: rgba(0, 0, 255, 0.8);
+        text-align: center;
+        font-size: 8px;
+    }
+    #sellClose{
+        position: absolute;
+        top: 4.5px;
+        right: 4.5px;
+        width: 8px;
+        height: 8px;
+        font-size: 8px;
+        background: rgba(128, 128, 128, 0.8);
+    }
+    #shopBuy {
+        display: none;
+        position: absolute;
+        width: 225px;
+        height: 215px;
+        top: 4.5px;
+        left: 75%;
+        margin-left: -110px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+        font-size: 16px;
+    }
+    #buySlot0, #buySlot1, #buySlot2, #buySlot3, #buySlot4{
+        position: absolute;
+        width: 215px;
+        left: 50%;
+        margin-left: -107.5px;
+        height: 50px;
+        border: 1px solid #9C9898;
+        background: rgba(255, 255, 255, 0.5);
+    }
+    #buySlot0 { top: 40px; }
+    #buySlot1 { top: 67.5px; }
+    #buySlot2 { top: 95px; }
+    #buySlot3 { top: 122.5px; }
+    #buySlot4 { top: 150px; }
+    #buyItem0, #buyItem1, #buyItem2, #buyItem3, #buyItem4{
+        position: absolute;
+        width: 16px;
+        top: 4.5px;
+        left: 4.5px;
+        height: 16px;
+        border: 1px solid #9C9898;
+        background-image: url('../img/1/inventory.png' );
+    }
+    #buyCount0, #buyCount1, #buyCount2, #buyCount3, #buyCount4{
+        position: absolute;
+        top: 4.5px;
+        right: 34px;
+        width: 35px;
+        height: 15px;
+        font-size: 9px;
+    }
+    #buyButton0, #buyButton1, #buyButton2, #buyButton3, #buyButton4{
+        position: absolute;
+        top: 4.5px;
+        right: 4.5px;
+        height: 15px;
+        width: 25px;
+        background: rgba(0, 0, 255, 0.8);
+        text-align: center;
+        font-size: 8px;
+    }
+    #buyPrevButton {
+        position: absolute;
+        top: 185px;
+        width: 40px;
+        left: 50%;
+        margin-left: -45px;
+        height: 15px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 255, 0, 0.5);
+        font-size: 8px;
+    }
+    #buyNextButton {
+        position: absolute;
+        top: 185px;
+        width: 40px;
+        left: 50%;
+        margin-left: 5px;
+        height: 15px;
+        border: 1px solid #9C9898;
+        background: rgba(0, 255, 0, 0.5);
+        font-size: 8px;
+    }
+
+    #buyClose{
+        position: absolute;
+        top: 4.5px;
+        right: 4.5px;
+        width: 8px;
+        height: 8px;
+        font-size: 8px;
+        background: rgba(128, 128, 128, 0.8);
+    }
     
 }

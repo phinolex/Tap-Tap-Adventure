@@ -131,6 +131,9 @@ module.exports = World = cls.Class.extend({
                 if(self.removed_callback) {
                     self.removed_callback();
                 }
+                if(player.clearWantedHandler) {
+                    clearTimeout(player.clearWantedHandler);
+                }
             });
 
             if(self.added_callback) {
@@ -600,11 +603,10 @@ module.exports = World = cls.Class.extend({
 
         if(entity.type === 'player') {
             // A player is only aware of his own hitpoints
-            this.pushToPlayer(entity, entity.health());
+            this.pushToPlayer(entity, entity.health(attacker));
         }
 
-        if(entity.type === 'mob') {
-            // Let the mob's attacker (player) know how much damage was inflicted
+        if(attacker.type === 'player') {
             this.pushToPlayer(attacker, new Messages.Damage(entity, damage, entity.hitPoints, entity.maxHitPoints));
         }
 
