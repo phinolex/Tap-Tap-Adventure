@@ -4,12 +4,12 @@ define(['area'], function(Area) {
             var self = this;
 
             this.enabled = true;
-            this.extension = Detect.canPlayMP3() ? "mp3" : "ogg";
+            this.extension = Detect.canPlayMP3() ? "ogg" : "ogg";
             this.sounds = {};
             this.game = game;
             this.currentMusic = null;
             this.areas = [];
-            this.musicNames = ["village", "beach", "lavaland", "dungeon", "underthesea1", "underthesea2", "boss"];
+            this.musicNames = ["beach", "boss", "cave", "desert", "dungeon", "forest", "lavaland", "tutorial", "underthesea1", "underthesea2", "veloma", "village"];
             this.soundNames = ["loot", "hit1", "hit2", "hurt", "heal", "chat", "revive", "death", "firefox", "achievement", "kill1", "kill2", "noloot", "teleport", "chest", "npc", "npc-end"];
 
             var loadSoundFiles = function() {

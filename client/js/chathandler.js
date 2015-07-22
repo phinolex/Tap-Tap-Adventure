@@ -114,6 +114,7 @@ define(['jquery'], function() {
         },
         addNormalChat: function(name, message){
             var self = this;
+
             var el = $('<p style="color: rgba(255, 255, 0, 1)">' + name + ': ' + message + '</p>');
             $(el).appendTo(this.chatLog);
             $(this.chatLog).scrollTop(999999);
