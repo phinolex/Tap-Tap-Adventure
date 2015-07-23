@@ -321,8 +321,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     client.multi()
                         .hget("b:" + player.connection._connection.remoteAddress, "rtime")
                         .hget("b:" + player.connection._connection.remoteAddress, "time")
-                        .hget("u:" + player.name, "x")
-                        .hget("u:" + player.name, "y")
+
                         .exec(function(err, replies){
                             var curTime = new Date();
                             var banEndTime = new Date(replies[0]*1);
@@ -353,8 +352,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
                     var curTime = (new Date()).getTime();
                     client.sadd("ipban", banPlayer.connection._connection.remoteAddress);
-                    client.hset("u:" + banPlayer.name, "x", 154);
-                    client.hset("u:" + banPlayer.name, "y", 4);
                     adminPlayer.server.pushBroadcast(new Messages.Chat(banPlayer, "/1 " + adminPlayer.name + " has banned " + banPlayer.name + " for " + days + "days"));
                     setTimeout( function(){ banPlayer.connection.close("Added IP Banned player: " + banPlayer.name + " " + banPlayer.connection._connection.remoteAddress); }, 500);
                     client.hset("b:" + banPlayer.connection._connection.remoteAddress, "rtime", (curTime+(days*24*60*60*1000)).toString());

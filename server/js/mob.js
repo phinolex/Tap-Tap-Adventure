@@ -151,7 +151,7 @@ var Mob = Character.extend({
     },
 
     handleRespawn: function () {
-        var delay = 25000;
+        var delay = 55000;
         var self = this;
 
         if (this.area && this.area instanceof MobArea) {
