@@ -1,4 +1,0 @@
-* [Design Patterns of Successful Role-Playing Games](http://legendaryquest.netfirms.com/books/Patterns.zip) - 272 pages.  But seems like worth a skim.
-* [Open Game Systems](http://wiki.rpg.net/index.php/Open_Game_Systems#Creative_Commons_Licenses) - Potential sources of inspiration.  Stick with the Creative Commons "(Attribution)" and "(Attribution/Share-Alike)" ones.  Avoid anything using any form of "Non-Commercial".
-* [OpenGameArt.org](http://opengameart.org/content/faq) - Possibly useful source for further artwork.
-* [BrowserQuest Class Diagram](https://raw.github.com/Ambilight/BrowserQuest/master/doc/ClassDiagram.png) - Shows inheritance between all classes.
