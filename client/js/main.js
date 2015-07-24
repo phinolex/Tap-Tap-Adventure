@@ -201,6 +201,19 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     $('#users').html("" + worldPlayers + " player");
                 }
             });
+            game.onGuildPopulationChange( function(guildName, guildPopulation) {
+				var setGuildPlayersString = function(string) {
+					$("#guild-population").find("span:nth-child(2)").text(string);
+				};
+				$('#guild-population').addClass("visible");
+                $("#guild-population").find("span").text(guildPopulation);
+				$('#guild-name').text(guildName);
+                if(guildPopulation == 1) {
+                    setGuildPlayersString("player");
+                } else {
+                    setGuildPlayersString("players");
+                }
+			});
                 
                 
             game.onGameStart(function() {

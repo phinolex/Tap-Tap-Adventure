@@ -380,6 +380,41 @@ module.exports = Player = Character.extend({
             } else if(action === Types.Messages.RANKING){
                 log.info("RANKING: " + self.name + " " + message[1]);
                 self.handleRanking(message);
+            } else if(action === Types.Messages.GUILD) {
+                if(message[1] === Types.Messages.GUILDACTION.CREATE) {
+                    var guildname = Utils.sanitize(message[2]);
+                    if(guildname === "") { //inaccurate name
+                        self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.BADNAME,message[2]));
+                    } else {
+                        var guildId = self.server.addGuild(guildname);
+                        if(guildId === false) {
+                            self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.ALREADYEXISTS, guildname));
+                        } else {
+                            self.server.joinGuild(self, guildId);
+                            self.server.pushToPlayer(self, new Messages.Guild(Types.Messages.GUILDACTION.CREATE, [guildId, guildname]));
+                        }
+                    }
+                }
+                else if(message[1] === Types.Messages.GUILDACTION.INVITE) {
+                    var userName = message[2];
+                    var invitee;
+                    if(self.group in self.server.groups) {
+                        invitee = _.find(self.server.groups[self.group].entities,
+                                         function(entity, key) { return (entity instanceof Player && entity.name == userName) ? entity : false; });
+                        if(invitee) {
+                            self.getGuild().invite(invitee,self);
+                        }
+                    }
+                }
+                else if(message[1] === Types.Messages.GUILDACTION.JOIN) {
+                    self.server.joinGuild(self, message[2], message[3]);
+                }
+                else if(message[1] === Types.Messages.GUILDACTION.LEAVE) {
+                    self.leaveGuild();
+                }
+                else if(message[1] === Types.Messages.GUILDACTION.TALK) {
+                    self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
+                }
             } else if(action === Types.Messages.BOARDWRITE){
                 log.info("BOARDWRITE: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
                 var command = message[1];
@@ -986,6 +1021,36 @@ module.exports = Player = Character.extend({
         }
         return true;
     },
+    setGuildId: function(id) {
+        if(typeof this.server.guilds[id] !== "undefined") {
+            this.guildId = id;
+        }
+        else {
+            log.error(this.id + " cannot add guild " + id + ", it does not exist");
+        }
+    },
+
+    getGuild: function() {
+        return this.hasGuild ? this.server.guilds[this.guildId] : undefined;
+    },
+
+    hasGuild: function() {
+        return (typeof this.guildId !== "undefined");
+    },
+
+    leaveGuild: function() {
+        if(this.hasGuild()){
+            var leftGuild = this.getGuild();
+            leftGuild.removeMember(this);
+            this.server.pushToGuild(leftGuild, new Messages.Guild(Types.Messages.GUILDACTION.LEAVE, [this.name, this.id, leftGuild.name]));
+            delete this.guildId;
+            this.server.pushToPlayer(this, new Messages.Guild(Types.Messages.GUILDACTION.LEAVE, [this.name, this.id, leftGuild.name]));
+        }
+        else {
+            this.server.pushToPlayer(this, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.NOLEAVE,""));
+        }
+    },
+
 
     sendWelcome: function(armor, weapon, avatar, weaponAvatar, exp, admin,
                           bannedTime, banUseTime, x, y, chatBanEndTime, rank,
@@ -1015,7 +1080,6 @@ module.exports = Player = Character.extend({
         self.orientation = Utils.randomOrientation;
         self.updateHitPoints();
 
-        /*player, otherPlayer, itemKind, itemSkillKind, itemSkillLevel, itemCount, newPlayer*/
         if(x === 0 && y === 0) {
             self.updatePosition();
         } else {
@@ -1042,10 +1106,10 @@ module.exports = Player = Character.extend({
                     self.experience, //10
                     self.admin, //11
                     self.mana, //12
-                    self.variations.doubleEXP,
-                    self.variations.expMultiplier,
-                    self.membership,
-                    self.kind
+                    self.variations.doubleEXP, //13
+                    self.variations.expMultiplier, //14
+                    self.membership, //15
+                    self.kind //16
                 ];
 
                 for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){

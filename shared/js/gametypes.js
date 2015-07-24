@@ -84,7 +84,29 @@ Types = {
         STOREOPEN: 56,
         STORESELL: 57,
         STOREBUY: 58,
-        WANTED: 59
+        WANTED: 59,
+        GUILD: 60,
+        GUILDERROR: 61,
+        GUILDERRORTYPE: {
+        	DOESNOTEXIST: 1,
+        	BADNAME: 2,
+        	ALREADYEXISTS: 3,
+        	NOLEAVE: 4,
+        	BADINVITE: 5,
+        	GUILDRULES: 6,
+        	IDWARNING: 7
+        },
+        GUILDACTION: {
+			CONNECT: 8,
+			ONLINE: 9,
+			DISCONNECT: 10,
+			INVITE: 11,
+			LEAVE: 12,
+			CREATE: 13,
+			TALK: 14,
+			JOIN: 15,
+			POPULATION: 16
+		}
     },
 
     Entities: {

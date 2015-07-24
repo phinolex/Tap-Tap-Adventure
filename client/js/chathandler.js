@@ -67,7 +67,7 @@ define(['jquery'], function() {
                     'receivers': {
                         // World chat
                         "/1 ": function(entityId, message) {
-                            self.addToChatLog(message);
+                                self.addToChatLog(message);
                             return true;
                         },
                         "// ": function(entityId, message){
@@ -112,10 +112,9 @@ define(['jquery'], function() {
             $(el).appendTo(this.chatLog);
             $(this.chatLog).scrollTop(999999);
         },
-        addNormalChat: function(name, message){
+        addNormalChat: function(name, message, theEntity){
             var self = this;
-
-            var el = $('<p style="color: rgba(255, 255, 0, 1)">' + name + ': ' + message + '</p>');
+            var el = theEntity.admin ? $('<p style="color: rgba(234, 39, 13, 1)">' + "[Admin]" + name + ': ' + message + '</p>') : $('<p style="color: rgba(255, 255, 0, 1)">' + name + ': ' + message + '</p>');
             $(el).appendTo(this.chatLog);
             $(this.chatLog).scrollTop(999999);
         }

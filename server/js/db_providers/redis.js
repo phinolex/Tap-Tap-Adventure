@@ -8,7 +8,7 @@ var cls = require("../lib/class"),
     redis = require("redis"),
     bcrypt = require("bcrypt"),
     inventory = require("../inventory");
-
+    
 module.exports = DatabaseHandler = cls.Class.extend({
     init: function(config){
         client = redis.createClient(config.redis_port, config.redis_host, {socket_nodelay: true});
@@ -195,11 +195,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                     }
                                     
                                 }
-                                client.sadd("adminname", "Flavius");
-                                client.sadd("adminname", "H0lybyte");
-                                //Remove both Moderators and Administrators and 
-                                // replace that with Ranks instead, using Rank 1 
-                                // for Moderator and Rank 2 for Administrators
                                 
                                 
                                 log.info("Player name: " + player.name);
@@ -255,9 +250,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
         // Check if username is taken
         client.sismember('usr', player.name, function(err, reply) {
             if(reply === 1) {
-                //this.checkBan(player);
-                
-                
                 player.connection.sendUTF8("userexists");
                 player.connection.close("Username not available: " + player.name);
                 return;
@@ -290,26 +282,16 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             
                                 return;
                         } 
-                        
-                        player.sendWelcome(
-                            "clotharmor", "sword1", null, null, 0,
-                             null, 0, 0,
-                             player.x, player.y, 0, 0,
-                                     0, 0, 0,
-                                     0, 0, 0,
-                                     0, 0, 0,
-                                     0, 0, 0,
-                                     null, 0, 0, 0,
-                                     null, 0, 0, 0,
-                                     null, 0, 0, 0,
-                                     false, 0, Types.Entities.WARRIOR);
-                       
+                        player.sendWelcome("clotharmor", "sword1", null, null, 0, null, 0, 0, player.x, player.y, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, null, 0, 0, 0, null, 0, 0, 0, false, 0, Types.Entities.WARRIOR);
                         
                     });
                     
             }
         });
     },
+
+        
+
 
     checkBan: function(player) {
         log.info("Name: " + player.name + "IP: " + player.connection._connection.remoteAddress);
@@ -616,6 +598,30 @@ module.exports = DatabaseHandler = cls.Class.extend({
             });
         });
     },
+    
+    addGuildMember: function(player, guildName) {
+        log.info("Set guild: " + guildName + " to player: " + player.name);
+        client.hset("u:" + player.name, "guild" + guildName);
+    },
+    
+    addGuildInvite: function(player, guildName) {
+        log.info("Player: " + player.name + " has been invited to: " + guildName);
+        client.hset("u:" + player.name, "guildInvite" + guildName);
+    },
+    
+    removeGuildMember: function(player, guildName) {
+        log.info("Player: " + player.name + " has been removed from: " + guildName);
+        client.hdel("u:" + player.name, "guild" + guildName);
+    },
+    
+    removeGuildInvite: function(player, guildName) {
+        log.info("Player invitation for: " + player.name + " has been removed for: " + guildName);
+        client.hdel("u:" + player.name, "guildInvite" + guildName);
+    },
+    checkGuildInvite: function(player, guildName) {
+        
+    },
+    
     setInventory: function(player, inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
         if(itemKind){
             client.hset("u:" + player.name, "inventory" + inventoryNumber, Types.getKindAsString(itemKind));

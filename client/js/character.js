@@ -11,6 +11,12 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             this.nextGridX = -1;
             this.nextGridY = -1;
             this.orientation = Types.Orientations.DOWN;
+            
+            /* 
+             * Have to handle this
+             * server side
+             * then have it sent using gameclient
+             */
 
             // Speeds
             this.atkSpeed = 50;
