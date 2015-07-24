@@ -628,6 +628,7 @@ js/statehandler.js
 js/tabbook.js
 js/tabpage.js
 js/storedialog.js
+js/guild.js
 js/../../shared/js/gametypes.js
 js/game.js
 

@@ -133,7 +133,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var membershipUseTime = replies[45];
                             var membershipLoginTime = replies[46];
                             var membershipRemainingTime = replies[47];
-                            var kind = Utils.NaN2Zero(replies[48]) === 222 ? Types.Entities.ARCHER : Types.Entities.WARRIOR;
+                            var kind = Utils.NaN2Zero(replies[48]);
                            
                             //var curTime = new Date();
                             //Check ban here
@@ -231,11 +231,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
             return;
         });
     },
+    changePlayerKind: function(player, kind) {
+        log.info("Player: " + player.name + " has been changed to: " + kind)
+        client.hset("u:" + player.name, "kind", kind);
 
-    prepareNameForDisplay: function(playerName) {
-        var name = this.capitalizeFirstLetter(playerName);
-
-        return name;
     },
     capitalizeFirstLetter: function(string) {
 
@@ -601,22 +600,22 @@ module.exports = DatabaseHandler = cls.Class.extend({
     
     addGuildMember: function(player, guildName) {
         log.info("Set guild: " + guildName + " to player: " + player.name);
-        client.hset("u:" + player.name, "guild" + guildName);
+        client.hset("u:" + player.name, "guild", guildName);
     },
     
     addGuildInvite: function(player, guildName) {
         log.info("Player: " + player.name + " has been invited to: " + guildName);
-        client.hset("u:" + player.name, "guildInvite" + guildName);
+        client.hset("u:" + player.name, "guildInvite", guildName);
     },
     
     removeGuildMember: function(player, guildName) {
         log.info("Player: " + player.name + " has been removed from: " + guildName);
-        client.hdel("u:" + player.name, "guild" + guildName);
+        client.hdel("u:" + player.name, "guild", guildName);
     },
     
     removeGuildInvite: function(player, guildName) {
         log.info("Player invitation for: " + player.name + " has been removed for: " + guildName);
-        client.hdel("u:" + player.name, "guildInvite" + guildName);
+        client.hdel("u:" + player.name, "guildInvite", guildName);
     },
     checkGuildInvite: function(player, guildName) {
         

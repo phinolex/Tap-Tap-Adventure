@@ -667,9 +667,9 @@ module.exports = Player = Character.extend({
             this.weaponAvatarEnchantedPoint = 0;
         }
         if (Types.isArcherWeapon(kind)) {
-            this.kind = Types.Entities.ARCHER;
+            databaseHandler.changePlayerKind(this, "archer");
         } else {
-            this.kind = Types.Entities.WARRIOR;
+            databaseHandler.changePlayerKind(this, "archer");
         }
 
         this.weaponLevel = Properties.getWeaponLevel(kind) + this.weaponEnchantedPoint;

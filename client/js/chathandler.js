@@ -137,7 +137,8 @@ define(['jquery'], function() {
         },
         addNormalChat: function(name, message, theEntity){
             var self = this;
-            var el = theEntity.admin ? $('<p style="color: rgba(234, 39, 13, 1)">' + "[Admin]" + name + ': ' + message + '</p>') : $('<p style="color: rgba(255, 255, 0, 1)">' + name + ': ' + message + '</p>');
+            var el = self.game.player.admin ? $('<p style="color: rgba(234, 39, 13, 1)">' + "[Admin]" + name + ': ' + message + '</p>') : $('<p style="color: rgba(255, 255, 0, 1)">' + name + ': ' + message + '</p>');
+
             $(el).appendTo(this.chatLog);
             $(this.chatLog).scrollTop(999999);
         }

@@ -887,12 +887,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                                avatar, weaponAvatar, experience, admin,
                                                questFound, questProgress, inventory, inventoryNumber,
                                                maxInventoryNumber, inventorySkillKind, inventorySkillLevel, doubleExp,
-                                               expMultiplier, membership) {
+                                               expMultiplier, membership, kind) {
                     log.info("Received player ID from server : "+ id);
                     self.player.id = id;
                     self.playerId = id;
                     // Always accept name received from the server which will
                     // sanitize and shorten names exceeding the allowed length.
+                    //self.player.kind = kind;
                     self.player.name = name;
                     self.player.admin = admin;
                     self.player.experience = experience;
@@ -904,12 +905,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.player.setMaxMana(mana);
                     self.player.setArmorName(armor);
                     self.player.setSpriteName(avatar);
-                    if (Types.isArcherWeapon(weapon)) {
-                        self.player.setAtkRange(10);
-                    } else {
-                        self.player.setAtkRange(1);
-                    }
                     self.player.setWeaponName(weaponAvatar ? weaponAvatar : weapon);
+
                     self.player.skillHandler = new SkillHandler(self);
                     self.membership = membership;
                     self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
@@ -1624,11 +1621,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 if (Types.isWeapon(itemKind)) {
                                     
                                     player.setAtkRange(1);
-                                    player.kind = Types.Entities.WARRIOR;
+                                    player.kind = "warrior";
                                 } else if (Types.isArcherWeapon(itemKind)) {  
                                     
                                     player.setAtkRange(10);
-                                    player.kind = Types.Entities.ARCHER;
+                                    player.kind = "archer";
                                 }
 
                                 if(self.player.id === player.id){
@@ -1690,7 +1687,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             var entity = self.getEntityById(entityId);
                             self.createBubble(entityId, message);
                             self.assignBubbleTo(entity);
-                            self.chathandler.addNormalChat(entity.name, message, entity);
+                            self.chathandler.addNormalChat(entity.name, message);
                         }
                         self.audioManager.playSound("chat");
                     });

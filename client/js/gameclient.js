@@ -73,7 +73,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
 
         connect: function(dispatcherMode) {
-            var url = "wss://"+ this.host +":"+ this.port +"/",
+            var url = "ws://"+ this.host +":"+ this.port +"/",
                 self = this;
 
             log.info("Trying to connect to server : "+url);
@@ -235,7 +235,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.welcome_callback(id, name, x, y, hp, mana, armor, weapon, avatar,
                 weaponAvatar, experience, admin, questFound, questProgress,
                 inventory, inventoryNumber, maxInventoryNumber,
-                inventorySkillKind, inventorySkillLevel, doubleExp, expMultiplier, membership);
+                inventorySkillKind, inventorySkillLevel, doubleExp, expMultiplier, membership, kind);
             }
         },
 
