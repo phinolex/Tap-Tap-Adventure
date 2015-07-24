@@ -18,6 +18,18 @@ define(['jquery'], function() {
                 } else {
                     self.addNotification('We are open to suggestions!');
                 }
+                // OPTIMIZED VERSION !!! NON TESTED
+               // var randNumber = Math.random();
+                //if(randNumber < 0.25)
+                  //  self.addNotification('Make sure you sign up on the forum!');
+                //else if(randNumber < 0.5)
+                  //  self.addNotification('This game is also playable on mobile devices, including tablets.');
+                //else if(randNumber < 0.75)
+                  //  self.addNotification('Invite your friends today!');
+                //else if(Math.round(Math.random() * 3628) + 1074==Math.round(Math.random() * 3628) + 1074)
+                  //  self.addNotification('You found a special easteregg!');
+                //else
+                  //  self.addNotification('We are open to suggestions!');
             }, 1000*60*20);
         },
         show: function(){
