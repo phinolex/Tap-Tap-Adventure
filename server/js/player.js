@@ -179,11 +179,7 @@ module.exports = Player = Character.extend({
 
 
                     } else if (msg.startsWith("/kick ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ').join('_')[1]);
-                        //Try this before applying it everywhere.
-                        //Players that have Spaces in their names 
-                        //have those replaced with "_" for them
-                        //to get kicked.
+                        var targetPlayer = self.server.getPlayerByName(msg.split('_'));
 
                         if (targetPlayer) {
                             databaseHandler.kickPlayer(self, targetPlayer);
@@ -208,7 +204,7 @@ module.exports = Player = Character.extend({
                         var y = (msg.split(' ')[3]) * 1;
 
                         if (playerName) {
-                            databaseHandler.teleportPlayer(self ,playerName, x, y);
+                            databaseHandler.teleportPlayer(self, playerName, x, y);
 
 
                         }

@@ -56,6 +56,7 @@ define(function() {
             }
         },
         //Optimized version of 'forEachVisiblePosition'
+
         forEachVisibleValidPosition: function(callback, extra, map) {
             var extra = extra || 0;
             

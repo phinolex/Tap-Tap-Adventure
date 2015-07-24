@@ -1928,15 +1928,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 var self = this,
                     m = this.map;
 
-                this.camera.forEachVisiblePosition(function(x, y) {
-                    if(!m.isOutOfBounds(x, y)) {
-                        if(self.renderingGrid[y][x]) {
-                            _.each(self.renderingGrid[y][x], function(entity) {
-                                callback(entity);
-                            });
-                        }
+                this.camera.forEachVisibleValidPosition(function(x, y) {
+                    if(self.renderingGrid[y][x]) {
+                        _.each(self.renderingGrid[y][x], function(entity) {
+                            callback(entity);
+                        });
                     }
-                }, this.renderer.mobile ? 0 : 2);
+                }, this.renderer.mobile ? 1 : 2, m);
             },
 
             /**
@@ -1945,11 +1943,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             forEachVisibleTileIndex: function(callback, extra) {
                 var m = this.map;
 
-                this.camera.forEachVisiblePosition(function(x, y) {
-                    if(!m.isOutOfBounds(x, y)) {
-                        callback(m.GridPositionToTileIndex(x, y) - 1);
-                    }
-                }, extra);
+                this.camera.forEachVisibleValidPosition(function(x, y) {
+                    //if(!m.isOutOfBounds(x, y)) {
+                    callback(m.GridPositionToTileIndex(x, y) - 1);
+                    //}
+                }, extra, m);
             },
 
             /**

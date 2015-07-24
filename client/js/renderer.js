@@ -580,13 +580,10 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     }
                     if(entity instanceof Player){
                         var medal = null;
-                        if(entity.rank < 3){
+                        if(entity.admin){
                             medal = this.game.sprites["goldmedal"];
-                        } else if(entity.rank < 10){
-                            medal = this.game.sprites["silvermedal"];
-                        } else if(entity.rank < 30){
-                            medal = this.game.sprites["bronzemedal"];
                         }
+
                         if(medal){
                             this.context.drawImage(medal.image, 0, 0, medal.width * os, medal.height * os,
                                 4 * ds,
