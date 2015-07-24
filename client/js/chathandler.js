@@ -56,6 +56,9 @@ define(['jquery'], function() {
                           if (self.game.player.admin) {
                               name = "[Admin] " + name;
                           }
+                          // OPTIMIZED VERSION !!! NON TESTED
+                          //if (self.game.player.admin)
+                          //    name = "[Admin]" + name;
                           self.game.client.sendChat("/1 " + name + ": " + message);
                           return true;
                       },
@@ -65,6 +68,11 @@ define(['jquery'], function() {
                           } else{
                               self.game.client.sendKung(message);
                           }
+                          // OPTIMIZED VERSION !!! NON TESTED
+                          //if(message.lenght !== 3)
+                          //    self.game.showNotification(message + "Incorrect message syntax.");
+                          //else
+                          //    self.game.client.sendKung(message);
                           return true;
                       },
                       "// ": function(message) {
@@ -79,7 +87,7 @@ define(['jquery'], function() {
                     'receivers': {
                         // World chat
                         "/1 ": function(entityId, message) {
-                                self.addToChatLog(message);
+                            self.addToChatLog(message);
                             return true;
                         },
                         "// ": function(entityId, message){
@@ -94,6 +102,9 @@ define(['jquery'], function() {
                                   if(i !== 3){
                                       msg += splitMsg[i] + " ";
                                   }
+                                  // OPTIMIZED VERSION !!! NON TESTED
+                                  //if(i !== 3)
+                                  //    msg += splitMsg[i] + " ";
                             }
                             self.addToChatLog('<font color="#FFA500">' + msg + '</font>');
                             return true;
@@ -131,6 +142,5 @@ define(['jquery'], function() {
             $(this.chatLog).scrollTop(999999);
         }
     });
-  
     return ChatHandler;
 });
