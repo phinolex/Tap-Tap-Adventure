@@ -55,6 +55,8 @@ define(['jquery'], function() {
                           var name = self.game.player.name;
                           if (self.game.player.admin) {
                               name = "[Admin] " + name;
+                          } else if (self.game.player.moderator) {
+                              name = "[Mod] " + name
                           }
                           // OPTIMIZED VERSION !!! NON TESTED
                           //if (self.game.player.admin)
@@ -137,7 +139,7 @@ define(['jquery'], function() {
         },
         addNormalChat: function(name, message, theEntity){
             var self = this;
-            var el = self.game.player.admin ? $('<p style="color: rgba(234, 39, 13, 1)">' + "[Admin]" + name + ': ' + message + '</p>') : $('<p style="color: rgba(255, 255, 0, 1)">' + name + ': ' + message + '</p>');
+            var el = self.game.player.admin ? $('<p style="color: rgba(251, 86, 65, 1)">' + "[Admin] " + name + ': ' + message + '</p>') : self.game.player.moderator ? $('<p style="color: rgba(219, 100, 53, 1)">' + "[Mod] " + name + ': ' + message + '</p>') : $('<p style="color: rgba(255, 255, 0, 1)">' + name + ': ' + message + '</p>');
 
             $(el).appendTo(this.chatLog);
             $(this.chatLog).scrollTop(999999);
