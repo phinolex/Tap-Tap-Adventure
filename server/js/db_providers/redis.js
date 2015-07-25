@@ -349,7 +349,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
         });
     },
     unmute: function(adminPlayer, targetPlayer) {
-        client.smembers("adminname", function(err, replies){
+        client.smembers("adminname" || "moderators", function(err, replies){
             for(var index = 0; index < replies.length; index++){
                 if(replies[index].toString() === adminPlayer.name){
                     var curTime = (new Date()).getTime();
@@ -379,7 +379,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
         });
     },
     kickPlayer: function(adminPlayer, targetPlayer) {
-        client.smembers("adminname", function(err, replies){
+        client.smembers("adminname" || "moderators", function(err, replies){
             for(var index = 0; index < replies.length; index++){
                 if(replies[index].toString() === adminPlayer.name){
                     targetPlayer.connection.close("Closed connection to " + targetPlayer.name);
