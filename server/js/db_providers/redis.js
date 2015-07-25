@@ -133,7 +133,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var membershipUseTime = replies[45];
                             var membershipLoginTime = replies[46];
                             var membershipRemainingTime = replies[47];
-                            var kind = Utils.NaN2Zero(replies[48]);
+                            var kind = Utils.NaN2Zero(replies[48]) === 222 ? Types.Entities.ARCHER : Types.Entities.WARRIOR;
                            
                             //var curTime = new Date();
                             //Check ban here
@@ -209,7 +209,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 log.info("Last Login Time: " + lastLoginTimeDate.toString());
                                 log.info("Chatting Ban End Time: " + (new Date(chatBanEndTime)).toString());
 
-                                 player.sendWelcome(armor, weapon, avatar, weaponAvatar, exp, admin,
+                                 player.sendWelcome(armor, weapon, avatar, weaponAvatar, exp, moderator, admin,
                                     bannedTime, banUseTime, x, y, chatBanEndTime, rank, 
                                     armorEnchantedPoint, armorSkillKind, armorSkillLevel,
                                     avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel, 

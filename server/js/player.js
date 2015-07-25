@@ -94,7 +94,115 @@ module.exports = Player = Character.extend({
             if(action === Types.Messages.CREATE || action === Types.Messages.LOGIN) {
                 var name = Utils.sanitize(message[1]);
                 var pw = Utils.sanitize(message[2]);
+                var session_id_kbve = false;
 
+                /**
+                 *  I was thinking we put the API check before everything and then not even have to use redis to verify the password again.
+                 *  Basically under redis.js, you check if the password is correct? Lets just assume after it checks the API and if it returns true,
+                 *  then the username is EITHER valid OR not existent.
+                 *  if Valid, then we just load the character , no point in checking the password again...
+                 * if not existent, we just create it ... then move forward.
+                 * The API will be ready in 15mins ~
+                 * https://kbve.com/api/vengyn/member/vengyn_member_login.php?action=login&username=demo&password=demo
+                 * I am going to put a block for bruteforce and require an API key.
+                 *  Basically, if the username and password are correct (demo, demo are), then it returns a session_id
+                 * {"session_id": "c514c91e4ed341f263e458d44b3bb0a7"}
+                 * 
+                 * if its false, it returns... false for the session_id...
+                 * 
+                 * 
+                 * THEN, with the session_id, you can pull anything you want..
+                 * 
+                 * https://kbve.com/api/tta/tta_m.php?session_id=c514c91e4ed341f263e458d44b3bb0a7
+                 * 
+                 * It gives you demo / demo 's full KBVE profile in json
+                 * 
+                 * "email":"mamosa@gmail.com
+                 * "ip_address":"142.105.37.212"
+                 * member_group_id":"3" , where 3 is a normal user, you can reference the admin panel for the exact user ids
+                 *  So if they are in the group that is ban, we will go ahead and 
+                 * 
+                 * We can grab PMs, their KBVE credits, special exp boost if they recently were active, ect..
+                 * 
+                 * Furthermore, we can also grab their crypto-currency and steam_id (if they add it).
+                 * 
+                 * 
+                 * http://rapiddg.com/blog/calling-rest-api-nodejs-script
+                 * 
+                 * I changed the API to https://kbve.com/api/tta/tta_l.php  , and its no longer $_GET but rather $_POST via JSON .
+                 * 
+                 * http://gurujsonrpc.appspot.com/ (You can use this to test the API)
+                 * 
+                 * 
+                *
+                * 
+                * Here is how i am thinking of it working.. performRequest is from the link above. 
+                * 
+                  
+                  
+                  
+                  performRequest('https://kbve.com/api/tta/tta_l.php', 'POST', {
+                    
+                    method: login,
+                    username: name,
+                    password: pw
+                  }, function(data) {
+                    session_id_kbve = data.session_id;
+                  
+                            
+                        if(session_id_kbve)
+                                {
+                                    if(name exists)
+                                     {
+                                         
+                                         Load Character ($name); 
+                                     }
+                                     else
+                                     {
+                                        Call TTA API to get member info, such as email.
+                                         createAccount($name, $pw, $email, $kbve_userid); // We should also add their KBVE UserID, but the email kinda can be an ID.
+                                         
+                                         
+                                     }
+                                    
+                                }
+                                else
+                                {
+                                    
+                                        player.connection.sendUTF8("invalidlogin");
+                                        player.connection.close("Wrong KBVE Password: " + player.name);
+                                        return;
+                                }
+                  
+                  });
+                  
+                
+                
+                
+                
+                 * 
+                 * 
+                 * 
+                 * 
+                **/
+                
+                /* 
+                // Check Password
+                This is how redis checks the player's password
+                bcrypt.compare(player.pw, pw, function(err, res) {
+                    if(!res) {
+                        player.connection.sendUTF8("invalidlogin");
+                        player.connection.close("Wrong Password: " + player.name);
+                        return;
+                    }
+                
+                
+                
+                
+                
+                */
+                
+                
 
                 /**
                  * Implement RSA Authorization
@@ -1052,7 +1160,7 @@ module.exports = Player = Character.extend({
     },
 
 
-    sendWelcome: function(armor, weapon, avatar, weaponAvatar, exp, admin,
+    sendWelcome: function(armor, weapon, avatar, weaponAvatar, exp, moderator, admin,
                           bannedTime, banUseTime, x, y, chatBanEndTime, rank,
                           armorEnchantedPoint, armorSkillKind, armorSkillLevel,
                           avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel,
@@ -1064,6 +1172,7 @@ module.exports = Player = Character.extend({
                           membershipTime, kind) {
         var self = this;
         self.kind = kind;
+        self.moderator = moderator;
         self.admin = admin;
         self.equipArmor(Types.getKindFromString(armor), armorEnchantedPoint, armorSkillKind, armorSkillLevel);
         self.equipWeapon(Types.getKindFromString(weapon), weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel);
@@ -1109,7 +1218,8 @@ module.exports = Player = Character.extend({
                     self.variations.doubleEXP, //13
                     self.variations.expMultiplier, //14
                     self.membership, //15
-                    self.kind //16
+                    self.kind, //16
+                    self.moderator
                 ];
 
                 for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){

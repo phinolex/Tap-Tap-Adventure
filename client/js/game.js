@@ -884,7 +884,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 });
 
                 this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon,
-                                               avatar, weaponAvatar, experience, admin,
+                                               avatar, weaponAvatar, experience, moderator, admin,
                                                questFound, questProgress, inventory, inventoryNumber,
                                                maxInventoryNumber, inventorySkillKind, inventorySkillLevel, doubleExp,
                                                expMultiplier, membership, kind) {
@@ -896,6 +896,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     //self.player.kind = kind;
                     self.player.name = name;
                     self.player.admin = admin;
+                    self.player.moderator = moderator;
                     self.player.experience = experience;
                     self.player.level = Types.getLevel(experience);
                     self.doubleEXP = doubleExp;
@@ -997,7 +998,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                          self.tryLootingItem(item);
                          }*/
 
-
+                        //ye se whatrm talken aboot? ah?
 
                         self.updatePlayerCheckpoint();
 

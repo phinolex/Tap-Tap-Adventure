@@ -12,7 +12,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             // Renderer
             this.nameOffsetY = -10;
             this.admin = null;
-            this.mod = null;
+            this.moderator = null;
             // sprites
             this.spriteName = "clotharmor";
             this.armorName = "clotharmor";

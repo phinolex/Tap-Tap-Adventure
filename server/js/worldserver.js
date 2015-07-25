@@ -501,11 +501,11 @@ module.exports = World = cls.Class.extend({
         this.addEntity(player);
         this.players[player.id] = player;
         this.outgoingQueues[player.id] = [];
-        var res = true;
+        /*var res = true;
         if(typeof guildId !== 'undefined'){
 			res = this.joinGuild(player, guildId);
 		}
-		return res;
+		return res;*/
         log.info("Added player : " + player.id);
     },
 
@@ -513,9 +513,9 @@ module.exports = World = cls.Class.extend({
 
         player.broadcast(player.despawn());
         this.removeEntity(player);
-        if(player.hasGuild()){
+        /*if(player.hasGuild()){
 			player.getGuild().removeMember(player);
-		}
+		}*/
         delete this.players[player.id];
         delete this.outgoingQueues[player.id];
     },

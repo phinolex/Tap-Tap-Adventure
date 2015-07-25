@@ -208,7 +208,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 doubleExp = data.shift(),
                 expMultiplier = data.shift(),
                 membership = data.shift(),
-                kind = data.shift();
+                kind = data.shift(),
+                moderator = data.shift();
        
             var i=0;
             var questFound = [];
@@ -233,7 +234,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 
             if(this.welcome_callback) {
                 this.welcome_callback(id, name, x, y, hp, mana, armor, weapon, avatar,
-                weaponAvatar, experience, admin, questFound, questProgress,
+                weaponAvatar, experience, moderator, admin, questFound, questProgress,
                 inventory, inventoryNumber, maxInventoryNumber,
                 inventorySkillKind, inventorySkillLevel, doubleExp, expMultiplier, membership, kind);
             }
