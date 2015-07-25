@@ -968,9 +968,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.player.onAggro(function(mob) {
                         if(!mob.isWaitingToAttack(self.player) && !self.player.isAttackedBy(mob)) {
-                            self.player.log_info("Aggroed by " + mob.id + " at ("+self.player.gridX+", "+self.player.gridY+")");
-                            self.client.sendAggro(mob);
-                            mob.waitToAttack(self.player);
+                            if (Types.getMobLevel(mob) * 2 < self.player.level) {
+                                self.player.log_info("Aggroed by " + mob.id + " at ("+self.player.gridX+", "+self.player.gridY+")");
+                                self.client.sendAggro(mob);
+                                mob.waitToAttack(self.player);
+                            }    
                         }
                     });
 
@@ -2491,57 +2493,58 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             tryMovingToADifferentTile: function(character) {
-                var attacker = character,
-                    target = character.target;
-
-                if(attacker && target && target instanceof Player) {
-                    if(!target.isMoving() && attacker.getDistanceToEntity(target) === 0) {
-                        var pos;
-
-                        switch(target.orientation) {
-                            case Types.Orientations.UP:
-                                pos = {x: target.gridX, y: target.gridY - 1, o: target.orientation}; break;
-                            case Types.Orientations.DOWN:
-                                pos = {x: target.gridX, y: target.gridY + 1, o: target.orientation}; break;
-                            case Types.Orientations.LEFT:
-                                pos = {x: target.gridX - 1, y: target.gridY, o: target.orientation}; break;
-                            case Types.Orientations.RIGHT:
-                                pos = {x: target.gridX + 1, y: target.gridY, o: target.orientation}; break;
-                        }
-
-                        if(pos) {
-                            attacker.previousTarget = target;
-                            attacker.disengage();
-                            attacker.idle();
-                            this.makeCharacterGoTo(attacker, pos.x, pos.y);
-                            target.adjacentTiles[pos.o] = true;
-
-                            return true;
-                        }
+            var attacker = character,
+                target = character.target;
+            
+            
+            if(attacker && target && target instanceof Player && attacker instanceof Mob) {
+                if (!target.isMoving() && attacker.getDistanceToEntity(target) === 0) {
+                    var pos;
+                    
+                    switch(target.orientation) {
+                        case Types.Orientations.UP:
+                            pos = {x: target.gridX, y: target.gridY - 1, o: target.orientation}; break;
+                        case Types.Orientations.DOWN:
+                            pos = {x: target.gridX, y: target.gridY + 1, o: target.orientation}; break;
+                        case Types.Orientations.LEFT:
+                            pos = {x: target.gridX - 1, y: target.gridY, o: target.orientation}; break;
+                        case Types.Orientations.RIGHT:
+                            pos = {x: target.gridX + 1, y: target.gridY, o: target.orientation}; break;
                     }
-
-                    if(!target.isMoving() && attacker.isAdjacentNonDiagonal(target) && this.isMobOnSameTile(attacker)) {
-                        var pos = this.getFreeAdjacentNonDiagonalPosition(target);
-
-                        // avoid stacking mobs on the same tile next to a player
-                        // by making them go to adjacent tiles if they are available
-                        if(pos && !target.adjacentTiles[pos.o]) {
-                            if(this.player.target && attacker.id === this.player.target.id) {
-                                return false; // never unstack the player's target
-                            }
-
-                            attacker.previousTarget = target;
-                            attacker.disengage();
-                            attacker.idle();
-                            this.makeCharacterGoTo(attacker, pos.x, pos.y);
-                            target.adjacentTiles[pos.o] = true;
-
-                            return true;
-                        }
+                    
+                    if(pos) {
+                        attacker.previousTarget = target;
+                        attacker.disengage();
+                        attacker.idle();
+                        this.makeCharacterGoTo(attacker, pos.x, pos.y);
+                        target.adjacentTiles[pos.o] = true;
+                        
+                        return true;
                     }
                 }
-                return false;
-            },
+            
+                if(!target.isMoving() && attacker.isAdjacentNonDiagonal(target) && this.isMobOnSameTile(attacker)) {
+                    var pos = this.getFreeAdjacentNonDiagonalPosition(target);
+            
+                    // avoid stacking mobs on the same tile next to a player
+                    // by making them go to adjacent tiles if they are available
+                    if(pos && !target.adjacentTiles[pos.o]) {
+                        if(this.player && this.player.target && attacker.id === this.player.target.id) {
+                            return false; // never unstack the player's target
+                        }
+                        
+                        attacker.previousTarget = target;
+                        attacker.disengage();
+                        attacker.idle();
+                        this.makeCharacterGoTo(attacker, pos.x, pos.y);
+                        target.adjacentTiles[pos.o] = true;
+                        
+                        return true;
+                    }
+                }
+            }
+            return false;
+        },
 
             /**
              *

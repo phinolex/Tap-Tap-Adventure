@@ -29,7 +29,7 @@ module.exports = World = cls.Class.extend({
         this.id = id;
         this.maxPlayers = maxPlayers;
         this.server = websocketServer;
-        this.ups = 1500;
+        this.ups = 60;
         this.databaseHandler = databaseHandler;
 
         this.map = null;
@@ -133,9 +133,9 @@ module.exports = World = cls.Class.extend({
 
             player.onExit(function() {
                 log.info(player.name + " has left the game.");
-                if(player.hasGuild()){
+                /*if(player.hasGuild()){
 					self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.DISCONNECT, player.name), player);
-				}
+				}*/
                 self.removePlayer(player);
                 self.decrementPlayerCount();
 
@@ -163,10 +163,10 @@ module.exports = World = cls.Class.extend({
 
         this.onRegenTick(function() {
             self.forEachCharacter(function(character) {
-                if(!character.hasFullHealth()) {
-                    character.regenHealthBy(Math.floor(character.maxHitPoints / 25));   
-                    //Handle Mana Regen
-                    if(character.type === 'player') {
+                if(character.type === 'player') {
+                    if(!character.hasFullHealth()) {
+                        character.regenHealthBy(Math.floor(character.maxHitPoints / 25));   
+                        //Handle Mana Regen
                         self.pushToPlayer(character, character.regen());
                     }
                 }

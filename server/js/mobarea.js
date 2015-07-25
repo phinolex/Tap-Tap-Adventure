@@ -11,7 +11,7 @@ module.exports = MobArea = Area.extend({
         this.respawns = [];
         this.setNumberOfEntities(this.nb);
 
-        this.initRoaming();
+        //this.initRoaming();
     },
     spawnMobs: function() {
         for(var i = 0; i < this.nb; i += 1) {
@@ -58,7 +58,7 @@ module.exports = MobArea = Area.extend({
                     }
                 }
             });
-        }, 500);
+        }, 10000);
     },
     createReward: function() {
         var pos = this._getRandomPositionInsideArea();
