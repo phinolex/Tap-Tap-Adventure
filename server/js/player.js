@@ -1617,7 +1617,7 @@ module.exports = Player = Character.extend({
             return;
         }
         this.inventory.makeEmptyInventory(inventoryNumber);
-        if(Utils.ratioToBool(0.1)){
+        if(Utils.ratioToBool(0.4)){
             this.server.pushToPlayer(this, new Messages.Notify("Your enchantment succeeded."));
             if(this.weaponEnchantedPoint){
                 this.weaponEnchantedPoint += 1;
@@ -1648,7 +1648,7 @@ module.exports = Player = Character.extend({
         }
 
         this.inventory.makeEmptyInventory(inventoryNumber);
-        if(Utils.ratioToBool(0.1)){
+        if(Utils.ratioToBool(0.4)){
             this.server.pushToPlayer(this, new Messages.Notify("Enchantment successful."));
             this.weaponSkillKind = Types.Skills.BLOODSUCKING;
             if(this.weaponSkillLevel){
@@ -1671,7 +1671,7 @@ module.exports = Player = Character.extend({
             return;
         }
         this.inventory.makeEmptyInventory(inventoryNumber);
-        if(Utils.ratioToBool(0.3)){
+        if(Utils.ratioToBool(0.4)){
             this.server.pushToPlayer(this, new Messages.Notify("Ring enchantment successful."));
             if(this.ringEnchantedPoint){
                 this.ringEnchantedPoint += 1;
@@ -1701,7 +1701,7 @@ module.exports = Player = Character.extend({
             return;
         }
         this.inventory.makeEmptyInventory(inventoryNumber);
-        if(Utils.ratioToBool(0.3)){
+        if(Utils.ratioToBool(0.4)){
             this.server.pushToPlayer(this, new Messages.Notify("Pendant enchantment successful."));
             if(this.pendantEnchantedPoint){
                 this.pendantEnchantedPoint += 1;

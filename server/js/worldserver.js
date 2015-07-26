@@ -375,6 +375,8 @@ module.exports = World = cls.Class.extend({
                             delete self.server.getConnection(id);
                             
                         }
+                    } else {
+                        delete self.outgoingQueues[id];
                     }
                 }
             } else {
@@ -827,7 +829,16 @@ module.exports = World = cls.Class.extend({
             v = Utils.random(100),
             p = 0,
             item = null;
-        
+            
+        var randomInt = Utils.random(10000);
+
+        if(randomInt === 7){
+          item = this.addItem(this.createItem(Types.Entities.SNOWPOTION, mob.x, mob.y));
+          return item;
+        } else if(randomInt === 77 || randomInt === 777){
+          item = this.addItem(this.createItem(Types.Entities.BLACKPOTION, mob.x, mob.y));
+          return item;
+        }
         for(var itemName in drops) {
             if (drops.hasOwnProperty(itemName)) {
                 var percentage = drops[itemName];

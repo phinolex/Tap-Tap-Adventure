@@ -106,7 +106,8 @@ Types = {
 			TALK: 14,
 			JOIN: 15,
 			POPULATION: 16
-		}
+		},
+		BANK: 62
     },
 
     Entities: {

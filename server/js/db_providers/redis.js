@@ -553,6 +553,31 @@ module.exports = DatabaseHandler = cls.Class.extend({
         });
 
     },
+
+    emptyOutBankItem: function(player, number) {
+        log.info("Emptying Player's Item slot: " + number + " of: " + player.name);
+        client.hdel("u:" + player.name, "bank" + number);
+        client.hdel("u:" + player.name, "bank" + number + ":number");
+        client.hdel("u:" + player.name, "bank" + number + ":skillKind");
+        client.hdel("u:" + player.name, "bank" + number + ":skillLevel");
+        player.send([Types.Messages.BANK, number, null, 0]);
+    },
+    
+    setBank: function(player, bankNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
+        if (itemKind) {
+            client.hset("u:" + player.name, "bank" + bankNumber, Types.getKindAsString(itemKind));
+            client.hset("u:" + player.name, "bank" + bankNumber + ":number", itemNumber);
+            client.hset("u:" + player.name, "bank" + bankNumber + ":skillKind", itemSkillKind);
+            client.hset("u:" + player.name, "bank" + bankNumber + ":skillLevel", itemSkillLevel);
+            player.server.pushToPlayer(player, new Messages.Bank(bankNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel));
+            log.info("Set Bank for: " + player.name);
+        } else {
+            this.emptyOutBankItem(player, bankNumber);
+        }
+        
+    },
+    
+    
     getAllInventory: function(player, callback){
         var userKey = "u:" + player.name;
         client.hget(userKey, "maxInventoryNumber", function(err, maxInventoryNumber){
@@ -653,6 +678,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
             client.hdel("u:" + player.name, "inventory" + number + ":skillLevel");
             player.send([Types.Messages.INVENTORY, number, null, 0]);
     },
+
     
     banTerm: function(time){
         return Math.pow(2, time)*500*60;

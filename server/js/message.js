@@ -268,14 +268,14 @@ Messages.CharacterInfo = Message.extend({
 
 
 Messages.Inventory = Message.extend({
-  init: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+  init: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
     this.inventoryNumber = inventoryNumber;
     this.itemKind = itemKind;
     this.itemNumber = itemNumber;
     this.itemSkillKind = itemSkillKind;
     this.itemSkillLevel = itemSkillLevel;
   },
-  serialize: function(){
+  serialize: function() {
     return [Types.Messages.INVENTORY,
             this.inventoryNumber,
             this.itemKind,
@@ -284,6 +284,25 @@ Messages.Inventory = Message.extend({
             this.itemSkillLevel];
   }
 });
+
+Messages.Bank = Message.extend({
+    init: function(bankNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
+        this.bankNumber = bankNumber;
+        this.itemKind = itemKind;
+        this.itemNumber = itemNumber;
+        this.itemSkillKind = itemSkillKind;
+        this.itemSkillLevel = itemSkillLevel;
+    },
+    serialize: function() {
+        return [Types.Messages.BANK,
+                this.bankNumber,
+                this.itemKind,
+                this.itemNumber,
+                this.itemSkillKind,
+                this.itemSkillLevel];
+    }
+});
+
 Messages.Population = Message.extend({
     init: function (world, total) {
         this.world = world;
