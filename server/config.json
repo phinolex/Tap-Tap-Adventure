@@ -14,5 +14,6 @@
   "server_name" : "TTA1",
   "world_id": 1,
   "production": "heroku",
-  "database": "redis"
+  "database": "redis",
+  "kbve_authorization" : false
 }
