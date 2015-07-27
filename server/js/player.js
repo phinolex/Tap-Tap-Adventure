@@ -263,7 +263,7 @@ module.exports = Player = Character.extend({
                         };
                         if ( typeof String.prototype.endsWith !== 'function' ) {
                             String.prototype.endsWith = function( str ) {
-                                return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
+                                regiturn str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
                             };
                         };
                         
@@ -283,6 +283,7 @@ module.exports = Player = Character.extend({
                                     databaseHandler.kickPlayer(self, targetPlayer);
                             break;
                             case "/ban ":
+                                //Must be server side, else, it will not be allowed to use the API of KBVE
                                 //permanent ban, as the actual banning method will be
                                 //through the KBVE API
                                 var playerBan = self.server.getPlayerByName(msg.split('/ban '));
