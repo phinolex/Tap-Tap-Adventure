@@ -263,7 +263,7 @@ module.exports = Player = Character.extend({
                         };
                         if ( typeof String.prototype.endsWith !== 'function' ) {
                             String.prototype.endsWith = function( str ) {
-                                regiturn str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
+                                return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
                             };
                         };
                         
@@ -290,248 +290,268 @@ module.exports = Player = Character.extend({
                                 if (playerBan)
                                     databaseHandler.newBanPlayer(self, playerBan, 50000);
                             break;
+                            case "/nameban ":
+                                var playerName = self.server.getPlayerByName(msg.split("/nameban "));
+                                if (playerName)
+                                    databaseHandler.newBanPlayer(self, playerName);
+                            break;
+                            case "/move ":
+                                var x = msg.split(' ')[1];
+                                var y = msg.split(' ')[2];
+                                var playerName = self.server.getPlayerByName(msg.split('/move ' + x + y));
+                                log.info("Experimental, moving: " + playerName + " to X: " + x + " y: " + y);
+                                if (playerName)
+                                    databaseHandler.teleportPlayer(self, playerName, x, y);
+                            break;
+                            case "/unmute ":
+                                var playerName = self.server.getPlayerByName(msg.split("/unmute "));
+                                if (playerName)
+                                    databaseHandler.unmute(self, playerName);
+                            break;
+                            case "/mute ":
+                                var mutePlayer = self.server.getPlayerByName(msg.split("/mute "));
+                                if (mutePlayer)
+                                    databaseHandler.chatBan(self, mutePlayer);
+                            break;
+                            case "/pmute ":
+                                var pMutePlayer = self.server.getPlayerByName(msg.split("/pmute "));
+                                if (pMutePlayer) 
+                                    databaseHandler.permanentlyMute(self, pMutePlayer);
+                            break;
+                            case "/promote ":
+                                var rank = msg.split(' ')[1];
+                                var playerName = self.server.getPlayerByName(msg.split("/promote " + rank));
+                                if (playerName)
+                                    databaseHandler.promotePlayer(self, playerName, rank);
+                            break;
+                            case "/demote ":
+                                var targetPlayer = self.server.getPlayerByName(msg.split("/demote "));
+                                if (targetPlayer)
+                                    databaseHandler.demotePlayer(self, targetPlayer);
+                            break;
                         }
                     }
                 break;
                 
-            }
-            if(action === Types.Messages.CHAT) {
-                var msg = Utils.sanitize(message[1]);
-                log.info("CHAT: " + self.name + ": " + msg);
-
-                // Sanitized messages may become empty. No need to broadcast empty chat messages.
-                if(msg && msg !== "") {
-                    msg = msg.substr(0, 60); // Enforce maxlength of chat input
-                    var key = msg.substr(0);
-                    
-                    var targetPalyer = self.server.getPlayerByName(msg.split(' ')[1]);
-                    if(msg.startsWith("/ban ")) {
-                        var banPlayer = self.server.getPlayerByName(msg.split(' ')[2]);
-                        var days = (msg.split(' ')[1])*1;
-                        if(banPlayer)
-                            databaseHandler.banPlayer(self, banPlayer, days);
-                    } else if(msg.startsWith("/banbyname ")) {
-                        var banPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        if(banPlayer)
-                            databaseHandler.newBanPlayer(self, banPlayer);
-                    } else if(msg.startsWith("/move ")) {
-                        var playerName = self.server.getPlayerByName(msg.split(' ')[1]);
-                        var x = (msg.split(' ')[2]) * 1;
-                        var y = (msg.split(' ')[3]) * 1;
-
-                        if (playerName)
-                            databaseHandler.teleportPlayer(self, playerName, x, y);
-                    } else if(msg.startsWith("/unmute ")) {
-                        if (targetPalyer)
-                            databaseHandler.unmute(self, targetPalyer);
-                    }
-
-                    else if(msg.startsWith("/mute ")) {
-                        var mutePlayer1 = self.server.getPlayerByName(msg.split(' ')[1]);
-                        var mutePlayer2 = self.server.getPlayerByName(msg.split(' ')[2]);
-                        if(mutePlayer1)
-                            databaseHandler.chatBan(self, mutePlayer1);
-                        else if (mutePlayer1 && mutePlayer2)
-                            databaseHandler.chatBan(self, mutePlayer1 + mutePlayer2);
-                    } else if(msg.startsWith("/pmute ")) {
-                        if (targetPalyer)
-                            databaseHandler.permanentlyMute(self, targetPalyer);
-
-
-                    } else if(msg.startsWith("/promote ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        var rank = (msg.split(' ')[2]) * 1;
-                        if (targetPlayer && rank)
-                            databaseHandler.promotePlayer(self, targetPalyer, rank);
-                    } else if (msg.startsWith("/demote ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        if (targetPlayer)
-                            databaseHandler.demotePlayer(self, targetPlayer);
-
-                    } else if (msg.startsWith("/sendrequest ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        if (targetPlayer) {
-                            this.trade = new Trade(self, targetPlayer);
-                            this.trade.sendRequest(self, targetPlayer);
+                case Types.Messages.MOVE:
+                    if (self.move_callback) {
+                        var x = message[1],
+                            y = message[2];
+                        
+                        if (self.server.isValidPosition(x, y)) {
+                            self.setPosition(x, y);
+                            self.clearTarget();
+                            self.broadcast(new Messages.Move(self));
+                            self.move_callback(self.x, self.y);
                         }
-
-                    } else if (msg.startsWith("/setability "))
-                        self.setAbility();
-                    else
-                        self.broadcastToZone(new Messages.Chat(self, msg), false);
-
-                }
-            }
-            else if(action === Types.Messages.MOVE) {
-                //log.info("MOVE: " + self.name + "(" + message[1] + ", " + message[2] + ")");
-                if(self.move_callback) {
+                    }
+                break;
+                
+                case Types.Messages.HIT:
+                    log.info("Player: " + self.name + " hit: " + message[1]);
+                    self.handleHit(message);
+                break;
+                
+                case Types.Messages.HURT:
+                    self.handleHurt(message);
+                break;
+                
+                case Types.Messages.INVENTORY:
+                    log.info("Player: " + self.name + " inventory message: " + message[1] + " " + message[2] + " " + message[3]);    
+                break;
+                
+                case Types.Messages.SKILL:
+                    log.info("Player: " + self.name + " skill: " + message[1] + " " + message[2])
+                    self.handleSkill(message);
+                break;
+                
+                case Types.Messages.SKILLINSTALL:
+                    log.info("Skill Install on: " + self.name + " " + message[1] + " " + message[2]);
+                    self.handleSkillInstall(message);
+                break;
+                
+                case Types.Messages.SELL:
+                    log.info("Player: " + self.name + " initiated sell: " + message[1] + " " + message[2]);
+                    self.handleSell(message);
+                break;
+                
+                case Types.Messages.AGGRO:
+                    log.info("Player: " + self.name + " aggro'ed: " + message[1]);
+                    if (self.move_callback)
+                        self.server.handleMobHate(message[1], self.id, 5);
+                break;
+                
+                case Types.Messages.SHOP:
+                    log.info("Player: " + self.name + " shop: " + message[1] + " " + message[2]);    
+                    self.handleShop(message);
+                break;
+                
+                case Types.Messages.BUY:
+                    log.info("Player: " + self.name + " shop: " + message[1] + " " + message[2] + " " + message[3])
+                break;
+                
+                case Types.Messages.STORESELL:
+                    log.info("Player: " + self.name + " store sell: " + message[1]);
+                    self.handleStoreSell(message);
+                break;
+                
+                case Types.Messages.STOREBUY:
+                    log.info("Player: " + self.name + " store buy: " + message[1] + " " + message[2] + " " + message[3]);
+                    self.handleStoreBuy(message);
+                break;
+                
+                case Types.Messages.CHARACTERINFO:
+                    log.info("Player character info: " + self.name);
+                    self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
+                break;
+                
+                case Types.Messages.TELEPORT: 
                     var x = message[1],
                         y = message[2];
-
-                    if(self.server.isValidPosition(x, y)) {
+                    
+                    if (self.server.isValidPosition(x, y)) {
                         self.setPosition(x, y);
                         self.clearTarget();
-
-                        self.broadcast(new Messages.Move(self));
-                        self.move_callback(self.x, self.y);
+                        self.broadcast(new Messages.Teleport(self));
+                        self.server.handlePlayerVanish(self);
+                        self.server.pushRelevantEntityListTo(self);
                     }
-                }
-            } else if(action === Types.Messages.HIT) {
-                log.info("HIT: " + self.name + " " + message[1]);
-                self.handleHit(message);
-            } else if(action === Types.Messages.HURT) {
-                self.handleHurt(message);
-            } else if(action === Types.Messages.INVENTORY){
-                log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                self.handleInventory(message);
-            }  else if(action === Types.Messages.SKILL){
-                log.info("SKILL: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleSkill(message);
-            } else if(action === Types.Messages.SKILLINSTALL) {
-                log.info("SKILLINSTALL: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleSkillInstall(message);
-            } else if(action === Types.Messages.SELL){
-                log.info("SELL: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleSell(message);
-            } else if(action === Types.Messages.AGGRO) {
-                log.info("AGGRO: " + self.name + " " + message[1]);
-                if(self.move_callback)
-                    self.server.handleMobHate(message[1], self.id, 5);
-            } else if(action === Types.Messages.SHOP){
-                log.info("SHOP: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleShop(message);
-            } else if(action === Types.Messages.BUY){
-                log.info("BUY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                self.handleBuy(message);
-            } else if(action === Types.Messages.STORESELL) {
-                log.info("STORESELL: " + self.name + " " + message[1]);
-                self.handleStoreSell(message);
-            } else if(action === Types.Messages.STOREBUY) {
-                log.info("STOREBUY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                self.handleStoreBuy(message);
-            } else if(action === Types.Messages.CHARACTERINFO) {
-                log.info("CHARACTERINFO: " + self.name);
-                self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
-
-            } else if(action === Types.Messages.TELEPORT) {
-                //log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
-                var x = message[1],
-                    y = message[2];
-
-                if(self.server.isValidPosition(x, y)) {
-                    self.setPosition(x, y);
-                    self.clearTarget();
-
-                    self.broadcast(new Messages.Teleport(self));
-
-                    self.server.handlePlayerVanish(self);
-                    self.server.pushRelevantEntityListTo(self);
-                }
-            }
-            else if(action === Types.Messages.OPEN) {
-                log.info("OPEN: " + self.name + " " + message[1]);
-                var chest = self.server.getEntityById(message[1]);
-                if(chest && chest instanceof Chest)
-                    self.server.handleOpenedChest(chest, self);
-            } else if(action === Types.Messages.LOOTMOVE) {
-                log.info("LOOTMOVE: " + this.name + "(" + message[1] + ", " + message[2] + ")");
-                self.handleLootMove(message);
-            } else if(action === Types.Messages.LOOT) {
-                log.info("LOOT: " + self.name + " " + message[1]);
-                self.handleLoot(message);
-            } else if(action === Types.Messages.CHECK) {
-                log.info("CHECK: " + self.name + " " + message[1]);
-                var checkpoint = self.server.map.getCheckpoint(message[1]);
-                if(checkpoint) {
-                    self.lastCheckpoint = checkpoint;
-                    databaseHandler.setCheckpoint(self.name, self.x, self.y);
-                }
-            } else if(action === Types.Messages.QUEST) {
-                log.info("QUEST: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleQuest(message);
-            } else if(action === Types.Messages.TALKTONPC){
-                log.info("TALKTONPC: " + self.name + " " + message[1]);
-                self.handleTalkToNPC(message);
-            } else if (action === Types.Messages.FLAREDANCE) {
-                log.info("FLAREDANCE: " + self.name + " " + message[1] + ", " + message[2] + ", " + message[3] + ", " + message[4]);
-                self.handleFlareDance(message);
-            } else if(action === Types.Messages.MAGIC){
-                log.info("MAGIC: " + self.name + " " + message[1] + " " + message[2]);
-                var magicName = message[1];
-                var magicTargetName = message[2];
-
-                if(magicName === "setheal"){
-                    self.magicTarget = self.server.getPlayerByName(magicTargetName);
-                    if(self.magicTarget === self)
-                        self.magicTarget = null;
-                } else if(magicName === "heal"){
-                    if(self.magicTarget){
-                        if(!self.magicTarget.hasFullHealth()) {
-                            self.magicTarget.regenHealthBy(50);
-                            self.server.pushToPlayer(self.magicTarget, self.magicTarget.health());
+                break;
+                
+                case Types.Messages.OPEN:
+                    log.info("Player: " + self.name + " open: " + message[1]);
+                    var chest = self.server.getEntityById(message[1]);
+                    if (chest && chest instanceof Chest)
+                        self.server.handleOpenedChest(chest, self);
+                break;
+                
+                case Types.Messages.LOOTMOVE:
+                    self.handleLootMove(message);
+                break;
+                
+                case Types.Messages.LOOT:
+                    self.handleLoot(message);
+                break;
+                
+                case Types.Messages.CHECK:
+                    var checkpoint = self.server.map.getCheckpoint(message[1]);
+                    if (checkpoint) {
+                        self.lastCheckpoint = checkpoint;
+                        databaseHandler.setCheckpoint(self.name, self.x, self.y);
+                    }
+                break;
+                
+                case Types.Messages.QUEST:
+                    self.handleQuest(message);
+                break;
+                
+                case Types.Messages.TALKTONPC:
+                    self.handleTalkToNPC(message);
+                break;
+                
+                case Types.Messages.FLAREDANCE:
+                    self.handleFlareDance(message);
+                break;
+                
+                case Types.Messages.MAGIC:
+                    var magicName = message[1];
+                    var magicTargetName = message[2];
+                    
+                    if (magicName === "setheal") {
+                        self.magicTarget = self.server.getPlayerByName(magicTargetName);
+                        if (self.magicTarget === self)
+                            self.magicTarget = null;
+                    } else if (magicName === "heal") {
+                        if (self.magicTarget) {
+                            if (!self.magicTarget.hasFullHealth()) {
+                                self.magicTarget.regenHealthBy(50);
+                                self.server.pushToPlayer(self.magicTarget, self.magic);
+                            }
                         }
                     }
-                }
-            } else if(action === Types.Messages.BOARD){
-                log.info("BOARD: " + self.name + " " + message[1] + " " + message[2]);
-                var command = message[1];
-                var number = message[2];
-                var replyNumber = message[3];
-                databaseHandler.loadBoard(self, command, number, replyNumber);
-            } else if(action === Types.Messages.RANKING){
-                log.info("RANKING: " + self.name + " " + message[1]);
-                self.handleRanking(message);
-            } else if(action === Types.Messages.GUILD) {
-                if(message[1] === Types.Messages.GUILDACTION.CREATE) {
-                    var guildname = Utils.sanitize(message[2]);
-                    if(guildname === "") //inaccurate name
-                        self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.BADNAME,message[2]));
-                    else {
-                        var guildId = self.server.addGuild(guildname);
-                        if(guildId === false)
-                            self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.ALREADYEXISTS, guildname));
-                        else {
-                            self.server.joinGuild(self, guildId);
-                            self.server.pushToPlayer(self, new Messages.Guild(Types.Messages.GUILDACTION.CREATE, [guildId, guildname]));
-                        }
+                    
+                break;
+                
+                case Types.Messages.BOARD:
+                    var command = message[1];
+                    var number = message[2];
+                    var replyNumber = message[3];
+                    databaseHandler.loadBoard(self, command, number, replyNumber);
+                break;
+                
+                case Types.Messages.RANKING:
+                    self.handleRanking(message);
+                break;
+                
+                case Types.Messages.GUILD:
+                    switch(message[1]) {
+                        case Types.Messages.GUILDACTION.CREATE:
+                            var guildname = Utils.sanitize(message[2]);
+                            if (guildname === "") {
+                                self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.BADNAME,message[2]));
+                            } else {
+                                var guildId = self.server.addGuild(guildname);
+                                if (guildId === false) {
+                                    self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.ALREADYEXISTS, guildname));
+                                } else {
+                                    self.server.joinGuild(self, guildId);
+                                    self.server.pushToPlayer(self, new Messages.Guild(Types.Messages.GUILDACTION.CREATE, [guildId, guildname]));
+                                }
+                            }   
+                        break;
+                        
+                        case Types.Messages.GUILDACTION.INVITE:
+                            var userName = message[2];
+                            var invitee;
+                            if (self.group in self.server.groups) {
+                                invitee = _.find(self.server.groups[self.group].entities, 
+                                                function(entity, key) { 
+                                                    
+                                                    return (entity instanceof Player && entity.name == userName) ? entity : false;
+                                                });
+                                    if (invitee)
+                                        self.getGuild().invite(invitee, self);
+                            }
+                        break;
+                        
+                        case Types.Messages.GUILDACTION.JOIN:
+                            self.server.joinGuild(self, message[2], message[3]);
+                        break;
+                        
+                        case Types.Messages.GUILDACTION.LEAVE:
+                            self.leaveGuild();
+                        break;
+                        
+                        case Types.Messages.GUILDACTION.TALK:
+                            self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
+                        break;
+                        
                     }
-                }
-                else if(message[1] === Types.Messages.GUILDACTION.INVITE) {
-                    var userName = message[2];
-                    var invitee;
-                    if(self.group in self.server.groups) {
-                        invitee = _.find(self.server.groups[self.group].entities,
-                                         function(entity, key) { return (entity instanceof Player && entity.name == userName) ? entity : false; });
-                        if(invitee)
-                            self.getGuild().invite(invitee,self);
+                break;
+                
+                case Types.Messages.BOARDWRITE:
+                    var command = message[1];
+                    if (command == "board") {
+                        var title = message[2];
+                        var content = message[3];
+                        databaseHandler.writeBoard(self, title, content);
+                    } else if (command === "reply") {
+                        var reply = message[2];
+                        var number = message[3] * 1;
+                        if (number > 0)
+                            databaseHandler.writeReply(self, reply, number);
                     }
-                }
-                else if(message[1] === Types.Messages.GUILDACTION.JOIN)
-                    self.server.joinGuild(self, message[2], message[3]);
-                else if(message[1] === Types.Messages.GUILDACTION.LEAVE)
-                    self.leaveGuild();
-                else if(message[1] === Types.Messages.GUILDACTION.TALK)
-                    self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
-            } else if(action === Types.Messages.BOARDWRITE){
-                log.info("BOARDWRITE: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                var command = message[1];
-                if(command === "board"){
-                    var title = message[2];
-                    var content = message[3];
-                    databaseHandler.writeBoard(self, title, content);
-                } else if(command === "reply"){
-                    var reply = message[2];
-                    var number = message[3]*1;
-                    if(number > 0)
-                        databaseHandler.writeReply(self, reply, number);
-                }
-            } else if(action === Types.Messages.KUNG){
-                log.info("KUNG: " + self.name + " " + message[1]);
-                var word = message[1];
-                databaseHandler.pushKungWord(self, word);
-            }  else {
-                if(self.message_callback)
-                    self.message_callback(message);
+                break;
+                
+                case Types.Messages.KUNG:
+                    var word = message[1];
+                    databaseHandler.pushKungWord(self, word);
+                break;
+                
+                default:
+                    if (self.message_callback)
+                        self.message_callback(message);
+                break;
             }
         });
 

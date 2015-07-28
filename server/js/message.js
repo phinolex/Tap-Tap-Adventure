@@ -7,8 +7,6 @@ module.exports = Messages;
 
 var Message = cls.Class.extend({
 });
-
-
 Messages.Spawn = Message.extend({
     init: function (entity) {
         this.entity = entity;
@@ -18,7 +16,6 @@ Messages.Spawn = Message.extend({
         return spawn.concat(this.entity.getState());
     }
 });
-
 Messages.Despawn = Message.extend({
     init: function (entityId) {
         this.entityId = entityId;
@@ -27,7 +24,6 @@ Messages.Despawn = Message.extend({
         return [Types.Messages.DESPAWN, this.entityId];
     }
 });
-
 Messages.Move = Message.extend({
     init: function (entity) {
         this.entity = entity;
@@ -39,7 +35,6 @@ Messages.Move = Message.extend({
                 this.entity.y];
     }
 });
-
 Messages.LootMove = Message.extend({
     init: function(entity, item) {
         this.entity = entity;
@@ -62,7 +57,6 @@ Messages.Attack = Message.extend({
             this.targetId];
     }
 });
-
 Messages.Wanted = Message.extend({
     init: function (player, isWanted) {
         this.player = player;
@@ -74,7 +68,6 @@ Messages.Wanted = Message.extend({
             this.isWanted];
     }
 });
-
 Messages.Health = Message.extend({
     init: function (points, isRegen) {
         this.points = points;
@@ -83,10 +76,8 @@ Messages.Health = Message.extend({
     serialize: function() {
         var health = [Types.Messages.HEALTH,
                       this.points];
-
-        if (this.isRegen) {
+        if (this.isRegen)
             health.push(1);
-        }
         return health;
     }
 });
@@ -99,7 +90,6 @@ Messages.Notify = Message.extend({
             this.message];
   }
 });
-
 Messages.HitPoints = Message.extend({
     init: function(maxHitPoints, maxMana) {
         this.maxHitPoints = maxHitPoints;
@@ -111,7 +101,6 @@ Messages.HitPoints = Message.extend({
             this.maxMana];
     }
 });
-
 Messages.TalkToNPC = Message.extend({
     init: function(questNumber, isCompleted){
         this.questNumber = questNumber;
@@ -123,7 +112,6 @@ Messages.TalkToNPC = Message.extend({
             this.isCompleted];
     }
 });
-
 Messages.EquipItem = Message.extend({
     init: function (player, itemKind) {
         this.playerId = player.id;
@@ -135,7 +123,6 @@ Messages.EquipItem = Message.extend({
                 this.itemKind];
     }
 });
-
 Messages.Drop = Message.extend({
     init: function (mob, item) {
         this.mob = mob;
@@ -150,12 +137,9 @@ Messages.Drop = Message.extend({
                     this.item.count,
                     this.item.skillKind,
                     this.item.skillLevel];
-
         return drop;
     }
 });
-
-
 Messages.Log = Message.extend({
     init: function(message) {
         this.message = message;
@@ -178,7 +162,6 @@ Messages.Skill = Message.extend({
             this.level];
     }
 });
-
 Messages.SkillInstall = Message.extend({
     init: function(index, name) {
         this.index = index;
@@ -188,7 +171,6 @@ Messages.SkillInstall = Message.extend({
         return [Types.Messages.SKILLINSTALL, this.index, this.name];
     }
 });
-
 Messages.Chat = Message.extend({
     init: function (player, message) {
         this.playerId = player.id;
@@ -200,7 +182,6 @@ Messages.Chat = Message.extend({
                 this.message];
     }
 });
-
 Messages.Teleport = Message.extend({
     init: function (entity) {
         this.entity = entity;
@@ -212,7 +193,6 @@ Messages.Teleport = Message.extend({
                 this.entity.y];
     }
 });
-
 Messages.Damage = Message.extend({
     init: function (entity, points, hp, maxHp) {
         this.entity = entity;
@@ -228,9 +208,6 @@ Messages.Damage = Message.extend({
                 this.maxHitPoints];
     }
 });
-
-
-
 Messages.CharacterInfo = Message.extend({
     init: function(player) {
         this.player = player;
@@ -265,8 +242,6 @@ Messages.CharacterInfo = Message.extend({
             this.player.admin];
     }
 });
-
-
 Messages.Inventory = Message.extend({
   init: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
     this.inventoryNumber = inventoryNumber;
@@ -284,7 +259,6 @@ Messages.Inventory = Message.extend({
             this.itemSkillLevel];
   }
 });
-
 Messages.Bank = Message.extend({
     init: function(bankNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
         this.bankNumber = bankNumber;
@@ -302,7 +276,6 @@ Messages.Bank = Message.extend({
                 this.itemSkillLevel];
     }
 });
-
 Messages.Population = Message.extend({
     init: function (world, total) {
         this.world = world;
@@ -314,7 +287,6 @@ Messages.Population = Message.extend({
                 this.total];
     }
 });
-
 Messages.Kill = Message.extend({
     init: function (mob, level, exp) {
         this.mob = mob;
@@ -328,19 +300,16 @@ Messages.Kill = Message.extend({
                 this.exp];
     }
 });
-
 Messages.List = Message.extend({
     init: function (ids) {
         this.ids = ids;
     },
     serialize: function () {
         var list = this.ids;
-
         list.unshift(Types.Messages.LIST);
         return list;
     }
 });
-
 Messages.Destroy = Message.extend({
     init: function (entity) {
         this.entity = entity;
@@ -350,7 +319,6 @@ Messages.Destroy = Message.extend({
                 this.entity.id];
     }
 });
-
 Messages.Blink = Message.extend({
     init: function (item) {
         this.item = item;
@@ -360,7 +328,6 @@ Messages.Blink = Message.extend({
                 this.item.id];
     }
 });
-
 Messages.PVP = Message.extend({
     init: function(isPVP){
         this.isPVP = isPVP;
@@ -370,8 +337,6 @@ Messages.PVP = Message.extend({
                 this.isPVP];
     }
 });
-
-
 Messages.TradeErrors = Message.extend({
     init: function(errorType, playerName, otherPlayer) {
         this.errorType = errorType;
@@ -381,9 +346,7 @@ Messages.TradeErrors = Message.extend({
     serialize: function() {
         return [Types.Messages.TRADEINVALID, this.errorType, this.playerName, this.otherPlayer];
     }
-
 });
-
 Messages.TradeStates = Message.extend({
     init: function(stateType, playerName, otherPlayer) {
         this.stateType = stateType;
@@ -391,7 +354,6 @@ Messages.TradeStates = Message.extend({
         this.otherPlayer = otherPlayer;
     },
     serialize: function() {
-
         return [Types.Messages.TRADE, this.stateType, this.playerName, this.otherPlayer];
     }
 });
@@ -404,7 +366,6 @@ Messages.GuildError = Message.extend({
 		return [Types.Messages.GUILDERROR, this.errorType, this.guildName];
 	}
 });
-
 Messages.Guild = Message.extend({
 	init: function (action, info) {
 		this.action = action;
@@ -414,17 +375,12 @@ Messages.Guild = Message.extend({
 		return [Types.Messages.GUILD, this.action].concat(this.info);
 	}
 });
-
-
 Messages.Mana = Message.extend({
     init: function(player) {
         this.mana = player.mana;
         this.maxMana = player.maxMana;
     },
     serialize: function() {
-        
         return [Types.Messages.MANA, this.mana, this.maxMana];
-    }  
-    
+    }
 });
-    
