@@ -17,8 +17,11 @@ var cls = require("./lib/class"),
     Mob = require('./mob'),
     SkillHandler = require("./skillhandler"),
     Variations = require('./variations'),
-    Trade = require('./trade');
-
+    Trade = require('./trade'),
+    express = require('express'),
+    bodyParser = require('body-parser'),
+    app = express(), 
+    request = require("request");
 
 module.exports = Player = Character.extend({
     init: function(connection, worldServer, databaseHandler) {
@@ -42,6 +45,7 @@ module.exports = Player = Character.extend({
         this.bannedTime = 0;
         this.banUseTime = 0;
         this.membershipTime = 0;
+        this.session_id_kbve = false;
         this.experience = 0;
         this.level = 0;
         this.lastWorldChatMinutes = 99;
@@ -198,7 +202,7 @@ module.exports = Player = Character.extend({
                 */
             var name = Utils.sanitize(message[1]);
             var pw = Utils.sanitize((message[2]));
-            var session_id_kbve = false; //To be handled through config
+            var psession_id_kbve = false; //To be handled through config
             
             /**
              * Implement KBVE API & RSA
@@ -211,14 +215,63 @@ module.exports = Player = Character.extend({
             
             var pName = name.substr(0, 12).trim();
             self.name = pName;
-            //Username Validation
+            //Username Validation ? We might have to restrict things on KBVE's end as well.
             if(!self.checkName(self.name)){
                 self.connection.sendUTF8("invalidusername");
                 self.connection.close("Invalid name " + self.name);
                 return;
             }
                     
+                    
             switch(action) {
+                
+                
+                case Types.Messages.KBVE:
+                    
+                    // Check if Logged in?
+                         if(self.server.loggedInPlayer(self.name)) {
+                        self.connection.sendUTF8("loggedin");
+                        self.connection.close("Player: " + self.name + " is already logged in.");
+                        return;
+                        }
+                                                 
+                        
+                        
+                        
+                    // Make Request to verify information    
+                                                           
+                       var options = {
+                          uri: 'https://kbve.com/api/tta/tta_l.php',
+                          method: 'POST',
+                          json: {
+                            "method": "login",
+                            "username": name,
+                            "password": pw
+                          }
+                        };
+                        
+                        request(options, function (error, response, body) {
+                          if (!error && response.statusCode == 200) {
+                            console.log(body.id) // Print the shortened url.
+                              body = body.toString('utf-8');
+
+                            // Print out the response body
+                            console.log(body)
+                    
+                            // If it is json
+                            var json_body = JSON.parse(body);
+                             self.session_id_kbve = json_body.session_id;
+                         
+                          }
+                        });
+                      //  if(session_id_kbve == falsle)
+                        
+                    // check if user exists? if not, create 
+                    
+                    
+                    // What function is it to check if the username exists 
+                //Let me check.
+                break;
                 case Types.Messages.CREATE:
                     bcrypt.genSalt(10, function(err, salt) {
                             bcrypt.hash(self.pw, salt, function(err, hash) {
@@ -230,7 +283,7 @@ module.exports = Player = Character.extend({
                     });
                 break;
                 case Types.Messages.LOGIN:
-                    log.info("Received login for: " + player.name);
+                    log.info("Received login for: " + self.name);
                     if(self.server.loggedInPlayer(self.name)) {
                         self.connection.sendUTF8("loggedin");
                         self.connection.close("Player: " + self.name + " is already logged in.");
@@ -283,7 +336,7 @@ module.exports = Player = Character.extend({
                                     databaseHandler.kickPlayer(self, targetPlayer);
                             break;
                             case "/ban ":
-                                //Must be server side, else, it will not be allowed to use the API of KBVE
+                                //Must be server side, else, it will not be allowed to use the API of KBVE for bans.
                                 //permanent ban, as the actual banning method will be
                                 //through the KBVE API
                                 var playerBan = self.server.getPlayerByName(msg.split('/ban '));
@@ -1500,32 +1553,33 @@ module.exports = Player = Character.extend({
         this.server.pushToPlayer(this, this.equip(itemKind));
     },
     handleInventoryEmpty: function(itemKind, inventoryNumber, count){
-        var item = this.server.addItemFromChest(itemKind, this.x, this.y);
-        if(Types.isHealingItem(item.kind)){
-            if(count < 0)
-                count = 0;
-            else if(count > this.inventory.rooms[inventoryNumber].itemNumber){
-                count = this.inventory.rooms[inventoryNumber].itemNumber;
-            item.count = count;
-        } else if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind) ||
-            Types.isPendant(item.kind) || Types.isRing(item.kind) || Types.isBoots(item.kind)) {
-            item.count = this.inventory.rooms[inventoryNumber].itemNumber;
-            item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
-            item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
-        }
-
-        if(item.count >= 0) {
-            this.server.pushToAdjacentGroups(this.group, new Messages.Drop(this, item));
-            //this.server.addItemFromChest(itemKind, this.x, this.y);
-            this.server.handleItemDespawn(item);
-
-            if(Types.isHealingItem(item.kind))
-                this.inventory.takeOutInventory(inventoryNumber, item.count);
-            else
+            var item = this.server.addItemFromChest(itemKind, this.x, this.y);
+            if(Types.isHealingItem(item.kind)){
+                if(count < 0)
+                    count = 0;
+                else if(count > this.inventory.rooms[inventoryNumber].itemNumber){
+                    count = this.inventory.rooms[inventoryNumber].itemNumber;
+                item.count = count;
+            } else if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind) ||
+                Types.isPendant(item.kind) || Types.isRing(item.kind) || Types.isBoots(item.kind)) {
+                item.count = this.inventory.rooms[inventoryNumber].itemNumber;
+                item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+                item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+            }
+    
+            if(item.count >= 0) {
+                this.server.pushToAdjacentGroups(this.group, new Messages.Drop(this, item));
+                //this.server.addItemFromChest(itemKind, this.x, this.y);
+                this.server.handleItemDespawn(item);
+    
+                if(Types.isHealingItem(item.kind))
+                    this.inventory.takeOutInventory(inventoryNumber, item.count);
+                else
+                    this.inventory.makeEmptyInventory(inventoryNumber);
+            } else {
+                this.server.removeEntity(item);
                 this.inventory.makeEmptyInventory(inventoryNumber);
-        } else {
-            this.server.removeEntity(item);
-            this.inventory.makeEmptyInventory(inventoryNumber);
+            }
         }
     },
     handleInventoryEat: function(itemKind, inventoryNumber){
@@ -2058,6 +2112,42 @@ module.exports = Player = Character.extend({
                 self.server.pushToPlayer(self, new Messages.SkillInstall(index, name));
             });
         }
+    },
+    
+    isMember: function() {
+        var self = this;
+        
+        
+        
+         // Make Request to verify information    
+                                                           
+                       var options = {
+                          uri: 'https://kbve.com/api/tta/tta_m.php',
+                          method: 'POST',
+                          json: {
+                            "session_id": "login",
+                            "useranem": name,
+                            "password": pw
+                          }
+                        };
+                        
+                        request(options, function (error, response, body) {
+                          if (!error && response.statusCode == 200) {
+                            console.log(body.id) // Print the shortened url.
+                              body = body.toString('utf-8');
+
+                            // Print out the response body
+                            console.log(body)
+                    
+                            // If it is json
+                            var json_body = JSON.parse(body);
+                          }
+                        });
+                        
+                    // check if user exists? if not, create 
+        
+        
+        return self.membership;
     },
 
     getRanking: function() {

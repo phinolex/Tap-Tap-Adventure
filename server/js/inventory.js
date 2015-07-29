@@ -1,8 +1,8 @@
 /* global databaseHandler, log */
 
 var cls = require("./lib/class"),
-    InventoryRoom = require("./inventoryroom");
-    Messages = require("./message");
+    InventoryRoom = require("./inventoryroom"),
+    Messages = require("./message"),
     Types = require("../../shared/js/gametypes");
 
 module.exports = Inventory = cls.Class.extend({

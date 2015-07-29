@@ -1,7 +1,5 @@
 /**
  * @depend util/core.js
- * @depend stub.js
- * @depend mock.js
  * @depend sandbox.js
  */
 /**
@@ -16,6 +14,8 @@
 
 (function (sinon) {
     function makeApi(sinon) {
+        var slice = Array.prototype.slice;
+
         function test(callback) {
             var type = typeof callback;
 
@@ -27,12 +27,12 @@
                 var config = sinon.getConfig(sinon.config);
                 config.injectInto = config.injectIntoThis && this || config.injectInto;
                 var sandbox = sinon.sandbox.create(config);
+                var args = slice.call(arguments);
+                var oldDone = args.length && args[args.length - 1];
                 var exception, result;
-                var doneIsWrapped = false;
-                var argumentsCopy = Array.prototype.slice.call(arguments);
-                if (argumentsCopy.length > 0 && typeof argumentsCopy[arguments.length - 1] == "function") {
-                    var oldDone = argumentsCopy[arguments.length - 1];
-                    argumentsCopy[arguments.length - 1] = function done(result) {
+
+                if (typeof oldDone == "function") {
+                    args[args.length - 1] = function sinonDone(result) {
                         if (result) {
                             sandbox.restore();
                             throw exception;
@@ -40,19 +40,16 @@
                             sandbox.verifyAndRestore();
                         }
                         oldDone(result);
-                    }
-                    doneIsWrapped = true;
+                    };
                 }
 
-                var args = argumentsCopy.concat(sandbox.args);
-
                 try {
-                    result = callback.apply(this, args);
+                    result = callback.apply(this, args.concat(sandbox.args));
                 } catch (e) {
                     exception = e;
                 }
 
-                if (!doneIsWrapped) {
+                if (typeof oldDone != "function") {
                     if (typeof exception !== "undefined") {
                         sandbox.restore();
                         throw exception;
@@ -62,7 +59,7 @@
                 }
 
                 return result;
-            };
+            }
 
             if (callback.length) {
                 return function sinonAsyncSandboxedTest(callback) {
@@ -98,9 +95,7 @@
         define(loadDependencies);
     } else if (isNode) {
         loadDependencies(require, module.exports, module);
-    } else if (!sinon) {
-        return;
-    } else {
+    } else if (sinon) {
         makeApi(sinon);
     }
 }(typeof sinon == "object" && sinon || null));
