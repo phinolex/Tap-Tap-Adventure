@@ -1,5 +1,5 @@
 {
-  "port": 8000,
+  "port": 1340,
   "debug_level": "info",
   "nb_players_per_world": 1000,
   "nb_worlds": 1,

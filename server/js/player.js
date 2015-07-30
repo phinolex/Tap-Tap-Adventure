@@ -229,10 +229,10 @@ module.exports = Player = Character.extend({
                 case Types.Messages.KBVE:
                     
                     // Check if Logged in?
-                         if(self.server.loggedInPlayer(self.name)) {
-                        self.connection.sendUTF8("loggedin");
-                        self.connection.close("Player: " + self.name + " is already logged in.");
-                        return;
+                        if(self.server.loggedInPlayer(self.name)) {
+                            self.connection.sendUTF8("loggedin");
+                            self.connection.close("Player: " + self.name + " is already logged in.");
+                            return;
                         }
                                                  
                         
@@ -307,7 +307,7 @@ module.exports = Player = Character.extend({
                     var msg = Utils.sanitize(message[1]);
                     log.info("Chat: " + self.name + ": " + msg);
                     if (msg && (msg !== "" || msg !== " ")) {
-                        msg = msg.substr(0, 60); //Will have to change the max length
+                        msg = msg.substr(0, 256); //Will have to change the max length
                         var key = msg.substr(0);
                         if ( typeof String.prototype.startsWith !== 'function' ) {
                             String.prototype.startsWith = function( str ) {
