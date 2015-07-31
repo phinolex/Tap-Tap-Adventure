@@ -968,7 +968,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.player.onAggro(function(mob) {
                         if(!mob.isWaitingToAttack(self.player) && !self.player.isAttackedBy(mob)) {
-                            if (Types.getMobLevel(mob) * 2 < self.player.level) {
+                            if (Types.getMobLevel(mob.kind) * 2 < self.player.level) {
                                 self.player.log_info("Aggroed by " + mob.id + " at ("+self.player.gridX+", "+self.player.gridY+")");
                                 self.client.sendAggro(mob);
                                 mob.waitToAttack(self.player);
