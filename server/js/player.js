@@ -212,7 +212,53 @@ module.exports = Player = Character.extend({
             // (also enforced by the maxlength attribute of the name input element).
             // After that, you capitalize the first letter.
 
-                    
+            if(action === Types.Messages.CREATE || action === Types.Messages.LOGIN) {
+                var name = Utils.sanitize(message[1]);
+                var pw = Utils.sanitize(message[2]);
+
+
+                /**
+                 * Implement RSA Authorization
+                 */
+
+                log.info("Starting Client/Server Handshake");
+
+                // Always ensure that the name is not longer than a maximum length.
+                // (also enforced by the maxlength attribute of the name input element).
+                // After that, you capitalize the first letter.
+                self.name = name.substr(0, 12).trim();
+
+
+                // Validate the username
+                if(!self.checkName(self.name)){
+                    self.connection.sendUTF8("invalidusername");
+                    self.connection.close("Invalid name " + self.name);
+                    return;
+                }
+                self.pw = pw.substr(0, 15);
+
+                if(action === Types.Messages.CREATE) {
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(self.pw, salt, function(err, hash) {
+                            log.info("CREATE: " + self.name);
+                            self.email = Utils.sanitize(message[3]);
+                            self.pw = hash;
+
+                            databaseHandler.createPlayer(self);
+                        });
+                    });
+                } else {
+                    log.info("LOGIN: " + self.name);
+                    if(self.server.loggedInPlayer(self.name)) {
+                        self.connection.sendUTF8("loggedin");
+                        self.connection.close("Already logged in " + self.name);
+                        return;
+                    }
+                    databaseHandler.loadPlayer(self);
+                }
+
+            }      
+            
                     
             switch(action) {
 
@@ -263,39 +309,8 @@ module.exports = Player = Character.extend({
                     // What function is it to check if the username exists 
                 //Let me check.
                 break;
-                case Types.Messages.CREATE:
-                case Types.Messages.LOGIN:
-                    var name = Utils.sanitize(message[1]);
-                    var pw = Utils.sanitize((message[2]));
-                    self.name = name.substr(0, 12).trim();
-                    if(!self.checkName(self.name)){
-                        self.connection.sendUTF8("invalidusername");
-                        self.connection.close("Invalid name " + self.name);
-                        return;
-                    }
-                    self.pw = pw.substr(0, 15);
-                    if (action === Types.Messages.CREATE) {
-                        self.pw = pw.substr(0, 15);
-                        bcrypt.genSalt(10, function (err, salt) {
-                            bcrypt.hash(self.pw, salt, function (err, hash) {
-                                log.info("Creating player: " + self.name);
-                                self.email = Utils.sanitize(message[3]);
-                                self.pw = hash;
-                                databaseHandler.createPlayer(self);
-                            });
-                        });
-                    } else {
-                        log.info("Received login for: " + self.name);
-                        if (self.server.loggedInPlayer(self.name)) {
-                            self.connection.sendUTF8("loggedin");
-                            self.connection.close("Player: " + self.name + " is already logged in.");
-                            return;
-                        }
-                        databaseHandler.loadPlayer(self);
-                    }
-
-                break;
-              
+                
+                
                 case Types.Messages.WHO:
                     log.info("Who: " + self.name);
                     message.shift();
