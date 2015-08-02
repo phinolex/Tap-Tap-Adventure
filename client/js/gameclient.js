@@ -73,22 +73,26 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
 
         connect: function(dispatcherMode) {
-            var url = "wss://"+ this.host +":"+ this.port +"/",
-                self = this;
+        var url = "wss://"+ this.host +":"+ this.port +"/",
+            self = this;
 
-            log.info("Trying to connect to server : "+url);
+        log.info("Trying to connect to server : "+url);
 
-            this.connection = io(url, {forceNew: true, reconnection: false});
+        this.connection = io(url, {forceNew: true, reconnection: false});
 
-            if(dispatcherMode) {
-                this.connection.on('message', function(e) {
-                    var reply = JSON.parse(e);
+            this.connection.on('connection', function() {
+                log.info("Connected to server "+self.host+":"+self.port);
+            });
 
-                    switch(reply.status) {
-                        case 'ok':
-                            self.dispatched_callback(reply.host, reply.port);
-                        break;
-                        
+            this.connection.on('message', function(e) {
+                if(e === 'go') {
+                    if(self.connected_callback) {
+                        self.connected_callback();
+                    }
+                    return;
+                }
+                
+                switch(e) {
                         case 'full':
                         case 'invalidlogin':
                         case 'userexists':
@@ -96,61 +100,39 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                         case 'invalidusername':
                         case 'ban':
                             if (self.fail_callback)
-                                self.fail_callback(reply.status);
+                                self.fail_callback(e);
                         break;
                         
                         case 'timeout':
                             self.isTimeout = true;
-                            if (self.fail_callback)
-                                self.fail_callback(reply.status);
                         break;
                         
                         default:
                             if (self.fail_callback)
-                                self.fail_callback(reply.status);
+                                self.fail_callback(e);
                         break;
                     }
-
-                  
-                });
-            } else {
-                this.connection.on('connection', function() {
-                    log.info("Connected to server "+self.host+":"+self.port);
-                });
-
-                this.connection.on('message', function(e) {
-                    if(e === 'go') {
-                        if(self.connected_callback) {
-                            self.connected_callback();
-                        }
-                        return;
-                    }
-                    /**
-                     * No longer required to check for messages
-                     * here as we're doing it when dispatching
-                     * to the game server.
-                     */
                     
-                    self.receiveMessage(e);
-                });
+                self.receiveMessage(e);
+            });
 
-                this.connection.on('error', function(e) {
-                    log.error(e, true);
-                });
+            this.connection.on('error', function(e) {
+                log.error(e, true);
+            });
 
-                this.connection.on('disconnect', function() {
-                    log.debug("Connection closed");
-                    $('#container').addClass('error');
+            this.connection.on('disconnect', function() {
+                log.debug("Connection closed");
+                $('#container').addClass('error');
 
-                    if(self.disconnected_callback) {
-                        if(self.isTimeout) {
-                            self.disconnected_callback("You have been disconnected for being inactive for too long");
-                        } else {
-                            self.disconnected_callback("The connection to Tap Tap Adventure has been lost.");
-                        }
+                if(self.disconnected_callback) {
+                    if(self.isTimeout) {
+                        self.disconnected_callback("You have been disconnected for being inactive for too long");
+                    } else {
+                        self.disconnected_callback("The connection to Tap Tap Adventure has been lost.");
                     }
-                });
-            }
+                }
+            });
+            
         },
 
         sendMessage: function(json) {

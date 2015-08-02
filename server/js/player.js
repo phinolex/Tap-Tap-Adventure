@@ -1065,7 +1065,7 @@ module.exports = Player = Character.extend({
     },
     resetTimeout: function() {
         clearTimeout(this.disconnectTimeout);
-        this.disconnectTimeout = setTimeout(this.timeout.bind(this), 1000 * 60 * 5); // 5 min.
+        this.disconnectTimeout = setTimeout(this.timeout.bind(this), 1000 * 60 * 10); // 5 min.
     },
 
     _questAboutKill: function(mobKind, questMobKind, questId, completeNumber, callback){
