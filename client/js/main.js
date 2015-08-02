@@ -2,7 +2,7 @@
 /* global Types */
 
 define(['jquery', 'app', 'entrypoint', 'characterdialog',
-        'button2', 'dialog', 'iteminfodialog', 'game', 'bubble'], function($, App, EntryPoint) {
+    'button2', 'dialog', 'iteminfodialog', 'game', 'bubble'], function($, App, EntryPoint) {
     var app, game;
 
     var initApp = function() {
@@ -14,7 +14,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 // Workaround for graphical glitches on text
                 $('body').addClass('windows');
             }
-            
+
             if(Detect.isOpera()) {
                 // Fix for no pointer events
                 $('body').addClass('opera');
@@ -43,18 +43,18 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 $(this).toggleClass('active');
             });
             $('#rankingbutton').click(function(event){
-              if(app.game && app.ready && app.game.ready){
-                app.game.client.sendRanking('get');
-                app.hideAllSubwindow();
-                app.game.rankingHandler.show();
-              }
+                if(app.game && app.ready && app.game.ready){
+                    app.game.client.sendRanking('get');
+                    app.hideAllSubwindow();
+                    app.game.rankingHandler.show();
+                }
             });
             $('#questbutton').click(function(event){
-              if(app.game && app.ready && app.game.ready){
-                app.game.client.sendQuest(0, "show");
-                app.hideAllSubwindow();
-                app.game.questhandler.show();
-              }
+                if(app.game && app.ready && app.game.ready){
+                    app.game.client.sendQuest(0, "show");
+                    app.hideAllSubwindow();
+                    app.game.questhandler.show();
+                }
             });
             $('#chatbutton').click(function() {
                 if($('#chatbutton').hasClass('active')) {
@@ -63,8 +63,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     app.hideChat();
                 }
             });
-            
-            
+
+
 
 
             $('#instructions').click(function() {
@@ -72,8 +72,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
 
             /* $('#playercount').click(function() {
-                app.togglePopulationInfo();
-            }); */
+             app.togglePopulationInfo();
+             }); */
 
             $('#population').click(function() {
                 app.togglePopulationInfo();
@@ -103,7 +103,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
 
             $('#continue span').click(function() {
-                
+
                 app.animateParchment('confirmation', 'createcharacter');
                 $('body').removeClass('returning');
                 app.clearValidationErrors();
@@ -130,7 +130,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 app.toggleButton();
             });
 
-           
+
 
             $('#notifications div').bind(TRANSITIONEND, app.resetMessagesPosition.bind(app));
 
@@ -141,18 +141,18 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $('.twitter').click(function() {
                 var url = $(this).attr('href');
 
-               app.openPopup('twitter', url);
-               return false;
+                app.openPopup('twitter', url);
+                return false;
             });
 
             $('.facebook').click(function() {
                 var url = $(this).attr('href');
 
-               app.openPopup('facebook', url);
-               return false;
+                app.openPopup('facebook', url);
+                return false;
             });
 
-            
+
 
             $('.play span').click(function(event) {
                 app.tryStartingGame();
@@ -184,7 +184,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
             game = new Game(app);
             game.setup('#bubbles', canvas, background, foreground, textcanvas, toptextcanvas, input);
-            
+
             app.setGame(game);
 
             if(app.isDesktop && app.supportsWorkers) {
@@ -202,24 +202,24 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }
             });
             game.onGuildPopulationChange( function(guildName, guildPopulation) {
-				var setGuildPlayersString = function(string) {
-					$("#guild-population").find("span:nth-child(2)").text(string);
-				};
-				$('#guild-population').addClass("visible");
+                var setGuildPlayersString = function(string) {
+                    $("#guild-population").find("span:nth-child(2)").text(string);
+                };
+                $('#guild-population').addClass("visible");
                 $("#guild-population").find("span").text(guildPopulation);
-				$('#guild-name').text(guildName);
+                $('#guild-name').text(guildName);
                 if(guildPopulation == 1) {
                     setGuildPlayersString("player");
                 } else {
                     setGuildPlayersString("players");
                 }
-			});
-                
-                
+            });
+
+
             game.onGameStart(function() {
-                
+
                 var entry = new EntryPoint();
-				entry.execute(game);
+                entry.execute(game);
             });
 
             game.onDisconnect(function(message) {
@@ -234,17 +234,17 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 $('body').addClass('death');
             });
 
-            
-            
+
+
             /*$('#questbutton').click(function(event){
-                if(app.game && app.ready && app.game.ready){
-                    app.game.client.sendQuest(0, "show");
-                    app.hideAllSubwindow();
-                    app.game.questhandler.show();
-                }
-            }); */
+             if(app.game && app.ready && app.game.ready){
+             app.game.client.sendQuest(0, "show");
+             app.hideAllSubwindow();
+             app.game.questhandler.show();
+             }
+             }); */
             game.onNotification(function(message) {
-		        app.showMessage(message);
+                app.showMessage(message);
             });
 
             app.initHealthBar();
@@ -267,11 +267,11 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 $('#canvas .clickable').click(function(event) {
                     app.center();
                     app.setMouseCoordinates(event);
-                     if(game && !app.dropDialogPopuped) {
-                	    //game.pvpFlag = event.shiftKey;
-                	    game.click();
-                	}
-                   app.hideWindows();
+                    if(game && !app.dropDialogPopuped) {
+                        //game.pvpFlag = event.shiftKey;
+                        game.click();
+                    }
+                    app.hideWindows();
                 });
             }
 
@@ -307,8 +307,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }
 
                 /*if(game.started && !game.renderer.mobile && game.player && !hasClosedParchment) {
-                    game.click();
-                }*/
+                 game.click();
+                 }*/
             });
 
             $('#respawn').click(function(event) {
@@ -325,7 +325,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             } else {
                 this.scale = 2;
             }
-            
+
             Button2.configure = {background: {top: this.scale * 314, width: this.scale * 14}, kinds: [0, 3, 2]};
 
             this.characterButton = new Button2('#characterButton', {background: {left: 0}});
@@ -345,7 +345,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             this.helpButton.onClick(function(sender, event) {
                 if(game && game.ready) {
                     if(game.itemInfoDialog.visible) {
-                        
+
                         game.itemInfoDialog.hide();
                     } else {
                         game.itemInfoDialog.show();
@@ -364,21 +364,21 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     }
                 }
             });
-            
-            
+
+
             $(document).mousemove(function(event) {
                 app.setMouseCoordinates(event);
                 if(game.started) {
-            	   // game.pvpFlag = event.shiftKey;
-                  game.movecursor();
+                    // game.pvpFlag = event.shiftKey;
+                    game.movecursor();
                 }
             });
-             $(document).bind('mousedown', function(event){ 
+            $(document).bind('mousedown', function(event){
                 if(event.button === 2){
                     return false;
                 }
             });
-            $(document).bind('mouseup', function(event) { 
+            $(document).bind('mouseup', function(event) {
                 if(event.button === 2) {
                     app.setMouseCoordinates(event);
                     game.rightClick();
@@ -388,7 +388,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
             $(document).keyup(function(e) {
                 var key = e.which;
-                
+
                 if (game.started && !$('#chatbox').hasClass('active'))
                 {
                     switch(key) {
@@ -433,7 +433,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         app.showChat();
                     }
                 }
-                
+
                 if (game.started && !$('#chatbox').hasClass('active')) {
                     pos = {
                         x: game.player.gridX,
@@ -473,31 +473,31 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                             $('#mutebutton').click();
                             break;
                         /* case Types.Keys.P:
-                            $('#playercount').click();
-                            break; */
+                         $('#playercount').click();
+                         break; */
                         default:
                             break;
                     }
                 }
             });
 
-             $(document).keyup(function(e) {
-            	var key = e.which;
+            $(document).keyup(function(e) {
+                var key = e.which;
 
-                
+
             });
-           $('#chatinput').keydown(function(e) {
+            $('#chatinput').keydown(function(e) {
                 var key = e.which,
                     $chat = $('#chatinput'),
                     placeholder = $(this).attr("placeholder");
 
-             //   if (!(e.shiftKey && e.keyCode === 16) && e.keyCode !== 9) {
-            //        if ($(this).val() === placeholder) {
-             //           $(this).val('');
-            //            $(this).removeAttr('placeholder');
-            //            $(this).removeClass('placeholder');
-            //        }
-            //    }
+                //   if (!(e.shiftKey && e.keyCode === 16) && e.keyCode !== 9) {
+                //        if ($(this).val() === placeholder) {
+                //           $(this).val('');
+                //            $(this).removeAttr('placeholder');
+                //            $(this).removeClass('placeholder');
+                //        }
+                //    }
 
                 if(key === 13) {
                     if($chat.attr('value') !== '') {
@@ -550,7 +550,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 setTimeout(function () {
                     app.hideDropDialog();
                 }, 100);
-                
+
             });
             $('#nameinput').focusin(function() {
                 $('#name-tooltip').addClass('visible');
@@ -594,35 +594,43 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         return false;
                         //use E and F for arrow keys and E F for WSAD
                     }
-                    if($('#chatinput:focus').size() == 0 && $('#nameinput:focus').size() == 0 && game.ready && !app.dropDialogPopuped && !game.statehandler.buyingArcher && !game.statehandler.changingPassword  && !game.shopHandler.shown && !game.storeDialog.visible) {
-                        if (key >= 49 && key <= 54) { // 1 to 6 for now
+                    if($('#chatinput:focus').size() == 0 &&
+                        $('#nameinput:focus').size() == 0 &&
+                        game.ready &&
+                        !app.dropDialogPopuped &&
+                        !game.statehandler.buyingArcher &&
+                        !game.statehandler.changingPassword  &&
+                        !game.shopHandler.shown &&
+                        !game.storeDialog.visible) {
+                        if (key >= 49 && key <= 54 && game.ready) { // 1 to 6 for now
                             game.keyDown(key);
                             return false;
 
-                        } else if (key === 107) { // +
+                        } else if (key === 107 && game.ready) { // +
                             game.chathandler.incChatWindow();
-                        } else if (key === 109) { // -
+                        } else if (key === 109 && game.ready) {
                             game.chathandler.decChatWindow();
-                        } else if ([81, 69, 82, 84, 89].indexOf(key) >= 0) { // q, e, r, t, y
+                        } else if ([81, 69, 82, 84, 89].indexOf(key) >= 0 && game.ready && game.player) { // q, e, r, t, y
                             game.player.skillHandler.execute(key);
+                            return false;
+                        }
+                        if (key === 32 && game.ready) { // Space
+                            game.togglePathingGrid();
                             return false;
                         }
 
                         // The following may be uncommented for debugging purposes.
                         //
-                        if (key === 32) { // Space
-                            game.togglePathingGrid();
-                            return false;
-                        }
-                        if (key === 70) { // F
-                            game.toggleDebugInfo();
-                            return false;
-                        }
+                        /*
+                         if (key === 70) { // F
+                         game.toggleDebugInfo();
+                         return false;
+                         } */
                     }
                 }
             });
 
-             $('#healthbar').click(function(e) {
+            $('#healthbar').click(function(e) {
                 var hb = $('#healthbar'),
                     hp = $('#hitpoints'),
                     hpg = $('#hpguide');
@@ -635,11 +643,11 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         hpg.css('display', 'block');
 
                         setInterval(function () {
-                            if(((game.player.hitPoints / game.player.maxHitPoints) <= game.hpGuide) && 
-                               (game.healShortCut >= 0) && 
-                               Types.isHealingItem(game.player.inventory[game.healShortCut]) &&
-                               (game.player.inventoryCount[game.healShortCut] > 0)
-                              ) {
+                            if(((game.player.hitPoints / game.player.maxHitPoints) <= game.hpGuide) &&
+                                (game.healShortCut >= 0) &&
+                                Types.isHealingItem(game.player.inventory[game.healShortCut]) &&
+                                (game.player.inventoryCount[game.healShortCut] > 0)
+                            ) {
                                 game.eat(game.healShortCut);
                             }
                         }, 100);
@@ -651,7 +659,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
                 return false;
             });
-           if(game.renderer.tablet) {
+            if(game.renderer.tablet) {
                 $('body').addClass('tablet');
             }
         });

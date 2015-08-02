@@ -200,8 +200,7 @@ module.exports = Player = Character.extend({
                 
                 
                 */
-            var name = Utils.sanitize(message[1]);
-            var pw = Utils.sanitize((message[2]));
+
             var psession_id_kbve = false; //To be handled through config
             
             /**
@@ -212,34 +211,26 @@ module.exports = Player = Character.extend({
             // Always ensure that the name is not longer than a maximum length.
             // (also enforced by the maxlength attribute of the name input element).
             // After that, you capitalize the first letter.
-            
-            var pName = name.substr(0, 12).trim();
-            self.name = pName;
-            //Username Validation ? We might have to restrict things on KBVE's end as well.
-            if(!self.checkName(self.name)){
-                self.connection.sendUTF8("invalidusername");
-                self.connection.close("Invalid name " + self.name);
-                return;
-            }
+
                     
                     
             switch(action) {
-                
-                
+
+
                 case Types.Messages.KBVE:
-                    
+
                     // Check if Logged in?
                         if(self.server.loggedInPlayer(self.name)) {
                             self.connection.sendUTF8("loggedin");
                             self.connection.close("Player: " + self.name + " is already logged in.");
                             return;
                         }
-                                                 
-                        
-                        
-                        
+
+
+
+
                     // Make Request to verify information    
-                                                           
+
                        var options = {
                           uri: 'https://kbve.com/api/tta/tta_l.php',
                           method: 'POST',
@@ -249,7 +240,7 @@ module.exports = Player = Character.extend({
                             "password": pw
                           }
                         };
-                        
+
                         request(options, function (error, response, body) {
                           if (!error && response.statusCode == 200) {
                             console.log(body.id) // Print the shortened url.
@@ -257,39 +248,52 @@ module.exports = Player = Character.extend({
 
                             // Print out the response body
                             console.log(body)
-                    
+
                             // If it is json
                             var json_body = JSON.parse(body);
                              self.session_id_kbve = json_body.session_id;
-                         
+
                           }
                         });
                       //  if(session_id_kbve == falsle)
-                        
+
                     // check if user exists? if not, create 
-                    
-                    
+
+
                     // What function is it to check if the username exists 
                 //Let me check.
                 break;
                 case Types.Messages.CREATE:
-                    bcrypt.genSalt(10, function(err, salt) {
-                            bcrypt.hash(self.pw, salt, function(err, hash) {
-                            log.info("Creating player: " + self.name);
-                            self.email = Utils.sanitize(message[3]);
-                            self.pw = hash;
-                            databaseHandler.createPlayer(self);
-                        });
-                    });
-                break;
                 case Types.Messages.LOGIN:
-                    log.info("Received login for: " + self.name);
-                    if(self.server.loggedInPlayer(self.name)) {
-                        self.connection.sendUTF8("loggedin");
-                        self.connection.close("Player: " + self.name + " is already logged in.");
+                    var name = Utils.sanitize(message[1]);
+                    var pw = Utils.sanitize((message[2]));
+                    self.name = name.substr(0, 12).trim();
+                    if(!self.checkName(self.name)){
+                        self.connection.sendUTF8("invalidusername");
+                        self.connection.close("Invalid name " + self.name);
                         return;
                     }
-                    databaseHandler.loadPlayer(self);
+                    self.pw = pw.substr(0, 15);
+                    if (action === Types.Messages.CREATE) {
+                        self.pw = pw.substr(0, 15);
+                        bcrypt.genSalt(10, function (err, salt) {
+                            bcrypt.hash(self.pw, salt, function (err, hash) {
+                                log.info("Creating player: " + self.name);
+                                self.email = Utils.sanitize(message[3]);
+                                self.pw = hash;
+                                databaseHandler.createPlayer(self);
+                            });
+                        });
+                    } else {
+                        log.info("Received login for: " + self.name);
+                        if (self.server.loggedInPlayer(self.name)) {
+                            self.connection.sendUTF8("loggedin");
+                            self.connection.close("Player: " + self.name + " is already logged in.");
+                            return;
+                        }
+                        databaseHandler.loadPlayer(self);
+                    }
+
                 break;
               
                 case Types.Messages.WHO:

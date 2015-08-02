@@ -73,7 +73,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
 
         connect: function(dispatcherMode) {
-        var url = "wss://"+ this.host +":"+ this.port +"/",
+        var url = "ws://"+ this.host +":"+ this.port +"/",
             self = this;
 
         log.info("Trying to connect to server : "+url);
@@ -101,16 +101,16 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                         case 'ban':
                             if (self.fail_callback)
                                 self.fail_callback(e);
-                        break;
+                        return;
                         
                         case 'timeout':
                             self.isTimeout = true;
-                        break;
+                        return;
                         
                         default:
                             if (self.fail_callback)
                                 self.fail_callback(e);
-                        break;
+                        return;
                     }
                     
                 self.receiveMessage(e);

@@ -251,7 +251,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
             if(reply === 1) {
                 player.connection.sendUTF8("userexists");
                 player.connection.close("Username not available: " + player.name);
-                return;
             } else {
                 // Add the player
                 //this.checkBan(player);
@@ -280,8 +279,17 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 player.connection.close("Closing connection to: " + player.name);
                             
                                 return;
-                        } 
-                        player.sendWelcome("clotharmor", "sword1", null, null, 0, null, 0, 0, player.x, player.y, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, null, 0, 0, 0, null, 0, 0, 0, false, 0, Types.Entities.WARRIOR);
+                        }
+                        player.sendWelcome("clotharmor", "sword1", null, null, 0, null, null,
+                            0, 0, player.x, player.y, 0, 0,
+                            0, 0, 0,
+                            0, 0, 0,
+                            0, 0, 0,
+                            0, 0, 0,
+                            null, 0, 0, 0,
+                            null, 0, 0, 0,
+                            null, 0, 0, 0,
+                            false, 0, Types.Entities.WARRIOR);
                         
                     });
                     
