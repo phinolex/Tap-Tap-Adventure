@@ -1,5 +1,5 @@
 
-define(['Animation'], function(Animation) {
+define(['animation'], function(Animation) {
 
     var Entity = Class.extend({
         init: function(id, kind) {

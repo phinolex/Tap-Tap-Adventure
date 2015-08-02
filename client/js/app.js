@@ -135,27 +135,47 @@ define(['jquery', 'mob', 'item'], function($, Mob, Item) {
                     } else {
                         
                         self.setPlayButtonState(true);
-
+                        /*
+                       
+                        case 'timeout':
+                        default:
+                            if (self.fail_callback)
+                                self.fail_callback(reply.status);
+                        break;
+                        */
                         switch(result.reason) {
+                            
+                            case "timeout":
+                                self.addValidationError(self.getUsernameField(), "Timeout whilst attempting to establish connection to TTA servers.");
+                            break;
+                            
                             case 'invalidlogin':
                                 // Login information was not correct (either username or password)
                                 self.addValidationError(null, 'The username or password you entered is incorrect.');
                                 self.getUsernameField().focus();
-                                break;
+                            break;
+                            
                             case 'userexists':
                                 // Attempted to create a new user, but the username was taken
                                 self.addValidationError(self.getUsernameField(), 'The username you entered is not available.');
-                                break;
+                            break;
+                            
                             case 'invalidusername':
                                 // The username contains characters that are not allowed (rejected by the sanitizer)
                                 self.addValidationError(self.getUsernameField(), 'The username you entered contains invalid characters.');
-                                break;
+                            break;
+                            
                             case 'loggedin':
                                 // Attempted to log in with the same user multiple times simultaneously
                                 self.addValidationError(self.getUsernameField(), 'A player with the specified username is already logged in.');
-                                break;
+                            break;
+                            
                             case 'ban':
-                                self.addValidationError(self.getUsernameField(), 'You have been banned.');
+                                self.addValidationError(null, 'You have been banned.');
+                            break;
+                            
+                            case 'full':
+                                self.addValidationError(null, "All TTA gameservers are currently full.")
                             break;
                             
                             default:

@@ -44,7 +44,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             this.isDead = false;
             this.attackingMode = false;
             this.followingMode = false;
-
+            this.engagingPC = false;
             this.inspecting = null;
         },
 
@@ -248,14 +248,18 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
                 }
 
                 if(stop) { // Path is complete or has been interrupted
-                    this.path = null;
-                    this.idle();
+    		        this.path = null;
+    		        this.idle();
 
+    		        if (this.engagingPC) {
+    		            this.followingMode = false;
+    		            this.engagingPC = false;
+    		        }
                     if(this.stop_pathing_callback) {
                         this.stop_pathing_callback(this.gridX, this.gridY);
                     }
-                }
-            }
+        		}
+        	}
         },
 
         onBeforeStep: function(callback) {
@@ -340,8 +344,9 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         /**
          * Makes the character follow another one.
          */
-        follow: function(entity) {
-            if(entity) {
+        follow: function(entity, engagingPC) {
+            this.engagingPC = engagingPC === undefined ? false : engagingPC
+            if (entity && ((this.engagingPC && this.kind === 1) || (this.engagingPC == false && entity.kind != 1) || (this.kind !== 1))) {
                 this.followingMode = true;
                 this.moveTo_(entity.gridX, entity.gridY);
             }
@@ -363,7 +368,11 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         engage: function(character) {
             this.attackingMode = true;
             this.setTarget(character);
-            this.follow(character);
+            var engagingPC = false;
+            if (this.kind === 1 && character.kind === 1) {
+                engagingPC = true;
+            }
+            this.follow(character, engagingPC);
         },
         disengage: function() {
             this.attackingMode = false;
@@ -434,7 +443,18 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
                 log.error(this.id + " is not attacked by " + character.id);
             }
         },
-
+        forceStop: function () {
+    	    if (this.isMoving()) {
+    	        //this.interrupted = true;
+    	        this.path = null;
+    	        this.newDestination = null;
+    	        this.idle();
+    	        if (this.engagingPC) {
+    	            this.followingMode = false;
+    	            this.engagingPC = false;
+    	        }
+    	    }
+    	},
         /**
          * Loops through all the characters currently attacking this one.
          * @param {Function} callback Function which must accept one character argument.
@@ -456,12 +476,10 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
                 }
                 this.unconfirmedTarget = null;
                 this.target = character;
-
                 if(this.settarget_callback){
                     var targetName = Types.getKindAsString(character.kind);
                     this.settarget_callback(character, targetName);
                 }
-
             } else {
                 log.debug(character.id + " is already the target of " + this.id);
             }

@@ -254,7 +254,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $('#pwinput').attr('value', '');
             $('#pwinput2').attr('value', '');
             $('#emailinput').attr('value', '');
-           $('#chatbox').attr('value', '');
+            $('#chatbox').attr('value', '');
 
             if(game.renderer.mobile || game.renderer.tablet) {
                 $('#canvas .clickable').bind('touchstart', function(event) {

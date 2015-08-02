@@ -84,13 +84,34 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.connection.on('message', function(e) {
                     var reply = JSON.parse(e);
 
-                    if(reply.status === 'OK') {
-                        self.dispatched_callback(reply.host, reply.port);
-                    } else if(reply.status === 'FULL') {
-                        alert("Tap Tap Adventure is currently at maximum player population. Please retry later.");
-                    } else {
-                        alert("Unknown error whilst connecting to Tap Tap Adventure server.");
+                    switch(reply.status) {
+                        case 'ok':
+                            self.dispatched_callback(reply.host, reply.port);
+                        break;
+                        
+                        case 'full':
+                        case 'invalidlogin':
+                        case 'userexists':
+                        case 'loggedin':
+                        case 'invalidusername':
+                        case 'ban':
+                            if (self.fail_callback)
+                                self.fail_callback(reply.status);
+                        break;
+                        
+                        case 'timeout':
+                            self.isTimeout = true;
+                            if (self.fail_callback)
+                                self.fail_callback(reply.status);
+                        break;
+                        
+                        default:
+                            if (self.fail_callback)
+                                self.fail_callback(reply.status);
+                        break;
                     }
+
+                  
                 });
             } else {
                 this.connection.on('connection', function() {
@@ -104,16 +125,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                         }
                         return;
                     }
-                    if(e === 'timeout') {
-                        self.isTimeout = true;
-                        return;
-                    }
-                    if(e === 'invalidlogin' || e === 'userexists' || e === 'loggedin' || e === 'invalidusername' || e === 'ban'){
-                        if(self.fail_callback){
-                            self.fail_callback(e);
-                        }
-                        return;
-                    }
+                    /**
+                     * No longer required to check for messages
+                     * here as we're doing it when dispatching
+                     * to the game server.
+                     */
                     
                     self.receiveMessage(e);
                 });

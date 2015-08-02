@@ -825,20 +825,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 };
 
                 //>>excludeStart("prodHost", pragmas.prodHost);
-                var config = this.app.config.local || this.app.config.dev;
-                if(config) {
-                    this.client.connect(config.dispatcher); // false if the client connects directly to a game server
-                    connecting = true;
-                }
                 //>>excludeEnd("prodHost");
 
                 //>>includeStart("prodHost", pragmas.prodHost);
                 if(!connecting) {
 
-
-
-
-                    this.client.connect(false); // dont use the dispatcher in production
+                    this.client.connect(false); // Always use dispatcher in production
                 }
                 //>>includeEnd("prodHost");
 
@@ -968,7 +960,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.player.onAggro(function(mob) {
                         if(!mob.isWaitingToAttack(self.player) && !self.player.isAttackedBy(mob)) {
-                            if (Types.getMobLevel(mob.kind) * 2 < self.player.level) {
+                            if (Types.getMobLevel(mob.kind) * 2 > self.player.level) {
                                 self.player.log_info("Aggroed by " + mob.id + " at ("+self.player.gridX+", "+self.player.gridY+")");
                                 self.client.sendAggro(mob);
                                 mob.waitToAttack(self.player);
@@ -3012,7 +3004,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if(music) {
                     if(music.name === 'cave') {
-
+                        
                     }
                 }
             },

@@ -641,15 +641,16 @@ module.exports = World = cls.Class.extend({
 
     handleMobHate: function(mobId, playerId, hatePoints) {
         var mob = this.getEntityById(mobId),
-            player = this.getEntityById(playerId),
-            mostHated;
+            player = this.getEntityById(playerId);
 
         if(player && mob) {
-            mob.increaseHateFor(playerId, hatePoints);
-            player.addHater(mob);
-
-            if(mob.hitPoints > 0) { // only choose a target if still alive
-                this.chooseMobTarget(mob);
+            if (Types.getMobLevel(mob.kind) * 2 > player.level) {
+                mob.increaseHateFor(playerId, hatePoints);
+                player.addHater(mob);
+    
+                if(mob.hitPoints > 0) { // only choose a target if still alive
+                    this.chooseMobTarget(mob);
+                }
             }
         }
     },
