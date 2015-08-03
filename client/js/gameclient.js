@@ -106,12 +106,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                         case 'timeout':
                             self.isTimeout = true;
                         return;
-                        
-                        default:
-                            if (self.fail_callback)
-                                self.fail_callback(e);
-                        return;
-                    }
+
+                }
                     
                 self.receiveMessage(e);
             });
