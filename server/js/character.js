@@ -86,8 +86,8 @@ var Character = Entity.extend({
         return new Messages.Attack(this.id, this.target);
     },
 
-    health: function () {
-        return new Messages.Health(this.hitPoints, false);
+    health: function(attacker) {
+        return new Messages.Health(this.hitPoints, attacker ? (attacker instanceof Mob ? 1 : 2) : 0, false);
     },
 
     regen: function () {

@@ -1,4 +1,5 @@
 {
     "host": "tta.kbve.com",
-    "port": 1337
+    "port": 1337,
+    "useAPI": false
 }

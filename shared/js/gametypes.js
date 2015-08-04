@@ -107,7 +107,8 @@ Types = {
 			JOIN: 15,
 			POPULATION: 16
 		},
-		BANK: 62
+		BANK: 62,
+		KBVE: 63
     },
 
     Entities: {

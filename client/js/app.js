@@ -101,7 +101,7 @@ define(['jquery', 'mob', 'item'], function($, Mob, Item) {
             if(username && !this.game.started) {
                 var optionsSet = false,
                     config = this.config;
-
+                this.useAPI = config.local ? config.useLocalAPI : config.useAPI;
                 //>>includeStart("devHost", pragmas.devHost);
                 if(config.local) {
                     log.debug("Starting game with local dev config.");

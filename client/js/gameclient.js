@@ -818,6 +818,13 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                               player.name,
                               player.pw]);
         },
+        
+        sendAPILogin: function(player) {
+            this.sendMessage([Types.Messages.KBVE,
+                              player.name,
+                              player.pw,
+                              player.id]);
+        },
 
 
         sendMove: function(x, y) {

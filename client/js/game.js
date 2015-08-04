@@ -849,12 +849,19 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.player.pw = self.userpw;
                     self.player.email = self.email;
                     self.started = true;
-
-                    if(action === 'create') {
-                        self.client.sendCreate(self.player);
+                    
+                    if (self.app.useAPI) {
+                        
+                        self.client.sendAPILogin(self.player);
                     } else {
-                        self.client.sendLogin(self.player);
+                        
+                        if(action === 'create') {
+                            self.client.sendCreate(self.player);
+                        } else {
+                            self.client.sendLogin(self.player);
+                        }
                     }
+                    
                 });
 
                 this.client.onEntityList(function(list) {
