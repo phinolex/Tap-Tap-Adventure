@@ -211,6 +211,7 @@ module.exports = Player = Character.extend({
                 case Types.Messages.WHO:
                     log.info("Who: " + self.name);
                     message.shift();
+                    log.info("list: " + message);
                     self.server.pushSpawnsToPlayer(self, message);
                 break;
                 

@@ -125,6 +125,23 @@ var Map = cls.Class.extend({
             return false;
         }
     },
+    
+    isHealingArea: function(x, y) {
+        var id = 0;
+        var area = null;
+        
+        area = _.detect(this.healingAreas, function(area) {
+            return area.contains(x, y);
+        });
+        
+        if (area) {
+            
+            return true;
+        } else {
+            
+            return false;
+        }
+    },
 
     GroupIdToGroupPosition: function (id) {
         var posArray = id.split('-');
@@ -225,7 +242,8 @@ var Map = cls.Class.extend({
             area = this.startingAreas[i];
 
         return area.getRandomPosition();
-     },
+    },
+    
     initPVPAreas: function(pvpList){
         var self = this;
 
@@ -234,7 +252,20 @@ var Map = cls.Class.extend({
             var pvpArea = new Area(pvp.id, pvp.x, pvp.y, pvp.w, pvp.h, null);
             self.pvpAreas.push(pvpArea);
         });
+    },
+    
+    initHealingAreas: function(healingList) {
+        var self = this;
+        self.healingSpots = [];
+        _.each(healingList, function(healing){ 
+            var healingArea = new Area(healing.id, healing.x, healing.y, healing.w, healing.h, null);
+            self.healingSpots.push(healingArea);
+        });
+        
+        
     }
+    
+    
 });
 
 var pos = function (x, y) {

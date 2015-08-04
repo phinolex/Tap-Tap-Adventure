@@ -78,7 +78,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 
         log.info("Trying to connect to server : "+url);
 
-        this.connection = io(url, {forceNew: true, reconnection: false});
+        this.connection = new io.Socket(url, {forceNew: true, reconnection: false});
 
             this.connection.on('connection', function() {
                 log.info("Connected to server "+self.host+":"+self.port);
@@ -106,10 +106,13 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                         case 'timeout':
                             self.isTimeout = true;
                         return;
-
+                        
+                        default:
+                        
+                            self.receiveMessage(e);
+                        return;
                 }
-                    
-                self.receiveMessage(e);
+                
             });
 
             this.connection.on('error', function(e) {
