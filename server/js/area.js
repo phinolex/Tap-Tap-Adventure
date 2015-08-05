@@ -2,7 +2,7 @@ var cls = require('./lib/class');
 var _ = require('underscore');
 var Utils = require('./utils');
 
-var Area = cls.Class.extend({
+module.exports = Area = cls.Class.extend({
     init: function (id, x, y, width, height, world) {
         this.id = id;
         this.x = x;

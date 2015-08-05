@@ -11,10 +11,9 @@ function main(config) {
         case "error":
         case "debug":
         case "info":
-            log = new Log(Log.INFO); break;
-            log = new Log(Log.DEBUG); break;
-            log = new Log(Log.ERROR); break;
-    };
+            log = new Log(Log.INFO || Log.DEBUG || Log.ERROR);
+        break;
+    }
 
     var production_config = new ProductionConfig(config);
     if(production_config.inProduction()) {

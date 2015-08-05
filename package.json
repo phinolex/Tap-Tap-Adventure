@@ -19,7 +19,9 @@
     "mysql": "*",
     "express": "*",
     "body-parser": "*",
-    "request": "*"
+    "request": "*",
+    "http": "*",
+    "url": "*"
     
   },
   "devDependencies": {

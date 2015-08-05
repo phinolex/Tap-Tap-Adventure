@@ -4,7 +4,7 @@ var cls = require('./lib/class');
 var Messages = require('./message');
 var Utils = require('./utils');
 
-var Entity = cls.Class.extend({
+module.exports = Entity = cls.Class.extend({
     init: function (id, type, kind, x, y) {
         this.id = parseInt(id, 10);
         this.type = type;

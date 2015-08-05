@@ -50,7 +50,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.mouse = { x: 0, y: 0 };
                 this.zoningQueue = [];
                 this.previousClickPosition = {};
-                
+
                 this.cursorVisible = true;
                 this.selectedX = 0;
                 this.selectedY = 0;
@@ -849,19 +849,19 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.player.pw = self.userpw;
                     self.player.email = self.email;
                     self.started = true;
-                    
+
                     if (self.app.useAPI) {
-                        
+
                         self.client.sendAPILogin(self.player);
                     } else {
-                        
+
                         if(action === 'create') {
                             self.client.sendCreate(self.player);
                         } else {
                             self.client.sendLogin(self.player);
                         }
                     }
-                    
+
                 });
 
                 this.client.onEntityList(function(list) {
@@ -971,7 +971,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 self.player.log_info("Aggroed by " + mob.id + " at ("+self.player.gridX+", "+self.player.gridY+")");
                                 self.client.sendAggro(mob);
                                 mob.waitToAttack(self.player);
-                            }    
+                            }
                         }
                     });
 
@@ -1012,7 +1012,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.player.flagPVP(pvpFlag);
                         //self.pvpFlag = pvpFlag;
                     });
-                    
+
                     self.client.onGuildError(function(errorType, info) {
     					if(errorType === Types.Messages.GUILDERRORTYPE.BADNAME){
     						self.showNotification(info + " seems to be an inappropriate guild name…");
@@ -1030,21 +1030,21 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
     						self.showNotification(info+" is ALREADY a member of “"+self.player.getGuild().name+"”");
     					}
     				});
-    				
+
     				self.client.onGuildCreate(function(guildId, guildName) {
     					self.player.setGuild(new Guild(guildId, guildName));
     					self.storage.setPlayerGuild(self.player.getGuild());
     					self.showNotification("You successfully created and joined…");
     					setTimeout(function(){self.showNotification("…" + self.player.getGuild().name)},2500);
     				});
-    				
+
     				self.client.onGuildInvite(function(guildId, guildName, invitorName) {
     					self.showNotification(invitorName + " invited you to join “"+guildName+"”.");
     					self.player.addInvite(guildId);
     					setTimeout(function(){$("#chatinput").attr("placeholder", "Do you want to join "+guildName+" ? Type /guild accept yes or /guild accept no");
     					self.app.showChat();},2500);
     				});
-    				
+
     				self.client.onGuildJoin(function(playerName, id, guildId, guildName) {
     					if(typeof id === "undefined"){
     						self.showNotification(playerName + " failed to answer to your invitation in time.");
@@ -1063,7 +1063,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
     						self.showNotification(playerName+" is now a jolly member of “"+guildName+"”.");//#updateguild
     					}
     				});
-    				
+
     				self.client.onGuildLeave(function(name, playerId, guildName) {
     					if(self.player.id===playerId){
     						if(self.player.hasGuild()){
@@ -1079,7 +1079,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
     						self.showNotification(name + " has left “"+guildName+"”.");//#updateguild
     					}
     				});
-    				
+
     				self.client.onGuildTalk(function(name, id, message) {
     					if(id===self.player.id){
     						self.showNotification("YOU: "+message);
@@ -1091,16 +1091,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.client.onMemberConnect(function(name) {
     					self.showNotification(name + " connected to your world.");//#updateguild
     				});
-    				
+
     				self.client.onMemberDisconnect(function(name) {
     					self.showNotification(name + " lost connection with your world.");
     				});
-    				
+
     				self.client.onReceiveGuildMembers(function(memberNames) {
     					self.showNotification(memberNames.join(", ") + ((memberNames.length===1) ? " is " : " are ") +"currently online.");//#updateguild
     				});
 
-                    
+
                     self.player.onStopPathing(function(x, y) {
                         if(self.player.hasTarget()) {
                             self.player.lookAtTarget();
@@ -1621,11 +1621,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
                                 player.setWeaponName(itemName);
                                 if (Types.isWeapon(itemKind)) {
-                                    
+
                                     player.setAtkRange(1);
                                     player.kind = "warrior";
-                                } else if (Types.isArcherWeapon(itemKind)) {  
-                                    
+                                } else if (Types.isArcherWeapon(itemKind)) {
+
                                     player.setAtkRange(10);
                                     player.kind = "archer";
                                 }
@@ -2494,12 +2494,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             tryMovingToADifferentTile: function(character) {
             var attacker = character,
                 target = character.target;
-            
-            
+
+
             if(attacker && target && target instanceof Player && attacker instanceof Mob) {
                 if (!target.isMoving() && attacker.getDistanceToEntity(target) === 0) {
                     var pos;
-                    
+
                     switch(target.orientation) {
                         case Types.Orientations.UP:
                             pos = {x: target.gridX, y: target.gridY - 1, o: target.orientation}; break;
@@ -2510,34 +2510,34 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         case Types.Orientations.RIGHT:
                             pos = {x: target.gridX + 1, y: target.gridY, o: target.orientation}; break;
                     }
-                    
+
                     if(pos) {
                         attacker.previousTarget = target;
                         attacker.disengage();
                         attacker.idle();
                         this.makeCharacterGoTo(attacker, pos.x, pos.y);
                         target.adjacentTiles[pos.o] = true;
-                        
+
                         return true;
                     }
                 }
-            
+
                 if(!target.isMoving() && attacker.isAdjacentNonDiagonal(target) && this.isMobOnSameTile(attacker)) {
                     var pos = this.getFreeAdjacentNonDiagonalPosition(target);
-            
+
                     // avoid stacking mobs on the same tile next to a player
                     // by making them go to adjacent tiles if they are available
                     if(pos && !target.adjacentTiles[pos.o]) {
                         if(this.player && this.player.target && attacker.id === this.player.target.id) {
                             return false; // never unstack the player's target
                         }
-                        
+
                         attacker.previousTarget = target;
                         attacker.disengage();
                         attacker.idle();
                         this.makeCharacterGoTo(attacker, pos.x, pos.y);
                         target.adjacentTiles[pos.o] = true;
-                        
+
                         return true;
                     }
                 }
@@ -2763,7 +2763,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
     							this.showNotification("“guild accept” is a YES or NO question!!");
     						}
     						break;
-    				}	
+    				}
     			}
                 if(!this.chathandler.processSendMessage(message)){
                     this.client.sendChat(message);
@@ -3011,7 +3011,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if(music) {
                     if(music.name === 'cave') {
-                        
+
                     }
                 }
             },

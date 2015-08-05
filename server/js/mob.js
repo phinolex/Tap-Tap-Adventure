@@ -6,7 +6,7 @@ var MobArea = require('./mobarea');
 var Properties = require('./properties');
 var Utils = require('./utils');
 
-var Mob = Character.extend({
+module.exports = Mob = Character.extend({
     init: function (id, kind, x, y) {
         this._super(id, 'mob', kind, x, y);
 

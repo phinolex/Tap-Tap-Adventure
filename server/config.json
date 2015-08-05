@@ -1,5 +1,6 @@
 {
   "port": 1340,
+  "ip": "0.0.0.0",
   "debug_level": "info",
   "nb_players_per_world": 1000,
   "nb_worlds": 1,
@@ -10,7 +11,7 @@
   "redis_host": "127.0.0.1",
   "memcached_host": "127.0.0.1",
   "memcached_port": 11211,
-  "game_servers": [{"server": "localhost", "name": "TTA1"}],
+  "game_servers": [{"server": "0.0.0.0", "name": "TTA1"}],
   "server_name" : "TTA1",
   "world_id": 1,
   "production": "heroku",

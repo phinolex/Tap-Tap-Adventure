@@ -73,26 +73,26 @@ module.exports = World = cls.Class.extend({
             // Number of players in this world
             self.pushToPlayer(player, new Messages.Population(self.playerCount));
             if(player.hasGuild()){
-				self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.CONNECT, player.name),player);
-				var names = _.without(player.getGuild().memberNames(), player.name);
-				if(names.length > 0){
-					self.pushToPlayer(player, new Messages.Guild(Types.Messages.GUILDACTION.ONLINE, names));
-				}
-			}
+                self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.CONNECT, player.name),player);
+                var names = _.without(player.getGuild().memberNames(), player.name);
+                if(names.length > 0){
+                    self.pushToPlayer(player, new Messages.Guild(Types.Messages.GUILDACTION.ONLINE, names));
+                }
+            }
 
             self.pushRelevantEntityListTo(player);
 
             var move_callback = function(x, y) {
                 log.debug(player.name + "has moved to position: x:" + x + " y:" + y);
-               
+
                 var isPVP = self.map.isPVP(x, y);
-                player.flagPVP(isPVP); 
-               
-               /*
-                * Basically 
-                */
-               player.forEachAttacker(function(mob) {
-                     if(mob.target === null){
+                player.flagPVP(isPVP);
+
+                /*
+                 * Basically
+                 */
+                player.forEachAttacker(function(mob) {
+                    if(mob.target === null){
                         player.removeAttacker(mob);
                         return;
                     }
@@ -134,8 +134,8 @@ module.exports = World = cls.Class.extend({
             player.onExit(function() {
                 log.info(player.name + " has left the game.");
                 /*if(player.hasGuild()){
-					self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.DISCONNECT, player.name), player);
-				}*/
+                 self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.DISCONNECT, player.name), player);
+                 }*/
                 self.removePlayer(player);
                 self.decrementPlayerCount();
 
@@ -165,7 +165,7 @@ module.exports = World = cls.Class.extend({
             self.forEachCharacter(function(character) {
                 if(character.type === 'player') {
                     if(!character.hasFullHealth()) {
-                        character.regenHealthBy(Math.floor(character.maxHitPoints / 25));   
+                        character.regenHealthBy(Math.floor(character.maxHitPoints / 25));
                         //Handle Mana Regen
                         self.pushToPlayer(character, character.regen());
                     }
@@ -296,26 +296,26 @@ module.exports = World = cls.Class.extend({
         }
     },
     pushToGuild: function(guild, message, except) {
-		var	self = this;
+        var	self = this;
 
-		if(guild){
-			if(typeof except === "undefined"){
-				guild.forEachMember(function (player, id){
-					self.pushToPlayer(self.getEntityById(id), message);
-				});
-			}
-			else{
-				guild.forEachMember(function (player, id){
-					if(parseInt(id,10)!==except.id){
-						self.pushToPlayer(self.getEntityById(id), message);
-					}
-				});
-			}
-		} else {
-			log.error("pushToGuild: guild was undefined");
-		}
-	},
-    
+        if(guild){
+            if(typeof except === "undefined"){
+                guild.forEachMember(function (player, id){
+                    self.pushToPlayer(self.getEntityById(id), message);
+                });
+            }
+            else{
+                guild.forEachMember(function (player, id){
+                    if(parseInt(id,10)!==except.id){
+                        self.pushToPlayer(self.getEntityById(id), message);
+                    }
+                });
+            }
+        } else {
+            log.error("pushToGuild: guild was undefined");
+        }
+    },
+
     pushToGroup: function(groupId, message, ignoredPlayer) {
         var self = this,
             group = this.groups[groupId];
@@ -373,10 +373,8 @@ module.exports = World = cls.Class.extend({
                             //log.info("Sent ID: " + id + " successfully.");
                         } else {
                             delete self.server.getConnection(id);
-                            
+
                         }
-                    } else {
-                        delete self.outgoingQueues[id];
                     }
                 }
             } else {
@@ -406,7 +404,7 @@ module.exports = World = cls.Class.extend({
             this.clearMobAggroLink(entity);
             this.clearMobHateLinks(entity);
         }
-        
+
         entity.destroy();
         this.removeFromGroups(entity);
         log.debug("Removed "+ Types.getKindAsString(entity.kind) +" : "+ entity.id);
@@ -437,77 +435,77 @@ module.exports = World = cls.Class.extend({
         }
     },
     joinGuild: function(player, guildId, answer){
-		if( typeof this.guilds[guildId] === 'undefined' ){
-			this.pushToPlayer(player, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.DOESNOTEXIST,guildId));
-		}
-		//#guildupdate (guildrules)
-		else {
-			if(player.hasGuild()){
-				var formerGuildId = player.guildId;
-			}
-			var res = this.guilds[guildId].addMember(player, answer);
-			if(res !== false && typeof formerGuildId !== "undefined"){
-				this.guilds[formerGuildId].removeMember(player);
-			}
-			return res;
-		}
-		return false;
-	},
-	
-	reloadGuild: function(guildId, guildName){
-			var res = false;
-			var lastItem = 0;
-			if(typeof this.guilds[guildId] !== "undefined"){
-				if(this.guilds[guildId].name === guildName){
-					res = guildId;
-				}
-			}
-			if(res===false){
-				_.every(this.guilds, function(guild, key){
-					if(guild.name === guildName){
-						res = parseInt(key,10);
-						return false;
-					}
-					else{
-						lastItem = key;
-						return true;
-					}
-				});
-			}
+        if( typeof this.guilds[guildId] === 'undefined' ){
+            this.pushToPlayer(player, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.DOESNOTEXIST,guildId));
+        }
+        //#guildupdate (guildrules)
+        else {
+            if(player.hasGuild()){
+                var formerGuildId = player.guildId;
+            }
+            var res = this.guilds[guildId].addMember(player, answer);
+            if(res !== false && typeof formerGuildId !== "undefined"){
+                this.guilds[formerGuildId].removeMember(player);
+            }
+            return res;
+        }
+        return false;
+    },
 
-			if(res===false){//first connected after reboot.
-				if(typeof this.guilds[guildId] !== "undefined"){
-					guildId = parseInt(lastItem,10)+1;
-				}
-				this.guilds[guildId] = new Guild(guildId, guildName, this);
-				res = guildId;
-			}
-		return res;
-	},
-	
-	addGuild: function(guildName){
-		var res = true;
-		var id=0;//an ID here
-		res = _.every(this.guilds,function(guild, key){
-			id = parseInt(key,10)+1;
-			return (guild.name !== guildName);
-		});
-		if (res) { 
-			this.guilds[id] = new Guild(id, guildName, this);
-			res = id;
-		}
-		return res;
-	},
+    reloadGuild: function(guildId, guildName){
+        var res = false;
+        var lastItem = 0;
+        if(typeof this.guilds[guildId] !== "undefined"){
+            if(this.guilds[guildId].name === guildName){
+                res = guildId;
+            }
+        }
+        if(res===false){
+            _.every(this.guilds, function(guild, key){
+                if(guild.name === guildName){
+                    res = parseInt(key,10);
+                    return false;
+                }
+                else{
+                    lastItem = key;
+                    return true;
+                }
+            });
+        }
+
+        if(res===false){//first connected after reboot.
+            if(typeof this.guilds[guildId] !== "undefined"){
+                guildId = parseInt(lastItem,10)+1;
+            }
+            this.guilds[guildId] = new Guild(guildId, guildName, this);
+            res = guildId;
+        }
+        return res;
+    },
+
+    addGuild: function(guildName){
+        var res = true;
+        var id=0;//an ID here
+        res = _.every(this.guilds,function(guild, key){
+            id = parseInt(key,10)+1;
+            return (guild.name !== guildName);
+        });
+        if (res) {
+            this.guilds[id] = new Guild(id, guildName, this);
+            res = id;
+        }
+        return res;
+    },
 
     addPlayer: function(player, guildId) {
         this.addEntity(player);
         this.players[player.id] = player;
         this.outgoingQueues[player.id] = [];
         /*var res = true;
-        if(typeof guildId !== 'undefined'){
-			res = this.joinGuild(player, guildId);
-		}
-		return res;*/
+         if(typeof guildId !== 'undefined'){
+         res = this.joinGuild(player, guildId);
+         }
+         return res;*/
         log.info("Added player : " + player.id);
     },
 
@@ -516,8 +514,8 @@ module.exports = World = cls.Class.extend({
         player.broadcast(player.despawn());
         this.removeEntity(player);
         /*if(player.hasGuild()){
-			player.getGuild().removeMember(player);
-		}*/
+         player.getGuild().removeMember(player);
+         }*/
         delete this.players[player.id];
         delete this.outgoingQueues[player.id];
     },
@@ -641,16 +639,15 @@ module.exports = World = cls.Class.extend({
 
     handleMobHate: function(mobId, playerId, hatePoints) {
         var mob = this.getEntityById(mobId),
-            player = this.getEntityById(playerId);
+            player = this.getEntityById(playerId),
+            mostHated;
 
         if(player && mob) {
-            if (Types.getMobLevel(mob.kind) * 2 > player.level) {
-                mob.increaseHateFor(playerId, hatePoints);
-                player.addHater(mob);
-    
-                if(mob.hitPoints > 0) { // only choose a target if still alive
-                    this.chooseMobTarget(mob);
-                }
+            mob.increaseHateFor(playerId, hatePoints);
+            player.addHater(mob);
+
+            if(mob.hitPoints > 0) { // only choose a target if still alive
+                this.chooseMobTarget(mob);
             }
         }
     },
@@ -693,7 +690,7 @@ module.exports = World = cls.Class.extend({
     },
 
     broadcastAttacker: function(character) {
-        if(character) {
+        if(character) {
             this.pushToAdjacentGroups(character.group, character.attack(), character.id);
         }
         if(this.attack_callback) {
@@ -830,16 +827,7 @@ module.exports = World = cls.Class.extend({
             v = Utils.random(100),
             p = 0,
             item = null;
-            
-        var randomInt = Utils.random(10000);
 
-        if(randomInt === 7){
-          item = this.addItem(this.createItem(Types.Entities.SNOWPOTION, mob.x, mob.y));
-          return item;
-        } else if(randomInt === 77 || randomInt === 777){
-          item = this.addItem(this.createItem(Types.Entities.BLACKPOTION, mob.x, mob.y));
-          return item;
-        }
         for(var itemName in drops) {
             if (drops.hasOwnProperty(itemName)) {
                 var percentage = drops[itemName];
@@ -875,7 +863,7 @@ module.exports = World = cls.Class.extend({
                 }
             }
         }
-        
+
         return item;
     },
 
@@ -900,8 +888,8 @@ module.exports = World = cls.Class.extend({
 
         this.map.forEachGroup(function(id) {
             self.groups[id] = { entities: {},
-                                players: [],
-                                incoming: []};
+                players: [],
+                incoming: []};
         });
         this.zoneGroupsReady = true;
     },
@@ -909,14 +897,14 @@ module.exports = World = cls.Class.extend({
     removeFromGroups: function(entity) {
         var self = this,
             oldGroups = [];
-        
+
         if(entity && entity.group) {
-            
+
             var group = this.groups[entity.group];
             if(entity instanceof Player) {
                 group.players = _.reject(group.players, function(id) { return id === entity.id; });
             }
-            
+
             this.map.forEachAdjacentGroup(entity.group, function(id) {
                 if(entity.id in self.groups[id].entities) {
                     delete self.groups[id].entities[entity.id];
@@ -944,8 +932,8 @@ module.exports = World = cls.Class.extend({
 
                 if(group) {
                     if(!_.include(group.entities, entity.id)
-                    //  Items dropped off of mobs are handled differently via DROP messages. See handleHurtEntity.
-                    && (!isItem || isChest || (isItem && !isDroppedItem))) {
+                            //  Items dropped off of mobs are handled differently via DROP messages. See handleHurtEntity.
+                        && (!isItem || isChest || (isItem && !isDroppedItem))) {
                         group.incoming.push(entity);
                     }
                 }
@@ -1041,7 +1029,7 @@ module.exports = World = cls.Class.extend({
             });
         }
     },
-    
+
     handleDroppedItemDespawn: function(item) {
         var self = this;
 
@@ -1091,7 +1079,7 @@ module.exports = World = cls.Class.extend({
         }
         return null;
     },
-    
+
     tryAddingMobToChestArea: function(mob) {
         _.each(this.chestAreas, function(area) {
             if(area.contains(mob)) {
@@ -1127,42 +1115,42 @@ module.exports = World = cls.Class.extend({
         }, 10000);
     },
     isAlreadyKung: function(word){
-      var i=0;
-      for(i=0; i<this.kungWords.length; i++){
-        if(this.kungWords[i] === word){
-          return true;
+        var i=0;
+        for(i=0; i<this.kungWords.length; i++){
+            if(this.kungWords[i] === word){
+                return true;
+            }
         }
-      }
-      return false;
+        return false;
     },
     isRightKungWord: function(word){
-      if(this.kungWords.length === 0){
-        return true;
-      }
-
-      var lastWord = this.kungWords[this.kungWords.length-1];
-      if(lastWord[2] === word[0]){
-        return true;
-      }
-
-      var charCode = lastWord.charCodeAt(2) - 44032;
-      var chosung = Math.floor(Math.floor(charCode/21)/28);
-      if(chosung === 2){ // ㄴ
-        var oCode = String.fromCharCode(charCode + 44032 + 9*21*28); // ㄴ to ㅇ
-        if(oCode === word[0]){
-          return true;
+        if(this.kungWords.length === 0){
+            return true;
         }
-      } else if(chosung === 5){ // ㄹ
-        var oCode = String.fromCharCode(charCode + 44032 + 6*21*28); // ㄹ to ㅇ
-        if(oCode === word[0]){
-          return true;
-        }
-        var nCode = String.fromCharCode(charCode + 44032 - 3*21*28); // ㄹ to ㄴ
-        if(nCode === word[0]){
-          return true;
-        }
-      }
 
-      return false;
+        var lastWord = this.kungWords[this.kungWords.length-1];
+        if(lastWord[2] === word[0]){
+            return true;
+        }
+
+        var charCode = lastWord.charCodeAt(2) - 44032;
+        var chosung = Math.floor(Math.floor(charCode/21)/28);
+        if(chosung === 2){ // ㄴ
+            var oCode = String.fromCharCode(charCode + 44032 + 9*21*28); // ㄴ to ㅇ
+            if(oCode === word[0]){
+                return true;
+            }
+        } else if(chosung === 5){ // ㄹ
+            var oCode = String.fromCharCode(charCode + 44032 + 6*21*28); // ㄹ to ㅇ
+            if(oCode === word[0]){
+                return true;
+            }
+            var nCode = String.fromCharCode(charCode + 44032 - 3*21*28); // ㄹ to ㄴ
+            if(nCode === word[0]){
+                return true;
+            }
+        }
+
+        return false;
     }
 });

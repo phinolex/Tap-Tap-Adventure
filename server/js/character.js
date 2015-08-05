@@ -1,8 +1,10 @@
-var Entity = require('./entity');
-var Messages = require('./message');
-var Utils = require('./utils');
+var cls = require("./lib/class"),
+    Messages = require("./message"),
+    Utils = require("./utils"),
+    Properties = require("./properties"),
+    Types = require("../../shared/js/gametypes");
 
-var Character = Entity.extend({
+module.exports = Character = Entity.extend({
     init: function (id, type, kind, x, y) {
         this._super(id, type, kind, x, y);
 
