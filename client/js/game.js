@@ -137,8 +137,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.sfxOn = true;
                 this.frameColour = "default";
                 this.autoRetaliate = false;
-
-
+                this.isWaiting = false;
+                
                 //Bank
                 this.bankShowing = false;
 
@@ -1007,7 +1007,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.audioManager.updateMusic();
                         }
                     });
-
+                    
+                    self.client.onGuildWarFlag(function(waitFlag) {
+                        self.player.flagWait(waitFlag); 
+                    });
+                    
                     self.client.onPVPChange(function(pvpFlag) {
                         self.player.flagPVP(pvpFlag);
                         //self.pvpFlag = pvpFlag;
@@ -1115,6 +1119,18 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 self.client.sendLoot(item);
                             } catch(e) {
                                 throw e;
+                            }
+                        }
+                        
+                        if (self.player.waitFlag && !self.notifyWaitMessageSent) {
+                            self.chathandler.addNormalChat("Notification:", "You've entered Guild Wars waiting area.");
+                            self.notifyWaitMessageSent = true;
+                            self.isWaiting = true;
+                        } else {
+                            if (!self.player.waitFlag && self.notifyWaitMessageSent) {
+                                self.chathandler.addNormalChat("Notification", "You hav eleft the waiting area.")
+                                self.notifyWaitMessageSent = false;
+                                self.isWaiting = false;
                             }
                         }
 

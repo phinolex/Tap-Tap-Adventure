@@ -108,7 +108,18 @@ Types = {
 			POPULATION: 16
 		},
 		BANK: 62,
-		KBVE: 63
+		KBVE: 63,
+		GUILDWAR: 64,
+		GUILDWARTYPES: {
+		    JOIN: 1,
+		    STARTED: 2,
+		    FULL: 3,
+		    INVALID: 4,
+		    ONGOING: 5,
+		    WAITING: 6
+		},
+		COUNTDOWN: 65
+		
     },
 
     Entities: {

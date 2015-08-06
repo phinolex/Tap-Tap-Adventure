@@ -87,6 +87,9 @@ module.exports = World = cls.Class.extend({
 
                 var isPVP = self.map.isPVP(x, y);
                 player.flagPVP(isPVP);
+                
+                /* var isWaiting = self.map.isWaiting(x, y);
+                player.flagWait(isWaiting);
 
                 /*
                  * Basically
@@ -231,7 +234,10 @@ module.exports = World = cls.Class.extend({
             }
         }, 1000 / this.ups);
 
-        log.info(""+this.id+" created (capacity: "+this.maxPlayers+" players).");
+        log.info(""+this.id+" created (capacity: " + this.maxPlayers + " players).");
+        
+        self.startMinigameTimer();
+        log.info("Started Minigame Timer.");
     },
 
     setUpdatesPerSecond: function(ups) {
@@ -1091,6 +1097,23 @@ module.exports = World = cls.Class.extend({
     updatePopulation: function(totalPlayers) {
         this.pushBroadcast(new Messages.Population(this.playerCount, totalPlayers ? totalPlayers : this.playerCount));
     },
+    
+    startMinigameTimer: function() {
+        this.minigameTimer = 180; //Every 180 seconds?
+        setInterval(function() {
+            this.minigameTimer -= 1;
+            if (this.minigameTimer <= 0) {
+                this.minigameTimer = 180; //reset The Timer
+            }
+        }, 1000); //every 1 second
+    },
+    
+    getMinigameTime: function() {
+          
+        return this.minigameTimer;
+    },
+    
+    
     pushKungWord: function(player, word){
         if(this.kungTimeCallback){
             clearTimeout(this.kungTimeCallback);

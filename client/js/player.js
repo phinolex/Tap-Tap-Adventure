@@ -26,6 +26,9 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
             // PVP Flag
             this.pvpFlag = false;
+            
+            //GuildWar
+            this.isWaiting = false;
 
             this.isWanted = false;
             // Benef
@@ -273,9 +276,19 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
                 clearTimeout(this.royalAzaleaBenefTimeout);
             }
         },
+        
         flagPVP: function(pvpFlag){
             this.pvpFlag = pvpFlag;
-       }
+        },
+        
+        flagWait: function(waitFlag) {
+            this.isWaiting = waitFlag;    
+        },
+        
+        isPlayerWaiting: function() {
+            
+            return this.isWaiting;
+        }
     });
 
     return Player;

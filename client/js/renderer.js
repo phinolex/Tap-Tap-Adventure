@@ -957,7 +957,14 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 });
                 this.initFont();
             },
-
+            
+            drawMinigameText: function() {
+                var self = this;
+                switch (this.scale) {
+                    
+                }
+            },
+            
             setCameraView: function(ctx) {
                 ctx.translate(-this.camera.x * this.scale, -this.camera.y * this.scale);
             },

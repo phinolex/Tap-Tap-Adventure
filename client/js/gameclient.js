@@ -59,6 +59,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.GUILDERROR] = this.receiveGuildError;
             this.handlers[Types.Messages.GUILD] = this.receiveGuild;
             this.handlers[Types.Messages.WANTED] = this.receiveWanted;
+            this.handlers[Types.Messages.GUILDWARTYPES.WAITING] = this.receiveGuildWarWait;
             this.useBison = false;
 
             this.enable();
@@ -73,7 +74,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
 
         connect: function(dispatcherMode) {
-        var url = "ws://"+ this.host +":"+ this.port +"/",
+        var url = "wss://"+ this.host +":"+ this.port +"/",
             self = this;
 
         log.info("Trying to connect to server : "+url);
@@ -617,6 +618,12 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 					this.guildtalk_callback(data[2], data[3], data[4]);//name, id, message
 			}
 		},
+		
+		receiveGuildWarWait: function(data) {
+		    var waitFlag = data[1];
+		    this.guildwarwaiting_callback(waitFlag);
+		},
+		
         onDispatched: function(callback) {
             this.dispatched_callback = callback;
         },
@@ -710,6 +717,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
         onPVPChange: function(callback){
             this.pvp_callback = callback;
+        },
+
+        onGuildWarFlag: function(callback) {
+          
+            this.guildwarwaiting_callback = callback;  
         },
 
         onBoard: function(callback){

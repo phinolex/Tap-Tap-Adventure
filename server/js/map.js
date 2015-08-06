@@ -216,6 +216,26 @@ var Map = cls.Class.extend({
             }
         });
     },
+    
+    //Waiting Areas
+    
+    initWaitingAreas: function(waitingList) {
+        var self = this;
+        this.waitingAreas = {};
+        var minigame = null;
+        
+        _.each(waitingList, function (wait) {
+            var minigameArea = new Area(wait.id, wait.x, wait.y, wait.w, wait.h); 
+            minigame = wait.m;
+            this.waitingAreas.push({minigame, minigameArea});
+        });
+        
+    },
+    
+    getWaitingArea: function(minigame) {
+        
+        return this.waitingArea[minigame].value;
+    },
 
     initCheckpoints: function (cpList) {
         var self = this;

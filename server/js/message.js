@@ -384,3 +384,24 @@ Messages.Mana = Message.extend({
         return [Types.Messages.MANA, this.mana, this.maxMana];
     }
 });
+
+Messages.Countdown = Message.extend({
+    init: function(time) {
+        this.time = time;
+    },
+    serialize: function() {
+        return [Types.Messages.COUNTDOWN, this.time];
+    }
+    
+});
+
+Messages.GuildWarWait = Message.extend({
+    init: function(waitFlag) {
+        this.waitFlag = waitFlag;
+    },
+    serialize: function() {
+        
+        return [Types.Messages.GUILDWARTYPES.WAITING, this.waitFlag];
+    }
+    
+});

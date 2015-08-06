@@ -17,7 +17,11 @@ var cls = require("./lib/class"),
     Mob = require('./mob'),
     SkillHandler = require("./skillhandler"),
     Variations = require('./variations'),
-    Trade = require('./trade');
+    Trade = require('./trade'),
+    express = require('express'),
+    bodyParser = require('body-parser'),
+    app = express(), 
+    request = require("request");
 
 
 module.exports = Player = Character.extend({
@@ -90,118 +94,10 @@ module.exports = Player = Character.extend({
             }
 
             self.resetTimeout();
-
+            
             if(action === Types.Messages.CREATE || action === Types.Messages.LOGIN) {
                 var name = Utils.sanitize(message[1]);
                 var pw = Utils.sanitize(message[2]);
-                var session_id_kbve = false;
-
-                /**
-                 *  I was thinking we put the API check before everything and then not even have to use redis to verify the password again.
-                 *  Basically under redis.js, you check if the password is correct? Lets just assume after it checks the API and if it returns true,
-                 *  then the username is EITHER valid OR not existent.
-                 *  if Valid, then we just load the character , no point in checking the password again...
-                 * if not existent, we just create it ... then move forward.
-                 * The API will be ready in 15mins ~
-                 * https://kbve.com/api/vengyn/member/vengyn_member_login.php?action=login&username=demo&password=demo
-                 * I am going to put a block for bruteforce and require an API key.
-                 *  Basically, if the username and password are correct (demo, demo are), then it returns a session_id
-                 * {"session_id": "c514c91e4ed341f263e458d44b3bb0a7"}
-                 *
-                 * if its false, it returns... false for the session_id...
-                 *
-                 *
-                 * THEN, with the session_id, you can pull anything you want..
-                 *
-                 * https://kbve.com/api/tta/tta_m.php?session_id=c514c91e4ed341f263e458d44b3bb0a7
-                 *
-                 * It gives you demo / demo 's full KBVE profile in json
-                 *
-                 * "email":"mamosa@gmail.com
-                 * "ip_address":"142.105.37.212"
-                 * member_group_id":"3" , where 3 is a normal user, you can reference the admin panel for the exact user ids
-                 *  So if they are in the group that is ban, we will go ahead and
-                 *
-                 * We can grab PMs, their KBVE credits, special exp boost if they recently were active, ect..
-                 *
-                 * Furthermore, we can also grab their crypto-currency and steam_id (if they add it).
-                 *
-                 *
-                 * http://rapiddg.com/blog/calling-rest-api-nodejs-script
-                 *
-                 * I changed the API to https://kbve.com/api/tta/tta_l.php  , and its no longer $_GET but rather $_POST via JSON .
-                 *
-                 * http://gurujsonrpc.appspot.com/ (You can use this to test the API)
-                 *
-                 *
-                 *
-                 *
-                 * Here is how i am thinking of it working.. performRequest is from the link above.
-                 *
-
-
-
-                 performRequest('https://kbve.com/api/tta/tta_l.php', 'POST', {
-                    
-                    method: login,
-                    username: name,
-                    password: pw
-                  }, function(data) {
-                    session_id_kbve = data.session_id;
-                  
-                            
-                        if(session_id_kbve)
-                                {
-                                    if(name exists)
-                                     {
-                                         
-                                         Load Character ($name); 
-                                     }
-                                     else
-                                     {
-                                        Call TTA API to get member info, such as email.
-                                         createAccount($name, $pw, $email, $kbve_userid); // We should also add their KBVE UserID, but the email kinda can be an ID.
-                                         
-                                         
-                                     }
-                                    
-                                }
-                                else
-                                {
-                                    
-                                        player.connection.sendUTF8("invalidlogin");
-                                        player.connection.close("Wrong KBVE Password: " + player.name);
-                                        return;
-                                }
-                  
-                  });
-
-
-
-
-
-                 *
-                 *
-                 *
-                 *
-                 **/
-
-                /* 
-                 // Check Password
-                 This is how redis checks the player's password
-                 bcrypt.compare(player.pw, pw, function(err, res) {
-                 if(!res) {
-                 player.connection.sendUTF8("invalidlogin");
-                 player.connection.close("Wrong Password: " + player.name);
-                 return;
-                 }
-
-
-
-
-
-                 */
-
 
 
                 /**
@@ -213,8 +109,7 @@ module.exports = Player = Character.extend({
                 // Always ensure that the name is not longer than a maximum length.
                 // (also enforced by the maxlength attribute of the name input element).
                 // After that, you capitalize the first letter.
-                var pName = name.substr(0, 12).trim();
-                self.name = pName;
+                self.name = name.substr(0, 36).trim();
 
 
                 // Validate the username
@@ -223,7 +118,7 @@ module.exports = Player = Character.extend({
                     self.connection.close("Invalid name " + self.name);
                     return;
                 }
-                self.pw = pw.substr(0, 15);
+                self.pw = pw.substr(0, 45);
 
                 if(action === Types.Messages.CREATE) {
                     bcrypt.genSalt(10, function(err, salt) {
@@ -245,306 +140,388 @@ module.exports = Player = Character.extend({
                     databaseHandler.loadPlayer(self);
                 }
 
-            }
-            else if(action === Types.Messages.WHO) {
-                log.info("WHO: " + self.name);
-                message.shift();
-                self.server.pushSpawnsToPlayer(self, message);
-            }
-            else if(action === Types.Messages.ZONE) {
-                log.info("ZONE: " + self.name);
-                self.zone_callback();
-            }
-            else if(action === Types.Messages.CHAT) {
-                var msg = Utils.sanitize(message[1]);
-                log.info("CHAT: " + self.name + ": " + msg);
+            }      
+            
+                    
+            switch(action) {
 
-                // Sanitized messages may become empty. No need to broadcast empty chat messages.
-                if(msg && msg !== "") {
-                    msg = msg.substr(0, 60); // Enforce maxlength of chat input
-                    var key = msg.substr(0);
-                    if ( typeof String.prototype.startsWith !== 'function' ) {
-                        String.prototype.startsWith = function( str ) {
-                            return str.length > 0 && this.substring( 0, str.length ) === str;
+
+                case Types.Messages.KBVE:
+                    self.name = Utils.sanitize(message[1]).substr(0, 36).trim();
+                    self.pw = Utils.sanitize(message[2]).substr(0, 45);
+                    self.session_id_kbve = message[3];
+                    
+                    /*
+                     * Check here if a player exists,
+                     * add his session_id to active players
+                     * and when he disconnects, make sure
+                     * the API removes the player.
+                     * You should check if a player exists by
+                     * username rather than ID, as that changes regularly.
+                     */
+                    
+                    
+                    
+                    // Check if Logged in?
+                        if(self.server.loggedInPlayer(self.name)) {
+                            self.connection.sendUTF8("loggedin");
+                            self.connection.close("Player: " + self.name + " is already logged in.");
+                            return;
+                        }
+
+
+
+
+                    // Make Request to verify information    
+
+                       var options = {
+                          uri: 'https://kbve.com/api/tta/tta_l.php',
+                          method: 'POST',
+                          json: {
+                            "method": "login",
+                            "username": self.name,
+                            "password": self.pw
+                          }
                         };
-                    };
 
-                    if ( typeof String.prototype.endsWith !== 'function' ) {
-                        String.prototype.endsWith = function( str ) {
-                            return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
+                        request(options, function (error, response, body) {
+                          if (!error && response.statusCode == 200) {
+                            console.log(body.id) // Print the shortened url.
+                              body = body.toString('utf-8');
+
+                            // Print out the response body
+                            console.log(body)
+
+                            // If it is json
+                            var json_body = JSON.parse(body);
+                             self.session_id_kbve = json_body.session_id;
+
+                          }
+                        });
+                      //  if(session_id_kbve == falsle)
+
+                    // check if user exists? if not, create 
+
+
+                    // What function is it to check if the username exists 
+                //Let me check.
+                break;
+                
+                
+                case Types.Messages.WHO:
+                    log.info("Who: " + self.name);
+                    message.shift();
+                    log.info("list: " + message);
+                    self.server.pushSpawnsToPlayer(self, message);
+                break;
+                
+                case Types.Messages.ZONE:
+                    log.info("Zone: " + self.name);
+                    self.zone_callback();
+                break;
+                
+                case Types.Messages.CHAT:
+                    var msg = Utils.sanitize(message[1]);
+                    log.info("Chat: " + self.name + ": " + msg);
+                    if (msg && (msg !== "" || msg !== " ")) {
+                        msg = msg.substr(0, 256); //Will have to change the max length
+                        var key = msg.substr(0);
+                        if ( typeof String.prototype.startsWith !== 'function' ) {
+                            String.prototype.startsWith = function( str ) {
+                                return str.length > 0 && this.substring( 0, str.length ) === str;
+                            };
                         };
-                    };
-                    var targetPalyer = self.server.getPlayerByName(msg.split(' ')[1]);
-
-                    if(msg.startsWith("/1 ")) {
-
-
-                        if((new Date()).getTime() > self.chatBanEndTime) {
-                            self.server.pushBroadcast(new Messages.Chat(self, msg));
-                        } else {
-                            self.send([Types.Messages.NOTIFY, "You have been muted.."]);
-                        }
-
-
-                    } else if (msg.startsWith("/kick ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split('_'));
-
-                        if (targetPlayer) {
-                            databaseHandler.kickPlayer(self, targetPlayer);
-                        }
-
-                    } else if(msg.startsWith("/ban ")) {
-
-                        var banPlayer = self.server.getPlayerByName(msg.split(' ')[2]);
-                        var days = (msg.split(' ')[1])*1;
-                        if(banPlayer) {
-
-                            databaseHandler.banPlayer(self, banPlayer, days);
-                        }
-                    } else if(msg.startsWith("/banbyname ")) {
-                        var banPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        if(banPlayer){
-                            databaseHandler.newBanPlayer(self, banPlayer);
-                        }
-                    } else if(msg.startsWith("/move ")) {
-                        var playerName = self.server.getPlayerByName(msg.split(' ')[1]);
-                        var x = (msg.split(' ')[2]) * 1;
-                        var y = (msg.split(' ')[3]) * 1;
-
-                        if (playerName) {
-                            databaseHandler.teleportPlayer(self, playerName, x, y);
-
-
-                        }
-
-                    } else if(msg.startsWith("/unmute ")) {
-                        if (targetPalyer) {
-
-                            databaseHandler.unmute(self, targetPalyer);
+                        if ( typeof String.prototype.endsWith !== 'function' ) {
+                            String.prototype.endsWith = function( str ) {
+                                return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
+                            };
+                        };
+                        
+                        switch(msg.startsWith) {
+                            case "/1 ":
+                                if ((new Date()).getTime() > self.chatBanEndTime)
+                                    self.server.pushBroadcast(new Messages.Chat(self, msg));
+                                else
+                                    self.send([Types.Messages.NOTIFY, "You are currently muted."]);
+                            break;
+                            case "/kick ":
+                                /*
+                                * Get player name despite spaces
+                                */
+                                var targetPlayer = self.server.getPlayerByName(msg.split('/kick ')); 
+                                if (targetPlayer)
+                                    databaseHandler.kickPlayer(self, targetPlayer);
+                            break;
+                            case "/ban ":
+                                //Must be server side, else, it will not be allowed to use the API of KBVE for bans.
+                                //permanent ban, as the actual banning method will be
+                                //through the KBVE API
+                                var playerBan = self.server.getPlayerByName(msg.split('/ban '));
+                                if (playerBan)
+                                    databaseHandler.newBanPlayer(self, playerBan, 50000);
+                            break;
+                            case "/nameban ":
+                                var playerName = self.server.getPlayerByName(msg.split("/nameban "));
+                                if (playerName)
+                                    databaseHandler.newBanPlayer(self, playerName);
+                            break;
+                            case "/move ":
+                                var x = msg.split(' ')[1];
+                                var y = msg.split(' ')[2];
+                                var playerName = self.server.getPlayerByName(msg.split('/move ' + x + y));
+                                log.info("Experimental, moving: " + playerName + " to X: " + x + " y: " + y);
+                                if (playerName)
+                                    databaseHandler.teleportPlayer(self, playerName, x, y);
+                            break;
+                            case "/unmute ":
+                                var playerName = self.server.getPlayerByName(msg.split("/unmute "));
+                                if (playerName)
+                                    databaseHandler.unmute(self, playerName);
+                            break;
+                            case "/mute ":
+                                var mutePlayer = self.server.getPlayerByName(msg.split("/mute "));
+                                if (mutePlayer)
+                                    databaseHandler.chatBan(self, mutePlayer);
+                            break;
+                            case "/pmute ":
+                                var pMutePlayer = self.server.getPlayerByName(msg.split("/pmute "));
+                                if (pMutePlayer) 
+                                    databaseHandler.permanentlyMute(self, pMutePlayer);
+                            break;
+                            case "/promote ":
+                                var rank = msg.split(' ')[1];
+                                var playerName = self.server.getPlayerByName(msg.split("/promote " + rank));
+                                if (playerName)
+                                    databaseHandler.promotePlayer(self, playerName, rank);
+                            break;
+                            case "/demote ":
+                                var targetPlayer = self.server.getPlayerByName(msg.split("/demote "));
+                                if (targetPlayer)
+                                    databaseHandler.demotePlayer(self, targetPlayer);
+                            break;
                         }
                     }
-
-                    else if(msg.startsWith("/mute ")) {
-                        var mutePlayer1 = self.server.getPlayerByName(msg.split(' ')[1]);
-                        var mutePlayer2 = self.server.getPlayerByName(msg.split(' ')[2]);
-                        if(mutePlayer1) {
-
-                            databaseHandler.chatBan(self, mutePlayer1);
-                        } else if (mutePlayer1 && mutePlayer2) {
-
-                            databaseHandler.chatBan(self, mutePlayer1 + mutePlayer2);
+                break;
+                
+                case Types.Messages.MOVE:
+                    if (self.move_callback) {
+                        var x = message[1],
+                            y = message[2];
+                        
+                        if (self.server.isValidPosition(x, y)) {
+                            self.setPosition(x, y);
+                            self.clearTarget();
+                            self.broadcast(new Messages.Move(self));
+                            self.move_callback(self.x, self.y);
                         }
-                    } else if(msg.startsWith("/pmute ")) {
-                        if (targetPalyer)
-                            databaseHandler.permanentlyMute(self, targetPalyer);
-
-
-                    } else if(msg.startsWith("/promote ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        var rank = (msg.split(' ')[2]) * 1;
-                        if (targetPlayer && rank) {
-                            databaseHandler.promotePlayer(self, targetPalyer, rank);
-                        }
-                    } else if (msg.startsWith("/demote ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        if (targetPlayer) {
-                            databaseHandler.demotePlayer(self, targetPlayer);
-                        }
-
-                    } else if (msg.startsWith("/sendrequest ")) {
-                        var targetPlayer = self.server.getPlayerByName(msg.split(' ')[1]);
-                        if (targetPlayer) {
-                            this.trade = new Trade(self, targetPlayer);
-                            this.trade.sendRequest(self, targetPlayer);
-                        }
-
-                    } else if (msg.startsWith("/setability ")) {
-                        self.setAbility();
-                    } else {
-                        self.broadcastToZone(new Messages.Chat(self, msg), false);
                     }
-
-                }
-            }
-            else if(action === Types.Messages.MOVE) {
-                //log.info("MOVE: " + self.name + "(" + message[1] + ", " + message[2] + ")");
-                if(self.move_callback) {
+                break;
+                
+                case Types.Messages.HIT:
+                    log.info("Player: " + self.name + " hit: " + message[1]);
+                    self.handleHit(message);
+                break;
+                
+                case Types.Messages.HURT:
+                    self.handleHurt(message);
+                break;
+                
+                case Types.Messages.INVENTORY:
+                    log.info("Player: " + self.name + " inventory message: " + message[1] + " " + message[2] + " " + message[3]);    
+                break;
+                
+                case Types.Messages.SKILL:
+                    log.info("Player: " + self.name + " skill: " + message[1] + " " + message[2])
+                    self.handleSkill(message);
+                break;
+                
+                case Types.Messages.SKILLINSTALL:
+                    log.info("Skill Install on: " + self.name + " " + message[1] + " " + message[2]);
+                    self.handleSkillInstall(message);
+                break;
+                
+                case Types.Messages.SELL:
+                    log.info("Player: " + self.name + " initiated sell: " + message[1] + " " + message[2]);
+                    self.handleSell(message);
+                break;
+                
+                case Types.Messages.AGGRO:
+                    log.info("Player: " + self.name + " aggro'ed: " + message[1]);
+                    if (self.move_callback)
+                        self.server.handleMobHate(message[1], self.id, 5);
+                break;
+                
+                case Types.Messages.SHOP:
+                    log.info("Player: " + self.name + " shop: " + message[1] + " " + message[2]);    
+                    self.handleShop(message);
+                break;
+                
+                case Types.Messages.BUY:
+                    log.info("Player: " + self.name + " shop: " + message[1] + " " + message[2] + " " + message[3])
+                break;
+                
+                case Types.Messages.STORESELL:
+                    log.info("Player: " + self.name + " store sell: " + message[1]);
+                    self.handleStoreSell(message);
+                break;
+                
+                case Types.Messages.STOREBUY:
+                    log.info("Player: " + self.name + " store buy: " + message[1] + " " + message[2] + " " + message[3]);
+                    self.handleStoreBuy(message);
+                break;
+                
+                case Types.Messages.CHARACTERINFO:
+                    log.info("Player character info: " + self.name);
+                    self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
+                break;
+                
+                case Types.Messages.TELEPORT: 
                     var x = message[1],
                         y = message[2];
-
-                    if(self.server.isValidPosition(x, y)) {
+                    
+                    if (self.server.isValidPosition(x, y)) {
                         self.setPosition(x, y);
                         self.clearTarget();
-
-                        self.broadcast(new Messages.Move(self));
-                        self.move_callback(self.x, self.y);
+                        self.broadcast(new Messages.Teleport(self));
+                        self.server.handlePlayerVanish(self);
+                        self.server.pushRelevantEntityListTo(self);
                     }
-                }
-            } else if(action === Types.Messages.HIT) {
-                log.info("HIT: " + self.name + " " + message[1]);
-                self.handleHit(message);
-            } else if(action === Types.Messages.HURT) {
-                self.handleHurt(message);
-            } else if(action === Types.Messages.INVENTORY){
-                log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                self.handleInventory(message);
-            }  else if(action === Types.Messages.SKILL){
-                log.info("SKILL: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleSkill(message);
-            } else if(action === Types.Messages.SKILLINSTALL) {
-                log.info("SKILLINSTALL: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleSkillInstall(message);
-            } else if(action === Types.Messages.SELL){
-                log.info("SELL: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleSell(message);
-            } else if(action === Types.Messages.AGGRO) {
-                log.info("AGGRO: " + self.name + " " + message[1]);
-                if(self.move_callback) {
-                    self.server.handleMobHate(message[1], self.id, 5);
-                }
-            } else if(action === Types.Messages.SHOP){
-                log.info("SHOP: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleShop(message);
-            } else if(action === Types.Messages.BUY){
-                log.info("BUY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                self.handleBuy(message);
-            } else if(action === Types.Messages.STORESELL) {
-                log.info("STORESELL: " + self.name + " " + message[1]);
-                self.handleStoreSell(message);
-            } else if(action === Types.Messages.STOREBUY) {
-                log.info("STOREBUY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                self.handleStoreBuy(message);
-            } else if(action === Types.Messages.CHARACTERINFO) {
-                log.info("CHARACTERINFO: " + self.name);
-                self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
-
-            } else if(action === Types.Messages.TELEPORT) {
-                //log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
-                var x = message[1],
-                    y = message[2];
-
-                if(self.server.isValidPosition(x, y)) {
-                    self.setPosition(x, y);
-                    self.clearTarget();
-
-                    self.broadcast(new Messages.Teleport(self));
-
-                    self.server.handlePlayerVanish(self);
-                    self.server.pushRelevantEntityListTo(self);
-                }
-            }
-            else if(action === Types.Messages.OPEN) {
-                log.info("OPEN: " + self.name + " " + message[1]);
-                var chest = self.server.getEntityById(message[1]);
-                if(chest && chest instanceof Chest) {
-                    self.server.handleOpenedChest(chest, self);
-                }
-            } else if(action === Types.Messages.LOOTMOVE) {
-                log.info("LOOTMOVE: " + this.name + "(" + message[1] + ", " + message[2] + ")");
-                self.handleLootMove(message);
-            } else if(action === Types.Messages.LOOT) {
-                log.info("LOOT: " + self.name + " " + message[1]);
-                self.handleLoot(message);
-            } else if(action === Types.Messages.CHECK) {
-                log.info("CHECK: " + self.name + " " + message[1]);
-                var checkpoint = self.server.map.getCheckpoint(message[1]);
-                if(checkpoint) {
-                    self.lastCheckpoint = checkpoint;
-                    databaseHandler.setCheckpoint(self.name, self.x, self.y);
-                }
-            } else if(action === Types.Messages.QUEST) {
-                log.info("QUEST: " + self.name + " " + message[1] + " " + message[2]);
-                self.handleQuest(message);
-            } else if(action === Types.Messages.TALKTONPC){
-                log.info("TALKTONPC: " + self.name + " " + message[1]);
-                self.handleTalkToNPC(message);
-            } else if (action === Types.Messages.FLAREDANCE) {
-                log.info("FLAREDANCE: " + self.name + " " + message[1] + ", " + message[2] + ", " + message[3] + ", " + message[4]);
-                self.handleFlareDance(message);
-            } else if(action === Types.Messages.MAGIC){
-                log.info("MAGIC: " + self.name + " " + message[1] + " " + message[2]);
-                var magicName = message[1];
-                var magicTargetName = message[2];
-
-                if(magicName === "setheal"){
-                    self.magicTarget = self.server.getPlayerByName(magicTargetName);
-                    if(self.magicTarget === self){
-                        self.magicTarget = null;
+                break;
+                
+                case Types.Messages.OPEN:
+                    log.info("Player: " + self.name + " open: " + message[1]);
+                    var chest = self.server.getEntityById(message[1]);
+                    if (chest && chest instanceof Chest)
+                        self.server.handleOpenedChest(chest, self);
+                break;
+                
+                case Types.Messages.LOOTMOVE:
+                    self.handleLootMove(message);
+                break;
+                
+                case Types.Messages.LOOT:
+                    self.handleLoot(message);
+                break;
+                
+                case Types.Messages.CHECK:
+                    var checkpoint = self.server.map.getCheckpoint(message[1]);
+                    if (checkpoint) {
+                        self.lastCheckpoint = checkpoint;
+                        databaseHandler.setCheckpoint(self.name, self.x, self.y);
                     }
-                } else if(magicName === "heal"){
-                    if(self.magicTarget){
-                        if(!self.magicTarget.hasFullHealth()) {
-                            self.magicTarget.regenHealthBy(50);
-                            self.server.pushToPlayer(self.magicTarget, self.magicTarget.health());
+                break;
+                
+                case Types.Messages.QUEST:
+                    self.handleQuest(message);
+                break;
+                
+                case Types.Messages.TALKTONPC:
+                    self.handleTalkToNPC(message);
+                break;
+                
+                case Types.Messages.FLAREDANCE:
+                    self.handleFlareDance(message);
+                break;
+                
+                case Types.Messages.MAGIC:
+                    var magicName = message[1];
+                    var magicTargetName = message[2];
+                    
+                    if (magicName === "setheal") {
+                        self.magicTarget = self.server.getPlayerByName(magicTargetName);
+                        if (self.magicTarget === self)
+                            self.magicTarget = null;
+                    } else if (magicName === "heal") {
+                        if (self.magicTarget) {
+                            if (!self.magicTarget.hasFullHealth()) {
+                                self.magicTarget.regenHealthBy(50);
+                                self.server.pushToPlayer(self.magicTarget, self.magic);
+                            }
                         }
                     }
-                }
-            } else if(action === Types.Messages.BOARD){
-                log.info("BOARD: " + self.name + " " + message[1] + " " + message[2]);
-                var command = message[1];
-                var number = message[2];
-                var replyNumber = message[3];
-                databaseHandler.loadBoard(self, command, number, replyNumber);
-            } else if(action === Types.Messages.RANKING){
-                log.info("RANKING: " + self.name + " " + message[1]);
-                self.handleRanking(message);
-            } else if(action === Types.Messages.GUILD) {
-                if(message[1] === Types.Messages.GUILDACTION.CREATE) {
-                    var guildname = Utils.sanitize(message[2]);
-                    if(guildname === "") { //inaccurate name
-                        self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.BADNAME,message[2]));
-                    } else {
-                        var guildId = self.server.addGuild(guildname);
-                        if(guildId === false) {
-                            self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.ALREADYEXISTS, guildname));
-                        } else {
-                            self.server.joinGuild(self, guildId);
-                            self.server.pushToPlayer(self, new Messages.Guild(Types.Messages.GUILDACTION.CREATE, [guildId, guildname]));
-                        }
+                    
+                break;
+                
+                case Types.Messages.BOARD:
+                    var command = message[1];
+                    var number = message[2];
+                    var replyNumber = message[3];
+                    databaseHandler.loadBoard(self, command, number, replyNumber);
+                break;
+                
+                case Types.Messages.RANKING:
+                    self.handleRanking(message);
+                break;
+                
+                case Types.Messages.GUILD:
+                    switch(message[1]) {
+                        case Types.Messages.GUILDACTION.CREATE:
+                            var guildname = Utils.sanitize(message[2]);
+                            if (guildname === "") {
+                                self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.BADNAME,message[2]));
+                            } else {
+                                var guildId = self.server.addGuild(guildname);
+                                if (guildId === false) {
+                                    self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.ALREADYEXISTS, guildname));
+                                } else {
+                                    self.server.joinGuild(self, guildId);
+                                    self.server.pushToPlayer(self, new Messages.Guild(Types.Messages.GUILDACTION.CREATE, [guildId, guildname]));
+                                }
+                            }   
+                        break;
+                        
+                        case Types.Messages.GUILDACTION.INVITE:
+                            var userName = message[2];
+                            var invitee;
+                            if (self.group in self.server.groups) {
+                                invitee = _.find(self.server.groups[self.group].entities, 
+                                                function(entity, key) { 
+                                                    
+                                                    return (entity instanceof Player && entity.name == userName) ? entity : false;
+                                                });
+                                    if (invitee)
+                                        self.getGuild().invite(invitee, self);
+                            }
+                        break;
+                        
+                        case Types.Messages.GUILDACTION.JOIN:
+                            self.server.joinGuild(self, message[2], message[3]);
+                        break;
+                        
+                        case Types.Messages.GUILDACTION.LEAVE:
+                            self.leaveGuild();
+                        break;
+                        
+                        case Types.Messages.GUILDACTION.TALK:
+                            self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
+                        break;
+                        
                     }
-                }
-                else if(message[1] === Types.Messages.GUILDACTION.INVITE) {
-                    var userName = message[2];
-                    var invitee;
-                    if(self.group in self.server.groups) {
-                        invitee = _.find(self.server.groups[self.group].entities,
-                            function(entity, key) { return (entity instanceof Player && entity.name == userName) ? entity : false; });
-                        if(invitee) {
-                            self.getGuild().invite(invitee,self);
-                        }
+                break;
+                
+                case Types.Messages.BOARDWRITE:
+                    var command = message[1];
+                    if (command == "board") {
+                        var title = message[2];
+                        var content = message[3];
+                        databaseHandler.writeBoard(self, title, content);
+                    } else if (command === "reply") {
+                        var reply = message[2];
+                        var number = message[3] * 1;
+                        if (number > 0)
+                            databaseHandler.writeReply(self, reply, number);
                     }
-                }
-                else if(message[1] === Types.Messages.GUILDACTION.JOIN) {
-                    self.server.joinGuild(self, message[2], message[3]);
-                }
-                else if(message[1] === Types.Messages.GUILDACTION.LEAVE) {
-                    self.leaveGuild();
-                }
-                else if(message[1] === Types.Messages.GUILDACTION.TALK) {
-                    self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
-                }
-            } else if(action === Types.Messages.BOARDWRITE){
-                log.info("BOARDWRITE: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
-                var command = message[1];
-                if(command === "board"){
-                    var title = message[2];
-                    var content = message[3];
-                    databaseHandler.writeBoard(self, title, content);
-                } else if(command === "reply"){
-                    var reply = message[2];
-                    var number = message[3]*1;
-                    if(number > 0){
-                        databaseHandler.writeReply(self, reply, number);
-                    }
-                }
-            } else if(action === Types.Messages.KUNG){
-                log.info("KUNG: " + self.name + " " + message[1]);
-                var word = message[1];
-                databaseHandler.pushKungWord(self, word);
-            }  else {
-                if(self.message_callback) {
-                    self.message_callback(message);
-                }
+                break;
+                
+                case Types.Messages.KUNG:
+                    var word = message[1];
+                    databaseHandler.pushKungWord(self, word);
+                break;
+                
+                default:
+                    if (self.message_callback)
+                        self.message_callback(message);
+                break;
             }
         });
 
@@ -658,6 +635,14 @@ module.exports = Player = Character.extend({
             this.pvpFlag = pvpFlag;
             this.send(new Messages.PVP(this.pvpFlag).serialize());
         }
+    },
+
+    flagWait: function(waitFlag) {
+        if (this.waitFlag !== waitFlag) {
+            this.waitFlag = waitFlag;
+            this.send(new Messages.GuildWarWait(this.waitFlag).serialize());
+        }
+        
     },
 
     broadcast: function(message, ignoreSelf) {
@@ -2173,5 +2158,12 @@ module.exports = Player = Character.extend({
         databaseHandler.getPlayerRanking(this, function(ranking){
             log.debug("Ranking: " + ranking);
         });
+    },
+    
+    sendCurrentCountdown: function(player) {
+        var time = player.server.getMinigameTime();
+        log.info("Sent Time: " + time + " to player: " + player.name);
+        player.send((new Messages.Countdown(time)).serialize()); 
     }
+    
 });
