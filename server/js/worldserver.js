@@ -48,6 +48,7 @@ module.exports = World = cls.Class.extend({
         this.groups = {};
 
         this.outgoingQueues = {};
+        this.waitingArea = [];
 
         this.itemCount = 0;
         this.playerCount = 0;
@@ -72,24 +73,18 @@ module.exports = World = cls.Class.extend({
 
             // Number of players in this world
             self.pushToPlayer(player, new Messages.Population(self.playerCount));
-            if(player.hasGuild()){
-                self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.CONNECT, player.name),player);
-                var names = _.without(player.getGuild().memberNames(), player.name);
-                if(names.length > 0){
-                    self.pushToPlayer(player, new Messages.Guild(Types.Messages.GUILDACTION.ONLINE, names));
-                }
-            }
-
             self.pushRelevantEntityListTo(player);
+
 
             var move_callback = function(x, y) {
                 log.debug(player.name + "has moved to position: x:" + x + " y:" + y);
 
                 var isPVP = self.map.isPVP(x, y);
                 player.flagPVP(isPVP);
+                /*
                 
-                /* var isWaiting = self.map.isWaiting(x, y);
-                player.flagWait(isWaiting);
+                var isWaiting = self.map.isWaiting(x, y);
+                player.flagWait(isWaiting);*/
 
                 /*
                  * Basically
@@ -136,9 +131,7 @@ module.exports = World = cls.Class.extend({
 
             player.onExit(function() {
                 log.info(player.name + " has left the game.");
-                /*if(player.hasGuild()){
-                 self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.DISCONNECT, player.name), player);
-                 }*/
+                self.removePlayerFromArea(player);
                 self.removePlayer(player);
                 self.decrementPlayerCount();
 
@@ -964,7 +957,12 @@ module.exports = World = cls.Class.extend({
         }
         return newGroups;
     },
-
+    
+    getPlayersInArea: function(area) {
+        
+        
+    },
+    
     logGroupPlayers: function(groupId) {
         log.debug("Players inside group "+groupId+":");
         _.each(this.groups[groupId].players, function(id) {
@@ -1175,5 +1173,31 @@ module.exports = World = cls.Class.extend({
         }
 
         return false;
-    }
+    },
+    addPlayerToArea: function(player) {
+        if (player && player.id) {
+            if (this.isWaitingAreaFull) {
+                player.server.pushToPlayer(player, new Messages.GuildWarFull(true));
+                log.info("Area is full, not adding player.");
+                return;
+            }
+            this.waitingArea.push(player.name);
+            log.info("Added player to waiting area.");
+            return;
+        }
+        log.info("Player is undefined.");
+        return;
+    },
+    
+    removePlayerFromArea: function(player) {
+        
+        delete this.waitingArea[player.name];
+    },
+    
+    
+    isWaitingAreaFull: function() {
+        
+        return this.waitingPlayers.length === 30 ? true : false;
+    },
+
 });

@@ -638,9 +638,11 @@ module.exports = Player = Character.extend({
     },
 
     flagWait: function(waitFlag) {
-        if (this.waitFlag !== waitFlag) {
-            this.waitFlag = waitFlag;
-            this.send(new Messages.GuildWarWait(this.waitFlag).serialize());
+        var self = this;
+        if (self.waitFlag !== waitFlag) {
+            self.waitFlag = waitFlag;
+            self.server.addPlayerToArea(self);
+            self.send(new Messages.GuildWarWait(self.waitFlag).serialize());
         }
         
     },

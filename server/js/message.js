@@ -6,6 +6,7 @@ var Messages = {};
 module.exports = Messages;
 
 var Message = cls.Class.extend({
+    
 });
 Messages.Spawn = Message.extend({
     init: function (entity) {
@@ -402,6 +403,19 @@ Messages.GuildWarWait = Message.extend({
     serialize: function() {
         
         return [Types.Messages.GUILDWARTYPES.WAITING, this.waitFlag];
+    }
+    
+});
+
+Messages.GuildWarFull = Message.extend({
+    init: function(isFull) {
+        
+        this.isFull = isFull;
+    },
+    
+    serialize: function() {
+        
+        return [Types.Messages.GUILDWARTYPES.FULL, this.isFull];
     }
     
 });

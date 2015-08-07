@@ -1,6 +1,7 @@
 var cls = require('./lib/class');
 var _ = require('underscore');
 var Utils = require('./utils');
+var Messages = require('./message');
 
 module.exports = Area = cls.Class.extend({
     init: function (id, x, y, width, height, world) {
@@ -40,6 +41,7 @@ module.exports = Area = cls.Class.extend({
             this.emptyCallback();
         }
     },
+    
 
     addToArea: function (entity) {
         var Mob = require('./mob');
