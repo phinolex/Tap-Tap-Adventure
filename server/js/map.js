@@ -221,13 +221,11 @@ var Map = cls.Class.extend({
     
     initWaitingAreas: function(waitingList) {
         var self = this;
-        this.waitingAreas = {};
-        var minigame = null;
+        this.waitingAreas = [];
         
         _.each(waitingList, function (wait) {
-            var minigameArea = new Area(wait.id, wait.x, wait.y, wait.w, wait.h); 
-            minigame = wait.m;
-            this.waitingAreas.push({minigame, minigameArea});
+            var minigameArea = new Area(wait.id, wait.x, wait.y, wait.w, wait.h);
+            self.waitingAreas.push(minigameArea);
         });
         
     },
