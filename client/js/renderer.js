@@ -865,6 +865,15 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     }
                 }
             },
+            
+            drawPVPTimer: function() {
+                
+            },
+            
+            removePVPTimer: function() {
+                
+            },
+            
             drawTerrain: function() {
                 var self = this,
                     m = this.game.map,

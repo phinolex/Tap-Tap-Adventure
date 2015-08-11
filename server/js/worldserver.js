@@ -65,7 +65,7 @@ module.exports = World = cls.Class.extend({
         });
 
         this.onPlayerEnter(function(player) {
-            log.info(player.name + "(" + player.connection._connection.remoteAddress + ") has joined " + self.id + " in guild " + player.guildId);
+            log.info(player.name + "(" + player.connection._connection.remoteAddress + ") has joined TTA World - 1");
 
             if(!player.hasEnteredGame) {
                 self.incrementPlayerCount();
@@ -74,17 +74,13 @@ module.exports = World = cls.Class.extend({
             // Number of players in this world
             self.pushToPlayer(player, new Messages.Population(self.playerCount));
             self.pushRelevantEntityListTo(player);
-
+            player.flagPVP(self.map.isPVP(player.x, player.y));
+            player.flagWait(self.map.isWaiting(player.x, player.y));
 
             var move_callback = function(x, y) {
                 log.debug(player.name + "has moved to position: x:" + x + " y:" + y);
-
-                var isPVP = self.map.isPVP(x, y);
-                player.flagPVP(isPVP);
-                /*
-                
-                var isWaiting = self.map.isWaiting(x, y);
-                player.flagWait(isWaiting);*/
+                player.flagPVP(self.map.isPVP(x, y));
+                player.flagWait(self.map.isWaiting(x, y));
 
                 /*
                  * Basically
@@ -1190,8 +1186,11 @@ module.exports = World = cls.Class.extend({
     },
     
     removePlayerFromArea: function(player) {
-        
-        delete this.waitingArea[player.name];
+        for (var i = 0; i < this.waitingArea.length; i++) {
+            if (this.waitingArea[i] === player.name) {
+                delete this.waitingArea[i];
+            }
+        }
     },
     
     

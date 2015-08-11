@@ -186,11 +186,11 @@ module.exports = Player = Character.extend({
 
                         request(options, function (error, response, body) {
                           if (!error && response.statusCode == 200) {
-                            console.log(body.id) // Print the shortened url.
+                            console.log(body.id); // Print the shortened url.
                               body = body.toString('utf-8');
 
                             // Print out the response body
-                            console.log(body)
+                            console.log(body);
 
                             // If it is json
                             var json_body = JSON.parse(body);
@@ -638,11 +638,9 @@ module.exports = Player = Character.extend({
     },
 
     flagWait: function(waitFlag) {
-        var self = this;
-        if (self.waitFlag !== waitFlag) {
-            self.waitFlag = waitFlag;
-            self.server.addPlayerToArea(self);
-            self.send(new Messages.GuildWarWait(self.waitFlag).serialize());
+        if (this.waitFlag !== waitFlag) {
+            this.waitFlag = waitFlag;
+            this.send(new Messages.GuildWarWait(this.waitFlag).serialize());
         }
         
     },

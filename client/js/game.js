@@ -1009,7 +1009,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
                     
                     self.client.onGuildWarFlag(function(waitFlag) {
-                        self.player.flagWait(waitFlag); 
+                        self.player.flagWait(waitFlag);
+                        if (self.player.isPlayerWaiting) {
+                            self.renderer.drawPVPTimer();
+                        } else {
+                            self.renderer.removePVPTimer();
+                        }
                     });
                     
                     self.client.onPVPChange(function(pvpFlag) {
