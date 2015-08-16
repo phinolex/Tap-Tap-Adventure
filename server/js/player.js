@@ -20,7 +20,7 @@ var cls = require("./lib/class"),
     Trade = require('./trade'),
     express = require('express'),
     bodyParser = require('body-parser'),
-    app = express(), 
+    app = express(),
     request = require("request");
 
 
@@ -94,7 +94,7 @@ module.exports = Player = Character.extend({
             }
 
             self.resetTimeout();
-            
+
             if(action === Types.Messages.CREATE || action === Types.Messages.LOGIN) {
                 var name = Utils.sanitize(message[1]);
                 var pw = Utils.sanitize(message[2]);
@@ -140,9 +140,9 @@ module.exports = Player = Character.extend({
                     databaseHandler.loadPlayer(self);
                 }
 
-            }      
-            
-                    
+            }
+
+
             switch(action) {
 
 
@@ -150,7 +150,7 @@ module.exports = Player = Character.extend({
                     self.name = Utils.sanitize(message[1]).substr(0, 36).trim();
                     self.pw = Utils.sanitize(message[2]).substr(0, 45);
                     self.session_id_kbve = message[3];
-                    
+
                     /*
                      * Check here if a player exists,
                      * add his session_id to active players
@@ -159,9 +159,9 @@ module.exports = Player = Character.extend({
                      * You should check if a player exists by
                      * username rather than ID, as that changes regularly.
                      */
-                    
-                    
-                    
+
+
+
                     // Check if Logged in?
                         if(self.server.loggedInPlayer(self.name)) {
                             self.connection.sendUTF8("loggedin");
@@ -172,7 +172,7 @@ module.exports = Player = Character.extend({
 
 
 
-                    // Make Request to verify information    
+                    // Make Request to verify information
 
                        var options = {
                           uri: 'https://kbve.com/api/tta/tta_l.php',
@@ -200,26 +200,26 @@ module.exports = Player = Character.extend({
                         });
                       //  if(session_id_kbve == falsle)
 
-                    // check if user exists? if not, create 
+                    // check if user exists? if not, create
 
 
-                    // What function is it to check if the username exists 
+                    // What function is it to check if the username exists
                 //Let me check.
                 break;
-                
-                
+
+
                 case Types.Messages.WHO:
                     log.info("Who: " + self.name);
                     message.shift();
                     log.info("list: " + message);
                     self.server.pushSpawnsToPlayer(self, message);
                 break;
-                
+
                 case Types.Messages.ZONE:
                     log.info("Zone: " + self.name);
                     self.zone_callback();
                 break;
-                
+
                 case Types.Messages.CHAT:
                     var msg = Utils.sanitize(message[1]);
                     log.info("Chat: " + self.name + ": " + msg);
@@ -236,7 +236,7 @@ module.exports = Player = Character.extend({
                                 return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
                             };
                         };
-                        
+
                         switch(msg.startsWith) {
                             case "/1 ":
                                 if ((new Date()).getTime() > self.chatBanEndTime)
@@ -248,7 +248,7 @@ module.exports = Player = Character.extend({
                                 /*
                                 * Get player name despite spaces
                                 */
-                                var targetPlayer = self.server.getPlayerByName(msg.split('/kick ')); 
+                                var targetPlayer = self.server.getPlayerByName(msg.split('/kick '));
                                 if (targetPlayer)
                                     databaseHandler.kickPlayer(self, targetPlayer);
                             break;
@@ -285,7 +285,7 @@ module.exports = Player = Character.extend({
                             break;
                             case "/pmute ":
                                 var pMutePlayer = self.server.getPlayerByName(msg.split("/pmute "));
-                                if (pMutePlayer) 
+                                if (pMutePlayer)
                                     databaseHandler.permanentlyMute(self, pMutePlayer);
                             break;
                             case "/promote ":
@@ -302,12 +302,12 @@ module.exports = Player = Character.extend({
                         }
                     }
                 break;
-                
+
                 case Types.Messages.MOVE:
                     if (self.move_callback) {
                         var x = message[1],
                             y = message[2];
-                        
+
                         if (self.server.isValidPosition(x, y)) {
                             self.setPosition(x, y);
                             self.clearTarget();
@@ -316,69 +316,69 @@ module.exports = Player = Character.extend({
                         }
                     }
                 break;
-                
+
                 case Types.Messages.HIT:
                     log.info("Player: " + self.name + " hit: " + message[1]);
                     self.handleHit(message);
                 break;
-                
+
                 case Types.Messages.HURT:
                     self.handleHurt(message);
                 break;
-                
+
                 case Types.Messages.INVENTORY:
-                    log.info("Player: " + self.name + " inventory message: " + message[1] + " " + message[2] + " " + message[3]);    
+                    log.info("Player: " + self.name + " inventory message: " + message[1] + " " + message[2] + " " + message[3]);
                 break;
-                
+
                 case Types.Messages.SKILL:
                     log.info("Player: " + self.name + " skill: " + message[1] + " " + message[2])
                     self.handleSkill(message);
                 break;
-                
+
                 case Types.Messages.SKILLINSTALL:
                     log.info("Skill Install on: " + self.name + " " + message[1] + " " + message[2]);
                     self.handleSkillInstall(message);
                 break;
-                
+
                 case Types.Messages.SELL:
                     log.info("Player: " + self.name + " initiated sell: " + message[1] + " " + message[2]);
                     self.handleSell(message);
                 break;
-                
+
                 case Types.Messages.AGGRO:
                     log.info("Player: " + self.name + " aggro'ed: " + message[1]);
                     if (self.move_callback)
                         self.server.handleMobHate(message[1], self.id, 5);
                 break;
-                
+
                 case Types.Messages.SHOP:
-                    log.info("Player: " + self.name + " shop: " + message[1] + " " + message[2]);    
+                    log.info("Player: " + self.name + " shop: " + message[1] + " " + message[2]);
                     self.handleShop(message);
                 break;
-                
+
                 case Types.Messages.BUY:
                     log.info("Player: " + self.name + " shop: " + message[1] + " " + message[2] + " " + message[3])
                 break;
-                
+
                 case Types.Messages.STORESELL:
                     log.info("Player: " + self.name + " store sell: " + message[1]);
                     self.handleStoreSell(message);
                 break;
-                
+
                 case Types.Messages.STOREBUY:
                     log.info("Player: " + self.name + " store buy: " + message[1] + " " + message[2] + " " + message[3]);
                     self.handleStoreBuy(message);
                 break;
-                
+
                 case Types.Messages.CHARACTERINFO:
                     log.info("Player character info: " + self.name);
                     self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
                 break;
-                
-                case Types.Messages.TELEPORT: 
+
+                case Types.Messages.TELEPORT:
                     var x = message[1],
                         y = message[2];
-                    
+
                     if (self.server.isValidPosition(x, y)) {
                         self.setPosition(x, y);
                         self.clearTarget();
@@ -387,22 +387,22 @@ module.exports = Player = Character.extend({
                         self.server.pushRelevantEntityListTo(self);
                     }
                 break;
-                
+
                 case Types.Messages.OPEN:
                     log.info("Player: " + self.name + " open: " + message[1]);
                     var chest = self.server.getEntityById(message[1]);
                     if (chest && chest instanceof Chest)
                         self.server.handleOpenedChest(chest, self);
                 break;
-                
+
                 case Types.Messages.LOOTMOVE:
                     self.handleLootMove(message);
                 break;
-                
+
                 case Types.Messages.LOOT:
                     self.handleLoot(message);
                 break;
-                
+
                 case Types.Messages.CHECK:
                     var checkpoint = self.server.map.getCheckpoint(message[1]);
                     if (checkpoint) {
@@ -410,23 +410,23 @@ module.exports = Player = Character.extend({
                         databaseHandler.setCheckpoint(self.name, self.x, self.y);
                     }
                 break;
-                
+
                 case Types.Messages.QUEST:
                     self.handleQuest(message);
                 break;
-                
+
                 case Types.Messages.TALKTONPC:
                     self.handleTalkToNPC(message);
                 break;
-                
+
                 case Types.Messages.FLAREDANCE:
                     self.handleFlareDance(message);
                 break;
-                
+
                 case Types.Messages.MAGIC:
                     var magicName = message[1];
                     var magicTargetName = message[2];
-                    
+
                     if (magicName === "setheal") {
                         self.magicTarget = self.server.getPlayerByName(magicTargetName);
                         if (self.magicTarget === self)
@@ -439,20 +439,20 @@ module.exports = Player = Character.extend({
                             }
                         }
                     }
-                    
+
                 break;
-                
+
                 case Types.Messages.BOARD:
                     var command = message[1];
                     var number = message[2];
                     var replyNumber = message[3];
                     databaseHandler.loadBoard(self, command, number, replyNumber);
                 break;
-                
+
                 case Types.Messages.RANKING:
                     self.handleRanking(message);
                 break;
-                
+
                 case Types.Messages.GUILD:
                     switch(message[1]) {
                         case Types.Messages.GUILDACTION.CREATE:
@@ -467,38 +467,38 @@ module.exports = Player = Character.extend({
                                     self.server.joinGuild(self, guildId);
                                     self.server.pushToPlayer(self, new Messages.Guild(Types.Messages.GUILDACTION.CREATE, [guildId, guildname]));
                                 }
-                            }   
+                            }
                         break;
-                        
+
                         case Types.Messages.GUILDACTION.INVITE:
                             var userName = message[2];
                             var invitee;
                             if (self.group in self.server.groups) {
-                                invitee = _.find(self.server.groups[self.group].entities, 
-                                                function(entity, key) { 
-                                                    
+                                invitee = _.find(self.server.groups[self.group].entities,
+                                                function(entity, key) {
+
                                                     return (entity instanceof Player && entity.name == userName) ? entity : false;
                                                 });
                                     if (invitee)
                                         self.getGuild().invite(invitee, self);
                             }
                         break;
-                        
+
                         case Types.Messages.GUILDACTION.JOIN:
                             self.server.joinGuild(self, message[2], message[3]);
                         break;
-                        
+
                         case Types.Messages.GUILDACTION.LEAVE:
                             self.leaveGuild();
                         break;
-                        
+
                         case Types.Messages.GUILDACTION.TALK:
                             self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
                         break;
-                        
+
                     }
                 break;
-                
+
                 case Types.Messages.BOARDWRITE:
                     var command = message[1];
                     if (command == "board") {
@@ -512,12 +512,12 @@ module.exports = Player = Character.extend({
                             databaseHandler.writeReply(self, reply, number);
                     }
                 break;
-                
+
                 case Types.Messages.KUNG:
                     var word = message[1];
                     databaseHandler.pushKungWord(self, word);
                 break;
-                
+
                 default:
                     if (self.message_callback)
                         self.message_callback(message);
@@ -643,7 +643,7 @@ module.exports = Player = Character.extend({
             this.send(new Messages.GuildWarWait(this.waitFlag).serialize());
             log.info("Sent flag to client");
         }
-        
+
     },
 
     broadcast: function(message, ignoreSelf) {
@@ -2160,11 +2160,11 @@ module.exports = Player = Character.extend({
             log.debug("Ranking: " + ranking);
         });
     },
-    
+
     sendCurrentCountdown: function(player) {
         var time = player.server.getMinigameTime();
         log.info("Sent Time: " + time + " to player: " + player.name);
-        player.send((new Messages.Countdown(time)).serialize()); 
+        player.send((new Messages.Countdown(time)).serialize());
     }
-    
+
 });

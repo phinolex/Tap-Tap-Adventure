@@ -16,10 +16,13 @@
     "serve-static": "^1.7.1",
     "socket.io": "*",
     "underscore": "~1.7.0",
+    "websocket-server": ">= 0.0.0",
+    "websocket": ">= 0.0.0",
     "mysql": "*",
     "express": "*",
     "body-parser": "*",
-    "request": "*"
+    "request": "*",
+    "jquery": "*"
     
   },
   "devDependencies": {

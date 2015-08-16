@@ -6,6 +6,9 @@ var path = require('path');
 var Utils = require('./utils');
 var Checkpoint = require('./checkpoint');
 var Area = require('./area');
+var collisionGrid = require('../data/maps/collisiongrid.json');
+var $ = require('jquery');
+
 
 var Map = cls.Class.extend({
     init: function (filepath) {
@@ -80,24 +83,23 @@ var Map = cls.Class.extend({
     },
 
     generateCollisionGrid: function () {
-        this.grid = [];
+        var location = ('./server/data/maps/collisiongrid.json');
 
-        if (this.isLoaded) {
-            var tileIndex = 0;
-            for (var j, i = 0; i < this.height; i++) {
-                this.grid[i] = [];
-                for (j = 0; j < this.width; j++) {
-                    if (_.include(this.collisions, tileIndex)) {
-                        this.grid[i][j] = 1;
-                    } else {
-                        this.grid[i][j] = 0;
-                    }
-                    tileIndex += 1;
-                }
-            }
-            log.debug('Collision grid generated.');
-        }
+        this.grid = collisionGrid;
+        log.info("Loaded collision grid JSON.");
+
     },
+
+    writeCollisionGrid: function(outputFilename, data) {
+        fs.writeFile(outputFilename, JSON.stringify(data), function(err) {
+            if(err) {
+                log.info(err);
+            } else {
+                log.info("JSON saved to " + outputFilename);
+            }
+        });
+    },
+
 
     isOutOfBounds: function (x, y) {
         return x <= 0 || x >= this.width || y <= 0 || y >= this.height;

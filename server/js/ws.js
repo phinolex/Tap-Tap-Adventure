@@ -156,7 +156,6 @@ WS.WebsocketServer = Server.extend({
 
             this._httpServer = http.createServer(app).listen(port, this.ip || undefined, function serverEverythingListening() {
                 log.info('Server (everything) is listening on port ' + port);
-                app.listen(1337);
             });
         } else {
             // Only run the server side code

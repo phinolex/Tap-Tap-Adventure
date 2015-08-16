@@ -76,7 +76,7 @@ module.exports = World = cls.Class.extend({
             self.pushRelevantEntityListTo(player);
             player.flagPVP(self.map.isPVP(player.x, player.y));
             player.flagWait(self.map.isWaiting(player.x, player.y));
-            
+
 
             var move_callback = function(x, y) {
                 log.debug(player.name + "has moved to position: x:" + x + " y:" + y);
@@ -225,7 +225,7 @@ module.exports = World = cls.Class.extend({
         }, 1000 / this.ups);
 
         log.info(""+this.id+" created (capacity: " + this.maxPlayers + " players).");
-        
+
         self.startMinigameTimer();
         log.info("Started Minigame Timer.");
     },
@@ -954,12 +954,12 @@ module.exports = World = cls.Class.extend({
         }
         return newGroups;
     },
-    
+
     getPlayersInArea: function(area) {
-        
-        
+
+
     },
-    
+
     logGroupPlayers: function(groupId) {
         log.debug("Players inside group "+groupId+":");
         _.each(this.groups[groupId].players, function(id) {
@@ -1092,7 +1092,7 @@ module.exports = World = cls.Class.extend({
     updatePopulation: function(totalPlayers) {
         this.pushBroadcast(new Messages.Population(this.playerCount, totalPlayers ? totalPlayers : this.playerCount));
     },
-    
+
     startMinigameTimer: function() {
         this.minigameTimer = 180; //Every 180 seconds?
         setInterval(function() {
@@ -1102,13 +1102,13 @@ module.exports = World = cls.Class.extend({
             }
         }, 1000); //every 1 second
     },
-    
+
     getMinigameTime: function() {
-          
+
         return this.minigameTimer;
     },
-    
-    
+
+
     pushKungWord: function(player, word){
         if(this.kungTimeCallback){
             clearTimeout(this.kungTimeCallback);
@@ -1185,7 +1185,7 @@ module.exports = World = cls.Class.extend({
         log.info("Player is undefined.");
         return;
     },
-    
+
     removePlayerFromArea: function(player) {
         for (var i = 0; i < this.waitingArea.length; i++) {
             if (this.waitingArea[i] === player.name) {
@@ -1193,10 +1193,10 @@ module.exports = World = cls.Class.extend({
             }
         }
     },
-    
-    
+
+
     isWaitingAreaFull: function() {
-        
+
         return this.waitingPlayers.length === 30 ? true : false;
     },
 

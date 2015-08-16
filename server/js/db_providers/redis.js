@@ -8,7 +8,7 @@ var cls = require("../lib/class"),
     redis = require("redis"),
     bcrypt = require("bcrypt"),
     inventory = require("../inventory");
-    
+
 module.exports = DatabaseHandler = cls.Class.extend({
     init: function(config){
         client = redis.createClient(config.redis_port, config.redis_host, {socket_nodelay: true});
@@ -49,7 +49,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "avatarSkillLevel")           // 24
                         .hget(userKey, "weaponEnchantedPoint")       // 25
                         .hget(userKey, "weaponSkillKind")            // 26
-                        .hget(userKey, "weaponSkillLevel")           // 27 
+                        .hget(userKey, "weaponSkillLevel")           // 27
                         .hget(userKey, "weaponAvatarEnchantedPoint") // 28
                         .hget(userKey, "weaponAvatarSkillKind")      // 29
                         .hget(userKey, "weaponAvatarSkillLevel")     // 30
@@ -71,18 +71,18 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "membershipLoginTime")        // 46
                         .hget(userKey, "membershipRemainingTime")    // 47
                         .hget(userKey, "kind")                       // 48
-                        
-                        
-                        
-                        
+
+
+
+
                         //.get(userKey, "userGuild")
                         /*
                          * Add a .hget here to select the guild the player is in, use
                          * the other ones above similarily.
                          * .hget(userKey, "guild")
-                         * 
+                         *
                          */
-                         
+
                         .exec(function(err, replies){
                             var pw = replies[0];
                             var armor = replies[1];
@@ -103,7 +103,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var moderators = replies[16];
                             var banTime = replies[17];
                             var rank = isNaN(parseInt(replies[18])) ? 0 : parseInt(replies[18]);
-                            
+
                             var armorEnchantedPoint = Utils.NaN2Zero(replies[19]);
                             var armorSkillKind = Utils.NaN2Zero(replies[20]);
                             var armorSkillLevel = Utils.NaN2Zero(replies[21]);
@@ -134,26 +134,26 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var membershipLoginTime = replies[46];
                             var membershipRemainingTime = replies[47];
                             var kind = Utils.NaN2Zero(replies[48]) === 222 ? Types.Entities.ARCHER : Types.Entities.WARRIOR;
-                           
+
                             //var curTime = new Date();
                             //Check ban here
-                            
+
                             if(banTime > curTime){
-                                 
-                                player.connection.sendUTF8("ban"); 
-                                
+
+                                player.connection.sendUTF8("ban");
+
                                 player.connection.close("Closing connection to: " + player.name);
-                            
+
                                 return;
-                            } 
-                            
-                            if (membershipTime > curTime) {
-                                
-                                player.membership = true;
-                            
                             }
-                            
-                            
+
+                            if (membershipTime > curTime) {
+
+                                player.membership = true;
+
+                            }
+
+
                             // Check Password
 
                             bcrypt.compare(player.pw, pw, function(err, res) {
@@ -165,8 +165,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
                                 var d = new Date();
                                 var lastLoginTimeDate = new Date(lastLoginTime);
-                                
-                                
+
+
                                 // Check Ban
                                 d.setDate(d.getDate() - d.getDay());
                                 d.setHours(0, 0, 0);
@@ -177,7 +177,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 }
                                 client.hset("b:" + player.connection._connection.remoteAddress, "loginTime", curTime);
 
-                                
+
                                 var admin = null;
                                 var iA = 0; // Index - Administrators
                                 for(iA = 0; iA < adminnames.length; iA++){
@@ -193,10 +193,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                         moderator = 1;
                                         log.info("Moderator " + player.name + " has logged in.");
                                     }
-                                    
+
                                 }
-                                
-                                
+
+
                                 log.info("Player name: " + player.name);
                                 log.info("Armor: " + armor);
                                 log.info("Weapon: " + weapon);
@@ -210,13 +210,13 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 log.info("Chatting Ban End Time: " + (new Date(chatBanEndTime)).toString());
 
                                  player.sendWelcome(armor, weapon, avatar, weaponAvatar, exp, moderator, admin,
-                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank, 
+                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank,
                                     armorEnchantedPoint, armorSkillKind, armorSkillLevel,
-                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel, 
-                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel, 
-                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel, 
+                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel,
+                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel,
+                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel,
                                     pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
-                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
+                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel,
                                     boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
                                     membershipTime, kind);
                             });
@@ -242,7 +242,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
     },
 
     createPlayer: function(player) {
-        
+
         var userKey = "u:" + player.name;
         var curTime = new Date().getTime();
 
@@ -255,7 +255,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                 // Add the player
                 //this.checkBan(player);
                 client.multi()
-                    
+
                     .sadd("usr", player.name)
                     .hset(userKey, "pw", player.pw)
                     .hset(userKey, "email", player.email)
@@ -265,19 +265,19 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     .hset(userKey, "exp", 0)
                     .hset("b:" + player.connection._connection.remoteAddress, "loginTime", curTime)
                     .hget("b:" + player.connection._connection.remoteAddress, "rtime") //9
-                    
+
                     .exec(function(err, replies){
                         log.info("New User: " + player.name);
                         var banTime = replies[8];
                         var curTime = new Date().getTime();
                         log.info("Player is banned for: " + banTime);
-                        
+
                         if(banTime > curTime){
-                                 
-                                player.connection.sendUTF8("ban"); 
-                                
+
+                                player.connection.sendUTF8("ban");
+
                                 player.connection.close("Closing connection to: " + player.name);
-                            
+
                                 return;
                         }
                         player.sendWelcome("clotharmor", "sword1", null, null, 0, null, null,
@@ -290,23 +290,23 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             null, 0, 0, 0,
                             null, 0, 0, 0,
                             false, 0, Types.Entities.WARRIOR);
-                        
+
                     });
-                    
+
             }
         });
     },
 
-        
+
 
 
     checkBan: function(player) {
         log.info("Name: " + player.name + "IP: " + player.connection._connection.remoteAddress);
-        
+
         client.smembers("ipban", function(err, replies){
             for(var index = 0; index < replies.length; index++){
                 if(replies[index].toString() === player.connection._connection.remoteAddress){
-                    
+
                     client.multi()
                         .hget("b:" + player.connection._connection.remoteAddress, "rtime")
                         .hget("b:" + player.connection._connection.remoteAddress, "time")
@@ -318,12 +318,12 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             var posY = replies[3];
                             log.info("curTime: " + curTime.toString());
                             log.info("banEndTime: " + banEndTime.toString());
-                             
+
                                 log.info("X: " + player.x + " y: " + player.y);
                             if(banEndTime.getTime() > curTime.getTime()){
-                                 
+
                                 player.connection.sendUTF8("ban");
-                                 
+
                                 player.connection.close("Closing connection to: " + player.name);
                                 return;
                             }
@@ -333,7 +333,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
             }
         });
     },
-    
+
     banPlayer: function(adminPlayer, banPlayer, days){
         client.smembers("adminname", function(err, replies){
             for(var index = 0; index < replies.length; index++){
@@ -374,8 +374,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.smembers("adminname", function(err, replies){
             for(var index = 0; index < replies.length; index++){
                 if(replies[index].toString() === adminPlayer.name) {
-            
-                    
+
+
                     var curTime = (new Date()).getTime();
                     adminPlayer.server.pushBroadcast(new Messages.Chat(targetPlayer, "/1 " + adminPlayer.name + " muted " + targetPlayer.name + "."));
                     targetPlayer.chatBanEndTime = curTime + (10*60*1000);
@@ -403,7 +403,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
                     switch (rank) {
                         case 1:
-                            client.sadd("moderators", targetPlayer.name);    
+                            client.sadd("moderators", targetPlayer.name);
                         break;
                         case 2:
                             client.sadd("adminname", targetPlayer.name);
@@ -459,7 +459,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     client.hset("b:" + banPlayer.connection._connection.remoteAddress, "time", banPlayer.bannedTime.toString());
                     client.hset("b:" + adminPlayer.connection._connection.remoteAddress, "banUseTime", curTime.getTime().toString());
                     setTimeout( function(){ banPlayer.connection.close("Added IP Banned player: " + banPlayer.name + " " + banPlayer.connection._connection.remoteAddress); }, 500);
-                    
+
                     log.info(banMsg);
                 }
                 return;
@@ -475,12 +475,12 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     client.hset("membershipTime: " + (otherPlayer.membershipTime).toString());
                     log.info("Membership on: " + otherPlayer.name + " until: " + (new Date(otherPlayer.membershipTime).toString()));
                     return;
-                
+
                 }
             }
         });
     },
-    
+
     putBurgerOfflineUser: function(name, itemNumber, successCallback, failCallback){
         var i=0;
         var multi = client.multi();
@@ -502,7 +502,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                 if(replies[i] === "burger"){
                     client.hset("u:" + name, "inventory" + i + ":number", parseInt(replies[i+30]) + itemNumber);
                     if(successCallback){
-                        
+
                         successCallback();
                     }
                     return;
@@ -510,7 +510,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
             }
             for(i=0; i<maxInventoryNumber; i++) {
                 if(replies[i]){
-                    
+
                     continue;
                 } else {
                     client.multi()
@@ -518,7 +518,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     .hset("u:" + name, "inventory" + i + ":number", itemNumber)
                     .exec();
                     if(successCallback){
-                        
+
                         successCallback();
                     }
                     return;
@@ -570,7 +570,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hdel("u:" + player.name, "bank" + number + ":skillLevel");
         player.send([Types.Messages.BANK, number, null, 0]);
     },
-    
+
     setBank: function(player, bankNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
         if (itemKind) {
             client.hset("u:" + player.name, "bank" + bankNumber, Types.getKindAsString(itemKind));
@@ -582,10 +582,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
         } else {
             this.emptyOutBankItem(player, bankNumber);
         }
-        
+
     },
-    
-    
+
+
     getAllInventory: function(player, callback){
         var userKey = "u:" + player.name;
         client.hget(userKey, "maxInventoryNumber", function(err, maxInventoryNumber){
@@ -630,30 +630,30 @@ module.exports = DatabaseHandler = cls.Class.extend({
             });
         });
     },
-    
+
     addGuildMember: function(player, guildName) {
         log.info("Set guild: " + guildName + " to player: " + player.name);
         client.hset("u:" + player.name, "guild", guildName);
     },
-    
+
     addGuildInvite: function(player, guildName) {
         log.info("Player: " + player.name + " has been invited to: " + guildName);
         client.hset("u:" + player.name, "guildInvite", guildName);
     },
-    
+
     removeGuildMember: function(player, guildName) {
         log.info("Player: " + player.name + " has been removed from: " + guildName);
         client.hdel("u:" + player.name, "guild", guildName);
     },
-    
+
     removeGuildInvite: function(player, guildName) {
         log.info("Player invitation for: " + player.name + " has been removed for: " + guildName);
         client.hdel("u:" + player.name, "guildInvite", guildName);
     },
     checkGuildInvite: function(player, guildName) {
-        
+
     },
-    
+
     setInventory: function(player, inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
         if(itemKind){
             client.hset("u:" + player.name, "inventory" + inventoryNumber, Types.getKindAsString(itemKind));
@@ -687,7 +687,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
             player.send([Types.Messages.INVENTORY, number, null, 0]);
     },
 
-    
+
     banTerm: function(time){
         return Math.pow(2, time)*500*60;
     },
@@ -765,7 +765,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "ringEnchantedPoint", enchantedPoint);
     },
     equipBoots: function(name, boots, enchantedPoint, skillKind, skillLevel) {
-        log.info("Set Boots: " + name + " " + boots + " " + skillKind + " " + skillLevel); 
+        log.info("Set Boots: " + name + " " + boots + " " + skillKind + " " + skillLevel);
         client.hset("u:" + name, "boots", boots);
         client.hset("u:" + name, "bootsEnchantedPoint", enchantedPoint);
         client.hset("u:" + name, "bootsSkillKind", skillKind);
@@ -775,7 +775,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
         log.info("Set Exp: " + name + " " + exp);
         client.hset("u:" + name, "exp", exp);
     },
-   
+
     foundAchievement: function(name, number){
         log.info("Found Achievement: " + name + " " + number);
         if(number < 100){
@@ -798,12 +798,12 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "usedPubPts", usedPubPts);
     },
     setPlayerPosition: function(player, x, y) {
-        
+
         log.info("Setting position: x: " + x + " y: " + y );
         client.hset("u:" + player.name, "x", x);
         client.hset("u:" + player.name, "y", y);
     },
-    
+
     teleportPlayer: function(adminPlayer, player, x, y) {
         client.smembers("adminname", function(err, replies){
             for(var index = 0; index < replies.length; index++){
@@ -818,18 +818,18 @@ module.exports = DatabaseHandler = cls.Class.extend({
         });
     },
     moveToBlackHole: function(player, x, y) {
-        
+
         log.info("Moving " + player.name + " to Black Hole.");
         client.hset("u:" + player.name, "x", x);
         client.hset("u:" + player.name, "y", y);
     },
-    
+
     setCheckpoint: function(name, x, y){
         log.info("Set Check Point: " + name + " " + x + " " + y);
         client.hset("u:" + name, "x", x);
         client.hset("u:" + name, "y", y);
     },
-    
+
     loadSkillSlots: function(player, callback) {
         var userKey = "u:" + player.name,
             multi = client.multi();
@@ -898,7 +898,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
           callback();
         });
       },
-    
+
     loadBoard: function(player, command, number, replyNumber){
       log.info("Load Board: " + player.name + " " + command + " " + number + " " + replyNumber);
       if(command === 'view'){
@@ -1190,16 +1190,16 @@ module.exports = DatabaseHandler = cls.Class.extend({
             }
           });
     },
-    
+
     delInventory: function(name, callback){
         client.hdel("u:" + name, "maxInventoryNumber", function(err, reply){
             if(parseInt(reply) === 1){
-                
+
                 callback();
             }
         });
     },
-    
+
     getRanking: function(player){
     var self = this;
 
@@ -1263,7 +1263,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
     loadPlayerHighscores: function() {
         //To be Handled.
-        
+
     },
     writeReply: function(player, content, number){
       log.info("Write Reply: " + player.name + " " + content + " " + number);
