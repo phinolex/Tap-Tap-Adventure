@@ -641,6 +641,7 @@ module.exports = Player = Character.extend({
         if (this.waitFlag !== waitFlag) {
             this.waitFlag = waitFlag;
             this.send(new Messages.GuildWarWait(this.waitFlag).serialize());
+            log.info("Sent flag to client");
         }
         
     },

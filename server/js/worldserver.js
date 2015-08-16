@@ -76,6 +76,7 @@ module.exports = World = cls.Class.extend({
             self.pushRelevantEntityListTo(player);
             player.flagPVP(self.map.isPVP(player.x, player.y));
             player.flagWait(self.map.isWaiting(player.x, player.y));
+            
 
             var move_callback = function(x, y) {
                 log.debug(player.name + "has moved to position: x:" + x + " y:" + y);

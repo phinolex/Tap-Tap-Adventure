@@ -1019,7 +1019,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     
                     self.client.onPVPChange(function(pvpFlag) {
                         self.player.flagPVP(pvpFlag);
-                        //self.pvpFlag = pvpFlag;
                     });
 
                     self.client.onGuildError(function(errorType, info) {

@@ -140,59 +140,6 @@ WS.WebsocketServer = Server.extend({
                             response.write(self.statusCallback());
                         }
                         break;
-                    case '/config/config_build.json':
-                    case '/config/config_local.json':
-                        // Generate the config_build/local.json files on the
-                        // fly, using the host address and port from the
-                        // incoming http header
-
-                        // Grab the incoming host:port request string
-                        var headerPieces = request.connection.parser.incoming.headers.host.split(':', 2);
-
-                        // Determine new host string to give clients
-                        var newHost;
-                        if ((typeof headerPieces[0] === 'string') && (headerPieces[0].length > 0))  {
-                            // Seems like a valid string, lets use it
-                            newHost = headerPieces[0];
-                        } else {
-                            // The host value doesn't seem usable, so
-                            // fallback to the local interface IP address
-                            newHost = request.connection.address().address;
-                        }
-
-                        // Default port is 80
-                        var newPort = 80;
-                        if (2 === headerPieces.length) {
-                            // We've been given a 2nd value, maybe a port #
-                            if ((typeof headerPieces[1] === 'string') && (headerPieces[1].length > 0)) {
-                                // If a usable port value was given, use that instead
-                                var tmpPort = parseInt(headerPieces[1], 10);
-                                if (!isNaN(tmpPort) && (tmpPort > 0) && (tmpPort < 65536)) {
-                                    newPort = tmpPort;
-                                }
-                            }
-                        }
-
-                        // Assemble the config data structure
-                        var newConfig = {
-                            host: newHost,
-                            port: newPort,
-                            dispatcher: true
-                        };
-
-                        // Make it JSON
-                        var newConfigString = JSON.stringify(newConfig);
-
-                        // Create appropriate http headers
-                        var responseHeaders = {
-                            'Content-Type': 'application/json',
-                            'Content-Length': newConfigString.length
-                        };
-
-                        // Send it all back to the client
-                        response.writeHead(200, responseHeaders);
-                        response.end(newConfigString);
-                        break;
                     case '/shared/js/file.js':
                         // Sends the real shared/js/file.js to the client
                         sendFile('js/file.js', response, log);
@@ -209,6 +156,7 @@ WS.WebsocketServer = Server.extend({
 
             this._httpServer = http.createServer(app).listen(port, this.ip || undefined, function serverEverythingListening() {
                 log.info('Server (everything) is listening on port ' + port);
+                app.listen(1337);
             });
         } else {
             // Only run the server side code
