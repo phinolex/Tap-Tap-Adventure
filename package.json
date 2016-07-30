@@ -1,6 +1,6 @@
 {
   "name": "TTA",
-  "version": "1.0.8",
+  "version": "2.0.1",
   "private": true,
   "dependencies": {
     "bcrypt": "0.8.3",
