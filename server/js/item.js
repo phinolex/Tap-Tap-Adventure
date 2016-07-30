@@ -1,16 +1,16 @@
 /* global Types, module */
 
-var Entity = require('./entity');
+var Entity = require('./entity'),
+	ItemTypes = require("../../shared/js/itemtypes");
 
 module.exports = Item = Entity.extend({
-    init: function (id, kind, x, y) {
+    init: function (id, kind, x, y, count) {
         this._super(id, 'item', kind, x, y);
         this.isStatic = false;
         this.isFromChest = false;
         this.skillKind = 0;
         this.skillLevel = 0;
-        this.count = 1;
-        
+        this.count = (count) ? count : 1;
     },
 
     handleDespawn: function (params) {
@@ -58,7 +58,7 @@ module.exports = Item = Entity.extend({
         ];
     },
     toString: function(){
-    return Types.getKindAsString(this.kind) + " "
+    return ItemTypes.getKindAsString(this.kind) + " "
          + this.count + " "
          + Types.getItemSkillNameByKind(this.skillKind) + " "
          + this.skillLevel + " "

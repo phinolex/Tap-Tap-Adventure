@@ -47,7 +47,7 @@ module.exports = Trade = cls.Class.extend({
     addItemToTradeSession: function(itemKind, itemSkillLevel, itemSkillKind, itemCount, player, otherPlayer, inventoryNumber, playerCountChosen, otherPlayerChosenCount) {
         for(var iRooms = 0; iRooms < player.inventory.rooms; iRooms++) {
             for (var selectedInventory in iRooms) {
-                if (Types.isHealingItem(selectedInventory.kind)) {
+                if (ItemTypes.isConsumableItem(selectedInventory.kind)) {
                     player.server.pushToPlayer(player, Types.Messages.TRADESTATES.TRADECOUNT);
                     if (itemCount > playerCountChosen) {
                         this.items.push(itemKind, itemSkillLevel, itemSkillKind, itemCount);

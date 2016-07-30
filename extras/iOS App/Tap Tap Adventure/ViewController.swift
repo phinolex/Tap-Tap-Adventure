@@ -37,20 +37,8 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
         webView.addSubview(loadingIndicator)
         
         
+           removeAds()
         
-        if adsRemoved {
-            
-            webView.loadRequest(requestObj)
-            removeAds()
-            
-        } else {
-            
-            SKPaymentQueue.defaultQueue().addTransactionObserver(self)
-            webView.loadRequest(requestObj)
-            webView.addSubview(removeAdsButton)
-            webView.addSubview(adView)
-            
-        }
         
         
     }
@@ -62,7 +50,7 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
     
     func fetchAvailableProducts() {
         let productID:NSSet = NSSet(object: product_id);
-        let productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productID as Set<NSObject>);
+        let productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productID as! Set<String>)
         productsRequest.delegate = self;
         productsRequest.start();
     }
@@ -70,14 +58,14 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
     
     @IBAction func buyConsumable(sender: AnyObject) {
 
-        var alert = UIAlertView(title: "Remove Advertisements", message: "Removes the advertisements.", delegate: self, cancelButtonTitle: "Nope", otherButtonTitles: "Restore Purchases", "Purchase")
+        let alert = UIAlertView(title: "Remove Advertisements", message: "Removes the advertisements.", delegate: self, cancelButtonTitle: "Nope", otherButtonTitles: "Restore Purchases", "Purchase")
         alert.show()
     }
 
     // Helper Methods
     
     func buyProduct(product: SKProduct){
-        println("Sending the Payment Request to Apple");
+        print("Sending the Payment Request to Apple");
         let payment = SKPayment(product: product)
         
         SKPaymentQueue.defaultQueue().addPayment(payment)
@@ -88,27 +76,27 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
     // Delegate Methods for IAP
     
     func productsRequest (request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
-        println("got the request from Apple")
-        var count : Int = response.products.count
+        print("got the request from Apple")
+        let count : Int = response.products.count
         if (count>0) {
             var validProducts = response.products
-            var validProduct: SKProduct = response.products[0] as! SKProduct
+            let validProduct: SKProduct = response.products[0] 
             if (validProduct.productIdentifier == product_id) {
-                println(validProduct.localizedTitle)
-                println(validProduct.localizedDescription)
-                println(validProduct.price)
+                print(validProduct.localizedTitle)
+                print(validProduct.localizedDescription)
+                print(validProduct.price)
                 buyProduct(validProduct);
             } else {
-                println(validProduct.productIdentifier)
+                print(validProduct.productIdentifier)
             }
         } else {
-            println("nothing")
+            print("nothing")
         }
     }
     
     
-    func request(request: SKRequest!, didFailWithError error: NSError!) {
-        println("Has failed with error.");
+    func request(request: SKRequest, didFailWithError error: NSError) {
+        print("Has failed with error.");
     }
     
     @IBAction func refreshView(sender: AnyObject) {
@@ -135,25 +123,25 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
         }
     }
     
-    func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!)    {
-        println("Received Payment Transaction Response from Apple");
+    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction])    {
+        print("Received Payment Transaction Response from Apple");
         
         for transaction:AnyObject in transactions {
             if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction{
                 switch trans.transactionState {
                 case .Purchased:
-                    println("Product Purchased");
+                    print("Product Purchased");
                     SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
                     removeAds()
                     break;
                 case .Failed:
-                    println("Purchased Failed");
+                    print("Purchased Failed");
                     SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
                     break;
                     
                 case .Restored:
                     SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
-                    println("Purchase Restored")
+                    print("Purchase Restored")
                     removeAds()
                     break;
                     
@@ -209,21 +197,21 @@ class ViewController: UIViewController, UIWebViewDelegate, ADBannerViewDelegate,
         switch (buttonIndex) {
             case 1:
                 SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
-                println("Restoring Purchases")
+                print("Restoring Purchases")
             break;
             
             case 2:
-                println("Initializing purcahses")
-                println("About to fetch the products");
+                print("Initializing purcahses")
+                print("About to fetch the products");
                 // We check that we are allow to make the purchase.
                 if (SKPaymentQueue.canMakePayments()) {
-                    var productID:NSSet = NSSet(object: product_id);
-                    var productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productID as Set<NSObject>);
+                    let productID:NSSet = NSSet(object: product_id);
+                    let productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productID as! Set<String>);
                     productsRequest.delegate = self;
                     productsRequest.start();
-                    println("Fething Products");
+                    print("Fething Products");
                 } else {
-                    println("can't make purchases");
+                    print("can't make purchases");
                 }
                 
 

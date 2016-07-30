@@ -263,6 +263,8 @@
 		C28F0C7F1A4139760081D5D0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Flaris;
 				TargetAttributes = {
@@ -513,6 +515,7 @@
 				INFOPLIST_FILE = "Tap Tap Adventure/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tta.kbve.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tap Tap Adventure/Tap Tap Adventure-Bridging-Header.h";
@@ -603,6 +606,7 @@
 				INFOPLIST_FILE = "Tap Tap Adventure/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tta.kbve.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tap Tap Adventure/Tap Tap Adventure-Bridging-Header.h";

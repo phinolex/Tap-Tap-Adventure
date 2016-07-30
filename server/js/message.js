@@ -30,12 +30,29 @@ Messages.Move = Message.extend({
         this.entity = entity;
     },
     serialize: function () {
+    	//log.info("move sent");
         return [Types.Messages.MOVE,
                 this.entity.id,
                 this.entity.x,
                 this.entity.y];
     }
 });
+
+Messages.Move2 = Message.extend({
+    init: function (entityId, x, y) {
+        this.entityId = entityId;
+        this.x = x;
+        this.y = y;
+    },
+    serialize: function () {
+    	//log.info("move sent");
+        return [Types.Messages.MOVE,
+                this.entityId,
+                this.x,
+                this.y];
+    }
+});
+
 Messages.LootMove = Message.extend({
     init: function(entity, item) {
         this.entity = entity;
@@ -92,23 +109,29 @@ Messages.Notify = Message.extend({
   }
 });
 Messages.HitPoints = Message.extend({
-    init: function(maxHitPoints, maxMana) {
+    init: function(maxHitPoints, maxMana, hp, mp) {
         this.maxHitPoints = maxHitPoints;
         this.maxMana = maxMana;
+        this.hitPoints = hp;
+        this.mana = mp
     },
     serialize: function() {
         return [Types.Messages.HP,
             this.maxHitPoints,
-            this.maxMana];
+            this.maxMana,
+            this.hitPoints,
+            this.mana];
     }
 });
 Messages.TalkToNPC = Message.extend({
-    init: function(questNumber, isCompleted){
-        this.questNumber = questNumber;
+    init: function(npcId, questNumber, isCompleted){
+        this.npcId = npcId;
+    	this.questNumber = questNumber;
         this.isCompleted = isCompleted;
     },
     serialize: function(){
         return [Types.Messages.TALKTONPC,
+            this.npcId,
             this.questNumber,
             this.isCompleted];
     }
@@ -166,12 +189,26 @@ Messages.Skill = Message.extend({
 Messages.SkillInstall = Message.extend({
     init: function(index, name) {
         this.index = index;
-        this.name = name;
+        this.name = name
     },
     serialize: function() {
         return [Types.Messages.SKILLINSTALL, this.index, this.name];
     }
 });
+Messages.SkillLoad = Message.extend({
+    init: function(index, id, level) {
+        this.index = index;
+        this.id = id;
+        this.level = level;
+    },
+    serialize: function() {
+        return [Types.Messages.SKILLLOAD,
+            this.index,
+            this.id,
+            this.level];
+    }
+});
+
 Messages.Chat = Message.extend({
     init: function (player, message) {
         this.playerId = player.id;
@@ -218,29 +255,16 @@ Messages.CharacterInfo = Message.extend({
             this.player.kind,                 // 0
             this.player.armor,                // 1
             this.player.armorEnchantedPoint,  // 2
-            this.player.avatar,               // 3
-            this.player.weapon,               // 4
-            this.player.weaponEnchantedPoint, // 5
-            this.player.weaponSkillKind,      // 6
-            this.player.weaponSkillLevel,     // 7
-            this.player.weaponAvatar,         // 8
-            this.player.pendant,              // 9
-            this.player.pendantEnchantedPoint,// 10
-            this.player.pendantSkillKind,     // 11
-            this.player.pendantSkillLevel,    // 12
-            this.player.ring,                 // 13
-            this.player.ringEnchantedPoint,   // 14
-            this.player.ringSkillKind,        // 15
-            this.player.ringSkillLevel,       // 16
-            this.player.boots,                // 17
-            this.player.bootsEnchantedPoint,  // 18
-            this.player.bootsSkillKind,       // 19
-            this.player.bootsSkillLevel,      // 20
-            this.player.experience,           // 21
-            this.player.level,                // 22
-            this.player.maxHitPoints,         // 23
-            this.player.hitPoints,            // 24
-            this.player.admin];
+            this.player.weapon,               // 3
+            this.player.weaponEnchantedPoint, // 4
+            this.player.weaponSkillKind,      // 5
+            this.player.weaponSkillLevel,     // 6
+            this.player.experience,           // 7
+            this.player.level,                // 8
+            this.player.maxHitPoints,         // 9
+            this.player.hitPoints,            // 10
+            this.player.admin,                // 11
+            this.player.pClass];              // 12
     }
 });
 Messages.Inventory = Message.extend({
@@ -296,7 +320,7 @@ Messages.Kill = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.KILL,
-                this.mob.kind,
+                this.mob.id,
                 this.level,
                 this.exp];
     }
@@ -308,6 +332,7 @@ Messages.List = Message.extend({
     serialize: function () {
         var list = this.ids;
         list.unshift(Types.Messages.LIST);
+        //log.info(JSON.stringify(list));
         return list;
     }
 });
@@ -358,24 +383,7 @@ Messages.TradeStates = Message.extend({
         return [Types.Messages.TRADE, this.stateType, this.playerName, this.otherPlayer];
     }
 });
-Messages.GuildError = Message.extend({
-	init: function (errorType, guildName) {
-		this.guildName = guildName;
-		this.errorType = errorType;
-	},
-	serialize: function () {
-		return [Types.Messages.GUILDERROR, this.errorType, this.guildName];
-	}
-});
-Messages.Guild = Message.extend({
-	init: function (action, info) {
-		this.action = action;
-		this.info = info;
-	},
-	serialize: function () {
-		return [Types.Messages.GUILD, this.action].concat(this.info);
-	}
-});
+
 Messages.Mana = Message.extend({
     init: function(player) {
         this.mana = player.mana;
@@ -396,26 +404,44 @@ Messages.Countdown = Message.extend({
     
 });
 
-Messages.GuildWarWait = Message.extend({
-    init: function(waitFlag) {
-        this.waitFlag = waitFlag;
+Messages.PartyInvite = Message.extend({
+    init: function(id) {
+        this.id = id;
     },
     serialize: function() {
-        
-        return [Types.Messages.GUILDWARTYPES.WAITING, this.waitFlag];
-    }
-    
+        return [Types.Messages.PARTYINVITE, this.id];
+    }		
 });
 
-Messages.GuildWarFull = Message.extend({
-    init: function(isFull) {
-        
-        this.isFull = isFull;
+Messages.Party = Message.extend({
+    init: function (members) {
+        this.members = members;
+        //this.members.unshift(Types.Messages.PARTY);
     },
-    
-    serialize: function() {
-        
-        return [Types.Messages.GUILDWARTYPES.FULL, this.isFull];
+    serialize: function () {
+        //var list = this.members;
+        //list.unshift(Types.Messages.PARTY);
+        return this.members;
     }
-    
 });
+
+Messages.AuctionOpen = Message.extend({
+    init: function (itemData) {
+        this.itemData = itemData;
+    },
+    serialize: function () {
+        //var list = this.members;
+        //list.unshift(Types.Messages.AUCTIONOPEN);
+        return this.itemData;
+    }	
+});
+
+Messages.SwitchClass = Message.extend({
+    init: function (pClass) {
+        this.pClass = pClass;
+    },
+    serialize: function () {
+        return [Types.Messages.CLASSSWITCH, this.pClass];
+    }	
+});
+

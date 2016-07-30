@@ -41,7 +41,7 @@ Utils.clamp = function(min, max, value) {
         return value;
     }
 };
-Utils.randomOrientation = function() {
+/*Utils.randomOrientation = function() {
     var o, r = Utils.random(4);
 
     if(r === 0)
@@ -54,7 +54,23 @@ Utils.randomOrientation = function() {
         o = Types.Orientations.DOWN;
 
     return o;
-};
+};*/
+
+Utils.randomPositionNextTo = function (entity) {
+    var a = entity.x, b = entity.y, r = Utils.random(4);
+    
+    if(r === 0)
+        --a;
+    if(r === 1)
+        ++a;
+    if(r === 2)
+        --b;
+    if(r === 3)
+        ++b;
+
+    return {"x": a, "y": b};
+}
+
 Utils.Mixin = function(target, source) {
     if (source) {
         for (var key, keys = Object.keys(source), l = keys.length; l--; ) {

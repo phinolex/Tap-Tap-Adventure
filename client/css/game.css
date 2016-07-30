@@ -1,19 +1,49 @@
-
+/*
+@media screen and (width: 2048px), screen and (height: 1536px)
+{
+	body {zoom :130%;}	
+}
+@media screen and (width: 1920px), screen and (height: 1080px)
+{
+	body {zoom :125%;}
+}
+@media screen and (width: 1440px), screen and (height: 900px)
+{
+	body {zoom :145%;}
+}
+@media screen and (width: 1280px), screen and (height: 1024px)
+{
+	body {zoom :145%;}
+}
+@media screen and (width: 1280px), screen and (height: 800px)
+{
+	body {zoom :130%;}
+}
+@media screen and (width: 1024px), screen and (height: 768px)
+{
+	body {zoom :105%;}
+}
+*/
 
 @media screen and (min-width: 1501px) {
 
-
-
-
-
-
-
-
-
-
-
-
-
+#classSwitcher {
+	position: absolute;
+	width:128px;
+	height:96px;
+	left: calc(50% - 64px);
+	top: calc(50% - 48px);
+	display: none;
+	background-color: rgba(0,0,0,0.5);
+	color: white;
+	padding:8px;
+	text-align: center;
+	font-size:12px;
+}
+#classSwitcherButton {
+	margin:8px;
+	border: 1px solid #000;
+}
 
     #bubbles{
         width:1440px;
@@ -24,6 +54,7 @@
         left: 0px;
         pointer-events:none;
         overflow: hidden;
+        z-index:5;
     }
     .bubble {
         background:rgba(45,45,45,0.8);
@@ -37,12 +68,12 @@
         -webkit-user-select:none;
     }
     .thingy {
-        height:15px;
-        width:16.5px;
+        height:10px;
+        width:11px;
         background:url('../img/common/thingy.png');
         margin:0 auto;
-        margin-top:-9px;
-        top:18px;
+        margin-top:-6px;
+        top:12px;
         position:relative;
     }
     #bubbles a {
@@ -54,9 +85,24 @@
 
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
 
-
-
-
+#classSwitcher {
+	position: absolute;
+	width:64px;
+	height:48px;
+	left: calc(50% - 32px);
+	top: calc(50% - 24px);
+	display: none;
+	background-color: rgba(0,0,0,0.5);
+	color: white;
+	padding:4px;
+	text-align: center;
+	font-size:8px;
+}
+#classSwitcherButton {
+	margin:4px;
+	border: 1px solid #000;
+}
+	
     #bubbles{
         width:960px;
         height:448px;
@@ -66,6 +112,7 @@
         left: 0px;
         pointer-events:none;
         overflow: hidden;
+        z-index:5;
     }
     .bubble {
         background:rgba(45,45,45,0.8);
@@ -84,7 +131,7 @@
         background:url('../img/common/thingy.png');
         margin:0 auto;
         margin-top:-6px;
-        top:6px;
+        top:12px;
         position:relative;
     }
     #bubbles a {
@@ -97,12 +144,23 @@
 
 @media screen and (max-width: 1000px) {
 
-
-
-
-
-
-
+#classSwitcher {
+	position: absolute;
+	width:32px;
+	height:24px;
+	left: calc(50% - 16px);
+	top: calc(50% - 12px);
+	display: none;
+	background-color: rgba(0,0,0,0.5);
+	color: white;
+	padding:2px;
+	text-align: center;
+	font-size:6px;
+}
+#classSwitcherButton {
+	margin:2px;
+	border: 1px solid #000;
+}
 
     #bubbles{
         width:480px;
@@ -113,6 +171,7 @@
         left: 0px;
         pointer-events:none;
         overflow: hidden;
+        z-index:5;
     }
     .bubble {
         background:rgba(45,45,45,0.8);
@@ -126,12 +185,12 @@
         -webkit-user-select:none;
     }
     .thingy {
-        height:5px;
-        width:5.5px;
+        height:10px;
+        width:11px;
         background:url('../img/common/thingy.png');
         margin:0 auto;
-        margin-top:-3px;
-        top:6px;
+        margin-top:-6px;
+        top:12px;
         position:relative;
     }
     #bubbles a {

@@ -17,7 +17,6 @@ console: false, java: false, module: false */
 
 var requirejs, require, define, file = require("../shared/js/file");
 (function (console, args, readFileFunc) {
-
     var fileName, env, fs, vm, path, exec, rhinoContext, dir, nodeRequire,
         nodeDefine, exists, reqMain, loadedOptimizedLib,
         version = '0.26.0',
@@ -7790,9 +7789,10 @@ function (lang,   logger,   file,          parse,    optimize,   pragma,
         config = build.createConfig(cmdConfig);
         paths = config.paths;
 
-        if (config.logLevel) {
+        /*if (config.logLevel) {
             logger.logLevel(config.logLevel);
-        }
+        }*/
+        logger.logLevel(logger.INFO);
 
         if (!config.out && !config.cssIn) {
             //This is not just a one-off file build but a full build profile, with
@@ -8528,7 +8528,7 @@ function (lang,   logger,   file,          parse,    optimize,   pragma,
             var runBuild = function (build, logger) {
                 //Make sure config has a log level, and if not,
                 //make it "silent" by default.
-                config.logLevel = config.logLevel || logger.SILENT;
+                config.logLevel = config.logLevel || logger.INFO;
 
                 var result = build(config);
 

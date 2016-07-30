@@ -1,4 +1,6 @@
-define(['character', 'exceptions'], function(Character, Exceptions) {
+/* global Types */
+
+define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mount) {
 
     var Player = Character.extend({
         MAX_LEVEL: 10,
@@ -11,8 +13,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
             // Renderer
             this.nameOffsetY = -10;
-            this.admin = null;
-            this.moderator = null;
+            this.rights = 0;
             // sprites
             this.spriteName = "clotharmor";
             this.armorName = "clotharmor";
@@ -26,9 +27,6 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
             // PVP Flag
             this.pvpFlag = false;
-            
-            //GuildWar
-            this.isWaiting = false;
 
             this.isWanted = false;
             // Benef
@@ -43,50 +41,59 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             this.flareDanceCooltimeCallback = null;
             this.flareDanceCooltimeCounter = 0;
             this.flareDanceMsgCooltimeCounter = 0;
+            
+            this.mount=null;
+            this.mountName=null;
+            this.mountOffsetY=0;
+            this.mountOffsetX=0;
+            //this.mount.setPosition(this.gridX, this.gridY);
+          
+            this.pets = [];
+            
+            this.prevX = 0;
+            this.prevY = 0;
+            
+            this.pClass = 0;
         },
-
         
         /**
          * Returns true if the character is currently walking towards an item in order to loot it.
          */
 
-        setSkill: function(level){
-            this.skillHandler.add('evasion', level);
+        setSkill: function(name, level, skillIndex)
+        {
+        
+            //alert("name:" + name + ",level:" + level);
+            this.skillHandler.add(name, level, skillIndex);
         },
-        setBloodSuckingSkill: function(level){
-            this.skillHandler.add('bloodSucking', level);
-        },
-        setCriticalStrikeSkill: function(level){
-            this.skillHandler.add('criticalStrike', level);
-        },
-        setHealSkill: function(level){
-            this.skillHandler.add('heal', level);
-        },
-        setFlareDanceSkill: function(level){
-            this.skillHandler.add('flareDance', level);
-        },
-        setStunSkill: function(level){
-            this.skillHandler.add('stun', level);
-        },
-        setSuperCatSkill: function(level){
-            this.skillHandler.add('superCat', level);
-        },
-        setProvocationSkill: function(level){
-            this.skillHandler.add('provocation', level);
-        },
+
         setBenef: function(itemKind){
             switch(itemKind){
-                case Types.Entities.FIREBENEF:
+                case 169:
                     this.startInvincibility();
                     break;
-                case Types.Entities.ROYALAZALEABENEF:
+                case 213:
                     this.startRoyalAzaleaBenef();
                     break;
-                case Types.Entities.DEBENEF:
+                case 20:
                     this.stopInvincibility();
                     break;
             }
         },
+        setConsumable: function(itemKind) {
+            switch (itemKind) {
+                case 450:
+                    this.startMount("seadragon", 0, -42, 45000);
+                    break;
+                case 451:
+                    this.startMount("whitetiger", 0, -75, 45000);
+                    break;
+                case 452:
+                    this.startMount("forestdragon", -25, -50, 45000);
+                    break;              
+            }
+        },
+
         flareDanceAttack: function(){
             var adjacentMobIds = [];
             var entity = null;
@@ -116,10 +123,16 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         },
 
         getSpriteName: function() {
+            if (!this.spriteName)
+            {
+            	    setSpriteName(null);
+            }
             return this.spriteName;
         },
         setSpriteName: function(name) {
-            if(name){
+            if (!name) {
+            	this.spriteName = "clotharmor";
+            } else if(name){
                 this.spriteName = name;
             } else {
                 this.spriteName = this.armorName;
@@ -131,6 +144,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         getArmorSprite: function() {
             return this.sprite;
         },
+        /*
         getGuild: function() {
 			return this.guild;
 		},
@@ -172,7 +186,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 					return false;
 				}
 			}
-		},
+		},*/
         setArmorName: function(name){
             this.armorName = name;
         },
@@ -232,28 +246,6 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             this.armorloot_callback = callback;
         },
 
-        startInvincibility: function() {
-            var self = this;
-
-            if(!this.invincible) {
-                this.invincible = true;
-            } else {
-                if(this.invincibleTimeout) {
-                    clearTimeout(this.invincibleTimeout);
-                }
-            }
-            this.invincibleTimeout = setTimeout(function() {
-                self.stopInvincibility();
-                self.idle();
-            }, 15000);
-        },
-        stopInvincibility: function() {
-            this.invincible = false;
-
-            if(this.invincibleTimeout) {
-                clearTimeout(this.invincibleTimeout);
-            }
-        },
         startRoyalAzaleaBenef: function() {
             var self = this;
 
@@ -276,19 +268,109 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
                 clearTimeout(this.royalAzaleaBenefTimeout);
             }
         },
-        
         flagPVP: function(pvpFlag){
             this.pvpFlag = pvpFlag;
+       },
+
+        // Override walk, idle, and updateMovement for mounts.
+        walk: function(orientation) {
+            this.setOrientation(orientation);
+            if (this.mount) {
+            	    this.mount.walk(orientation);
+            	    this.animate("idle", this.idleSpeed);
+            }
+            else {
+            	    this.animate("walk", this.walkSpeed);
+            }
         },
         
-        flagWait: function(waitFlag) {
-            this.isWaiting = waitFlag;    
+        idle: function(orientation) {
+            this.setOrientation(orientation);
+            if (this.mount) {
+            	    this.mount.idle(orientation);
+            }
+            else {
+            	    this.animate("idle", this.idleSpeed);
+            }
+        },        
+
+        updateMovement: function() {
+        	if (this.mount) {
+        		this.mount.walk(this.orientation);
+        	}
+        	this._super();	
         },
         
-        isPlayerWaiting: function() {
+        // Mount Code.
+        startMount: function(mountName, mountOffsetX, mountOffsetY, time) {
+            var self = this;
+
+            if(this.mount) {
+                this.destroyMount();
+                this.createMount(mountName, mountOffsetX, mountOffsetY);
+            } else {
+            	this.createMount(mountName, mountOffsetX, mountOffsetY);
+		this.mountTimeout = setTimeout(function() {
+		    self.stopMount();
+		    self.idle();
+		}, time);
+            }
+        },
+
+        stopMount: function() {
+            if(this.mountTimeout) {
+            	this.destroyMount();
+                clearTimeout(this.mountTimeout);
+            }
+        },
+
+        createMount: function (mountName, mountOffsetX, mountOffsetY) {
+            this.mountName=mountName;
+            this.mountOffsetX=mountOffsetX;
+            this.mountOffsetY=mountOffsetY;
+            this.mount = new Mount(this.game, this, mountName, this.walkSpeed, this.idleSpeed);
+            this.moveSpeed = 60;
+            this.mount.setOrientation(this.orientation);
+        },
+        
+        destroyMount: function () {
+            this.moveSpeed = 120;
+            delete this.mount;
+        },
+                
+        removeTarget: function () {
+            if (this.pets) {
+		    for (var i=0; i < this.pets.length; ++i)
+		    {
+			this.pets[i].target = null;
+			log.info("pet removed target");
+		    }
+            }
+            this._super();	
+        },
             
-            return this.isWaiting;
-        }
+	    setClass: function (pClass) {
+		this.pClass = pClass;
+		if (pClass == Types.PlayerClass.WARRIOR)
+		{
+		    this.setAtkRange(1);
+		}
+		else if (pClass == Types.PlayerClass.DEFENDER)
+		{
+		    this.setAtkRange(1);
+		}
+		else if (pClass == Types.PlayerClass.ARCHER)
+		{
+		    this.setAtkRange(10);
+		}
+		/*else if (pClass == Types.PlayerClass.MAGE)
+		{
+		    this.setAtkRange(10);
+		}*/
+		    
+	    },
+        	    
+
     });
 
     return Player;

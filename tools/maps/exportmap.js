@@ -6,8 +6,7 @@ var util = require('util'),
     fs = require("fs"),
     file = require("../../shared/js/file"),
     processMap = require('./processmap'),
-    log = new Log(Log.DEBUG),
-	mapVersion = require('../../server/data/maps/mapVersion.json');
+    log = new Log(Log.DEBUG);
     
 var source = process.argv[2],
     mode = process.argv[3],
@@ -41,7 +40,7 @@ function callback_function(json) {
 			break;
 		case "direct":
 			processClient(json, "../../client/maps/world_client");
-			processServer(json, "../../server/data/maps/world_server.json");
+			processServer(json, "../../server/maps/world_server.json");
 			break;
 			
 		case "both":
@@ -80,11 +79,11 @@ function processClient(json, dest){
 
 function processServer(json, dest){
 	var jsonMap = JSON.stringify(processMap(json, {mode:"server"})); // Save the processed map object as JSON data
-
 	fs.writeFile(dest, jsonMap, function(err, file) {
 		if(err){
 			log.error(JSON.stringify(err));
-		} else{
+		}
+		else{
 			log.info("Finished processing map file: "+ dest + " was saved.");
 		}
 	});

@@ -1,5 +1,5 @@
 
-define(['character', 'timer'], function(Character, Timer) {
+define(['character', 'timer', 'player'], function(Character, Timer, Player) {
 
     var Updater = Class.extend({
         init: function(game) {
@@ -88,7 +88,7 @@ define(['character', 'timer'], function(Character, Timer) {
                 s = 3,
                 ts = 16,
                 speed = 500;
-
+                
             if(z && z.inProgress === false) {
                 var orientation = this.game.zoningOrientation,
                     startValue = endValue = offset = 0,
@@ -100,12 +100,11 @@ define(['character', 'timer'], function(Character, Timer) {
                     startValue = (orientation === Types.Orientations.LEFT) ? c.x - ts : c.x + ts;
                     endValue = (orientation === Types.Orientations.LEFT) ? c.x - offset : c.x + offset;
                     updateFunc = function(x) {
-                        c.setPosition(x, c.y);
-                        g.initAnimatedTiles();
-                        g.renderer.renderStaticCanvases();
+                        g.camera.setRealCoords();
+			g.renderbackground = true;
+                        
                     },
                     endFunc = function() {
-                        c.setPosition(z.endValue, c.y);
                         g.endZoning();
                     };
                 } else if(orientation === Types.Orientations.UP || orientation === Types.Orientations.DOWN) {
@@ -113,13 +112,12 @@ define(['character', 'timer'], function(Character, Timer) {
                     startValue = (orientation === Types.Orientations.UP) ? c.y - ts : c.y + ts;
                     endValue = (orientation === Types.Orientations.UP) ? c.y - offset : c.y + offset;
                     updateFunc = function(y) {
-                        c.setPosition(c.x, y);
-                        g.initAnimatedTiles();
-                        g.renderer.renderStaticCanvases();
+                        g.camera.setRealCoords();
+			g.renderbackground = true;
                     },
                     endFunc = function() {
-                        c.setPosition(c.x, z.endValue);
                         g.endZoning();
+                        
                     };
                 }
 
@@ -131,7 +129,22 @@ define(['character', 'timer'], function(Character, Timer) {
             var self = this;
 
             // Estimate of the movement distance for one update
-            var tick = Math.round(16 / Math.round((c.moveSpeed / (1000 / this.game.renderer.FPS))));
+            //var tick = Math.round(16 / Math.round((c.moveSpeed / (1000 / this.game.renderer.FPS))));
+            //log.info("tick="+tick);
+            var tick=3;
+            
+            if (c === self.game.player)
+            {
+            	    // Gets reset to 0 Every screen update.
+            	    if (c.prevX == 0 && c.prevY == 0)
+            	    {
+            	    	    c.prevX = c.x;
+            	    	    c.prevY = c.y;
+            	    	    c.prevOrientation = c.orientation;
+            	    }
+            }  
+            if (c.isStunned)
+            	return;
 
             if(c.isMoving() && c.movement.inProgress === false) {
                 if(c.orientation === Types.Orientations.LEFT) {
@@ -195,16 +208,55 @@ define(['character', 'timer'], function(Character, Timer) {
                                      c.moveSpeed);
                 }
             }
+            if(c.isMoving() && c instanceof Player)
+            {
+            	this.game.camera.setRealCoords();
+		//this.game.renderbackground = true;
+            }
+            
+            // Set Dirty all visible entities so it renders properly.
+            if (c == this.game.player && this.game.player.isMoving())
+            {
+            	this.game.forEachVisibleEntityByDepth(function(entity) {
+                    entity.setDirty();		
+            	});
+            }
         },
         
         updateKeyboardMovement: function()
-        {           
-            if(!this.game.player || this.game.player.isMoving())
+        {
+            if(!this.game.player /*|| this.game.player.isMoving()*/)
                 return;
 
             var game = this.game;
             var player = this.game.player;
-                
+
+            if (game.joystick)
+            {            	
+	           player.moveRight = false;
+	       	   player.moveLeft = false;
+		   player.moveUp = false;
+		   player.moveDown = false;
+		   
+		   if (game.joystick.right())
+		   {
+		       player.moveRight = true;
+	       	   }
+		   else if (game.joystick.left())
+		   {
+		       player.moveLeft = true;
+		   }
+		   else if (game.joystick.up())
+		   {
+		       player.moveUp = true;
+		   }
+		   else if (game.joystick.down())
+		   {
+		       player.moveDown = true;
+		   }
+
+       	    }
+
             var pos = {
                 x: player.gridX,
                 y: player.gridY
@@ -213,22 +265,25 @@ define(['character', 'timer'], function(Character, Timer) {
             if(player.moveUp)
             {
                 pos.y -= 1;
-                game.keys(pos, Types.Orientations.UP);
+                game.keys(pos, Types.Orientations.UP);                
             }
             else if(player.moveDown)
             {
                 pos.y += 1;
                 game.keys(pos, Types.Orientations.DOWN);
+
             }
             else if(player.moveRight)
             {
                 pos.x += 1;
                 game.keys(pos, Types.Orientations.RIGHT);
+
             }
             else if(player.moveLeft)
             {
                 pos.x -= 1;
                 game.keys(pos, Types.Orientations.LEFT);
+
             }
         
         },
@@ -244,6 +299,14 @@ define(['character', 'timer'], function(Character, Timer) {
                         entity.setDirty();
                     }
                 }
+                
+                if (entity.mount) {
+                	var animMount = entity.mount.currentAnimation;
+                	if (animMount) {
+                		animMount.update(t);
+                        }
+                }
+                
                 anim = entity.criticalAnimation;
                 if(anim && entity.isCritical){
                     anim.update(t);

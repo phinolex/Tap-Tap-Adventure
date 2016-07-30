@@ -3,7 +3,7 @@ define(['entity'], function(Entity) {
 
     var Chest = Entity.extend({
         init: function(id, kind) {
-            this._super(id, Types.Entities.CHEST);
+            this._super(id, 37);
         },
 
         getSpriteName: function() {

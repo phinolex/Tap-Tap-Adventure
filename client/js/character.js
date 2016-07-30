@@ -1,5 +1,5 @@
 
-define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
+define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity, Transition, Timer, MobData, NpcData) {
 
     var Character = Entity.extend({
         init: function(id, kind) {
@@ -10,6 +10,9 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             // Position and orientation
             this.nextGridX = -1;
             this.nextGridY = -1;
+            this.prevGridX = -1;
+            this.prevGridY = -1;
+
             this.orientation = Types.Orientations.DOWN;
             
             /* 
@@ -20,10 +23,10 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
 
             // Speeds
             this.atkSpeed = 50;
-            this.moveSpeed = 120;
+            this.moveSpeed = 150;
             this.walkSpeed = 100;
             this.idleSpeed = 450;
-            this.setAttackRate(800);
+            this.setAttackRate(1000);
 
             // Pathing
             this.movement = new Transition();
@@ -46,6 +49,8 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             this.followingMode = false;
             this.engagingPC = false;
             this.inspecting = null;
+            
+            this.isStunned = false;
         },
 
         clean: function() {
@@ -200,9 +205,13 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         },
 
         nextStep: function() {
+            
             var stop = false,
                 x, y, path;
 
+            this.prevGridX = this.gridX;
+            this.prevGridY = this.gridX;
+                
             if(this.isMoving()) {
                 if(this.before_step_callback) {
                     this.before_step_callback();
@@ -341,17 +350,26 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             this.moveTo_(x, y);
         },
 
+	    
         /**
          * Makes the character follow another one.
          */
         follow: function(entity, engagingPC) {
             this.engagingPC = engagingPC === undefined ? false : engagingPC
             if (entity && ((this.engagingPC && this.kind === 1) || (this.engagingPC == false && entity.kind != 1) || (this.kind !== 1))) {
+            	//log.info("pClass="+this.pClass);
+            	
+            	if (typeof this.pClass !== 'undefined' && (this.pClass==Types.PlayerClass.ARCHER || this.pClass==Types.PlayerClass.MAGE))
+            	{
+            		log.info("Archer or mage ranged attack");
+            		return;
+            	}
                 this.followingMode = true;
                 this.moveTo_(entity.gridX, entity.gridY);
             }
         },
 
+        
         /**
          * Stops a moving character.
          */
@@ -417,6 +435,9 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
          * @returns {Boolean} Whether this is an attacker of this character.
          */
         isAttackedBy: function(character) {
+        	if (this.attackers.size == 0) {
+        		return false;
+        	}
             return (character.id in this.attackers);
         },
 
@@ -437,10 +458,13 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         * @param {Character} character The attacking character.
         */
         removeAttacker: function(character) {
+            if (this.attackers.size == 0) {
+            	    return;
+            }
             if(this.isAttackedBy(character)) {
                 delete this.attackers[character.id];
             } else {
-                log.error(this.id + " is not attacked by " + character.id);
+                log.info(this.id + " is not attacked by " + character.id);
             }
         },
         forceStop: function () {
@@ -470,30 +494,48 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
          * @param {Character} character The target character.
          */
         setTarget: function(character) {
-            if(this.target !== character) { // If it's not already set as the target
+             if (character == null) {
+             	     this.removeTarget();
+             	     return;
+             }
+             if(this.target !== character) { // If it's not already set as the target
                 if(this.hasTarget()) {
                     this.removeTarget(); // Cleanly remove the previous one
                 }
                 this.unconfirmedTarget = null;
                 this.target = character;
                 if(this.settarget_callback){
-                    var targetName = Types.getKindAsString(character.kind);
+                    var targetName;
+                    if (MobData.Kinds[character.kind] && MobData.Kinds[character.kind].key)
+                    	targetName = MobData.Kinds[character.kind].key;
                     this.settarget_callback(character, targetName);
                 }
             } else {
                 log.debug(character.id + " is already the target of " + this.id);
             }
         },
-        onSetTarget: function(callback){
+        onSetTarget: function(callback) {        	
           this.settarget_callback = callback;
         },
-        showTarget: function(character){
-          if(this.inspecting !== character){
+        showTarget: function(character) {
+          if(this.inspecting !== character && character !== this){
             this.inspecting = character;
             if(this.settarget_callback){
-              var targetName = Types.getKindAsString(character.kind);
+              
+              var targetName;
+              var mobData = MobData.Kinds[character.kind];
+              if (mobData)
+              {
+              	  if (mobData.spriteName)
+              	      targetName = mobData.spriteName;
+                  else
+                      targetName = mobData.key;
+              }
+              else if (ItemTypes.isItem(character.kind)) {
+              	      targetName = ItemTypes.getKindAsString(character.kind);
+              }
               this.settarget_callback(character, targetName, true);
-            }
+            }                  
           }
         },
 
@@ -548,7 +590,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
          *
          */
         canAttack: function(time) {
-            if(this.canReachTarget() && this.attackCooldown.isOver(time)) {
+            if(this.isDead == false && this.canReachTarget() && this.attackCooldown.isOver(time)) {
                 return true;
             }
             return false;
@@ -606,7 +648,23 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
 
         setAttackRate: function(rate) {
             this.attackCooldown = new Timer(rate);
-        }
+        },
+        
+        canReach: function(entity) {
+            //log.info("attackRange: " + this.attackRange);
+            if (this.x == entity.x && this.y && entity.y)
+            	    return true;
+            if(this.attackRange > 1){
+                if(this.isNear(entity, this.attackRange)) {
+                    return true;
+                }
+            } else{
+                if(this.isAdjacentNonDiagonal(entity)) {
+                    return true;
+                }
+            }
+            return false;
+        },        
     });
 
     return Character;

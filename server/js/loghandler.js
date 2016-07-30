@@ -47,7 +47,7 @@ module.exports = LogHandler = cls.Class.extend({
                     + '"' + player.name + '",'
                     + '"item",'
                     + '"' + action + '",'
-                    + '"' + (item ? item.toString() + '/': '') + player.inventory.toString() + '");');
+                    + '"' +  + kasdk + '");');
   },
   addExpLog: function(player, action, mob, incExp){
     this.client.query('insert into log (user, kind, action, content) values('
@@ -68,10 +68,10 @@ module.exports = LogHandler = cls.Class.extend({
                     + '"' + player.name + '",'
                     + '"login",'
                     + '"login",'
-                    + '"' + Types.getKindAsString(player.weapon) + "+" + player.weaponEnchantedPoint + " " + Types.getItemSkillNameByKind(player.weaponSkillKind) + "+" + player.weaponSkillLevel + "/"
-                    + Types.getKindAsString(player.ring) + " " + Types.getItemSkillNameByKind(player.ringSkillKind) + "+" + player.ringSkillLevel + "/"
-                    + Types.getKindAsString(player.pendant) + " " + Types.getItemSkillNameByKind(player.pendantSkillKind) + "+" + player.pendantSkillLevel + "/"
-                    + Types.getKindAsString(player.armor)
+                    + '"' + ItemTypes.getKindAsString(player.weapon) + "+" + player.weaponEnchantedPoint + " " + Types.getItemSkillNameByKind(player.weaponSkillKind) + "+" + player.weaponSkillLevel + "/"
+                    + ItemTypes.getKindAsString(player.ring) + " " + Types.getItemSkillNameByKind(player.ringSkillKind) + "+" + player.ringSkillLevel + "/"
+                    + ItemTypes.getKindAsString(player.pendant) + " " + Types.getItemSkillNameByKind(player.pendantSkillKind) + "+" + player.pendantSkillLevel + "/"
+                    + ItemTypes.getKindAsString(player.armor)
                     + "/" + player.inventory.toString() + '");');
   },
   getAdLog: function(name, callback){

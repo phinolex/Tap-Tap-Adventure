@@ -7,6 +7,8 @@ var cls = require("../lib/class"),
     Messages = require("../message"),
     redis = require("redis"),
     bcrypt = require("bcrypt"),
+    ItemTypes = require("../../../shared/js/itemtypes"),
+    Quests = require('../quests'),
     inventory = require("../inventory");
 
 module.exports = DatabaseHandler = cls.Class.extend({
@@ -14,12 +16,43 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client = redis.createClient(config.redis_port, config.redis_host, {socket_nodelay: true});
         client.auth("ki24SimpleYetMisleading009109256256");
     },
+
+    updatePassword: function (player) {
+        var userKey = "u:" + player.name;
+        client.smembers("usr", function(err, replies){
+            for(var index = 0; index < replies.length; index++){
+                if(replies[index].toString() === player.name){
+                    client.multi()
+                        .hget(userKey, "pw") // 0
+
+                        .exec(function(err, replies){
+                            // Check Password
+                            log.info("name: " + player.name+", oldpassword: " + player.pw + ", dbpassword" + replies[0]);
+                            bcrypt.compare(player.pw, replies[0], function(err, res) {
+                                if(!res) {
+                                    player.connection.sendUTF8("invalidlogin");
+                                    player.connection.close("Wrong Password: " + player.name);
+                                    return;
+                                }
+                                else
+                                {
+                                    client.hset(userKey, "pw", player.newpw);
+                                    log.info("passwordChanged:" + player.newpw);
+                                    player.connection.sendUTF8("passwordChanged");
+                                }
+                            });
+                        });
+                }
+            }
+        });
+    },
+
     loadPlayer: function(player) {
         var self = this;
         var userKey = "u:" + player.name;
         var curTime = new Date().getTime();
-        client.smembers("usr", function(err, replies){
-            for(var index = 0; index < replies.length; index++){
+        client.smembers("usr", function(err, replies) {
+            for(var index = 0; index < replies.length; index++) {
                 if(replies[index].toString() === player.name){
                     client.multi()
                         .hget(userKey, "pw") // 0
@@ -29,50 +62,37 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget("b:" + player.connection._connection.remoteAddress, "time") // 4
                         .hget("b:" + player.connection._connection.remoteAddress, "banUseTime") // 5
                         .hget("b:" + player.connection._connection.remoteAddress, "loginTime") // 6
-                        .hget(userKey, "avatar") // 7
-                        .zrange("adrank", "-1", "-1") // 8
-                        .get("nextNewArmor") // 9
-                        .smembers("adminname") // 10
-                        .zscore("adrank", player.name) // 11
-                        .hget(userKey, "weaponAvatar") // 12
-                        .hget(userKey, "x") // 13
-                        .hget(userKey, "y") // 14
-                        .hget("cb:" + player.connection._connection.remoteAddress, "etime") // 15
-                        .smembers("moderators") // 16
-                        .hget("b:" + player.connection._connection.remoteAddress, "rtime") //17
-                        .zrevrank("ranking", player.name) // 18
-                        .hget(userKey, "armorEnchantedPoint")        // 19
-                        .hget(userKey, "armorkillKind")              // 20
-                        .hget(userKey, "armorSkillLevel")            // 21
-                        .hget(userKey, "avatarEnchantedPoint")       // 22
-                        .hget(userKey, "avatarkillKind")             // 23
-                        .hget(userKey, "avatarSkillLevel")           // 24
-                        .hget(userKey, "weaponEnchantedPoint")       // 25
-                        .hget(userKey, "weaponSkillKind")            // 26
-                        .hget(userKey, "weaponSkillLevel")           // 27
-                        .hget(userKey, "weaponAvatarEnchantedPoint") // 28
-                        .hget(userKey, "weaponAvatarSkillKind")      // 29
-                        .hget(userKey, "weaponAvatarSkillLevel")     // 30
-                        .hget(userKey, "pendant")                    // 31
-                        .hget(userKey, "pendantEnchantedPoint")      // 32
-                        .hget(userKey, "pendantSkillKind")           // 33
-                        .hget(userKey, "pendantSkillLevel")          // 34
-                        .hget(userKey, "ring")                       // 35
-                        .hget(userKey, "ringEnchantedPoint")         // 36
-                        .hget(userKey, "ringSkillKind")              // 37
-                        .hget(userKey, "ringSkillLevel")             // 38
-                        .hget(userKey, "boots")                      // 39
-                        .hget(userKey, "bootsEnchantedPoint")        // 40
-                        .hget(userKey, "bootsSkillKind")             // 41
-                        .hget(userKey, "bootsSkillLevel")            // 42
-                        .hget(userKey, "membership")                 // 43
-                        .hget(userKey, "membershipTime")             // 44
-                        .hget(userKey, "membershipUseTime")          // 45
-                        .hget(userKey, "membershipLoginTime")        // 46
-                        .hget(userKey, "membershipRemainingTime")    // 47
-                        .hget(userKey, "kind")                       // 48
-
-
+                        .hget(userKey, "x") // 7
+                        .hget(userKey, "y") // 8
+                        .hget("cb:" + player.connection._connection.remoteAddress, "etime") // 9
+                        .hget("b:" + player.connection._connection.remoteAddress, "rtime") //10
+                        .zrevrank("ranking", player.name) // 11
+                        .hget(userKey, "armorEnchantedPoint")        // 12
+                        .hget(userKey, "armorkillKind")              // 13
+                        .hget(userKey, "armorSkillLevel")            // 14
+                        .hget(userKey, "weaponEnchantedPoint")       // 15
+                        .hget(userKey, "weaponSkillKind")            // 16
+                        .hget(userKey, "weaponSkillLevel")           // 17
+                        .hget(userKey, "pendant")                    // 18
+                        .hget(userKey, "pendantEnchantedPoint")      // 19
+                        .hget(userKey, "pendantSkillKind")           // 20
+                        .hget(userKey, "pendantSkillLevel")          // 21
+                        .hget(userKey, "ring")                       // 22
+                        .hget(userKey, "ringEnchantedPoint")         // 23
+                        .hget(userKey, "ringSkillKind")              // 24
+                        .hget(userKey, "ringSkillLevel")             // 25
+                        .hget(userKey, "boots")                      // 26
+                        .hget(userKey, "bootsEnchantedPoint")        // 27
+                        .hget(userKey, "bootsSkillKind")             // 28
+                        .hget(userKey, "bootsSkillLevel")            // 29
+                        .hget(userKey, "membership")                 // 30
+                        .hget(userKey, "membershipTime")             // 31
+                        .hget(userKey, "membershipUseTime")          // 32
+                        .hget(userKey, "membershipLoginTime")        // 33
+                        .hget(userKey, "membershipRemainingTime")    // 34
+                        .hget(userKey, "kind")                       // 35
+                        .hget(userKey, "rights")                     // 36
+                        .hget(userKey, "class")			     // 37
 
 
                         //.get(userKey, "userGuild")
@@ -84,61 +104,53 @@ module.exports = DatabaseHandler = cls.Class.extend({
                          */
 
                         .exec(function(err, replies){
-                            var pw = replies[0];
-                            var armor = replies[1];
-                            var weapon = replies[2];
-                            var exp = Utils.NaN2Zero(replies[3]);
-                            var bannedTime = Utils.NaN2Zero(replies[4]);
-                            var banUseTime = Utils.NaN2Zero(replies[5]);
-                            var lastLoginTime = Utils.NaN2Zero(replies[6]);
-                            var avatar = replies[7];
-                            var pubTopName = replies[8];
-                            var nextNewArmor = replies[9];
-                            var adminnames = replies[10];
-                            var pubPoint =  Utils.NaN2Zero(replies[11]);
-                            var weaponAvatar = replies[12] ? replies[12] : weapon;
-                            var x = Utils.NaN2Zero(replies[13]);
-                            var y = Utils.NaN2Zero(replies[14]);
-                            var chatBanEndTime = Utils.NaN2Zero(replies[15]);
-                            var moderators = replies[16];
-                            var banTime = replies[17];
-                            var rank = isNaN(parseInt(replies[18])) ? 0 : parseInt(replies[18]);
 
-                            var armorEnchantedPoint = Utils.NaN2Zero(replies[19]);
-                            var armorSkillKind = Utils.NaN2Zero(replies[20]);
-                            var armorSkillLevel = Utils.NaN2Zero(replies[21]);
-                            var avatarEnchantedPoint = Utils.NaN2Zero(replies[22]);
-                            var avatarSkillKind = Utils.NaN2Zero(replies[23]);
-                            var avatarSkillLevel = Utils.NaN2Zero(replies[24]);
-                            var weaponEnchantedPoint = Utils.NaN2Zero(replies[25]);
-                            var weaponSkillKind = Utils.NaN2Zero(replies[26]);
-                            var weaponSkillLevel = Utils.NaN2Zero(replies[27]);
-                            var weaponAvatarEnchantedPoint = Utils.NaN2Zero(replies[28]);
-                            var weaponAvatarSkillKind = Utils.NaN2Zero(replies[29]);
-                            var weaponAvatarSkillLevel = Utils.NaN2Zero(replies[30]);
-                            var pendant = replies[31];
-                            var pendantEnchantedPoint = Utils.NaN2Zero(replies[32]);
-                            var pendantSkillKind = Utils.NaN2Zero(replies[33]);
-                            var pendantSkillLevel = Utils.NaN2Zero(replies[34]);
-                            var ring = replies[35];
-                            var ringEnchantedPoint = Utils.NaN2Zero(replies[36]);
-                            var ringSkillKind = Utils.NaN2Zero(replies[37]);
-                            var ringSkillLevel = Utils.NaN2Zero(replies[38]);
-                            var boots = replies[39];
-                            var bootsEnchantedPoint = Utils.NaN2Zero(replies[40]);
-                            var bootsSkillKind = Utils.NaN2Zero(replies[41]);
-                            var bootsSkillLevel = Utils.NaN2Zero(replies[42]);
-                            var membership = replies[43];
-                            var membershipTime = replies[44];
-                            var membershipUseTime = replies[45];
-                            var membershipLoginTime = replies[46];
-                            var membershipRemainingTime = replies[47];
-                            var kind = Utils.NaN2Zero(replies[48]) === 222 ? Types.Entities.ARCHER : Types.Entities.WARRIOR;
+                            var db_player = {
+                                "pw":replies[0],
+                                "armor": replies[1],
+                                "weapon": replies[2],
+                                "exp": Utils.NaN2Zero(replies[3]),
+                                "bannedTime": Utils.NaN2Zero(replies[4]),
+                                "banUseTime": Utils.NaN2Zero(replies[5]),
+                                "lastLoginTime": Utils.NaN2Zero(replies[6]),
+                                "x": Utils.NaN2Zero(replies[7]),
+                                "y": Utils.NaN2Zero(replies[8]),
+                                "chatBanEndTime": Utils.NaN2Zero(replies[9]),
+                                "banTime": replies[10],
+                                "rank": isNaN(parseInt(replies[11])) ? 0 : parseInt(replies[11]),
+                                "armorEnchantedPoint": Utils.NaN2Zero(replies[12]),
+                                "armorSkillKind": Utils.NaN2Zero(replies[13]),
+                                "armorSkillLevel": Utils.NaN2Zero(replies[14]),
+                                "weaponEnchantedPoint": Utils.NaN2Zero(replies[15]),
+                                "weaponSkillKind": Utils.NaN2Zero(replies[16]),
+                                "weaponSkillLevel": Utils.NaN2Zero(replies[17]),
+                                "pendant": replies[18],
+                                "pendantEnchantedPoint": Utils.NaN2Zero(replies[19]),
+                                "pendantSkillKind": Utils.NaN2Zero(replies[20]),
+                                "pendantSkillLevel": Utils.NaN2Zero(replies[21]),
+                                "ring": replies[22],
+                                "ringEnchantedPoint": Utils.NaN2Zero(replies[23]),
+                                "ringSkillKind": Utils.NaN2Zero(replies[24]),
+                                "ringSkillLevel": Utils.NaN2Zero(replies[25]),
+                                "boots": replies[26],
+                                "bootsEnchantedPoint": Utils.NaN2Zero(replies[27]),
+                                "bootsSkillKind": Utils.NaN2Zero(replies[28]),
+                                "bootsSkillLevel": Utils.NaN2Zero(replies[29]),
+                                "membership": Utils.NaN2Zero(replies[30]),
+                                "membershipTime": replies[31],
+                                "membershipUseTime": replies[32],
+                                "membershipLoginTime": replies[33],
+                                "membershipRemainingTime": replies[34],
+                                "kind": Utils.NaN2Zero(replies[35]) === 222 ? 222 : 1,
+                                "rights": Utils.NaN2Zero(replies[36]),
+                                "pClass": Utils.NaN2Zero(replies[37])
+                            };
 
-                            //var curTime = new Date();
+
+                            var curTime = new Date();
                             //Check ban here
 
-                            if(banTime > curTime){
+                            if(db_player.banTime > curTime){
 
                                 player.connection.sendUTF8("ban");
 
@@ -147,95 +159,72 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 return;
                             }
 
-                            if (membershipTime > curTime) {
+                            if (db_player.membershipTime > curTime) {
 
                                 player.membership = true;
 
                             }
 
 
-                            // Check Password
-
-                            bcrypt.compare(player.pw, pw, function(err, res) {
-                                if(!res) {
-                                    player.connection.sendUTF8("invalidlogin");
-                                    player.connection.close("Wrong Password: " + player.name);
-                                    return;
-                                }
-
-                                var d = new Date();
-                                var lastLoginTimeDate = new Date(lastLoginTime);
+                            var d = new Date();
+                            var lastLoginTimeDate = new Date(db_player.lastLoginTime);
 
 
-                                // Check Ban
-                                d.setDate(d.getDate() - d.getDay());
-                                d.setHours(0, 0, 0);
-                                if(lastLoginTime < d.getTime()){
-                                    log.info(player.name + "ban is initialized.");
-                                    bannedTime = 0;
-                                    client.hset("b:" + player.connection._connection.remoteAddress, "time", bannedTime);
-                                }
-                                client.hset("b:" + player.connection._connection.remoteAddress, "loginTime", curTime);
+                            // Check Ban
+                            d.setDate(d.getDate() - d.getDay());
+                            d.setHours(0, 0, 0);
+                            if(db_player.lastLoginTime < d.getTime()){
+                                bannedTime = 0;
+                                client.hset("b:" + player.connection._connection.remoteAddress, "time", db_player.bannedTime);
+                            }
+                            client.hset("b:" + player.connection._connection.remoteAddress, "loginTime", curTime);
 
-
-                                var admin = null;
-                                var iA = 0; // Index - Administrators
-                                for(iA = 0; iA < adminnames.length; iA++){
-                                    if(adminnames[iA] === player.name){
-                                        admin = 1;
-                                        log.info("Admin " + player.name + " has logged in.");
-                                    }
-                                }
-                                var moderator = null;
-                                var iM = 0; //Moderators Index
-                                for (iM = 0; iM < moderators.length; iM++) {
-                                    if (moderators[iM] === player.name) {
-                                        moderator = 1;
-                                        log.info("Moderator " + player.name + " has logged in.");
-                                    }
-
-                                }
-
-
-                                log.info("Player name: " + player.name);
-                                log.info("Armor: " + armor);
-                                log.info("Weapon: " + weapon);
-                                log.info("Weapon Avatar: " + weaponAvatar);
-                                log.info("Avatar: " + avatar)
-                                log.info("Experience: " + exp);
-                                log.info("Banned Time: " + (new Date(bannedTime)).toString());
-                                log.info("Ban Use Time: " + (new Date(banUseTime)).toString());
-                                log.info("Membership Time: ") + (new Date(membershipTime).toString());
-                                log.info("Last Login Time: " + lastLoginTimeDate.toString());
-                                log.info("Chatting Ban End Time: " + (new Date(chatBanEndTime)).toString());
-
-                                 player.sendWelcome(armor, weapon, avatar, weaponAvatar, exp, moderator, admin,
-                                    bannedTime, banUseTime, x, y, chatBanEndTime, rank,
-                                    armorEnchantedPoint, armorSkillKind, armorSkillLevel,
-                                    avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel,
-                                    weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel,
-                                    weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel,
-                                    pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
-                                    ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel,
-                                    boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
-                                    membershipTime, kind);
-                            });
-                    });
+                            player.sendWelcome(
+                                db_player.armor,
+                                db_player.weapon,
+                                db_player.exp,
+                                db_player.bannedTime,
+                                db_player.banUseTime,
+                                db_player.x,
+                                db_player.y,
+                                db_player.chatBanEndTime,
+                                db_player.rank,
+                                db_player.armorEnchantedPoint,
+                                db_player.armorSkillKind,
+                                db_player.armorSkillLevel,
+                                db_player.weaponEnchantedPoint,
+                                db_player.weaponSkillKind,
+                                db_player.weaponSkillLevel,
+                                db_player.pendant,
+                                db_player.pendantEnchantedPoint,
+                                db_player.pendantSkillKind,
+                                db_player.pendantSkillLevel,
+                                db_player.ring,
+                                db_player.ringEnchantedPoint,
+                                db_player.ringSkillKind,
+                                db_player.ringSkillLevel,
+                                db_player.boots,
+                                db_player.bootsEnchantedPoint,
+                                db_player.bootsSkillKind,
+                                db_player.bootsSkillLevel,
+                                db_player.membership,
+                                db_player.membershipTime,
+                                db_player.kind,
+                                db_player.rights,
+                                db_player.pClass);
+                        });
                     return;
                 }
             }
-
-            // Could not find the user
-            player.connection.sendUTF8("invalidlogin");
-            player.connection.close("User does not exist: " + player.name);
+            self.createPlayer(player);
             return;
         });
     },
-    changePlayerKind: function(player, kind) {
-        log.info("Player: " + player.name + " has been changed to: " + kind)
-        client.hset("u:" + player.name, "kind", kind);
 
+    changePlayerClass: function(player) {
+        client.hset("u:" + player.name, "class", player.pClass);
     },
+
     capitalizeFirstLetter: function(string) {
 
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -254,45 +243,72 @@ module.exports = DatabaseHandler = cls.Class.extend({
             } else {
                 // Add the player
                 //this.checkBan(player);
+                var startWeapon = "";
+                var startArmor = "";
+
                 client.multi()
 
                     .sadd("usr", player.name)
                     .hset(userKey, "pw", player.pw)
                     .hset(userKey, "email", player.email)
-                    .hset(userKey, "armor", "clotharmor")
-                    .hset(userKey, "avatar", "clotharmor")
-                    .hset(userKey, "weapon", "sword1")
+                    .hset(userKey, "armor", startArmor)
+                    .hset(userKey, "weapon", startWeapon)
                     .hset(userKey, "exp", 0)
                     .hset("b:" + player.connection._connection.remoteAddress, "loginTime", curTime)
                     .hget("b:" + player.connection._connection.remoteAddress, "rtime") //9
+                    .hset(userKey, "class", "")
+                    .hset(userKey, "rights", 0)
 
                     .exec(function(err, replies){
-                        log.info("New User: " + player.name);
-                        var banTime = replies[8];
+                        var banTime = 0;
                         var curTime = new Date().getTime();
-                        log.info("Player is banned for: " + banTime);
 
                         if(banTime > curTime){
 
-                                player.connection.sendUTF8("ban");
+                            player.connection.sendUTF8("ban");
 
-                                player.connection.close("Closing connection to: " + player.name);
+                            player.connection.close("Closing connection to: " + player.name);
 
-                                return;
+                            return;
                         }
-                        player.sendWelcome("clotharmor", "sword1", null, null, 0, null, null,
-                            0, 0, player.x, player.y, 0, 0,
-                            0, 0, 0,
-                            0, 0, 0,
-                            0, 0, 0,
-                            0, 0, 0,
-                            null, 0, 0, 0,
-                            null, 0, 0, 0,
-                            null, 0, 0, 0,
-                            false, 0, Types.Entities.WARRIOR);
+
+                        
+                        player.sendWelcome(
+                            startArmor, 
+                            startWeapon, 
+                            0,
+                            null, 
+                            null, 
+                            player.x, 
+                            player.y, 
+                            null, 
+                            0,
+                            0,
+                            0, 
+                            0,
+                            0,
+                            0,
+                            0,
+                            null,
+                            0,
+                            0,
+                            0,
+                            null,
+                            0, 
+                            0, 
+                            0,
+                            null,
+                            0, 
+                            0,
+                            0,
+                            0, 
+                            null,
+                            1, 
+                            0,
+                            player.pClass);
+
 
                     });
-
             }
         });
     },
@@ -319,7 +335,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             log.info("curTime: " + curTime.toString());
                             log.info("banEndTime: " + banEndTime.toString());
 
-                                log.info("X: " + player.x + " y: " + player.y);
+                            log.info("X: " + player.x + " y: " + player.y);
                             if(banEndTime.getTime() > curTime.getTime()){
 
                                 player.connection.sendUTF8("ban");
@@ -404,10 +420,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     switch (rank) {
                         case 1:
                             client.sadd("moderators", targetPlayer.name);
-                        break;
+                            break;
                         case 2:
                             client.sadd("adminname", targetPlayer.name);
-                        break;
+                            break;
                     }
                     targetPlayer.connection.close("Admin has promoted player: " + targetPlayer.name);
                 }
@@ -481,26 +497,24 @@ module.exports = DatabaseHandler = cls.Class.extend({
         });
     },
 
-    putBurgerOfflineUser: function(name, itemNumber, successCallback, failCallback){
+    putGoldOfflineUser: function(name, itemNumber, successCallback, failCallback){
         var i=0;
         var multi = client.multi();
-        for(i=0; i<30; i++){
-            multi.hget("u:" + name, "inventory"+i);
+        for(i=0; i<18; i++){
+            multi.hget("u:" + name, "bank"+i);
         }
-        for(i=0; i<30; i++){
-            multi.hget("u:" + name, "inventory"+i+":number");
+        for(i=0; i<18; i++){
+            multi.hget("u:" + name, "bank"+i+":number");
         }
-        multi.hget("u:" + name, "maxInventoryNumber");
+        //multi.hget("u:" + name, "maxBankNumber");
         multi.exec(function(err, replies){
-            log.info("putBurgerOfflineUser(" + name + ", " + itemNumber + ")");
             var i=0;
-            var maxInventoryNumber = parseInt(replies[60]);
-            if(isNaN(maxInventoryNumber) || maxInventoryNumber < 5){
-                maxInventoryNumber = 10;
-            }
-            for(i=0; i<maxInventoryNumber; i++){
-                if(replies[i] === "burger"){
-                    client.hset("u:" + name, "inventory" + i + ":number", parseInt(replies[i+30]) + itemNumber);
+            //var maxBankNumber = parseInt(replies[36]);
+            var maxBankNumber = 18;
+            for(i=0; i<maxBankNumber; i++){
+                if(replies[i] === "gold"){
+                    var amount = parseInt(replies[i+18]) + parseInt(itemNumber);
+                    client.hset("u:" + name, "bank" + i + ":number", amount);
                     if(successCallback){
 
                         successCallback();
@@ -508,15 +522,14 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     return;
                 }
             }
-            for(i=0; i<maxInventoryNumber; i++) {
+            for(i=0; i<maxBankNumber; i++) {
                 if(replies[i]){
-
                     continue;
                 } else {
                     client.multi()
-                    .hset("u:" + name, "inventory" + i, "burger")
-                    .hset("u:" + name, "inventory" + i + ":number", itemNumber)
-                    .exec();
+                        .hset("u:" + name, "bank" + i, "gold")
+                        .hset("u:" + name, "bank" + i + ":number", itemNumber)
+                        .exec();
                     if(successCallback){
 
                         successCallback();
@@ -529,10 +542,11 @@ module.exports = DatabaseHandler = cls.Class.extend({
             }
         });
     },
+
     getBankItems: function(player, callback) {
         var userKey = "u:" + player.name;
         client.hget(userKey, "maxBankNumber", function(err, maxBankNumber){
-            maxBankNumber = Utils.NaN2Zero(maxBankNumber) === 0 ? 15 : Utils.NaN2Zero(maxBankNumber);
+            maxBankNumber = Utils.NaN2Zero(maxBankNumber) === 0 ? 18 : Utils.NaN2Zero(maxBankNumber);
 
             var i = 0;
             var multi = client.multi();
@@ -550,7 +564,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                 var itemSkillKinds = [];
                 var itemSkillLevels = [];
                 for (i = 0; i < maxBankNumber; i++) {
-                    itemKinds.push(Types.getKindFromString(data.shift()));
+                    itemKinds.push(Utils.NaN2Zero(ItemTypes.getKindFromString(data.shift())));
                     itemNumbers.push(Utils.NaN2Zero(data.shift()));
                     itemSkillKinds.push(Utils.NaN2Zero(data.shift()));
                     itemSkillLevels.push(Utils.NaN2Zero(data.shift()));
@@ -571,9 +585,13 @@ module.exports = DatabaseHandler = cls.Class.extend({
         player.send([Types.Messages.BANK, number, null, 0]);
     },
 
+    setBankItem: function (player, bankNumber, item) {
+        this.setBank(player, bankNumber, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
+    },
+
     setBank: function(player, bankNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
         if (itemKind) {
-            client.hset("u:" + player.name, "bank" + bankNumber, Types.getKindAsString(itemKind));
+            client.hset("u:" + player.name, "bank" + bankNumber, ItemTypes.getKindAsString(itemKind));
             client.hset("u:" + player.name, "bank" + bankNumber + ":number", itemNumber);
             client.hset("u:" + player.name, "bank" + bankNumber + ":skillKind", itemSkillKind);
             client.hset("u:" + player.name, "bank" + bankNumber + ":skillLevel", itemSkillLevel);
@@ -589,7 +607,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
     getAllInventory: function(player, callback){
         var userKey = "u:" + player.name;
         client.hget(userKey, "maxInventoryNumber", function(err, maxInventoryNumber){
-            maxInventoryNumber = Utils.NaN2Zero(maxInventoryNumber) === 0 ? 10 : Utils.NaN2Zero(maxInventoryNumber);
+            maxInventoryNumber = 24;
 
             var i=0;
             var multi = client.multi();
@@ -607,89 +625,59 @@ module.exports = DatabaseHandler = cls.Class.extend({
                 var itemSkillKinds = [];
                 var itemSkillLevels = [];
                 for(i=0; i<maxInventoryNumber; i++){
-                    itemKinds.push(Types.getKindFromString(data.shift()));
+                    itemKinds.push(ItemTypes.getKindFromString(data.shift()));
                     itemNumbers.push(Utils.NaN2Zero(data.shift()));
                     itemSkillKinds.push(Utils.NaN2Zero(data.shift()));
                     itemSkillLevels.push(Utils.NaN2Zero(data.shift()));
                 }
                 callback(maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels);
-                if (itemKinds === null) {
-                    log.info("PRINTING OUT: " + "MaxInventoryNumber: " + maxInventoryNumber
-                        + "Item Kinds: " + "NULL ==="
-                        + "Item Numbers: " + itemNumbers
-                        + "Item Skill Kinds: " + itemSkillKinds
-                        + "Item Skill Levels: " + itemSkillLevels);
 
-                } else {
-                    log.info("PRINTING OUT: " + "MaxInventoryNumber: " + maxInventoryNumber
-                        + "Item Kinds: " + itemKinds
-                        + "Item Numbers: " + itemNumbers
-                        + "Item Skill Kinds: " + itemSkillKinds
-                        + "Item Skill Levels: " + itemSkillLevels);
-                }
             });
         });
     },
 
-    addGuildMember: function(player, guildName) {
-        log.info("Set guild: " + guildName + " to player: " + player.name);
-        client.hset("u:" + player.name, "guild", guildName);
-    },
 
-    addGuildInvite: function(player, guildName) {
-        log.info("Player: " + player.name + " has been invited to: " + guildName);
-        client.hset("u:" + player.name, "guildInvite", guildName);
-    },
-
-    removeGuildMember: function(player, guildName) {
-        log.info("Player: " + player.name + " has been removed from: " + guildName);
-        client.hdel("u:" + player.name, "guild", guildName);
-    },
-
-    removeGuildInvite: function(player, guildName) {
-        log.info("Player invitation for: " + player.name + " has been removed for: " + guildName);
-        client.hdel("u:" + player.name, "guildInvite", guildName);
-    },
-    checkGuildInvite: function(player, guildName) {
-
+    setInventoryItem: function(player, inventoryNumber, item) {
+        this.setInventory(player, inventoryNumber, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
     },
 
     setInventory: function(player, inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+        /*log.info("SetInventory: " + player.name + ", "
+         + ItemTypes.getKindAsString(itemKind) + ", "
+         + inventoryNumber + ", "
+         + itemNumber + ", "
+         + itemSkillKind + ", "
+         + itemSkillLevel);*/
         if(itemKind){
-            client.hset("u:" + player.name, "inventory" + inventoryNumber, Types.getKindAsString(itemKind));
+            client.hset("u:" + player.name, "inventory" + inventoryNumber, ItemTypes.getKindAsString(itemKind));
             client.hset("u:" + player.name, "inventory" + inventoryNumber + ":number", itemNumber);
             client.hset("u:" + player.name, "inventory" + inventoryNumber + ":skillKind", itemSkillKind);
             client.hset("u:" + player.name, "inventory" + inventoryNumber + ":skillLevel", itemSkillLevel);
             player.server.pushToPlayer(player, new Messages.Inventory(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel));
-            log.info("SetInventory: " + player.name + ", "
-                   + Types.getKindAsString(itemKind) + ", "
-                   + inventoryNumber + ", "
-                   + itemNumber + ", "
-                   + itemSkillKind + ", "
-                   + itemSkillLevel);
         } else{
             this.makeEmptyInventory(player, inventoryNumber);
         }
-        var i=0;
-        for(i=0; i < player.maxInventoryNumber; i++){
-            log.info("Inventory " + i + ": " + player.inventory.rooms[i].itemKind
-                   + " " + player.inventory.rooms[i].itemNumber
-                   + " " + player.inventory.rooms[i].itemSkillKind
-                   + " " + player.inventory.rooms[i].itemSkillLevel);
-        }
+
+        /*var i=0;
+         for(i=0; i < player.maxInventoryNumber; i++){
+         log.info("Inventory " + i + ": " + player.inventory.rooms[i].itemKind
+         + " " + player.inventory.rooms[i].itemNumber
+         + " " + player.inventory.rooms[i].itemSkillKind
+         + " " + player.inventory.rooms[i].itemSkillLevel);
+         }*/
     },
     makeEmptyInventory: function(player, number){
-            log.info("Empty Inventory: " + player.name + " " + number);
-            client.hdel("u:" + player.name, "inventory" + number);
-            client.hdel("u:" + player.name, "inventory" + number + ":number");
-            client.hdel("u:" + player.name, "inventory" + number + ":skillKind");
-            client.hdel("u:" + player.name, "inventory" + number + ":skillLevel");
-            player.send([Types.Messages.INVENTORY, number, null, 0]);
+        log.info("Empty Inventory: " + player.name + " " + number);
+        client.hdel("u:" + player.name, "inventory" + number);
+        client.hdel("u:" + player.name, "inventory" + number + ":number");
+        client.hdel("u:" + player.name, "inventory" + number + ":skillKind");
+        client.hdel("u:" + player.name, "inventory" + number + ":skillLevel");
+        player.send([Types.Messages.INVENTORY, number, null, 0]);
     },
 
 
     banTerm: function(time){
-        return Math.pow(2, time)*500*60;
+        return Math.pow(2, time) * 500 * 60;
     },
     equipArmor: function(name, armor, enchantedPoint, skillKind, skillLevel){
         log.info("Set Armor: " + name + " " + armor);
@@ -698,40 +686,12 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "armorSkillKind", skillKind);
         client.hset("u:" + name, "armorSkillLevel", skillLevel);
     },
-    equipAvatar: function(name, armor, enchantedPoint, skillKind, skillLevel){
-        log.info("Set Avatar: " + name + " " + armor);
-        client.hset("u:" + name, "avatar", armor);
-        client.hset("u:" + name, "avatarEnchantedPoint", enchantedPoint);
-        client.hset("u:" + name, "avatarSkillKind", skillKind);
-        client.hset("u:" + name, "avatarSkillLevel", skillLevel);
-    },
     equipWeapon: function(name, weapon, enchantedPoint, skillKind, skillLevel){
         log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
         client.hset("u:" + name, "weapon", weapon);
         client.hset("u:" + name, "weaponEnchantedPoint", enchantedPoint);
         client.hset("u:" + name, "weaponSkillKind", skillKind);
         client.hset("u:" + name, "weaponSkillLevel", skillLevel);
-    },
-    equipWeaponAvatar: function(name, weapon, enchantedPoint, skillKind, skillLevel){
-        log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
-        client.hset("u:" + name, "weaponAvatar", weapon);
-        client.hset("u:" + name, "weaponAvatarEnchantedPoint", enchantedPoint);
-        client.hset("u:" + name, "weaponAvatarSkillKind", skillKind);
-        client.hset("u:" + name, "weaponAvatarSkillLevel", skillLevel);
-    },
-    takeOffAvatar: function(name){
-        log.info("Take Off Avatar: " + name);
-        client.hdel("u:" + name, "avatar");
-        client.hdel("u:" + name, "avatarEnchantedPoint");
-        client.hdel("u:" + name, "avatarSkillKind");
-        client.hdel("u:" + name, "avatarSkillLevel");
-    },
-    takeOffWeaponAvatar: function(name){
-        log.info("Take Off Weapon Avatar: " + name);
-        client.hdel("u:" + name, "weaponAvatar");
-        client.hdel("u:" + name, "weaponAvatarEnchantedPoint");
-        client.hdel("u:" + name, "weaponAvatarSkillKind");
-        client.hdel("u:" + name, "weaponAvatarSkillLevel");
     },
     enchantWeapon: function(name, enchantedPoint){
         log.info("Enchant Weapon: " + name + " " + enchantedPoint);
@@ -742,56 +702,19 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "weaponSkillKind", skillKind);
         client.hset("u:" + name, "weaponSkillLevel", skillLevel);
     },
-    equipPendant: function(name, pendant, enchantedPoint, skillKind, skillLevel) {
-        log.info("Set Pendant: " + name + " " + pendant + " " + skillKind + " " + skillLevel);
-        client.hset("u:" + name, "pendant", pendant);
-        client.hset("u:" + name, "pendantEnchantedPoint", enchantedPoint);
-        client.hset("u:" + name, "pendantSkillKind", skillKind);
-        client.hset("u:" + name, "pendantSkillLevel", skillLevel);
-    },
-    equipRing: function(name, ring, enchantedPoint, skillKind, skillLevel) {
-        log.info("Set Ring: " + name + " " + ring + " " + skillKind + " " + skillLevel);
-        client.hset("u:" + name, "ring", ring);
-        client.hset("u:" + name, "ringEnchantedPoint", enchantedPoint);
-        client.hset("u:" + name, "ringSkillKind", skillKind);
-        client.hset("u:" + name, "ringSkillLevel", skillLevel);
-    },
-    enchantPendant: function(name, enchantedPoint){
-        log.info("Enchant Pendant: " + name + " " + enchantedPoint);
-        client.hset("u:" + name, "pendantEnchantedPoint", enchantedPoint);
-    },
-    enchantRing: function(name, enchantedPoint){
-        log.info("Enchant Ring: " + name + " " + enchantedPoint);
-        client.hset("u:" + name, "ringEnchantedPoint", enchantedPoint);
-    },
-    equipBoots: function(name, boots, enchantedPoint, skillKind, skillLevel) {
-        log.info("Set Boots: " + name + " " + boots + " " + skillKind + " " + skillLevel);
-        client.hset("u:" + name, "boots", boots);
-        client.hset("u:" + name, "bootsEnchantedPoint", enchantedPoint);
-        client.hset("u:" + name, "bootsSkillKind", skillKind);
-        client.hset("u:" + name, "bootsSkillLevel", skillLevel);
-    },
+
     setExp: function(name, exp){
-        log.info("Set Exp: " + name + " " + exp);
+        //log.info("Set Exp: " + name + " " + exp);
         client.hset("u:" + name, "exp", exp);
     },
 
     foundAchievement: function(name, number){
         log.info("Found Achievement: " + name + " " + number);
-        if(number < 100){
-          client.hset("u:" + name, "achievement" + number + ":found", "true");
-        } else{
-          client.hset("u:" + name, "dailyQuest" + (number-100) + ":found", "true");
-          client.hset("u:" + name, "dailyQuest" + (number-100) + ":foundTime", (new Date()).getTime());
-        }
+        client.hset("u:" + name, "achievement" + number + ":found", "true");
     },
     progressAchievement: function(name, number, progress){
         log.info("Progress Achievement: " + name + " " + number + " " + progress);
-        if(number < 100){
-          client.hset("u:" + name, "achievement" + number + ":progress", progress);
-        } else{
-          client.hset("u:" + name, "dailyQuest" + (number-100) + ":progress", progress);
-        }
+        client.hset("u:" + name, "achievement" + number + ":progress", progress);
     },
     setUsedPubPts: function(name, usedPubPts){
         log.info("Set Used Pub Points: " + name + " " + usedPubPts);
@@ -830,6 +753,29 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "y", y);
     },
 
+    delInventory: function(name, callback){
+        client.hdel("u:" + name, "maxInventoryNumber", function(err, reply){
+            if(parseInt(reply) === 1){
+
+                callback();
+            }
+        });
+    },
+
+    delSkillSlots: function(player, callback) {
+        var userKey = "u:" + player.name,
+            multi = client.multi();
+
+        for(var index = 0; index < 5; index++) {
+            multi.hdel(userKey, "skillSlot" + index);
+        }
+        multi.exec(function(err) {
+            if(callback) {
+                callback();
+            }
+        });
+    },
+
     loadSkillSlots: function(player, callback) {
         var userKey = "u:" + player.name,
             multi = client.multi();
@@ -843,6 +789,62 @@ module.exports = DatabaseHandler = cls.Class.extend({
             }
         });
     },
+
+    setPlayerRights: function(player, newRank) {
+        var self = this,
+            userKey = "u:" + player.name,
+            multi = client.multi();
+
+        multi.hset(userKey, "rights", newRank);
+    },
+
+    getPlayerRights: function(player) {
+        var self = this,
+            rights,
+            userKey = "u:" + player.name,
+            multi = client.multi();
+
+        multi.hget(userKey, "rights");
+        multi.exec(function(err, data) {
+            rights = data.shift();
+        });
+
+        if (isNaN(rights))
+            rights = 0;
+
+        return rights;
+    },
+
+    getSkills: function(player, callback) {
+        var maxSkills = 12;
+
+        var userKey = "u:" + player.name;
+
+        var i = 0;
+        var multi = client.multi();
+
+        for (i = 0; i < maxSkills; i++) {
+            multi.hget(userKey, "skill" + i);
+            multi.hget(userKey, "skillLevel" + i);
+        }
+        multi.exec(function(err, data) {
+            var i = 0;
+            var skillName = [];
+            var skillLevel = [];
+            for (i = 0; i < maxSkills; i++) {
+                skillName.push(data.shift());
+                skillLevel.push(data.shift());
+            }
+
+            callback(skillName.length, skillName, skillLevel);
+
+        });
+    },
+    handleSkills: function(player, index, name, level) {
+        client.hset('u:' + player.name, 'skill' + index, name);
+        client.hset('u:' + player.name, 'skillLevel' + index, level);
+    },
+
     handleSkillInstall: function(player, index, name, callback) {
         client.hset('u:' + player.name, 'skillSlot' + index, name, function(err, reply) {
             if(callback) {
@@ -854,453 +856,171 @@ module.exports = DatabaseHandler = cls.Class.extend({
         var userKey = "u:" + player.name;
         var multi = client.multi();
         var i=0;
-        for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
-          multi.hget(userKey, "achievement" + (i+1) + ":found");
-          multi.hget(userKey, "achievement" + (i+1) + ":progress");
-        }
-        for(i=0; i<4; i++){
-          multi.hget(userKey, "dailyQuest" + (i+1) + ":found");
-          multi.hget(userKey, "dailyQuest" + (i+1) + ":progress");
-          multi.hget(userKey, "dailyQuest" + (i+1) + ":foundTime");
+        for(i=0; i<Object.keys(Quests.QuestData).length; i++){
+            multi.hget(userKey, "achievement" + (i) + ":found");
+            multi.hget(userKey, "achievement" + (i) + ":progress");
         }
         multi.exec(function(err, replies){
-          var i=0;
-          var dFound, dProgress, foundTime;
-
-          for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
-            dFound = Utils.trueFalse(replies.shift());
-            dProgress = Utils.NaN2Zero(replies.shift());
-
-            player.achievement[i+1] = {
-              found: dFound,
-              progress: dProgress
-            };
-          }
-
-          for(i=0; i<4; i++){
-            dFound = Utils.trueFalse(replies.shift());
-            dProgress = Utils.NaN2Zero(replies.shift());
-            foundTime = Utils.NaN2Zero(replies.shift());
-
-            if((new Date(foundTime)).getDate() !== (new Date()).getDate()){
-              dFound = false;
-              dProgress = 0;
-              client.hset(userKey, "dailyQuest" + (i+1) + ":found", "false");
-              client.hset(userKey, "dailyQuest" + (i+1) + ":progress", 0);
-            }
-
-            player.achievement[i+101] = {
-              found: dFound,
-              progress: dProgress,
-              foundTime: foundTime
-            }
-          }
-          callback();
-        });
-      },
-
-    loadBoard: function(player, command, number, replyNumber){
-      log.info("Load Board: " + player.name + " " + command + " " + number + " " + replyNumber);
-      if(command === 'view'){
-        client.multi()
-        .hget('bo:free', number+':title')
-        .hget('bo:free', number+':content')
-        .hget('bo:free', number+':writer')
-        .hincrby('bo:free', number+':cnt', 1)
-        .smembers('bo:free:' + number + ':up')
-        .smembers('bo:free:' + number + ':down')
-        .hget('bo:free', number+':time')
-        .exec(function(err, replies){
-          var title = replies[0];
-          var content = replies[1];
-          var writer = replies[2];
-          var counter = replies[3];
-          var up = replies[4].length;
-          var down = replies[5].length;
-          var time = replies[6];
-          player.send([Types.Messages.BOARD,
-                       'view',
-                       title,
-                       content,
-                       writer,
-                       counter,
-                       up,
-                       down,
-                       time]);
-        });
-      } else if(command === 'reply'){
-        client.multi()
-        .hget('bo:free', number+':reply:'+replyNumber+':writer')
-        .hget('bo:free', number+':reply:'+replyNumber+':content')
-        .smembers('bo:free:' + number+':reply:'+replyNumber+':up')
-        .smembers('bo:free:' + number+':reply:'+replyNumber+':down')
-
-        .hget('bo:free', number+':reply:'+(replyNumber+1)+':writer')
-        .hget('bo:free', number+':reply:'+(replyNumber+1)+':content')
-        .smembers('bo:free:' + number+':reply:'+(replyNumber+1)+':up')
-        .smembers('bo:free:' + number+':reply:'+(replyNumber+1)+':down')
-
-        .hget('bo:free', number+':reply:'+(replyNumber+2)+':writer')
-        .hget('bo:free', number+':reply:'+(replyNumber+2)+':content')
-        .smembers('bo:free:' + number+':reply:'+(replyNumber+2)+':up')
-        .smembers('bo:free:' + number+':reply:'+(replyNumber+2)+':down')
-
-        .hget('bo:free', number+':reply:'+(replyNumber+3)+':writer')
-        .hget('bo:free', number+':reply:'+(replyNumber+3)+':content')
-        .smembers('bo:free:' + number+':reply:'+(replyNumber+3)+':up')
-        .smembers('bo:free:' + number+':reply:'+(replyNumber+3)+':down')
-
-        .hget('bo:free', number+':reply:'+(replyNumber+4)+':writer')
-        .hget('bo:free', number+':reply:'+(replyNumber+4)+':content')
-        .smembers('bo:free:' + number+':reply:'+(replyNumber+4)+':up')
-        .smembers('bo:free:' + number+':reply:'+(replyNumber+4)+':down')
-
-        .exec(function(err, replies){
-          player.send([Types.Messages.BOARD,
-                       'reply',
-                        replies[0],  replies[1],  replies[2].length, replies[3].length,
-                        replies[4],  replies[5],  replies[6].length, replies[7].length,
-                        replies[8],  replies[9],  replies[10].length, replies[11].length,
-                        replies[12], replies[13], replies[14].length, replies[15].length,
-                        replies[16], replies[17], replies[18].length, replies[19].length]);
-        });
-      } else if(command === 'up'){
-        if(player.level >= 50){
-          client.sadd('bo:free:' + number + ':up', player.name);
-        }
-      } else if(command === 'down'){
-        if(player.level >= 50){
-          client.sadd('bo:free:' + number + ':down', player.name);
-        }
-      } else if(command === 'replyup'){
-        if(player.level >= 50){
-          client.sadd('bo:free:'+number+':reply:'+replyNumber+':up', player.name);
-        }
-      } else if(command === 'replydown'){
-        if(player.level >= 50){
-          client.sadd('bo:free:'+number+':reply:'+replyNumber+':down', player.name);
-        }
-      } else if(command === 'list'){
-        client.hget('bo:free', 'lastnum', function(err, reply){
-          var lastnum = reply;
-          if(number > 0){
-            lastnum = number;
-          }
-          client.multi()
-          .hget('bo:free', lastnum +':title')
-          .hget('bo:free', (lastnum-1) +':title')
-          .hget('bo:free', (lastnum-2) +':title')
-          .hget('bo:free', (lastnum-3) +':title')
-          .hget('bo:free', (lastnum-4) +':title')
-          .hget('bo:free', (lastnum-5) +':title')
-          .hget('bo:free', (lastnum-6) +':title')
-          .hget('bo:free', (lastnum-7) +':title')
-          .hget('bo:free', (lastnum-8) +':title')
-          .hget('bo:free', (lastnum-9) +':title')
-
-          .hget('bo:free', lastnum +':writer')
-          .hget('bo:free', (lastnum-1) +':writer')
-          .hget('bo:free', (lastnum-2) +':writer')
-          .hget('bo:free', (lastnum-3) +':writer')
-          .hget('bo:free', (lastnum-4) +':writer')
-          .hget('bo:free', (lastnum-5) +':writer')
-          .hget('bo:free', (lastnum-6) +':writer')
-          .hget('bo:free', (lastnum-7) +':writer')
-          .hget('bo:free', (lastnum-8) +':writer')
-          .hget('bo:free', (lastnum-9) +':writer')
-
-          .hget('bo:free', lastnum +':cnt')
-          .hget('bo:free', (lastnum-1) +':cnt')
-          .hget('bo:free', (lastnum-2) +':cnt')
-          .hget('bo:free', (lastnum-3) +':cnt')
-          .hget('bo:free', (lastnum-4) +':cnt')
-          .hget('bo:free', (lastnum-5) +':cnt')
-          .hget('bo:free', (lastnum-6) +':cnt')
-          .hget('bo:free', (lastnum-7) +':cnt')
-          .hget('bo:free', (lastnum-8) +':cnt')
-          .hget('bo:free', (lastnum-9) +':cnt')
-
-          .smembers('bo:free:' + lastnum + ':up')
-          .smembers('bo:free:' + (lastnum-1) + ':up')
-          .smembers('bo:free:' + (lastnum-2) + ':up')
-          .smembers('bo:free:' + (lastnum-3) + ':up')
-          .smembers('bo:free:' + (lastnum-4) + ':up')
-          .smembers('bo:free:' + (lastnum-5) + ':up')
-          .smembers('bo:free:' + (lastnum-6) + ':up')
-          .smembers('bo:free:' + (lastnum-7) + ':up')
-          .smembers('bo:free:' + (lastnum-8) + ':up')
-          .smembers('bo:free:' + (lastnum-9) + ':up')
-
-          .smembers('bo:free:' + lastnum + ':down')
-          .smembers('bo:free:' + (lastnum-1) + ':down')
-          .smembers('bo:free:' + (lastnum-2) + ':down')
-          .smembers('bo:free:' + (lastnum-3) + ':down')
-          .smembers('bo:free:' + (lastnum-4) + ':down')
-          .smembers('bo:free:' + (lastnum-5) + ':down')
-          .smembers('bo:free:' + (lastnum-6) + ':down')
-          .smembers('bo:free:' + (lastnum-7) + ':down')
-          .smembers('bo:free:' + (lastnum-8) + ':down')
-          .smembers('bo:free:' + (lastnum-9) + ':down')
-
-          .hget('bo:free', lastnum + ':replynum')
-          .hget('bo:free', (lastnum+1) + ':replynum')
-          .hget('bo:free', (lastnum+2) + ':replynum')
-          .hget('bo:free', (lastnum+3) + ':replynum')
-          .hget('bo:free', (lastnum+4) + ':replynum')
-          .hget('bo:free', (lastnum+5) + ':replynum')
-          .hget('bo:free', (lastnum+6) + ':replynum')
-          .hget('bo:free', (lastnum+7) + ':replynum')
-          .hget('bo:free', (lastnum+8) + ':replynum')
-          .hget('bo:free', (lastnum+9) + ':replynum')
-
-          .exec(function(err, replies){
             var i=0;
-            var msg = [Types.Messages.BOARD, 'list', lastnum];
+            var dFound, dProgress, foundTime;
 
-            for(i=0; i<30; i++){
-                msg.push(replies[i]);
-            }
-            for(i=30; i<50; i++){
-                msg.push(replies[i].length);
-            }
-            for(i=50; i<60; i++){
-                msg.push(replies[i]);
-            }
+            for(i=0; i< Object.keys(Quests.QuestData).length; i++){
+                dFound = Utils.trueFalse(replies.shift());
+                dProgress = Utils.NaN2Zero(replies.shift());
 
-            player.send(msg);
-          });
-        });
-      }
-    },
-    writeBoard: function(player, title, content){
-      log.info("Write Board: " + player.name + " " + title);
-      client.hincrby('bo:free', 'lastnum', 1, function(err, reply){
-        var curTime = new Date().getTime();
-        var number = reply ? reply : 1;
-        client.multi()
-        .hset('bo:free', number+':title', title)
-        .hset('bo:free', number+':content', content)
-        .hset('bo:free', number+':writer', player.name)
-        .hset('bo:free', number+':time', curTime)
-        .exec();
-        player.send([Types.Messages.BOARD,
-                     'view',
-                     title,
-                     content,
-                     player.name,
-                     0,
-                     0,
-                     0,
-                     curTime]);
-      });
-    },
-    sell: function(player, inventoryNumber, burgerCount){
-        var self = this;
-        client.hget('u:'+player.name+':shop0', 'itemKind', function(err, itemKindInShop){
-            itemKindInShop = Utils.NaN2Zero(itemKindInShop);
-            var multi = client.multi();
-            multi.hset('u:'+player.name+':shop0', 'itemKind', player.inventory.rooms[inventoryNumber].itemKind);
-            multi.hset('u:'+player.name+':shop0', 'burgerCount', burgerCount);
-            if(!itemKindInShop){
-                multi.lpush('shop:id', player.name+':'+0)
+                player.achievement[i] = {
+                    found: dFound,
+                    progress: dProgress
+                };
             }
-            multi.exec();
-            player.inventory.makeEmptyInventory(inventoryNumber);
-            if(itemKindInShop){
-                player.inventory.putInventory(itemKindInShop, 0, 0, 0);
-            }
-            self.getShop(player, 0);
+            callback();
         });
     },
-    getShop: function(player, number){
-        client.lrange('shop:id', number, number+5, function(err, ids){
-            var i=0;
-            var multi = client.multi();
 
-            for(i=0; i < ids.length; i++){
-                var splitedId = ids[i].split(':');
-                multi.hget('u:' + splitedId[0] + ':shop'+ splitedId[1], 'itemKind');
-                multi.hget('u:' + splitedId[0] + ':shop'+ splitedId[1], 'burgerCount');
+    handlePet: function(player, index, kind) {
+        client.hset('u:' + player.name, 'pet' + index, kind);
+    },
+
+    loadPets: function(player, callback) {
+        var userKey = "u:" + player.name,
+            multi = client.multi();
+
+        for(var index = 0; index < 3; index++) {
+            multi.hget(userKey, "pet" + index);
+        }
+        multi.exec(function(err, replies) {
+            if(callback) {
+                callback(replies);
             }
+        });
+    },
 
-            multi.exec(function(err, items){
-                var msg = [Types.Messages.SHOP, number];
-                for(i=0; i < ids.length; i++){
-                    msg.push(ids[i]);
-                    msg.push(items[i*2]);
-                    msg.push(items[i*2+1]);
-                }
-                player.send(msg);
+    // AUCTION DATABASE CALLS.
+    handleSaveAuctionItem: function (player, item, buy, invNumber)
+    {
+        client.lrange('auctionIndex', 0, -1, function(err, auctionIndex) {
+            var auctionCount = 0;
+            if (auctionIndex.length > 0)
+                auctionCount = auctionIndex.length;
+
+            client.lpush("auctionIndex",auctionCount);
+            client.hset('s:auction', 'i' + auctionCount + ".p", player.name);
+            client.hset('s:auction', 'i' + auctionCount + ".k", item.itemKind);
+            client.hset('s:auction', 'i' + auctionCount + ".c", item.itemNumber);
+            client.hset('s:auction', 'i' + auctionCount + ".sk", item.itemSkillKind);
+            client.hset('s:auction', 'i' + auctionCount + ".sl", item.itemSkillLevel);
+            client.hset('s:auction', 'i' + auctionCount + ".buy", buy, function () {
+                player.inventory.makeEmptyInventory(invNumber);
+                player.server.pushToPlayer(player, new Messages.Notify("sold"));
             });
         });
+
     },
-    buy: function(player, id, itemKind, burgerCount){
-        var self = this;
-        var splitedId = id.split(':');
-        var name = splitedId[0];
-        var number = splitedId[1];
-        if(!player.inventory.hasEmptyInventory()){
-            player.server.pushToPlayer(player, new Messages.Notify("인벤토리에 빈 칸이 없습니다."));
-            return;
-        }
 
+
+    loadAuctionItems: function(player, type) {
+        var msg = [Types.Messages.AUCTIONOPEN,type,0];
         var multi = client.multi();
-        multi.hget('u:' + name + ':shop'+number, 'itemKind');
-        multi.hget('u:' + name + ':shop'+number, 'burgerCount');
-        multi.exec(function(err, replies){
-            var databaseItemKind = parseInt(replies[0]);
-            var databaseBurgerCount = parseInt(replies[1]);
-            var playerBurgerCount = player.inventory.getItemNumber(Types.Entities.BURGER);
 
-            if(parseInt(databaseItemKind) === itemKind
-                && parseInt(databaseBurgerCount) === burgerCount
-                && playerBurgerCount >= databaseBurgerCount){
-                if(player.inventory.putInventory(itemKind, 0, 0, 0)){
-                    client.multi()
-                        .hdel('u:'+name+':shop0', 'itemKind')
-                        .hdel('u:'+name+':shop0', 'burgerCount')
-                        .lrem('shop:id', 0, name+':'+0)
-                        .exec();
-                    soldPlayer = player.server.getPlayerByName(name);
-                    if(soldPlayer){
-                        soldPlayer.inventory.putInventory(Types.Entities.BURGER, burgerCount, 0, 0);
-                    } else{
-                        self.putBurgerOfflineUser(name, burgerCount);
+        client.lrange('auctionIndex', 0, -1, function(err, auctionIndex) {
+            //log.info(JSON.stringify(auctionIndex));
+            if (err || !auctionIndex || auctionIndex.length == 0)
+            {
+                player.server.pushToPlayer(player, new Messages.AuctionOpen(msg));
+                return;
+            }
+
+            var i=0;
+            for (var index = 0; index < auctionIndex.length; ++index) {
+                i = auctionIndex[index];
+                //log.info("i="+i);
+                multi.hget('s:auction', "i" + i + ".k");
+                multi.hget('s:auction', "i" + i + ".p");
+                multi.hget('s:auction', "i" + i + ".c");
+                multi.hget('s:auction', "i" + i + ".sk");
+                multi.hget('s:auction', "i" + i + ".sl");
+                multi.hget('s:auction', "i" + i + ".buy");
+            }
+
+            multi.exec(function(err, auctionData) {
+                var kind;
+                var itemCount = 0;
+                log.info(JSON.stringify(auctionData));
+                for(var index = 0; index < auctionIndex.length; ++index)
+                {
+                    kind = auctionData[0];
+                    if (kind === null)
+                        break;
+                    //log.info("kind="+kind);
+                    //log.info("type="+type);
+                    if((type === 2 && (ItemTypes.isArmor(kind) || ItemTypes.isArcherArmor(kind))) ||
+                        (type === 3 && (ItemTypes.isWeapon(kind) || ItemTypes.isArcherWeapon(kind))) ||
+                        (type === 0 && player.name === auctionData[1]))
+                    {
+                        msg.push(parseInt(auctionIndex[index]));
+                        msg.push(parseInt(auctionData.shift()));
+                        msg.push(auctionData.shift());
+                        msg.push(parseInt(auctionData.shift()));
+                        msg.push(parseInt(auctionData.shift()));
+                        msg.push(parseInt(auctionData.shift()));
+                        msg.push(parseInt(auctionData.shift()));
+                        ++itemCount;
                     }
-                    player.inventory.putInventory(Types.Entities.BURGER, -1 * burgerCount, 0, 0);
+                    else
+                    {
+                        auctionData.shift();
+                        auctionData.shift();
+                        auctionData.shift();
+                        auctionData.shift();
+                        auctionData.shift();
+                        auctionData.shift();
+                    }
                 }
-            }
-            self.getShop(player, 0);
-        });
-    },
-    buyInventory: function(player){
-        var self = this;
-        client.zscore("adrank", player.name, function(err, reply){
-            var userKey = "u:" + player.name;
-            var pubPoint = Utils.NaN2Zero(reply);
-            log.info(player.name + ' pubPoint: ' + pubPoint);
-            if(pubPoint >= 100){
-                if(player.inventory.number < 30){
-                    player.inventory.incInventoryRoom();
-                    client.zincrby("adrank", -100, player.name);
-                    client.hset(userKey, "maxInventoryNumber", player.inventory.number);
-                    player.send([Types.Messages.STATE, 'maxInventoryNumber', player.inventory.number]);
-                    self.getState(player);
-                }
-            }
-          });
-    },
-
-    delInventory: function(name, callback){
-        client.hdel("u:" + name, "maxInventoryNumber", function(err, reply){
-            if(parseInt(reply) === 1){
-
-                callback();
-            }
-        });
-    },
-
-    getRanking: function(player){
-    var self = this;
-
-        client.multi()
-        .zadd("ranking", player.experience, player.name)
-        .zrevrank("ranking", player.name)
-        .zcount("ranking", '-inf', '+inf')
-        .exec(function(err, replies){
-          var playerRank = replies[1];
-          var numOfRankers = replies[2];
-          var bottomRank = playerRank - 5;
-          var topRank = playerRank + 5;
-          if(bottomRank < 0){
-            bottomRank = 0;
-          }
-          if(topRank > numOfRankers-1){
-            topRank = numOfRankers-1;
-          }
-          log.info("bottomRank: " + bottomRank);
-          log.info("topRank: " + topRank);
-          client.zrevrange("ranking", bottomRank, topRank, function(error, rankers){
-            var i = 0;
-
-            client.multi()
-            .zscore("ranking", rankers[0])
-            .zscore("ranking", rankers[1])
-            .zscore("ranking", rankers[2])
-            .zscore("ranking", rankers[3])
-            .zscore("ranking", rankers[4])
-            .zscore("ranking", rankers[5])
-            .zscore("ranking", rankers[6])
-            .zscore("ranking", rankers[7])
-            .zscore("ranking", rankers[8])
-            .zscore("ranking", rankers[9])
-            .zscore("ranking", rankers[10])
-            .zscore("ranking", rankers[11])
-            .exec(function(err, scores){
-              log.info("" + rankers);
-              log.info("" + scores);
-              var msg = [Types.Messages.RANKING, bottomRank+1];
-              for(i=0; i < 11; i++){
-                msg.push(rankers[i]);
-                msg.push(scores[i]);
-              }
-              player.send(msg);
+                msg[2] = itemCount;
+                player.server.pushToPlayer(player, new Messages.AuctionOpen(msg));
             });
-          });
         });
-      },
-      getPlayerRanking: function(player, callback) {
-        var result = -1;
-        var multi = client.multi();
-
-        multi.zadd("ranking", player.experience, player.name);
-        multi.zrevrank("ranking", player.name);
-        multi.exec(function(err, ranking) {
-          callback(parseInt(ranking[1]));
-        });
-      },
-
-
-    loadPlayerHighscores: function() {
-        //To be Handled.
 
     },
-    writeReply: function(player, content, number){
-      log.info("Write Reply: " + player.name + " " + content + " " + number);
-      var self = this;
-      client.hincrby('bo:free', number + ':replynum', 1, function(err, reply){
-        var replyNum = reply ? reply : 1;
-        client.multi()
-        .hset('bo:free', number+':reply:'+replyNum+':content', content)
-        .hset('bo:free', number+':reply:'+replyNum+':writer', player.name)
-        .exec(function(err, replies){
-          player.send([Types.Messages.BOARD,
-                       'reply',
-                       player.name,
-                       content]);
+
+
+    handleDelAuctionItem: function (index)
+    {
+        client.lrem('auctionIndex', -1, index);
+        client.hget("s:auction", "auctionCount", function(err, auctionCount){
+            client.hdel('s:auction', 'i' + index + ".p");
+            client.hdel('s:auction', 'i' + index + ".k");
+            client.hdel('s:auction', 'i' + index + ".c");
+            client.hdel('s:auction', 'i' + index + ".sk");
+            client.hdel('s:auction', 'i' + index + ".sl");
+            client.hdel('s:auction', 'i' + index + ".buy");
         });
-      });
     },
-    pushKungWord: function(player, word){
-      var server = player.server;
 
-      if(player === server.lastKungPlayer){ return; }
-      if(server.isAlreadyKung(word)){ return; }
-      if(!server.isRightKungWord(word)){ return; }
+    getAuctionItem: function(index, callback)
+    {
+        var auction;
+        multi = client.multi();
+        multi.hget('s:auction', "i" + index + ".p");
+        multi.hget('s:auction', "i" + index + ".k");
+        multi.hget('s:auction', "i" + index + ".c");
+        multi.hget('s:auction', "i" + index + ".sk");
+        multi.hget('s:auction', "i" + index + ".sl");
+        multi.hget('s:auction', "i" + index + ".buy");
 
-      if(server.kungWords.length === 0){
-        client.srandmember('dic', function(err, reply){
-          var randWord = reply;
-          server.pushKungWord(player, randWord);
+        multi.exec(function(err, replies) {
+            auction = {
+                player: replies.shift(),
+                item: {
+                    itemKind: parseInt(replies.shift()),
+                    itemNumber: parseInt(replies.shift()),
+                    itemSkillKind: parseInt(replies.shift()),
+                    itemSkillLevel: parseInt(replies.shift())
+                },
+                value: parseInt(replies.shift())
+            };
+            callback(auction);
         });
-      } else{
-        client.sismember('dic', word, function(err, reply){
-          if(reply === 1){
-            server.pushKungWord(player, word);
-          } else{
-            player.send([Types.Messages.NOTIFY, word + "는 사전에 없습니다."]);
-          }
-        });
-      }
-    }
+    },
+
 });

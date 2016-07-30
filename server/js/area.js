@@ -2,6 +2,7 @@ var cls = require('./lib/class');
 var _ = require('underscore');
 var Utils = require('./utils');
 var Messages = require('./message');
+var MobData = require('./mobdata');
 
 module.exports = Area = cls.Class.extend({
     init: function (id, x, y, width, height, world) {
@@ -20,8 +21,8 @@ module.exports = Area = cls.Class.extend({
         var valid = false;
 
         while (!valid) {
-            pos.x = this.x + Utils.random(this.width + 1);
-            pos.y = this.y + Utils.random(this.height + 1);
+            pos.x = this.x + Utils.randomInt(0, this.width + 1);
+            pos.y = this.y + Utils.randomInt(0, this.height + 1);
             valid = this.world.isValidPosition(pos.x, pos.y);
         }
         return pos;
@@ -45,7 +46,7 @@ module.exports = Area = cls.Class.extend({
 
     addToArea: function (entity) {
         var Mob = require('./mob');
-        if (entity) {
+        if (entity && entity.kind !== null) {
             this.entities.push(entity);
             entity.area = this;
             if (entity instanceof Mob) {

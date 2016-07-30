@@ -5,7 +5,7 @@ var Utils = require('./utils');
 
 var Chest = Item.extend({
     init: function (id, x, y) {
-        this._super(id, Types.Entities.CHEST, x, y);
+        this._super(id, 37, x, y); // CHEST
     },
 
     setItems: function (items) {
@@ -24,3 +24,4 @@ var Chest = Item.extend({
 });
 
 module.exports = Chest;
+

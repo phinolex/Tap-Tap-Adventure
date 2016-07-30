@@ -3,25 +3,53 @@ var Character = require('./character');
 var ChestArea = require('./chestarea');
 var Messages = require('./message');
 var MobArea = require('./mobarea');
-var Properties = require('./properties');
+var MobData = require('./mobdata');
+var Items = require('./items');
 var Utils = require('./utils');
 
 module.exports = Mob = Character.extend({
     init: function (id, kind, x, y) {
-        this._super(id, 'mob', kind, x, y);
 
+    	this._super(id, 'mob', kind, x, y);
+
+    	var mobData = MobData.Kinds[this.kind];
         this.updateHitPoints();
         this.spawningX = x;
         this.spawningY = y;
-        this.armorLevel = Properties.getArmorLevel(this.kind);
-        this.weaponLevel = Properties.getWeaponLevel(this.kind);
-        this.level = Types.getMobLevel(kind);
+        this.armorLevel = mobData.armor;
+        this.weaponLevel = mobData.weapon;
+        this.level = mobData.level;
         this.hatelist = [];
         this.respawnTimeout = null;
         this.returnTimeout = null;
         this.isDead = false;
         this.hateCount = 0;
         this.tankerlist = [];
+        this.aggroRange = mobData.aggroRange;
+        this.attackRange = mobData.attackRange;
+        this.isAggressive = mobData.isAggressive;
+        this.setAttackRate(mobData.attackRate);
+        this.setMoveRate(mobData.moveSpeed);
+        this.xp = mobData.xp;
+        this.setDrops();
+        this.spawnDelay = mobData.spawnDelay;
+
+    },
+
+    startRoaming: function() {
+        var self = this;
+
+        setInterval(function() {
+            if (Utils.randomInt(0, 20) == 4) {
+                var position = {};
+                var validPosition = false;
+                while (!validPosition) {
+                    position.x = self.x + Utils.random(0, 5);
+                    position.y = self.y + Utils.random(0, 5);
+
+                }
+            }
+        }, 500);
     },
 
     destroy: function () {
@@ -151,12 +179,11 @@ module.exports = Mob = Character.extend({
     },
 
     handleRespawn: function () {
-        var delay = 55000;
         var self = this;
 
         if (this.area && this.area instanceof MobArea) {
             // Respawn inside the area if part of a MobArea
-            this.area.respawnMob(this, delay);
+            this.area.respawnMob(this, this.spawnDelay);
         }
         else {
             if (this.area && this.area instanceof ChestArea) {
@@ -167,7 +194,7 @@ module.exports = Mob = Character.extend({
                 if (self.respawnCallback) {
                     self.respawnCallback();
                 }
-            }, delay);
+            }, this.spawnDelay);
         }
     },
 
@@ -181,6 +208,7 @@ module.exports = Mob = Character.extend({
     returnToSpawningPosition: function(waitDuration) {
         var self = this,
             delay = waitDuration || 4000;
+
 
         this.clearTarget();
 
@@ -196,17 +224,21 @@ module.exports = Mob = Character.extend({
 
     move: function (x, y) {
         this.setPosition(x, y);
-        if (this.moveCallback) {
+
+        if (this.moveCallback)
             this.moveCallback(this);
-        }
     },
 
     updateHitPoints: function () {
-        this.resetHitPoints(Properties.getHitPoints(this.kind));
+        this.resetHitPoints(MobData.Kinds[this.kind].hp);
     },
 
     distanceToSpawningPoint: function (x, y) {
         return Utils.distanceTo(x, y, this.spawningX, this.spawningY);
+    },
+    
+    setDrops: function () {
+        this.drops = MobData.Kinds[this.kind].drops
     }
 });
 

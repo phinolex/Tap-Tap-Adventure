@@ -7,11 +7,14 @@ var cls = require("./lib/class"),
     Chest = require('./chest'),
     Messages = require("./message"),
     Utils = require("./utils"),
-    Properties = require("./properties"),
+    MobData = require("./mobdata"),
     Formulas = require("./formulas"),
     check = require("./format").check,
     Party = require("./party"),
+    Items = require("./items"),
+    Bank = require("./bank"),
     Types = require("../../shared/js/gametypes"),
+    ItemTypes = require("../../shared/js/itemtypes"),
     bcrypt = require('bcrypt'),
     Inventory = require("./inventory"),
     Mob = require('./mob'),
@@ -20,19 +23,22 @@ var cls = require("./lib/class"),
     Trade = require('./trade'),
     express = require('express'),
     bodyParser = require('body-parser'),
-    app = express(),
-    request = require("request");
+    app = express(), 
+    Quests = require('./quests'),
+    request = require("request"),
+    EntitySpawn = require("./entityspawn"),
+    PacketHandler = require("./packethandler");
 
 
 module.exports = Player = Character.extend({
     init: function(connection, worldServer, databaseHandler) {
         var self = this;
-
+  
         this.server = worldServer;
         this.connection = connection;
 
-        this._super(this.connection.id, "player", Types.Entities.WARRIOR, 0, 0, "");
-
+        this._super(this.connection.id, "player", 1, 0, 0, "");        
+        
         this.hasEnteredGame = false;
         this.isDead = false;
         this.haters = {};
@@ -40,7 +46,8 @@ module.exports = Player = Character.extend({
         this.formatChecker = new FormatChecker();
         this.friends = {};
         this.ignores = {};
-        this.disconnectTimeout = null;
+        this.pets = [];
+
         this.inventory = null;
         this.pvpFlag = false;
         this.bannedTime = 0;
@@ -52,7 +59,8 @@ module.exports = Player = Character.extend({
         this.achievement = [];
         this.royalAzaleaBenefTimeout = null;
         this.cooltimeTimeout = null;
-
+        this.consumeTimeout = null;
+        this.rights = 0;
         this.skillHandler = new SkillHandler();
 
         this.healExecuted = 0;
@@ -74,533 +82,18 @@ module.exports = Player = Character.extend({
         this.membership = false;
         this.chatBanEndTime = 0;
 
-
-        this.connection.listen(function(message) {
-            var action = parseInt(message[0]);
-
-            log.debug("Received: "+message);
-            if(!check(message)) {
-                self.connection.close("Invalid "+Types.getMessageTypeAsString(action)+" message format: "+message);
-                return;
-            }
-
-            if(!self.hasEnteredGame && action !== Types.Messages.CREATE && action !== Types.Messages.LOGIN) { // CREATE or LOGIN must be the first message
-                self.connection.close("Invalid handshake message: "+message);
-                return;
-            }
-            if(self.hasEnteredGame && !self.isDead && (action === Types.Messages.CREATE || action === Types.Messages.LOGIN)) { // CREATE/LOGIN can be sent only once
-                self.connection.close("Cannot initiate handshake twice: "+message);
-                return;
-            }
-
-            self.resetTimeout();
-
-            if(action === Types.Messages.CREATE || action === Types.Messages.LOGIN) {
-                var name = Utils.sanitize(message[1]);
-                var pw = Utils.sanitize(message[2]);
-
-
-                /**
-                 * Implement RSA Authorization
-                 */
-
-                log.info("Starting Client/Server Handshake");
-
-                // Always ensure that the name is not longer than a maximum length.
-                // (also enforced by the maxlength attribute of the name input element).
-                // After that, you capitalize the first letter.
-                self.name = name.substr(0, 36).trim();
-
-
-                // Validate the username
-                if(!self.checkName(self.name)){
-                    self.connection.sendUTF8("invalidusername");
-                    self.connection.close("Invalid name " + self.name);
-                    return;
-                }
-                self.pw = pw.substr(0, 45);
-
-                if(action === Types.Messages.CREATE) {
-                    bcrypt.genSalt(10, function(err, salt) {
-                        bcrypt.hash(self.pw, salt, function(err, hash) {
-                            log.info("CREATE: " + self.name);
-                            self.email = Utils.sanitize(message[3]);
-                            self.pw = hash;
-
-                            databaseHandler.createPlayer(self);
-                        });
-                    });
-                } else {
-                    log.info("LOGIN: " + self.name);
-                    if(self.server.loggedInPlayer(self.name)) {
-                        self.connection.sendUTF8("loggedin");
-                        self.connection.close("Already logged in " + self.name);
-                        return;
-                    }
-                    databaseHandler.loadPlayer(self);
-                }
-
-            }
-
-
-            switch(action) {
-
-
-                case Types.Messages.KBVE:
-                    self.name = Utils.sanitize(message[1]).substr(0, 36).trim();
-                    self.pw = Utils.sanitize(message[2]).substr(0, 45);
-                    self.session_id_kbve = message[3];
-
-                    /*
-                     * Check here if a player exists,
-                     * add his session_id to active players
-                     * and when he disconnects, make sure
-                     * the API removes the player.
-                     * You should check if a player exists by
-                     * username rather than ID, as that changes regularly.
-                     */
-
-
-
-                    // Check if Logged in?
-                        if(self.server.loggedInPlayer(self.name)) {
-                            self.connection.sendUTF8("loggedin");
-                            self.connection.close("Player: " + self.name + " is already logged in.");
-                            return;
-                        }
-
-
-
-
-                    // Make Request to verify information
-
-                       var options = {
-                          uri: 'https://kbve.com/api/tta/tta_l.php',
-                          method: 'POST',
-                          json: {
-                            "method": "login",
-                            "username": self.name,
-                            "password": self.pw
-                          }
-                        };
-
-                        request(options, function (error, response, body) {
-                          if (!error && response.statusCode == 200) {
-                            console.log(body.id); // Print the shortened url.
-                              body = body.toString('utf-8');
-
-                            // Print out the response body
-                            console.log(body);
-
-                            // If it is json
-                            var json_body = JSON.parse(body);
-                             self.session_id_kbve = json_body.session_id;
-
-                          }
-                        });
-                      //  if(session_id_kbve == falsle)
-
-                    // check if user exists? if not, create
-
-
-                    // What function is it to check if the username exists
-                //Let me check.
-                break;
-
-
-                case Types.Messages.WHO:
-                    log.info("Who: " + self.name);
-                    message.shift();
-                    log.info("list: " + message);
-                    self.server.pushSpawnsToPlayer(self, message);
-                break;
-
-                case Types.Messages.ZONE:
-                    log.info("Zone: " + self.name);
-                    self.zone_callback();
-                break;
-
-                case Types.Messages.CHAT:
-                    var msg = Utils.sanitize(message[1]);
-                    log.info("Chat: " + self.name + ": " + msg);
-                    if (msg && (msg !== "" || msg !== " ")) {
-                        msg = msg.substr(0, 256); //Will have to change the max length
-                        var key = msg.substr(0);
-                        if ( typeof String.prototype.startsWith !== 'function' ) {
-                            String.prototype.startsWith = function( str ) {
-                                return str.length > 0 && this.substring( 0, str.length ) === str;
-                            };
-                        };
-                        if ( typeof String.prototype.endsWith !== 'function' ) {
-                            String.prototype.endsWith = function( str ) {
-                                return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
-                            };
-                        };
-
-                        switch(msg.startsWith) {
-                            case "/1 ":
-                                if ((new Date()).getTime() > self.chatBanEndTime)
-                                    self.server.pushBroadcast(new Messages.Chat(self, msg));
-                                else
-                                    self.send([Types.Messages.NOTIFY, "You are currently muted."]);
-                            break;
-                            case "/kick ":
-                                /*
-                                * Get player name despite spaces
-                                */
-                                var targetPlayer = self.server.getPlayerByName(msg.split('/kick '));
-                                if (targetPlayer)
-                                    databaseHandler.kickPlayer(self, targetPlayer);
-                            break;
-                            case "/ban ":
-                                //Must be server side, else, it will not be allowed to use the API of KBVE for bans.
-                                //permanent ban, as the actual banning method will be
-                                //through the KBVE API
-                                var playerBan = self.server.getPlayerByName(msg.split('/ban '));
-                                if (playerBan)
-                                    databaseHandler.newBanPlayer(self, playerBan, 50000);
-                            break;
-                            case "/nameban ":
-                                var playerName = self.server.getPlayerByName(msg.split("/nameban "));
-                                if (playerName)
-                                    databaseHandler.newBanPlayer(self, playerName);
-                            break;
-                            case "/move ":
-                                var x = msg.split(' ')[1];
-                                var y = msg.split(' ')[2];
-                                var playerName = self.server.getPlayerByName(msg.split('/move ' + x + y));
-                                log.info("Experimental, moving: " + playerName + " to X: " + x + " y: " + y);
-                                if (playerName)
-                                    databaseHandler.teleportPlayer(self, playerName, x, y);
-                            break;
-                            case "/unmute ":
-                                var playerName = self.server.getPlayerByName(msg.split("/unmute "));
-                                if (playerName)
-                                    databaseHandler.unmute(self, playerName);
-                            break;
-                            case "/mute ":
-                                var mutePlayer = self.server.getPlayerByName(msg.split("/mute "));
-                                if (mutePlayer)
-                                    databaseHandler.chatBan(self, mutePlayer);
-                            break;
-                            case "/pmute ":
-                                var pMutePlayer = self.server.getPlayerByName(msg.split("/pmute "));
-                                if (pMutePlayer)
-                                    databaseHandler.permanentlyMute(self, pMutePlayer);
-                            break;
-                            case "/promote ":
-                                var rank = msg.split(' ')[1];
-                                var playerName = self.server.getPlayerByName(msg.split("/promote " + rank));
-                                if (playerName)
-                                    databaseHandler.promotePlayer(self, playerName, rank);
-                            break;
-                            case "/demote ":
-                                var targetPlayer = self.server.getPlayerByName(msg.split("/demote "));
-                                if (targetPlayer)
-                                    databaseHandler.demotePlayer(self, targetPlayer);
-                            break;
-                        }
-                    }
-                break;
-
-                case Types.Messages.MOVE:
-                    if (self.move_callback) {
-                        var x = message[1],
-                            y = message[2];
-
-                        if (self.server.isValidPosition(x, y)) {
-                            self.setPosition(x, y);
-                            self.clearTarget();
-                            self.broadcast(new Messages.Move(self));
-                            self.move_callback(self.x, self.y);
-                        }
-                    }
-                break;
-
-                case Types.Messages.HIT:
-                    log.info("Player: " + self.name + " hit: " + message[1]);
-                    self.handleHit(message);
-                break;
-
-                case Types.Messages.HURT:
-                    self.handleHurt(message);
-                break;
-
-                case Types.Messages.INVENTORY:
-                    log.info("Player: " + self.name + " inventory message: " + message[1] + " " + message[2] + " " + message[3]);
-                break;
-
-                case Types.Messages.SKILL:
-                    log.info("Player: " + self.name + " skill: " + message[1] + " " + message[2])
-                    self.handleSkill(message);
-                break;
-
-                case Types.Messages.SKILLINSTALL:
-                    log.info("Skill Install on: " + self.name + " " + message[1] + " " + message[2]);
-                    self.handleSkillInstall(message);
-                break;
-
-                case Types.Messages.SELL:
-                    log.info("Player: " + self.name + " initiated sell: " + message[1] + " " + message[2]);
-                    self.handleSell(message);
-                break;
-
-                case Types.Messages.AGGRO:
-                    log.info("Player: " + self.name + " aggro'ed: " + message[1]);
-                    if (self.move_callback)
-                        self.server.handleMobHate(message[1], self.id, 5);
-                break;
-
-                case Types.Messages.SHOP:
-                    log.info("Player: " + self.name + " shop: " + message[1] + " " + message[2]);
-                    self.handleShop(message);
-                break;
-
-                case Types.Messages.BUY:
-                    log.info("Player: " + self.name + " shop: " + message[1] + " " + message[2] + " " + message[3])
-                break;
-
-                case Types.Messages.STORESELL:
-                    log.info("Player: " + self.name + " store sell: " + message[1]);
-                    self.handleStoreSell(message);
-                break;
-
-                case Types.Messages.STOREBUY:
-                    log.info("Player: " + self.name + " store buy: " + message[1] + " " + message[2] + " " + message[3]);
-                    self.handleStoreBuy(message);
-                break;
-
-                case Types.Messages.CHARACTERINFO:
-                    log.info("Player character info: " + self.name);
-                    self.server.pushToPlayer(self, new Messages.CharacterInfo(self));
-                break;
-
-                case Types.Messages.TELEPORT:
-                    var x = message[1],
-                        y = message[2];
-
-                    if (self.server.isValidPosition(x, y)) {
-                        self.setPosition(x, y);
-                        self.clearTarget();
-                        self.broadcast(new Messages.Teleport(self));
-                        self.server.handlePlayerVanish(self);
-                        self.server.pushRelevantEntityListTo(self);
-                    }
-                break;
-
-                case Types.Messages.OPEN:
-                    log.info("Player: " + self.name + " open: " + message[1]);
-                    var chest = self.server.getEntityById(message[1]);
-                    if (chest && chest instanceof Chest)
-                        self.server.handleOpenedChest(chest, self);
-                break;
-
-                case Types.Messages.LOOTMOVE:
-                    self.handleLootMove(message);
-                break;
-
-                case Types.Messages.LOOT:
-                    self.handleLoot(message);
-                break;
-
-                case Types.Messages.CHECK:
-                    var checkpoint = self.server.map.getCheckpoint(message[1]);
-                    if (checkpoint) {
-                        self.lastCheckpoint = checkpoint;
-                        databaseHandler.setCheckpoint(self.name, self.x, self.y);
-                    }
-                break;
-
-                case Types.Messages.QUEST:
-                    self.handleQuest(message);
-                break;
-
-                case Types.Messages.TALKTONPC:
-                    self.handleTalkToNPC(message);
-                break;
-
-                case Types.Messages.FLAREDANCE:
-                    self.handleFlareDance(message);
-                break;
-
-                case Types.Messages.MAGIC:
-                    var magicName = message[1];
-                    var magicTargetName = message[2];
-
-                    if (magicName === "setheal") {
-                        self.magicTarget = self.server.getPlayerByName(magicTargetName);
-                        if (self.magicTarget === self)
-                            self.magicTarget = null;
-                    } else if (magicName === "heal") {
-                        if (self.magicTarget) {
-                            if (!self.magicTarget.hasFullHealth()) {
-                                self.magicTarget.regenHealthBy(50);
-                                self.server.pushToPlayer(self.magicTarget, self.magic);
-                            }
-                        }
-                    }
-
-                break;
-
-                case Types.Messages.BOARD:
-                    var command = message[1];
-                    var number = message[2];
-                    var replyNumber = message[3];
-                    databaseHandler.loadBoard(self, command, number, replyNumber);
-                break;
-
-                case Types.Messages.RANKING:
-                    self.handleRanking(message);
-                break;
-
-                case Types.Messages.GUILD:
-                    switch(message[1]) {
-                        case Types.Messages.GUILDACTION.CREATE:
-                            var guildname = Utils.sanitize(message[2]);
-                            if (guildname === "") {
-                                self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.BADNAME,message[2]));
-                            } else {
-                                var guildId = self.server.addGuild(guildname);
-                                if (guildId === false) {
-                                    self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.ALREADYEXISTS, guildname));
-                                } else {
-                                    self.server.joinGuild(self, guildId);
-                                    self.server.pushToPlayer(self, new Messages.Guild(Types.Messages.GUILDACTION.CREATE, [guildId, guildname]));
-                                }
-                            }
-                        break;
-
-                        case Types.Messages.GUILDACTION.INVITE:
-                            var userName = message[2];
-                            var invitee;
-                            if (self.group in self.server.groups) {
-                                invitee = _.find(self.server.groups[self.group].entities,
-                                                function(entity, key) {
-
-                                                    return (entity instanceof Player && entity.name == userName) ? entity : false;
-                                                });
-                                    if (invitee)
-                                        self.getGuild().invite(invitee, self);
-                            }
-                        break;
-
-                        case Types.Messages.GUILDACTION.JOIN:
-                            self.server.joinGuild(self, message[2], message[3]);
-                        break;
-
-                        case Types.Messages.GUILDACTION.LEAVE:
-                            self.leaveGuild();
-                        break;
-
-                        case Types.Messages.GUILDACTION.TALK:
-                            self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
-                        break;
-
-                    }
-                break;
-
-                case Types.Messages.BOARDWRITE:
-                    var command = message[1];
-                    if (command == "board") {
-                        var title = message[2];
-                        var content = message[3];
-                        databaseHandler.writeBoard(self, title, content);
-                    } else if (command === "reply") {
-                        var reply = message[2];
-                        var number = message[3] * 1;
-                        if (number > 0)
-                            databaseHandler.writeReply(self, reply, number);
-                    }
-                break;
-
-                case Types.Messages.KUNG:
-                    var word = message[1];
-                    databaseHandler.pushKungWord(self, word);
-                break;
-
-                default:
-                    if (self.message_callback)
-                        self.message_callback(message);
-                break;
-            }
-        });
-
-        this.connection.onClose(function() {
-
-            clearTimeout(self.disconnectTimeout);
-            if(self.exit_callback) {
-                self.exit_callback();
-            }
-        });
-
-        this.connection.sendUTF8("go"); // Notify client that the HELLO/WELCOME handshake can start
+        this.hasFocus = true;
+
+        this.attackedTime = new Timer(950);
+        
+        this.packetHandler = new PacketHandler(this, connection, worldServer, databaseHandler);
+        
+        this.pClass = 0;
+        
+        
     },
-
-
-
-
-    questAboutKill: function(mob){
-        var self = this;
-        // Daily Quest
-        if(this.achievement[101].found){
-            if(this.achievement[101].progress < 999){
-                this._questAboutKill(mob.kind, 0, 101, 25, function(){
-                    log.info("Quest 101 Completed");
-                    self.inventory.putInventory(Types.Entities.FLASK, 100, 0, 0);
-                });
-                return;
-            } else if(this.achievement[102].found){
-                if(this.achievement[102].progress < 999){
-                    this._questAboutKill(mob.kind, 0, 102, 50, function(){
-                        log.info("Quest 102 Completed");
-                        self.inventory.putInventory(Types.Entities.BURGER, 100, 0, 0);
-                    });
-                    return;
-                } else if(this.achievement[103].found){
-                    if(this.achievement[103].progress < 999){
-                        this._questAboutKill(mob.kind, 0, 103, 100, function(){
-                            log.info("Quest 103 Completed");
-                            self.inventory.putInventory(Types.Entities.ROYALAZALEA, 50, 0, 0);
-                        });
-                        return;
-                    } else if(this.achievement[104].found){
-                        if(this.achievement[104].progress < 999){
-                            this._questAboutKill(mob.kind, 0, 104, 200, function(){
-                                log.info("Quest 104 Completed");
-                                self.inventory.putInventory(Types.Entities.SNOWPOTION, 1, 0, 0);
-                            });
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-        this._questAboutKill(mob.kind, Types.Entities.RAT, 2, 10, function(){
-            self.incExp(200);
-        });
-        this._questAboutKill(mob.kind, Types.Entities.CRAB, 4, 5, function(){
-            self.incExp(100);
-        });
-        this._questAboutKill(mob.kind, Types.Entities.SKELETON, 7, 10, function(){
-            self.incExp(400);
-        });
-        this._questAboutKill(mob.kind, Types.Entities.SKELETONKING, 9, 2, function(){
-            self.incExp(1000);
-        });
-        this._questAboutKill(mob.kind, Types.Entities.ORC, 10, 10, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.GOLEM, 11, 10, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.HOBGOBLIN, 12, 13, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.YELLOWMOUSE, 13, 12, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.MERMAID, 16, 15, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.LIVINGARMOR, 17, 9, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.PENGUIN, 18, 12, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.DARKSKELETON, 19, 20, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.MINIKNIGHT, 20, 30, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.WOLF, 22, 50, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.GOBLIN, 28, 60, function(){ self.setAbility(); });
-        this._questAboutKill(mob.kind, Types.Entities.SNOWLADY, 29, 70, function(){ self.setAbility(); });
-    },
-
+    
+    
     destroy: function() {
         var self = this;
 
@@ -617,10 +110,10 @@ module.exports = Player = Character.extend({
 
     getState: function() {
         var basestate = this._getBaseState(),
-            state = [this.name, this.orientation, this.avatar ? this.avatar : this.armor, this.weaponAvatar ? this.weaponAvatar : this.weapon, this.level];
+            state = [this.name, this.orientation, this.armor, this.weapon, this.level];
 
         if(this.target) {
-            state.push(this.target);
+            state.push(this.target.id);
         }
 
         return basestate.concat(state);
@@ -635,59 +128,6 @@ module.exports = Player = Character.extend({
             this.pvpFlag = pvpFlag;
             this.send(new Messages.PVP(this.pvpFlag).serialize());
         }
-    },
-
-    flagWait: function(waitFlag) {
-        if (this.waitFlag !== waitFlag) {
-            this.waitFlag = waitFlag;
-            this.send(new Messages.GuildWarWait(this.waitFlag).serialize());
-            log.info("Sent flag to client");
-        }
-
-    },
-
-    broadcast: function(message, ignoreSelf) {
-        if(this.broadcast_callback) {
-            this.broadcast_callback(message, ignoreSelf === undefined ? true : ignoreSelf);
-        }
-    },
-
-    broadcastToZone: function(message, ignoreSelf) {
-        if(this.broadcastzone_callback) {
-            this.broadcastzone_callback(message, ignoreSelf === undefined ? true : ignoreSelf);
-        }
-    },
-
-    onExit: function(callback) {
-        this.exit_callback = callback;
-    },
-
-    onMove: function(callback) {
-        this.move_callback = callback;
-    },
-
-    onLootMove: function(callback) {
-        this.lootmove_callback = callback;
-    },
-
-    onZone: function(callback) {
-        this.zone_callback = callback;
-    },
-
-    onOrient: function(callback) {
-        this.orient_callback = callback;
-    },
-
-    onMessage: function(callback) {
-        this.message_callback = callback;
-    },
-
-    onBroadcast: function(callback) {
-        this.broadcast_callback = callback;
-    },
-
-    onBroadcastToZone: function(callback) {
-        this.broadcastzone_callback = callback;
     },
 
     equip: function(item) {
@@ -715,187 +155,53 @@ module.exports = Player = Character.extend({
     },
 
     equipArmor: function(kind, enchantedPoint, skillKind, skillLevel) {
-        this.armor = kind;
-        this.avatar = kind;
-        if(enchantedPoint){
-            this.armorEnchantedPoint = enchantedPoint;
-            this.avatarEnchantedPoint = enchantedPoint;
-        } else {
-            this.armorEnchantedPoint = 0;
-            this.avatarEnchantedPoint = 0;
-        }
-        this.armorLevel = Properties.getArmorLevel(kind) + this.armorEnchantedPoint;
+    	this.armor = kind;
+        this.armorEnchantedPoint = enchantedPoint;
+        this.armorLevel = ItemTypes.getArmorLevel(kind) + enchantedPoint;
         this.armorSkillKind = skillKind;
         this.armorSkillLevel = skillLevel;
-        this.avatarSkillKind = skillKind;
-        this.avatarSkillLevel = skillLevel;
-    },
-    equipAvatar: function(kind, enchantedPoint, skillKind, skillLevel) {
-        if(kind){
-
-            this.avatar = kind;
-        } else{
-
-            this.avatar = null;
-        }
-        if(enchantedPoint){
-
-            this.avatarEnchantedPoint = enchantedPoint;
-        } else{
-
-            this.avatarEnchantedPoint = 0;
-        }
-        this.avatarSkillKind = skillKind;
-        this.avatarSkillLevel = skillLevel;
     },
     equipWeapon: function(kind, enchantedPoint, skillKind, skillLevel){
         this.weapon = kind;
-        this.weaponAvatar = kind;
-        if(enchantedPoint){
-
-            this.weaponEnchantedPoint = enchantedPoint;
-            this.weaponAvatarEnchantedPoint = enchantedPoint;
-        } else {
-
-            this.weaponEnchantedPoint = 0;
-            this.weaponAvatarEnchantedPoint = 0;
-        }
-        if (Types.isArcherWeapon(kind)) {
-            databaseHandler.changePlayerKind(this, "archer");
-        } else {
-            databaseHandler.changePlayerKind(this, "archer");
-        }
-
-        this.weaponLevel = Properties.getWeaponLevel(kind) + this.weaponEnchantedPoint;
+        this.weaponEnchantedPoint = enchantedPoint;
+        this.weaponLevel = ItemTypes.getWeaponLevel(kind) + this.weaponEnchantedPoint;
         this.weaponSkillKind = skillKind;
-        this.weaponSkillLevel = skillLevel;
-        this.weaponAvatarSkillKind = skillKind;
-        this.weaponAvatarSkillLevel = skillLevel;
+        this.weaponSkillLevel = skillLevel;        
     },
-    equipWeaponAvatar: function(kind, enchantedPoint, skillKind, skillLevel){
 
-    },
-    equipPendant: function(kind, enchantedPoint, skillKind, skillLevel) {
-        if(kind) {
-            this.pendant = kind;
-            if(enchantedPoint){
-
-                this.pendantEnchantedPoint = enchantedPoint;
-            } else{
-
-                this.pendantEnchantedPoint = 0;
-            }
-            this.pendantLevel = Properties.getPendantLevel(kind);
-            this.pendantSkillKind = skillKind;
-            this.pendantSkillLevel = skillLevel;
-        } else {
-            this.pendant = null;
-            this.pendantEnchantedPoint = 0;
-            this.pendantLevel = 0;
-            this.pendantSkillKind = 0;
-            this.pendantSkillLevel = 0;
-        }
-    },
-    equipRing: function(kind, enchantedPoint, skillKind, skillLevel) {
-        if(kind) {
-            this.ring = kind;
-            if(enchantedPoint){
-
-                this.ringEnchantedPoint = enchantedPoint;
-            } else{
-
-                this.ringEnchantedPoint = 0;
-            }
-            this.ringLevel = Properties.getRingLevel(kind);
-            this.ringSkillKind = skillKind;
-            this.ringSkillLevel = skillLevel;
-        } else {
-            this.ring = null;
-            this.ringEnchantedPoint = 0;
-            this.ringLevel = 0;
-            this.ringSkillKind = 0;
-            this.ringSkillLevel = 0;
-        }
-    },
-    equipBoots: function(kind, enchantedPoint, skillKind, skillLevel) {
-        if(kind) {
-            this.boots = kind;
-            if(enchantedPoint){
-
-                this.bootsEnchantedPoint = enchantedPoint;
-            } else{
-
-                this.bootsEnchantedPoint = 0;
-            }
-            this.bootsLevel = Properties.getBootsLevel(kind);
-            this.bootsSkillKind = skillKind;
-            this.bootsSkillLevel = skillLevel;
-        } else {
-            this.boots = null;
-            this.bootsEnchantedPoint = 0;
-            this.bootsLevel = 0;
-            this.bootsSkillKind = 0;
-            this.bootsSkillLevel = 0;
-        }
-    },
     equipItem: function(itemKind, enchantedPoint, skillKind, skillLevel, isAvatar) {
         if(itemKind) {
-            log.debug(this.name + " equips " + Types.getKindAsString(itemKind));
-
-            if(Types.isArmor(itemKind) || Types.isArcherArmor(itemKind)) {
-                databaseHandler.equipAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
-                databaseHandler.equipArmor(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
+            log.debug(this.name + " equips " + ItemTypes.getKindAsString(itemKind));
+            log.info("equipItem-enchantedPoint="+enchantedPoint);
+            if(ItemTypes.isArmor(itemKind) || ItemTypes.isArcherArmor(itemKind)) {
+                databaseHandler.equipArmor(this.name, ItemTypes.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
                 this.equipArmor(itemKind, enchantedPoint, skillKind, skillLevel);
-
-            } else if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind)) {
-
-                databaseHandler.equipWeaponAvatar(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
-                databaseHandler.equipWeapon(this.name, Types.getKindAsString(itemKind), enchantedPoint ? enchantedPoint : 0, skillKind, skillLevel);
+            } else if(ItemTypes.isWeapon(itemKind) || ItemTypes.isArcherWeapon(itemKind)) {
+                databaseHandler.equipWeapon(this.name, ItemTypes.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
                 this.equipWeapon(itemKind, enchantedPoint, skillKind, skillLevel);
-
-            } else if(Types.isPendant(itemKind)) {
-                databaseHandler.equipPendant(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
-                this.equipPendant(itemKind, enchantedPoint, skillKind, skillLevel);
-            } else if(Types.isRing(itemKind)) {
-                databaseHandler.equipRing(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
-                this.equipRing(itemKind, enchantedPoint, skillKind, skillLevel);
-            } else if(Types.isBoots(itemKind)) {
-                databaseHandler.equipBoots(this.name, Types.getKindAsString(itemKind), enchantedPoint, skillKind, skillLevel);
-                this.equipBoots(itemKind, enchantedPoint, skillKind, skillLevel);
             }
         }
     },
-    takeOffAvatar: function(){
-        this.inventory.putInventory(this.avatar, this.avatarEnchantedPoint, this.avatarSkillKind, this.avatarSkillLevel);
-        this.avatar = null;
-        this.avatarEnchantedPoint = 0;
-        this.avatarSkillKind = 0;
-        this.avatarSkillLevel = 0;
-        databaseHandler.takeOffAvatar(this.name);
-        this.broadcastToZone(new Messages.EquipItem(this, this.armor), false);
-    },
-    takeOffWeaponAvatar: function(){
-        this.inventory.putInventory(this.weaponAvatar, this.weaponAvatarEnchantedPoint, this.weaponAvatarSkillKind, this.weaponAvatarSkillLevel);
-        this.weaponAvatar = null;
-        this.weaponAvatarEnchantedPoint = 0;
-        this.weaponAvatarSkillKind = 0;
-        this.weaponAvatarSkillLevel = 0;
-        databaseHandler.takeOffWeaponAvatar(this.name);
-        this.broadcastToZone(new Messages.EquipItem(this, this.weapon), false);
-    },
-    updateHitPoints: function() {
-        this.resetHitPoints(Formulas.hp(this.level));
-        this.resetMana(Formulas.mana(this.level));
-    },
-    //NOTE HERE - HP HERE
-    //This needs to be looked over and change everything necessary.
-    //
-    /* resetHPandMana: function() {
-     this.resetHitpoints(Formulas.hp(this.kind ,this.level));
-     this.resetMana(Formulas.mana(this.kind, this.level));
-     }, */
-    //^ ALREADY COVERED BY updateHitPoints
+    unequipItem: function (itemKind)
+    {
+        if(itemKind) {
+            log.debug(this.name + " unequips " + ItemTypes.getKindAsString(itemKind));
 
+            if(ItemTypes.isArmor(itemKind) || ItemTypes.isArcherArmor(itemKind)) {
+                databaseHandler.equipArmor(this.name, '', 0, 0, 0);
+                this.equipArmor(0, 0, 0, 0);
+
+            } else if(ItemTypes.isWeapon(itemKind) || ItemTypes.isArcherWeapon(itemKind)) {
+                databaseHandler.equipWeapon(this.name, '', 0, 0, 0);
+                this.equipWeapon(0, 0, 0, 0);
+            }
+        }
+    },
+
+    updateHitPoints: function() {
+        this.resetHitPoints(this.getHp());
+        this.resetMana(this.getMp());
+    },
 
     updatePosition: function() {
         if(this.requestpos_callback) {
@@ -907,178 +213,104 @@ module.exports = Player = Character.extend({
     onRequestPosition: function(callback) {
         this.requestpos_callback = callback;
     },
-    handleRanking: function(message){ // 40
-        var type = message[1];
-
-        if(type === 'get'){
-            databaseHandler.getRanking(this);
-        }
-    },
-    handleQuest: function(message){ // 29
-        if(message[2] === "found") {
-            var questId = message[1];
-            if(!this.achievement[questId].found){
-                this.foundQuest(questId);
-            }
-        } else if(message[2] === "show") {
-            var self = this;
-            databaseHandler.loadQuest(this, function(){
-                var i=0;
-                var msg = [Types.Messages.QUEST, "show"];
-                for(i=0; i<Types.Quest.TOTAL_QUEST_NUMBER; i++){
-                    msg.push(self.achievement[i+1].found);
-                    msg.push(self.achievement[i+1].progress);
-                }
-                for(i=0; i<4; i++){
-                    msg.push(self.achievement[i+101].found);
-                    msg.push(self.achievement[i+101].progress);
-                }
-                self.send(msg);
-            });
-        }
-    },
-    handleTalkToNPC: function(message){ // 30
+    
+    questAboutKill: function(mob){
         var self = this;
-        var npcKind = message[1];
-
-        if(npcKind === Types.Entities.CODER){
-            this.getDailyQuest();
-        } else if(npcKind === Types.Entities.VILLAGER){
-            this.questAboutItem(npcKind, 3, Types.Entities.LEATHERARMOR, function(){ self.incExp(50); });
-        } else if(npcKind === Types.Entities.SNOWSHEPHERDBOY){
-            this.questAboutItem(npcKind, 28, Types.Entities.LEATHERARMOR, function(){ self.incExp(50); });
-        } else if(npcKind === Types.Entities.AGENT){
-            this.questAboutItem(npcKind, 5, Types.Entities.CAKE, function(){ self.incExp(50); });
-        } else if(npcKind === Types.Entities.NYAN){
-            this.questAboutItem(npcKind, 6, Types.Entities.CD, function(){ self.incExp(100); });
-        } else if(npcKind === Types.Entities.DESERTNPC){
-            this.questAboutItem(npcKind, 8, Types.Entities.AXE, function(){ self.incExp(200); });
-        } else if(npcKind === Types.Entities.ODDEYECAT){
-            this.questAboutItem(npcKind, 14, Types.Entities.RATARMOR, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.OCTOCAT){
-            this.questAboutItem(npcKind, 15, Types.Entities.HAMMER, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.FAIRYNPC){
-            this.questAboutItem(npcKind, 21, Types.Entities.REDLIGHTSABER, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.ZOMBIEGF){
-            this.questAboutItem(npcKind, 23, Types.Entities.BLUEWINGARMOR, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.PIRATEGIRLNPC){
-            this.questAboutItem(npcKind, 24, Types.Entities.BASTARDSWORD, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.IAMVERYCOLDNPC){
-            this.questAboutItem(npcKind, 25, Types.Entities.REDMETALSWORD, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.ICEELFNPC){
-            this.questAboutItem(npcKind, 26, Types.Entities.ICEROSE, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.ELFNPC){
-            this.questAboutItem(npcKind, 27, Types.Entities.FORESTGUARDIANSWORD, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.MOMANGELNPC){
-            this.questAboutItem(npcKind, 30, Types.Entities.FROSTARMOR, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.SUPERIORANGELNPC){
-            this.questAboutItem(npcKind, 31, Types.Entities.SHADOWREGIONARMOR, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.FIRSTSONANGELNPC){
-            this.questAboutItem(npcKind, 32, Types.Entities.BREAKER, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.SECONDSONANGELNPC){
-            this.questAboutItem(npcKind, 33, Types.Entities.DAMBOARMOR, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.MOJOJOJONPC){
-            this.questAboutItem2(npcKind, 34, Types.Entities.SQUIDARMOR, Types.Entities.TYPHOON, function(){ self.setAbility(); });
-        } else if(npcKind === Types.Entities.ANCIENTMANUMENTNPC){
-            this.questAboutItem(npcKind, 35, Types.Entities.MEMME, function(){ self.setAbility(); });
-        } else{
-            this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, false));
-        }
+        
+        //log.info("questAboutKill");
+        for(i = 0; i < Object.keys(Quests.QuestData).length; i++){
+            var quest = Quests.QuestData[i];
+	    if(quest.type == 2) 
+	    {
+	    	 //log.info("quest.id="+ quest.id+",mob.kind="+mob.kind+",quest.mobId="+quest.mobId+",quest.mobCount="+quest.mobCount);
+		 this.tmpQuest = quest;
+	    	 this._questAboutKill(mob.kind, quest, function (quest){
+		 	 if (self.tmpQuest.xp)
+			 {
+				 self.incExp(self.tmpQuest.xp);
+			 }
+			 var skillName = self.tmpQuest.skillName;
+			 var skillLevel = self.tmpQuest.skillLevel;
+			//log.info("skill="+skillName+",skillLevel="+skillLevel);
+			 if (skillName && skillLevel)
+			 {
+			 	 self.skillHandler.add(skillName, skillLevel);
+				 var index = self.skillHandler.getIndexByName(skillName);
+				 databaseHandler.handleSkills(self, index, skillName, skillLevel);
+				 self.server.pushToPlayer(self, new Messages.SkillLoad(index, skillName, skillLevel));		 	 
+				 
+			 }
+		 });
+	    }
+	}
     },
-    questAboutItem: function(npcKind, questNumber, itemKind, callback){
+
+    questAboutItem: function(npcKind, questNumber, itemKind, itemCount, callback){
+
         if(this.achievement[questNumber].found === true
             && this.achievement[questNumber].progress !== 999) {
-            if(this.inventory.hasItem(itemKind)){
-                this.inventory.makeEmptyInventory(this.inventory.getInventoryNumber(itemKind));
+            if(this.inventory.hasItems(itemKind, itemCount)){
+            	log.info("MISSION COMPLETED!=============");
+                this.inventory.makeEmptyInventory2(itemKind, itemCount);
                 this.send([Types.Messages.QUEST, "complete", questNumber]);
                 this.achievement[questNumber].progress = 999;
                 if(callback){
-                    callback();
-                    this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, true));
+                    callback();                    
                 }
-                databaseHandler.progressAchievement(this.name, questNumber, this.achievement[questNumber].progress);
+                databaseHandler.progressAchievement(this.name, questNumber, 999);
+                this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, questNumber, true));
             } else{
-                this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, false));
+                this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, questNumber, false));
             }
         }
-    },
-    questAboutItem2: function(npcKind, questNumber, itemKind, item2Kind, callback){
-        if(this.achievement[questNumber].found === true
-            && this.achievement[questNumber].progress !== 999) {
-            if(this.inventory.hasItem(itemKind) && this.inventory.hasItem(item2Kind)){
-                this.inventory.makeEmptyInventory(this.inventory.getInventoryNumber(itemKind));
-                this.inventory.makeEmptyInventory(this.inventory.getInventoryNumber(item2Kind));
-                this.send([Types.Messages.QUEST, "complete", questNumber]);
-                this.achievement[questNumber].progress = 999;
-                if(callback){
-                    callback();
-                    this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, true));
-                }
-                databaseHandler.progressAchievement(this.name, questNumber, this.achievement[questNumber].progress);
-            } else{
-                this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, false));
-            }
-        }
-    },
-    resetTimeout: function() {
-        clearTimeout(this.disconnectTimeout);
-        this.disconnectTimeout = setTimeout(this.timeout.bind(this), 1000 * 60 * 5); // 5 min.
     },
 
-    _questAboutKill: function(mobKind, questMobKind, questId, completeNumber, callback){
-        if((questMobKind === 0 && Types.getMobLevel(mobKind)*2 > this.level) || mobKind === questMobKind) {
-            var achievement = this.achievement[questId];
+    _questAboutKill: function(mobKind, quest, callback){
+    	//log.info("quest.mobId.length="+quest.mobId.length+",quest.mobId="+quest.mobId+",mobKind="+mobKind);
+    	if(quest.mobId.length > 1 && (quest.mobId.indexOf(mobKind) > -1) ||
+        	(mobKind === quest.mobId) ||
+        	(quest.mobId == 0 && MobData.Kinds[mobKind].level * 2 > this.level))
+        {
+            //log.info("mob found");
+            var achievement = this.achievement[quest.id];
             if(achievement.found && achievement.progress !== 999) {
                 if(isNaN(achievement.progress)){
-                    achievement.progress = 0;
+                    achievement.progress = 1;
                 } else{
                     achievement.progress++;
                 }
-                if(achievement.progress >= completeNumber) {
-                    this.send([Types.Messages.QUEST, "complete", questId]);
+                if(achievement.progress >= quest.mobCount) {
+                    //log.info("MISSION COMPLETED!=============");
+                    this.send([Types.Messages.QUEST, "complete", quest.id]);
                     achievement.progress = 999;
                     if(callback){
                         callback();
                     }
                 }
-                databaseHandler.progressAchievement(this.name, questId, achievement.progress);
-                if(achievement.progress < completeNumber){
-                    this.send([Types.Messages.QUEST, "progress", questId, achievement.progress]);
+                //log.info("MISSION progress!=============");
+                databaseHandler.progressAchievement(this.name, quest.id, achievement.progress);
+                if(achievement.progress < quest.mobCount){
+                    this.send([Types.Messages.QUEST, "progress", quest.id, achievement.progress]);
                 }
             }
         }
     },
-    getDailyQuest: function(){
-        var i=0;
-        for(i=0; i<4; i++){
-            if(this.achievement[i+101].found){
-                if(this.achievement[i+101].progress !== 999){
-                    break;
-                }
-            } else {
-                this.foundQuest(i+101);
-                break;
-            }
-        }
-    },
-    foundQuest: function(questId){
-        this.achievement[questId].found = true;
+
+    foundQuest: function(questId){  
+    	log.info("foundQuest="+questId);
+        this.achievement[questId] = {};
+    	this.achievement[questId].found = true;
         databaseHandler.foundAchievement(this.name, questId);
         this.send([Types.Messages.QUEST, "found", questId]);
     },
 
-    timeout: function() {
-        this.connection.sendUTF8("timeout");
-        this.connection.close("Player was idle for too long");
-    },
-
     incExp: function(gotexp){
         if (this.variations.doubleEXP) {
-            log.info("Double EXP Enabled");
+            //log.info("Double EXP Enabled");
             this.experience = parseInt(this.experience) + (parseInt(gotexp) * 2);
-            log.info("Added: " + parseInt(gotexp) + " w/ double EXP: " + (parseInt(gotexp) * 2));
+            //log.info("Added: " + parseInt(gotexp) + " w/ double EXP: " + (parseInt(gotexp) * 2));
         } else {
-            log.info("EXP Multiplier: " + this.variations.expMultiplier);
+            //log.info("EXP Multiplier: " + this.variations.expMultiplier);
             this.experience = parseInt(this.experience) + (parseInt(gotexp) * this.variations.expMultiplier);
         }
 
@@ -1089,12 +321,11 @@ module.exports = Player = Character.extend({
         if(origLevel !== this.level) {
             //this.resetHPandMana();
             this.updateHitPoints();
-            //this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
+            this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana, this.hitPoints, this.mana));
             //NOTE 3
-            this.send(new Messages.HitPoints(this.maxHitPoints, this.maxMana).serialize());
+            //this.send(new Messages.HitPoints(this.maxHitPoints, this.maxMana, this.hitPoints, this.mana).serialize());
         }
     },
-
 
     checkName: function(name) {
         if(name === null) return false;
@@ -1115,56 +346,23 @@ module.exports = Player = Character.extend({
         }
         return true;
     },
-    setGuildId: function(id) {
-        if(typeof this.server.guilds[id] !== "undefined") {
-            this.guildId = id;
-        }
-        else {
-            log.error(this.id + " cannot add guild " + id + ", it does not exist");
-        }
-    },
-
-    getGuild: function() {
-        return this.hasGuild ? this.server.guilds[this.guildId] : undefined;
-    },
-
-    hasGuild: function() {
-        return (typeof this.guildId !== "undefined");
-    },
-
-    leaveGuild: function() {
-        if(this.hasGuild()){
-            var leftGuild = this.getGuild();
-            leftGuild.removeMember(this);
-            this.server.pushToGuild(leftGuild, new Messages.Guild(Types.Messages.GUILDACTION.LEAVE, [this.name, this.id, leftGuild.name]));
-            delete this.guildId;
-            this.server.pushToPlayer(this, new Messages.Guild(Types.Messages.GUILDACTION.LEAVE, [this.name, this.id, leftGuild.name]));
-        }
-        else {
-            this.server.pushToPlayer(this, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.NOLEAVE,""));
-        }
-    },
 
 
-    sendWelcome: function(armor, weapon, avatar, weaponAvatar, exp, moderator, admin,
-                          bannedTime, banUseTime, x, y, chatBanEndTime, rank,
-                          armorEnchantedPoint, armorSkillKind, armorSkillLevel,
-                          avatarEnchantedPoint, avatarSkillKind, avatarSkillLevel,
-                          weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel,
-                          weaponAvatarEnchantedPoint, weaponAvatarSkillKind, weaponAvatarSkillLevel,
-                          pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
-                          ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel,
-                          boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel, membership,
-                          membershipTime, kind) {
+
+    sendWelcome: function(armor, weapon, exp,
+                                bannedTime, banUseTime, x, y, chatBanEndTime, rank, 
+                                armorEnchantedPoint, armorSkillKind, armorSkillLevel,
+                                weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel, 
+                                pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
+                                ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel, 
+                                boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel,
+                                membership, membershipTime, kind, rights, pClass) {
+    
         var self = this;
         self.kind = kind;
-        self.moderator = moderator;
-        self.admin = admin;
-        self.equipArmor(Types.getKindFromString(armor), armorEnchantedPoint, armorSkillKind, armorSkillLevel);
-        self.equipWeapon(Types.getKindFromString(weapon), weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel);
-        self.equipPendant(Types.getKindFromString(pendant), pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel);
-        self.equipRing(Types.getKindFromString(ring), ringEnchantedPoint, ringSkillKind, ringSkillLevel);
-        self.equipBoots(Types.getKindFromString(boots), bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel);
+        self.rights = rights;
+        self.equipArmor(ItemTypes.getKindFromString(armor), armorEnchantedPoint, armorSkillKind, armorSkillLevel);
+        self.equipWeapon(ItemTypes.getKindFromString(weapon), weaponEnchantedPoint, weaponSkillKind, weaponSkillLevel);
         self.membership = membership;
         self.bannedTime = bannedTime;
         self.banUseTime = banUseTime;
@@ -1172,8 +370,11 @@ module.exports = Player = Character.extend({
         self.chatBanEndTime = chatBanEndTime;
         self.experience = exp;
         self.level = Types.getLevel(self.experience);
+        
         self.orientation = Utils.randomOrientation;
+        self.pClass = pClass;
         self.updateHitPoints();
+        self.skillHandler.installSkills(self);
 
         if(x === 0 && y === 0) {
             self.updatePosition();
@@ -1183,9 +384,14 @@ module.exports = Player = Character.extend({
 
         self.server.addPlayer(self);
         self.server.enter_callback(self);
+        
+
+	
+        databaseHandler.getBankItems(self, function(maxBankNumber, bankKinds, bankNumbers, bankSkillKinds, bankSkillLevels) {
+            self.bank = new Bank(self, maxBankNumber, bankKinds, bankNumbers, bankSkillKinds, bankSkillLevels);        		
         databaseHandler.getAllInventory(self, function(maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels) {
             self.inventory = new Inventory(self, maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels);
-            databaseHandler.loadQuest(self, function() {
+            databaseHandler.loadQuest(self, function() {            		    
                 var i = 0;
                 var sendMessage = [
                     Types.Messages.WELCOME,
@@ -1196,36 +402,49 @@ module.exports = Player = Character.extend({
                     self.hitPoints, //5
                     self.armor, //6
                     self.weapon, //7
-                    self.avatar, //8
-                    self.weaponAvatar, //9
                     self.experience, //10
-                    self.admin, //11
-                    self.mana, //12
-                    self.variations.doubleEXP, //13
-                    self.variations.expMultiplier, //14
-                    self.membership, //15
-                    self.kind, //16
-                    self.moderator
+                    self.mana, //11
+                    self.variations.doubleEXP, //12
+                    self.variations.expMultiplier, //13
+                    self.membership, //14
+                    self.kind, //15
+                    self.rights, //16
+                    self.pClass, //17
                 ];
-
-                for(i = 0; i < Types.Quest.TOTAL_QUEST_NUMBER; i++){
-                    sendMessage.push(self.achievement[i+1].found);
-                    sendMessage.push(self.achievement[i+1].progress);
-                }
-                for(i = 0; i < 4; i++){
-                    sendMessage.push(self.achievement[i+101].found);
-                    sendMessage.push(self.achievement[i+101].progress);
-                }
+                
+                // Send All Inventory
                 sendMessage.push(self.inventory.number);
                 for(i=0; i < self.inventory.number; i++){
                     sendMessage.push(self.inventory.rooms[i].itemKind);
                     sendMessage.push(self.inventory.rooms[i].itemNumber);
                     sendMessage.push(self.inventory.rooms[i].itemSkillKind);
                     sendMessage.push(self.inventory.rooms[i].itemSkillLevel);
+                    //log.info("inventory"+i+"=" +JSON.stringify(self.inventory.rooms[i]));
                 }
+                
+                // Send All Bank
+                //log.info("self.bank.number="+self.bank.number);
+                sendMessage.push(self.bank.number);
+                for(i=0; i < self.bank.number; i++){
+                    sendMessage.push(self.bank.rooms[i].itemKind);
+                    sendMessage.push(self.bank.rooms[i].itemNumber);
+                    sendMessage.push(self.bank.rooms[i].itemSkillKind);
+                    sendMessage.push(self.bank.rooms[i].itemSkillLevel);
+                }
+                
+                // Send All Quests
+                //log.info("Quests==================");
+                var questLength = Object.keys(Quests.QuestData).length;
+                sendMessage.push(questLength);
+                for(i = 0; i < questLength; ++i){
+                    //log.info("Quest"+i+".progress="+self.achievement[i].progress);
+                    sendMessage.push(self.achievement[i].found);
+                    sendMessage.push(self.achievement[i].progress);
+                }
+                                
                 self.send(sendMessage);
 
-
+                
                 databaseHandler.loadSkillSlots(self, function(names) {
                     for(var index = 0; index < names.length; index++) {
                         if(names[index]) {
@@ -1233,221 +452,105 @@ module.exports = Player = Character.extend({
                             self.send((new Messages.SkillInstall(index, names[index])).serialize());
                         }
                     }
-                    self.setAbility();
+                    //self.setAbility();
                 });
+
+                databaseHandler.loadPets(self, function(kinds) {
+                    for(var index = 0; index < kinds.length; index++) {
+			if (kinds[index])
+			    var pet = self.server.addPet(self, kinds[index], self.x, self.y);
+                    }
+                });                
             });
+        });
         });
 
         self.hasEnteredGame = true;
         self.isDead = false;
     },
 
-    handleLootMove: function(message){
-        if(this.lootmove_callback) {
-            this.setPosition(message[1], message[2]);
-
-            var item = this.server.getEntityById(message[3]);
-            if(item) {
-                this.clearTarget();
-
-                this.broadcast(new Messages.LootMove(this, item));
-                this.lootmove_callback(this.x, this.y);
-            }
-        }
-    },
-    handleSell: function(message){ // 41
-        var inventoryNumber = message[1];
-        var burgerCount = message[2];
-
-        if(Types.isArmor(this.inventory.rooms[inventoryNumber].itemKind) && burgerCount > 0){
-            databaseHandler.sell(this, inventoryNumber, burgerCount);
-        }
-    },
-    handleShop: function(message){ // 42
-        var command = message[1];
-        var number = message[2];
-
-        if(command === 'get'){
-            databaseHandler.getShop(this, number);
-        }
-    },
-    handleBuy: function(message){ // 43
-        var id = message[1];
-        var itemKind = message[2];
-        var burgerCount = message[3];
-
-        databaseHandler.buy(this, id, itemKind, burgerCount);
-    },
-    handleStoreSell: function(message) {
-        var inventoryNumber1 = message[1],
-            itemKind = null,
-            price = 0,
-            inventoryNumber2 = -1;
-
-        if((inventoryNumber1 >= 0) && (inventoryNumber1 < this.inventory.number)) {
-            itemKind = this.inventory.rooms[inventoryNumber1].itemKind;
-            if(itemKind) {
-                price = Types.Store.getSellPrice(Types.getKindAsString(itemKind));
-                if(price > 0) {
-                    inventoryNumber2 = this.inventory.getInventoryNumber(Types.Entities.BURGER);
-                    if(inventoryNumber2 < 0) {
-                        inventoryNumber2 = this.inventory.getEmptyInventoryNumber();
-                    }
-                    if(inventoryNumber2 < 0) {
-                        this.server.pushToPlayer(this, new Messages.Notify("Not enough space in your inventory."));
-                        return;
-                    }
-                    this.inventory.makeEmptyInventory(inventoryNumber1);
-                    this.inventory.putInventory(Types.Entities.BURGER, price, 0, 0);
-                }
-            }
-        }
-    },
-    handleStoreBuy: function(message) {
-        var itemType = message[1],
-            itemKind = message[2],
-            itemCount = message[3],
-            itemName = null,
-            price = 0,
-            burgerCount = 0,
-            inventoryNumber = -1,
-            buyCount = 0;
-
-        if(itemCount <= 0) {
-            return;
-        }
-        if(itemKind) {
-            itemName = Types.getKindAsString(itemKind);
-        }
-        if(itemName) {
-            price = Types.Store.getBuyPrice(itemName);
-            if(price > 0) {
-                if(Types.Store.isBuyMultiple(itemName)) {
-                    price = price * itemCount;
-                } else {
-                    itemCount = 1;
-                }
-                burgerCount = this.inventory.getItemNumber(Types.Entities.BURGER);
-                if(burgerCount < price) {
-                    this.server.pushToPlayer(this, new Messages.Notify("You don't have enough Burgers."));
-                    return;
-                }
-
-                if(this.inventory.hasEmptyInventory()) {
-                    this.inventory.putInventory(itemKind, Types.Store.getBuyCount(itemName) * itemCount, 0, 0);
-                    this.inventory.putInventory(Types.Entities.BURGER, -1 * price, 0, 0);
-                } else {
-                    this.server.pushToPlayer(this, new Messages.Notify("There is not enough space in your inventory."));
-                }
-            }
-        }
-    },
-
-    handleInventory: function(message){ // 28
-        var inventoryNumber = message[2],
-            count = message[3];
-        var self = this;
-
-        if(inventoryNumber > this.inventory.number){
-
-            return;
-        }
-
-        var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
-        if(itemKind){
-            if(message[1] === "armor"){
-                this.handleInventoryArmor(itemKind, inventoryNumber);
-            } else if(message[1] === "weapon"){
-                this.handleInventoryWeapon(itemKind, inventoryNumber);
-            } else if(message[1] === "pendant") {
-                this.handleInventoryPendant(itemKind, inventoryNumber);
-            } else if(message[1] === "ring") {
-                this.handleInventoryRing(itemKind, inventoryNumber);
-            } else if(message[1] === "boots") {
-                this.handleInventoryBoots(itemKind, inventoryNumber);
-            } else if(message[1] === "empty"){
-                this.handleInventoryEmpty(itemKind, inventoryNumber, count);
-            } else if(message[1] === "eat"){
-                this.handleInventoryEat(itemKind, inventoryNumber);
-            } else if(message[1] === "enchantweapon"){
-                this.handleInventoryEnchantWeapon(itemKind, inventoryNumber);
-            } else if(message[1] === "enchantbloodsucking"){
-                this.handleInventoryEnchantBloodsucking(itemKind, inventoryNumber);
-            } else if(message[1] === "enchantring"){
-                this.handleInventoryEnchantRing(itemKind, inventoryNumber);
-            } else if(message[1] === "enchantpendant"){
-                this.handleInventoryEnchantPendant(itemKind, inventoryNumber);
-            }
-        }
-    },
     canEquipArmor: function(itemKind){
 
-        var armorLevel = Types.getArmorRank(itemKind)+1;
+        var armorLevel = ItemTypes.getArmorLevel(itemKind);
         if(armorLevel * 2 > this.level){
             this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + armorLevel * 2 + " to equip this."));
             return false;
         }
+        if ((ItemTypes.isArmor(itemKind) && (this.pClass != Types.PlayerClass.FIGHTER && this.pClass != Types.PlayerClass.DEFENDER)) ||
+            (ItemTypes.isArcherArmor(itemKind) && this.pClass != Types.PlayerClass.ARCHER))
+        {
+            this.server.pushToPlayer(this, new Messages.Notify("Your class cannot use this Armor."));
+            return false;	
+        } 
         return true;
 
     },
     canEquipWeapon: function(itemKind){
 
-        var weaponLevel = Types.getWeaponRank(itemKind)+1;
+        var weaponLevel = ItemTypes.getWeaponLevel(itemKind);
         if(weaponLevel * 2 > this.level){
             this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + weaponLevel * 2 + " to equip this."));
             return false;
         }
+        if ((ItemTypes.isWeapon(itemKind) && (this.pClass != Types.PlayerClass.FIGHTER && this.pClass != Types.PlayerClass.DEFENDER)) ||
+            (ItemTypes.isArcherWeapon(itemKind) && this.pClass != Types.PlayerClass.ARCHER))
+        {
+            this.server.pushToPlayer(this, new Messages.Notify("Your class cannot use this Weapon."));
+            return false;
+        	
+        }        
         return true;
     },
-    handleInventoryAvatar: function(inventoryNumber){
-        var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
-        var itemEnchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
-        var itemSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
-        var itemSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillKind;
 
-        if(!this.canEquipArmor(itemKind)){
+    handleInventoryArmorUnequip: function () {
+	if (this.inventory.putInventory(this.armor, this.armorEnchantedPoint, this.armorSkillKind, this.armorSkillLevel))
+	{
+		this.unequipItem(this.armor);
+		this.packetHandler.broadcast(this.equip(-2), false);
+		return true;
+	}
+	return false;
+    },
+    
+    handleInventoryArmor: function(itemKind, inventoryNumber){
+        if (inventoryNumber == -2) // Unequip Armor
+        {
+        	this.handleInventoryArmorUnequip();
+        }
+
+    	if(!this.canEquipArmor(itemKind)){
             return;
         }
-        if(this.avatar){
-            this.inventory.setInventory(inventoryNumber, this.avatar, this.avatarEnchantedPoint, this.avatarSkillKind, this.avatarSkillLevel);
-        } else{
-            this.inventory.makeEmptyInventory(inventoryNumber);
-        }
-        this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
-        this.broadcast(this.equip(itemKind), false);
-    },
-    handleInventoryWeaponAvatar: function(inventoryNumber){
-        var itemKind = this.inventory.rooms[inventoryNumber].itemKind;
-        var itemEnchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
+
+        //log.info("itemEnchantedLevel="+this.inventory.rooms[inventoryNumber].itemNumber);
+        var itemEnchantedLevel = this.inventory.rooms[inventoryNumber].itemNumber;
         var itemSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
         var itemSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
 
-        if(!this.canEquipWeapon(itemKind)){
-            return;
-        }
-        if(this.weaponAvatar){
-            this.inventory.setInventory(inventoryNumber, this.weaponAvatar, this.weaponAvatarEnchantedPoint, this.weaponAvatarSkillKind, this.weaponAvatarSkillLevel);
-        } else {
-            this.inventory.makeEmptyInventory(inventoryNumber);
-        }
-        this.equipItem(itemKind, itemEnchantedPoint, itemSkillKind, itemSkillLevel, true);
-        this.broadcast(this.equip(itemKind), false);
-    },
-    handleInventoryArmor: function(itemKind, inventoryNumber){
-        if(!this.canEquipArmor(itemKind)){
-            return;
-        }
-        this.inventory.setInventory(inventoryNumber, this.armor, 0, 0, 0);
-        this.equipItem(itemKind, 0, 0, 0, false);
+        this.inventory.setInventory(inventoryNumber, this.armor, this.armorEnchantedPoint, this.armorSkillKind, this.armorSkillLevel);
+        this.equipItem(itemKind, itemEnchantedLevel, itemSkillKind, itemSkillLevel, false);
         //if(!this.avatar){
-        this.broadcast(this.equip(itemKind), false);
+        this.packetHandler.broadcast(this.equip(itemKind), false);
         //}
     },
+    
+    handleInventoryWeaponUnequip: function() {
+	if (this.inventory.putInventory(this.weapon, this.weaponEnchantedPoint, this.weaponSkillKind, this.weaponSkillLevel))
+	{
+		this.unequipItem(this.weapon);
+		this.packetHandler.broadcast(this.equip(-1), false);
+		return true;
+	}
+	return false;
+    },
+    
     handleInventoryWeapon: function(itemKind, inventoryNumber){
+        if (inventoryNumber == -1) // Unequip Weapon
+        {
+        	this.handleInventoryWeaponUnequip();
+        }
 
-        var weaponLevel = Types.getWeaponRank(itemKind) + 1;
-        if(weaponLevel * 2 > this.level){
-            this.server.pushToPlayer(this, new Messages.Notify("You need to be at least level " + weaponLevel * 2 + " to wield this weapon."));
+    	if(!this.canEquipWeapon(itemKind)){
             return;
         }
 
@@ -1460,92 +563,36 @@ module.exports = Player = Character.extend({
         this.equipItem(itemKind, enchantedPoint, weaponSkillKind, weaponSkillLevel, false);
         this.setAbility();
         //if(!this.weaponAvatar){
-        this.broadcast(this.equip(itemKind), false);
+        this.packetHandler.broadcast(this.equip(itemKind), false);
         //}
     },
-    handleInventoryPendant: function(itemKind, inventoryNumber){
-        if(!Types.isPendant(itemKind)) {
-            this.server.pushToPlayer(this, new Messages.Notify("This isn't a pendant.."));
-            return;
-        }
-        var pendantLevel = Properties.getPendantLevel(itemKind);
-        if((pendantLevel * 10) > this.level) {
-            this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + (pendantLevel * 10) + " to equip this."));
-            return;
-        }
-        var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
-        var pendantSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
-        var pendantSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
-
-        if(this.pendant) {
-            this.inventory.setInventory(inventoryNumber, this.pendant, this.pendantEnchantedPoint, this.pendantSkillKind, this.pendantSkillLevel);
-        } else {
-            this.inventory.makeEmptyInventory(inventoryNumber);
-        }
-        this.equipItem(itemKind, enchantedPoint, pendantSkillKind, pendantSkillLevel, false);
-        this.server.pushToPlayer(this, this.equip(itemKind));
-
-    },
-    handleInventoryRing: function(itemKind, inventoryNumber){
-        if(!Types.isRing(itemKind)) {
-            this.server.pushToPlayer(this, new Messages.Notify("This is not a ring."));
-            return;
-        }
-        var ringLevel = Properties.getRingLevel(itemKind);
-        if((ringLevel * 10) > this.level) {
-            this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + (ringLevel * 10) + " to equip this."));
-            return;
-        }
-        var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
-        var ringSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
-        var ringSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
-
-        if(this.ring) {
-            this.inventory.setInventory(inventoryNumber, this.ring, this.ringEnchantedPoint, this.ringSkillKind, this.ringSkillLevel);
-        } else {
-            this.inventory.makeEmptyInventory(inventoryNumber);
-
-        }
-        this.equipItem(itemKind, enchantedPoint, ringSkillKind, ringSkillLevel, false);
-        this.server.pushToPlayer(this, this.equip(itemKind));
-    },
-    handleInventoryBoots: function(itemKind, inventoryNumber){
-        if(!Types.isBoots(itemKind)) {
-            this.server.pushToPlayer(this, new Messages.Notify("These are not boots.."));
-            return;
-        }
-        var bootsLevel = Properties.getBootsLevel(itemKind);
-        if((bootsLevel * 10) > this.level) {
-            this.server.pushToPlayer(this, new Messages.Notify("You need to be level " + (bootsLevel * 10) + " to equop this."));
-            return;
-        }
-
-        var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
-        var bootsSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
-        var bootsSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
-
-        if(this.boots) {
-            this.inventory.setInventory(inventoryNumber, this.boots, this.bootsEnchantedPoint, this.bootsSkillKind, this.bootsSkillLevel);
-        } else {
-            this.inventory.makeEmptyInventory(inventoryNumber);
-        }
-        this.equipItem(itemKind, enchantedPoint, bootsSkillKind, bootsSkillLevel, false);
-        this.server.pushToPlayer(this, this.equip(itemKind));
-    },
     handleInventoryEmpty: function(itemKind, inventoryNumber, count){
-        var item = this.server.addItemFromChest(itemKind, this.x, this.y);
-        if(Types.isHealingItem(item.kind)){
+    	var item = this.server.addItemFromChest(itemKind, this.x, this.y);
+        if(ItemTypes.isConsumableItem(item.kind) || ItemTypes.isGold(item.kind) || ItemTypes.isCraft(item.kind)){
             if(count < 0){
                 count = 0;
             } else if(count > this.inventory.rooms[inventoryNumber].itemNumber){
                 count = this.inventory.rooms[inventoryNumber].itemNumber;
             }
             item.count = count;
-        } else if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind) ||
-            Types.isPendant(item.kind) || Types.isRing(item.kind) || Types.isBoots(item.kind)) {
-            item.count = this.inventory.rooms[inventoryNumber].itemNumber;
-            item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
-            item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+        } else if(ItemTypes.isWeapon(item.kind) || ItemTypes.isArcherWeapon(item.kind) ||
+			ItemTypes.isArmor(item.kind) || ItemTypes.isArcherArmor(item.kind)) {
+            
+            if (inventoryNumber > 0) {
+            	    item.count = this.inventory.rooms[inventoryNumber].itemNumber;
+        	    item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
+	            item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+	    }
+	    else if (inventoryNumber == -1) {
+            	    item.count = this.weaponEnchantedPoint;
+        	    item.skillKind = this.weaponSkillKind;
+	            item.skillLevel = this.weaponSkillLevel;	    	    
+	    }
+	    else if (inventoryNumber == -2) {
+            	    item.count = this.armorEnchantedPoint;
+        	    item.skillKind = this.armorSkillKind;
+	            item.skillLevel = this.armorSkillLevel;
+	    }
         }
 
         if(item.count >= 0) {
@@ -1553,35 +600,58 @@ module.exports = Player = Character.extend({
             //this.server.addItemFromChest(itemKind, this.x, this.y);
             this.server.handleItemDespawn(item);
 
-            if(Types.isHealingItem(item.kind)) {
-                this.inventory.takeOutInventory(inventoryNumber, item.count);
-            } else {
-                this.inventory.makeEmptyInventory(inventoryNumber);
-            }
+            if (inventoryNumber >= 0) {
+		    if(ItemTypes.isConsumableItem(item.kind) || ItemTypes.isGold(item.kind) || ItemTypes.isCraft(item.kind)) {
+			this.inventory.takeOutInventory(inventoryNumber, item.count);
+		    } else {
+			this.inventory.makeEmptyInventory(inventoryNumber);
+		    }
+	    }
+	    else if (inventoryNumber == -1) {
+        	this.unequipItem(this.weapon);
+        	this.packetHandler.broadcast(this.equip(-1), false);
+	    }
+	    else if (inventoryNumber == -2) {
+        	this.unequipItem(this.armor);
+        	this.packetHandler.broadcast(this.equip(-2), false);	    	
+	    }
         } else {
             this.server.removeEntity(item);
             this.inventory.makeEmptyInventory(inventoryNumber);
         }
     },
     handleInventoryEat: function(itemKind, inventoryNumber){
+        if(this.consumeTimeout){
+            return;
+        } else{
+            this.consumeTimeout = setTimeout(function(){
+                self.consumeTimeout = null;
+            }, 4000);
+        }
+
         var self = this;
-        if(itemKind === Types.Entities.ROYALAZALEA){
-            this.broadcast(this.equip(Types.Entities.ROYALAZALEABENEF), false);
+        if(itemKind === 212){ // ROYALAZALEA
+            this.packetHandler.broadcast(this.equip(213), false); // ROYALAZALEABENEF
             if(this.royalAzaleaBenefTimeout){
                 clearTimeout(this.royalAzaleaBenefTimeout);
             }
             this.royalAzaleaBenefTimeout = setTimeout(function(){
                 self.royalAzaleaBenefTimeout = null;
             }, 15000);
+        } else if (ItemTypes.isMount(itemKind) ) {
+        	this.packetHandler.broadcast(this.equip(itemKind), false);        	
         } else {
             var amount;
 
             switch(itemKind) {
-                case Types.Entities.FLASK:
-                    amount = 80;
+                case 35: // FLASK
+                    amount = 100;
                     break;
-                case Types.Entities.BURGER:
+                case 36: // BURGER
                     amount = 200;
+                    break;
+                case 401: // BIGFLASK
+                    amount = ~~(this.maxHitPoints * 0.35);
                     break;
             }
 
@@ -1594,7 +664,7 @@ module.exports = Player = Character.extend({
         this.inventory.takeOutInventory(inventoryNumber, 1);
     },
     handleInventoryEnchantWeapon: function(itemKind, inventoryNumber){
-        if(itemKind !== Types.Entities.SNOWPOTION){
+        if(itemKind !== 200){ // SNOWPOTION
             this.server.pushToPlayer(this, new Messages.Notify("This isn't a snowpotion."));
             return;
         }
@@ -1616,7 +686,7 @@ module.exports = Player = Character.extend({
         }
     },
     handleInventoryEnchantBloodsucking: function(itemKind, inventoryNumber){
-        if(itemKind !== Types.Entities.BLACKPOTION){
+        if(itemKind !== 306){ // BLACKPOTION
             this.server.pushToPlayer(this, new Messages.Notify("This isn't a black potion."));
             return;
         }
@@ -1629,7 +699,7 @@ module.exports = Player = Character.extend({
             return;
         }
         if(this.weaponSkillKind !== Types.Skills.BLOODSUCKING){
-            this.server.pushToPlayer(this, new Messages.Notify("You can use a black potion."));
+            this.server.pushToPlayer(this, new Messages.Notify("You can use a black potion.")); //NOTE - Not sure about this
             return;
         }
 
@@ -1647,212 +717,8 @@ module.exports = Player = Character.extend({
             this.server.pushToPlayer(this, new Messages.Notify("The enchantment failed."));
         }
     },
-    handleInventoryEnchantRing: function(itemKind, inventoryNumber){
-        if(itemKind !== Types.Entities.SNOWPOTION){
-            this.server.pushToPlayer(this, new Messages.Notify("This isn't a Snow Potion."));
-            return;
-        }
-        if(this.ringEnchantedPoint >= 9){
-            this.server.pushToPlayer(this, new Messages.Notify("The ring enchantment cannot exceed level 9."));
-            return;
-        }
-        this.inventory.makeEmptyInventory(inventoryNumber);
-        if(Utils.ratioToBool(0.3)){
-            this.server.pushToPlayer(this, new Messages.Notify("Ring enchantment successful."));
-            if(this.ringEnchantedPoint){
-                this.ringEnchantedPoint += 1;
-            } else{
-                this.ringEnchantedPoint = 1;
-            }
-            databaseHandler.enchantRing(this.name, this.ringEnchantedPoint);
-        } else if(this.ringEnchantedPoint && Utils.ratioToBool(0.3/0.7)){
-            this.server.pushToPlayer(this, new Messages.Notify("The ring has been weakened."));
-            if(this.ringEnchantedPoint >= 1){
-                this.ringEnchantedPoint -= 1;
-            } else{
-                this.ringEnchantedPoint = 0;
-            }
-            databaseHandler.enchantRing(this.name, this.ringEnchantedPoint);
-        } else{
-            this.server.pushToPlayer(this, new Messages.Notify("The enchantment failed."));
-        }
-    },
-    handleInventoryEnchantPendant: function(itemKind, inventoryNumber){
-        if(itemKind !== Types.Entities.SNOWPOTION){
-            this.server.pushToPlayer(this, new Messages.Notify("This isn't a snow potion."));
-            return;
-        }
-        if(this.pendantEnchantedPoint >= 9){
-            this.server.pushToPlayer(this, new Messages.Notify("The pendant enchantment cannot exceed level 9."));
-            return;
-        }
-        this.inventory.makeEmptyInventory(inventoryNumber);
-        if(Utils.ratioToBool(0.3)){
-            this.server.pushToPlayer(this, new Messages.Notify("Pendant enchantment successful."));
-            if(this.pendantEnchantedPoint){
-                this.pendantEnchantedPoint += 1;
-            } else{
-                this.pendantEnchantedPoint = 1;
-            }
-            databaseHandler.enchantPendant(this.name, this.pendantEnchantedPoint);
-        } else if(this.pendantEnchantedPoint && Utils.ratioToBool(0.3/0.7)){
-            this.server.pushToPlayer(this, new Messages.Notify("The pendant has been weakened."));
-            if(this.pendantEnchantedPoint >= 1){
-                this.pendantEnchantedPoint -= 1;
-            } else{
-                this.pendantEnchantedPoint = 0;
-            }
-            databaseHandler.enchantPendant(this.name, this.pendantEnchantedPoint);
 
-        } else {
-            this.server.pushToPlayer(this, new Messages.Notify("The enchantment failed."));
-        }
-    },
-
-
-
-    handleLoot: function(message){
-        var self = this;
-        var item = this.server.getEntityById(message[1]);
-
-        if(item) {
-            var kind = item.kind;
-            var itemRank = 0;
-
-            if(Types.isItem(kind)) {
-                if(kind === Types.Entities.FIREPOTION) {
-                    this.updateHitPoints();
-                    this.broadcast(this.equip(Types.Entities.FIREBENEF), false);
-                    this.broadcast(item.despawn(), false);
-                    this.server.removeEntity(item);
-                    this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana));
-                } else if(Types.isHealingItem(kind)
-                    || Types.isWeapon(kind)
-                    || Types.isArmor(kind)
-                    || Types.isArcherArmor(kind)
-                    || Types.isArcherWeapon(kind)
-                    || Types.isPendant(kind)
-                    || Types.isRing(kind)
-                    || Types.isBoots(kind)
-                    || kind === Types.Entities.CAKE
-                    || kind === Types.Entities.CD
-                    || kind === Types.Entities.SNOWPOTION
-                    || kind === Types.Entities.BLACKPOTION) {
-                    if(self.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel)){
-                        this.broadcast(item.despawn(), false);
-                        this.server.removeEntity(item);
-                    }
-                }
-            }
-        }
-    },
-
-
-    computeSkillLevel: function() {
-        if(this.achievement[10].progress === 999) {
-            if(this.achievement[11].progress === 999) {
-                if(this.achievement[14].progress === 999) {
-                    if(this.achievement[18].progress === 999) {
-
-                        this.skillHandler.add('evasion', 4);
-                    } else {
-
-                        this.skillHandler.add('evasion', 3);
-                    }
-                } else{
-
-                    this.skillHandler.add('evasion', 2);
-                }
-            } else {
-
-                this.skillHandler.add('evasion', 1);
-            }
-        }
-        if(this.achievement[12].progress === 999) {
-            if(this.achievement[13].progress === 999) {
-                if(this.achievement[17].progress === 999) {
-                    if(this.achievement[20].progress === 999) {
-                        this.skillHandler.add('bloodSucking', 4);
-                    } else {
-                        this.skillHandler.add('bloodSucking', 3);
-                    }
-                } else {
-                    this.skillHandler.add('bloodSucking', 2);
-                }
-            } else {
-                this.skillHandler.add('bloodSucking', 1);
-            }
-        }
-        if(this.achievement[15].progress === 999) {
-            if(this.achievement[16].progress === 999) {
-                if(this.achievement[21].progress === 999) {
-                    if(this.achievement[24].progress === 999) {
-                        this.skillHandler.add('criticalStrike', 4);
-                    } else {
-                        this.skillHandler.add('criticalStrike', 3);
-                    }
-                } else {
-                    this.skillHandler.add('criticalStrike', 2);
-                }
-            } else {
-                this.skillHandler.add('criticalStrike', 1);
-            }
-        }
-        if(this.achievement[19].progress === 999) {
-            if(this.achievement[22].progress === 999) {
-                if(this.achievement[25].progress === 999) {
-                    if(this.achievement[28].progress === 999) {
-                        this.skillHandler.add('heal', 4);
-                    } else{
-                        this.skillHandler.add('heal', 3);
-                    }
-                } else {
-                    this.skillHandler.add('heal', 2);
-                }
-            } else {
-                this.skillHandler.add('heal', 1);
-            }
-        }
-        if(this.achievement[23].progress === 999) {
-            if(this.achievement[26].progress === 999) {
-                if(this.achievement[29].progress === 999) {
-                    if(this.achievement[32].progress === 999) {
-                        this.skillHandler.add('flareDance', 4);
-                    } else{
-                        this.skillHandler.add('flareDance', 3);
-                    }
-                } else{
-                    this.skillHandler.add('flareDance', 2);
-                }
-            } else {
-                this.skillHandler.add('flareDance', 1);
-            }
-        }
-        if(this.achievement[27].progress === 999) {
-            if(this.achievement[30].progress === 999) {
-                if(this.achievement[33].progress === 999) {
-                    this.skillHandler.add('stun', 3);
-                } else{
-                    this.skillHandler.add('stun', 2);
-                }
-            } else{
-                this.skillHandler.add('stun', 1);
-            }
-        }
-        if(this.achievement[31].progress === 999){
-            if(this.achievement[34].progress === 999) {
-                this.skillHandler.add('superCat', 2);
-            } else{
-                this.skillHandler.add('superCat', 1);
-            }
-        }
-        if(this.achievement[35].progress === 999){
-            this.skillHandler.add('provocation', 1);
-        }
-    },
     setAbility: function(){
-        this.computeSkillLevel();
-
         this.bloodsuckingRatio = 0;
         if(this.weaponSkillKind === Types.Skills.BLOODSUCKING){
             this.bloodsuckingRatio += this.weaponSkillLevel*0.02;
@@ -1866,305 +732,47 @@ module.exports = Player = Character.extend({
             this.criticalRatio += this.weaponSkillLevel*0.01;
         }
     },
+    
+    isAdmin: function () {
+    	if (this.name == "Langerz" || this.name == "Tachyon")
+    		return true;
 
-    handleHit: function(message){ // 8
-        var mobId = message[1];
-        var mob = this.server.getEntityById(message[1]);
-        var self = this;
-
-        if(this.cooltimeTimeout){
-            return;
-        } else{
-            this.cooltimeTimeout = setTimeout(function(){
-                self.cooltimeTimeout = null;
-            }, 720);
-        }
-
-        if(mob && this.id){
-            var dmg = Formulas.dmg(this, mob);
-            if(mob instanceof Player){
-                dmg = Formulas.newDmg(this, mob);
-            }
-
-            if(dmg > 0){
-                if(Utils.ratioToBool(this.criticalRatio)){
-                    var criticalStrikeLevel = this.skillHandler.getLevel("criticalStrike");
-
-                    if (isNaN(criticalStrikeLevel)) {
-                        criticalStrikeLevel = 1;
-                        var dmg2 = dmg * (1 + (0.5 * criticalStrikeLevel));
-                        var dmg3 = dmg;
-                        dmg = Math.round(dmg2 + (this.ringSkillKind == Types.Skills.CRITICALATTACK ? dmg * (this.ringSkillLevel * 0.05) : 0));
-                        if (isNaN(dmg)) {
-                            dmg = dmg3;
-                        }
-                        log.info('critical: ' + dmg);
-
-                        this.broadcast(new Messages.Skill("critical", mobId, 0), false);
-                    } else {
-                        var dmg2 = dmg * (1 + (0.5 * criticalStrikeLevel));
-                        dmg = Math.round(dmg2 + (this.ringSkillKind == Types.Skills.CRITICALATTACK ? dmg * (this.ringSkillLevel * 0.05) : 0));
-
-                        log.info('critical: ' + dmg);
-
-                        this.broadcast(new Messages.Skill("critical", mobId, 0), false);
-                    }
-                }
-
-                var bloodsuckingAmount = dmg * (this.bloodsuckingRatio + this.skillHandler.getLevel("bloodSucking")*0.05);
-
-                if(this.ringSkillKind == Types.Skills.ATTACKWITHBLOOD) {
-                    var hitPoints = this.hitPoints,
-                        bleedingAmount = this.maxHitPoints * (this.ringSkillLevel * 0.01);
-                    if(hitPoints > bleedingAmount) {
-                        bloodsuckingAmount -= bleedingAmount;
-                    }
-                }
-
-                bloodsuckingAmount = Math.floor(bloodsuckingAmount);
-                if(bloodsuckingAmount != 0){
-                    this.regenHealthBy(bloodsuckingAmount);
-                    this.server.pushToPlayer(this, this.health());
-                }
-
-                if(mob.type !== "player"){
-                    mob.receiveDamage(dmg, this.id);
-                    if(mob.hitPoints <= 0){
-                        this.questAboutKill(mob);
-                    }
-                    this.server.handleMobHate(mob.id, this.id, dmg);
-                    this.server.handleHurtEntity(mob, this, dmg);
-                } else{
-                    mob.hitPoints -= dmg;
-                    mob.server.handleHurtEntity(mob, this, dmg);
-                    if(mob.hitPoints <= 0){
-                        mob.isDead = true;
-                        this.server.pushBroadcast(new Messages.Chat(this, "/1 " + this.name + " killed " + mob.name + " in combat."));
-                    }
-                }
-            }
-        }
-    },
-    handleHurt: function(message){ // 9
-        var self = this;
-        log.info("HURT: " + this.name + " " + message[1]);
-        var mob = this.server.getEntityById(message[1]);
-        if(mob &&
-            (mob.kind === Types.Entities.FORESTDRAGON
-            || mob.kind == Types.Entities.SEADRAGON
-            || mob.kind == Types.Entities.HELLSPIDER
-            || mob.kind == Types.Entities.SKYDINOSAUR)){
-            var group = this.server.groups[this.group];
-            if(group){
-                _.each(group.players, function(playerId){
-                    var attackedPlayer = self.server.getEntityById(playerId);
-                    if(attackedPlayer){
-                        attackedPlayer.hitPoints -= Formulas.dmg(mob, attackedPlayer);
-                        self.server.handleHurtEntity(attackedPlayer, mob);
-
-                        if(attackedPlayer.hitPoints <= 0) {
-                            attackedPlayer.isDead = true;
-                            if(attackedPlayer.level >= 50){
-                                attackedPlayer.incExp(Math.floor(attackedPlayer.level*attackedPlayer.level*(-2)));
-                            }
-                        }
-                    }
-                });
-            }
-        }
-        if(mob && this.hitPoints > 0 && mob instanceof Mob) {
-            var evasionLevel = this.skillHandler.getLevel("evasion");
-            if(evasionLevel > 0) {
-                var randNum = Math.random(),
-                    avoidChance = 0.05 * evasionLevel;
-
-                if(this.pendantSkillKind == Types.Skills.AVOIDATTACK){
-                    avoidChance += this.pendantSkillLevel * 0.01;
-                }
-
-                if(randNum < avoidChance){
-                    this.server.pushToPlayer(this, new Messages.Damage(this, 'MISS', this.hitPoints, this.maxHitPoints));
-                    return;
-                }
-            }
-
-            this.hitPoints -= Formulas.dmg(mob, this);
-            this.server.handleHurtEntity(this, mob);
-            mob.addTanker(this.id);
-
-            if(this.hitPoints <= 0) {
-                this.isDead = true;
-                if(this.level >= 50){
-                    this.incExp(Math.floor(this.level*this.level*(-2)));
-                }
-                if(this.flareDanceCallback) {
-                    clearTimeout(this.flareDanceCallback);
-                    this.flareDanceCallback = null;
-                    this.flareDanceExecuted1 = 0;
-                    this.flareDanceExecuted2 = 0;
-                    this.flareDanceCount = 0;
-                }
-            }
-        }
-    },
-    handleSkill: function(message){
-        var self = this;
-        var type = message[1];
-        var targetId = message[2];
-        if(type === "heal"){
-            if(this.party){
-                var healLevel = this.skillHandler.getLevel("heal"),
-                    now = (new Date()).getTime();
-                if((healLevel > 0) && ((now - this.healExecuted) > 30 * 1000) && this.mana >= 30) {
-                    var i = 0;
-                    var partyPlayers = this.party.players;
-                    var p = null;
-                    var amount = 0;
-                    switch(healLevel) {
-                        case 1: amount = this.level;
-                        case 2: amount = Math.floor(this.level * 1.5);
-                        case 3: amount = this.level * 2;
-                        case 4: amount = Math.floor(this.level * 2.5);
-                    }
-                    if(this.pendantSkillKind == Types.Skills.HEALANDHEAL) {
-                        amount += this.pendantSkillLevel * 10;
-                    }
-                    if(this.ringSkillKind == Types.Skills.HEALANDHEAL) {
-                        amount += this.ringSkillLevel * 10;
-                    }
-                    for(i=0; i < partyPlayers.length; i++){
-                        p = partyPlayers[i];
-                        if(p === this){
-                            continue;
-                        }
-                        if(!p.hasFullHealth()) {
-                            p.regenHealthBy(amount);
-                            p.server.pushToPlayer(p, p.health());
-                        }
-                    }
-                    this.healExecuted = now;
-                    this.broadcast(new Messages.Skill("heal", this.id, 0), false);
-                    this.mana -= 30;
-                    this.server.pushToPlayer(this, new Messages.Mana(this));
-                }
-            } else{
-
-                this.server.pushToPlayer(this, new Messages.Notify("You're not in a party."));
-            }
-        } else if(type === "flareDance"){
-            var flareDanceLevel = this.skillHandler.getLevel("flareDance"),
-                now = (new Date).getTime();
-            if((flareDanceLevel > 0) && ((now - this.flareDanceExecuted1) > 10 * 1000) && this.mana >= 100) {
-                this.broadcast(new Messages.Skill("flareDance", this.id, 0), false);
-                self.flareDanceCallback = setTimeout(function () {
-                    self.flareDanceCallback = null;
-                    self.broadcast(new Messages.Skill("flareDanceOff", self.id, 0), false);
-                }, 5*1000);
-                this.flareDanceExecuted1 = now;
-                this.flareDanceExecuted2 = 0;
-                this.flareDanceCount = 0;
-                this.mana -= 100;
-                this.server.pushToPlayer(this, new Messages.Mana(this));
-            }
-        } else if(type === "stun"){
-            var target = this.server.getEntityById(targetId);
-            var stunLevel = this.skillHandler.getLevel("stun");
-            var now = (new Date).getTime();
-            if(target
-                && stunLevel > 0
-                && (now - this.stunExecuted) > 30 * 1000
-                && this.mana >= 150) {
-                this.broadcast(new Messages.Skill("stun", targetId, stunLevel), false);
-                this.stunExecuted = now;
-                this.mana -= 150;
-                this.server.pushToPlayer(this, new Messages.Mana(this));
-            }
-        } else if(type === "superCat"){
-            var superCatLevel = this.skillHandler.getLevel("superCat");
-            var now = (new Date).getTime();
-            if(superCatLevel > 0 && (now - this.superCatExecuted) > 90 * 1000
-                && this.mana >= 200 && this.superCatCallback == null){
-                this.broadcast(new Messages.Skill("superCat", this.id, superCatLevel), false);
-                this.superCatExecuted = now;
-                this.mana -= 200;
-                this.server.pushToPlayer(this, new Messages.Mana(this));
-                this.superCatCallback = setTimeout(function () {
-                    self.superCatCallback = null;
-                    self.broadcast(new Messages.Skill("superCatOff", self.id, 0), false);
-                }, 30*1000);
-            }
-        } else if(type === "provocation"){
-            var target = this.server.getEntityById(targetId);
-            var provocationLevel = this.skillHandler.getLevel("provocation");
-            var now = (new Date).getTime();
-            if(target
-                && provocationLevel > 0
-                && (now - this.provocationExecuted) > 15 * 1000
-                && this.mana >= 50) {
-                this.broadcast(new Messages.Skill("provocation", targetId, provocationLevel), false);
-                this.provocationExecuted = now;
-                this.mana -= 50;
-                this.server.pushToPlayer(this, new Messages.Mana(this));
-                this.server.provocateMob(this, target);
-            }
-        }
-    },
-    handleFlareDance: function(message){
-        if(this.flareDanceCallback) {
-            var flareDanceLevel = this.skillHandler.getLevel("flareDance"),
-                now = (new Date).getTime();
-            if((flareDanceLevel > 0) && ((now - this.flareDanceExecuted2) >= 720) && (this.flareDanceCount < 10)) {
-                var i=1;
-                var dmg = this.level;
-
-                this.flareDanceExecuted2 = now;
-                this.flareDanceCount++;
-
-                if(flareDanceLevel == 2) {
-                    dmg = Math.floor(this.level * 1.4);
-                } else if(flareDanceLevel == 3){
-                    dmg = Math.floor(this.level * 1.7);
-                } else if(flareDanceLevel == 4){
-                    dmg = Math.floor(this.level * 2);
-                }
-
-                for(i=1; i<5; i++){
-                    var mob = this.server.getEntityById(message[i]);
-                    if(mob){
-                        mob.receiveDamage(dmg, this.id);
-                        if(mob.hitPoints <= 0){
-                            this.questAboutKill(mob);
-                        }
-                        this.server.handleMobHate(mob.id, this.id, dmg);
-                        this.server.handleHurtEntity(mob, this, dmg);
-                    }
-                }
-            }
-        }
-    },
-    handleSkillInstall: function(message) {
-        var index = message[1],
-            name = message[2],
-            self = this;
-
-        if(((index >= 0) && (index < this.skillHandler.skillSlots.length)) && (name in Types.Player.Skills)) {
-            databaseHandler.handleSkillInstall(this, index, name, function() {
-                self.skillHandler.install(index, name);
-                self.server.pushToPlayer(self, new Messages.SkillInstall(index, name));
-            });
-        }
+    	return false;
     },
 
-    getRanking: function() {
-        databaseHandler.getPlayerRanking(this, function(ranking){
-            log.debug("Ranking: " + ranking);
-        });
+    hasPet: function(pet) {
+    	for ( var i = 0; i < this.pets.length; ++i)
+    	{
+    		if (pet === this.pets[i])
+    			return true;
+    	}
+    	return false;
     },
 
-    sendCurrentCountdown: function(player) {
-        var time = player.server.getMinigameTime();
-        log.info("Sent Time: " + time + " to player: " + player.name);
-        player.send((new Messages.Countdown(time)).serialize());
-    }
-
+    getHp: function () {
+        if (this.pClass == Types.PlayerClass.FIGHTER)
+            return 50 + (this.level * 10);
+        // 20% More health.
+    	if (this.pClass == Types.PlayerClass.DEFENDER)
+    	    return 60 + (this.level * 12);
+    	// 20% Less health.
+    	if (this.pClass == Types.PlayerClass.MAGE)
+    	    return 40 + (this.level * 8);
+    	// 10% Less health.
+    	if (this.pClass == Types.PlayerClass.ARCHER)
+    	    return 45 + (this.level * 9);
+    },
+    
+    getMp: function () {
+        if (this.pClass == Types.PlayerClass.FIGHTER)
+            return 10 + (this.level * 2);
+    	if (this.pClass == Types.PlayerClass.DEFENDER)
+    	    return 25 + (this.level * 2);
+    	if (this.pClass == Types.PlayerClass.MAGE)
+    	    return 30 + (this.level * 10);
+    	if (this.pClass == Types.PlayerClass.ARCHER)
+    	    return 10 + (this.level * 2);
+    	    
+    },
+    
 });

@@ -15,19 +15,19 @@ function generateCollisionGrid() {
     for(var j, i = 0; i < mapData.height; i++) {
         mapData.grid[i] = [];
         for(j = 0; j < mapData.width; j++) {
-            mapData.grid[i][j] = 0;
+            mapData.grid[i][j] = false;
         }
     }
 
     _.each(mapData.collisions, function(tileIndex) {
         var pos = tileIndexToGridPosition(tileIndex+1);
-        mapData.grid[pos.y][pos.x] = 1;
+        mapData.grid[pos.y][pos.x] = true;
     });
 
     _.each(mapData.blocking, function(tileIndex) {
         var pos = tileIndexToGridPosition(tileIndex+1);
         if(mapData.grid[pos.y] !== undefined) {
-            mapData.grid[pos.y][pos.x] = 1;
+            mapData.grid[pos.y][pos.x] = true;
         }
     });
 }
@@ -40,9 +40,9 @@ function generatePlateauGrid() {
         mapData.plateauGrid[i] = [];
         for(j = 0; j < mapData.width; j++) {
             if(_.include(mapData.plateau, tileIndex)) {
-                mapData.plateauGrid[i][j] = 1;
+                mapData.plateauGrid[i][j] = true;
             } else {
-                mapData.plateauGrid[i][j] = 0;
+                mapData.plateauGrid[i][j] = false;
             }
             tileIndex += 1;
         }

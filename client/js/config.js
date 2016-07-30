@@ -2,7 +2,7 @@
 define(['text!../config/config_build.json'],
 function(build) {
     var config = {
-        dev: { host: "localhost", port: 8000, dispatcher: false },
+        dev: { host: "192.168.0.20", port: 1340, dispatcher: false, useLocalAPI: false },
         build: JSON.parse(build)
     };
 

@@ -83,8 +83,8 @@ define(['jquery'], function(){
                 $('#sellInventory' + i).click(function(){
                     self.sellInventoryNumber = parseInt(this.id.slice(-1));
                     var itemKind = self.game.inventoryHandler.inventory[self.sellInventoryNumber];
-                    if(Types.isArmor(itemKind)){
-                        $('#sellItem').css('background-image', "url('../client/img/" + this.scale + "/item-" + Types.getKindAsString(itemKind) + ".png')");
+                    if(ItemTypes.isArmor(itemKind)){
+                        $('#sellItem').css('background-image', "url('../client/img/" + this.scale + "/item-" + ItemTypes.getKindAsString(itemKind) + ".png')");
                     } else{
                         self.sellInventoryNumber = null;
                     }
@@ -106,8 +106,8 @@ define(['jquery'], function(){
                 this.buySlotId[slotNumber] = message[i];
                 this.buySlotItem[slotNumber] = parseInt(message[i+1]);
                 this.buySlotBurgerCount[slotNumber] = parseInt(message[i+2]);
-                $('#buyItem'+slotNumber).css('background-image', "url('../client/img/" + this.scale + "/item-" + Types.getKindAsString(this.buySlotItem[slotNumber]) + ".png')");
-                $('#buyItem'+slotNumber).attr('title', Types.getName(this.buySlotItem[slotNumber], this.game.language) + ": Armor +" + (Types.getArmorRank(this.buySlotItem[slotNumber]) + 1));
+                $('#buyItem'+slotNumber).css('background-image', "url('../client/img/" + this.scale + "/item-" + ItemTypes.getKindAsString(this.buySlotItem[slotNumber]) + ".png')");
+                $('#buyItem'+slotNumber).attr('title', ItemTypes.getName(this.buySlotItem[slotNumber], this.game.language) + ": Armor +" + (Types.getArmorRank(this.buySlotItem[slotNumber]) + 1));
                 $('#buyCount'+slotNumber).html("x" + this.buySlotBurgerCount[slotNumber]);
                 $('#buySlot'+slotNumber).css('display', 'block');
             }
@@ -118,7 +118,7 @@ define(['jquery'], function(){
 
             for(i=0; i<this.game.player.maxInventoryNumber; i++){
                 if(this.game.inventoryHandler.inventory){
-                    $('#sellInventory'+i).css('background-image', "url('../client/img/" + this.scale + "/item-" + Types.getKindAsString(this.game.inventoryHandler.inventory[i]) + ".png')");
+                    $('#sellInventory'+i).css('background-image', "url('../client/img/" + this.scale + "/item-" + ItemTypes.getKindAsString(this.game.inventoryHandler.inventory[i]) + ".png')");
                 }
             }
         },

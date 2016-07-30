@@ -1,0 +1,225 @@
+{
+  "Rat": {
+    "name": "Rat",
+    "kind": 2,
+    "drops": null,
+    "hp": 10,
+    "armor": 0,
+    "weapon": 0,
+    "xp": 5,
+    "level": 1,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 1500,
+    "moveSpeed": 500,
+    "spawnDelay": 15000
+  },
+
+  "Bat": {
+    "name": "Batterfly",
+    "kind": 8,
+    "drops": {"flask": 500, "null": 500},
+    "hp": 20,
+    "armor": 0,
+    "weapon": 1,
+    "xp": 10,
+    "level": 4,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 350,
+    "spawnDelay": 20000
+  },
+
+  "Crab": {
+    "name": "Crab",
+    "kind": 7,
+    "drops": {"flask": 500, "null": 500},
+    "hp": 35,
+    "armor": 0,
+    "weapon": 0,
+    "xp": 10,
+    "level": 3,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 1250,
+    "moveSpeed": 300,
+    "spawnDelay": 20000
+  },
+
+  "Wizard": {
+    "name": "Wizard",
+    "kind": 9,
+    "drops": {"axe": 600, "morningstar": 100, "woodenbow": 300},
+    "hp": 50,
+    "armor": 4,
+    "weapon": 2,
+    "xp": 40,
+    "level": 7,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 350,
+    "spawnDelay": 35000
+  },
+
+  "Goblin": {
+    "name": "Goblin",
+    "kind": 4,
+    "drops": {"leatherarmor": 250, "plasticbow": 225, "gold": 300, "leatherarcherarmor": 225},
+    "hp": 30,
+    "armor": 1,
+    "weapon": 2,
+    "xp": 15,
+    "level": 5,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 1250,
+    "moveSpeed": 300,
+    "spawnDelay": 25000
+  },
+
+  "Skeleton": {
+    "name": "Skeleton",
+    "kind": 3,
+    "drops": {"axe": 400, "gold": 200, "ironbow": 400},
+    "hp": 40,
+    "armor": 1,
+    "weapon": 1,
+    "xp": 20,
+    "level": 6,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 350,
+    "spawnDelay": 35000
+  },
+
+  "Ogre": {
+    "name": "Ogre",
+    "kind": 5,
+    "drops": {"axe": 300, "gold": 150, "bluesword": 50, "mailarmor": 175, "ironbow": 150, "mailarcherarmor": 175},
+    "hp": 60,
+    "armor": 3,
+    "weapon": 2,
+    "xp": 50,
+    "level": 8,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 1250,
+    "moveSpeed": 300,
+    "spawnDelay": 45000
+  },
+
+
+  "Skeleton2": {
+    "name": "Armoured Skeleton",
+    "kind": 12,
+    "drops": {"axe": 250, "morningstar": 200, "platearmor": 300, "platearcherarmor": 250},
+    "hp": 50,
+    "armor": 4,
+    "weapon": 2,
+    "xp": 40,
+    "level": 7,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 350,
+    "spawnDelay": 35000
+  },
+
+  "Snek": {
+    "name": "Snek",
+    "kind": 11,
+    "drops": {"mailarcherarmor": 400, "morningstar": 200, "platearmor": 400},
+    "hp": 50,
+    "armor": 4,
+    "weapon": 2,
+    "xp": 40,
+    "level": 7,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 350,
+    "spawnDelay": 35000
+  },
+
+  "Spectre": {
+    "name": "Spectre",
+    "kind": 6,
+    "drops": {"redarmor": 200, "axe": 400, "bluesword": 400},
+    "hp": 50,
+    "armor": 4,
+    "weapon": 2,
+    "xp": 40,
+    "level": 7,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 350,
+    "spawnDelay": 35000
+  },
+
+  "Eye": {
+    "name": "Eye",
+    "kind": 10,
+    "drops": {"redarcherarmor": 600, "axe": 100, "bluesword": 300},
+    "hp": 50,
+    "armor": 4,
+    "weapon": 2,
+    "xp": 40,
+    "level": 7,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 350,
+    "spawnDelay": 35000
+  },
+
+  "Deathknight": {
+    "name": "Dog",
+    "kind": 14,
+    "drops": {"redsword": 600, "redarmor": 100, "morningstar": 300},
+    "hp": 50,
+    "armor": 4,
+    "weapon": 2,
+    "xp": 40,
+    "level": 7,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 350,
+    "spawnDelay": 35000
+  },
+
+  "Skeletonking": {
+    "name": "Skeleton King",
+    "kind": 13,
+    "drops": {"goldensword": 450, "bigflask": 250, "redsword": 300},
+    "hp": 50,
+    "armor": 10,
+    "weapon": 6,
+    "xp": 40,
+    "level": 25,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+
+  }
+
+}

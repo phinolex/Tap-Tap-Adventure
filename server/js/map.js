@@ -1,16 +1,15 @@
 var cls = require('./lib/class');
-    _ = require('underscore');
+_ = require('underscore');
 var fs = require('fs');
 var file = require('../../shared/js/file');
 var path = require('path');
 var Utils = require('./utils');
 var Checkpoint = require('./checkpoint');
 var Area = require('./area');
-var collisionGrid = require('../data/maps/collisiongrid.json');
-var $ = require('jquery');
-
 
 var Map = cls.Class.extend({
+
+
     init: function (filepath) {
         var self = this;
 
@@ -40,18 +39,20 @@ var Map = cls.Class.extend({
         this.staticChests = thismap.staticChests;
         this.staticEntities = thismap.staticEntities;
         this.isLoaded = true;
+        this.generateCollisions = false;
 
         // zone groups
-        this.zoneWidth = 28;
-        this.zoneHeight = 12;
+        this.zoneWidth = 20;
+        this.zoneHeight = 10;
         this.groupWidth = Math.floor(this.width / this.zoneWidth);
         this.groupHeight = Math.floor(this.height / this.zoneHeight);
 
         this.initConnectedGroups(thismap.doors);
         this.initCheckpoints(thismap.checkpoints);
         this.initPVPAreas(thismap.pvpAreas);
+        this.loadCollisionGrid();
 
-        if (this.readyFunc) {
+        if (!this.generateCollisions && this.readyFunc) {
             this.readyFunc();
         }
     },
@@ -82,22 +83,61 @@ var Map = cls.Class.extend({
         return (y * this.width) + x + 1;
     },
 
-    generateCollisionGrid: function () {
-        var location = ('./server/data/maps/collisiongrid.json');
-
-        this.grid = collisionGrid;
-        log.info("Loaded collision grid JSON.");
+    generateArea: function(width, height) {
 
     },
 
-    writeCollisionGrid: function(outputFilename, data) {
-        fs.writeFile(outputFilename, JSON.stringify(data), function(err) {
-            if(err) {
-                log.info(err);
-            } else {
-                log.info("JSON saved to " + outputFilename);
-            }
-        });
+    loadCollisionGrid: function() {
+        var self = this;
+        var collisionGrid = require('../data/map/collisions.json');
+
+
+        if (self.generateCollisions) {
+            var filePath = ('./server/data/map/collisiongrid.json')
+            fs.exists(filePath, function(exists) {
+                if (exists) {
+                    log.info("JSON Collision Grid already exists.. Assigning");
+                    self.grid = collisionGrid;
+                } else {
+                    log.info("Generating collision grid...");
+                    self.grid = [];
+                    if (self.isLoaded) {
+                        var tileIndex = 0;
+                        log.info("height:"+self.height+",width:"+self.width);
+                        for (var i = 0; i < self.height; i++) {
+                            self.grid[i] = [];
+                            for (var j = 0; j < self.width; j++) {
+                                if (_.include(self.collisions, tileIndex)) {
+                                    self.grid[i][j] = 1;
+                                } else {
+                                    self.grid[i][j] = 0;
+                                }
+                                tileIndex += 1;
+                            }
+                        }
+                    } else {
+                        log.info("An error has occured, map has not loaded.");
+                    }
+                    fs.writeFile(filePath, JSON.stringify(self.grid), function(err) {
+                        if (err)
+                            log.info(err);
+                        else
+                            log.info("Successfully generated the collision grid");
+                    
+			if (this.readyFunc) {
+			    this.readyFunc();
+			}                    
+                    });
+
+                }
+            });
+        } else
+            self.grid = collisionGrid;
+
+
+        log.info("Collision Grid Loaded");
+
+        
     },
 
 
@@ -106,41 +146,42 @@ var Map = cls.Class.extend({
     },
 
     isColliding: function (x, y) {
+    	//log.info("x="+x+",y="+y);
         if (this.isOutOfBounds(x, y)) {
             return false;
         }
         return this.grid[y][x] === 1;
     },
     isPVP: function(x,y){
-        
+
         var id = 0;
         var area = null;
-        
+
         area = _.detect(this.pvpAreas, function(area){
             return area.contains(x,y);
         });
         if(area){
-            
+
             return true;
         } else{
-            
+
             return false;
         }
     },
-    
+
     isHealingArea: function(x, y) {
         var id = 0;
         var area = null;
-        
+
         area = _.detect(this.healingAreas, function(area) {
             return area.contains(x, y);
         });
-        
+
         if (area) {
-            
+
             return true;
         } else {
-            
+
             return false;
         }
     },
@@ -165,8 +206,8 @@ var Map = cls.Class.extend({
     getGroupIdFromPosition: function (x, y) {
         var w = this.zoneWidth;
         var h = this.zoneHeight;
-        var gx = Math.floor((x - 1) / w);
-        var gy = Math.floor((y - 1) / h);
+        var gx = Math.floor((x) / w);
+        var gy = Math.floor((y) / h);
 
         return gx + '-' + gy;
     },
@@ -178,8 +219,8 @@ var Map = cls.Class.extend({
         var y = position.y;
         // surrounding groups
         var list = [pos(x-1, y-1), pos(x, y-1), pos(x+1, y-1),
-                    pos(x-1, y),   pos(x, y),   pos(x+1, y),
-                    pos(x-1, y+1), pos(x, y+1), pos(x+1, y+1)];
+            pos(x-1, y),   pos(x, y),   pos(x+1, y),
+            pos(x-1, y+1), pos(x, y+1), pos(x+1, y+1)];
 
         // groups connected via doors
         _.each(this.connectedGroups[id], function (position) {
@@ -218,22 +259,24 @@ var Map = cls.Class.extend({
             }
         });
     },
-    
+
     //Waiting Areas
-    
+
     initWaitingAreas: function(waitingList) {
         var self = this;
-        this.waitingAreas = [];
-        
+        this.waitingAreas = {};
+        var minigame = null;
+
         _.each(waitingList, function (wait) {
             var minigameArea = new Area(wait.id, wait.x, wait.y, wait.w, wait.h);
-            self.waitingAreas.push(minigameArea);
+            minigame = wait.m;
+
         });
-        
+
     },
-    
+
     getWaitingArea: function(minigame) {
-        
+
         return this.waitingArea[minigame].value;
     },
 
@@ -263,7 +306,7 @@ var Map = cls.Class.extend({
 
         return area.getRandomPosition();
     },
-    
+
     initPVPAreas: function(pvpList){
         var self = this;
 
@@ -273,19 +316,19 @@ var Map = cls.Class.extend({
             self.pvpAreas.push(pvpArea);
         });
     },
-    
+
     initHealingAreas: function(healingList) {
         var self = this;
         self.healingSpots = [];
-        _.each(healingList, function(healing){ 
+        _.each(healingList, function(healing){
             var healingArea = new Area(healing.id, healing.x, healing.y, healing.w, healing.h, null);
             self.healingSpots.push(healingArea);
         });
-        
-        
+
+
     }
-    
-    
+
+
 });
 
 var pos = function (x, y) {

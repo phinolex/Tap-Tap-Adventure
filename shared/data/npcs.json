@@ -1,0 +1,149 @@
+{
+	"King": {
+		"npcId":41
+	},
+	"VillageGirl": {
+		"name":"Stoned Girl",
+		"npcId":43
+	},
+	"Villager": {
+		"npcId":44
+	},
+	"BeachNpc": {
+		"name": "Beachgoer",
+		"npcId":51
+	},
+	"Agent": {
+		"name": "Auction",
+		"npcId":47
+	},
+	"Nyan": {
+		"npcId":49		
+	},
+	"Rick": {
+		"npcId":48
+	},
+	"Priest": {
+		"npcId":45
+	},
+
+	"Guard": {
+		"npcId":40
+	},
+	"Scientist": {
+		"npcId":46
+	},
+	"DesertNpc": {
+		"name":"Muscles",
+		"npcId":53
+	},
+	"LavaNpc": {
+		"name":"Dying Man",
+		"npcId":54
+	},
+	"Boxingman": {
+		"name": "Boxing Man",
+		"npcId":227
+	},
+	"Vampire": {
+		"npcId":230
+	},
+	"Doctor": {
+		"npcId":235
+	},
+	"Oddeyecat": {
+		"npcId":236
+	},
+	"Sorcerer": {
+		"npcId":50
+	},
+	"Coder": {
+		"npcId":55
+	},
+	"ForestNpc": {
+		"npcId":52
+	},
+	"Octocat": {
+		"npcId":42
+	},
+	"Soldier": {
+		"npcId":244
+	},
+	"Fisherman": {
+		"npcId":245
+	},
+	"Octopus": {
+		"npcId":246
+	},
+	"Mermaidnpc": {
+		"name": "Mermaid",
+		"npcId":249
+	},
+	"Sponge": {
+		"npcId":257
+	},
+	"Fairynpc": {
+		"npcId":283
+	},
+	"Shepherdboy": {
+		"npcId":287
+	},
+	"Zombiegf": {
+		"npcId":288
+	},
+	"Pirategirlnpc": {
+		"npcId":298
+	},
+	"Bluebikinigirlnpc": {
+		"npcId":299
+	},
+	"Redbikinigirlnpc": {
+		"npcId":0
+	},
+	"Iamverycoldnpc": {
+		"npcId":303
+	},
+	"Iceelfnpc": {
+		"npcId":316
+	},
+	"Elfnpc": {
+		"npcId":335
+	},
+	"Snowshepherdboy": {
+		"name":"Tutorial",
+		"npcId":347
+	},
+	"Angelnpc": {
+		"npcId":352
+	},
+	"Momangelnpc": {
+		"npcId":361
+	},
+	"Superiorangelnpc": {
+		"npcId":367
+	},
+	"Firstsonangelnpc": {
+		"npcId":371
+	},
+	"Secondsonangelnpc": {
+		"npcId":376
+	},
+	"Mojojojonpc": {
+		"npcId":382
+	},
+	"Ancientmanumentnpc": {
+		"npcId":389
+	},
+	"Vendingmachine": {
+		"name": "Enchant",
+		"npcId":239
+	},
+	"Redstoremannpc": {
+		"name":"Shop",
+		"npcId":317
+	},
+	"Bluestoremannpc": {
+		"name":"Bank",
+		"npcId":318
+	}
+}

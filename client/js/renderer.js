@@ -1,23 +1,30 @@
 /* global Detect, Class, _, log, Types, font */
 
-define(['camera', 'item', 'character', 'player', 'timer'],
-    function(Camera, Item, Character, Player, Timer) {
+define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
+    function(Camera, Item, Character, Player, Timer, Mob, Npc, Pet) {
 
         var Renderer = Class.extend({
-            init: function(game, canvas, background, foreground, textcanvas, toptextcanvas) {
+            init: function(game, canvas, buffer, background, foreground, textcanvas, toptextcanvas) {
                 this.game = game;
 
+                this.setZoom();
+
+
                 this.context = (canvas && canvas.getContext) ? canvas.getContext("2d") : null;
+                this.buffer = (buffer && buffer.getContext) ? buffer.getContext("2d") : null;
                 this.background = (background && background.getContext) ? background.getContext("2d") : null;
                 this.foreground = (foreground && foreground.getContext) ? foreground.getContext("2d") : null;
                 this.textcontext = (textcanvas && textcanvas.getContext) ? textcanvas.getContext("2d") : null;
                 this.toptextcontext = (toptextcanvas && toptextcanvas.getContext) ? toptextcanvas.getContext("2d") : null;
 
                 this.canvas = canvas;
+                this.backbuffercanvas = buffer;
                 this.backcanvas = background;
                 this.forecanvas = foreground;
                 this.textcanvas = textcanvas;
                 this.toptextcanvas = toptextcanvas;
+
+                this.bgrcanvas = document.getElementById("background");
 
                 this.initFPS();
                 this.tilesize = 16;
@@ -25,6 +32,10 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 this.upscaledRendering = this.context.mozImageSmoothingEnabled !== undefined;
                 this.supportsSilhouettes = this.upscaledRendering;
                 this.isFirefox = Detect.isFirefox();
+                this.isCanary = Detect.isEdgeOnWindows();
+                this.isEdge = Detect.isCanaryOnWindows();
+                this.isSafari = Detect.isSafari();
+
                 this.rescale(this.getScaleFactor());
                 this.lastTime = new Date();
                 this.frameCount = 0;
@@ -38,6 +49,20 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 this.highTileCount = 0;
                 this.tablet = Detect.isTablet(window.innerWidth);
                 this.fixFlickeringTimer = new Timer(100);
+
+                this.mobile = false;
+
+                this.forceRedraw = true;
+            },
+
+            setZoom: function () {
+                if (this.getScaleFactor() == 3)
+                    return;
+
+                var zoom = $(window).width() / $('#container').width();
+                $('body').css('zoom', zoom);
+                $('body').css('-moz-transform', 'scale('+zoom+')');
+                $('#mainborder').css("top", 0);
             },
 
             getWidth: function() {
@@ -59,8 +84,8 @@ define(['camera', 'item', 'character', 'player', 'timer'],
 
                 this.mobile = false;
 
+                //if(w <= 1136) {
                 if(w <= 1000) {
-
                     scale = 2;
                     this.mobile = true;
                 } else if(w <= 1500 || h <= 870) {
@@ -75,6 +100,8 @@ define(['camera', 'item', 'character', 'player', 'timer'],
             },
 
             rescale: function(factor) {
+                this.setZoom();
+
                 this.scale = this.getScaleFactor();
 
                 this.createCamera();
@@ -91,19 +118,26 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     this.setTileset(this.game.map.tilesets[this.scale - 1]);
                 }
 
-                if(this.game.renderer) {
+                if(this.game.ready && this.game.renderer) {
                     this.game.setSpriteScale(this.scale);
                     this.game.inventoryHandler.scale = this.scale;
                 }
             },
 
             createCamera: function() {
-                this.camera = new Camera(this);
+                this.camera = new Camera(this.game, this);
                 this.camera.rescale();
 
                 this.canvas.width = this.camera.gridW * this.tilesize * this.scale;
                 this.canvas.height = this.camera.gridH * this.tilesize * this.scale;
+                if (this.mobile)
+                    this.canvas.height += 15;
+
                 log.debug("#entities set to "+this.canvas.width+" x "+this.canvas.height);
+
+                this.backbuffercanvas.width = this.canvas.width + 2 * this.tilesize;
+                this.backbuffercanvas.height = this.canvas.height+ 2 * this.tilesize;
+                log.debug("#background set to "+this.backbuffercanvas.width+" x "+this.backbuffercanvas.height);
 
                 this.backcanvas.width = this.canvas.width;
                 this.backcanvas.height = this.canvas.height;
@@ -124,7 +158,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
             },
 
             initFPS: function() {
-                this.FPS = this.mobile ? 30 : 60;
+                this.FPS = Detect.isMobile ? 120 : 120;
             },
 
             initFont: function() {
@@ -169,9 +203,9 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     }
                     ctx.strokeStyle = strokeColor || "#373737";
                     ctx.lineWidth = strokeSize;
-                    ctx.strokeText(text, x, y);
+                    ctx.strokeText(text, x * this.scale, y * this.scale);
                     ctx.fillStyle = color || "white";
-                    ctx.fillText(text, x, y);
+                    ctx.fillText(text, x * this.scale, y * this.scale);
                     ctx.restore();
                 }
             },
@@ -179,22 +213,26 @@ define(['camera', 'item', 'character', 'player', 'timer'],
             drawCellRect: function(x, y, color) {
                 this.context.save();
                 this.context.lineWidth = 2*this.scale;
-                this.context.strokeStyle = color;
+
                 this.context.translate(x+2, y+2);
+                if (this.mobile)
+                    this.context.clearRect(-8, -8, (this.tilesize * this.scale) + 16, (this.tilesize * this.scale) + 16);
+                this.context.strokeStyle = color;
                 this.context.strokeRect(0, 0, (this.tilesize * this.scale) - 4, (this.tilesize * this.scale) - 4);
                 this.context.restore();
             },
             drawRectStroke: function(x, y, width, height, color) {
                 this.context.fillStyle = color;
-                this.context.fillRect(x, y, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
+                this.context.fillRect(x * this.scale, y * this.scale, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
                 this.context.fill();
                 this.context.lineWidth = 5;
                 this.context.strokeStyle = 'black';
-                this.context.strokeRect(x, y, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
+                this.context.strokeRect(x * this.scale, y * this.scale, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
             },
-            drawRect: function(x, y, width, height, color) {
-                this.context.fillStyle = color;
-                this.context.fillRect(x, y, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
+            drawRect: function(ctx, x, y, width, height, color) {
+                ctx.fillStyle = color;
+                ctx.fillRect(x * this.scale, y * this.scale, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
+                ctx.fill();
             },
 
             drawCellHighlight: function(x, y, color) {
@@ -216,11 +254,10 @@ define(['camera', 'item', 'character', 'player', 'timer'],
 
             drawAttackTargetCell: function() {
                 var mouse = this.game.getMouseGridPosition(),
-                    entity = this.game.getEntityAt(mouse.x, mouse.y),
-                    s = this.scale;
+                    entity = this.game.getEntityAt(mouse.x, mouse.y);
 
-                if(entity) {
-                    this.drawCellRect(entity.x * s, entity.y * s, "rgba(255, 0, 0, 0.5)");
+                if(entity instanceof Mob && !(entity instanceof Pet)) {
+                    this.drawCellRect(entity.x * this.scale, entity.y * this.scale, "rgba(255, 0, 0, 0.5)");
                 }
             },
 
@@ -258,36 +295,41 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     os = this.upscaledRendering ? 1 : this.scale,
                     ds = this.upscaledRendering ? this.scale : 1;
 
-                if(this.game.selectedCellVisible) {
-                    if(this.mobile || this.tablet) {
-                        if(this.game.drawTarget) {
-                            var x = this.game.selectedX,
-                                y = this.game.selectedY;
+                if(!this.game.selectedCellVisible)
+                    return;
 
-                            this.drawCellHighlight(this.game.selectedX, this.game.selectedY, "rgb(51, 255, 0)");
-                            this.lastTargetPos = { x: x,
-                                y: y };
-                            this.game.drawTarget = false;
-                        }
-                    } else {
-                        if(sprite && anim) {
-                            var    frame = anim.currentFrame,
-                                s = this.scale,
-                                x = frame.x * os,
-                                y = frame.y * os,
-                                w = sprite.width * os,
-                                h = sprite.height * os,
-                                ts = 16,
-                                dx = this.game.selectedX * ts * s,
-                                dy = this.game.selectedY * ts * s,
-                                dw = w * ds,
-                                dh = h * ds;
+                if(this.mobile) {
+                    if(this.game.drawTarget) {
+                        var x = this.game.selectedX,
+                            y = this.game.selectedY;
 
-                            this.context.save();
-                            this.context.translate(dx, dy);
-                            this.context.drawImage(sprite.image, x, y, w, h, 0, 0, dw, dh);
-                            this.context.restore();
-                        }
+                        //this.context.clearRect(x-this.tilesize, y-this.tilesize, this.tilesize*2, this.tilesize*2);
+                        this.drawCellHighlight(x, y, "rgb(51, 255, 0)");
+                        this.lastTargetPos = { x: x,
+                            y: y };
+                        this.game.drawTarget = false;
+                    }
+                } else {
+
+
+                    if(sprite && anim) {
+                        var    frame = anim.currentFrame,
+                            s = this.scale,
+                            x = frame.x * os,
+                            y = frame.y * os,
+                            w = sprite.width * os,
+                            h = sprite.height * os,
+                            ts = 16,
+                            dx = this.game.selectedX * ts * s,
+                            dy = this.game.selectedY * ts * s,
+                            dw = w * ds,
+                            dh = h * ds;
+
+                        if (!sprite.isLoaded) sprite.load();
+                        this.context.save();
+                        this.context.translate(dx, dy);
+                        this.context.drawImage(sprite.image, x, y, w, h, 0, 0, dw, dh);
+                        this.context.restore();
                     }
                 }
             },
@@ -299,26 +341,27 @@ define(['camera', 'item', 'character', 'player', 'timer'],
             },
 
             drawCursor: function() {
-                var mx = this.game.mouse.x,
+                mx = this.game.mouse.x,
                     my = this.game.mouse.y,
                     s = this.scale,
                     os = this.upscaledRendering ? 1 : this.scale;
 
                 this.context.save();
+                if (!this.game.currentCursor.isLoaded)
+                    this.game.currentCursor.load();
+
                 if(this.game.currentCursor && this.game.currentCursor.isLoaded) {
-                    this.context.drawImage(this.game.currentCursor.image, 0, 0, 14 * os, 14 * os, mx, my, 14*s, 14*s);
+                    //this.context.drawImage(this.game.currentCursor.image, 0, 0, 14 * os, 14 * os, mx, my, 14*s, 14*s);
+
+                    this.drawScaledImage(this.textcontext, this.game.currentCursor.image, 0, 0, 14 * s, 14 * s, mx / 2, my / 2);
                 }
+
+
                 this.context.restore();
             },
 
             drawScaledImage: function(ctx, image, x, y, w, h, dx, dy) {
                 var s = this.upscaledRendering ? 1 : this.scale;
-                _.each(arguments, function(arg) {
-                    if(_.isUndefined(arg) || _.isNaN(arg) || _.isNull(arg) || arg < 0) {
-                        log.error("x:"+x+" y:"+y+" w:"+w+" h:"+h+" dx:"+dx+" dy:"+dy, true);
-                        throw Error("A problem occured when trying to draw on the canvas");
-                    }
-                });
 
                 ctx.drawImage(image,
                     x * s,
@@ -329,6 +372,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     dy * this.scale,
                     w * this.scale,
                     h * this.scale);
+
             },
 
             drawTile: function(ctx, tileid, tileset, setW, gridW, cellid) {
@@ -343,6 +387,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                         getX(cellid + 1, gridW) * this.tilesize,
                         Math.floor(cellid / gridW) * this.tilesize);
                 }
+
             },
 
             clearTile: function(ctx, gridW, cellid) {
@@ -363,24 +408,24 @@ define(['camera', 'item', 'character', 'player', 'timer'],
 
                 this.context.save();
                 this.context.translate(this.camera.x*s, this.camera.y*s);
-                this.drawRectStroke(8, 8, 29, 4, "rgba(142, 214, 255, 0.8)");
+                this.drawRectStroke(4, 4, 29, 4, "rgba(142, 214, 255, 0.8)");
 
-                Types.forEachArmorKind(function(kind, kindName){
+                ItemTypes.forEachArmorKind(function(kind, kindName){
                     var item = self.game.sprites[kindName];
                     if(item){
                         var itemAnimData = item.animationData["idle_down"];
                         if(itemAnimData){
-                            var ix = item.width * 0 * os,
+                            var ix = item.width * os,
                                 iy = item.height * itemAnimData.row * os,
                                 iw = item.width * os,
                                 ih = item.height * os,
                                 rank = Types.getArmorRank(kind);
 
-                            if(rank > Types.getArmorRank(Types.Entities.SEADRAGONARMOR)){
+                            if(rank > Types.getArmorRank(190)){
                                 return;
                             }
 
-                            if(kind !== Types.Entities.ADMINARMOR){
+                            if(kind !== 175){
                                 self.context.drawImage(item.image, ix, iy, iw, ih,
                                     item.offsetX * s + ((rank%19)*3+2)*self.tilesize,
                                     item.offsetY * s + (Math.floor(rank/19)*3+2)*self.tilesize,
@@ -390,18 +435,19 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     }
                 });
 
-                Types.forEachWeaponKind(function(kind, kindName){
+                ItemTypes.forEachWeaponKind(function(kind, kindName){
                     var item = self.game.sprites[kindName];
+                    if (!item.isLoaded) item.load();
                     if(item){
                         var itemAnimData = item.animationData["idle_down"];
                         if(itemAnimData){
-                            var ix = item.width * 0 * os,
+                            var ix = item.width * os,
                                 iy = item.height * itemAnimData.row * os,
                                 iw = item.width * os,
                                 ih = item.height * os,
                                 rank = Types.getWeaponRank(kind);
 
-                            if(rank > Types.getWeaponRank(Types.Entities.SEARAGE)){
+                            if(rank > Types.getWeaponRank(191)){
                                 return;
                             }
 
@@ -413,6 +459,30 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                         }
                     }
                 });
+                this.context.restore();
+            },
+
+
+            drawEntitiesCircle: function() {
+                var ac = this.game.activeCircle;
+
+                if (!ac) return;
+
+                var os = this.upscaledRendering ? 1 : this.scale,
+                    ds = this.upscaledRendering ? this.scale : 1;
+
+                this.context.save();
+                for (var i = 0; i < ac.length; ++i)
+                {
+                    var filename = "item-"+ItemTypes.KindData[ac[i].inv.item].key;
+                    var item = this.game.sprites[filename];
+                    if (!item.isLoaded) item.load();
+                    var s = this.scale,
+                        dw = ac[i].w * ds / .9,
+                        dh = ac[i].h * ds / .9;
+
+                    this.context.drawImage(item.image, 0, 0, ac[i].w * 0.9, ac[i].h * 0.9, ac[i].x, ac[i].y, dw, dh);
+                }
                 this.context.restore();
             },
 
@@ -442,10 +512,6 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                         this.context.globalAlpha = entity.fadingAlpha;
                     }
 
-
-                    this.drawEntityName(entity);
-
-
                     this.context.save();
                     if(entity.flipSpriteX) {
                         this.context.translate(dx + this.tilesize*s, dy);
@@ -460,15 +526,16 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     }
 
                     if(entity.isVisible()) {
-                        if(entity.hasShadow()) {
+                        if(!(entity instanceof Pet) && entity.hasShadow()) {
+                            if (!shadow.isLoaded) shadow.load();
                             this.context.drawImage(shadow.image, 0, 0, shadow.width * os, shadow.height * os,
                                 0,
                                 entity.shadowOffsetY * ds,
                                 shadow.width * os * ds, shadow.height * os * ds);
                         }
-
                         if(entity.isFlareDance){
                             var benef = this.game.sprites["flaredanceeffect"];
+                            if (!benef.isLoaded) benef.load();
                             if(benef){
                                 var benefAnimData1 = benef.animationData[anim.name];
                                 if(benefAnimData1){
@@ -487,6 +554,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                         }
                         if(entity.isSuperCat){
                             var benef = this.game.sprites["supercateffect"];
+                            if (!benef.isLoaded) benef.load();
                             if(benef){
                                 var benefAnimData2 = benef.animationData[anim.name];
                                 if(benefAnimData2){
@@ -505,6 +573,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                         }
                         if(entity.isProvocation){
                             var benef = this.game.sprites["provocationeffect"];
+                            if (!benef.isLoaded) benef.load();
                             if(benef){
                                 var benefAnimData3 = benef.animationData[anim.name];
                                 if(benefAnimData3){
@@ -526,6 +595,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
 
                         if(entity.isRoyalAzaleaBenef){
                             var benef = this.game.sprites["bucklerbenef"];
+                            if (!benef.isLoaded) benef.load();
                             if(benef){
                                 var benefAnimData4 = benef.animationData[anim.name];
                                 if(benefAnimData4){
@@ -543,9 +613,20 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                             }
                         }
 
-                        this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
+                        try {
+                            if(!entity.mount) {
+                                //if (!sprite.isLoaded) sprite.load();
+                                //if (!sprite.image)
+                                //	log.info(JSON.stringify(sprite));
+                                if (entity instanceof Pet)
+                                    this.context.drawImage(sprite.image, x, y, w, h, ox/1.5, oy/1.5, dw/1.5, dh/1.5);
+                                else
+                                    this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
+                            }
+                        }
+                        catch (err) { /*log.info(err.message); log.info(err.stack);*/ }
 
-                        if(entity instanceof Item && entity.kind !== Types.Entities.CAKE) {
+                        if(entity instanceof Item && entity.kind !== 39) {
                             var sparks = this.game.sprites["sparks"],
                                 anim = this.game.sparksAnimation,
                                 frame = anim.currentFrame,
@@ -554,6 +635,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                                 sw = sparks.width * os,
                                 sh = sparks.width * os;
 
+                            if (!sparks.isLoaded) sparks.load();
                             this.context.drawImage(sparks.image, sx, sy, sw, sh,
                                 sparks.offsetX * s,
                                 sparks.offsetY * s,
@@ -563,8 +645,8 @@ define(['camera', 'item', 'character', 'player', 'timer'],
 
                     if(entity instanceof Character && !entity.isDead && entity.hasWeapon()) {
                         var weapon = this.game.sprites[entity.getWeaponName()];
-
                         if(weapon) {
+                            if (!weapon.isLoaded) weapon.load();
                             var weaponAnimData = weapon.animationData[anim.name],
                                 index = frame.index < weaponAnimData.length ? frame.index : frame.index % weaponAnimData.length,
                                 wx = weapon.width * index * os,
@@ -582,6 +664,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                         var medal = null;
                         if(entity.admin){
                             medal = this.game.sprites["goldmedal"];
+                            if (!medal.isLoaded) medal.load();
                         }
 
                         if(medal){
@@ -593,6 +676,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     }
                     if(entity.invincible){
                         var benef = this.game.sprites["shieldbenef"];
+                        if (!benef.isLoaded) benef.load();
                         if(benef){
                             var benefAnimData5 = benef.animationData[anim.name];
                             if(benefAnimData5){
@@ -611,6 +695,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     }
                     if(entity.isStun){
                         var benef = this.game.sprites["stuneffect"];
+                        if (!benef.isLoaded) benef.load();
                         if(benef){
                             var index = entity.stunAnimation.currentFrame.index,
                                 bx = benef.width * index * os,
@@ -626,6 +711,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     }
                     if(entity.isCritical){
                         var benef = this.game.sprites["criticaleffect"];
+                        if (!benef.isLoaded) benef.load();
                         if(benef){
                             var index = entity.criticalAnimation.currentFrame.index,
                                 bx = benef.width * index * os,
@@ -641,6 +727,7 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     }
                     if(entity.isHeal){
                         var benef = this.game.sprites["healeffect"];
+                        if (!benef.isLoaded) benef.load();
                         if(benef){
                             var index = entity.healAnimation.currentFrame.index,
                                 bx = benef.width * index * os,
@@ -655,14 +742,50 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                         }
                     }
 
+                    if(entity.mount){
+                        var mountSprite = this.game.sprites[entity.mountName];
+                        entity.mount.setSprite(mountSprite);
+                        if (!mountSprite.isLoaded) mountSprite.load();
+
+                        var spriteMount = entity.mount.sprite;
+
+                        // dirty hack to show before moving.
+                        if (!entity.mount.currentAnimation)
+                        {
+                            entity.mount.animate("idle", entity.mount.idleSpeed);
+                        }
+
+                        if (entity.orientation != Types.Orientations.UP)
+                        {
+                            this.context.drawImage(sprite.image, x, y, w, h, ox + entity.mountOffsetX, oy + entity.mountOffsetY, dw, dh);
+                        }
+
+                        if(spriteMount && entity.mount.currentAnimation) {
+                            var frame = entity.mount.currentAnimation.currentFrame,
+                                mx = frame.x * os,
+                                my = frame.y * os,
+                                mw = spriteMount.width * os,
+                                mh = spriteMount.height * os,
+                                mox = spriteMount.offsetX * s,
+                                moy = spriteMount.offsetY * s,
+                                mdw = mw * ds,
+                                mdh = mh * ds;
+                            this.context.drawImage(spriteMount.image, mx, my, mw, mh, mox, moy, mdw, mdh);
+                        }
+                        if (entity.orientation == Types.Orientations.UP)
+                        {
+                            this.context.drawImage(sprite.image, x, y, w, h, ox + entity.mountOffsetX, oy + entity.mountOffsetY, dw, dh);
+                        }
+                    }
 
                     this.context.restore();
                     if(entity instanceof Item) {
+                        var ctx = this.tablet ? this.context : this.textcontext;
                         var item = entity;
-                        if(item.count >= 1) {
-                            this.drawText(this.textcontext, item.count,
-                                (entity.x + 8) * this.scale,
-                                (entity.y - 0.3) * this.scale,
+                        if(item.count > 1) {
+                            this.drawText(ctx, item.count,
+                                entity.x + 8,
+                                entity.y - 0.3,
                                 true,
                                 "white");
 
@@ -671,6 +794,8 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     if(entity.isFading) {
                         this.context.restore();
                     }
+
+                    //this.drawEntityName(entity);
                 }
             },
 
@@ -678,6 +803,9 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 var self = this;
 
                 this.game.forEachVisibleEntityByDepth(function(entity) {
+                    //if (entity.oldDirtyRect)
+                    //    self.clearDirtyRect(entity.oldDirtyRect);
+
                     if(entity.isLoaded) {
                         if(dirtyOnly) {
                             if(entity.isDirty) {
@@ -706,9 +834,14 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 var self = this,
                     count = 0;
 
+                this.context.translate(-(this.camera.x-this.cameraOldX) * this.scale,
+                    -(this.camera.y-this.cameraOldY) * this.scale);
+
                 this.game.forEachVisibleEntityByDepth(function(entity) {
                     if(entity.isDirty && entity.oldDirtyRect) {
                         self.clearDirtyRect(entity.oldDirtyRect);
+                        if (entity.dirtyRect)
+                            self.clearDirtyRect(entity.dirtyRect);
                         count += 1;
                     }
                 });
@@ -729,9 +862,6 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     count += 1;
                 }
 
-                if(count > 0) {
-                    //log.debug("count:"+count);
-                }
             },
 
             getEntityBoundingRect: function(entity) {
@@ -804,23 +934,121 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 (rect2.bottom < rect1.top));
             },
 
+            drawEntityNames: function() {
+                var self = this;
+                this.game.forEachVisibleEntityByDepth(function(entity) {
+                    if(entity.isLoaded) {
+                        self.drawEntityName(entity);
+                    }
+                });
+            },
+
             drawEntityName: function(entity) {
-                this.textcontext.save();
+                var ctx = this.textcontext;
+                ctx.save();
+
                 //"#00CCFF" : "#78AB46
-                if(entity.name && entity instanceof Player) {
+                if(entity.name && entity instanceof Player && entity.isMoving) {
                     var color =  entity.isWanted ? "red" : (entity.id === this.game.playerId) ? "#fcda5c" : entity.admin ? "#ff0000" : "white";
                     var name = (entity.level) ? entity.name + " (" + entity.level + ")" : entity.name;
 
                     this.drawText(this.textcontext, name,
-                        (entity.x + 8) * this.scale,
-                        (entity.y + entity.nameOffsetY) * this.scale,
+                        (entity.x + 8),
+                        (entity.y + entity.nameOffsetY),
                         true,
                         color);
                 }
-                this.textcontext.restore();
+                if(entity instanceof Mob) {
+                    var color;
+                    var mobLvl = entity.level;
+
+                    var playerLvl;
+
+
+                    if (this.game.player)
+                    {
+                        playerLvl = this.game.player.level;
+                        //alert("mobLevel="+mobLvl+",playerLvl="+playerLvl);
+                        //8, 4
+                        if ( mobLvl < playerLvl-6)
+                            color = "white";
+                        else if (playerLvl-mobLvl >= -5 || mobLvl-playerLvl <= 9)
+                        {
+                            switch (mobLvl)
+                            {
+                                case (playerLvl-5):
+                                case (playerLvl-4):
+                                    color = "cyan";
+                                    break;
+                                case (playerLvl-3):
+                                case (playerLvl-2):
+                                    color = "blue";
+                                    break;
+                                case (playerLvl-1):
+                                case (playerLvl):
+                                case (playerLvl+1):
+                                    color = "green";
+                                    break;
+                                case (playerLvl+2):
+                                case (playerLvl+3):
+                                    color = "yellow";
+                                    break;
+                                case (playerLvl+4):
+                                case (playerLvl+5):
+                                    color = "orange";
+                                    break;
+                                case (playerLvl+6):
+                                case (playerLvl+7):
+                                    color = "red";
+                                    break;
+                                case (playerLvl+8):
+                                case (playerLvl+9):
+                                    color = "purple";
+                                    break;
+                                default:
+                                    color = "white";
+                            }
+                        }
+                        else
+                            color = "grey";
+                    }
+                    else
+                    {
+                        color = "white";
+                    }
+
+                    //var name = entity.title + " " + entity.kind;
+                    var name = entity.title;
+
+                    this.drawText(ctx, name,
+                        (entity.x + 8),
+                        (entity.y - 10),
+                        true,
+                        color);
+                }
+                if(entity instanceof Npc) {
+                    var color;
+                    var name;
+                    if (this.game.questhandler.npcHasQuest(entity.kind))
+                    {
+                        color = "cyan";
+                        name = entity.title + " ?";
+                    }
+                    else
+                    {
+                        color = "white";
+                        name = entity.title;
+                    }
+
+                    this.drawText(ctx, name,
+                        (entity.x + 8),
+                        (entity.y - 10),
+                        true,
+                        color);
+                }
+                ctx.restore();
             },
             drawInventory: function(){
-                var i=0;
                 var s = this.scale;
                 this.textcontext.save();
                 this.textcontext.translate(this.camera.x * s, this.camera.y * s);
@@ -828,65 +1056,195 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 this.textcontext.restore();
             },
             drawInventoryMenu: function(){
-                var s = this.scale;
-                if(this.game.player && this.game.menu && this.game.menu.selectedInventory !== null){
+                if(this.game.player && this.game.menu && this.game.menu.selectedEquipped !== null) {
+                    var equippedNumber = this.game.menu.selectedEquipped;
+                    var leftTextAlign = 12 * this.tilesize;
+                    var leftRectAlign = 11 * this.tilesize;
+                    if (equippedNumber) {
+                        this.drawRect(this.textcontext, leftRectAlign, (this.camera.gridH - 4) * this.tilesize, 3, 2, "rgba(0, 0, 0, 0.5)");
+                        this.drawText(this.textcontext, "Unequip", leftTextAlign, (this.camera.gridH - 3.4) * this.tilesize, true, "white", "black");
+                        this.drawText(this.textcontext, "Drop", leftTextAlign, (this.camera.gridH-2.4) * this.tilesize, true, "white", "black");
+                    }
+                    return;
+                }
+                else if(this.game.player && this.game.menu && this.game.menu.selectedInventory !== null){
                     var inventoryNumber = this.game.menu.selectedInventory;
                     var itemKind = this.game.inventoryHandler.inventory[inventoryNumber];
+
                     if (!this.game.bankShowing) {
-                        if(itemKind === Types.Entities.CAKE || itemKind === Types.Entities.CD) {
-                            this.drawRect(366, (this.camera.gridH-1) * this.tilesize * s, 2, 1, "rgba(0, 0, 0, 0.8)");
-                            this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-0.4) * this.tilesize * s, true, "white", "black");
-                        } else if(itemKind === Types.Entities.BLACKPOTION) {
-                            this.drawRect(366, (this.camera.gridH - 2) * this.tilesize * s, 2, 2, "rgba(0, 0, 0, 0.8)");
-                            this.drawText(this.textcontext, "Enchant Bloodsucking", 398, (this.camera.gridH-1.4) * this.tilesize * s, true, "white", "black");
-                            this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-0.4) * this.tilesize * s, true, "white", "black");
+                        var leftTextAlign = 12 * this.tilesize;
+                        var leftRectAlign = 11 * this.tilesize;
+                        if(itemKind === 39 || itemKind === 173) {
+                            this.drawRect(this.textcontext, leftRectAlign, (this.camera.gridH-3) * this.tilesize, 3, 1, "rgba(0, 0, 0, 0.5)");
+                            this.drawText(this.textcontext, "Drop", leftTextAlign, (this.camera.gridH-2.4) * this.tilesize, true, "white", "black");
+                        } else if(itemKind === 306) {
+                            this.drawRect(this.textcontext, leftRectAlign, (this.camera.gridH - 4) * this.tilesize, 3, 2, "rgba(0, 0, 0, 1)");
+                            this.drawText(this.textcontext, "Enchant Bloodsucking", leftTextAlign, (this.camera.gridH-3.4) * this.tilesize, true, "white", "black");
+                            this.drawText(this.textcontext, "Drop", leftTextAlign, (this.camera.gridH-2.4) * this.tilesize, true, "white", "black");
 
-                        } else if(Types.isHealingItem(itemKind)) {
-                            this.drawRect(366, (this.camera.gridH - 3) * this.tilesize * s, 2, 3, "rgba(0, 0, 0, 0.8)");
-                            this.drawText(this.textcontext, inventoryNumber === this.game.healShortCut ? "Manual" : "Auto", 398, (this.camera.gridH-2.4)*this.tilesize * s, true, "white", "black");
-                            this.drawText(this.textcontext, "Eat", 398, (this.camera.gridH-1.4) * this.tilesize * s, true, "white", "black");
-                            this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-0.4) * this.tilesize * s, true, "white", "black");
+                        } else if(ItemTypes.isConsumableItem(itemKind)) {
+                            this.drawRect(this.textcontext, leftRectAlign, (this.camera.gridH - 5) * this.tilesize, 3, 3, "rgba(0, 0, 0, 0.5)");
+                            this.drawText(this.textcontext, inventoryNumber === this.game.healShortCut ? "Manual" : "Auto", leftTextAlign, (this.camera.gridH-4.4) * this.tilesize, true, "white", "black");
+                            this.drawText(this.textcontext, "Eat", leftTextAlign, (this.camera.gridH-3.4) * this.tilesize, true, "white", "black");
+                            this.drawText(this.textcontext, "Drop", leftTextAlign, (this.camera.gridH-2.4) * this.tilesize, true, "white", "black");
 
-                        } else if(itemKind === Types.Entities.SNOWPOTION) {
-                            this.drawRect(366, (this.camera.gridH - 4) * this.tilesize * s, 2, 4, "rgba(0, 0, 0, 0.8)");
-                            this.drawText(this.textcontext, "Enchant Pendant", 398, (this.camera.gridH-3.4) * this.tilesize * s, true, "white", "black");
-                            this.drawText(this.textcontext, "Enchant Ring",  398, (this.camera.gridH-2.4) * this.tilesize * s, true, "white", "black");
-                            this.drawText(this.textcontext, "Enchant Weapon", 398, (this.camera.gridH-1.4) * this.tilesize * s, true, "white", "black");
-                            this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-1.4) * this.tilesize * s, true, "white", "black");
+                        } else if(itemKind === 200) {
+                            this.drawRect(this.textcontext, leftRectAlign, (this.camera.gridH - 6) * this.tilesize, 3, 4, "rgba(0, 0, 0, 0.5)");
+                            this.drawText(this.textcontext, "Enchant Pendant", leftTextAlign, (this.camera.gridH-5.4) * this.tilesize, true, "white", "black");
+                            this.drawText(this.textcontext, "Enchant Ring",  leftTextAlign, (this.camera.gridH-4.4) * this.tilesize, true, "white", "black");
+                            this.drawText(this.textcontext, "Enchant Weapon", leftTextAlign, (this.camera.gridH-3.4) * this.tilesize, true, "white", "black");
+                            this.drawText(this.textcontext, "Drop", leftTextAlign, (this.camera.gridH-2.4) * this.tilesize, true, "white", "black");
+                        } else if(ItemTypes.isGold(itemKind)) {
+                            this.drawRect(this.textcontext, leftRectAlign, (this.camera.gridH - 3) * this.tilesize, 3, 1, "rgba(0, 0, 0, 0.5)");
+                            this.drawText(this.textcontext, "Drop", leftTextAlign, (this.camera.gridH-2.4) * this.tilesize, true, "white", "black");
                         } else {
-                            this.drawRect(366, (this.camera.gridH - 2) * this.tilesize * s, 2, 2, "rgba(0, 0, 0, 0.8)");
-                            this.drawText(this.textcontext, "Equip", 398, (this.camera.gridH - 1.4) * this.tilesize * s, true, "white", "black");
-                            this.drawText(this.textcontext, "Drop", 398, (this.camera.gridH-0.4) * this.tilesize * s, true, "white", "black");
+                            this.drawRect(this.textcontext, leftRectAlign, (this.camera.gridH - 4) * this.tilesize, 3, 2, "rgba(0, 0, 0, 0.5)");
+                            this.drawText(this.textcontext, "Equip", leftTextAlign, (this.camera.gridH - 3.4) * this.tilesize, true, "white", "black");
+                            this.drawText(this.textcontext, "Drop", leftTextAlign, (this.camera.gridH-2.4) * this.tilesize, true, "white", "black");
                         }
                     } else {
-                        this.drawRect(366, (this.camera.gridH - 2) * this.tilesize * s, 2, 2, "rgba(0, 0, 0, 0.8)");
-                        this.drawText(this.textcontext, "Deposit 1", 398, (this.camera.gridH-1.4) * this.tilesize * s, true, "white", "black");
-                        this.drawText(this.textcontext, "Deposit All", 398, (this.camera.gridH-0.4) * this.tilesize * s, true, "white", "black");
+                        this.drawRect(this.textcontext, leftRectAlign, (this.camera.gridH - 4) * this.tilesize, 3, 2, "rgba(0, 0, 0, 0.5)");
+                        this.drawText(this.textcontext, "Deposit 1", leftTextAlign, (this.camera.gridH-3.4) * this.tilesize, true, "white", "black");
+                        this.drawText(this.textcontext, "Deposit All", leftTextAlign, (this.camera.gridH-2.4) * this.tilesize, true, "white", "black");
                     }
                 }
             },
-            
-            drawPVPTimer: function() {
-                
+            drawCoordinates: function () {
+                if (this.game.player)
+                {
+                    var s = this.scale;
+                    this.textcontext.save();
+                    this.textcontext.translate(this.camera.x * s, this.camera.y * s);
+
+                    var realX = Math.floor(this.game.player.x / this.tilesize);
+                    var realY = Math.floor(this.game.player.y / this.tilesize);
+                    var coord = "(x:"+realX+",y:"+realY+")";
+                    this.drawText(this.textcontext, coord, (this.camera.gridW-2) * this.tilesize, 6, true, "white", "black");
+                    //var touch = Math.round(this.game.joystick.deltaX()) + " : " + Math.round(this.game.joystick.deltaY());
+                    //this.drawText(this.textcontext, touch, (this.camera.gridW-2) * this.tilesize, this.tilesize * s, true, "white", "black");
+                    //var zoom = $('body').css('zoom');
+                    //if (this.game.renderer.isFirefox)
+                    //	    zoom = $('body').css('-moz-transform') > 0 ? $('body').css('-moz-transform') : 1;
+
+                    //this.drawText(this.textcontext, "zoom: "+zoom, (this.camera.gridW-2) * this.tilesize, this.tilesize * s, true, "white", "black");
+                    this.textcontext.restore();
+                }
             },
-            
-            removePVPTimer: function() {
-                
+
+            // Can only be called once as it resets the previous positions.
+            getOldOffset: function () {
+                var p = this.game.player;
+                var a = 0, b = 0;
+
+                if (p && p.isMoving())
+                {
+                    a = (p.prevX - p.x) * this.scale;
+                    b = (p.prevY - p.y) * this.scale;
+                    p.prevX = 0;
+                    p.prevY = 0;
+                    // Prevent overdrawing.
+                    var c = this.tilesize*this.scale;
+                    if (Math.abs(a) >= c ||
+                        Math.abs(b) >= c)
+                    {
+                        this.forceRedraw = true;
+                    }
+                }
+
+                return {"x": a, "y": b};
             },
-            
-            drawTerrain: function() {
+
+            drawOldTerrain: function () {
+                var self = this,
+                    m = this.game.map;
+                //tilesetwidth = m.tilesets[this.scale-1].width / m.tilesize;
+                var p = this.game.player;
+                var c = this.camera;
+
+                var oldoffset = this.getOldOffset();
+
+                if (p.prevOrientation !== p.orientation)
+                    this.forceRedraw = true;
+
+                if (!p || !p.isMoving() || this.forceRedraw)
+                {
+                    this.drawBackground(this.background, "#12100D");
+                    return;
+                }
+
+                this.buffer.save();
+                this.clearBuffer(this.buffer);
+                this.foreground.save();
+
+                this.background.save();
+                this.drawBackground(this.buffer, "#12100D");
+                this.buffer.drawImage(this.background.canvas, oldoffset.x, oldoffset.y);
+
+                this.drawBackground(this.background, "#12100D");
+                this.background.drawImage(this.buffer.canvas, 0, 0);
+
+                this.setCameraView(this.background);
+                this.drawTerrain(this.background);
+                this.drawAnimatedTiles(false, this.background);
+                this.background.restore();
+
+                this.foreground.save();
+                this.clearBuffer(this.buffer);
+                this.buffer.drawImage(this.foreground.canvas,oldoffset.x,oldoffset.y);
+                this.setCameraView(this.buffer);
+                this.drawHighTiles(this.buffer);
+                this.clearScreen(this.foreground);
+                this.foreground.drawImage(this.buffer.canvas, 0, 0);
+
+                this.foreground.restore();
+                this.buffer.restore();
+
+            },
+
+            drawTerrain: function(ctx) {
                 var self = this,
                     m = this.game.map,
+                    p = this.game.player,
                     tilesetwidth = this.tileset.width / m.tilesize;
+
+
+                var optimized = false;
+                if (p && p.isMoving() && !this.forceRedraw)
+                {
+
+                    optimized = true;
+                }
+
+                ctx.save()
+                //log.info("optimized:"+optimized);
 
                 this.game.forEachVisibleTile(function (id, index) {
                     if(!m.isHighTile(id) && !m.isAnimatedTile(id)) { // Don't draw unnecessary tiles
-                        self.drawTile(self.background, id, self.tileset, tilesetwidth, m.width, index);
+                        self.drawTile(ctx, id, self.tileset, tilesetwidth, m.width, index);
                     }
-                }, 1);
+                }, 1, optimized);
+                ctx.restore()
+
+
             },
 
-            drawAnimatedTiles: function(dirtyOnly) {
+            drawHighTerrain: function() {
+                var p = this.game.player;
+
+                if (!p || !p.isMoving() || this.forceRedraw)
+                {
+                    this.foreground.save();
+                    this.clearScreen(this.foreground);
+                    this.setCameraView(this.foreground);
+                    this.drawHighTiles(this.foreground);
+                    this.foreground.restore();
+                }
+            },
+
+            drawAnimatedTiles: function(dirtyOnly, ctx) {
+                //if (!this.camera.isattached)
+                //   return;
+
                 var self = this,
                     m = this.game.map,
                     tilesetwidth = this.tileset.width / m.tilesize;
@@ -895,18 +1253,18 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 this.game.forEachAnimatedTile(function (tile) {
                     if(dirtyOnly) {
                         if(tile.isDirty) {
-                            self.drawTile(self.context, tile.id, self.tileset, tilesetwidth, m.width, tile.index);
+                            self.drawTile(ctx, tile.id, self.tileset, tilesetwidth, m.width, tile.index);
                             tile.isDirty = false;
                         }
                     } else {
-                        self.drawTile(self.context, tile.id, self.tileset, tilesetwidth, m.width, tile.index);
+                        self.drawTile(ctx, tile.id, self.tileset, tilesetwidth, m.width, tile.index);
                         self.animatedTileCount += 1;
                     }
                 });
             },
 
-            drawDirtyAnimatedTiles: function() {
-                this.drawAnimatedTiles(true);
+            drawDirtyAnimatedTiles: function(ctx) {
+                this.drawAnimatedTiles(true, ctx);
             },
 
             drawHighTiles: function(ctx) {
@@ -915,12 +1273,22 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                     tilesetwidth = this.tileset.width / m.tilesize;
 
                 this.highTileCount = 0;
+                var p = this.game.player;
+
+                var optimized = false;
+                if (p && p.isMoving() && !this.forceRedraw)
+                {
+                    optimized = true;
+                }
+
                 this.game.forEachVisibleTile(function (id, index) {
                     if(m.isHighTile(id)) {
+                        self.clearTile(ctx, m.width, index);
                         self.drawTile(ctx, id, self.tileset, tilesetwidth, m.width, index);
                         self.highTileCount += 1;
                     }
-                }, 1);
+                }, 1, optimized);
+
             },
 
             drawBackground: function(ctx, color) {
@@ -932,22 +1300,23 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 var nowTime = new Date(),
                     diffTime = nowTime.getTime() - this.lastTime.getTime();
 
-                if (diffTime >= 1000) {
+                if (diffTime >= 2000) {
                     this.realFPS = this.frameCount;
                     this.frameCount = 0;
                     this.lastTime = nowTime;
+                    this.FPS = this.realFPS;
                 }
                 this.frameCount++;
 
                 //this.drawText(this.toptextcontext, "FPS: " + this.realFPS + " / " + this.maxFPS, 30, 30, false);
-                this.drawText(this.toptextcontext, "FPS: " + this.realFPS, 30, 30, false);
+                this.drawText(this.toptextcontext, "FPS: " + this.realFPS, 10, 11, false);
             },
 
             drawDebugInfo: function() {
                 if(this.isDebugInfoVisible) {
                     this.drawFPS();
-                    //this.drawText(this.toptextcontext, "A: " + this.animatedTileCount, 100, 30, false);
-                    //this.drawText(this.toptextcontext, "H: " + this.highTileCount, 140, 30, false);
+                    //this.drawText(this.toptextcontext, "A: " + this.animatedTileCount, 50, 20, false);
+                    //this.drawText(this.toptextcontext, "H: " + this.highTileCount, 70, 20, false);
                 }
             },
 
@@ -961,20 +1330,14 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 this.game.infoManager.forEachInfo(function(info) {
                     self.textcontext.save();
                     self.textcontext.globalAlpha = info.opacity;
-                    self.drawText(self.textcontext, info.value, (info.x + 8) * self.scale, Math.floor(info.y * self.scale), true, info.fillColor, info.strokeColor);
+                    self.drawText(self.textcontext, info.value, (info.x + 8), Math.floor(info.y), true, info.fillColor, info.strokeColor);
                     self.textcontext.restore();
                 });
                 this.initFont();
             },
-            
-            drawMinigameText: function() {
-                var self = this;
-                switch (this.scale) {
-                    
-                }
-            },
-            
+
             setCameraView: function(ctx) {
+                this.camera.setRealCoords();
                 ctx.translate(-this.camera.x * this.scale, -this.camera.y * this.scale);
             },
             setCameraViewText: function(ctx) {
@@ -984,6 +1347,11 @@ define(['camera', 'item', 'character', 'player', 'timer'],
             clearScreen: function(ctx) {
                 ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             },
+
+            clearBuffer: function(ctx) {
+                ctx.clearRect(0, 0, this.canvas.width+this.tilesize, this.canvas.height+this.tilesize);
+            },
+
             clearScreenText: function(ctx) {
                 ctx.clearRect(0, 0, this.textcanvas.width, this.textcanvas.height);
             },
@@ -1025,23 +1393,34 @@ define(['camera', 'item', 'character', 'player', 'timer'],
                 return canvas.toDataURL("image/png");
             },
 
-            renderStaticCanvases: function() {
+            renderMobileCanvas: function() {
+                this.drawOldTerrain();
                 this.background.save();
                 this.setCameraView(this.background);
-                this.drawTerrain();
+                this.drawTerrain(this.background);
+                this.drawHighTerrain();
                 this.background.restore();
+            },
 
-                if(this.mobile || this.tablet) {
-                    this.clearScreen(this.foreground);
-                    this.foreground.save();
-                    this.setCameraView(this.foreground);
-                    this.drawHighTiles(this.foreground);
-                    this.foreground.restore();
+            renderStaticCanvases: function() {
+
+                this.drawOldTerrain();
+
+                if (this.forceRedraw || this.game.player && !this.game.player.isMoving())
+                {
+                    this.background.save();
+                    this.setCameraView(this.background);
+                    this.drawTerrain(this.background);
+                    this.drawHighTerrain();
+                    this.background.restore();
                 }
+
+                this.game.renderbackground = false;
+                this.forceRedraw = false;
             },
 
             renderFrame: function() {
-                if(this.mobile || this.tablet) {
+                if(this.mobile) {
                     this.renderFrameMobile();
                 }
                 else {
@@ -1052,61 +1431,83 @@ define(['camera', 'item', 'character', 'player', 'timer'],
             renderFrameDesktop: function() {
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
-                this.clearScreen(this.context);
+
+
+                this.renderStaticCanvases();
 
                 this.textcontext.save();
                 this.toptextcontext.save();
-                this.setCameraViewText(this.textcontext);
-                this.setCameraViewText(this.toptextcontext);
+
+                this.setCameraView(this.textcontext);
+                this.setCameraView(this.toptextcontext);
+                //this.drawEntityNames();
 
                 this.context.save();
+                this.clearScreen(this.context);
+
+                this.drawEntitiesCircle();
+
                 this.setCameraView(this.context);
-                this.drawAnimatedTiles();
+
+                this.drawAnimatedTiles(false, this.context);
 
                 if(this.game.started && this.game.cursorVisible) {
                     this.drawSelectedCell();
                     this.drawTargetCell();
+                    this.drawAttackTargetCell();
                 }
 
                 //this.drawOccupiedCells();
                 this.drawPathingCells();
-                this.drawEntities();
+                this.drawEntities(false);
                 this.drawCombatInfo();
                 this.drawInventory();
+                this.drawCoordinates();
 
 
-                this.drawHighTiles(this.context);
 
                 this.context.restore();
                 this.textcontext.restore();
                 this.toptextcontext.restore();
+
                 // Overlay UI elements
-                if(this.game.cursorVisible)
+                if(this.game.cursorVisible || !this.tablet || this.isFirefox)
                     this.drawCursor();
 
                 this.drawDebugInfo();
 
 
-
-
             },
 
+
             renderFrameMobile: function() {
-                this.clearScreenText(this.textcontext);
-                this.clearScreenText(this.toptextcontext);
                 this.clearDirtyRects();
                 this.preventFlickeringBug();
+                this.clearScreenText(this.textcontext);
+                this.clearScreenText(this.toptextcontext);
+
+                this.renderStaticCanvases();
+
+                this.renderMobileCanvas();
+
                 this.textcontext.save();
                 this.toptextcontext.save();
-                this.setCameraViewText(this.textcontext);
-                this.setCameraViewText(this.toptextcontext);
-                this.drawCombatInfo();
                 this.context.save();
+
+                this.setCameraView(this.textcontext);
+                this.setCameraView(this.toptextcontext);
                 this.setCameraView(this.context);
-                this.drawAnimatedTiles();
+
+                this.drawEntityNames();
+                this.drawCombatInfo();
+
+
+                this.drawDirtyAnimatedTiles(this.context);
+
                 this.drawSelectedCell();
                 this.drawInventory();
-                this.drawDirtyEntities();
+                this.drawEntities(true);
+
                 this.context.restore();
                 this.textcontext.restore();
                 this.toptextcontext.restore();
@@ -1114,13 +1515,10 @@ define(['camera', 'item', 'character', 'player', 'timer'],
 
             preventFlickeringBug: function() {
                 if(this.fixFlickeringTimer.isOver(this.game.currentTime)) {
-                    this.background.fillRect(0, 0, 0, 0);
                     this.context.fillRect(0, 0, 0, 0);
-                    this.foreground.fillRect(0, 0, 0, 0);
-                    this.textcontext.fillRect(0, 0, 0, 0);
-                    this.toptextcontext.fillRect(0, 0, 0, 0);
                 }
             }
+
         });
 
         var getX = function(id, w) {

@@ -6,6 +6,7 @@ var http = require('http');
 var socketio = require('socket.io');
 var url = require('url');
 var Utils = require('./utils');
+var fs = require('fs');
 var WS = {};
 
 module.exports = WS;
@@ -24,6 +25,10 @@ var Server = cls.Class.extend({
 
     onError: function (callback) {
         this.errorCallback = callback;
+    },
+
+    onConnectionType: function(callback) {
+        this.connectionTypeCallback = callback;
     },
 
     broadcast: function (message) {
@@ -140,6 +145,59 @@ WS.WebsocketServer = Server.extend({
                             response.write(self.statusCallback());
                         }
                         break;
+                    case '/config/config_build.json':
+                    case '/config/config_local.json':
+                        // Generate the config_build/local.json files on the
+                        // fly, using the host address and port from the
+                        // incoming http header
+
+                        // Grab the incoming host:port request string
+                        var headerPieces = request.connection.parser.incoming.headers.host.split(':', 2);
+
+                        // Determine new host string to give clients
+                        var newHost;
+                        if ((typeof headerPieces[0] === 'string') && (headerPieces[0].length > 0))  {
+                            // Seems like a valid string, lets use it
+                            newHost = headerPieces[0];
+                        } else {
+                            // The host value doesn't seem usable, so
+                            // fallback to the local interface IP address
+                            newHost = request.connection.address().address;
+                        }
+
+                        // Default port is 80
+                        var newPort = 80;
+                        if (2 === headerPieces.length) {
+                            // We've been given a 2nd value, maybe a port #
+                            if ((typeof headerPieces[1] === 'string') && (headerPieces[1].length > 0)) {
+                                // If a usable port value was given, use that instead
+                                var tmpPort = parseInt(headerPieces[1], 10);
+                                if (!isNaN(tmpPort) && (tmpPort > 0) && (tmpPort < 65536)) {
+                                    newPort = tmpPort;
+                                }
+                            }
+                        }
+
+                        // Assemble the config data structure
+                        var newConfig = {
+                            host: newHost,
+                            port: newPort,
+                            dispatcher: true
+                        };
+
+                        // Make it JSON
+                        var newConfigString = JSON.stringify(newConfig);
+
+                        // Create appropriate http headers
+                        var responseHeaders = {
+                            'Content-Type': 'application/json',
+                            'Content-Length': newConfigString.length
+                        };
+
+                        // Send it all back to the client
+                        response.writeHead(200, responseHeaders);
+                        response.end(newConfigString);
+                        break;
                     case '/shared/js/file.js':
                         // Sends the real shared/js/file.js to the client
                         sendFile('js/file.js', response, log);
@@ -148,6 +206,10 @@ WS.WebsocketServer = Server.extend({
                         // Sends the real shared/js/gametypes.js to the client
                         sendFile('js/gametypes.js', response, log);
                         break;
+
+                    case '/shared/js/itemtypes.js':
+                        sendFile('js/itemtypes.js', response, log);
+                        break;
                     default:
                         response.writeHead(404);
                 }
@@ -155,7 +217,7 @@ WS.WebsocketServer = Server.extend({
             });
 
             this._httpServer = http.createServer(app).listen(port, this.ip || undefined, function serverEverythingListening() {
-                log.info('Server (everything) is listening on port ' + port);
+                log.info('Server (everything) is now running on port: ' + port);
             });
         } else {
             // Only run the server side code
@@ -173,20 +235,37 @@ WS.WebsocketServer = Server.extend({
                 log.info('Server (only) is listening on port ' + port);
             });
         }
-
+        var canProceed = false;
+        var isUnityClient = false;
         this._ioServer = new socketio(this._httpServer);
         this._ioServer.on('connection', function webSocketListener(socket) {
             log.info('Client socket connected from ' + socket.conn.remoteAddress);
             // Add remoteAddress property
-            socket.remoteAddress = socket.conn.remoteAddress;
-
             var c = new WS.socketioConnection(self._createId(), socket, self);
 
-            if (self.connectionCallback) {
-                self.connectionCallback(c);
-            }
+            socket.on('html_client', function () {
+                socket.remoteAddress = socket.conn.remoteAddress;
 
-            self.addConnection(c);
+                if (self.connectionCallback)
+                    self.connectionCallback(c);
+
+
+                self.addConnection(c);
+            });
+
+            socket.on("unity_client", function () {
+                isUnityClient = true;
+
+                if (self.connectionCallback)
+                    self.connectionCallback(c);
+
+                self.addConnection(c);
+            });
+
+            socket.on('unity_message', function(message) {
+                if (c.listenCallback)
+                    c.listenCallback(message);
+            })
         });
     },
 
@@ -204,7 +283,6 @@ WS.WebsocketServer = Server.extend({
         this.statusCallback = statusCallback;
     }
 });
-
 
 /**
  * Connection class for socket.io Socket
@@ -231,21 +309,23 @@ WS.socketioConnection = Connection.extend({
             if (self.closeCallback) {
                 self.closeCallback();
             }
+            //self._connection.conn.close();
             delete self._server.removeConnection(self.id);
         });
+
     },
 
     send: function(message) {
-        var data;
-        if (useBison) {
-            data = BISON.encode(message);
-        } else {
-            data = JSON.stringify(message);
-        }
+
+        var data = JSON.stringify(message);
+
+
+
         this.sendUTF8(data);
     },
 
     sendUTF8: function(data) {
+
         this._connection.send(data);
     }
 });

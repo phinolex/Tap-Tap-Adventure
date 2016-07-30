@@ -1,0 +1,44 @@
+{
+    
+    //Server Start
+    "muted": "You are currently muted.",
+    "snowpotionWarning": "This isn't a snowpotion.",
+    "enchantmentSuccess": "Your enchantment succeeded.",
+    "enchantmentFail": "Your enchantment failed.",
+    "weaponEnchantmentWarning": "Weapon enchantment cannot exceed level 30.",
+    "weaponSkillEnchantmentWarning": "Weapon skill cannot exceed level 7.",
+    "blackpotionWarning": "This isn't a black potion.",
+    "ringEnchantmentWarning": "Your ring enchantment cannot exceed level 9.",
+    "pendantEnchantmentWarning": "Your pendant cannot exceed level 9.",
+    "pendantWeakening": "Your pendant has weakened",
+    "pvpNotification": "kneels to the ground in agony.",
+    "pvpNotification2": "falls before you.",
+    "pvpNotification3": "has been defeated.",
+    "partyWarning": "You are not in a party.",
+    //End of Server english   
+    
+    "usernameField": "Username",
+    "passwordField": "Password",
+    "enterUsernameWarning": "Please enter a username.",
+    "enterPasswordWarning": "Please enter a password.",
+    "confirmPasswordWarning": "Please confirm your password by re-typing it.",
+    "passwordsMatchWarning": "The passwords you have entered do not match, please try again.",
+    "invalidEmail": "The email you have entered appears to be invalid, please try again.",
+    "createCharacter": "Create Character",
+    "playersOnlineSingular": "player",
+    "playersOnlinePlural": "players"
+    "disconnectMessage": "Please reload the page",
+    
+    "timeoutWarning": "The connection to TTA servers has timed out.",
+    "invalidLogin": "The username or password you have entered is incorrect.",
+    "userExistsWarning": "The username you have entered is currently in use.",
+    "invalidCharactersWarning": "The username you have entered contains invalid characters.",
+    "alreadyLoggedInWarning": "A player with the specified username is already logged in.",
+    "banWarning": "You are currently banned.",
+    "fullWarning": "The TTA server is currently full.",
+    "unknownWarning": "An error has occured, unknown warning: ",
+    "targerHUDLevel": "Level - ",
+    
+    
+    
+}

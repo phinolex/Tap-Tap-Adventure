@@ -1,0 +1,1110 @@
+var cls = require("./lib/class"),
+    _ = require("underscore"),
+    Character = require('./character'),
+    Chest = require('./chest'),
+    Messages = require("./message"),
+    Utils = require("./utils"),
+    Properties = require("./properties"),
+    Formulas = require("./formulas"),
+    check = require("./format").check,
+    Party = require("./party"),
+    Items = require("./items"),
+    Bank = require("./bank"),
+    Types = require("../../shared/js/gametypes"),
+    ItemTypes = require("../../shared/js/itemtypes"),
+    bcrypt = require('bcrypt'),
+    Inventory = require("./inventory"),
+    Mob = require('./mob'),
+    SkillHandler = require("./skillhandler"),
+    Variations = require('./variations'),
+    Trade = require('./trade'),
+    express = require('express'),
+    bodyParser = require('body-parser'),
+    app = express(), 
+    Quests = require('./quests'),
+    request = require("request"),
+    EntitySpawn = require("./entityspawn");
+
+module.exports = PacketHandler = Class.extend({
+    init: function(player, worldServer, connection, databaseHandler) {
+
+    	this.player = player;
+        this.server = worldServer;
+        this.connection = connection;
+
+        this.connection.listen(function(message) {
+            var action = parseInt(message[0]);
+
+            log.debug("Received: "+message);
+            if(!check(message)) {
+                self.connection.close("Invalid "+Types.getMessageTypeAsString(action)+" message format: "+message);
+                return;
+            }
+
+            if(!self.hasEnteredGame && action !== Types.Messages.CREATE &&
+            	action !== Types.Messages.LOGIN && action !== Types.Messages.NEWPASSWORD)
+            { // CREATE or LOGIN or NEWPASSWORD must be the first message
+                self.connection.close("Invalid handshake message: "+message);
+                return;
+            }
+            if(self.hasEnteredGame && !self.isDead && 
+                (action === Types.Messages.CREATE || action === Types.Messages.LOGIN ))
+            { // CREATE/LOGIN can be sent only once
+                self.connection.close("Cannot initiate handshake twice: "+message);
+                return;
+            }
+
+            self.player.resetTimeout();
+            
+            if (action == Types.Messages.NEWPASSWORD)
+            {
+            	self.player.handleNewPassword(message);
+
+            }
+
+            else if(action === Types.Messages.CREATE || action === Types.Messages.LOGIN) {
+                self.handleCreateOrLogin(message);
+
+            }      
+            
+            switch(action) {
+	
+                case Types.Messages.KBVE:
+                    self.handleKBVE(message);       
+                break;
+                
+                case Types.Messages.WHO:
+                    //log.info("Who: " + self.player.name);
+                    message.shift();
+                    //log.info("list: " + message);
+                    self.server.pushSpawnsToPlayer(self, message);
+                break;
+                
+                case Types.Messages.ZONE:
+                    //log.info("Zone: " + self.player.name);
+                    self.zone_callback();
+                break;
+                
+                case Types.Messages.CHAT:
+                    self.handleChat(message);
+                break;
+
+                case Types.Messages.MOVEENTITY:
+                    self.handleMoveEntity(message);
+                break;
+
+                case Types.Messages.HIT:
+                    //log.info("Player: " + self.player.name + " hit: " + message[1]);
+                    self.handleHit(message);
+                break;
+                
+                case Types.Messages.HURT:
+                    self.handleHurt(message);
+                break;
+                
+                case Types.Messages.INVENTORY:
+                    //log.info("Player: " + self.player.name + " inventory message: " + message[1] + " " + message[2] + " " + message[3]);
+                    self.handleInventory(message);
+                break;
+                
+                case Types.Messages.SKILL:
+                    log.info("Player: " + self.player.name + " skill: " + message[1] + " " + message[2])
+                    self.handleSkill(message);
+                break;
+                
+                case Types.Messages.SKILLINSTALL:
+                    //log.info("Skill Install on: " + self.player.name + " " + message[1] + " " + message[2]);
+                    self.handleSkillInstall(message);
+                break;
+                
+        	case Types.Messages.SKILLLOAD:
+        	    self.player.handleSkillLoad();
+                break;
+                
+                case Types.Messages.AGGRO:
+                    log.info("Player: " + self.player.name + " aggro'ed: " + message[1]);
+                    if (self.move_callback)
+                        self.server.handleMobHate(message[1], self.player.id, 5);
+                break;
+                
+                case Types.Messages.STORESELL:
+                    log.info("Player: " + self.player.name + " store sell: " + message[1]);
+                    self.handleStoreSell(message);
+                break;
+                
+                case Types.Messages.STOREBUY:
+                    log.info("Player: " + self.player.name + " store buy: " + message[1] + " " + message[2] + " " + message[3]);
+                    self.handleStoreBuy(message);
+                break;
+
+                case Types.Messages.STOREENCHANT:
+                    log.info("Player: " + self.player.name + " store enchant: " + message[1]);
+                    self.handleStoreEnchant(message);
+                break;
+
+                case Types.Messages.BANKSTORE:
+                    log.info("Player: " + self.player.name + " bank store: " + message[1]);
+                    self.handleBankStore(message);
+                break;
+
+                case Types.Messages.BANKRETRIEVE:
+                    log.info("Player: " + self.player.name + " bank retrieve: " + message[1]);
+                    self.handleBankRetrieve(message);
+                break;
+                
+                case Types.Messages.CHARACTERINFO:
+                    log.info("Player character info: " + self.player.name);
+                    self.server.pushToPlayer(self.player, new Messages.CharacterInfo(self.player));
+                break;
+                
+                case Types.Messages.TELEPORT:
+                    self.handleTeleport(message);
+                break;
+                
+                case Types.Messages.OPEN:
+                    self.handleOpen(message);
+                break;
+                
+                case Types.Messages.LOOTMOVE:
+                    self.handleLootMove(message);
+                break;
+                
+                case Types.Messages.LOOT:
+                    self.handleLoot(message);
+                break;
+                
+                case Types.Messages.CHECK:
+                    self.handleCheckpoint(message);                    
+                break;
+                
+                case Types.Messages.QUEST:
+                    self.player.handleQuest(message);
+                break;
+                
+                case Types.Messages.TALKTONPC:
+                    self.player.handleTalkToNPC(message);
+                break;
+                
+                case Types.Messages.FLAREDANCE:
+                    self.player.handleFlareDance(message);
+                break;
+                
+                case Types.Messages.MAGIC:
+                    self.player.handleMagic(message);
+                break;
+                
+                case Types.Messages.CLIENTFOCUS:
+                    //log.info("Player: " + self.player.name + " client_focus: " + message[1]);
+                    self.player.handleClientFocus(message);
+                break;                
+                
+        	case Types.Messages.ADDSPAWN:
+        	    self.player.handleAddSpawn(message);
+        	break;
+        	
+        	case Types.Messages.SAVESPAWNS:
+                    self.player.handleSaveSpawns();
+        	break;
+
+        	
+                default:
+                    if (self.message_callback)
+                        self.player.message_callback(message);
+                break;
+            }
+        });
+
+        this.connection.onClose(function() {
+
+            clearTimeout(self.disconnectTimeout);
+            if(self.exit_callback) {
+                self.exit_callback();
+            }
+        });
+
+        this.connection.sendUTF8("go"); // Notify client that the HELLO/WELCOME handshake can start
+        
+    },
+    
+    
+
+    broadcast: function(message, ignoreSelf) {
+        if(this.broadcast_callback) {
+            this.broadcast_callback(message, ignoreSelf === undefined ? true : ignoreSelf);
+        }
+    },
+
+    broadcastToZone: function(message, ignoreSelf) {
+        if(this.broadcastzone_callback) {
+            this.broadcastzone_callback(message, ignoreSelf === undefined ? true : ignoreSelf);
+        }
+    },
+
+    onExit: function(callback) {
+        this.exit_callback = callback;
+    },
+
+    onMove: function(callback) {
+        this.move_callback = callback;
+    },
+
+    onLootMove: function(callback) {
+        this.lootmove_callback = callback;
+    },
+
+    onZone: function(callback) {
+        this.zone_callback = callback;
+    },
+
+    onOrient: function(callback) {
+        this.orient_callback = callback;
+    },
+
+    onMessage: function(callback) {
+        this.message_callback = callback;
+    },
+
+    onBroadcast: function(callback) {
+        this.broadcast_callback = callback;
+    },
+
+    onBroadcastToZone: function(callback) {
+        this.broadcastzone_callback = callback;
+    },
+    
+    handleCreateOrLogin: function (message) {          
+	var name = Utils.sanitize(message[1]);
+	var pw = Utils.sanitize(message[2]);
+
+
+	  var options = {
+		  //uri: 'https://kbve.com/api/tta/tta_l.php',
+		  uri: 'http://10.21.21.1:8080/api/tta/tta_l.php',
+		  method: 'POST',
+		  json: {
+		    "method": "login",
+		    "u": name,
+		    "p": pw
+		  }
+		};
+
+		request(options, function (error, response, body) {
+		  if (!error && response.statusCode == 200) {
+		   // console.log(body.id) // Print the shortened url.
+		    
+		    body = JSON.stringify(body);
+		    var s_id = JSON.parse(body).session_id;
+		    console.log("Contacting API");
+		    console.log("[BODY]");
+		    // Print out the response body
+		    console.log(body);
+		    console.log('');
+		    console.log(s_id);
+		    
+		
+		    // If it is json
+		   // var json_body = JSON.parse(body);
+		   //  self.session_id_kbve = json_body.session_id;
+
+		  }
+		});
+
+	/**
+	 * Implement RSA Authorization
+	 */
+
+	log.info("Starting Client/Server Handshake");
+
+	// Always ensure that the name is not longer than a maximum length.
+	// (also enforced by the maxlength attribute of the name input element).
+	// After that, you capitalize the first letter.
+	self.player.name = name.substr(0, 36).trim();
+
+
+	// Validate the username
+	if(!self.checkName(self.player.name)){
+	    self.connection.sendUTF8("invalidusername");
+	    self.connection.close("Invalid name " + self.player.name);
+	    return;
+	}
+	self.player.pw = pw.substr(0, 45);
+
+	if(action === Types.Messages.CREATE) {
+	    bcrypt.genSalt(10, function(err, salt) {
+		bcrypt.hash(self.player.pw, salt, function(err, hash) {
+		    log.info("CREATE: " + self.player.name);
+		    self.player.email = Utils.sanitize(message[3]);
+		    self.player.pw = hash;
+
+		    databaseHandler.createPlayer(self);
+		});
+	    });
+	} else {
+	    log.info("LOGIN: " + self.player.name);
+	    if(self.server.loggedInPlayer(self.player.name)) {
+		self.connection.sendUTF8("loggedin");
+		self.connection.close("Already logged in " + self.player.name);
+		return;
+	    }
+	    databaseHandler.loadPlayer(self.player);
+	}
+    
+    },
+    
+    handleNewPassword: function(message) {	
+	    self.player.name = Utils.sanitize(message[1]).substr(0, 36).trim();
+	    self.pw = Utils.sanitize(message[2]).substr(0, 45);
+	    self.newpw = Utils.sanitize(message[3]).substr(0, 45);
+
+	// Validate the username
+	if(!self.player.checkName(self.player.name)){
+	    self.connection.sendUTF8("invalidusername");
+	    self.connection.close("Invalid name " + self.player.name);
+	    return;
+	}
+	
+	    bcrypt.genSalt(10, function(err, salt) {
+		bcrypt.hash(self.newpw, salt, function(err, hash) {
+		    log.info("CREATE NEW PASSWORD HASH: " + self.player.name);
+		    self.newpw = hash;
+		    databaseHandler.updatePassword(self);
+		    log.info("name: " + self.player.name + ", oldpw: " + self.pw + ", newpw: " + self.newpw);
+		});
+	    });    	    
+    },
+    
+    handleKBVE: function (message) {
+	    self.player.name = Utils.sanitize(message[1]).substr(0, 36).trim();
+	    self.pw = Utils.sanitize(message[2]).substr(0, 45);
+	    self.session_id_kbve = message[3];
+	    
+	    /*
+	     * Check here if a player exists,
+	     * add his session_id to active players
+	     * and when he disconnects, make sure
+	     * the API removes the player.
+	     * You should check if a player exists by
+	     * username rather than ID, as that changes regularly.
+	     */
+	    
+	    
+	    
+	    // Check if Logged in?
+		if(self.server.loggedInPlayer(self.player.name)) {
+		    self.connection.sendUTF8("loggedin");
+		    self.connection.close("Player: " + self.player.name + " is already logged in.");
+		    return;
+		}    
+    },
+    
+    handleChat: function (message) {
+	    var msg = Utils.sanitize(message[1]);
+	    log.info("Chat: " + self.player.name + ": " + msg);
+	    if (msg && (msg !== "" || msg !== " ")) {
+		msg = msg.substr(0, 256); //Will have to change the max length
+		var command = msg.split(" ",3)
+		switch(command[0]) {
+		    case "/1":
+			if ((new Date()).getTime() > self.chatBanEndTime) {
+			    self.server.pushBroadcast(new Messages.Chat(self, msg));
+			} else
+			    self.send([Types.Messages.NOTIFY, "You are currently muted."]);
+		    break;
+		    default:
+			if ((new Date()).getTime() > self.chatBanEndTime) {
+			    //self.broadcastToZone(new Messages.Chat(self, msg));
+			    //self.send(new Messages.Chat(self, msg));
+			    self.server.pushBroadcast(new Messages.Chat(self, msg));
+			} else
+			    self.send([Types.Messages.NOTIFY, "You are currently muted."]);
+		    break;
+		    
+		}
+	    } 
+    },
+
+    handleRanking: function(message){ // 40
+        var type = message[1];
+
+        if(type === 'get'){
+            databaseHandler.getRanking(this);
+        }
+    },
+
+    handleTalkToNPC: function(message){ // 30
+        var self = this;
+        var npcKind = message[1];
+        var questId = message[2];
+        log.info("npcKind="+npcKind+",questId="+questId);
+        
+        if (!this.achievement[questId] || !this.achievement[questId].found)
+        {
+        	log.info("FOUND MISSION");
+        	this.foundQuest(questId);
+        	//this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, questId, false));        	
+        	return;
+        }     
+        if (this.achievement[questId].progress === 999)
+        {
+        	log.info("MISSION complete");
+        	this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, questId, true));
+        	return;
+        }
+        
+        var quest = Quests.QuestData[questId];
+        //log.info("quest="+JSON.stringify(quest));
+	    if(quest.type == 1) 
+	    {
+	    	 log.info("quest.npcId: " +quest.npcId+",questId="+questId+",quest.itemId="+quest.itemId+",quest.itemCount="+quest.itemCount);
+		 this.questAboutItem(quest.npcId, questId, quest.itemId, quest.itemCount);
+		 if (quest.xp)
+		 {
+		 	 self.incExp(quest.xp);
+		 }
+	    }	    
+
+    },
+    
+    handleLootMove: function(message){
+        if(this.lootmove_callback) {
+            this.setPosition(message[1], message[2]);
+
+            var item = this.server.getEntityById(message[3]);
+            if(item) {
+                this.clearTarget();
+
+                this.broadcast(new Messages.LootMove(this, item));
+                this.lootmove_callback(this.x, this.y);
+            }
+        }
+    },
+
+    handleCheckPoint: function (message) {
+	    var checkpoint = this.server.map.getCheckpoint(message[1]);
+	    if (checkpoint) {
+		self.lastCheckpoint = checkpoint;
+		databaseHandler.setCheckpoint(this.player.name, this.player.x, this.player.y);
+	    }    	    
+    },
+    
+    handleStoreSell: function(message) {
+        var inventoryNumber1 = message[1],
+            itemKind = null,
+            price = 0,
+            inventoryNumber2 = -1;
+
+        if((inventoryNumber1 >= 0) && (inventoryNumber1 < this.inventory.number)) {
+            itemKind = this.inventory.rooms[inventoryNumber1].itemKind;
+            if(itemKind && !ItemTypes.isConsumableItem(itemKind) && !ItemTypes.isGold(itemKind)) {
+                price = ItemTypes.getSellPrice(ItemTypes.getKindAsString(itemKind));
+                inventoryNumber2 = this.inventory.getInventoryNumber(Types.Entities.GOLD);
+                if(inventoryNumber2 < 0) {
+                    inventoryNumber2 = this.inventory.getEmptyInventoryNumber();
+                }
+                this.inventory.makeEmptyInventory(inventoryNumber1);
+                this.inventory.putInventory(Types.Entities.GOLD, price);
+                this.server.pushToPlayer(this, new Messages.Notify("sold"));
+            }
+        }
+    },
+
+    handleStoreEnchant: function(message) {
+    	    //log.info("handleStoreEnchant");
+        var inventoryNumber1 = message[1],
+            itemKind = null,
+            price = 0;
+
+        if((inventoryNumber1 >= 6) && (inventoryNumber1 < this.inventory.number)) {
+            item = this.inventory.rooms[inventoryNumber1];
+            log.info("item="+ JSON.stringify(item));
+            if(item && item.itemKind && !ItemTypes.isGold(item.itemKind)) {
+                price = ItemTypes.getEnchantPrice(ItemTypes.getKindAsString(item.itemKind), item.itemNumber);
+
+                goldCount = this.inventory.getItemNumber(Types.Entities.GOLD);
+                //log.info("goldCount="+goldCount+",price="+price);
+                if(goldCount < price) {
+                    this.server.pushToPlayer(this, new Messages.Notify("You don't have enough Gold."));
+                    return;
+                }
+		    item.itemNumber++;
+		    databaseHandler.setInventory(this.inventory.owner, inventoryNumber1, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
+		    
+		    this.inventory.putInventory(Types.Entities.GOLD, -price);
+		    this.server.pushToPlayer(this, new Messages.Notify("enchanted"));
+            }
+        }
+    },
+
+    handleBankStore: function(message) {
+        var inventoryNumber = message[1],
+            itemKind = null;
+
+        if((inventoryNumber >= 6) && (inventoryNumber < this.inventory.number)) {
+            item = this.inventory.rooms[inventoryNumber];
+
+            if(item && item.itemKind) {
+            	    var slot = this.bank.getEmptyBankNumber();
+            	    log.info("slot="+slot);
+            	    if (slot >= 0) {
+            	    	    this.bank.putBankItem(item);
+            	    	    this.inventory.takeOutInventory(inventoryNumber, item.itemNumber);
+                    }
+            }
+        }
+    },
+
+    handleBankRetrieve: function(message) {
+        var bankNumber = message[1],
+            itemKind = null;
+
+        if((bankNumber >= 0) && (bankNumber < this.bank.number)) {
+            item = this.bank.rooms[bankNumber];
+
+            if(item && item.itemKind) {
+            	    var slot = this.inventory.getEmptyEquipmentNumber();
+            	    if (slot >= 0) {
+            	    	    this.inventory.putInventoryItem(item);
+            	    	    this.bank.takeOutBank(bankNumber, item.itemNumber);            	    	    
+                    }
+            }
+        }
+    },
+    
+    handleOpen: function (message) {
+	    log.info("Player: " + self.player.name + " open: " + message[1]);
+	    var chest = self.server.getEntityById(message[1]);
+	    if (chest && chest instanceof Chest)
+		self.server.handleOpenedChest(chest, self);
+    },
+    
+    handleTeleport: function (message) {
+	    var x=message[1], y=message[2];
+	    if (self.server.isValidPosition(x, y)) {
+		self.player.setPosition(x, y);
+		self.player.clearTarget();
+		self.broadcast(new Messages.Teleport(self));
+		self.server.handlePlayerVanish(self);
+		self.server.pushRelevantEntityListTo(self);
+		this.attackedTime = 0;
+	    }	
+    },
+
+    handleStoreBuy: function(message) {
+        var itemType = message[1],
+            itemKind = message[2],
+            itemCount = message[3],
+            itemName = null,
+            price = 0,
+            goldCount = 0,
+            inventoryNumber = -1,
+            buyCount = 0;
+
+        if(itemCount <= 0) {
+            return;
+        }
+        if(itemKind) {
+            itemName = ItemTypes.getKindAsString(itemKind);
+        }
+        if(itemName) {
+            price = ItemTypes.getBuyPrice(itemName);
+            if(price > 0) {
+                if(ItemTypes.Store.isBuyMultiple(itemName)) {
+                    price = price * itemCount;
+                } else {
+                    itemCount = 1;
+                }
+                goldCount = this.inventory.getItemNumber(Types.Entities.GOLD);
+                log.info("goldCount="+goldCount);
+                
+                if(goldCount < price) {
+                    this.server.pushToPlayer(this, new Messages.Notify("You don't have enough Gold."));
+                    return;
+                }
+
+                if(this.inventory.hasEmptyInventory()) {
+                    this.inventory.putInventory(itemKind, ItemTypes.Store.getBuyCount(itemName) * itemCount);
+                    this.inventory.putInventory(Types.Entities.GOLD, -1 * price);
+                    this.server.pushToPlayer(this, new Messages.Notify("buy"));
+                } else {
+                    this.server.pushToPlayer(this, new Messages.Notify("There is not enough space in your inventory."));
+                }
+            }
+        }
+    },
+
+    handleInventory: function(message){ // 28
+        var inventoryNumber = message[2],
+            count = message[3];
+        var self = this;
+
+        if(inventoryNumber > this.inventory.number){
+
+            return;
+        }
+        var itemKind;
+        if (inventoryNumber == -1) {
+        	itemKind = this.weapon;
+        } else if (inventoryNumber == -2) {
+        	itemKind = this.armor;
+        } else {
+        	itemKind = this.inventory.rooms[inventoryNumber].itemKind;
+        }
+
+        if (itemKind < 0) {
+        	return;
+        }
+
+	    if(message[1] === "armor"){
+		this.handleInventoryArmor(itemKind, inventoryNumber);
+	    } else if(message[1] === "weapon"){
+		this.handleInventoryWeapon(itemKind, inventoryNumber);
+	    //} else if(message[1] === "pendant") {
+		//this.handleInventoryPendant(itemKind, inventoryNumber);
+	    //} else if(message[1] === "ring") {
+		//this.handleInventoryRing(itemKind, inventoryNumber);
+	    //} else if(message[1] === "boots") {
+		//this.handleInventoryBoots(itemKind, inventoryNumber);
+	    } else if(message[1] === "empty"){
+		this.handleInventoryEmpty(itemKind, inventoryNumber, count);
+	    } else if(message[1] === "eat"){
+		this.handleInventoryEat(itemKind, inventoryNumber);
+	    } else if(message[1] === "enchantweapon"){
+		this.handleInventoryEnchantWeapon(itemKind, inventoryNumber);
+	    } else if(message[1] === "enchantbloodsucking"){
+		this.handleInventoryEnchantBloodsucking(itemKind, inventoryNumber);
+	    } else if(message[1] === "enchantring"){
+		this.handleInventoryEnchantRing(itemKind, inventoryNumber);
+	    } else if(message[1] === "enchantpendant"){
+		this.handleInventoryEnchantPendant(itemKind, inventoryNumber);
+	    }
+
+    },
+
+    handleLoot: function(message){
+        var self = this;
+        var item = this.server.getEntityById(message[1]);
+
+        if(item) {
+            var kind = item.kind;
+            var itemRank = 0;
+
+            if(ItemTypes.isItem(kind)) {
+                if(kind === Types.Entities.FIREPOTION) {
+                    this.updateHitPoints();
+                    this.broadcast(this.equip(Types.Entities.FIREBENEF), false);
+                    this.broadcast(item.despawn(), false);
+                    this.server.removeEntity(item);
+                    this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana, this.hitPoints, this.mana));
+                } else {
+                    if(self.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel)){
+                        this.broadcast(item.despawn(), false);
+                        this.server.removeEntity(item);
+                    }
+                }
+            }
+        }
+    },
+
+    setAbility: function(){
+        this.bloodsuckingRatio = 0;
+        if(this.weaponSkillKind === Types.Skills.BLOODSUCKING){
+            this.bloodsuckingRatio += this.weaponSkillLevel*0.02;
+        }
+
+        this.criticalRatio = 0;
+        if(this.skillHandler.getLevel("criticalStrike") > 0){
+            this.criticalRatio = 0.1;
+        }
+        if(this.weaponSkillKind === Types.Skills.CRITICALRATIO){
+            this.criticalRatio += this.weaponSkillLevel*0.01;
+        }
+    },
+
+    handleHit: function(message){ // 8
+        var mobId = message[1];
+        var mob = this.server.getEntityById(message[1]);
+        var self = this;
+
+        if(this.cooltimeTimeout){
+            return;
+        } else{
+            this.cooltimeTimeout = setTimeout(function(){
+                self.cooltimeTimeout = null;
+            }, 720);
+        }
+
+        if (this.attackedTime == 0) this.attackedTime = new Date().getTime(); 
+    	var time = new Date().getTime();
+    	if ((time - this.attackedTime) > 30000)
+    	{
+    		//this.connection.close("Player not taking damage detected: " + this.name);
+    		//return;
+    	} 
+
+        if(mob && this.id){
+            var dmg = Formulas.dmg(this, mob);
+            if(mob instanceof Player){
+                dmg = Formulas.newDmg(this, mob);
+            }
+
+            if(dmg > 0){
+                if(Utils.ratioToBool(this.criticalRatio)){
+                    var criticalStrikeLevel = this.skillHandler.getLevel("criticalStrike");
+
+                    if (isNaN(criticalStrikeLevel)) {
+                        criticalStrikeLevel = 1;
+                        var dmg2 = dmg * (1 + (0.5 * criticalStrikeLevel));
+                        var dmg3 = dmg;
+                        dmg = Math.round(dmg2 + (this.ringSkillKind == Types.Skills.CRITICALATTACK ? dmg * (this.ringSkillLevel * 0.05) : 0));
+                        if (isNaN(dmg)) {
+                            dmg = dmg3;
+                        }
+                        log.info('critical: ' + dmg);
+
+                        this.broadcast(new Messages.Skill("critical", mobId, 0), false);
+                    } else {
+                        var dmg2 = dmg * (1 + (0.5 * criticalStrikeLevel));
+                        dmg = Math.round(dmg2 + (this.ringSkillKind == Types.Skills.CRITICALATTACK ? dmg * (this.ringSkillLevel * 0.05) : 0));
+
+                        log.info('critical: ' + dmg);
+
+                        this.broadcast(new Messages.Skill("critical", mobId, 0), false);
+                    }
+                }
+
+                log.info("bloodsuckingRatio: "+this.bloodsuckingRatio+",getLevel: "+this.skillHandler.getLevel("bloodSucking")*0.05);
+                var bloodsuckingAmount = dmg * (this.bloodsuckingRatio + this.skillHandler.getLevel("bloodSucking")*0.05);
+
+                if(this.ringSkillKind == Types.Skills.ATTACKWITHBLOOD) {
+                    var hitPoints = this.hitPoints,
+                        bleedingAmount = this.maxHitPoints * (this.ringSkillLevel * 0.01);
+                    if(hitPoints > bleedingAmount) {
+                        bloodsuckingAmount -= bleedingAmount;
+                    }
+                }
+
+                bloodsuckingAmount = Math.floor(bloodsuckingAmount);
+                if(bloodsuckingAmount != 0){
+                    this.regenHealthBy(bloodsuckingAmount);
+                    this.server.pushToPlayer(this, this.health());
+                }
+
+                if(mob.type !== "player"){
+                    mob.receiveDamage(dmg, this.id);
+                    if(mob.hitPoints <= 0){
+                        this.questAboutKill(mob);
+                        this.attackedTime = 0;
+                    }
+                    this.server.handleMobHate(mob.id, this.id, dmg);
+                    this.server.handleHurtEntity(mob, this, dmg);
+                } else{
+                    mob.hitPoints -= dmg;
+                    mob.server.handleHurtEntity(mob, this, dmg);
+                    if(mob.hitPoints <= 0){
+                        mob.isDead = true;
+                        this.attackedTime = 0;
+                        this.server.pushBroadcast(new Messages.Chat(this, "/1 " + this.name + " killed " + mob.name + " in combat."));
+                    }
+                }
+            }
+        }
+    },
+    handleHurt: function(message){ // 9
+        this.attackedTime = 0;
+        var self = this;
+        //log.info("HURT: " + this.name + " " + message[1]);
+        var mob = this.server.getEntityById(message[1]);
+        if(mob &&
+            (mob.kind === Types.Entities.FORESTDRAGON
+            || mob.kind == Types.Entities.SEADRAGON
+            || mob.kind == Types.Entities.HELLSPIDER
+            || mob.kind == Types.Entities.SKYDINOSAUR)){
+            var group = this.server.groups[this.group];
+            if(group){
+                _.each(group.players, function(playerId){
+                    var attackedPlayer = self.server.getEntityById(playerId);
+                    if(attackedPlayer){
+                        attackedPlayer.hitPoints -= Formulas.dmg(mob, attackedPlayer);
+                        self.server.handleHurtEntity(attackedPlayer, mob);
+
+                        if(attackedPlayer.hitPoints <= 0) {
+                            attackedPlayer.isDead = true;
+                            if(attackedPlayer.level >= 50){
+                                attackedPlayer.incExp(Math.floor(attackedPlayer.level*attackedPlayer.level*(-2)));
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        if(mob && this.hitPoints > 0 && mob instanceof Mob) {
+            var evasionLevel = this.skillHandler.getLevel("evasion");
+            if(evasionLevel > 0) {
+                var randNum = Math.random(),
+                    avoidChance = 0.05 * evasionLevel;
+
+                if(this.pendantSkillKind == Types.Skills.AVOIDATTACK){
+                    avoidChance += this.pendantSkillLevel * 0.01;
+                }
+
+                if(randNum < avoidChance){
+                    this.server.pushToPlayer(this, new Messages.Damage(this, 'MISS', mob.hitPoints, mob.maxHitPoints));
+                    return;
+                }
+            }
+
+            this.hitPoints -= Formulas.dmg(mob, this);
+            this.server.handleHurtEntity(this, mob);
+            mob.addTanker(this.id);
+
+            if(this.hitPoints <= 0) {
+                this.isDead = true;
+                if(this.level >= 50){
+                    this.incExp(Math.floor(this.level*this.level*(-2)));
+                }
+                if(this.flareDanceCallback) {
+                    clearTimeout(this.flareDanceCallback);
+                    this.flareDanceCallback = null;
+                    this.flareDanceExecuted1 = 0;
+                    this.flareDanceExecuted2 = 0;
+                    this.flareDanceCount = 0;
+                }
+            }
+        }
+    },
+    handleSkill: function(message){
+        var self = this;
+        var type = message[1];
+        var targetId = message[2];
+        if(type === "heal"){
+            if(this.party){
+                var healLevel = this.skillHandler.getLevel("heal"),
+                    now = (new Date()).getTime();
+                if((healLevel > 0) && ((now - this.healExecuted) > 30 * 1000) && this.mana >= 30) {
+                    var i = 0;
+                    var partyPlayers = this.party.players;
+                    var p = null;
+                    var amount = 0;
+                    switch(healLevel) {
+                        case 1: amount = this.level;
+                        case 2: amount = Math.floor(this.level * 1.5);
+                        case 3: amount = this.level * 2;
+                        case 4: amount = Math.floor(this.level * 2.5);
+                    }
+                    if(this.pendantSkillKind == Types.Skills.HEALANDHEAL) {
+                        amount += this.pendantSkillLevel * 10;
+                    }
+                    if(this.ringSkillKind == Types.Skills.HEALANDHEAL) {
+                        amount += this.ringSkillLevel * 10;
+                    }
+                    for(i=0; i < partyPlayers.length; i++){
+                        p = partyPlayers[i];
+                        if(p === this){
+                            continue;
+                        }
+                        if(!p.hasFullHealth()) {
+                            p.regenHealthBy(amount);
+                            p.server.pushToPlayer(p, p.health());
+                        }
+                    }
+                    this.healExecuted = now;
+                    this.broadcast(new Messages.Skill("heal", this.id, 0), false);
+                    this.mana -= 30;
+                    this.server.pushToPlayer(this, new Messages.Mana(this));
+                }
+            } else{
+
+                this.server.pushToPlayer(this, new Messages.Notify("You're not in a party."));
+            }
+        } else if(type === "flareDance"){
+            var flareDanceLevel = this.skillHandler.getLevel("flareDance"),
+                now = (new Date).getTime();
+            if((flareDanceLevel > 0) && ((now - this.flareDanceExecuted1) > 10 * 1000) && this.mana >= 100) {
+                this.broadcast(new Messages.Skill("flareDance", this.id, 0), false);
+                self.flareDanceCallback = setTimeout(function () {
+                    self.flareDanceCallback = null;
+                    self.broadcast(new Messages.Skill("flareDanceOff", self.id, 0), false);
+                }, 5*1000);
+                this.flareDanceExecuted1 = now;
+                this.flareDanceExecuted2 = 0;
+                this.flareDanceCount = 0;
+                this.mana -= 100;
+                this.server.pushToPlayer(this, new Messages.Mana(this));
+            }
+        } else if(type === "stun"){
+            var target = this.server.getEntityById(targetId);
+            var stunLevel = this.skillHandler.getLevel("stun");
+            var now = (new Date).getTime();
+            if(target
+                && stunLevel > 0
+                && (now - this.stunExecuted) > 30 * 1000
+                && this.mana >= 150) {
+                this.broadcast(new Messages.Skill("stun", targetId, stunLevel), false);
+                this.stunExecuted = now;
+                this.mana -= 150;
+                this.server.pushToPlayer(this, new Messages.Mana(this));
+            }
+        } else if(type === "superCat"){
+            var superCatLevel = this.skillHandler.getLevel("superCat");
+            var now = (new Date).getTime();
+            if(superCatLevel > 0 && (now - this.superCatExecuted) > 90 * 1000
+                && this.mana >= 200 && this.superCatCallback == null){
+                this.broadcast(new Messages.Skill("superCat", this.id, superCatLevel), false);
+                this.superCatExecuted = now;
+                this.mana -= 200;
+                this.server.pushToPlayer(this, new Messages.Mana(this));
+                this.superCatCallback = setTimeout(function () {
+                    self.superCatCallback = null;
+                    self.broadcast(new Messages.Skill("superCatOff", self.id, 0), false);
+                }, 30*1000);
+            }
+        } else if(type === "provocation"){
+            var target = this.server.getEntityById(targetId);
+            var provocationLevel = this.skillHandler.getLevel("provocation");
+            var now = (new Date).getTime();
+            if(target
+                && provocationLevel > 0
+                && (now - this.provocationExecuted) > 15 * 1000
+                && this.mana >= 50) {
+                this.broadcast(new Messages.Skill("provocation", targetId, provocationLevel), false);
+                this.provocationExecuted = now;
+                this.mana -= 50;
+                this.server.pushToPlayer(this, new Messages.Mana(this));
+                this.server.provocateMob(this, target);
+            }
+        }
+    },
+    
+
+    handleFlareDance: function(message){
+        if(this.flareDanceCallback) {
+            var flareDanceLevel = this.skillHandler.getLevel("flareDance"),
+                now = (new Date).getTime();
+            if((flareDanceLevel > 0) && ((now - this.flareDanceExecuted2) >= 720) && (this.flareDanceCount < 10)) {
+                var i=1;
+                var dmg = this.level;
+
+                this.flareDanceExecuted2 = now;
+                this.flareDanceCount++;
+
+                if(flareDanceLevel == 2) {
+                    dmg = Math.floor(this.level * 1.4);
+                } else if(flareDanceLevel == 3){
+                    dmg = Math.floor(this.level * 1.7);
+                } else if(flareDanceLevel == 4){
+                    dmg = Math.floor(this.level * 2);
+                }
+
+                for(i=1; i<5; i++){
+                    var mob = this.server.getEntityById(message[i]);
+                    if(mob){
+                        mob.receiveDamage(dmg, this.id);
+                        if(mob.hitPoints <= 0){
+                            this.questAboutKill(mob);
+                        }
+                        this.server.handleMobHate(mob.id, this.id, dmg);
+                        this.server.handleHurtEntity(mob, this, dmg);
+                    }
+                }
+            }
+        }
+    },
+
+    handleMagic: function(message) {
+	    var magicName = message[1];
+	    var magicTargetName = message[2];
+	    
+	    if (magicName === "setheal") {
+		self.magicTarget = self.server.getPlayerByName(magicTargetName);
+		if (self.magicTarget === self)
+		    self.magicTarget = null;
+	    } else if (magicName === "heal") {
+		if (self.magicTarget) {
+		    if (!self.magicTarget.hasFullHealth()) {
+			self.magicTarget.regenHealthBy(50);
+			self.server.pushToPlayer(self.magicTarget, self.magic);
+		    }
+		}
+	    }    	    
+    },
+    
+	handleSkillInstall: function(message) {
+		var index = message[1],
+		name = message[2],
+		self = this;
+		
+		if(((index >= 0) && (index < this.skillHandler.skillSlots.length)) && (name in Types.Player.Skills)) {
+			databaseHandler.handleSkillInstall(this, index, name, function() {
+			self.skillHandler.install(index, name);
+			self.server.pushToPlayer(self, new Messages.SkillInstall(index, name));
+			});
+		}
+	},
+	
+	handleSkillLoad: function () {
+		var self= this;
+		databaseHandler.getSkills(self, function(maxSkillNumber, skillNames, skillLevels) {			
+		    for(var index = 0; index < maxSkillNumber; index++) {
+	
+		//log.info("skillName=" + JSON.stringify(skillNames));
+		//log.info("skillLevel=" + JSON.stringify(skillLevel));
+			    
+			var skillName = skillNames[index];
+			log.info("load_skillName="+skillName);
+			var skillLevel = skillLevels[index];
+			log.info("load_skillLevel="+skillLevel);
+			if (!skillLevel) break;
+			self.skillHandler.add(skillName, skillLevel);
+			self.server.pushToPlayer(self, new Messages.SkillLoad(index, skillName, skillLevel));
+		    }
+			
+		});		
+	},
+
+    handleClientFocus: function (message) {
+        var hasFocus = message[1];
+        
+        this.hasFocus = (hasFocus == 0) ? false : true;        	
+    },
+
+    handleMoveEntity: function (message) {
+	var entityId = message[1],
+	    x = message[2],
+	    y = message[3];
+	
+    	if (this.server.isValidPosition(x, y))
+    	{
+    	    var entity = this.server.getEntityById(entityId);
+    	    if (!entity) return;
+    	    entity.setPosition(x,y);
+            if (entity == this)
+            {
+            	entity.clearTarget();
+            	entity.broadcast(new Messages.Move(this));
+            	entity.move_callback(entity.x, entity.y);
+            }
+    	}
+    },
+    
+    handleAddSpawn: function (msg) {
+	var id = msg[1],
+	    x = msg[2],
+	    y = msg[3];
+	
+    	if (this.isAdmin() && this.server.isValidPosition(x, y))
+    	{
+    	    EntitySpawn.addSpawn(id, x, y);
+    	    this.server.spawnEntity(id, x, y);
+    	}   
+    },
+    
+    handleSaveSpawns: function (msg) {
+    	 if (this.isAdmin())
+             EntitySpawn.saveSpawns();
+    },
+    
+    send: function(message) {
+        this.connection.send(message);
+    },
+    
+});

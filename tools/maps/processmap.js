@@ -1,7 +1,8 @@
 var fs = require("fs"),
     Log = require('log'),
     _ = require('underscore'),
-    Types = require("../../shared/js/gametypes");
+    Types = require("../../shared/js/gametypes"),
+    ItemTypes = require("../../shared/js/itemtypes");
 
 var map, mode;
 var collidingTiles = {};
@@ -178,7 +179,7 @@ module.exports = function processMap(json, options) {
 
                 // get items
                 chestArea['i'] = _.map(area.properties.items.split(','), function(name) {
-                    return Types.getKindFromString(name);
+                    return ItemTypes.getKindFromString(name);
                 });
 
                 // iterate through remaining area's properties
@@ -205,7 +206,7 @@ module.exports = function processMap(json, options) {
 
                 // get items
                 newChest['i'] = _.map(chest.properties.items.split(','), function(name) {
-                    return Types.getKindFromString(name);
+                    return ItemTypes.getKindFromString(name);
                 });
 
                 map.staticChests.push(newChest);

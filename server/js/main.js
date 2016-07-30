@@ -74,6 +74,7 @@ function main(config) {
 
     server.onError(function() {
         log.error(Array.prototype.join.call(arguments, ", "));
+        
     });
 
     var onPopulationChange = function() {
@@ -107,7 +108,10 @@ function main(config) {
 
     process.on('uncaughtException', function (e) {
         // Display the full error stack, to aid debugging
+        //log.info(JSON.stringify(e));
+
         log.error('uncaughtException: ' + e.stack);
+        
     });
 }
 

@@ -64,6 +64,18 @@ define(function() {
           }
         },
 
+        /*setImage: function (image) {
+        	if (this.body) {
+        		this.body.css('background-image', 'url=("'+image+') !important');
+        	}
+        },*/
+        
+        setBackground: function(background) {        	
+        	this.background = background;
+        	this.kind = this.kind ? this.kind : 0;
+        	this.setBackgroundPosition(this.kind);
+        },
+
         getBackgroundPosition: function(kind) {
           var left = isUndefined(this.background.left) ? 0 : this.background.left,
               top = isUndefined(this.background.top) ? 0 : this.background.top,
@@ -72,10 +84,8 @@ define(function() {
           return '-' + (left + (width * index)) + 'px -' + (top) + 'px';
         },
         setBackgroundPosition: function(kind) {
-          if(kind != this.kind) {
-            this.kind = kind;
-            this.body.css('background-position', this.getBackgroundPosition(kind));
-          }
+		this.kind = kind;
+		this.body.css('background-position', this.getBackgroundPosition(kind));
         },
 
         refresh: function() {

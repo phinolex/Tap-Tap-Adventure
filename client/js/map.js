@@ -1,5 +1,5 @@
 
-define(['jquery', 'area'], function($, Area) {
+define(['jquery', 'area', 'detect'], function($, Area, Detect) {
 
     var Map = Class.extend({
         init: function(loadMultiTilesheets, game) {
@@ -10,7 +10,7 @@ define(['jquery', 'area'], function($, Area) {
             this.mapLoaded = false;
             this.loadMultiTilesheets = loadMultiTilesheets;
 
-            var useWorker = !(this.game.renderer.mobile || this.game.renderer.tablet);
+            var useWorker = !(this.game.renderer.mobile || this.game.renderer.tablet || this.game.renderer.isSafari);
 
             this._loadMap(useWorker);
             this._initTilesets();
@@ -57,7 +57,7 @@ define(['jquery', 'area'], function($, Area) {
         _initTilesets: function() {
             var tileset1, tileset2, tileset3;
 
-            if(!this.loadMultiTilesheets) {
+            if(!this.loadMultiTilesheets || this.game.renderer.scale == 1) {
                 this.tilesetCount = 1;
                 tileset1 = this._loadTileset('img/1/tilesheet.png');
             } else {
@@ -184,17 +184,18 @@ define(['jquery', 'area'], function($, Area) {
         },
 
         isColliding: function(x, y) {
+            //log.info("isCOlliding x:"+x+",y:"+y);
             if(this.isOutOfBounds(x, y) || !this.grid) {
                 return false;
             }
-            return (this.grid[y][x] === 1);
+            return (this.grid[y][x] === true);
         },
 
         isPlateau: function(x, y) {
             if(this.isOutOfBounds(x, y) || !this.plateauGrid) {
                 return false;
             }
-            return (this.plateauGrid[y][x] === 1);
+            return (this.plateauGrid[y][x] === true);
         },
 
         _generateCollisionGrid: function() {
@@ -205,19 +206,19 @@ define(['jquery', 'area'], function($, Area) {
             for(var j, i = 0; i < this.height; i++) {
                 this.grid[i] = [];
                 for(j = 0; j < this.width; j++) {
-                    this.grid[i][j] = 0;
+                    this.grid[i][j] = false;
                 }
             }
 
             _.each(this.collisions, function(tileIndex) {
                 var pos = self.tileIndexToGridPosition(tileIndex+1);
-                self.grid[pos.y][pos.x] = 1;
+                self.grid[pos.y][pos.x] = true;
             });
 
             _.each(this.blocking, function(tileIndex) {
                 var pos = self.tileIndexToGridPosition(tileIndex+1);
                 if(self.grid[pos.y] !== undefined) {
-                    self.grid[pos.y][pos.x] = 1;
+                    self.grid[pos.y][pos.x] = true;
                 }
             });
             log.debug("Collision grid generated.");
@@ -231,9 +232,9 @@ define(['jquery', 'area'], function($, Area) {
                 this.plateauGrid[i] = [];
                 for(j = 0; j < this.width; j++) {
                     if(_.include(this.plateau, tileIndex)) {
-                        this.plateauGrid[i][j] = 1;
+                        this.plateauGrid[i][j] = true;
                     } else {
-                        this.plateauGrid[i][j] = 0;
+                        this.plateauGrid[i][j] = false;
                     }
                     tileIndex += 1;
                 }

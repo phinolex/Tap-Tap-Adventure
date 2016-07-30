@@ -17,7 +17,8 @@ var Log = require('log'),
     path = require("path"),
     fs = require("fs"),
     log = new Log(Log.DEBUG),
-    Types = require("../../shared/js/gametypes");
+    Types = require("../../shared/js/gametypes"),
+    ItemTypes = require("../../shared/js/itemtypes");
 
 var source = "map.json";
 var clientDest = "../../client/maps/world_client";
@@ -223,7 +224,7 @@ function processMap(json, mode){
                      if(chestAreaProps){
                          if(chestAreaProps.items){
                              chestArea['i'] = _.map(chestAreaProps.items.split(','), function(name){
-                                 return Types.getKindFromString(name);
+                                 return ItemTypes.getKindFromString(name);
                              });
                          }
                          if(chestAreaProps.x){
@@ -256,7 +257,7 @@ function processMap(json, mode){
                          x: chests[i].x / map.tilesize,
                          y: chests[i].y / map.tilesize,
                          i: _.map(items.split(','), function(name){
-                             return Types.getKindFromString(name);
+                             return ItemTypes.getKindFromString(name);
                          })
                      };
                      map.staticChests.push(newChest);

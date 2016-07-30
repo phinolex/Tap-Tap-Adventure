@@ -3,41 +3,46 @@ define(['area'], function(Area) {
         init: function(game) {
             var self = this;
 
-            this.enabled = true;
+            if (game.renderer.mobile)
+                this.enabled = false;
+            else
+            	 this.enabled = true;
             this.extension = "ogg";
             this.sounds = {};
             this.game = game;
             this.currentMusic = null;
             this.areas = [];
-            this.musicNames = ["beach", "boss", "cave", "desert", "dungeon", "forest", "lavaland", "tutorial", "underthesea1", "underthesea2", "veloma", "village"];
-            this.soundNames = ["loot", "hit1", "hit2", "hurt", "heal", "chat", "revive", "death", "firefox", "achievement", "kill1", "kill2", "noloot", "teleport", "chest", "npc", "npc-end"];
-
-            var loadSoundFiles = function() {
-                var counter = _.size(self.soundNames);
-                log.info("Loading sound files...");
-                _.each(self.soundNames, function(name) { self.loadSound(name, function() {
-                    counter -= 1;
-                    if(counter === 0) {
-                        loadMusicFiles();
-                    }
-                });});
-            };
-
-            var loadMusicFiles = function() {
-                if(!self.game.renderer.mobile) { // disable music on mobile devices
-                    log.info("Loading music files...");
-                    // Load the village music first, as players always start here
-                    self.loadMusic(self.musicNames.shift(), function() {
-                        // Then, load all the other music files
-                        _.each(self.musicNames, function(name) {
-                            self.loadMusic(name);
-                        });
-                    });
-                }
-            };
+            this.loadedMusic = {"beach":false,
+            			"boss":false,
+            			"cave":false,
+            			"desert":false,
+            			"dungeon":false, 
+            			"forest":false, 
+            			"lavaland":false,
+            			"tutorial":false,
+            			"underthesea1":false,
+            			"underthesea2":false,
+            			"veloma":false,
+            			"village":false};
+            this.loadedSound = {"loot":false,
+            	    "hit1":false,
+            	    "hit2":false,
+            	    "hurt":false,
+            	    "heal":false,
+            	    "chat":false,
+            	    "revive":false,
+            	    "death":false,
+            	    "firefox":false,
+            	    "achievement":false,
+            	    "kill1":false,
+            	    "kill2":false,
+            	    "noloot":false,
+            	    "teleport":false,
+            	    "chest":false,
+            	    "npc":false,
+            	    "npc-end":false};
 
             if(!(Detect.isSafari() && Detect.isWindows())) {
-                loadSoundFiles();
             } else {
                 this.enabled = false; // Disable audio on Safari Windows
             }
@@ -110,10 +115,19 @@ define(['area'], function(Area) {
             return sound;
         },
         playSound: function(name) {
-            var sound = this.enabled && this.getSound(name);
-            if(sound) {
-                sound.play();
-            }
+        	if (this.enabled)
+        	{
+			if (name in this.loadedSound &&
+				this.loadedSound[name] == false)
+			{
+				this.loadSound(name);
+				this.loadedSound[name] = true;
+			}  
+			var sound = this.getSound(name);
+			if(sound) {  
+				sound.play();
+			}
+		}
         },
         addArea: function(x, y, width, height, musicName) {
             var area = new Area(x, y, width, height);
@@ -139,6 +153,12 @@ define(['area'], function(Area) {
                     if(!this.isCurrentMusic(music)) {
                         if(this.currentMusic) {
                             this.fadeOutCurrentMusic();
+                        }
+                        if (music.name in this.loadedMusic &&
+                        	this.loadedMusic[music.name] == false)
+                        {
+                        	this.loadMusic(music.name);
+                        	this.loadedMusic[music.name] = true;
                         }
                         this.playMusic(music);
                     }

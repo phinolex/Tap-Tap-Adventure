@@ -8,10 +8,13 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         return object ? (object.game ? object.game : getGame(object.parent)) : null;
     }
 
+    var SCALE = 2;
+    function setScale(scale) {
+    	    SCALE = scale;
+    }
+    
     var Inventory = Class.extend({
         init: function(parent, index) {
-            var name = '#storeDialogInventory' + fixed(index, 2);
-
             this.parent = parent;
             this.index = index;
             this.itemKind = null;
@@ -19,36 +22,104 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.itemCount = 0;
             this.skillKind = 0;
             this.skillLevel = 0;
+            var name = '#storeDialogInventory' + fixed(this.index, 2);
             this.background = $(name + 'Background');
             this.body = $(name + 'Body');
+            this.number = $(name + 'Number');
 
-            this.background.css({
-                'position': 'absolute',
-                'left': '' + (30 + Math.floor(index % 6) * 33) + 'px',
-                'top': '' + (44 + Math.floor(index / 6) * 31) + 'px',
-                'width': '32px',
-                'height': '30px',
-                'background-image': 'url("img/2/storedialogsheet.png")',
-                'background-position': '-600px -344px'
-            });
-            this.body.css({
-                'position': 'absolute',
-                'left': '0px',
-                'top': '0px',
-                'width': '32px',
-                'height': '30px',
-                'background-position': '0px -5px'
-            });
-
+            this.rescale();
             var self = this;
-
-            this.body.click(function(event) {
-                if(self.itemName && (Types.Store.getSellPrice(self.itemName) > 0)) {
-                    self.parent.select(self);
-                }
-            });
+                        	    
+	    this.body.click(function(event) {
+                    var game = getGame(self);
+                    if(game && game.ready && game.storeDialog.visible) {
+	    		    
+			if (!ItemTypes.isConsumableItem(self.itemKind) && !ItemTypes.isGold(self.itemKind)) {
+				self.parent.select(self);
+			}
+		    }
+	    });
         },
-
+        
+        rescale: function() {
+            this.scale = this.parent.parent.scale;
+            if (this.scale == 1)
+            {
+		    this.background.css({
+			'position': 'absolute',
+			'left': '' + (15 + Math.floor(this.index % 6) * 17) + 'px',
+			'top': '' + (22 + Math.floor(this.index / 6) * 23) + 'px',
+			'width': '16px',
+			'height': '15px',
+			'background-image': 'url("img/1/storedialogsheet.png")',
+			'background-position': '-300px -172px'
+		    });
+		    this.body.css({
+			'position': 'absolute',
+			'width': '16px',
+			'height': '15px',
+			'bottom': '1px'
+		    });
+		    this.number.css({
+		    	'margin-top': '15px',
+			'color': '#fff',
+			'text-size': '6px',
+			'text-align': 'center'
+		    });
+            }
+            else if (this.scale == 2)
+            {
+		    this.background.css({
+			'position': 'absolute',
+			'left': '' + (30 + Math.floor(this.index % 6) * 33) + 'px',
+			'top': '' + (44 + Math.floor(this.index / 6) * 45) + 'px',
+			'width': '32px',
+			'height': '30px',
+			'background-image': 'url("img/2/storedialogsheet.png")',
+			'background-position': '-600px -344px'
+		    });
+		    this.body.css({
+			'position': 'absolute',
+			'width': '32px',
+			'height': '30px',
+			'bottom': '2px'
+		    });
+		    this.number.css({
+		    	'margin-top': '30px',
+			'color': '#fff',
+			'text-size': '9px',
+			'text-align': 'center'
+		    });
+            }
+            else if (this.scale == 3)
+            {
+		    this.background.css({
+			'position': 'absolute',
+			'left': '' + (45 + Math.floor(this.index % 6) * 50) + 'px',
+			'top': '' + (66 + Math.floor(this.index / 6) * 68) + 'px',
+			'width': '48px',
+			'height': '45px',
+			'background-image': 'url("img/3/storedialogsheet.png")',
+			'background-position': '-900px -516px'
+		    });
+		    this.body.css({
+			'position': 'absolute',
+			'width': '48px',
+			'height': '45px',
+			'bottom': '3px'
+		    });
+		    this.number.css({
+		    	'margin-top': '45px',
+			'color': '#fff',
+			'text-size': '12px',
+			'text-align': 'center'
+		    });		
+            }
+            if (this.itemKind) {
+                this.restore();
+            }
+        },
+        
         getIndex: function() {
             return this.index;
         },
@@ -57,16 +128,16 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         },
         setItemKind: function(value) {
             this.itemKind = value;
-            this.itemName = Types.getKindAsString(value);
+            this.itemName = ItemTypes.getKindAsString(value);
         },
         getItemName: function() {
             return this.itemName;
         },
         getComment: function() {
             var game = getGame(this);
-            var sellPrice = Types.Store.getSellPrice(this.itemName);
-            return Item.getInfoMsgEx(this.itemKind, this.itemCount, this.skillKind, this.skillLevel, game.language) +
-                (sellPrice > 0 ? '\r\nPrice: ' + sellPrice + 'Burgers' : '\r\nCan not sell equipment..')
+            var sellPrice = ItemTypes.getSellPrice(this.itemName);
+            return Item.getInfoMsgEx(this.itemKind, this.itemCount, this.skillKind, this.skillLevel) +
+                (ItemTypes.isConsumableItem(this.itemKind) || ItemTypes.isGold(this.itemKind) ? '\r\nCan not sell.' : '\r\nSell: ' + sellPrice + ' Gold');
         },
 
         assign: function(itemKind, itemCount, skillKind, skillLevel) {
@@ -74,6 +145,9 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.itemCount = itemCount;
             this.skillKind = skillKind;
             this.skillLevel = skillLevel;
+            this.itemName = ItemTypes.KindData[itemKind].key;
+            this.spriteName = ItemTypes.KindData[itemKind].spriteName=="" ? this.itemName : ItemTypes.KindData[itemKind].spriteName;
+
             this.restore();
         },
         clear: function() {
@@ -86,9 +160,20 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         release: function() {
             this.body.css('background-image', '');
             this.body.attr('title', '');
+            this.number.html("");
         },
         restore: function() {
-            this.body.css('background-image', this.itemName ? 'url("img/2/item-' + this.itemName + '.png")' : '');
+            this.scale = this.parent.parent.scale;
+            this.body.css('background-image', this.itemName ? 'url("img/'+this.scale+'/item-' + this.spriteName + '.png")' : '');
+            if (this.itemCount > 1) {
+            	if (ItemTypes.isObject(this.itemKind) || ItemTypes.isCraft(this.itemKind))
+            		this.number.html(this.itemCount);
+            	else
+            		this.number.html("+"+this.itemCount);
+            } else {
+            	    this.number.html("");
+            }
+
             this.body.attr('title', this.getComment());
         }
     });
@@ -97,85 +182,198 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         init: function(parent) {
             this.parent = parent;
             this.inventories = [];
-
-            for(var index = 0; index < 30; index++) {
+            
+            for(var index = 0; index < 24; index++) {
                 this.inventories.push(new Inventory(this, index));
             }
-
+            
             this.basket = $('#storeDialogBasket');
             this.sellButton = $('#storeDialogSellButton');
 
-            this.selectedInventory = null;
 
-            this.basket.css({
-                'position': 'absolute',
-                'left': '88px',
-                'top': '250px',
-                'width': '32px',
-                'height': '30px',
-                'background-position': '0px -5px'
-            });
-            this.sellButton.css({
-                'position': 'absolute',
-                'left': '130px',
-                'top': '246px',
-                'width': '60px',
-                'height': '38px'
-            });
+            this.goldBackground = $('#storeDialogGoldBackground');
+            this.goldIcon = $('#storeDialogGoldBody');
+            this.goldNumber = $('#storeDialogGoldNumber');
+                        
+            this.selectedInventory = null;
 
             var self = this;
 
             this.sellButton.click(function(event) {
                 if(self.selectedInventory) {
                     var game = getGame(self);
-                    if(game && game.ready) {
-                        self.parent.confirm('Are you sure?', function(result) {
-                            if(result) {
-                                game.client.sendStoreSell(self.selectedInventory.getIndex());
-                                self.release();
-                            }
-                        });
+                    if(game && game.ready && game.storeDialog.visible) {
+                    	game.client.sendStoreSell(self.selectedInventory.getIndex());
+                        self.release();
                     }
                 }
             });
+        },
+
+        rescale: function(scale) {
+	    if (scale == 1)
+	    {
+		    this.basket.css({
+			'position': 'absolute',
+			'left': '44px',
+			'top': '125px',
+			'width': '16px',
+			'height': '15px',
+			'background-position': '0px -2px'
+		    });
+		    this.sellButton.css({
+			'position': 'absolute',
+			'left': '65px',
+			'top': '125px',
+			'width': '30px',
+			'height': '19px',
+			'margin-left': '4px',
+		    	'margin-top': '5px',
+			'color': '#fff',
+			'font-size': '6px',
+		    });
+		    this.goldBackground.css({
+			'position': 'absolute',
+			'left': '15px',
+			'top': '125px',
+			'width': '16px',
+			'height': '15px',
+			'background-image': 'url("img/1/storedialogsheet.png")',
+			'background-position': '-300px -172px'
+		    });
+		    this.goldIcon.css({
+			'position': 'absolute',
+			'width': '16px',
+			'height': '15px',
+			'background-image': 'url("img/1/item-gold.png")'
+		    });
+		    this.goldNumber.css({
+			'position': 'absolute',
+			'margin-top': '15px',
+			'color': '#000',
+			'text-align': 'center'
+		    });			    
+	    }
+	    else if (scale == 2)
+	    {
+		    this.basket.css({
+			'position': 'absolute',
+			'left': '88px',
+			'top': '250px',
+			'width': '32px',
+			'height': '30px',
+			'background-position': '0px -5px'
+		    });
+		    this.sellButton.css({
+			'position': 'absolute',
+			'left': '130px',
+			'top': '246px',
+			'width': '60px',
+			'height': '38px',
+			'margin-left': '8px',
+			'margin-top': '10px',
+			'color': '#fff',
+			'font-size': '12px',
+		    });
+		    this.goldBackground.css({
+			'position': 'absolute',
+			'left': '30px',
+			'top': '246px',
+			'width': '32px',
+			'height': '30px',
+			'background-image': 'url("img/2/storedialogsheet.png")',
+			'background-position': '-600px -344px'
+		    });
+		    this.goldIcon.css({
+			'position': 'absolute',
+			'width': '32px',
+			'height': '30px',
+			'background-image': 'url("img/2/item-gold.png")'
+		    });
+		    this.goldNumber.css({
+			'position': 'absolute',
+			'margin-top': '30px',
+			'color': '#000',
+			'text-align': 'center'
+		    });			    
+		    		    	    
+	    }
+	    else if (scale == 3)
+	    {
+		    this.basket.css({
+			'position': 'absolute',
+			'left': '132px',
+			'top': '375px',
+			'width': '48px',
+			'height': '45px',
+			'background-position': '0px -5px'
+		    });
+		    this.sellButton.css({
+			'position': 'absolute',
+			'left': '195px',
+			'top': '369px',
+			'width': '90px',
+			'height': '57px',
+			'margin-left': '12px',
+			'margin-top': '15px',
+			'color': '#fff',
+			'font-size': '18px',			
+		    });
+		    this.goldBackground.css({
+			'position': 'absolute',
+			'left': '45px',
+			'top': '375px',
+			'width': '48px',
+			'height': '45px',
+			'background-image': 'url("img/3/storedialogsheet.png")',
+			'background-position': '-900px -516px'
+		    });
+		    this.goldIcon.css({
+			'position': 'absolute',
+			'width': '48px',
+			'height': '45px',
+			'background-position': '0px 0px',
+			'background-image': 'url("img/3/item-gold.png")'
+		    });
+		    this.goldNumber.css({
+			'position': 'absolute',
+			'margin-top': '45px',
+			'color': '#000',
+			'text-align': 'center'
+		    });		    
+	    }
+	    
+            for(var index = 0; index < 24; index++) {
+                this.inventories[index].rescale(scale);
+            }
         },
 
         getInventory: function(index) {
             return this.inventories[index];
         },
 
-        open: function(datas) {
+        open: function() {
+            this.sellButton.html("Sell");
+
             this.release();
 
             for(var index = 0; index < this.inventories.length; index++) {
                 this.inventories[index].release();
             }
-            if(datas instanceof Array) {
-                for(var index = 0; index < datas.length; ) {
-                    var inventoryNumber = parseInt(datas[index]),
-                        itemKind = parseInt(datas[index + 1]);
-
-                    if(Types.isWeapon(itemKind) || Types.isArcherWeapon(itemKind) || Types.isPendant(itemKind) || Types.isRing(itemKind)) {
-                        this.inventories[inventoryNumber].assign(itemKind, parseInt(datas[index + 2]), parseInt(datas[index + 3]), parseInt(datas[index + 4]));
-
-                        index += 5;
-                    } else {
-                        this.inventories[inventoryNumber].assign(itemKind, 0, 0, 0);
-
-                        index += 2;
-                    }
-                }
-            } else {
-                var game = getGame(this);
-                if(game && game.ready) {
-                    for(var inventoryNumber = 0; inventoryNumber < game.inventoryHandler.maxInventoryNumber; inventoryNumber++) {
-                        var item = game.inventoryHandler.inventories[inventoryNumber];
-                        if(item && item.kind) {
-                            if(Types.isWeapon(item.kind) || Types.isArcherWeapon(item.kind) || Types.isPendant(item.kind) || Types.isRing(item.kind)) {
-                                this.inventories[inventoryNumber].assign(item.kind, item.count, item.skillKind, item.skillLevel);
-                            } else {
-                                this.inventories[inventoryNumber].assign(item.kind, item.count, 0, 0);
-                            }
+            
+            this.goldNumber.html(0);
+            var game = getGame(this);
+            if(game && game.ready) {
+                for(var inventoryNumber = 0; inventoryNumber < game.inventoryHandler.maxInventoryNumber; inventoryNumber++) {
+                    var item = game.inventoryHandler.inventories[inventoryNumber];
+                    if(item && item.kind) {
+                        if(ItemTypes.isWeapon(item.kind) || ItemTypes.isArcherWeapon(item.kind)) {
+                            this.inventories[inventoryNumber].assign(item.kind, item.count, item.skillKind, item.skillLevel);
+                        } else {
+                            this.inventories[inventoryNumber].assign(item.kind, item.count, 0, 0);
+                            if (ItemTypes.isGold(item.kind)) {
+                            	    this.goldNumber.html(item.count);
+                            }                            
                         }
                     }
                 }
@@ -188,7 +386,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.selectedInventory = inventory;
             inventory.release();
 
-            this.basket.css('background-image', inventory.getItemName() ? 'url("img/2/item-' + inventory.getItemName() + '.png")' : '');
+            this.basket.css('background-image', inventory.getItemName() ? 'url("img/'+this.parent.scale+'/item-' + inventory.getItemName() + '.png")' : '');
             this.basket.attr('title', inventory.getComment());
             this.sellButton.css('cursor', 'pointer');
         },
@@ -214,87 +412,209 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.basket = $(id + 'Basket');
             this.extra = $(id + 'Extra');
             this.price = $(id + 'Price');
-            this.count = $(id + 'Count');
             this.buyButton = $(id + 'BuyButton');
             this.item = null;
 
-            this.body.css({
-                'position': 'absolute',
-                'left': '0px',
-                'top': '' + (index * 40) + 'px',
-                'width': '268px',
-                'height': '38px',
-                'border-radius': '3px',
-                'background-color': 'rgba(150, 150, 150, 0.35)',
-                'display': 'none'
-            });
-            this.basketBackground.css({
-                'position': 'absolute',
-                'left': '8px',
-                'top': '4px',
-                'width': '32px',
-                'height': '30px',
-                'background-image': 'url("img/2/storedialogsheet.png")',
-                'background-position': '-600px -344px'
-            });
-            this.basket.css({
-                'position': 'absolute',
-                'left': '0px',
-                'top': '4px',
-                'width': '32px',
-                'height': '30px',
-                'background-position': '0px -5px'
-            });
-            this.extra.css({
-                'position': 'absolute',
-                'left': '42px',
-                'top': '8px',
-                'width': '30px',
-                'height': '22px',
-                'line-height': '22px',
-                'color': 'white',
-            });
-            this.price.css({
-                'position': 'absolute',
-                'left': '92px',
-                'top': '8px',
-                'width': '50px',
-                'height': '22px',
-                'line-height': '22px',
-                'color': 'white',
-                'text-align': 'right'
-            });
-            this.count.css({
-                'position': 'absolute',
-                'left': '144px',
-                'top': '7px',
-                'width': '50px',
-                'height': '18px',
-                'text-align': 'right'
-            });
-            this.buyButton.css({
-                'position': 'absolute',
-                'left': '206px',
-                'top': '8px',
-                'width': '54px',
-                'height': '22px',
-                'background-image': 'url("img/2/storedialogsheet.png")',
-                'background-position': '-632px -344px',
-                'line-height': '22px',
-                'color': 'white',
-                'text-align': 'center',
-                'cursor': 'pointer'
-            });
+            this.rescale();
+		    
             this.buyButton.text('Buy');
 
             var self = this;
-
-            this.buyButton.click(function(event) {
+            this.buyButton.bind('click', function(event) {
                 var game = getGame(self);
-                if(game && game.ready) {
-                    game.client.sendStoreBuy(self.parent.itemType, self.item.kind, parseInt(self.count.val()));
+                if(game && game.ready && game.storeDialog.visible) {
+                    game.client.sendStoreBuy(self.parent.itemType, self.item.kind, 1);
                 }
-            });
+            }); 
+        },
+
+        rescale: function() {
+            var scale = this.parent.scale;
+            var id = this.id;
+            this.body = $(id);
+            this.basketBackground = $(id + 'BasketBackground');
+            this.basket = $(id + 'Basket');
+            this.extra = $(id + 'Extra');
+            this.price = $(id + 'Price');
+            this.buyButton = $(id + 'BuyButton');        
+        	if (scale == 1)
+        	{
+		    this.body.css({
+			'position': 'absolute',
+			'left': '0px',
+			'top': '' + (this.index * 20) + 'px',
+			'width': '134px',
+			'height': '19px',
+			'border-radius': '1px',
+			'background-color': 'rgba(150, 150, 150, 0.35)',
+			'display': 'none'
+		    });
+		    this.basketBackground.css({
+			'position': 'absolute',
+			'left': '4px',
+			'top': '2px',
+			'width': '16px',
+			'height': '15px',
+			'background-image': 'url("img/1/storedialogsheet.png")',
+			'background-position': '-300px -172px'
+		    });
+		    this.basket.css({
+			'position': 'absolute',
+			'width': '16px',
+			'height': '15px'
+		    });
+		    this.extra.css({
+			'position': 'absolute',
+			'left': '22px',
+			'top': '2px',
+			'width': '50px',
+			'height': '11px',
+			'color': 'white',
+			'font-size': '6px'
+		    });
+		    this.price.css({
+			'position': 'absolute',
+			'left': '70px',
+			'top': '4px',
+			'width': '25px',
+			'height': '11px',
+			'line-height': '11px',
+			'color': 'white',
+			'text-align': 'right'
+		    });
+		    this.buyButton.css({
+			'position': 'absolute',
+			'left': '103px',
+			'top': '4px',
+			'width': '27px',
+			'height': '11px',
+			'background-image': 'url("img/1/storedialogsheet.png")',
+			'background-position': '-316px -172px',
+			'line-height': '11px',
+			'color': 'white',
+			'text-align': 'center',
+			'cursor': 'pointer'
+		    });
+	     }
+	     else if (scale == 2) {
+		    this.body.css({
+			'position': 'absolute',
+			'left': '0px',
+			'top': '' + (this.index * 40) + 'px',
+			'width': '268px',
+			'height': '38px',
+			'border-radius': '3px',
+			'background-color': 'rgba(150, 150, 150, 0.35)',
+			'display': 'none'
+		    });
+		    this.basketBackground.css({
+			'position': 'absolute',
+			'left': '8px',
+			'top': '4px',
+			'width': '32px',
+			'height': '30px',
+			'background-image': 'url("img/2/storedialogsheet.png")',
+			'background-position': '-600px -344px'
+		    });
+		    this.basket.css({
+			'position': 'absolute',
+			'width': '32px',
+			'height': '30px',
+		    });
+		    this.extra.css({
+			'position': 'absolute',
+			'left': '44px',
+			'top': '4px',
+			'width': '100px',
+			'height': '22px',
+			'color': 'white',
+			'font-size': '10px'
+		    });
+		    this.price.css({
+			'position': 'absolute',
+			'left': '140px',
+			'top': '8px',
+			'width': '50px',
+			'height': '22px',
+			'line-height': '22px',
+			'color': 'white',
+			'text-align': 'right'
+		    });
+		    this.buyButton.css({
+			'position': 'absolute',
+			'left': '206px',
+			'top': '8px',
+			'width': '54px',
+			'height': '22px',
+			'background-image': 'url("img/2/storedialogsheet.png")',
+			'background-position': '-632px -344px',
+			'line-height': '22px',
+			'color': 'white',
+			'text-align': 'center',
+			'cursor': 'pointer'
+		    });	     	     
+	     }
+	     else if (scale == 3) {
+		    this.body.css({
+			'position': 'absolute',
+			'left': '0px',
+			'top': '' + (this.index * 60) + 'px',
+			'width': '402px',
+			'height': '57px',
+			'border-radius': '3px',
+			'background-color': 'rgba(150, 150, 150, 0.35)',
+			'display': 'none'
+		    });
+		    this.basketBackground.css({
+			'position': 'absolute',
+			'left': '12px',
+			'top': '6px',
+			'width': '48px',
+			'height': '45px',
+			'background-image': 'url("img/3/storedialogsheet.png")',
+			'background-position': '-901px -516px'
+		    });
+		    this.basket.css({
+			'position': 'absolute',
+			'width': '48px',
+			'height': '45px',
+		    });
+		    this.extra.css({
+			'position': 'absolute',
+			'left': '66px',
+			'top': '6px',
+			'width': '150px',
+			'height': '33px',
+			'color': 'white',
+			'font-size': '15px'
+		    });
+		    this.price.css({
+			'position': 'absolute',
+			'left': '210px',
+			'top': '12px',
+			'width': '75px',
+			'height': '33px',
+			'line-height': '33px',
+			'color': 'white',
+			'text-align': 'right'
+		    });
+		    this.buyButton.css({
+			'position': 'absolute',
+			'left': '309px',
+			'top': '12px',
+			'width': '81px',
+			'height': '33px',
+			'background-image': 'url("img/3/storedialogsheet.png")',
+			'background-position': '-949px -517px',
+			'line-height': '33px',
+			'color': 'white',
+			'text-align': 'center',
+			'cursor': 'pointer'
+		    });	     	     
+	     }
+	     if (this.item) {
+	     	     this.assign(this.item);
+	     }
         },
 
         getVisible: function() {
@@ -302,58 +622,44 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         },
         setVisible: function(value) {
             this.body.css('display', value ? 'block' : 'none');
+            this.buyButton.text('Buy');
         },
 
         assign: function(item) {
             var game = getGame(this);
             this.item = item;
 
-            this.basket.css('background-image', 'url("img/2/item-' + item.name + '.png")')
-            this.basket.attr('title', Item.getInfoMsgEx(item.kind, 0, 0, 0, game.language));
-            this.extra.text(item.buyCount > 0 ? 'x' + item.buyCount : '');
-            this.price.text(item.buyPrice + ' x');
-            this.count.val('1');
-            this.count.attr('disabled', !item.buyMultiple);
+            this.basket.css('background-image', 'url("img/'+this.parent.scale+'/item-' + item.name + '.png")')
+            var itemDesc = Item.getInfoMsgEx(item.kind, 0, 0, 0, game.language);
+            this.basket.attr('title', itemDesc);
+            this.extra.text((item.buyCount > 0 ? 'x' + item.buyCount : '')+" "+itemDesc);
+            this.price.text(item.buyPrice + 'g');
         }
     });
 
     var StorePage = TabPage.extend({
-        init: function(id, itemType, items, ranks) {
+        init: function(id, itemType, items, scale) {
             this._super(id + 'Page', id + 'Button');
-
             this.itemType = itemType;
             this.racks = [];
-            this.items = [];
+            this.items = items;
+            this.scale = scale;
+            this.pageIndex = 1;
 
             for(var index = 0; index < 6; index++) {
                 this.racks.push(new StoreRack(this, id + index, index));
-            }
-
-            for(var itemName in items) {
-                if(Types.Store.isBuy(itemName)) {
-                    var item = {
-                        name: itemName,
-                        kind: Types.getKindFromString(itemName),
-                        buyCount: Types.Store.getBuyCount(itemName),
-                        buyPrice: Types.Store.getBuyPrice(itemName),
-                        buyMultiple: Types.Store.isBuyMultiple(itemName)
-                    };
-                    this.items.push(item);
-                }
-            }
-            if(ranks) {
-                for(var index = 0; index < this.items.length; index++) {
-                    var item = this.items[index];
-                    item.rank = ranks.indexOf(item.kind);
-                }
-
-                this.items.sort(function(a, b) {
-                    return a.rank - b.rank;
-                });
-            }
+            } 
         },
-
+        
+        rescale: function (scale) {
+            this.scale = scale;
+            for(var index = 0; index < 6; index++) {
+                this.racks[index].rescale();
+            }         	
+        },
+        
         getPageCount: function() {
+            log.info("this.items.length="+this.items.length);
             return Math.ceil(this.items.length / 6);
         },
         getPageIndex: function() {
@@ -381,27 +687,27 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             }
         }
     });
-
+    
     var StorePotionPage = StorePage.extend({
-        init: function() {
-            this._super('#storeDialogStorePotion', Types.Store.ItemTypes.POTION, Types.Store.Potions, null);
+        init: function(scale) {
+            this._super('#storeDialogStorePotion', 1, ItemTypes.Store.Potions, scale);
         }
     });
 
     var StoreArmorPage = StorePage.extend({
-        init: function() {
-            this._super('#storeDialogStoreArmor', Types.Store.ItemTypes.ARMOR, Types.Store.Armors, Types.rankedArmors);
+        init: function(scale) {
+            this._super('#storeDialogStoreArmor', 2, ItemTypes.Store.Armors, scale);
         }
     });
 
     var StoreWeaponPage = StorePage.extend({
-        init: function() {
-            this._super('#storeDialogStoreWeapon', Types.Store.ItemTypes.WEAPON, Types.Store.Weapons, Types.rankedWeapons);
+        init: function(scale) {
+            this._super('#storeDialogStoreWeapon', 3, ItemTypes.Store.Weapons, scale);
         }
     });
 
     var PageNavigator = Class.extend({
-        init: function() {
+        init: function(scale) {
             this.body = $('#storeDialogPageNavigator');
             this.movePreviousButton = $('#storeDialogPageNavigatorMovePreviousButton');
             this.numbers = [];
@@ -411,38 +717,8 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.moveNextButton = $('#storeDialogPageNavigatorMoveNextButton');
 
             this.changeHandler = null;
-
-            this.body.css({
-                'position': 'absolute',
-                'left': '103px',
-                'top': '350px',
-                'width': '138px',
-                'height': '20px'
-            });
-            this.movePreviousButton.css({
-                'position': 'absolute',
-                'left': '0px',
-                'top': '1px',
-                'width': '16px',
-                'height': '18px',
-            });
-            for(var index = 0; index < this.numbers.length; index++) {
-                this.numbers[index].css({
-                    'position': 'absolute',
-                    'left': '' + (24 + (index * 18)) + 'px',
-                    'top': '0px',
-                    'width': '18px',
-                    'height': '20px'
-                });
-            }
-            this.numbers[2].attr('class', 'storeDialogPageNavigatorNumberS');
-            this.moveNextButton.css({
-                'position': 'absolute',
-                'left': '122px',
-                'top': '1px',
-                'width': '16px',
-                'height': '18px'
-            });
+            
+            this.rescale(scale);
 
             var self = this;
 
@@ -458,27 +734,129 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             });
         },
 
+        rescale: function(scale) {
+        	if (scale == 1)
+        	{
+		    this.body.css({
+			'position': 'absolute',
+			'left': '51px',
+			'top': '175px',
+			'width': '138px',
+			'height': '20px'
+		    });
+		    this.movePreviousButton.css({
+			'position': 'absolute',
+			'left': '0px',
+			'top': '1px',
+			'width': '8px',
+			'height': '9px',
+		    });
+		    for(var index = 0; index < this.numbers.length; index++) {
+			this.numbers[index].css({
+			    'position': 'absolute',
+			    'left': '' + (15 + (index * 12)) + 'px',
+			    'top': '0px',
+			    'width': '9px',
+			    'height': '10px'
+			});
+		    }
+		    this.numbers[2].attr('class', 'storeDialogPageNavigatorNumberS');
+		    this.moveNextButton.css({
+			'position': 'absolute',
+			'left': '79px',
+			'top': '1px',
+			'width': '8px',
+			'height': '9px'
+		    });        		
+        	}
+        	if (scale == 2)
+        	{
+		    this.body.css({
+			'position': 'absolute',
+			'left': '103px',
+			'top': '350px',
+			'width': '138px',
+			'height': '20px'
+		    });
+		    this.movePreviousButton.css({
+			'position': 'absolute',
+			'left': '0px',
+			'top': '1px',
+			'width': '16px',
+			'height': '18px',
+		    });
+		    for(var index = 0; index < this.numbers.length; index++) {
+			this.numbers[index].css({
+			    'position': 'absolute',
+			    'left': '' + (30 + (index * 24)) + 'px',
+			    'top': '0px',
+			    'width': '18px',
+			    'height': '20px'
+			});
+		    }
+		    this.numbers[2].attr('class', 'storeDialogPageNavigatorNumberS');
+		    this.moveNextButton.css({
+			'position': 'absolute',
+			'left': '158px',
+			'top': '1px',
+			'width': '16px',
+			'height': '18px'
+		    });        		
+        	}
+        	if (scale == 3)
+        	{
+		    this.body.css({
+			'position': 'absolute',
+			'left': '155px',
+			'top': '525px',
+			'width': '207px',
+			'height': '30px'
+		    });
+		    this.movePreviousButton.css({
+			'position': 'absolute',
+			'left': '0px',
+			'top': '1px',
+			'width': '24px',
+			'height': '27px',
+		    });
+		    for(var index = 0; index < this.numbers.length; index++) {
+			this.numbers[index].css({
+			    'position': 'absolute',
+			    'left': '' + (45 + (index * 36)) + 'px',
+			    'top': '0px',
+			    'width': '27px',
+			    'height': '30px'
+			});
+		    }
+		    this.numbers[2].attr('class', 'storeDialogPageNavigatorNumberS');
+		    this.moveNextButton.css({
+			'position': 'absolute',
+			'left': '237px',
+			'top': '1px',
+			'width': '24px',
+			'height': '27px'
+		    });        		
+        	}
+        },
+        
         getCount: function() {
             return this.count;
         },
         setCount: function(value) {
             this.count = value;
 
-            for(var index = 0; index < 2; index++) {
-                this.numbers[4 - index].attr('class', 'storeDialogPageNavigatorNumber' + (value % 10));
-                value = Math.floor(value / 10);
-            }
+            this.numbers[3].attr('class', 'storeDialogPageNavigatorNumber' + ~~(value / 10))
+            this.numbers[4].attr('class', 'storeDialogPageNavigatorNumber' + (value % 10));
         },
         getIndex: function() {
             return this.index;
         },
         setIndex: function(value) {
             this.index = value;
-
-            for(var index = 0; index < 2; index++) {
-                this.numbers[1 - index].attr('class', 'storeDialogPageNavigatorNumber' + (value % 10));
-                value = Math.floor(value / 10);
-            }
+            
+            this.numbers[0].attr('class', 'storeDialogPageNavigatorNumber' + ~~(value / 10))
+            this.numbers[1].attr('class', 'storeDialogPageNavigatorNumber' + (value % 10));
+            
 
             this.movePreviousButton.attr('class', this.index > 1 ? 'enabled' : '');
             this.moveNextButton.attr('class', this.index < this.count ? 'enabled' : '');
@@ -504,29 +882,51 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this._super('#storeDialogStore');
 
             this.parent = parent;
+            this.scale = this.parent.scale;
+            this.pagePotion = new StorePotionPage(this.scale);
+            this.pageArmor = new StoreArmorPage(this.scale);
+            this.pageWeapon = new StoreWeaponPage(this.scale);
+            
+            this.add(this.pagePotion);
+            this.add(this.pageArmor);
+            this.add(this.pageWeapon);
 
-            this.add(new StorePotionPage());
-            this.add(new StoreArmorPage());
-            this.add(new StoreWeaponPage());
-
-            this.pageNavigator = new PageNavigator();
+            this.pageNavigator = new PageNavigator(parent.scale);
 
             var self = this;
 
             this.pageNavigator.onChange(function(sender) {
                 var activePage = self.getActivePage();
-                if(activePage) {
+                if(activePage && self.parent.game.storeDialog.visible) {
+                    log.info("self.parent.game.storeDialog.visible");
+                    //log.info("sender.getIndex()="+sender.getIndex());
                     activePage.setPageIndex(sender.getIndex() - 1);
                 }
             });
         },
 
+        rescale: function() {
+        	this.scale = this.parent.scale;
+        	this.pagePotion.rescale(this.scale);
+        	this.pageArmor.rescale(this.scale);
+        	this.pageWeapon.rescale(this.scale);
+        	
+        	this.pageNavigator.rescale(this.scale);
+        },
+        
         setPageIndex: function(value) {
+            if (!this.parent.game.storeDialog.visible)
+            {
+            	    return;
+            }
+            
             this._super(value);
 
             var activePage = this.getActivePage();
+            
             if(activePage) {
                 if(activePage.getPageCount() > 0) {
+                    //log.info("activePage.getPageCount()="+activePage.getPageCount());
                     this.pageNavigator.setCount(activePage.getPageCount());
                     this.pageNavigator.setIndex(activePage.getPageIndex() + 1);
                     this.pageNavigator.setVisible(true);
@@ -547,10 +947,12 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
     var StoreDialog = Dialog.extend({
         init: function(game) {
             this._super(game, '#storeDialog');
+            this.setScale();
 
-            this.closeButton = $('#storeDialogCloseButton');
             this.inventoryFrame = new InventoryFrame(this);
             this.storeFrame = new StoreFrame(this);
+            
+            this.closeButton = $('#storeDialogCloseButton');
             this.modal = $('#storeDialogModal');
             this.modalNotify = $('#storeDialogModalNotify');
             this.modalNotifyMessage = $('#storeDialogModalNotifyMessage');
@@ -560,22 +962,15 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.modalConfirmButton1 = $('#storeDialogModalConfirmButton1');
             this.modalConfirmButton2 = $('#storeDialogModalConfirmButton2');
             this.confirmCallback = null;
-
-            this.closeButton.css({
-                'position': 'absolute',
-                'left': '581px',
-                'top': '31px',
-                'width': '32px',
-                'height': '32px',
-                'background-image': 'url("img/2/storedialogsheet.png")',
-                'background-position': '-64px -330px',
-                'cursor': 'pointer'
-            });
-
+            this.scale=this.setScale();
+            
             var self = this;
 
             this.closeButton.click(function(event) {
-                self.hide();
+                var activePage = self.storeFrame.getActivePage();
+                if (activePage) 
+                    activePage.setVisible(false);            		    
+            	self.hide();
             });
             this.modalNotifyButton1.click(function(event) {
                 self.modal.css('display', 'none');
@@ -597,14 +992,84 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                     self.confirmCallback(false);
                 }
             });
+            
+            $('#storeDialogStorePotionPage').css('display','none');
+        },
+        setScale: function() {
+	    if (this.game.renderer) {
+		if (this.game.renderer.mobile) {
+		    this.scale = 1;
+		} else {
+		    this.scale = this.game.renderer.getScaleFactor();
+		}
+	    } else {
+		this.scale = 2;
+	    }
+        	
+        },        
+        rescale: function() {
+        	this.setScale();
+		if (this.scale == 1)
+		{
+		    this.closeButton.css({
+			'position': 'absolute',
+			'left': '290px',
+			'top': '15px',
+			'width': '16px',
+			'height': '16px',
+			'background-image': 'url("img/1/storedialogsheet.png")',
+			'background-position': '-32px -165px',
+			'cursor': 'pointer'
+		    });
+				
+		}
+		else if (this.scale == 2)
+		{
+		    this.closeButton.css({
+			'position': 'absolute',
+			'left': '581px',
+			'top': '31px',
+			'width': '32px',
+			'height': '32px',
+			'background-image': 'url("img/2/storedialogsheet.png")',
+			'background-position': '-64px -330px',
+			'cursor': 'pointer'
+		    });
+			
+		}    
+		else if (this.scale == 3)
+		{	
+		    this.closeButton.css({
+			'position': 'absolute',
+			'left': '880px',
+			'top': '52px',
+			'width': '48px',
+			'height': '48px',
+			'background-image': 'url("img/3/storedialogsheet.png")',
+			'background-position': '-97px -496px',
+			'cursor': 'pointer'
+		    });
+		}
+		this.inventoryFrame.rescale(this.scale);
+		this.storeFrame.rescale();
         },
 
-        show: function(datas) {
-            this.inventoryFrame.open(datas);
+        show: function() {
+            this.rescale();
+            this.inventoryFrame.open();
             this.storeFrame.open();
 
+            $("#storeDialogStorePotionButton").html('<div>Potions</div>');
+
+            $('#auctionDialogSellButton').css("display","none");
+            $('#storeDialogSellButton').css("display","block");
+            
+            //$('#storeDialogStorePotionPage').css('display','block');            
             this._super();
+            
+            
         },
+        
         notify: function(message) {
             this.modalNotifyMessage.text(message);
             this.modalNotify.css('display', 'block');
@@ -616,8 +1081,9 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.modalConfirmMessage.text(message);
             this.modalConfirm.css('display', 'block');
             this.modal.css('display', 'block');
-        }
+        },
     });
 
     return StoreDialog;
 });
+

@@ -1,81 +1,101 @@
-var Utils = require('./utils');
+/* global Types */
 
-var Formulas = {};
-
-Formulas.newDmg = function(attacker, defender){
-    var dealt, absorbed, dmg;
-
-    if(attacker.kind === Types.Entities.ARCHER){
-        dealt = (attacker.weaponLevel + (attacker.level*2) + 15) * (0.9 + Math.random() * 0.2);
-    } else{
-        dealt = (attacker.weaponLevel + attacker.level + 5) * (0.9 + Math.random() * 0.2);
-    }
-    dealt = dealt + (dealt * (Utils.NaN2Zero(attacker.ringLevel + attacker.ringEnchantedPoint) * 0.005));
-    absorbed = defender.armorLevel + defender.level;
-    absorbed = absorbed + (absorbed * (Utils.NaN2Zero(defender.pendantLevel + defender.pendantEnchantedPoint) * 0.005));
-    dmg = Math.floor(dealt * 100 / (100 + absorbed));
-
-    if(attacker.ringSkillKind == Types.Skills.ATTACKWITHBLOOD) {
-        var hitPoints = attacker.hitPoints,
-            bleedingAmount = attacker.maxHitPoints * (attacker.ringSkillLevel * 0.01),
-            dmg2 = 0;
-        if(hitPoints > bleedingAmount) {
-            dmg2 += dmg * (attacker.ringSkillLevel * 0.006);
-        }
-        dmg += dmg2;
-    }
-
-
-    if(defender.royalAzaleaBenefTimeout){
-        dmg =  Math.floor(dmg*0.66);
-    } else{
-        dmg =  Math.floor(dmg);
-    }
-
-    if(dmg <= 0) {
-        return Utils.randomInt(0, 3);
-    } else {
-        return dmg;
-    }
-};
+var Utils = require('./utils'),
+    ItemTypes = require('../../shared/js/itemtypes'),
+    Formulas = {};
 
 
 Formulas.dmg = function(attacker, defender) {
+    var damage, damageDealt, damageAbsorbed, usingRange, attackerLevel, defenderLevel, defenderArmourLevel, attackerArmourLevel, attackerWeaponLevel;
+
+    defenderArmourLevel = defender.armorLevel;
+    attackerArmourLevel = attacker.armorLevel;
+    attackerWeaponLevel = attacker.weaponLevel;
+    usingRange = attacker instanceof Player && attacker.pClass == Types.PlayerClass.ARCHER;
+
+    attackerLevel = attacker.level;
+    defenderLevel = defender.level;
+
+    if (defenderArmourLevel == 0)
+        defenderArmourLevel = 1;
+
+    if (attackerArmourLevel == 0)
+        attackerArmourLevel = 1;
+
+    if (defenderLevel == 0)
+        defenderLevel = 1;
+
+    if (attackerLevel == 0)
+        attackerLevel = 1;
+
+    if (attackerWeaponLevel == 0)
+        attackerWeaponLevel = 1;
+
+
+    damageDealt = Math.round((attackerLevel * Utils.randomRange(0.25, 2.1875)) + (attackerWeaponLevel * (1.125 + (Utils.randomRange(-0.5, 0.50))) * (usingRange ? 1.85 + (Utils.randomRange(-0.25, 0.35)) : 2.15 + (Utils.randomRange(-0.95, 1.25)))));
+    damageAbsorbed = Math.round((defenderLevel + (Utils.random (0, defenderArmourLevel))) * (1.115 + Utils.random(-0.35, 0.05)));
+
+    if (damageAbsorbed > damageDealt)
+        damageAbsorbed = damageDealt - 1;
+
+    damage = damageDealt - damageAbsorbed;
+
+
+    if (damage < 0)
+        damage = 0;
+
+    if (ItemTypes.isArcherArmor(attacker.weapon) && attacker.isAdjacentNonDiagonal(defender))
+        damage *= Utils.randomRange(1.01, 1 + (attacker.weaponLevel / 100));
+
+    damage = Math.round(damage);
+
+    return damage;
+};
+/*
+Formulas.dmg = function(attacker, defender) {
     var dealt, absorbed, dmg;
 
-    if(attacker.kind === Types.Entities.ARCHER){
-        dealt = (attacker.weaponLevel * 0.9 + attacker.level * 0.5 + 6) * Utils.randomRange(6, 9);
-    } else{
-        dealt = (attacker.weaponLevel * 0.9 + attacker.level * 0.3 + 5) * Utils.randomRange(6, 9);
+    dealt = (attacker.weaponLevel + attacker.level * 0.5 + 5) * Utils.randomRange(4, 8);
+    // Passive Attack
+    if (attacker instanceof Player && attacker.skillPassiveAttack > 0)
+    {
+    	log.info("dealt="+dealt);
+        dealt = ~~(dealt * (1 + attacker.skillPassiveAttack / 100));
+        log.info("dealt="+dealt);
     }
-    dealt = dealt + (dealt * (Utils.NaN2Zero(attacker.ringLevel + attacker.ringEnchantedPoint) * 0.005));
-    absorbed = (defender.armorLevel * 1.8 + defender.level * 0.325) * 2;
-    absorbed = absorbed + (absorbed * (Utils.NaN2Zero(defender.pendantLevel + defender.pendantEnchantedPoint) * 0.005));
+
+    absorbed = (defender.armorLevel * 2.0 + defender.level * 2.0);
+    // Passive Defense
+    if (defender instanceof Player && defender.skillPassiveDefense > 0)
+    {
+    	absorbed = ~~(absorbed * (1 + defender.skillPassiveDefense / 100));    
+    }
+        
     dmg = dealt - absorbed;
 
-    if(attacker.ringSkillKind == Types.Skills.ATTACKWITHBLOOD) {
-        var hitPoints = attacker.hitPoints,
-            bleedingAmount = attacker.maxHitPoints * (attacker.ringSkillLevel * 0.01),
-            dmg2 = 0;
-        if(hitPoints > bleedingAmount) {
-            dmg2 += dmg * (attacker.ringSkillLevel * 0.006);
-        }
-
-        dmg += dmg2;
-    }
-
     if(defender.royalAzaleaBenefTimeout){
-        dmg =  Math.floor(dmg*0.66);
+        dmg = Math.floor(dmg * 0.66);
     } else{
-        dmg =  Math.floor(dmg);
+        dmg = Math.floor(dmg);
     }
 
+    // Make Mobs do 15% more damage
+    if (attacker instanceof Mob && defender instanceof Player) {
+    	dmg = Math.floor(dmg * 1.15);	    
+    }
+
+    // Bows do 75% damage when close quarters.
+    if (ItemTypes.isArcherWeapon(attacker.weapon) && attacker.isAdjacentNonDiagonal(defender))
+    {
+    	dmg = Math.floor(dmg * 0.75);
+    }
+    
     if(dmg <= 0) {
-        return Utils.randomInt(0, 3);
+        return 0;
     } else {
         return dmg;
     }
-};
+};*/
 
 Formulas.hp = function(entityLevel) {
     var hp = 300 + (entityLevel * 8) * 5;
@@ -86,6 +106,11 @@ Formulas.mana = function(entityLevel) {
     //Do not check kind yet, will be implemented later on.
     return 50 + entityLevel * 2;
     //This requires more work, look around "kind".
+};
+
+Formulas.getExpArray = function() {
+    
+    //just return the EXP Array here.
 };
 
 if(!(typeof exports === 'undefined')) {

@@ -2,7 +2,7 @@
 /* global Types */
 
 define(['jquery', 'app', 'entrypoint', 'characterdialog',
-    'button2', 'dialog', 'iteminfodialog', 'game', 'bubble'], function($, App, EntryPoint) {
+    'button2', 'dialog', 'iteminfodialog', 'game', 'bubble', 'settings'], function($, App, EntryPoint, Settings) {
     var app, game;
 
     var initApp = function() {
@@ -42,38 +42,6 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $('.barbutton').click(function() {
                 $(this).toggleClass('active');
             });
-            $('#rankingbutton').click(function(event){
-                if(app.game && app.ready && app.game.ready){
-                    app.game.client.sendRanking('get');
-                    app.hideAllSubwindow();
-                    app.game.rankingHandler.show();
-                }
-            });
-            $('#questbutton').click(function(event){
-                if(app.game && app.ready && app.game.ready){
-                    app.game.client.sendQuest(0, "show");
-                    app.hideAllSubwindow();
-                    app.game.questhandler.show();
-                }
-            });
-            $('#chatbutton').click(function() {
-                if($('#chatbutton').hasClass('active')) {
-                    app.showChat();
-                } else {
-                    app.hideChat();
-                }
-            });
-
-
-
-
-            $('#instructions').click(function() {
-                app.hideWindows();
-            });
-
-            /* $('#playercount').click(function() {
-             app.togglePopulationInfo();
-             }); */
 
             $('#population').click(function() {
                 app.togglePopulationInfo();
@@ -102,6 +70,10 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 app.animateParchment('loadcharacter', 'confirmation');
             });
 
+            $('#change-password span').click(function() {
+                app.animateParchment('loadcharacter', 'changePassword');
+            });
+
             $('#continue span').click(function() {
 
                 app.animateParchment('confirmation', 'createcharacter');
@@ -117,6 +89,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 app.toggleScrollContent('about');
             });
 
+            // Create New Character fields
             $('#nameinput').bind("keyup", function() {
                 app.toggleButton();
             });
@@ -130,6 +103,19 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 app.toggleButton();
             });
 
+            // Change Password Fields.
+            $('#cpnameinput').bind("keyup", function() {
+                app.toggleButton();
+            });
+            $('#cppwinputold').bind("keyup", function() {
+                app.toggleButton();
+            });
+            $('#cppwinput').bind("keyup", function() {
+                app.toggleButton();
+            });
+            $('#cppwinput2').bind("keyup", function() {
+                app.toggleButton();
+            });
 
 
             $('#notifications div').bind(TRANSITIONEND, app.resetMessagesPosition.bind(app));
@@ -176,6 +162,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
 
             var canvas = document.getElementById("entities"),
+                backgroundbuffer = document.getElementById("backgroundbuffer"),
                 background = document.getElementById("background"),
                 foreground = document.getElementById("foreground"),
                 textcanvas = document.getElementById("textcanvas"),
@@ -183,7 +170,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 input = document.getElementById("chatinput");
 
             game = new Game(app);
-            game.setup('#bubbles', canvas, background, foreground, textcanvas, toptextcanvas, input);
+            game.setup('#bubbles', canvas, backgroundbuffer, background, foreground, textcanvas, toptextcanvas, input);
 
             app.setGame(game);
 
@@ -215,9 +202,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }
             });
 
-
             game.onGameStart(function() {
-
+                $('#parchment').removeClass();
                 var entry = new EntryPoint();
                 entry.execute(game);
             });
@@ -234,15 +220,6 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 $('body').addClass('death');
             });
 
-
-
-            /*$('#questbutton').click(function(event){
-             if(app.game && app.ready && app.game.ready){
-             app.game.client.sendQuest(0, "show");
-             app.hideAllSubwindow();
-             app.game.questhandler.show();
-             }
-             }); */
             game.onNotification(function(message) {
                 app.showMessage(message);
             });
@@ -255,27 +232,31 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $('#pwinput2').attr('value', '');
             $('#emailinput').attr('value', '');
             $('#chatbox').attr('value', '');
+            var settings = new Settings();
+            var ax, ay, bx, by;
 
-            if(game.renderer.mobile || game.renderer.tablet) {
-                $('#canvas .clickable').bind('touchstart', function(event) {
-                    app.center();
-                    app.setMouseCoordinates(event.originalEvent.touches[0]);
+            $('#canvas .clickable').click(function(event) {
+                app.center();
+                app.setMouseCoordinates(event);
+                if(game && !app.dropDialogPopuped)
                     game.click();
-                    app.hideWindows();
-                });
-            } else {
-                $('#canvas .clickable').click(function(event) {
-                    app.center();
-                    app.setMouseCoordinates(event);
-                    if(game && !app.dropDialogPopuped) {
-                        //game.pvpFlag = event.shiftKey;
-                        game.click();
-                    }
-                    app.hideWindows();
-                });
-            }
 
-            $('body').unbind('click');
+                app.hideWindows();
+            });
+
+            $('#canvas .clickable').bind('dragover', function(event) {
+                event.preventDefault();
+            });
+
+            $('#canvas .clickable').bind('dragenter', function(event) {
+                if(DragDataInv && DragDataInv.invNumber) {
+                    game.dropItem(DragDataInv.invNumber);
+                    DragDataInv.invNumber = null;
+                }
+            });
+
+
+            //$('body').unbind('click');
             $('body').click(function(event) {
                 var hasClosedParchment = false;
 
@@ -326,9 +307,14 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 this.scale = 2;
             }
 
+
+
+
+
             Button2.configure = {background: {top: this.scale * 314, width: this.scale * 14}, kinds: [0, 3, 2]};
 
-            this.characterButton = new Button2('#characterButton', {background: {left: 0}});
+
+            this.characterButton = new Button2('#characterButton', {background: {left: this.scale * 238 }});
             this.characterButton.onClick(function(sender, event) {
                 if(game && game.ready) {
                     if(game.characterDialog.visible) {
@@ -341,21 +327,21 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             game.characterDialog.button = this.characterButton;
 
 
-            this.helpButton = new Button2('#helpbutton', {background: {left: this.scale * 140}});
-            this.helpButton.onClick(function(sender, event) {
-                if(game && game.ready) {
-                    if(game.itemInfoDialog.visible) {
 
-                        game.itemInfoDialog.hide();
-                    } else {
-                        game.itemInfoDialog.show();
-                    }
+            this.helpButton = new Button2('#helpbutton', {background: {left: this.scale * 280}});
+
+            // Inventory Button
+            this.inventoryButton = new Button2('#moreinventorybutton', {background: {left: this.scale * 196}});
+            this.inventoryButton.onClick(function(sender, event) {
+                if(game && game.ready) {
+                    game.inventoryHandler.toggleAllInventory();
                 }
             });
-            game.itemInfoDialog.button = this.helpButton;
 
+            // Sound Button
             this.soundButton = new Button2('#soundbutton', {background: {left: this.scale * 98}, downed: true});
             this.soundButton.onClick(function(sender, event) {
+                log.info(JSON.stringify(sender));
                 if(game && game.ready) {
                     if(game.audioManager.toggle()) {
                         sender.down();
@@ -364,6 +350,34 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     }
                 }
             });
+            game.soundButton = this.soundButton;
+
+            // Warp Button
+            this.warpButton = new Button2('#warpbutton', {background: {left: this.scale * 322}});
+            this.warpButton.onClick(function(sender, event) {
+                if(game && game.ready) {
+                    if(game.warpManager.toggle()) {
+                        sender.down();
+                    } else {
+                        sender.up();
+                    }
+                }
+            });
+            game.warpButton = this.warpButton;
+
+
+            // Chat Button
+            this.chatButton = new Button2('#chatbutton', {background: {left: this.scale * 364}});
+            this.chatButton.onClick(function(sender, event) {
+                if(game && game.ready) {
+                    if(!$('#chatbutton').hasClass('active')) {
+                        app.showChat();
+                    } else {
+                        app.hideChat();
+                    }
+                }
+            });
+            game.chatButton = this.chatButton;
 
 
             $(document).mousemove(function(event) {
@@ -389,8 +403,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $(document).keyup(function(e) {
                 var key = e.which;
 
-                if (game.started && !$('#chatbox').hasClass('active'))
-                {
+                if (game.player && game.started && !$('#chatbox').hasClass('active')) {
                     switch(key) {
                         case Types.Keys.LEFT:
                         case Types.Keys.A:
@@ -434,7 +447,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     }
                 }
 
-                if (game.started && !$('#chatbox').hasClass('active')) {
+                if (game.player && game.started && !$('#chatbox').hasClass('active')) {
                     pos = {
                         x: game.player.gridX,
                         y: game.player.gridY
@@ -472,9 +485,14 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         case Types.Keys.M:
                             $('#mutebutton').click();
                             break;
-                        /* case Types.Keys.P:
-                         $('#playercount').click();
-                         break; */
+                        case Types.Keys.P:
+                            if (game.partyHandler)
+                            {
+                                //alert("P pressed");
+                                game.partyHandler.show();
+                            }
+
+                            break;
                         default:
                             break;
                     }
@@ -486,6 +504,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
 
             });
+
             $('#chatinput').keydown(function(e) {
                 var key = e.which,
                     $chat = $('#chatinput'),
@@ -531,6 +550,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     this.setSelectionRange(0, 0);
                 }
             });
+
+
             $('#dropAccept').click(function(event) {
                 try {
                     var count = parseInt($('#dropCount').val());
@@ -552,6 +573,39 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }, 100);
 
             });
+
+            $('#dropCancel').click(function(event) {
+                setTimeout(function () {
+                    app.hideDropDialog();
+                }, 100);
+
+            });
+
+            $('#auctionSellAccept').click(function(event) {
+                try {
+                    var count = parseInt($('#auctionSellCount').val());
+                    if(count > 0) {
+                        game.client.sendAuctionSell(app.inventoryNumber,count);
+                        game.inventoryHandler.inventory[app.inventoryNumber] = null;
+                    }
+                } catch(e) {
+                }
+
+                setTimeout(function () {
+                    app.hideAuctionSellDialog();
+                }, 100);
+
+            });
+
+            $('#auctionSellCancel').click(function(event) {
+                setTimeout(function () {
+                    app.hideAuctionSellDialog();
+                }, 100);
+
+            });
+
+
+
             $('#nameinput').focusin(function() {
                 $('#name-tooltip').addClass('visible');
             });
@@ -568,6 +622,10 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 game.audioManager.toggle();
             });
 
+            $('#helpbutton').click(function() {
+                game.questhandler.toggleShowLog();
+            });
+
             $(document).bind("keydown", function(e) {
                 var key = e.which,
                     $chat = $('#chatinput');
@@ -577,7 +635,9 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         $chat.focus();
                         return false;
                     } else {
-                        if(app.loginFormActive() || app.createNewCharacterFormActive()) {
+                        if (app.loginFormActive() || app.createNewCharacterFormActive() ||
+                            app.changePasswordFormActive())
+                        {
                             $('input').blur();      // exit keyboard on mobile
                             app.tryStartingGame();
                             return false;           // prevent form submit
@@ -585,49 +645,89 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     }
                 }
 
-                if($('#chatinput:focus').size() === 0 && $('#nameinput:focus').size() === 0) {
-                    if(key === 27) { // ESC
-                        app.hideWindows();
-                        _.each(game.player.attackers, function(attacker) {
-                            attacker.stop();
-                        });
-                        return false;
-                        //use E and F for arrow keys and E F for WSAD
-                    }
-                    if($('#chatinput:focus').size() == 0 &&
-                        $('#nameinput:focus').size() == 0 &&
-                        game.ready &&
-                        !app.dropDialogPopuped &&
-                        !game.statehandler.buyingArcher &&
-                        !game.statehandler.changingPassword  &&
-                        !game.shopHandler.shown &&
-                        !game.storeDialog.visible) {
-                        if (key >= 49 && key <= 54 && game.ready) { // 1 to 6 for now
-                            game.keyDown(key);
-                            return false;
-
-                        } else if (key === 107 && game.ready) { // +
-                            game.chathandler.incChatWindow();
-                        } else if (key === 109 && game.ready) {
-                            game.chathandler.decChatWindow();
-                        } else if ([81, 69, 82, 84, 89].indexOf(key) >= 0 && game.ready && game.player) { // q, e, r, t, y
-                            game.player.skillHandler.execute(key);
-                            return false;
-                        }
-                        if (key === 32 && game.ready) { // Space
-                            game.togglePathingGrid();
-                            return false;
-                        }
-
-                        // The following may be uncommented for debugging purposes.
-                        //
-                        /*
-                         if (key === 70) { // F
-                         game.toggleDebugInfo();
-                         return false;
-                         } */
-                    }
+                //if($('#chatinput:focus').size() === 0 && $('#nameinput:focus').size() === 0) {
+                if (app.loginFormActive() || app.createNewCharacterFormActive() ||
+                    app.changePasswordFormActive() || $chat.is(":focus"))
+                {
+                    //game.keyDown(key);
+                    //alert("aborting since not started");
+                    //log.info("login or create new character true");
+                    return true;
                 }
+
+                if(key === 27) { // ESC
+                    app.hideWindows();
+                    _.each(game.player.attackers, function(attacker) {
+                        attacker.stop();
+                    });
+                    return false;
+                    //use E and F for arrow keys and E F for WSAD
+                }
+                if(game.ready &&
+                    !app.dropDialogPopuped &&
+                    !app.auctionsellDialogPopuped &&
+                    !game.statehandler.buyingArcher &&
+                    !game.statehandler.changingPassword  &&
+                    !game.shopHandler.shown &&
+                    !game.storeDialog.visible) {
+                    if (key >= 49 && key <= 54) { // 1 to 6 for now
+                        game.keyDown(key);
+                        return false;
+
+                    } else if (key === 107) { // +
+                        game.chathandler.incChatWindow();
+                    } else if (key === 109) {
+                        game.chathandler.decChatWindow();
+                    } else if ([81, 69, 82, 84, 89].indexOf(key) >= 0 && game.ready && game.player) { // q, e, r, t, y
+                        game.player.skillHandler.execute(key);
+                        return false;
+                    }
+                    if (key === 32) { // Space
+                        game.togglePathingGrid();
+                        return false;
+                    }
+
+                    if (key == 66) {  // B for Backpack
+                        //if(game && game.ready) {
+                        game.inventoryHandler.toggleAllInventory();
+                        //}
+                    }
+
+                    if (key == 67) { // C for Character
+                        //if(game && game.ready) {
+                        if(game.characterDialog.visible) {
+                            game.characterDialog.hide();
+                        } else {
+                            game.client.sendCharacterInfo();
+                        }
+                        //}
+                    }
+
+                    if (key == 76) // L for Quest Log.
+                    {
+                        game.questhandler.toggleShowLog();
+                    }
+
+                    if (key == 77) // M for Music
+                    {
+                        //if(game && game.ready) {
+                        if(game.audioManager.toggle()) {
+                            game.soundButton.down();
+                        } else {
+                            game.soundButton.up();
+                        }
+                        //}
+                    }
+
+                    // The following may be uncommented for debugging purposes.
+                    //
+                    /*
+                     if (key === 70) { // F
+                     game.toggleDebugInfo();
+                     return false;
+                     } */
+                }
+                //}
             });
 
             $('#healthbar').click(function(e) {
@@ -645,7 +745,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         setInterval(function () {
                             if(((game.player.hitPoints / game.player.maxHitPoints) <= game.hpGuide) &&
                                 (game.healShortCut >= 0) &&
-                                Types.isHealingItem(game.player.inventory[game.healShortCut]) &&
+                                ItemTypes.isConsumableItem(game.player.inventory[game.healShortCut]) &&
                                 (game.player.inventoryCount[game.healShortCut] > 0)
                             ) {
                                 game.eat(game.healShortCut);
@@ -696,6 +796,16 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 return false;
             }
         });
+
+        $(window).blur(function(){
+            if (game.client && game.player && game.started);
+            //game.client.sendHasFocus(0);
+        });
+        $(window).focus(function(){
+            if (game.client && game.player && game.started);
+            //game.client.sendHasFocus(1);
+        });
+
     };
 
     initApp();

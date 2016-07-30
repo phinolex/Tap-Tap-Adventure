@@ -9,6 +9,12 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
             this.offsetX = 0;
             this.offsetY = 0;
             this.loadJSON(sprites[name]);
+            this.whiteSprite = {
+                isLoaded: false,
+            };
+            this.silhouetteSprite = {
+                isLoaded: false,
+            };
         },
 
         loadJSON: function(data) {
@@ -20,14 +26,16 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
             this.offsetX = (data.offset_x !== undefined) ? data.offset_x : -16;
             this.offsetY = (data.offset_y !== undefined) ? data.offset_y : -16;
 
-            this.load();
+            //this.load();
         },
 
+        
         load: function() {
             var self = this;
 
             this.image = new Image();
             this.image.crossOrigin = "Anonymous";
+            log.info("filepath:"+this.filepath);
             this.image.src = this.filepath;
 
             this.image.onload = function() {
@@ -51,10 +59,12 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
         },
 
         createHurtSprite: function() {
+            if(!this.isLoaded) this.load();
+            if (this.whiteSprite.isLoaded) return;
             var canvas = document.createElement('canvas'),
                 ctx = canvas.getContext('2d'),
-                width = this.image.width,
-                height = this.image.height,
+                width = this.width,
+                height = this.height,
                 spriteData, data;
 
             canvas.width = width;
@@ -88,14 +98,18 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
         },
 
         getHurtSprite: function() {
+            if (!this.isLoaded) this.load();
+            this.createHurtSprite();
             return this.whiteSprite;
         },
-
+        
         createSilhouette: function() {
+            if(!this.isLoaded) this.load();
+            if (this.silhouetteSprite.isLoaded) return;
             var canvas = document.createElement('canvas'),
                 ctx = canvas.getContext('2d'),
-                width = this.image.width,
-                height = this.image.height,
+                width = this.width,
+                height = this.height,
                 spriteData, finalData, data;
 
             canvas.width = width;

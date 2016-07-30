@@ -1,49 +1,55 @@
-define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPage, Item) {
+define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, TabBook, TabPage, Item, SkillData) {
     var StatePage = TabPage.extend({
         init: function(parent, game) {
             this._super('#characterDialogFrameStatePage');
             this.parent = parent;
             this.game = game;
+            var self = this;
+
+            $('#characterItemWeapon').click(function(event) {
+                if (self.game.ready){
+                    self.game.menu.clickEquipped(1);
+                    var p = self.player;
+                    self.game.createBubble(p.weapon, Item.getInfoMsgEx(p.weapon, p.weaponEnchantedPoint, p.weaponSkillKind, p.weaponSkillLevel));
+                    var id = $("#"+p.weapon);
+                    $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
+                    $(id).css("top",self.game.mouse.y-$(id).height()+"px");
+                }
+
+            });
+            $('#characterItemArmor').click(function(event) {
+                if (self.game.ready){
+                    self.game.menu.clickEquipped(2);
+                    var p = self.player;
+                    self.game.createBubble(p.armor, Item.getInfoMsgEx(p.armor, p.armorEnchantedPoint, p.armorSkillKind, p.armorSkillLevel));
+                    var id = $("#"+p.armor);
+                    $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
+                    $(id).css("top",self.game.mouse.y-$(id).height()+"px");
+                }
+            });
+
         },
         assign: function(datas) {
             var game = this.game,
-                player = {
-                    kind: datas[0],
-                    armor: datas[1],
-                    armorEnchantedPoint: datas[2],
-                    avatar: datas[3],
-                    weapon: datas[4],
-                    weaponEnchantedPoint: datas[5],
-                    weaponSkillKind: datas[6],
-                    weaponSkillLevel: datas[7],
-                    weaponAvatar: datas[8],
-                    pendant: datas[9],
-                    pendantEnchantedPoint: datas[10],
-                    pendantSkillKind: datas[11],
-                    pendantSkillLevel: datas[12],
-                    ring: datas[13],
-                    ringEnchantedPoint: datas[14],
-                    ringSkillKind: datas[15],
-                    ringSkillLevel: datas[16],
-                    boots: datas[17],
-                    bootsEnchantedPoint: datas[18],
-                    bootsSkillKind: datas[19],
-                    bootsSkillLevel: datas[20],
-                    experience: datas[21],
-                    level: datas[22],
-                    maxHitPoints: datas[23],
-                    hitPoints: datas[24],
-                    admin: datas[25]
-                },
-                weapon, armor,
                 width1, height1, width2, height2, width3, height3;
 
-            if(!player.avatar){
-                player.avatar = player.armor;
-            }
-            if(!player.weaponAvatar){
-                player.weaponAvatar = player.weapon;
-            }
+            this.player = {
+                kind: datas[0],
+                armor: datas[1],
+                armorEnchantedPoint: datas[2],
+                weapon: datas[3],
+                weaponEnchantedPoint: datas[4],
+                weaponSkillKind: datas[5],
+                weaponSkillLevel: datas[6],
+                experience: datas[7],
+                level: datas[8],
+                maxHitPoints: datas[9],
+                hitPoints: datas[10],
+                admin: datas[11],
+                pClass: datas[12]
+            };
+            var player = this.player;
+
             if (this.game.renderer) {
                 if (this.game.renderer.mobile) {
                     this.scale = 1;
@@ -65,53 +71,37 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                 player.experience
             );
 
-            if(player.pendant) {
-                $('#characterItemPendant').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.pendant) + '.png")');
-                $('#characterItemPendant').attr('class', '');
-                $('#characterItemPendant').attr(
-                    'title',
-                    Item.getInfoMsgEx(player.pendant, player.pendantEnchantedPoint, player.pendantSkillKind, player.pendantSkillLevel)
-                );
-            } else {
-                $('#characterItemPendant').attr('class', 'empty');
-            }
+            var playerArmour = this.player.armor;
+            var playerWeapon = player.weapon;
 
-            $('#characterItemWeapon').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.weapon) + '.png")');
+            if (typeof playerArmour == 'undefined' || playerArmour == null || playerArmour == 'undefined')
+                playerArmour = 'clotharmor';
+
+            if (typeof playerWeapon == 'undefined' || playerWeapon == null || playerWeapon == 'undefined')
+                playerWeapon = 'sword1';
+
+            log.info("PlayerArmour: " + playerArmour + " PlayerWeapon: " + playerWeapon);
+
+            $('#characterItemWeapon').css('background-image', 'url("img/' + this.scale + '/item-' + ItemTypes.getKindAsString(playerWeapon) + '.png")');
             $('#characterItemWeapon').attr(
                 'title',
-                Item.getInfoMsgEx(player.weapon, player.weaponEnchantedPoint, player.weaponSkillKind, player.weaponSkillLevel)
+                Item.getInfoMsgEx(playerWeapon, player.weaponEnchantedPoint, player.weaponSkillKind, player.weaponSkillLevel)
             );
 
-            $('#characterItemArmor').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.armor) + '.png")');
+
+            $('#characterItemArmor').css('background-image', 'url("img/' + this.scale + '/item-' + ItemTypes.getKindAsString(playerArmour) + '.png")');
+
             $('#characterItemArmor').attr(
                 'title',
-                Item.getInfoMsgEx(player.armor, 0, 0, 0)
+                Item.getInfoMsgEx(player.spriteName, player.armorEnchantedPoint, player.armorSkillKind, player.armorSkillLevel)
             );
 
-            if(player.ring) {
-                $('#characterItemRing').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.ring) + '.png")');
-                $('#characterItemRing').attr('class', '');
-                $('#characterItemRing').attr(
-                    'title',
-                    Item.getInfoMsgEx(player.ring, player.ringEnchantedPoint, player.ringSkillKind, player.ringSkillLevel)
-                );
-            } else {
-                $('#characterItemRing').attr('class', 'empty');
-            }
+            var weapon = game.sprites[playerWeapon];
+            var armor = game.sprites[playerArmour];
 
-            if(player.boots) {
-                $('#characterItemBoots').css('background-image', 'url("img/' + this.scale + '/item-' + Types.getKindAsString(player.boots) + '.png")');
-                $('#characterItemBoots').attr('class', '');
-                $('#characterItemBoots').attr(
-                    'title',
-                    Item.getInfoMsgEx(player.boots, player.bootsEnchantedPoint, player.bootsSkillKind, player.bootsSkillLevel)
-                );
-            } else {
-                $('#characterItemBoots').attr('class', 'empty');
-            }
+            log.info("Weapon: " + weapon + ".");
+            log.info("Armour: " + armor + ".");
 
-            weapon = game.sprites[Types.getKindAsString(player.weaponAvatar)];
-            armor = game.sprites[Types.getKindAsString(player.avatar)];
             switch (this.scale) {
                 case 1:
                     width1 = weapon.width * 1;
@@ -188,8 +178,8 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             $('#characterLookWeapon').css('background-size', '' + (width1 * 5) + 'px');
             $('#characterLookWeapon').css('background-position', '0px -' + (height1 * 8) + 'px');
 
-            $('#characterLookArmor').css('background-image', 'url("img/' + this.scale + '/' + Types.getKindAsString(player.avatar) + '.png")');
-            $('#characterLookWeapon').css('background-image', 'url("img/' + this.scale + '/' + Types.getKindAsString(player.weaponAvatar) + '.png")');
+            $('#characterLookArmor').css('background-image', 'url("img/' + this.scale + '/' + playerArmour + '.png")');
+            $('#characterLookWeapon').css('background-image', 'url("img/' + this.scale + '/' + playerWeapon + '.png")');
         }
     });
 
@@ -203,57 +193,66 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.game = game;
 
             if (this.game.renderer) {
-
-                if (this.game.renderer.mobile) {
-
-                    this.scale = 1;
-                } else {
-
-                    this.scale = this.game.renderer.getScaleFactor();
-                }
-            } else {
-
-                this.scale = 2;
+                this.scale = this.game.renderer.getScaleFactor();
             }
 
             this.body.css({
                 'position': 'absolute',
                 'left': '0px',
                 'top': '0px',
-                'width': '32px',
-                'height': '30px',
+                'width': 16 * this.scale,
+                'height': 15 * this.scale,
                 'display': 'none'
             });
             if(position) {
                 this.body.css({
-                    'background-image': 'url("img/' + this.scale + '/characterdialogsheet.png")',
-                    'background-position': position
+                    'background-image': 'url("img/' + this.scale + '/skillicons.png")',
+                    'background-position': position,
+                    'display': 'block'
                 });
+
             }
 
             for(var index = 0; index < 4; index++) {
                 var level = $(id + 'Level' + (1 + index));
+                var levelPosition = [
+                    ["-329px -278px"],
+                    ["-658px -556px"],
+                    ["-987px -834px"]
+                ];
                 level.css({
                     'position': 'absolute',
-                    'left': '' + (38 + (index * 12)) + 'px',
-                    'top': '18px',
-                    'width': '10px',
-                    'height': '12px',
-                    'background-image': 'url("img/' + this.scale + '/characterdialogsheet.png")',
-                    'background-position': '-254px -438px',
+                    'left': (19 + (index * 6)) * this.scale + 'px',
+                    'top': 9 * this.scale,
+                    'width': 5 * this.scale,
+                    'height': 8 * this.scale,
+                    'background-image': 'url("img/' + this.scale + '/main.png")',
+                    'background-position': levelPosition[this.scale-1],
                     'display': 'none'
                 });
                 this.levels.push(level);
             }
 
             var self = this;
+            var dragStart = false;
 
-            this.body.unbind('dragstart').bind('dragstart', function(event) {
-                log.info("Began DragStart.")
-                event.originalEvent.dataTransfer.setData("skllName", self.name);
-                DragData = {};
-                DragData.skillName = self.name;
-            });
+            if (SkillData.Names[self.name].type == "active")
+            {
+                this.body.bind('dragstart', function(event) {
+                    log.info("Began DragStart.")
+                    event.originalEvent.dataTransfer.setData("skllName", self.name);
+                    DragData = {};
+                    DragData.skillName = self.name;
+                    dragStart = true;
+                });
+
+                this.body.bind('mouseup', function(event){
+                    if(!dragStart) {
+                        self.game.client.sendSkillInstall(self.game.selectedSkillIndex++ % 5, self.name);
+                    }
+                    dragStart = false;
+                });
+            }
         },
 
         getName: function() {
@@ -266,7 +265,8 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.level = value;
             if(value > 0) {
                 this.body.css('display', 'block');
-                this.body[0].draggable = true;
+                if (this.body[0])
+                    this.body[0].draggable = true;
                 for(var index = 0; index < value; index++) {
                     this.levels[index].css('display', 'block');
                 }
@@ -275,7 +275,8 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                 }
             } else {
                 this.body.css('display', 'none');
-                this.body[0].draggable = false;
+                if (this.body[0])
+                    this.body[0].draggable = false;
                 for(var index = 0; index < this.levels.length; index++) {
                     this.levels[index].css('display', 'none');
                 }
@@ -283,10 +284,6 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         }
     });
 
-    var skill1Names = ['evasion', 'bloodSucking', 'criticalStrike', '', '', '', '', ''];
-    var skill1Positions = ['-286px -454px', '-254px -454px', '-318px -454px', '', '', '', '', ''];
-    var skill2Names = ['heal', 'flareDance', 'stun', 'superCat', 'provocation', '', '', ''];
-    var skill2Positions = ['-350px -454px', '-382px -454px', '-414px -454px', '-446px -454px', '-254px -484px', '', ''];
 
     var SkillPage = TabPage.extend({
         init: function(frame, game) {
@@ -294,53 +291,54 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.game = game;
             this.skills = [];
 
-            for(var index = 0; index < 8; index++) {
-                if(skill1Names[index]) {
-                    var skill = new Skill('#characterSkill1' + index, skill1Names[index], skill1Positions[index], this.game);
-                    skill.background.css({
-                        'position': 'absolute',
-                        'left': '' + ((index % 2) ? 140 : 28) + 'px',
-                        'top': '' + (34 + (Math.floor(index / 2) * 40)) + 'px',
-                        'width': '84px',
-                        'height': '30px',
-                        'display': 'block'
-                    });
-                    this.skills.push(skill);
-                }
-            }
-            for(var index = 0; index < 8; index++) {
-                if(skill2Names[index]) {
-                    var skill = new Skill('#characterSkill2' + index, skill2Names[index], skill2Positions[index], this.game);
-                    skill.background.css({
-                        'position': 'absolute',
-                        'left': '' + ((index % 2) ? 140 : 28) + 'px',
-                        'top': '' + (226 + (Math.floor(index / 2) * 40)) + 'px',
-                        'width': '84px',
-                        'height': '30px',
-                        'display': 'block'
-                    });
-                    this.skills.push(skill);
-                }
-            }
         },
 
         setSkill: function(name, level) {
-            for(var index = 0; index < this.skills.length; index++) {
-                var skill = this.skills[index];
-                if(skill.name == name) {
-                    skill.setLevel(level);
+            this.skills.push({name: name, level: level, skill: null});
+        },
 
-                    break;
+        clear: function() {
+            for (var i = this.skills.length-1; i >= 0; --i)
+            {
+                var tSkill = this.skills[i];
+                //log.info("tSkill="+JSON.stringify(tSkill));
+                if(tSkill.skill) {
+                    tSkill.skill.background.css({
+                        'display': 'none'
+                    });
+                    $('#characterSkill1' + i).attr('title', '');
+                    tSkill.skill.setLevel(0);
                 }
+                delete this.skills[i];
             }
+            this.skills = [];
         },
 
         assign: function(player) {
-            for(var name in player.skillHandler.skills) {
-                var skill = player.skillHandler.skills[name];
-                this.setSkill(skill.name, skill.level);
+            var scale = this.game.renderer.getScaleFactor();
+            for(var id in this.skills) {
+
+                var tSkill = this.skills[id];
+                if(tSkill) {
+                    log.info('#characterSkill1' + id);
+                    var skill = new Skill('#characterSkill1' + id, tSkill.name,
+                        SkillData.Names[tSkill.name].iconOffset[scale-1], this.game);
+                    skill.background.css({
+                        'position': 'absolute',
+                        'left': '' + ((id % 2) ? 70 : 14) * scale + 'px',
+                        'top': '' + (17 + (Math.floor(id / 2) * 20)) * scale + 'px',
+                        'width': '84px',
+                        'height': '30px',
+                        'display': 'block'
+                    });
+                    this.skills[id].skill = skill;
+                    //log.info("this.skills[id].skill="+JSON.stringify(this.skills[id].skill));
+                    $('#characterSkill1' + id).attr('title', tSkill.name + " Lv: " + tSkill.level);
+                    skill.setLevel(tSkill.level);
+                }
             }
         }
+
     });
 
     var PageNavigator = Class.extend({

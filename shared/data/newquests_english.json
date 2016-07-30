@@ -1,0 +1,417 @@
+[
+{
+	"npcId":347,
+	"type": 1,
+	"name": "Intro",
+	"desc": "big sword.",
+	"beforeTalk" : [
+		"Welcome to the world of Maearth",
+		"I kidnapped you in your dreams",
+		"We need your help to save us",
+		"First off ill teach you a few things.",
+		"See the Sword below pick it up by standing on it,",
+		"Then bring me the Big Sword."
+	],
+	"afterTalk": [
+		"Good now I got a sword to kill you with!"
+	],
+	"itemId": 61,
+	"itemCount": 1,
+	"xp":10
+},
+{
+	"npcId":347,
+	"type": 2,
+	"name": "Intro",
+	"desc": "Kill 2 Rats.",
+	"beforeTalk" : [
+		"Just kidding, help me take care of some pesky rats",
+		"Attack them by clicking on the monster or move up to them."
+	],
+	"mobId": 2,
+	"mobCount": 2,
+	"xp":30
+},
+{
+	"npcId":347,
+	"type": 2,
+	"name": "Intro",
+	"desc": "Kill 2 Goblins.",
+	"beforeTalk" : [
+		"Thanks for clearing the rats,",
+		"To access items press B or press the + button on the shortcut bar",
+		"Now theres a little hut east of here",
+		"Which is occupied by evil goblins",
+		"Kill some of them for me"
+	],
+	"mobId": 4,
+	"mobCount": 2,
+	"xp":50
+},
+{
+	"npcId":43,
+	"type": 1,
+	"name": "Intro",
+	"desc": "get Cake.",
+	"beforeTalk" : [
+		"I got the munchies from smoking too much *cough*",
+		"I had some cake but the goblins took it in there raid",
+		"Fetch me some cake would you plx??"
+	],
+	"afterTalk" : [
+		"Nom Nom Nom thank you so much"	
+	],
+	"itemId": 39,
+	"itemCount": 1,
+	"xp":100
+},
+{
+	"npcId":44,
+	"type": 2,
+	"name": "Intro",
+	"desc": "Kill 5 Rats",
+	"beforeTalk" : [
+		"The goblins raided out village now its almost abandoned",
+		"We need help in restoring the place",
+		"Can you start by killing some Rats for me?"
+	],
+	"mobId": 2,
+	"mobCount": 5,
+	"xp":30
+},
+{
+	"npcId":40,
+	"type": 2,
+	"name": "Intro",
+	"desc": "Kill 10 Goblins or Bats",
+	"beforeTalk" : [
+		"We need help fighting some Goblin raiding parties North",
+		"Can you help me remove some the Goblins and Wild Bats?"
+	],
+	"mobId": [4,8],
+	"mobCount": 10,
+	"xp":50
+},
+{
+	"npcId":53,
+	"type": 1,
+	"name": "Get an Axe",
+	"desc": "Get an Axe",
+	"beforeTalk" : [
+		"I've been working out on my arms look tough dont I?",
+		"I saw some monsters holding some axes can you fetch one",
+		"For my new workout bro, I'll wait for you"
+	],
+	"afterTalk": [
+		"Thanks Bro for the Axe,"
+	],
+	"itemId": 65,
+	"itemCount": 1,
+	"xp":50
+},
+{
+	"npcId":45,
+	"type": 2,
+	"name": "Skeletons",
+	"desc": "Kill 5 Skeletons",
+	"beforeTalk" : [
+		"The grave is cursed and the dead are walking!",
+		"Kill some Skeletons and restore there souls",
+		"back to there final resting place!"
+	],
+	"mobId": 3,
+	"mobCount": 5,
+	"xp":100
+},
+{
+	"npcId":53,
+	"type": 2,
+	"name": "Ogres",
+	"desc": "Kill 3 Ogres",
+	"beforeTalk" : [
+		"Now lets see how tough you really are",
+		"I've seen some Ogres protecting a cave North of here",
+		"I want you to take 'em all on!"
+	],
+	"mobId": 5,
+	"mobCount": 3,
+	"xp":100
+},
+{
+	"npcId":45,
+	"type": 2,
+	"name": "Spectres",
+	"desc": "Kill 2 Spectres",
+	"beforeTalk" : [
+		"Our old Kings final resting place is atop a hill North here.",
+		"The curse there is at it's strongest and is said to be,",
+		"causing several Evil Spectres to show.",
+		"Can you remove them for my I'll be eternally grateful"
+	],
+	"mobId": 6,
+	"mobCount": 2,
+	"xp":100
+},
+{
+	"npcId":45,
+	"type": 2,
+	"name": "Armor Skeletons",
+	"desc": "Kill 6 Armored Skeletons",
+	"beforeTalk" : [
+		"Thanks for removing the spectres from the old kings grave",
+		"Far North there are Armored Skeletons in the desert",
+		"Can you clear them for me?"
+	],
+	"mobId": 12,
+	"mobCount": 6,
+	"xp":300
+},
+{
+	"npcId":53,
+	"type": 2,
+	"name": "Ogres",
+	"desc": "Kill 6 Ogres",
+	"beforeTalk" : [
+		"Wow man, your tough you beat up those Ogres up good",
+		"Theres allot more in the desert far North",
+		"Can you clear them for me? So I can get past them?"
+	],
+	"mobId": 5,
+	"mobCount": 6,
+	"xp":250
+},
+{
+	"npcId":54,
+	"type": 2,
+	"name": "Eyes",
+	"desc": "Kill 10 Eyes or Spectres",
+	"beforeTalk" : [
+		"I'm surrounded by all the enemies",
+		"Can you kill the evil Eyes or Spectres for me so I can rest?"
+	],
+	"mobId": [6,10],
+	"mobCount": 10,
+	"xp":400
+},
+{
+	"npcId":54,
+	"type": 2,
+	"name": "Deathknights",
+	"desc": "Kill 4 deathknights",
+	"beforeTalk" : [
+		"Thanks for removing some of the evil Eyes.",
+		"The Skeleton King is being guarded",
+		"Can you kill the Skeleton Kings deathknight Guards"
+	],
+	"mobId": 14,
+	"mobCount": 4,
+	"xp":400
+},
+{
+	"npcId":54,
+	"type": 2,
+	"name": "Skeleton King",
+	"desc": "Kill the Skeleton King",
+	"beforeTalk" : [
+		"Thanks for removing the guards",
+		"I have one final wish please kill the Skeleton King",
+		"After that go to the Skeleton Kings Lair on the East exit",
+		"And you will find a cave to meet the Scientist",
+		"There you can continue your adventures, good luck!"
+	],
+	"mobId": 13,
+	"mobCount": 1,
+	"xp":1000
+},
+{
+	"npcId":46,
+	"type": 2,
+	"name": "Haunted Cave",
+	"desc": "Kill 10 Death Knights and Spectres",
+	"beforeTalk" : [
+		"Did you meet my friend he said he was",
+		"taking care of the Skeleton King",
+		"I need you to enter the cave and take care of",
+		"the Death Knights and the Spectres roaming the halls"
+	],
+	"mobId": [6,14],
+	"mobCount": 10,
+	"xp":1000
+},
+{
+	"npcId":46,
+	"type": 2,
+	"name": "Orcs",
+	"desc": "Kill 6 Orcs",
+	"beforeTalk" : [
+		"Can you kill the Orcs",
+		"Some of them are trapped as they were pushed back",
+		"by the evil spirits but now they are weak",
+		"and the Orcs may break through"
+	],
+	"mobId": 67,
+	"mobCount": 6,
+	"xp":1000
+},
+{
+	"npcId":227,
+	"type": 2,
+	"name": "Golems",
+	"desc": "Kill 8 Golems",
+	"beforeTalk" : [
+		"Can you kill the Golems",
+		"When you do ill train you how to box",
+		"And how to evade attacks!"
+	],
+	"mobId": 69,
+	"mobCount": 8,
+	"xp":1500,
+	"skillName":"evasion",
+	"skillLevel":1
+},
+{
+	"npcId":230,
+	"type": 2,
+	"name": "Vampire",
+	"desc": "Kill 10 Hobgoblins or Old Ogres",
+	"beforeTalk" : [
+		"Can you kill the Hobgoblins or Old Ogres",
+		"When you do ill train you how to use blood-sucking"
+	],
+	"mobId": [71,68],
+	"mobCount": 10,
+	"xp":1500,
+	"skillName":"bloodSucking",
+	"skillLevel":1
+},
+{
+	"npcId":235,
+	"type": 2,
+	"name": "Giant Mice",
+	"desc": "Kill 10 Giant Mice",
+	"beforeTalk" : [
+		"Kill 10 Giant Mice",
+		"When you do ill train you how to use Evasion Lv2"
+	],
+	"mobId": [77,75,76,80],
+	"mobCount": 10,
+	"xp":1500,
+	"skillName":"evasion",
+	"skillLevel":2
+},
+{
+	"npcId":244,
+	"type": 2,
+	"name": "Sea 1",
+	"desc": "Kill 5 Infected Guards",
+	"beforeTalk" : [
+		"Kill 5 Infected Guards"
+	],
+	"mobId": 85,
+	"mobCount": 5,
+	"xp":3000
+},
+{
+	"npcId":244,
+	"type": 2,
+	"name": "Sea 2",
+	"desc": "Kill 10 Mermaids or Preta",
+	"beforeTalk" : [
+		"Kill 10 Mermaids or Preta"
+	],
+	"mobId": [94,87],
+	"mobCount": 10,
+	"xp":3000
+},
+{
+	"npcId":245,
+	"type": 2,
+	"name": "Sea 3",
+	"desc": "Kill 5 Living Armors",
+	"beforeTalk" : [
+		"Kill 5 Living Armors"
+	],
+	"mobId": 86,
+	"mobCount": 5,
+	"xp":3000
+},
+
+{
+	"npcId":246,
+	"type": 2,
+	"name": "Sea 4",
+	"desc": "Kill 20 Pirate Skeletons",
+	"beforeTalk" : [
+		"Kill 20 Pirate Skeletons"
+	],
+	"mobId": 95,
+	"mobCount": 20,
+	"xp":3000
+},
+
+{
+	"npcId":246,
+	"type": 2,
+	"name": "Sea 3",
+	"desc": "Kill 10 Penguins",
+	"beforeTalk" : [
+		"Kill 10 Penguins"
+	],
+	"mobId": 98,
+	"mobCount": 10,
+	"xp":3000
+},
+
+{
+	"npcId":249,
+	"type": 2,
+	"name": "Sea 5",
+	"desc": "Kill 20 Dark Skeletons",
+	"beforeTalk" : [
+		"Kill 20 Dark Skeletons"
+	],
+	"mobId": 102,
+	"mobCount": 20,
+	"xp":5000
+},
+{
+	"npcId":288,
+	"type": 1,
+	"name": "Sea 6",
+	"desc": "Get Dovakina Armor",
+	"beforeTalk" : [
+		"I Zombie cancer raging",
+		"I Zombie fascinating",
+		"I Zombie crucify",
+		"I Zombie do not die",
+		"Astro 2000",
+		"I Zombie kill machine",
+		"I Zombie never seen",
+		"I Zombie never you",
+		"I Zombie coming through",
+		"Astro 2000",
+		"I Zombie duplicating",
+		"I Zombie eliminating",
+		"I Zombie fucking you",
+		"I Zombie never through",
+		"Astro 2000",
+		"Get a Dovakina Armor from the Dark Skeletons for I'm Zombie!"
+	],
+	"itemId": 328,
+	"itemCount": 1,
+	"xp":5000
+},
+{
+	"npcId":257,
+	"type": 2,
+	"name": "Sea 7",
+	"desc": "Kill 20 Mini Kights",
+	"beforeTalk" : [
+		"Kill 20 Mini Kights"
+	],
+	"mobId": 108,
+	"mobCount": 20,
+	"xp":10000
+}
+
+]

@@ -7,6 +7,9 @@ define(['dialog'], function(Dialog) {
             
         },
         show: function() {
+            // TODO - Broken with Item Levels.
+            return;
+            
             var htmlStr = '';
             var i = 0;
             var x = 16;
@@ -36,14 +39,14 @@ define(['dialog'], function(Dialog) {
                 case 1:
 
                     for (i = 0; i < Math.floor(this.game.player.level / 2); i++)  {
-                        var imageUrl = "img/" + this.scale + "/item-" + Types.getKindAsString(rankedArmors[i]) + ".png";
+                        var imageUrl = "img/" + this.scale + "/item-" + ItemTypes.getKindAsString(rankedArmors[i]) + ".png";
                         htmlStr += '<div style="position: absolute; top: ' + y + 'px;';
                         htmlStr += 'left: ' + x + 'px; ';
                         htmlStr += 'width: 16px; height: 16px; background-image: url(';
                         htmlStr += "'" + imageUrl + "');"
                         htmlStr += 'background-color: rgba(128, 128, 128, 0.5);';
                         htmlStr += 'border: 1px solid #9c9898;"';
-                        htmlStr += 'title="' + Types.getName(rankedArmors[i]) + ': Armor +' + (i + 1) + '"></div>';
+                        htmlStr += 'title="' + ItemTypes.getName(rankedArmors[i]) + ': Armor +' + (i + 1) + '"></div>';
 
                         if (i === rankedArmors.length - 1) {
                             break;
@@ -59,14 +62,14 @@ define(['dialog'], function(Dialog) {
                     y += 16 + 16;
 
                     for (i = 0; i < Math.floor(this.game.player.level / 2); i++) {
-                        var imageUrl = "img/" + this.scale + "/item-" + Types.getKindAsString(rankedWeapons[i]) + ".png";
+                        var imageUrl = "img/" + this.scale + "/item-" + ItemTypes.getKindAsString(rankedWeapons[i]) + ".png";
                         htmlStr += '<div style="position: absolute; top: ' + y + 'px;';
                         htmlStr += 'left: ' + x + 'px; ';
                         htmlStr += 'width: 16px; height: 16px; background-image: url(';
                         htmlStr += "'" + imageUrl + "');"
                         htmlStr += 'background-color: rgba(128, 128, 128, 0.5);';
                         htmlStr += 'border: 1px solid #9c9898;"';
-                        htmlStr += 'title="' + Types.getName(rankedWeapons[i]) + ': Attack +' + (i + 1) + '"></div>';
+                        htmlStr += 'title="' + ItemTypes.getName(rankedWeapons[i]) + ': Attack +' + (i + 1) + '"></div>';
 
                         if (i === rankedWeapons.length - 1) {
                             break;
@@ -88,14 +91,14 @@ define(['dialog'], function(Dialog) {
                 case 2:
 
                     for (i = 0; i < Math.floor(this.game.player.level / 2); i++)  {
-                        var imageUrl = "img/" + this.scale + "/item-" + Types.getKindAsString(rankedArmors[i]) + ".png";
+                        var imageUrl = "img/" + this.scale + "/item-" + ItemTypes.getKindAsString(rankedArmors[i]) + ".png";
                         htmlStr += '<div style="position: absolute; top: ' + y + 'px;';
                         htmlStr += 'left: ' + x + 'px; ';
                         htmlStr += 'width: 32px; height: 32px; background-image: url(';
                         htmlStr += "'" + imageUrl + "');"
                         htmlStr += 'background-color: rgba(128, 128, 128, 0.5);';
                         htmlStr += 'border: 1px solid #9c9898;"';
-                        htmlStr += 'title="' + Types.getName(rankedArmors[i]) + ': Armor +' + (i + 1) + '"></div>';
+                        htmlStr += 'title="' + ItemTypes.getName(rankedArmors[i]) + ': Armor +' + (i + 1) + '"></div>';
 
                         if (i === rankedArmors.length - 1) {
                             break;
@@ -111,14 +114,14 @@ define(['dialog'], function(Dialog) {
                     y += 32 + 32;
 
                     for (i = 0; i < Math.floor(this.game.player.level / 2); i++) {
-                        var imageUrl = "img/" + this.scale + "/item-" + Types.getKindAsString(rankedWeapons[i]) + ".png";
+                        var imageUrl = "img/" + this.scale + "/item-" + ItemTypes.getKindAsString(rankedWeapons[i]) + ".png";
                         htmlStr += '<div style="position: absolute; top: ' + y + 'px;';
                         htmlStr += 'left: ' + x + 'px; ';
                         htmlStr += 'width: 32px; height: 32px; background-image: url(';
                         htmlStr += "'" + imageUrl + "');"
                         htmlStr += 'background-color: rgba(128, 128, 128, 0.5);';
                         htmlStr += 'border: 1px solid #9c9898;"';
-                        htmlStr += 'title="' + Types.getName(rankedWeapons[i]) + ': Attack +' + (i + 1) + '"></div>';
+                        htmlStr += 'title="' + ItemTypes.getName(rankedWeapons[i]) + ': Attack +' + (i + 1) + '"></div>';
 
                         if (i === rankedWeapons.length - 1) {
                             break;
@@ -138,14 +141,14 @@ define(['dialog'], function(Dialog) {
                 case 3:
 
                     for (i = 0; i < Math.floor(this.game.player.level / 2); i++)  {
-                        var imageUrl = "img/" + this.scale + "/item-" + Types.getKindAsString(rankedArmors[i]) + ".png";
+                        var imageUrl = "img/" + this.scale + "/item-" + ItemTypes.getKindAsString(rankedArmors[i]) + ".png";
                         htmlStr += '<div style="position: absolute; top: ' + y + 'px;';
                         htmlStr += 'left: ' + x + 'px; ';
                         htmlStr += 'width: 48px; height: 48px; background-image: url(';
                         htmlStr += "'" + imageUrl + "');"
                         htmlStr += 'background-color: rgba(128, 128, 128, 0.5);';
                         htmlStr += 'border: 1px solid #9c9898;"';
-                        htmlStr += 'title="' + Types.getName(rankedArmors[i]) + ': Armor +' + (i + 1) + '"></div>';
+                        htmlStr += 'title="' + ItemTypes.getName(rankedArmors[i]) + ': Armor +' + (i + 1) + '"></div>';
 
                         if (i === rankedArmors.length - 1) {
                             break;
@@ -161,14 +164,14 @@ define(['dialog'], function(Dialog) {
                     y += 48 + 48;
 
                     for (i = 0; i < Math.floor(this.game.player.level / 2); i++) {
-                        var imageUrl = "img/" + this.scale + "/item-" + Types.getKindAsString(rankedWeapons[i]) + ".png";
+                        var imageUrl = "img/" + this.scale + "/item-" + ItemTypes.getKindAsString(rankedWeapons[i]) + ".png";
                         htmlStr += '<div style="position: absolute; top: ' + y + 'px;';
                         htmlStr += 'left: ' + x + 'px; ';
                         htmlStr += 'width: 48px; height: 48px; background-image: url(';
                         htmlStr += "'" + imageUrl + "');"
                         htmlStr += 'background-color: rgba(128, 128, 128, 0.5);';
                         htmlStr += 'border: 1px solid #9c9898;"';
-                        htmlStr += 'title="' + Types.getName(rankedWeapons[i]) + ': Attack +' + (i + 1) + '"></div>';
+                        htmlStr += 'title="' + ItemTypes.getName(rankedWeapons[i]) + ': Attack +' + (i + 1) + '"></div>';
 
                         if (i === rankedWeapons.length - 1) {
                             break;

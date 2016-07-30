@@ -1,0 +1,245 @@
+[
+	{
+	    "name":"Power Gain",
+	    "class":0,
+	    "type":"passive",
+	    "skillType":"attack",
+	    "target":"self",
+	    "levels": [
+	        5, 10, 15, 20	    
+	    ],
+	    "iconOffset": [
+	      "-16px 0px",
+	      "-32px 0px",
+	      "-48px 0px"
+	    ]
+	},	
+	{
+	    "name":"Beserker",
+	    "class":0,
+	    "type":"active",
+	    "skillType":"haste-attack",
+	    "target":"self",
+	    "duration":5,
+	    "recharge":30,
+	    "levels": [
+	        25, 50, 75, 100	    
+	    ],
+	    "iconOffset": [
+	      "-16px 0px",
+	      "-32px 0px",
+	      "-48px 0px"
+	    ]
+	},	
+
+	{
+	    "name":"Whirlwind Attack",
+	    "class":0,
+	    "type":"active",
+	    "skillType": "damage",
+	    "recharge":10,
+	    "aoe": 2,
+	    "levels": [
+	        5, 10, 15, 20	    
+	    ],
+	    "iconOffset": [
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
+	    ]
+	},
+	{
+	    "name":"Deadly Attack",
+	    "class":0,
+	    "type":"active",
+	    "skillType":"damage",
+	    "recharge":15,
+	    "levels": [
+	        25, 50, 100, 200	    
+	    ],
+	    "iconOffset": [
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
+	    ]
+	},
+	{
+	    "name":"Concussion",
+	    "class":0,
+	    "type":"active",
+	    "skillType":"stun",
+	    "duration": [2,3,4,5],
+	    "recharge":30,
+	    "iconOffset": [
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
+	    ]
+	},	
+	
+	
+	{
+	    "name":"Evasion",
+	    "class":1,
+	    "type":"passive",
+	    "skillType":"defense",
+	    "target":"self",
+	    "levels": [
+	        5, 10, 15, 20	    
+	    ],
+	    "iconOffset": [
+	      "-16px 0px",
+	      "-32px 0px",
+	      "-48px 0px"
+	    ]
+	},	
+	{
+	    "name":"Run",
+	    "class":1,
+	    "type":"active",
+	    "skillType":"haste-move",
+	    "target":"self",
+	    "duration":10,
+	    "recharge":30,
+	    "levels": [
+	        25, 50, 75, 100	    
+	    ],
+	    "iconOffset": [
+	      "-16px 0px",
+	      "-32px 0px",
+	      "-48px 0px"
+	    ]
+	      
+	},	
+
+	{
+	    "name":"Explosive Arrow",
+	    "class":1,
+	    "type":"active",
+	    "skillType": "damage",
+	    "recharge":10,
+	    "aoe": 2,
+	    "levels": [
+	        5, 10, 15, 20	    
+	    ],
+	    "iconOffset": [
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
+	    ]
+	},
+	{
+	    "name":"Deadly Arrow",
+	    "class":1,
+	    "type":"active",
+	    "skillType":"damage",
+	    "recharge":15,
+	    "levels": [
+	        25, 50, 100, 200	    
+	    ],
+	    "iconOffset": [
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
+	    ]
+	},
+	
+	{
+	    "name":"Slow Arrow",
+	    "class":1,
+	    "type":"active",
+	    "skillType":"slow",
+	    "duration":10,
+	    "recharge":30,
+	    "levels": [
+	        25, 50, 75, 100	    
+	    ],
+	    "iconOffset": [
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
+	    ]
+	},	
+	
+	
+	{
+	    "name":"Defense",
+	    "class":2,
+	    "type":"passive",
+	    "skillType":"defence",
+	    "target":"self",
+	    "levels": [
+	        5, 10, 15, 20	    
+	    ],
+	    "iconOffset": [
+	      "-16px 0px",
+	      "-32px 0px",
+	      "-48px 0px"
+	    ]
+	},	
+	{
+	    "name":"Invincible",
+	    "class":2,
+	    "type":"active",
+	    "skillType":"invincible",
+	    "target":"self",
+	    "duration": [3, 6, 9, 12],
+	    "recharge":30,
+	    "iconOffset": [
+	      "-16px 0px",
+	      "-32px 0px",
+	      "-48px 0px"
+	    ]
+	},
+
+	{
+	    "name":"Strong Attack",
+	    "class":2,
+	    "type":"active",
+	    "skillType": "damage",
+	    "recharge":10,
+	    "levels": [
+	        10, 20, 30, 40	    
+	    ],
+	    "iconOffset": [
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
+	    ]
+	},
+	{
+	    "name":"Shield",
+	    "class":2,
+	    "type":"active",
+	    "skillType":"defence",
+	    "target":"self",
+	    "recharge":20,
+	    "duration":10,
+	    "levels": [
+	        20, 40, 60, 80	    
+	    ],
+	    "iconOffset": [
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
+	    ]
+	},
+	{
+	    "name":"Provoke",
+	    "class":2,
+	    "type":"active",
+	    "skillType":"provoke",
+	    "recharge":20,
+	    "aoe":2,
+	    "levels": [
+	        25, 50, 100, 200	    
+	    ],
+	    "iconOffset": [
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
+	    ]
+	}
+]
+
+

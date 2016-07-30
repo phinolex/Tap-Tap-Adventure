@@ -4,6 +4,7 @@ var cls = require('./lib/class'),
     Inventory = require('./inventory'),
     Messages = require('./message'),
     BankRoom = require('./bankroom'),
+    ItemTypes = require("../../shared/js/itemtypes"),
     Types = require('../../shared/js/gametypes');
 
 module.exports = Bank = cls.Class.extend({
@@ -14,6 +15,7 @@ module.exports = Bank = cls.Class.extend({
         for (var i = 0; i < number; i++) {
             this.rooms.push(new BankRoom(itemKinds[i], itemNumbers[i], itemSkillKinds[i], itemSkillLevels[i]));
         }
+        //log.info("bank="+this.bankToString());
     },
     
     hasItem: function(itemKind) {
@@ -29,7 +31,7 @@ module.exports = Bank = cls.Class.extend({
     hasEmptySpace: function(itemKind) {
         var i = 0;
         for (i = 0; i < this.number; i++) {
-            if (this.rooms[i].itemKind === null) {
+            if (this.rooms[i].itemKind === 0) {
                 return true;
             }
         }
@@ -37,7 +39,7 @@ module.exports = Bank = cls.Class.extend({
     },
     
     emptyBankItem: function(bankNumber) {
-        this.rooms[bankNumber].itemKind = null;
+        this.rooms[bankNumber].itemKind = 0;
         this.rooms[bankNumber].itemNumber = 0;
         this.rooms[bankNumber].itemSkillKind = 0;
         this.rooms[bankNumber].itemSkillLevel = 0;
@@ -69,7 +71,7 @@ module.exports = Bank = cls.Class.extend({
     
     getEmptyBankNumber: function() {
         for (var index = 0; index < this.number; index++) {
-            if (this.rooms[index].itemKind === null) {
+            if (this.rooms[index].itemKind === 0) {
                 
                 return index;
             }
@@ -77,10 +79,17 @@ module.exports = Bank = cls.Class.extend({
         return -1;
     },
     
+    putBankItem: function (item)
+    {
+    	this.putBank(item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);    
+    },
+    
     putBank: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
-        var i = 0;
-        for (i = 0; i < this.number; i++) {
-            if (this.rooms[i].itemKind === itemKind) {
+        //var i = 0;
+        for (var i = 0; i < this.number; i++) {
+            if ((ItemTypes.isConsumableItem(itemKind) || ItemTypes.isGold(itemKind) || ItemTypes.isCraft(itemKind))
+            	    && this.rooms[i].itemKind === itemKind)
+            {
                 this.rooms[i].itemNumber += itemNumber;
                 if (this.rooms[i].itemNumber <= 0) {
                     
@@ -92,24 +101,24 @@ module.exports = Bank = cls.Class.extend({
                 return true;
             }
         }
-        if (i === this.number) {
+        //if (i === this.number) {
             
-            return this._putBank(itemKind, itemNumber, 0, 0);
-        }
+            return this._putBank(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
+        //}
     },
     
     _putBank: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
-        var i = 0;
-        for(i = 0; i < this.number; i++) {
-            if (this.rooms[i].itemKind === null) {
-                this.rooms[i].itemKind = itemKind;
-                this.rooms[i].itemNumber = itemNumber;
-                this.rooms[i].itemSkillKind = itemSkillKind;
-                this.rooms[i].itemSkillLevel = itemSkillLevel;
-                databaseHandler.setBank(this.owner, i, itemKind, itemNumber, itemSkillKind, itemSkillLevel);
+        for(var i = 0; i < this.number; i++){
+            var item = this.rooms[i];
+            if(item.itemKind === 0) {
+            	item.itemKind = itemKind;
+                item.itemNumber = itemNumber;
+                item.itemSkillKind = itemSkillKind;
+                item.itemSkillLevel = itemSkillLevel;
+                databaseHandler.setBankItem(this.owner, i, item);
                 return true;
             }
-        }
+        } 
         this.owner.server.pushToPlayer(this.owner, new Messages.Notify("Your bank is full."));
         return false;
     },
@@ -120,12 +129,14 @@ module.exports = Bank = cls.Class.extend({
     },
     
     takeOutBank: function(bankNumber, number) {
-        if (this.rooms[bankNumber].itemNumber <= number) {
-            this.emptyBankItem(bankNumber);
-        } else {
-            this.rooms[bankNumber].itemNumber -= number;
-            databaseHandler.setBank(this.owner, bankNumber, this.rooms[bankNumber].itemKind, this.rooms[bankNumber].itemNumber, this.rooms[bankNumber].itemSkillKind, this.rooms[bankNumber].itemSkillLevel);
+        var item = this.rooms[bankNumber];
+    if((ItemTypes.isConsumableItem(item.itemKind) || ItemTypes.isCraft(item.itemKind)) && item.itemNumber > number) {
+            item.itemNumber -= number;
+            databaseHandler.setBankItem(this.owner, inventoryNumber, item);
         }
+        else {
+            this.emptyBankItem(bankNumber);
+        }       
     },
     
     incBankRoom: function() {
@@ -140,7 +151,7 @@ module.exports = Bank = cls.Class.extend({
         var inventoryString = "" + this.number;
         
         for (i = 0; i < this.number; i++) {
-            inventoryString += ", " + Types.getKindAsString(this.rooms[i].itemKind) + " ";
+            inventoryString += ", " + ItemTypes.getKindAsString(this.rooms[i].itemKind) + " ";
             inventoryString += this.rooms[i].itemNumber + " ";
             inventoryString += Types.getItemSkillNameByKind(this.rooms[i].itemSkillKind) + " ";
             inventoryString += this.rooms[i].itemSkillLevel;

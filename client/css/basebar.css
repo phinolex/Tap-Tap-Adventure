@@ -66,22 +66,23 @@ footer, header, hgroup, menu, nav, section {
 
     #basebarcontainer {
         position: absolute;
-        width: 1440px;
+        width: 970px;
         height: 66px;
-        top: 684px;
-        left: 15px;
-        margin-left: 0px;
+        top: 672px;
+        left: calc(50% - 444px);
         border: 0px;
         text-align: center;
         font-size: 21px;
         background-image: url('../img/3/main.png' );
-        background-position: 0px -768px;
+        background-position: -370px -768px;
         -moz-user-select: none;
         -webkit-user-select: none;
     }
 
     #hpcontainer, #mpcontainer{
-        position: absolute;
+	font-family:'GraphicPixel';
+	color:#e3e3e3;
+	position:absolute;
         top: 9px;
         width: 264px;
         height: -18px;
@@ -93,16 +94,16 @@ footer, header, hgroup, menu, nav, section {
         -webkit-user-select: none;
     }
     #hpcontainer {
-        left: 3px;
+        left: 6px;
     }
     #mpcontainer {
-        left: 279px;
+        left: 288px;
     }
     #expcontainer {
         position: absolute;
         left: 0px;
-        top: 51px;
-        width: 564px;
+        top: 48px;
+        width: 572px;
         height: 15px;
         border: 0px;
         margin-left: 0px;
@@ -113,10 +114,10 @@ footer, header, hgroup, menu, nav, section {
     }
     #health, #mana {
         position: absolute;
-        top: 3px;
+        top: 4.5px;
         left: 30px;
         width: 230px;
-        height: 30px;
+        height: 26px;
         border: 0px;
         margin: 0px;
         padding: 0px;
@@ -136,7 +137,7 @@ footer, header, hgroup, menu, nav, section {
     }
     #exp {
         position: absolute;
-        top: 0px;
+        top: 1.5px;
         left: 0px;
         width: 564px;
         height: 15px;
@@ -177,17 +178,20 @@ footer, header, hgroup, menu, nav, section {
         position: absolute;
         top: 0px;
         left: 0px;
-        width: 564px;
+        width: 560px;
         height: 15px;
         border: 0px;
         margin: 0px;
         padding: 0px;
         background-image: url('../img/3/main.png' );
         background-position: 0px -873px;
+        color: rgba(255, 255, 255, 1);
+        font-size: 0px;
+        text-align: center;        
     }
     #healthtext, #manatext {
         position: absolute;
-        top: -0.25px;
+        top: 9px;
         left: 0px;
         width: 264px;
         height: 39px;
@@ -208,148 +212,83 @@ footer, header, hgroup, menu, nav, section {
         top: 3px;
         left: 0px;
     }
-    #inventorybackground0, #inventorybackground1, #inventorybackground2, #inventorybackground3, #inventorybackground4, #inventorybackground5 {
-        position: absolute;
-        width: 48px;
-        height: 60px;
-        top: 6px;
-        left: 549px;
-        margin: 0px;
-        border: 0px;
-        background-image: url('../img/3/main.png' );
-    }
-    #inventorybackground0 {
-        margin-left: 0px;
-        background-position: -597px -834px;
-    }
-    #inventorybackground0.empty {
-        background-position: -549px -834px;
-    }
-    #inventorybackground1 {
-        margin-left: 34px;
-        background-position: -645px -834px;
-    }
-    #inventorybackground1.empty {
-        background-position: -549px -834px;
-    }
-    #inventorybackground2 {
-        margin-left: 68px;
-        background-position: -693px -834px;
-    }
-    #inventorybackground2.empty {
-        background-position: -549px -834px;
-    }
-    #inventorybackground3 {
-        margin-left: 102px;
-        background-position: -741px -834px;
-    }
-    #inventorybackground3.empty {
-        background-position: -549px -834px;
-    }
-    #inventorybackground4 {
-        margin-left: 136px;
-        background-position: -789px -834px;
-    }
-    #inventorybackground4.empty {
-        background-position: -549px -834px;
-    }
-    #inventorybackground5 {
-        margin-left: 170px;
-        background-position: -837px -834px;
-        display: none;
-    }
-    #inventorybackground5.empty {
-        background-position: -549px -834px;
-    }
-    #inventorybackground0 { margin-left: 0px; }
-    #inventorybackground1 { margin-left: 51px; }
-    #inventorybackground2 { margin-left: 99px; }
-    #inventorybackground3 { margin-left: 153px; display: none; }
-    #inventorybackground4 { margin-left: 204px; display: none; }
-    #inventorybackground5 { margin-left: 255px; display: none; }
-    #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
-        position: absolute;
-        top: -7.5px;
-        left: 00px;
-        width: 48px;
-        height: 48px;
-        background-color: rgba(0, 0, 0, 0);
-    }
-    #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
-        position: absolute;
-        width: 48px;
-        height: 12px;
-        left: 1px;
-        top: 42px;
-        border: 0px;
-        color: rgba(255, 255, 255, 1);
-        font-size: 13.5px;
-        text-align: center;
-        padding: 0px;
-        margin: 0px;
-    }
-    #moreinventorybutton{
-        position: absolute;
-        display: none;
-        width: 48px;
-        height: 51px;
-        top: 0px;
-        left: 852px;
-        margin: 0px;
-        border: 0px;
-        background: url('../img/3/main.png') no-repeat -591px -556px;
-    }
 
     #characterButton {
         position: absolute;
         width: 42px;
         height: 45px;
-        top: 3px;
-        left: 1305px;
+        top: 0px;
+        left: 605px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
-        background: url('../img/3/main.png') no-repeat -0px -942px;
+        background: url('../img/3/main.png') no-repeat -714px -942px;
     }
     #helpbutton {
         position: absolute;
         width: 42px;
         height: 45px;
-        top: 3px;
-        left: 1350px;
+        top: 0px;
+        left: 650px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
-        background: url('../img/3/main.png' ) no-repeat -420px -942px;
+        background: url('../img/3/main.png' ) no-repeat -840px -942px;
     }
     #soundbutton {
         position: absolute;
         width: 42px;
         height: 45px;
-        top: 3px;
-        left: 1395px;
+        top: 0px;
+        left: 740px;
         margin: 0px;
         border: 0px;
         background: url('../img/3/main.png' ) no-repeat -438px -942px;
     }
+    #warpbutton {
+        position: absolute;
+        width: 42px;
+        height: 45px;
+        top: 0px;
+        left: 695px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/3/main.png' ) no-repeat -966px -942px;
+    }
+    #chatbutton {
+        position: absolute;
+        width: 42px;
+        height: 45px;
+        top: 0px;
+        left: 785px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/3/main.png' ) no-repeat -1134px -942px;
+    }
 
     #users {
-        position: absolute;
-        width: 96px;
+	font-family:'GraphicPixel';
+	color:#e3e3e3;
+	position:absolute;
+        width: 80px;
         height: 60px;
         top: 18px;
-        left: 1203px;
+        left: 878px;
         margin: 0px;
         border: 0px;
         color: white;
-
+        font-family: 'GraphicPixel', sans-serif;
+        font-size: 18px;
     }
+    
     #fps {
-        position: absolute;
+	font-family:'GraphicPixel';
+	color:#e3e3e3;
+	position:absolute;
         width: 132px;
         height: 12px;
-        left: 1305px;
-        top: 49.5px;
+        left: 617px;
+        top: 46px;
         border: 0px;
         color: rgba(255, 255, 255, 1);
         font-size: 13.5px;
@@ -363,23 +302,24 @@ footer, header, hgroup, menu, nav, section {
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
     #basebarcontainer {
         position: absolute;
-        width: 960px;
+        width: 650px;
         height: 44px;
-        top: 456px;
-        left: 10px;
-        margin-left: 0px;
+        top: 446px;
+        left: calc(50% - 296px);
         border: 0px;
         text-align: center;
         font-size: 14px;
         background-image: url('../img/2/main.png' );
-        background-position: 0px -512px;
+        background-position: -244px -510px;
         -moz-user-select: none;
         -webkit-user-select: none;
     }
 
     #hpcontainer, #mpcontainer{
-        position: absolute;
-        top: 6px;
+	font-family:'GraphicPixel';
+	color:#e3e3e3;
+	position:absolute;
+        top: 4px;
         width: 176px;
         height: 26px;
         border: 0px;
@@ -390,10 +330,10 @@ footer, header, hgroup, menu, nav, section {
         -webkit-user-select: none;
     }
     #hpcontainer {
-        left: 2px;
+        left: 4px;
     }
     #mpcontainer {
-        left: 186px;
+        left: 196px;
     }
     #expcontainer {
         position: absolute;
@@ -410,10 +350,10 @@ footer, header, hgroup, menu, nav, section {
     }
     #health, #mana {
         position: absolute;
-        top: 2px;
+        top: 3px;
         left: 20px;
         width: 154px;
-        height: 22px;
+        height: 20px;
         border: 0px;
         margin: 0px;
         padding: 0px;
@@ -433,10 +373,10 @@ footer, header, hgroup, menu, nav, section {
     }
     #exp {
         position: absolute;
-        top: 0px;
+        top: 1px;
         left: 0px;
         width: 376px;
-        height: 10px;
+        height: 9px;
         border: 0px;
         margin: 0px;
         padding: 0px;
@@ -474,17 +414,21 @@ footer, header, hgroup, menu, nav, section {
         position: absolute;
         top: 0px;
         left: 0px;
-        width: 376px;
-        height: 10px;
+        width: 372px;
+        height: 9px;
         border: 0px;
         margin: 0px;
         padding: 0px;
         background-image: url('../img/2/main.png' );
         background-position: 0px -582px;
+        color: rgba(255, 255, 255, 1);
+        font-size: 0px;
+        text-align: center;        
+        
     }
     #healthtext, #manatext {
         position: absolute;
-        top: 6.5px;
+        top: 6px;
         left: 0px;
         width: 176px;
         height: 26px;
@@ -504,106 +448,13 @@ footer, header, hgroup, menu, nav, section {
         top: 2px;
         left: 0px;
     }
-    #inventorybackground0, #inventorybackground1, #inventorybackground2, #inventorybackground3, #inventorybackground4, #inventorybackground5 {
-        position: absolute;
-        width: 32px;
-        height: 40px;
-        top: 4px;
-        left: 366px;
-        margin: 0px;
-        border: 0px;
-        background-image: url('../img/2/main.png' );
-    }
-    #inventorybackground0 {
-        margin-left: 0px;
-        background-position: -398px -556px;
-    }
-    #inventorybackground0.empty {
-        background-position: -366px -556px;
-    }
-    #inventorybackground1 {
-        margin-left: 34px;
-        background-position: -430px -556px;
-    }
-    #inventorybackground1.empty {
-        background-position: -366px -556px;
-    }
-    #inventorybackground2 {
-        margin-left: 68px;
-        background-position: -462px -556px;
-    }
-    #inventorybackground2.empty {
-        background-position: -366px -556px;
-    }
-    #inventorybackground3 {
-        margin-left: 102px;
-        background-position: -494px -556px;
-    }
-    #inventorybackground3.empty {
-        background-position: -366px -556px;
-    }
-    #inventorybackground4 {
-        margin-left: 136px;
-        background-position: -526px -556px;
-    }
-    #inventorybackground4.empty {
-        background-position: -366px -556px;
-    }
-    #inventorybackground5 {
-        margin-left: 170px;
-        background-position: -558px -556px;
-        display: none;
-    }
-    #inventorybackground5.empty {
-        background-position: -366px -556px;
-    }
-    #inventorybackground0 { margin-left: 0px; }
-    #inventorybackground1 { margin-left: 34px; }
-    #inventorybackground2 { margin-left: 68px; }
-    #inventorybackground3 { margin-left: 102px; display: none; }
-    #inventorybackground4 { margin-left: 136px; display: none; }
-    #inventorybackground5 { margin-left: 170px; display: none; }
-    #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
-        position: absolute;
-        top: -5px;
-        left: 0px;
-        width: 32px;
-        height: 32px;
-        background-color: rgba(0, 0, 0, 0);
-    }
-    #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
-        position: absolute;
-        width: 32px;
-        height: 8px;
-        left: 0px;
-        top: 29px;
-        border: 0px;
-        color: rgba(255, 255, 255, 1);
-        font-size: 9px;
-        text-align: center;
-        padding: 0px;
-        margin: 0px;
-    }
-    #moreinventorybutton{
-        position: absolute;
-        display: none;
-        width: 32px;
-        height: 34px;
-        top: 0px;
-        left: 568px;
-        margin: 0px;
-        border: 0px;
-        background: url('../img/2/main.png') no-repeat -591px -556px;
-    }
-
-
 
     #characterButton {
         position: absolute;
         width: 28px;
         height: 30px;
         top: 2px;
-        left: 870px;
+        left: 406px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -614,37 +465,63 @@ footer, header, hgroup, menu, nav, section {
         width: 28px;
         height: 30px;
         top: 2px;
-        left: 900px;
+        left: 436px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
-        background: url('../img/2/main.png' ) no-repeat -280px -628px;
+        background: url('../img/2/main.png' ) no-repeat -560px -628px;
     }
     #soundbutton {
         position: absolute;
         width: 28px;
         height: 30px;
         top: 2px;
-        left: 930px;
+        left: 496px;
         margin: 0px;
         border: 0px;
         background: url('../img/2/main.png' ) no-repeat -252px -628px;
     }
-    #users {
+    #warpbutton {
         position: absolute;
-        width: 64px;
-        height: 40px;
-        top: 12px;
-        left: 802px;
+        width: 28px;
+        height: 30px;
+        top: 0px;
+        left: 466px;
         margin: 0px;
         border: 0px;
+        background: url('../img/2/main.png' ) no-repeat -644px -628px;
+    }
+    #chatbutton {
+        position: absolute;
+        width: 28px;
+        height: 30px;
+        top: 0px;
+        left: 526px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/2/main.png' ) no-repeat -756px -628px;
+    }
+    
+    #users {
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position:absolute;
+        width: 60px;
+        height: 40px;
+        top: 12px;
+        left: 585px;
+        margin: 0px;
+        border: 0px;
+        font-size: 12px;
         color: white;
     }
     #fps {
-        position: absolute;
+	font-family:'GraphicPixel';
+	color:#e3e3e3;
+	position:absolute;
         width: 88px;
         height: 8px;
-        left: 870px;
+        left: 410px;
         top: 33px;
         border: 0px;
         color: rgba(255, 255, 255, 1);
@@ -661,22 +538,25 @@ footer, header, hgroup, menu, nav, section {
 
     #basebarcontainer {
         position: absolute;
-        width: 480px;
+        width: 326px;
         height: 22px;
-        top: 228px;
-        left: 5px;
+        top: 223px;
+        left: calc(50% - 146px);
         margin-left: 0px;
         border: 0px;
         text-align: center;
         font-size: 7px;
         background-image: url('../img/1/main.png' );
-        background-position: 0px -256px;
+        background-position: -122px -256px;
         -moz-user-select: none;
         -webkit-user-select: none;
+        margin-right:100px;
     }
 
     #hpcontainer, #mpcontainer{
-        position: absolute;
+	font-family:'GraphicPixel';
+	color:#e3e3e3;
+	position:absolute;
         top: 3px;
         width: 88px;
         height: -6px;
@@ -688,15 +568,15 @@ footer, header, hgroup, menu, nav, section {
         -webkit-user-select: none;
     }
     #hpcontainer {
-        left: 1px;
+        left: 2px;
     }
     #mpcontainer {
-        left: 93px;
+        left: 99px;
     }
     #expcontainer {
         position: absolute;
         left: 0px;
-        top: 17px;
+        top: 16px;
         width: 188px;
         height: 5px;
         border: 0px;
@@ -708,10 +588,10 @@ footer, header, hgroup, menu, nav, section {
     }
     #health, #mana {
         position: absolute;
-        top: 1px;
+        top: 1.5px;
         left: 10px;
         width: 77px;
-        height: 11px;
+        height: 9px;
         border: 0px;
         margin: 0px;
         padding: 0px;
@@ -731,7 +611,7 @@ footer, header, hgroup, menu, nav, section {
     }
     #exp {
         position: absolute;
-        top: 0px;
+        top: 0.5px;
         left: 0px;
         width: 188px;
         height: 5px;
@@ -778,10 +658,13 @@ footer, header, hgroup, menu, nav, section {
         padding: 0px;
         background-image: url('../img/1/main.png' );
         background-position: 0px -291px;
+        color: rgba(255, 255, 255, 1);
+        font-size: 0px;
+        text-align: center;         
     }
     #healthtext, #manatext {
         position: absolute;
-        top: 4.25px;
+        top: 3px;
         left: 0px;
         width: 88px;
         height: 13px;
@@ -808,103 +691,12 @@ footer, header, hgroup, menu, nav, section {
         top: 1px;
         left: 0px;
     }
-    #inventorybackground0, #inventorybackground1, #inventorybackground2, #inventorybackground3, #inventorybackground4, #inventorybackground5 {
-        position: absolute;
-        width: 16px;
-        height: 20px;
-        top: 2px;
-        left: 183px;
-        margin: 0px;
-        border: 0px;
-        background-image: url('../img/1/main.png' );
-    }
-    #inventorybackground0 {
-        margin-left: 0px;
-        background-position: -199px -278px;
-    }
-    #inventorybackground0.empty {
-        background-position: -183px -278px;
-    }
-    #inventorybackground1 {
-        margin-left: 34px;
-        background-position: -215px -278px;
-    }
-    #inventorybackground1.empty {
-        background-position: -183px -278px;
-    }
-    #inventorybackground2 {
-        margin-left: 68px;
-        background-position: -231px -278px;
-    }
-    #inventorybackground2.empty {
-        background-position: -183px -278px;
-    }
-    #inventorybackground3 {
-        margin-left: 102px;
-        background-position: -247px -278px;
-    }
-    #inventorybackground3.empty {
-        background-position: -183px -278px;
-    }
-    #inventorybackground4 {
-        margin-left: 136px;
-        background-position: -263px -278px;
-    }
-    #inventorybackground4.empty {
-        background-position: -183px -278px;
-    }
-    #inventorybackground5 {
-        margin-left: 170px;
-        background-position: -279px -278px;
-        display: none;
-    }
-    #inventorybackground5.empty {
-        background-position: -183px -278px;
-    }
-    #inventorybackground0 { margin-left: 0px; }
-    #inventorybackground1 { margin-left: 17px; }
-    #inventorybackground2 { margin-left: 33px; }
-    #inventorybackground3 { margin-left: 51px; display: none; }
-    #inventorybackground4 { margin-left: 68px; display: none; }
-    #inventorybackground5 { margin-left: 85px; display: none; }
-    #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
-        position: absolute;
-        top: -2.5px;
-        left: 0px;
-        width: 16px;
-        height: 16px;
-        background-color: rgba(0, 0, 0, 0);
-    }
-    #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
-        position: absolute;
-        width: 16px;
-        height: 4px;
-        left: 0px;
-        top: 15.5px;
-        border: 0px;
-        color: rgba(255, 255, 255, 1);
-        font-size: 4.5px;
-        text-align: center;
-        padding: 0px;
-        margin: 0px;
-    }
-    #moreinventorybutton{
-        position: absolute;
-        display: none;
-        width: 16px;
-        height: 17px;
-        top: 0px;
-        left: 284px;
-        margin: 0px;
-        border: 0px;
-        background: url('../img/1/main.png') no-repeat -591px -556px;
-    }
     #characterButton {
         position: absolute;
         width: 14px;
         height: 15px;
-        top: 1px;
-        left: 435px;
+        top: 0px;
+        left: 203px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -914,39 +706,67 @@ footer, header, hgroup, menu, nav, section {
         position: absolute;
         width: 14px;
         height: 15px;
-        top: 1px;
-        left: 450px;
+        top: 0px;
+        left: 218px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
-        background: url('../img/1/main.png' ) no-repeat -140px -314px;
+        background: url('../img/1/main.png' ) no-repeat -280px -314px;
     }
     #soundbutton {
         position: absolute;
         width: 14px;
         height: 15px;
-        top: 1px;
-        left: 465px;
+        top: 0px;
+        left: 248px;
         margin: 0px;
         border: 0px;
         background: url('../img/1/main.png' ) no-repeat -126px -314px;
     }
-    #users {
+    #warpbutton {
         position: absolute;
-        width: 32px;
+        width: 14px;
+        height: 15px;
+        top: 0px;
+        left: 233px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/1/main.png' ) no-repeat -322px -314px;
+    }
+    #chatbutton {
+        position: absolute;
+        width: 14px;
+        height: 15px;
+        top: 0px;
+        left: 263px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/1/main.png' ) no-repeat -378px -314px;
+    }
+    
+    #users {
+	font-family:'GraphicPixel';
+	color:#e3e3e3;
+	position:absolute;
+        width: 30px;
         height: 20px;
         top: 6px;
-        left: 401px;
+        left: 293px;
         margin: 0px;
         border: 0px;
         color: white;
         font-family: 'GraphicPixel', sans-serif;
+        font-size: 6px;
     }
+    
+    
     #fps {
-        position: absolute;
+	font-family:'GraphicPixel';
+	color:#e3e3e3;
+	position:absolute;
         width: 44px;
         height: 4px;
-        left: 435px;
+        left: 205px;
         top: 16.5px;
         border: 0px;
         color: rgba(255, 255, 255, 1);

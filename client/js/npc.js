@@ -1,14 +1,16 @@
 /* global Types */
 
-define(['character'], function(Character) {
+define(['character', 'questhandler', 'npcdata'], function(Character, QH, NpcData) {
   var Npc = Character.extend({
-    init: function(id, kind) {
+    init: function(id, kind, name) {
       this._super(id, kind, 1);
-      this.itemKind = Types.getKindAsString(this.kind);
+      this.itemKind = ItemTypes.getKindAsString(this.kind);
       this.talkIndex = 0;
+      this.title = name;
     },
-    talk: function(isQuestCompleted) {
-        var msgs = isQuestCompleted ? this.afterQuestCompleteTalk : this.beforeQuestCompleteTalk;
+    talk: function(quest, isQuestCompleted) {
+    	if (isQuestCompleted) this.talkIndex = 0;
+    	var msgs = isQuestCompleted ? quest.afterTalk : quest.beforeTalk;
         if(msgs){
             var msg = null;
             var talkCount = msgs.length;
@@ -25,8 +27,11 @@ define(['character'], function(Character) {
         } else  {
             return "Well, hello there!";
         }
-      }
+      },
+        getSpriteName: function() {
+            return NpcData.Kinds[this.kind].spriteName;
+        },  
+      
     });
-    
   return Npc;
 });

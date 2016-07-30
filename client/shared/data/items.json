@@ -1,0 +1,1423 @@
+{
+  "Sword1": {
+    "kind":60,
+    "type":"weapon",
+    "attack":1,
+    "name":"Sword"
+
+  },
+  "Sword2": {
+    "kind":61,
+    "type":"weapon",
+    "attack":2,
+    "name":"Big Sword"
+  },
+  "Axe": {
+    "kind":65,
+    "type":"weapon",
+    "attack":3,
+    "name":"Axe"
+  },
+  "MorningStar": {
+    "kind":64,
+    "type":"weapon",
+    "attack":4,
+    "name":"Morning Star"
+  },
+  "BlueSword": {
+    "kind":66,
+    "type":"weapon",
+    "attack":5,
+    "name":"Blue Sword"
+  },
+  "RedSword": {
+    "kind":62,
+    "type":"weapon",
+    "attack":6,
+    "name":"Red Sword"
+  },
+  "GoldenSword": {
+    "kind":63,
+    "type":"weapon",
+    "attack":7,
+    "name":"Golden Sword"
+  },
+  "SideSword": {
+    "kind":74,
+    "type":"weapon",
+    "attack":8,
+    "name":"Side Sword"
+  },
+  "Spear": {
+    "kind":79,
+    "type":"weapon",
+    "attack":9,
+    "name":"Spear"
+  },
+  "Scimitar": {
+    "kind":84,
+    "type":"weapon",
+    "attack":10,
+    "name":"Scimitar"
+  },
+  "Trident": {
+    "kind":89,
+    "type":"weapon",
+    "attack":11,
+    "name":"Trident"
+  },
+  "Bluescimitar": {
+    "kind":97,
+    "type":"weapon",
+    "attack":12,
+    "name":"Blue Scimitar"
+  },
+  "Hammer": {
+    "kind":101,
+    "type":"weapon",
+    "attack":13,
+    "name":"Hammer"
+  },
+  "Greenlightsaber": {
+    "kind":116,
+    "type":"weapon",
+    "attack":14,
+    "name":"Green Light Saber"
+  },
+  "Skylightsaber": {
+    "kind":118,
+    "type":"weapon",
+    "attack":15,
+    "name":"Sky Light Saber"
+  },
+  "Redlightsaber": {
+    "kind":120,
+    "type":"weapon",
+    "attack":16,
+    "name":"Red Light Saber"
+  },
+  "Bastardsword": {
+    "kind":137,
+    "type":"weapon",
+    "attack":17,
+    "name":""
+  },
+  "Redmetalsword": {
+    "kind":136,
+    "type":"weapon",
+    "attack":18,
+    "name":"Red Metal Sword"
+  },
+  "Justicehammer": {
+    "kind":165,
+    "type":"weapon",
+    "attack":19,
+    "name":"Justice Hammer"
+  },
+  "Rose": {
+    "kind":139,
+    "type":"weapon",
+    "attack":20,
+    "name":"Rose"
+  },
+  "Icerose": {
+    "kind":140,
+    "type":"weapon",
+    "attack":21,
+    "name":"Ice Rose"
+  },
+  "Halberd": {
+    "kind":138,
+    "type":"weapon",
+    "attack":22,
+    "name":"Halberd"
+  },
+  "Whip": {
+    "kind":167,
+    "type":"weapon",
+    "attack":23,
+    "name":"Whip"
+  },
+  "Forestguardiansword": {
+    "kind":168,
+    "type":"weapon",
+    "attack":24,
+    "name":"Forest Guardian Sword"
+  },
+  "Sickle": {
+    "kind":178,
+    "type":"weapon",
+    "attack":25,
+    "name":"Sickle"
+  },
+  "Plunger": {
+    "kind":182,
+    "type":"weapon",
+    "attack":26,
+    "name":"Plunger"
+  },
+  "Redsickle": {
+    "kind":184,
+    "type":"weapon",
+    "attack":27,
+    "name":"Red Sickle"
+  },
+  "Daywalker": {
+    "kind":186,
+    "type":"weapon",
+    "attack":28,
+    "name":"Day Walker"
+  },
+  "Purplecloudkallege": {
+    "kind":188,
+    "type":"weapon",
+    "attack":29,
+    "name":"Purple Cloud Kallege"
+  },
+  "Searage": {
+    "kind":191,
+    "type":"weapon",
+    "attack":30,
+    "name":"Sea rage"
+  },
+  "Breaker": {
+    "kind":196,
+    "type":"weapon",
+    "attack":31,
+    "name":"Breaker"
+  },
+  "Eneltrident": {
+    "kind":199,
+    "type":"weapon",
+    "attack":32,
+    "name":"Enel Trident"
+  },
+  "Rainbowsword": {
+    "kind":207,
+    "type":"weapon",
+    "attack":33,
+    "name":"Rainbow Sword"
+  },
+  "Typhoon": {
+    "kind":211,
+    "type":"weapon",
+    "attack":34,
+    "name":"Typhoon"
+  },
+  "Memme": {
+    "kind":217,
+    "type":"weapon",
+    "attack":35,
+    "name":"Memme"
+  },
+  "Candybar": {
+    "kind":229,
+    "type":"weapon",
+    "attack":36,
+    "name":"Candy Bar"
+  },
+  "Butcherknife": {
+    "kind":243,
+    "type":"weapon",
+    "attack":37,
+    "name":"Butcher Knife"
+  },
+  "Fireshot": {
+    "kind":254,
+    "type":"weapon",
+    "attack":38,
+    "name":"Fire Shot"
+  },
+  "Comb": {
+    "kind":263,
+    "type":"weapon",
+    "attack":39,
+    "name":"Comb"
+  },
+  "Squeakyhammer": {
+    "kind":270,
+    "type":"weapon",
+    "attack":40,
+    "name":"Squeaky Hammer"
+  },
+  "Fireplay": {
+    "kind":274,
+    "type":"weapon",
+    "attack":41,
+    "name":"Fire Play"
+  },
+  "Weastaff": {
+    "kind":280,
+    "type":"weapon",
+    "attack":42,
+    "name":"Wea Staff"
+  },
+  "Pinksword": {
+    "kind":293,
+    "type":"weapon",
+    "attack":43,
+    "name":"Pink Sword"
+  },
+  "Conferencecall": {
+    "kind":313,
+    "type":"weapon",
+    "attack":44,
+    "name":"Conference Call"
+  },
+  "Cactusaxe": {
+    "kind":327,
+    "type":"weapon",
+    "attack":45,
+    "name":"Cactus Axe"
+  },
+  "Devilkazyasword": {
+    "kind":338,
+    "type":"weapon",
+    "attack":46,
+    "name":"Devil Kazya Sword"
+  },
+  "Bamboospear": {
+    "kind":348,
+    "type":"weapon",
+    "attack":47,
+    "name":"Bamboo Spear"
+  },
+  "Paewoldo": {
+    "kind":377,
+    "type":"weapon",
+    "attack":48,
+    "name":"Paewoldo"
+  },
+  "Magicspear": {
+    "kind":194,
+    "type":"weapon",
+    "attack":49,
+    "name":"Magic Spear"
+  },
+  "Firesword": {
+    "kind":166,
+    "type":"weapon",
+    "attack":50,
+    "name":"Fire Sword"
+  },
+
+  "armorarcher1": {
+    "kind":223,
+    "defense":1,
+    "type":"armorarcher",
+    "name":"Archer Armor",
+    "spriteName":"armorarcher"
+  },
+  "LeatherarcherArmor": {
+    "kind":252,
+    "defense":2,
+    "type":"armorarcher",
+    "name":"Leather Archer Armor"
+  },
+  "MailarcherArmor": {
+    "kind":258,
+    "defense":3,
+    "type":"armorarcher",
+    "name":"Mail Archer Armor"
+  },
+  "PlatearcherArmor": {
+    "kind":260,
+    "defense":4,
+    "type":"armorarcher",
+    "name":"Plate Archer Armor"
+  },
+  "RedarcherArmor": {
+    "kind":264,
+    "defense":5,
+    "type":"armorarcher",
+    "name":"Red Archer Armor"
+  },
+  "GoldenarcherArmor": {
+    "kind":277,
+    "defense":6,
+    "type":"armorarcher",
+    "name":"Golden Archer Armor"
+  },
+  "GreenarcherArmor": {
+    "kind":290,
+    "defense":7,
+    "type":"armorarcher",
+    "name":"Green Archer Armor"
+  },
+  "GreenwingarcherArmor": {
+    "kind":291,
+    "defense":8,
+    "type":"armorarcher",
+    "name":"Green Wing Archer Armor"
+  },
+  "GuardarcherArmor": {
+    "kind":294,
+    "defense":9,
+    "type":"armorarcher",
+    "name":"Guard Archer Armor"
+  },
+  "RedguardarcherArmor": {
+    "kind":307,
+    "defense":10,
+    "type":"armorarcher",
+    "name":"Red Guard Archer Armor"
+  },
+  "WhitearcherArmor": {
+    "kind":314,
+    "defense":11,
+    "type":"armorarcher",
+    "name":"White Archer Armor"
+  },
+  "RatarcherArmor": {
+    "kind":319,
+    "defense":12,
+    "type":"armorarcher",
+    "name":"Rat Archer Armor"
+  },
+  "PiratearcherArmor": {
+    "kind":321,
+    "defense":13,
+    "type":"armorarcher",
+    "name":"Pirate Archer Armor"
+  },
+  "CheoliarcherArmor": {
+    "kind":324,
+    "defense":14,
+    "type":"armorarcher",
+    "name":"Cheolia Archer Armor"
+  },
+  "DovakinarcherArmor": {
+    "kind":328,
+    "defense":15,
+    "type":"armorarcher",
+    "name":"Dovakina Archer Armor"
+  },
+  "GbwingarcherArmor": {
+    "kind":331,
+    "defense":16,
+    "type":"armorarcher",
+    "name":"GbwingarcherArmor"
+  },
+  "RedwingarcherArmor": {
+    "kind":336,
+    "defense":17,
+    "type":"armorarcher",
+    "name":"Red Wing Archer Armor"
+  },
+  "SnowfoxarcherArmor": {
+    "kind":339,
+    "defense":18,
+    "type":"armorarcher",
+    "name":"Snow Fox Archer Armor"
+  },
+  "WolfarcherArmor": {
+    "kind":343,
+    "defense":19,
+    "type":"armorarcher",
+    "name":"Wolf Archer Armor"
+  },
+  "BluewingarcherArmor": {
+    "kind":349,
+    "defense":20,
+    "type":"armorarcher",
+    "name":"Blue Wing Archer Armor"
+  },
+  "FallenarcherArmor": {
+    "kind":351,
+    "defense":21,
+    "type":"armorarcher",
+    "name":"Fallen Archer Armor"
+  },
+  "CrystalarcherArmor": {
+    "kind":357,
+    "defense":22,
+    "type":"armorarcher",
+    "name":"Crystal Archer Armor"
+  },
+  "LegolasArmor": {
+    "kind":362,
+    "defense":23,
+    "type":"armorarcher",
+    "name":"Legolas Armor"
+  },
+  "AdhererarcherArmor": {
+    "kind":368,
+    "defense":24,
+    "type":"armorarcher",
+    "name":"Adherer Archer Armor"
+  },
+  "ArcherschoolUniform": {
+    "kind":373,
+    "defense":25,
+    "type":"armorarcher",
+    "name":"Archer School Uniform"
+  },
+  "CombatUniform": {
+    "kind":379,
+    "defense":26,
+    "type":"armorarcher",
+    "name":"Combat Uniform"
+  },
+  "GayarcherArmor": {
+    "kind":384,
+    "defense":27,
+    "type":"armorarcher",
+    "name":"Gay Archer Armor"
+  },
+
+  "WoodenBow": {
+    "kind":224,
+    "type":"weaponarcher",
+    "attack":1,
+    "name":"Wooden Bow"
+  },
+  "PlasticBow": {
+    "kind":259,
+    "type":"weaponarcher",
+    "attack":2,
+    "name":"Plastic Bow"
+  },
+  "IronBow": {
+    "kind":261,
+    "type":"weaponarcher",
+    "attack":3,
+    "name":"Iron Bow"
+  },
+  "RedBow": {
+    "kind":265,
+    "type":"weaponarcher",
+    "attack":4,
+    "name":"Red Bow"
+  },
+  "VioletBow": {
+    "kind":271,
+    "type":"weaponarcher",
+    "attack":5,
+    "name":"Violet Bow"
+  },
+  "DeathBow": {
+    "kind":272,
+    "type":"weaponarcher",
+    "attack":6,
+    "name":"Death Bow"
+  },
+  "GoldenBow": {
+    "kind":284,
+    "type":"weaponarcher",
+    "attack":7,
+    "name":"Golden Bow"
+  },
+  "WatermelonBow": {
+    "kind":289,
+    "type":"weaponarcher",
+    "attack":8,
+    "name":"Watermelon Bow"
+  },
+  "GreenBow": {
+    "kind":295,
+    "type":"weaponarcher",
+    "attack":9,
+    "name":"Greenbow"
+  },
+  "RedenelBow": {
+    "kind":302,
+    "type":"weaponarcher",
+    "attack":10,
+    "name":"Redenel Bow"
+  },
+  "MermaidBow": {
+    "kind":308,
+    "type":"weaponarcher",
+    "attack":11,
+    "name":"Mermaid Bow"
+  },
+  "SeahorseBow": {
+    "kind":315,
+    "type":"weaponarcher",
+    "attack":12,
+    "name":"Seahorse Bow"
+  },
+  "HunterBow": {
+    "kind":320,
+    "type":"weaponarcher",
+    "attack":13,
+    "name":"Hunter Bow"
+  },
+  "GreenlightBow": {
+    "kind":322,
+    "type":"weaponarcher",
+    "attack":14,
+    "name":"Green Light Bow"
+  },
+  "SkylightBow": {
+    "kind":325,
+    "type":"weaponarcher",
+    "attack":15,
+    "name":"Sky Light Bow"
+  },
+  "RedlightBow": {
+    "kind":329,
+    "type":"weaponarcher",
+    "attack":16,
+    "name":"Red Light Bow"
+  },
+  "CaptainBow": {
+    "kind":332,
+    "type":"weaponarcher",
+    "attack":17,
+    "name":"Captain Bow"
+  },
+  "RedmetalBow": {
+    "kind":337,
+    "type":"weaponarcher",
+    "attack":18,
+    "name":"Red Metal Bow"
+  },
+  "JusticeBow": {
+    "kind":344,
+    "type":"weaponarcher",
+    "attack":19,
+    "name":"Justice Bow"
+  },
+  "RoseBow": {
+    "kind":350,
+    "type":"weaponarcher",
+    "attack":20,
+    "name":"Rose Bow"
+  },
+  "MarineBow": {
+    "kind":340,
+    "type":"weaponarcher",
+    "attack":21,
+    "name":"Marine Bow"
+  },
+  "CrystalBow": {
+    "kind":358,
+    "type":"weaponarcher",
+    "attack":22,
+    "name":"Crystal Bow"
+  },
+  "GayBow": {
+    "kind":363,
+    "type":"weaponarcher",
+    "attack":23,
+    "name":"Gay Bow"
+  },
+  "ForestBow": {
+    "kind":369,
+    "type":"weaponarcher",
+    "attack":24,
+    "name":"Forest Bow"
+  },
+  "SickleBow": {
+    "kind":374,
+    "type":"weaponarcher",
+    "attack":25,
+    "name":"Sickle Bow"
+  },
+  "BloodBow": {
+    "kind":380,
+    "type":"weaponarcher",
+    "attack":26,
+    "name":"Blood Bow"
+  },
+  "RedsickleBow": {
+    "kind":385,
+    "type":"weaponarcher",
+    "attack":27,
+    "name":"Red Sickle Bow"
+  },
+
+
+  "ClothArmor": {
+    "kind":21,
+    "defense":1,
+    "type":"armor",
+    "name":"Cloth Armor"
+  },
+  "LeatherArmor": {
+    "kind":22,
+    "defense":2,
+    "type":"armor",
+    "name":"Leather Armor"
+  },
+  "MailArmor": {
+    "kind":23,
+    "defense":3,
+    "type":"armor",
+    "name":"Mail Armor"
+  },
+  "PlateArmor": {
+    "kind":24,
+    "defense":4,
+    "type":"armor",
+    "name":"Steel Armor"
+  },
+  "RedArmor": {
+    "kind":25,
+    "defense":5,
+    "type":"armor",
+    "name":"Ruby Armor"
+  },
+  "GoldenArmor": {
+    "kind":26,
+    "defense":6,
+    "type":"armor",
+    "name":"Golden Armor"
+  },
+  "GreenArmor": {
+    "kind":72,
+    "defense":7,
+    "type":"armor",
+    "name":"Green Armor"
+  },
+  "GreenWingArmor": {
+    "kind":73,
+    "defense":8,
+    "type":"armor",
+    "name":"Green Wing Armor"
+  },
+  "GuardArmor": {
+    "kind":78,
+    "defense":9,
+    "type":"armor",
+    "name":"Guard Armor"
+  },
+  "RedGuardArmor": {
+    "kind":82,
+    "defense":10,
+    "type":"armor",
+    "name":"Red Guard Armor"
+  },
+  "WhiteArmor": {
+    "kind":83,
+    "defense":11,
+    "type":"armor",
+    "name":"White Armor"
+  },
+  "RatArmor": {
+    "kind":88,
+    "defense":12,
+    "type":"armor",
+    "name":"Rat Armor"
+  },
+  "BluepirateArmor": {
+    "kind":96,
+    "defense":13,
+    "type":"armor",
+    "name":"Blue Pirate Armor"
+  },
+  "CheoliArmor": {
+    "kind":100,
+    "defense":14,
+    "type":"armor",
+    "name":"Cheoli Armor"
+  },
+  "DovakinArmor": {
+    "kind":110,
+    "defense":15,
+    "type":"armor",
+    "name":"Dovakin Armor"
+  },
+  "GbwingArmor": {
+    "kind":111,
+    "defense":16,
+    "type":"armor",
+    "name":"GB Wing Armor"
+  },
+  "RedwingArmor": {
+    "kind":112,
+    "defense":17,
+    "type":"armor",
+    "name":"Red Wing Armor"
+  },
+  "SnowfoxArmor": {
+    "kind":113,
+    "defense":18,
+    "type":"armor",
+    "name":"Snow Fox Armor"
+  },
+  "WolfArmor": {
+    "kind":114,
+    "defense":19,
+    "type":"armor",
+    "name":"Wolf Armor"
+  },
+  "BluewingArmor": {
+    "kind":127,
+    "defense":20,
+    "type":"armor",
+    "name":"Blue Wing Armor"
+  },
+  "ThiefArmor": {
+    "kind":128,
+    "defense":21,
+    "type":"armor",
+    "name":"Thief Armor"
+  },
+  "NinjaArmor": {
+    "kind":129,
+    "defense":22,
+    "type":"armor",
+    "name":"Ninja Armor"
+  },
+  "DragonArmor": {
+    "kind":130,
+    "defense":23,
+    "type":"armor",
+    "name":"Dragon Armor"
+  },
+  "FallenArmor": {
+    "kind":131,
+    "defense":24,
+    "type":"armor",
+    "name":"Fallen Armor"
+  },
+  "PaladinArmor": {
+    "kind":132,
+    "defense":25,
+    "type":"armor",
+    "name":"Paladin Armor"
+  },
+  "CrystalArmor": {
+    "kind":133,
+    "defense":26,
+    "type":"armor",
+    "name":"Crystal Armor"
+  },
+  "AdhererRobe": {
+    "kind":134,
+    "defense":27,
+    "type":"armor",
+    "name":"Adherer Robe"
+  },
+  "FrostArmor": {
+    "kind":135,
+    "defense":28,
+    "type":"armor",
+    "name":"Frost Armor"
+  },
+  "GayArmor": {
+    "kind":160,
+    "defense":29,
+    "type":"armor",
+    "name":"Gay Armor"
+  },
+  "SchoolUniform": {
+    "kind":161,
+    "defense":30,
+    "type":"armor",
+    "name":"School Uniform"
+  },
+  "BeautifulLife": {
+    "kind":162,
+    "defense":31,
+    "type":"armor",
+    "name":"Beautiful Life"
+  },
+  "RegionArmor": {
+    "kind":163,
+    "defense":32,
+    "type":"armor",
+    "name":"Region Armor"
+  },
+  "GhostRider": {
+    "kind":164,
+    "defense":33,
+    "type":"armor",
+    "name":"Ghost Rider"
+  },
+  "Taekwondo": {
+    "kind":170,
+    "defense":34,
+    "type":"armor",
+    "name":"Taekwondo"
+  },
+  "RabbitArmor": {
+    "kind":176,
+    "defense":35,
+    "type":"armor",
+    "name":"Rabbit Armor"
+  },
+  "PortalArmor": {
+    "kind":179,
+    "defense":36,
+    "type":"armor",
+    "name":"Portal Armor"
+  },
+  "PirateKing": {
+    "kind":187,
+    "defense":37,
+    "type":"armor",
+    "name":"Pirate King"
+  },
+  "SeadragonArmor": {
+    "kind":190,
+    "defense":38,
+    "type":"armor",
+    "name":"Sea Dragon Armor"
+  },
+  "ShadowregionArmor": {
+    "kind":193,
+    "defense":39,
+    "type":"armor",
+    "name":"Shadow Region Armor"
+  },
+  "EnelArmor": {
+    "kind":198,
+    "defense":40,
+    "type":"armor",
+    "name":"Enel Armor"
+  },
+  "MiniseadragonArmor": {
+    "kind":203,
+    "defense":41,
+    "type":"armor",
+    "name":"Mini Sea Dragon Armor"
+  },
+  "HuniArmor": {
+    "kind":205,
+    "defense":42,
+    "type":"armor",
+    "name":"Huni Armor"
+  },
+  "DamboArmor": {
+    "kind":209,
+    "defense":43,
+    "type":"armor",
+    "name":"Dambo Armor"
+  },
+  "SquidArmor": {
+    "kind":215,
+    "defense":44,
+    "type":"armor",
+    "name":"Squid Armor"
+  },
+  "BeeArmor": {
+    "kind":219,
+    "defense":45,
+    "type":"armor",
+    "name":"Bee Armor"
+  },
+  "BluedamboArmor": {
+    "kind":221,
+    "defense":46,
+    "type":"armor",
+    "name":"Blue Dambo Armor"
+  },
+  "RudolfArmor": {
+    "kind":226,
+    "defense":47,
+    "type":"armor",
+    "name":"Rudolf Armor"
+  },
+  "ChristmasArmor": {
+    "kind":232,
+    "defense":48,
+    "type":"armor",
+    "name":"Christmas Armor"
+  },
+  "RobocopArmor": {
+    "kind":233,
+    "defense":49,
+    "type":"armor",
+    "name":"Robocop Armor"
+  },
+  "PinkcockroachArmor": {
+    "kind":238,
+    "defense":50,
+    "type":"armor",
+    "name":"Pink Cockroach Armor"
+  },
+  "CockroachSuit": {
+    "kind":241,
+    "defense":51,
+    "type":"armor",
+    "name":"Cockroach Suit"
+  },
+  "DinosaurArmor": {
+    "kind":248,
+    "defense":52,
+    "type":"armor",
+    "name":"Dinosaur Armor"
+  },
+  "CatArmor": {
+    "kind":251,
+    "defense":53,
+    "type":"armor",
+    "name":"Cat Armor"
+  },
+  "SnowmanArmor": {
+    "kind":256,
+    "defense":54,
+    "type":"armor",
+    "name":"Snowman Armor"
+  },
+  "BeetleArmor": {
+    "kind":267,
+    "defense":55,
+    "type":"armor",
+    "name":"Beetle Armor"
+  },
+  "HongcheolArmor": {
+    "kind":269,
+    "defense":56,
+    "type":"armor",
+    "name":"Hongcheol Armor"
+  },
+  "TigerArmor": {
+    "kind":276,
+    "defense":57,
+    "type":"armor",
+    "name":"Tiger Armor"
+  },
+  "WizardRobe": {
+    "kind":279,
+    "defense":58,
+    "type":"armor",
+    "name":"Wizard Robe"
+  },
+  "IronknightArmor": {
+    "kind":282,
+    "defense":59,
+    "type":"armor",
+    "name":"Iron Knight Armor"
+  },
+  "EvilArmor": {
+    "kind":286,
+    "defense":60,
+    "type":"armor",
+    "name":"Evil Armor"
+  },
+  "GreendamboArmor": {
+    "kind":297,
+    "defense":61,
+    "type":"armor",
+    "name":"Green Dambo Armor"
+  },
+  "ReddamboArmor": {
+    "kind":310,
+    "defense":62,
+    "type":"armor",
+    "name":"Red Dambo Armor"
+  },
+  "DevilkazyaArmor": {
+    "kind":334,
+    "defense":63,
+    "type":"armor",
+    "name":"Devil Kazya Armor"
+  },
+  "BridalMask": {
+    "kind":342,
+    "defense":64,
+    "type":"armor",
+    "name":"Bridal Mask"
+  },
+  "BlackspiderArmor": {
+    "kind":355,
+    "defense":65,
+    "type":"armor",
+    "name":"Black Spider Armor"
+  },
+  "FrogArmor": {
+    "kind":365,
+    "defense":66,
+    "type":"armor",
+    "name":"Frog Armor"
+  },
+  "BearseonbiArmor": {
+    "kind":387,
+    "defense":67,
+    "type":"armor",
+    "name":"Bearseonbi Armor"
+  },
+  "RainbowApro": {
+    "kind":356,
+    "defense":68,
+    "type":"armor",
+    "name":"Rainbow A Pro"
+  },
+  "CokeArmor": {
+    "kind":359,
+    "defense":69,
+    "type":"armor",
+    "name":"Coke Armor"
+  },
+  "FriedpotatoArmor": {
+    "kind":366,
+    "defense":70,
+    "type":"armor",
+    "name":"Fried Potato Armor"
+  },
+  "BurgerArmor": {
+    "kind":370,
+    "defense":71,
+    "type":"armor",
+    "name":"Burger Armor"
+  },
+  "RadishArmor": {
+    "kind":378,
+    "defense":72,
+    "type":"armor",
+    "name":"Radish Armor"
+  },
+  "HalloweenJKArmor": {
+    "kind":381,
+    "defense":73,
+    "type":"armor",
+    "name":"Halloween JK Armor"
+  },
+  "FrankensteinArmor": {
+    "kind":388,
+    "defense":74,
+    "type":"armor",
+    "name":"Frankenstein Armor"
+  },
+  "AdminArmor": {
+    "kind":175,
+    "defense":150,
+    "type":"armor",
+    "name":"Admin Armor"
+  },
+
+  "Flask": {
+    "kind":35,
+    "type":"object",
+    "name":"Flask +100 HP",
+    "buyCount":5
+  ,"buy":1
+  },
+  "Burger": {
+    "kind":36,
+    "type":"object",
+    "name":"Burger +200 HP",
+    "buyCount":5
+  ,"buy":2
+  },
+  "BigFlask": {
+    "kind":401,
+    "type":"object",
+    "name":"Big Flask +35% HP",
+    "buyCount":5
+  ,"buy":5
+  },
+  "Chest": {
+    "kind":37,
+    "type":"chest",
+    "name":"Chest"
+  },
+  "FirePotion": {
+    "kind":38,
+    "type":"object",
+    "name":"Fire Potion"
+  },
+  "Cake": {
+    "kind":39,
+    "type":"object",
+    "name":"Cake [Quest]"
+  },
+  "Book": {
+    "kind":172,
+    "type":"object",
+    "name":"Book [Quest]"
+  },
+  "Cd": {
+    "kind":173,
+    "type":"object",
+    "name":"CD [Quest]"
+  },
+  "Snowpotion": {
+    "kind":200,
+    "type":"object",
+    "name":"Snow Potion"
+  },
+  "Royalazalea": {
+    "kind":212,
+    "type":"object",
+    "name":"Royal Azalea"
+  },
+  "Blackpotion": {
+    "kind":306,
+    "type":"object",
+    "name":"Black Potion"
+  },
+  "Gold": {
+    "kind":400,
+    "type":"object",
+    "name":"Gold"
+  },
+  "MountSeaDragon": {
+    "kind":450,
+    "type":"object",
+    "name":"Mount Sea Dragon",
+    "buyCount":5,
+    "buy":25
+  },
+  "MountForestDragon": {
+    "kind":451,
+    "type":"object",
+    "name":"Mount Forest Dragon",
+    "buyCount":5,
+    "buy":25
+  },
+  "MountWhiteTiger": {
+    "kind":452,
+    "type":"object",
+    "name":"Mount White Tiger"
+  },
+
+  "LeafCommon": {
+    "kind":700,
+    "spriteName":"leaf",
+    "type":"craft",
+    "name":"Leaf Common"
+  },
+  "LeafUncommon": {
+    "kind":701,
+    "spriteName":"leaf",
+    "type":"craft",
+    "name":"Leaf Uncommon"
+  },
+  "LeafRare": {
+    "kind":702,
+    "spriteName":"leaf",
+    "type":"craft",
+    "name":"Leaf Rare"
+  },
+  "BranchCommon": {
+    "kind":703,
+    "spriteName":"branch",
+    "type":"craft",
+    "name":"Branch Common"
+  },
+  "BranchUncommon": {
+    "kind":704,
+    "spriteName":"branch",
+    "type":"craft",
+    "name":"Branch Uncommon"
+  },
+  "BranchRare": {
+    "kind":705,
+    "spriteName":"branch",
+    "type":"craft",
+    "name":"Branch Rare"
+  },
+  "SeedCommon": {
+    "kind":706,
+    "spriteName":"seed",
+    "type":"craft",
+    "name":"Seed Common"
+  },
+  "SeedUncommon": {
+    "kind":707,
+    "spriteName":"seed",
+    "type":"craft",
+    "name":"Seed Uncommon"
+  },
+  "SeedRare": {
+    "kind":708,
+    "spriteName":"seed",
+    "type":"craft",
+    "name":"Seed Rare"
+  },
+  "ClothCommon": {
+    "kind":709,
+    "spriteName":"cloth",
+    "type":"craft",
+    "name":"Cloth Common"
+  },
+  "Clothuncommon": {
+    "kind":710,
+    "spriteName":"cloth",
+    "type":"craft",
+    "name":"Cloth Uncommon"
+  },
+  "ClothRare": {
+    "kind":711,
+    "spriteName":"cloth",
+    "type":"craft",
+    "name":"Cloth Rare"
+  },
+  "RockCommon": {
+    "kind":712,
+    "spriteName":"rock",
+    "type":"craft",
+    "name":"Rock Common"
+  },
+  "RockUncommon": {
+    "kind":713,
+    "spriteName":"rock",
+    "type":"craft",
+    "name":"Rock Uncommon"
+  },
+  "RockRare": {
+    "kind":714,
+    "spriteName":"rock",
+    "type":"craft",
+    "name":"Rock Rare"
+  },
+  "MineralCommon": {
+    "kind":715,
+    "spriteName":"mineral",
+    "type":"craft",
+    "name":"Mineral Common"
+  },
+  "MineralUncommon": {
+    "kind":716,
+    "spriteName":"mineral",
+    "type":"craft",
+    "name":"Mineral Uncommon"
+  },
+  "MineralRare": {
+    "kind":717,
+    "spriteName":"mineral",
+    "type":"craft",
+    "name":"Mineral Rare"
+  },
+  "ElementCommon": {
+    "kind":718,
+    "spriteName":"element",
+    "type":"craft",
+    "name":"Element Common"
+  },
+  "ElementUncommon": {
+    "kind":719,
+    "spriteName":"element",
+    "type":"craft",
+    "name":"Element Uncommon"
+  },
+  "ElementRare": {
+    "kind":720,
+    "spriteName":"element",
+    "type":"craft",
+    "name":"Element Rare"
+  },
+  "WeaponHiltCommon": {
+    "kind":721,
+    "spriteName":"weaponhilt",
+    "type":"craft",
+    "name":"Common Weapon Hilt"
+  },
+  "WeaponHiltUncommon": {
+    "kind":722,
+    "spriteName":"weaponhilt",
+    "type":"craft",
+    "name":"Uncommon Weapon Hilt"
+  },
+  "WeaponHiltRare": {
+    "kind":723,
+    "spriteName":"weaponhilt",
+    "type":"craft",
+    "name":"Rare Weapon Hilt"
+  },
+  "WeaponBladeCommon": {
+    "kind":724,
+    "spriteName":"weaponblade",
+    "type":"craft",
+    "name":"Common Weapon Blade"
+  },
+  "WeaponBladeUncommon": {
+    "kind":725,
+    "spriteName":"weaponblade",
+    "type":"craft",
+    "name":"Uncommon Weapon Blade"
+  },
+  "WeaponBladeRare": {
+    "kind":726,
+    "spriteName":"weaponblade",
+    "type":"craft",
+    "name":"Rare Weapon Blade"
+  },
+  "ArmorPatchCommon": {
+    "kind":727,
+    "spriteName":"armorpatches",
+    "type":"craft",
+    "name":"Common Armor Patch"
+  },
+  "ArmorPatchUncommon": {
+    "kind":728,
+    "spriteName":"armorpatches",
+    "type":"craft",
+    "name":"Uncommon Armor Patch"
+  },
+  "ArmorPatchRare": {
+    "kind":729,
+    "spriteName":"armorpatches",
+    "type":"craft",
+    "name":"Rare Armor Patch"
+  },
+  "ArmorBindingCommon": {
+    "kind":739,
+    "spriteName":"armorbinding",
+    "type":"craft",
+    "name":"Common Armor Binding"
+  },
+  "ArmorBindingUncommon": {
+    "kind":740,
+    "spriteName":"armorbinding",
+    "type":"craft",
+    "name":"Uncommon Armor Binding"
+  },
+  "ArmorBindingRare": {
+    "kind":741,
+    "spriteName":"armorbinding",
+    "type":"craft",
+    "name":"Rare Armor Binding"
+  },
+  "WoodCommon": {
+    "kind":730,
+    "spriteName":"wood",
+    "type":"craft",
+    "name":"Wood Common"
+  },
+  "WoodUncommon": {
+    "kind":731,
+    "spriteName":"wood",
+    "type":"craft",
+    "name":"Wood Uncommon"
+  },
+  "WoodRare": {
+    "kind":732,
+    "spriteName":"wood",
+    "type":"craft",
+    "name":"Wood Rare"
+  },
+
+  "weaponbowlimbcommon": {
+    "kind":733,
+    "spriteName":"bowlimb",
+    "type":"craft",
+    "name":"Bow Limb Common"
+  },
+  "weaponbowlimbuncommon": {
+    "kind":734,
+    "spriteName":"bowlimb",
+    "type":"craft",
+    "name":"Bow Limb Uncommon"
+  },
+  "weaponbowlimbrare": {
+    "kind":735,
+    "spriteName":"bowlimb",
+    "type":"craft",
+    "name":"Bow Limb Rare"
+  },
+  "weaponbowstringcommon": {
+    "kind":736,
+    "spriteName":"bowstring",
+    "type":"craft",
+    "name":"Bow String Common"
+  },
+  "weaponbowstringuncommon": {
+    "kind":737,
+    "spriteName":"bowstring",
+    "type":"craft",
+    "name":"Bow String Uncommon"
+  },
+  "weaponbowstringrare": {
+    "kind":738,
+    "spriteName":"bowstring",
+    "type":"craft",
+    "name":"Bow String Rare"
+  }
+}
+

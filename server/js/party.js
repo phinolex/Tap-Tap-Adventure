@@ -1,5 +1,7 @@
 
 var cls = require("./lib/class");
+var MobData = require("./mobdata.js");
+var Messages = require("./message.js");
 
 module.exports = Party = Class.extend({
   init: function(player1, player2){
@@ -8,8 +10,10 @@ module.exports = Party = Class.extend({
     if(player2.party){ player2.party.removePlayer(player2); }
     player1.party = this;
     player2.party = this;
+    this.leader = player1;
     this.sendMembersName();
   },
+  
   addPlayer: function(player){
     if(player){
       this.players.push(player);
@@ -20,8 +24,11 @@ module.exports = Party = Class.extend({
     }
     this.sendMembersName();
   },
+  
   removePlayer: function(player){
     var i=0;
+    if (player == this.leader)
+    	    this.leader = this.players[0];
     if(player){
       for(i=0; i<this.players.length; i++){
         if(player === this.players[i]){
@@ -32,44 +39,48 @@ module.exports = Party = Class.extend({
           break;
         }
       }
-    }
+    }   
   },
+
   sendMembersName: function(){
     var i=0;
     var msg = [Types.Messages.PARTY];
+    
+    var players = this.players;
 
-    if(this.players.length > 1){
-      for(i=0; i<this.players.length; i++){
-        msg.push(this.players[i].name);
+    if(players.length > 1){
+      msg.push(this.leader.name)
+      for(i=0; i<players.length; i++){
+        if (players[i] !== this.leader)
+            msg.push(players[i].name);
       }
     }
-    for(i=0; i<this.players.length; i++){
-      this.players[i].send(msg);
+    //log.info("msg="+JSON.stringify(msg));
+    for(i=0; i<players.length; i++){
+       players[i].server.pushToPlayer(players[i], new Messages.Party(msg));
     }
   },
+
   sumTotalLevel: function(){
     var i=0;
     var sum=0;
     for(i=0; i<this.players.length; i++){
       sum += this.players[i].level;
     }
-    return sum;
+    return sum+1;
   },
   incExp: function(mob, logHandler){
     var i=0;
     var totalLevel = this.sumTotalLevel();
-    var exp = Types.getMobExp(mob.kind) * 1.1;
+    var exp = MobData.Kinds[mob.kind].xp * ((10 + this.players.length) / 10);
     for(i=0; i<this.players.length; i++){
       var player = this.players[i],
-          exp1 = exp * player.level / totalLevel;
+          exp1 = Math.ceil(exp * (player.level+1) / totalLevel);
 
-      if(player.pendantSkillKind == Types.Skills.ADDEXPERIENCE) {
-        exp1 = Math.floor(exp1 + (exp1 * (player.pendantSkillLevel * 0.005)));
-      } else{
-        exp1 = Math.floor(exp1);
-      }
       player.incExp(exp1);
-      logHandler.addExpLog(player, 'kill', mob, exp1);
+      //logHandler.addExpLog(player, 'kill', mob, exp1);
+      //log.info("exp1=" + exp1);
+      player.server.pushToPlayer(player, new Messages.Kill(mob, player.level, exp1));
     }
   },
   getHighestLevel: function(){

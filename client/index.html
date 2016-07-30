@@ -1,5 +1,6 @@
 <html lang="en">
 <head>
+    <!-- hi -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -7,7 +8,7 @@
     <link rel="icon" type="image/png" href="img/common/favicon.png">
     <meta property="og:title" content="TapTap">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://taptapadventure.com">
+    <meta property="og:url" content="https://taptapadventure.com">
     <meta property="og:image" content="img/common/promo-title.jpg">
     <meta property="og:site_name" content="Tap Tap Adventure">
     <meta property="og:description" content="Play the massively MMORPG today!">
@@ -17,8 +18,11 @@
     <link rel="stylesheet" href="css/basebar.css" type="text/css">
     <link rel="stylesheet" href="css/quest.css" type="text/css">
     <link rel="stylesheet" href="css/skill.css" type="text/css">
-    <link rel="stylesheet" href="css/game.css" type="text/css">
+    <link rel="stylesheet" href="css/inventory.css" type="text/css">
+    <!--<link rel="stylesheet" href="css/game.css" type="text/css">-->
     <link rel="stylesheet" href="css/storedialog.css" type="text/css">
+    <link rel="stylesheet" href="css/enchantdialog.css" type="text/css">
+    <link rel="stylesheet" href="css/bankdialog.css" type="text/css">
     <link rel="stylesheet" href="css/shop.css" type="text/css">
 
     <link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
@@ -26,6 +30,7 @@
     <link href="img/common/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
     <link href="img/common/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
 
+    <!--<script src="http://192.168.0.20:9000/target/target-script-min.js#anonymous" type="text/javascript"></script>-->
     <script src="js/lib/modernizr.js" type="text/javascript"></script>
 
     <script src="js/detect.js" type="text/javascript"></script>
@@ -42,9 +47,7 @@
 
 <div id="intro">
     <h1 id="logo">
-	           <span id="logosparks">
-
-	           </span>
+	      
     </h1>
     <article id="portrait">
         <p>
@@ -52,7 +55,7 @@
         </p>
         <div id="tilt"></div>
     </article>
-    <section id="parchment" class="createcharacter">
+    <section id="parchment" class="loadcharacter">
         <div class="parchment-left"></div>
         <div class="parchment-middle">
             <article id="createcharacter">
@@ -62,10 +65,18 @@
                     <span class="right-ornament"></span>
                 </h1>
                 <form action="none" method="get" accept-charset="utf-8">
-                    <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="12">
-                    <input type="password" id="pwinput" class="stroke" name="player-pw" placeholder="Password" maxlength="15">
-                    <input type="password" id="pwinput2" class="stroke" name="player-pw2" placeholder="Confirm Password" maxlength="15">
-                    <input type="email" id="emailinput" class="stroke" name="player-email" placeholder="Email address" maxlength="48">
+                    <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="32">
+                    <input type="password" id="pwinput" class="stroke" name="player-pw" placeholder="Password" maxlength="200">
+                    <input type="password" id="pwinput2" class="stroke" name="player-pw2" placeholder="Confirm Password" maxlength="200">
+                    <div id="charclassinput">Choose your Class:
+                    <select id="selectClassSwitch2">
+        		<option value="0">Fighter</option>
+        		<option value="1">Archer</option>
+        		<option value="2">Defender</option>
+        		<!--<option value="3">Mage</option>-->
+        	    </select>
+        	    </div>
+                    <input type="email" id="emailinput" class="stroke" name="player-email" placeholder="Email address" maxlength="64">
                 </form>
                 <div class="play">
                     <span class="link">Create</span>
@@ -79,8 +90,8 @@
                     <span class="right-ornament"></span>
                 </h1>
                 <form action="none" method="get" accept-charset="utf-8">
-                    <input type="text" id="loginnameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="12" autofocus>
-                    <input type="password" id="loginpwinput" class="stroke" name="player-loginpw" placeholder="Password" maxlength="15">
+                    <input type="text" id="loginnameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="32" autofocus>
+                    <input type="password" id="loginpwinput" class="stroke" name="player-loginpw" placeholder="Password" maxlength="200">
                 </form>
                 <div class="play">
                     <span class="link">Login</span>
@@ -89,6 +100,9 @@
                 <div class="validation-summary"></div>
                 <div id="create-new">
                     <span class="link">New Character</span>
+                </div>
+                <div id="change-password">
+                    <span class="link">Change Password</span>
                 </div>
             </article>
             <article id="confirmation">
@@ -105,23 +119,42 @@
                     <span class="link">Cancel</span>
                 </div>
             </article>
-
+            <article id="changePassword">
+                <h1>
+                    <span class="left-ornament"></span>
+                    Change Password
+                    <span class="right-ornament"></span>
+                </h1>
+                <form action="none" method="get" accept-charset="utf-8">
+                    <input type="text" id="cpnameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="32">
+                    <input type="password" id="cppwinputold" class="stroke" name="player-pwold" placeholder="Old Password" maxlength="200">
+                    <input type="password" id="cppwinput" class="stroke" name="player-pw" placeholder="New Password" maxlength="200">
+                    <input type="password" id="cppwinput2" class="stroke" name="player-pw2" placeholder="New Confirm Password" maxlength="200">
+                </form>
+                <div class="play">
+                    <span class="link">Save</span>
+                </div>
+                <div class="validation-summary"></div>
+            </article>
 
 
             <article id="credits">
                 <h1>
                     <span class="left-ornament"></span>
          	               <span class="title">
-         	                   Thanks to Little Workshop
+         	                   Special thanks to Little Workshop
          	               </span>
                     <span class="right-ornament"></span>
                 </h1>
                 <div id="authors">
-                    For the starting code and Pixel art.
+                    For the initial code and pixel art.
                     <br>
                     <br>
                     Music by <a class="clickable" target="_blank" href="http://opengameart.org/users/marcelofg55">Marcelofg55</a>, <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>
-
+                    <br>
+                    Developers: Tachyon, H0lyByte and Langerz
+                    <br>
+                    Contributors: Pretzel and Asky Team
                 </div>
                 <div id="close-credits">
                     <span>- click anywhere to close -</span>
@@ -135,7 +168,7 @@
                     <span class="right-ornament"></span>
                 </h1>
                 <p>
-                    Donating will help the developers significantly, allowing us to support the servers thus keeping the server online, it also allows for website maintanance and more. If you wish to <a class="stroke clickable" target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=flavius256%40icloud%2ecom&lc=CA&item_name=Tap%20Tap%20Adventure&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3ataptapadventure%2ecom%3aNonHostedGuest">donate</a> please do so, every cent is welcome.
+                    Donating will help the developers significantly, allowing us to support the servers thus keeping the server online, it also allows for website maintanance and more. If you wish to <a class="stroke clickable" target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=flavius256%40icloud%2ecom&lc=CA&item_name=Tap%20Tap%20Adventure&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3ataptapadventure%2ecom%3aNonHostedGuest">donate</a> please do so, for every dollar donated 100 in game gold will be added (mention your username in Paypal).
                 </p>
                 <div id="close-legal">
                     <span>- click anywhere to close -</span>
@@ -192,80 +225,14 @@
 </div>
 
 <div id="container">
-    <div id="mainborder">
+    <div id="mainborder" width="1470" height="737">
         <div id="canvas">
+            <canvas id="backgroundbuffer"></canvas>    
             <canvas id="background"></canvas>
             <canvas id="entities"></canvas>
-            <canvas id="textcanvas"></canvas>
             <canvas id="foreground"></canvas>
+            <canvas id="textcanvas"></canvas>
             <canvas id="toptextcanvas" class="clickable"></canvas>
-        </div>
-        <div id="shopSell">
-            <p>Sell</p>
-            <div id="sellInventorybackground0">
-                <div id="sellInventory0"></div>
-            </div>
-            <div id="sellInventorybackground1">
-                <div id="sellInventory1"></div>
-            </div>
-            <div id="sellInventorybackground2">
-                <div id="sellInventory2"></div>
-            </div>
-            <div id="sellInventorybackground3">
-                <div id="sellInventory3"></div>
-            </div>
-            <div id="sellInventorybackground4">
-                <div id="sellInventory4"></div>
-            </div>
-            <div id="sellSlot">
-                <div id="sellItem"></div>
-                <div id="burger"></div>
-                <input type="number" id="sellCount" size="6" maxlength="6">
-                <div id="sellButton">Sell</div>
-            </div>
-            <div id="sellInfo">
-                <li>When selling an item, the inventory slot you click on will be stored here.</li>
-                <li>There are certain items you cannot sell.</li>
-                <li>You can only sell one item at a time. When you offer a new item the one currently in the shop will be returned.</li>
-                <li>Shop is still in development.</li>
-            </div>
-            <div id="sellClose">X</div>
-        </div>
-        <div id="shopBuy">
-            <p>Buy</p>
-            <div id="buySlot0">
-                <div id="buyItem0"></div>
-                <div id="burger"></div>
-                <div id="buyCount0"></div>
-                <div id="buyButton0">Buy</div>
-            </div>
-            <div id="buySlot1">
-                <div id="buyItem1"></div>
-                <div id="burger"></div>
-                <div id="buyCount1"></div>
-                <div id="buyButton1">Buy</div>
-            </div>
-            <div id="buySlot2">
-                <div id="buyItem2"></div>
-                <div id="burger"></div>
-                <div id="buyCount2"></div>
-                <div id="buyButton2">Buy</div>
-            </div>
-            <div id="buySlot3">
-                <div id="buyItem3"></div>
-                <div id="burger"></div>
-                <div id="buyCount3"></div>
-                <div id="buyButton3">Buy</div>
-            </div>
-            <div id="buySlot4">
-                <div id="buyItem4"></div>
-                <div id="burger"></div>
-                <div id="buyCount4"></div>
-                <div id="buyButton4">Buy</div>
-            </div>
-            <div id="buyPrevButton">Previous</div>
-            <div id="buyNextButton">Next</div>
-            <div id="buyClose">X</div>
         </div>
         <div id="allinventorywindow">
             <div id="inventorybackground6"><div id="inventory6"></div></div>
@@ -286,12 +253,6 @@
             <div id="inventorybackground21"><div id="inventory21"></div></div>
             <div id="inventorybackground22"><div id="inventory22"></div></div>
             <div id="inventorybackground23"><div id="inventory23"></div></div>
-            <div id="inventorybackground24"><div id="inventory24"></div></div>
-            <div id="inventorybackground25"><div id="inventory25"></div></div>
-            <div id="inventorybackground26"><div id="inventory26"></div></div>
-            <div id="inventorybackground27"><div id="inventory27"></div></div>
-            <div id="inventorybackground28"><div id="inventory28"></div></div>
-            <div id="inventorybackground29"><div id="inventory29"></div></div>
             <div id="inventorynumber6"></div>
             <div id="inventorynumber7"></div>
             <div id="inventorynumber8"></div>
@@ -310,17 +271,21 @@
             <div id="inventorynumber21"></div>
             <div id="inventorynumber22"></div>
             <div id="inventorynumber23"></div>
-            <div id="inventorynumber24"></div>
-            <div id="inventorynumber25"></div>
-            <div id="inventorynumber26"></div>
-            <div id="inventorynumber27"></div>
-            <div id="inventorynumber28"></div>
-            <div id="inventorynumber29"></div>
         </div>
-        <div id="bubbles"></div>
-
+        <div id="bubbles"></div>        
+        <div id="classSwitcher">
+        Choose your class:<br/>
+        	<select id="selectClassSwitch">
+        		<option value="0">Fighter</option>
+        		<option value="1">Archer</option>
+        		<option value="2">Defender</option>
+        		<!--<option value="3">Mage</option>-->
+        	</select>
+        	<div id="classSwitcherButton">Save</div>
+        </div>
         <div id="chatLog"></div>
         <div id="questalarm"></div>
+        <div id="questlog"></div>
 
         <div id="chatbox">
             <form action="none" method="get" accept-charset="utf-8">
@@ -331,6 +296,7 @@
             <div class="headshot"><div></div></div>
             <div class="details">
                 <div class="name"></div>
+                <div class="life"></div>
                 <div class="health"></div>
             </div>
         </div>
@@ -341,6 +307,14 @@
                 <div class="health"></div>
             </div>
         </div>
+        <div id="auctionSellDialog">
+            <div id="auctionSellTitle">Sell Value.</div>
+            <div align="center">
+                <input type="text" id="auctionSellCount" size="10" maxlength="10">
+                <span id="auctionSellAccept">&nbsp;Accept&nbsp;</span>
+                <span id="auctionSellCancel">&nbsp;Cancel&nbsp;</span>
+            </div>
+        </div>        
         <div id="dropDialog">
             <div id="dropTitle">Input drop count.</div>
             <div align="center">
@@ -350,7 +324,61 @@
             </div>
         </div>
         <div id="iteminfo"></div>
+        <div id="playerPopupMenuContainer">
+        	<div id="playerPopupMenuName"></div>
+        	<div id="playerPopupMenuPartyInvite">Invite</div>
+        	<div id="playerPopupMenuPartyLeader">Leader</div>
+        	<div id="playerPopupMenuPartyKick">Kick</div>
+        	<div id="playerPopupMenuAttack">Attack</div>
+        </div>
+        <div id="party">
+        	<div id="partynames"></div>
+        	<div id="partyleave">Leave Party</div>
+        </div>
+        <div id="partyconfirm">
+        	<div id="partyconfirmtitle"></div>
+        	<div id="partyconfirmyes">Yes</div>
+        	<div id="partyconfirmno">No</div>
+        </div>
+        
+
+            <div id="inventorycontainer" class="vertical">
+            <div id="inventorycontainermove"></div>
+            <div id="inventorycontainerswitch"></div>
+            <div id="inventorybackground0">
+                <div id="inventory0"></div>
+                <div id="inventorynumber0"></div>
+                <div id="inventory0Cooltime"></div>
+            </div>
+            <div id="inventorybackground1">
+                <div id="inventory1"></div>
+                <div id="inventorynumber1"></div>
+                <div id="inventory1Cooltime"></div>
+            </div>
+            <div id="inventorybackground2">
+                <div id="inventory2"></div>
+                <div id="inventorynumber2"></div>
+                <div id="inventory2Cooltime"></div>
+            </div>
+            <div id="inventorybackground3">
+                <div id="inventory3"></div>
+                <div id="inventorynumber3"></div>
+                <div id="inventory3Cooltime"></div>
+            </div>
+            <div id="inventorybackground4">
+                <div id="inventory4"></div>
+                <div id="inventorynumber4"></div>
+                <div id="inventory4Cooltime"></div>
+            </div>
+            <div id="inventorybackground5">
+                <div id="inventory5"></div>
+                <div id="inventorynumber5"></div>
+                <div id="inventory5Cooltime"></div>
+            </div>
+            </div>
+
         <div id="basebarcontainer">
+            <div id="moreinventorybutton"></div>  
             <div id="hpcontainer">
                 <div id="health"> </div>
                 <div id="healthbar"></div>
@@ -366,33 +394,17 @@
                 <div id="exp"></div>
                 <div id="expbar"></div>
             </div>
-            <div id="inventorybackground0">
-                <div id="inventory0"></div>
-                <div id="inventorynumber0"></div>
-            </div>
-            <div id="inventorybackground1">
-                <div id="inventory1"></div>
-                <div id="inventorynumber1"></div>
-            </div>
-            <div id="inventorybackground2">
-                <div id="inventory2"></div>
-                <div id="inventorynumber2"></div>
-            </div>
-            <div id="inventorybackground3">
-                <div id="inventory3"></div>
-                <div id="inventorynumber3"></div>
-            </div>
-            <div id="inventorybackground4">
-                <div id="inventory4"></div>
-                <div id="inventorynumber4"></div>
-            </div>
-            <div id="inventorybackground5">
-                <div id="inventory5"></div>
-                <div id="inventorynumber5"></div>
-            </div>
-
-            <div id="moreinventorybutton"></div>
-
+            <div id="users"></div>
+            <div id="characterButton"></div>
+            <div id="helpbutton"></div>
+            <div id="soundbutton"></div>
+            <div id="warpbutton"></div>
+            <div id="chatbutton"></div>
+            <div id="fps">FPS: 60</div>
+        </div>
+        <div id="skillcontainer" class="vertical">
+            <div id="skillcontainermove"></div>
+            <div id="skillcontainerswitch"></div>        
             <div id="skill0">
                 <div id="skill0Body"></div>
                 <div id="skill0Cooltime"></div>
@@ -433,12 +445,8 @@
                 <div id="skill42"></div>
                 <div id="skill43"></div>
             </div>
-            <div id="users"></div>
-            <div id="characterButton"></div>
-            <div id="helpbutton"></div>
-            <div id="soundbutton"></div>
-            <div id="fps">FPS: 60</div>
         </div>
+            
         <div id="characterDialog">
             <div id="characterDialogFrame">
                 <div id="characterDialogFrameStatePage">
@@ -576,40 +584,119 @@
                 </div>
             </div>
         </div>
+        <div id="bankDialog">
+            <div id="bankDialogInventory">
+                <div id="bankDialogInventory00Background"><div id="bankDialogInventory00Body"></div><div id="bankDialogInventory00Number"></div></div>
+                <div id="bankDialogInventory01Background"><div id="bankDialogInventory01Body"></div><div id="bankDialogInventory01Number"></div></div>
+                <div id="bankDialogInventory02Background"><div id="bankDialogInventory02Body"></div><div id="bankDialogInventory02Number"></div></div>
+                <div id="bankDialogInventory03Background"><div id="bankDialogInventory03Body"></div><div id="bankDialogInventory03Number"></div></div>
+                <div id="bankDialogInventory04Background"><div id="bankDialogInventory04Body"></div><div id="bankDialogInventory04Number"></div></div>
+                <div id="bankDialogInventory05Background"><div id="bankDialogInventory05Body"></div><div id="bankDialogInventory05Number"></div></div>
+                <div id="bankDialogInventory06Background"><div id="bankDialogInventory06Body"></div><div id="bankDialogInventory06Number"></div></div>
+                <div id="bankDialogInventory07Background"><div id="bankDialogInventory07Body"></div><div id="bankDialogInventory07Number"></div></div>
+                <div id="bankDialogInventory08Background"><div id="bankDialogInventory08Body"></div><div id="bankDialogInventory08Number"></div></div>
+                <div id="bankDialogInventory09Background"><div id="bankDialogInventory09Body"></div><div id="bankDialogInventory09Number"></div></div>
+                <div id="bankDialogInventory10Background"><div id="bankDialogInventory10Body"></div><div id="bankDialogInventory10Number"></div></div>
+                <div id="bankDialogInventory11Background"><div id="bankDialogInventory11Body"></div><div id="bankDialogInventory11Number"></div></div>
+                <div id="bankDialogInventory12Background"><div id="bankDialogInventory12Body"></div><div id="bankDialogInventory12Number"></div></div>
+                <div id="bankDialogInventory13Background"><div id="bankDialogInventory13Body"></div><div id="bankDialogInventory13Number"></div></div>
+                <div id="bankDialogInventory14Background"><div id="bankDialogInventory14Body"></div><div id="bankDialogInventory14Number"></div></div>
+                <div id="bankDialogInventory15Background"><div id="bankDialogInventory15Body"></div><div id="bankDialogInventory15Number"></div></div>
+                <div id="bankDialogInventory16Background"><div id="bankDialogInventory16Body"></div><div id="bankDialogInventory16Number"></div></div>
+                <div id="bankDialogInventory17Background"><div id="bankDialogInventory17Body"></div><div id="bankDialogInventory17Number"></div></div>
+                
+                <div id="bankDialogInventoryGoldBackground"><div id="bankDialogInventoryGoldBody"></div><div id="bankDialogInventoryGoldNumber"></div></div>
+            </div>
+            <div id="bankDialogBank">
+                <div id="bankDialogBank00Background"><div id="bankDialogBank00Body"></div><div id="bankDialogBank00Number"></div></div>
+                <div id="bankDialogBank01Background"><div id="bankDialogBank01Body"></div><div id="bankDialogBank01Number"></div></div>
+                <div id="bankDialogBank02Background"><div id="bankDialogBank02Body"></div><div id="bankDialogBank02Number"></div></div>
+                <div id="bankDialogBank03Background"><div id="bankDialogBank03Body"></div><div id="bankDialogBank03Number"></div></div>
+                <div id="bankDialogBank04Background"><div id="bankDialogBank04Body"></div><div id="bankDialogBank04Number"></div></div>
+                <div id="bankDialogBank05Background"><div id="bankDialogBank05Body"></div><div id="bankDialogBank05Number"></div></div>
+                <div id="bankDialogBank06Background"><div id="bankDialogBank06Body"></div><div id="bankDialogBank06Number"></div></div>
+                <div id="bankDialogBank07Background"><div id="bankDialogBank07Body"></div><div id="bankDialogBank07Number"></div></div>
+                <div id="bankDialogBank08Background"><div id="bankDialogBank08Body"></div><div id="bankDialogBank08Number"></div></div>
+                <div id="bankDialogBank09Background"><div id="bankDialogBank09Body"></div><div id="bankDialogBank09Number"></div></div>
+                <div id="bankDialogBank10Background"><div id="bankDialogBank10Body"></div><div id="bankDialogBank10Number"></div></div>
+                <div id="bankDialogBank11Background"><div id="bankDialogBank11Body"></div><div id="bankDialogBank11Number"></div></div>
+                <div id="bankDialogBank12Background"><div id="bankDialogBank12Body"></div><div id="bankDialogBank12Number"></div></div>
+                <div id="bankDialogBank13Background"><div id="bankDialogBank13Body"></div><div id="bankDialogBank13Number"></div></div>
+                <div id="bankDialogBank14Background"><div id="bankDialogBank14Body"></div><div id="bankDialogBank14Number"></div></div>
+                <div id="bankDialogBank15Background"><div id="bankDialogBank15Body"></div><div id="bankDialogBank15Number"></div></div>
+                <div id="bankDialogBank16Background"><div id="bankDialogBank16Body"></div><div id="bankDialogBank16Number"></div></div>
+                <div id="bankDialogBank17Background"><div id="bankDialogBank17Body"></div><div id="bankDialogBank17Number"></div></div>
+                <div id="bankDialogBankGoldBackground"><div id="bankDialogBankGoldBody"></div><div id="bankDialogBankGoldNumber"></div></div>
+            </div>            
+            <div id="bankDialogCloseButton"></div>
+        </div>        
+        <div id="enchantDialog">
+            <div id="enchantDialogInventory">
+                <div id="enchantDialogInventory00Background"><div id="enchantDialogInventory00Body"></div><div id="enchantDialogInventory00Number"></div></div>
+                <div id="enchantDialogInventory01Background"><div id="enchantDialogInventory01Body"></div><div id="enchantDialogInventory01Number"></div></div>
+                <div id="enchantDialogInventory02Background"><div id="enchantDialogInventory02Body"></div><div id="enchantDialogInventory02Number"></div></div>
+                <div id="enchantDialogInventory03Background"><div id="enchantDialogInventory03Body"></div><div id="enchantDialogInventory03Number"></div></div>
+                <div id="enchantDialogInventory04Background"><div id="enchantDialogInventory04Body"></div><div id="enchantDialogInventory04Number"></div></div>
+                <div id="enchantDialogInventory05Background"><div id="enchantDialogInventory05Body"></div><div id="enchantDialogInventory05Number"></div></div>
+                <div id="enchantDialogInventory06Background"><div id="enchantDialogInventory06Body"></div><div id="enchantDialogInventory06Number"></div></div>
+                <div id="enchantDialogInventory07Background"><div id="enchantDialogInventory07Body"></div><div id="enchantDialogInventory07Number"></div></div>
+                <div id="enchantDialogInventory08Background"><div id="enchantDialogInventory08Body"></div><div id="enchantDialogInventory08Number"></div></div>
+                <div id="enchantDialogInventory09Background"><div id="enchantDialogInventory09Body"></div><div id="enchantDialogInventory09Number"></div></div>
+                <div id="enchantDialogInventory10Background"><div id="enchantDialogInventory10Body"></div><div id="enchantDialogInventory10Number"></div></div>
+                <div id="enchantDialogInventory11Background"><div id="enchantDialogInventory11Body"></div><div id="enchantDialogInventory11Number"></div></div>
+                <div id="enchantDialogInventory12Background"><div id="enchantDialogInventory12Body"></div><div id="enchantDialogInventory12Number"></div></div>
+                <div id="enchantDialogInventory13Background"><div id="enchantDialogInventory13Body"></div><div id="enchantDialogInventory13Number"></div></div>
+                <div id="enchantDialogInventory14Background"><div id="enchantDialogInventory14Body"></div><div id="enchantDialogInventory14Number"></div></div>
+                <div id="enchantDialogInventory15Background"><div id="enchantDialogInventory15Body"></div><div id="enchantDialogInventory15Number"></div></div>
+                <div id="enchantDialogInventory16Background"><div id="enchantDialogInventory16Body"></div><div id="enchantDialogInventory16Number"></div></div>
+                <div id="enchantDialogInventory17Background"><div id="enchantDialogInventory17Body"></div><div id="enchantDialogInventory17Number"></div></div>
+                <div id="enchantDialogGoldBackground"><div id="enchantDialogGoldBody"></div><div id="enchantDialogGoldNumber"></div></div>
+                <div id="enchantDialogBasket"></div>
+                <div id="enchantDialogEnchantButton"></div>
+            </div>
+		<div id="enchantDialogModal">
+		    <div id="enchantDialogModalNotify">
+			<div id="enchantDialogModalNotifyMessage"></div>
+			<div id="enchantDialogModalNotifyButton1">Done</div>
+		    </div>
+		    <div id="enchantDialogModalConfirm">
+			<div id="enchantDialogModalConfirmMessage"></div>
+			<div id="enchantDialogModalConfirmButton1">Yes</div>
+			<div id="enchantDialogModalConfirmButton2">No</div>
+		    </div>
+		</div>
+		<div id="enchantDialogCloseButton"></div>
+        </div>    
         <div id="storeDialog">
             <div id="storeDialogInventory">
-                <div id="storeDialogInventory00Background"><div id="storeDialogInventory00Body"></div></div>
-                <div id="storeDialogInventory01Background"><div id="storeDialogInventory01Body"></div></div>
-                <div id="storeDialogInventory02Background"><div id="storeDialogInventory02Body"></div></div>
-                <div id="storeDialogInventory03Background"><div id="storeDialogInventory03Body"></div></div>
-                <div id="storeDialogInventory04Background"><div id="storeDialogInventory04Body"></div></div>
-                <div id="storeDialogInventory05Background"><div id="storeDialogInventory05Body"></div></div>
-                <div id="storeDialogInventory06Background"><div id="storeDialogInventory06Body"></div></div>
-                <div id="storeDialogInventory07Background"><div id="storeDialogInventory07Body"></div></div>
-                <div id="storeDialogInventory08Background"><div id="storeDialogInventory08Body"></div></div>
-                <div id="storeDialogInventory09Background"><div id="storeDialogInventory09Body"></div></div>
-                <div id="storeDialogInventory10Background"><div id="storeDialogInventory10Body"></div></div>
-                <div id="storeDialogInventory11Background"><div id="storeDialogInventory11Body"></div></div>
-                <div id="storeDialogInventory12Background"><div id="storeDialogInventory12Body"></div></div>
-                <div id="storeDialogInventory13Background"><div id="storeDialogInventory13Body"></div></div>
-                <div id="storeDialogInventory14Background"><div id="storeDialogInventory14Body"></div></div>
-                <div id="storeDialogInventory15Background"><div id="storeDialogInventory15Body"></div></div>
-                <div id="storeDialogInventory16Background"><div id="storeDialogInventory16Body"></div></div>
-                <div id="storeDialogInventory17Background"><div id="storeDialogInventory17Body"></div></div>
-                <div id="storeDialogInventory18Background"><div id="storeDialogInventory18Body"></div></div>
-                <div id="storeDialogInventory19Background"><div id="storeDialogInventory19Body"></div></div>
-                <div id="storeDialogInventory20Background"><div id="storeDialogInventory20Body"></div></div>
-                <div id="storeDialogInventory21Background"><div id="storeDialogInventory21Body"></div></div>
-                <div id="storeDialogInventory22Background"><div id="storeDialogInventory22Body"></div></div>
-                <div id="storeDialogInventory23Background"><div id="storeDialogInventory23Body"></div></div>
-                <div id="storeDialogInventory24Background"><div id="storeDialogInventory24Body"></div></div>
-                <div id="storeDialogInventory25Background"><div id="storeDialogInventory25Body"></div></div>
-                <div id="storeDialogInventory26Background"><div id="storeDialogInventory26Body"></div></div>
-                <div id="storeDialogInventory27Background"><div id="storeDialogInventory27Body"></div></div>
-                <div id="storeDialogInventory28Background"><div id="storeDialogInventory28Body"></div></div>
-                <div id="storeDialogInventory29Background"><div id="storeDialogInventory29Body"></div></div>
+                <div id="storeDialogInventory00Background"><div id="storeDialogInventory00Body"></div><div id="storeDialogInventory00Number"></div></div>
+                <div id="storeDialogInventory01Background"><div id="storeDialogInventory01Body"></div><div id="storeDialogInventory01Number"></div></div>
+                <div id="storeDialogInventory02Background"><div id="storeDialogInventory02Body"></div><div id="storeDialogInventory02Number"></div></div>
+                <div id="storeDialogInventory03Background"><div id="storeDialogInventory03Body"></div><div id="storeDialogInventory03Number"></div></div>
+                <div id="storeDialogInventory04Background"><div id="storeDialogInventory04Body"></div><div id="storeDialogInventory04Number"></div></div>
+                <div id="storeDialogInventory05Background"><div id="storeDialogInventory05Body"></div><div id="storeDialogInventory05Number"></div></div>
+                <div id="storeDialogInventory06Background"><div id="storeDialogInventory06Body"></div><div id="storeDialogInventory06Number"></div></div>
+                <div id="storeDialogInventory07Background"><div id="storeDialogInventory07Body"></div><div id="storeDialogInventory07Number"></div></div>
+                <div id="storeDialogInventory08Background"><div id="storeDialogInventory08Body"></div><div id="storeDialogInventory08Number"></div></div>
+                <div id="storeDialogInventory09Background"><div id="storeDialogInventory09Body"></div><div id="storeDialogInventory09Number"></div></div>
+                <div id="storeDialogInventory10Background"><div id="storeDialogInventory10Body"></div><div id="storeDialogInventory10Number"></div></div>
+                <div id="storeDialogInventory11Background"><div id="storeDialogInventory11Body"></div><div id="storeDialogInventory11Number"></div></div>
+                <div id="storeDialogInventory12Background"><div id="storeDialogInventory12Body"></div><div id="storeDialogInventory12Number"></div></div>
+                <div id="storeDialogInventory13Background"><div id="storeDialogInventory13Body"></div><div id="storeDialogInventory13Number"></div></div>
+                <div id="storeDialogInventory14Background"><div id="storeDialogInventory14Body"></div><div id="storeDialogInventory14Number"></div></div>
+                <div id="storeDialogInventory15Background"><div id="storeDialogInventory15Body"></div><div id="storeDialogInventory15Number"></div></div>
+                <div id="storeDialogInventory16Background"><div id="storeDialogInventory16Body"></div><div id="storeDialogInventory16Number"></div></div>
+                <div id="storeDialogInventory17Background"><div id="storeDialogInventory17Body"></div><div id="storeDialogInventory17Number"></div></div>
+                <div id="storeDialogInventory18Background"><div id="storeDialogInventory18Body"></div><div id="storeDialogInventory18Number"></div></div>
+                <div id="storeDialogInventory19Background"><div id="storeDialogInventory19Body"></div><div id="storeDialogInventory19Number"></div></div>
+                <div id="storeDialogInventory20Background"><div id="storeDialogInventory20Body"></div><div id="storeDialogInventory20Number"></div></div>
+                <div id="storeDialogInventory21Background"><div id="storeDialogInventory21Body"></div><div id="storeDialogInventory21Number"></div></div>
+                <div id="storeDialogInventory22Background"><div id="storeDialogInventory22Body"></div><div id="storeDialogInventory22Number"></div></div>
+                <div id="storeDialogInventory23Background"><div id="storeDialogInventory23Body"></div><div id="storeDialogInventory23Number"></div></div>
+                <div id="storeDialogGoldBackground"><div id="storeDialogGoldBody"></div><div id="storeDialogGoldNumber"></div></div>
                 <div id="storeDialogBasket"></div>
                 <div id="storeDialogSellButton"></div>
+                <div id="auctionDialogSellButton"></div>
             </div>
             <div id="storeDialogStore">
                 <div id="storeDialogStorePotionPage">
@@ -620,7 +707,6 @@
                             </div>
                             <div id="storeDialogStorePotion0Extra"></div>
                             <div id="storeDialogStorePotion0Price"></div>
-                            <input id="storeDialogStorePotion0Count" type="number">
                             <div id="storeDialogStorePotion0BuyButton"></div>
                         </div>
                         <div id="storeDialogStorePotion1">
@@ -629,7 +715,6 @@
                             </div>
                             <div id="storeDialogStorePotion1Extra"></div>
                             <div id="storeDialogStorePotion1Price"></div>
-                            <input id="storeDialogStorePotion1Count" type="number">
                             <div id="storeDialogStorePotion1BuyButton"></div>
                         </div>
                         <div id="storeDialogStorePotion2">
@@ -638,7 +723,6 @@
                             </div>
                             <div id="storeDialogStorePotion2Extra"></div>
                             <div id="storeDialogStorePotion2Price"></div>
-                            <input id="storeDialogStorePotion2Count" type="number">
                             <div id="storeDialogStorePotion2BuyButton"></div>
                         </div>
                         <div id="storeDialogStorePotion3">
@@ -647,7 +731,6 @@
                             </div>
                             <div id="storeDialogStorePotion3Extra"></div>
                             <div id="storeDialogStorePotion3Price"></div>
-                            <input id="storeDialogStorePotion3Count" type="number">
                             <div id="storeDialogStorePotion3BuyButton"></div>
                         </div>
                         <div id="storeDialogStorePotion4">
@@ -656,7 +739,6 @@
                             </div>
                             <div id="storeDialogStorePotion4Extra"></div>
                             <div id="storeDialogStorePotion4Price"></div>
-                            <input id="storeDialogStorePotion4Count" type="number">
                             <div id="storeDialogStorePotion4BuyButton"></div>
                         </div>
                         <div id="storeDialogStorePotion5">
@@ -665,7 +747,6 @@
                             </div>
                             <div id="storeDialogStorePotion5Extra"></div>
                             <div id="storeDialogStorePotion5Price"></div>
-                            <input id="storeDialogStorePotion5Count" type="number">
                             <div id="storeDialogStorePotion5BuyButton"></div>
                         </div>
                     </div>
@@ -678,7 +759,6 @@
                             </div>
                             <div id="storeDialogStoreArmor0Extra"></div>
                             <div id="storeDialogStoreArmor0Price"></div>
-                            <input id="storeDialogStoreArmor0Count" type="number">
                             <div id="storeDialogStoreArmor0BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreArmor1">
@@ -687,7 +767,6 @@
                             </div>
                             <div id="storeDialogStoreArmor1Extra"></div>
                             <div id="storeDialogStoreArmor1Price"></div>
-                            <input id="storeDialogStoreArmor1Count" type="number">
                             <div id="storeDialogStoreArmor1BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreArmor2">
@@ -696,7 +775,6 @@
                             </div>
                             <div id="storeDialogStoreArmor2Extra"></div>
                             <div id="storeDialogStoreArmor2Price"></div>
-                            <input id="storeDialogStoreArmor2Count" type="number">
                             <div id="storeDialogStoreArmor2BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreArmor3">
@@ -705,7 +783,6 @@
                             </div>
                             <div id="storeDialogStoreArmor3Extra"></div>
                             <div id="storeDialogStoreArmor3Price"></div>
-                            <input id="storeDialogStoreArmor3Count" type="number">
                             <div id="storeDialogStoreArmor3BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreArmor4">
@@ -714,7 +791,6 @@
                             </div>
                             <div id="storeDialogStoreArmor4Extra"></div>
                             <div id="storeDialogStoreArmor4Price"></div>
-                            <input id="storeDialogStoreArmor4Count" type="number">
                             <div id="storeDialogStoreArmor4BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreArmor5">
@@ -723,7 +799,6 @@
                             </div>
                             <div id="storeDialogStoreArmor5Extra"></div>
                             <div id="storeDialogStoreArmor5Price"></div>
-                            <input id="storeDialogStoreArmor5Count" type="number">
                             <div id="storeDialogStoreArmor5BuyButton"></div>
                         </div>
                     </div>
@@ -736,7 +811,6 @@
                             </div>
                             <div id="storeDialogStoreWeapon0Extra"></div>
                             <div id="storeDialogStoreWeapon0Price"></div>
-                            <input id="storeDialogStoreWeapon0Count" type="number">
                             <div id="storeDialogStoreWeapon0BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreWeapon1">
@@ -745,7 +819,6 @@
                             </div>
                             <div id="storeDialogStoreWeapon1Extra"></div>
                             <div id="storeDialogStoreWeapon1Price"></div>
-                            <input id="storeDialogStoreWeapon1Count" type="number">
                             <div id="storeDialogStoreWeapon1BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreWeapon2">
@@ -754,7 +827,6 @@
                             </div>
                             <div id="storeDialogStoreWeapon2Extra"></div>
                             <div id="storeDialogStoreWeapon2Price"></div>
-                            <input id="storeDialogStoreWeapon2Count" type="number">
                             <div id="storeDialogStoreWeapon2BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreWeapon3">
@@ -763,7 +835,6 @@
                             </div>
                             <div id="storeDialogStoreWeapon3Extra"></div>
                             <div id="storeDialogStoreWeapon3Price"></div>
-                            <input id="storeDialogStoreWeapon3Count" type="number">
                             <div id="storeDialogStoreWeapon3BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreWeapon4">
@@ -772,7 +843,6 @@
                             </div>
                             <div id="storeDialogStoreWeapon4Extra"></div>
                             <div id="storeDialogStoreWeapon4Price"></div>
-                            <input id="storeDialogStoreWeapon4Count" type="number">
                             <div id="storeDialogStoreWeapon4BuyButton"></div>
                         </div>
                         <div id="storeDialogStoreWeapon5">
@@ -781,15 +851,14 @@
                             </div>
                             <div id="storeDialogStoreWeapon5Extra"></div>
                             <div id="storeDialogStoreWeapon5Price"></div>
-                            <input id="storeDialogStoreWeapon5Count" type="number">
                             <div id="storeDialogStoreWeapon5BuyButton"></div>
                         </div>
                     </div>
                 </div>
                 <div id="storeDialogStoreButtons">
-                    <div id="storeDialogStorePotionButton"></div>
-                    <div id="storeDialogStoreArmorButton"></div>
-                    <div id="storeDialogStoreWeaponButton"></div>
+                    <div id="storeDialogStorePotionButton"><div>Potions</div></div>
+                    <div id="storeDialogStoreArmorButton"><div>Armor</div></div>
+                    <div id="storeDialogStoreWeaponButton"><div>Weapons</div></div>
                 </div>
                 <div id="storeDialogPageNavigator">
                     <div id="storeDialogPageNavigatorMovePreviousButton"></div>
@@ -818,17 +887,9 @@
 </div>
 
 <footer>
-
     <div id="legal-link" class="clickable">
-        <a class="clickable" target="_blank" href="https://kbve.com/c/index.php?/forum/124-tta-tap-tap-adventure/">Forum</a>
+        <span class="dash">&ndash;</span><a class="clickable" target="_blank" href="https://kbve.com/category/24/taptapadventure">Forum</a>
     </div>
-
-
-    <div id="privacy-link" class="clickable">
-        <span class="dash">&ndash;</span> <span id="toggle-legal">Donate</span>
-    </div>
-
-
     <div id="credits-link" class="clickable">
         <span class="dash">&ndash;</span><span id="toggle-credits">Credits</span>
     </div>
@@ -844,12 +905,7 @@
 
 
 <div id="resize-check"></div>
-<script type="text/javascript" src="https://cdn.socket.io/socket.io-1.3.6.js"></script>
-<!-- <script type="text/javascript" src="javascripts/cordova-2.6.0.js"></script>
-<script type="text/javascript" src="javascripts/LowLatencyAudio.js"></script>
-<script type='text/javascript' src='javascripts/gamecontroller.js'></script>
-<script type="text/javascript" src="javascripts/screenfull.js"></script> -->
-
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script type="text/javascript">
     var ctx = document.querySelector('canvas').getContext('2d'),
             parchment = document.getElementById("parchment");
@@ -867,9 +923,6 @@
     var require = { waitSeconds: 60 };
 </script>
 <script data-main="js/home" src="js/lib/require-jquery.js"></script>
-
-
-<div id="quest"></div>
-<div id="ranking"></div>
+<script data-main="js/home" src="js/lib/virtualjoystick.js"></script>
 </body>
 </html>

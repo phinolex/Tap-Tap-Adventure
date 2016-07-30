@@ -35,8 +35,12 @@ define(['animation'], function(Animation) {
             this.stunAnimation = new Animation("atk_down", 6, 0, 48, 48);
             this.stunAnimation.setSpeed(30);
 
-
-
+            this.mountAnimation = new Animation("idle_down", 6, 0, 32, 32);
+            this.mountAnimation.setSpeed(150);
+            this.mountAnimation.setCount(1, function(){
+                self.mountAnimation.reset();
+                self.mountAnimation.count = 1;
+            });
             
             
             this.shadowOffsetY = 0;
@@ -50,6 +54,11 @@ define(['animation'], function(Animation) {
             this.visible = true;
             this.isFading = false;
             this.setDirty();
+            
+            this.prevX=0;
+            this.prevY=0;
+            this.prevOrientation=null;
+            this.name = "";
         },
 
         setName: function(name) {
@@ -78,12 +87,10 @@ define(['animation'], function(Animation) {
                 return;
             }
 
+            if (!sprite.isLoaded) sprite.load();
+
             this.sprite = sprite;
             this.normalSprite = this.sprite;
-
-            if(Types.isMob(this.kind) || Types.isPlayer(this.kind)) {
-                this.hurtSprite = sprite.getHurtSprite();
-            }
 
             this.animations = sprite.createAnimations();
 
@@ -97,8 +104,8 @@ define(['animation'], function(Animation) {
             return this.sprite;
         },
 
-        getSpriteName: function() {
-            return Types.getKindAsString(this.kind);
+        getSpriteName: function() {
+            return this.spriteName;
         },
 
         getAnimationByName: function(name) {
@@ -161,14 +168,15 @@ define(['animation'], function(Animation) {
         },
 
         setHighlight: function(value) {
-            if(value === true) {
+            // TODO - Highlight not supported.
+            /*if(value === true) {
                 this.sprite = this.sprite.silhouetteSprite;
                 this.isHighlighted = true;
             }
             else {
                 this.sprite = this.normalSprite;
                 this.isHighlighted = false;
-            }
+            }*/
         },
 
         setVisible: function(value) {

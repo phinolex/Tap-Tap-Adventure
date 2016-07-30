@@ -7,29 +7,36 @@ define(['jquery'], function() {
             this.selectedPlayer = null;
 
             var self = this;
-            $('#playerPopupMenuMove').click(function(event){
-                if(self.selectedPlayer){
-                    self.game.makePlayerGoTo(self.selectedPlayer.gridX, self.selectedPlayer.gridY);
-                    self.close();
-                }
-
-            });
             $('#playerPopupMenuPartyInvite').click(function(event){
                 if(self.selectedPlayer){
-                    self.game.client.sendChat("/3 " + self.selectedPlayer.name);
+        	    self.game.client.sendPartyInvite(self.selectedPlayer.id, 0);
                     self.close();
                 }
             });
-            $('#playerPopupMenuPartyOut').click(function(event){
+            $('#playerPopupMenuPartyLeader').click(function(event){
                 if(self.selectedPlayer){
-                    self.game.client.sendChat("/4 " + self.selectedPlayer.name);
+                    self.game.client.sendPartyLeader(self.selectedPlayer.id);
                     self.close();
                 }
             });
+            $('#playerPopupMenuPartyKick').click(function(event){
+                if(self.selectedPlayer){
+                    self.game.client.sendPartyKick(self.selectedPlayer.id);
+                    self.close();
+                }
+            });
+            $('#playerPopupMenuAttack').click(function(event){
+                if(self.selectedPlayer){
+                    self.game.player.engage(self.selectedPlayer);
+                    self.game.client.sendAttack(self.selectedPlayer);
+                    self.close();
+                }
+            });            
         },
         click: function(player){
-            var x = (player.x - this.game.renderer.camera.x + 16) * 2;
+            var x = (player.x - this.game.renderer.camera.x) * 2;
             var y = (player.y - this.game.renderer.camera.y) * 2;
+            var ph = this.game.partyHandler;
 
             if(x < 0){
                 x = 0;
@@ -44,7 +51,27 @@ define(['jquery'], function() {
             }
 
             this.selectedPlayer = player;
-
+            
+            if (ph.isLeader(this.game.player.name) && ph.isMember(this.selectedPlayer.name))
+            {
+                $('#playerPopupMenuPartyKick').css('display', 'block');
+                $('#playerPopupMenuPartyLeader').css('display', 'block');
+            }
+            else
+            {
+            	$('#playerPopupMenuPartyKick').css('display', 'none');
+            	$('#playerPopupMenuPartyLeader').css('display', 'none');
+            }
+            
+            if (ph.isMember(this.selectedPlayer.name))
+            {
+            	$('#playerPopupMenuPartyInvite').css('display', 'none');    
+            }
+            else
+            {
+            	$('#playerPopupMenuPartyInvite').css('display', 'block');    
+            }
+            
             $('#playerPopupMenuContainer').css('display', 'block');
             $('#playerPopupMenuContainer').css('top', '' + y + 'px');
             $('#playerPopupMenuContainer').css('left', '' + x + 'px');
