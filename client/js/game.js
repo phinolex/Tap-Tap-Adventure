@@ -802,32 +802,26 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if(this.started) {
 
-                    this.updater.update();
-
-                    if ((Detect.isMobile || Detect.isTablet) && this.currentTime - this.lastFPSTime > 4000) {
-
+                    if (Detect.isMobile && this.currentTime - this.lastFPSTime > 4000) {
+                        this.updater.update();
                         this.renderer.renderFrame();
-                        this.logicTime = this.currentTime;
-
                     } else {
                         this.updateCursorLogic();
+                        this.updater.update();
                         this.renderer.renderFrame();
-                        this.logicTime = this.currentTime;
                     }
 
                     if (!Detect.isMobile || !Detect.isTablet) {
                         this.FPSCount++;
-                        if (this.currentTime - this.lastFPSTime > 1000) {
-                            $('#fps').html("FPS: " + this.FPSCount);
-                            this.lastFPSTime = this.currentTime;
-                            this.FPSCount = 0;
+                        if (this.currentTime - this.lastFPSTime > 10000) {
+                            $('#fps').html("Date: " + new Date().toDateString());
                         }
                     }
                 }
 
-                if(!this.isStopped) {
+                if(!this.isStopped)
                     requestAnimFrame(this.tick.bind(this));
-                }
+
             },
 
             start: function() {
@@ -1488,19 +1482,17 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                         });
 
                                         entity.onDeath(function() {
-                                            log.info(entity.id + " is dead");
-
 
                                             if(entity instanceof Mob) {
                                                 // Keep track of where mobs die in order to spawn their dropped items
                                                 // at the right position later.
+                                                log.info("entity: " + entity.gridX + " y: " + entity.gridY);
                                                 self.deathpositions[entity.id] = {x: entity.gridX, y: entity.gridY};
                                             }
 
                                             entity.isDying = true;
                                             entity.setSprite(self.sprites[entity instanceof Mobs.rat ? "rat" : "death"]);
                                             entity.animate("death", 120, 1, function() {
-                                                log.info(entity.id + " was removed");
 
                                                 self.removeEntity(entity);
                                                 self.removeFromRenderingGrid(entity, entity.gridX, entity.gridY);
@@ -1543,9 +1535,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                         if(entity instanceof Mob) {
                                             if(targetId) {
                                                 var player = self.getEntityById(targetId);
-                                                if(player) {
+                                                if(player)
                                                     self.createAttackLink(entity, player);
-                                                }
                                             }
                                         }
                                     }
@@ -1584,9 +1575,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 self.removeItem(entity);
                             } else if(entity instanceof Character) {
                                 entity.forEachAttacker(function(attacker) {
-                                    if(attacker.canReachTarget()) {
+                                    if(attacker.canReachTarget())
                                         attacker.hit();
-                                    }
+
                                 });
                                 entity.die();
                             } else if(entity instanceof Chest) {
@@ -1596,16 +1587,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             }
 
                             entity.clean();
-                            self.unregisterEntityPosition(entity);
+                            //self.unregisterEntityPosition(entity);
                         }
                     });
 
                     self.client.onItemBlink(function(id) {
                         var item = self.getEntityById(id);
 
-                        if(item) {
+                        if(item)
                             item.blink(150);
-                        }
+
                     });
 
                     self.client.onEntityMove(function(id, x, y) {
@@ -1877,10 +1868,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.client.onDropItem(function(item, mobId) {
-                        var pos = self.getDeadMobPosition(mobId);
-                        //log.info("pos="+pos.x+","+pos.y);	
+                        var pos = self.getEntityById(mobId);
+
                         if(pos) {
-                            self.addItem(item, pos.x, pos.y);
+                            self.addItem(item, pos.gridX, pos.gridY);
                             self.updateCursor();
                         }
                     });

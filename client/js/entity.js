@@ -133,9 +133,9 @@ define(['animation'], function(Animation) {
 
                 if(a) {
                     this.currentAnimation = a;
-                    if(name.substr(0, 3) === "atk") {
+                    if(name.substr(0, 3) === "atk")
                         this.currentAnimation.reset();
-                    }
+
                     this.currentAnimation.setSpeed(speed);
                     this.currentAnimation.setCount(count ? count : 0, onEndCount || function() {
                         self.idle();

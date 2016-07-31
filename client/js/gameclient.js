@@ -148,11 +148,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         sendMessage: function(json) {
             var data;
             if(this.connection.connected === true) {
-                if(this.useBison) {
-                    data = BISON.encode(json);
-                } else {
-                    data = JSON.stringify(json);
-                }
+                data = JSON.stringify(json);
                 this.connection.send(data);
             }
         },
@@ -160,11 +156,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         receiveMessage: function(message) {
             var data, action;
             if(this.isListening) {
-                if(this.useBison) {
-                    data = BISON.decode(message);
-                } else {
-                    data = JSON.parse(message);
-                }
+                data = JSON.parse(message);
 
                 //log.debug("data: " + message);
 
@@ -181,14 +173,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         },
 
         receiveAction: function(data) {
-            log.info("received=" + JSON.stringify(data));
             var action = data[0];
-            if(this.handlers[action] && _.isFunction(this.handlers[action])) {
+
+            if(this.handlers[action] && _.isFunction(this.handlers[action]))
                 this.handlers[action].call(this, data);
-            }
-            else {
-                log.error("Unknown action : " + action);
-            }
+
         },
 
         receiveActionBatch: function(actions) {
@@ -404,9 +393,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         receiveDespawn: function(data) {
             var id = data[1];
 
-            if(this.despawn_callback) {
+            if(this.despawn_callback)
                 this.despawn_callback(id);
-            }
+
         },
 
         receiveHealth: function(data) {
@@ -452,9 +441,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             item.count = count;
             item.wasDropped = true;
 
-            if(this.drop_callback) {
+            if(this.drop_callback)
                 this.drop_callback(item, mobId);
-            }
+
         },
 
         receiveTeleport: function(data) {
@@ -528,9 +517,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         receiveBlink: function(data) {
             var id = data[1];
 
-            if(this.blink_callback) {
+            if(this.blink_callback)
                 this.blink_callback(id);
-            }
+
         },
         receivePVP: function(data){
             var pvp = data[1];

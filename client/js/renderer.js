@@ -1429,25 +1429,27 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             renderFrameDesktop: function() {
+                this.clearScreen(this.context);
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 
-
-                this.renderStaticCanvases();
-
+                this.context.save();
                 this.textcontext.save();
                 this.toptextcontext.save();
 
+                this.setCameraView(this.context);
                 this.setCameraView(this.textcontext);
                 this.setCameraView(this.toptextcontext);
-                //this.drawEntityNames();
 
-                this.context.save();
-                this.clearScreen(this.context);
+                this.renderStaticCanvases();
+
+
+
+                this.drawEntityNames();
+
 
                 this.drawEntitiesCircle();
 
-                this.setCameraView(this.context);
 
                 this.drawAnimatedTiles(false, this.context);
 
@@ -1473,9 +1475,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 // Overlay UI elements
                 if(this.game.cursorVisible || !this.tablet || this.isFirefox)
                     this.drawCursor();
-
-                this.drawDebugInfo();
-
 
             },
 

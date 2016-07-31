@@ -1,7 +1,3 @@
-/**
- * @type GameWorld Handler
- */
-
 var cls = require("./lib/class"),
     _ = require("underscore"),
     Log = require('log'),
@@ -27,14 +23,7 @@ var cls = require("./lib/class"),
     Pet = require("./pet"),
     SkillData = require("./skilldata"),
     GatherData = require("./gatherdata"),
-    Gather = require("./gather"),
-    util = require("util");
-
-
-/**
- * Always use instanced self = this;
- * and follow conventions.
- */
+    Gather = require("./gather");
 
 module.exports = World = cls.Class.extend({
     init: function(id, maxPlayers, socket, database) {
@@ -63,7 +52,7 @@ module.exports = World = cls.Class.extend({
 
         self.packets = {};
         self.cycleSpeed = 60;
-        self.mobControllerSpeed = 200;
+        self.mobControllerSpeed = 20;
 
         self.itemCount = 0;
         self.playerCount = 0;
@@ -189,7 +178,7 @@ module.exports = World = cls.Class.extend({
     removeParty: function (party)
     {
         this.party = _.reject(this.party, function (el) { return el === party; });
-        delete party;
+        delete this.party;
     },
 
     run: function(mapN) {
@@ -351,9 +340,11 @@ module.exports = World = cls.Class.extend({
         var self = this;
         var stop = 0;
         for (var mob in self.mobs) {
-            stop++;
-            if (stop == randomInt)
-                return mob;
+            if (self.mobs.hasOwnProperty(mob)) {
+                stop++;
+                if (stop == randomInt)
+                    return mob;
+            }
         }
     },
 
@@ -634,10 +625,9 @@ module.exports = World = cls.Class.extend({
         pet.onRequestPath(function(x, y) {
             if (this.x == x && this.y == y)
                 return null;
-            ignore = [this, self.getEntityById(this.playerId)];
-            var path = self.mobController.findPath(this, x, y);
+            var ignore = [this, self.getEntityById(this.playerId)];
             //log.info("path="+JSON.stringify(path));
-            return path;
+            return self.mobController.findPath(this, x, y);
         });
 
         pet.onStopPathing(function(x, y) {
@@ -875,7 +865,7 @@ module.exports = World = cls.Class.extend({
     handleGather: function (player, target) {
         var self = this;
         var item = self.getDroppedGatherItem(target);
-        var xp = GatherData.Kinds[target.kind].xp
+        var xp = GatherData.Kinds[target.kind].xp;
         player.incExp(xp);
         self.pushToPlayer(player, new Messages.Kill(target, player.level, xp));
         self.pushToAdjacentGroups(target.group, target.despawn());
@@ -894,7 +884,7 @@ module.exports = World = cls.Class.extend({
 
         if (entity instanceof Player) {
             if (attacker instanceof Player)
-                self.pushToPlayer(entity, entity.health(attacker))
+                self.pushToPlayer(entity, entity.health(attacker));
             else
                 self.pushToPlayer(entity, entity.health(attacker));
         }
@@ -965,31 +955,13 @@ module.exports = World = cls.Class.extend({
 
     handleItemDespawn: function(item) {
         var self = this;
-        if (item) {
+        if(item) {
             item.handleDespawn({
                 beforeBlinkDelay: 20000,
                 blinkCallback: function() {
                     self.pushToAdjacentGroups(item.group, new Messages.Blink(item));
                 },
-                blinkingDuration: 8000,
-                despawnCallback: function() {
-                    self.pushToAdjacentGroups(item.group, new Messages.Destroy(item));
-                    self.removeEntity(item);
-                }
-            });
-        }
-    },
-
-    handleDroppedItemDespawn: function(item) {
-        var self = this;
-
-        if(item) {
-            item.handleDespawn({
-                beforeBlinkDelay: 0,
-                blinkCallback: function() {
-                    self.pushToAdjacentGroups(item.group, new Messages.Blink(item));
-                },
-                blinkingDuration: 0,
+                blinkingDuration: 4000,
                 despawnCallback: function() {
                     self.pushToAdjacentGroups(item.group, new Messages.Destroy(item));
                     self.removeEntity(item);
@@ -1161,9 +1133,9 @@ module.exports = World = cls.Class.extend({
                 if (v >= m && v < p) {
 
                     item = self.createItem(ItemTypes.getKindFromString(itemName), mob.x, mob.y, ItemTypes.getKindFromString(itemName) == 400 ? Utils.randomInt(0, mob.level) : 1);
-
                     self.addItem(item);
-                    break;
+
+                    return item;
                 }
             }
         }

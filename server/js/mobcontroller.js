@@ -175,9 +175,9 @@ module.exports = MobController = cls.Class.extend({
                 }
 
             }
-            if (!mob.target && mob.distanceToSpawningPoint(mob.x, mob.y) > 10) {
+            if (!mob.target)
                 mob.returnToSpawningPosition(1);
-            }
+
         }
     },
 

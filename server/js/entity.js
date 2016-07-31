@@ -147,7 +147,7 @@ module.exports = Entity = cls.Class.extend({
 	    },
 	
 	    despawn: function () {
-		return new Messages.Despawn(this.id);
+		    return new Messages.Despawn(this.id);
 	    },
 	
 	    getPositionNextTo: function (entity) {
