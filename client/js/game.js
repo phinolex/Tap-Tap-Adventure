@@ -800,6 +800,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             tick: function() {
                 this.currentTime = new Date().getTime();
 
+
+                if(!this.isStopped)
+                    requestAnimFrame(this.tick.bind(this));
+
                 if(this.started) {
 
                     if (Detect.isMobile && this.currentTime - this.lastFPSTime > 4000) {
@@ -818,10 +822,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         }
                     }
                 }
-
-                if(!this.isStopped)
-                    requestAnimFrame(this.tick.bind(this));
-
             },
 
             start: function() {
@@ -1063,6 +1063,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     if (self.membership) {
                         self.chathandler.addNotification("You are currently a member");
                     }
+
+                    self.initializeQuests();
+
                     self.player.onStartPathing(function(path) {
                         var i = path.length - 1,
                             x =  path[i][0],
@@ -1261,9 +1264,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             }
                         }
 
-                        if(self.player.target instanceof Npc) {
+                        if(self.player.target instanceof Npc)
                             self.makeNpcTalk(self.player.target);
-                        } else if(self.player.target instanceof Chest) {
+                        else if(self.player.target instanceof Chest) {
                             self.client.sendOpen(self.player.target);
                             self.audioManager.playSound("chest");
                         }
@@ -2070,6 +2073,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 });
                 this.client.connection.emit('html_client');
                 log.info("onWelcome - loaded");
+            },
+
+            initializeQuests: function() {
+                var self = this;
+                log.info("Quests: " + self.questhandler.quests.length);
+                self.app.initAchievementList(self.questhandler.quests);
             },
 
             /**

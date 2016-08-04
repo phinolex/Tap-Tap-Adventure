@@ -50,6 +50,7 @@ var Map = cls.Class.extend({
         this.initConnectedGroups(thismap.doors);
         this.initCheckpoints(thismap.checkpoints);
         this.initPVPAreas(thismap.pvpAreas);
+        this.initPVPWaitingArea(thismap.pvpGameAreas);
         this.loadCollisionGrid();
 
         if (!this.generateCollisions && this.readyFunc) {
@@ -160,13 +161,19 @@ var Map = cls.Class.extend({
         area = _.detect(this.pvpAreas, function(area){
             return area.contains(x,y);
         });
-        if(area){
 
-            return true;
-        } else{
+        return area;
+    },
 
-            return false;
-        }
+    isGameArea: function(x, y) {
+        var id = 0,
+            area = null;
+
+        area = _.detect(this.pvpGameAreas, function(area) {
+            return area.contains(x, y);
+        });
+
+        return area;
     },
 
     isHealingArea: function(x, y) {
@@ -177,13 +184,7 @@ var Map = cls.Class.extend({
             return area.contains(x, y);
         });
 
-        if (area) {
-
-            return true;
-        } else {
-
-            return false;
-        }
+        return area;
     },
 
     GroupIdToGroupPosition: function (id) {
@@ -314,6 +315,16 @@ var Map = cls.Class.extend({
         _.each(pvpList, function(pvp){
             var pvpArea = new Area(pvp.id, pvp.x, pvp.y, pvp.w, pvp.h, null);
             self.pvpAreas.push(pvpArea);
+        });
+    },
+
+    initPVPWaitingArea: function(pvpGameAreas) {
+        var self = this;
+        this.pvpGameAreas = [];
+        //Only one.
+        _.each(pvpGameAreas, function(area) {
+            var gameArea = new Area(area.id, area.x, area.y, area.w, area.h, null);
+            self.pvpGameAreas.push(gameArea);
         });
     },
 

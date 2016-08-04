@@ -734,9 +734,43 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
             if($('body').hasClass('about')) {
                 this.closeInGameScroll('about');
             }
+
+            if($('#achievements').hasClass('active')) {
+                this.toggleAchievements();
+                $('#achievementsbutton').removeClass('active');
+            }
             this.game.closeItemInfo();
         },
 
+        resetPage: function() {
+            var self = this,
+                $achievements = $('#achievements');
+
+            if($achievements.hasClass('active')) {
+                $achievements.bind(TRANSITIONEND, function() {
+                    $achievements.removeClass('page' + self.currentPage).addClass('page1');
+                    self.currentPage = 1;
+                    $achievements.unbind(TRANSITIONEND);
+                });
+            }
+        },
+
+        toggleInstructions: function() {
+            if($('#achievements').hasClass('active')) {
+                this.toggleAchievements();
+                $('#achievementsbutton').removeClass('active');
+            }
+            $('#instructions').toggleClass('active');
+        },
+
+        toggleAchievements: function() {
+            if($('#instructions').hasClass('active')) {
+                this.toggleInstructions();
+                $('#helpbutton').removeClass('active');
+            }
+            this.resetPage();
+            $('#achievements').toggleClass('active');
+        },
 
         toggleScrollContent: function(content) {
             var currentState = $('#parchment').attr('class');
@@ -762,6 +796,94 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
                     }
                 }
             }
+        },
+
+        showAchievementNotification: function(id, name) {
+            var $notif = $('#achievement-notification'),
+                $name = $notif.find('.name'),
+                $button = $('#achievementsbutton');
+
+            $notif.removeClass().addClass('active achievement' + id);
+            $name.text(name);
+            if(this.game.storage.getAchievementCount() === 1) {
+                this.blinkInterval = setInterval(function() {
+                    $button.toggleClass('blink');
+                }, 500);
+            }
+            setTimeout(function() {
+                $notif.removeClass('active');
+                $button.removeClass('blink');
+            }, 5000);
+        },
+
+        displayUnlockedAchievement: function(id) {
+            var $achievement = $('#achievements li.achievement' + id);
+
+            var achievement = this.game.getAchievementById(id);
+            if(achievement && achievement.hidden) {
+                this.setAchievementData($achievement, achievement.name, achievement.desc);
+            }
+            $achievement.addClass('unlocked');
+        },
+
+        unlockAchievement: function(id, name) {
+            this.showAchievementNotification(id, name);
+            this.displayUnlockedAchievement(id);
+
+            var nb = parseInt($('#unlocked-achievements').text());
+            $('#unlocked-achievements').text(nb + 1);
+        },
+
+        initAchievementList: function(achievements) {
+            var self = this,
+                $lists = $('#lists'),
+                $page = $('#page-tmpl'),
+                $achievement = $('#achievement-tmpl'),
+                page = 0,
+                count = 0,
+                $p = null;
+
+            _.each(achievements, function(achievement) {
+                count++;
+
+                var $a = $achievement.clone();
+                $a.removeAttr('id');
+                $a.addClass('achievement' + count);
+                self.setAchievementData($a, achievement.name, achievement.desc);
+                $a.find('.twitter').attr('href', 'http://twitter.com/share?url=http%3A%2F%2Fbrowserquest.mozilla.org&text=I%20unlocked%20the%20%27'+ achievement.name +'%27%20achievement%20on%20Mozilla%27s%20%23BrowserQuest%21&related=glecollinet:Creators%20of%20BrowserQuest%2Cwhatthefranck');
+                $a.show();
+                $a.find('a').click(function() {
+                    var url = $(this).attr('href');
+
+                    self.openPopup('twitter', url);
+                    return false;
+                });
+
+                if((count - 1) % 4 === 0) {
+                    page++;
+                    $p = $page.clone();
+                    $p.attr('id', 'page'+page);
+                    $p.show();
+                    $lists.append($p);
+                }
+                $p.append($a);
+            });
+
+            $('#total-achievements').text($('#achievements').find('li').length);
+        },
+
+        initUnlockedAchievements: function(ids) {
+            var self = this;
+
+            _.each(ids, function(id) {
+                self.displayUnlockedAchievement(id);
+            });
+            $('#unlocked-achievements').text(ids.length);
+        },
+
+        setAchievementData: function($el, name, desc) {
+            $el.find('.achievement-name').html(name);
+            $el.find('.achievement-description').html(desc);
         },
 
         closeInGameScroll: function(content) {

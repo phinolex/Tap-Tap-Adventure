@@ -142,7 +142,8 @@ Types = {
         CLASSSWITCH: 101,
         GATHER: 102,
         CRAFT: 103,
-        FAILEDATTEMPTS: 104
+        FAILEDATTEMPTS: 104,
+        TIME: 105
     },
 
     Orientations: {

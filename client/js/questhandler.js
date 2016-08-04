@@ -63,14 +63,14 @@ define(['text!../shared/data/newquests_english.json', 'jquery'], function(Quests
     
     toggleShowLog: function () {
     	    this.showlog = !this.showlog;
-	if (this.showlog)
-	{
-            this.questShowLog();	
-	}
-	else
-	{
-	    this.questHideLog();
-	}
+        if (this.showlog)
+        {
+                this.questShowLog();
+        }
+        else
+        {
+            this.questHideLog();
+        }
     },
     
     questShowLog: function() {

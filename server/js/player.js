@@ -62,7 +62,8 @@ module.exports = Player = Character.extend({
         this.consumeTimeout = null;
         this.rights = 0;
         this.skillHandler = new SkillHandler();
-
+        this.inPVPLobby = false;
+        this.inPVPGame = false;
         this.healExecuted = 0;
 
         this.flareDanceCallback = null;
@@ -93,7 +94,6 @@ module.exports = Player = Character.extend({
         
     },
     
-    
     destroy: function() {
         var self = this;
 
@@ -122,6 +122,20 @@ module.exports = Player = Character.extend({
     send: function(message) {
         this.connection.send(message);
     },
+
+    setInPVPLobby: function(inPVPLobby) {
+        if (this.inPVPLobby !== inPVPLobby) {
+            this.inPVPLobby = inPVPLobby;
+        }
+    },
+
+    setInPVPGame: function(inPVPGame) {
+        if (this.inPVPGame !== inPVPGame) {
+            this.inPVPGame = inPVPGame;
+
+        }
+    },
+
 
     flagPVP: function(pvpFlag){
         if(this.pvpFlag !== pvpFlag){

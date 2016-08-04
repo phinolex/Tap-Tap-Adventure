@@ -9,7 +9,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.setZoom();
 
-
                 this.context = (canvas && canvas.getContext) ? canvas.getContext("2d") : null;
                 this.buffer = (buffer && buffer.getContext) ? buffer.getContext("2d") : null;
                 this.background = (background && background.getContext) ? background.getContext("2d") : null;
@@ -158,7 +157,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             initFPS: function() {
-                this.FPS = Detect.isMobile ? 120 : 120;
+                this.FPS = 60;
             },
 
             initFont: function() {
@@ -1419,6 +1418,19 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.forceRedraw = false;
             },
 
+            renderMobileStaticCanvas: function() {
+                this.drawOldTerrain();
+                if (!this.game.player.isMoving() && this.game.player) {
+                    this.background.save();
+                    this.setCameraView(this.background);
+                    this.drawTerrain(this.background);
+                    this.background.restore();
+                }
+
+                this.game.renderbackground = false;
+                this.forceRedraw = false;
+            },
+
             renderFrame: function() {
                 if(this.mobile) {
                     this.renderFrameMobile();
@@ -1485,7 +1497,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 
-                this.renderStaticCanvases();
+                this.renderMobileStaticCanvas();
 
                 this.renderMobileCanvas();
 

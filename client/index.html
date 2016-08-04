@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/quest.css" type="text/css">
     <link rel="stylesheet" href="css/skill.css" type="text/css">
     <link rel="stylesheet" href="css/inventory.css" type="text/css">
+    <link rel="stylesheet" href="css/achievement.css" type="text/css">
     <!--<link rel="stylesheet" href="css/game.css" type="text/css">-->
     <link rel="stylesheet" href="css/storedialog.css" type="text/css">
     <link rel="stylesheet" href="css/enchantdialog.css" type="text/css">
@@ -284,6 +285,34 @@
         	<div id="classSwitcherButton">Save</div>
         </div>
         <div id="chatLog"></div>
+        <article id="achievements" class="page1 clickable">
+            <div class="close"></div>
+            <div id="achievements-wrapper">
+                <div id="lists">
+                </div>
+            </div>
+            <div id="achievements-count" class="stroke">
+                Completed
+                <div>
+                    <span id="unlocked-achievements">0</span>
+                    /
+                    <span id="total-achievements"></span>
+                </div>
+            </div>
+            <nav class="clickable">
+                <div id="previous"></div>
+                <div id="next"></div>
+            </nav>
+        </article>
+        <div id="achievement-notification">
+            <div class="coin">
+                <div id="coinsparks"></div>
+            </div>
+            <div id="achievement-info">
+                <div class="title">New Achievement Unlocked!</div>
+                <div class="name"></div>
+            </div>
+        </div>
         <div id="questalarm"></div>
         <div id="questlog"></div>
 
@@ -899,7 +928,16 @@
 
 <ul id="page-tmpl" class="clickable" style="display:none">
 </ul>
-
+<ul>
+    <li id="achievement-tmpl" style="display:none">
+        <div class="coin"></div>
+        <span class="achievement-name">???</span>
+        <span class="achievement-description">???</span>
+        <div class="achievement-sharing">
+            <a href="" class="twitter"></a>
+        </div>
+    </li>
+</ul>
 
 <img src="img/common/thingy.png" alt="" class="preload">
 

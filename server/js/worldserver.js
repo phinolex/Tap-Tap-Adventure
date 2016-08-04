@@ -44,22 +44,22 @@ module.exports = World = cls.Class.extend({
         self.npcs = {};
         self.pets = {};
         self.gather = {};
-
+        self.playersPvpGame = [];
         self.mobAreas = [];
         self.chestAreas = [];
         self.groups = {};
         self.party = [];
 
+
         self.packets = {};
         self.cycleSpeed = 60;
         self.mobControllerSpeed = 20;
-
+        self.pvpTime = 200;
         self.itemCount = 0;
         self.playerCount = 0;
         self.zoneGroupsReady = false;
-
-
         self.uselessDebugging = false;
+
 
         /**
          * Handlers
@@ -83,11 +83,12 @@ module.exports = World = cls.Class.extend({
             self.pushRelevantEntityListTo(player);
 
             var move_callback = function(x, y) {
-                //log.info("move_callback");
-                if (self.uselessDebugging)
-                    log.info("Player: " + player.name + " position set to: " + x + " " + y);
 
                 player.flagPVP(self.map.isPVP(x, y));
+                if (!player.inPVPGame && !player.inPVPLobby && self.map.isGameArea(x, y)) {
+                    self.playersPvpGame.push(player);
+                    player.setInPVPGame(true);
+                }
 
                 player.forEachAttacker(function(mob) {
                     if (mob.target == null)
@@ -166,6 +167,14 @@ module.exports = World = cls.Class.extend({
             });
         });
 
+    },
+
+    arrayContains: function(array, object) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] == object)
+                return true;
+        }
+        return false;
     },
 
     addParty: function (player1, player2)
@@ -270,6 +279,21 @@ module.exports = World = cls.Class.extend({
             }
 
         }, 1000 / self.getCycleSpeed());
+    },
+
+    removeFromPVPGame: function(player) {
+        var self = this;
+        Array.prototype.remByVal = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] === val) {
+                    this.splice(i, 1);
+                    i--;
+                }
+            }
+            return this;
+        }
+
+        self.playersPvpGame.remByVal(player);
     },
 
     initializeMobController: function() {
@@ -690,7 +714,11 @@ module.exports = World = cls.Class.extend({
             }
             player.pets = null;
         }
-        this.database.setPlayerPosition(player, player.x, player.y);
+        //Teleport player to the lobby if logged out within the game area.
+        //if (self.map.isGameArea(player.x, player.y))
+
+        //this.database.setPlayerPosition(player, player.x, player.y);
+
         player.packetHandler.broadcast(player.despawn());
         self.removeEntity(player);
         self.decrementPlayerCount();
@@ -1249,6 +1277,26 @@ module.exports = World = cls.Class.extend({
         }
         this.updatePopulation(this.playerCount);
     },
+    /*
+     * Very Important notice:
+     * The PVP and future minigame timer has to be handled
+     * through instances rather than setting it in the World.
+     * new Timer();
+     */
+
+    startPVPTimer: function() {
+        var self = this;
+
+        var interval = setInterval(function() {
+            self.pvpTime--;
+            clearInterval(interval);
+        }, 1000);
+    },
+
+    resetPVPTimer: function() {
+
+    },
+
 
     // TODO make a entity map so this is more efficient.
     getTargetsAround: function(entity, range) {

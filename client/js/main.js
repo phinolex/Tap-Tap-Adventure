@@ -618,13 +618,41 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 $('#name-tooltip').removeClass('visible');
             });
 
+            $('#previous').click(function() {
+                var $achievements = $('#achievements');
+
+                if(app.currentPage === 1) {
+                    return false;
+                } else {
+                    app.currentPage -= 1;
+                    $achievements.removeClass().addClass('active page' + app.currentPage);
+                }
+            });
+
+            $('#next').click(function() {
+                var $achievements = $('#achievements'),
+                    $lists = $('#lists'),
+                    nbPages = $lists.children('ul').length;
+
+                log.info("Pages: " + nbPages + "/" + app.currentPage);
+
+                if(app.currentPage === nbPages) {
+                    return false;
+                } else {
+                    app.currentPage += 1;
+                    $achievements.removeClass().addClass('active page' + app.currentPage);
+                }
+            });
+
             $('#mutebutton').click(function() {
                 game.audioManager.toggle();
             });
 
             $('#helpbutton').click(function() {
-                game.questhandler.toggleShowLog();
+                $('#achievements').toggleClass('active');
             });
+
+
 
             $(document).bind("keydown", function(e) {
                 var key = e.which,

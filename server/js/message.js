@@ -6,7 +6,7 @@ var Messages = {};
 module.exports = Messages;
 
 var Message = cls.Class.extend({
-    
+
 });
 Messages.Spawn = Message.extend({
     init: function (entity) {
@@ -30,11 +30,11 @@ Messages.Move = Message.extend({
         this.entity = entity;
     },
     serialize: function () {
-    	//log.info("move sent");
+        //log.info("move sent");
         return [Types.Messages.MOVE,
-                this.entity.id,
-                this.entity.x,
-                this.entity.y];
+            this.entity.id,
+            this.entity.x,
+            this.entity.y];
     }
 });
 
@@ -45,11 +45,11 @@ Messages.Move2 = Message.extend({
         this.y = y;
     },
     serialize: function () {
-    	//log.info("move sent");
+        //log.info("move sent");
         return [Types.Messages.MOVE,
-                this.entityId,
-                this.x,
-                this.y];
+            this.entityId,
+            this.x,
+            this.y];
     }
 });
 
@@ -93,20 +93,20 @@ Messages.Health = Message.extend({
     },
     serialize: function() {
         var health = [Types.Messages.HEALTH,
-                      this.points];
+            this.points];
         if (this.isRegen)
             health.push(1);
         return health;
     }
 });
 Messages.Notify = Message.extend({
-  init: function(message) {
-    this.message = message;
-  },
-  serialize: function() {
-    return [Types.Messages.NOTIFY,
+    init: function(message) {
+        this.message = message;
+    },
+    serialize: function() {
+        return [Types.Messages.NOTIFY,
             this.message];
-  }
+    }
 });
 Messages.HitPoints = Message.extend({
     init: function(maxHitPoints, maxMana, hp, mp) {
@@ -126,7 +126,7 @@ Messages.HitPoints = Message.extend({
 Messages.TalkToNPC = Message.extend({
     init: function(npcId, questNumber, isCompleted){
         this.npcId = npcId;
-    	this.questNumber = questNumber;
+        this.questNumber = questNumber;
         this.isCompleted = isCompleted;
     },
     serialize: function(){
@@ -143,8 +143,8 @@ Messages.EquipItem = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.EQUIP,
-                this.playerId,
-                this.itemKind];
+            this.playerId,
+            this.itemKind];
     }
 });
 Messages.Drop = Message.extend({
@@ -154,13 +154,13 @@ Messages.Drop = Message.extend({
     },
     serialize: function() {
         var drop = [Types.Messages.DROP,
-                    this.mob.id,
-                    this.item.id,
-                    this.item.kind,
-                    
-                    this.item.count,
-                    this.item.skillKind,
-                    this.item.skillLevel];
+            this.mob.id,
+            this.item.id,
+            this.item.kind,
+
+            this.item.count,
+            this.item.skillKind,
+            this.item.skillLevel];
         return drop;
     }
 });
@@ -216,8 +216,8 @@ Messages.Chat = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.CHAT,
-                this.playerId,
-                this.message];
+            this.playerId,
+            this.message];
     }
 });
 Messages.Teleport = Message.extend({
@@ -226,9 +226,9 @@ Messages.Teleport = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.TELEPORT,
-                this.entity.id,
-                this.entity.x,
-                this.entity.y];
+            this.entity.id,
+            this.entity.x,
+            this.entity.y];
     }
 });
 Messages.Damage = Message.extend({
@@ -240,10 +240,10 @@ Messages.Damage = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.DAMAGE,
-                this.entity.id,
-                this.points,
-                this.hp,
-                this.maxHitPoints];
+            this.entity.id,
+            this.points,
+            this.hp,
+            this.maxHitPoints];
     }
 });
 Messages.CharacterInfo = Message.extend({
@@ -251,7 +251,7 @@ Messages.CharacterInfo = Message.extend({
         this.player = player;
     },
     serialize: function() {
-      return [Types.Messages.CHARACTERINFO,
+        return [Types.Messages.CHARACTERINFO,
             this.player.kind,                 // 0
             this.player.armor,                // 1
             this.player.armorEnchantedPoint,  // 2
@@ -268,21 +268,21 @@ Messages.CharacterInfo = Message.extend({
     }
 });
 Messages.Inventory = Message.extend({
-  init: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
-    this.inventoryNumber = inventoryNumber;
-    this.itemKind = itemKind;
-    this.itemNumber = itemNumber;
-    this.itemSkillKind = itemSkillKind;
-    this.itemSkillLevel = itemSkillLevel;
-  },
-  serialize: function() {
-    return [Types.Messages.INVENTORY,
+    init: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
+        this.inventoryNumber = inventoryNumber;
+        this.itemKind = itemKind;
+        this.itemNumber = itemNumber;
+        this.itemSkillKind = itemSkillKind;
+        this.itemSkillLevel = itemSkillLevel;
+    },
+    serialize: function() {
+        return [Types.Messages.INVENTORY,
             this.inventoryNumber,
             this.itemKind,
             this.itemNumber,
             this.itemSkillKind,
             this.itemSkillLevel];
-  }
+    }
 });
 Messages.Bank = Message.extend({
     init: function(bankNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
@@ -294,11 +294,11 @@ Messages.Bank = Message.extend({
     },
     serialize: function() {
         return [Types.Messages.BANK,
-                this.bankNumber,
-                this.itemKind,
-                this.itemNumber,
-                this.itemSkillKind,
-                this.itemSkillLevel];
+            this.bankNumber,
+            this.itemKind,
+            this.itemNumber,
+            this.itemSkillKind,
+            this.itemSkillLevel];
     }
 });
 Messages.Population = Message.extend({
@@ -308,8 +308,8 @@ Messages.Population = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.POPULATION,
-                this.world,
-                this.total];
+            this.world,
+            this.total];
     }
 });
 Messages.Kill = Message.extend({
@@ -320,9 +320,9 @@ Messages.Kill = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.KILL,
-                this.mob.id,
-                this.level,
-                this.exp];
+            this.mob.id,
+            this.level,
+            this.exp];
     }
 });
 Messages.List = Message.extend({
@@ -342,7 +342,7 @@ Messages.Destroy = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.DESTROY,
-                this.entity.id];
+            this.entity.id];
     }
 });
 Messages.Blink = Message.extend({
@@ -351,7 +351,7 @@ Messages.Blink = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.BLINK,
-                this.item.id];
+            this.item.id];
     }
 });
 Messages.PVP = Message.extend({
@@ -360,7 +360,7 @@ Messages.PVP = Message.extend({
     },
     serialize: function(){
         return [Types.Messages.PVP,
-                this.isPVP];
+            this.isPVP];
     }
 });
 Messages.TradeErrors = Message.extend({
@@ -401,7 +401,7 @@ Messages.Countdown = Message.extend({
     serialize: function() {
         return [Types.Messages.COUNTDOWN, this.time];
     }
-    
+
 });
 
 Messages.PartyInvite = Message.extend({
@@ -410,7 +410,7 @@ Messages.PartyInvite = Message.extend({
     },
     serialize: function() {
         return [Types.Messages.PARTYINVITE, this.id];
-    }		
+    }
 });
 
 Messages.Party = Message.extend({
@@ -433,7 +433,7 @@ Messages.AuctionOpen = Message.extend({
         //var list = this.members;
         //list.unshift(Types.Messages.AUCTIONOPEN);
         return this.itemData;
-    }	
+    }
 });
 
 Messages.SwitchClass = Message.extend({
@@ -442,6 +442,15 @@ Messages.SwitchClass = Message.extend({
     },
     serialize: function () {
         return [Types.Messages.CLASSSWITCH, this.pClass];
-    }	
+    }
+});
+
+Messages.MinigameTime = Message.extend({
+    init: function(time) {
+        this.time = time;
+    },
+    serialize: function() {
+        return [Types.Messages.TIME, this.time];
+    }
 });
 
