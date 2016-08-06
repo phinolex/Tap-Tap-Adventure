@@ -1162,9 +1162,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 var oldoffset = this.getOldOffset();
 
-                if (p.prevOrientation !== p.orientation)
-                    this.forceRedraw = true;
-
                 if (!p || !p.isMoving() || this.forceRedraw)
                 {
                     this.drawBackground(this.background, "#12100D");

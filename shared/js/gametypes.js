@@ -143,7 +143,8 @@ Types = {
         GATHER: 102,
         CRAFT: 103,
         FAILEDATTEMPTS: 104,
-        TIME: 105
+        TIME: 105,
+        SENDTELE: 106
     },
 
     Orientations: {

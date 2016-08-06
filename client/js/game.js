@@ -1028,21 +1028,18 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.membership = membership;
                     self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
                     self.shopHandler.setMaxInventoryNumber(maxInventoryNumber);
-                    log.info("maxBankNumber:"+maxBankNumber);
-                    log.info("bankKind="+JSON.stringify(bankKind));
                     self.bankHandler.initBank(maxBankNumber, bankKind, bankNumber, bankSkillKind, bankSkillLevel);
 
                     self.initPlayer();
                     self.updateBars();
                     self.updateExpBar();
 
-                    log.info("onWelcome-pClass="+pClass);
                     self.player.setClass(parseInt(pClass));
 
                     //self.initAnimatedTiles();
                     //self.renderer.renderStaticCanvases();
                     //log.info("self.renderbackground");
-                    self.renderbackground = true;
+
 
                     self.resetCamera();
                     self.updatePlateauMode();
@@ -1055,6 +1052,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.client.sendSkillLoad();
                     //Welcome message
                     self.chathandler.show();
+                    self.renderbackground = true;
+                    self.renderer.forceRedraw = true;
                     //self.chathandler.addNotification("Welcome to Tap Tap Adventure!");
 
                     if (self.doubleEXP) {
@@ -1195,13 +1194,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
                             var dest = self.map.getDoorDestination(x, y);
 
-                            /*if(dest.quest && !self.questhandler.quests[0].completed) {
-                             self.unregisterEntityPosition(self.player);
-                             self.registerEntityPosition(self.player);
-                             self.chathandler.addGameNotification("Notification", "You must finish the tutorial to proceed.");
-                             return;
-                             }*/
-
                             if(dest.level > self.player.level) {
                                 self.unregisterEntityPosition(self.player);
                                 self.registerEntityPosition(self.player);
@@ -1280,11 +1272,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.unregisterEntityPosition(self.player);
                         self.registerEntityPosition(self.player);
 
+
                         if(!(self.player.moveUp || self.player.moveDown || self.player.moveLeft || self.player.moveRight))
-                        {
                             self.renderer.forceRedraw = true;
-                            //self.chathandler.addToChatLog("FORCE REDRAW");
-                        }
+
                     });
 
                     self.player.onRequestPath(function(x, y) {
@@ -1838,36 +1829,37 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.client.onPlayerTeleport(function(id, x, y) {
-                        var entity = null,
-                            currentOrientation;
+                        self.player.setGridPosition(x, y);
+                        self.player.nextGridX = x;
+                        self.player.nextGridY = y;
 
-                        //log.info ("id: "+id+",self.player,id: "+self.player.id);
-                        if(id !== self.playerId) {
-                            entity = self.getEntityById(id);
-                            //log.info("teleport-entityId="+entity.id);
-                            if(entity) {
-                                log.info("UNREGISTERED ENTITY POS");
-                                currentOrientation = entity.orientation;
+                        self.resetZone();
 
-                                self.removeFromRenderingGrid(entity, entity.gridX, entity.gridY);
-                                log.info("entity.gridX, entity.gridY="+entity.gridX+","+entity.gridY);
+                        self.player.forEachAttacker(function(attacker) {
+                            attacker.disengage();
+                            attacker.idle();
+                        });
 
-                                self.unregisterEntityPosition(entity);
-                                self.makeCharacterTeleportTo(entity, x, y);
+                        self.updatePlateauMode();
 
-                                //self.registerEntityPosition(entity);
-                                //entity.setOrientation(currentOrientation);
-                                //entity.setGridPosition(x,y);
+                        self.camera.setRealCoords();
 
-                                entity.forEachAttacker(function(attacker) {
-                                    attacker.disengage();
-                                    attacker.idle();
-                                    attacker.stop();
-                                });
+                        self.renderer.drawBackground(self.renderer.background, "#12100D");
+                        self.renderbackground = true;
+                        self.renderer.forceRedraw = true;
 
-                                self.removeEntity(entity);
-                            }
+                        if (self.renderer.mobile)
+                            this.renderer.clearScreen(this.renderer.context);
+
+
+                        for (var i = 0; i < self.player.pets.length; ++i) {
+                            var pet = self.player.pets[i];
+                            pet.path = null;
+                            pet.setGridPosition(x, y);
                         }
+
+                        self.unregisterEntityPosition(self.player);
+                        self.registerEntityPosition(self.player);
                     });
 
                     self.client.onDropItem(function(item, mobId) {
@@ -2155,10 +2147,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     log.debug("Teleport out of bounds: "+x+", "+y);
                 }
             },
-
-            /**
-             *
-             */
             makePlayerAttackNext: function()
             {
 

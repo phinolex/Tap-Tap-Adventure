@@ -61,6 +61,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.PARTYINVITE] = this.receivePartyInvite;
             this.handlers[Types.Messages.AUCTIONOPEN] = this.receiveAuction;
             this.handlers[Types.Messages.CLASSSWITCH] = this.receiveClassSwitch;
+            this.handlers[Types.Messages.SENDTELE] = this.receiveTeleportation;
             this.useBison = false;
 
             this.enable();

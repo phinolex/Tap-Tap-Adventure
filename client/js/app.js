@@ -223,6 +223,10 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
                                 self.addValidationError(null, "");
                                 break;
 
+                            case 'cheating':
+                                self.addValidationError(null, "Attempts to cheat the system will not be tolerated.");
+                                break;
+
                             default:
                                 self.addValidationError(null, 'Failed to launch the game: ' + (result.reason ? result.reason : '(unknown error)'));
                                 break;

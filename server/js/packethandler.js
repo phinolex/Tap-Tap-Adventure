@@ -185,7 +185,7 @@ module.exports = PacketHandler = Class.extend({
                     break;
 
                 case Types.Messages.TELEPORT:
-                    self.handleTeleport(message);
+                    self.handleTeleport(message, false);
                     break;
 
                 case Types.Messages.OPEN:
@@ -435,7 +435,8 @@ module.exports = PacketHandler = Class.extend({
                     databaseHandler.setPlayerRights(self.player, 2);
                     break;
                 case "/test":
-                    log.info(databaseHandler.getPlayerRights(self.player));
+                    databaseHandler.moveToBlackHole(self.player, 15, 15);
+                    self.player.forcePosition(15, 15);
                     break;
                 default:
 
@@ -653,13 +654,15 @@ module.exports = PacketHandler = Class.extend({
             this.server.handleOpenedChest(chest, this.player);
     },
 
-    handleTeleport: function (message) {
+    handleTeleport: function (message, bypass) {
         var id=message[1], x=message[2], y=message[3];
         //if (!this.server.isValidPosition(x, y))
         //	return;
 
-        if (id !== this.player.id)
+        if (id !== this.player.id && !bypass) {
+            log.info("Invalid player id");
             return;
+        }
 
         this.broadcast(new Messages.Teleport(this.player), false);
 
@@ -687,6 +690,7 @@ module.exports = PacketHandler = Class.extend({
 
         this.broadcast(new Messages.Spawn(this.player));
 
+        log.info("Finished.");
         //this.broadcast(new Messages.Move(this.player));
 
     },

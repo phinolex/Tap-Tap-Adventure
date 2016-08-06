@@ -124,16 +124,13 @@ module.exports = Player = Character.extend({
     },
 
     setInPVPLobby: function(inPVPLobby) {
-        if (this.inPVPLobby !== inPVPLobby) {
+        if (this.inPVPLobby !== inPVPLobby)
             this.inPVPLobby = inPVPLobby;
-        }
     },
 
     setInPVPGame: function(inPVPGame) {
-        if (this.inPVPGame !== inPVPGame) {
+        if (this.inPVPGame !== inPVPGame)
             this.inPVPGame = inPVPGame;
-
-        }
     },
 
 
@@ -361,7 +358,14 @@ module.exports = Player = Character.extend({
         return true;
     },
 
+    forcePosition: function(x, y) {
+        var self = this,
+            message = [Types.Messages.TELEPORT, self.id, x, y];
 
+        log.info("Called.");
+
+        self.send(message);
+    },
 
     sendWelcome: function(armor, weapon, exp,
                                 bannedTime, banUseTime, x, y, chatBanEndTime, rank, 

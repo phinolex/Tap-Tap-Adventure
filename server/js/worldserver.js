@@ -85,10 +85,8 @@ module.exports = World = cls.Class.extend({
             var move_callback = function(x, y) {
 
                 player.flagPVP(self.map.isPVP(x, y));
-                if (!player.inPVPGame && !player.inPVPLobby && self.map.isGameArea(x, y)) {
-                    self.playersPvpGame.push(player);
-                    player.setInPVPGame(true);
-                }
+                self.addToPVPGame(player);
+
 
                 player.forEachAttacker(function(mob) {
                     if (mob.target == null)
@@ -107,6 +105,7 @@ module.exports = World = cls.Class.extend({
 
                     }
                 });
+
             };
 
             player.packetHandler.onMove(move_callback);
@@ -167,6 +166,62 @@ module.exports = World = cls.Class.extend({
             });
         });
 
+    },
+
+    startGame: function() {
+        var self = this;
+        for (var player in self.playersPvpGame) {
+            if (self.playersPvpGame.hasOwnProperty(player)) {
+                player.setInPVPGame(true);
+                player.setInPVPLobby(false);
+            }
+        }
+    },
+
+    endGame: function() {
+        var self = this;
+
+        self.redTeam = [];
+        self.blueTeam = [];
+        for (var player in self.playersPvpGame) {
+            if (self.playersPvpGame.hasOwnProperty(player)) {
+                player.setInPVPGame(false);
+                player.setInPVPLobby(true);
+            }
+        }
+    },
+
+
+
+    splitPlayers: function() {
+        var self = this;
+
+        self.redTeam = self.playersPvpGame;
+        self.blueTeam = [];
+
+        if (self.playersPvpGame.length % 2 == 1)
+            self.blueTeam = self.redTeam.splice(0, random === 0 ? (self.redTeam.length / 2) + 0.5 : (self.redTeam.length / 2) - 0.5);
+    },
+
+    addToPVPGame: function(player) {
+        var self = this;
+        if (!self.arrayContains(self.playersPvpGame, player))
+            self.playersPvpGame.push(player);
+    },
+
+    removeFromPVPGame: function(player) {
+        var self = this;
+        Array.prototype.remByVal = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] === val) {
+                    this.splice(i, 1);
+                    i--;
+                }
+            }
+            return this;
+        }
+
+        self.playersPvpGame.remByVal(player);
     },
 
     arrayContains: function(array, object) {
@@ -279,21 +334,6 @@ module.exports = World = cls.Class.extend({
             }
 
         }, 1000 / self.getCycleSpeed());
-    },
-
-    removeFromPVPGame: function(player) {
-        var self = this;
-        Array.prototype.remByVal = function(val) {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i] === val) {
-                    this.splice(i, 1);
-                    i--;
-                }
-            }
-            return this;
-        }
-
-        self.playersPvpGame.remByVal(player);
     },
 
     initializeMobController: function() {
