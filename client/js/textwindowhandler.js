@@ -9,7 +9,7 @@ define(['jquery'], function() {
             var text = '<p><h4>Welcome to Tap Tap Adventure</h4></p>'
                      + '<p><h3></h3></p>'
                      + '<p>Latest News: Tweaks and Inventory</p>'
-                     + '<p>Agent quest is now available</p>'
+                     + '<p>Hi is now available</p>'
             $('#textWindow').html(text);
             $('#textWindow').fadeIn('fast');
         },

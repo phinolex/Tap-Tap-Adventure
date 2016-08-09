@@ -7,7 +7,6 @@ var _ = require("underscore"),
 var EntitySpawnData = [];
 
 var i=0;
-//log.info(QuestsJson);
 _.each( SpawnJson, function( value, key ) {
 	EntitySpawnData[i++] = value;
 });
@@ -28,7 +27,6 @@ var saveSpawns = function() {
 };
 
 
-//log.info(QuestData);
 module.exports.EntitySpawnData = EntitySpawnData;
 module.exports.addSpawn = addSpawn;
 module.exports.saveSpawns = saveSpawns;

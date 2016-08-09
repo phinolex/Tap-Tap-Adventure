@@ -1,0 +1,23 @@
+[
+  {
+    "npcId":40,
+    "type": 1,
+    "name": "Slash!",
+    "desc": "Acquire a Big Sword!",
+    "beforeTalk" : [
+      "Hello fellow Zeearth resident!",
+      "I am in dire need of a favour.",
+      "You see, a guard like me requires a",
+      "bigger weapon to protect the village.",
+      "I ask that you bring me a sword in exchange",
+      "for a nifty reward."
+    ],
+    "afterTalk": [
+      "Thank you for your help!",
+      "You've truly saved us all!"
+    ],
+    "itemId": 61,
+    "itemCount": 1,
+    "xp":25
+  }
+]

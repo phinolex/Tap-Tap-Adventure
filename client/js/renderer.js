@@ -9,6 +9,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.setZoom();
 
+
                 this.context = (canvas && canvas.getContext) ? canvas.getContext("2d") : null;
                 this.buffer = (buffer && buffer.getContext) ? buffer.getContext("2d") : null;
                 this.background = (background && background.getContext) ? background.getContext("2d") : null;
@@ -46,7 +47,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.isDebugInfoVisible = false;
                 this.animatedTileCount = 0;
                 this.highTileCount = 0;
-                this.tablet = Detect.isTablet(window.innerWidth);
+                this.tablet = Detect.isTablet();
                 this.fixFlickeringTimer = new Timer(100);
 
                 this.mobile = false;
@@ -1028,7 +1029,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 if(entity instanceof Npc) {
                     var color;
                     var name;
-                    if (this.game.questhandler.npcHasQuest(entity.kind))
+                    if (this.game.achievementHandler.npcHasAchievement(entity.kind))
                     {
                         color = "cyan";
                         name = entity.title + " ?";
@@ -1161,6 +1162,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 var c = this.camera;
 
                 var oldoffset = this.getOldOffset();
+
+                if (p.prevOrientation !== p.orientation)
+                    this.forceRedraw = true;
 
                 if (!p || !p.isMoving() || this.forceRedraw)
                 {
@@ -1398,6 +1402,15 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.background.restore();
             },
 
+            renderingMobile: function() {
+                this.drawOldTerrain();
+                this.background.save();
+                this.setCameraView(this.background);
+                this.drawTerrain(this.background);
+                this.drawHighTerrain();
+                this.background.restore();
+            },
+
             renderStaticCanvases: function() {
 
                 this.drawOldTerrain();
@@ -1408,20 +1421,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     this.setCameraView(this.background);
                     this.drawTerrain(this.background);
                     this.drawHighTerrain();
-                    this.background.restore();
-                }
 
-                this.game.renderbackground = false;
-                this.forceRedraw = false;
-            },
-
-            renderMobileStaticCanvas: function() {
-                this.drawOldTerrain();
-                if (!this.game.player.isMoving() && this.game.player) {
-                    this.background.save();
-                    this.setCameraView(this.background);
-                    this.drawTerrain(this.background);
                     this.background.restore();
+
                 }
 
                 this.game.renderbackground = false;
@@ -1429,7 +1431,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             renderFrame: function() {
-                if(this.mobile) {
+                if(this.mobile || this.tablet) {
                     this.renderFrameMobile();
                 }
                 else {
@@ -1438,27 +1440,25 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             renderFrameDesktop: function() {
-                this.clearScreen(this.context);
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 
-                this.context.save();
-                this.textcontext.save();
-                this.toptextcontext.save();
-
-                this.setCameraView(this.context);
-                this.setCameraView(this.textcontext);
-                this.setCameraView(this.toptextcontext);
 
                 this.renderStaticCanvases();
 
+                this.textcontext.save();
+                this.toptextcontext.save();
 
-
+                this.setCameraView(this.textcontext);
+                this.setCameraView(this.toptextcontext);
                 this.drawEntityNames();
 
+                this.context.save();
+                this.clearScreen(this.context);
 
                 this.drawEntitiesCircle();
 
+                this.setCameraView(this.context);
 
                 this.drawAnimatedTiles(false, this.context);
 
@@ -1485,6 +1485,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 if(this.game.cursorVisible || !this.tablet || this.isFirefox)
                     this.drawCursor();
 
+                this.drawDebugInfo();
+
+
             },
 
 
@@ -1494,9 +1497,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 
-                this.renderMobileStaticCanvas();
-
-                this.renderMobileCanvas();
+                this.renderingMobile();
 
                 this.textcontext.save();
                 this.toptextcontext.save();
@@ -1512,7 +1513,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.drawDirtyAnimatedTiles(this.context);
 
-                this.drawSelectedCell();
+                //this.drawSelectedCell();
                 this.drawInventory();
                 this.drawEntities(true);
 

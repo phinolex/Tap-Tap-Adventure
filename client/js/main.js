@@ -476,9 +476,6 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         case Types.Keys.SPACE:
                             game.makePlayerAttackNext();
                             break;
-                        case Types.Keys.I:
-                            $('#achievementsbutton').click();
-                            break;
                         case Types.Keys.H:
                             $('#helpbutton').click();
                             break;
@@ -731,10 +728,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         //}
                     }
 
-                    if (key == 76) // L for Quest Log.
-                    {
-                        game.questhandler.toggleShowLog();
-                    }
+                    if (key == 76)
+                        $('#achievementsbutton').click();
 
                     if (key == 77) // M for Music
                     {
@@ -747,13 +742,6 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         //}
                     }
 
-                    // The following may be uncommented for debugging purposes.
-                    //
-                    /*
-                     if (key === 70) { // F
-                     game.toggleDebugInfo();
-                     return false;
-                     } */
                 }
                 //}
             });

@@ -5,7 +5,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'tile', 'gameclient', 'audio', 'updater', 'transition',
         'pathfinder', 'entity', 'item', 'items', 'mob', 'npc', 'npcdata', 'player', 'character', 'chest', 'mount',
         'pet', 'mobs', 'mobdata', 'gather', 'exceptions', 'config', 'chathandler', 'warpmanager', 'textwindowhandler',
-        'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'questhandler',
+        'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'achievemethandler',
         'rankinghandler', 'inventoryhandler', 'bankhandler', 'partyhandler','bools', 'iteminfodialog',
         'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', 'enchantdialog', 'bankdialog', 'craftdialog', 'guild', 'gamedata',
         '../shared/js/gametypes', '../shared/js/itemtypes'],
@@ -13,7 +13,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              GameClient, AudioManager, Updater, Transition, Pathfinder,
              Entity, Item, Items, Mob, Npc, NpcData, Player, Character, Chest, Mount, Pet, Mobs, MobData, Gather, Exceptions, config,
              ChatHandler, WarpManager, TextWindowHandler, Menu, BoardHandler, KkHandler,
-             ShopHandler, PlayerPopupMenu, ClassPopupMenu, QuestHandler, RankingHandler,
+             ShopHandler, PlayerPopupMenu, ClassPopupMenu, AchievementHandler, RankingHandler,
              InventoryHandler, BankHandler, PartyHandler, Bools, ItemInfoDialog, SkillHandler, StateHandler,
              StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Guild, GameData) {
         var Game = Class.extend({
@@ -75,7 +75,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 // combat
                 this.infoManager = new InfoManager(this);
-                this.questhandler = new QuestHandler(this);
+                this.achievementHandler = new AchievementHandler(this);
                 this.kkhandler = new KkHandler();
                 this.chathandler = new ChatHandler(this, this.kkhandler);
                 this.shopHandler = new ShopHandler(this);
@@ -806,7 +806,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if(this.started) {
 
-                    if (Detect.isMobile && this.currentTime - this.lastFPSTime > 4000) {
+                    if ((this.renderer.mobile || Detect.isTablet()) && this.currentTime - this.lastFPSTime > 4000) {
+                        log.info("It's a tablet!" + Detect.isTablet() + " " + self.renderer.mobile);
                         this.updater.update();
                         this.renderer.renderFrame();
                     } else {
@@ -815,7 +816,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         this.renderer.renderFrame();
                     }
 
-                    if (!Detect.isMobile || !Detect.isTablet) {
+                    if (!Detect.isMobile || !Detect.isTablet()) {
                         this.FPSCount++;
                         if (this.currentTime - this.lastFPSTime > 10000) {
                             $('#fps').html("Date: " + new Date().toDateString());
@@ -996,7 +997,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                                inventorySkillKind, inventorySkillLevel,
                                                maxBankNumber, bankKind, bankNumber,
                                                bankSkillKind, bankSkillLevel,
-                                               questNumber, questFound, questProgress,
+                                               achievementNumber, achievementFound, achievementProgress,
                                                doubleExp, expMultiplier, membership, kind, rights, pClass) {
                     log.info("Received player ID from server : "+ id);
                     self.loadGameData();
@@ -1046,7 +1047,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.audioManager.updateMusic();
                     self.addEntity(self.player);
                     self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
-                    self.questhandler.initQuest(questFound, questProgress);
+                    self.achievementHandler.initAchievement(achievementFound, achievementProgress);
 
                     //log.info("send skill load");
                     self.client.sendSkillLoad();
@@ -1063,7 +1064,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.chathandler.addNotification("You are currently a member");
                     }
 
-                    self.initializeQuests();
+                    self.initializeAchievements();
 
                     self.player.onStartPathing(function(path) {
                         var i = path.length - 1,
@@ -1194,6 +1195,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
                             var dest = self.map.getDoorDestination(x, y);
 
+                            /*if(dest.quest && !self.questhandler.quests[0].completed) {
+                             self.unregisterEntityPosition(self.player);
+                             self.registerEntityPosition(self.player);
+                             self.chathandler.addGameNotification("Notification", "You must finish the tutorial to proceed.");
+                             return;
+                             }*/
+
                             if(dest.level > self.player.level) {
                                 self.unregisterEntityPosition(self.player);
                                 self.registerEntityPosition(self.player);
@@ -1212,7 +1220,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             self.client.sendTeleport(self.player.id, dest.x, dest.y);
 
-                            if(self.renderer.mobile && dest.cameraX && dest.cameraY) {
+                            if((self.renderer.mobile || self.renderer.tablet)&& dest.cameraX && dest.cameraY) {
                                 self.resetZone();
                             } else {
                                 if(dest.portal) {
@@ -1230,7 +1238,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             self.updatePlateauMode();
 
-                            if(self.renderer.mobile){
+                            if(self.renderer.mobile || self.renderer.tablet) {
                                 // When rendering with dirty rects, clear the whole screen when entering a door.
                                 self.renderer.clearScreen(self.renderer.context);
                             }
@@ -1848,7 +1856,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.renderbackground = true;
                         self.renderer.forceRedraw = true;
 
-                        if (self.renderer.mobile)
+                        if (self.renderer.mobile || self.renderer.tablet)
                             this.renderer.clearScreen(this.renderer.context);
 
 
@@ -1898,8 +1906,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.dialogs[index].hide();
                         }
                     });
-                    self.client.onQuest(function(data){
-                        self.questhandler.handleQuest(data);
+                    self.client.onAchievement(function(data){
+                        self.achievementHandler.handleAchievement(data);
                     });
                     self.client.onInventory(function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
                         //self.shopHandler.initSellInventory();
@@ -1912,12 +1920,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if (self.bankDialog.visible)
                             self.bankDialog.inventoryFrame.open();
                     });
-                    self.client.onTalkToNPC(function(npcKind, questId, isCompleted){
+                    self.client.onTalkToNPC(function(npcKind, achievementId, isCompleted){
                         var npc = self.getEntityByKind(npcKind);
                         if (isCompleted)
                         {
-                            var quest = self.questhandler.getNPCQuest(questId);
-                            var msg = npc.talk(quest, true);
+                            var achievement = self.achievementHandler.getNPCAchievement(achievementId);
+                            var msg = npc.talk(achievement, true);
                             if(msg) {
                                 self.createBubble(npc.id, msg);
                                 self.assignBubbleTo(npc);
@@ -2067,10 +2075,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 log.info("onWelcome - loaded");
             },
 
-            initializeQuests: function() {
+            initializeAchievements: function() {
                 var self = this;
-                log.info("Quests: " + self.questhandler.quests.length);
-                self.app.initAchievementList(self.questhandler.quests);
+                self.app.initAchievementList(self.achievementHandler.achievements);
             },
 
             /**
@@ -2259,7 +2266,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     } else if (NpcData.Kinds[npc.kind].name==="Coder") {
                         this.craftDialog.show();
                     } else {
-                        msg = this.questhandler.talkToNPC(npc);
+                        msg = this.achievementHandler.talkToNPC(npc);
                         this.previousClickPosition = {};
                         if (msg) {
 
@@ -3200,7 +3207,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.client.enable();
                 this.client.sendLogin(this.player);
 
-                if(this.renderer.mobile) {
+                if(this.renderer.mobile || this.renderer.tablet) {
                     this.renderer.clearScreen(this.renderer.context);
                 }
 

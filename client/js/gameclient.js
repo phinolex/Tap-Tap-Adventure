@@ -43,7 +43,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.NOTIFY] = this.receiveNotify;
             this.handlers[Types.Messages.KUNG] = this.receiveKung;
             this.handlers[Types.Messages.MANA] = this.receiveMana;
-            this.handlers[Types.Messages.QUEST] = this.receiveQuest;
+            this.handlers[Types.Messages.ACHIEVEMENT] = this.receiveAchievement;
             this.handlers[Types.Messages.PARTY] = this.receiveParty;
             this.handlers[Types.Messages.TALKTONPC] = this.receiveTalkToNPC;
             this.handlers[Types.Messages.RANKING] = this.receiveRanking;
@@ -235,12 +235,12 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             }
 
             var i=0;
-            var maxQuestNumber = data.shift();
-            var questFound = [];
-            var questProgress = [];
-            for(i=0; i < maxQuestNumber; i++) {
-                questFound.push(data.shift());
-                questProgress.push(data.shift());
+            var maxAchievementNumber = data.shift();
+            var achievementFound = [];
+            var achievementProgress = [];
+            for(i=0; i < maxAchievementNumber; i++) {
+                achievementFound.push(data.shift());
+                achievementProgress.push(data.shift());
             }
 
             if(this.welcome_callback) {
@@ -248,7 +248,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                     experience, inventory, inventoryNumber, maxInventoryNumber,
                     inventorySkillKind, inventorySkillLevel, maxBankNumber,
                     bankKind, bankNumber, bankSkillKind, bankSkillLevel,
-                    maxQuestNumber, questFound, questProgress, doubleExp,
+                    maxAchievementNumber, achievementFound, achievementProgress, doubleExp,
                     expMultiplier, membership, kind, rights, pClass);
             }
         },
@@ -262,10 +262,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             }
         },
 
-        receiveQuest: function(data){
+        receiveAchievement: function(data){
             data.shift();
-            if(this.quest_callback){
-                this.quest_callback(data);
+            if(this.achievement_callback){
+                this.achievement_callback(data);
             }
         },
         receiveInventory: function(data){
@@ -280,11 +280,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         },
         receiveTalkToNPC: function(data){
             var npcKind = data[1];
-            var questId = data[2];
+            var achievementId = data[2];
             var isCompleted = data[3];
 
             if(this.talkToNPC_callback){
-                this.talkToNPC_callback(npcKind, questId, isCompleted);
+                this.talkToNPC_callback(npcKind, achievementId, isCompleted);
             }
         },
         receiveMove: function(data) {
@@ -745,8 +745,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.mana_callback = callback;
         },
 
-        onQuest: function(callback) {
-            this.quest_callback = callback;
+        onAchievement: function(callback) {
+            this.achievement_callback = callback;
         },
         onTalkToNPC: function(callback) {
             this.talkToNPC_callback = callback;
@@ -931,9 +931,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             ids.unshift(Types.Messages.WHO);
             this.sendMessage(ids);
         },
-        sendTalkToNPC: function(kind, questId){
+        sendTalkToNPC: function(kind, achievementId){
             this.sendMessage([Types.Messages.TALKTONPC,
-                kind, questId]);
+                kind, achievementId]);
         },
         sendMagic: function(magicName, target){
             this.sendMessage([Types.Messages.MAGIC,
@@ -959,9 +959,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
             this.sendMessage([Types.Messages.RANKING, command]);
         },
-        sendQuest: function(id, type){
+        sendAchievement: function(id, type){
 
-            this.sendMessage([Types.Messages.QUEST, id, type]);
+            this.sendMessage([Types.Messages.ACHIEVEMENT, id, type]);
         },
         sendInventory: function(type, inventoryNumber, count){
 

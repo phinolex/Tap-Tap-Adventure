@@ -3,18 +3,19 @@
 		"npcId":41
 	},
 	"VillageGirl": {
-		"name":"Stoned Girl",
+		"name": "Azaria",
 		"npcId":43
 	},
 	"Villager": {
-		"npcId":44
+        "name": "Stronk",
+		"npcId": 44
 	},
 	"BeachNpc": {
 		"name": "Beachgoer",
 		"npcId":51
 	},
 	"Agent": {
-		"name": "Auction",
+		"name": "Auctioneer",
 		"npcId":47
 	},
 	"Nyan": {
@@ -34,7 +35,7 @@
 		"npcId":46
 	},
 	"DesertNpc": {
-		"name":"Muscles",
+		"name":"My Mooscles",
 		"npcId":53
 	},
 	"LavaNpc": {

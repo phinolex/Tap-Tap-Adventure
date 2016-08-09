@@ -124,15 +124,15 @@ Messages.HitPoints = Message.extend({
     }
 });
 Messages.TalkToNPC = Message.extend({
-    init: function(npcId, questNumber, isCompleted){
+    init: function(npcId, achievementNumber, isCompleted){
         this.npcId = npcId;
-        this.questNumber = questNumber;
+        this.achievementNumber = achievementNumber;
         this.isCompleted = isCompleted;
     },
     serialize: function(){
         return [Types.Messages.TALKTONPC,
             this.npcId,
-            this.questNumber,
+            this.achievementNumber,
             this.isCompleted];
     }
 });

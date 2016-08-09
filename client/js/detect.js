@@ -9,19 +9,16 @@ Detect.userAgentContains = function(string) {
     return navigator.userAgent.indexOf(string) != -1;
 };
 
-Detect.isTablet = function(screenWidth) {
-    if(screenWidth > 720) {
-        if(Detect.userAgentContains('Android')
-        || Detect.userAgentContains('Mobile') || Detect.userAgentContains('iPad')) {
-            return true;
-        }
-    }
+Detect.isTablet = function() {
+    var isAppleTablet = /ipad/i.test(navigator.userAgent.toLowerCase()),
+        isAndroidTablet = /android/i.test(navigator.userAgent.toLowerCase());
+
     return false;
 };
 
 Detect.isWindows = function() {
     return Detect.userAgentContains('Windows');
-}
+};
 
 Detect.isChromeOnWindows = function() {
     return Detect.userAgentContains('Chrome') && Detect.userAgentContains('Windows');

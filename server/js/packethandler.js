@@ -21,7 +21,7 @@ var cls = require("./lib/class"),
     express = require('express'),
     bodyParser = require('body-parser'),
     app = express(),
-    Quests = require('./quests'),
+    Achievements = require('./achievements'),
     request = require("request"),
     SkillData = require("./skilldata"),
     EntitySpawn = require("./entityspawn"),
@@ -204,8 +204,8 @@ module.exports = PacketHandler = Class.extend({
                     self.handleCheckpoint(message);
                     break;
 
-                case Types.Messages.QUEST:
-                    self.handleQuest(message);
+                case Types.Messages.Achievement:
+                    self.handleAchievement(message);
                     break;
 
                 case Types.Messages.TALKTONPC:
@@ -455,29 +455,29 @@ module.exports = PacketHandler = Class.extend({
     handleTalkToNPC: function(message){ // 30
         var self = this;
         var npcKind = message[1];
-        var questId = message[2];
+        var achievementId = message[2];
 
-        if (!this.player.achievement[questId] || !this.player.achievement[questId].found)
+        if (!this.player.achievement[achievementId] || !this.player.achievement[achievementId].found)
         {
             log.info("FOUND MISSION");
-            this.player.foundQuest(questId);
+            this.player.foundAchievement(achievementId);
             return;
         }
-        if (this.player.achievement[questId].progress === 999)
+        if (this.player.achievement[achievementId].progress === 999)
         {
             log.info("MISSION complete");
-            this.server.pushToPlayer(this.player, new Messages.TalkToNPC(npcKind, questId, true));
+            this.server.pushToPlayer(this.player, new Messages.TalkToNPC(npcKind, achievementId, true));
             return;
         }
 
-        var quest = Quests.QuestData[questId];
-        if(quest.type == 1)
+        var achievement = Achievements.AchievementData[achievementId];
+        if(achievement.type == 1)
         {
-            log.info("quest.npcId: " +quest.npcId+",questId="+questId+",quest.itemId="+quest.itemId+",quest.itemCount="+quest.itemCount);
-            this.player.questAboutItem(quest.npcId, questId, quest.itemId, quest.itemCount);
-            if (quest.xp)
+            log.info("achievement.npcId: " +achievement.npcId+",achievementId="+achievementId+",achievement.itemId="+achievement.itemId+",achievement.itemCount="+achievement.itemCount);
+            this.player.achievementAboutItem(achievement.npcId, achievementId, achievement.itemId, achievement.itemCount);
+            if (achievement.xp)
             {
-                self.player.incExp(quest.xp);
+                self.player.incExp(achievement.xp);
             }
         }
 
@@ -659,12 +659,10 @@ module.exports = PacketHandler = Class.extend({
         //if (!this.server.isValidPosition(x, y))
         //	return;
 
-        if (id !== this.player.id && !bypass) {
-            log.info("Invalid player id");
+        if (id !== this.player.id)
             return;
-        }
 
-        this.broadcast(new Messages.Teleport(this.player), false);
+        //this.broadcast(new Messages.Teleport(this.player), false);
 
         this.player.setPosition(x, y);
         this.player.clearTarget();
@@ -937,7 +935,7 @@ module.exports = PacketHandler = Class.extend({
                 if(!(mob instanceof Player)){
                     mob.receiveDamage(dmg, entity.id);
                     if(mob.hitPoints <= 0){
-                        self.player.questAboutKill(mob);
+                        self.player.achievementAboutKill(mob);
                     }
                     self.server.handleMobHate(mob.id, entity.id, dmg);
                     self.server.handleHurtEntity(mob, this.player, dmg);

@@ -1,8 +1,8 @@
 /* global bootKind, _, exports, module, Types */
 
 Types = {
-    Quest: {
-        TOTAL_QUEST_NUMBER: 35
+    Achievement: {
+        TOTAL_ACHIEVEMENT_NUMBER: 35
     },
     Messages: {
 
@@ -39,7 +39,7 @@ Types = {
         BOARDWRITE: 30,
         NOTIFY: 31,
         KUNG: 32,
-        QUEST: 33,
+        ACHIEVEMENT: 33,
         TALKTONPC: 34,
         MAGIC: 36,
         MANA: 37,

@@ -8,7 +8,7 @@ var cls = require("../lib/class"),
     redis = require("redis"),
     bcrypt = require("bcrypt"),
     ItemTypes = require("../../../shared/js/itemtypes"),
-    Quests = require('../quests'),
+    Achievements = require('../achievements'),
     inventory = require("../inventory");
 
 module.exports = DatabaseHandler = cls.Class.extend({
@@ -852,11 +852,11 @@ module.exports = DatabaseHandler = cls.Class.extend({
             }
         });
     },
-    loadQuest: function(player, callback){
+    loadAchievement: function(player, callback){
         var userKey = "u:" + player.name;
         var multi = client.multi();
         var i=0;
-        for(i=0; i<Object.keys(Quests.QuestData).length; i++){
+        for(i=0; i<Object.keys(Achievements.AchievementData).length; i++){
             multi.hget(userKey, "achievement" + (i) + ":found");
             multi.hget(userKey, "achievement" + (i) + ":progress");
         }
@@ -864,7 +864,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
             var i=0;
             var dFound, dProgress, foundTime;
 
-            for(i=0; i< Object.keys(Quests.QuestData).length; i++){
+            for(i=0; i< Object.keys(Achievements.AchievementData).length; i++){
                 dFound = Utils.trueFalse(replies.shift());
                 dProgress = Utils.NaN2Zero(replies.shift());
 

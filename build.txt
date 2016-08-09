@@ -23,8 +23,8 @@ js/exceptions.js
 js/mount.js
 js/player.js
 js/mob.js
-text!../shared/data/newquests_english.json
-js/questhandler.js
+text!../shared/data/achievements_english.json
+js/achievemethandler.js
 js/npc.js
 js/pet.js
 js/renderer.js
