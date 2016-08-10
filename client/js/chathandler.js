@@ -7,8 +7,6 @@ define(['jquery'], function() {
             this.kkhandler = kkhandler;
             this.chatLog = $('#chatLog');
             this.board = $('#board');
-            //handle global announcements server sided so
-            //they're always synced.
         },
         show: function(){
           $('#chatLog').css('display', 'block');

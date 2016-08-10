@@ -45,21 +45,23 @@
 	border: 1px solid #000;
 }
 
+
     #bubbles{
-        width:1440px;
-        height:672px;
-        margin-bottom:-672px;
+        font-family:'GraphicPixel';
+        width:960px;
+        height:448px;
+        margin-bottom:-448px;
         position: absolute;
-        top: 0px;
-        left: 0px;
+        top: 20px;
+        left: 12px;
         pointer-events:none;
         overflow: hidden;
         z-index:5;
     }
     .bubble {
-        background:rgba(45,45,45,0.8);
-        padding:0px 12px 0px 12px;
-        border-radius:12px;
+        background:rgba(45,45,45,0.7);
+        padding:3px 10px 0 10px;
+        border-radius:8px;
         color:rgba(255,255,255,0.8);
         display:inline-block;
         text-align:center;
@@ -73,7 +75,7 @@
         background:url('../img/common/thingy.png');
         margin:0 auto;
         margin-top:-6px;
-        top:12px;
+        top:10px;
         position:relative;
     }
     #bubbles a {
@@ -102,21 +104,22 @@
 	margin:4px;
 	border: 1px solid #000;
 }
-	
+
     #bubbles{
+        font-family:'GraphicPixel';
         width:960px;
         height:448px;
         margin-bottom:-448px;
         position: absolute;
-        top: 0px;
-        left: 0px;
+        top: 20px;
+        left: 12px;
         pointer-events:none;
         overflow: hidden;
         z-index:5;
     }
     .bubble {
-        background:rgba(45,45,45,0.8);
-        padding:0px 8px 0px 8px;
+        background:rgba(45,45,45,0.7);
+        padding:3px 10px 0 10px;
         border-radius:8px;
         color:rgba(255,255,255,0.8);
         display:inline-block;
@@ -131,7 +134,7 @@
         background:url('../img/common/thingy.png');
         margin:0 auto;
         margin-top:-6px;
-        top:12px;
+        top:10px;
         position:relative;
     }
     #bubbles a {
@@ -144,39 +147,25 @@
 
 @media screen and (max-width: 1000px) {
 
-#classSwitcher {
-	position: absolute;
-	width:32px;
-	height:24px;
-	left: calc(50% - 16px);
-	top: calc(50% - 12px);
-	display: none;
-	background-color: rgba(0,0,0,0.5);
-	color: white;
-	padding:2px;
-	text-align: center;
-	font-size:6px;
-}
-#classSwitcherButton {
-	margin:2px;
-	border: 1px solid #000;
-}
+
+
 
     #bubbles{
-        width:480px;
-        height:224px;
-        margin-bottom:-224px;
+        font-family:'GraphicPixel';
+        width:960px;
+        height:448px;
+        margin-bottom:-448px;
         position: absolute;
-        top: 0px;
-        left: 0px;
+        top: 20px;
+        left: 7px;
         pointer-events:none;
         overflow: hidden;
         z-index:5;
     }
     .bubble {
-        background:rgba(45,45,45,0.8);
-        padding:0px 4px 0px 4px;
-        border-radius:4px;
+        background:rgba(45,45,45,0.7);
+        padding:3px 10px 0 10px;
+        border-radius:8px;
         color:rgba(255,255,255,0.8);
         display:inline-block;
         text-align:center;
@@ -190,12 +179,29 @@
         background:url('../img/common/thingy.png');
         margin:0 auto;
         margin-top:-6px;
-        top:12px;
+        top:10px;
         position:relative;
     }
     #bubbles a {
         pointer-events:auto;
         text-decoration:none;
         color:#fcda5c;
+    }
+    #classSwitcher {
+        position: absolute;
+        width:32px;
+        height:24px;
+        left: calc(50% - 16px);
+        top: calc(50% - 12px);
+        display: none;
+        background-color: rgba(0,0,0,0.5);
+        color: white;
+        padding:2px;
+        text-align: center;
+        font-size:6px;
+    }
+    #classSwitcherButton {
+        margin:2px;
+        border: 1px solid #000;
     }
 }

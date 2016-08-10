@@ -1185,7 +1185,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.setCameraView(this.background);
                 this.drawTerrain(this.background);
-                this.drawAnimatedTiles(false, this.background);
+                //this.drawAnimatedTiles(false, this.background);
                 this.background.restore();
 
                 this.foreground.save();
@@ -1451,7 +1451,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.setCameraView(this.textcontext);
                 this.setCameraView(this.toptextcontext);
-                this.drawEntityNames();
 
                 this.context.save();
                 this.clearScreen(this.context);
@@ -1462,11 +1461,14 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.drawAnimatedTiles(false, this.context);
 
+
                 if(this.game.started && this.game.cursorVisible) {
                     this.drawSelectedCell();
                     this.drawTargetCell();
                     this.drawAttackTargetCell();
                 }
+
+
 
                 //this.drawOccupiedCells();
                 this.drawPathingCells();
@@ -1494,6 +1496,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             renderFrameMobile: function() {
                 this.clearDirtyRects();
                 this.preventFlickeringBug();
+
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 

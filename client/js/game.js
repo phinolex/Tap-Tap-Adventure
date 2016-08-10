@@ -575,8 +575,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.addEntity(item);
 
                 //Display info about the item upon creation (dropping, or any appearance on the ground)
-                this.createBubble(item.id, item.getInfoMsg());
-                this.assignBubbleTo(item);
+                //this.createBubble(item.id, item.getInfoMsg());
+                //this.assignBubbleTo(item);
             },
 
             removeItem: function(item) {
@@ -800,29 +800,17 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             tick: function() {
                 this.currentTime = new Date().getTime();
 
-
-                if(!this.isStopped)
-                    requestAnimFrame(this.tick.bind(this));
-
                 if(this.started) {
-
-                    if ((this.renderer.mobile || Detect.isTablet()) && this.currentTime - this.lastFPSTime > 4000) {
-                        log.info("It's a tablet!" + Detect.isTablet() + " " + self.renderer.mobile);
-                        this.updater.update();
-                        this.renderer.renderFrame();
-                    } else {
+                    if (this.currentTime - this.lastFPSTime > 2000) {
                         this.updateCursorLogic();
                         this.updater.update();
                         this.renderer.renderFrame();
                     }
-
-                    if (!Detect.isMobile || !Detect.isTablet()) {
-                        this.FPSCount++;
-                        if (this.currentTime - this.lastFPSTime > 10000) {
-                            $('#fps').html("Date: " + new Date().toDateString());
-                        }
-                    }
                 }
+
+                if(!this.isStopped)
+                    requestAnimFrame(this.tick.bind(this));
+
             },
 
             start: function() {
@@ -1220,16 +1208,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             self.client.sendTeleport(self.player.id, dest.x, dest.y);
 
-                            if((self.renderer.mobile || self.renderer.tablet)&& dest.cameraX && dest.cameraY) {
-                                self.resetZone();
-                            } else {
-                                if(dest.portal) {
-                                    self.assignBubbleTo(self.player);
-                                } else {
-                                    //self.camera.focusEntity(self.player);
-                                    self.resetZone();
-                                }
-                            }
+                            self.resetZone();
 
                             self.player.forEachAttacker(function(attacker) {
                                 attacker.disengage();
@@ -1933,7 +1912,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 setTimeout(function () {
                                     self.destroyBubble(npc.id);
                                     self.audioManager.playSound("npc-end");
-                                },5000);
+                                }, 5000);
                             }
                             //} else {
 

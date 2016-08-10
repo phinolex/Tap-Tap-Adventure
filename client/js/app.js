@@ -15,6 +15,7 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
             this.auctionsellDialogPopuped = false;
 
             this.inventoryNumber = 0;
+            this.showChatLog = null;
 
             this.classNames = ["loadcharacter",
                 "createcharacter",
@@ -225,6 +226,10 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
 
                             case 'cheating':
                                 self.addValidationError(null, "Attempts to cheat the system will not be tolerated.");
+                                break;
+
+                            case 'errorconnecting':
+                                self.addValidationError(null, "Unable to connect to the game server, please try again.");
                                 break;
 
                             default:
@@ -671,9 +676,15 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
 
         showChat: function() {
             if(this.game.started) {
+                if (this.showChatLog) {
+                    clearTimeout(this.showChatLog);
+                    this.showChatLog = null;
+                }
+
                 $('#chatbox').addClass('active');
                 $('#chatinput').focus();
                 $('#chatbutton').addClass('active');
+                $('#chatLog').css('visibility', 'visible');
             }
         },
 
@@ -682,6 +693,9 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
                 $('#chatbox').removeClass('active');
                 $('#chatinput').blur();
                 $('#chatbutton').removeClass('active');
+                this.showChatLog = setTimeout(function() {
+                    $('#chatLog').css('visibility', 'hidden');
+                }, 1000);
             }
         },
 

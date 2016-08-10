@@ -3,7 +3,7 @@ define(['jquery', 'timer'], function($, Timer) {
         init: function(id, element, time) {
             this.id = id;
             this.element = element;
-            this.timer = new Timer(5000, time);
+            this.timer = new Timer(500000, time);
         },
         isOver: function(time) {
             if(this.timer.isOver(time)) {

@@ -82,7 +82,16 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
             log.info("Trying to connect to server : "+url);
 
-            this.connection = io(url, {forceNew: true, reconnection: false});
+            this.connection = io(url, {
+                forceNew: true,
+                reconnection: false}
+            );
+
+            this.connection.on('connect_error', function() {
+                log.info("Could not connect to the game server.");
+                if (self.fail_callback)
+                    self.fail_callback('errorconnecting');
+            });
 
             this.connection.on('connection', function() {
                 log.info("Connected to server " + self.host + ":" + self.port);

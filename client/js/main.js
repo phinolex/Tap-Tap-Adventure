@@ -204,6 +204,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
             game.onGameStart(function() {
                 $('#parchment').removeClass();
+                $('#chatLog').css('visibility', 'hidden');
                 var entry = new EntryPoint();
                 entry.execute(game);
             });

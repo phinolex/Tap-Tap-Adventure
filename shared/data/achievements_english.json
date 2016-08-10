@@ -2,7 +2,7 @@
   {
     "npcId":40,
     "type": 1,
-    "name": "Slash!",
+    "name": "Slash",
     "desc": "Acquire a Big Sword!",
     "beforeTalk" : [
       "Hello fellow Zeearth resident!",
@@ -19,5 +19,23 @@
     "itemId": 61,
     "itemCount": 1,
     "xp":25
+  },
+
+  {
+    "npcId":44,
+    "type": 2,
+    "name": "Mooscles",
+    "desc": "Help Bulk Bogan poomp his mooscles.",
+    "beforeTalk" : [
+      "Yiss, poomping ze mooscles.",
+      "Yiss, you must help me.",
+      "Yiss, kill pesky gobln fr me."
+    ],
+    "afterTalk": [
+      "Yisss, now I can continue getting stronker."
+    ],
+    "mobId": 61,
+    "mobCount": 1,
+    "xp":45
   }
 ]

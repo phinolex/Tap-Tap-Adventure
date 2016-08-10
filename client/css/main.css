@@ -128,7 +128,7 @@ h1 {font-weight:normal;}
 
 #notifications {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel';overflow:hidden;}
 #notifications div {position:absolute;-moz-transition:none;-webkit-transition:none;top:0;width:100%;}
-#notifications div.top {-moz-transition:0.5s top ease;-webkit-transition:0.5s top ease;-o-transition:0.5s top ease;-ms-transition:0.5s top ease;transition:0.5s top ease;}
+#notifications div.top {-moz-transition:0.5s top ease-in-out;-webkit-transition:0.5s top ease-in-out;-o-transition:0.5s top ease-in-out;-ms-transition:0.5s top ease-in-out;transition:0.5s top ease-in-out;}
 #notifications div.top #message1 {opacity:0;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
 #notifications span {display:block;text-align:center;width:100%;opacity:1;-moz-user-select:none;-webkit-user-select:none;}
 
@@ -193,13 +193,13 @@ div.clear{
 }
 
 
-#instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
+#instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease-in-out, 0.4s opacity linear;-o-transition:0.4s top ease-in-out, 0.4s opacity linear;-ms-transition:0.4s top ease-in-out, 0.4s opacity linear;transition:0.4s top ease-in-out, 0.4s opacity linear;}
 #instructions.active, #achievements.active {opacity:1;pointer-events:auto;}
 
 #weapon, #armor {image-rendering:-moz-crisp-edges;}
 
 #achievements, #achievements li, .coin, #achievement-notification, #coinsparks, .achievement-sharing a, #previous, #next {background:url('../img/1/achievements.png');image-rendering:-moz-crisp-edges;}
-#achievements {font-family:'GraphicPixel'; position:absolute;top:50%;left:50%;z-index:1000;opacity:0;pointer-events:none;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
+#achievements {font-family:'GraphicPixel'; position:absolute;top:50%;left:50%;z-index:1000;opacity:0;pointer-events:none;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease-in-out, 0.4s opacity linear;-o-transition:0.4s top ease-in-out, 0.4s opacity linear;-ms-transition:0.4s top ease-in-out, 0.4s opacity linear;transition:0.4s top ease-in-out, 0.4s opacity linear;}
 #achievements li {clear:both;position:relative;}
 #achievements li .coin, #achievements li .achievement-name {float:left;}
 #achievements li .coin {opacity:0;}
@@ -207,7 +207,7 @@ div.clear{
 #achievements li.unlocked .coin {opacity:1;}
 #achievements .achievement-name {color:#fff;}
 #achievements .achievement-description {float:right;width:65%;}
-#achievement-notification {position:absolute;z-index:8;bottom:0;left:50%;text-align:center;font-family:'GraphicPixel';pointer-events:none;-moz-transition:0.3s height ease;-webkit-transition:0.3s height ease;-o-transition:0.3s height ease;-ms-transition:0.3s height ease;}
+#achievement-notification {position:absolute;z-index:8;bottom:0;left:50%;text-align:center;font-family:'GraphicPixel';pointer-events:none;-moz-transition:0.3s height ease-in-out;-webkit-transition:0.3s height ease-in-out;-o-transition:0.3s height ease-in-out;-ms-transition:0.3s height ease-in-out;}
 #achievement-notification .name, #achievement-notification .title {opacity:0;-moz-transition:0.3s opacity linear;-webkit-transition:0.3s opacity linear;-o-transition:0.3s opacity linear;-ms-transition:0.3s opacity linear;transition:0.3s opacity linear;}
 #achievement-notification.active .name, #achievement-notification.active .title {opacity:1;}
 #achievement-info {overflow:hidden;height:100%;}
@@ -264,12 +264,12 @@ footer div  {display:inline-block;}
 
 .ribbon {position:absolute;}
 .ribbon:hover {cursor:pointer;}
-.ribbon .top {-moz-transition:0.25s height ease;-webkit-transition:0.25s height ease;-o-transition:0.25s height ease;-ms-transition:0.25s height ease;transition:0.25s height ease;}
+.ribbon .top {-moz-transition:0.25s height ease-in-out;-webkit-transition:0.25s height ease-in-out;-o-transition:0.25s height ease-in-out;-ms-transition:0.25s height ease-in-out;transition:0.25s height ease-in-out;}
 
 .alert {height:50px;background:#d83939;width:100%;color:#eee;font-size:20px;font-family:'GraphicPixel', arial, sans-serif;text-align:center;line-height:50px;border-bottom:1px solid #000;}
 #instructions, #achievements, #lists, #about, #credits, .ribbon, .play, .play div, .barbutton {-webkit-tap-highlight-color:transparent;}
 #nameinput::-webkit-input-placeholder  {color:#fff;}
-#resize-check {position:absolute;height:0;top:0;left:0;-moz-transition:0.001s height ease;-webkit-transition:0.001s height ease;-o-transition:0.001s height ease;-ms-transition:0.001s height ease;transition:0.001s height ease;}
+#resize-check {position:absolute;height:0;top:0;left:0;-moz-transition:0.001s height ease-in-out;-webkit-transition:0.001s height ease-in-out;-o-transition:0.001s height ease-in-out;-ms-transition:0.001s height ease-in-out;transition:0.001s height ease-in-out;}
 #death p em {display:block;font-style:normal;}
 
 #legal p {width:75%;font-size:25px;line-height:35px;}
@@ -279,7 +279,7 @@ footer div  {display:inline-block;}
 
 #createcharacter form {position:relative;}
 
-#name-tooltip {width:400px;height:30px;padding:10px 0;font-size:20px;background:#373737;position:absolute;left:50%;margin-left:-200px;color:#fff;border-radius:8px;line-height:30px;top:-40px;opacity:0;-moz-transition:0.25s opacity ease;-webkit-transition:0.25s opacity ease;-o-transition:0.25s opacity ease;-ms-transition:0.25s opacity ease;transition:0.25s opacity ease;pointer-events:none;}
+#name-tooltip {width:400px;height:30px;padding:10px 0;font-size:20px;background:#373737;position:absolute;left:50%;margin-left:-200px;color:#fff;border-radius:8px;line-height:30px;top:-40px;opacity:0;-moz-transition:0.25s opacity ease-in-out;-webkit-transition:0.25s opacity ease-in-out;-o-transition:0.25s opacity ease-in-out;-ms-transition:0.25s opacity ease-in-out;transition:0.25s opacity ease-in-out;pointer-events:none;}
 #name-tooltip:after {content:url('../img/common/arrow.png');width:28px;height:16px;position:absolute;bottom:-8px;left:50%;margin-left:-14px;}
 #name-tooltip.visible {opacity:.9;}
 
@@ -288,8 +288,8 @@ footer div  {display:inline-block;}
 .parchment-left {position:absolute;top:0;left:0%;}
 .parchment-right {position:absolute;top:0;right:0%;}
 .parchment-middle {position:absolute;left:50%;top:0;}
-.animate .parchment-left {-moz-animation:parchleft 1s ease 1;-webkit-animation:parchleft 1s ease 1;-o-animation:parchleft 1s ease 1;-ms-animation:parchleft 1s ease 1;animation:parchleft 1s ease 1;}
-.animate .parchment-right {-moz-animation:parchright 1s ease 1;-webkit-animation:parchright 1s ease 1;-o-animation:parchright 1s ease 1;-ms-animation:parchright 1s ease 1;animation:parchright 1s ease 1;}
+.animate .parchment-left {-moz-animation:parchleft 1s ease-in-out 1;-webkit-animation:parchleft 1s ease-in-out 1;-o-animation:parchleft 1s ease-in-out 1;-ms-animation:parchleft 1s ease-in-out 1;animation:parchleft 1s ease-in-out 1;}
+.animate .parchment-right {-moz-animation:parchright 1s ease-in-out 1;-webkit-animation:parchright 1s ease-in-out 1;-o-animation:parchright 1s ease-in-out 1;-ms-animation:parchright 1s ease-in-out 1;animation:parchright 1s ease-in-out 1;}
 #credits, #createcharacter, #loadcharacter, #changePassword, #confirmation, #death, #error, #about, #legal {opacity:0;pointer-events:none;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
 .credits #credits, .createcharacter #createcharacter, .loadcharacter #loadcharacter, .changePassword #changePassword, .confirmation #confirmation, .death #death, .error #error, .about #about, .legal #legal {opacity:1;pointer-events:auto;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;}
 #intro {-moz-transition:0.4s opacity linear;-webkit-transition:0.4s opacity linear;-o-transition:0.4s opacity linear;-ms-transition:0.4s opacity linear;transition:0.4s opacity linear;}
@@ -300,9 +300,9 @@ footer div  {display:inline-block;}
 .game #credits, .game #death, .game #about {opacity:0;-moz-transition:0s opacity linear 0s;-webkit-transition:0s opacity linear 0s;-o-transition:0s opacity linear 0s;-ms-transition:0s opacity linear 0s;transition:0s opacity linear 0s;}
 .game.credits #credits, .game.death #death, .game.about #about, .game.legal #legal {opacity:1;-moz-transition:0.5s opacity linear 0.5s;-webkit-transition:0.5s opacity linear 0.5s;-o-transition:0.5s opacity linear 0.5s;-ms-transition:0.5s opacity linear 0.5s;transition:0.5s opacity linear 0.5s;}
 .game.credits #parchment, .game.death #parchment, .game.about #parchment, .game.legal #parchment {opacity:1;-moz-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-webkit-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-o-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-ms-transition:0.5s opacity linear 0s, 0s z-index linear 0s;transition:0.5s opacity linear 0s, 0s z-index linear 0s;z-index:200;}
-.game .parchment-left {-moz-transition:0.5s left ease;-webkit-transition:0.5s left ease;-o-transition:0.5s left ease;-ms-transition:0.5s left ease;transition:0.5s left ease;left:41%;}
-.game .parchment-right {-moz-transition:0.5s right ease;-webkit-transition:0.5s right ease;-o-transition:0.5s right ease;-ms-transition:0.5s right ease;transition:0.5s right ease;right:41%;}
-.game .parchment-middle {-moz-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-webkit-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-o-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-ms-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;width:0px;margin-left:0px;}
+.game .parchment-left {-moz-transition:0.5s left ease-in-out;-webkit-transition:0.5s left ease-in-out;-o-transition:0.5s left ease-in-out;-ms-transition:0.5s left ease-in-out;transition:0.5s left ease-in-out;left:41%;}
+.game .parchment-right {-moz-transition:0.5s right ease-in-out;-webkit-transition:0.5s right ease-in-out;-o-transition:0.5s right ease-in-out;-ms-transition:0.5s right ease-in-out;transition:0.5s right ease-in-out;right:41%;}
+.game .parchment-middle {-moz-transition:0.5s width ease-in-out, 0.5s margin-left ease-in-out, 0.5s background-position ease-in-out;-webkit-transition:0.5s width ease-in-out, 0.5s margin-left ease-in-out, 0.5s background-position ease-in-out;-o-transition:0.5s width ease-in-out, 0.5s margin-left ease-in-out, 0.5s background-position ease-in-out;-ms-transition:0.5s width ease-in-out, 0.5s margin-left ease-in-out, 0.5s background-position ease-in-out;transition:0.5s width ease-in-out, 0.5s margin-left ease-in-out, 0.5s background-position ease-in-out;width:0px;margin-left:0px;}
 .game.credits .parchment-left, .game.death .parchment-left, .game.about .parchment-left, .game.legal .parchment-left {left:0%;}
 .game.credits .parchment-right, .game.death .parchment-right, .game.about .parchment-right, .game.legal .parchment-right {right:0%;}
 #container {z-index:100;background:rgba(0,0,0,0.2);-moz-transition:1s opacity linear 0.5s;-webkit-transition:1s opacity linear 0.5s;-o-transition:1s opacity linear 0.5s;-ms-transition:1s opacity linear 0.5s;transition:1s opacity linear 0.5s;}
@@ -628,20 +628,21 @@ footer div  {display:inline-block;}
 
     #chatbox {
         position: absolute;
-        left: 50%;
-        bottom: 84px;
+        left: 52.75%;
+        bottom: 72.7px;
         width: 788px;
         height: 32px;
         margin-left: -394px;
         background-image: url('../img/2/main.png');
         background-position: 0px -596px;
         display: none;
+        zoom: 82%
     }
     #chatbox.active {
         display: block;
     }
     #chatbox input {
-        font-size:20px;
+        font-size:10px;
         color:#eee;
         background:none;
         width:90%;
@@ -721,7 +722,7 @@ footer div  {display:inline-block;}
         top: 82%;
         bottom: 10.309%;
         border: 1px solid #9C9898;
-        background: rgba(0, 0, 0, 0.35);
+        background: rgba(0, 0, 0, 0.25);
         padding: 5px;
         overflow-y: hidden;
         overflow-x: hidden;
@@ -1011,7 +1012,7 @@ footer div  {display:inline-block;}
     #about .link a {color:#2e7fdd;text-decoration:none;}
     #about .link .ext-link {height:18px;width:18px;background-position:-1197px -516px;display:block;float:left;margin-right:10px;}
 
-    .animate .parchment-middle {-moz-animation:parchmiddle3 1s ease 1;-webkit-animation:parchmiddle3 1s ease 1;-o-animation:parchmiddle3 1s ease 1;-ms-animation:parchmiddle3 1s ease 1;}
+    .animate .parchment-middle {-moz-animation:parchmiddle3 1s ease-in-out 1;-webkit-animation:parchmiddle3 1s ease-in-out 1;-o-animation:parchmiddle3 1s ease-in-out 1;-ms-animation:parchmiddle3 1s ease-in-out 1;}
     .game .parchment-middle {background-position: -633px -882px;}
     .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:1038px;margin-left:-519px;background-position: -114px -882px;}
 
@@ -1197,20 +1198,21 @@ footer div  {display:inline-block;}
 
     #chatbox{
         position: absolute;
-        left: 50%;
-        bottom: 56px;
+        left: 52.75%;
+        bottom: 72.7px;
         width: 788px;
         height: 32px;
         margin-left: -394px;
         background-image: url('../img/2/main.png');
         background-position: 0px -596px;
         display: none;
+        zoom: 82%;
     }
     #chatbox.active {
         display: block;
     }
     #chatbox input {
-        font-size:20px;
+        font-size:17px;
         color:#eee;
         background:none;
         width:90%;
@@ -1582,7 +1584,7 @@ footer div  {display:inline-block;}
     #about .link a {color:#2e7fdd;text-decoration:none;}
     #about .link .ext-link {height:12px;width:12px;background-position:-798px -344px;display:block;float:left;margin-right:7px;}
 
-    .animate .parchment-middle {-moz-animation:parchmiddle2 1s ease 1;-webkit-animation:parchmiddle2 1s ease 1;-o-animation:parchmiddle2 1s ease 1;-ms-animation:parchmiddle2 1s ease 1;}
+    .animate .parchment-middle {-moz-animation:parchmiddle2 1s ease-in-out 1;-webkit-animation:parchmiddle2 1s ease-in-out 1;-o-animation:parchmiddle2 1s ease-in-out 1;-ms-animation:parchmiddle2 1s ease-in-out 1;}
     .game .parchment-middle {background-position: -422px -588px;}
     .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
 
@@ -1776,10 +1778,10 @@ footer div  {display:inline-block;}
         width: 87px;
         height:15%;
         left: 130.6%;
-        margin-left: -648px;
-        top: 76%;
+        margin-left: -650px;
+        top: 77%;
         border: 1px solid #9C9898;
-        background: rgba(0, 0, 0, 0.35);
+        background: rgba(0, 0, 0, 0.15);
         padding: 5px;
         overflow-y: hidden;
         overflow-x: hidden;
@@ -1787,12 +1789,13 @@ footer div  {display:inline-block;}
         pointer-events: none;
     }
     #chatLog p{
-        margin-bottom: 3px;
+        font-size: 6px;
+        margin-bottom: 1.5px;
         padding: 0;
         line-height: 1;
         color: rgba(255,255,255,1);
         font-family:'GraphicPixel'
-    font-size: 8px;
+        font-size: 4px;
     }
     #chatLog p .name{
         font-weight: bold;
@@ -1800,14 +1803,15 @@ footer div  {display:inline-block;}
 
     #chatbox{
         position: absolute;
-        left: 50%;
-        bottom: 28px;
+        left: 53.2%;
+        bottom: 37px;
         width: 394px;
         height: 16px;
         margin-left: -197px;
         background-image: url('../img/1/main.png');
         background-position: 0px -298px;
         display: none;
+        zoom: 82.25%;
     }
     #chatbox.active {
         display: block;
@@ -1823,7 +1827,7 @@ footer div  {display:inline-block;}
         padding:3.5px 0;
     }
     #chatbox .legend{
-        position: absoute;
+        position: absolute;
         top: -10px;
         left: 5px;
         padding: 2px 3px;
@@ -1982,7 +1986,7 @@ footer div  {display:inline-block;}
     #about .link a {color:#2e7fdd;text-decoration:none;}
     #about .link .ext-link {height:6px;width:6px;background-position:-399px -172px;display:block;float:left;margin-right:4px;}
 
-    .animate .parchment-middle {-moz-animation:parchmiddle1 1s ease 1;-webkit-animation:parchmiddle1 1s ease 1;-o-animation:parchmiddle1 1s ease 1;-ms-animation:parchmiddle1 1s ease 1;}
+    .animate .parchment-middle {-moz-animation:parchmiddle1 1s ease-in-out 1;-webkit-animation:parchmiddle1 1s ease-in-out 1;-o-animation:parchmiddle1 1s ease-in-out 1;-ms-animation:parchmiddle1 1s ease-in-out 1;}
 
     .game .parchment-middle {background-position: -211px -294px;}
     .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:346px;margin-left:-173px;background-position: -38px -294px;}
