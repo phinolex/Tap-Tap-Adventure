@@ -144,7 +144,8 @@ Types = {
         CRAFT: 103,
         FAILEDATTEMPTS: 104,
         TIME: 105,
-        SENDTELE: 106
+        SENDTELE: 106,
+        TOD: 107
     },
 
     Orientations: {

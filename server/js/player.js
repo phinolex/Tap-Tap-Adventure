@@ -234,12 +234,12 @@ module.exports = Player = Character.extend({
             {
                 this.tmpAchievement = achievement;
                 this._achievementAboutKill(mob.kind, achievement, function (achievement){
-                    if (self.tmpachievement.xp)
+                    if (self.tmpAchievement.xp)
                     {
-                        self.incExp(self.tmpachievement.xp);
+                        self.incExp(self.tmpAchievement.xp);
                     }
-                    var skillName = self.tmpachievement.skillName;
-                    var skillLevel = self.tmpachievement.skillLevel;
+                    var skillName = self.tmpAchievement.skillName;
+                    var skillLevel = self.tmpAchievement.skillLevel;
                     //log.info("skill="+skillName+",skillLevel="+skillLevel);
                     if (skillName && skillLevel)
                     {

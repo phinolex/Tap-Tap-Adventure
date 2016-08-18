@@ -10,7 +10,7 @@
     "kind":61,
     "type":"weapon",
     "attack":2,
-    "name":"Big Sword"
+    "name":"Heavy Sword"
   },
   "Axe": {
     "kind":65,
@@ -28,13 +28,13 @@
     "kind":66,
     "type":"weapon",
     "attack":5,
-    "name":"Blue Sword"
+    "name":"Water Sword"
   },
   "RedSword": {
     "kind":62,
     "type":"weapon",
     "attack":6,
-    "name":"Red Sword"
+    "name":"Fire Sword"
   },
   "GoldenSword": {
     "kind":63,
@@ -52,19 +52,19 @@
     "kind":79,
     "type":"weapon",
     "attack":9,
-    "name":"Spear"
+    "name":"Silly Spear"
   },
   "Scimitar": {
     "kind":84,
     "type":"weapon",
     "attack":10,
-    "name":"Scimitar"
+    "name":"Pirate's Scimitar"
   },
   "Trident": {
     "kind":89,
     "type":"weapon",
     "attack":11,
-    "name":"Trident"
+    "name":"Trident Of The Seas"
   },
   "Bluescimitar": {
     "kind":97,

@@ -454,3 +454,11 @@ Messages.MinigameTime = Message.extend({
     }
 });
 
+Messages.TimeOfDay = Message.extend({
+    init: function (isDay) {
+        this.isDay = isDay;
+    },
+    serialize: function() {
+        return [Types.Messages.TOD, this.isDay];
+    }
+});

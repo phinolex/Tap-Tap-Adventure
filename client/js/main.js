@@ -158,8 +158,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
     var initGame = function() {
         require(['game', 'button2'], function(Game, Button2) {
-
-
+            log.info("Initialized Game.");
 
             var canvas = document.getElementById("entities"),
                 backgroundbuffer = document.getElementById("backgroundbuffer"),
@@ -177,7 +176,6 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             if(app.isDesktop && app.supportsWorkers) {
                 game.loadMap();
             }
-
 
             game.onNbPlayersChange(function(worldPlayers, totalPlayers){
                 if (worldPlayers !== 1) {
@@ -307,12 +305,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             } else {
                 this.scale = 2;
             }
-
-
-
-
-
-            Button2.configure = {background: {top: this.scale * 314, width: this.scale * 14}, kinds: [0, 3, 2]};
+            
+            /*Button2.configure = {background: {top: this.scale * 314, width: this.scale * 14}, kinds: [0, 3, 2]};
 
 
             this.characterButton = new Button2('#characterButton', {background: {left: this.scale * 238 }});
@@ -326,11 +320,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }
             });
             game.characterDialog.button = this.characterButton;
-
-
-
-            this.helpButton = new Button2('#helpbutton', {background: {left: this.scale * 280}});
-
+            game.gameButtons.push(this.characterButton);
             // Inventory Button
             this.inventoryButton = new Button2('#moreinventorybutton', {background: {left: this.scale * 196}});
             this.inventoryButton.onClick(function(sender, event) {
@@ -338,6 +328,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     game.inventoryHandler.toggleAllInventory();
                 }
             });
+            game.gameButtons.push(this.inventoryButton);
 
             // Sound Button
             this.soundButton = new Button2('#soundbutton', {background: {left: this.scale * 98}, downed: true});
@@ -352,6 +343,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }
             });
             game.soundButton = this.soundButton;
+            game.gameButtons.push(this.soundButton);
 
             // Warp Button
             this.warpButton = new Button2('#warpbutton', {background: {left: this.scale * 322}});
@@ -365,6 +357,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }
             });
             game.warpButton = this.warpButton;
+            game.gameButtons.push(this.warpButton);
 
 
             // Chat Button
@@ -379,7 +372,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }
             });
             game.chatButton = this.chatButton;
-
+            game.gameButtons.push(this.chatButton);*/
 
             $(document).mousemove(function(event) {
                 app.setMouseCoordinates(event);
@@ -815,12 +808,12 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
         });
 
         $(window).blur(function(){
-            if (game.client && game.player && game.started);
-            //game.client.sendHasFocus(0);
+            if (game.client && game.player && game.started)
+                game.client.sendHasFocus(0);
         });
         $(window).focus(function(){
-            if (game.client && game.player && game.started);
-            //game.client.sendHasFocus(1);
+            if (game.client && game.player && game.started)
+                game.client.sendHasFocus(1);
         });
 
     };

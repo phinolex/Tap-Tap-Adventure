@@ -431,13 +431,23 @@ module.exports = PacketHandler = Class.extend({
                     } else
                         self.send([Types.Messages.NOTIFY, "You are currently muted."]);
                     break;
+
                 case "/setrank":
                     databaseHandler.setPlayerRights(self.player, 2);
                     break;
+
                 case "/test":
                     databaseHandler.moveToBlackHole(self.player, 15, 15);
                     self.player.forcePosition(15, 15);
                     break;
+
+                case "/pos":
+                    var x = self.player.x;
+                    var y = self.player.y;
+
+                    self.send([Type.Messages.NOTIFY], "x: " + x + " y: " + y);
+                    break;
+
                 default:
 
                     if ((new Date()).getTime() > self.player.chatBanEndTime) {

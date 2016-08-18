@@ -1,4 +1,4 @@
-define([], function() {
+define(function() {
     var WarpManager = Class.extend({
         init: function(game) {
             var self = this;

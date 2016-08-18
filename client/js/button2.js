@@ -1,11 +1,11 @@
 define(function() {
     function isUndefined(value) {
-      
+
         return (typeof value) == 'undefined';
     }
 
     function isObject(value) {
-        
+
         return (typeof value) == 'object';
     }
 
@@ -29,125 +29,125 @@ define(function() {
     var Button2 = Class.extend({
         // kind - normal: 0, disabled: 1, downed: 2, overed: 3, blinked: 4
         init: function(id, configure) {
-          this.id = id;
-          this.background = {}
-          assign(this.background, configure.background, Button2.configure.background, ['left', 'top', 'width']);
-          this.kinds = isObject(configure.kinds) ? configure.kinds: (isObject(Button2.configure.kinds) ? Button2.configure.kinds : [0]);
-          this.visible = isUndefined(configure.visible) ? true : configure.visible;
-          this.enabled = isUndefined(configure.enabled) ? true : configure.enabled;
-          this.downed = isUndefined(configure.downed) ? false : configure.downed;
-          this.overed = false;
-          this.blinked = false;
-          this.blinkFlag = false;
-          this.blinkHandle = null;
-          this.body = $(this.id);
-          this.body.css('display', this.visible ? 'block' : 'none');
-          this.kind = -1;
-          this.clickHandler = null;
+            this.id = id;
+            this.background = {};
+            assign(this.background, configure.background, Button2.configure.background, ['left', 'top', 'width']);
+            this.kinds = isObject(configure.kinds) ? configure.kinds: (isObject(Button2.configure.kinds) ? Button2.configure.kinds : [0]);
+            this.visible = isUndefined(configure.visible) ? true : configure.visible;
+            this.enabled = isUndefined(configure.enabled) ? true : configure.enabled;
+            this.downed = isUndefined(configure.downed) ? false : configure.downed;
+            this.overed = false;
+            this.blinked = false;
+            this.blinkFlag = false;
+            this.blinkHandle = null;
+            this.body = $(this.id);
+            this.body.css('display', this.visible ? 'block' : 'none');
+            this.kind = -1;
+            this.clickHandler = null;
 
-          this.refresh();
+            this.refresh();
 
-          this.body.unbind('click').bind('click', function(event) {
-            if(this.enabled && this.clickHandler) {
-              this.clickHandler(this, event);
+            this.body.unbind('click').bind('click', function(event) {
+                if(this.enabled && this.clickHandler) {
+                    this.clickHandler(this, event);
+                }
+            }.bind(this));
+            if(this.kinds.indexOf(3) >= 0) {
+                this.body.unbind('mouseover').bind('mouseover', function(event) {
+                    this.overed = true;
+                    this.refresh();
+                }.bind(this));
+                this.body.unbind('mouseout').bind('mouseout', function(event) {
+                    this.overed = false;
+                    this.refresh();
+                }.bind(this));
             }
-          }.bind(this));
-          if(this.kinds.indexOf(3) >= 0) {
-            this.body.unbind('mouseover').bind('mouseover', function(event) {
-              this.overed = true;
-              this.refresh();
-            }.bind(this));
-            this.body.unbind('mouseout').bind('mouseout', function(event) {
-              this.overed = false;
-              this.refresh();
-            }.bind(this));
-          }
         },
 
         /*setImage: function (image) {
-        	if (this.body) {
-        		this.body.css('background-image', 'url=("'+image+') !important');
-        	}
-        },*/
-        
-        setBackground: function(background) {        	
-        	this.background = background;
-        	this.kind = this.kind ? this.kind : 0;
-        	this.setBackgroundPosition(this.kind);
+         if (this.body) {
+         this.body.css('background-image', 'url=("'+image+') !important');
+         }
+         },*/
+
+        setBackground: function(background) {
+            this.background = background;
+            this.kind = this.kind ? this.kind : 0;
+            this.setBackgroundPosition(this.kind);
         },
 
         getBackgroundPosition: function(kind) {
-          var left = isUndefined(this.background.left) ? 0 : this.background.left,
-              top = isUndefined(this.background.top) ? 0 : this.background.top,
-              width = isUndefined(this.background.width) ? 25 : this.background.width,
-              index = indexOf(this.kinds, kind, 0);
-          return '-' + (left + (width * index)) + 'px -' + (top) + 'px';
+            var left = isUndefined(this.background.left) ? 0 : this.background.left,
+                top = isUndefined(this.background.top) ? 0 : this.background.top,
+                width = isUndefined(this.background.width) ? 25 : this.background.width,
+                index = indexOf(this.kinds, kind, 0);
+            return '-' + (left + (width * index)) + 'px -' + (top) + 'px';
         },
         setBackgroundPosition: function(kind) {
-		this.kind = kind;
-		this.body.css('background-position', this.getBackgroundPosition(kind));
+            this.kind = kind;
+            this.body.css('background-position', this.getBackgroundPosition(kind));
         },
 
         refresh: function() {
-          if(this.visible) {
-            this.setBackgroundPosition(this.enabled ? (this.overed ? 3 : (this.downed ? 2 : (this.blinked ? (this.blinkFlag ? 4 : 0) : 0))) : 1);
-          }
+            if(this.visible) {
+                this.setBackgroundPosition(this.enabled ? (this.overed ? 3 : (this.downed ? 2 : (this.blinked ? (this.blinkFlag ? 4 : 0) : 0))) : 1);
+            }
         },
         show: function() {
-          this.visible = true;
-          this.body.css('display', 'block');
+            this.visible = true;
+            this.body.css('display', 'block');
         },
         hide: function() {
-          this.visible = false;
-          this.body.css('display', 'none');
+            this.visible = false;
+            this.body.css('display', 'none');
         },
         enable: function() {
-          this.enabled = true;
-          this.refresh();
+            this.enabled = true;
+            this.refresh();
         },
         disable: function() {
-          if(this.blinked) {
-            this.blink(false);
-          }
+            if(this.blinked) {
+                this.blink(false);
+            }
 
-          this.enabled = false;
-          this.refresh();
+            this.enabled = false;
+            this.refresh();
         },
         down: function() {
-          this.downed = true;
-          if(this.enabled) {
-            this.refresh();
-          }
+            this.downed = true;
+            if(this.enabled) {
+                this.refresh();
+            }
         },
         up: function() {
-          this.downed = false;
-          if(this.enabled) {
-            this.refresh();
-          }
+            this.downed = false;
+            if(this.enabled) {
+                this.refresh();
+            }
         },
         blink: function(flag) {
-          if(this.enabled) {
-            if(flag) {
-              if((this.kinds.indexOf(4) >= 0) && !this.blinked) {
-                this.blinkFlag = false;
-                this.blinkHandle = setInterval(function() {
-                  this.blinkFlag = !this.blinkFlag;
-                  this.refresh();
-                }.bind(this), 500);
-                this.blinked = true;
-              }
-            } else {
-              if(this.blinked) {
-                clearInterval(this.blinkHandle);
-                this.blinkHandle = null;
-                this.blinked = false;
-                this.refresh();
-              }
+            if(this.enabled) {
+                if(flag) {
+                    if((this.kinds.indexOf(4) >= 0) && !this.blinked) {
+                        this.blinkFlag = false;
+                        this.blinkHandle = setInterval(function() {
+                            this.blinkFlag = !this.blinkFlag;
+                            this.refresh();
+                        }.bind(this), 500);
+                        this.blinked = true;
+                    }
+                } else {
+                    if(this.blinked) {
+                        clearInterval(this.blinkHandle);
+                        this.blinkHandle = null;
+                        this.blinked = false;
+                        this.refresh();
+                    }
+                }
             }
-          }
         },
         onClick: function(handler) {
-            
+
             this.clickHandler = handler;
         }
     });

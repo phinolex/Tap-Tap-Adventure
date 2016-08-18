@@ -99,9 +99,27 @@ canvas { position:absolute;image-rendering:optimizeSpeed;}
 
 }*/
 
+@media screen and (max-width: 800px) and (orientation: portrait) {
+    #portrait {display:block;height:300px;width:300px;position:absolute;top:55%; left:50%; margin:-150px 0 0 -150px;}
+    #parchment {display:none;}
+    #container, .game #container {display:none;}
+
+    #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;background-size:844px;}
+    #portrait p {color:#eee;font-family:'GraphicPixel', sans-serif;font-size:20px;text-align:center;}
+
+    #tilt {height:120px;width:132px;background-position:-710px -82px;background-size:844px;margin:25px auto 0 auto;}
+}
+
+@media screen and (max-width: 640px) and (orientation: portrait) {
+    #portrait {display:block;height:300px;width:300px;position:absolute;top:70%; left:50%; margin:-150px 0 0 -150px;}
+
+    #logo {height:42px;width:229px;position:absolute;top:10%;left:50%;margin-left:-114px;z-index:3;background-size:422px;}
+}
 
 @media screen and (max-width: 600px) {
+    #portrait p {color:#eee;font-family:'GraphicPixel', sans-serif;font-size:20px;text-align:center;}
 
+    #tilt {height:120px;width:132px;background-position:-710px -82px;background-size:844px;margin:25px auto 0 auto;}
     #entities {
         cursor: default;
     }
@@ -1250,6 +1268,8 @@ footer div  {display:inline-block;}
     }
     #logo, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
     #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
+
+
     #parchment, #loadcharacter, #changePassword, #confirmation, #error, #legal {width:844px;height:364px;position:absolute;top:55%;left:50%;margin-left:-422px;margin-top:-182px;font-size:20px;text-align:center; z-index:2;}
     #parchment h1 {margin-top:40px;font-weight:normal;}
     .left-ornament, .right-ornament {height:24px;width:62px;display:inline-block;margin:0 15px;position:relative;top:7px;}
@@ -1599,6 +1619,10 @@ footer div  {display:inline-block;}
 }
 
 @media screen and (max-width: 1000px) {
+    #portrait p {color:#eee;font-family:'GraphicPixel', sans-serif;font-size:20px;text-align:center;}
+
+    #tilt {height:120px;width:132px;background-position:-710px -82px;background-size:844px;margin:25px auto 0 auto;}
+
 
     #partyconfirm {
         position: absolute;

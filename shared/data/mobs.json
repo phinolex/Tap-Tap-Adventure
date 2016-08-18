@@ -123,11 +123,11 @@
     "name": "Armoured Skeleton",
     "kind": 12,
     "drops": {"axe": 250, "morningstar": 200, "platearmor": 300, "platearcherarmor": 250},
-    "hp": 50,
+    "hp": 65,
     "armor": 4,
     "weapon": 2,
-    "xp": 40,
-    "level": 7,
+    "xp": 45,
+    "level": 10,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -144,7 +144,7 @@
     "armor": 4,
     "weapon": 2,
     "xp": 40,
-    "level": 7,
+    "level": 9,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -160,8 +160,8 @@
     "hp": 50,
     "armor": 4,
     "weapon": 2,
-    "xp": 40,
-    "level": 7,
+    "xp": 50,
+    "level": 12,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -177,8 +177,8 @@
     "hp": 50,
     "armor": 4,
     "weapon": 2,
-    "xp": 40,
-    "level": 7,
+    "xp": 50,
+    "level": 12,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": false,
@@ -194,8 +194,8 @@
     "hp": 50,
     "armor": 4,
     "weapon": 2,
-    "xp": 40,
-    "level": 7,
+    "xp": 55,
+    "level": 14,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -211,8 +211,8 @@
     "hp": 50,
     "armor": 10,
     "weapon": 6,
-    "xp": 40,
-    "level": 25,
+    "xp": 75,
+    "level": 20,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -220,6 +220,487 @@
     "moveSpeed": 400,
     "spawnDelay": 35000
 
+  },
+
+  "Adherer": {
+    "name": "Dark Mage",
+    "kind": 125,
+    "drops": {},
+    "hp": 350,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 150,
+    "level": 31,
+    "aggroRange": 1,
+    "attackRange": 2,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Ant": {
+
+  },
+
+  "BabySpider": {
+
+  },
+
+  "Beetle": {
+
+  },
+
+  "BlackPirateSkeleton": {
+
+  },
+
+  "BlackWizard": {
+
+  },
+
+  "BlazeSpider": {
+
+  },
+
+  "BlueCockroach": {
+
+  },
+
+  "BluePreta": {
+
+  },
+
+  "Breaker": {
+
+  },
+
+  "Cactus": {
+
+  },
+
+  "Cat": {
+
+  },
+
+  "Clam": {
+
+  },
+
+  "Cobra": {
+
+  },
+
+  "CrystalScolpion": {
+
+  },
+
+  "CursedHahoeMask": {
+
+  },
+
+  "CursedDjangseung": {
+
+  },
+
+  "DarkOgre": {
+
+  },
+
+  "DarkRegion": {
+
+  },
+
+  "DarkRegionIllusion": {
+
+  },
+
+  "DarkScolpion": {
+
+  },
+
+  "DarkSkeleton": {
+
+  },
+
+  "DesertScolpion": {
+
+  },
+
+  "DevilKazya": {
+
+  },
+
+  "EarthWorm": {
+
+  },
+
+  "Eliminator": {
+
+  },
+
+  "Enel": {
+
+  },
+
+  "FireFox": {
+
+  },
+
+  "FireSpider": {
+
+  },
+
+  "FlareDanceKnight": {
+
+  },
+
+  "Fluffy": {
+
+  },
+
+  "ForestDragon": {
+
+  },
+
+  "Frog": {
+
+  },
+
+  "FrostQueen": {
+
+  },
+
+  "GhostRider": {
+
+  },
+
+  "GoldGolem": {
+
+  },
+
+  "Golem": {
+
+  },
+
+  "GreenFish": {
+
+  },
+
+  "HellSpider": {
+
+  },
+
+  "HermitCrab": {
+
+  },
+
+  "Hobgoblin": {
+
+  },
+
+  "HongCheol": {
+
+  },
+
+  "IceGolem": {
+
+  },
+
+  "IceKnight": {
+
+  },
+
+  "IceVulture": {
+
+  },
+
+  "InfectedGuard": {
+
+  },
+
+  "IronOgre": {
+
+  },
+
+  "JirisanMoonBear": {
+
+  },
+
+  "Kaonashi": {
+
+  },
+
+  "LightningGuardian": {
+
+  },
+
+  "LivingArmor": {
+
+  },
+
+  "Mantis": {
+
+  },
+
+  "Mermaid": {
+
+  },
+
+  "Mimic": {
+
+  },
+
+  "MiniDragon": {
+
+  },
+
+  "MiniEmperor": {
+
+  },
+
+  "MiniIceKnight": {
+
+  },
+
+  "MiniKnight": {
+
+  },
+
+  "MiniSeaDragon": {
+
+  },
+
+  "MoleKing": {
+
+  },
+
+  "NightmareRegion": {
+
+  },
+
+  "OgreLord": {
+
+  },
+
+  "OldOgre": {
+
+  },
+
+  "Orc": {
+
+  },
+
+  "Pain": {
+
+  },
+
+  "Penguin": {
+
+  },
+
+  "Pierrot": {
+
+  },
+
+  "PinkElf": {
+
+  },
+
+  "PirateCaptain": {
+
+  },
+
+  "PirateKing": {
+
+  },
+
+  "PirateSkeleton": {
+
+  },
+
+  "PoisonSpider": {
+
+  },
+
+  "Preta": {
+
+  },
+
+  "PurplePreta": {
+
+  },
+
+  "QueenAnt": {
+
+  },
+
+  "QueenSpider": {
+
+  },
+
+  "RedCockroach": {
+
+  },
+
+  "RedElf": {
+
+  },
+
+  "RedFish": {
+
+  },
+
+  "RedGuard": {
+
+  },
+
+  "RedMouse": {
+
+  },
+
+  "RedPirateSkeleton": {
+
+  },
+
+  "RegionHenchman": {
+
+  },
+
+  "Rhaphidophoridae": {
+
+  },
+
+  "Rudolf": {
+
+  },
+
+  "Santa": {
+
+  },
+
+  "SantaElf": {
+
+  },
+
+  "Scorpion": {
+
+  },
+
+  "SeaDragon": {
+
+  },
+
+  "ShadowRegion": {
+
+  },
+
+  "SkyDinosaur": {
+
+  },
+
+  "SkyElf": {
+
+  },
+
+  "Slime": {
+
+  },
+
+  "SmallDevil": {
+
+  },
+
+  "SnowElf": {
+
+  },
+
+  "SnowLady": {
+
+  },
+
+  "Snowman": {
+
+  },
+
+  "SnowRabbit": {
+
+  },
+
+  "SnowWolf": {
+
+  },
+
+  "SoliderAnt": {
+
+  },
+
+  "SoyBeanBug": {
+
+  },
+
+  "Spider": {
+
+  },
+
+  "Squid": {
+
+  },
+
+  "Squirrel": {
+
+  },
+
+  "SuicideGhost": {
+
+  },
+
+  "Vulture": {
+
+  },
+
+  "WhiteBear": {
+
+  },
+
+  "WhiteMouse": {
+
+  },
+
+  "WhiteTiger": {
+
+  },
+
+  "WhiteGuardian": {
+
+  },
+
+  "Wolf": {
+
+  },
+
+  "YellowBat": {
+
+  },
+
+  "YellowFish": {
+
+  },
+
+  "YellowMouse": {
+
+  },
+
+  "YellowPreta": {
+
+  },
+
+  "Zombie": {
+
+  },
+
+  "AdminArmor": {
+    "name": "Death"
   }
 
 }

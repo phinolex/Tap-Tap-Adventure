@@ -1,10 +1,12 @@
 
 /* global Mob, Types, Item, log, _, TRANSITIONEND, Class */
 
-define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
+define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, MobData, Button2) {
 
     var App = Class.extend({
         init: function() {
+            this.window = window;
+            this.rotation = null;
             this.currentPage = 1;
             this.blinkInterval = null;
             this.isParchmentReady = true;
@@ -21,6 +23,7 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
                 "createcharacter",
                 "changePassword"];
             this.frontPage = this.classNames[0];
+
         },
 
         setGame: function(game) {
@@ -30,6 +33,7 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
             this.isDesktop = !(this.isMobile || this.isTablet);
             this.supportsWorkers = !!window.Worker;
             this.ready = true;
+            this.rotation = this.window.orientation;
         },
 
         initFormFields: function() {
@@ -63,6 +67,7 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
 
         center: function() {
             window.scrollTo(0, 1);
+
         },
 
         canStartGame: function() {
@@ -1008,6 +1013,7 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
         },
 
         resizeUi: function() {
+            log.info("Rescaling..");
             if(this.game) {
                 if(this.game.started) {
                     this.game.resize();
@@ -1017,6 +1023,7 @@ define(['jquery', 'mob', 'item', 'mobdata'], function($, Mob, Item, MobData) {
                     this.game.updateBars();
                 } else {
                     var newScale = this.game.renderer.getScaleFactor();
+
                     this.game.renderer.rescale(newScale);
                 }
             }

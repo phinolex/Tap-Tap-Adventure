@@ -37,5 +37,23 @@
     "mobId": 61,
     "mobCount": 1,
     "xp":45
+  },
+
+  {
+    "npcId":49,
+    "type": 2,
+    "name": "Mooscles",
+    "desc": "Help Bulk Bogan poomp his mooscles.",
+    "beforeTalk" : [
+      "Yiss, poomping ze mooscles.",
+      "Yiss, you must help me.",
+      "Yiss, kill pesky gobln fr me."
+    ],
+    "afterTalk": [
+      "Yisss, now I can continue getting stronker."
+    ],
+    "mobId": 61,
+    "mobCount": 1,
+    "xp":45
   }
 ]

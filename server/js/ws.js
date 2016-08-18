@@ -133,9 +133,7 @@ WS.WebsocketServer = Server.extend({
                 var id = path.split('&')[1];
                 var name = path.split('&')[2];
                 path.concat(id).concat(name);
-                if (path.startsWith("/token")){
-                    log.info("Token received with ID: " + id + " and name: " + name);
-                }
+
                 switch (path) {
 
                     case '/status':
@@ -199,17 +197,19 @@ WS.WebsocketServer = Server.extend({
                         response.end(newConfigString);
                         break;
                     case '/shared/js/file.js':
-                        // Sends the real shared/js/file.js to the client
-                        sendFile('js/file.js', response, log);
-                        break;
                     case '/shared/js/gametypes.js':
-                        // Sends the real shared/js/gametypes.js to the client
-                        sendFile('js/gametypes.js', response, log);
+                    case '/shared/js/itemtypes.js':
+                    case '/shared/data/achievements_english.json':
+                    case '/shared/data/craft.json':
+                    case '/shared/data/entity_spawn.json':
+                    case '/shared/data/gather.json':
+                    case '/shared/data/items.json':
+                    case '/shared/data/mobs.json':
+                    case '/shared/data/npcs.json':
+                    case '/shared/data/skills.json':
+                        sendFile(path, response, log);
                         break;
 
-                    case '/shared/js/itemtypes.js':
-                        sendFile('js/itemtypes.js', response, log);
-                        break;
                     default:
                         response.writeHead(404);
                 }

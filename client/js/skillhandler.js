@@ -149,7 +149,6 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
     for (var i = 0; i < SkillData.Data.length; ++i)
     {
     	var skillName = SkillData.Data[i].name;
-        log.info("skillName="+skillName);
     	if (SkillData.Data[i].type == "passive")
     	{
     		SkillFactory.Skills[skillName] =  SkillPassive;

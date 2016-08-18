@@ -124,7 +124,8 @@ define(['area'], function(Area) {
 				this.loadedSound[name] = true;
 			}  
 			var sound = this.getSound(name);
-			if(sound) {  
+			if(sound) {
+
 				sound.play();
 			}
 		}
@@ -175,7 +176,7 @@ define(['area'], function(Area) {
                 if(music.sound.fadingOut) {
                     this.fadeInMusic(music);
                 } else {
-                    music.sound.volume = 1;
+                    music.sound.volume = 0.5;
                     music.sound.play();
                 }
                 this.currentMusic = music;

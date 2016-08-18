@@ -224,6 +224,7 @@ footer, header, hgroup, menu, nav, section {
         background-color: rgba(0, 0, 0, 0);
         background: url('../img/3/main.png') no-repeat -714px -942px;
     }
+
     #helpbutton {
         position: absolute;
         width: 42px;
@@ -304,7 +305,7 @@ footer, header, hgroup, menu, nav, section {
         position: absolute;
         width: 650px;
         height: 44px;
-        top: 446px;
+        top: 447px;
         left: calc(50% - 296px);
         border: 0px;
         text-align: center;
@@ -458,8 +459,18 @@ footer, header, hgroup, menu, nav, section {
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
-        background: url('../img/2/main.png') no-repeat -0px -628px;
+        background: url('../img/2/main.png') no-repeat -476px -628px;
     }
+
+    #characterButton:hover {
+        background: url('../img/2/main.png') no-repeat -504px -628px;
+    }
+
+    #characterButton.active {
+        background: url('../img/2/main.png') no-repeat -532px -628px;
+    }
+
+
     #helpbutton {
         position: absolute;
         width: 28px;
@@ -471,6 +482,15 @@ footer, header, hgroup, menu, nav, section {
         background-color: rgba(0, 0, 0, 0);
         background: url('../img/2/main.png' ) no-repeat -560px -628px;
     }
+
+    #helpbutton:hover {
+        background: url('../img/2/main.png' ) no-repeat -588px -628px;
+    }
+
+    #helpbutton.active {
+        background: url('../img/2/main.png' ) no-repeat -616px -628px;
+    }
+
     #soundbutton {
         position: absolute;
         width: 28px;
@@ -481,6 +501,15 @@ footer, header, hgroup, menu, nav, section {
         border: 0px;
         background: url('../img/2/main.png' ) no-repeat -252px -628px;
     }
+
+    #soundbutton:hover {
+        background: url('../img/2/main.png' ) no-repeat -280px -628px;
+    }
+
+    #soundbutton.active {
+        background: url('../img/2/main.png' ) no-repeat -308px -628px;
+    }
+
     #warpbutton {
         position: absolute;
         width: 28px;
@@ -491,6 +520,15 @@ footer, header, hgroup, menu, nav, section {
         border: 0px;
         background: url('../img/2/main.png' ) no-repeat -644px -628px;
     }
+
+    #warpbutton:hover {
+        background: url('../img/2/main.png' ) no-repeat -672px -628px;
+    }
+
+    #warpbutton.active {
+        background: url('../img/2/main.png' ) no-repeat -700px -628px;
+    }
+
     #chatbutton {
         position: absolute;
         width: 28px;
@@ -501,7 +539,15 @@ footer, header, hgroup, menu, nav, section {
         border: 0px;
         background: url('../img/2/main.png' ) no-repeat -756px -628px;
     }
-    
+
+    #chatbutton:hover {
+        background: url('../img/2/main.png' ) no-repeat -784px -628px;
+    }
+
+    #chatbutton.active {
+        background: url('../img/2/main.png' ) no-repeat -812px -628px;
+    }
+
     #users {
         font-family:'GraphicPixel';
         color:#e3e3e3;

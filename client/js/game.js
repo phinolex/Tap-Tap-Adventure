@@ -7,7 +7,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pet', 'mobs', 'mobdata', 'gather', 'exceptions', 'config', 'chathandler', 'warpmanager', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'achievemethandler',
         'rankinghandler', 'inventoryhandler', 'bankhandler', 'partyhandler','bools', 'iteminfodialog',
-        'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', 'enchantdialog', 'bankdialog', 'craftdialog', 'guild', 'gamedata',
+        'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', 'enchantdialog', 'bankdialog', 'craftdialog', 'guild', 'gamedata', 'button2',
         '../shared/js/gametypes', '../shared/js/itemtypes'],
     function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
              GameClient, AudioManager, Updater, Transition, Pathfinder,
@@ -15,7 +15,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              ChatHandler, WarpManager, TextWindowHandler, Menu, BoardHandler, KkHandler,
              ShopHandler, PlayerPopupMenu, ClassPopupMenu, AchievementHandler, RankingHandler,
              InventoryHandler, BankHandler, PartyHandler, Bools, ItemInfoDialog, SkillHandler, StateHandler,
-             StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Guild, GameData) {
+             StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Guild, GameData, Button2) {
         var Game = Class.extend({
             init: function(app) {
                 $('head').append( $('<link rel="stylesheet" type="text/css" />').attr('href', 'css/game.css') );
@@ -25,7 +25,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.ready = false;
                 this.started = false;
                 this.hasNeverStarted = true;
-
+                this.gameButtons = [];
                 this.renderer = null;
                 this.camera = null;
                 this.updater = null;
@@ -801,11 +801,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.currentTime = new Date().getTime();
 
                 if(this.started) {
-                    if (this.currentTime - this.lastFPSTime > 2000) {
-                        this.updateCursorLogic();
-                        this.updater.update();
-                        this.renderer.renderFrame();
-                    }
+                    this.updateCursorLogic();
+                    this.updater.update();
+                    this.renderer.renderFrame();
+                    /*this.FPSCount++;
+                    if (this.currentTime - this.lastFPSTime > 1000) {
+                        $('#fps').html("FPS: " + this.FPSCount);
+                        this.lastFPSTime = this.currentTime;
+                        this.FPSCount = 0;
+                    }*/
                 }
 
                 if(!this.isStopped)
@@ -3244,7 +3248,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     currentScale = this.renderer.scale,
                     newScale = this.renderer.getScaleFactor();
 
-                //this.resizeButtons();
                 this.renderer.rescale(newScale);
                 this.camera = this.renderer.camera;
 
@@ -3271,6 +3274,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     this.playermana_callback(this.player.mana, this.player.maxMana);
                 }
             },
+
             updateExpBar: function(){
                 if(this.player && this.playerexp_callback){
                     var level = this.player.level;

@@ -50,7 +50,7 @@ module.exports = World = cls.Class.extend({
         self.groups = {};
         self.party = [];
 
-
+        self.isDay = true;
         self.packets = {};
         self.cycleSpeed = 60;
         self.mobControllerSpeed = 20;
@@ -312,7 +312,32 @@ module.exports = World = cls.Class.extend({
         self.initializeGameTick();
         self.initializeMobController();
         self.initializeGather();
+        self.initializeDayCycle();
         //self.initializeRoaming();
+    },
+
+    initializeDayCycle: function() {
+        var self = this,
+            time = new Date().getTime();
+
+        setInterval(function() {
+            var currentTime = new Date().getTime();
+            if (currentTime - time === 3600000) {
+                time = new Date().getTime();
+                self.isDay = !self.isDay;
+                self.sendToAll(new Messages.TimeOfDay(self.isDay));
+            }
+
+        }, 10000)
+    },
+
+    sendToAll: function(message) {
+        var self = this;
+
+        for (var player in self.players) {
+            if (self.players.hasOwnProperty(player))
+                player.send(message);
+        }
     },
 
     initializeGameTick: function() {

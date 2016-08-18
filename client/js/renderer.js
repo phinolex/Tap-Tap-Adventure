@@ -42,6 +42,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.maxFPS = this.FPS;
                 this.realFPS = 0;
                 this.fullscreen = false;
+                this.allowDrawing = false;
+                this.tutorialText = null;
 
                 //Turn on or off Debuginfo (FPS Counter)
                 this.isDebugInfoVisible = false;
@@ -106,13 +108,12 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.createCamera();
 
-                this.context.mozImageSmoothingEnabled = false;
-                this.background.mozImageSmoothingEnabled = false;
-                this.foreground.mozImageSmoothingEnabled = false;
-                this.textcontext.mozImageSmoothingEnabled = false;
-                this.toptextcontext.mozImageSmoothingEnabled = false;
+                this.context.mozImageSmoothingEnabled = true;
+                this.background.mozImageSmoothingEnabled = true;
+                this.foreground.mozImageSmoothingEnabled = true;
+                this.textcontext.mozImageSmoothingEnabled = true;
+                this.toptextcontext.mozImageSmoothingEnabled = true;
                 this.initFont();
-                this.initFPS();
 
                 if(!this.upscaledRendering && this.game.map && this.game.map.tilesets) {
                     this.setTileset(this.game.map.tilesets[this.scale - 1]);
@@ -133,27 +134,21 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 if (this.mobile)
                     this.canvas.height += 15;
 
-                log.debug("#entities set to "+this.canvas.width+" x "+this.canvas.height);
 
                 this.backbuffercanvas.width = this.canvas.width + 2 * this.tilesize;
                 this.backbuffercanvas.height = this.canvas.height+ 2 * this.tilesize;
-                log.debug("#background set to "+this.backbuffercanvas.width+" x "+this.backbuffercanvas.height);
 
                 this.backcanvas.width = this.canvas.width;
                 this.backcanvas.height = this.canvas.height;
-                log.debug("#background set to "+this.backcanvas.width+" x "+this.backcanvas.height);
 
                 this.forecanvas.width = this.canvas.width;
                 this.forecanvas.height = this.canvas.height;
-                log.debug("#foreground set to "+this.forecanvas.width+" x "+this.forecanvas.height);
 
                 this.textcanvas.width = this.camera.gridW * this.tilesize * this.scale;
                 this.textcanvas.height = this.camera.gridH * this.tilesize * this.scale;
-                log.debug("#textcontext set to " + this.textcanvas.width + " x " + this.textcanvas.height);
 
                 this.toptextcanvas.width = this.textcanvas.width;
                 this.toptextcanvas.height = this.textcanvas.height;
-                log.debug("#toptextcontext set to " + this.toptextcanvas.width + " x " + this.toptextcanvas.height);
 
             },
 
@@ -362,6 +357,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
             drawScaledImage: function(ctx, image, x, y, w, h, dx, dy) {
                 var s = this.upscaledRendering ? 1 : this.scale;
+                if (!ctx)
+                    return;
 
                 ctx.drawImage(image,
                     x * s,
@@ -526,107 +523,25 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     }
 
                     if(entity.isVisible()) {
-                        if(!(entity instanceof Pet) && entity.hasShadow()) {
-                            if (!shadow.isLoaded) shadow.load();
+
+                        if (entity.hasShadow()) {
+                            if (!shadow.isLoaded)
+                                shadow.load();
+
                             this.context.drawImage(shadow.image, 0, 0, shadow.width * os, shadow.height * os,
                                 0,
                                 entity.shadowOffsetY * ds,
                                 shadow.width * os * ds, shadow.height * os * ds);
                         }
-                        if(entity.isFlareDance){
-                            var benef = this.game.sprites["flaredanceeffect"];
-                            if (!benef.isLoaded) benef.load();
-                            if(benef){
-                                var benefAnimData1 = benef.animationData[anim.name];
-                                if(benefAnimData1){
-                                    var index = this.game.benef4Animation.currentFrame.index < benefAnimData1.length ? this.game.benef4Animation.currentFrame.index : this.game.benef4Animation.currentFrame.index % benefAnimData1.length,
-                                        bx = benef.width * index * os,
-                                        by = benef.height * benefAnimData1.row * os,
-                                        bw = benef.width * os,
-                                        bh = benef.height * os;
 
-                                    this.context.drawImage(benef.image, bx, by, bw, bh,
-                                        benef.offsetX * s,
-                                        benef.offsetY * s,
-                                        bw * ds, bh * ds);
-                                }
-                            }
-                        }
-                        if(entity.isSuperCat){
-                            var benef = this.game.sprites["supercateffect"];
-                            if (!benef.isLoaded) benef.load();
-                            if(benef){
-                                var benefAnimData2 = benef.animationData[anim.name];
-                                if(benefAnimData2){
-                                    var index = this.game.benef10Animation.currentFrame.index < benefAnimData2.length ? this.game.benef10Animation.currentFrame.index : this.game.bene104Animation.currentFrame.index % benefAnimData2.length,
-                                        bx = benef.width * index * os,
-                                        by = benef.height * benefAnimData2.row * os,
-                                        bw = benef.width * os,
-                                        bh = benef.height * os;
-
-                                    this.context.drawImage(benef.image, bx, by, bw, bh,
-                                        benef.offsetX * s,
-                                        benef.offsetY * s,
-                                        bw * ds, bh * ds);
-                                }
-                            }
-                        }
-                        if(entity.isProvocation){
-                            var benef = this.game.sprites["provocationeffect"];
-                            if (!benef.isLoaded) benef.load();
-                            if(benef){
-                                var benefAnimData3 = benef.animationData[anim.name];
-                                if(benefAnimData3){
-                                    var index = this.game.benef10Animation.currentFrame.index < benefAnimData3.length ? this.game.benef10Animation.currentFrame.index : this.game.bene104Animation.currentFrame.index % benefAnimData3.length,
-                                        bx = benef.width * index * os,
-                                        by = benef.height * benefAnimData3.row * os,
-                                        bw = benef.width * os,
-                                        bh = benef.height * os;
-
-                                    this.context.drawImage(benef.image, bx, by, bw, bh,
-                                        benef.offsetX * s,
-                                        benef.offsetY * s,
-                                        bw * ds, bh * ds);
-                                }
-                            }
-                        }
-
-
-
-                        if(entity.isRoyalAzaleaBenef){
-                            var benef = this.game.sprites["bucklerbenef"];
-                            if (!benef.isLoaded) benef.load();
-                            if(benef){
-                                var benefAnimData4 = benef.animationData[anim.name];
-                                if(benefAnimData4){
-                                    var index = this.game.benef10Animation.currentFrame.index < benefAnimData4.length ? this.game.benef10Animation.currentFrame.index : this.game.benef10Animation.currentFrame.index % benefAnimData4.length,
-                                        bx = benef.width * index * os,
-                                        by = benef.height * benefAnimData4.row * os,
-                                        bw = benef.width * os,
-                                        bh = benef.height * os;
-
-                                    this.context.drawImage(benef.image, bx, by, bw, bh,
-                                        benef.offsetX * s,
-                                        benef.offsetY * s,
-                                        bw * ds, bh * ds);
-                                }
-                            }
-                        }
 
                         try {
-                            if(!entity.mount) {
-                                //if (!sprite.isLoaded) sprite.load();
-                                //if (!sprite.image)
-                                //	log.info(JSON.stringify(sprite));
-                                if (entity instanceof Pet)
-                                    this.context.drawImage(sprite.image, x, y, w, h, ox/1.5, oy/1.5, dw/1.5, dh/1.5);
-                                else
-                                    this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
-                            }
-                        }
-                        catch (err) { /*log.info(err.message); log.info(err.stack);*/ }
+                            this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
+                        } catch(e) {}
+
 
                         if(entity instanceof Item && entity.kind !== 39) {
+
                             var sparks = this.game.sprites["sparks"],
                                 anim = this.game.sparksAnimation,
                                 frame = anim.currentFrame,
@@ -636,10 +551,14 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                                 sh = sparks.width * os;
 
                             if (!sparks.isLoaded) sparks.load();
+
                             this.context.drawImage(sparks.image, sx, sy, sw, sh,
                                 sparks.offsetX * s,
                                 sparks.offsetY * s,
                                 sw * ds, sh * ds);
+
+                            if (entity.count > 1)
+                                this.drawText(this.textcontext, entity.count, entity.x + 8, entity.y - 0.3, true, "white");
                         }
                     }
 
@@ -660,137 +579,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                                 ww * ds, wh * ds);
                         }
                     }
-                    if(entity instanceof Player){
-                        var medal = null;
-                        if(entity.admin){
-                            medal = this.game.sprites["goldmedal"];
-                            if (!medal.isLoaded) medal.load();
-                        }
-
-                        if(medal){
-                            this.context.drawImage(medal.image, 0, 0, medal.width * os, medal.height * os,
-                                4 * ds,
-                                -56 * ds,
-                                medal.width * os * ds, medal.height * os * ds);
-                        }
-                    }
-                    if(entity.invincible){
-                        var benef = this.game.sprites["shieldbenef"];
-                        if (!benef.isLoaded) benef.load();
-                        if(benef){
-                            var benefAnimData5 = benef.animationData[anim.name];
-                            if(benefAnimData5){
-                                var index = this.game.benefAnimation.currentFrame.index < benefAnimData5.length ? this.game.benefAnimation.currentFrame.index : this.game.benefAnimation.currentFrame.index % benefAnimData5.length,
-                                    bx = benef.width * index * os,
-                                    by = benef.height * benefAnimData5.row * os,
-                                    bw = benef.width * os,
-                                    bh = benef.height * os;
-
-                                this.context.drawImage(benef.image, bx, by, bw, bh,
-                                    benef.offsetX * s,
-                                    benef.offsetY * s,
-                                    bw * ds, bh * ds);
-                            }
-                        }
-                    }
-                    if(entity.isStun){
-                        var benef = this.game.sprites["stuneffect"];
-                        if (!benef.isLoaded) benef.load();
-                        if(benef){
-                            var index = entity.stunAnimation.currentFrame.index,
-                                bx = benef.width * index * os,
-                                by = benef.height * entity.stunAnimation.row,
-                                bw = benef.width * os,
-                                bh = benef.height * os;
-
-                            this.context.drawImage(benef.image, bx, by, bw, bh,
-                                benef.offsetX * s,
-                                (benef.offsetY - entity.sprite.height)*s,
-                                bw * ds, bh * ds);
-                        }
-                    }
-                    if(entity.isCritical){
-                        var benef = this.game.sprites["criticaleffect"];
-                        if (!benef.isLoaded) benef.load();
-                        if(benef){
-                            var index = entity.criticalAnimation.currentFrame.index,
-                                bx = benef.width * index * os,
-                                by = benef.height * entity.criticalAnimation.row * os,
-                                bw = benef.width * os,
-                                bh = benef.height * os;
-
-                            this.context.drawImage(benef.image, bx, by, bw, bh,
-                                benef.offsetX * s,
-                                benef.offsetY * s,
-                                bw * ds, bh * ds);
-                        }
-                    }
-                    if(entity.isHeal){
-                        var benef = this.game.sprites["healeffect"];
-                        if (!benef.isLoaded) benef.load();
-                        if(benef){
-                            var index = entity.healAnimation.currentFrame.index,
-                                bx = benef.width * index * os,
-                                by = benef.height * entity.healAnimation.row * os,
-                                bw = benef.width * os,
-                                bh = benef.height * os;
-
-                            this.context.drawImage(benef.image, bx, by, bw, bh,
-                                benef.offsetX * s,
-                                benef.offsetY * s,
-                                bw * ds, bh * ds);
-                        }
-                    }
-
-                    if(entity.mount){
-                        var mountSprite = this.game.sprites[entity.mountName];
-                        entity.mount.setSprite(mountSprite);
-                        if (!mountSprite.isLoaded) mountSprite.load();
-
-                        var spriteMount = entity.mount.sprite;
-
-                        // dirty hack to show before moving.
-                        if (!entity.mount.currentAnimation)
-                        {
-                            entity.mount.animate("idle", entity.mount.idleSpeed);
-                        }
-
-                        if (entity.orientation != Types.Orientations.UP)
-                        {
-                            this.context.drawImage(sprite.image, x, y, w, h, ox + entity.mountOffsetX, oy + entity.mountOffsetY, dw, dh);
-                        }
-
-                        if(spriteMount && entity.mount.currentAnimation) {
-                            var frame = entity.mount.currentAnimation.currentFrame,
-                                mx = frame.x * os,
-                                my = frame.y * os,
-                                mw = spriteMount.width * os,
-                                mh = spriteMount.height * os,
-                                mox = spriteMount.offsetX * s,
-                                moy = spriteMount.offsetY * s,
-                                mdw = mw * ds,
-                                mdh = mh * ds;
-                            this.context.drawImage(spriteMount.image, mx, my, mw, mh, mox, moy, mdw, mdh);
-                        }
-                        if (entity.orientation == Types.Orientations.UP)
-                        {
-                            this.context.drawImage(sprite.image, x, y, w, h, ox + entity.mountOffsetX, oy + entity.mountOffsetY, dw, dh);
-                        }
-                    }
 
                     this.context.restore();
-                    if(entity instanceof Item) {
-                        var ctx = this.tablet ? this.context : this.textcontext;
-                        var item = entity;
-                        if(item.count > 1) {
-                            this.drawText(ctx, item.count,
-                                entity.x + 8,
-                                entity.y - 0.3,
-                                true,
-                                "white");
 
-                        }
-                    }
                     if(entity.isFading) {
                         this.context.restore();
                     }
@@ -803,9 +594,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 var self = this;
 
                 this.game.forEachVisibleEntityByDepth(function(entity) {
-                    //if (entity.oldDirtyRect)
-                    //    self.clearDirtyRect(entity.oldDirtyRect);
-
                     if(entity.isLoaded) {
                         if(dirtyOnly) {
                             if(entity.isDirty) {
@@ -838,30 +626,23 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     -(this.camera.y-this.cameraOldY) * this.scale);
 
                 this.game.forEachVisibleEntityByDepth(function(entity) {
-                    if(entity.isDirty && entity.oldDirtyRect) {
+                    if(entity.isDirty && entity.oldDirtyRect)
                         self.clearDirtyRect(entity.oldDirtyRect);
-                        if (entity.dirtyRect)
-                            self.clearDirtyRect(entity.dirtyRect);
-                        count += 1;
-                    }
                 });
 
+
                 this.game.forEachAnimatedTile(function(tile) {
-                    if(tile.isDirty) {
+                    if(tile.isDirty)
                         self.clearDirtyRect(tile.dirtyRect);
-                        count += 1;
-                    }
                 });
 
                 if(this.game.clearTarget && this.lastTargetPos) {
-                    var last = this.lastTargetPos,
-                        rect = this.getTargetBoundingRect(last.x, last.y);
+                    var last = this.lastTargetPos;
+                    rect = this.getTargetBoundingRect(last.x, last.y);
 
                     this.clearDirtyRect(rect);
                     this.game.clearTarget = false;
-                    count += 1;
                 }
-
             },
 
             getEntityBoundingRect: function(entity) {
@@ -1215,7 +996,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     optimized = true;
                 }
 
-                ctx.save()
+                ctx.save();
                 //log.info("optimized:"+optimized);
 
                 this.game.forEachVisibleTile(function (id, index) {
@@ -1242,8 +1023,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             drawAnimatedTiles: function(dirtyOnly, ctx) {
-                //if (!this.camera.isattached)
-                //   return;
+                if (!this.camera.isattached)
+                   return;
 
                 var self = this,
                     m = this.game.map,
@@ -1294,6 +1075,16 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             drawBackground: function(ctx, color) {
                 ctx.fillStyle = color;
                 ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            },
+
+            drawTutorialText: function() {
+                // drawText: function(ctx, text, x, y, centered, color, strokeColor) {
+                if (!this.tutorialText)
+                    return;
+
+                var view = this.toptextcontext;
+
+                this.drawText(view, this.tutorialText, view / 2, (view / 3) * 4, true);
             },
 
             drawFPS: function() {
@@ -1393,15 +1184,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 return canvas.toDataURL("image/png");
             },
 
-            renderMobileCanvas: function() {
-                this.drawOldTerrain();
-                this.background.save();
-                this.setCameraView(this.background);
-                this.drawTerrain(this.background);
-                this.drawHighTerrain();
-                this.background.restore();
-            },
-
             renderingMobile: function() {
                 this.drawOldTerrain();
                 this.background.save();
@@ -1421,7 +1203,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     this.setCameraView(this.background);
                     this.drawTerrain(this.background);
                     this.drawHighTerrain();
-
                     this.background.restore();
 
                 }
@@ -1431,6 +1212,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             renderFrame: function() {
+
+                //this.drawTutorialText();
+
                 if(this.mobile || this.tablet) {
                     this.renderFrameMobile();
                 }
@@ -1440,24 +1224,21 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             renderFrameDesktop: function() {
+                this.clearScreen(this.context);
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 
-
                 this.renderStaticCanvases();
 
+                this.context.save();
                 this.textcontext.save();
                 this.toptextcontext.save();
 
+                this.setCameraView(this.context);
                 this.setCameraView(this.textcontext);
                 this.setCameraView(this.toptextcontext);
 
-                this.context.save();
-                this.clearScreen(this.context);
-
                 this.drawEntitiesCircle();
-
-                this.setCameraView(this.context);
 
                 this.drawAnimatedTiles(false, this.context);
 
@@ -1469,15 +1250,11 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 }
 
 
-
                 //this.drawOccupiedCells();
                 this.drawPathingCells();
                 this.drawEntities(false);
                 this.drawCombatInfo();
                 this.drawInventory();
-                this.drawCoordinates();
-
-
 
                 this.context.restore();
                 this.textcontext.restore();
@@ -1487,40 +1264,34 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 if(this.game.cursorVisible || !this.tablet || this.isFirefox)
                     this.drawCursor();
 
-                this.drawDebugInfo();
-
-
             },
 
 
             renderFrameMobile: function() {
-                this.clearDirtyRects();
-                this.preventFlickeringBug();
-
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 
+                this.clearDirtyRects();
+                this.preventFlickeringBug();
                 this.renderingMobile();
 
                 this.textcontext.save();
                 this.toptextcontext.save();
-                this.context.save();
 
                 this.setCameraView(this.textcontext);
                 this.setCameraView(this.toptextcontext);
-                this.setCameraView(this.context);
 
-                this.drawEntityNames();
                 this.drawCombatInfo();
 
+                this.context.save();
+                this.setCameraView(this.context);
 
-                this.drawDirtyAnimatedTiles(this.context);
-
-                //this.drawSelectedCell();
+                this.drawDirtyAnimatedTiles();
                 this.drawInventory();
                 this.drawEntities(true);
 
                 this.context.restore();
+
                 this.textcontext.restore();
                 this.toptextcontext.restore();
             },
