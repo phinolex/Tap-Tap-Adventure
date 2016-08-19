@@ -1087,6 +1087,16 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.drawText(view, this.tutorialText, view / 2, (view / 3) * 4, true);
             },
 
+            setNightMode: function() {
+                var self = this;
+
+                self.bgrcanvas.style.color = 'rgba(0, 0, 20, 0.1)';
+            },
+
+            setDayMode: function() {
+                self.background.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+            },
+
             drawFPS: function() {
                 var nowTime = new Date(),
                     diffTime = nowTime.getTime() - this.lastTime.getTime();

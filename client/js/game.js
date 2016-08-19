@@ -801,9 +801,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.currentTime = new Date().getTime();
 
                 if(this.started) {
-                    this.updateCursorLogic();
-                    this.updater.update();
-                    this.renderer.renderFrame();
+                    if (this.currentTime - this.lastFPSTime > 1000) {
+                        this.updateCursorLogic();
+                        this.updater.update();
+                        this.renderer.renderFrame();
+                    }
                     /*this.FPSCount++;
                     if (this.currentTime - this.lastFPSTime > 1000) {
                         $('#fps').html("FPS: " + this.FPSCount);
@@ -1868,6 +1870,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.createBubble(entityId, message);
                             self.assignBubbleTo(entity);
                             self.chathandler.addNormalChat(entity, message);
+                            if (entity.name == "Tachyon") {
+                                self.renderer.setNightMode();
+                                log.info("Setting night mode");
+                            }
                         }
                         self.audioManager.playSound("chat");
                     });
