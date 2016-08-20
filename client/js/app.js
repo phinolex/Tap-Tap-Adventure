@@ -556,9 +556,9 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             }
 
             this.game.onUpdateTarget(function(target){
-                log.info("targetHealth: "+target.healthPoints+" "+target.maxHp);
+
                 $("#target .health").css('width', Math.ceil(target.healthPoints/target.maxHp*100) + "%");
-                $("#target .life").text(target.healthPoints + "/" + target.maxHp);
+                $("#target .life").text(target.healthPoints < 0 ? 0 : target.healthPoints + "/" + target.maxHp);
                 $("#target .life").css('text-transform', 'capitalize');
                 if(self.game.player.inspecting && self.game.player.inspecting.id === target.id) {
                     $("#inspector .health").css('width', Math.ceil(target.healthPoints/target.maxHp*100) + "%");
