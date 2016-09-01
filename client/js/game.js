@@ -813,11 +813,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.currentTime = new Date().getTime();
 
                 if(this.started) {
-                    if (this.currentTime - this.lastFPSTime > 3000) {
-                        this.updateCursorLogic();
-                        this.updater.update();
-                        this.renderer.renderFrame();
-                    }
+                    this.updater.update();
+                    this.updateCursorLogic();
+                    this.renderer.renderFrame();
+
                     /*this.FPSCount++;
                     if (this.currentTime - this.lastFPSTime > 1000) {
                         $('#fps').html("FPS: " + this.FPSCount);
@@ -1005,33 +1004,26 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                                bankSkillKind, bankSkillLevel,
                                                achievementNumber, achievementFound, achievementProgress,
                                                doubleExp, expMultiplier, membership, kind, rights, pClass) {
-                    log.info("Received player ID from server : "+ id);
+
                     self.loadGameData();
                     self.player.id = id;
                     self.playerId = id;
-                    // Always accept name received from the server which will
-                    // sanitize and shorten names exceeding the allowed length.
                     self.player.kind = kind;
                     self.player.name = name;
-                    //Rights cannot, will not, ever be handling complex types
-                    //client sided.
                     self.player.rights = rights;
                     self.player.experience = experience;
                     self.player.level = Types.getLevel(experience);
-                    self.doubleEXP = doubleExp;
-                    self.expMultiplier = expMultiplier;
-
                     self.player.setGridPosition(x, y);
-                    self.camera.setRealCoords();
-                    self.resetZone();
-
                     self.player.setMaxHitPoints(hp);
                     self.player.setMaxMana(mana);
                     self.player.setArmorName(armor);
                     self.player.setSpriteName(armor);
                     self.player.setWeaponName(weapon);
-
                     self.player.skillHandler = new SkillHandler(self);
+                    self.camera.setRealCoords();
+                    self.resetZone();
+                    self.doubleEXP = doubleExp;
+                    self.expMultiplier = expMultiplier;
                     self.membership = membership;
                     self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
                     self.shopHandler.setMaxInventoryNumber(maxInventoryNumber);
@@ -1284,6 +1276,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         if(!(self.player.moveUp || self.player.moveDown || self.player.moveLeft || self.player.moveRight))
                             self.renderer.forceRedraw = true;
+
 
                         if (self.renderer.mobile)
                             self.renderer.cleanPathing();
@@ -2999,7 +2992,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if(!character.isStunned && character.isAttacking() && (!character.previousTarget || character.id === this.playerId)) {
                     var isMoving = this.tryMovingToADifferentTile(character); // Don't let multiple mobs stack on the same tile when attacking a player.
-
 
                     if(character.canAttack(time)) {
                         if(!isMoving) { // don't hit target if moving to a different tile.

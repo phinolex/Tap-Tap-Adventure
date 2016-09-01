@@ -2,49 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb550f01-0ddd-4624-bd8b-1881f15acc0a" name="Default" comment="Character Dialog changes and certain attempts.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dump.rdb" afterPath="$PROJECT_DIR$/dump.rdb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-gold.png" afterPath="$PROJECT_DIR$/client/img/1/item-gold.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/2/item-gold.png" afterPath="$PROJECT_DIR$/client/img/2/item-gold.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/3/item-gold.png" afterPath="$PROJECT_DIR$/client/img/3/item-gold.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/tilesheet.png" afterPath="$PROJECT_DIR$/client/img/1/tilesheet.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/2/tilesheet.png" afterPath="$PROJECT_DIR$/client/img/2/tilesheet.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/3/tilesheet.png" afterPath="$PROJECT_DIR$/client/img/3/tilesheet.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/maps/tmx/tilesheet.png" afterPath="$PROJECT_DIR$/tools/maps/tmx/tilesheet.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/achievement.css" afterPath="$PROJECT_DIR$/client/css/achievement.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/achievements.js" afterPath="$PROJECT_DIR$/server/js/achievements.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/achievements_english.json" afterPath="$PROJECT_DIR$/client/shared/data/achievements_english.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/achievements_english.json" afterPath="$PROJECT_DIR$/shared/data/achievements_english.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/achievemethandler.js" afterPath="$PROJECT_DIR$/client/js/achievemethandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/app.js" afterPath="$PROJECT_DIR$/client/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/basebar.css" afterPath="$PROJECT_DIR$/client/css/basebar.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/config/config_local.json" afterPath="$PROJECT_DIR$/client/config/config_local.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/detect.js" afterPath="$PROJECT_DIR$/client/js/detect.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/game.js" afterPath="$PROJECT_DIR$/client/js/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/gameclient.js" afterPath="$PROJECT_DIR$/client/js/gameclient.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/js/gametypes.js" afterPath="$PROJECT_DIR$/client/shared/js/gametypes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/js/gametypes.js" afterPath="$PROJECT_DIR$/shared/js/gametypes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.html" afterPath="$PROJECT_DIR$/client/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/inventory.css" afterPath="$PROJECT_DIR$/client/css/inventory.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/inventoryhandler.js" afterPath="$PROJECT_DIR$/client/js/inventoryhandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/items.json" afterPath="$PROJECT_DIR$/client/shared/data/items.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/main.css" afterPath="$PROJECT_DIR$/client/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/main.js" afterPath="$PROJECT_DIR$/client/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/maps/tmx/map.json" afterPath="$PROJECT_DIR$/tools/maps/tmx/map.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/message.js" afterPath="$PROJECT_DIR$/server/js/message.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/mobs.json" afterPath="$PROJECT_DIR$/client/shared/data/mobs.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/mobs.json" afterPath="$PROJECT_DIR$/shared/data/mobs.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/npcs.json" afterPath="$PROJECT_DIR$/client/shared/data/npcs.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/npcs.json" afterPath="$PROJECT_DIR$/shared/data/npcs.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/packethandler.js" afterPath="$PROJECT_DIR$/server/js/packethandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/player.js" afterPath="$PROJECT_DIR$/server/js/player.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/maps/processmap.log" afterPath="$PROJECT_DIR$/tools/maps/processmap.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/renderer.js" afterPath="$PROJECT_DIR$/client/js/renderer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/variations.js" afterPath="$PROJECT_DIR$/server/js/variations.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/updater.js" afterPath="$PROJECT_DIR$/client/js/updater.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/maps/world_client.js" afterPath="$PROJECT_DIR$/client/maps/world_client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/maps/world_client.json" afterPath="$PROJECT_DIR$/client/maps/world_client.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/maps/world_server.json" afterPath="$PROJECT_DIR$/server/maps/world_server.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/worldserver.js" afterPath="$PROJECT_DIR$/server/js/worldserver.js" />
     </list>
     <ignored path="Tap Tap Adventure.iws" />
@@ -66,11 +27,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="game.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.43561208">
+              <caret line="816" column="45" selection-start-line="816" selection-start-column="45" selection-end-line="816" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="updater.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/js/updater.js">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="2089" column="24" selection-start-line="2089" selection-start-column="16" selection-end-line="2089" selection-end-column="24" />
+              <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -101,58 +72,18 @@
       <file leaf-file-name="renderer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/js/renderer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.538462">
-              <caret line="374" column="57" selection-start-line="374" selection-start-column="57" selection-end-line="374" selection-end-column="57" />
+            <state vertical-scroll-proportion="-18.038462">
+              <caret line="372" column="52" selection-start-line="372" selection-start-column="52" selection-end-line="372" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="worldserver.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="worldserver.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/js/worldserver.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.41679388">
-              <caret line="47" column="17" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config_build.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/config/config_build.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.59090906">
-              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config_local.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/config/config_local.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.59090906">
-              <caret line="1" column="26" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="redis.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/js/db_providers/redis.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="253" column="55" selection-start-line="253" selection-start-column="55" selection-end-line="253" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="achievemethandler.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/js/achievemethandler.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+            <state vertical-scroll-proportion="-25.038462">
+              <caret line="353" column="18" selection-start-line="353" selection-start-column="18" selection-end-line="353" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -174,7 +105,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/js/entity.js" />
         <option value="$PROJECT_DIR$/client/js/util.js" />
         <option value="$PROJECT_DIR$/client/js/character.js" />
         <option value="$PROJECT_DIR$/client/js/questhandler.js" />
@@ -210,13 +140,11 @@
         <option value="$PROJECT_DIR$/shared/js/gametypes.js" />
         <option value="$PROJECT_DIR$/client/js/gameclient.js" />
         <option value="$PROJECT_DIR$/client/shared/js/gametypes.js" />
-        <option value="$PROJECT_DIR$/server/js/worldserver.js" />
         <option value="$PROJECT_DIR$/shared/data/npcs.json" />
         <option value="$PROJECT_DIR$/server/js/achievements.js" />
         <option value="$PROJECT_DIR$/server/js/player.js" />
         <option value="$PROJECT_DIR$/shared/data/achievements_english.json" />
         <option value="$PROJECT_DIR$/client/css/main.css" />
-        <option value="$PROJECT_DIR$/client/js/game.js" />
         <option value="$PROJECT_DIR$/client/js/achievemethandler.js" />
         <option value="$PROJECT_DIR$/client/css/achievement.css" />
         <option value="$PROJECT_DIR$/client/js/app.js" />
@@ -225,6 +153,9 @@
         <option value="$PROJECT_DIR$/server/js/packethandler.js" />
         <option value="$PROJECT_DIR$/client/config/config_local.json" />
         <option value="$PROJECT_DIR$/client/js/renderer.js" />
+        <option value="$PROJECT_DIR$/server/js/worldserver.js" />
+        <option value="$PROJECT_DIR$/client/js/updater.js" />
+        <option value="$PROJECT_DIR$/client/js/game.js" />
       </list>
     </option>
   </component>
@@ -606,7 +537,7 @@
     <option name="totallyTimeSpent" value="701000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1280" height="774" extended-state="6" />
+    <frame x="0" y="22" width="1280" height="774" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18903892" sideWeight="0.6935484" order="0" side_tool="false" content_ui="combo" />
@@ -614,20 +545,20 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274596" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24911869" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18903892" sideWeight="0.30645162" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32888147" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32599118" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="UnknownFeatures">
@@ -655,13 +586,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/client/js/tabpage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/mob.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -886,14 +810,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/achievemethandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -943,14 +859,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2089" column="24" selection-start-line="2089" selection-start-column="16" selection-end-line="2089" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shared/data/npcs.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14991763">
@@ -992,14 +900,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/config/config_build.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.59090906">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/config/config_local.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.59090906">
@@ -1008,18 +908,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/renderer.js">
+    <entry file="file://$PROJECT_DIR$/client/config/config_build.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.538462">
-          <caret line="374" column="57" selection-start-line="374" selection-start-column="57" selection-end-line="374" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.020537125">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/achievemethandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2259542">
+          <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/worldserver.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.41679388">
-          <caret line="47" column="17" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="17" />
+        <state vertical-scroll-proportion="-25.038462">
+          <caret line="353" column="18" selection-start-line="353" selection-start-column="18" selection-end-line="353" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/renderer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-18.038462">
+          <caret line="372" column="52" selection-start-line="372" selection-start-column="52" selection-end-line="372" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/updater.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43561208">
+          <caret line="816" column="45" selection-start-line="816" selection-start-column="45" selection-end-line="816" selection-end-column="45" />
           <folding />
         </state>
       </provider>

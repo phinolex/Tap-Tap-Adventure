@@ -52,7 +52,7 @@ module.exports = World = cls.Class.extend({
 
         self.isDay = true;
         self.packets = {};
-        self.cycleSpeed = 60;
+        self.cycleSpeed = 50;
         self.mobControllerSpeed = 20;
         self.pvpTime = 200;
         self.itemCount = 0;

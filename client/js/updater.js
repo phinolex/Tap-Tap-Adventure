@@ -21,7 +21,6 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
 
         updateCharacters: function() {
             var self = this;
-
             this.game.forEachEntity(function(entity) {
                 var isCharacter = entity instanceof Character;
 

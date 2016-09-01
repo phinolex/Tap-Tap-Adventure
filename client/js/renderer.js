@@ -382,7 +382,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         getX(cellid + 1, gridW) * this.tilesize,
                         Math.floor(cellid / gridW) * this.tilesize);
                 }
-
             },
 
             clearTile: function(ctx, gridW, cellid) {
