@@ -305,30 +305,44 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             } else {
                 this.scale = 2;
             }
+
+            $('#characterButton').click(function(event) {
+                $('#characterButton').toggleClass('active');
+
+                if ($('#characterButton').hasClass('active'))
+                    game.client.sendCharacterInfo();
+                else
+                    game.characterDialog.hide();
+            });
+
+            $('#inventoryButton').click(function(event) {
+                $('#inventoryButton').toggleClass('active');
+
+                game.inventoryHandler.toggleAllInventory();
+            });
+
+            $('#warpbutton').click(function(event) {
+                $('#warpbutton').toggleClass('active');
+
+                game.warpManager.toggle();
+            });
+
+            $('#chatbutton').click(function(event) {
+                $('#chatbutton').toggleClass('active');
+
+                if ($('#chatbutton').hasClass('active'))
+                    app.showChat();
+                else
+                    app.hideChat();
+
+            });
+
+            $('#soundbutton').click(function(event) {
+                $('#soundbutton').toggleClass('active');
+                game.audioManager.toggle();
+            });
             
-            /*Button2.configure = {background: {top: this.scale * 314, width: this.scale * 14}, kinds: [0, 3, 2]};
-
-
-            this.characterButton = new Button2('#characterButton', {background: {left: this.scale * 238 }});
-            this.characterButton.onClick(function(sender, event) {
-                if(game && game.ready) {
-                    if(game.characterDialog.visible) {
-                        game.characterDialog.hide();
-                    } else {
-                        game.client.sendCharacterInfo();
-                    }
-                }
-            });
-            game.characterDialog.button = this.characterButton;
-            game.gameButtons.push(this.characterButton);
-            // Inventory Button
-            this.inventoryButton = new Button2('#moreinventorybutton', {background: {left: this.scale * 196}});
-            this.inventoryButton.onClick(function(sender, event) {
-                if(game && game.ready) {
-                    game.inventoryHandler.toggleAllInventory();
-                }
-            });
-            game.gameButtons.push(this.inventoryButton);
+            /*
 
             // Sound Button
             this.soundButton = new Button2('#soundbutton', {background: {left: this.scale * 98}, downed: true});

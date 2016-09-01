@@ -12,7 +12,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
             this.inventoryDisplay = [];
             this.scale = this.getScale();
             
-            this.moreInventoryButton = new Button2('#moreinventorybutton', {background: {left: 196 * this.scale, top: 314 * this.scale, width: 17 * this.scale}, kinds: [0, 2], visible: false});
+            //this.moreInventoryButton = new Button2('#moreinventorybutton', {background: {left: 196 * this.scale, top: 314 * this.scale, width: 17 * this.scale}, kinds: [0, 2], visible: false});
             this.showInventoryButton();
 
             this.healingCoolTimeCallback = null;
@@ -153,7 +153,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
                 
         showInventoryButton: function() {
         	var scale = this.getScale();
-        	this.moreInventoryButton.setBackground({left: 196 * scale, top: 314 * scale, width: 17 * scale});        	
+        	//this.moreInventoryButton.setBackground({left: 196 * scale, top: 314 * scale, width: 17 * scale});
         },
 
         getScale: function () {
@@ -246,9 +246,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
                 $('#inventorybackground' + i).css('display', 'block');
                 $('#inventorynumber' + i).css('display', 'block');
             }
-            //if(maxInventoryNumber > 6){
-                this.moreInventoryButton.show();
-            //}
+
         },
         
         makeEmptyInventory: function(inventoryNumber){

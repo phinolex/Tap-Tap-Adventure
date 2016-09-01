@@ -61,6 +61,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.hoveringMob = false;
                 this.hoveringItem = false;
                 this.hoveringCollidingTile = false;
+                this.stepCount = 0;
 
                 // Global chats
                 this.chats = 0;
@@ -388,6 +389,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.cursors["talk"] = this.sprites["talk"];
                 this.cursors["join"] = this.sprites["talk"];
             },
+
             initAnimations: function() {
                 this.targetAnimation = new Animation("idle_down", 4, 0, 16, 16);
                 this.targetAnimation.setSpeed(50);
@@ -403,6 +405,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 this.benef4Animation = new Animation("idle_down", 4, 0, 48, 48);
                 this.benef4Animation.setSpeed(80);
+            },
+
+            getAchievementById: function(id) {
+                var found = null;
+                _.each(this.achievements, function(achievement, key) {
+                    if(achievement.id === parseInt(id)) {
+                        found = achievement;
+                    }
+                });
+                return found;
             },
 
             /*initHurtSprites: function() {
@@ -801,7 +813,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.currentTime = new Date().getTime();
 
                 if(this.started) {
-                    if (this.currentTime - this.lastFPSTime > 1000) {
+                    if (this.currentTime - this.lastFPSTime > 3000) {
                         this.updateCursorLogic();
                         this.updater.update();
                         this.renderer.renderFrame();
@@ -1138,9 +1150,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         //ye se whatrm talken aboot? ah?
 
                         self.updatePlayerCheckpoint();
-
+                        self.stepCount++;
                         if(!self.player.isDead) {
                             self.audioManager.updateMusic();
+                            if (self.renderer.mobile && self.stepCount >= 2) {
+                                self.renderer.cleanPathing();
+                                self.stepCount++;
+                            }
                         }
                     });
 
@@ -1268,6 +1284,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         if(!(self.player.moveUp || self.player.moveDown || self.player.moveLeft || self.player.moveRight))
                             self.renderer.forceRedraw = true;
+
+                        if (self.renderer.mobile)
+                            self.renderer.cleanPathing();
 
                     });
 
@@ -1742,7 +1761,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 ];
 
                                 var slot;
-                                for(var i=0; i < potions.length; ++i)
+                                for(var i = 0; i < potions.length; ++i)
                                 {
                                     slot = self.inventoryHandler.getItemInventorSlotByKind(potions[i]);
                                     if (slot >= 0)
@@ -1752,9 +1771,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             if(player.hitPoints <= 0) {
                                 player.die();
-                                self.updateBars();
                                 return;
                             }
+
                             if(isHurt) {
                                 player.hurt();
                                 self.infoManager.addDamageInfo(diff, player.x, player.y - 15, "received");
@@ -1771,11 +1790,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         }
                     });
 
-                    self.client.onPlayerChangeMaxHitPoints(function(hp, mana) {
-                        self.player.maxHitPoints = hp;
-                        self.player.hitPoints = hp;
-                        self.player.mana = mana;
-                        self.player.maxMana = mana;
+                    self.client.onPlayerPoints(function(maxHp, maxMana, currentHp, currentMana) {
+                        log.info("Received Player Points: " + currentHp);
+                        self.player.maxHitPoints = maxHp;
+                        self.player.maxMana = maxMana;
+                        self.player.hitPoints = currentHp;
+                        self.player.mana = currentMana;
+
                         self.updateBars();
                     });
 
@@ -2067,6 +2088,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             initializeAchievements: function() {
                 var self = this;
                 self.app.initAchievementList(self.achievementHandler.achievements);
+                self.app.initUnlockedAchievements(self.achievementHandler.achievements);
             },
 
             /**
@@ -2235,11 +2257,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              */
             makeNpcTalk: function(npc) {
                 var msg;
-                if (!this.player.isAdjacentNonDiagonal(npc)) {
+                if (!this.player.isAdjacentNonDiagonal(npc))
                     return;
-                }
-                var msg;
 
+                var msg;
                 if(npc) {
                     if(NpcData.Kinds[npc.kind].name==="Shop")
                     {

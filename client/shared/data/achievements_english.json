@@ -25,7 +25,7 @@
     "npcId":44,
     "type": 2,
     "name": "Mooscles",
-    "desc": "Help stronk poomp his mooscles.",
+    "desc": "Help Bulk Bogan poomp his mooscles!",
     "beforeTalk" : [
       "Yiss, poomping ze mooscles.",
       "Yiss, you must help me.",
@@ -34,8 +34,47 @@
     "afterTalk": [
       "Yisss, now I can continue getting stronker."
     ],
+    "mobId": 4,
+    "mobCount": 5,
+    "xp":45
+  },
+
+  {
+    "npcId": 51,
+    "type": 3,
+    "name": "Crabby",
+    "desc": "Help Randy relax by killing a few crabs.",
+    "beforeTalk" : [
+      "Hey man!",
+      "I have this small issue..",
+      "You see, there is a small infestation of crabs around here..",
+      "It would be of great if you could kill 10 of them..",
+      "So I can finally relax in peace."
+    ],
+    "afterTalk": [
+      "Thank you kind sir!"
+    ],
     "mobId": 61,
     "mobCount": 1,
+    "xp":45
+  },
+
+  {
+    "npcId":44,
+    "type": 3,
+    "name": "Nip Noops",
+    "desc": "Bulk Bogan is in dire need of your mooscles!",
+    "beforeTalk" : [
+      "Yiss sir.. I request your help again!",
+      "Yiss, you must help me.",
+      "Yiss, you must bring me mail armor.",
+      "Yiss, it's to cover my Nip Noops."
+    ],
+    "afterTalk": [
+      "Yisss, now I don't shiver."
+    ],
+    "itemId": 4,
+    "itemCount": 1,
     "xp":45
   }
 ]

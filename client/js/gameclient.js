@@ -25,7 +25,6 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.ATTACK] = this.receiveAttack;
             this.handlers[Types.Messages.SPAWN] = this.receiveSpawn;
             this.handlers[Types.Messages.DESPAWN] = this.receiveDespawn;
-            this.handlers[Types.Messages.SPAWN_BATCH] = this.receiveSpawnBatch;
             this.handlers[Types.Messages.HEALTH] = this.receiveHealth;
             this.handlers[Types.Messages.CHAT] = this.receiveChat;
             this.handlers[Types.Messages.EQUIP] = this.receiveEquipItem;
@@ -36,7 +35,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.LIST] = this.receiveList;
             this.handlers[Types.Messages.DESTROY] = this.receiveDestroy;
             this.handlers[Types.Messages.KILL] = this.receiveKill;
-            this.handlers[Types.Messages.HP] = this.receiveHitPoints;
+            this.handlers[Types.Messages.PP] = this.receivePoints;
             this.handlers[Types.Messages.BLINK] = this.receiveBlink;
             this.handlers[Types.Messages.PVP] = this.receivePVP;
             this.handlers[Types.Messages.BOARD] = this.receiveBoard;
@@ -513,14 +512,16 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             }
         },
 
-        receiveHitPoints: function(data) {
+        receivePoints: function(data) {
             var maxHp = data[1];
             var maxMana = data[2];
             var hp = data[3];
             var mp = data[4];
 
-            if(this.hp_callback) {
-                this.hp_callback(maxHp, maxMana);
+            log.info("Got Player Points.");
+
+            if(this.points_callback) {
+                this.points_callback(maxHp, maxMana, hp, mp);
             }
         },
 
@@ -735,8 +736,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.destroy_callback = callback;
         },
 
-        onPlayerChangeMaxHitPoints: function(callback) {
-            this.hp_callback = callback;
+        onPlayerPoints: function(callback) {
+            this.points_callback = callback;
         },
 
         onItemBlink: function(callback) {

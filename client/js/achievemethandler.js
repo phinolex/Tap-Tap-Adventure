@@ -9,7 +9,7 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
     var AchievementHandler = Class.extend({
         init: function(game) {
             this.game = game;
-            this.hideDelay = 5000; //How long the notification shows for.
+            this.hideDelay = 1000; //How long the notification shows for.
             this.progressHideDelay = 1000;
             this.achievements = achievementdata;
             this.showlog = false;
@@ -115,7 +115,7 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
                 achievementId = data[1];
                 achievement = this.getNPCAchievement(achievementId);
                 achievement.found = true;
-                this.achievementAlarmShow(achievement, this.hideDelay);
+                this.game.app.unlockAchievement(achievementId);
             } else if(type === "complete") {
                 achievementId = data[1];
                 achievement = this.getNPCAchievement(achievementId);
@@ -139,24 +139,11 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
         talkToNPC: function(npc){
             for(var achievementSerial in this.achievements){
                 var achievement = this.achievements[achievementSerial];
-                //alert(JSON.stringify(achievement));
+
                 if(achievement.npcId === npc.kind && !achievement.completed){
-                    //if(!achievement.found) {
-                    //this.game.client.sendAchievement(achievement.id, "found");
                     this.game.client.sendTalkToNPC(npc.kind, achievement.id);
-                    //this.achievements[achievementSerial].found = true;
-                    //if (achievement.completed)
-                    //	return null;
-
                     return npc.talk(achievement, false);
-                    //} /*else if(achievement.found && achievement.completed) {
-                    //return npc.talk(achievement.id, true);
-
-                } /*else if (achievement.npcId === npc.kind && achievement.completed)
-                 {
-                 //this.game.client.sendTalkToNPC(npc.kind, achievement.id);
-                 return npc.talk(achievement, true);
-                 }*/
+                }
             }
         }
     });

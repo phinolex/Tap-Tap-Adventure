@@ -30,7 +30,7 @@ Types = {
         WHO: 21,
         ZONE: 22,
         DESTROY: 23,
-        HP: 24,
+        PP: 24,
         BLINK: 25,
         OPEN: 26,
         CHECK: 27,
@@ -144,7 +144,9 @@ Types = {
         CRAFT: 103,
         FAILEDATTEMPTS: 104,
         TIME: 105,
-        SENDTELE: 106
+        SENDTELE: 106,
+        TOD: 107,
+        JSONUPDATE: 108
     },
 
     Orientations: {
@@ -197,7 +199,7 @@ Types = {
 
 Types.expForLevel = [];
 Types.expForLevel[0] = 0;
-for(i=1; i < 200; i++){
+for(var i = 1; i < 200; i++) {
     var points = Math.floor((i * 60) * Math.pow(2, i / 7.));
     //log.info("level_"+i+"="+points);
     Types.expForLevel[i] = points;
@@ -206,8 +208,7 @@ for(i=1; i < 200; i++){
 
 Types.getLevel = function(exp){
     if (exp==0) return 0;
-    var i=1;
-    for(i=1; i < 165; i++){
+    for(var i = 1; i < 165; i++){
         if(exp < Types.expForLevel[i]){
             return i;
         }

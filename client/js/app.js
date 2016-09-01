@@ -828,25 +828,10 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
             $notif.removeClass().addClass('active achievement' + id);
             $name.text(name);
-            if(this.game.storage.getAchievementCount() === 1) {
-                this.blinkInterval = setInterval(function() {
-                    $button.toggleClass('blink');
-                }, 500);
-            }
             setTimeout(function() {
                 $notif.removeClass('active');
                 $button.removeClass('blink');
             }, 5000);
-        },
-
-        displayUnlockedAchievement: function(id) {
-            var $achievement = $('#achievements li.achievement' + id);
-
-            var achievement = this.game.getAchievementById(id);
-            if(achievement && achievement.hidden) {
-                this.setAchievementData($achievement, achievement.name, achievement.desc);
-            }
-            $achievement.addClass('unlocked');
         },
 
         unlockAchievement: function(id, name) {
@@ -895,13 +880,19 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             $('#total-achievements').text($('#achievements').find('li').length);
         },
 
-        initUnlockedAchievements: function(ids) {
+        unlockAchievement: function(achievementId) {
+            var $achievement = $('#achievements li.achievement' + (achievementId + 1));
+            $achievement.addClass('unlocked')
+        },
+
+        initUnlockedAchievements: function(achievements) {
             var self = this;
 
-            _.each(ids, function(id) {
-                self.displayUnlockedAchievement(id);
+            _.each(achievements, function(achievement) {
+                if (achievement.found)
+                    self.unlockAchievement(achievement.id);
             });
-            $('#unlocked-achievements').text(ids.length);
+
         },
 
         setAchievementData: function($el, name, desc) {

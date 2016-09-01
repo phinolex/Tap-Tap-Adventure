@@ -1,4 +1,26 @@
 
+@font-face {
+    font-family: 'GraphicPixel';
+    src: url('../fonts/graphicpixel-webfont.eot');
+    src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/graphicpixel-webfont.woff') format('woff'),
+    url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
+    url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AdvoCut';
+    src: url('../fonts/advocut-webfont.eot');
+    src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/advocut-webfont.woff') format('woff'),
+    url('../fonts/advocut-webfont.ttf') format('truetype'),
+    url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @media screen and (min-width: 1501px), screen and (min-height: 801px) {
     #inventorycontainer.vertical {
         position: absolute;
@@ -57,6 +79,7 @@
         background-color: rgba(0, 0, 0, 0);
     }
     .vertical #inventorynumber0, .vertical #inventorynumber1, .vertical #inventorynumber2, .vertical #inventorynumber3, .vertical #inventorynumber4, .vertical #inventorynumber5{
+        font-family:'GraphicPixel';
         position: absolute;
         width: 48px;
         height: 12px;
@@ -141,6 +164,7 @@
         background-color: rgba(0, 0, 0, 0);
     }
     .horizontal #inventorynumber0, .horizontal #inventorynumber1, .horizontal #inventorynumber2, .horizontal #inventorynumber3, .horizontal #inventorynumber4, .horizontal #inventorynumber5{
+        font-family:'GraphicPixel';
         position: absolute;
         width: 48px;
         height: 12px;
@@ -221,6 +245,7 @@
     #inventorybackground10, #inventorybackground16, #inventorybackground22, #inventorybackground28{ left: 192px; }
     #inventorybackground11, #inventorybackground17, #inventorybackground23, #inventorybackground29{ left: 240px; }
     #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11, #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17, #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23, #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29 {
+        font-family:'GraphicPixel';
         position: absolute;
         left: 0px;
         width: 48px;
@@ -303,6 +328,7 @@
         background-color: rgba(0, 0, 0, 0);
     }
     .vertical #inventorynumber0, .vertical #inventorynumber1, .vertical #inventorynumber2, .vertical #inventorynumber3, .vertical #inventorynumber4, .vertical #inventorynumber5{
+        font-family:'GraphicPixel';
         position: absolute;
         width: 32px;
         height: 8px;
@@ -388,6 +414,7 @@
         background-color: rgba(0, 0, 0, 0);
     }
     .horizontal #inventorynumber0, .horizontal #inventorynumber1, .horizontal #inventorynumber2, .horizontal #inventorynumber3, .horizontal #inventorynumber4, .horizontal #inventorynumber5{
+        font-family:'GraphicPixel';
         position: absolute;
         width: 32px;
         height: 8px;
@@ -470,6 +497,7 @@
     #inventorybackground10, #inventorybackground16, #inventorybackground22, #inventorybackground28{ left: 128px; }
     #inventorybackground11, #inventorybackground17, #inventorybackground23, #inventorybackground29{ left: 160px; }
     #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11, #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17, #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23, #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29 {
+        font-family:'GraphicPixel';
         position: absolute;
         left: 0px;
         width: 32px;
@@ -552,6 +580,7 @@
         background-color: rgba(0, 0, 0, 0);
     }
     .vertical #inventorynumber0, .vertical #inventorynumber1, .vertical #inventorynumber2, .vertical #inventorynumber3, .vertical #inventorynumber4, .vertical #inventorynumber5{
+        font-family:'GraphicPixel';
         position: absolute;
         width: 16px;
         height: 4px;
@@ -637,6 +666,7 @@
         background-color: rgba(0, 0, 0, 0);
     }
     .horizontal #inventorynumber0, .horizontal #inventorynumber1, .horizontal #inventorynumber2, .horizontal #inventorynumber3, .horizontal #inventorynumber4, .horizontal #inventorynumber5{
+        font-family:'GraphicPixel';
         position: absolute;
         width: 16px;
         height: 4px;
@@ -719,6 +749,7 @@
     #inventorybackground10, #inventorybackground16, #inventorybackground22, #inventorybackground28{ left: 64px; }
     #inventorybackground11, #inventorybackground17, #inventorybackground23, #inventorybackground29{ left: 80px; }
     #inventorynumber6, #inventorynumber7, #inventorynumber8, #inventorynumber9, #inventorynumber10, #inventorynumber11, #inventorynumber12, #inventorynumber13, #inventorynumber14, #inventorynumber15, #inventorynumber16, #inventorynumber17, #inventorynumber18, #inventorynumber19, #inventorynumber20, #inventorynumber21, #inventorynumber22, #inventorynumber23, #inventorynumber24, #inventorynumber25, #inventorynumber26, #inventorynumber27, #inventorynumber28, #inventorynumber29 {
+        font-family:'GraphicPixel';
         position: absolute;
         left: 0px;
         width: 16px;

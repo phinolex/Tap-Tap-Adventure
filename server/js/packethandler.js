@@ -37,6 +37,7 @@ module.exports = PacketHandler = Class.extend({
         this.player = player;
         this.server = worldServer;
         this.connection = connection;
+        this.redisPool = databaseHandler;
 
         this.disconnectTimeout = null;
 
@@ -337,83 +338,73 @@ module.exports = PacketHandler = Class.extend({
 
         var options = {
             method: 'POST',
-            uri: 'https://kbve.com/b/api/nodebb-php-api/register/',
+            uri: 'https://kbve.com/api/user/',
             form: {
-                "a": "c02b7d24a066adb747fdeb12deb21bfa",
-                "u": playerName,
-                "p": playerPassword,
-                "e": playerEmail
+                "username": playerName,
+                "password": playerPassword,
+                "email": playerEmail
             }
         };
 
         request(options, function(error, response, body) {
-            if (response.statusCode != 200)
-                return;
+            var jsonData = JSON.parse(body);
 
-            self.player.name = playerName;
-            self.player.pw = playerPassword;
-            self.player.email = playerEmail;
-            self.player.pClass = playerClass;
+            log.info(jsonData.ok);
 
-            databaseHandler.createPlayer(self.player);
+            if (jsonData.ok) {
+                self.player.name = playerName;
+                self.player.pw = playerPassword;
+                self.player.email = playerEmail;
+                self.player.pClass = playerClass;
+
+                self.redisPool.createPlayer(self.player);
+
+            } else {
+                self.connection.sendUTF8("userexists");
+                self.connection.close("Username not available: " + self.player.name);
+            }
         });
     },
 
 
     processLogin: function(message) {
         var self = this;
-        var developmentMode = self.connection._connection.remoteAddress == "127.0.0.1";
+        //var developmentMode = self.connection._connection.remoteAddress == "127.0.0.1";
         var playerName = Utils.sanitize(message[1]),
             playerPassword = Utils.sanitize(message[2]);
 
-        if ((playerName == "tachyon" || playerName == "Tachyon") && playerPassword == "ppp111") {
-            self.player.name = playerName.substr(0, 36).trim();
-            self.player.pw = playerPassword.substr(0, 45);
-            self.player.email = "";
-            self.player.pClass = Types.PlayerClass.FIGHTER;
-            databaseHandler.loadPlayer(self.player);
-            return;
-        }
-
         var options = {
             method: 'POST',
-            uri: 'https://kbve.com/api/ns/login',
+            uri: 'https://kbve.com/api/session',
             form: {
                 'username': playerName,
                 'password': playerPassword
             }
         };
 
+        if (self.server.loggedInPlayer(playerName.substr(0, 36).trim())) {
+            self.connection.sendUTF8('loggedin');
+            self.connection.close("Player: " + playerName);
+            return;
+        }
+
         request(options, function(error, response, body) {
-            if (response.statusCode != 200 && !developmentMode) {
-                if (typeof String.prototype.contains === 'undefined') { String.prototype.contains = function(it) { return this.indexOf(it) != -1; }; }
-                
-                if (body.contains("You have made too many failed attempts")) {
-                    self.connection.sendUTF8("failedattempts");
-                }
 
-                self.connection.sendUTF8("invalidlogin");
-                self.connection.close("Wrong Password: " + playerName);
-                return;
+            var jsonData = JSON.parse(body);
+
+            if (jsonData.ok) {
+                try {
+                    self.player.name = playerName.substr(0, 36).trim();
+                    self.player.pw = playerPassword.substr(0, 45);
+
+                    self.redisPool.loadPlayer(self.player);
+                } catch (e) { log.info(e) }
+            } else {
+                self.connection.sendUTF8('invalidlogin');
+                self.connection.close("Wrong password for: " + playerName);
             }
-
-            self.player.name = playerName.substr(0, 36).trim();
-            self.player.pw = playerPassword.substr(0, 45);
-            self.player.email = "";
-            self.player.pClass = Types.PlayerClass.FIGHTER;
-
-            try {
-                if (self.server.loggedInPlayer(self.player.name)) {
-                    self.connection.sendUTF8("loggedin");
-                    self.connection.close("Already logged in " + self.player.name);
-                    return;
-                }
-                databaseHandler.loadPlayer(self.player);
-            } catch (e) {
-                log.info(e);
-            }
-
         });
+
     },
 
 
@@ -433,12 +424,17 @@ module.exports = PacketHandler = Class.extend({
                     break;
 
                 case "/setrank":
-                    databaseHandler.setPlayerRights(self.player, 2);
+                    self.redisPool.setPlayerRights(self.player, 2);
                     break;
 
-                case "/test":
-                    databaseHandler.moveToBlackHole(self.player, 15, 15);
-                    self.player.forcePosition(15, 15);
+                case "/tele":
+                    var command = msg.split(" ");
+                    if (command.length < 3) {
+                        self.send([Types.Messages.NOTIFY, "Invalid command syntax."]);
+                        return;
+                    }
+                    self.redisPool.moveToBlackHole(self.player, command[1], command[2]);
+                    self.player.forcePosition(command[1], command[2]);
                     break;
 
                 case "/pos":
@@ -511,7 +507,7 @@ module.exports = PacketHandler = Class.extend({
         var checkpoint = this.server.map.getCheckpoint(message[1]);
         if (checkpoint) {
             this.player.lastCheckpoint = checkpoint;
-            databaseHandler.setCheckpoint(this.player.name, this.player.x, this.player.y);
+            this.redisPool.setCheckpoint(this.player.name, this.player.x, this.player.y);
         }
     },
 
@@ -544,20 +540,20 @@ module.exports = PacketHandler = Class.extend({
             item = this.player.inventory.rooms[inventoryNumber1];
             //log.info(JSON.stringify(item));
             if(item.itemKind && !ItemTypes.isConsumableItem(item.itemKind) && !ItemTypes.isGold(item.itemKind)) {
-                databaseHandler.handleSaveAuctionItem(this.player, item, price, inventoryNumber1);
+                this.redisPool.handleSaveAuctionItem(this.player, item, price, inventoryNumber1);
             }
         }
     },
 
     handleAuctionOpen: function(message) {
         var type = message[1];
-        databaseHandler.loadAuctionItems(this.player, type);
+        this.redisPool.loadAuctionItems(this.player, type);
     },
 
     handleAuctionBuy: function(message) {
         var itemIndex = message[1];
         var self = this;
-        databaseHandler.getAuctionItem(itemIndex, function (auction) {
+        self.redisPool.getAuctionItem(itemIndex, function (auction) {
             price = auction.value;
             if(price > 0) {
                 goldCount = self.player.inventory.getItemNumber(400);
@@ -571,8 +567,8 @@ module.exports = PacketHandler = Class.extend({
                     self.player.inventory.putInventoryItem(auction.item);
                     self.player.inventory.putInventory(400, -price);
                     self.server.pushToPlayer(self.player, new Messages.Notify("buy"));
-                    databaseHandler.putGoldOfflineUser(auction.player, price, function() {log.info("gold success")}, function() {log.info("gold fail")});
-                    databaseHandler.handleDelAuctionItem(itemIndex);
+                    self.redisPool.putGoldOfflineUser(auction.player, price, function() {log.info("gold success")}, function() {log.info("gold fail")});
+                    self.redisPool.handleDelAuctionItem(itemIndex);
                 } else {
                     self.server.pushToPlayer(self.player, new Messages.Notify("There is not enough space in your inventory."));
                 }
@@ -584,11 +580,11 @@ module.exports = PacketHandler = Class.extend({
         var itemIndex = message[1];
         var self = this;
 
-        databaseHandler.getAuctionItem(itemIndex, function (auction) {
+        self.redisPool.getAuctionItem(itemIndex, function (auction) {
             if(self.player.inventory.hasEmptyInventory()) {
                 self.player.inventory.putInventoryItem(auction.item);
                 self.server.pushToPlayer(self.player, new Messages.Notify("buy"));
-                databaseHandler.handleDelAuctionItem(itemIndex);
+                self.redisPool.handleDelAuctionItem(itemIndex);
             } else {
                 self.server.pushToPlayer(self.player, new Messages.Notify("There is not enough space in your inventory."));
             }
@@ -613,7 +609,7 @@ module.exports = PacketHandler = Class.extend({
                     return;
                 }
                 item.itemNumber++;
-                databaseHandler.setInventory(this.player.inventory.owner, inventoryNumber1, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
+                this.redisPool.setInventory(this.player.inventory.owner, inventoryNumber1, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
 
                 this.player.inventory.putInventory(400, -price);
 
@@ -1146,7 +1142,7 @@ module.exports = PacketHandler = Class.extend({
             self = this;
 
         if(((index >= 0) && (index < 5)) && (name in SkillData.SkillNames)) {
-            databaseHandler.handleSkillInstall(this.player, index, name, function() {
+            self.redisPool.handleSkillInstall(this.player, index, name, function() {
                 self.player.skillHandler.install(index, name);
                 self.server.pushToPlayer(self.player, new Messages.SkillInstall(index, name));
             });
@@ -1155,7 +1151,7 @@ module.exports = PacketHandler = Class.extend({
 
 
     handleSkillLoad: function () {
-        var self= this;
+        var self = this;
 
 
         for(var index in self.player.skills) {
@@ -1166,7 +1162,7 @@ module.exports = PacketHandler = Class.extend({
             self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
         }
 
-        databaseHandler.loadSkillSlots(self.player, function(skillNames) {
+        self.redisPool.loadSkillSlots(self.player, function(skillNames) {
             for(var index = 0; index < skillNames.length; index++) {
 
                 var skillName = skillNames[index];
@@ -1375,7 +1371,7 @@ module.exports = PacketHandler = Class.extend({
             return;
 
         var pet = this.server.addPet(target, petKind, pos.x, pos.y);
-        databaseHandler.handlePet(target, target.pets.length-1, pet.kind);
+        this.redisPool.handlePet(target, target.pets.length-1, pet.kind);
     },
 
     handlePetDestroy: function (msg)
@@ -1399,12 +1395,12 @@ module.exports = PacketHandler = Class.extend({
         this.player.updateHitPoints();
         this.server.pushToPlayer(this.player, new Messages.HitPoints(this.player.maxHitPoints, this.player.maxMana, this.player.hitPoints, this.player.mana));
 
-        databaseHandler.changePlayerClass(this.player);
+        this.redisPool.changePlayerClass(this.player);
         this.server.pushToPlayer(this.player, new Messages.SwitchClass(this.player.pClass));
         this.server.pushToPlayer(this.player, new Messages.Chat(this.player, "The Player Class has been switched."));
 
         this.player.skillHandler.clear();
-        databaseHandler.delSkillSlots(this.player);
+        this.redisPool.delSkillSlots(this.player);
 
         var self= this;
 

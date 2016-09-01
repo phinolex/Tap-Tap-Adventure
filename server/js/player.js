@@ -228,7 +228,7 @@ module.exports = Player = Character.extend({
     achievementAboutKill: function(mob){
         var self = this;
 
-        for(i = 0; i < Object.keys(Achievements.AchievementData).length; i++){
+        for(var i = 0; i < Object.keys(Achievements.AchievementData).length; i++){
             var achievement = Achievements.AchievementData[i];
             if(achievement.type == 2)
             {
@@ -281,25 +281,28 @@ module.exports = Player = Character.extend({
             (achievement.mobId == 0 && MobData.Kinds[mobKind].level * 2 > this.level))
         {
             //log.info("mob found");
+            var achievementId = achievement.id;
+            var mobCount = achievement.mobCount;
             var achievement = this.achievement[achievement.id];
+
             if(achievement.found && achievement.progress !== 999) {
                 if(isNaN(achievement.progress)){
                     achievement.progress = 1;
                 } else{
                     achievement.progress++;
                 }
-                if(achievement.progress >= achievement.mobCount) {
+                if(achievement.progress >= mobCount) {
                     //log.info("MISSION COMPLETED!=============");
-                    this.send([Types.Messages.ACHIEVEMENT, "complete", achievement.id]);
+                    this.send([Types.Messages.ACHIEVEMENT, "complete", achievementId]);
                     achievement.progress = 999;
                     if(callback){
                         callback();
                     }
                 }
-                //log.info("MISSION progress!=============");
-                databaseHandler.progressAchievement(this.name, achievement.id, achievement.progress);
-                if(achievement.progress < achievement.mobCount){
-                    this.send([Types.Messages.ACHIEVEMENT, "progress", achievement.id, achievement.progress]);
+
+                databaseHandler.progressAchievement(this.name, achievementId, achievement.progress);
+                if(achievement.progress < mobCount){
+                    this.send([Types.Messages.ACHIEVEMENT, "progress", achievementId, achievement.progress]);
                 }
             }
         }
@@ -313,27 +316,38 @@ module.exports = Player = Character.extend({
         this.send([Types.Messages.ACHIEVEMENT, "found", achievementId]);
     },
 
-    incExp: function(gotexp){
-        if (this.variations.doubleEXP) {
-            //log.info("Double EXP Enabled");
-            this.experience = parseInt(this.experience) + (parseInt(gotexp) * 2);
-            //log.info("Added: " + parseInt(gotexp) + " w/ double EXP: " + (parseInt(gotexp) * 2));
-        } else {
-            //log.info("EXP Multiplier: " + this.variations.expMultiplier);
-            this.experience = parseInt(this.experience) + (parseInt(gotexp) * this.variations.expMultiplier);
+    incExp: function(gotexp, mob){
+        var self = this,
+            receivedExp = gotexp;
+
+        if (mob) {
+            var mobLevel = MobData.Kinds[mob.kind].level;
+            if (mobLevel > self.level) {
+                var multiplier = Utils.randomRange(1.2, 1.2 + (mobLevel - self.level) / 7);
+                receivedExp *= multiplier;
+            }
         }
 
-        //NOTE
+        var expGained = (parseInt(self.experience) + (parseInt(Math.round(receivedExp)))) * (self.variations.doubleEXP ? 2 : self.variations.expMultiplier);
+
+        self.experience = expGained;
+
         databaseHandler.setExp(this.name, this.experience);
-        var origLevel = this.level;
-        this.level = Types.getLevel(this.experience);
-        if(origLevel !== this.level) {
-            //this.resetHPandMana();
+
+        var previousLevel = self.level;
+        self.level = Types.getLevel(self.experience);
+
+        if (previousLevel != self.level)
             this.updateHitPoints();
-            this.server.pushToPlayer(this, new Messages.HitPoints(this.maxHitPoints, this.maxMana, this.hitPoints, this.mana));
-            //NOTE 3
-            //this.send(new Messages.HitPoints(this.maxHitPoints, this.maxMana, this.hitPoints, this.mana).serialize());
-        }
+
+        self.server.pushToPlayer(self, new Messages.PlayerPoints(self.maxHitPoints, self.maxMana, self.hitPoints, self.mana));
+        log.info("Sending Player Points: " + self.hitPoints);
+
+        return Math.round(receivedExp);
+    },
+
+    sendPlayerHp: function() {
+
     },
 
     checkName: function(name) {
@@ -760,6 +774,16 @@ module.exports = Player = Character.extend({
                 return true;
         }
         return false;
+    },
+
+    startRegenTick: function() {
+        var self = this;
+
+        setInterval(function() {
+            if (!self.isAttacked) {
+
+            }
+        }, 7000);
     },
 
     getHp: function () {

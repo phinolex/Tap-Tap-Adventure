@@ -10,7 +10,6 @@ _.each( AchievementJson, function( value, key ) {
     AchievementData[i] = value;
     AchievementData[i].id = i;
 	i++;
-	
 });
 
 module.exports.AchievementData = AchievementData;

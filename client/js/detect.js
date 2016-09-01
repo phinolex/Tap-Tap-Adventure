@@ -9,11 +9,11 @@ Detect.userAgentContains = function(string) {
     return navigator.userAgent.indexOf(string) != -1;
 };
 
-Detect.isTablet = function() {
+Detect.isTablet = function(screenWidth) {
     var isAppleTablet = /ipad/i.test(navigator.userAgent.toLowerCase()),
         isAndroidTablet = /android/i.test(navigator.userAgent.toLowerCase());
 
-    return false;
+    return (isAppleTablet || isAndroidTablet) && screenWidth >= 640;
 };
 
 Detect.isWindows = function() {

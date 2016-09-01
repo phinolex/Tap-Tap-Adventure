@@ -10,5 +10,6 @@
     init: function() {    
         this.expMultiplier = 1;
         this.doubleEXP = false;
+        this.serverVersion = 1;
     }
  });

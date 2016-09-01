@@ -49,7 +49,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.isDebugInfoVisible = false;
                 this.animatedTileCount = 0;
                 this.highTileCount = 0;
-                this.tablet = Detect.isTablet();
+                this.tablet = Detect.isTablet(window.innerWidth);
                 this.fixFlickeringTimer = new Timer(100);
 
                 this.mobile = false;
@@ -65,6 +65,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 $('body').css('zoom', zoom);
                 $('body').css('-moz-transform', 'scale('+zoom+')');
                 $('#mainborder').css("top", 0);
+                //$('#entities').css('z-index', -10);
             },
 
             getWidth: function() {
@@ -131,9 +132,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.canvas.width = this.camera.gridW * this.tilesize * this.scale;
                 this.canvas.height = this.camera.gridH * this.tilesize * this.scale;
+
                 if (this.mobile)
                     this.canvas.height += 15;
-
 
                 this.backbuffercanvas.width = this.canvas.width + 2 * this.tilesize;
                 this.backbuffercanvas.height = this.canvas.height+ 2 * this.tilesize;
@@ -345,11 +346,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 if (!this.game.currentCursor.isLoaded)
                     this.game.currentCursor.load();
 
-                if(this.game.currentCursor && this.game.currentCursor.isLoaded) {
-                    //this.context.drawImage(this.game.currentCursor.image, 0, 0, 14 * os, 14 * os, mx, my, 14*s, 14*s);
-
-                    this.drawScaledImage(this.textcontext, this.game.currentCursor.image, 0, 0, 14 * s, 14 * s, mx / 2, my / 2);
-                }
+                if(this.game.currentCursor && this.game.currentCursor.isLoaded)
+                    this.context.drawImage(this.game.currentCursor.image, 0, 0, 14 * os, 14 * os, mx, my, 14*s, 14*s);
 
 
                 this.context.restore();
@@ -746,57 +744,18 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     var playerLvl;
 
 
-                    if (this.game.player)
-                    {
+                    if (this.game.player) {
                         playerLvl = this.game.player.level;
                         //alert("mobLevel="+mobLvl+",playerLvl="+playerLvl);
                         //8, 4
-                        if ( mobLvl < playerLvl-6)
-                            color = "white";
-                        else if (playerLvl-mobLvl >= -5 || mobLvl-playerLvl <= 9)
-                        {
-                            switch (mobLvl)
-                            {
-                                case (playerLvl-5):
-                                case (playerLvl-4):
-                                    color = "cyan";
-                                    break;
-                                case (playerLvl-3):
-                                case (playerLvl-2):
-                                    color = "blue";
-                                    break;
-                                case (playerLvl-1):
-                                case (playerLvl):
-                                case (playerLvl+1):
-                                    color = "green";
-                                    break;
-                                case (playerLvl+2):
-                                case (playerLvl+3):
-                                    color = "yellow";
-                                    break;
-                                case (playerLvl+4):
-                                case (playerLvl+5):
-                                    color = "orange";
-                                    break;
-                                case (playerLvl+6):
-                                case (playerLvl+7):
-                                    color = "red";
-                                    break;
-                                case (playerLvl+8):
-                                case (playerLvl+9):
-                                    color = "purple";
-                                    break;
-                                default:
-                                    color = "white";
-                            }
-                        }
-                        else
-                            color = "grey";
-                    }
-                    else
-                    {
                         color = "white";
-                    }
+
+                        if (mobLvl > playerLvl + 5)
+                            color = "red";
+
+                    } else
+                        color = "white";
+
 
                     //var name = entity.title + " " + entity.kind;
                     var name = entity.title;
@@ -836,6 +795,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.drawInventoryMenu();
                 this.textcontext.restore();
             },
+
             drawInventoryMenu: function(){
                 if(this.game.player && this.game.menu && this.game.menu.selectedEquipped !== null) {
                     var equippedNumber = this.game.menu.selectedEquipped;
@@ -1222,47 +1182,42 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             renderFrame: function() {
+                if (this.mobile) {
+                    this.clearDirtyRects();
+                    this.preventFlickeringBug();
+                } else
+                    this.clearScreen(this.context);
 
-                //this.drawTutorialText();
-
-                if(this.mobile || this.tablet) {
-                    this.renderFrameMobile();
-                }
-                else {
-                    this.renderFrameDesktop();
-                }
-            },
-
-            renderFrameDesktop: function() {
-                this.clearScreen(this.context);
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 
-                this.renderStaticCanvases();
+                if (!this.mobile)
+                    this.renderStaticCanvases();
+                else
+                    this.renderingMobile();
 
-                this.context.save();
+
+
                 this.textcontext.save();
                 this.toptextcontext.save();
+                this.context.save();
 
                 this.setCameraView(this.context);
                 this.setCameraView(this.textcontext);
                 this.setCameraView(this.toptextcontext);
 
-                this.drawEntitiesCircle();
+                this.drawAnimatedTiles(this.mobile, this.context);
 
-                this.drawAnimatedTiles(false, this.context);
+                this.drawSelectedCell();
 
+                this.drawEntityNames();
 
-                if(this.game.started && this.game.cursorVisible) {
-                    this.drawSelectedCell();
+                if (!this.mobile && !this.tablet) {
                     this.drawTargetCell();
                     this.drawAttackTargetCell();
                 }
 
-
-                //this.drawOccupiedCells();
-                this.drawPathingCells();
-                this.drawEntities(false);
+                this.drawEntities(this.mobile);
                 this.drawCombatInfo();
                 this.drawInventory();
 
@@ -1270,46 +1225,21 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.textcontext.restore();
                 this.toptextcontext.restore();
 
-                // Overlay UI elements
-                if(this.game.cursorVisible || !this.tablet || this.isFirefox)
-                    this.drawCursor();
+                if (!this.mobile && !this.tablet) {
+                    if (this.game.cursorVisible || this.isFirefox)
+                        this.drawCursor();
+                }
 
-            },
-
-
-            renderFrameMobile: function() {
-                this.clearScreenText(this.textcontext);
-                this.clearScreenText(this.toptextcontext);
-
-                this.clearDirtyRects();
-                this.preventFlickeringBug();
-                this.renderingMobile();
-
-                this.textcontext.save();
-                this.toptextcontext.save();
-
-                this.setCameraView(this.textcontext);
-                this.setCameraView(this.toptextcontext);
-
-                this.drawCombatInfo();
-
-                this.context.save();
-                this.setCameraView(this.context);
-
-                this.drawDirtyAnimatedTiles();
-                this.drawInventory();
-                this.drawEntities(true);
-
-                this.context.restore();
-
-                this.textcontext.restore();
-                this.toptextcontext.restore();
             },
 
             preventFlickeringBug: function() {
-                if(this.fixFlickeringTimer.isOver(this.game.currentTime)) {
+                if(this.fixFlickeringTimer.isOver(this.game.currentTime))
                     this.context.fillRect(0, 0, 0, 0);
-                }
+
+            },
+
+            cleanPathing: function() {
+                this.clearScreen(this.context);
             }
 
         });

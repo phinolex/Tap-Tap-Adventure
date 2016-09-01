@@ -159,7 +159,7 @@ module.exports = World = cls.Class.extend({
             self.forEachCharacter(function(character) {
                 if (character instanceof Player) {
                     if (character.hasFocus && !character.hasFullHealth() && !character.isAttacked()) {
-                        character.regenHealthBy(Math.floor(character.maxHitPoints / Utils.randomInt(10, 15)));
+                        character.regenHealthBy(1);
                         self.pushToPlayer(character, character.regen());
                     }
                 }
@@ -342,7 +342,7 @@ module.exports = World = cls.Class.extend({
 
     initializeGameTick: function() {
         var self = this;
-        var regenCount = self.getCycleSpeed * 2;
+        var regenCount = self.getCycleSpeed() * 2;
         var updateCount = 0;
 
         setInterval(function() {
@@ -996,7 +996,7 @@ module.exports = World = cls.Class.extend({
                     if (mainTanker.party)
                         mainTanker.party.incExp(mob);
                     else {
-                        mainTanker.incExp(MobData.Kinds[mob.kind].xp);
+                        mainTanker.incExp(MobData.Kinds[mob.kind].xp, mob);
                         self.pushToPlayer(mainTanker, new Messages.Kill(mob, mainTanker.level, mob.xp));
                     }
                 } else {
@@ -1005,7 +1005,7 @@ module.exports = World = cls.Class.extend({
 
                     else
                     {
-                        attacker.incExp(MobData.Kinds[mob.kind].xp);
+                        var exp = attacker.incExp(MobData.Kinds[mob.kind].xp, mob);
                         self.pushToPlayer(attacker, new Messages.Kill(mob, attacker.level, mob.xp));
                     }
                 }

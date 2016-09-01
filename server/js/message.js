@@ -108,7 +108,7 @@ Messages.Notify = Message.extend({
             this.message];
     }
 });
-Messages.HitPoints = Message.extend({
+Messages.PlayerPoints = Message.extend({
     init: function(maxHitPoints, maxMana, hp, mp) {
         this.maxHitPoints = maxHitPoints;
         this.maxMana = maxMana;
@@ -116,7 +116,7 @@ Messages.HitPoints = Message.extend({
         this.mana = mp
     },
     serialize: function() {
-        return [Types.Messages.HP,
+        return [Types.Messages.PP,
             this.maxHitPoints,
             this.maxMana,
             this.hitPoints,

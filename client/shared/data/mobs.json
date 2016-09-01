@@ -24,7 +24,7 @@
     "armor": 0,
     "weapon": 1,
     "xp": 10,
-    "level": 4,
+    "level": 3,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -54,7 +54,7 @@
     "name": "Wizard",
     "kind": 9,
     "drops": {"axe": 600, "morningstar": 100, "woodenbow": 300},
-    "hp": 50,
+    "hp": 45,
     "armor": 4,
     "weapon": 2,
     "xp": 40,
@@ -70,7 +70,7 @@
   "Goblin": {
     "name": "Goblin",
     "kind": 4,
-    "drops": {"leatherarmor": 250, "plasticbow": 225, "gold": 300, "leatherarcherarmor": 225},
+    "drops": {"leatherarmor": 200, "plasticbow": 100, "gold": 600, "leatherarcherarmor": 100},
     "hp": 30,
     "armor": 1,
     "weapon": 2,
@@ -123,11 +123,11 @@
     "name": "Armoured Skeleton",
     "kind": 12,
     "drops": {"axe": 250, "morningstar": 200, "platearmor": 300, "platearcherarmor": 250},
-    "hp": 50,
+    "hp": 65,
     "armor": 4,
     "weapon": 2,
-    "xp": 40,
-    "level": 7,
+    "xp": 45,
+    "level": 10,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -144,7 +144,7 @@
     "armor": 4,
     "weapon": 2,
     "xp": 40,
-    "level": 7,
+    "level": 9,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -160,8 +160,8 @@
     "hp": 50,
     "armor": 4,
     "weapon": 2,
-    "xp": 40,
-    "level": 7,
+    "xp": 50,
+    "level": 12,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -177,8 +177,8 @@
     "hp": 50,
     "armor": 4,
     "weapon": 2,
-    "xp": 40,
-    "level": 7,
+    "xp": 50,
+    "level": 12,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": false,
@@ -188,14 +188,14 @@
   },
 
   "Deathknight": {
-    "name": "Dog",
+    "name": "Death Knight",
     "kind": 14,
     "drops": {"redsword": 600, "redarmor": 100, "morningstar": 300},
     "hp": 50,
     "armor": 4,
     "weapon": 2,
-    "xp": 40,
-    "level": 7,
+    "xp": 55,
+    "level": 14,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -204,6 +204,1459 @@
     "spawnDelay": 35000
   },
 
+  "Adherer": {
+    "name": "Dark Mage",
+    "kind": 125,
+    "drops": {},
+    "hp": 750,
+    "armor": 15,
+    "weapon": 15,
+    "xp": 250,
+    "level": 31,
+    "aggroRange": 1,
+    "attackRange": 2,
+    "isAggressive": true,
+    "attackRate": 1200,
+    "moveSpeed": 500,
+    "spawnDelay": 35000
+  },
+
+  "Ant": {
+    "name": "Worker Ant",
+    "kind": 220,
+    "drops": {},
+    "hp": 1150,
+    "armor": 5,
+    "weapon": 10,
+    "xp": 425,
+    "level": 50,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1000,
+    "moveSpeed": 600,
+    "spawnDelay": 35000
+  },
+
+  "BabySpider": {
+    "name": "Baby Spooder",
+    "kind": 301,
+    "drops": {},
+    "hp": 400,
+    "armor": 3,
+    "weapon": 7,
+    "xp": 250,
+    "level": 35,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+
+  },
+
+  "Beetle": {
+    "name": "Beetle",
+    "kind": 266,
+    "drops": {},
+    "hp": 600,
+    "armor": 5,
+    "weapon": 10,
+    "xp": 515,
+    "level": 45,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "BlackPirateSkeleton": {
+    "name": "Pirate Skeleton",
+    "kind": 104,
+    "drops": {},
+    "hp": 435,
+    "armor": 10,
+    "weapon": 3,
+    "xp": 150,
+    "level": 35,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "BlackWizard": {
+    "name": "Dark Wizard",
+    "kind": 278,
+    "drops": {},
+    "hp": 700,
+    "armor": 0,
+    "weapon": 6,
+    "xp": 300,
+    "level": 28,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "BlazeSpider": {
+    "name": "Blaze Spooder",
+    "kind": 273,
+    "drops": {},
+    "hp": 915,
+    "armor": 0,
+    "weapon": 3,
+    "xp": 1150,
+    "level": 60,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "BlueCockroach": {
+    "name": "Blue Cockroach",
+    "kind": 240,
+    "drops": {},
+    "hp": 785,
+    "armor": 5,
+    "weapon": 0,
+    "xp": 950,
+    "level": 55,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "BluePreta": {
+    "name": "Blue Preta",
+    "kind": 107,
+    "drops": {},
+    "hp": 1250,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 2500,
+    "level": 71,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Cactus": {
+    "name": "Cactus",
+    "kind": 326,
+    "drops": {},
+    "hp": 75,
+    "armor": 2,
+    "weapon": 1,
+    "xp": 200,
+    "level": 9,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Cat": {
+    "name": "Cat",
+    "kind": 250,
+    "drops": {},
+    "hp": 600,
+    "armor": 1,
+    "weapon": 4,
+    "xp": 450,
+    "level": 35,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Clam": {
+    "name": "Clam",
+    "kind": 93,
+    "drops": {},
+    "hp": 200,
+    "armor": 6,
+    "weapon": 1,
+    "xp": 450,
+    "level": 18,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Cobra": {
+    "name": "Cobra",
+    "kind": 155,
+    "drops": {},
+    "hp": 1150,
+    "armor": 3,
+    "weapon": 10,
+    "xp": 7350,
+    "level": 91,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "CrystalScolpion": {
+    "name": "Crystal Scorpion",
+    "kind": 146,
+    "drops": {},
+    "hp": 1450,
+    "armor": 15,
+    "weapon": 5,
+    "xp": 8250,
+    "level": 105,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "CursedHahoeMask": {
+    "name": "Cursed Hahoe Mask",
+    "kind": 375,
+    "drops": {},
+    "hp": 2100,
+    "armor": 25,
+    "weapon": 5,
+    "xp": 13250,
+    "level": 115,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "CursedDjangseung": {
+    "name": "Cursed Djangseung",
+    "kind": 341,
+    "drops": {},
+    "hp": 1900,
+    "armor": 25,
+    "weapon": 10,
+    "xp": 10250,
+    "level": 110,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "DarkOgre": {
+    "name": "Dark Ogre",
+    "kind": 171,
+    "drops": {},
+    "hp": 600,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 1200,
+    "level": 41,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "DarkScolpion": {
+    "name": "Dark Scorpion",
+    "kind": 143,
+    "drops": {},
+    "hp": 1450,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 8400,
+    "level": 101,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "DarkSkeleton": {
+    "name": "Dark Skeleton",
+    "kind": 102,
+    "drops": {},
+    "hp": 500,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 526,
+    "level": 20,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "DesertScolpion": {
+    "name": "Desert Scorpion",
+    "kind": 142,
+    "drops": {},
+    "hp": 1300,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 5950,
+    "level": 90,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "DevilKazya": {
+    "name": "Devil Blox",
+    "kind": 333,
+    "drops": {},
+    "hp": 2300,
+    "armor": 30,
+    "weapon": 25,
+    "xp": 25000,
+    "level": 135,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "EarthWorm": {
+    "name": "Earth Worm",
+    "kind": 247,
+    "drops": {},
+    "hp": 1450,
+    "armor": 5,
+    "weapon": 5,
+    "xp": 5400,
+    "level": 92,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "FireSpider": {
+    "name": "Fire Spooder",
+    "kind": 253,
+    "drops": {},
+    "hp": 1150,
+    "armor": 3,
+    "weapon": 4,
+    "xp": 1650,
+    "level": 83,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "FlareDanceKnight": {
+    "name": "Cursed Knight",
+    "kind": 1001,
+    "drops": {},
+    "hp": 1000,
+    "armor": 15,
+    "weapon": 10,
+    "xp": 950,
+    "level": 65,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Frog": {
+    "name": "Frog",
+    "kind": 364,
+    "drops": {},
+    "hp": 1850,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 4300,
+    "level": 89,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "GhostRider": {
+    "name": "Skeleton Knight",
+    "kind": 164,
+    "drops": {},
+    "hp": 700,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 450,
+    "level": 19,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "GoldGolem": {
+    "name": "Golden Golem",
+    "kind": 156,
+    "drops": {},
+    "hp": 1150,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 2250,
+    "level": 75,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Golem": {
+    "name": "Golem",
+    "kind": 69,
+    "drops": {},
+    "hp": 1050,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 1950,
+    "level": 70,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "GreenFish": {
+    "name": "Green Fish",
+    "kind": 91,
+    "drops": {},
+    "hp": 350,
+    "armor": 5,
+    "weapon": 10,
+    "xp": 400,
+    "level": 29,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "HellSpider": {
+    "name": "Hell Spooder",
+    "kind": 354,
+    "drops": {},
+    "hp": 2000,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 4550,
+    "level": 91,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "HermitCrab": {
+    "name": "Hermit Crab",
+    "kind": 141,
+    "drops": {},
+    "hp": 300,
+    "armor": 10,
+    "weapon": 10,
+    "xp": 250,
+    "level": 24,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Hobgoblin": {
+    "name": "Hobgoblin",
+    "kind": 71,
+    "drops": {},
+    "hp": 100,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 150,
+    "level": 12,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "HongCheol": {
+    "name": "Hong Chul",
+    "kind": 268,
+    "drops": {},
+    "hp": 1550,
+    "armor": 15,
+    "weapon": 15,
+    "xp": 14050,
+    "level": 100,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "IceGolem": {
+    "name": "Ice Golem",
+    "kind": 126,
+    "drops": {},
+    "hp": 2500,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 2750,
+    "level": 78,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "IceKnight": {
+    "name": "Ice Knight",
+    "kind": 151,
+    "drops": {},
+    "hp": 1000,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 950,
+    "level": 59,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "IceVulture": {
+    "name": "Ice Vulture",
+    "kind": 177,
+    "drops": {},
+    "hp": 850,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 850,
+    "level": 51,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "InfectedGuard": {
+    "name": "Infected Guard",
+    "kind": 85,
+    "drops": {},
+    "hp": 2000,
+    "armor": 8,
+    "weapon": 4,
+    "xp": 1400,
+    "level": 61,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "IronOgre": {
+    "name": "Iron Ogre",
+    "kind": 123,
+    "drops": {},
+    "hp": 1150,
+    "armor": 5,
+    "weapon": 4,
+    "xp": 850,
+    "level": 45,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "LivingArmor": {
+    "name": "Living Armor",
+    "kind": 86,
+    "drops": {},
+    "hp": 4350,
+    "armor": 25,
+    "weapon": 10,
+    "xp": 20000,
+    "level": 113,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Mantis": {
+    "name": "Praying Mantis",
+    "kind": 292,
+    "drops": {},
+    "hp": 2400,
+    "armor": 15,
+    "weapon": 10,
+    "xp": 9500,
+    "level": 89,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Mermaid": {
+    "name": "Mermaid",
+    "kind": 87,
+    "drops": {},
+    "hp": 450,
+    "armor": 3,
+    "weapon": 5,
+    "xp": 500,
+    "level": 34,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Mimic": {
+    "name": "Mimic",
+    "kind": 70,
+    "drops": {},
+    "hp": 200,
+    "armor": 2,
+    "weapon": 1,
+    "xp": 120,
+    "level": 22,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "MiniIceKnight": {
+    "name": "Mini Ice Knight",
+    "kind": 152,
+    "drops": {},
+    "hp": 1950,
+    "armor": 5,
+    "weapon": 7,
+    "xp": 1500,
+    "level": 61,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "MiniKnight": {
+    "name": "Mini Knight",
+    "kind": 108,
+    "drops": {},
+    "hp": 1450,
+    "armor": 3,
+    "weapon": 5,
+    "xp": 1100,
+    "level": 56,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "OldOgre": {
+    "name": "Old Ogre",
+    "kind": 68,
+    "drops": {},
+    "hp": 500,
+    "armor": 3,
+    "weapon": 1,
+    "xp": 650,
+    "level": 40,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Orc": {
+    "name": "Orc",
+    "kind": 67,
+    "drops": {},
+    "hp": 650,
+    "armor": 3,
+    "weapon": 4,
+    "xp": 750,
+    "level": 43,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Pain": {
+    "name": "Infected Villager",
+    "kind": 174,
+    "drops": {},
+    "hp": 1550,
+    "armor": 5,
+    "weapon": 1,
+    "xp": 1450,
+    "level": 73,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Penguin": {
+    "name": "Penguin",
+    "kind": 98,
+    "drops": {},
+    "hp": 526,
+    "armor": 1,
+    "weapon": 3,
+    "xp": 400,
+    "level": 39,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Pierrot": {
+    "name": "Clown",
+    "kind": 285,
+    "drops": {},
+    "hp": 150,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 75,
+    "level": 12,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "PinkElf": {
+    "name": "Pink Elf",
+    "kind": 115,
+    "drops": {},
+    "hp": 1600,
+    "armor": 4,
+    "weapon": 4,
+    "xp": 2225,
+    "level": 69,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "PoisonSpider": {
+    "name": "Red Spider",
+    "kind": 296,
+    "drops": {},
+    "hp": 990,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 1225,
+    "level": 49,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Preta": {
+    "name": "Preta",
+    "kind": 296,
+    "drops": {},
+    "hp": 1995,
+    "armor": 1,
+    "weapon": 10,
+    "xp": 2655,
+    "level": 72,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "PurplePreta": {
+    "name": "Preta",
+    "kind": 94,
+    "drops": {},
+    "hp": 2150,
+    "armor": 1,
+    "weapon": 13,
+    "xp": 2855,
+    "level": 75,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "RedCockroach": {
+    "name": "Red Cockroach",
+    "kind": 237,
+    "drops": {},
+    "hp": 1200,
+    "armor": 2,
+    "weapon": 4,
+    "xp": 1650,
+    "level": 61,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "RedElf": {
+    "name": "Red Elf",
+    "kind": 119,
+    "drops": {},
+    "hp": 1750,
+    "armor": 5,
+    "weapon": 5,
+    "xp": 2350,
+    "level": 70,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "RedFish": {
+    "name": "Red Fish",
+    "kind": 92,
+    "drops": {},
+    "hp": 210,
+    "armor": 1,
+    "weapon": 1,
+    "xp": 250,
+    "level": 30,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "RedGuard": {
+    "name": "Red Guard",
+    "kind": 81,
+    "drops": {},
+    "hp": 135,
+    "armor": 1,
+    "weapon": 1,
+    "xp": 100,
+    "level": 18,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "RedMouse": {
+    "name": "Red Mouse",
+    "kind": 80,
+    "drops": {},
+    "hp": 100,
+    "armor": 1,
+    "weapon": 1,
+    "xp": 75,
+    "level": 16,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "RedPirateSkeleton": {
+    "name": "Pirate Skeleton",
+    "kind": 105,
+    "drops": {},
+    "hp": 650,
+    "armor": 1,
+    "weapon": 1,
+    "xp": 375,
+    "level": 38,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Rhaphidophoridae": {
+    "name": "Cricket",
+    "kind": 216,
+    "drops": {},
+    "hp": 3500,
+    "armor": 5,
+    "weapon": 10,
+    "xp": 4000,
+    "level": 93,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Rudolf": {
+    "name": "Raindeer",
+    "kind": 225,
+    "drops": {},
+    "hp": 5550,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 22500,
+    "level": 129,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "SantaElf": {
+    "name": "Santa's Elf",
+    "kind": 228,
+    "drops": {},
+    "hp": 6100,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 32500,
+    "level": 144,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Scorpion": {
+    "name": "Scorpion",
+    "kind": 1002,
+    "drops": {},
+    "hp": 2700,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 2250,
+    "level": 80,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "SkyElf": {
+    "name": "Sky Elf",
+    "kind": 117,
+    "drops": {},
+    "hp": 2100,
+    "armor": 6,
+    "weapon": 6,
+    "xp": 2800,
+    "level": 74,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Slime": {
+    "name": "Slime",
+    "kind": 206,
+    "drops": {},
+    "hp": 3055,
+    "armor": 5,
+    "weapon": 5,
+    "xp": 3600,
+    "level": 88,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "SmallDevil": {
+    "name": "Corrupted Bat",
+    "kind": 281,
+    "drops": {},
+    "hp": 100,
+    "armor": 3,
+    "weapon": 5,
+    "xp": 125,
+    "level": 10,
+    "aggroRange": 2,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "SnowElf": {
+    "name": "Snow Elf",
+    "kind": 153,
+    "drops": {},
+    "hp": 3400,
+    "armor": 10,
+    "weapon": 15,
+    "xp": 6500,
+    "level": 99,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Snowman": {
+    "name": "Snowman",
+    "kind": 255,
+    "drops": {},
+    "hp": 750,
+    "armor": 3,
+    "weapon": 3,
+    "xp": 655,
+    "level": 43,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "SnowRabbit": {
+    "name": "Snow Rabbit",
+    "kind": 149,
+    "drops": {},
+    "hp": 295,
+    "armor": 4,
+    "weapon": 1,
+    "xp": 355,
+    "level": 29,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "SnowWolf": {
+    "name": "Snow Wolf",
+    "kind": 150,
+    "drops": {},
+    "hp": 785,
+    "armor": 1,
+    "weapon": 4,
+    "xp": 685,
+    "level": 44,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "SoldierAnt": {
+    "name": "Soldier Ant",
+    "kind": 234,
+    "drops": {},
+    "hp": 1150,
+    "armor": 5,
+    "weapon": 5,
+    "xp": 950,
+    "level": 63,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "SoyBeanBug": {
+    "name": "Soy Bean Bug",
+    "kind": 242,
+    "drops": {},
+    "hp": 3500,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 9500,
+    "level": 103,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Spider": {
+    "name": "Spooder",
+    "kind": 1003,
+    "drops": {},
+    "hp": 2900,
+    "armor": 45,
+    "weapon": 1,
+    "xp": 7500,
+    "level": 91,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Squirrel": {
+    "name": "Squirrel",
+    "kind": 1004,
+    "drops": {},
+    "hp": 150,
+    "armor": 3,
+    "weapon": 7,
+    "xp": 250,
+    "level": 16,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "SuicideGhost": {
+    "name": "Ghost",
+    "kind": 346,
+    "drops": {},
+    "hp": 1500,
+    "armor": 1,
+    "weapon": 5,
+    "xp": 1000,
+    "level": 62,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Vulture": {
+    "name": "Vulture",
+    "kind": 144,
+    "drops": {},
+    "hp": 150,
+    "armor": 4,
+    "weapon": 5,
+    "xp": 150,
+    "level": 16,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "WhiteBear": {
+    "name": "Molar Bear",
+    "kind": 154,
+    "drops": {},
+    "hp": 3350,
+    "armor": 5,
+    "weapon": 10,
+    "xp": 7500,
+    "level": 86,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "WhiteMouse": {
+    "name": "Mouse",
+    "kind": 76,
+    "drops": {},
+    "hp": 950,
+    "armor": 10,
+    "weapon": 3,
+    "xp": 850,
+    "level": 53,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "WhiteTiger": {
+    "name": "Tiger",
+    "kind": 275,
+    "drops": {},
+    "hp": 3350,
+    "armor": 1,
+    "weapon": 15,
+    "xp": 8500,
+    "level": 98,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Wolf": {
+    "name": "Wolf",
+    "kind": 109,
+    "drops": {},
+    "hp": 650,
+    "armor": 1,
+    "weapon": 10,
+    "xp": 350,
+    "level": 37,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "YellowBat": {
+    "name": "Mutated Bat",
+    "kind": 1005,
+    "drops": {},
+    "hp": 350,
+    "armor": 30,
+    "weapon": 15,
+    "xp": 150,
+    "level": 16,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "YellowFish": {
+    "name": "Yellow Fish",
+    "kind": 90,
+    "drops": {},
+    "hp": 350,
+    "armor": 3,
+    "weapon": 1,
+    "xp": 250,
+    "level": 27,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "YellowMouse": {
+    "name": "Yellow Mouse",
+    "kind": 75,
+    "drops": {},
+    "hp": 750,
+    "armor": 3,
+    "weapon": 1,
+    "xp": 600,
+    "level": 39,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "YellowPreta": {
+    "name": "Preta",
+    "kind": 106,
+    "drops": {},
+    "hp": 2000,
+    "armor": 5,
+    "weapon": 15,
+    "xp": 3500,
+    "level": 70,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "Zombie": {
+    "name": "Zombie",
+    "kind": 121,
+    "drops": {},
+    "hp": 3500,
+    "armor": 15,
+    "weapon": 25,
+    "xp": 2500,
+    "level": 86,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "AdminArmor": {
+    "name": "Death",
+    "kind": 175
+  },
+
+
+
   "Skeletonking": {
     "name": "Skeleton King",
     "kind": 13,
@@ -211,8 +1664,8 @@
     "hp": 50,
     "armor": 10,
     "weapon": 6,
-    "xp": 40,
-    "level": 25,
+    "xp": 75,
+    "level": 20,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -220,6 +1673,170 @@
     "moveSpeed": 400,
     "spawnDelay": 35000
 
+  },
+
+  "WhiteGuardian": {
+    "name": "Sky Guardian",
+    "kind": 1006,
+    "drops": {},
+    "hp": 15000,
+    "armor": 40,
+    "weapon": 35,
+    "xp": 75000,
+    "level": 195,
+    "aggroRange": 3,
+    "attackRange": 2,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 500,
+    "spawnDelay": 95000
+  },
+
+  "LightningGuardian": {
+    "name": "Lighting Guardian",
+    "kind": 195,
+    "drops": {},
+    "hp": 20000,
+    "armor": 45,
+    "weapon": 30,
+    "xp": 80000,
+    "level": 200,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1200,
+    "moveSpeed": 600,
+    "spawnDelay": 95000
+  },
+
+  "SnowLady": {
+    "name": "Gemina",
+    "kind": 185
+  },
+
+  "DarkRegion": {
+    "name": "Tenebris",
+    "kind": 157
+  },
+
+  "DarkRegionIllusion": {
+    "name": "Tenebris",
+    "kind": 158
+  },
+
+  "MiniSeaDragon": {
+    "name": "Mini Sea Dragon",
+    "kind": 202
+  },
+
+  "MoleKing": {
+    "name": "Mole King",
+    "kind": 99
+  },
+
+  "NightmareRegion": {
+    "name": "Qntal",
+    "kind": 159
+  },
+
+  "OgreLord": {
+    "name": "Ogre Lord",
+    "kind": 124
+  },
+
+  "RegionHenchman": {
+    "name": "Optio",
+    "kind": 180
+  },
+
+  "Santa": {
+    "name": "Santa",
+    "kind": 231
+  },
+
+  "FrostQueen": {
+    "name": "Aurora",
+    "kind": 148
+  },
+
+  "ForestDragon": {
+    "name": "Gragon",
+    "kind": 145
+  },
+
+  "Eliminator": {
+    "name": "Eliminator",
+    "kind": 147
+  },
+
+  "Enel": {
+    "name": "Lucendi",
+    "kind": 197
+  },
+
+  "SeaDragon": {
+    "name": "Sea Dragon",
+    "kind": 189
+  },
+
+  "MiniDragon": {
+    "name": "Mini Dragon",
+    "kind": 201
+  },
+
+  "JirisanMoonBear": {
+    "name": "Moon Bear",
+    "kind": 386
+  },
+
+  "Kaonashi": {
+    "name": "Kaonashi",
+    "kind": 208
+  },
+
+  "MiniEmperor": {
+    "name": "Mini Emperor",
+    "kind": 204
+  },
+
+  "PirateCaptain": {
+    "name": "Pirate Captain",
+    "kind": 122
+  },
+
+  "PirateKing": {
+    "name": "Pirate King",
+    "kind": 187
+  },
+
+  "PirateSkeleton": {
+    "name": "Pirate Skeleton",
+    "kind": 95
+  },
+
+  "QueenAnt": {
+    "name": "Ziana",
+    "kind": 262
+  },
+
+  "QueenSpider": {
+    "name": "Spooder Queen",
+    "kind": 309
+  },
+
+  "ShadowRegion": {
+    "name": "Umbra",
+    "kind": 192
+  },
+
+  "SkyDinosaur": {
+    "name": "Fulgur",
+    "kind": 311
+  },
+
+  "Squid": {
+    "name": "Squid",
+    "kind": 214
   }
 
 }

@@ -7,7 +7,7 @@
 
 @media screen and (min-width: 1501px) {
     .coin {width:72px;height:78px;}
-    .achievement1 .coin {background-position:0 -666px;}
+    .achievement1 .coin {  background-position:0 -666px;  }
     .achievement2 .coin {background-position:-72px -666px;}
     .achievement3 .coin {background-position:-144px -666px;}
     .achievement4 .coin {background-position:-216px -666px;}
@@ -24,6 +24,7 @@
     .achievement15 .coin {background-position:-1008px -666px;}
     .achievement16 .coin {background-position:-1080px -666px;}
     .achievement17 .coin {background-position:-1152px -666px;}
+
     .achievement18 .coin {background-position:-648px -822px;}
     .achievement19 .coin {background-position:-720px -822px;}
     .achievement20 .coin {background-position:-792px -822px;}
@@ -73,7 +74,7 @@
     .achievement-sharing .twitter, .upscaled .achievement-sharing .twitter {height:33px;width:48px;background-position:-1131px -588px;margin-left:15px;}
     .achievement-sharing .twitter:hover, .upscaled .achievement-sharing .twitter:hover {background-position:-1131px -621px;}
 
-    #achievement-notification, .upscaled #achievement-notification {width:648px;bottom:66px;height:0;margin-left:-324px;background-position:0 -744px;}
+    #achievement-notification, .upscaled #achievement-notification {width:648px;bottom:87px;height:0;margin-left:-308px;background-position:0 -744px;}
     #achievement-notification.active {height:102px;}
     #achievement-notification .coin {position:absolute;top:-60px;left:50%;margin-left:-36px;opacity:0;}
     #achievement-notification.active .coin {opacity:1;}
@@ -155,7 +156,13 @@
     .achievement-sharing .twitter, .upscaled .achievement-sharing .twitter {height:22px;width:32px;background-position:-754px -392px;margin-left:10px;}
     .achievement-sharing .twitter:hover, .upscaled .achievement-sharing .twitter:hover {background-position:-754px -414px;}
 
-    #achievement-notification, .upscaled #achievement-notification {width:432px;bottom:44px;height:0;margin-left:-216px;background-position:0 -496px;}
+    #achievement-notification, .upscaled #achievement-notification {
+        width:432px;
+        bottom:58px;
+        height:0;
+        margin-left:-204px;
+        background-position:0 -496px;
+    }
     #achievement-notification.active {height:68px;}
     #achievement-notification .coin {position:absolute;top:-40px;left:50%;margin-left:-24px;opacity:0;}
     #achievement-notification.active .coin {opacity:1;}
@@ -238,7 +245,7 @@
     .achievement-sharing .twitter, .upscaled .achievement-sharing .twitter {height:22px;width:32px;background-position:-754px -391px;margin-left:10px;}
     .achievement-sharing .twitter:hover, .upscaled .achievement-sharing .twitter:hover {background-position:-754px -414px;}
 
-    #achievement-notification, .upscaled #achievement-notification {width:432px;bottom:44px;height:0;margin-left:-216px;background-position:0 -496px;}
+    #achievement-notification, .upscaled #achievement-notification {width:432px;bottom:58px;height:0;margin-left:-204px;background-position:0 -496px;}
     #achievement-notification.active {height:68px;}
     #achievement-notification .coin {position:absolute;top:-40px;left:50%;margin-left:-24px;opacity:0;}
     #achievement-notification.active .coin {opacity:1;}
@@ -314,7 +321,7 @@
     .achievement-sharing .twitter, .upscaled .achievement-sharing .twitter {height:11px;width:16px;background-position:-377px -196px;margin-left:5px;}
     .achievement-sharing .twitter:hover, .upscaled .achievement-sharing .twitter:hover {background-position:-377px -207px;}
 
-    #achievement-notification, .upscaled #achievement-notification {width:216px;bottom:22px;height:0;margin-left:-108px;background-position:0 -248px;}
+    #achievement-notification, .upscaled #achievement-notification {width:216px;bottom:29px;height:0;margin-left:-102px;background-position:0 -248px;}
     #achievement-notification.active {height:34px;}
     #achievement-notification .coin {position:absolute;top:-20px;left:50%;margin-left:-12px;opacity:0;}
     #achievement-notification.active .coin {opacity:1;}
