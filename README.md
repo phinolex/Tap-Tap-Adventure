@@ -1,9 +1,11 @@
 # Tap Tap Adventure
 
-The game is a 2D continuance of the original BrowserQuest single-handedly rewritten from scratch. The map and all of the details within the game have been re-done in accordance to our convention standards and re-arranged into their dedicated class files. Combat, Skilling, Interface handling all will be re-programmed and introduced into the game one by one until perfect stability is reached. Automatic donation systems and player-scripting will also be introduced through the use of JSON files.
+    Tap Tap Adventure is an advanced expasion of the 2012 experimental HTML5 game developed by Little Workshop to show how WebSockets could be used to create a realtime MMORPG in the comfort of your browser.
 
+    With the visual potential behind the original game, TTA takes a leap forward towards expanding the game from many of the ideas and suggestions from earlier development releases of the game. Thus, with the expansion hundreds of new mobs, items, and sprites have been added to the game to offer a higher field of actions. 
 
-The game functions upon the classic client-server connection. However, original BrowserQuest was unaware or did not consider the possibility of exploiting client-sided set constants such as attack speed and walking speed. The new version will re-take in consideration various framework necessary features such as region generation, player-logging, MYSQL-based player saving and various new more modern pieces of code. All handled through the use of NodeJS & HTML5.
+    Further accomplishments include improvements towards the rendering engine, game engine, migration of WebSockets to Socket.IO, quests, levels, new areas, inventory, party system, character information, database saving, API login & registration, and abilities. The list does not cover all of the new features and is but merely to point in the direction the game is heading.
 
+    The initial intent behind TTA is to offer a large-scaled MMORPG whereby players are able to access it from all devices in a comfortable manner, thus said the data, RAM, and CPU usage must be maintained at a minimal to ensure perfect compatibility. HTML5 comes into play when we wish to allow players to access the game from a wide variety of devices. This includes Android and Apple phones, phablets and tablets as well as Linux based machines and older OS computers.
 
-An official version of the game will be playable at the main website, and all libraries will remain up-to-date in accordance to copyright statements.
+    All of the music and game art is signed under CC-BY-SA 3.0 and in compliance with those terms have credited the rightful authors for their contributions towards the development
