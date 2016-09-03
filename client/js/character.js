@@ -14,19 +14,14 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             this.prevGridY = -1;
 
             this.orientation = Types.Orientations.DOWN;
-            
-            /* 
-             * Have to handle this
-             * server side
-             * then have it sent using gameclient
-             */
 
             // Speeds
             this.atkSpeed = 50;
             this.moveSpeed = 150;
             this.walkSpeed = 100;
             this.idleSpeed = 450;
-            this.setAttackRate(1000);
+            this.setRate(1000);
+            this.setAttackRate();
 
             // Pathing
             this.movement = new Transition();
@@ -49,8 +44,27 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             this.followingMode = false;
             this.engagingPC = false;
             this.inspecting = null;
-            
             this.isStunned = false;
+
+        },
+
+        setData: function(data) {
+            var self = this;
+
+            self.atkSpeed = data[0];
+            self.moveSpeed = data[1];
+            self.walkSpeed = data[2];
+            self.idleSpeed = data[3];
+            self.setRate(data[4]);
+            self.setAttackRange();
+        },
+
+        getData: function() {
+            var self = this;
+
+            var data = [self.atkSpeed, self.moveSpeed, self.walkSpeed, self.idleSpeed, self.getRate()];
+
+            return data;
         },
 
         clean: function() {
@@ -646,8 +660,16 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             clearTimeout(this.hurting);
         },
 
-        setAttackRate: function(rate) {
-            this.attackCooldown = new Timer(rate);
+        setRate: function(rate) {
+            this.rate = rate;
+        },
+
+        getRate: function() {
+            return this.rate;
+        },
+
+        setAttackRate: function() {
+            this.attackCooldown = new Timer(this.getRate());
         },
         
         canReach: function(entity) {

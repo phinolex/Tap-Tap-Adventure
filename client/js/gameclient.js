@@ -60,7 +60,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.PARTYINVITE] = this.receivePartyInvite;
             this.handlers[Types.Messages.AUCTIONOPEN] = this.receiveAuction;
             this.handlers[Types.Messages.CLASSSWITCH] = this.receiveClassSwitch;
-            this.handlers[Types.Messages.SENDTELE] = this.receiveTeleportation;
+            this.handlers[Types.Messages.CHARDATA] = this.receiveData;
             this.useBison = false;
 
             this.enable();
@@ -652,6 +652,17 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             }
         },
 
+        receiveData: function(data) {
+            var attackSpeed = data[1],
+                moveSpeed = data[2],
+                walkSpeed = data[3],
+                idleSpeed = data[4],
+                attackRate = data[5];
+
+            if (this.chardata_callback)
+                this.chardata_callback(attackSpeed, moveSpeed, walkSpeed, idleSpeed, attackRate);
+        },
+
         onDispatched: function(callback) {
             this.dispatched_callback = callback;
         },
@@ -814,6 +825,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.classSwitch_callback = callback;
         },
 
+        onCharData: function(callback) {
+            this.chardata_callback = callback;
+        },
+
         sendPartyInvite: function(playerId, status) { // 0 for request, 1, for yes, 2 for no.
             this.sendMessage([Types.Messages.PARTYINVITE,
                 playerId, status]);
@@ -869,6 +884,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 entity.gridX,
                 entity.gridY,
                 2]);
+        },
+
+        sendStep: function(entity) {
+            log.info("sending step");
+            this.sendMessage([Types.Messages.STEP, entity.id, entity.gridX, entity.gridY]);
         },
 
         // future move 1 for planned, 2 for arrived.

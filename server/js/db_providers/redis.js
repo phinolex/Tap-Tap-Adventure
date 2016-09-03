@@ -740,15 +740,12 @@ module.exports = DatabaseHandler = cls.Class.extend({
             }
         });
     },
-    moveToBlackHole: function(player, x, y) {
-
-        log.info("Moving " + player.name + " to Black Hole.");
+    assignPosition: function(player, x, y) {
         client.hset("u:" + player.name, "x", x);
         client.hset("u:" + player.name, "y", y);
     },
 
     setCheckpoint: function(name, x, y){
-        log.info("Set Check Point: " + name + " " + x + " " + y);
         client.hset("u:" + name, "x", x);
         client.hset("u:" + name, "y", y);
     },

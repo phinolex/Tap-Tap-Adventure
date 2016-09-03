@@ -462,3 +462,18 @@ Messages.TimeOfDay = Message.extend({
         return [Types.Messages.TOD, this.isDay];
     }
 });
+
+Messages.CharData = Message.extend({
+    init: function(data) {
+        this.data = data;
+    },
+    serialize: function() {
+        var attackSpeed = this.data[0],
+            moveSpeed = this.data[1],
+            walkSpeed = this.data[2],
+            idleSpeed = this.data[3],
+            attackRate = this.data[4];
+
+        return [Types.Messages.CHARDATA, attackSpeed, moveSpeed, walkSpeed, idleSpeed, attackRate];
+    }
+});

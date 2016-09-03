@@ -146,7 +146,9 @@ Types = {
         TIME: 105,
         SENDTELE: 106,
         TOD: 107,
-        JSONUPDATE: 108
+        JSONUPDATE: 108,
+        STEP: 109,
+        CHARDATA: 110
     },
 
     Orientations: {

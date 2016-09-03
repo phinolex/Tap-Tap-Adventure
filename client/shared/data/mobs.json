@@ -112,7 +112,7 @@
     "level": 8,
     "aggroRange": 1,
     "attackRange": 1,
-    "isAggressive": false,
+    "isAggressive": true,
     "attackRate": 1250,
     "moveSpeed": 300,
     "spawnDelay": 45000

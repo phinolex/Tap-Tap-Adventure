@@ -1,7 +1,8 @@
 var cls = require("./lib/class"),
     Pathfinder = require("./pathfinder"),
     Messages = require("./message"),
-    _ = require("underscore");
+    _ = require("underscore"),
+    Player = require('./player');
 
 module.exports = MobController = cls.Class.extend({
 
@@ -25,15 +26,16 @@ module.exports = MobController = cls.Class.extend({
         log.info("Initialized the pathing grid with static colliding cells.");
     },
 
+    handleStep: function() {
 
+    },
 
     setEntityStep: function () {
-        self=  this;
+        var self = this;
         for(var mobId in this.worldServer.mobs)
         {
             var entity = this.worldServer.mobs[mobId];
             entity.onStep(function() {
-
                 //this.broadcast(new Messages.Move(entity), false);
                 //if (this.target)
                 //   this.target.packetHandler.handleMoveEntity([0,this.id, this.x, this.y]);

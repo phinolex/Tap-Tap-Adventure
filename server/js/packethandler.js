@@ -50,12 +50,14 @@ module.exports = PacketHandler = Class.extend({
             if(!self.player.hasEnteredGame && action !== Types.Messages.CREATE &&
                 action !== Types.Messages.LOGIN && action !== Types.Messages.NEWPASSWORD)
             { // CREATE or LOGIN or NEWPASSWORD must be the first message
-                self.connection.close("Invalid handshake message: "+message);
+                self.connection.sendUTF8('unknownerror');
+                self.connection.close("Invalid handshake message: " + message);
                 return;
             }
             if(self.player.hasEnteredGame && !player.isDead &&
                 (action === Types.Messages.CREATE || action === Types.Messages.LOGIN ))
             { // CREATE/LOGIN can be sent only once
+                self.connection.sendUTF8('unknownerror');
                 self.connection.close("Cannot initiate handshake twice: "+message);
                 return;
             }
@@ -63,181 +65,122 @@ module.exports = PacketHandler = Class.extend({
             self.resetTimeout();
 
             switch(action) {
-
                 case Types.Messages.CREATE:
                     self.processCreation(message);
                     break;
-
                 case Types.Messages.LOGIN:
                     self.processLogin(message);
                     break;
-
                 case Types.Messages.WHO:
-                    //log.info("Who: " + self.player.name);
                     message.shift();
-                    //log.info("list: " + message);
                     self.server.pushSpawnsToPlayer(self.player, message);
                     break;
-
                 case Types.Messages.ZONE:
-                    //log.info("Zone: " + self.player.name);
                     self.zone_callback();
                     break;
-
                 case Types.Messages.CHAT:
                     self.handleChat(message);
                     break;
-
                 case Types.Messages.MOVEENTITY:
                     self.handleMoveEntity(message);
                     break;
-
                 case Types.Messages.HIT:
-                    //log.info("Player: " + self.player.name + " hit: " + message[1]);
                     self.handleHit(message);
                     break;
-
                 case Types.Messages.HURT:
                     self.handleHurt(message);
                     break;
-
                 case Types.Messages.GATHER:
-                    log.info("GATHER");
                     self.handleGather(message);
                     break;
-
                 case Types.Messages.INVENTORY:
-                    //log.info("Player: " + self.player.name + " inventory message: " + message[1] + " " + message[2] + " " + message[3]);
                     self.handleInventory(message);
                     break;
-
                 case Types.Messages.SKILL:
-                    log.info("Player: " + self.player.name + " skill: " + message[1] + " " + message[2])
                     self.handleSkill(message);
                     break;
-
                 case Types.Messages.SKILLINSTALL:
-                    log.info("Skill Install on: " + self.player.name + " " + message[1] + " " + message[2]);
                     self.handleSkillInstall(message);
                     break;
-
                 case Types.Messages.SKILLLOAD:
                     self.handleSkillLoad();
                     break;
-
                 case Types.Messages.AGGRO:
-                    log.info("Player: " + self.player.name + " aggro'ed: " + message[1]);
                     if (self.move_callback)
                         self.server.handleMobHate(message[1], self.player.id, 5);
                     break;
-
                 case Types.Messages.STORESELL:
-                    log.info("Player: " + self.player.name + " store sell: " + message[1]);
                     self.handleStoreSell(message);
                     break;
-
                 case Types.Messages.STOREBUY:
-                    log.info("Player: " + self.player.name + " store buy: " + message[1] + " " + message[2] + " " + message[3]);
                     self.handleStoreBuy(message);
                     break;
-
                 case Types.Messages.CRAFT:
                     self.handleCraft(message);
                     break;
-
                 case Types.Messages.AUCTIONSELL:
-                    log.info("Player: " + self.player.name + " auction sell: " + message[1]);
                     self.handleAuctionSell(message);
                     break;
-
                 case Types.Messages.AUCTIONBUY:
-                    log.info("Player: " + self.player.name + " auction buy: " + message[1]);
                     self.handleAuctionBuy(message);
                     break;
-
                 case Types.Messages.AUCTIONOPEN:
-                    log.info("Player: " + self.player.name + " auction open: " + message[1]);
                     self.handleAuctionOpen(message);
                     break;
-
                 case Types.Messages.AUCTIONDELETE:
-                    log.info("Player: " + self.player.name + " auction delete: " + message[1]);
                     self.handleAuctionDelete(message);
                     break;
-
                 case Types.Messages.STOREENCHANT:
-                    log.info("Player: " + self.player.name + " store enchant: " + message[1]);
                     self.handleStoreEnchant(message);
                     break;
-
                 case Types.Messages.BANKSTORE:
-                    log.info("Player: " + self.player.name + " bank store: " + message[1]);
                     self.handleBankStore(message);
                     break;
-
                 case Types.Messages.BANKRETRIEVE:
-                    log.info("Player: " + self.player.name + " bank retrieve: " + message[1]);
                     self.handleBankRetrieve(message);
                     break;
-
                 case Types.Messages.CHARACTERINFO:
-                    log.info("Player character info: " + self.player.name);
                     self.server.pushToPlayer(self.player, new Messages.CharacterInfo(self.player));
                     break;
-
                 case Types.Messages.TELEPORT:
                     self.handleTeleport(message, false);
                     break;
-
                 case Types.Messages.OPEN:
                     self.handleOpen(message);
                     break;
-
                 case Types.Messages.LOOTMOVE:
                     self.handleLootMove(message);
                     break;
-
                 case Types.Messages.LOOT:
                     self.handleLoot(message);
                     break;
-
                 case Types.Messages.CHECK:
                     self.handleCheckpoint(message);
                     break;
-
                 case Types.Messages.Achievement:
                     self.handleAchievement(message);
                     break;
-
                 case Types.Messages.TALKTONPC:
                     self.handleTalkToNPC(message);
                     break;
-
                 case Types.Messages.FLAREDANCE:
                     self.handleFlareDance(message);
                     break;
-
                 case Types.Messages.MAGIC:
                     self.handleMagic(message);
                     break;
-
                 case Types.Messages.CLIENTFOCUS:
-                    //log.info("Player: " + self.player.name + " client_focus: " + message[1]);
                     self.handleClientFocus(message);
                     break;
-
                 case Types.Messages.ADDSPAWN:
                     self.handleAddSpawn(message);
                     break;
-
                 case Types.Messages.SAVESPAWNS:
                     self.handleSaveSpawns();
                     break;
-
                 case Types.Messages.PARTYINVITE:
                     self.handlePartyInvite(message);
                     break;
-
                 case Types.Messages.PARTYLEAVE:
                     self.handlePartyLeave(message);
                     break;
@@ -252,6 +195,9 @@ module.exports = PacketHandler = Class.extend({
                     break;
                 case Types.Messages.CLASSSWITCH:
                     self.handleClassSwitch(message);
+                    break;
+                case Types.Messages.STEP:
+                    self.handleStep(message);
                     break;
                 default:
                     if (self.message_callback)
@@ -369,7 +315,7 @@ module.exports = PacketHandler = Class.extend({
 
     processLogin: function(message) {
         var self = this;
-        //var developmentMode = self.connection._connection.remoteAddress == "127.0.0.1";
+        var developmentMode = self.connection._connection.remoteAddress == "127.0.0.1";
         var playerName = Utils.sanitize(message[1]),
             playerPassword = Utils.sanitize(message[2]);
 
@@ -389,19 +335,31 @@ module.exports = PacketHandler = Class.extend({
         }
 
         request(options, function(error, response, body) {
+            try {
+                var jsonData = JSON.parse(body);
 
-            var jsonData = JSON.parse(body);
+                if (jsonData.ok) {
+                    try {
+                        self.player.name = playerName.substr(0, 36).trim();
+                        self.player.pw = playerPassword.substr(0, 45);
 
-            if (jsonData.ok) {
-                try {
+                        self.redisPool.loadPlayer(self.player);
+                    } catch (e) {
+                        log.info(e)
+                    }
+                } else {
+                    self.connection.sendUTF8('invalidlogin');
+                    self.connection.close("Wrong password for: " + playerName);
+                }
+            } catch (e) {
+                if (developmentMode) {
+                    log.info("Failed API login, starting in development.");
+
                     self.player.name = playerName.substr(0, 36).trim();
                     self.player.pw = playerPassword.substr(0, 45);
 
                     self.redisPool.loadPlayer(self.player);
-                } catch (e) { log.info(e) }
-            } else {
-                self.connection.sendUTF8('invalidlogin');
-                self.connection.close("Wrong password for: " + playerName);
+                }
             }
         });
 
@@ -433,8 +391,12 @@ module.exports = PacketHandler = Class.extend({
                         self.send([Types.Messages.NOTIFY, "Invalid command syntax."]);
                         return;
                     }
-                    self.redisPool.moveToBlackHole(self.player, command[1], command[2]);
-                    self.player.forcePosition(command[1], command[2]);
+                    self.player.movePlayer(command[1], command[2]);
+                    break;
+
+                case "/setdata":
+                    log.info("Sending Data.");
+                    self.server.pushToPlayer(self.player, new Messages.CharData([100, 100, 100, 100, 100]));
                     break;
 
                 case "/pos":
@@ -465,13 +427,11 @@ module.exports = PacketHandler = Class.extend({
 
         if (!this.player.achievement[achievementId] || !this.player.achievement[achievementId].found)
         {
-            log.info("FOUND MISSION");
             this.player.foundAchievement(achievementId);
             return;
         }
         if (this.player.achievement[achievementId].progress === 999)
         {
-            log.info("MISSION complete");
             this.server.pushToPlayer(this.player, new Messages.TalkToNPC(npcKind, achievementId, true));
             return;
         }
@@ -479,7 +439,6 @@ module.exports = PacketHandler = Class.extend({
         var achievement = Achievements.AchievementData[achievementId];
         if(achievement.type == 1)
         {
-            log.info("achievement.npcId: " +achievement.npcId+",achievementId="+achievementId+",achievement.itemId="+achievement.itemId+",achievement.itemCount="+achievement.itemCount);
             this.player.achievementAboutItem(achievement.npcId, achievementId, achievement.itemId, achievement.itemCount);
             if (achievement.xp)
             {
@@ -661,41 +620,20 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleTeleport: function (message, bypass) {
-        var id=message[1], x=message[2], y=message[3];
-        //if (!this.server.isValidPosition(x, y))
-        //	return;
+        var id = message[1],
+            x = message[2],
+            y = message[3],
+            self = this;
 
-        if (id !== this.player.id)
+        if (id !== self.player.id || !self.server.isValidPosition(x, y))
             return;
 
-        //this.broadcast(new Messages.Teleport(this.player), false);
-
-        this.player.setPosition(x, y);
-        this.player.clearTarget();
-        //log.info("this.player.pets.length:"+this.player.pets.length);
-        for (var i=0; i < this.player.pets.length; ++i)
-        {
-            //log.info("TELEPORT PETS");
-            var pet = this.player.pets[i];
-            this.broadcast(new Messages.Teleport(pet));
-            pet.setPosition(x, y);
-            if (pet.isMoving()) pet.forceStop();
-            //log.info("x:"+this.player.pets[i].x+"y:"+this.player.pets[i].y);
-            pet.clearTarget();
-            this.broadcast(new Messages.Spawn(pet));
-            //this.broadcast(new Messages.Move(pet));
-            //this.server.pushBroadcast(new Messages.Move(pet), false);
-        }
-
-        this.server.handlePlayerVanish(this.player);
-        this.server.pushRelevantEntityListTo(this.player);
-
-        this.server.handleEntityGroupMembership(this.player)
-
-        this.broadcast(new Messages.Spawn(this.player));
-
-        log.info("Finished.");
-        //this.broadcast(new Messages.Move(this.player));
+        self.player.setPosition(x, y);
+        self.player.movePlayer(x, y);
+        self.player.clearTarget();
+        self.broadcast(new Messages.Teleport(self.player));
+        self.server.handlePlayerVanish(self.player);
+        self.server.pushRelevantEntityListTo(self.player);
 
     },
 
@@ -959,6 +897,22 @@ module.exports = PacketHandler = Class.extend({
         }
     },
 
+    handleStep: function(message) {
+        var self = this,
+            id = message[1],
+            x = message[2],
+            y = message[3];
+
+        var entity = self.server.getEntityById(id);
+
+        if (entity.x == x && entity.y == y)
+            return;
+
+        entity.setPosition(x, y);
+
+        self.broadcast(new Messages.Move(entity));
+    },
+
     handleSkill: function(message){
         var self = this;
         var type = message[1];
@@ -1184,42 +1138,20 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleMoveEntity: function (message) {
-        var entityId = message[1],
+
+        var self = this,
+            entityId = message[1],
             x = message[2],
-            y = message[3],
-            planned = message[4];
+            y = message[3];
 
-        //log.info(this.player.name);
-        var entity = this.server.getEntityById(entityId);
-        if (!entity) return;
+        var entity = self.server.getEntityById(entityId);
 
-        // Dont send useless updates.
-        //if (entity instanceof Player && entity.x === x && entity.y === y)
-        //    return;
-
-        // Ignore Monster updates
-        //if (entity instanceof Mob && !(entity instanceof Pet))
-        //    return;
-
-        //log.info(entityId +","+x+","+y);
-        if (this.server.isValidPosition(x, y))
-        {
-            if (planned == 1)
-                entity.setPosition(x,y);
-            //if (planned == 2)
-            this.broadcast(new Messages.Move(entity), true);
-            //this.server.pushBroadcast(new Messages.Move(entity), );
-            //log.info(entity.name);
-            //log.info("move done "+entityId +","+x+","+y);
-            if (entityId == this.player.id)
-            {
-                this.player.hasMoved = true;
-                //log.info("this.move_callback");
-                entity.clearTarget();
-                //this.broadcast(new Messages.Move(this));
-                this.move_callback(entity.x, entity.y);
-            }
+        if (self.server.isValidPosition(x, y)) {
+            entity.setPosition(x, y);
+            self.broadcast(new Messages.Move(entity), true);
+            self.move_callback(entity.x, entity.y);
         }
+
     },
 
     handleAddSpawn: function (msg) {

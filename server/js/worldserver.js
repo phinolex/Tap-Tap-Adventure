@@ -52,8 +52,8 @@ module.exports = World = cls.Class.extend({
 
         self.isDay = true;
         self.packets = {};
-        self.cycleSpeed = 50;
-        self.mobControllerSpeed = 20;
+        self.cycleSpeed = 200;
+        self.mobControllerSpeed = 5;
         self.pvpTime = 200;
         self.itemCount = 0;
         self.playerCount = 0;
@@ -83,10 +83,7 @@ module.exports = World = cls.Class.extend({
             self.pushRelevantEntityListTo(player);
 
             var move_callback = function(x, y) {
-
                 player.flagPVP(self.map.isPVP(x, y));
-                self.addToPVPGame(player);
-
 
                 player.forEachAttacker(function(mob) {
                     if (mob.target == null)
@@ -94,6 +91,7 @@ module.exports = World = cls.Class.extend({
 
                     if (mob.target)
                         var target = self.getEntityById(mob.target.id);
+
                     if (target) {
                         var pos = self.findPositionNextTo(mob, target);
                         if (mob.distanceToSpawningPoint(pos.x, pos.y) > 20) {
@@ -310,7 +308,6 @@ module.exports = World = cls.Class.extend({
          * World Tasks.
          */
         self.initializeGameTick();
-        self.initializeMobController();
         self.initializeGather();
         self.initializeDayCycle();
         //self.initializeRoaming();
@@ -358,22 +355,14 @@ module.exports = World = cls.Class.extend({
                 updateCount = 0;
             }
 
-        }, 1000 / self.getCycleSpeed());
-    },
-
-    initializeMobController: function() {
-        var self = this;
-
-        setInterval(function() {
             if (self.mobController) {
-                setTimeout(function() {
-                    self.mobController.checkPetHit();
-                    self.mobController.checkMove();
-                    self.mobController.checkAggro();
-                    self.mobController.checkHit();
-                }, self.mobControllerSpeed - 10);
+                self.mobController.checkPetHit();
+                self.mobController.checkMove();
+                self.mobController.checkAggro();
+                self.mobController.checkHit();
             }
-        }, self.mobControllerSpeed);
+
+        }, 1000 / self.getCycleSpeed());
     },
 
     initializeGather: function() {
@@ -1362,6 +1351,18 @@ module.exports = World = cls.Class.extend({
 
     },
 
+    resetCharacterData: function() {
+        var self = this,
+            dAttackSpeed = 50,
+            dMoveSpeed = 120,
+            dWalkSpeed = 100,
+            dIdleSpeed = 450,
+            dAttackRate = 800;
+
+        var data = [dAttackSpeed, dMoveSpeed, dWalkSpeed, dIdleSpeed, dAttackRate];
+
+        self.sendToAll(new Messages.CharData(data));
+    },
 
     // TODO make a entity map so this is more efficient.
     getTargetsAround: function(entity, range) {

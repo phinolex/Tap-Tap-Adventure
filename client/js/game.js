@@ -108,6 +108,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 // debug
                 this.debugPathing = false;
 
+                this.latestCharData = [];
+
                 // Shortcut Healing
                 this.healShortCut = -1;
                 this.hpGuide = 0;
@@ -813,16 +815,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.currentTime = new Date().getTime();
 
                 if(this.started) {
-                    this.updater.update();
-                    this.updateCursorLogic();
-                    this.renderer.renderFrame();
-
-                    /*this.FPSCount++;
-                    if (this.currentTime - this.lastFPSTime > 1000) {
-                        $('#fps').html("FPS: " + this.FPSCount);
-                        this.lastFPSTime = this.currentTime;
-                        this.FPSCount = 0;
-                    }*/
+                    if (this.currentTime - this.lastFPSTime > 3000) {
+                        this.updater.update();
+                        this.updateCursorLogic();
+                        this.renderer.renderFrame();
+                    }
                 }
 
                 if(!this.isStopped)
@@ -935,9 +932,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 this.client.onConnected(function() {
                     log.info("Starting client/server handshake");
-
-
-
 
                     // Player
                     self.player = new Player("player", "", this);
@@ -1121,9 +1115,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             pet.follow(this);
                         }
 
-                        if(self.player.hasNextStep()) {
+                        if(self.player.hasNextStep())
                             self.registerEntityDualPosition(self.player);
-                        }
+
 
                         // TODO - Sometimes isnt called so next zone isnt loaded.
                         if(self.isZoningTile(self.player.gridX, self.player.gridY))
@@ -1142,6 +1136,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         //ye se whatrm talken aboot? ah?
 
                         self.updatePlayerCheckpoint();
+                        self.client.sendStep(self.player);
                         self.stepCount++;
                         if(!self.player.isDead) {
                             self.audioManager.updateMusic();
@@ -1155,6 +1150,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.client.onPVPChange(function(pvpFlag) {
                         self.player.flagPVP(pvpFlag);
                         //self.pvpFlag = pvpFlag;
+                    });
+
+                    self.client.onCharData(function(attackSpeed, movementSpeed, walkSpeed, idleSpeed, attackRate) {
+                        if (self.player.isDead)
+                            return;
+
+                        var charData = [attackSpeed, movementSpeed, walkSpeed, idleSpeed, attackRate];
+                        self.latestCharData = charData;
+
+                        self.player.setData(charData);
                     });
 
                     self.player.onStopPathing(function(x, y) {
@@ -1601,9 +1606,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.client.onEntityMove(function(id, x, y) {
                         var entity = null;
 
-                        if (self.player.isDead == true) {
+                        if (self.player.isDead == true)
                             return;
-                        }
+
 
                         if(id !== self.playerId) {
                             entity = self.getEntityById(id);
@@ -1836,37 +1841,59 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.client.onPlayerTeleport(function(id, x, y) {
-                        self.player.setGridPosition(x, y);
-                        self.player.nextGridX = x;
-                        self.player.nextGridY = y;
 
-                        self.resetZone();
+                        var entity = null,
+                            currentOrientation;
 
-                        self.player.forEachAttacker(function(attacker) {
-                            attacker.disengage();
-                            attacker.idle();
-                        });
+                        if (id == self.playerId) {
 
-                        self.updatePlateauMode();
+                            self.player.setGridPosition(x, y);
+                            self.player.nextGridX = x;
+                            self.player.nextGridY = y;
 
-                        self.camera.setRealCoords();
+                            self.resetZone();
 
-                        self.renderer.drawBackground(self.renderer.background, "#12100D");
-                        self.renderbackground = true;
-                        self.renderer.forceRedraw = true;
+                            self.player.forEachAttacker(function(attacker) {
+                                attacker.disengage();
+                                attacker.idle();
+                            });
 
-                        if (self.renderer.mobile || self.renderer.tablet)
-                            this.renderer.clearScreen(this.renderer.context);
+                            self.updatePlateauMode();
+
+                            self.camera.setRealCoords();
+
+                            self.renderer.drawBackground(self.renderer.background, "#12100D");
+                            self.renderbackground = true;
+                            self.renderer.forceRedraw = true;
+
+                            if (self.renderer.mobile || self.renderer.tablet)
+                                this.renderer.clearScreen(this.renderer.context);
 
 
-                        for (var i = 0; i < self.player.pets.length; ++i) {
-                            var pet = self.player.pets[i];
-                            pet.path = null;
-                            pet.setGridPosition(x, y);
+                            for (var i = 0; i < self.player.pets.length; ++i) {
+                                var pet = self.player.pets[i];
+                                pet.path = null;
+                                pet.setGridPosition(x, y);
+                            }
+
+                            self.unregisterEntityPosition(self.player);
+                            self.registerEntityPosition(self.player);
+                        } else {
+                            entity = self.getEntityById(id);
+
+                            if(entity) {
+                                currentOrientation = entity.orientation;
+
+                                self.makeCharacterTeleportTo(entity, x, y);
+                                entity.setOrientation(currentOrientation);
+
+                                entity.forEachAttacker(function(attacker) {
+                                    attacker.disengage();
+                                    attacker.idle();
+                                    attacker.stop();
+                                });
+                            }
                         }
-
-                        self.unregisterEntityPosition(self.player);
-                        self.registerEntityPosition(self.player);
                     });
 
                     self.client.onDropItem(function(item, mobId) {

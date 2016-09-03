@@ -370,11 +370,9 @@ module.exports = Player = Character.extend({
         return true;
     },
 
-    forcePosition: function(x, y) {
+    movePlayer: function(x, y) {
         var self = this,
             message = [Types.Messages.TELEPORT, self.id, x, y];
-
-        log.info("Called.");
 
         self.send(message);
     },
