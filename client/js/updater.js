@@ -15,8 +15,8 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             this.updateAnimations();
             this.updateAnimatedTiles();
             this.updateChatBubbles();
-            this.updateInfos();
             this.updateKeyboardMovement();
+            this.updateInfos();
         },
 
         updateCharacters: function() {

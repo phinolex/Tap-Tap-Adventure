@@ -12,17 +12,6 @@ var isInt = function(n) {
 
 var TRANSITIONEND = 'transitionend webkitTransitionEnd oTransitionEnd';
 
-// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-window.requestAnimFrame = (function(){
-    return  window.requestAnimationFrame       ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame    ||
-        window.oRequestAnimationFrame      ||
-        window.msRequestAnimationFrame     ||
-        function(/* function */ callback, /* DOMElement */ element){
-            window.setTimeout(callback, 1000 / 60);
-        };
-})();
 var getUrlVars = function() {
     //from http://snipplr.com/view/19838/get-url-parameters/
     var vars = {};
@@ -30,4 +19,12 @@ var getUrlVars = function() {
         vars[key] = value;
     });
     return vars;
-}
+};
+
+// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+window.requestAnimFrame = window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    function( callback ) {
+        window.setTimeout(callback, 1000 / 60);
+    };

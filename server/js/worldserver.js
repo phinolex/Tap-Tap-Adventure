@@ -98,8 +98,8 @@ module.exports = World = cls.Class.extend({
                             mob.clearTarget();
                             mob.forgetEveryone();
                             player.removeAttacker(mob);
-                        } //else {
-                          //  self.moveEntity(mob, pos.x, pos.y);
+                        } //else
+                            //self.moveEntity(mob, pos.x, pos.y);
 
                     }
                 });
@@ -189,7 +189,12 @@ module.exports = World = cls.Class.extend({
         }
     },
 
-
+    moveEntity: function(entity, x, y) {
+        if(entity) {
+            entity.setPosition(x, y);
+            this.handleEntityGroupMembership(entity);
+        }
+    },
 
     splitPlayers: function() {
         var self = this;

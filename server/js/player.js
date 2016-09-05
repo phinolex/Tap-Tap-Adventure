@@ -133,7 +133,6 @@ module.exports = Player = Character.extend({
             this.inPVPGame = inPVPGame;
     },
 
-
     flagPVP: function(pvpFlag){
         if(this.pvpFlag !== pvpFlag){
             this.pvpFlag = pvpFlag;
@@ -201,7 +200,6 @@ module.exports = Player = Character.extend({
             if(ItemTypes.isArmor(itemKind) || ItemTypes.isArcherArmor(itemKind)) {
                 databaseHandler.equipArmor(this.name, '', 0, 0, 0);
                 this.equipArmor(0, 0, 0, 0);
-
             } else if(ItemTypes.isWeapon(itemKind) || ItemTypes.isArcherWeapon(itemKind)) {
                 databaseHandler.equipWeapon(this.name, '', 0, 0, 0);
                 this.equipWeapon(0, 0, 0, 0);
@@ -285,19 +283,18 @@ module.exports = Player = Character.extend({
             var mobCount = achievement.mobCount;
             var achievement = this.achievement[achievement.id];
 
-            if(achievement.found && achievement.progress !== 999) {
-                if(isNaN(achievement.progress)){
+            if (achievement.found && achievement.progress !== 999) {
+                if (isNaN(achievement.progress))
                     achievement.progress = 1;
-                } else{
+                else
                     achievement.progress++;
-                }
-                if(achievement.progress >= mobCount) {
+
+                if (achievement.progress >= mobCount) {
                     //log.info("MISSION COMPLETED!=============");
                     this.send([Types.Messages.ACHIEVEMENT, "complete", achievementId]);
                     achievement.progress = 999;
-                    if(callback){
+                    if (callback)
                         callback();
-                    }
                 }
 
                 databaseHandler.progressAchievement(this.name, achievementId, achievement.progress);
@@ -341,13 +338,8 @@ module.exports = Player = Character.extend({
             this.updateHitPoints();
 
         self.server.pushToPlayer(self, new Messages.PlayerPoints(self.maxHitPoints, self.maxMana, self.hitPoints, self.mana));
-        log.info("Sending Player Points: " + self.hitPoints);
 
         return Math.round(receivedExp);
-    },
-
-    sendPlayerHp: function() {
-
     },
 
     checkName: function(name) {
@@ -413,8 +405,6 @@ module.exports = Player = Character.extend({
         self.server.addPlayer(self);
         self.server.enter_callback(self);
 
-
-
         databaseHandler.getBankItems(self, function(maxBankNumber, bankKinds, bankNumbers, bankSkillKinds, bankSkillLevels) {
             self.bank = new Bank(self, maxBankNumber, bankKinds, bankNumbers, bankSkillKinds, bankSkillLevels);
             databaseHandler.getAllInventory(self, function(maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels) {
@@ -437,12 +427,12 @@ module.exports = Player = Character.extend({
                         self.membership, //14
                         self.kind, //15
                         self.rights, //16
-                        self.pClass, //17
+                        self.pClass //17
                     ];
 
                     // Send All Inventory
                     sendMessage.push(self.inventory.number);
-                    for(i=0; i < self.inventory.number; i++){
+                    for(i = 0; i < self.inventory.number; i++){
                         sendMessage.push(self.inventory.rooms[i].itemKind);
                         sendMessage.push(self.inventory.rooms[i].itemNumber);
                         sendMessage.push(self.inventory.rooms[i].itemSkillKind);
@@ -453,7 +443,7 @@ module.exports = Player = Character.extend({
                     // Send All Bank
                     //log.info("self.bank.number="+self.bank.number);
                     sendMessage.push(self.bank.number);
-                    for(i=0; i < self.bank.number; i++){
+                    for(i = 0; i < self.bank.number; i++){
                         sendMessage.push(self.bank.rooms[i].itemKind);
                         sendMessage.push(self.bank.rooms[i].itemNumber);
                         sendMessage.push(self.bank.rooms[i].itemSkillKind);
@@ -468,7 +458,6 @@ module.exports = Player = Character.extend({
                     }
 
                     self.send(sendMessage);
-
 
                     databaseHandler.loadSkillSlots(self, function(names) {
                         for(var index = 0; index < names.length; index++) {

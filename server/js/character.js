@@ -197,7 +197,7 @@ module.exports = Character = Entity.extend({
                 
                 //log.info("nextStep-this.path="+JSON.stringify(this.path));
                 this.updatePositionOnGrid();
-                //this.checkAggro();
+                this.checkAggro();
 
                 if(this.interrupted) { // if Character.stop() has been called
                     stop = true;
@@ -335,7 +335,7 @@ module.exports = Character = Entity.extend({
          * Makes the character follow another one.
          */
         follow: function(entity, engagingPC) {
-            this.engagingPC = engagingPC === undefined ? false : engagingPC
+            this.engagingPC = engagingPC === undefined ? false : engagingPC;
             if (entity && ((this.engagingPC && this.kind === 1) || (this.engagingPC == false && entity.kind != 1) || (this.kind !== 1))) {                
                 this.followingMode = true;
                 this.moveTo_(entity.x, entity.y);
@@ -564,17 +564,17 @@ module.exports = Character = Entity.extend({
         },
         
         canReach: function(entity) {
-            //log.info("attackRange: " + this.attackRange);
             if (this.x == entity.x && this.y == entity.y)
             	    return true;
+
             if(this.attackRange > 1){
-                if(this.isNear(entity, this.attackRange)) {
+                if(this.isNear(entity, this.attackRange))
                     return true;
-                }
+
             } else{
-                if(this.isAdjacentNonDiagonal(entity)) {
+                if(this.isAdjacentNonDiagonal(entity))
                     return true;
-                }
+
             }
             return false;
         },

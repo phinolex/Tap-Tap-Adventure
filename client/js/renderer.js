@@ -65,7 +65,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 $('body').css('zoom', zoom);
                 $('body').css('-moz-transform', 'scale('+zoom+')');
                 $('#mainborder').css("top", 0);
-                //$('#entities').css('z-index', -10);
+
             },
 
             getWidth: function() {
@@ -534,7 +534,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                         try {
                             this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
-                        } catch(e) {}
+                        } catch(e) { log.info(e); }
 
 
                         if(entity instanceof Item && entity.kind !== 39) {
@@ -635,7 +635,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 if(this.game.clearTarget && this.lastTargetPos) {
                     var last = this.lastTargetPos;
-                    rect = this.getTargetBoundingRect(last.x, last.y);
+                    var rect = this.getTargetBoundingRect(last.x, last.y);
 
                     this.clearDirtyRect(rect);
                     this.game.clearTarget = false;
@@ -950,10 +950,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 var optimized = false;
                 if (p && p.isMoving() && !this.forceRedraw)
-                {
-
                     optimized = true;
-                }
+
 
                 ctx.save();
                 //log.info("optimized:"+optimized);
@@ -1240,7 +1238,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             cleanPathing: function() {
                 this.clearScreen(this.context);
             }
-
         });
 
         var getX = function(id, w) {

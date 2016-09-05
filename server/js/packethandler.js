@@ -909,7 +909,6 @@ module.exports = PacketHandler = Class.extend({
             return;
 
         entity.setPosition(x, y);
-
         self.broadcast(new Messages.Move(entity));
     },
 

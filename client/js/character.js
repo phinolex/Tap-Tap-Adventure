@@ -20,6 +20,7 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             this.moveSpeed = 150;
             this.walkSpeed = 100;
             this.idleSpeed = 450;
+            this.attackRange = 1;
             this.setRate(1000);
             this.setAttackRate();
 
@@ -56,7 +57,7 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             self.walkSpeed = data[2];
             self.idleSpeed = data[3];
             self.setRate(data[4]);
-            self.setAttackRange();
+            self.setAttackRate();
         },
 
         getData: function() {
@@ -81,12 +82,12 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         setMaxMana: function(mana) {
             this.maxMana = mana;
             this.mana = mana;
-	    },
+        },
         setDefaultAnimation: function() {
             this.idle();
         },
         setAtkRange: function(range) {
-            this.atkRange = range;
+            this.attackRange = range;
         },
 
         hasWeapon: function() {
@@ -107,7 +108,7 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
 
                 if(_.indexOf(oriented, animation) >= 0) {
                     animation += "_" + (o === Types.Orientations.LEFT ? "right" : Types.getOrientationAsString(o));
-                    this.flipSpriteX = (this.orientation === Types.Orientations.LEFT) ? true : false;
+                    this.flipSpriteX = this.orientation === Types.Orientations.LEFT;
                 }
 
                 this.setAnimation(animation, speed, count, onEndCount);
@@ -133,7 +134,7 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         hit: function(orientation) {
             this.setOrientation(orientation);
             this.animate("atk", this.atkSpeed, 1);
-            this.stop();
+            //this.stop();
         },
 
         walk: function(orientation) {
@@ -219,13 +220,13 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         },
 
         nextStep: function() {
-            
+
             var stop = false,
                 x, y, path;
 
             this.prevGridX = this.gridX;
             this.prevGridY = this.gridX;
-                
+
             if(this.isMoving()) {
                 if(this.before_step_callback) {
                     this.before_step_callback();
@@ -271,18 +272,18 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
                 }
 
                 if(stop) { // Path is complete or has been interrupted
-    		        this.path = null;
-    		        this.idle();
+                    this.path = null;
+                    this.idle();
 
-    		        if (this.engagingPC) {
-    		            this.followingMode = false;
-    		            this.engagingPC = false;
-    		        }
+                    if (this.engagingPC) {
+                        this.followingMode = false;
+                        this.engagingPC = false;
+                    }
                     if(this.stop_pathing_callback) {
                         this.stop_pathing_callback(this.gridX, this.gridY);
                     }
-        		}
-        	}
+                }
+            }
         },
 
         onBeforeStep: function(callback) {
@@ -364,26 +365,26 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             this.moveTo_(x, y);
         },
 
-	    
+
         /**
          * Makes the character follow another one.
          */
         follow: function(entity, engagingPC) {
             this.engagingPC = engagingPC === undefined ? false : engagingPC
             if (entity && ((this.engagingPC && this.kind === 1) || (this.engagingPC == false && entity.kind != 1) || (this.kind !== 1))) {
-            	//log.info("pClass="+this.pClass);
-            	
-            	if (typeof this.pClass !== 'undefined' && (this.pClass==Types.PlayerClass.ARCHER || this.pClass==Types.PlayerClass.MAGE))
-            	{
-            		log.info("Archer or mage ranged attack");
-            		return;
-            	}
+                //log.info("pClass="+this.pClass);
+
+                if (typeof this.pClass !== 'undefined' && (this.pClass==Types.PlayerClass.ARCHER || this.pClass==Types.PlayerClass.MAGE))
+                {
+                    log.info("Archer or mage ranged attack");
+                    return;
+                }
                 this.followingMode = true;
                 this.moveTo_(entity.gridX, entity.gridY);
             }
         },
 
-        
+
         /**
          * Stops a moving character.
          */
@@ -449,16 +450,16 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
          * @returns {Boolean} Whether this is an attacker of this character.
          */
         isAttackedBy: function(character) {
-        	if (this.attackers.size == 0) {
-        		return false;
-        	}
+            if (this.attackers.size == 0) {
+                return false;
+            }
             return (character.id in this.attackers);
         },
 
         /**
-        * Registers a character as a current attacker of this one.
-        * @param {Character} character The attacking character.
-        */
+         * Registers a character as a current attacker of this one.
+         * @param {Character} character The attacking character.
+         */
         addAttacker: function(character) {
             if(!this.isAttackedBy(character)) {
                 this.attackers[character.id] = character;
@@ -468,12 +469,12 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         },
 
         /**
-        * Unregisters a character as a current attacker of this one.
-        * @param {Character} character The attacking character.
-        */
+         * Unregisters a character as a current attacker of this one.
+         * @param {Character} character The attacking character.
+         */
         removeAttacker: function(character) {
             if (this.attackers.size == 0) {
-            	    return;
+                return;
             }
             if(this.isAttackedBy(character)) {
                 delete this.attackers[character.id];
@@ -482,17 +483,17 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             }
         },
         forceStop: function () {
-    	    if (this.isMoving()) {
-    	        //this.interrupted = true;
-    	        this.path = null;
-    	        this.newDestination = null;
-    	        this.idle();
-    	        if (this.engagingPC) {
-    	            this.followingMode = false;
-    	            this.engagingPC = false;
-    	        }
-    	    }
-    	},
+            if (this.isMoving()) {
+                //this.interrupted = true;
+                this.path = null;
+                this.newDestination = null;
+                this.idle();
+                if (this.engagingPC) {
+                    this.followingMode = false;
+                    this.engagingPC = false;
+                }
+            }
+        },
         /**
          * Loops through all the characters currently attacking this one.
          * @param {Function} callback Function which must accept one character argument.
@@ -508,11 +509,11 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
          * @param {Character} character The target character.
          */
         setTarget: function(character) {
-             if (character == null) {
-             	     this.removeTarget();
-             	     return;
-             }
-             if(this.target !== character) { // If it's not already set as the target
+            if (character == null) {
+                this.removeTarget();
+                return;
+            }
+            if(this.target !== character) { // If it's not already set as the target
                 if(this.hasTarget()) {
                     this.removeTarget(); // Cleanly remove the previous one
                 }
@@ -521,36 +522,36 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
                 if(this.settarget_callback){
                     var targetName;
                     if (MobData.Kinds[character.kind] && MobData.Kinds[character.kind].key)
-                    	targetName = MobData.Kinds[character.kind].key;
+                        targetName = MobData.Kinds[character.kind].key;
                     this.settarget_callback(character, targetName);
                 }
             } else {
                 log.debug(character.id + " is already the target of " + this.id);
             }
         },
-        onSetTarget: function(callback) {        	
-          this.settarget_callback = callback;
+        onSetTarget: function(callback) {
+            this.settarget_callback = callback;
         },
         showTarget: function(character) {
-          if(this.inspecting !== character && character !== this){
-            this.inspecting = character;
-            if(this.settarget_callback){
-              
-              var targetName;
-              var mobData = MobData.Kinds[character.kind];
-              if (mobData)
-              {
-              	  if (mobData.spriteName)
-              	      targetName = mobData.spriteName;
-                  else
-                      targetName = mobData.key;
-              }
-              else if (ItemTypes.isItem(character.kind)) {
-              	      targetName = ItemTypes.getKindAsString(character.kind);
-              }
-              this.settarget_callback(character, targetName, true);
-            }                  
-          }
+            if(this.inspecting !== character && character !== this){
+                this.inspecting = character;
+                if(this.settarget_callback){
+
+                    var targetName;
+                    var mobData = MobData.Kinds[character.kind];
+                    if (mobData)
+                    {
+                        if (mobData.spriteName)
+                            targetName = mobData.spriteName;
+                        else
+                            targetName = mobData.key;
+                    }
+                    else if (ItemTypes.isItem(character.kind)) {
+                        targetName = ItemTypes.getKindAsString(character.kind);
+                    }
+                    this.settarget_callback(character, targetName, true);
+                }
+            }
         },
 
 
@@ -604,19 +605,21 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
          *
          */
         canAttack: function(time) {
-            if(this.isDead == false && this.canReachTarget() && this.attackCooldown.isOver(time)) {
+            if(!this.isDead && this.canReachTarget() && this.attackCooldown.isOver(time)) {
                 return true;
             }
             return false;
         },
 
         canReachTarget: function() {
-            if(this.atkRange > 1){
-                if(this.hasTarget() && this.getDistanceToEntity(this.target) < this.atkRange) {
+            if(this.attackRange > 1){
+                if(this.hasTarget() && this.getDistanceToEntity(this.target) < this.attackRange) {
                     return true;
                 }
-            } else{
+            } else {
                 if(this.hasTarget() && this.isAdjacentNonDiagonal(this.target)) {
+                    log.info("Entity: " + this.name + " pos: " + this.gridX + " " + this.gridY);
+                    log.info("Entity: " + this.target.name + " pos: " + this.target.gridX + " " + this.target.gridY);
                     return true;
                 }
             }
@@ -671,11 +674,11 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         setAttackRate: function() {
             this.attackCooldown = new Timer(this.getRate());
         },
-        
+
         canReach: function(entity) {
             //log.info("attackRange: " + this.attackRange);
             if (this.x == entity.x && this.y && entity.y)
-            	    return true;
+                return true;
             if(this.attackRange > 1){
                 if(this.isNear(entity, this.attackRange)) {
                     return true;
@@ -686,7 +689,7 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
                 }
             }
             return false;
-        },        
+        },
     });
 
     return Character;

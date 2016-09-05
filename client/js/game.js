@@ -7,7 +7,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pet', 'mobs', 'mobdata', 'gather', 'exceptions', 'config', 'chathandler', 'warpmanager', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'achievemethandler',
         'rankinghandler', 'inventoryhandler', 'bankhandler', 'partyhandler','bools', 'iteminfodialog',
-        'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', 'enchantdialog', 'bankdialog', 'craftdialog', 'guild', 'gamedata', 'button2',
+        'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', 'enchantdialog', 'bankdialog', 'craftdialog', 'guild',
+        'gamedata', 'button2', 'util',
         '../shared/js/gametypes', '../shared/js/itemtypes'],
     function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
              GameClient, AudioManager, Updater, Transition, Pathfinder,
@@ -15,7 +16,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              ChatHandler, WarpManager, TextWindowHandler, Menu, BoardHandler, KkHandler,
              ShopHandler, PlayerPopupMenu, ClassPopupMenu, AchievementHandler, RankingHandler,
              InventoryHandler, BankHandler, PartyHandler, Bools, ItemInfoDialog, SkillHandler, StateHandler,
-             StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Guild, GameData, Button2) {
+             StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Guild, GameData, Button2, Util) {
         var Game = Class.extend({
             init: function(app) {
                 $('head').append( $('<link rel="stylesheet" type="text/css" />').attr('href', 'css/game.css') );
@@ -68,13 +69,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.maxChats = 3;
                 this.globalChatColor = '#A6FFF9';
 
-                // Menu
-                this.menu = new Menu();
-
                 // Item Info
                 this.itemInfoOn = true;
 
-                // combat
+                this.menu = new Menu();
                 this.infoManager = new InfoManager(this);
                 this.achievementHandler = new AchievementHandler(this);
                 this.kkhandler = new KkHandler();
@@ -84,9 +82,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.playerPopupMenu = new PlayerPopupMenu(this);
                 this.partyHandler = new PartyHandler(this);
                 this.rankingHandler = new RankingHandler(this);
-
-
-
                 this.statehandler = new StateHandler(this);
 
                 // FPS
@@ -419,28 +414,34 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 return found;
             },
 
-            /*initHurtSprites: function() {
-             var self = this;
+            initHurtSprites: function() {
+                var self = this;
 
-             ItemTypes.forEachArmorKind(function(kind, kindName) {
-             self.sprites[kindName].createHurtSprite();
-             });
-             },*/
+                log.info("Initializing Hurt Sprites.");
+
+                for (var sprite in self.sprites) {
+                    var kind = ItemTypes.getKindFromString(sprite);
+                    if (kind) {
+                        if (ItemTypes.isArmor(kind)) {
+                            log.info("Sprite: " + sprite);
+                            try {
+                                self.sprites[sprite].createHurtSprite();
+                            } catch (e) {
+                                continue;
+                            }
+
+                        }
+                    }
+                }
+            },
 
             initSilhouettes: function() {
                 var self = this;
 
-                //Types.forEachMobOrNpcKind(function(kind, kindName) {
-                //    self.sprites[kindName].createSilhouette();
-                //    log.info("Loading... " + kindName);
-                //});
-                var sprite = self.sprites["chest"];
-                if (sprite)
-                {
-                    if (!sprite.isLoaded) sprite.load();
+                for (var sprite in self.sprites) {
                     sprite.createSilhouette();
                 }
-                //self.sprites["item-cake"].createSilhouette();
+
             },
 
 
@@ -461,7 +462,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             setSpriteScale: function(scale) {
                 var self = this;
 
-                //alert(scale);
                 if(this.renderer.upscaledRendering || scale == 1)
                     this.sprites = this.spritesets[0];
                 else
@@ -471,7 +471,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     //entity.sprite = null;
                     entity.setSprite(self.sprites[entity.getSpriteName()]);
                 });
-                //this.initHurtSprites();
+                this.initHurtSprites();
                 this.initShadows();
                 this.initCursors();
             },
@@ -808,18 +808,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.connect(action, started_callback);
                         clearInterval(wait);
                     }
-                }, 100);
+                }, 200);
             },
 
             tick: function() {
                 this.currentTime = new Date().getTime();
 
                 if(this.started) {
-                    if (this.currentTime - this.lastFPSTime > 3000) {
-                        this.updater.update();
-                        this.updateCursorLogic();
-                        this.renderer.renderFrame();
-                    }
+                    this.updater.update();
+                    this.updateCursorLogic();
+                    this.renderer.renderFrame();
                 }
 
                 if(!this.isStopped)
@@ -879,8 +877,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 self.initCursors();
                 self.initAnimations();
                 self.initShadows();
-
-                self.initSilhouettes();
+                self.initHurtSprites();
+                //self.initSilhouettes();
 
                 self.initEntityGrid();
                 self.initItemGrid();
@@ -961,15 +959,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             break;
                     }
                     /*if (self.renderer.tablet || self.renderer.mobile)
-                    {
-                        log.info("Loading Joystick");
-                        self.joystick = new VirtualJoystick({
-                            container	: document.getElementById('canvas'),
-                            mouseSupport	: true,
-                        });
-                        log.info("Joystick Loaded");
-                    }
-*/
+                     {
+                     log.info("Loading Joystick");
+                     self.joystick = new VirtualJoystick({
+                     container	: document.getElementById('canvas'),
+                     mouseSupport	: true,
+                     });
+                     log.info("Joystick Loaded");
+                     }
+                     */
                 });
 
                 this.client.onEntityList(function(list) {
@@ -1128,15 +1126,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         self.player.forEachAttacker(self.makeAttackerFollow);
 
-                        /*var item = self.getItemAt(self.player.gridX, self.player.gridY);
-                         if(item instanceof Item) {
-                         self.tryLootingItem(item);
-                         }*/
-
-                        //ye se whatrm talken aboot? ah?
 
                         self.updatePlayerCheckpoint();
-                        self.client.sendStep(self.player);
+                        //self.client.sendStep(self.player);
                         self.stepCount++;
                         if(!self.player.isDead) {
                             self.audioManager.updateMusic();
@@ -1201,13 +1193,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
                             var dest = self.map.getDoorDestination(x, y);
-
-                            /*if(dest.quest && !self.questhandler.quests[0].completed) {
-                             self.unregisterEntityPosition(self.player);
-                             self.registerEntityPosition(self.player);
-                             self.chathandler.addGameNotification("Notification", "You must finish the tutorial to proceed.");
-                             return;
-                             }*/
 
                             if(dest.level > self.player.level) {
                                 self.unregisterEntityPosition(self.player);
@@ -1420,6 +1405,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                                                 if(self.player && self.player.target === entity) {
                                                     self.makeAttackerFollow(self.player);
+
+                                                    log.info(entity.moveSpeed);
+                                                    log.info("entity: " + entity.gridX + " " + entity.gridY);
                                                 }
 
                                                 entity.forEachAttacker(function(attacker) {
@@ -1614,9 +1602,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             entity = self.getEntityById(id);
 
                             if(entity) {
-                                if(self.player.isAttackedBy(entity)) {
-                                    this.playerIsAttacked = true;
-                                }
                                 entity.disengage();
                                 entity.idle();
                                 entity.lookAtTarget();
@@ -1660,17 +1645,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             attacker.hit();
                             attacker.lookAtTarget();
                         }
-
-                        if (attacker instanceof Player && target instanceof Player)
-                            return;
+                        /*
+                         if (attacker instanceof Player && target instanceof Player)
+                         return;*/
 
                         if(attacker && target && attacker.id !== self.playerId) {
-                            log.debug(attacker.id + " attacks " + target.id);
 
-                            if(attacker && target instanceof Player && target.id !== self.playerId && target.target && target.target.id === attacker.id && attacker.getDistanceToEntity(target) < 3) {
+                            if(attacker && target instanceof Player && target.id !== self.playerId && target.target && target.target.id === attacker.id && attacker.getDistanceToEntity(target) < 1) {
                                 setTimeout(function() {
                                     self.createAttackLink(attacker, target);
-                                }, 250); // delay to prevent other players attacking mobs from ending up on the same tile as they walk towards each other.
+                                }, 400); // delay to prevent other players attacking mobs from ending up on the same tile as they walk towards each other.
                             } else {
                                 self.createAttackLink(attacker, target);
                             }
@@ -2605,7 +2589,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         var entity = this.getEntityAt(x, y);
 
                         this.player.showTarget(entity);
-                        if(!entity.isHighlighted && this.renderer.supportsSilhouettes) {
+                        if(!entity.isHighlighted) {
                             if(this.lastHovered) {
                                 this.lastHovered.setHighlight(false);
                             }
@@ -3297,7 +3281,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.renderer.rescale(newScale);
                 this.camera = this.renderer.camera;
 
-                //this.renderer.renderStaticCanvases();
+                this.renderer.renderStaticCanvases();
                 this.renderbackground = true;
 
                 this.inventoryHandler.inventoryDisplayShow();
@@ -3391,9 +3375,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 } else {
                     this.chathandler.addNotification(message);
                 }
-                /*if(this.notification_callback) {
-                 this.notification_callback(message);
-                 }*/
             },
 
             removeObsoleteEntities: function() {

@@ -10,9 +10,9 @@ define(function() {
 
         addDamageInfo: function(value, x, y, type, duration) {
             var time = this.game.currentTime,
-                id = time+""+(isNaN(value*1)?value:value*1)+""+x+""+y,
+                id = time + "" + Math.abs(value) + "" + x + "" + y,
                 self = this,
-                info = new HoveringInfo(id, value, x, y, (duration)?duration:1000, type);
+                info = new HoveringInfo(id, value, x, y, (duration) ? duration:1000, type);
 
             info.onDestroy(function(id) {
                 self.destroyQueue.push(id);

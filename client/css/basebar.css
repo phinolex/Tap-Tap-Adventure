@@ -122,12 +122,32 @@ footer, header, hgroup, menu, nav, section {
         margin: 0px;
         padding: 0px;
         text-align: center;
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
     #health {
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, #FF8888, #FF0000);
         /* Firefox 3.6+ */
         background: -moz-linear-gradient(top, #FF8888, #FF0000);
+    }
+
+    #health.white {
+        -moz-animation:flash 0.5s linear 1;
+        -webkit-animation:flash 0.5s linear 1;
+        -o-animation:flash 0.5s linear 1;
+        -ms-animation:flash 0.5s linear 1;
+        animation:flash 0.5s linear 1;
+    }
+
+    #health.invincible {
+        -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -o-animation:invincible 0.3s steps(3, end) alternate infinite;
+        -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
     }
     #mana {
         /* Safari 5.1, Chrome 10+ */
@@ -212,8 +232,6 @@ footer, header, hgroup, menu, nav, section {
         top: 3px;
         left: 0px;
     }
-
-
 
     #inventoryButton {
         position: absolute;
@@ -425,6 +443,11 @@ footer, header, hgroup, menu, nav, section {
         margin: 0px;
         padding: 0px;
         text-align: center;
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
     #health {
         /* Safari 5.1, Chrome 10+ */
@@ -432,6 +455,22 @@ footer, header, hgroup, menu, nav, section {
         /* Firefox 3.6+ */
         background: -moz-linear-gradient(top, #FF8888, #FF0000);
     }
+
+    #health.white {
+        -moz-animation:flash 0.5s linear 1;
+        -webkit-animation:flash 0.5s linear 1;
+        -o-animation:flash 0.5s linear 1;
+        -ms-animation:flash 0.5s linear 1;
+        animation:flash 0.5s linear 1;
+    }
+
+    #health.invincible {
+        -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -o-animation:invincible 0.3s steps(3, end) alternate infinite;
+        -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
+    }
+
     #mana {
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
@@ -691,7 +730,7 @@ footer, header, hgroup, menu, nav, section {
 	position:absolute;
         top: 3px;
         width: 88px;
-        height: -6px;
+        height: 0px;
         border: 0px;
         margin-left: 0px;
         text-align: center;
@@ -728,6 +767,11 @@ footer, header, hgroup, menu, nav, section {
         margin: 0px;
         padding: 0px;
         text-align: center;
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
     #health {
         /* Safari 5.1, Chrome 10+ */
@@ -735,6 +779,22 @@ footer, header, hgroup, menu, nav, section {
         /* Firefox 3.6+ */
         background: -moz-linear-gradient(top, #FF8888, #FF0000);
     }
+
+    #health.white {
+        -moz-animation:flash 0.5s linear 1;
+        -webkit-animation:flash 0.5s linear 1;
+        -o-animation:flash 0.5s linear 1;
+        -ms-animation:flash 0.5s linear 1;
+        animation:flash 0.5s linear 1;
+    }
+
+    #health.invincible {
+        -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -o-animation:invincible 0.3s steps(3, end) alternate infinite;
+        -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
+    }
+
     #mana {
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));

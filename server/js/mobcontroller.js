@@ -36,9 +36,7 @@ module.exports = MobController = cls.Class.extend({
         {
             var entity = this.worldServer.mobs[mobId];
             entity.onStep(function() {
-                //this.broadcast(new Messages.Move(entity), false);
-                //if (this.target)
-                //   this.target.packetHandler.handleMoveEntity([0,this.id, this.x, this.y]);
+
             });
 
             entity.onRequestPath(function(x, y) {
@@ -120,14 +118,11 @@ module.exports = MobController = cls.Class.extend({
             var mob = this.worldServer.mobs[mobId];
             if (!mob || mob.isDead || mob.isStunned)
                 continue;
-            if (mob.target && mob.canAttack(time) && mob.canReach(mob.target) )
-            {
-                //log.info("checkHit-Can reach");
-                //log.info("mob x:"+mob.x+",y:"+mob.y);
+
+            if (mob.target && mob.canAttack(time) && mob.canReach(mob.target) ) {
                 if (mob.path)
                     mob.path = null;
                 mob.target.packetHandler.handleHurt(mob);
-                //mob.target.packetHandler.handleHitEntity(mob, [0,mob.target.id]);
             }
         }
     },

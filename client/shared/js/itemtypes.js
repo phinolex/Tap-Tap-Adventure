@@ -273,25 +273,25 @@ ItemTypes.isItem = function (kind) {
     	item.type == "armorarcher" ||
     	item.type == "object" ||
     	item.type == "craft";
-}
+};
 
 // TODO - what should the callback be?
 ItemTypes.forEachKind = function(callback) {
-    for(var k in itemData) {
+    for(var k in ItemTypes.ItemData) {
     	//log.info("k="+JSON.stringify(k));
         callback(KindData[k], k);
     }
 };
 
 ItemTypes.forEachArmorKind = function(callback) {
-    Types.forEachKind(function(kind, kindName) {
+    ItemTypes.forEachKind(function(kind, kindName) {
         if(ItemTypes.isArmor(kind)) {
             callback(kind, kindName);
         }
     });
 };
 ItemTypes.forEachWeaponKind = function(callback) {
-    Types.forEachKind(function(kind, kindName) {
+    ItemTypes.forEachKind(function(kind, kindName) {
         if(ItemTypes.isWeapon(kind)) {
             callback(kind, kindName);
         }
@@ -300,14 +300,14 @@ ItemTypes.forEachWeaponKind = function(callback) {
 
 
 ItemTypes.forEachArcherArmorKind = function(callback) {
-    Types.forEachKind(function(kind, kindName) {
+    ItemTypes.forEachKind(function(kind, kindName) {
         if(ItemTypes.isArcherArmor(kind)) {
             callback(kind, kindName);
         }
     });
 };
 ItemTypes.forEachArcherWeaponKind = function(callback) {
-    Types.forEachKind(function(kind, kindName) {
+    ItemTypes.forEachKind(function(kind, kindName) {
         if(ItemTypes.isArcherWeapon(kind)) {
             callback(kind, kindName);
         }

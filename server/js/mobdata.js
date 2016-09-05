@@ -18,7 +18,7 @@ _.each( Mobs, function( value, key ) {
 		isAggressive: typeof value.isAggressive === 'boolean' ? value.isAggressive : true,
 		attackRate: (value.attackRate) ? value.attackRate : 1000,
 		moveSpeed: (value.moveSpeed) ? value.moveSpeed : 200,
-		spawnDelay: value.spawnDelay ? value.spawnDelay : 60000,
+		spawnDelay: value.spawnDelay ? value.spawnDelay : 60000
 	};
 	
 	// Create a Kind map for fast retrieval.
@@ -31,8 +31,8 @@ var isMob = function(kind){
 };
 
 var forEachMobKind = function(callback) {
-    for(var k in MobKinds) {
-        callback(MobKinds[k][0], k);
+    for(var k in Kinds) {
+        callback(Kinds[k][0], k);
     }
 };
 

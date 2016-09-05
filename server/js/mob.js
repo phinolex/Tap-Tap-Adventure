@@ -236,7 +236,11 @@ module.exports = Mob = Character.extend({
     distanceToSpawningPoint: function (x, y) {
         return Utils.distanceTo(x, y, this.spawningX, this.spawningY);
     },
-    
+
+    distanceBetween: function(entityX, entityY, otherEntityX, otherEntityY) {
+        return Utils.distanceTo(entityX, entityY, otherEntityX, otherEntityY);
+    },
+
     setDrops: function () {
         this.drops = MobData.Kinds[this.kind].drops
     }

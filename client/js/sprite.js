@@ -10,10 +10,10 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
             this.offsetY = 0;
             this.loadJSON(sprites[name]);
             this.whiteSprite = {
-                isLoaded: false,
+                isLoaded: false
             };
             this.silhouetteSprite = {
-                isLoaded: false,
+                isLoaded: false
             };
         },
 
@@ -51,8 +51,10 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
             var animations = {};
 
             for(var name in this.animationData) {
-                var a = this.animationData[name];
-                animations[name] = new Animation(name, a.length, a.row, this.width, this.height);
+                if (this.animationData.hasOwnProperty(name)) {
+                    var a = this.animationData[name];
+                    animations[name] = new Animation(name, a.length, a.row, this.width, this.height);
+                }
             }
 
             return animations;
@@ -61,10 +63,11 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
         createHurtSprite: function() {
             if(!this.isLoaded) this.load();
             if (this.whiteSprite.isLoaded) return;
+
             var canvas = document.createElement('canvas'),
                 ctx = canvas.getContext('2d'),
-                width = this.width,
-                height = this.height,
+                width = this.image.width,
+                height = this.image.height,
                 spriteData, data;
 
             canvas.width = width;
@@ -76,7 +79,7 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
 
                 data = spriteData.data;
 
-                for(var i=0; i < data.length; i += 4) {
+                for(var i = 0; i < data.length; i += 4) {
                     data[i] = 255;
                     data[i+1] = data[i+2] = 75;
                 }
@@ -92,6 +95,7 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
                     width: this.width,
                     height: this.height
                 };
+
             } catch(e) {
                 log.error("Error getting image data for sprite : "+this.name);
             }
@@ -117,7 +121,7 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
             ctx.drawImage(this.image, 0, 0, width, height);
             data = ctx.getImageData(0, 0, width, height).data;
             finalData = ctx.getImageData(0, 0, width, height);
-            fdata = finalData.data;
+            var fdata = finalData.data;
 
             var getIndex = function(x, y) {
                 return ((width * (y-1)) + x - 1) * 4;

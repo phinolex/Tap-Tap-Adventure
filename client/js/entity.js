@@ -1,5 +1,5 @@
 
-define(['animation'], function(Animation) {
+define(['animation', 'mobdata'], function(Animation, MobData) {
 
     var Entity = Class.extend({
         init: function(id, kind) {
@@ -92,12 +92,21 @@ define(['animation'], function(Animation) {
             this.sprite = sprite;
             this.normalSprite = this.sprite;
 
+            try {
+                this.hurtSprite = sprite.getHurtSprite();
+            } catch (e) {}
+
             this.animations = sprite.createAnimations();
 
             this.isLoaded = true;
             if(this.ready_func) {
                 this.ready_func();
             }
+        },
+
+        isMob: function(kind) {
+            var kinds = MobData.Kinds;
+            return kinds[kind] ? true : false;
         },
 
         getSprite: function() {
@@ -168,15 +177,14 @@ define(['animation'], function(Animation) {
         },
 
         setHighlight: function(value) {
-            // TODO - Highlight not supported.
-            /*if(value === true) {
+            if(value === true) {
                 this.sprite = this.sprite.silhouetteSprite;
                 this.isHighlighted = true;
             }
             else {
                 this.sprite = this.normalSprite;
                 this.isHighlighted = false;
-            }*/
+            }
         },
 
         setVisible: function(value) {
@@ -226,7 +234,7 @@ define(['animation'], function(Animation) {
             var adjacent = false;
 
             if(entity) {
-                adjacent = this.getDistanceToEntity(entity) > 1 ? false : true;
+                adjacent = this.getDistanceToEntity(entity) <= 1;
             }
             return adjacent;
         },
@@ -306,7 +314,7 @@ define(['animation'], function(Animation) {
                 this.stunTimeout = setTimeout(function(){
                     self.isProvocation = false;
                     self.provocationTimeout = null;
-                }, 1000*level);
+                }, 1000 * level);
             }
         }
     });
