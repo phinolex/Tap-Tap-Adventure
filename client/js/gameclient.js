@@ -1091,6 +1091,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         sendCraft: function (id) {
             this.sendMessage([Types.Messages.CRAFT, id]);
         },
+
+        sendDeath: function(id) {
+            this.sendMessage([Types.Messages.DEATH, id]);
+        }
     });
 
     return GameClient;

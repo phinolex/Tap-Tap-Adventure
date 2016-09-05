@@ -36,6 +36,7 @@ module.exports = Player = Character.extend({
 
         this.server = worldServer;
         this.connection = connection;
+        this.redisPool = databaseHandler;
 
         this._super(this.connection.id, "player", 1, 0, 0, "");
 
@@ -219,6 +220,10 @@ module.exports = Player = Character.extend({
         }
     },
 
+    getSpawnPoint: function() {
+          return [325 + Utils.randomInt(0, 3), 87 + Utils.randomInt(0, 2)];
+    },
+
     onRequestPosition: function(callback) {
         this.requestpos_callback = callback;
     },
@@ -327,17 +332,17 @@ module.exports = Player = Character.extend({
 
         var expGained = (parseInt(self.experience) + (parseInt(Math.round(receivedExp)))) * (self.variations.doubleEXP ? 2 : self.variations.expMultiplier);
 
-        self.experience = expGained;
-
-        databaseHandler.setExp(this.name, this.experience);
+        self.experience = Math.round(expGained);
 
         var previousLevel = self.level;
         self.level = Types.getLevel(self.experience);
 
         if (previousLevel != self.level)
-            this.updateHitPoints();
+            self.updateHitPoints();
 
         self.server.pushToPlayer(self, new Messages.PlayerPoints(self.maxHitPoints, self.maxMana, self.hitPoints, self.mana));
+
+        self.redisPool.setExp(self.name, self.experience);
 
         return Math.round(receivedExp);
     },
@@ -763,15 +768,6 @@ module.exports = Player = Character.extend({
         return false;
     },
 
-    startRegenTick: function() {
-        var self = this;
-
-        setInterval(function() {
-            if (!self.isAttacked) {
-
-            }
-        }, 7000);
-    },
 
     getHp: function () {
         if (this.pClass == Types.PlayerClass.FIGHTER)

@@ -416,14 +416,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
             initHurtSprites: function() {
                 var self = this;
-
-                log.info("Initializing Hurt Sprites.");
-
                 for (var sprite in self.sprites) {
                     var kind = ItemTypes.getKindFromString(sprite);
                     if (kind) {
-                        if (ItemTypes.isArmor(kind)) {
-                            log.info("Sprite: " + sprite);
+                        if (ItemTypes.isArmor(kind) || ItemTypes.isArcherArmor(kind)) {
                             try {
                                 self.sprites[sprite].createHurtSprite();
                             } catch (e) {
@@ -439,9 +435,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 var self = this;
 
                 for (var sprite in self.sprites) {
-                    sprite.createSilhouette();
+                    var kind = ItemTypes.getKindFromString(sprite);
+                    if (kind) {
+                        if (!ItemTypes.isArmor(kind) && !ItemTypes.isWeapon(kind) && !ItemTypes.isArcherArmor(kind) && !ItemTypes.isArcherWeapon(kind)) {
+                            try {
+                                self.sprites[sprite].createSilhouette();
+                            } catch (e) { continue; }
+                        }
+                    }
                 }
-
             },
 
 
@@ -1289,6 +1291,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.player.onDeath(function() {
                         log.info(self.playerId + " is dead");
+                        self.client.sendDeath(self.playerId);
                         self.player.skillHandler.clear();
                         self.player.stopBlinking();
 
@@ -2589,7 +2592,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         var entity = this.getEntityAt(x, y);
 
                         this.player.showTarget(entity);
-                        if(!entity.isHighlighted) {
+                        if(!entity.isHighlighted && this.renderer.supportsSilhouettes) {
                             if(this.lastHovered) {
                                 this.lastHovered.setHighlight(false);
                             }

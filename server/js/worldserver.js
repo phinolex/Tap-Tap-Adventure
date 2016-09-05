@@ -83,7 +83,9 @@ module.exports = World = cls.Class.extend({
             self.pushRelevantEntityListTo(player);
 
             var move_callback = function(x, y) {
+
                 player.flagPVP(self.map.isPVP(x, y));
+                self.database.setPlayerPosition(player, x, y);
 
                 player.forEachAttacker(function(mob) {
                     if (mob.target == null)
@@ -930,6 +932,8 @@ module.exports = World = cls.Class.extend({
             mob.clearTarget();
             mob.forgetPlayer(player.id, 1000);
         });
+
+        self.database.setPlayerPosition(player, player.x, player.y);
 
         self.handleEntityGroupMembership(player);
     },

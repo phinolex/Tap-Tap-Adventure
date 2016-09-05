@@ -70,6 +70,10 @@ define(['animation', 'mobdata'], function(Animation, MobData) {
             this.y = y;
         },
 
+        getSpawnPoint: function() {
+            return [325 + Utils.randomInt(0, 3), 87 + Utils.randomInt(0, 2)];
+        },
+
         setGridPosition: function(x, y) {
             this.gridX = x;
             this.gridY = y;

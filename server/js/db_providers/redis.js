@@ -179,6 +179,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             }
                             client.hset("b:" + player.connection._connection.remoteAddress, "loginTime", curTime);
 
+
                             player.sendWelcome(
                                 db_player.armor,
                                 db_player.weapon,
@@ -721,8 +722,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "usedPubPts", usedPubPts);
     },
     setPlayerPosition: function(player, x, y) {
-
-        log.info("Setting position: x: " + x + " y: " + y );
         client.hset("u:" + player.name, "x", x);
         client.hset("u:" + player.name, "y", y);
     },

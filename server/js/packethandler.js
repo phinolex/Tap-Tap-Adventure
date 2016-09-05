@@ -199,6 +199,10 @@ module.exports = PacketHandler = Class.extend({
                 case Types.Messages.STEP:
                     self.handleStep(message);
                     break;
+
+                case Types.Messages.DEATH:
+                    self.handleDeath(message);
+                    break;
                 default:
                     if (self.message_callback)
                         self.player.message_callback(message);
@@ -342,7 +346,7 @@ module.exports = PacketHandler = Class.extend({
                     try {
                         self.player.name = playerName.substr(0, 36).trim();
                         self.player.pw = playerPassword.substr(0, 45);
-
+                        self.player.email = "";
                         self.redisPool.loadPlayer(self.player);
                     } catch (e) {
                         log.info(e)
@@ -910,6 +914,20 @@ module.exports = PacketHandler = Class.extend({
 
         entity.setPosition(x, y);
         self.broadcast(new Messages.Move(entity));
+    },
+
+    handleDeath: function(message) {
+        var self = this,
+            id = message[1];
+
+        if (self.player) {
+            var spawnPoint = self.player.getSpawnPoint();
+            var x = spawnPoint[0];
+            var y = spawnPoint[1];
+
+            self.player.redisPool.setPlayerPosition(self.player, x, y);
+            self.player.setPosition(x, y);
+        }
     },
 
     handleSkill: function(message){

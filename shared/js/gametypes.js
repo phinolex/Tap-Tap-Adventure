@@ -148,7 +148,8 @@ Types = {
         TOD: 107,
         JSONUPDATE: 108,
         STEP: 109,
-        CHARDATA: 110
+        CHARDATA: 110,
+        DEATH: 111
     },
 
     Orientations: {

@@ -613,15 +613,12 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
 
         canReachTarget: function() {
             if(this.attackRange > 1){
-                if(this.hasTarget() && this.getDistanceToEntity(this.target) < this.attackRange) {
+                if(this.hasTarget() && this.getDistanceToEntity(this.target) < this.attackRange)
                     return true;
-                }
+
             } else {
-                if(this.hasTarget() && this.isAdjacentNonDiagonal(this.target)) {
-                    log.info("Entity: " + this.name + " pos: " + this.gridX + " " + this.gridY);
-                    log.info("Entity: " + this.target.name + " pos: " + this.target.gridX + " " + this.target.gridY);
+                if(this.hasTarget() && this.isAdjacentNonDiagonal(this.target))
                     return true;
-                }
             }
             return false;
         },

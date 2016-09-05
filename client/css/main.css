@@ -595,12 +595,18 @@ footer div  {display:inline-block;}
         width: 100%;
         background: red;
         clear: left;
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
 
     #target .life {
         float: right;
         margin-bottom: 12px;
         text-transform: capitalize;
+
     }
 
     #inspector {
@@ -1163,6 +1169,11 @@ footer div  {display:inline-block;}
         width: 100%;
         background: red;
         clear: left;
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
 
     #target .life {
@@ -1745,6 +1756,11 @@ footer div  {display:inline-block;}
         width: 100%;
         background: red;
         clear: left;
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
 
     #target .life {
