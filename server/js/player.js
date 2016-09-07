@@ -243,7 +243,6 @@ module.exports = Player = Character.extend({
                     }
                     var skillName = self.tmpAchievement.skillName;
                     var skillLevel = self.tmpAchievement.skillLevel;
-                    //log.info("skill="+skillName+",skillLevel="+skillLevel);
                     if (skillName && skillLevel)
                     {
                         self.skillHandler.add(skillName, skillLevel);

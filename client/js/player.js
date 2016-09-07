@@ -27,6 +27,8 @@ define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mou
 
             // PVP Flag
             this.pvpFlag = false;
+            this.pvpWaitFlag = false;
+            this.inPVPGame = false;
 
             this.isWanted = false;
             // Benef

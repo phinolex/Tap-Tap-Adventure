@@ -1094,6 +1094,46 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.initFont();
             },
 
+            drawHUD: function() {
+                /**
+                 * Draws HUD (PVP, Tutorial, Etc);
+                  */
+
+                if (this.game && this.game.player && (this.game.player.pvpFlag || this.game.player.pvpWaitFlag)) {
+                    this.toptextcontext.save();
+                    var time = this.game.getPVPTimer();
+
+
+                    switch (this.scale) {
+                        case 1: this.setFontSize(10); break;
+                        case 2: this.setFontSize(20); break;
+                        case 3: this.setFontSize(30); break;
+                    }
+
+                    this.drawText(this.toptextcontext, "" + this.game.redkills,
+                        this.getWidth() / 2 - 100 * this.scale,
+                        10 * this.scale,
+                        true,
+                        "#cf7c6a");
+
+                    this.drawText(this.toptextcontext, time,
+                        this.getWidth() / 2,
+                        10 * this.scale,
+                        true,
+                        "#fcda5c");
+
+                    this.drawText(this.toptextcontext, "" + this.game.bluekills,
+                        this.getWidth() / 2 + 100 * this.scale,
+                        10 * this.scale,
+                        true,
+                        "#0085E5");
+
+                    this.toptextcontext.restore();
+
+                    this.initFont();
+                }
+            },
+
             setCameraView: function(ctx) {
                 this.camera.setRealCoords();
                 ctx.translate(-this.camera.x * this.scale, -this.camera.y * this.scale);

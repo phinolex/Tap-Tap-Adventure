@@ -111,6 +111,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.autoEattingHandler = null;
                 // pvp
                 this.pvpFlag = false;
+                this.pvpTimer = null;
                 //
                 this.dialogs = [];
                 this.characterDialog = new CharacterDialog(this);
@@ -1144,6 +1145,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.client.onPVPChange(function(pvpFlag) {
                         self.player.flagPVP(pvpFlag);
                         //self.pvpFlag = pvpFlag;
+                    });
+
+                    self.client.onPVPGame(function(inGame, pvpTimer) {
+                        self.pvpTimer = pvpTimer;
+                        self.player.pvpWaitFlag = true;
+                        self.player.inPVPGame = inGame;
                     });
 
                     self.client.onCharData(function(attackSpeed, movementSpeed, walkSpeed, idleSpeed, attackRate) {
@@ -2366,6 +2373,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             /**
              *
              */
+
+            getPVPTimer: function() {
+                return this.pvpTimer;
+            },
 
             forEachVisibleTile: function(callback, extra, optimized) {
                 var self = this,

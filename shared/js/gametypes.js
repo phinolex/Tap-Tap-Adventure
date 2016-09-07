@@ -149,7 +149,8 @@ Types = {
         JSONUPDATE: 108,
         STEP: 109,
         CHARDATA: 110,
-        DEATH: 111
+        DEATH: 111,
+        PVPGAME: 112
     },
 
     Orientations: {

@@ -61,6 +61,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.AUCTIONOPEN] = this.receiveAuction;
             this.handlers[Types.Messages.CLASSSWITCH] = this.receiveClassSwitch;
             this.handlers[Types.Messages.CHARDATA] = this.receiveData;
+            this.handlers[Types.Messages.PVPGAME] = this.receivePVPGame();
             this.useBison = false;
 
             this.enable();
@@ -164,20 +165,22 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         receiveMessage: function(message) {
             var data, action;
-            if(this.isListening) {
-                data = JSON.parse(message);
-
-                //log.debug("data: " + message);
-
-                if(data instanceof Array) {
-                    if(data[0] instanceof Array) {
-                        // Multiple actions received
-                        this.receiveActionBatch(data);
-                    } else {
-                        // Only one action received
-                        this.receiveAction(data);
+            try {
+                if (this.isListening) {
+                    data = JSON.parse(message);
+                    if (data instanceof Array) {
+                        if (data[0] instanceof Array) {
+                            // Multiple actions received
+                            this.receiveActionBatch(data);
+                        } else {
+                            // Only one action received
+                            this.receiveAction(data);
+                        }
                     }
                 }
+            } catch (e) {
+                if (self.fail_callback)
+                    self.fail_callback('errorconnecting');
             }
         },
 
@@ -539,6 +542,14 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             }
         },
 
+        receivePVPGame: function(data) {
+            var inGame = data[1],
+                pvpTime = data[2];
+
+            if (this.pvpGame_callback)
+                this.pvpGame_callback(inGame, pvpTime);
+        },
+
         receiveRanking: function(data){
             data.shift();
             if(this.ranking_callback){
@@ -756,6 +767,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         },
         onPVPChange: function(callback){
             this.pvp_callback = callback;
+        },
+
+        onPVPGame: function(callback) {
+            this.pvpGame_callback = callback;
         },
 
         onNotify: function(callback){

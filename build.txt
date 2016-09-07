@@ -10,12 +10,12 @@ js/timer.js
 js/bubble.js
 js/camera.js
 js/animation.js
-js/entity.js
-js/item.js
-js/transition.js
 js/text.js
 text!../shared/data/mobs.json
 js/mobdata.js
+js/entity.js
+js/item.js
+js/transition.js
 text!../shared/data/npcs.json
 js/npcdata.js
 js/character.js
@@ -85,6 +85,7 @@ js/craftdata.js
 js/craftdialog.js
 js/guild.js
 js/gamedata.js
+js/util.js
 js/../shared/js/gametypes.js
 js/game.js
 
@@ -92,7 +93,6 @@ js/home.js
 ----------------
 js/app.js
 js/lib/sha1.js
-js/util.js
 js/entrypoint.js
 js/characterdialog.js
 js/settings.js
