@@ -93,6 +93,9 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "kind")                       // 35
                         .hget(userKey, "rights")                     // 36
                         .hget(userKey, "class")			     // 37
+                        .hget(userKey, "poisoned")
+                        .hget(userKey, "hitpoints")
+                        .hget(userKey, "mana")
 
 
                         //.get(userKey, "userGuild")
@@ -143,7 +146,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 "membershipRemainingTime": replies[34],
                                 "kind": Utils.NaN2Zero(replies[35]) === 222 ? 222 : 1,
                                 "rights": Utils.NaN2Zero(replies[36]),
-                                "pClass": Utils.NaN2Zero(replies[37])
+                                "pClass": Utils.NaN2Zero(replies[37]),
+                                "poisoned": replies[38],
+                                "hitpoints": Utils.NaN2Zero(replies[39]),
+                                "mana": Utils.NaN2Zero(replies[40])
                             };
 
 
@@ -212,13 +218,15 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 db_player.membershipTime,
                                 db_player.kind,
                                 db_player.rights,
-                                db_player.pClass);
+                                db_player.pClass,
+                                db_player.poisoned,
+                                db_player.hitpoints,
+                                db_player.mana);
                         });
                     return;
                 }
             }
             self.createPlayer(player);
-            return;
         });
     },
 
@@ -306,7 +314,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             null,
                             1, 
                             0,
-                            player.pClass);
+                            player.pClass,
+                            false,
+                            40,
+                            10);
 
 
                     });
@@ -709,6 +720,11 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "exp", exp);
     },
 
+    setPointsData: function(name, hitpoints, mana) {
+        client.hset("u:" + name, "hitpoints", hitpoints);
+        client.hset("u:" + name, "mana", mana);
+    },
+
     foundAchievement: function(name, number){
         log.info("Found Achievement: " + name + " " + number);
         client.hset("u:" + name, "achievement" + number + ":found", "true");
@@ -721,6 +737,11 @@ module.exports = DatabaseHandler = cls.Class.extend({
         log.info("Set Used Pub Points: " + name + " " + usedPubPts);
         client.hset("u:" + name, "usedPubPts", usedPubPts);
     },
+
+    setPoison: function(player, state) {
+        client.hset("u:" + player.name, "poisoned", state);
+    },
+
     setPlayerPosition: function(player, x, y) {
         client.hset("u:" + player.name, "x", x);
         client.hset("u:" + player.name, "y", y);

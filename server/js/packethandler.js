@@ -47,9 +47,10 @@ module.exports = PacketHandler = Class.extend({
 
             var action = parseInt(message[0]);
 
-            if(!self.player.hasEnteredGame && action !== Types.Messages.CREATE &&
-                action !== Types.Messages.LOGIN && action !== Types.Messages.NEWPASSWORD)
-            { // CREATE or LOGIN or NEWPASSWORD must be the first message
+            if(!self.player.hasEnteredGame && action !== Types.Messages.CREATE && action !== Types.Messages.LOGIN) {
+                try {
+                    self.server.removePlayer(self.player);
+                } catch (e) {}
                 self.connection.sendUTF8('unknownerror');
                 self.connection.close("Invalid handshake message: " + message);
                 return;
@@ -199,9 +200,14 @@ module.exports = PacketHandler = Class.extend({
                 case Types.Messages.STEP:
                     self.handleStep(message);
                     break;
-
                 case Types.Messages.DEATH:
                     self.handleDeath(message);
+                    break;
+                case Types.Messages.UPDATE:
+                    self.handleUpdate(message);
+                    break;
+                case Types.Messages.REQUESTWARP:
+                    self.handleWarp(message);
                     break;
                 default:
                     if (self.message_callback)
@@ -403,11 +409,15 @@ module.exports = PacketHandler = Class.extend({
                     self.server.pushToPlayer(self.player, new Messages.CharData([100, 100, 100, 100, 100]));
                     break;
 
+                case "/update":
+                    self.server.updatePlayers(self.player.id);
+                    break;
+
                 case "/pos":
                     var x = self.player.x;
                     var y = self.player.y;
 
-                    self.send([Type.Messages.NOTIFY], "x: " + x + " y: " + y);
+                    self.send([Types.Messages.NOTIFY], "x: " + x + " y: " + y);
                     break;
 
                 default:
@@ -638,7 +648,7 @@ module.exports = PacketHandler = Class.extend({
         self.broadcast(new Messages.Teleport(self.player));
         self.server.handlePlayerVanish(self.player);
         self.server.pushRelevantEntityListTo(self.player);
-
+        self.server.handleEntityGroupMembership(self.player);
     },
 
     handleStoreBuy: function(message) {
@@ -902,6 +912,9 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleStep: function(message) {
+        if (!message)
+            return;
+
         var self = this,
             id = message[1],
             x = message[2],
@@ -909,11 +922,13 @@ module.exports = PacketHandler = Class.extend({
 
         var entity = self.server.getEntityById(id);
 
-        if (entity.x == x && entity.y == y)
-            return;
+        if (entity) {
+            if (entity.x == x && entity.y == y)
+                return;
 
-        entity.setPosition(x, y);
-        self.broadcast(new Messages.Move(entity));
+            entity.setPosition(x, y);
+            self.broadcast(new Messages.Move(entity));
+        }
     },
 
     handleDeath: function(message) {
@@ -927,7 +942,38 @@ module.exports = PacketHandler = Class.extend({
 
             self.player.redisPool.setPlayerPosition(self.player, x, y);
             self.player.setPosition(x, y);
+            self.player.redisPool.setPointsData(self.player.name, self.player.maxHitPoints, self.player.maxMana);
         }
+    },
+
+    handleUpdate: function(message) {
+          var self = this,
+              id = message[1],
+              x = message[2],
+              y = message[3];
+
+        if (self.player.id != id)
+            return;
+
+        var player = self.server.getEntityById(id);
+
+        if (player) {
+            if (player.x != x && player.y != y) {
+
+            }
+        }
+    },
+
+    handleWarp: function(message) {
+        var self = this,
+            id = message[1],
+            warpId = message[2];
+
+        if (self.player.id != id)
+            return;
+
+        var player = self.server.getEntityById(id);
+
     },
 
     handleSkill: function(message){

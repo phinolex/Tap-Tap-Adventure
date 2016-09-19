@@ -647,6 +647,14 @@ module.exports = Character = Entity.extend({
         this.hitPoints = this.maxHitPoints;
     },
 
+    setHitPoints: function(hitPoints) {
+        this.hitPoints = hitPoints;
+    },
+
+    setMana: function(mana) {
+        this.mana = mana;
+    },
+
     regenHealthBy: function (value) {
         var hp = this.hitPoints,
             max = this.maxHitPoints;

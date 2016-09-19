@@ -47,21 +47,18 @@ define(function() {
         forEachVisibleValidPosition: function(callback, extra, map) {
             var extra = extra || 0;
 
-            //Invalid: isInt(x) && isInt(y) && (x < 0 || x >= this.width || y < 0 || y >= this.height);
-
             var w = this.gridW;
             var h = this.gridH;
 
-            var minX = Math.max(0,this.gridX-extra);
-            var minY = Math.max(0,this.gridY-extra);
+            var minX = Math.max(0, this.gridX - extra);
+            var minY = Math.max(0, this.gridY - extra);
 
-            var maxX = Math.min(map.height-1, this.gridX+w+(2*extra));
-            var maxY = Math.min(map.width-1, this.gridY+h+(2*extra));
+            var maxX = Math.min(map.height - 1, this.gridX + w + (2 * extra));
+            var maxY = Math.min(map.width - 1, this.gridY + h + (2 * extra));
 
-            for(var y=minY; y < maxY; ++y) {
-                for(var x=minX; x < maxX; ++x) {
+            for (var y = minY; y < maxY; ++y) {
+                for (var x = minX; x < maxX; ++x)
                     callback(x, y);
-                }
             }
         },
 
@@ -75,42 +72,27 @@ define(function() {
             var maxX = Math.min(map.height-1, this.gridX+w);
             var maxY = Math.min(map.width-1, this.gridY+h);
 
-            if (c.orientation === Types.Orientations.LEFT ||
-                c.prevOrientation === Types.Orientations.LEFT)
-            {
-                for(var y=minY; y < maxY; ++y) {
+            for (var y = minY; y < maxY; ++y) {
+                if (c.orientation === Types.Orientations.LEFT || c.prevOrientation === Types.Orientations.LEFT) {
                     callback(minX, y);
-                    callback(minX+1, y);
+                    callback(minX + 1, y);
                 }
 
-            }
-            if (c.orientation === Types.Orientations.RIGHT ||
-                c.prevOrientation === Types.Orientations.RIGHT)
-            {
-                for(var y=minY; y < maxY; ++y) {
+                if (c.orientation === Types.Orientations.RIGHT || c.prevOrientation === Types.Orientations.RIGHT) {
                     callback(maxX, y);
-                    callback(maxX-1, y);
+                    callback(maxX - 1, y);
                 }
-
             }
-            if (c.orientation === Types.Orientations.UP ||
-                c.prevOrientation === Types.Orientations.UP)
-            {
-                for(var x=minX; x < maxX; ++x) {
+
+            for (var x = minX; x < maxX; ++x) {
+                if (c.orientation === Types.Orientations.UP || c.prevOrientation === Types.Orientations.UP) {
                     callback(x, minY);
-                    callback(x, minY+1);
+                    callback(x, minY + 1);
                 }
 
-            }
-
-            if (c.orientation === Types.Orientations.DOWN ||
-                c.prevOrientation === Types.Orientations.DOWN)
-            {
-                for(var x=minX; x < maxX; ++x) {
+                if (c.orientation === Types.Orientations.DOWN || c.prevOrientation === Types.Orientations.DOWN) {
                     callback(x, maxY);
-                    callback(x, maxY-1);
-                    //if (this.game.renderer.mobile)
-                    //	callback(x, maxY-2);
+                    callback(x, maxY - 1);
                 }
             }
         },

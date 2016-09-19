@@ -8,26 +8,50 @@ define(['character', 'achievemethandler', 'npcdata'], function(Character, QH, Np
             this.talkIndex = 0;
             this.title = name;
         },
-        talk: function(achievement, isAchievementCompleted) {
-            if (isAchievementCompleted) this.talkIndex = 0;
-            var msgs = isAchievementCompleted ? achievement.afterTalk : achievement.beforeTalk;
-            if(msgs) {
-                var msg = null;
-                var talkCount = msgs.length;
 
-                if(this.talkIndex > talkCount)
+        talk: function(isAchievement, achievement, completedAchievement) {
+            var messages;
+
+            if (isAchievement) {
+                if (completedAchievement)
                     this.talkIndex = 0;
 
-                if(this.talkIndex < talkCount)
-                    msg = msgs[this.talkIndex];
+                messages = completedAchievement ? achievement.afterTalk : achievement.beforeTalk;
 
-                this.talkIndex += 1;
+                if (messages) {
+                    var message,
+                        talkCount = messages.length;
 
-                return msg;
-            } else
-                return "Well, hello there!";
+                    if (this.talkIndex > talkCount)
+                        this.talkIndex = 0;
 
+                    if (this.talkIndex < talkCount)
+                        message = messages[this.talkIndex];
+
+                    this.talkIndex++;
+
+                    return message;
+                }
+            } else {
+                if (this.name = "Doctor") {
+                    messages = ["Test", "Test2"];
+
+                    var message,
+                        talkCount = messages.length;
+
+                    if (this.talkIndex > talkCount)
+                        this.talkIndex = 0;
+
+                    if (this.talkIndex < talkCount)
+                        message = messages[this.talkIndex];
+
+                    this.talkIndex++;
+
+                    return message;
+                }
+            }
         },
+
         getSpriteName: function() {
             return NpcData.Kinds[this.kind].spriteName;
         }

@@ -19,8 +19,6 @@ define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mou
             this.armorName = "clotharmor";
             this.weaponName = "sword1";
 
-
-            
             // modes
             this.isLootMoving = false;
             this.isSwitchingWeapon = true;

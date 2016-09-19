@@ -208,7 +208,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
 
             game.onDisconnect(function(message) {
-                $('#death').find('p').html(message+"<em>Please reload the page.</em>");
+                $('#death').find('p').html(message + "<em>Click anywhere to reload the page.</em>");
+                game.isDisconnected = true;
                 $('#respawn').hide();
             });
 
@@ -286,9 +287,9 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     }
                 }
 
-                /*if(game.started && !game.renderer.mobile && game.player && !hasClosedParchment) {
-                 game.click();
-                 }*/
+                if (game.isDisconnected)
+                    location.reload();
+
             });
 
             $('#respawn').click(function(event) {
@@ -324,7 +325,6 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $('#warpbutton').click(function(event) {
                 $('#warpbutton').toggleClass('active');
 
-                game.warpManager.toggle();
             });
 
             $('#chatbutton').click(function(event) {
@@ -341,52 +341,6 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 $('#soundbutton').toggleClass('active');
                 game.audioManager.toggle();
             });
-            
-            /*
-
-            // Sound Button
-            this.soundButton = new Button2('#soundbutton', {background: {left: this.scale * 98}, downed: true});
-            this.soundButton.onClick(function(sender, event) {
-                log.info(JSON.stringify(sender));
-                if(game && game.ready) {
-                    if(game.audioManager.toggle()) {
-                        sender.down();
-                    } else {
-                        sender.up();
-                    }
-                }
-            });
-            game.soundButton = this.soundButton;
-            game.gameButtons.push(this.soundButton);
-
-            // Warp Button
-            this.warpButton = new Button2('#warpbutton', {background: {left: this.scale * 322}});
-            this.warpButton.onClick(function(sender, event) {
-                if(game && game.ready) {
-                    if(game.warpManager.toggle()) {
-                        sender.down();
-                    } else {
-                        sender.up();
-                    }
-                }
-            });
-            game.warpButton = this.warpButton;
-            game.gameButtons.push(this.warpButton);
-
-
-            // Chat Button
-            this.chatButton = new Button2('#chatbutton', {background: {left: this.scale * 364}});
-            this.chatButton.onClick(function(sender, event) {
-                if(game && game.ready) {
-                    if(!$('#chatbutton').hasClass('active')) {
-                        app.showChat();
-                    } else {
-                        app.hideChat();
-                    }
-                }
-            });
-            game.chatButton = this.chatButton;
-            game.gameButtons.push(this.chatButton);*/
 
             $(document).mousemove(function(event) {
                 app.setMouseCoordinates(event);
@@ -514,14 +468,6 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 var key = e.which,
                     $chat = $('#chatinput'),
                     placeholder = $(this).attr("placeholder");
-
-                //   if (!(e.shiftKey && e.keyCode === 16) && e.keyCode !== 9) {
-                //        if ($(this).val() === placeholder) {
-                //           $(this).val('');
-                //            $(this).removeAttr('placeholder');
-                //            $(this).removeClass('placeholder');
-                //        }
-                //    }
 
                 if(key === 13) {
                     if($chat.attr('value') !== '') {

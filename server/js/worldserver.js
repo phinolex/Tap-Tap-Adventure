@@ -158,9 +158,14 @@ module.exports = World = cls.Class.extend({
         self.onRegenTick(function() {
             self.forEachCharacter(function(character) {
                 if (character instanceof Player) {
-                    if (character.hasFocus && !character.hasFullHealth() && !character.isAttacked()) {
-                        character.regenHealthBy(1);
+                    if (character.poisoned) {
+                        character.regenHealthBy(-1);
                         self.pushToPlayer(character, character.regen());
+                    } else {
+                        if (character.hasFocus && !character.hasFullHealth() && !character.isAttacked()) {
+                            character.regenHealthBy(1);
+                            self.pushToPlayer(character, character.regen());
+                        }
                     }
                 }
             });
@@ -224,7 +229,7 @@ module.exports = World = cls.Class.extend({
                 }
             }
             return this;
-        }
+        };
 
         self.playersPvpGame.remByVal(player);
     },
@@ -779,7 +784,7 @@ module.exports = World = cls.Class.extend({
         //if (self.map.isGameArea(player.x, player.y))
 
         //this.database.setPlayerPosition(player, player.x, player.y);
-
+        player.redisPool.setPointsData(player.name, player.hitPoints, player.mana);
         player.packetHandler.broadcast(player.despawn());
         self.removeEntity(player);
         self.decrementPlayerCount();
@@ -1360,6 +1365,22 @@ module.exports = World = cls.Class.extend({
 
     },
 
+    updatePlayers: function(id) {
+        var self = this,
+            player = self.getEntityById(id);
+
+        for (var oPlayer in self.players) {
+            if (self.players.hasOwnProperty(oPlayer)) {
+                if (oPlayer == id)
+                    continue;
+
+                var oEntity = self.getEntityById(oPlayer);
+
+                self.pushToPlayer(player, new Messages.Update(oEntity));
+            }
+        }
+    },
+
     resetCharacterData: function() {
         var self = this,
             dAttackSpeed = 50,
@@ -1367,6 +1388,8 @@ module.exports = World = cls.Class.extend({
             dWalkSpeed = 100,
             dIdleSpeed = 450,
             dAttackRate = 800;
+
+
 
         var data = [dAttackSpeed, dMoveSpeed, dWalkSpeed, dIdleSpeed, dAttackRate];
 

@@ -32,7 +32,8 @@ var isMob = function(kind){
 
 var forEachMobKind = function(callback) {
     for(var k in Kinds) {
-        callback(Kinds[k][0], k);
+        if (Kinds.hasOwnProperty(k))
+            callback(Kinds[k][0], k);
     }
 };
 

@@ -4,7 +4,7 @@
 define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'tile', 'gameclient', 'audio', 'updater', 'transition',
         'pathfinder', 'entity', 'item', 'items', 'mob', 'npc', 'npcdata', 'player', 'character', 'chest', 'mount',
-        'pet', 'mobs', 'mobdata', 'gather', 'exceptions', 'config', 'chathandler', 'warpmanager', 'textwindowhandler',
+        'pet', 'mobs', 'mobdata', 'gather', 'exceptions', 'config', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'achievemethandler',
         'rankinghandler', 'inventoryhandler', 'bankhandler', 'partyhandler','bools', 'iteminfodialog',
         'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', 'enchantdialog', 'bankdialog', 'craftdialog', 'guild',
@@ -13,7 +13,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
     function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
              GameClient, AudioManager, Updater, Transition, Pathfinder,
              Entity, Item, Items, Mob, Npc, NpcData, Player, Character, Chest, Mount, Pet, Mobs, MobData, Gather, Exceptions, config,
-             ChatHandler, WarpManager, TextWindowHandler, Menu, BoardHandler, KkHandler,
+             ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
              ShopHandler, PlayerPopupMenu, ClassPopupMenu, AchievementHandler, RankingHandler,
              InventoryHandler, BankHandler, PartyHandler, Bools, ItemInfoDialog, SkillHandler, StateHandler,
              StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Guild, GameData, Button2, Util) {
@@ -34,7 +34,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.chatinput = null;
                 this.bubbleManager = null;
                 this.audioManager = null;
-
+                this.isDisconnected = false;
                 this.renderbackground = false;
 
 
@@ -417,31 +417,32 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
             initHurtSprites: function() {
                 var self = this;
-                for (var sprite in self.sprites) {
-                    var kind = ItemTypes.getKindFromString(sprite);
-                    if (kind) {
-                        if (ItemTypes.isArmor(kind) || ItemTypes.isArcherArmor(kind)) {
-                            try {
-                                self.sprites[sprite].createHurtSprite();
-                            } catch (e) {
-                                continue;
-                            }
+                try {
+                    for (var sprite in self.sprites) {
+                        if (self.sprites.hasOwnProperty(sprite)) {
+                            var kind = ItemTypes.getKindFromString(sprite);
+                            if (kind) {
+                                if (ItemTypes.isArmor(kind) || ItemTypes.isArcherArmor(kind))
+                                    self.sprites[sprite].createHurtSprite();
 
+                            }
                         }
                     }
-                }
+                } catch (e) {}
             },
 
             initSilhouettes: function() {
                 var self = this;
 
                 for (var sprite in self.sprites) {
-                    var kind = ItemTypes.getKindFromString(sprite);
-                    if (kind) {
-                        if (!ItemTypes.isArmor(kind) && !ItemTypes.isWeapon(kind) && !ItemTypes.isArcherArmor(kind) && !ItemTypes.isArcherWeapon(kind)) {
-                            try {
-                                self.sprites[sprite].createSilhouette();
-                            } catch (e) { continue; }
+                    if (self.sprites.hasOwnProperty(sprite)) {
+                        var kind = ItemTypes.getKindFromString(sprite);
+                        if (kind) {
+                            if (!ItemTypes.isArmor(kind) && !ItemTypes.isWeapon(kind) && !ItemTypes.isArcherArmor(kind) && !ItemTypes.isArcherWeapon(kind)) {
+                                try {
+                                    self.sprites[sprite].createSilhouette();
+                                } catch (e) {}
+                            }
                         }
                     }
                 }
@@ -452,9 +453,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 if(this.renderer.upscaledRendering || this.renderer.mobile) {
                     this.spritesets[0][name] = new Sprite(name, 1);
                     this.spritesets[1][name] = new Sprite(name, 2);
-                } else if (this.renderer.tablet) {
+                } else if (this.renderer.tablet)
                     this.spritesets[1][name] = new Sprite(name, 2);
-                }
                 else {
                     this.spritesets[0][name] = new Sprite(name, 1);
                     this.spritesets[1][name] = new Sprite(name, 2);
@@ -471,7 +471,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     this.sprites = this.spritesets[scale - 1];
 
                 _.each(this.entities, function(entity) {
-                    //entity.sprite = null;
                     entity.setSprite(self.sprites[entity.getSpriteName()]);
                 });
                 this.initHurtSprites();
@@ -490,7 +489,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             spritesLoaded: function() {
-                if(_.any(this.sprites, function(sprite) { return !sprite.isLoaded; })) {
+                if(_.any(this.sprites, function(sprite) {
+                        return !sprite.isLoaded;
+                    })) {
                     return false;
                 }
                 return true;
@@ -500,9 +501,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 if(name in this.cursors) {
                     this.currentCursor = this.cursors[name];
                     this.currentCursorOrientation = orientation;
-                } else {
+                } else
                     log.error("Unknown cursor name :"+name);
-                }
             },
 
             updateCursorLogic: function() {
@@ -514,7 +514,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 }
 
                 if(this.hoveringPlayer && this.started) {
-                    if(this.player.pvpFlag || (this.namedEntity && this.namedEntity instanceof Player && this.namedEntity.isWanted)) {
+                    if(this.player.pvpFlag) {
                         this.setCursor("sword");
                     } else {
                         this.setCursor("hand");
@@ -783,9 +783,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.audioManager = new AudioManager(this);
             },
 
-            loadWarp: function() {
-                this.warpManager = new WarpManager(this);
-            },
 
             initMusicAreas: function() {
                 var self = this;
@@ -805,8 +802,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 var wait = setInterval(function() {
                     if(self.map.isLoaded /*&& self.spritesLoaded()*/) {
-
-                        //log.debug('All sprites loaded.');
                         log.debug('Map is loaded.');
                         self.connect(action, started_callback);
                         clearInterval(wait);
@@ -819,8 +814,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if(this.started) {
                     this.updater.update();
-                    this.updateCursorLogic();
                     this.renderer.renderFrame();
+                    this.FPSCount++;
+                    if (this.currentTime - this.lastFPSTime > 1000) {
+                        $('#fps').html("FPS: " + this.FPSCount);
+                        this.lastFPSTime = this.currentTime;
+                        this.FPSCount = 0;
+
+                    }
                 }
 
                 if(!this.isStopped)
@@ -848,22 +849,23 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 }
             },
 
-
             getEntityByName: function(name){
-                for(id in this.entities){
-                    var entity = this.entities[id];
-                    if(entity.name === name){
-                        return entity;
+                for(var id in this.entities) {
+                    if (this.entities.hasOwnProperty(id)) {
+                        var entity = this.entities[id];
+                        if (entity.name === name)
+                            return entity;
                     }
                 }
                 return null;
             },
 
             getEntityByKind: function(kind){
-                for(id in this.entities){
-                    var entity = this.entities[id];
-                    if(entity.kind === kind){
-                        return entity;
+                for(var id in this.entities) {
+                    if (this.entities.hasOwnProperty(id)) {
+                        var entity = this.entities[id];
+                        if (entity.kind === kind)
+                            return entity;
                     }
                 }
                 return null;
@@ -872,28 +874,22 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
             loadGameData: function() {
                 var self = this;
+
                 self.loadAudio();
-                self.loadWarp();
-
                 self.initMusicAreas();
-
                 self.initCursors();
                 self.initAnimations();
                 self.initShadows();
                 self.initHurtSprites();
-                //self.initSilhouettes();
-
                 self.initEntityGrid();
                 self.initItemGrid();
-
                 self.initPathingGrid();
                 self.initRenderingGrid();
                 self.initAnimatedTiles();
-
                 self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
-
                 self.initPlayer();
                 self.setCursor("hand");
+
             },
 
             connect: function(action, started_callback) {
@@ -1101,10 +1097,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.player.onBeforeStep(function() {
-                        /*var blockingEntity = self.getEntityAt(self.player.nextGridX, self.player.nextGridY);
-                         if(blockingEntity && blockingEntity.id !== self.playerId) {
-                         log.debug("Blocked by " + blockingEntity.id);
-                         }*/
                         self.unregisterEntityPosition(self.player);
                     });
 
@@ -1131,7 +1123,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
 
                         self.updatePlayerCheckpoint();
-                        //self.client.sendStep(self.player);
                         self.stepCount++;
                         if(!self.player.isDead) {
                             self.audioManager.updateMusic();
@@ -1171,6 +1162,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         }
 
                         self.client.sendMoveEntity2(self.player.id, x, y, 2);
+                        self.client.sendStep(self.player);
 
                         if(self.player.hasTarget()) {
                             self.player.lookAtTarget();
@@ -1235,9 +1227,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 self.renderer.clearScreen(self.renderer.context);
                             }
 
-                            if(dest.portal) {
+                            if(dest.portal)
                                 self.audioManager.playSound("teleport");
-                            }
+
 
                             //if(!self.player.isDead) {
                             //    self.audioManager.updateMusic();
@@ -1247,6 +1239,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.renderer.drawBackground(self.renderer.background, "#12100D");
                             self.renderbackground = true;
                             self.renderer.forceRedraw = true;
+
+                            self.removeFromRenderingGrid(self.player, self.player.gridX, self.player.gridY);
 
                             for (var i=0; i < self.player.pets.length; ++i)
                             {
@@ -1405,20 +1399,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                     else if(entity instanceof Character) {
                                         entity.onBeforeStep(function() {
                                             self.unregisterEntityPosition(entity);
-                                            //log.info("unreg x:"+entity.gridX+",y:"+entity.gridY);
                                         });
 
                                         entity.onStep(function() {
                                             if(!entity.isDying) {
-                                                if (!entity instanceof Player)
-                                                    self.registerEntityDualPosition(entity);
+                                                self.registerEntityDualPosition(entity);
 
-                                                if(self.player && self.player.target === entity) {
+                                                if(self.player && self.player.target === entity)
                                                     self.makeAttackerFollow(self.player);
 
-                                                    log.info(entity.moveSpeed);
-                                                    log.info("entity: " + entity.gridX + " " + entity.gridY);
-                                                }
 
                                                 entity.forEachAttacker(function(attacker) {
                                                     if(attacker.isAdjacent(attacker.target)) {
@@ -1427,17 +1416,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                                         attacker.follow(entity);
                                                     }
                                                 });
-                                                //if (entity instanceof Player)
-                                                //{
-                                                self.addToRenderingGrid(entity, entity.gridX, entity.gridY);
-                                                //}
-
                                             }
-
-
                                         });
 
                                         entity.onStopPathing(function(x, y) {
+                                            self.addToRenderingGrid(entity, entity.gridX, entity.gridY);
 
                                             if (entity instanceof Pet)
                                                 self.client.sendMoveEntity(entity);
@@ -1456,6 +1439,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                                                 self.unregisterEntityPosition(entity);
                                                 self.registerEntityPosition(entity);
+
+                                                if (self.map.isDoor(x, y))
+                                                    self.removeFromRenderingGrid(entity, entity.gridX, entity.gridY);
                                             }
                                         });
 
@@ -1919,6 +1905,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         }
                     });
 
+
                     self.client.onDisconnected(function(message) {
                         if(self.player) {
                             self.player.die();
@@ -1949,7 +1936,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if (isCompleted)
                         {
                             var achievement = self.achievementHandler.getNPCAchievement(achievementId);
-                            var msg = npc.talk(achievement, true);
+                            var msg = npc.talk(true, achievement, true);
                             if(msg) {
                                 self.createBubble(npc.id, msg);
                                 self.assignBubbleTo(npc);
@@ -1959,12 +1946,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                     self.audioManager.playSound("npc-end");
                                 }, 5000);
                             }
-                            //} else {
-
-                            //    self.destroyBubble(npc.id);
-                            //    self.audioManager.playSound("npc-end");
-                            //}
-
                         }
                     });
                     self.client.onNotify(function(msg){
@@ -2096,7 +2077,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     }
                 });
                 this.client.connection.emit('html_client');
-                log.info("onWelcome - loaded");
             },
 
             initializeAchievements: function() {
@@ -2275,8 +2255,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     return;
 
                 var msg;
+
                 if(npc) {
-                    if(NpcData.Kinds[npc.kind].name==="Shop")
+                    if(NpcData.Kinds[npc.kind].name === "Shop")
                     {
                         this.storeDialog.show();
                     } else if (NpcData.Kinds[npc.kind].name==="Bank") {
@@ -2293,12 +2274,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         msg = this.achievementHandler.talkToNPC(npc);
                         this.previousClickPosition = {};
                         if (msg) {
-
                             this.createBubble(npc.id, msg);
                             this.assignBubbleTo(npc);
                             this.audioManager.playSound("npc");
-                        }
-                        else {
+                        } else {
+
                             this.destroyBubble(npc.id);
                             this.audioManager.playSound("npc-end");
                         }
@@ -2361,9 +2341,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     this.camera.forEachNewTile(function(x, y) {
                         callback(m.GridPositionToTileIndex(x, y) - 1);
                     }, extra, m);
-                }
-                else
-                {
+                } else {
                     this.camera.forEachVisibleValidPosition(function(x, y) {
                         callback(m.GridPositionToTileIndex(x, y) - 1);
                     }, extra, m);
@@ -2384,17 +2362,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if(m.isLoaded) {
                     this.forEachVisibleTileIndex(function(tileIndex) {
-                        if(_.isArray(m.data[tileIndex])) {
-                            _.each(m.data[tileIndex], function(id) {
-                                callback(id-1, tileIndex);
+                        if (_.isArray(m.data[tileIndex])) {
+                            _.each(m.data[tileIndex], function (id) {
+                                callback(id - 1, tileIndex);
                             });
                         }
                         else {
-                            if(_.isNaN(m.data[tileIndex]-1)) {
-                                //throw Error("Tile number for index:"+tileIndex+" is NaN");
-                            } else {
-                                callback(m.data[tileIndex]-1, tileIndex);
-                            }
+                            if (!(_.isNaN(m.data[tileIndex] - 1)))
+                                callback(m.data[tileIndex] - 1, tileIndex);
                         }
                     }, extra, optimized);
                 }
@@ -2430,7 +2405,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 return entity;
             },
 
-            getEntityByName: function (name) {
+           /* getEntityByName: function (name) {
                 var entity;
                 $.each(this.entities, function (i, v) {
                     if (v instanceof Player && v.name.toLowerCase() == name.toLowerCase())
@@ -2440,7 +2415,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     }
                 });
                 return entity;
-            },
+            },*/
 
             getMobAt: function(x, y) {
                 var entity = this.getEntityAt(x, y);
@@ -3650,9 +3625,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 {
                     var circleItem = this.activeCircle[i];
 
-                    log.info("x:" +x+",y:"+y);
-                    log.info("circleItem.x:" +circleItem.x+",circleItem.y:"+circleItem.y);
-                    log.info("circleItem.w:" +circleItem.w+",circleItem.h:"+circleItem.h);
                     if (x >= circleItem.x && x <= circleItem.x + circleItem.w &&
                         y >= circleItem.y && y <= circleItem.y + circleItem.h)
                     {

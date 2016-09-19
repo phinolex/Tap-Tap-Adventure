@@ -3,10 +3,7 @@ define(['area'], function(Area) {
         init: function(game) {
             var self = this;
 
-            if (game.renderer.mobile)
-                this.enabled = false;
-            else
-            	 this.enabled = true;
+            this.enabled = true;
             this.extension = "ogg";
             this.sounds = {};
             this.game = game;
@@ -125,9 +122,9 @@ define(['area'], function(Area) {
 			}  
 			var sound = this.getSound(name);
 			if(sound) {
-
-				sound.play();
-			}
+                sound.volume = 0.075;
+                sound.play();
+            }
 		}
         },
         addArea: function(x, y, width, height, musicName) {

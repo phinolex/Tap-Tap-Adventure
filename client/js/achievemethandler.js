@@ -142,7 +142,7 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
 
                 if(achievement.npcId === npc.kind && !achievement.completed){
                     this.game.client.sendTalkToNPC(npc.kind, achievement.id);
-                    return npc.talk(achievement, false);
+                    return npc.talk(true, achievement, false);
                 }
             }
         }

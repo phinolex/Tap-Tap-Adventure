@@ -463,6 +463,33 @@ Messages.TimeOfDay = Message.extend({
     }
 });
 
+Messages.RequestPos = Message.extend({
+    init: function(data) {
+        this.data = data;
+    },
+    serialize: function() {
+        var id = data[0];
+        return [Types.Messages.REQUESTPOS, id];
+    }
+});
+
+
+Messages.Update = Message.extend({
+    init: function(player) {
+        this.player = player;
+    },
+
+    serialize: function() {
+        var id = this.player.id,
+            x = this.player.x,
+            y = this.player.y;
+
+
+
+        return [Types.Messages.UPDATE, id, x, y];
+    }
+});
+
 Messages.CharData = Message.extend({
     init: function(data) {
         this.data = data;

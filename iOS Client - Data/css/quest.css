@@ -1,0 +1,289 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15-Mar-2015, 11:36:38 AM
+    Author     : Mami_Tati
+*/
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+:focus {
+	outline: 0;
+}
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+table {
+	border-collapse: collapse;
+}
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+@font-face {
+        font-family: 'GraphicPixel';
+        src: url('../fonts/graphicpixel-webfont.eot');
+        src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../fonts/graphicpixel-webfont.woff') format('woff'),
+             url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
+             url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    
+@font-face {
+        font-family: 'AdvoCut';
+        src: url('../fonts/advocut-webfont.eot');
+        src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../fonts/advocut-webfont.woff') format('woff'),
+             url('../fonts/advocut-webfont.ttf') format('truetype'),
+             url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+}
+
+#questlog {
+	position: absolute;
+	top: 8%;
+	left: 65%;
+	background: rgba(0, 0, 0, 0.3);
+	text-align: left;
+	
+	pointer-events: none;
+}
+
+#questLogInfo {
+	color: white;
+	border-spacing:10px !important;	
+}
+
+
+#questalarm{
+	position: absolute;
+	width: 320px;
+	height: 55px;
+	top: calc(90% - 55px);
+	left: calc(50% - 160px);
+	background: rgba(0, 0, 0, 0.5);
+	text-align: center;
+	color: rgba(255, 255, 255, 1);
+	display: none;
+	pointer-events: none;
+}
+
+#questalarm h2{
+	font-size: 20px;
+	text-shadow: 0px 1px 0px #000000;
+} //Downscale and upscale this.
+
+
+
+//Upscale - 3questalarm
+@media screen and (min-width: 1501px) {
+
+#questLogInfo {
+	font-size:12px;
+	
+}
+
+#questLogInfo td {
+	max-width:120px;	
+}
+
+#questLogInfo col:nth-child(1) {
+	width: 60px;	
+}
+#questLogInfo col:nth-child(2) {
+	width: 120px;	
+}
+#questLogInfo col:nth-child(3) {
+	width: 60px;	
+}
+
+
+    #quest {
+        position: absolute;
+        width: 1440px;
+        left: 50%;
+        margin-left: -720px;
+        top: 777px;
+        bottom: 15px;
+        border: 1px solid #9C9898;
+        background: rgba(255, 255, 255, 1);
+        padding: 7.5px;
+        overflow-y: scroll;
+        overflow-x: hide;
+        color: rgba(0, 0, 0, 1);
+        display: none;
+        font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse:collapse;
+    }
+    #quest td, #quest th{
+        font-size:1.2em;
+        border:1px solid #98bf21;
+        padding:3px 7px 2px 7px;
+    }
+    #quest th{
+        font-size:1.4em;
+        text-align:left;
+        padding-top:5px;
+        padding-bottom:4px;
+        background-color:#A7C942;
+        color:#fff;
+    }
+    #quest tr.alt td{
+        color:#000;
+        background-color:#EAF2D3;
+    }
+
+}
+
+//Upscale - 2
+
+@media screen and (max-width: 1500px), screen and (max-height: 870px) {
+
+#questLogInfo {
+	font-size:9px;
+	
+}
+
+#questLogInfo td {
+	max-width:90px;	
+}
+
+#questLogInfo col:nth-child(1) {
+	width: 40px;	
+}
+#questLogInfo col:nth-child(2) {
+	width: 90px;	
+}
+#questLogInfo col:nth-child(3) {
+	width: 40px;	
+}
+
+	
+	
+    #quest {
+        position: absolute;
+        width: 960px;
+        left: 50%;
+        margin-left: -480px;
+        top: 518px;
+        bottom: 10px;
+        border: 1px solid #9C9898;
+        background: rgba(255, 255, 255, 1);
+        padding: 5px;
+        overflow-y: scroll;
+        overflow-x: hide;
+        color: rgba(0, 0, 0, 1);
+        display: none;
+        font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse:collapse;
+    }
+    #quest td, #quest th{
+        font-size:1.2em;
+        border:1px solid #98bf21;
+        padding:3px 7px 2px 7px;
+    }
+    #quest th{
+        font-size:1.4em;
+        text-align:left;
+        padding-top:5px;
+        padding-bottom:4px;
+        background-color:#A7C942;
+        color:#fff;
+    }
+    #quest tr.alt td{
+        color:#000;
+        background-color:#EAF2D3;
+    }
+  
+}
+
+//Upscale - 1
+
+@media screen and (max-width: 1000px) {
+#questLogInfo {
+	font-size:6px;
+}
+
+#questLogInfo td {
+	max-width:60px;	
+}
+
+#questLogInfo col:nth-child(1) {
+	width: 30px;	
+}
+#questLogInfo col:nth-child(2) {
+	width: 60px;	
+}
+#questLogInfo col:nth-child(3) {
+	width: 30px;	
+}
+
+	
+    #quest {
+        position: absolute;
+        width: 480px;
+        left: 50%;
+        margin-left: -240px;
+        top: 259px;
+        bottom: 5px;
+        border: 1px solid #9C9898;
+        background: rgba(255, 255, 255, 1);
+        padding: 2.5px;
+        overflow-y: scroll;
+        overflow-x: hide;
+        color: rgba(0, 0, 0, 1);
+        display: none;
+        font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse:collapse;
+    }
+    #quest td, #quest th{
+        font-size:1.2em;
+        border:1px solid #98bf21;
+        padding:3px 7px 2px 7px;
+    }
+    #quest th{
+        font-size:1.4em;
+        text-align:left;
+        padding-top:5px;
+        padding-bottom:4px;
+        background-color:#A7C942;
+        color:#fff;
+    }
+    #quest tr.alt td{
+        color:#000;
+        background-color:#EAF2D3;
+    }
+
+}

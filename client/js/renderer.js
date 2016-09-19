@@ -337,7 +337,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             drawCursor: function() {
-                mx = this.game.mouse.x,
+                var mx = this.game.mouse.x,
                     my = this.game.mouse.y,
                     s = this.scale,
                     os = this.upscaledRendering ? 1 : this.scale;
@@ -619,8 +619,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 var self = this,
                     count = 0;
 
-                this.context.translate(-(this.camera.x-this.cameraOldX) * this.scale,
-                    -(this.camera.y-this.cameraOldY) * this.scale);
+                //this.context.translate(-(this.camera.x-this.cameraOldX) * this.scale,
+                //    -(this.camera.y-this.cameraOldY) * this.scale);
 
                 this.game.forEachVisibleEntityByDepth(function(entity) {
                     if(entity.isDirty && entity.oldDirtyRect)
@@ -961,6 +961,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         self.drawTile(ctx, id, self.tileset, tilesetwidth, m.width, index);
                     }
                 }, 1, optimized);
+
                 ctx.restore()
 
 
@@ -1191,15 +1192,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 return canvas.toDataURL("image/png");
             },
 
-            renderingMobile: function() {
-                this.drawOldTerrain();
-                this.background.save();
-                this.setCameraView(this.background);
-                this.drawTerrain(this.background);
-                this.drawHighTerrain();
-                this.background.restore();
-            },
-
             renderStaticCanvases: function() {
 
                 this.drawOldTerrain();
@@ -1228,12 +1220,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 
-                if (!this.mobile)
-                    this.renderStaticCanvases();
-                else
-                    this.renderingMobile();
-
-
+                this.renderStaticCanvases();
 
                 this.textcontext.save();
                 this.toptextcontext.save();
@@ -1250,8 +1237,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.drawEntityNames();
 
                 if (!this.mobile && !this.tablet) {
-                    this.drawTargetCell();
-                    this.drawAttackTargetCell();
+                    if (this.game.cursorVisible) {
+                        this.drawTargetCell();
+                        this.drawAttackTargetCell();
+                    }
                 }
 
                 this.drawEntities(this.mobile);
@@ -1263,7 +1252,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.toptextcontext.restore();
 
                 if (!this.mobile && !this.tablet) {
-                    if (this.game.cursorVisible || this.isFirefox)
+                    if (this.game.cursorVisible)
                         this.drawCursor();
                 }
 
@@ -1272,7 +1261,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             preventFlickeringBug: function() {
                 if(this.fixFlickeringTimer.isOver(this.game.currentTime))
                     this.context.fillRect(0, 0, 0, 0);
-
             },
 
             cleanPathing: function() {

@@ -9,6 +9,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
 
         update: function() {
             this.updateZoning();
+            //this.processRendering();
             this.updateCharacters();
             this.updatePlayerAggro();
             this.updateTransitions();
@@ -17,6 +18,10 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             this.updateChatBubbles();
             this.updateKeyboardMovement();
             this.updateInfos();
+        },
+
+        processRendering: function() {
+            this.game.renderer.renderFrame();
         },
 
         updateCharacters: function() {
@@ -38,7 +43,6 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             var t = this.game.currentTime,
                 player = this.game.player;
 
-            // Check player aggro every 1s when not moving nor attacking
             if(player && !player.isMoving() && !player.isAttacking()  && this.playerAggroTimer.isOver(t)) {
                 player.checkAggro();
             }

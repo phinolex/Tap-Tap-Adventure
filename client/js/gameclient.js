@@ -61,7 +61,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.AUCTIONOPEN] = this.receiveAuction;
             this.handlers[Types.Messages.CLASSSWITCH] = this.receiveClassSwitch;
             this.handlers[Types.Messages.CHARDATA] = this.receiveData;
-            this.handlers[Types.Messages.PVPGAME] = this.receivePVPGame();
+            this.handlers[Types.Messages.PVPGAME] = this.receivePVPGame;
+            this.handlers[Types.Messages.UPDATE] = this.receiveUpdate;
             this.useBison = false;
 
             this.enable();
@@ -76,7 +77,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         },
 
         connect: function(dispatcherMode) {
-            //var url = "wss://"+ this.host +":"+ this.port +"/",
+
             var url = "ws://"+ this.host +":"+ this.port +"/",
                 self = this;
 
@@ -95,8 +96,6 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
             this.connection.on('connection', function() {
                 log.info("Connected to server " + self.host + ":" + self.port);
-
-                this.connection.emit('html_client');
             });
 
             this.connection.on('message', function(e) {
@@ -130,7 +129,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             });
 
             this.connection.on('error', function(e) {
-                log.error(e, true);
+                log.error("An error has occurred: " + e, true);
             });
 
             this.connection.on('disconnect', function() {
@@ -138,22 +137,14 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 $('#container').addClass('error');
 
                 if(self.disconnected_callback) {
-                    if(self.isTimeout) {
+                    if(self.isTimeout)
                         self.disconnected_callback("You have been disconnected for being inactive for too long");
-                    } else {
+                    else
                         self.disconnected_callback("The connection to Tap Tap Adventure has been lost.");
-                    }
                 }
             });
 
         },
-
-        /**
-         * this.sendMessage([Types.Messages.LOGIN,
-         player.name,
-         player.pw]);
-         * @param json
-         */
 
         sendMessage: function(json) {
             var data;
@@ -550,6 +541,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 this.pvpGame_callback(inGame, pvpTime);
         },
 
+
         receiveRanking: function(data){
             data.shift();
             if(this.ranking_callback){
@@ -772,6 +764,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         onPVPGame: function(callback) {
             this.pvpGame_callback = callback;
         },
+
 
         onNotify: function(callback){
             this.notify_callback = callback;
@@ -1109,6 +1102,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         sendDeath: function(id) {
             this.sendMessage([Types.Messages.DEATH, id]);
+        },
+
+        requestWarp: function(id) {
+            this.sendMessage([Types.Messages.REQUESTWARP, id]);
         }
     });
 

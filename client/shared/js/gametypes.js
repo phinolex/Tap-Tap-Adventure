@@ -150,7 +150,10 @@ Types = {
         STEP: 109,
         CHARDATA: 110,
         DEATH: 111,
-        PVPGAME: 112
+        PVPGAME: 112,
+        UPDATE: 113,
+        REQUESTPOS: 114,
+        REQUESTWARP: 115
     },
 
     Orientations: {

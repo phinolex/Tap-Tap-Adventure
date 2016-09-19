@@ -21,7 +21,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
 
             var i=0;
             var self = this;
-            for(i=0; i<30; i++) {
+            for(i=0; i < 30; i++) {
                 $('#inventory' + i).click( function(event) {
                     if(self.game.ready){
                         var inventoryNumber = parseInt(this.id.slice(9));
@@ -46,7 +46,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
 
                 $('#inventory' + i).attr('draggable',true);
                 $('#inventory' + i).draggable = true;
-		$('#inventory' + i).bind('dragstart', function(event) {
+		    $('#inventory' + i).bind('dragstart', function(event) {
 		    var inventoryNumber = parseInt(this.id.slice(9));
 		    event.originalEvent.dataTransfer.setData("invNumber", inventoryNumber);
 		    DragDataInv = {};

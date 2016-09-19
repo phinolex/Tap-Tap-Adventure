@@ -76,9 +76,8 @@ module.exports = Player = Character.extend({
 
         this.superCatCallback = null;
         this.superCatExecuted = 0;
-
+        this.poisoned = false;
         this.provocationExecuted = 0;
-
         this.pubPointBuyTimeout = null;
         this.variations = new Variations();
         this.membership = false;
@@ -380,7 +379,7 @@ module.exports = Player = Character.extend({
                           pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
                           ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel,
                           boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel,
-                          membership, membershipTime, kind, rights, pClass) {
+                          membership, membershipTime, kind, rights, pClass, poisoned, hitpoints, mana) {
 
         var self = this;
         self.kind = kind;
@@ -394,10 +393,12 @@ module.exports = Player = Character.extend({
         self.chatBanEndTime = chatBanEndTime;
         self.experience = exp;
         self.level = Types.getLevel(self.experience);
-
+        self.poisoned = poisoned;
         self.orientation = Utils.randomOrientation;
         self.pClass = pClass;
         self.updateHitPoints();
+        self.setHitPoints(hitpoints);
+        self.setMana(mana);
         self.skillHandler.installSkills(self);
 
         if(x === 0 && y === 0) {
@@ -421,11 +422,11 @@ module.exports = Player = Character.extend({
                         self.name, //2
                         self.x, //3
                         self.y, //4
-                        self.hitPoints, //5
+                        self.maxHitPoints, //5
                         self.armor, //6
                         self.weapon, //7
                         self.experience, //10
-                        self.mana, //11
+                        self.maxMana, //11
                         self.variations.doubleEXP, //12
                         self.variations.expMultiplier, //13
                         self.membership, //14
@@ -767,6 +768,16 @@ module.exports = Player = Character.extend({
         return false;
     },
 
+    isPoisoned: function() {
+        return this.poisoned;
+    },
+
+    setPoison: function(state) {
+        var self = this;
+
+        self.poisoned = state;
+        self.redisPool.setPoison(state);
+    },
 
     getHp: function () {
         if (this.pClass == Types.PlayerClass.FIGHTER)

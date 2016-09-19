@@ -85,7 +85,7 @@
   },
 
   "Skeleton": {
-    "name": "Skeleton",
+    "name": "Spooky Skeleton",
     "kind": 3,
     "drops": {"axe": 400, "gold": 200, "ironbow": 400},
     "hp": 40,
