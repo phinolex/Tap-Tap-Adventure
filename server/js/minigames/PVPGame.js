@@ -1,6 +1,7 @@
-var cls = require('./lib/class');
+var cls = require('./lib/class'),
+    MinigameHandler = require('./minigamehandler');
 
-module.exports = PVPGame = cls.Class.extend({
+module.exports = PVPGame = MinigameHandler.Class.extend({
     init: function() {
 
     }

@@ -153,7 +153,14 @@ Types = {
         PVPGAME: 112,
         UPDATE: 113,
         REQUESTPOS: 114,
-        REQUESTWARP: 115
+        REQUESTWARP: 115,
+        POISON: 116,
+        REDTEAM: 117,
+        BLUETEAM: 118,
+        TEAM: 119,
+        MINIGAMESTATE: 120,
+        INGAME: 121,
+        INLOBBY: 122
     },
 
     Orientations: {

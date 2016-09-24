@@ -1067,6 +1067,7 @@
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
+    "isPoisonous": true,
     "attackRate": 900,
     "moveSpeed": 400,
     "spawnDelay": 35000

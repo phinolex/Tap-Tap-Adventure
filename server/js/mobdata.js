@@ -16,6 +16,7 @@ _.each( Mobs, function( value, key ) {
 		aggroRange: (value.aggroRange) ? value.aggroRange : 2,
 		attackRange: (value.attackRange) ? value.attackRange : 1,
 		isAggressive: typeof value.isAggressive === 'boolean' ? value.isAggressive : true,
+        isPoisonous: typeof value.isPoisonous === 'boolean' ? value.isPoisonous : false,
 		attackRate: (value.attackRate) ? value.attackRate : 1000,
 		moveSpeed: (value.moveSpeed) ? value.moveSpeed : 200,
 		spawnDelay: value.spawnDelay ? value.spawnDelay : 60000

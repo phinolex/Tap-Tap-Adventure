@@ -1339,6 +1339,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.addItem(item, x, y);
                     });
 
+                    self.client.onPoison(function(isOn) {
+                        self.player.poisoned = isOn;
+                        self.app.setPoison();
+                    });
+
                     self.client.onSpawnChest(function(chest, x, y) {
                         log.info("Spawned chest (" + chest.id + ") at "+x+", "+y);
                         chest.setSprite(self.sprites[chest.getSpriteName()]);
@@ -1720,7 +1725,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     });
 
-                    self.client.onPlayerChangeHealth(function(points, isRegen) {
+                    self.client.onPlayerChangeHealth(function(points, isRegen, isPoison) {
                         var player = self.player,
                             diff,
                             isHurt;
@@ -1752,18 +1757,30 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 return;
                             }
 
+                            if (isPoison) {
+                                self.infoManager.addDamageInfo(diff, player.x, player.y - 15, "poison");
+                                self.audioManager.playSound("hurt");
+
+                                if (self.playerhurt_callback)
+                                    self.playerhurt_callback();
+
+                                self.updateBars();
+
+                                return;
+                            }
+
                             if(isHurt) {
                                 player.hurt();
                                 self.infoManager.addDamageInfo(diff, player.x, player.y - 15, "received");
                                 self.audioManager.playSound("hurt");
 
 
-                                if(self.playerhurt_callback) {
+                                if (self.playerhurt_callback)
                                     self.playerhurt_callback();
-                                }
-                            } else if(!isRegen){
+
+                            } else if (!isRegen)
                                 self.infoManager.addDamageInfo("+"+diff, player.x, player.y - 15, "healed");
-                            }
+
                             self.updateBars();
                         }
                     });
@@ -3203,15 +3220,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 this.initPlayer();
 
-
-
                 this.started = true;
                 this.client.enable();
                 this.client.sendLogin(this.player);
 
-                if(this.renderer.mobile || this.renderer.tablet) {
+                if(this.renderer.mobile || this.renderer.tablet)
                     this.renderer.clearScreen(this.renderer.context);
-                }
 
                 this.client.sendMoveEntity(this.player);
 
@@ -3249,7 +3263,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             onPlayerHurt: function(callback) {
                 this.playerhurt_callback = callback;
             },
-
 
             onNbPlayersChange: function(callback) {
                 this.nbplayers_callback = callback;

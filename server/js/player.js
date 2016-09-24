@@ -66,7 +66,7 @@ module.exports = Player = Character.extend({
         this.inPVPLobby = false;
         this.inPVPGame = false;
         this.healExecuted = 0;
-
+        this.teamId = -1;
         this.flareDanceCallback = null;
         this.flareDanceExecuted1 = 0;
         this.flareDanceExecuted2 = 0;
@@ -93,6 +93,7 @@ module.exports = Player = Character.extend({
 
 
     },
+
 
     destroy: function() {
         var self = this;
@@ -772,9 +773,13 @@ module.exports = Player = Character.extend({
         return this.poisoned;
     },
 
+    setTeam: function(id) {
+        this.teamId = id;
+    },
+
     setPoison: function(state) {
         var self = this;
-
+        self.server.pushToPlayer(self, new Messages.Poison(state));
         self.poisoned = state;
         self.redisPool.setPoison(state);
     },

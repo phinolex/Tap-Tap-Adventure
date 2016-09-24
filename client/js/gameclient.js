@@ -62,7 +62,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.CLASSSWITCH] = this.receiveClassSwitch;
             this.handlers[Types.Messages.CHARDATA] = this.receiveData;
             this.handlers[Types.Messages.PVPGAME] = this.receivePVPGame;
-            this.handlers[Types.Messages.UPDATE] = this.receiveUpdate;
+            this.handlers[Types.Messages.POISON] = this.receivePoison;
             this.useBison = false;
 
             this.enable();
@@ -403,15 +403,12 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         receiveHealth: function(data) {
             var points = data[1],
-                isRegen = false;
+                isRegen = data[2],
+                isPoison = data[3];
 
-            if(data[2]) {
-                isRegen = true;
-            }
 
-            if(this.health_callback) {
-                this.health_callback(points, isRegen);
-            }
+            if (this.health_callback)
+                this.health_callback(points, isRegen ? isRegen : false, isPoison ? isPoison : false);
         },
 
         receiveChat: function(data) {
@@ -655,6 +652,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             }
         },
 
+        receivePoison: function(data) {
+            if (this.poison_callback)
+                this.poison_callback(data[1]);
+        },
+
         receiveData: function(data) {
             var attackSpeed = data[1],
                 moveSpeed = data[2],
@@ -835,6 +837,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         onCharData: function(callback) {
             this.chardata_callback = callback;
+        },
+
+        onPoison: function(callback) {
+            this.poison_callback = callback;
         },
 
         sendPartyInvite: function(playerId, status) { // 0 for request, 1, for yes, 2 for no.
@@ -1078,7 +1084,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.sendMessage([Types.Messages.BANKRETRIEVE, inventoryNumber]);
         },
         sendHasFocus: function(flag) {
-            this.sendMessage([Types.Messages.CLIENTFOCUS, flag]);
+            //log.info("Skipping has focus.");
+            //this.sendMessage([Types.Messages.CLIENTFOCUS, flag]);
         },
         sendAddSpawn: function (id, x, y) {
             this.sendMessage([Types.Messages.ADDSPAWN, id, x, y]);

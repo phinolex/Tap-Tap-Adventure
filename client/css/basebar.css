@@ -62,6 +62,29 @@ footer, header, hgroup, menu, nav, section {
     font-style: normal;
 }
 
+#health {
+    /* Safari 5.1, Chrome 10+ */
+    background: -webkit-linear-gradient(top, #FF8888, #FF0000);
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, #FF8888, #FF0000);
+}
+
+#health.white {
+    -moz-animation:flash 0.5s linear 1;
+    -webkit-animation:flash 0.5s linear 1;
+    -o-animation:flash 0.5s linear 1;
+    -ms-animation:flash 0.5s linear 1;
+    animation:flash 0.5s linear 1;
+}
+
+
+#health.invincible {
+    -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
+    -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
+    -o-animation:invincible 0.3s steps(3, end) alternate infinite;
+    -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
+}
+
 @media screen and (min-width: 1501px) {
 
     #basebarcontainer {
@@ -128,27 +151,7 @@ footer, header, hgroup, menu, nav, section {
         -ms-transition:.5s width ease;
         transition:.5s width ease;
     }
-    #health {
-        /* Safari 5.1, Chrome 10+ */
-        background: -webkit-linear-gradient(top, #FF8888, #FF0000);
-        /* Firefox 3.6+ */
-        background: -moz-linear-gradient(top, #FF8888, #FF0000);
-    }
 
-    #health.white {
-        -moz-animation:flash 0.5s linear 1;
-        -webkit-animation:flash 0.5s linear 1;
-        -o-animation:flash 0.5s linear 1;
-        -ms-animation:flash 0.5s linear 1;
-        animation:flash 0.5s linear 1;
-    }
-
-    #health.invincible {
-        -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
-        -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
-        -o-animation:invincible 0.3s steps(3, end) alternate infinite;
-        -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
-    }
     #mana {
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
@@ -207,7 +210,7 @@ footer, header, hgroup, menu, nav, section {
         background-position: 0px -873px;
         color: rgba(255, 255, 255, 1);
         font-size: 0px;
-        text-align: center;        
+        text-align: center;
     }
     #healthtext, #manatext {
         position: absolute;
@@ -365,7 +368,7 @@ footer, header, hgroup, menu, nav, section {
         font-family: 'GraphicPixel', sans-serif;
         font-size: 18px;
     }
-    
+
     #fps {
 	font-family:'GraphicPixel';
 	color:#e3e3e3;
@@ -449,27 +452,6 @@ footer, header, hgroup, menu, nav, section {
         -ms-transition:.5s width ease;
         transition:.5s width ease;
     }
-    #health {
-        /* Safari 5.1, Chrome 10+ */
-        background: -webkit-linear-gradient(top, #FF8888, #FF0000);
-        /* Firefox 3.6+ */
-        background: -moz-linear-gradient(top, #FF8888, #FF0000);
-    }
-
-    #health.white {
-        -moz-animation:flash 0.5s linear 1;
-        -webkit-animation:flash 0.5s linear 1;
-        -o-animation:flash 0.5s linear 1;
-        -ms-animation:flash 0.5s linear 1;
-        animation:flash 0.5s linear 1;
-    }
-
-    #health.invincible {
-        -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
-        -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
-        -o-animation:invincible 0.3s steps(3, end) alternate infinite;
-        -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
-    }
 
     #mana {
         /* Safari 5.1, Chrome 10+ */
@@ -529,8 +511,8 @@ footer, header, hgroup, menu, nav, section {
         background-position: 0px -582px;
         color: rgba(255, 255, 255, 1);
         font-size: 0px;
-        text-align: center;        
-        
+        text-align: center;
+
     }
     #healthtext, #manatext {
         position: absolute;
@@ -772,27 +754,6 @@ footer, header, hgroup, menu, nav, section {
         -o-transition:.5s width ease;
         -ms-transition:.5s width ease;
         transition:.5s width ease;
-    }
-    #health {
-        /* Safari 5.1, Chrome 10+ */
-        background: -webkit-linear-gradient(top, #FF8888, #FF0000);
-        /* Firefox 3.6+ */
-        background: -moz-linear-gradient(top, #FF8888, #FF0000);
-    }
-
-    #health.white {
-        -moz-animation:flash 0.5s linear 1;
-        -webkit-animation:flash 0.5s linear 1;
-        -o-animation:flash 0.5s linear 1;
-        -ms-animation:flash 0.5s linear 1;
-        animation:flash 0.5s linear 1;
-    }
-
-    #health.invincible {
-        -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
-        -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
-        -o-animation:invincible 0.3s steps(3, end) alternate infinite;
-        -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
     }
 
     #mana {

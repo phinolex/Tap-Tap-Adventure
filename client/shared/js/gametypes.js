@@ -153,7 +153,8 @@ Types = {
         PVPGAME: 112,
         UPDATE: 113,
         REQUESTPOS: 114,
-        REQUESTWARP: 115
+        REQUESTWARP: 115,
+        POISON: 116
     },
 
     Orientations: {

@@ -87,16 +87,13 @@ Messages.Wanted = Message.extend({
     }
 });
 Messages.Health = Message.extend({
-    init: function (points, isRegen) {
+    init: function (points, isRegen, isPoison) {
         this.points = points;
         this.isRegen = isRegen;
+        this.isPoison = isPoison;
     },
     serialize: function() {
-        var health = [Types.Messages.HEALTH,
-            this.points];
-        if (this.isRegen)
-            health.push(1);
-        return health;
+        return [Types.Messages.HEALTH, this.points, this.isRegen, this.isPoison];
     }
 });
 Messages.Notify = Message.extend({
@@ -445,12 +442,31 @@ Messages.SwitchClass = Message.extend({
     }
 });
 
+Message.MinigameState = Message.extend({
+    init: function(state) {
+        this.state = state;
+    },
+
+    serialize: function() {
+        return [Types.Messages.MINIGAMESTATE, this.state];
+    }
+});
+
 Messages.MinigameTime = Message.extend({
     init: function(time) {
         this.time = time;
     },
     serialize: function() {
         return [Types.Messages.TIME, this.time];
+    }
+});
+
+Messages.MinigameTeam = Message.extend({
+    init: function(team) {
+        this.team = team;
+    },
+    serialize: function() {
+        return [Types.Messages.TEAM, this.team];
     }
 });
 
@@ -484,9 +500,17 @@ Messages.Update = Message.extend({
             x = this.player.x,
             y = this.player.y;
 
-
-
         return [Types.Messages.UPDATE, id, x, y];
+    }
+});
+
+Messages.Poison = Message.extend({
+    init: function(isOn) {
+        this.isOn = isOn;
+    },
+
+    serialize: function() {
+        return [Types.Messages.POISON, this.isOn];
     }
 });
 

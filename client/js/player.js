@@ -41,7 +41,7 @@ define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mou
             this.flareDanceCooltimeCallback = null;
             this.flareDanceCooltimeCounter = 0;
             this.flareDanceMsgCooltimeCounter = 0;
-            
+            this.poisoned = false;
             this.mount=null;
             this.mountName=null;
             this.mountOffsetY=0;

@@ -54,7 +54,6 @@ js/pathfinder.js
 text!../config/config_build.json
 js/config.js
 js/chathandler.js
-js/warpmanager.js
 js/textwindowhandler.js
 js/menu.js
 js/boardhandler.js

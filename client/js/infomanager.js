@@ -63,7 +63,11 @@ define(function() {
         "exp": {
             fill: "rgb(80, 80, 255)",
             stroke: "rgb(50, 50, 255)"
-       }
+        },
+        "poison": {
+            fill: "rgb(66, 183, 77)",
+            stroke: "rgb(50, 120, 50)"
+        }
     };
 
 

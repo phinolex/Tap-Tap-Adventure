@@ -48,9 +48,6 @@ module.exports = PacketHandler = Class.extend({
             var action = parseInt(message[0]);
 
             if(!self.player.hasEnteredGame && action !== Types.Messages.CREATE && action !== Types.Messages.LOGIN) {
-                try {
-                    self.server.removePlayer(self.player);
-                } catch (e) {}
                 self.connection.sendUTF8('unknownerror');
                 self.connection.close("Invalid handshake message: " + message);
                 return;
@@ -64,155 +61,162 @@ module.exports = PacketHandler = Class.extend({
             }
 
             self.resetTimeout();
+            /**
+             * Let's just catch any potential errors.
+             */
 
-            switch(action) {
-                case Types.Messages.CREATE:
-                    self.processCreation(message);
-                    break;
-                case Types.Messages.LOGIN:
-                    self.processLogin(message);
-                    break;
-                case Types.Messages.WHO:
-                    message.shift();
-                    self.server.pushSpawnsToPlayer(self.player, message);
-                    break;
-                case Types.Messages.ZONE:
-                    self.zone_callback();
-                    break;
-                case Types.Messages.CHAT:
-                    self.handleChat(message);
-                    break;
-                case Types.Messages.MOVEENTITY:
-                    self.handleMoveEntity(message);
-                    break;
-                case Types.Messages.HIT:
-                    self.handleHit(message);
-                    break;
-                case Types.Messages.HURT:
-                    self.handleHurt(message);
-                    break;
-                case Types.Messages.GATHER:
-                    self.handleGather(message);
-                    break;
-                case Types.Messages.INVENTORY:
-                    self.handleInventory(message);
-                    break;
-                case Types.Messages.SKILL:
-                    self.handleSkill(message);
-                    break;
-                case Types.Messages.SKILLINSTALL:
-                    self.handleSkillInstall(message);
-                    break;
-                case Types.Messages.SKILLLOAD:
-                    self.handleSkillLoad();
-                    break;
-                case Types.Messages.AGGRO:
-                    if (self.move_callback)
-                        self.server.handleMobHate(message[1], self.player.id, 5);
-                    break;
-                case Types.Messages.STORESELL:
-                    self.handleStoreSell(message);
-                    break;
-                case Types.Messages.STOREBUY:
-                    self.handleStoreBuy(message);
-                    break;
-                case Types.Messages.CRAFT:
-                    self.handleCraft(message);
-                    break;
-                case Types.Messages.AUCTIONSELL:
-                    self.handleAuctionSell(message);
-                    break;
-                case Types.Messages.AUCTIONBUY:
-                    self.handleAuctionBuy(message);
-                    break;
-                case Types.Messages.AUCTIONOPEN:
-                    self.handleAuctionOpen(message);
-                    break;
-                case Types.Messages.AUCTIONDELETE:
-                    self.handleAuctionDelete(message);
-                    break;
-                case Types.Messages.STOREENCHANT:
-                    self.handleStoreEnchant(message);
-                    break;
-                case Types.Messages.BANKSTORE:
-                    self.handleBankStore(message);
-                    break;
-                case Types.Messages.BANKRETRIEVE:
-                    self.handleBankRetrieve(message);
-                    break;
-                case Types.Messages.CHARACTERINFO:
-                    self.server.pushToPlayer(self.player, new Messages.CharacterInfo(self.player));
-                    break;
-                case Types.Messages.TELEPORT:
-                    self.handleTeleport(message, false);
-                    break;
-                case Types.Messages.OPEN:
-                    self.handleOpen(message);
-                    break;
-                case Types.Messages.LOOTMOVE:
-                    self.handleLootMove(message);
-                    break;
-                case Types.Messages.LOOT:
-                    self.handleLoot(message);
-                    break;
-                case Types.Messages.CHECK:
-                    self.handleCheckpoint(message);
-                    break;
-                case Types.Messages.Achievement:
-                    self.handleAchievement(message);
-                    break;
-                case Types.Messages.TALKTONPC:
-                    self.handleTalkToNPC(message);
-                    break;
-                case Types.Messages.FLAREDANCE:
-                    self.handleFlareDance(message);
-                    break;
-                case Types.Messages.MAGIC:
-                    self.handleMagic(message);
-                    break;
-                case Types.Messages.CLIENTFOCUS:
-                    self.handleClientFocus(message);
-                    break;
-                case Types.Messages.ADDSPAWN:
-                    self.handleAddSpawn(message);
-                    break;
-                case Types.Messages.SAVESPAWNS:
-                    self.handleSaveSpawns();
-                    break;
-                case Types.Messages.PARTYINVITE:
-                    self.handlePartyInvite(message);
-                    break;
-                case Types.Messages.PARTYLEAVE:
-                    self.handlePartyLeave(message);
-                    break;
-                case Types.Messages.PARTYLEADER:
-                    self.handlePartyLeader(message);
-                    break;
-                case Types.Messages.PARTYKICK:
-                    self.handlePartyKick(message);
-                    break;
-                case Types.Messages.PETCREATE:
-                    self.handlePetCreate(message);
-                    break;
-                case Types.Messages.CLASSSWITCH:
-                    self.handleClassSwitch(message);
-                    break;
-                case Types.Messages.STEP:
-                    self.handleStep(message);
-                    break;
-                case Types.Messages.DEATH:
-                    self.handleDeath(message);
-                    break;
-                case Types.Messages.UPDATE:
-                    self.handleUpdate(message);
-                    break;
-                case Types.Messages.REQUESTWARP:
-                    self.handleWarp(message);
-                    break;
-                default:
-                    if (self.message_callback)
-                        self.player.message_callback(message);
-                    break;
+            try {
+                switch(action) {
+                    case Types.Messages.CREATE:
+                        self.processCreation(message);
+                        break;
+                    case Types.Messages.LOGIN:
+                        self.processLogin(message);
+                        break;
+                    case Types.Messages.WHO:
+                        message.shift();
+                        self.server.pushSpawnsToPlayer(self.player, message);
+                        break;
+                    case Types.Messages.ZONE:
+                        self.zone_callback();
+                        break;
+                    case Types.Messages.CHAT:
+                        self.handleChat(message);
+                        break;
+                    case Types.Messages.MOVEENTITY:
+                        self.handleMoveEntity(message);
+                        break;
+                    case Types.Messages.HIT:
+                        self.handleHit(message);
+                        break;
+                    case Types.Messages.HURT:
+                        self.handleHurt(message);
+                        break;
+                    case Types.Messages.GATHER:
+                        self.handleGather(message);
+                        break;
+                    case Types.Messages.INVENTORY:
+                        self.handleInventory(message);
+                        break;
+                    case Types.Messages.SKILL:
+                        self.handleSkill(message);
+                        break;
+                    case Types.Messages.SKILLINSTALL:
+                        self.handleSkillInstall(message);
+                        break;
+                    case Types.Messages.SKILLLOAD:
+                        self.handleSkillLoad();
+                        break;
+                    case Types.Messages.AGGRO:
+                        if (self.move_callback)
+                            self.server.handleMobHate(message[1], self.player.id, 5);
+                        break;
+                    case Types.Messages.STORESELL:
+                        self.handleStoreSell(message);
+                        break;
+                    case Types.Messages.STOREBUY:
+                        self.handleStoreBuy(message);
+                        break;
+                    case Types.Messages.CRAFT:
+                        self.handleCraft(message);
+                        break;
+                    case Types.Messages.AUCTIONSELL:
+                        self.handleAuctionSell(message);
+                        break;
+                    case Types.Messages.AUCTIONBUY:
+                        self.handleAuctionBuy(message);
+                        break;
+                    case Types.Messages.AUCTIONOPEN:
+                        self.handleAuctionOpen(message);
+                        break;
+                    case Types.Messages.AUCTIONDELETE:
+                        self.handleAuctionDelete(message);
+                        break;
+                    case Types.Messages.STOREENCHANT:
+                        self.handleStoreEnchant(message);
+                        break;
+                    case Types.Messages.BANKSTORE:
+                        self.handleBankStore(message);
+                        break;
+                    case Types.Messages.BANKRETRIEVE:
+                        self.handleBankRetrieve(message);
+                        break;
+                    case Types.Messages.CHARACTERINFO:
+                        self.server.pushToPlayer(self.player, new Messages.CharacterInfo(self.player));
+                        break;
+                    case Types.Messages.TELEPORT:
+                        self.handleTeleport(message, false);
+                        break;
+                    case Types.Messages.OPEN:
+                        self.handleOpen(message);
+                        break;
+                    case Types.Messages.LOOTMOVE:
+                        self.handleLootMove(message);
+                        break;
+                    case Types.Messages.LOOT:
+                        self.handleLoot(message);
+                        break;
+                    case Types.Messages.CHECK:
+                        self.handleCheckpoint(message);
+                        break;
+                    case Types.Messages.Achievement:
+                        self.handleAchievement(message);
+                        break;
+                    case Types.Messages.TALKTONPC:
+                        self.handleTalkToNPC(message);
+                        break;
+                    case Types.Messages.FLAREDANCE:
+                        self.handleFlareDance(message);
+                        break;
+                    case Types.Messages.MAGIC:
+                        self.handleMagic(message);
+                        break;
+                    case Types.Messages.CLIENTFOCUS:
+                        self.handleClientFocus(message);
+                        break;
+                    case Types.Messages.ADDSPAWN:
+                        self.handleAddSpawn(message);
+                        break;
+                    case Types.Messages.SAVESPAWNS:
+                        self.handleSaveSpawns();
+                        break;
+                    case Types.Messages.PARTYINVITE:
+                        self.handlePartyInvite(message);
+                        break;
+                    case Types.Messages.PARTYLEAVE:
+                        self.handlePartyLeave(message);
+                        break;
+                    case Types.Messages.PARTYLEADER:
+                        self.handlePartyLeader(message);
+                        break;
+                    case Types.Messages.PARTYKICK:
+                        self.handlePartyKick(message);
+                        break;
+                    case Types.Messages.PETCREATE:
+                        self.handlePetCreate(message);
+                        break;
+                    case Types.Messages.CLASSSWITCH:
+                        self.handleClassSwitch(message);
+                        break;
+                    case Types.Messages.STEP:
+                        self.handleStep(message);
+                        break;
+                    case Types.Messages.DEATH:
+                        self.handleDeath(message);
+                        break;
+                    case Types.Messages.UPDATE:
+                        self.handleUpdate(message);
+                        break;
+                    case Types.Messages.REQUESTWARP:
+                        self.handleWarp(message);
+                        break;
+                    default:
+                        if (self.message_callback)
+                            self.player.message_callback(message);
+                        break;
+                }
+            } catch (exception) {
+                log.info("An error has occured: " + exception);
             }
         });
 
@@ -418,6 +422,10 @@ module.exports = PacketHandler = Class.extend({
                     var y = self.player.y;
 
                     self.send([Types.Messages.NOTIFY], "x: " + x + " y: " + y);
+                    break;
+
+                case '/poison':
+                    self.player.setPoison(true);
                     break;
 
                 default:
@@ -1376,15 +1384,12 @@ module.exports = PacketHandler = Class.extend({
         // TODO
     },
 
-    handleClassSwitch: function (msg)
-    {
+    handleClassSwitch: function (msg) {
+
         var pClass = msg[1];
 
-        if ((this.player.weapon && !this.player.handleInventoryWeaponUnequip()) ||
-            (this.player.armor && !this.player.handleInventoryArmorUnequip()))
-        {
+        if ((this.player.weapon && !this.player.handleInventoryWeaponUnequip()) || (this.player.armor && !this.player.handleInventoryArmorUnequip()))
             return;
-        }
 
         this.player.pClass = pClass;
         this.player.updateHitPoints();
@@ -1397,7 +1402,7 @@ module.exports = PacketHandler = Class.extend({
         this.player.skillHandler.clear();
         this.redisPool.delSkillSlots(this.player);
 
-        var self= this;
+        var self = this;
 
         this.player.skillHandler.installSkills(this.player);
         for(var index in self.player.skills) {

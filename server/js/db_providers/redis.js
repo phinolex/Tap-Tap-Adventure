@@ -32,10 +32,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 if(!res) {
                                     player.connection.sendUTF8("invalidlogin");
                                     player.connection.close("Wrong Password: " + player.name);
-                                    return;
-                                }
-                                else
-                                {
+                                } else {
                                     client.hset(userKey, "pw", player.newpw);
                                     log.info("passwordChanged:" + player.newpw);
                                     player.connection.sendUTF8("passwordChanged");
@@ -721,8 +718,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
     },
 
     setPointsData: function(name, hitpoints, mana) {
-        client.hset("u:" + name, "hitpoints", hitpoints);
-        client.hset("u:" + name, "mana", mana);
+        try {
+            client.hset("u:" + name, "hitpoints", hitpoints);
+            client.hset("u:" + name, "mana", mana);
+        } catch (e) {}
     },
 
     foundAchievement: function(name, number){
@@ -739,7 +738,11 @@ module.exports = DatabaseHandler = cls.Class.extend({
     },
 
     setPoison: function(player, state) {
-        client.hset("u:" + player.name, "poisoned", state);
+        var value = 0;
+        if (state)
+            value = 1;
+
+        client.hset("u:" + player.name, "poisoned", value);
     },
 
     setPlayerPosition: function(player, x, y) {

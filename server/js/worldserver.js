@@ -159,10 +159,10 @@ module.exports = World = cls.Class.extend({
             self.forEachCharacter(function(character) {
                 if (character instanceof Player) {
                     if (character.poisoned) {
-                        character.regenHealthBy(-1);
-                        self.pushToPlayer(character, character.regen());
+                        character.poisonHealthBy(1);
+                        self.pushToPlayer(character, character.poison());
                     } else {
-                        if (character.hasFocus && !character.hasFullHealth() && !character.isAttacked()) {
+                        if (!character.hasFullHealth() && !character.isAttacked()) {
                             character.regenHealthBy(1);
                             self.pushToPlayer(character, character.regen());
                         }
@@ -173,65 +173,11 @@ module.exports = World = cls.Class.extend({
 
     },
 
-    startGame: function() {
-        var self = this;
-        for (var player in self.playersPvpGame) {
-            if (self.playersPvpGame.hasOwnProperty(player)) {
-                player.setInPVPGame(true);
-                player.setInPVPLobby(false);
-            }
-        }
-    },
-
-    endGame: function() {
-        var self = this;
-
-        self.redTeam = [];
-        self.blueTeam = [];
-        for (var player in self.playersPvpGame) {
-            if (self.playersPvpGame.hasOwnProperty(player)) {
-                player.setInPVPGame(false);
-                player.setInPVPLobby(true);
-            }
-        }
-    },
-
     moveEntity: function(entity, x, y) {
         if(entity) {
             entity.setPosition(x, y);
             this.handleEntityGroupMembership(entity);
         }
-    },
-
-    splitPlayers: function() {
-        var self = this;
-
-        self.redTeam = self.playersPvpGame;
-        self.blueTeam = [];
-
-        if (self.playersPvpGame.length % 2 == 1)
-            self.blueTeam = self.redTeam.splice(0, random === 0 ? (self.redTeam.length / 2) + 0.5 : (self.redTeam.length / 2) - 0.5);
-    },
-
-    addToPVPGame: function(player) {
-        var self = this;
-        if (!self.arrayContains(self.playersPvpGame, player))
-            self.playersPvpGame.push(player);
-    },
-
-    removeFromPVPGame: function(player) {
-        var self = this;
-        Array.prototype.remByVal = function(val) {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i] === val) {
-                    this.splice(i, 1);
-                    i--;
-                }
-            }
-            return this;
-        };
-
-        self.playersPvpGame.remByVal(player);
     },
 
     arrayContains: function(array, object) {
@@ -322,7 +268,6 @@ module.exports = World = cls.Class.extend({
         self.initializeGameTick();
         self.initializeGather();
         self.initializeDayCycle();
-        //self.initializeRoaming();
     },
 
     initializeDayCycle: function() {
@@ -784,7 +729,10 @@ module.exports = World = cls.Class.extend({
         //if (self.map.isGameArea(player.x, player.y))
 
         //this.database.setPlayerPosition(player, player.x, player.y);
-        player.redisPool.setPointsData(player.name, player.hitPoints, player.mana);
+        if (player.hasEnteredGame)
+            player.redisPool.setPointsData(player.name, player.hitPoints, player.mana);
+
+
         player.packetHandler.broadcast(player.despawn());
         self.removeEntity(player);
         self.decrementPlayerCount();
@@ -987,6 +935,20 @@ module.exports = World = cls.Class.extend({
 
         if (attacker instanceof Player)
             self.pushToPlayer(attacker, new Messages.Damage(entity, damage, entity.hitPoints, entity.maxHitPoints));
+
+        if (entity.type === 'mob') {
+            if (attacker instanceof Player) {
+                if (entity.isPoisonous)
+                    attacker.setPoison(true);
+            }
+        }
+
+        if (attacker.type === 'mob') {
+            if (entity instanceof Player) {
+                if (attacker.isPoisonous)
+                    entity.setPoison(true);
+            }
+        }
 
         if (entity.hitPoints <= 0) {
             if (entity.type === 'mob') {
@@ -1357,12 +1319,65 @@ module.exports = World = cls.Class.extend({
 
         var interval = setInterval(function() {
             self.pvpTime--;
-            clearInterval(interval);
+            if (self.pvpTime <= 0)
+                clearInterval(interval);
+
+            self.sendToPvpPlayers(new Messages.MinigameTime(self.pvpTime));
+            self.startPVPGame();
         }, 1000);
     },
 
-    resetPVPTimer: function() {
+    sendToPvpPlayers: function(message) {
+        var self = this;
 
+        for (var player in self.playersPvpGame) {
+            if (self.playersPvpGame.hasOwnProperty(player))
+                player.send(message);
+        }
+    },
+
+    startPVPGame: function() {
+        var self = this,
+            allPlayers = self.playersPvpGame,
+            splitIndex;
+
+        if (allPlayers.length % 2 == 0)
+            splitIndex = allPlayers.length / 2;
+        else {
+            var randomFactor = Utils.randomInt(0, 1);
+
+            splitIndex = allPlayers.length / 2;
+
+            if (randomFactor == 0)
+                splitIndex += 0.5;
+            else
+                splitIndex -= 0.5
+
+        }
+
+        var redTeam = allPlayers.splice(0, splitIndex);
+        var blueTeam = allPlayers.splice(splitIndex + 1);
+
+        for (var redPlayer in redTeam) {
+            if (redTeam.hasOwnProperty(redPlayer))
+                redPlayer.setTeam(Types.Messages.REDTEAM);
+        }
+
+        for (var bluePlayer in blueTeam) {
+            if (blueTeam.hasOwnProperty(bluePlayer))
+                bluePlayer.setTeam(Types.Messages.BLUETEAM);
+        }
+
+        for (var p in allPlayers) {
+            if (allPlayers.hasOwnProperty(p)) {
+                if (p.teamId == -1)
+                    continue;
+
+                p.send(Messages.MinigameTeam(p.teamId));
+                p.setInPVPGame(true);
+                p.setInPVPLobby(false);
+            }
+        }
     },
 
     updatePlayers: function(id) {

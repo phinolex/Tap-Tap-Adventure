@@ -19,9 +19,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             this.inventoryNumber = 0;
             this.showChatLog = null;
 
-            this.classNames = ["loadcharacter",
-                "createcharacter",
-                "changePassword"];
+            this.classNames = ["loadcharacter", "createcharacter", "changePassword"];
             this.frontPage = this.classNames[0];
 
         },
@@ -79,59 +77,44 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
         },
 
         tryStartingGame: function() {
-            if(this.starting) return;        // Already loading
+            if (this.starting)
+                return;
 
-            var action = $('#parchment').attr("class");
+            var action = $('#parchment').attr("class"),
+                username,
+                userpw,
+                self = this;
 
+            if (action == this.classNames[0]) {
 
+                username = this.$loginnameinput.attr('value');
+                userpw = this.$loginpwinput.attr('value');
 
-            var self = this;
-
-            if (action == this.classNames[0])
-            {
-                var username = this.$loginnameinput.attr('value');
-                var userpw = this.$loginpwinput.attr('value');
-
-                if(!this.validateLoginForm(username, userpw)) return;
+                if (!this.validateLoginForm(username, userpw))
+                    return;
 
                 this.preStartGame(action, username, userpw);
 
-            }
-            else if (action == this.classNames[1])
-            {
-                var username = this.$nameinput.attr('value');
-                var userpw = this.$pwinput.attr('value');
+            } else if (action == this.classNames[1]) {
+
+                username = this.$nameinput.attr('value');
+                userpw = this.$pwinput.attr('value');
                 var userpw2 = this.$pwinput2.attr('value');
                 var email = this.$email.attr('value');
                 var pClass = $('#selectClassSwitch2').val();
 
-                if(!this.validateCreateForm(username, userpw, userpw2, email)) return;
+                if (!this.validateCreateForm(username, userpw, userpw2, email))
+                    return;
 
                 this.preStartGame(action, username, userpw, email, '', pClass);
             }
-            else if (action == this.classNames[2])
-            {
-                var username = this.$pwnameinput.attr('value');
-                var userpwold = this.$pwinputold.attr('value');
-                var userpwnew = this.$pwinputnew.attr('value');
-                var userpwnew2 = this.$pwinputnew2.attr('value');;
-
-                if(!this.validateChangePasswordForm(username, userpwold, userpwnew, userpwnew2, email)) return;
-
-                this.preStartGame(action, username, userpwold, '', userpwnew);
-            }
-
-            if (action == this.classNames[0] || action == this.classNames[1])
-            {
-            }
-
         },
 
         preStartGame: function (action, username, userpw, email, newpw, pClass) {
             var self = this;
-            this.setPlayButtonState(false);
 
-            if(!this.ready || !this.canStartGame()) {
+            self.setPlayButtonState(false);
+            if (!self.ready || !self.canStartGame()) {
                 var watchCanStart = setInterval(function() {
                     log.debug("waiting...");
                     if(self.canStartGame()) {
@@ -139,10 +122,8 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                         self.startGame(action, username, userpw, email, newpw, pClass);
                     }
                 }, 100);
-            } else {
-
-                this.startGame(action, username, userpw, email, newpw, pClass);
-            }
+            } else
+                self.startGame(action, username, userpw, email, newpw, pClass);
         },
 
         startGame: function(action, username, userpw, email, newuserpw, pClass) {
@@ -151,38 +132,25 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             if(username && !this.game.started) {
                 var optionsSet = false,
                     config = this.config;
-                this.useAPI = config.local ? config.useLocalAPI : config.useAPI;
-                //>>includeStart("devHost", pragmas.devHost);
-                if(config.local) {
-                    log.debug("Starting game with local dev config.");
+
+                if(config.local)
                     this.game.setServerOptions(config.local.host, config.local.port, username, userpw, email, newuserpw, pClass);
-                } else {
-                    log.debug("Starting game with default dev config.");
+                else
                     this.game.setServerOptions(config.dev.host, config.dev.port, username, userpw, email, newuserpw, pClass);
-                }
+
                 optionsSet = true;
-                //>>includeEnd("devHost");
 
-                //>>includeStart("prodHost", pragmas.prodHost);
-                if(!optionsSet) {
-                    log.debug("Starting game with build config.");
+                if(!optionsSet)
                     this.game.setServerOptions(config.build.host, config.build.port, username, userpw, email, newuserpw, pClass);
-                }
-                //>>includeEnd("prodHost");
 
-                if(!self.isDesktop) {
-                    // On mobile and tablet we load the map after the player has clicked
-                    // on the login/create button instead of loading it in a web worker.
-                    // See initGame in main.js.
+                if(!self.isDesktop)
                     self.game.loadMap();
-                }
 
                 this.center();
                 this.game.run(action, function(result) {
-                    if(result.success === true) {
-
+                    if(result.success === true)
                         self.start();
-                    } else {
+                    else {
 
                         self.setPlayButtonState(true);
 
@@ -248,11 +216,15 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
 
         start: function() {
-            this.hideIntro();
-            $('body').addClass('started'); //ASKY Doesn't use this, look furhter into whether this is necessary or not.
+            var self = this,
+                $playButton = this.getPlayButton();
 
-            var $playButton = this.getPlayButton();
-            $playButton.click(function () { self.tryStartingGame(); });
+            this.hideIntro();
+            $('body').addClass('started');
+
+            $playButton.click(function () {
+                self.tryStartingGame();
+            });
         },
 
         setPlayButtonState: function(enabled) {
@@ -602,10 +574,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
         initExpBar: function(){
             var maxWidth = $("#expbar").width();
 
-            //var rate = expInThisLevel/expForLevelUp;
-            //$('#expbar').attr("title", "Exp: " + (rate*100).toFixed(3) + "%");
-            //$('#expbar').html("Exp: " + (rate*100).toFixed(3) + "%");
-
             this.game.onPlayerExpChange(function(level, expInThisLevel, expForLevelUp){
 
                 var rate = expInThisLevel/expForLevelUp;
@@ -615,29 +583,28 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                     rate = 0;
                 }
                 $('#exp').css('width', (rate*maxWidth).toFixed(0) + "px");
-                //if (self.game && self.game.ready && self.game.player) {
                 $('#expbar').attr("title", "Level: "+level+", Exp: " + (rate*100).toFixed(3) + "%");
                 $('#expbar').html("Level: "+level+", Exp: " + (rate*100).toFixed(3) + "%");
-                //}
             });
         },
 
         initHealthBar: function() {
-
+            var self = this;
+            var scale;
             if (this.game.renderer) {
                 if (this.game.renderer.mobile) {
-                    var scale = 1;
+                    scale = 1;
                 } else {
-                    var scale = this.game.renderer.getScaleFactor();
+                    scale = this.game.renderer.getScaleFactor();
                 }
             } else {
-                var scale = 2;
+                scale = 2;
             }
 
             var healthMaxWidth = $("#healthbar").width() - (11 * scale);
-            if (scale == 1) {
+            if (scale == 1)
                 healthMaxWidth = 77;
-            }
+
 
             this.game.onPlayerHealthChange(function(hp, maxHp) {
                 var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));
@@ -648,8 +615,26 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             this.game.onPlayerHurt(this.blinkHealthBar.bind(this));
         },
 
+        setPoison: function() {
+            var self = this,
+                player = self.game.player;
+
+            if (player.poisoned) {
+                $('#health').css({'background': '-webkit-linear-gradient(top, #33CC33, #33CC33)'});
+                $('#health').css({'background': '-moz-linear-gradient(top, #33CC33, #33CC33)'});
+            } else {
+                $('#health').css({'background': '-webkit-linear-gradient(top, #FF8888, #FF0000)'});
+                $('#health').css({'background': '-moz-linear-gradient(top, #FF8888, #FF0000)'});
+            }
+
+        },
 
         blinkHealthBar: function() {
+            var self = this;
+
+            if (self.game.player.poisoned)
+                return;
+
             var $hitpoints = $('#health');
 
             $hitpoints.addClass('white');
