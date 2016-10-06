@@ -66,7 +66,6 @@ module.exports = World = cls.Class.extend({
          */
 
         self.onPlayerConnect(function(player) {
-            //Determine player's spawning location.
             player.onRequestPosition(function() {
                 if (player.lastCheckpoint)
                     return player.lastCheckpoint.getRandomPosition();
@@ -76,9 +75,6 @@ module.exports = World = cls.Class.extend({
         });
 
         self.onPlayerEnter(function(player) {
-            if(!player.hasEnteredGame) {
-                self.incrementPlayerCount();
-            }
 
             self.pushRelevantEntityListTo(player);
 
@@ -100,9 +96,7 @@ module.exports = World = cls.Class.extend({
                             mob.clearTarget();
                             mob.forgetEveryone();
                             player.removeAttacker(mob);
-                        } //else
-                            //self.moveEntity(mob, pos.x, pos.y);
-
+                        }
                     }
                 });
 
@@ -123,12 +117,10 @@ module.exports = World = cls.Class.extend({
 
 
             player.packetHandler.onBroadcast(function(message, ignoreSelf) {
-                //log.info("onBroadcast");
                 self.pushToAdjacentGroups(player.group, message, ignoreSelf ? player.id : null);
             });
 
             player.packetHandler.onBroadcastToZone(function(message, ignoreSelf) {
-                //log.info("onBroadcastToZone");
                 self.pushToGroup(player.group, message, ignoreSelf ? player.id : null);
             });
 
@@ -146,11 +138,9 @@ module.exports = World = cls.Class.extend({
 
         self.onEntityAttack(function(attacker) {
             var target = self.getEntityById(attacker.target.id);
-            if (target && attacker.type == "mob") {
-                //var pos = self.findPositionNextTo(attacker, target);
+            if (target && attacker.type == "mob")
                 attacker.follow(target);
-                //self.moveEntity(attacker, pos.x, pos.y);
-            }
+
             if (attacker instanceof Pet)
                 attacker.hit();
         });
@@ -211,13 +201,10 @@ module.exports = World = cls.Class.extend({
         self.map = new Map(mapN);
         self.map.ready(function() {
             self.initZoneGroups();
-            //self.map.loadCollisionGrid();
 
             _.each(self.map.mobAreas, function(a) {
                 var area = new MobArea(a.id, a.nb, a.type, a.x, a.y, a.width, a.height, self);
                 area.spawnMobs();
-                //area.onEmpty(self.handleEmptyMobArea.bind(self, area));
-
                 self.mobAreas.push(area);
             });
 
@@ -241,25 +228,6 @@ module.exports = World = cls.Class.extend({
 
             self.mobController = new MobController(self, self.map);
             self.mobController.setEntityStep();
-
-            // Plot Gathering Nodes around the world.
-            /*for (var key in GatherData.Kinds)
-             {
-             var gather = GatherData.Kinds[key];
-             var count = gather.count;
-             for (var i=0; i < count; ++i)
-             {
-             var posX = ~~(Utils.randomRange(0,self.map.width));
-             var posY = ~~(Utils.randomRange(0,self.map.height));
-             while (!self.isValidPosition(posX, posY))
-             {
-             posX = ~~(Utils.randomRange(0,self.map.width));
-             posY = ~~(Utils.randomRange(0,self.map.height));
-             }
-             self.spawnEntity(gather.kind, posX, posY);
-             }
-             }*/
-
         });
 
         /**
@@ -718,17 +686,13 @@ module.exports = World = cls.Class.extend({
         }
 
         if (player.pets) {
-            for (var i=0; i < player.pets.length; ++i)
-            {
+            for (var i=0; i < player.pets.length; ++i) {
                 var pet = player.pets[i];
                 self.removeEntity(pet);
             }
             player.pets = null;
         }
-        //Teleport player to the lobby if logged out within the game area.
-        //if (self.map.isGameArea(player.x, player.y))
 
-        //this.database.setPlayerPosition(player, player.x, player.y);
         if (player.hasEnteredGame)
             player.redisPool.setPointsData(player.name, player.hitPoints, player.mana);
 
@@ -803,10 +767,6 @@ module.exports = World = cls.Class.extend({
         if (id in self.entities) {
             if (self.entities.hasOwnProperty(id))
                 return self.entities[id];
-        }
-        else
-        {
-            //throw new Error();
         }
     },
 
@@ -1229,10 +1189,6 @@ module.exports = World = cls.Class.extend({
         }
     },
 
-    onInit: function(callback) {
-        this.init_callback = callback;
-    },
-
     onPlayerConnect: function(callback) {
         this.connect_callback = callback;
     },
@@ -1404,14 +1360,11 @@ module.exports = World = cls.Class.extend({
             dIdleSpeed = 450,
             dAttackRate = 800;
 
-
-
         var data = [dAttackSpeed, dMoveSpeed, dWalkSpeed, dIdleSpeed, dAttackRate];
 
         self.sendToAll(new Messages.CharData(data));
     },
 
-    // TODO make a entity map so this is more efficient.
     getTargetsAround: function(entity, range) {
         var x = entity.x;
         var y = entity.y;
@@ -1424,5 +1377,5 @@ module.exports = World = cls.Class.extend({
             }
         });
         return entities;
-    },
+    }
 });

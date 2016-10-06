@@ -6,9 +6,5 @@ module.exports = RequestHandler = cls.Class.extend({
        this.player = player;
        this.targetPlayer = targetPlayer;
        
-   },
-   
-   
-    
-    
+   }
 });

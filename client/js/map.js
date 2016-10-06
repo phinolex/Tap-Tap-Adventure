@@ -140,15 +140,12 @@ define(['jquery', 'area', 'detect'], function($, Area, Detect) {
             log.info("Loading tileset: "+filepath);
 
             tileset.onload = function() {
-                if(tileset.width % self.tilesize > 0) {
+                if(tileset.width % self.tilesize > 0)
                     throw Error("Tileset size should be a multiple of "+ self.tilesize);
-                }
-                log.info("Map tileset loaded.");
+
 
                 self.tilesetCount -= 1;
                 if(self.tilesetCount === 0) {
-                    log.debug("All map tilesets loaded.")
-
                     self.tilesetsLoaded = true;
                     self._checkReady();
                 }

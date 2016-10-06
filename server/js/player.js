@@ -27,7 +27,8 @@ var cls = require("./lib/class"),
     Achievements = require('./achievements'),
     request = require("request"),
     EntitySpawn = require("./entityspawn"),
-    PacketHandler = require("./packethandler");
+    PacketHandler = require("./packethandler"),
+    Quest = require('./quest');
 
 
 module.exports = Player = Character.extend({
@@ -73,7 +74,7 @@ module.exports = Player = Character.extend({
         this.flareDanceCount = 0;
 
         this.stunExecuted = 0;
-
+        this.quests = [];
         this.superCatCallback = null;
         this.superCatExecuted = 0;
         this.poisoned = false;
@@ -801,13 +802,45 @@ module.exports = Player = Character.extend({
     getMp: function () {
         if (this.pClass == Types.PlayerClass.FIGHTER)
             return 10 + (this.level * 2);
+
         if (this.pClass == Types.PlayerClass.DEFENDER)
             return 25 + (this.level * 2);
+
         if (this.pClass == Types.PlayerClass.MAGE)
             return 30 + (this.level * 10);
+
         if (this.pClass == Types.PlayerClass.ARCHER)
             return 10 + (this.level * 2);
 
     },
 
+    getQuestState: function(questId) {
+        var self = this;
+
+        log.info(self.redisPool.getQuestState(self.name, questId));
+    },
+
+    setQuestState: function(questId, state) {
+        var self = this;
+        self.redisPool.setQuestState(self.name, questId, state);
+    },
+
+    getQuestLength: function(questId) {
+        var quest = new Quest(questId);
+        return quest.getLength();
+    },
+
+    getQuestData: function(questId) {
+        var quest = new Quest(questId);
+        log.info("Quest EXP Reward: " + quest.getExpReward());
+        log.info("Quest Item Reward: " + quest.getItemReward()[0] + " count: " + quest.getItemReward()[1]);
+    },
+
+    hasFinishedQuest: function(questId) {
+        var self = this;
+
+        self.getQuestState(questId, function(state) {
+            return state > self.getQuestLength(questId);
+        });
+    }
 });

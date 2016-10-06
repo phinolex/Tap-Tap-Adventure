@@ -160,7 +160,14 @@ Types = {
         TEAM: 119,
         MINIGAMESTATE: 120,
         INGAME: 121,
-        INLOBBY: 122
+        INLOBBY: 122,
+        BANKREQUEST: 123,
+        STOREREQUEST: 124,
+        ENCHANTMENTREQUEST: 125,
+        AUCTIONREQUEST: 126,
+        CLASSREQUEST: 127,
+        CRAFTINGREQUEST: 128,
+        INTERFACE: 129
     },
 
     Orientations: {

@@ -26,7 +26,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.ready = false;
                 this.started = false;
                 this.hasNeverStarted = true;
-                this.gameButtons = [];
                 this.renderer = null;
                 this.camera = null;
                 this.updater = null;
@@ -57,17 +56,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.selectedCellVisible = false;
                 this.targetColor = "rgba(255, 255, 255, 0.5)";
                 this.targetCellVisible = true;
-                this.hoveringTarget = false;
                 this.hoveringPlayer = false;
                 this.hoveringMob = false;
                 this.hoveringItem = false;
+                this.hoveringTarget = false;
                 this.hoveringCollidingTile = false;
                 this.stepCount = 0;
-
-                // Global chats
-                this.chats = 0;
-                this.maxChats = 3;
-                this.globalChatColor = '#A6FFF9';
 
                 // Item Info
                 this.itemInfoOn = true;
@@ -81,14 +75,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.boardhandler = new BoardHandler(this);
                 this.playerPopupMenu = new PlayerPopupMenu(this);
                 this.partyHandler = new PartyHandler(this);
-                this.rankingHandler = new RankingHandler(this);
                 this.statehandler = new StateHandler(this);
+                this.logicTime = new Date().getTime();
 
                 // FPS
                 this.lastFPSTime = new Date().getTime();
                 this.FPSCount = 0;
-
-                this.logicTime = new Date().getTime();
 
                 // zoning
                 this.currentZoning = null;
@@ -102,8 +94,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 // debug
                 this.debugPathing = false;
-
-                this.latestCharData = [];
 
                 // Shortcut Healing
                 this.healShortCut = -1;
@@ -122,28 +112,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 //New Stuff
                 this.soundButton = null;
-
                 this.doubleEXP = false;
                 this.expMultiplier = 1;
                 this.membership = false;
-
                 this.showInventory = 0;
                 this.activeCircle = null;
-
                 this.selectedSkillIndex = 0;
-
-                /**
-                 * Settings - For player
-                 */
-
-                this.showPlayerNames = true;
-                this.musicOn = true;
-                this.sfxOn = true;
-                this.frameColour = "default";
-                this.autoRetaliate = false;
-
-
-                //Bank
                 this.bankShowing = false;
 
 
@@ -300,7 +274,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     "item-weaponhilt",
                     "item-weaponrare",
                     "item-weaponuncommon",
-                    "item-wood",
+                    "item-wood"
                 ];
             },
 
@@ -365,7 +339,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 this.app.initTargetHud();
 
-                //alert (this.player.getSpriteName());
                 this.player.setSprite(this.sprites[this.player.getSpriteName()]);
 
                 this.player.idle();
@@ -408,9 +381,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             getAchievementById: function(id) {
                 var found = null;
                 _.each(this.achievements, function(achievement, key) {
-                    if(achievement.id === parseInt(id)) {
+                    if(achievement.id === parseInt(id))
                         found = achievement;
-                    }
+
+                    log.info("Key: " + key);
                 });
                 return found;
             },
@@ -497,12 +471,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 return true;
             },
 
-            setCursor: function(name, orientation) {
-                if(name in this.cursors) {
+            setCursor: function(name) {
+                if (name in this.cursors)
                     this.currentCursor = this.cursors[name];
-                    this.currentCursorOrientation = orientation;
-                } else
-                    log.error("Unknown cursor name :"+name);
             },
 
             updateCursorLogic: function() {
@@ -514,40 +485,31 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 }
 
                 if(this.hoveringPlayer && this.started) {
-                    if(this.player.pvpFlag) {
-                        this.setCursor("sword");
-                    } else {
-                        this.setCursor("hand");
-                    }
-                    this.hoveringTarget = false;
+                    this.setCursor(this.player.pvpFlag ? "sword" : "hand");
                     this.hoveringMob = false;
                     this.targetCellVisible = false;
                 } else if(this.hoveringMob && this.started) {
                     this.setCursor("sword");
-                    this.hoveringTarget = false;
                     this.hoveringPlayer = false;
                     this.targetCellVisible = false;
                 }
                 else if(this.hoveringNpc && this.started) {
                     this.setCursor("talk");
-                    this.hoveringTarget = false;
                     this.targetCellVisible = false;
                 }
                 else if((this.hoveringItem || this.hoveringChest) && this.started) {
                     this.setCursor("loot");
-                    this.hoveringTarget = false;
                     this.targetCellVisible = true;
                 }
                 else {
                     this.setCursor("hand");
-                    this.hoveringTarget = false;
                     this.hoveringPlayer = false;
                     this.targetCellVisible = true;
                 }
             },
 
             focusPlayer: function() {
-                this.renderer.camera.lookAt(this.player);
+                //this.renderer.camera.lookAt(this.player);
             },
 
             addEntity: function(entity) {
@@ -652,9 +614,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 log.info("Initialized the item grid.");
             },
 
-            /**
-             *
-             */
             initAnimatedTiles: function() {
                 var self = this,
                     m = this.map;
@@ -670,32 +629,26 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.animatedTiles.push(tile);
                     }
                 }, 1, false);
-                //log.info("Initialized animated tiles.");
             },
 
             addToRenderingGrid: function(entity, x, y) {
-                if(!this.map.isOutOfBounds(x, y)) {
+                if(!this.map.isOutOfBounds(x, y))
                     this.renderingGrid[y][x][entity.id] = entity;
-                }
             },
 
             removeFromRenderingGrid: function(entity, x, y) {
-                if(entity && this.renderingGrid[y][x] && entity.id in this.renderingGrid[y][x]) {
+                if(entity && this.renderingGrid[y][x] && entity.id in this.renderingGrid[y][x])
                     delete this.renderingGrid[y][x][entity.id];
-                }
             },
 
             removeFromEntityGrid: function(entity, x, y) {
-                if(entity && this.entityGrid[y][x] && entity.id in this.entityGrid[y][x]) {
+                if(entity && this.entityGrid[y][x] && entity.id in this.entityGrid[y][x])
                     delete this.entityGrid[y][x][entity.id];
-                    //log.info("x: "+x+",y:"+y+",id:"+entity.id+" removed from grid");
-                }
             },
 
             removeFromItemGrid: function(item, x, y) {
-                if(item && this.itemGrid[y][x][item.id]) {
+                if(item && this.itemGrid[y][x][item.id])
                     delete this.itemGrid[y][x][item.id];
-                }
             },
 
             removeFromPathingGrid: function(x, y) {
@@ -801,7 +754,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
 
                 var wait = setInterval(function() {
-                    if(self.map.isLoaded /*&& self.spritesLoaded()*/) {
+                    if(self.map.isLoaded) {
                         log.debug('Map is loaded.');
                         self.connect(action, started_callback);
                         clearInterval(wait);
@@ -815,13 +768,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 if(this.started) {
                     this.updater.update();
                     this.renderer.renderFrame();
-                    this.FPSCount++;
-                    if (this.currentTime - this.lastFPSTime > 1000) {
-                        $('#fps').html("FPS: " + this.FPSCount);
-                        this.lastFPSTime = this.currentTime;
-                        this.FPSCount = 0;
-
-                    }
                 }
 
                 if(!this.isStopped)
@@ -831,7 +777,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
             start: function() {
                 this.tick();
-                log.info("Game loop started.");
             },
 
             stop: function() {
@@ -907,30 +852,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.started = false;
                 };
 
-                //>>excludeStart("prodHost", pragmas.prodHost);
-                //>>excludeEnd("prodHost");
-
-                //>>includeStart("prodHost", pragmas.prodHost);
-                if(!connecting) {
-
-                    this.client.connect(false); // Always use dispatcher in production
-                }
-                //>>includeEnd("prodHost");
+                if(!connecting)
+                    this.client.connect(false);
 
                 this.client.onDispatched(function(host, port) {
-                    log.debug("Dispatched to game server "+host+ ":"+port);
-
                     self.client.host = host;
                     self.client.port = port;
-                    self.client.connect(); // connect to actual game server
-
-
+                    self.client.connect();
                 });
 
                 this.client.onConnected(function() {
-                    log.info("Starting client/server handshake");
-
-                    // Player
                     self.player = new Player("player", "", this);
                     self.player.moveUp = false;
                     self.player.moveDown = false;
@@ -944,29 +875,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.started = true;
                     self.ready = true;
 
-
-
-
                     switch (action)
                     {
                         case "loadcharacter":
-                            log.info("sendLogin");
                             self.client.sendLogin(self.player);
                             break;
                         case "createcharacter":
                             self.client.sendCreate(self.player);
                             break;
                     }
-                    /*if (self.renderer.tablet || self.renderer.mobile)
-                     {
-                     log.info("Loading Joystick");
-                     self.joystick = new VirtualJoystick({
-                     container	: document.getElementById('canvas'),
-                     mouseSupport	: true,
-                     });
-                     log.info("Joystick Loaded");
-                     }
-                     */
                 });
 
                 this.client.onEntityList(function(list) {
@@ -978,23 +895,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         return _.include(knownIds, entity.id) || entity.id === self.player.id;
                     });
 
-                    // Destroy entities outside of the player's zone group
                     self.removeObsoleteEntities();
 
-                    // Ask the server for spawn information about unknown entities
                     if(_.size(newIds) > 0) {
                         self.client.sendWho(newIds);
                     }
                 });
 
-                this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon,
-                                               experience,
-                                               inventory, inventoryNumber, maxInventoryNumber,
-                                               inventorySkillKind, inventorySkillLevel,
-                                               maxBankNumber, bankKind, bankNumber,
-                                               bankSkillKind, bankSkillLevel,
-                                               achievementNumber, achievementFound, achievementProgress,
-                                               doubleExp, expMultiplier, membership, kind, rights, pClass) {
+                this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon, experience, inventory, inventoryNumber, maxInventoryNumber,
+                                               inventorySkillKind, inventorySkillLevel, maxBankNumber, bankKind, bankNumber, bankSkillKind, bankSkillLevel,
+                                               achievementNumber, achievementFound, achievementProgress, doubleExp, expMultiplier, membership, kind, rights, pClass) {
 
                     self.loadGameData();
                     self.player.id = id;
@@ -1011,6 +921,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.player.setSpriteName(armor);
                     self.player.setWeaponName(weapon);
                     self.player.skillHandler = new SkillHandler(self);
+                    self.player.setClass(parseInt(pClass));
                     self.camera.setRealCoords();
                     self.resetZone();
                     self.doubleEXP = doubleExp;
@@ -1019,40 +930,19 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
                     self.shopHandler.setMaxInventoryNumber(maxInventoryNumber);
                     self.bankHandler.initBank(maxBankNumber, bankKind, bankNumber, bankSkillKind, bankSkillLevel);
-
                     self.initPlayer();
                     self.updateBars();
                     self.updateExpBar();
-
-                    self.player.setClass(parseInt(pClass));
-
-                    //self.initAnimatedTiles();
-                    //self.renderer.renderStaticCanvases();
-                    //log.info("self.renderbackground");
-
-
                     self.resetCamera();
                     self.updatePlateauMode();
                     self.audioManager.updateMusic();
                     self.addEntity(self.player);
                     self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
                     self.achievementHandler.initAchievement(achievementFound, achievementProgress);
-
-                    //log.info("send skill load");
                     self.client.sendSkillLoad();
-                    //Welcome message
                     self.chathandler.show();
                     self.renderbackground = true;
                     self.renderer.forceRedraw = true;
-                    //self.chathandler.addNotification("Welcome to Tap Tap Adventure!");
-
-                    if (self.doubleEXP) {
-                        self.chathandler.addNotification("Double EXP is currently on.");
-                    }
-                    if (self.membership) {
-                        self.chathandler.addNotification("You are currently a member");
-                    }
-
                     self.initializeAchievements();
 
                     self.player.onStartPathing(function(path) {
@@ -1064,7 +954,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.player.isLootMoving = false;
                         }
 
-                        // Target cursor position
                         self.selectedX = x;
                         self.selectedY = y;
 
@@ -1112,12 +1001,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.registerEntityDualPosition(self.player);
 
 
-                        // TODO - Sometimes isnt called so next zone isnt loaded.
+                        // TODO - An error may occur here? Double check maybe.
                         if(self.isZoningTile(self.player.gridX, self.player.gridY))
-                        {
-                            //alert ("called");
                             self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
-                        }
+
 
                         self.player.forEachAttacker(self.makeAttackerFollow);
 
@@ -1135,7 +1022,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.client.onPVPChange(function(pvpFlag) {
                         self.player.flagPVP(pvpFlag);
-                        //self.pvpFlag = pvpFlag;
                     });
 
                     self.client.onPVPGame(function(inGame, pvpTimer) {
@@ -1155,7 +1041,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.player.onStopPathing(function(x, y) {
-                        for (var i=0; i < self.player.pets.length; ++i)
+                        for (var i = 0; i < self.player.pets.length; ++i)
                         {
                             var pet = self.player.pets[i];
                             pet.follow(self.player);
@@ -1222,18 +1108,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             self.updatePlateauMode();
 
-                            if(self.renderer.mobile || self.renderer.tablet) {
-                                // When rendering with dirty rects, clear the whole screen when entering a door.
+                            if(self.renderer.mobile || self.renderer.tablet)
                                 self.renderer.clearScreen(self.renderer.context);
-                            }
+
 
                             if(dest.portal)
                                 self.audioManager.playSound("teleport");
 
-
-                            //if(!self.player.isDead) {
-                            //    self.audioManager.updateMusic();
-                            //}
                             self.camera.setRealCoords();
 
                             self.renderer.drawBackground(self.renderer.background, "#12100D");
@@ -1279,10 +1160,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.player.onRequestPath(function(x, y) {
                         var ignored = [self.player]; // Always ignore self
 
-                        if(self.player.hasTarget()) {
-
+                        if(self.player.hasTarget())
                             ignored.push(self.player.target);
-                        }
 
                         var path = self.findPath(self.player, x, y, ignored);
                         if (path)
@@ -1344,6 +1223,34 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.app.setPoison();
                     });
 
+                    self.client.onInterface(function(interfaceId) {
+                        switch (interfaceId) {
+                            case Types.Messages.AUCTIONREQUEST:
+                                self.openAuctionDialog();
+                                break;
+
+                            case Types.Messages.BANKREQUEST:
+                                self.openBankDialog();
+                                break;
+
+                            case Types.Messages.CLASSREQUEST:
+                                self.openClassChangeDialog();
+                                break;
+
+                            case Types.Messages.CRAFTINGREQUEST:
+                                self.openCraftingDialog();
+                                break;
+
+                            case Types.Messages.ENCHANTMENTREQUEST:
+                                self.openEnchantmentDialog();
+                                break;
+
+                            case Types.Messages.STOREREQUEST:
+                                self.openStoreDialog();
+                                break;
+                        }
+                    });
+
                     self.client.onSpawnChest(function(chest, x, y) {
                         log.info("Spawned chest (" + chest.id + ") at "+x+", "+y);
                         chest.setSprite(self.sprites[chest.getSpriteName()]);
@@ -1380,18 +1287,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                         entityName = MobData.Kinds[entity.kind].name;
                                     else if (entity instanceof Npc)
                                         entityName = NpcData.Kinds[entity.kind].name;
-                                    else if (entity instanceof Pet)
-                                        entityName = "Pet";
-
                                     else
-                                        entityName = ItemTypes.getKindAsString(entity.kind)
-                                    log.debug("Spawned " + entityName + " (" + entity.id + ") at "+entity.gridX+", "+entity.gridY);
+                                        entityName = ItemTypes.getKindAsString(entity.kind);
 
                                     if (entity instanceof Pet) {
                                         log.info("playerId="+playerId);
-                                        var player = self.getEntityById(entity.playerId);
-                                        if (player)
-                                            player.pets.push(entity);
+                                        var p = self.getEntityById(entity.playerId);
+                                        if (p)
+                                            p.pets.push(entity);
                                     }
 
                                     if (entity instanceof Gather) {
@@ -2267,41 +2170,49 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              *
              */
             makeNpcTalk: function(npc) {
-                var msg;
                 if (!this.player.isAdjacentNonDiagonal(npc))
                     return;
 
                 var msg;
 
                 if(npc) {
-                    if(NpcData.Kinds[npc.kind].name === "Shop")
-                    {
-                        this.storeDialog.show();
-                    } else if (NpcData.Kinds[npc.kind].name==="Bank") {
-                        this.bankDialog.show();
-                    } else if (NpcData.Kinds[npc.kind].name==="Enchant") {
-                        this.enchantDialog.show();
-                    } else if (NpcData.Kinds[npc.kind].name==="Auction") {
-                        this.auctionDialog.show();
-                    } else if (NpcData.Kinds[npc.kind].name==="King") {
-                        this.classPopupMenu.open();
-                    } else if (NpcData.Kinds[npc.kind].name==="Coder") {
-                        this.craftDialog.show();
+                    msg = this.achievementHandler.talkToNPC(npc);
+                    this.previousClickPosition = {};
+                    if (msg) {
+                        this.createBubble(npc.id, msg);
+                        this.assignBubbleTo(npc);
+                        this.audioManager.playSound("npc");
                     } else {
-                        msg = this.achievementHandler.talkToNPC(npc);
-                        this.previousClickPosition = {};
-                        if (msg) {
-                            this.createBubble(npc.id, msg);
-                            this.assignBubbleTo(npc);
-                            this.audioManager.playSound("npc");
-                        } else {
 
-                            this.destroyBubble(npc.id);
-                            this.audioManager.playSound("npc-end");
-                        }
+                        this.destroyBubble(npc.id);
+                        this.audioManager.playSound("npc-end");
                     }
                     this.player.removeTarget();
                 }
+            },
+
+            openBankDialog: function() {
+                this.bankDialog.show();
+            },
+
+            openStoreDialog: function() {
+                this.storeDialog.show();
+            },
+
+            openEnchantmentDialog: function() {
+                this.enchantDialog.show();
+            },
+
+            openAuctionDialog: function() {
+                this.auctionDialog.show();
+            },
+
+            openClassChangeDialog: function() {
+                this.classPopupMenu.open();
+            },
+
+            openCraftingDialog: function() {
+                this.craftDialog.open();
             },
 
 
@@ -2422,17 +2333,17 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 return entity;
             },
 
-           /* getEntityByName: function (name) {
-                var entity;
-                $.each(this.entities, function (i, v) {
-                    if (v instanceof Player && v.name.toLowerCase() == name.toLowerCase())
-                    {
-                        entity = v;
-                        return false;
-                    }
-                });
-                return entity;
-            },*/
+            /* getEntityByName: function (name) {
+             var entity;
+             $.each(this.entities, function (i, v) {
+             if (v instanceof Player && v.name.toLowerCase() == name.toLowerCase())
+             {
+             entity = v;
+             return false;
+             }
+             });
+             return entity;
+             },*/
 
             getMobAt: function(x, y) {
                 var entity = this.getEntityAt(x, y);

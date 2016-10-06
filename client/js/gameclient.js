@@ -63,6 +63,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.CHARDATA] = this.receiveData;
             this.handlers[Types.Messages.PVPGAME] = this.receivePVPGame;
             this.handlers[Types.Messages.POISON] = this.receivePoison;
+            this.handlers[Types.Messages.INTERFACE] = this.receiveInterface;
+
             this.useBison = false;
 
             this.enable();
@@ -657,6 +659,12 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 this.poison_callback(data[1]);
         },
 
+        receiveInterface: function(data) {
+            var interfaceId = data[1];
+            if (this.interface_callback)
+                this.interface_callback(interfaceId);
+        },
+
         receiveData: function(data) {
             var attackSpeed = data[1],
                 moveSpeed = data[2],
@@ -841,6 +849,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         onPoison: function(callback) {
             this.poison_callback = callback;
+        },
+
+        onInterface: function(callback) {
+            this.interface_callback = callback;
         },
 
         sendPartyInvite: function(playerId, status) { // 0 for request, 1, for yes, 2 for no.

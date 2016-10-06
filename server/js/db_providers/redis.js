@@ -732,6 +732,28 @@ module.exports = DatabaseHandler = cls.Class.extend({
         log.info("Progress Achievement: " + name + " " + number + " " + progress);
         client.hset("u:" + name, "achievement" + number + ":progress", progress);
     },
+
+    setQuestState: function(name, questId, state) {
+        client.hset("u:" + name, "quest" + questId + ":state", state);
+    },
+
+    getQuestState: function(name, questId) {
+        var self = this,
+            userKey = "u:" + name,
+            multi = client.multi(),
+            questState;
+
+        multi.hget(userKey, "quest" + questId + ":state");
+        multi.exec(function(err, data) {
+            questState = data.shift();
+
+            if (isNaN(questState))
+                questState = -1;
+
+            return questState;
+        });
+    },
+
     setUsedPubPts: function(name, usedPubPts){
         log.info("Set Used Pub Points: " + name + " " + usedPubPts);
         client.hset("u:" + name, "usedPubPts", usedPubPts);
@@ -1041,6 +1063,5 @@ module.exports = DatabaseHandler = cls.Class.extend({
             };
             callback(auction);
         });
-    },
-
+    }
 });

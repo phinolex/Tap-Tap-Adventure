@@ -154,7 +154,20 @@ Types = {
         UPDATE: 113,
         REQUESTPOS: 114,
         REQUESTWARP: 115,
-        POISON: 116
+        POISON: 116,
+        REDTEAM: 117,
+        BLUETEAM: 118,
+        TEAM: 119,
+        MINIGAMESTATE: 120,
+        INGAME: 121,
+        INLOBBY: 122,
+        BANKREQUEST: 123,
+        STOREREQUEST: 124,
+        ENCHANTMENTREQUEST: 125,
+        AUCTIONREQUEST: 126,
+        CLASSREQUEST: 127,
+        CRAFTINGREQUEST: 128,
+        INTERFACE: 129
     },
 
     Orientations: {
