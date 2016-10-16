@@ -932,7 +932,6 @@ module.exports = World = cls.Class.extend({
                 self.pushToAdjacentGroups(entity.group, entity.despawn());
             }
             attacker.removeAttacker(entity);
-            entity.removeAttacker(attacker);
             self.removeEntity(entity);
         }
     },

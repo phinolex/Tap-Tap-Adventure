@@ -437,6 +437,12 @@ module.exports = Character = Entity.extend({
      * Unregisters a character as a current attacker of this one.
      * @param {Character} character The attacking character.
      */
+
+    removeAllAttackers: function() {
+        for (var attacker in this.attackers)
+            delete this.attackers[attacker.id];
+    },
+
     removeAttacker: function(character) {
         if (Object.keys(this.attackers).length == 0) {
             return;

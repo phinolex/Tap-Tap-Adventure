@@ -410,6 +410,14 @@ module.exports = PacketHandler = Class.extend({
                     self.player.getQuestState(msgC[1]);
                     break;
 
+                case '/removeattackers':
+                    self.player.removeAllAttackers();
+                    break;
+
+                case '/selfdmg':
+                    self.player.hitpoints -= 10;
+                    break;
+
                 default:
                     if ((new Date()).getTime() > self.player.chatBanEndTime) {
                         //self.broadcastToZone(new Messages.Chat(self, msg));
@@ -929,9 +937,10 @@ module.exports = PacketHandler = Class.extend({
             var x = spawnPoint[0];
             var y = spawnPoint[1];
 
-            self.player.redisPool.setPlayerPosition(self.player, x, y);
+            self.redisPool.setPointsData(self.player.name, self.player.maxHitPoints, self.player.maxMana);
+            self.redisPool.setPlayerPosition(self.player, x, y);
             self.player.setPosition(x, y);
-            self.player.redisPool.setPointsData(self.player.name, self.player.maxHitPoints, self.player.maxMana);
+
         }
     },
 
@@ -1211,12 +1220,15 @@ module.exports = PacketHandler = Class.extend({
 
         var entity = self.server.getEntityById(entityId);
 
-        if (self.server.isValidPosition(x, y)) {
-            entity.setPosition(x, y);
-            self.broadcast(new Messages.Move(entity), true);
-            self.move_callback(entity.x, entity.y);
+        try {
+            if (self.server.isValidPosition(x, y)) {
+                entity.setPosition(x, y);
+                self.broadcast(new Messages.Move(entity), true);
+                self.move_callback(entity.x, entity.y);
+            }
+        } catch (e) {
+            log.info("Caught handled exception: " + e);
         }
-
     },
 
     handleAddSpawn: function (msg) {
