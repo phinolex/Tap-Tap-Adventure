@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="eb550f01-0ddd-4624-bd8b-1881f15acc0a" name="Default" comment="Character Dialog changes and certain attempts.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/app.js" afterPath="$PROJECT_DIR$/client/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.html" afterPath="$PROJECT_DIR$/client/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/main.js" afterPath="$PROJECT_DIR$/client/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Tap Tap Adventure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,8 +66,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45166403">
-              <caret line="938" column="45" selection-start-line="938" selection-start-column="45" selection-end-line="938" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.38034865">
+              <caret line="935" column="12" selection-start-line="935" selection-start-column="12" selection-end-line="935" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -896,8 +893,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45166403">
-          <caret line="938" column="45" selection-start-line="938" selection-start-column="45" selection-end-line="938" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.38034865">
+          <caret line="935" column="12" selection-start-line="935" selection-start-column="12" selection-end-line="935" selection-end-column="12" />
           <folding />
         </state>
       </provider>

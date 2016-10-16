@@ -932,11 +932,11 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 $parchment = $('#parchment'),
                 duration = 1;
 
+            this.clearValidationErrors();
+            
             if(this.isMobile) {
-                this.clearValidationErrors();
                 $parchment.removeClass(origin).addClass(destination);
             } else {
-                this.clearValidationErrors();
                 if(this.isParchmentReady) {
                     if(this.isTablet) {
                         duration = 0;
