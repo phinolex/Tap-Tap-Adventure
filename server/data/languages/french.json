@@ -1,0 +1,44 @@
+{
+    
+    //Server Start
+    "muted": "Vous ne pouvez plus bavarder.",
+    "snowpotionWarning": "Ceci n'est pas une potion de neige.",
+    "enchantmentSuccess": "Votre enchantement à été réussi.",
+    "enchantmentFail": "Votre enchantement à échouer.",
+    "weaponEnchantmentWarning": "L'enchantement sur les armes ne peuvent pas dépasser le niveau 30.",
+    "weaponSkillEnchantmentWarning": "Le niveau de compétence pour les armes ne peuvent pas dépasser le niveau 7.",
+    "blackpotionWarning": "Ceci n'est pas une potion noir.",
+    "ringEnchantmentWarning": "L'enchantement de votre bague ne peut pas dépasser le niveau 9.",
+    "pendantEnchantmentWarning": "Votre pendentif ne peut pas dépasser le niveau 9.",
+    "pendantWeakening": "Votre pendentif s'affaibli.",
+    "pvpNotification": "s'agenouille avec douleur sur le sol.",
+    "pvpNotification2": "tombe devant toi.",
+    "pvpNotification3": "à été vaincu.",
+    "partyWarning": "Vous n'êtes pas dans une équipe.",
+    //End of Server french   
+    
+    "usernameField": "Utilisateur",
+    "passwordField": "Mot de passe",
+    "enterUsernameWarning": "Veuiller entrer un nom d'utilisateur.",
+    "enterPasswordWarning": "Veuiller entrer un mot de passe.",
+    "confirmPasswordWarning": "Veuiller confirmé votre mot de passe en saisisant à nouveau celui-ci.",
+    "passwordsMatchWarning": "Les mots de passe que vous avez entrer ne corresponde pas, veuiller recommencez.",
+    "invalidEmail": "L'adresse de couriel que vous avez entrer est invalide, veuiller recommencez.",
+    "createCharacter": "Céer un personnage",
+    "playersOnlineSingular": "joueur",
+    "playersOnlinePlural": "joueurs"
+    "disconnectMessage": "Veuiller recharger la page",
+    
+    "timeoutWarning": "La connection aux serveurs à échouer.",
+    "invalidLogin": "Le mot de passe ou le nom d'utilisateur que vous avez entrer est invalide.",
+    "userExistsWarning": "Le nom d'utilisateur que vous avez entrer est déjà enregistrer.",
+    "invalidCharactersWarning": "Le nom d'utilisateur que vous avez entrer contient des caractères invalides.",
+    "alreadyLoggedInWarning": "Un joueur avec le même nom est déjà connecter.",
+    "banWarning": "Vous êtes banni.",
+    "fullWarning": "Le serveur est plein.",
+    "unknownWarning": "Une erreur ses produit, message d'erreur inconnu: ",
+    "targerHUDLevel": "Niveau - ",
+    
+    
+    
+}
