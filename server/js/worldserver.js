@@ -75,6 +75,8 @@ module.exports = World = cls.Class.extend({
         });
 
         self.onPlayerEnter(function(player) {
+            if(!player.hasEnteredGame)
+                self.incrementPlayerCount();
 
             self.pushRelevantEntityListTo(player);
 

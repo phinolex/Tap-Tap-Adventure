@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb550f01-0ddd-4624-bd8b-1881f15acc0a" name="Default" comment="Character Dialog changes and certain attempts.">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dump.rdb" afterPath="$PROJECT_DIR$/dump.rdb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/app.js" afterPath="$PROJECT_DIR$/client/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/config.json" afterPath="$PROJECT_DIR$/server/config.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/main.js" afterPath="$PROJECT_DIR$/server/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/worldserver.js" afterPath="$PROJECT_DIR$/server/js/worldserver.js" />
     </list>
     <ignored path="Tap Tap Adventure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,11 +27,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="worldserver.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="worldserver.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/js/worldserver.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="144" column="11" selection-start-line="144" selection-start-column="11" selection-end-line="144" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.30903327">
+              <caret line="1249" column="6" selection-start-line="1249" selection-start-column="6" selection-end-line="1256" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.115385">
+              <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -63,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38034865">
-              <caret line="935" column="12" selection-start-line="935" selection-start-column="12" selection-end-line="935" selection-end-column="12" />
+            <state vertical-scroll-proportion="-9.230769">
+              <caret line="935" column="0" selection-start-line="935" selection-start-column="0" selection-end-line="935" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -109,7 +123,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/js/character.js" />
         <option value="$PROJECT_DIR$/client/shared/data/npcs.json" />
         <option value="$PROJECT_DIR$/client/shared/js/itemtypes.js" />
         <option value="$PROJECT_DIR$/client/js/npc.js" />
@@ -155,11 +168,12 @@
         <option value="$PROJECT_DIR$/client/js/game.js" />
         <option value="$PROJECT_DIR$/server/js/bank.js" />
         <option value="$PROJECT_DIR$/server/js/character.js" />
-        <option value="$PROJECT_DIR$/server/js/worldserver.js" />
         <option value="$PROJECT_DIR$/client/js/renderer.js" />
         <option value="$PROJECT_DIR$/client/js/main.js" />
         <option value="$PROJECT_DIR$/client/index.html" />
         <option value="$PROJECT_DIR$/client/js/app.js" />
+        <option value="$PROJECT_DIR$/server/js/worldserver.js" />
+        <option value="$PROJECT_DIR$/server/js/main.js" />
       </list>
     </option>
   </component>
@@ -174,6 +188,7 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="1" />
     <option name="y" value="22" />
     <option name="width" value="1280" />
     <option name="height" value="774" />
@@ -478,7 +493,7 @@
     <option name="totallyTimeSpent" value="701000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1280" height="774" extended-state="6" />
+    <frame x="1" y="22" width="1280" height="774" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.123907864" sideWeight="0.60703814" order="1" side_tool="false" content_ui="combo" />
@@ -527,13 +542,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/js/message.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.5384617">
-          <caret line="107" column="21" selection-start-line="107" selection-start-column="9" selection-end-line="107" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/gamedata.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -787,18 +795,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/gameclient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/entity.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.6624405">
           <caret line="45" column="29" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -814,6 +815,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14896989">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -827,34 +829,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/worldserver.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="144" column="11" selection-start-line="144" selection-start-column="11" selection-end-line="144" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/css/game.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19651347">
           <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/renderer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="766" column="40" selection-start-line="766" selection-start-column="40" selection-end-line="766" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1426" column="29" selection-start-line="1426" selection-start-column="29" selection-end-line="1426" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -883,6 +861,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.230769">
+          <caret line="935" column="0" selection-start-line="935" selection-start-column="0" selection-end-line="935" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.115385">
+          <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/gameclient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server/js/player.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -891,10 +893,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/app.js">
+    <entry file="file://$PROJECT_DIR$/client/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38034865">
-          <caret line="935" column="12" selection-start-line="935" selection-start-column="12" selection-end-line="935" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1426" column="29" selection-start-line="1426" selection-start-column="29" selection-end-line="1426" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/renderer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="766" column="40" selection-start-line="766" selection-start-column="40" selection-end-line="766" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/worldserver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30903327">
+          <caret line="1249" column="6" selection-start-line="1249" selection-start-column="6" selection-end-line="1256" selection-end-column="0" />
           <folding />
         </state>
       </provider>
