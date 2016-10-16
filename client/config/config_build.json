@@ -1,6 +1,6 @@
 {
     "host": "149.56.0.37",
-    "port": 1340,
+    "port": 50526,
     "useLocalAPI": false,
     "dispatcher": false
 }
