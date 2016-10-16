@@ -82,7 +82,10 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
 
             $('#cancel span').click(function() {
-                app.animateParchment('confirmation', 'loadcharacter');
+                if ($('#parchment').hasClass('confirmation'))
+                    app.animateParchment('confirmation', 'loadcharacter');
+                else if ($('#parchment').hasClass('createcharacter'))
+                    app.animateParchment('createcharacter', 'loadcharacter');
             });
 
             $('.ribbon').click(function() {

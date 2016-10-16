@@ -70,18 +70,14 @@
                     <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="32">
                     <input type="password" id="pwinput" class="stroke" name="player-pw" placeholder="Password" maxlength="200">
                     <input type="password" id="pwinput2" class="stroke" name="player-pw2" placeholder="Confirm Password" maxlength="200">
-                    <div id="charclassinput">Choose your Class:
-                        <select id="selectClassSwitch2">
-                            <option value="0">Fighter</option>
-                            <option value="1">Archer</option>
-                            <option value="2">Defender</option>
-                            <!--<option value="3">Mage</option>-->
-                        </select>
-                    </div>
                     <input type="email" id="emailinput" class="stroke" name="player-email" placeholder="Email address" maxlength="64">
                 </form>
+                <div></div>
                 <div class="play">
                     <span class="link">Create</span>
+                </div>
+                <div id="cancel">
+                    <span class="link">Cancel</span>
                 </div>
                 <div class="validation-summary"></div>
             </article>
@@ -102,9 +98,6 @@
                 <div class="validation-summary"></div>
                 <div id="create-new">
                     <span class="link">New Character</span>
-                </div>
-                <div id="change-password">
-                    <span class="link">Change Password</span>
                 </div>
             </article>
             <article id="confirmation">
