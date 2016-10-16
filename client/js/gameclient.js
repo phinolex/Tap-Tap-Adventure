@@ -81,7 +81,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         connect: function(dispatcherMode) {
 
             var self = this,
-                url = "ws://127.0.0.1:1340/";
+                url = "ws://127.0.0.1:50526/";
 
             log.info("Trying to connect to server : "+url);
 
