@@ -28,7 +28,7 @@ var cls = require("./lib/class"),
     request = require("request"),
     EntitySpawn = require("./entityspawn"),
     PacketHandler = require("./packethandler"),
-    Quest = require('./quest');
+    Quests = require('./questdata');
 
 
 module.exports = Player = Character.extend({
@@ -91,8 +91,6 @@ module.exports = Player = Character.extend({
         this.packetHandler = new PacketHandler(this, connection, worldServer, databaseHandler);
 
         this.pClass = 0;
-
-
     },
 
 
@@ -814,33 +812,17 @@ module.exports = Player = Character.extend({
 
     },
 
-    getQuestState: function(questId) {
-        var self = this;
+    /**
+     * Talk To NPC,
+     * Kill NPC,
+     * Bring Item
+     */
 
-        log.info(self.redisPool.getQuestState(self.name, questId));
-    },
+    getQuestData: function(questId, state) {
+        var questData = Quests.QuestData[questId];
+        var stateData = Object.Keys(questData.states).state;
 
-    setQuestState: function(questId, state) {
-        var self = this;
-        self.redisPool.setQuestState(self.name, questId, state);
-    },
-
-    getQuestLength: function(questId) {
-        var quest = new Quest(questId);
-        return quest.getLength();
-    },
-
-    getQuestData: function(questId) {
-        var quest = new Quest(questId);
-        log.info("Quest EXP Reward: " + quest.getExpReward());
-        log.info("Quest Item Reward: " + quest.getItemReward()[0] + " count: " + quest.getItemReward()[1]);
-    },
-
-    hasFinishedQuest: function(questId) {
-        var self = this;
-
-        self.getQuestState(questId, function(state) {
-            return state > self.getQuestLength(questId);
-        });
+        log.info(getQuestData);
     }
+
 });

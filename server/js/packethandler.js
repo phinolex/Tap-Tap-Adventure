@@ -209,6 +209,9 @@ module.exports = PacketHandler = Class.extend({
                 case Types.Messages.REQUESTWARP:
                     self.handleWarp(message);
                     break;
+                case Types.Messages.PLAYERREADY:
+                    self.handlePlayerReady(message);
+                    break;
                 default:
                     if (self.message_callback)
                         self.player.message_callback(message);
@@ -383,6 +386,7 @@ module.exports = PacketHandler = Class.extend({
         if (msg && (msg !== "" || msg !== " ")) {
             msg = msg.substr(0, 256); //Will have to change the max length
             var command = msg.split(" ", 3);
+
             switch(command[0]) {
                 case "/1":
                     if ((new Date()).getTime() > self.player.chatBanEndTime) {
@@ -390,11 +394,7 @@ module.exports = PacketHandler = Class.extend({
                     } else
                         self.send([Types.Messages.NOTIFY, "You are currently muted."]);
                     break;
-
-                case "/setrank":
-                    self.redisPool.setPlayerRights(self.player, 2);
-                    break;
-
+                
                 case "/tele":
                     var command = msg.split(" ");
                     if (command.length < 3) {
@@ -404,49 +404,13 @@ module.exports = PacketHandler = Class.extend({
                     self.player.movePlayer(command[1], command[2]);
                     break;
 
-                case "/setdata":
-                    log.info("Sending Data.");
-                    self.server.pushToPlayer(self.player, new Messages.CharData([100, 100, 100, 100, 100]));
-                    break;
-
-                case "/update":
-                    self.server.updatePlayers(self.player.id);
-                    break;
-
-                case "/pos":
-                    var x = self.player.x;
-                    var y = self.player.y;
-
-                    self.send([Types.Messages.NOTIFY], "x: " + x + " y: " + y);
-                    break;
-
-                case '/poison':
-                    self.player.setPoison(true);
-                    break;
-
-                case '/setquest':
-                    var command = msg.split(" ");
-                    if (command.length < 3) {
-                        self.send([Types.Messages.NOTIFY, "Invalid command syntax."]);
-                        return;
-                    }
-
-                    self.player.setQuestState(command[1], command[2]);
-                    break;
-
                 case '/getquest':
+                    var msgC = msg.split(" ");
 
-                    self.player.getQuestState(1);
-                    break;
-
-                case '/getquestlength':
-                    var questId = msg.split(" ");
-                    var length = self.player.getQuestLength(questId[1]);
-                    self.send([Types.Messages.NOTIFY, "Quest Length: " + length]);
+                    self.player.getQuestState(msgC[1]);
                     break;
 
                 default:
-
                     if ((new Date()).getTime() > self.player.chatBanEndTime) {
                         //self.broadcastToZone(new Messages.Chat(self, msg));
                         //self.send(new Messages.Chat(self, msg));
@@ -998,7 +962,20 @@ module.exports = PacketHandler = Class.extend({
             return;
 
         var player = self.server.getEntityById(id);
+    },
 
+    handlePlayerReady: function(message) {
+        var self = this,
+            id = message[1];
+
+        if (self.player.id != id) {
+            log.info("ID Mismatch whilst handling player.");
+            return;
+        }
+
+        var player = self.server.getEntityById(id);
+
+        self.server.pushRelevantEntityListTo(player);
     },
 
     handleSkill: function(message){

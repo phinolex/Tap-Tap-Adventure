@@ -12,18 +12,15 @@ module.exports = Bank = cls.Class.extend({
         this.owner = owner;
         this.number = number;
         this.rooms = [];
-        for (var i = 0; i < number; i++) {
+        for (var i = 0; i < number; i++)
             this.rooms.push(new BankRoom(itemKinds[i], itemNumbers[i], itemSkillKinds[i], itemSkillLevels[i]));
-        }
-        //log.info("bank="+this.bankToString());
     },
     
     hasItem: function(itemKind) {
         var i = 0;
         for (i = 0; i < this.number; i++) {
-            if (this.rooms[i].itemKind === itemKind) {
+            if (this.rooms[i].itemKind === itemKind)
                 return true;
-            }
         }
         return false;
     },
@@ -61,20 +58,16 @@ module.exports = Bank = cls.Class.extend({
         var i = 0;
         
         for (i = 0; i < this.number; i++) {
-            if (this.rooms[i].itemKind === itemKind) {
-                
+            if (this.rooms[i].itemKind === itemKind)
                 return i;
-            }
         }
         return -1;
     },
     
     getEmptyBankNumber: function() {
         for (var index = 0; index < this.number; index++) {
-            if (this.rooms[index].itemKind === 0) {
-                
+            if (this.rooms[index].itemKind === 0)
                 return index;
-            }
         }
         return -1;
     },
@@ -87,24 +80,19 @@ module.exports = Bank = cls.Class.extend({
     putBank: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
         //var i = 0;
         for (var i = 0; i < this.number; i++) {
-            if ((ItemTypes.isConsumableItem(itemKind) || ItemTypes.isGold(itemKind) || ItemTypes.isCraft(itemKind))
-            	    && this.rooms[i].itemKind === itemKind)
-            {
+            if ((ItemTypes.isConsumableItem(itemKind) || ItemTypes.isGold(itemKind) || ItemTypes.isCraft(itemKind)) && this.rooms[i].itemKind === itemKind) {
                 this.rooms[i].itemNumber += itemNumber;
-                if (this.rooms[i].itemNumber <= 0) {
-                    
+
+                if (this.rooms[i].itemNumber <= 0)
                     this.emptyBankItem(i);
-                } else {
-                    
+                else
                     databaseHandler.setBank(this.owner, i, itemKind, this.rooms[i].itemNumber, 0, 0);
-                }
+
                 return true;
             }
         }
-        //if (i === this.number) {
-            
-            return this._putBank(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
-        //}
+
+        return this._putBank(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
     },
     
     _putBank: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel) {

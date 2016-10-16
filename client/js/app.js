@@ -15,7 +15,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             this.initFormFields();
             this.dropDialogPopuped = false;
             this.auctionsellDialogPopuped = false;
-
+            this.achievementQuery = [];
             this.inventoryNumber = 0;
             this.showChatLog = null;
 
@@ -819,14 +819,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             }, 5000);
         },
 
-        unlockAchievement: function(id, name) {
-            this.showAchievementNotification(id, name);
-            this.displayUnlockedAchievement(id);
-
-            var nb = parseInt($('#unlocked-achievements').text());
-            $('#unlocked-achievements').text(nb + 1);
-        },
-
         initAchievementList: function(achievements) {
             var self = this,
                 $lists = $('#lists'),
@@ -842,7 +834,9 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 var $a = $achievement.clone();
                 $a.removeAttr('id');
                 $a.addClass('achievement' + count);
-                self.setAchievementData($a, achievement.name, achievement.desc);
+                self.setAchievementData($a, achievement.name, achievement.found ? achievement.desc : "???????");
+                self.achievementQuery.push($a);
+                log.info("$a: " + $a);
                 $a.find('.twitter').attr('href', '');
                 $a.show();
                 $a.find('a').click(function() {
@@ -865,6 +859,13 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             $('#total-achievements').text($('#achievements').find('li').length);
         },
 
+        relistAchievement: function(achievement) {
+            var self = this,
+                achievementId = achievement.id;
+
+            self.setAchievementData(self.achievementQuery[achievementId], achievement.name, achievement.found ? achievement.desc : "");
+        },
+
         unlockAchievement: function(achievementId) {
             var $achievement = $('#achievements li.achievement' + (achievementId + 1));
             $achievement.addClass('unlocked')
@@ -874,7 +875,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             var self = this;
 
             _.each(achievements, function(achievement) {
-                if (achievement.found)
+                if (achievement.completed)
                     self.unlockAchievement(achievement.id);
             });
 

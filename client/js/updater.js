@@ -9,7 +9,6 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
 
         update: function() {
             this.updateZoning();
-            //this.processRendering();
             this.updateCharacters();
             this.updatePlayerAggro();
             this.updateTransitions();
@@ -18,10 +17,6 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             this.updateChatBubbles();
             this.updateKeyboardMovement();
             this.updateInfos();
-        },
-
-        processRendering: function() {
-            this.game.renderer.renderFrame();
         },
 
         updateCharacters: function() {
@@ -131,10 +126,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
         updateCharacter: function(c) {
             var self = this;
 
-            // Estimate of the movement distance for one update
-            //var tick = Math.round(16 / Math.round((c.moveSpeed / (1000 / this.game.renderer.FPS))));
-            //log.info("tick="+tick);
-            var tick=3;
+            var tick = Math.round(16 / Math.round((c.moveSpeed / (1000 / 60))));
 
             if (c === self.game.player)
             {
@@ -212,10 +204,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                 }
             }
             if(c.isMoving() && c instanceof Player)
-            {
                 this.game.camera.setRealCoords();
-                //this.game.renderbackground = true;
-            }
 
             // Set Dirty all visible entities so it renders properly.
             if (c == this.game.player && this.game.player.isMoving())

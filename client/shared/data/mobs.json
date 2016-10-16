@@ -345,10 +345,10 @@
     "name": "Blue Preta",
     "kind": 107,
     "drops": {},
-    "hp": 1250,
-    "armor": 30,
+    "hp": 600,
+    "armor": 10,
     "weapon": 15,
-    "xp": 2500,
+    "xp": 750,
     "level": 71,
     "aggroRange": 1,
     "attackRange": 1,
@@ -566,11 +566,11 @@
     "name": "Earth Worm",
     "kind": 247,
     "drops": {},
-    "hp": 1450,
+    "hp": 970,
     "armor": 5,
     "weapon": 5,
-    "xp": 5400,
-    "level": 92,
+    "xp": 750,
+    "level": 78,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": false,
@@ -1067,6 +1067,7 @@
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
+    "isPoisonous": true,
     "attackRate": 900,
     "moveSpeed": 400,
     "spawnDelay": 35000
@@ -1381,15 +1382,32 @@
   "SnowWolf": {
     "name": "Snow Wolf",
     "kind": 150,
-    "drops": {},
+    "drops": {"gold": 850, "icerose": 50, "wolfarmor": 100},
     "hp": 785,
     "armor": 1,
     "weapon": 4,
     "xp": 685,
-    "level": 44,
+    "level": 35,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
+    "attackRate": 900,
+    "moveSpeed": 400,
+    "spawnDelay": 35000
+  },
+
+  "IceGoblin": {
+    "name": "Frost Goblin",
+    "kind": 1010,
+    "drops": {"gold": 1000},
+    "hp": 450,
+    "armor": 2,
+    "weapon": 6,
+    "xp": 515,
+    "level": 30,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "isAggressive": false,
     "attackRate": 900,
     "moveSpeed": 400,
     "spawnDelay": 35000
@@ -1654,6 +1672,7 @@
     "name": "Death",
     "kind": 175
   },
+
 
 
 

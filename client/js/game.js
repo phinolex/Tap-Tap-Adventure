@@ -61,7 +61,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.hoveringItem = false;
                 this.hoveringTarget = false;
                 this.hoveringCollidingTile = false;
-                this.stepCount = 0;
 
                 // Item Info
                 this.itemInfoOn = true;
@@ -335,15 +334,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             initPlayer: function() {
-
-
                 this.app.initTargetHud();
 
                 this.player.setSprite(this.sprites[this.player.getSpriteName()]);
 
                 this.player.idle();
-
-                log.debug("Finished initPlayer");
             },
 
             initShadows: function() {
@@ -391,18 +386,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
             initHurtSprites: function() {
                 var self = this;
-                try {
-                    for (var sprite in self.sprites) {
-                        if (self.sprites.hasOwnProperty(sprite)) {
-                            var kind = ItemTypes.getKindFromString(sprite);
-                            if (kind) {
-                                if (ItemTypes.isArmor(kind) || ItemTypes.isArcherArmor(kind))
-                                    self.sprites[sprite].createHurtSprite();
+                for (var sprite in self.sprites) {
+                    if (self.sprites.hasOwnProperty(sprite)) {
+                        var kind = ItemTypes.getKindFromString(sprite);
+                        if (kind) {
+                            if (ItemTypes.isArmor(kind) || ItemTypes.isArcherArmor(kind))
+                                self.sprites[sprite].createHurtSprite();
 
-                            }
                         }
                     }
-                } catch (e) {}
+                }
             },
 
             initSilhouettes: function() {
@@ -413,9 +406,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         var kind = ItemTypes.getKindFromString(sprite);
                         if (kind) {
                             if (!ItemTypes.isArmor(kind) && !ItemTypes.isWeapon(kind) && !ItemTypes.isArcherArmor(kind) && !ItemTypes.isArcherWeapon(kind)) {
-                                try {
-                                    self.sprites[sprite].createSilhouette();
-                                } catch (e) {}
+                                self.sprites[sprite].createSilhouette();
                             }
                         }
                     }
@@ -462,54 +453,39 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.setSpriteScale(this.renderer.scale);
             },
 
-            spritesLoaded: function() {
-                if(_.any(this.sprites, function(sprite) {
-                        return !sprite.isLoaded;
-                    })) {
-                    return false;
-                }
-                return true;
-            },
-
             setCursor: function(name) {
                 if (name in this.cursors)
                     this.currentCursor = this.cursors[name];
             },
 
             updateCursorLogic: function() {
-                if(this.hoveringCollidingTile && this.started) {
-                    this.targetColor = "rgba(255, 50, 50, 0.5)";
-                }
-                else {
-                    this.targetColor = "rgba(255, 255, 255, 0.5)";
-                }
+                if (this.renderer.mobile)
+                    return;
 
-                if(this.hoveringPlayer && this.started) {
-                    this.setCursor(this.player.pvpFlag ? "sword" : "hand");
-                    this.hoveringMob = false;
-                    this.targetCellVisible = false;
-                } else if(this.hoveringMob && this.started) {
-                    this.setCursor("sword");
-                    this.hoveringPlayer = false;
-                    this.targetCellVisible = false;
-                }
-                else if(this.hoveringNpc && this.started) {
-                    this.setCursor("talk");
-                    this.targetCellVisible = false;
-                }
-                else if((this.hoveringItem || this.hoveringChest) && this.started) {
-                    this.setCursor("loot");
-                    this.targetCellVisible = true;
-                }
-                else {
-                    this.setCursor("hand");
-                    this.hoveringPlayer = false;
-                    this.targetCellVisible = true;
-                }
-            },
+                this.targetColor = this.hoveringCollidingTile && this.started ? "rgba(255, 50, 50, 0.5)" : "rgba(255, 255, 255, 0.5)";
 
-            focusPlayer: function() {
-                //this.renderer.camera.lookAt(this.player);
+                if (this.started) {
+                    if (this.hoveringPlayer) {
+                        this.setCursor(this.player.pvpFlag ? "sword" : "hand");
+                        this.hoveringMob = false;
+                        this.targetCellVisible = false;
+                    } else if (this.hoveringMob) {
+                        this.setCursor("sword");
+                        this.hoveringPlayer = false;
+                        this.targetCellVisible = false;
+                    } else if (this.hoveringNpc) {
+                        this.setCursor("talk");
+                        this.targetCellVisible = false;
+                    } else if (this.hoveringItem || this.hoveringChest) {
+                        this.setCursor("loot");
+                        this.targetCellVisible = true;
+                    } else {
+                        this.setCursor("hand");
+                        this.hoveringPlayer = false;
+                        this.targetCellVisible = true;
+                    }
+
+                }
             },
 
             addEntity: function(entity) {
@@ -531,19 +507,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             }
                         });
                     }
-                }
-                else {
+                } else
                     log.error("This entity already exists : " + entity.id + " ("+entity.kind+")");
-                }
             },
 
             removeEntity: function(entity) {
                 if(entity.id in this.entities) {
                     this.unregisterEntityPosition(entity);
                     delete this.entities[entity.id];
-                }
-                else {
-                    log.error("Cannot remove entity. Unknown ID : " + entity.id);
                 }
             },
 
@@ -552,10 +523,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 item.setGridPosition(x, y);
                 item.setAnimation("idle", 150);
                 this.addEntity(item);
-
-                //Display info about the item upon creation (dropping, or any appearance on the ground)
-                //this.createBubble(item.id, item.getInfoMsg());
-                //this.assignBubbleTo(item);
             },
 
             removeItem: function(item) {
@@ -563,18 +530,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     this.removeFromItemGrid(item, item.gridX, item.gridY);
                     this.removeFromRenderingGrid(item, item.gridX, item.gridY);
                     delete this.entities[item.id];
-                } else {
-                    log.error("Cannot remove item. Unknown ID : " + item.id);
                 }
             },
 
             initPathingGrid: function() {
                 this.pathingGrid = [];
-                for(var i=0; i < this.map.height; i += 1) {
+                for(var i = 0; i < this.map.height; i += 1) {
                     this.pathingGrid[i] = [];
-                    for(var j=0; j < this.map.width; j += 1) {
+                    for(var j = 0; j < this.map.width; j += 1)
                         this.pathingGrid[i][j] = this.map.grid[i][j];
-                    }
+
                 }
                 log.info("Initialized the pathing grid with static colliding cells.");
             },
@@ -766,8 +731,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.currentTime = new Date().getTime();
 
                 if(this.started) {
+                    this.updateCursorLogic();
                     this.updater.update();
                     this.renderer.renderFrame();
+                    this.FPSCount++;
+                    if (this.currentTime - this.lastFPSTime > 1000) {
+                        $('#fps').html("FPS: " + this.FPSCount);
+                        this.lastFPSTime = this.currentTime;
+                        this.FPSCount = 0;
+                    }
                 }
 
                 if(!this.isStopped)
@@ -922,14 +894,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.player.setWeaponName(weapon);
                     self.player.skillHandler = new SkillHandler(self);
                     self.player.setClass(parseInt(pClass));
-                    self.camera.setRealCoords();
-                    self.resetZone();
                     self.doubleEXP = doubleExp;
                     self.expMultiplier = expMultiplier;
                     self.membership = membership;
                     self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
                     self.shopHandler.setMaxInventoryNumber(maxInventoryNumber);
                     self.bankHandler.initBank(maxBankNumber, bankKind, bankNumber, bankSkillKind, bankSkillLevel);
+                    self.camera.setRealCoords();
+                    self.resetZone();
                     self.initPlayer();
                     self.updateBars();
                     self.updateExpBar();
@@ -944,6 +916,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.renderbackground = true;
                     self.renderer.forceRedraw = true;
                     self.initializeAchievements();
+                    self.client.sendReady(self.playerId);
 
                     self.player.onStartPathing(function(path) {
                         var i = path.length - 1,
@@ -1000,8 +973,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if(self.player.hasNextStep())
                             self.registerEntityDualPosition(self.player);
 
-
-                        // TODO - An error may occur here? Double check maybe.
                         if(self.isZoningTile(self.player.gridX, self.player.gridY))
                             self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
 
@@ -1010,13 +981,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
 
                         self.updatePlayerCheckpoint();
-                        self.stepCount++;
                         if(!self.player.isDead) {
                             self.audioManager.updateMusic();
-                            if (self.renderer.mobile && self.stepCount >= 2) {
+                            if (self.renderer.mobile)
                                 self.renderer.cleanPathing();
-                                self.stepCount++;
-                            }
                         }
                     });
 
@@ -1110,7 +1078,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             if(self.renderer.mobile || self.renderer.tablet)
                                 self.renderer.clearScreen(self.renderer.context);
-
 
                             if(dest.portal)
                                 self.audioManager.playSound("teleport");
@@ -1439,7 +1406,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 }
                             }
                             catch(e) {
-                                log.error(e);
+                                throw e;
                             }
                         } else {
                             log.debug("Character "+entity.id+" already exists. Don't respawn.");
@@ -1581,20 +1548,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.client.onPlayerKillMob(function(id, level, exp) {
                         var mob = self.getEntityById(id);
-                        if (self.doubleEXP) {
-                            var mobExp = exp * 2;
-                        } else {
-                            var mobExp = exp * self.expMultiplier;
-                        }
+
                         if (self.player.level != level) {
                             self.infoManager.addDamageInfo("Level " + level, self.player.x, self.player.y - 15, "exp", 5000);
                         }
                         else
                         {
-                            self.infoManager.addDamageInfo("+"+mobExp+" exp", self.player.x, self.player.y - 15, "exp", 3000);
+                            self.infoManager.addDamageInfo("+"+exp+" exp", self.player.x, self.player.y - 15, "exp", 3000);
                         }
                         self.player.level = level;
-                        self.player.experience += mobExp;
+                        self.player.experience += exp;
                         self.updateExpBar();
 
                         //self.infoManager.addDamageInfo("+"+mobExp+" exp", self.player.x, self.player.y - 15, "exp", 3000);
@@ -3416,15 +3379,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             toggleItemInfo: function(){
-                if(this.itemInfoOn){
-                    this.itemInfoOn = false;
-                } else{
-                    this.itemInfoOn = true;
-                }
+                this.itemInfoOn = !this.itemInfoOn;
             },
+
             closeItemInfo: function (){
                 this.itemInfoOn = false;
             },
+
             keyDown: function(key){
                 var self = this;
                 if(key >= 49 && key <= 54){ // 1, 2, 3, 4, 5, 6

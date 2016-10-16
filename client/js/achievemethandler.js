@@ -3,7 +3,6 @@
 
 define(['text!../shared/data/achievements_english.json', 'jquery'], function(AchievementsJson) {
 
-
     var achievementdata = JSON.parse(AchievementsJson);
 
     var AchievementHandler = Class.extend({
@@ -44,11 +43,7 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
             var i=0;
             _.each(this.achievements, function(achievement){
                 achievement.found = achievementFound[i];
-                if(achievementProgress[i] === 999){
-                    achievement.completed = true;
-                } else{
-                    achievement.completed = false;
-                }
+                achievement.completed = achievementProgress[i] === 999;
                 i++;
             });
         },
@@ -97,49 +92,50 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
         },
 
         handleAchievement: function(data) {
-            var i=1;
-            var type = data[0];
-            var achievementId, achievement;
-            var htmlStr = '';
+            var self = this,
+                i = 0,
+                type = data[0],
+                achievementId = data[1],
+                achievement,
+                htmlStr = '';
 
-            if(type === "show") {
-                _.each(this.achievements, function(achievement) {
-                    achievement.found = data[i++];
-                    if(data[i++] === 999){
-                        achievement.completed = true;
-                    } else{
-                        achievement.completed = false;
+            switch (type) {
+                case "show":
+                    _.each(self.achievements, function(achievement) {
+                        achievement.found = data[i++];
+                        achievement.completed = data[i++] === 999;
+                    });
+                    break;
+
+                case "found":
+                    achievement = self.getNPCAchievement(achievementId);
+                    achievement.found = true;
+                    self.achievementAlarmShow(achievement, self.hideDelay);
+                    self.game.app.relistAchievement(achievement);
+                    break;
+
+                case "complete":
+                    achievement = self.getNPCAchievement(achievementId);
+                    achievement.completed = true;
+                    self.achievementAlarmShow(achievement, self.hideDelay);
+                    self.game.app.unlockAchievement(achievementId);
+                    break;
+
+                case "progress":
+                    achievement = self.getNPCAchievement(achievementId);
+                    if (achievement.type == 2) {
+                        self.achievementAlarmShow(achievement, self.progressHideDelay);
+                        self.achievements[achievementId].progCount = data[2];
                     }
-                });
-            } else if(type === "found") {
-                achievementId = data[1];
-                achievement = this.getNPCAchievement(achievementId);
-                achievement.found = true;
-                this.game.app.unlockAchievement(achievementId);
-            } else if(type === "complete") {
-                achievementId = data[1];
-                achievement = this.getNPCAchievement(achievementId);
-                achievement.completed = true;
-                this.achievementAlarmShow(achievement, this.hideDelay);
-            } else if(type === "progress") {
-                achievementId = data[1];
-                achievement = this.getNPCAchievement(achievementId);
-                if (achievement.type == 2)
-                {
-                    this.achievementAlarmShow(achievement, this.progressHideDelay);
-                    this.achievements[achievementId].progCount = data[2];
-                }
+                    break;
             }
 
             if (this.showlog)
-            {
                 this.achievementShowLog();
-            }
         },
         talkToNPC: function(npc){
             for(var achievementSerial in this.achievements){
                 var achievement = this.achievements[achievementSerial];
-
                 if(achievement.npcId === npc.kind && !achievement.completed){
                     this.game.client.sendTalkToNPC(npc.kind, achievement.id);
                     return npc.talk(true, achievement, false);

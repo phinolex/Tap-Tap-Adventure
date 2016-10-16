@@ -106,7 +106,6 @@ module.exports = World = cls.Class.extend({
             player.packetHandler.onLootMove(move_callback);
 
             player.packetHandler.onZone(function() {
-                //log.info("onZone");
                 var groupsChanged = self.handleEntityGroupMembership(player);
 
                 if (groupsChanged) {
@@ -152,7 +151,7 @@ module.exports = World = cls.Class.extend({
                         character.poisonHealthBy(1);
                         self.pushToPlayer(character, character.poison());
                     } else {
-                        if (!character.hasFullHealth() && !character.isAttacked()) {
+                        if (!character.hasFullHealth() && character.isAttacked()) {
                             character.regenHealthBy(1);
                             self.pushToPlayer(character, character.regen());
                         }
@@ -692,9 +691,9 @@ module.exports = World = cls.Class.extend({
             }
             player.pets = null;
         }
-
-        if (player.hasEnteredGame)
+        try {
             player.redisPool.setPointsData(player.name, player.hitPoints, player.mana);
+        } catch (e) {}
 
 
         player.packetHandler.broadcast(player.despawn());
@@ -886,29 +885,12 @@ module.exports = World = cls.Class.extend({
     handleHurtEntity: function(entity, attacker, damage) {
         var self = this;
 
-        if (entity instanceof Player) {
-            if (attacker instanceof Player)
-                self.pushToPlayer(entity, entity.health(attacker));
-            else
-                self.pushToPlayer(entity, entity.health(attacker));
-        }
+        if (entity instanceof Player)
+            self.pushToPlayer(entity, entity.health(attacker));
 
         if (attacker instanceof Player)
             self.pushToPlayer(attacker, new Messages.Damage(entity, damage, entity.hitPoints, entity.maxHitPoints));
 
-        if (entity.type === 'mob') {
-            if (attacker instanceof Player) {
-                if (entity.isPoisonous)
-                    attacker.setPoison(true);
-            }
-        }
-
-        if (attacker.type === 'mob') {
-            if (entity instanceof Player) {
-                if (attacker.isPoisonous)
-                    entity.setPoison(true);
-            }
-        }
 
         if (entity.hitPoints <= 0) {
             if (entity.type === 'mob') {
@@ -947,7 +929,8 @@ module.exports = World = cls.Class.extend({
                 self.handlePlayerVanish(entity);
                 self.pushToAdjacentGroups(entity.group, entity.despawn());
             }
-            entity.removeAttacker(entity);
+            attacker.removeAttacker(entity);
+            entity.removeAttacker(attacker);
             self.removeEntity(entity);
         }
     },

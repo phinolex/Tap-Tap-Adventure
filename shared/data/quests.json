@@ -16,7 +16,12 @@
       },
 
       "2": {
-
+        "npcKill": 15,
+        "acquireItem": false,
+        "npcTalk": 100,
+        "npcText": [
+          "Thank you."
+        ]
       }
     }
   }

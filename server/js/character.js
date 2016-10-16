@@ -407,13 +407,17 @@ module.exports = Character = Entity.extend({
      * @returns {Boolean} Whether this is an attacker of this character.
      */
     isAttackedBy: function(character) {
-        if (Object.keys(this.attackers).length == 0) {
+
+        if (Object.keys(this.attackers).length == 0)
             return false;
-        }
+
         return (character.id in this.attackers);
     },
 
     isAttacked: function() {
+        for (var attacker in this.attackers)
+            log.info("Attacker: " + attacker);
+
         return Object.keys(this.attackers).length == 0;
     },
 
@@ -440,9 +444,6 @@ module.exports = Character = Entity.extend({
         if(this.isAttackedBy(character)) {
             delete this.attackers[character.id];
         }
-        //else {
-        //    log.info(this.id + " is not attacked by " + character.id);
-        //}
     },
     forceStop: function () {
         if (this.isMoving()) {
@@ -668,12 +669,10 @@ module.exports = Character = Entity.extend({
             max = this.maxHitPoints;
 
         if (hp < max) {
-            if (hp + value <= max) {
+            if (hp + value <= max)
                 this.hitPoints += value;
-            }
-            else {
+            else
                 this.hitPoints = max;
-            }
         }
     },
 

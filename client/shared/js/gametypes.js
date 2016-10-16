@@ -167,7 +167,8 @@ Types = {
         AUCTIONREQUEST: 126,
         CLASSREQUEST: 127,
         CRAFTINGREQUEST: 128,
-        INTERFACE: 129
+        INTERFACE: 129,
+        PLAYERREADY: 130
     },
 
     Orientations: {

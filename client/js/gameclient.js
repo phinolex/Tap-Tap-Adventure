@@ -80,14 +80,15 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         connect: function(dispatcherMode) {
 
-            var url = "ws://"+ this.host +":"+ this.port +"/",
-                self = this;
+            var self = this,
+                url = "ws://127.0.0.1:1340/";
 
             log.info("Trying to connect to server : "+url);
 
             this.connection = io(url, {
                 forceNew: true,
-                reconnection: false}
+                reconnection: false
+                }
             );
 
             this.connection.on('connect_error', function() {
@@ -96,17 +97,13 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                     self.fail_callback('errorconnecting');
             });
 
-            this.connection.on('connection', function() {
-                log.info("Connected to server " + self.host + ":" + self.port);
-            });
-
             this.connection.on('message', function(e) {
                 switch(e) {
                     case 'go':
                         if (self.connected_callback)
                             self.connected_callback();
-
                         return;
+
                     case 'full':
                     case 'invalidlogin':
                     case 'userexists':
@@ -115,12 +112,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                     case 'ban':
                     case 'passwordChanged':
                     case 'failedattempts':
+                    case 'timeout':
                         if (self.fail_callback)
                             self.fail_callback(e);
-                        return;
-
-                    case 'timeout':
-                        self.isTimeout = true;
                         return;
 
                     default:
@@ -135,7 +129,6 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             });
 
             this.connection.on('disconnect', function() {
-                log.debug("Connection closed");
                 $('#container').addClass('error');
 
                 if(self.disconnected_callback) {
@@ -145,6 +138,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                         self.disconnected_callback("The connection to Tap Tap Adventure has been lost.");
                 }
             });
+
+        },
+
+        downloadFiles: function() {
 
         },
 
@@ -158,22 +155,17 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         receiveMessage: function(message) {
             var data, action;
-            try {
-                if (this.isListening) {
-                    data = JSON.parse(message);
-                    if (data instanceof Array) {
-                        if (data[0] instanceof Array) {
-                            // Multiple actions received
-                            this.receiveActionBatch(data);
-                        } else {
-                            // Only one action received
-                            this.receiveAction(data);
-                        }
+            if (this.isListening) {
+                data = JSON.parse(message);
+                if (data instanceof Array) {
+                    if (data[0] instanceof Array) {
+                        // Multiple actions received
+                        this.receiveActionBatch(data);
+                    } else {
+                        // Only one action received
+                        this.receiveAction(data);
                     }
                 }
-            } catch (e) {
-                if (self.fail_callback)
-                    self.fail_callback('errorconnecting');
             }
         },
 
@@ -230,19 +222,17 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             var bankNumber = [];
             var bankSkillKind = [];
             var bankSkillLevel = [];
-            for(var i=0; i < maxBankNumber; ++i)
-            {
+            for(var i = 0; i < maxBankNumber; ++i) {
                 bankKind.push(data.shift());
                 bankNumber.push(data.shift());
                 bankSkillKind.push(data.shift());
                 bankSkillLevel.push(data.shift());
             }
 
-            var i=0;
             var maxAchievementNumber = data.shift();
             var achievementFound = [];
             var achievementProgress = [];
-            for(i=0; i < maxAchievementNumber; i++) {
+            for(var i = 0; i < maxAchievementNumber; i++) {
                 achievementFound.push(data.shift());
                 achievementProgress.push(data.shift());
             }
@@ -1125,6 +1115,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         requestWarp: function(id) {
             this.sendMessage([Types.Messages.REQUESTWARP, id]);
+        },
+
+        sendReady: function(id) {
+            this.sendMessage([Types.Messages.PLAYERREADY, id]);
         }
     });
 

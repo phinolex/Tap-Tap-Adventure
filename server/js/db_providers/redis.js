@@ -737,7 +737,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "quest" + questId + ":state", state);
     },
 
-    getQuestState: function(name, questId) {
+    getQuestState: function(name, questId, callback) {
         var self = this,
             userKey = "u:" + name,
             multi = client.multi(),
@@ -750,7 +750,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
             if (isNaN(questState))
                 questState = -1;
 
-            return questState;
+            callback(questState);
         });
     },
 

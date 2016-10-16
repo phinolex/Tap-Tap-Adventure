@@ -109,11 +109,11 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.createCamera();
 
-                this.context.mozImageSmoothingEnabled = true;
-                this.background.mozImageSmoothingEnabled = true;
-                this.foreground.mozImageSmoothingEnabled = true;
-                this.textcontext.mozImageSmoothingEnabled = true;
-                this.toptextcontext.mozImageSmoothingEnabled = true;
+                this.context.mozImageSmoothingEnabled = false;
+                this.background.mozImageSmoothingEnabled = false;
+                this.foreground.mozImageSmoothingEnabled = false;
+                this.textcontext.mozImageSmoothingEnabled = false;
+                this.toptextcontext.mozImageSmoothingEnabled = false;
                 this.initFont();
 
                 if(!this.upscaledRendering && this.game.map && this.game.map.tilesets) {
@@ -536,7 +536,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                             this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
                         } catch(e) { log.info(e); }
 
-
                         if(entity instanceof Item && entity.kind !== 39) {
 
                             var sparks = this.game.sprites["sparks"],
@@ -579,9 +578,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                     this.context.restore();
 
-                    if(entity.isFading) {
+                    if(entity.isFading)
                         this.context.restore();
-                    }
+
 
                     //this.drawEntityName(entity);
                 }
@@ -619,10 +618,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 var self = this,
                     count = 0;
 
-                //this.context.translate(-(this.camera.x-this.cameraOldX) * this.scale,
-                //    -(this.camera.y-this.cameraOldY) * this.scale);
 
-                this.game.forEachVisibleEntityByDepth(function(entity) {
+                this.game.forEachEntity(function(entity) {
                     if(entity.isDirty && entity.oldDirtyRect)
                         self.clearDirtyRect(entity.oldDirtyRect);
                 });
@@ -647,12 +644,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     s = this.scale,
                     spr;
 
-                if(entity instanceof Player && entity.hasWeapon()) {
-                    var weapon = this.game.sprites[entity.getWeaponName()];
-                    spr = weapon;
-                } else {
+                if (entity instanceof Player) {
+                    spr = this.game.sprites['clotharmor'];
+                } else
                     spr = entity.sprite;
-                }
 
                 if(spr) {
                     rect.x = (entity.x + spr.offsetX - this.camera.x) * s;
@@ -725,66 +720,46 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 var ctx = this.textcontext;
                 ctx.save();
 
-                //"#00CCFF" : "#78AB46
-                if(entity.name && entity instanceof Player && entity.isMoving) {
-                    var color =  entity.isWanted ? "red" : (entity.id === this.game.playerId) ? "#fcda5c" : entity.admin ? "#ff0000" : "white";
-                    var name = (entity.level) ? entity.name + " (" + entity.level + ")" : entity.name;
+                if (entity.name) {
+                    if (entity instanceof Player && entity.isMoving) {
+                        var colour = entity.isWanted ? "red" : (entity.id === this.game.playerId) ? "#fcda5c" : entity.admin ? "#ff0000" : "white",
+                            level = "Level: " + entity.level;
 
-                    this.drawText(this.textcontext, name,
-                        (entity.x + 8),
-                        (entity.y + entity.nameOffsetY),
-                        true,
-                        color);
+                        this.drawText(ctx, level, (entity.x + 8), (entity.y - 17), true, colour);
+                        this.drawText(ctx, entity.name, (entity.x + 8), (entity.y - 10), true, colour);
+                    }
                 }
-                if(entity instanceof Mob) {
-                    var color;
-                    var mobLvl = entity.level;
 
-                    var playerLvl;
-
+                if (entity instanceof Mob) {
+                    var mobColour = 'white',
+                        mobLevel = entity.level,
+                        playerLevel;
 
                     if (this.game.player) {
-                        playerLvl = this.game.player.level;
-                        //alert("mobLevel="+mobLvl+",playerLvl="+playerLvl);
-                        //8, 4
-                        color = "white";
+                        playerLevel = this.game.player.level;
 
-                        if (mobLvl > playerLvl + 5)
-                            color = "red";
+                        if (mobLevel > playerLevel + 5)
+                            mobColour = 'red';
 
-                    } else
-                        color = "white";
+                        var mobName = entity.title;
 
+                        var levelText = "Level: " + mobLevel;
 
-                    //var name = entity.title + " " + entity.kind;
-                    var name = entity.title;
+                        this.drawText(ctx, levelText, (entity.x + 8), (entity.y - 17), true, mobColour);
+                        this.drawText(ctx, mobName, (entity.x + 8), (entity.y - 10), true, mobColour);
+                    }
 
-                    this.drawText(ctx, name,
-                        (entity.x + 8),
-                        (entity.y - 10),
-                        true,
-                        color);
                 }
-                if(entity instanceof Npc) {
-                    var color;
-                    var name;
+
+                if (entity instanceof Npc) {
+                    var npcColour = 'white';
+
                     if (this.game.achievementHandler.npcHasAchievement(entity.kind))
-                    {
-                        color = "cyan";
-                        name = entity.title + " ?";
-                    }
-                    else
-                    {
-                        color = "white";
-                        name = entity.title;
-                    }
+                        npcColour = 'cyan';
 
-                    this.drawText(ctx, name,
-                        (entity.x + 8),
-                        (entity.y - 10),
-                        true,
-                        color);
+                    this.drawText(ctx, entity.title, (entity.x + 8), (entity.y - 10), true, npcColour);
                 }
+
                 ctx.restore();
             },
             drawInventory: function(){
@@ -897,7 +872,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             drawOldTerrain: function () {
                 var self = this,
                     m = this.game.map;
-                //tilesetwidth = m.tilesets[this.scale-1].width / m.tilesize;
+
                 var p = this.game.player;
                 var c = this.camera;
 
@@ -919,74 +894,51 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.background.save();
                 this.drawBackground(this.buffer, "#12100D");
                 this.buffer.drawImage(this.background.canvas, oldoffset.x, oldoffset.y);
-
                 this.drawBackground(this.background, "#12100D");
                 this.background.drawImage(this.buffer.canvas, 0, 0);
 
+                this.background.save();
                 this.setCameraView(this.background);
-                this.drawTerrain(this.background);
-                //this.drawAnimatedTiles(false, this.background);
+                this.drawTerrain(this.background, this.buffer);
                 this.background.restore();
 
-                this.foreground.save();
-                this.clearBuffer(this.buffer);
-                this.buffer.drawImage(this.foreground.canvas,oldoffset.x,oldoffset.y);
-                this.setCameraView(this.buffer);
-                this.drawHighTiles(this.buffer);
-                this.clearScreen(this.foreground);
-                this.foreground.drawImage(this.buffer.canvas, 0, 0);
-
-                this.foreground.restore();
                 this.buffer.restore();
-
             },
 
-            drawTerrain: function(ctx) {
+            drawTerrain: function(backgroundContext, foregroundContext) {
                 var self = this,
                     m = this.game.map,
                     p = this.game.player,
-                    tilesetwidth = this.tileset.width / m.tilesize;
+                    tilesetWidth = this.tileset.width / m.tilesize,
+                    optimized = false;
 
-
-                var optimized = false;
-                if (p && p.isMoving() && !this.forceRedraw)
+                if (p && p.isMoving && !this.forceRedraw)
                     optimized = true;
 
 
-                ctx.save();
-                //log.info("optimized:"+optimized);
+                foregroundContext.save();
+                self.clearScreen(foregroundContext);
+                self.setCameraView(foregroundContext);
 
-                this.game.forEachVisibleTile(function (id, index) {
-                    if(!m.isHighTile(id) && !m.isAnimatedTile(id)) { // Don't draw unnecessary tiles
-                        self.drawTile(ctx, id, self.tileset, tilesetwidth, m.width, index);
-                    }
+                this.game.forEachVisibleTile(function(id, index) {
+                    if (m.isHighTile(id)) {
+                        self.clearTile(foregroundContext, m.width, index);
+                        self.drawTile(foregroundContext, id, self.tileset, tilesetWidth, m.width, index);
+                    } else
+                        self.drawTile(backgroundContext, id, self.tileset, tilesetWidth, m.width, index);
                 }, 1, optimized);
 
-                ctx.restore()
 
-
-            },
-
-            drawHighTerrain: function() {
-                var p = this.game.player;
-
-                if (!p || !p.isMoving() || this.forceRedraw)
-                {
-                    this.foreground.save();
-                    this.clearScreen(this.foreground);
-                    this.setCameraView(this.foreground);
-                    this.drawHighTiles(this.foreground);
-                    this.foreground.restore();
-                }
+                foregroundContext.restore();
             },
 
             drawAnimatedTiles: function(dirtyOnly, ctx) {
                 if (!this.camera.isattached)
-                   return;
-
+                    return;
                 var self = this,
                     m = this.game.map,
                     tilesetwidth = this.tileset.width / m.tilesize;
+
 
                 this.animatedTileCount = 0;
                 this.game.forEachAnimatedTile(function (tile) {
@@ -1000,10 +952,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         self.animatedTileCount += 1;
                     }
                 });
-            },
-
-            drawDirtyAnimatedTiles: function(ctx) {
-                this.drawAnimatedTiles(true, ctx);
             },
 
             drawHighTiles: function(ctx) {
@@ -1029,6 +977,27 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 }, 1, optimized);
 
             },
+
+            drawHighTerrain: function() {
+                var p = this.game.player;
+
+                if (!p || !p.isMoving() || this.forceRedraw)
+                {
+                    this.foreground.save();
+                    this.clearScreen(this.foreground);
+                    this.setCameraView(this.foreground);
+                    this.drawHighTiles(this.foreground);
+                    this.foreground.restore();
+                }
+            },
+
+
+
+            drawDirtyAnimatedTiles: function(ctx) {
+                this.drawAnimatedTiles(true, ctx);
+            },
+
+
 
             drawBackground: function(ctx, color) {
                 ctx.fillStyle = color;
@@ -1096,10 +1065,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             drawHUD: function() {
-                /**
-                 * Draws HUD (PVP, Tutorial, Etc);
-                  */
-
                 if (this.game && this.game.player && (this.game.player.pvpFlag || this.game.player.pvpWaitFlag)) {
                     this.toptextcontext.save();
                     var time = this.game.getPVPTimer();
@@ -1155,59 +1120,17 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 ctx.clearRect(0, 0, this.textcanvas.width, this.textcanvas.height);
             },
 
-            getPlayerImage: function() {
-                var canvas = document.createElement('canvas'),
-                    ctx = canvas.getContext('2d'),
-                    os = this.upscaledRendering ? 1 : this.scale,
-                    player = this.game.player,
-                    sprite = player.getArmorSprite(),
-                    spriteAnim = sprite.animationData["idle_down"],
-                // character
-                    row = spriteAnim.row,
-                    w = sprite.width * os,
-                    h = sprite.height * os,
-                    y = row * h,
-                // weapon
-                    weapon = this.game.sprites[this.game.player.getWeaponName()],
-                    ww = weapon.width * os,
-                    wh = weapon.height * os,
-                    wy = wh * row,
-                    offsetX = (weapon.offsetX - sprite.offsetX) * os,
-                    offsetY = (weapon.offsetY - sprite.offsetY) * os,
-                // shadow
-                    shadow = this.game.shadows["small"],
-                    sw = shadow.width * os,
-                    sh = shadow.height * os,
-                    ox = -sprite.offsetX * os,
-                    oy = -sprite.offsetY * os;
-
-                canvas.width = w;
-                canvas.height = h;
-
-                ctx.clearRect(0, 0, w, h);
-                ctx.drawImage(shadow.image, 0, 0, sw, sh, ox, oy, sw, sh);
-                ctx.drawImage(sprite.image, 0, y, w, h, 0, 0, w, h);
-                ctx.drawImage(weapon.image, 0, wy, ww, wh, offsetX, offsetY, ww, wh);
-
-                return canvas.toDataURL("image/png");
-            },
-
             renderStaticCanvases: function() {
 
-                this.drawOldTerrain();
+                if (this.game.player.isMoving)
+                    this.drawOldTerrain();
 
-                if (this.forceRedraw || this.game.player && !this.game.player.isMoving())
-                {
+                if (this.forceRedraw || this.game.player && !this.game.player.isMoving()) {
                     this.background.save();
                     this.setCameraView(this.background);
-                    this.drawTerrain(this.background);
-                    this.drawHighTerrain();
+                    this.drawTerrain(this.background, this.foreground);
                     this.background.restore();
-
                 }
-
-                this.game.renderbackground = false;
-                this.forceRedraw = false;
             },
 
             renderFrame: function() {
