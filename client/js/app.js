@@ -87,8 +87,8 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
             if (action == this.classNames[0]) {
 
-                username = this.$loginnameinput.attr('value');
-                userpw = this.$loginpwinput.attr('value');
+                username = this.$loginnameinput.val();
+                userpw = this.$loginpwinput.val();
 
                 if (!this.validateLoginForm(username, userpw))
                     return;
@@ -97,10 +97,10 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
             } else if (action == this.classNames[1]) {
 
-                username = this.$nameinput.attr('value');
-                userpw = this.$pwinput.attr('value');
-                var userpw2 = this.$pwinput2.attr('value');
-                var email = this.$email.attr('value');
+                username = this.$nameinput.val();
+                userpw = this.$pwinput.val();
+                var userpw2 = this.$pwinput2.val();
+                var email = this.$email.val();
                 var pClass = $('#selectClassSwitch2').val();
 
                 if (!this.validateCreateForm(username, userpw, userpw2, email))
@@ -334,9 +334,13 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 return false;
             }
 
-            // Email field is not required, but if it's filled out, then it should look like a valid email.
+            if (!email) {
+                this.addValidationError(this.$email, "Please enter an email address.");
+                return false;
+            }
+
             if(email && !this.validateEmail(email)) {
-                this.addValidationError(this.$email, 'The email you entered appears to be invalid. Please enter a valid email (or leave the email blank).');
+                this.addValidationError(this.$email, 'The email you entered appears to be invalid. Please enter a valid email address.');
                 return false;
             }
 
