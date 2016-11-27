@@ -415,9 +415,6 @@ module.exports = Character = Entity.extend({
     },
 
     isAttacked: function() {
-        for (var attacker in this.attackers)
-            log.info("Attacker: " + attacker);
-
         return Object.keys(this.attackers).length == 0;
     },
 
@@ -718,6 +715,10 @@ module.exports = Character = Entity.extend({
     health: function(attacker) {
         return new Messages.Health(this.hitPoints, attacker ? (attacker instanceof Mob ? 1 : 2) : 0, false);
     },
+    /*
+    mana: function() {
+        return new Messages.Mana(this.mana);
+    },*/
 
     regen: function () {
         return new Messages.Health(this.hitPoints, true, false);

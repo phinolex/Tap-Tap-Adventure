@@ -5,9 +5,11 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
         init: function(game) {
             this.game = game;
             this.playerAggroTimer = new Timer(1000);
+            this.lastUpdate = new Date();
         },
 
         update: function() {
+            this.deltaSeconds = (new Date() - this.lastUpdate) / 1000;
             this.updateZoning();
             this.updateCharacters();
             this.updatePlayerAggro();
@@ -17,6 +19,72 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             this.updateChatBubbles();
             this.updateKeyboardMovement();
             this.updateInfos();
+            this.updateProjectiles();
+        },
+
+        updateProjectiles: function() {
+            var self = this;
+            this.game.forEachProjectile(function(projectile) {
+                if(projectile.isLoaded)
+                    self.updateProjectile(projectile);
+
+            });
+        },
+
+        updateProjectile: function(p) {
+            var self = this;
+
+            if (!p.impacted) {
+                self.game.renderer.cleanPathing();
+                var mdist = p.speed * self.deltaSeconds;
+                var dx = p.tx-p.x;
+                var dy = p.ty-p.y;
+                var tdist = Math.sqrt(dx*dx+dy*dy);
+                var amount = mdist/tdist;
+
+                // prevent "overshoot"
+                if (amount > 1) amount = 1;
+
+                p.x += dx * amount;
+                p.y += dy * amount;
+
+                // game/emitter projected or in pvp area and not our projectile
+                // collision with players in transit behavior
+                if (p.owner == 0 || (this.game.pvpFlag && this.game.player && p.owner != this.game.player.id)) {
+                    // which tile are we over
+                    var tpos = { x: Math.floor(p.x/16), y: Math.floor(p.y/16) };
+                    // player (self) standing here?
+                    if (this.game.player) {
+                        if (this.game.player.gridX == tpos.x) {
+                            if (this.game.player.gridY == tpos.y) {
+                                p.tx = this.game.player.x+8;
+                                p.ty = this.game.player.y+8;
+                                p.impact(this.game);
+                            }
+                        }
+                    }
+                }
+
+                // tornadoes hit as they move over tiles
+                if (p.kind === Types.Projectiles.TORNADO) {
+                    // only track our own
+                    if (this.game.player && p.owner == this.game.player.id) {
+                        // which tile are we over
+                        var tpos = { x: Math.floor(p.x/16), y: Math.floor(p.y/16) };
+                        // has this changed
+                        if (p.tpos == null || p.tpos && (p.tpos.x != tpos.x || p.tpos.y != tpos.y) ) {
+                            // moved over new tile
+                            this.game.detectCollateral(tpos.x,tpos.y,2,p.kind);
+                        }
+                        p.tpos = tpos;
+                    }
+                }
+
+                if (tdist<1)
+                    p.impact(this.game);
+
+            }
+
         },
 
         updateCharacters: function() {
@@ -127,19 +195,6 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             var self = this;
 
             var tick = Math.round(16 / Math.round((c.moveSpeed / (1000 / 60))));
-
-            if (c === self.game.player)
-            {
-                // Gets reset to 0 Every screen update.
-                if (c.prevX == 0 && c.prevY == 0)
-                {
-                    c.prevX = c.x;
-                    c.prevY = c.y;
-                    c.prevOrientation = c.orientation;
-                }
-            }
-            if (c.isStunned)
-                return;
 
             if(c.isMoving() && c.movement.inProgress === false) {
                 if(c.orientation === Types.Orientations.LEFT) {
@@ -292,6 +347,13 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                 }
             });
 
+            this.game.forEachProjectile(function(projectile) {
+                var anim = projectile.currentAnimation;
+                if(anim) {
+                    anim.update(t);
+                }
+            });
+
             var sparks = this.game.sparksAnimation;
             if(sparks)
                 sparks.update(t);
@@ -300,6 +362,18 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             var target = this.game.targetAnimation;
             if(target)
                 target.update(t);
+
+            var benef = this.game.benefAnimation;
+            if (benef)
+                benef.update(t);
+
+            var benef10 = this.game.benef10Animation;
+            if (benef10)
+                benef10.update(t);
+
+            var benef4 = this.game.benef4Animation;
+            if (benef4)
+                benef4.update(t);
 
         },
 

@@ -16,7 +16,7 @@ module.exports = Inventory = cls.Class.extend({
             this.rooms.push(new InventoryRoom(itemKinds[i], itemNumbers[i], itemSkillKinds[i], itemSkillLevels[i]));
         }
     },
-    hasItem: function(itemKind){
+    hasItem: function(itemKind) {
         var i = 0;
         for(i=0; i<this.number; i++){
             if(this.rooms[i].itemKind === itemKind){
@@ -26,14 +26,13 @@ module.exports = Inventory = cls.Class.extend({
         return false;
     },
     hasItems: function(itemKind, itemCount){
-        var i = 0;
-        var a = 0;
-        for(i=0; i<this.number; i++){
-            if(this.rooms[i].itemKind === itemKind){
-                if (++a === itemCount)
-                	return true;
+        for (var i  = 0; i < this.number; i++) {
+            if (this.rooms[i].itemKind === itemKind) {
+                if (this.rooms[i].itemNumber >= itemCount)
+                    return true;
             }
         }
+
         return false;
     },    
     hasEmptyInventory: function(){
@@ -45,18 +44,40 @@ module.exports = Inventory = cls.Class.extend({
         }
         return false;
     },
+
+    takeOut: function(itemKind, itemCount) {
+        for (var i = 0; i < this.number; i++) {
+            var room = this.rooms[i];
+            if (room.itemKind === itemKind) {
+                if (room.itemNumber > itemCount) {
+                    room.itemKind = itemKind;
+                    room.itemNumber -= itemCount;
+                    databaseHandler.setInventory(this.owner, i, itemKind, room.itemNumber, 0, 0);
+                } else {
+                    room.itemKind = null;
+                    room.itemNumber = 0;
+                    room.itemSkillKind = 0;
+                    room.itemSkilLevel = 0;
+
+                    databaseHandler.makeEmptyInventory(this.owner, i);
+                }
+            }
+        }
+    },
+
     makeEmptyInventory2: function(itemKind, itemCount) {
         var i = 0;
         var a = itemCount;
-        for(i=0; i<this.number; i++){
+        for(i = 0; i < this.number; i++) {
             if(this.rooms[i].itemKind === itemKind){
-		this.rooms[i].itemKind = null;
-		this.rooms[i].itemNumber = 0;
-		this.rooms[i].itemSkillKind = 0;
-		this.rooms[i].itemSkillLevel = 0;
-		databaseHandler.makeEmptyInventory(this.owner, i);
-		if (--a == 0)
-            	    return;
+                this.rooms[i].itemKind = null;
+                this.rooms[i].itemNumber = 0;
+                this.rooms[i].itemSkillKind = 0;
+                this.rooms[i].itemSkillLevel = 0;
+                databaseHandler.makeEmptyInventory(this.owner, i);
+
+                if (--a == 0)
+                    return;
             }
         }   
     },
@@ -112,14 +133,14 @@ module.exports = Inventory = cls.Class.extend({
     	this.putInventory(item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);    
     },
     
-    putInventory: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel){
+    putInventory: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
         itemNumber = (itemNumber) ? itemNumber : 1;
         itemSkillKind = (itemSkillKind) ? itemSkillKind : 0;
         itemSkillLevel = (itemSkillLevel) ? itemSkillLevel : 0;
 
 
         var i=0;
-        if(ItemTypes.isConsumableItem(itemKind) || ItemTypes.isGold(itemKind) || ItemTypes.isCraft(itemKind)){
+        if(ItemTypes.isConsumableItem(itemKind) || ItemTypes.isGold(itemKind)){
             for(i=0; i<this.number; i++){
                 if(this.rooms[i].itemKind === itemKind){
                     this.rooms[i].itemNumber += itemNumber;

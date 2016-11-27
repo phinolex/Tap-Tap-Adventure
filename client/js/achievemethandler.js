@@ -12,6 +12,7 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
             this.progressHideDelay = 1000;
             this.achievements = achievementdata;
             this.showlog = false;
+            this.sent = false;
 
             var i=0;
             _.each(this.achievements, function(achievement){
@@ -33,6 +34,15 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
             return false;
         },
 
+        isAchievementNPC: function(npcKind) {
+            for (var aS in this.achievements) {
+                if (this.achievements[aS].npcId === npcKind)
+                    return true;
+            }
+
+            return false;
+        },
+
         getNPCAchievement: function(achievementId) {
             return _.find(this.achievements, function(q) {
                 return q.id === achievementId;
@@ -48,12 +58,31 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
             });
         },
 
-        achievementAlarmShow: function (achievement, delay) {
+        achievementAlarmShow: function (achievement, delay, type) {
             var $notification = $('#achievement-notification'),
-                $name = $notification.find('.name');
+                $name = $notification.find('.name'),
+                $title = $notification.find('.title');
 
             $notification.removeClass().addClass('active achievement' + 1);
+
+            switch (type) {
+                case "found":
+                    $title.text("Achievement Found!");
+                    $name.text(achievement.name);
+                    break;
+
+                case "completed":
+                    $title.text("Achievement completed!");
+                    break;
+
+                case "progress":
+                    $title.text("Achievement progress: " + achievement.progCount + "/" + achievement.mobCount + "!");
+                    break;
+            }
+
             $name.text(achievement.name);
+
+
 
             setTimeout(function() {
                 $notification.removeClass('active');
@@ -110,22 +139,24 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
                 case "found":
                     achievement = self.getNPCAchievement(achievementId);
                     achievement.found = true;
-                    self.achievementAlarmShow(achievement, self.hideDelay);
+                    achievement.progCount = 0;
+                    self.achievementAlarmShow(achievement, self.hideDelay, type);
                     self.game.app.relistAchievement(achievement);
                     break;
 
                 case "complete":
                     achievement = self.getNPCAchievement(achievementId);
                     achievement.completed = true;
-                    self.achievementAlarmShow(achievement, self.hideDelay);
                     self.game.app.unlockAchievement(achievementId);
+                    self.game.app.addUnlockedCount();
+                    self.achievementAlarmShow(achievement, self.hideDelay, type);
                     break;
 
                 case "progress":
                     achievement = self.getNPCAchievement(achievementId);
                     if (achievement.type == 2) {
-                        self.achievementAlarmShow(achievement, self.progressHideDelay);
                         self.achievements[achievementId].progCount = data[2];
+                        self.achievementAlarmShow(achievement, self.progressHideDelay, type);
                     }
                     break;
             }
@@ -133,14 +164,25 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
             if (this.showlog)
                 this.achievementShowLog();
         },
-        talkToNPC: function(npc){
-            for(var achievementSerial in this.achievements){
-                var achievement = this.achievements[achievementSerial];
-                if(achievement.npcId === npc.kind && !achievement.completed){
-                    this.game.client.sendTalkToNPC(npc.kind, achievement.id);
-                    return npc.talk(true, achievement, false);
+
+        talkToNPC: function(npc) {
+            var a;
+
+            for (var achievementSerial in this.achievements) {
+                if (this.achievements.hasOwnProperty(achievementSerial)) {
+                    var achievement = this.achievements[achievementSerial];
+
+                    if (achievement.npcId == npc.kind) {
+                        a = achievement;
+                        if (!achievement.completed) {
+                            this.game.client.sendTalkToNPC(npc.kind, achievement.id);
+                            return npc.talk(achievement, false);
+                        }
+                    }
                 }
             }
+
+            return npc.talk(a, true);
         }
     });
     return AchievementHandler;

@@ -62,6 +62,21 @@ footer, header, hgroup, menu, nav, section {
     font-style: normal;
 }
 
+#mana {
+    /* Safari 5.1, Chrome 10+ */
+    background: -webkit-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
+}
+
+#mana.white {
+    -moz-animation:flash 0.5s linear 1;
+    -webkit-animation:flash 0.5s linear 1;
+    -o-animation:flash 0.5s linear 1;
+    -ms-animation:flash 0.5s linear 1;
+    animation:flash 0.5s linear 1;
+}
+
 #health {
     /* Safari 5.1, Chrome 10+ */
     background: -webkit-linear-gradient(top, #FF8888, #FF0000);
@@ -404,9 +419,9 @@ footer, header, hgroup, menu, nav, section {
     }
 
     #hpcontainer, #mpcontainer{
-	font-family:'GraphicPixel';
-	color:#e3e3e3;
-	position:absolute;
+        font-family:'GraphicPixel';
+	    color:#e3e3e3;
+	    position:absolute;
         top: 4px;
         width: 176px;
         height: 26px;

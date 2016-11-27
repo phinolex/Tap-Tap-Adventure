@@ -14,8 +14,7 @@
   "game_servers": [{"server": "0.0.0.0", "name": "TTA1"}],
   "server_name" : "TTA1",
   "world_id": 1,
-  "production": "heroku",
   "database": "redis",
-  "kbve_authorization" : false,
-  "generateCollisions": true
+  "generateCollisions": true,
+  "serverVersion": 1
 }

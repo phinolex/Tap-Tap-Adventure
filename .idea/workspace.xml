@@ -2,33 +2,751 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb550f01-0ddd-4624-bd8b-1881f15acc0a" name="Default" comment="Character Dialog changes and certain attempts.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/jquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/lib/require-jquery-backup.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/argscheck.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/base64.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/builder.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/channel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/exec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/exec/proxy.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/init.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/init_b.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/modulemapper.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/platform.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/pluginloader.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/urlutil.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/cordova/utils.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/require-jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/require-jquery11.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/socket.io-1.4.1.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/lib/web.js" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/projectile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/projectile.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/beach.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/boss.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/cave.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/desert.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/dungeon.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/forest.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/lavaland.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/tutorial.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/underthesea1.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/underthesea2.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/veloma.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/village.ogg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/2/icegoblin" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/achievements.png" afterPath="$PROJECT_DIR$/client/img/1/achievements.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/adherer.png" afterPath="$PROJECT_DIR$/client/img/1/adherer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/adhererarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/adhererarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/adhererrobe.png" afterPath="$PROJECT_DIR$/client/img/1/adhererrobe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/adminarmor.png" afterPath="$PROJECT_DIR$/client/img/1/adminarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/agent.png" afterPath="$PROJECT_DIR$/client/img/1/agent.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ancientmanumentnpc.png" afterPath="$PROJECT_DIR$/client/img/1/ancientmanumentnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/angelnpc.png" afterPath="$PROJECT_DIR$/client/img/1/angelnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ant.png" afterPath="$PROJECT_DIR$/client/img/1/ant.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/archerarmor.png" afterPath="$PROJECT_DIR$/client/img/1/archerarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/archerschooluniform.png" afterPath="$PROJECT_DIR$/client/img/1/archerschooluniform.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/axe.png" afterPath="$PROJECT_DIR$/client/img/1/axe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/babyspider.png" afterPath="$PROJECT_DIR$/client/img/1/babyspider.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/common/background.png" afterPath="$PROJECT_DIR$/client/img/common/background.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bamboospear.png" afterPath="$PROJECT_DIR$/client/img/1/bamboospear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/barsheet.png" afterPath="$PROJECT_DIR$/client/img/1/barsheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/basebarcontainer.png" afterPath="$PROJECT_DIR$/client/img/1/basebarcontainer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bastardsword.png" afterPath="$PROJECT_DIR$/client/img/1/bastardsword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bat.png" afterPath="$PROJECT_DIR$/client/img/1/bat.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/beachnpc.png" afterPath="$PROJECT_DIR$/client/img/1/beachnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bearseonbiarmor.png" afterPath="$PROJECT_DIR$/client/img/1/bearseonbiarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/beautifullife.png" afterPath="$PROJECT_DIR$/client/img/1/beautifullife.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bee.png" afterPath="$PROJECT_DIR$/client/img/1/bee.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/beearmor.png" afterPath="$PROJECT_DIR$/client/img/1/beearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/beetle.png" afterPath="$PROJECT_DIR$/client/img/1/beetle.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/beetlearmor.png" afterPath="$PROJECT_DIR$/client/img/1/beetlearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/blackpirateskeleton.png" afterPath="$PROJECT_DIR$/client/img/1/blackpirateskeleton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/blackspiderarmor.png" afterPath="$PROJECT_DIR$/client/img/1/blackspiderarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/blackwizard.png" afterPath="$PROJECT_DIR$/client/img/1/blackwizard.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/blazespider.png" afterPath="$PROJECT_DIR$/client/img/1/blazespider.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bloodbow.png" afterPath="$PROJECT_DIR$/client/img/1/bloodbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bloodsucking.png" afterPath="$PROJECT_DIR$/client/img/1/bloodsucking.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluebikinigirlnpc.png" afterPath="$PROJECT_DIR$/client/img/1/bluebikinigirlnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluecockroach.png" afterPath="$PROJECT_DIR$/client/img/1/bluecockroach.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluedamboarmor.png" afterPath="$PROJECT_DIR$/client/img/1/bluedamboarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluepiratearmor.png" afterPath="$PROJECT_DIR$/client/img/1/bluepiratearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluepreta.png" afterPath="$PROJECT_DIR$/client/img/1/bluepreta.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluescimitar.png" afterPath="$PROJECT_DIR$/client/img/1/bluescimitar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluestoremannpc.png" afterPath="$PROJECT_DIR$/client/img/1/bluestoremannpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluesword.png" afterPath="$PROJECT_DIR$/client/img/1/bluesword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluewingarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/bluewingarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bluewingarmor.png" afterPath="$PROJECT_DIR$/client/img/1/bluewingarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/border.png" afterPath="$PROJECT_DIR$/client/img/1/border.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/boss.png" afterPath="$PROJECT_DIR$/client/img/1/boss.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/boxingman.png" afterPath="$PROJECT_DIR$/client/img/1/boxingman.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/breaker.png" afterPath="$PROJECT_DIR$/client/img/1/breaker.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bridalmask.png" afterPath="$PROJECT_DIR$/client/img/1/bridalmask.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bronzemedal.png" afterPath="$PROJECT_DIR$/client/img/1/bronzemedal.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/brownmouse.png" afterPath="$PROJECT_DIR$/client/img/1/brownmouse.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/bucklerbenef.png" afterPath="$PROJECT_DIR$/client/img/1/bucklerbenef.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/burgerarmor.png" afterPath="$PROJECT_DIR$/client/img/1/burgerarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/burningstrike.png" afterPath="$PROJECT_DIR$/client/img/1/burningstrike.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/butcherknife.png" afterPath="$PROJECT_DIR$/client/img/1/butcherknife.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cactus.png" afterPath="$PROJECT_DIR$/client/img/1/cactus.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cactusaxe.png" afterPath="$PROJECT_DIR$/client/img/1/cactusaxe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/candybar.png" afterPath="$PROJECT_DIR$/client/img/1/candybar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/captainbow.png" afterPath="$PROJECT_DIR$/client/img/1/captainbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cat.png" afterPath="$PROJECT_DIR$/client/img/1/cat.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/catarmor.png" afterPath="$PROJECT_DIR$/client/img/1/catarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/characterbutton.png" afterPath="$PROJECT_DIR$/client/img/1/characterbutton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/characterdialog.png" afterPath="$PROJECT_DIR$/client/img/1/characterdialog.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/characterdialogsheet.png" afterPath="$PROJECT_DIR$/client/img/1/characterdialogsheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cheoliarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/cheoliarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cheoliarmor.png" afterPath="$PROJECT_DIR$/client/img/1/cheoliarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/chest.png" afterPath="$PROJECT_DIR$/client/img/1/chest.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/christmasarmor.png" afterPath="$PROJECT_DIR$/client/img/1/christmasarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/clam.png" afterPath="$PROJECT_DIR$/client/img/1/clam.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/clotharmor.png" afterPath="$PROJECT_DIR$/client/img/1/clotharmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cobra.png" afterPath="$PROJECT_DIR$/client/img/1/cobra.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cockroachsuit.png" afterPath="$PROJECT_DIR$/client/img/1/cockroachsuit.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/coder.png" afterPath="$PROJECT_DIR$/client/img/1/coder.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cokearmor.png" afterPath="$PROJECT_DIR$/client/img/1/cokearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/comb.png" afterPath="$PROJECT_DIR$/client/img/1/comb.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/combatuniform.png" afterPath="$PROJECT_DIR$/client/img/1/combatuniform.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/conferencecall.png" afterPath="$PROJECT_DIR$/client/img/1/conferencecall.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/crab.png" afterPath="$PROJECT_DIR$/client/img/1/crab.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/criticaleffect.png" afterPath="$PROJECT_DIR$/client/img/1/criticaleffect.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/criticalstrike.png" afterPath="$PROJECT_DIR$/client/img/1/criticalstrike.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/crystalarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/crystalarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/crystalarmor.png" afterPath="$PROJECT_DIR$/client/img/1/crystalarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/crystalbow.png" afterPath="$PROJECT_DIR$/client/img/1/crystalbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/crystalscolpion.png" afterPath="$PROJECT_DIR$/client/img/1/crystalscolpion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cursedhahoemask.png" afterPath="$PROJECT_DIR$/client/img/1/cursedhahoemask.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/cursedjangseung.png" afterPath="$PROJECT_DIR$/client/img/1/cursedjangseung.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/damboarmor.png" afterPath="$PROJECT_DIR$/client/img/1/damboarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/darkogre.png" afterPath="$PROJECT_DIR$/client/img/1/darkogre.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/darkregion.png" afterPath="$PROJECT_DIR$/client/img/1/darkregion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/darkregionillusion.png" afterPath="$PROJECT_DIR$/client/img/1/darkregionillusion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/darkscolpion.png" afterPath="$PROJECT_DIR$/client/img/1/darkscolpion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/darkskeleton.png" afterPath="$PROJECT_DIR$/client/img/1/darkskeleton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/daywalker.png" afterPath="$PROJECT_DIR$/client/img/1/daywalker.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/death.png" afterPath="$PROJECT_DIR$/client/img/1/death.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/deathbow.png" afterPath="$PROJECT_DIR$/client/img/1/deathbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/deathknight.png" afterPath="$PROJECT_DIR$/client/img/1/deathknight.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/desertnpc.png" afterPath="$PROJECT_DIR$/client/img/1/desertnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/desertscolpion.png" afterPath="$PROJECT_DIR$/client/img/1/desertscolpion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/devilkazya.png" afterPath="$PROJECT_DIR$/client/img/1/devilkazya.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/devilkazyaarmor.png" afterPath="$PROJECT_DIR$/client/img/1/devilkazyaarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/devilkazyasword.png" afterPath="$PROJECT_DIR$/client/img/1/devilkazyasword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/dinosaurarmor.png" afterPath="$PROJECT_DIR$/client/img/1/dinosaurarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/doctor.png" afterPath="$PROJECT_DIR$/client/img/1/doctor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/dovakinarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/dovakinarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/dovakinarmor.png" afterPath="$PROJECT_DIR$/client/img/1/dovakinarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/dragonarmor.png" afterPath="$PROJECT_DIR$/client/img/1/dragonarmor.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dump.rdb" afterPath="$PROJECT_DIR$/dump.rdb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/earthworm.png" afterPath="$PROJECT_DIR$/client/img/1/earthworm.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/elfnpc.png" afterPath="$PROJECT_DIR$/client/img/1/elfnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/eliminator.png" afterPath="$PROJECT_DIR$/client/img/1/eliminator.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/enel.png" afterPath="$PROJECT_DIR$/client/img/1/enel.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/enelarmor.png" afterPath="$PROJECT_DIR$/client/img/1/enelarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/eneltrident.png" afterPath="$PROJECT_DIR$/client/img/1/eneltrident.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/evasion.png" afterPath="$PROJECT_DIR$/client/img/1/evasion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/evilarmor.png" afterPath="$PROJECT_DIR$/client/img/1/evilarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/expbar.png" afterPath="$PROJECT_DIR$/client/img/1/expbar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/eye.png" afterPath="$PROJECT_DIR$/client/img/1/eye.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/fairynpc.png" afterPath="$PROJECT_DIR$/client/img/1/fairynpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/fallenarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/fallenarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/fallenarmor.png" afterPath="$PROJECT_DIR$/client/img/1/fallenarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/firebenef.png" afterPath="$PROJECT_DIR$/client/img/1/firebenef.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/firefox.png" afterPath="$PROJECT_DIR$/client/img/1/firefox.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/fireplay.png" afterPath="$PROJECT_DIR$/client/img/1/fireplay.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/fireshot.png" afterPath="$PROJECT_DIR$/client/img/1/fireshot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/firespider.png" afterPath="$PROJECT_DIR$/client/img/1/firespider.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/firesword.png" afterPath="$PROJECT_DIR$/client/img/1/firesword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/firstsonangelnpc.png" afterPath="$PROJECT_DIR$/client/img/1/firstsonangelnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/fisherman.png" afterPath="$PROJECT_DIR$/client/img/1/fisherman.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/flaredance.png" afterPath="$PROJECT_DIR$/client/img/1/flaredance.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/flaredanceeffect.png" afterPath="$PROJECT_DIR$/client/img/1/flaredanceeffect.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/flaredeathknight.png" afterPath="$PROJECT_DIR$/client/img/1/flaredeathknight.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/fluffy.png" afterPath="$PROJECT_DIR$/client/img/1/fluffy.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/forestbow.png" afterPath="$PROJECT_DIR$/client/img/1/forestbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/forestdragon.png" afterPath="$PROJECT_DIR$/client/img/1/forestdragon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/forestguardiansword.png" afterPath="$PROJECT_DIR$/client/img/1/forestguardiansword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/forestnpc.png" afterPath="$PROJECT_DIR$/client/img/1/forestnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/frankensteinarmor.png" afterPath="$PROJECT_DIR$/client/img/1/frankensteinarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/friedpotatoarmor.png" afterPath="$PROJECT_DIR$/client/img/1/friedpotatoarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/frog.png" afterPath="$PROJECT_DIR$/client/img/1/frog.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/frogarmor.png" afterPath="$PROJECT_DIR$/client/img/1/frogarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/frostarmor.png" afterPath="$PROJECT_DIR$/client/img/1/frostarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/frostqueen.png" afterPath="$PROJECT_DIR$/client/img/1/frostqueen.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/gayarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/gayarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/gayarmor.png" afterPath="$PROJECT_DIR$/client/img/1/gayarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/gaybow.png" afterPath="$PROJECT_DIR$/client/img/1/gaybow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/gbwingarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/gbwingarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/gbwingarmor.png" afterPath="$PROJECT_DIR$/client/img/1/gbwingarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ghostrider.png" afterPath="$PROJECT_DIR$/client/img/1/ghostrider.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/goblin.png" afterPath="$PROJECT_DIR$/client/img/1/goblin.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/goldaxe.png" afterPath="$PROJECT_DIR$/client/img/1/goldaxe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/goldenarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/goldenarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/goldenarmor.png" afterPath="$PROJECT_DIR$/client/img/1/goldenarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/goldenbow.png" afterPath="$PROJECT_DIR$/client/img/1/goldenbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/goldensword.png" afterPath="$PROJECT_DIR$/client/img/1/goldensword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/goldgolem.png" afterPath="$PROJECT_DIR$/client/img/1/goldgolem.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/goldmedal.png" afterPath="$PROJECT_DIR$/client/img/1/goldmedal.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/golem.png" afterPath="$PROJECT_DIR$/client/img/1/golem.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greenarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/greenarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greenarmor.png" afterPath="$PROJECT_DIR$/client/img/1/greenarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greenbow.png" afterPath="$PROJECT_DIR$/client/img/1/greenbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greendamboarmor.png" afterPath="$PROJECT_DIR$/client/img/1/greendamboarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greenfish.png" afterPath="$PROJECT_DIR$/client/img/1/greenfish.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greenlightbow.png" afterPath="$PROJECT_DIR$/client/img/1/greenlightbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greenlightsaber.png" afterPath="$PROJECT_DIR$/client/img/1/greenlightsaber.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greenpirateskeleton.png" afterPath="$PROJECT_DIR$/client/img/1/greenpirateskeleton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greenwingarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/greenwingarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/greenwingarmor.png" afterPath="$PROJECT_DIR$/client/img/1/greenwingarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/guard.png" afterPath="$PROJECT_DIR$/client/img/1/guard.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/guardarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/guardarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/guardarmor.png" afterPath="$PROJECT_DIR$/client/img/1/guardarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/halberd.png" afterPath="$PROJECT_DIR$/client/img/1/halberd.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/halloweenjkarmor.png" afterPath="$PROJECT_DIR$/client/img/1/halloweenjkarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/hammer.png" afterPath="$PROJECT_DIR$/client/img/1/hammer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/hand.png" afterPath="$PROJECT_DIR$/client/img/1/hand.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/heal.png" afterPath="$PROJECT_DIR$/client/img/1/heal.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/healactiveicon.png" afterPath="$PROJECT_DIR$/client/img/1/healactiveicon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/healeffect.png" afterPath="$PROJECT_DIR$/client/img/1/healeffect.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/hellspider.png" afterPath="$PROJECT_DIR$/client/img/1/hellspider.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/helpbutton.png" afterPath="$PROJECT_DIR$/client/img/1/helpbutton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/hermitcrab.png" afterPath="$PROJECT_DIR$/client/img/1/hermitcrab.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/hobgoblin.png" afterPath="$PROJECT_DIR$/client/img/1/hobgoblin.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/hongcheol.png" afterPath="$PROJECT_DIR$/client/img/1/hongcheol.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/hongcheolarmor.png" afterPath="$PROJECT_DIR$/client/img/1/hongcheolarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/hpbar.png" afterPath="$PROJECT_DIR$/client/img/1/hpbar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/huniarmor.png" afterPath="$PROJECT_DIR$/client/img/1/huniarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/hunterbow.png" afterPath="$PROJECT_DIR$/client/img/1/hunterbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/iamverycoldnpc.png" afterPath="$PROJECT_DIR$/client/img/1/iamverycoldnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/iceelfnpc.png" afterPath="$PROJECT_DIR$/client/img/1/iceelfnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/icegoblin.png" afterPath="$PROJECT_DIR$/client/img/1/icegoblin.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/icegolem.png" afterPath="$PROJECT_DIR$/client/img/1/icegolem.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/iceknight.png" afterPath="$PROJECT_DIR$/client/img/1/iceknight.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/icerose.png" afterPath="$PROJECT_DIR$/client/img/1/icerose.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/icevulture.png" afterPath="$PROJECT_DIR$/client/img/1/icevulture.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/infectedguard.png" afterPath="$PROJECT_DIR$/client/img/1/infectedguard.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/inventory.png" afterPath="$PROJECT_DIR$/client/img/1/inventory.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ironbow.png" afterPath="$PROJECT_DIR$/client/img/1/ironbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ironknightarmor.png" afterPath="$PROJECT_DIR$/client/img/1/ironknightarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ironogre.png" afterPath="$PROJECT_DIR$/client/img/1/ironogre.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-adhererarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-adhererarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-adhererrobe.png" afterPath="$PROJECT_DIR$/client/img/1/item-adhererrobe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-adminarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-adminarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-archerarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-archerarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-archerschooluniform.png" afterPath="$PROJECT_DIR$/client/img/1/item-archerschooluniform.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-armorbinding.png" afterPath="$PROJECT_DIR$/client/img/1/item-armorbinding.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-armorcommon.png" afterPath="$PROJECT_DIR$/client/img/1/item-armorcommon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-armorpatches.png" afterPath="$PROJECT_DIR$/client/img/1/item-armorpatches.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-armorrare.png" afterPath="$PROJECT_DIR$/client/img/1/item-armorrare.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-armoruncommon.png" afterPath="$PROJECT_DIR$/client/img/1/item-armoruncommon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-axe.png" afterPath="$PROJECT_DIR$/client/img/1/item-axe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bamboospear.png" afterPath="$PROJECT_DIR$/client/img/1/item-bamboospear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bastardsword.png" afterPath="$PROJECT_DIR$/client/img/1/item-bastardsword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bearseonbiarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-bearseonbiarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-beautifullife.png" afterPath="$PROJECT_DIR$/client/img/1/item-beautifullife.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-beearmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-beearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-beetlearmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-beetlearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bigflask.png" afterPath="$PROJECT_DIR$/client/img/1/item-bigflask.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-blackpotion.png" afterPath="$PROJECT_DIR$/client/img/1/item-blackpotion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-blackspiderarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-blackspiderarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bloodbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-bloodbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bluedamboarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-bluedamboarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bluepiratearmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-bluepiratearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bluescimitar.png" afterPath="$PROJECT_DIR$/client/img/1/item-bluescimitar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bluesword.png" afterPath="$PROJECT_DIR$/client/img/1/item-bluesword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bluewingarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-bluewingarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bluewingarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-bluewingarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-book.png" afterPath="$PROJECT_DIR$/client/img/1/item-book.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bowcommon.png" afterPath="$PROJECT_DIR$/client/img/1/item-bowcommon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bowlimb.png" afterPath="$PROJECT_DIR$/client/img/1/item-bowlimb.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bowrare.png" afterPath="$PROJECT_DIR$/client/img/1/item-bowrare.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bowstring.png" afterPath="$PROJECT_DIR$/client/img/1/item-bowstring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bowuncommon.png" afterPath="$PROJECT_DIR$/client/img/1/item-bowuncommon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-branch.png" afterPath="$PROJECT_DIR$/client/img/1/item-branch.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-breaker.png" afterPath="$PROJECT_DIR$/client/img/1/item-breaker.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-bridalmask.png" afterPath="$PROJECT_DIR$/client/img/1/item-bridalmask.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-burger.png" afterPath="$PROJECT_DIR$/client/img/1/item-burger.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-burgerarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-burgerarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-butcherknife.png" afterPath="$PROJECT_DIR$/client/img/1/item-butcherknife.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-cactusaxe.png" afterPath="$PROJECT_DIR$/client/img/1/item-cactusaxe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-cake.png" afterPath="$PROJECT_DIR$/client/img/1/item-cake.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-candybar.png" afterPath="$PROJECT_DIR$/client/img/1/item-candybar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-captainbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-captainbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-catarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-catarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-cd.png" afterPath="$PROJECT_DIR$/client/img/1/item-cd.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-cheoliarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-cheoliarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-cheoliarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-cheoliarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-christmasarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-christmasarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-cloth.png" afterPath="$PROJECT_DIR$/client/img/1/item-cloth.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-clotharmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-clotharmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-cockroachsuit.png" afterPath="$PROJECT_DIR$/client/img/1/item-cockroachsuit.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-cokearmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-cokearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-comb.png" afterPath="$PROJECT_DIR$/client/img/1/item-comb.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-combatuniform.png" afterPath="$PROJECT_DIR$/client/img/1/item-combatuniform.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-conferencecall.png" afterPath="$PROJECT_DIR$/client/img/1/item-conferencecall.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-crystalarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-crystalarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-crystalarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-crystalarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-crystalbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-crystalbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-damboarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-damboarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-daywalker.png" afterPath="$PROJECT_DIR$/client/img/1/item-daywalker.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-deathbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-deathbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-devilkazyaarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-devilkazyaarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-devilkazyasword.png" afterPath="$PROJECT_DIR$/client/img/1/item-devilkazyasword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-diamondring.png" afterPath="$PROJECT_DIR$/client/img/1/item-diamondring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-dinosaurarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-dinosaurarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-dolring.png" afterPath="$PROJECT_DIR$/client/img/1/item-dolring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-dovakinarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-dovakinarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-dovakinarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-dovakinarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-dragonarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-dragonarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-element.png" afterPath="$PROJECT_DIR$/client/img/1/item-element.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-emeraldring.png" afterPath="$PROJECT_DIR$/client/img/1/item-emeraldring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-enelarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-enelarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-eneltrident.png" afterPath="$PROJECT_DIR$/client/img/1/item-eneltrident.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-essentialrage.png" afterPath="$PROJECT_DIR$/client/img/1/item-essentialrage.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-evilarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-evilarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-fallenarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-fallenarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-fallenarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-fallenarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-fireplay.png" afterPath="$PROJECT_DIR$/client/img/1/item-fireplay.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-firepotion.png" afterPath="$PROJECT_DIR$/client/img/1/item-firepotion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-fireshot.png" afterPath="$PROJECT_DIR$/client/img/1/item-fireshot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-firesword.png" afterPath="$PROJECT_DIR$/client/img/1/item-firesword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-flask.png" afterPath="$PROJECT_DIR$/client/img/1/item-flask.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-forestbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-forestbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-forestguardiansword.png" afterPath="$PROJECT_DIR$/client/img/1/item-forestguardiansword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-frankensteinarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-frankensteinarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-friedpotatoarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-friedpotatoarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-frogarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-frogarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-frostarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-frostarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-gayarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-gayarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-gayarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-gayarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-gaybow.png" afterPath="$PROJECT_DIR$/client/img/1/item-gaybow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-gbwingarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-gbwingarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-gbwingarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-gbwingarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-ghostrider.png" afterPath="$PROJECT_DIR$/client/img/1/item-ghostrider.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-gold.png" afterPath="$PROJECT_DIR$/client/img/1/item-gold.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-goldaxe.png" afterPath="$PROJECT_DIR$/client/img/1/item-goldaxe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-goldenarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-goldenarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-goldenarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-goldenarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-goldenbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-goldenbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-goldensword.png" afterPath="$PROJECT_DIR$/client/img/1/item-goldensword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-goldring.png" afterPath="$PROJECT_DIR$/client/img/1/item-goldring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-greenarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-greenarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-greenarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-greenarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-greenbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-greenbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-greendamboarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-greendamboarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-greenlightbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-greenlightbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-greenlightsaber.png" afterPath="$PROJECT_DIR$/client/img/1/item-greenlightsaber.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-greenpendant.png" afterPath="$PROJECT_DIR$/client/img/1/item-greenpendant.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-greenwingarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-greenwingarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-greenwingarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-greenwingarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-guardarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-guardarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-guardarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-guardarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-halberd.png" afterPath="$PROJECT_DIR$/client/img/1/item-halberd.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-halloweenjkarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-halloweenjkarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-hammer.png" afterPath="$PROJECT_DIR$/client/img/1/item-hammer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-hongcheolarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-hongcheolarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-huniarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-huniarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-hunterbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-hunterbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-icerose.png" afterPath="$PROJECT_DIR$/client/img/1/item-icerose.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-ironbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-ironbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-ironknightarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-ironknightarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-justicebow.png" afterPath="$PROJECT_DIR$/client/img/1/item-justicebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-justicehammer.png" afterPath="$PROJECT_DIR$/client/img/1/item-justicehammer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-leaf.png" afterPath="$PROJECT_DIR$/client/img/1/item-leaf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-leatherarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-leatherarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-leatherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-leatherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-legolasarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-legolasarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-loveactring.png" afterPath="$PROJECT_DIR$/client/img/1/item-loveactring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-machete.png" afterPath="$PROJECT_DIR$/client/img/1/item-machete.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-magicspear.png" afterPath="$PROJECT_DIR$/client/img/1/item-magicspear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-mailarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-mailarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-mailarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-mailarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-marblependant.png" afterPath="$PROJECT_DIR$/client/img/1/item-marblependant.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-marinebow.png" afterPath="$PROJECT_DIR$/client/img/1/item-marinebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-memme.png" afterPath="$PROJECT_DIR$/client/img/1/item-memme.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-mermaidbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-mermaidbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-mineral.png" afterPath="$PROJECT_DIR$/client/img/1/item-mineral.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-miniseadragonarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-miniseadragonarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-morningstar.png" afterPath="$PROJECT_DIR$/client/img/1/item-morningstar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-mountforestdragon.png" afterPath="$PROJECT_DIR$/client/img/1/item-mountforestdragon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-mountseadragon.png" afterPath="$PROJECT_DIR$/client/img/1/item-mountseadragon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-mountwhitetiger.png" afterPath="$PROJECT_DIR$/client/img/1/item-mountwhitetiger.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-ninjaarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-ninjaarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-paewoldo.png" afterPath="$PROJECT_DIR$/client/img/1/item-paewoldo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-paladinarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-paladinarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-pearlpendant.png" afterPath="$PROJECT_DIR$/client/img/1/item-pearlpendant.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-pearlring.png" afterPath="$PROJECT_DIR$/client/img/1/item-pearlring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-pendant1.png" afterPath="$PROJECT_DIR$/client/img/1/item-pendant1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-pinkcockroacharmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-pinkcockroacharmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-pinksword.png" afterPath="$PROJECT_DIR$/client/img/1/item-pinksword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-piratearcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-piratearcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-pirateking.png" afterPath="$PROJECT_DIR$/client/img/1/item-pirateking.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-plasticbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-plasticbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-platearcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-platearcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-platearmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-platearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-plunger.png" afterPath="$PROJECT_DIR$/client/img/1/item-plunger.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-portalarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-portalarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-powerarmour.png" afterPath="$PROJECT_DIR$/client/img/1/item-powerarmour.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-powersword.png" afterPath="$PROJECT_DIR$/client/img/1/item-powersword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-purplecloudkallege.png" afterPath="$PROJECT_DIR$/client/img/1/item-purplecloudkallege.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-rabbitarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-rabbitarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-radisharmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-radisharmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-rainbowapro.png" afterPath="$PROJECT_DIR$/client/img/1/item-rainbowapro.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-rainbowsword.png" afterPath="$PROJECT_DIR$/client/img/1/item-rainbowsword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-ratarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-ratarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-ratarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-ratarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-redarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-redarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-redbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-reddamboarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-reddamboarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redenelbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-redenelbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redguardarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-redguardarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redguardarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-redguardarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redlightbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-redlightbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redlightsaber.png" afterPath="$PROJECT_DIR$/client/img/1/item-redlightsaber.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redmetalbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-redmetalbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redmetalsword.png" afterPath="$PROJECT_DIR$/client/img/1/item-redmetalsword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redsickle.png" afterPath="$PROJECT_DIR$/client/img/1/item-redsickle.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redsicklebow.png" afterPath="$PROJECT_DIR$/client/img/1/item-redsicklebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redsword.png" afterPath="$PROJECT_DIR$/client/img/1/item-redsword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redwingarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-redwingarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-redwingarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-redwingarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-regionarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-regionarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-ring1.png" afterPath="$PROJECT_DIR$/client/img/1/item-ring1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-robocoparmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-robocoparmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-rock.png" afterPath="$PROJECT_DIR$/client/img/1/item-rock.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-rose.png" afterPath="$PROJECT_DIR$/client/img/1/item-rose.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-rosebow.png" afterPath="$PROJECT_DIR$/client/img/1/item-rosebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-royalazalea.png" afterPath="$PROJECT_DIR$/client/img/1/item-royalazalea.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-rubyring.png" afterPath="$PROJECT_DIR$/client/img/1/item-rubyring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-rudolfarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-rudolfarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-sapphirering.png" afterPath="$PROJECT_DIR$/client/img/1/item-sapphirering.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-schooluniform.png" afterPath="$PROJECT_DIR$/client/img/1/item-schooluniform.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-scimitar.png" afterPath="$PROJECT_DIR$/client/img/1/item-scimitar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-seadragonarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-seadragonarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-seahorsebow.png" afterPath="$PROJECT_DIR$/client/img/1/item-seahorsebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-searage.png" afterPath="$PROJECT_DIR$/client/img/1/item-searage.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-seed.png" afterPath="$PROJECT_DIR$/client/img/1/item-seed.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-shadowregionarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-shadowregionarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-sickle.png" afterPath="$PROJECT_DIR$/client/img/1/item-sickle.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-sicklebow.png" afterPath="$PROJECT_DIR$/client/img/1/item-sicklebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-sidesword.png" afterPath="$PROJECT_DIR$/client/img/1/item-sidesword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-skylightbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-skylightbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-skylightsaber.png" afterPath="$PROJECT_DIR$/client/img/1/item-skylightsaber.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-snowfoxarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-snowfoxarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-snowfoxarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-snowfoxarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-snowmanarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-snowmanarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-snowpotion.png" afterPath="$PROJECT_DIR$/client/img/1/item-snowpotion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-spear.png" afterPath="$PROJECT_DIR$/client/img/1/item-spear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-spiritring.png" afterPath="$PROJECT_DIR$/client/img/1/item-spiritring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-sproutring.png" afterPath="$PROJECT_DIR$/client/img/1/item-sproutring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-squeakyhammer.png" afterPath="$PROJECT_DIR$/client/img/1/item-squeakyhammer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-squidarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-squidarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-sword1.png" afterPath="$PROJECT_DIR$/client/img/1/item-sword1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-sword2.png" afterPath="$PROJECT_DIR$/client/img/1/item-sword2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-taekwondo.png" afterPath="$PROJECT_DIR$/client/img/1/item-taekwondo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-tamagotchiring.png" afterPath="$PROJECT_DIR$/client/img/1/item-tamagotchiring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-thiefarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-thiefarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-tigerarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-tigerarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-topazring.png" afterPath="$PROJECT_DIR$/client/img/1/item-topazring.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-trident.png" afterPath="$PROJECT_DIR$/client/img/1/item-trident.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-typhoon.png" afterPath="$PROJECT_DIR$/client/img/1/item-typhoon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-violetbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-violetbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-watermelonbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-watermelonbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-weaponblade.png" afterPath="$PROJECT_DIR$/client/img/1/item-weaponblade.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-weaponcommon.png" afterPath="$PROJECT_DIR$/client/img/1/item-weaponcommon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-weaponhilt.png" afterPath="$PROJECT_DIR$/client/img/1/item-weaponhilt.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-weaponrare.png" afterPath="$PROJECT_DIR$/client/img/1/item-weaponrare.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-weaponuncommon.png" afterPath="$PROJECT_DIR$/client/img/1/item-weaponuncommon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-weastaff.png" afterPath="$PROJECT_DIR$/client/img/1/item-weastaff.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-whip.png" afterPath="$PROJECT_DIR$/client/img/1/item-whip.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-whitearcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-whitearcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-whitearmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-whitearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-wizardrobe.png" afterPath="$PROJECT_DIR$/client/img/1/item-wizardrobe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-wolfarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-wolfarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-wolfarmor.png" afterPath="$PROJECT_DIR$/client/img/1/item-wolfarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-wood.png" afterPath="$PROJECT_DIR$/client/img/1/item-wood.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/item-woodenbow.png" afterPath="$PROJECT_DIR$/client/img/1/item-woodenbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/jirisanmoonbear.png" afterPath="$PROJECT_DIR$/client/img/1/jirisanmoonbear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/justicebow.png" afterPath="$PROJECT_DIR$/client/img/1/justicebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/justicehammer.png" afterPath="$PROJECT_DIR$/client/img/1/justicehammer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/kaonashi.png" afterPath="$PROJECT_DIR$/client/img/1/kaonashi.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/king.png" afterPath="$PROJECT_DIR$/client/img/1/king.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/lavanpc.png" afterPath="$PROJECT_DIR$/client/img/1/lavanpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/leatherarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/leatherarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/leatherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/leatherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/legolasarmor.png" afterPath="$PROJECT_DIR$/client/img/1/legolasarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/lightningguardian.png" afterPath="$PROJECT_DIR$/client/img/1/lightningguardian.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/livingarmor.png" afterPath="$PROJECT_DIR$/client/img/1/livingarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/loot.png" afterPath="$PROJECT_DIR$/client/img/1/loot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/machete.png" afterPath="$PROJECT_DIR$/client/img/1/machete.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/magicspear.png" afterPath="$PROJECT_DIR$/client/img/1/magicspear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/mailarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/mailarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/mailarmor.png" afterPath="$PROJECT_DIR$/client/img/1/mailarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/main.png" afterPath="$PROJECT_DIR$/client/img/1/main.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/maintwo.png" afterPath="$PROJECT_DIR$/client/img/1/maintwo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/mantis.png" afterPath="$PROJECT_DIR$/client/img/1/mantis.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/marinebow.png" afterPath="$PROJECT_DIR$/client/img/1/marinebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/memme.png" afterPath="$PROJECT_DIR$/client/img/1/memme.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/mermaid.png" afterPath="$PROJECT_DIR$/client/img/1/mermaid.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/mermaidbow.png" afterPath="$PROJECT_DIR$/client/img/1/mermaidbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/mermaidnpc.png" afterPath="$PROJECT_DIR$/client/img/1/mermaidnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/mimic.png" afterPath="$PROJECT_DIR$/client/img/1/mimic.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/minidragon.png" afterPath="$PROJECT_DIR$/client/img/1/minidragon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/miniemperor.png" afterPath="$PROJECT_DIR$/client/img/1/miniemperor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/miniiceknight.png" afterPath="$PROJECT_DIR$/client/img/1/miniiceknight.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/miniknight.png" afterPath="$PROJECT_DIR$/client/img/1/miniknight.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/miniseadragon.png" afterPath="$PROJECT_DIR$/client/img/1/miniseadragon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/miniseadragonarmor.png" afterPath="$PROJECT_DIR$/client/img/1/miniseadragonarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/mojojojonpc.png" afterPath="$PROJECT_DIR$/client/img/1/mojojojonpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/moleking.png" afterPath="$PROJECT_DIR$/client/img/1/moleking.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/momangelnpc.png" afterPath="$PROJECT_DIR$/client/img/1/momangelnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/moreinventorybutton.png" afterPath="$PROJECT_DIR$/client/img/1/moreinventorybutton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/morningstar.png" afterPath="$PROJECT_DIR$/client/img/1/morningstar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/nightmareregion.png" afterPath="$PROJECT_DIR$/client/img/1/nightmareregion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ninjaarmor.png" afterPath="$PROJECT_DIR$/client/img/1/ninjaarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/nyan.png" afterPath="$PROJECT_DIR$/client/img/1/nyan.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/octocat.png" afterPath="$PROJECT_DIR$/client/img/1/octocat.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/octopus.png" afterPath="$PROJECT_DIR$/client/img/1/octopus.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/oddeyecat.png" afterPath="$PROJECT_DIR$/client/img/1/oddeyecat.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ogre.png" afterPath="$PROJECT_DIR$/client/img/1/ogre.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ogrelord.png" afterPath="$PROJECT_DIR$/client/img/1/ogrelord.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/oldogre.png" afterPath="$PROJECT_DIR$/client/img/1/oldogre.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/orc.png" afterPath="$PROJECT_DIR$/client/img/1/orc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/paewoldo.png" afterPath="$PROJECT_DIR$/client/img/1/paewoldo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/pain.png" afterPath="$PROJECT_DIR$/client/img/1/pain.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/paladinarmor.png" afterPath="$PROJECT_DIR$/client/img/1/paladinarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/penguin.png" afterPath="$PROJECT_DIR$/client/img/1/penguin.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/pierrot.png" afterPath="$PROJECT_DIR$/client/img/1/pierrot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/pinkcockroacharmor.png" afterPath="$PROJECT_DIR$/client/img/1/pinkcockroacharmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/pinkelf.png" afterPath="$PROJECT_DIR$/client/img/1/pinkelf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/pinksword.png" afterPath="$PROJECT_DIR$/client/img/1/pinksword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/piratearcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/piratearcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/piratecaptain.png" afterPath="$PROJECT_DIR$/client/img/1/piratecaptain.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/pirategirlnpc.png" afterPath="$PROJECT_DIR$/client/img/1/pirategirlnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/pirateking.png" afterPath="$PROJECT_DIR$/client/img/1/pirateking.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/pirateskeleton.png" afterPath="$PROJECT_DIR$/client/img/1/pirateskeleton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/plasticbow.png" afterPath="$PROJECT_DIR$/client/img/1/plasticbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/platearcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/platearcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/platearmor.png" afterPath="$PROJECT_DIR$/client/img/1/platearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/plunger.png" afterPath="$PROJECT_DIR$/client/img/1/plunger.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/poisonspider.png" afterPath="$PROJECT_DIR$/client/img/1/poisonspider.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/portalarmor.png" afterPath="$PROJECT_DIR$/client/img/1/portalarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/powerarmour.png" afterPath="$PROJECT_DIR$/client/img/1/powerarmour.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/powersword.png" afterPath="$PROJECT_DIR$/client/img/1/powersword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/preta.png" afterPath="$PROJECT_DIR$/client/img/1/preta.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/priest.png" afterPath="$PROJECT_DIR$/client/img/1/priest.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/provocationeffect.png" afterPath="$PROJECT_DIR$/client/img/1/provocationeffect.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/purplecloudkallege.png" afterPath="$PROJECT_DIR$/client/img/1/purplecloudkallege.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/purplepreta.png" afterPath="$PROJECT_DIR$/client/img/1/purplepreta.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/queenant.png" afterPath="$PROJECT_DIR$/client/img/1/queenant.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/queenspider.png" afterPath="$PROJECT_DIR$/client/img/1/queenspider.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rabbitarmor.png" afterPath="$PROJECT_DIR$/client/img/1/rabbitarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/radisharmor.png" afterPath="$PROJECT_DIR$/client/img/1/radisharmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rainbowapro.png" afterPath="$PROJECT_DIR$/client/img/1/rainbowapro.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rainbowsword.png" afterPath="$PROJECT_DIR$/client/img/1/rainbowsword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rat.png" afterPath="$PROJECT_DIR$/client/img/1/rat.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ratarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/ratarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/ratarmor.png" afterPath="$PROJECT_DIR$/client/img/1/ratarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/redarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redarmor.png" afterPath="$PROJECT_DIR$/client/img/1/redarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redbikinigirlnpc.png" afterPath="$PROJECT_DIR$/client/img/1/redbikinigirlnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redbow.png" afterPath="$PROJECT_DIR$/client/img/1/redbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redcockroach.png" afterPath="$PROJECT_DIR$/client/img/1/redcockroach.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/reddamboarmor.png" afterPath="$PROJECT_DIR$/client/img/1/reddamboarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redelf.png" afterPath="$PROJECT_DIR$/client/img/1/redelf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redenelbow.png" afterPath="$PROJECT_DIR$/client/img/1/redenelbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redfish.png" afterPath="$PROJECT_DIR$/client/img/1/redfish.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redguard.png" afterPath="$PROJECT_DIR$/client/img/1/redguard.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redguardarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/redguardarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redguardarmor.png" afterPath="$PROJECT_DIR$/client/img/1/redguardarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redlightbow.png" afterPath="$PROJECT_DIR$/client/img/1/redlightbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redlightsaber.png" afterPath="$PROJECT_DIR$/client/img/1/redlightsaber.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redmetalbow.png" afterPath="$PROJECT_DIR$/client/img/1/redmetalbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redmetalsword.png" afterPath="$PROJECT_DIR$/client/img/1/redmetalsword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redmouse.png" afterPath="$PROJECT_DIR$/client/img/1/redmouse.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redpirateskeleton.png" afterPath="$PROJECT_DIR$/client/img/1/redpirateskeleton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redsickle.png" afterPath="$PROJECT_DIR$/client/img/1/redsickle.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redsicklebow.png" afterPath="$PROJECT_DIR$/client/img/1/redsicklebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redstoremannpc.png" afterPath="$PROJECT_DIR$/client/img/1/redstoremannpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redsword.png" afterPath="$PROJECT_DIR$/client/img/1/redsword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redwingarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/redwingarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/redwingarmor.png" afterPath="$PROJECT_DIR$/client/img/1/redwingarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/regionarmor.png" afterPath="$PROJECT_DIR$/client/img/1/regionarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/regionhenchman.png" afterPath="$PROJECT_DIR$/client/img/1/regionhenchman.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rhaphidophoridae.png" afterPath="$PROJECT_DIR$/client/img/1/rhaphidophoridae.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rick.png" afterPath="$PROJECT_DIR$/client/img/1/rick.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/robocoparmor.png" afterPath="$PROJECT_DIR$/client/img/1/robocoparmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rose.png" afterPath="$PROJECT_DIR$/client/img/1/rose.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rosebow.png" afterPath="$PROJECT_DIR$/client/img/1/rosebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rudolf.png" afterPath="$PROJECT_DIR$/client/img/1/rudolf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/rudolfarmor.png" afterPath="$PROJECT_DIR$/client/img/1/rudolfarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/santa.png" afterPath="$PROJECT_DIR$/client/img/1/santa.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/santaelf.png" afterPath="$PROJECT_DIR$/client/img/1/santaelf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/schooluniform.png" afterPath="$PROJECT_DIR$/client/img/1/schooluniform.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/scientist.png" afterPath="$PROJECT_DIR$/client/img/1/scientist.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/scimitar.png" afterPath="$PROJECT_DIR$/client/img/1/scimitar.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/scorpion.png" afterPath="$PROJECT_DIR$/client/img/1/scorpion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/seadragon.png" afterPath="$PROJECT_DIR$/client/img/1/seadragon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/seadragonarmor.png" afterPath="$PROJECT_DIR$/client/img/1/seadragonarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/seahorsebow.png" afterPath="$PROJECT_DIR$/client/img/1/seahorsebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/searage.png" afterPath="$PROJECT_DIR$/client/img/1/searage.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/secondsonangelnpc.png" afterPath="$PROJECT_DIR$/client/img/1/secondsonangelnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/shadow16.png" afterPath="$PROJECT_DIR$/client/img/1/shadow16.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/shadowregion.png" afterPath="$PROJECT_DIR$/client/img/1/shadowregion.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/shadowregionarmor.png" afterPath="$PROJECT_DIR$/client/img/1/shadowregionarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/shepherdboy.png" afterPath="$PROJECT_DIR$/client/img/1/shepherdboy.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/shieldbenef.png" afterPath="$PROJECT_DIR$/client/img/1/shieldbenef.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/sickle.png" afterPath="$PROJECT_DIR$/client/img/1/sickle.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/sicklebow.png" afterPath="$PROJECT_DIR$/client/img/1/sicklebow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/sidesword.png" afterPath="$PROJECT_DIR$/client/img/1/sidesword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/silvermedal.png" afterPath="$PROJECT_DIR$/client/img/1/silvermedal.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skeleton.png" afterPath="$PROJECT_DIR$/client/img/1/skeleton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skeleton2.png" afterPath="$PROJECT_DIR$/client/img/1/skeleton2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skeletonking.png" afterPath="$PROJECT_DIR$/client/img/1/skeletonking.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skillicons.png" afterPath="$PROJECT_DIR$/client/img/1/skillicons.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skilllevel.png" afterPath="$PROJECT_DIR$/client/img/1/skilllevel.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skydinosaur.png" afterPath="$PROJECT_DIR$/client/img/1/skydinosaur.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skyelf.png" afterPath="$PROJECT_DIR$/client/img/1/skyelf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skylightbow.png" afterPath="$PROJECT_DIR$/client/img/1/skylightbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skylightsaber.png" afterPath="$PROJECT_DIR$/client/img/1/skylightsaber.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/slime.png" afterPath="$PROJECT_DIR$/client/img/1/slime.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/smalldevil.png" afterPath="$PROJECT_DIR$/client/img/1/smalldevil.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snek.png" afterPath="$PROJECT_DIR$/client/img/1/snek.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snowelf.png" afterPath="$PROJECT_DIR$/client/img/1/snowelf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snowfoxarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/snowfoxarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snowfoxarmor.png" afterPath="$PROJECT_DIR$/client/img/1/snowfoxarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snowlady.png" afterPath="$PROJECT_DIR$/client/img/1/snowlady.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snowman.png" afterPath="$PROJECT_DIR$/client/img/1/snowman.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snowmanarmor.png" afterPath="$PROJECT_DIR$/client/img/1/snowmanarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snowrabbit.png" afterPath="$PROJECT_DIR$/client/img/1/snowrabbit.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snowshepherdboy.png" afterPath="$PROJECT_DIR$/client/img/1/snowshepherdboy.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/snowwolf.png" afterPath="$PROJECT_DIR$/client/img/1/snowwolf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/soldier.png" afterPath="$PROJECT_DIR$/client/img/1/soldier.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/soldierant.png" afterPath="$PROJECT_DIR$/client/img/1/soldierant.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/sorcerer.png" afterPath="$PROJECT_DIR$/client/img/1/sorcerer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/soundbutton.png" afterPath="$PROJECT_DIR$/client/img/1/soundbutton.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/soybeanbug.png" afterPath="$PROJECT_DIR$/client/img/1/soybeanbug.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/sparks.png" afterPath="$PROJECT_DIR$/client/img/1/sparks.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/spear.png" afterPath="$PROJECT_DIR$/client/img/1/spear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/spectre.png" afterPath="$PROJECT_DIR$/client/img/1/spectre.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/spider.png" afterPath="$PROJECT_DIR$/client/img/1/spider.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/sponge.png" afterPath="$PROJECT_DIR$/client/img/1/sponge.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/spritesheet.png" afterPath="$PROJECT_DIR$/client/img/1/spritesheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/squeakyhammer.png" afterPath="$PROJECT_DIR$/client/img/1/squeakyhammer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/squid.png" afterPath="$PROJECT_DIR$/client/img/1/squid.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/squidarmor.png" afterPath="$PROJECT_DIR$/client/img/1/squidarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/squirrel.png" afterPath="$PROJECT_DIR$/client/img/1/squirrel.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/storedialogsheet.png" afterPath="$PROJECT_DIR$/client/img/1/storedialogsheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/stuneffect.png" afterPath="$PROJECT_DIR$/client/img/1/stuneffect.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/suicideghost.png" afterPath="$PROJECT_DIR$/client/img/1/suicideghost.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/supercateffect.png" afterPath="$PROJECT_DIR$/client/img/1/supercateffect.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/superiorangelnpc.png" afterPath="$PROJECT_DIR$/client/img/1/superiorangelnpc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/sword.png" afterPath="$PROJECT_DIR$/client/img/1/sword.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/sword1.png" afterPath="$PROJECT_DIR$/client/img/1/sword1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/sword2.png" afterPath="$PROJECT_DIR$/client/img/1/sword2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/taekwondo.png" afterPath="$PROJECT_DIR$/client/img/1/taekwondo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/talk.png" afterPath="$PROJECT_DIR$/client/img/1/talk.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/target.png" afterPath="$PROJECT_DIR$/client/img/1/target.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/thiefarmor.png" afterPath="$PROJECT_DIR$/client/img/1/thiefarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/tigerarmor.png" afterPath="$PROJECT_DIR$/client/img/1/tigerarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/tilesheet.png" afterPath="$PROJECT_DIR$/client/img/1/tilesheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/2/tilesheet.png" afterPath="$PROJECT_DIR$/client/img/2/tilesheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/3/tilesheet.png" afterPath="$PROJECT_DIR$/client/img/3/tilesheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/maps/tmx/tilesheet.png" afterPath="$PROJECT_DIR$/tools/maps/tmx/tilesheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/trident.png" afterPath="$PROJECT_DIR$/client/img/1/trident.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/typhoon.png" afterPath="$PROJECT_DIR$/client/img/1/typhoon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/vampire.png" afterPath="$PROJECT_DIR$/client/img/1/vampire.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/vendingmachine.png" afterPath="$PROJECT_DIR$/client/img/1/vendingmachine.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/2/vendingmachine.png" afterPath="$PROJECT_DIR$/client/img/2/vendingmachine.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/3/vendingmachine.png" afterPath="$PROJECT_DIR$/client/img/3/vendingmachine.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/villagegirl.png" afterPath="$PROJECT_DIR$/client/img/1/villagegirl.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/villager.png" afterPath="$PROJECT_DIR$/client/img/1/villager.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/violetbow.png" afterPath="$PROJECT_DIR$/client/img/1/violetbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/vulture.png" afterPath="$PROJECT_DIR$/client/img/1/vulture.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/watermelonbow.png" afterPath="$PROJECT_DIR$/client/img/1/watermelonbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/weastaff.png" afterPath="$PROJECT_DIR$/client/img/1/weastaff.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/whip.png" afterPath="$PROJECT_DIR$/client/img/1/whip.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/whitearcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/whitearcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/whitearmor.png" afterPath="$PROJECT_DIR$/client/img/1/whitearmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/whitebear.png" afterPath="$PROJECT_DIR$/client/img/1/whitebear.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/whitemouse.png" afterPath="$PROJECT_DIR$/client/img/1/whitemouse.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/whitetiger.png" afterPath="$PROJECT_DIR$/client/img/1/whitetiger.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/windguardian.png" afterPath="$PROJECT_DIR$/client/img/1/windguardian.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/wizard.png" afterPath="$PROJECT_DIR$/client/img/1/wizard.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/wizardrobe.png" afterPath="$PROJECT_DIR$/client/img/1/wizardrobe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/wolf.png" afterPath="$PROJECT_DIR$/client/img/1/wolf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/wolfarcherarmor.png" afterPath="$PROJECT_DIR$/client/img/1/wolfarcherarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/wolfarmor.png" afterPath="$PROJECT_DIR$/client/img/1/wolfarmor.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/wood.png" afterPath="$PROJECT_DIR$/client/img/1/wood.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/wood2.png" afterPath="$PROJECT_DIR$/client/img/1/wood2.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/wood3.png" afterPath="$PROJECT_DIR$/client/img/1/wood3.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/woodenbow.png" afterPath="$PROJECT_DIR$/client/img/1/woodenbow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/yellowbat.png" afterPath="$PROJECT_DIR$/client/img/1/yellowbat.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/yellowfish.png" afterPath="$PROJECT_DIR$/client/img/1/yellowfish.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/yellowmouse.png" afterPath="$PROJECT_DIR$/client/img/1/yellowmouse.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/yellowpreta.png" afterPath="$PROJECT_DIR$/client/img/1/yellowpreta.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/zombie.png" afterPath="$PROJECT_DIR$/client/img/1/zombie.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/zombiegf.png" afterPath="$PROJECT_DIR$/client/img/1/zombiegf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/achievement.css" afterPath="$PROJECT_DIR$/client/css/achievement.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/achievements_english.json" afterPath="$PROJECT_DIR$/client/shared/data/achievements_english.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/achievements_english.json" afterPath="$PROJECT_DIR$/shared/data/achievements_english.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/achievemethandler.js" afterPath="$PROJECT_DIR$/client/js/achievemethandler.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/app.js" afterPath="$PROJECT_DIR$/client/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/audio.js" afterPath="$PROJECT_DIR$/client/js/audio.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/bankdialog.js" afterPath="$PROJECT_DIR$/client/js/bankdialog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/basebar.css" afterPath="$PROJECT_DIR$/client/css/basebar.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/bubble.js" afterPath="$PROJECT_DIR$/client/js/bubble.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/build.js" afterPath="$PROJECT_DIR$/client/js/build.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.txt" afterPath="$PROJECT_DIR$/build.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/character.js" afterPath="$PROJECT_DIR$/client/js/character.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/character.js" afterPath="$PROJECT_DIR$/server/js/character.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/characterdialog.css" afterPath="$PROJECT_DIR$/client/css/characterdialog.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/characterdialog.js" afterPath="$PROJECT_DIR$/client/js/characterdialog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/chathandler.js" afterPath="$PROJECT_DIR$/client/js/chathandler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/map/collisiongrid.json" afterPath="$PROJECT_DIR$/server/data/map/collisiongrid.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/map/collisions.json" afterPath="$PROJECT_DIR$/server/data/map/collisions.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/config.json" afterPath="$PROJECT_DIR$/server/config.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/enchantdialog.css" afterPath="$PROJECT_DIR$/client/css/enchantdialog.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/enchantdialog.js" afterPath="$PROJECT_DIR$/client/js/enchantdialog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/entity.js" afterPath="$PROJECT_DIR$/server/js/entity.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entityfactory.js" afterPath="$PROJECT_DIR$/client/js/entityfactory.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/formulas.js" afterPath="$PROJECT_DIR$/server/js/formulas.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/game.js" afterPath="$PROJECT_DIR$/client/js/game.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/gameclient.js" afterPath="$PROJECT_DIR$/client/js/gameclient.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/js/gametypes.js" afterPath="$PROJECT_DIR$/client/shared/js/gametypes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/js/gametypes.js" afterPath="$PROJECT_DIR$/shared/js/gametypes.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.html" afterPath="$PROJECT_DIR$/client/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/r.js" afterPath="$PROJECT_DIR$/bin/r.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/inventory.js" afterPath="$PROJECT_DIR$/server/js/inventory.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/inventoryhandler.js" afterPath="$PROJECT_DIR$/client/js/inventoryhandler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/items.js" afterPath="$PROJECT_DIR$/client/js/items.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/items.js" afterPath="$PROJECT_DIR$/server/js/items.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/items.json" afterPath="$PROJECT_DIR$/client/shared/data/items.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/items.json" afterPath="$PROJECT_DIR$/shared/data/items.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/js/itemtypes.js" afterPath="$PROJECT_DIR$/client/shared/js/itemtypes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/js/itemtypes.js" afterPath="$PROJECT_DIR$/shared/js/itemtypes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/main.css" afterPath="$PROJECT_DIR$/client/css/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/main.js" afterPath="$PROJECT_DIR$/client/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/main.js" afterPath="$PROJECT_DIR$/server/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/sprites/main.json" afterPath="$PROJECT_DIR$/client/sprites/main.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/map.js" afterPath="$PROJECT_DIR$/client/js/map.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/map.js" afterPath="$PROJECT_DIR$/server/js/map.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/maps/tmx/map.json" afterPath="$PROJECT_DIR$/tools/maps/tmx/map.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/message.js" afterPath="$PROJECT_DIR$/server/js/message.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/mob.js" afterPath="$PROJECT_DIR$/server/js/mob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/mobcontroller.js" afterPath="$PROJECT_DIR$/server/js/mobcontroller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/mobs.json" afterPath="$PROJECT_DIR$/client/shared/data/mobs.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/mobs.json" afterPath="$PROJECT_DIR$/shared/data/mobs.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/npc.js" afterPath="$PROJECT_DIR$/client/js/npc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/npcs.json" afterPath="$PROJECT_DIR$/client/shared/data/npcs.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/npcs.json" afterPath="$PROJECT_DIR$/shared/data/npcs.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/packethandler.js" afterPath="$PROJECT_DIR$/server/js/packethandler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/player.js" afterPath="$PROJECT_DIR$/client/js/player.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/player.js" afterPath="$PROJECT_DIR$/server/js/player.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/maps/processmap.js" afterPath="$PROJECT_DIR$/tools/maps/processmap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/maps/processmap.log" afterPath="$PROJECT_DIR$/tools/maps/processmap.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/db_providers/redis.js" afterPath="$PROJECT_DIR$/server/js/db_providers/redis.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/renderer.js" afterPath="$PROJECT_DIR$/client/js/renderer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/skill.css" afterPath="$PROJECT_DIR$/client/css/skill.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/skilldata.js" afterPath="$PROJECT_DIR$/client/js/skilldata.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/skilldata.js" afterPath="$PROJECT_DIR$/server/js/skilldata.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/skillhandler.js" afterPath="$PROJECT_DIR$/client/js/skillhandler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/skillhandler.js" afterPath="$PROJECT_DIR$/server/js/skillhandler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/skills.json" afterPath="$PROJECT_DIR$/client/shared/data/skills.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/skills.json" afterPath="$PROJECT_DIR$/shared/data/skills.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/sprite.js" afterPath="$PROJECT_DIR$/client/js/sprite.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/updater.js" afterPath="$PROJECT_DIR$/client/js/updater.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/maps/world_client.js" afterPath="$PROJECT_DIR$/client/maps/world_client.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/maps/world_client.json" afterPath="$PROJECT_DIR$/client/maps/world_client.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/maps/world_server.json" afterPath="$PROJECT_DIR$/server/maps/world_server.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/worldserver.js" afterPath="$PROJECT_DIR$/server/js/worldserver.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/ws.js" afterPath="$PROJECT_DIR$/server/js/ws.js" />
     </list>
     <ignored path="Tap Tap Adventure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,31 +767,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/js/app.js">
+      <file leaf-file-name="npcs.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shared/data/npcs.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7131537">
-              <caret line="341" column="53" selection-start-line="341" selection-start-column="53" selection-end-line="341" selection-end-column="53" />
+            <state vertical-scroll-proportion="-19.958334">
+              <caret line="152" column="4" selection-start-line="152" selection-start-column="4" selection-end-line="152" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/index.html">
+      <file leaf-file-name="mobs.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/shared/data/mobs.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.04">
-              <caret line="90" column="57" selection-start-line="90" selection-start-column="43" selection-end-line="90" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/js/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.076923">
-              <caret line="185" column="27" selection-start-line="185" selection-start-column="24" selection-end-line="185" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.3825944">
+              <caret line="1817" column="25" selection-start-line="1817" selection-start-column="25" selection-end-line="1817" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -95,57 +803,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/css/storedialog.css" />
-        <option value="$PROJECT_DIR$/client/js/audio.js" />
-        <option value="$PROJECT_DIR$/client/js/warpmanager.js" />
-        <option value="$PROJECT_DIR$/server/warpdata.js" />
-        <option value="$PROJECT_DIR$/server/js/warpdata.js" />
-        <option value="$PROJECT_DIR$/shared/data/warps.json" />
-        <option value="$PROJECT_DIR$/client/js/inventoryhandler.js" />
-        <option value="$PROJECT_DIR$/client/css/characterdialog.css" />
-        <option value="$PROJECT_DIR$/client/js/player.js" />
-        <option value="$PROJECT_DIR$/client/css/basebar.css" />
         <option value="$PROJECT_DIR$/client/js/infomanager.js" />
-        <option value="$PROJECT_DIR$/server/js/mobdata.js" />
-        <option value="$PROJECT_DIR$/client/js/mobdata.js" />
-        <option value="$PROJECT_DIR$/server/js/minigames/pvpgame.js" />
-        <option value="$PROJECT_DIR$/shared/data/minigamedata.json" />
-        <option value="$PROJECT_DIR$/server/js/minigames/minigamehandler.js" />
-        <option value="$PROJECT_DIR$/server/js/message.js" />
-        <option value="$PROJECT_DIR$/server/js/requesthandler.js" />
-        <option value="$PROJECT_DIR$/server/js/questdata.js" />
-        <option value="$PROJECT_DIR$/server/js/questhandler.js" />
-        <option value="$PROJECT_DIR$/shared/data/quest.json" />
-        <option value="$PROJECT_DIR$/server/js/quest.js" />
-        <option value="$PROJECT_DIR$/client/js/map.js" />
-        <option value="$PROJECT_DIR$/client/js/camera.js" />
-        <option value="$PROJECT_DIR$/client/shared/js/gametypes.js" />
-        <option value="$PROJECT_DIR$/shared/js/gametypes.js" />
-        <option value="$PROJECT_DIR$/client/config/config_local.json" />
-        <option value="$PROJECT_DIR$/bin/build.sh" />
-        <option value="$PROJECT_DIR$/client/js/util.js" />
-        <option value="$PROJECT_DIR$/client/config/config_build.json" />
-        <option value="$PROJECT_DIR$/shared/data/quests.json" />
-        <option value="$PROJECT_DIR$/server/js/db_providers/redis.js" />
-        <option value="$PROJECT_DIR$/server/js/player.js" />
-        <option value="$PROJECT_DIR$/client/sprites/main.json" />
-        <option value="$PROJECT_DIR$/client/js/updater.js" />
-        <option value="$PROJECT_DIR$/shared/data/mobs.json" />
-        <option value="$PROJECT_DIR$/client/js/gameclient.js" />
-        <option value="$PROJECT_DIR$/client/js/achievemethandler.js" />
-        <option value="$PROJECT_DIR$/client/js/game.js" />
-        <option value="$PROJECT_DIR$/server/js/bank.js" />
-        <option value="$PROJECT_DIR$/client/js/renderer.js" />
-        <option value="$PROJECT_DIR$/client/js/main.js" />
+        <option value="$PROJECT_DIR$/server/js/inventory.js" />
+        <option value="$PROJECT_DIR$/client/js/bubble.js" />
+        <option value="$PROJECT_DIR$/client/js/npc.js" />
+        <option value="$PROJECT_DIR$/server/config.json" />
+        <option value="$PROJECT_DIR$/server/js/mob.js" />
+        <option value="$PROJECT_DIR$/server/js/entity.js" />
         <option value="$PROJECT_DIR$/server/js/main.js" />
+        <option value="$PROJECT_DIR$/server/js/ws.js" />
+        <option value="$PROJECT_DIR$/server/js/mobcontroller.js" />
+        <option value="$PROJECT_DIR$/server/js/map.js" />
+        <option value="$PROJECT_DIR$/client/js/achievemethandler.js" />
+        <option value="$PROJECT_DIR$/server/js/items.js" />
+        <option value="$PROJECT_DIR$/server/js/skillhandler.js" />
+        <option value="$PROJECT_DIR$/client/js/player.js" />
+        <option value="$PROJECT_DIR$/client/css/skill.css" />
         <option value="$PROJECT_DIR$/server/js/character.js" />
-        <option value="$PROJECT_DIR$/server/js/packethandler.js" />
+        <option value="$PROJECT_DIR$/client/js/skilldata.js" />
+        <option value="$PROJECT_DIR$/server/js/skilldata.js" />
+        <option value="$PROJECT_DIR$/client/js/characterdialog.js" />
+        <option value="$PROJECT_DIR$/server/js/db_providers/redis.js" />
+        <option value="$PROJECT_DIR$/client/css/enchantdialog.css" />
+        <option value="$PROJECT_DIR$/client/js/enchantdialog.js" />
+        <option value="$PROJECT_DIR$/shared/data/npcs.json" />
+        <option value="$PROJECT_DIR$/shared/data/items.json" />
+        <option value="$PROJECT_DIR$/shared/data/achievements_english.json" />
+        <option value="$PROJECT_DIR$/shared/data/mobs.json" />
+        <option value="$PROJECT_DIR$/client/css/main.css" />
+        <option value="$PROJECT_DIR$/client/js/chathandler.js" />
+        <option value="$PROJECT_DIR$/client/js/Projectile.js" />
+        <option value="$PROJECT_DIR$/shared/js/itemtypes.js" />
+        <option value="$PROJECT_DIR$/client/sprites/main.json" />
         <option value="$PROJECT_DIR$/server/js/worldserver.js" />
-        <option value="$PROJECT_DIR$/client/js/lib/require-jquery.js" />
-        <option value="$PROJECT_DIR$/client/js/build.js" />
-        <option value="$PROJECT_DIR$/client/js/home.js" />
-        <option value="$PROJECT_DIR$/client/index.html" />
+        <option value="$PROJECT_DIR$/server/js/projectile.js" />
+        <option value="$PROJECT_DIR$/server/js/message.js" />
+        <option value="$PROJECT_DIR$/client/js/sprite.js" />
+        <option value="$PROJECT_DIR$/client/js/projectile.js" />
+        <option value="$PROJECT_DIR$/client/js/renderer.js" />
+        <option value="$PROJECT_DIR$/client/js/audio.js" />
+        <option value="$PROJECT_DIR$/client/js/main.js" />
+        <option value="$PROJECT_DIR$/client/js/updater.js" />
+        <option value="$PROJECT_DIR$/shared/js/gametypes.js" />
+        <option value="$PROJECT_DIR$/server/js/player.js" />
         <option value="$PROJECT_DIR$/client/js/app.js" />
+        <option value="$PROJECT_DIR$/client/js/game.js" />
+        <option value="$PROJECT_DIR$/client/js/gameclient.js" />
+        <option value="$PROJECT_DIR$/server/js/formulas.js" />
+        <option value="$PROJECT_DIR$/server/js/packethandler.js" />
+        <option value="$PROJECT_DIR$/client/js/skillhandler.js" />
+        <option value="$PROJECT_DIR$/client/js/character.js" />
+        <option value="$PROJECT_DIR$/shared/data/skills.json" />
       </list>
     </option>
   </component>
@@ -160,7 +868,6 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
     <option name="y" value="22" />
     <option name="width" value="1280" />
     <option name="height" value="774" />
@@ -204,7 +911,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -233,7 +940,147 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="shared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tap Tap Adventure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tap Tap Adventure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tap Tap Adventure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tap Tap Adventure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tap Tap Adventure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db_providers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tap Tap Adventure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tap Tap Adventure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sprites" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tap Tap Adventure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shared" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -269,31 +1116,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap Tap Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bin" />
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -303,7 +1132,7 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="SearchEverywhereHistoryKey" value="requestAnimationFrame&#9;null&#9;null&#10;disable&#9;null&#9;null&#10;spritesLoaded&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="setPosition&#9;null&#9;null&#10;onPlayerDeath&#9;null&#9;null&#10;pathing grid&#9;null&#9;null&#10;requestAnimationFrame&#9;null&#9;null&#10;disable&#9;null&#9;null&#10;spritesLoaded&#9;null&#9;null" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="66" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="68" />
@@ -387,28 +1216,28 @@
     <option name="totallyTimeSpent" value="701000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="22" width="1280" height="774" extended-state="6" />
+    <frame x="0" y="22" width="1280" height="774" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.123907864" sideWeight="0.60703814" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12708499" sideWeight="0.59210527" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32697946" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3260234" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24861" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24702145" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18903892" sideWeight="0.3929619" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15519014" sideWeight="0.40789473" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32888147" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32551318" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="UnknownFeatures">
@@ -431,159 +1260,145 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="11" />
+      <option name="time" value="15" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/js/timer.js">
+    <entry file="file://$PROJECT_DIR$/client/js/skilldata.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.039694656">
-          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.47945204">
+          <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="70" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/loghandler.js">
+    <entry file="file://$PROJECT_DIR$/server/js/character.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3572519">
-          <caret line="18" column="2" selection-start-line="18" selection-start-column="2" selection-end-line="28" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.42922375">
+          <caret line="715" column="21" selection-start-line="715" selection-start-column="21" selection-end-line="715" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/skillhandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7123288">
+          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/db_providers/redis.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4870624">
+          <caret line="757" column="6" selection-start-line="757" selection-start-column="6" selection-end-line="757" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/enchantdialog.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.9668247">
+          <caret line="83" column="21" selection-start-line="83" selection-start-column="21" selection-end-line="83" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/bankdialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/characterdialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="356" column="17" selection-start-line="356" selection-start-column="17" selection-end-line="356" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/camera.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6130501">
+          <caret line="110" column="41" selection-start-line="109" selection-start-column="15" selection-end-line="110" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/enchantdialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.848255">
+          <caret line="213" column="10" selection-start-line="213" selection-start-column="10" selection-end-line="213" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/items.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59028834">
+          <caret line="31" column="53" selection-start-line="31" selection-start-column="53" selection-end-line="31" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/chathandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40088758">
+          <caret line="143" column="34" selection-start-line="143" selection-start-column="34" selection-end-line="143" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="185" column="20" selection-start-line="185" selection-start-column="20" selection-end-line="185" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/data/items.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25864908">
+          <caret line="1158" column="14" selection-start-line="1158" selection-start-column="14" selection-end-line="1158" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shared/data/achievements_english.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="50" selection-start-line="27" selection-start-column="50" selection-end-line="27" selection-end-column="50" />
+          <caret line="235" column="22" selection-start-line="235" selection-start-column="22" selection-end-line="235" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/maps/world_client.js">
+    <entry file="file://$PROJECT_DIR$/server/js/gather.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.7170111">
-          <caret line="0" column="1130" selection-start-line="0" selection-start-column="1130" selection-end-line="0" selection-end-column="1130" />
+        <state vertical-scroll-proportion="0.2283105">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/map.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2366412">
-          <caret line="137" column="35" selection-start-line="137" selection-start-column="35" selection-end-line="137" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/shared/data/mobs.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3322314">
-          <caret line="1057" column="9" selection-start-line="1057" selection-start-column="3" selection-end-line="1057" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/js/gametypes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21917808">
-          <caret line="160" column="27" selection-start-line="160" selection-start-column="27" selection-end-line="160" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/shared/js/gametypes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58447486">
-          <caret line="169" column="18" selection-start-line="169" selection-start-column="18" selection-end-line="169" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/r.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.587519">
-          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/start_dev_client.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27701673">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/build.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7519026">
-          <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/javascripts/gamecontroller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48554033">
-          <caret line="1282" column="12" selection-start-line="1282" selection-start-column="12" selection-end-line="1282" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/camera.js">
+    <entry file="file://$PROJECT_DIR$/server/js/npc.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="58" selection-start-line="46" selection-start-column="58" selection-end-line="46" selection-end-column="58" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/util.js">
+    <entry file="file://$PROJECT_DIR$/server/js/entity.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3561644">
-          <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+        <state vertical-scroll-proportion="2.4429224">
+          <caret line="107" column="30" selection-start-line="107" selection-start-column="24" selection-end-line="107" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/map.js">
+    <entry file="file://$PROJECT_DIR$/server/js/format.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.019786911">
-          <caret line="39" column="24" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="24" />
+        <state vertical-scroll-proportion="-0.2283105">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/config/config_build.json">
+    <entry file="file://$PROJECT_DIR$/server/js/projectile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02047244">
-          <caret line="1" column="26" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.1826484">
+          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/config/config_local.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10236221">
-          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/data/quests.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/questdata.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/quest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/updater.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.17432646">
-          <caret line="285" column="45" selection-start-line="285" selection-start-column="45" selection-end-line="285" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/animation.js">
+    <entry file="file://$PROJECT_DIR$/client/js/playerpopupmenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -592,227 +1407,220 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/sprites/main.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.818182">
-          <caret line="36152" column="18" selection-start-line="36152" selection-start-column="18" selection-end-line="36152" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.6540362">
+          <caret line="36113" column="13" selection-start-line="36113" selection-start-column="7" selection-end-line="36113" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shared/data/mobs.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="347" column="13" selection-start-line="347" selection-start-column="13" selection-end-line="347" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/shared/data/quests.json">
+    <entry file="file://$PROJECT_DIR$/client/js/tile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/shared/data/achievements_english.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2897638">
-          <caret line="63" column="12" selection-start-line="63" selection-start-column="12" selection-end-line="63" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/achievemethandler.js">
+    <entry file="file://$PROJECT_DIR$/client/js/transition.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="130" column="13" selection-start-line="130" selection-start-column="13" selection-end-line="130" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/bank.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.9178082">
-          <caret line="84" column="16" selection-start-line="84" selection-start-column="16" selection-end-line="84" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/achievements.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34246576">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/entity.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6624405">
-          <caret line="45" column="29" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="29" />
-          <folding />
+        <state vertical-scroll-proportion="0.14263074">
+          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/characterdialog.js">
+    <entry file="file://$PROJECT_DIR$/client/js/projectile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <caret line="50" column="15" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/character.js">
+    <entry file="file://$PROJECT_DIR$/client/js/updater.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14896989">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/sprite.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/infomanager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/audio.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3196347">
+          <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/player.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.33280507">
+          <caret line="52" column="21" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/game.css">
+    <entry file="file://$PROJECT_DIR$/server/js/inventory.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19651347">
-          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-          <folding />
+        <state vertical-scroll-proportion="0.16640253">
+          <caret line="159" column="13" selection-start-line="159" selection-start-column="13" selection-end-line="159" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/main.css">
+    <entry file="file://$PROJECT_DIR$/shared/js/itemtypes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.076923">
-          <caret line="1328" column="21" selection-start-line="1328" selection-start-column="5" selection-end-line="1328" selection-end-column="21" />
-          <folding />
+        <state vertical-scroll-proportion="0.4520548">
+          <caret line="295" column="23" selection-start-line="295" selection-start-column="23" selection-end-line="295" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.115385">
-          <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
-          <folding />
+        <state vertical-scroll-proportion="0.362916">
+          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/player.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="318" column="10" selection-start-line="318" selection-start-column="4" selection-end-line="318" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/renderer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="766" column="40" selection-start-line="766" selection-start-column="40" selection-end-line="766" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.461538">
-          <caret line="1158" column="26" selection-start-line="1158" selection-start-column="26" selection-end-line="1158" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/character.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47543582">
-          <caret line="441" column="44" selection-start-line="441" selection-start-column="44" selection-end-line="441" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/gameclient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.803653">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/build.js">
+    <entry file="file://$PROJECT_DIR$/client/js/area.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/lib/require-jquery-backup.js">
+    <entry file="file://$PROJECT_DIR$/shared/js/gametypes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33280507">
-          <caret line="650" column="50" selection-start-line="650" selection-start-column="44" selection-end-line="650" selection-end-column="50" />
-          <folding />
+        <state vertical-scroll-proportion="0.15525115">
+          <caret line="332" column="0" selection-start-line="332" selection-start-column="0" selection-end-line="332" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/button2.js">
+    <entry file="file://$PROJECT_DIR$/server/js/message.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.24657534">
+          <caret line="544" column="0" selection-start-line="544" selection-start-column="0" selection-end-line="544" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/home.js">
+    <entry file="file://$PROJECT_DIR$/client/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0913242">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/db_providers/redis.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8082409">
-          <caret line="739" column="54" selection-start-line="739" selection-start-column="54" selection-end-line="739" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/packethandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6418384">
-          <caret line="425" column="26" selection-start-line="425" selection-start-column="26" selection-end-line="425" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/worldserver.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78446907">
-          <caret line="934" column="38" selection-start-line="934" selection-start-column="38" selection-end-line="934" selection-end-column="38" />
-          <folding />
+        <state vertical-scroll-proportion="-4.6538463">
+          <caret line="547" column="49" selection-start-line="547" selection-start-column="49" selection-end-line="547" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.076923">
-          <caret line="185" column="27" selection-start-line="185" selection-start-column="24" selection-end-line="185" selection-end-column="27" />
+          <caret line="778" column="18" selection-start-line="778" selection-start-column="12" selection-end-line="778" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/gameclient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.807693">
+          <caret line="977" column="0" selection-start-line="977" selection-start-column="0" selection-end-line="977" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/formulas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11415525">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/renderer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9270998">
+          <caret line="85" column="26" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="903" column="20" selection-start-line="903" selection-start-column="17" selection-end-line="903" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/worldserver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3601896">
+          <caret line="1378" column="23" selection-start-line="1378" selection-start-column="19" selection-end-line="1378" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/exceptions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/character.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45181674">
+          <caret line="600" column="11" selection-start-line="600" selection-start-column="11" selection-end-line="600" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.615385">
+          <caret line="3037" column="42" selection-start-line="3037" selection-start-column="33" selection-end-line="3037" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/skillhandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47551343">
+          <caret line="86" column="95" selection-start-line="86" selection-start-column="95" selection-end-line="86" selection-end-column="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/packethandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09636651">
+          <caret line="1172" column="24" selection-start-line="1172" selection-start-column="24" selection-end-line="1172" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/data/skills.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35433072">
+          <caret line="57" column="21" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/index.html">
+    <entry file="file://$PROJECT_DIR$/shared/data/npcs.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.04">
-          <caret line="90" column="57" selection-start-line="90" selection-start-column="43" selection-end-line="90" selection-end-column="57" />
+        <state vertical-scroll-proportion="-19.958334">
+          <caret line="152" column="4" selection-start-line="152" selection-start-column="4" selection-end-line="152" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/app.js">
+    <entry file="file://$PROJECT_DIR$/shared/data/mobs.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7131537">
-          <caret line="341" column="53" selection-start-line="341" selection-start-column="53" selection-end-line="341" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.3825944">
+          <caret line="1817" column="25" selection-start-line="1817" selection-start-column="25" selection-end-line="1817" selection-end-column="25" />
           <folding />
         </state>
       </provider>

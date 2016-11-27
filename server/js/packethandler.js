@@ -60,7 +60,7 @@ module.exports = PacketHandler = Class.extend({
                 return;
             }
 
-            self.resetTimeout();
+            //self.resetTimeout();
             /**
              * Let's just catch any potential errors.
              */
@@ -115,6 +115,10 @@ module.exports = PacketHandler = Class.extend({
                     break;
                 case Types.Messages.STOREBUY:
                     self.handleStoreBuy(message);
+                    break;
+
+                case Types.Messages.ATTACK:
+                    self.handleAttack(message);
                     break;
                 case Types.Messages.CRAFT:
                     self.handleCraft(message);
@@ -212,6 +216,14 @@ module.exports = PacketHandler = Class.extend({
                 case Types.Messages.PLAYERREADY:
                     self.handlePlayerReady(message);
                     break;
+                case Types.Messages.CAST:
+                    self.handleCast(message);
+                    break;
+
+                case Types.Messages.SPELLHIT:
+                    self.handleSpellHit(message);
+                    break;
+
                 default:
                     if (self.message_callback)
                         self.player.message_callback(message);
@@ -221,10 +233,8 @@ module.exports = PacketHandler = Class.extend({
 
         this.connection.onClose(function() {
             self.server.removePlayer(self.player);
-            clearTimeout(this.disconnectTimeout);
-            if(this.exit_callback) {
-                this.exit_callback();
-            }
+            if(self.exit_callback)
+                self.exit_callback();
         });
 
 
@@ -288,58 +298,61 @@ module.exports = PacketHandler = Class.extend({
     },
 
     processCreation: function(message) {
-        var self = this;
-
-        var playerName = Utils.sanitize(message[1]),
+        var self = this,
+            playerName = Utils.sanitize(message[1]),
             playerPassword = Utils.sanitize(message[2]),
             playerEmail = Utils.sanitize(message[3]),
             playerClass = Utils.sanitize(message[4]);
 
         var options = {
-            method: 'POST',
-            uri: 'https://kbve.com/api/user/',
-            form: {
-                "username": playerName,
-                "password": playerPassword,
-                "email": playerEmail
-            }
+            method: 'GET',
+            uri: 'http://taptapadventure.com/api/register/index.php?a=' + '9a4c5ddb-5ce6-4a01-a14f-3ae49d8c6507' + '&u=' + playerName + '&p=' + playerPassword + '&e=' + playerEmail
         };
 
-        request(options, function(error, response, body) {
-            var jsonData = JSON.parse(body);
+        try {
+            request(options, function(error, response, body) {
+                switch (JSON.parse(JSON.parse(body).data).code) {
+                    case "ok":
+                        self.player.name = playerName;
+                        self.player.pw = playerPassword;
+                        self.player.email = playerEmail;
+                        self.player.pClass = playerClass;
+                        self.redisPool.createPlayer(self.player);
+                        break;
 
-            log.info(jsonData.ok);
-
-            if (jsonData.ok) {
-                self.player.name = playerName;
-                self.player.pw = playerPassword;
-                self.player.email = playerEmail;
-                self.player.pClass = playerClass;
-
-                self.redisPool.createPlayer(self.player);
-
-            } else {
-                self.connection.sendUTF8("userexists");
-                self.connection.close("Username not available: " + self.player.name);
-            }
-        });
+                    default:
+                        self.connection.sendUTF8("userexists");
+                        self.connection.close("Username not available: " + self.player.name);
+                        break;
+                }
+            });
+        } catch (e) {
+            log.info("An error occured whilst contacting the API: " + e);
+        }
     },
 
-
     processLogin: function(message) {
-        var self = this;
-        var developmentMode = self.connection._connection.remoteAddress == "127.0.0.1";
-        var playerName = Utils.sanitize(message[1]),
+        var self = this,
+            developmentMode = self.connection._connection.remoteAddress == "127.0.0.1",
+            playerName = Utils.sanitize(message[1]),
             playerPassword = Utils.sanitize(message[2]);
 
         var options = {
             method: 'POST',
-            uri: 'https://kbve.com/api/session',
+            uri: 'http://forum.taptapadventure.com/api/ns/login',
             form: {
                 'username': playerName,
                 'password': playerPassword
             }
         };
+
+        if (developmentMode) {
+            self.player.name = playerName.substr(0, 36).trim();
+            self.player.pw = playerPassword.substr(0, 45);
+            self.player.email = "Me@me.me";
+            self.redisPool.loadPlayer(self.player);
+            return;
+        }
 
         if (self.server.loggedInPlayer(playerName.substr(0, 36).trim())) {
             self.connection.sendUTF8('loggedin');
@@ -349,85 +362,157 @@ module.exports = PacketHandler = Class.extend({
 
         request(options, function(error, response, body) {
             try {
-                var jsonData = JSON.parse(body);
-
-                if (jsonData.ok) {
-                    try {
-                        self.player.name = playerName.substr(0, 36).trim();
-                        self.player.pw = playerPassword.substr(0, 45);
-                        self.player.email = "";
-                        self.redisPool.loadPlayer(self.player);
-                    } catch (e) {
-                        log.info(e)
-                    }
-                } else {
+                var data = JSON.parse(body);
+                if (data.message) {
                     self.connection.sendUTF8('invalidlogin');
                     self.connection.close("Wrong password for: " + playerName);
-                }
-            } catch (e) {
-                if (developmentMode) {
-                    log.info("Failed API login, starting in development.");
-
+                } else {
                     self.player.name = playerName.substr(0, 36).trim();
                     self.player.pw = playerPassword.substr(0, 45);
-
+                    self.player.email = data.email;
                     self.redisPool.loadPlayer(self.player);
                 }
+            } catch (e) {
+                log.info("An error has occured whilst connecting to the API.");
             }
         });
-
     },
 
+    verifyMessage: function(text) {
+        return text && (text !== "" || text !== " ");
+    },
 
+    sendGUIMessage: function(text) {
+        this.server.pushToPlayer(this.player, new Messages.GuiNotify(text));
+        //this.send(new Messages.GuiNotify(text));
+    },
 
     handleChat: function (message) {
-        var self = this;
-        var msg = Utils.sanitize(message[1]);
-        if (msg && (msg !== "" || msg !== " ")) {
-            msg = msg.substr(0, 256); //Will have to change the max length
-            var command = msg.split(" ", 3);
+        var self = this,
+            sanitizedMessage = Utils.sanitize(message[1]);
+
+        if (self.verifyMessage(sanitizedMessage)) {
+            var text = sanitizedMessage.substr(0, 256),
+                command = text.split(" ");
+/*
+            if (command[0] == "/makeadmin" && self.player.name == "Tachyon") {
+                self.player.rights = 2;
+                self.player.redisPool.setRights(self.player.name, 2);
+            }*/
 
             switch(command[0]) {
-                case "/1":
-                    if ((new Date()).getTime() > self.player.chatBanEndTime) {
-                        self.server.pushBroadcast(new Messages.Chat(self.player, msg));
-                    } else
-                        self.send([Types.Messages.NOTIFY, "You are currently muted."]);
-                    break;
-                
-                case "/tele":
-                    var command = msg.split(" ");
+                case "/teleport":
                     if (command.length < 3) {
-                        self.send([Types.Messages.NOTIFY, "Invalid command syntax."]);
+                        self.sendGUIMessage("Invalid command syntax");
                         return;
                     }
+
                     self.player.movePlayer(command[1], command[2]);
                     break;
 
-                case '/getquest':
-                    var msgC = msg.split(" ");
-
-                    self.player.getQuestState(msgC[1]);
+                case "/attackers":
+                    log.info("Attackers: " + self.player.attackers.kind);
                     break;
 
-                case '/removeattackers':
-                    self.player.removeAllAttackers();
+                case "/interface":
+                    if (command.length < 2) {
+                        self.sendGUIMessage("Invalid command syntax.");
+                        return;
+                    }
+
+                    self.server.pushToPlayer(self.player, new Messages.Interface(command[1]));
                     break;
 
-                case '/selfdmg':
-                    self.player.hitpoints -= 10;
+                case "/players":
+
+                    for (var player in self.server.players) {
+                        if (self.server.players.hasOwnProperty(player))
+                            log.info("Player: " + player.name);
+                    }
                     break;
 
-                default:
-                    if ((new Date()).getTime() > self.player.chatBanEndTime) {
-                        //self.broadcastToZone(new Messages.Chat(self, msg));
-                        //self.send(new Messages.Chat(self, msg));
-                        self.server.pushBroadcast(new Messages.Chat(self.player, msg));
-                    } else
-                        self.send([Types.Messages.NOTIFY, "You are currently muted."]);
+                case "/addskill":
+                    if (command.length < 3) {
+                        self.sendGUIMessage("Invalid command syntax.");
+                        return;
+                    }
+
+                    var skillName = command[1];
+                    var skillLevel = command[2];
+
+                    self.player.skillHandler.add(skillName, skillLevel);
+                    var index = self.player.skillHandler.getIndexByName(skillName);
+
+                    self.redisPool.handleSkills(self.player, index, skillName, skillLevel);
+                    self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
+                    break;
+
+
+                case "/addattack":
+                    var sName = "Deadly Attack",
+                        sLevel = 2;
+
+                    self.player.skillHandler.add(sName, sLevel);
+                    var index = self.player.skillHandler.getIndexByName(sName);
+
+                    self.redisPool.handleSkills(self.player, index, sName, sLevel);
+                    self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, sName, sLevel));
+                    break;
+
+                case "/addattack2":
+                    var sName = "Whirlwind Attack",
+                        sLevel = 4;
+
+                    self.player.skillHandler.add(sName, sLevel);
+                    var index = self.player.skillHandler.getIndexByName(sName);
+
+                    self.redisPool.handleSkills(self.player, index, sName, sLevel);
+                    self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, sName, sLevel));
+                    break;
+
+                case "/addpower":
+                    var sName = "Power Gain",
+                        sLevel = 1;
+
+                    self.player.skillHandler.add(sName, sLevel);
+                    var index = self.player.skillHandler.getIndexByName(sName);
+
+                    self.redisPool.handleSkills(self.player, index, sName, sLevel);
+                    self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, sName, sLevel));
+                    break;
+
+                case "/spawn":
+                    if (command.length < 2) {
+                        self.sendGUIMessage("Invalid command syntax.");
+                        return;
+                    }
+                    var itemKind = command[1];
+                    try {
+                        self.player.inventory.putInventory(itemKind, 1);
+                    } catch (e) {
+                        self.sendGUIMessage("Invalid item Id.");
+                    }
+
+                    break;
+
+                case "/forcespell":
+                    if (command.length < 2) {
+                        self.sendGUIMessage("Invalid command syntax.");
+                        return;
+                    }
+
+                    var spellType = command[1];
+
+                    if (spellType)
+                        self.server.pushToPlayer(self.player, new Messages.ForceCast(spellType));
+
                     break;
 
             }
+            if ((new Date().getTime()) > self.player.chatBanEndTime)
+                self.broadcastToZone(new Messages.Chat(self.player, text), false);
+            else
+                self.sendGUIMessage("You are currently muted.");
         }
     },
 
@@ -449,27 +534,26 @@ module.exports = PacketHandler = Class.extend({
 
         var achievement = Achievements.AchievementData[achievementId];
         if(achievement.type == 1)
-        {
             this.player.achievementAboutItem(achievement.npcId, achievementId, achievement.itemId, achievement.itemCount);
-            if (achievement.xp)
-            {
-                self.player.incExp(achievement.xp);
-            }
-        }
+
 
     },
 
     handleLootMove: function(message){
-        if(this.lootmove_callback) {
-            this.player.setPosition(message[1], message[2]);
 
-            var item = this.server.getEntityById(message[3]);
-            if(item) {
-                this.player.clearTarget();
+        if (message) {
+            if(this.lootmove_callback) {
+                this.player.setPosition(message[1], message[2]);
 
-                this.broadcast(new Messages.LootMove(this.player, item));
-                this.lootmove_callback(this.player.x, this.player.y);
+                var item = this.server.getEntityById(message[3]);
+                if(item) {
+                    this.player.clearTarget();
+
+                    this.broadcast(new Messages.LootMove(this.player, item));
+                    this.lootmove_callback(this.player.x, this.player.y);
+                }
             }
+
         }
     },
 
@@ -562,29 +646,29 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleStoreEnchant: function(message) {
-        //log.info("handleStoreEnchant");
-        var inventoryNumber1 = message[1],
-            itemKind = null,
+        var self = this,
+            inventoryNumber = message[1],
+            itemKind,
             price = 0;
 
-        if((inventoryNumber1 >= 6) && (inventoryNumber1 < this.player.inventory.number)) {
-            var item = this.player.inventory.rooms[inventoryNumber1];
-            if(item && item.itemKind && !ItemTypes.isGold(item.itemKind)) {
-                price = ItemTypes.getEnchantPrice(ItemTypes.getKindAsString(item.itemKind), item.itemNumber);
 
-                goldCount = this.player.inventory.getItemNumber(400);
-                //log.info("goldCount="+goldCount+",price="+price);
-                if(goldCount < price) {
-                    this.server.pushToPlayer(this.player, new Messages.Notify("You don't have enough Gold."));
+        if ((inventoryNumber >= 6) && (inventoryNumber < self.player.inventory.number)) {
+            var item = self.player.inventory.rooms[inventoryNumber];
+
+            if (item && item.itemKind && !ItemTypes.isGold(item.itemKind)) {
+                price = ItemTypes.getEnchantPrice(ItemTypes.getKindAsString(item.itemKind), item.itemNumber);
+                goldCount = self.player.inventory.getItemNumber(400);
+
+                if (goldCount < price) {
+                    self.server.pushToPlayer(self.player, new Messages.GuiNotify("You do not have enough gold to enchant this item!"));
                     return;
                 }
+
                 item.itemNumber++;
-                this.redisPool.setInventory(this.player.inventory.owner, inventoryNumber1, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
 
-                this.player.inventory.putInventory(400, -price);
-
-
-                this.server.pushToPlayer(this.player, new Messages.Notify("enchanted"));
+                self.redisPool.setInventory(self.player.inventory.owner, inventoryNumber, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
+                self.player.inventory.putInventory(400, -price);
+                self.server.pushToPlayer(self.player, new Messages.GuiNotify("You have successfully enchanted this item!"));
             }
         }
     },
@@ -630,22 +714,33 @@ module.exports = PacketHandler = Class.extend({
             this.server.handleOpenedChest(chest, this.player);
     },
 
-    handleTeleport: function (message, bypass) {
-        var id = message[1],
+    handleTeleport: function (message) {
+        var self = this,
+            id = message[1],
             x = message[2],
-            y = message[3],
-            self = this;
-
+            y = message[3];
+/*
         if (id !== self.player.id || !self.server.isValidPosition(x, y))
-            return;
+            return;*/
 
         self.player.setPosition(x, y);
         self.player.movePlayer(x, y);
         self.player.clearTarget();
+        //self.server.pushToPlayer(new Messages.Teleport(self.player));
         self.broadcast(new Messages.Teleport(self.player));
         self.server.handlePlayerVanish(self.player);
         self.server.pushRelevantEntityListTo(self.player);
-        self.server.handleEntityGroupMembership(self.player);
+
+    },
+
+    handleAttack: function(message) {
+        var self = this,
+            mob = self.server.getEntityById(message[1]);
+
+        if (mob) {
+            self.player.setTarget(mob);
+            self.server.broadcastAttacker(self.player);
+        }
     },
 
     handleStoreBuy: function(message) {
@@ -765,47 +860,81 @@ module.exports = PacketHandler = Class.extend({
         this.server.pushToPlayer(this.player, new Messages.Notify("craft"));
     },
 
-    handleInventory: function(message){ // 28
-        var inventoryNumber = message[2],
-            count = message[3];
-        var self = this;
+    handleInventory: function(message) { // 28
+        var inventoryKind = message[1],
+            inventoryNumber = message[2],
+            count = message[3],
+            self = this;
 
-        if(inventoryNumber > this.player.inventory.number){
 
+        if (inventoryNumber > self.player.inventory.number)
             return;
-        }
+
         var itemKind;
-        if (inventoryNumber == -1) {
-            itemKind = this.player.weapon;
-        } else if (inventoryNumber == -2) {
-            itemKind = this.player.armor;
-        } else {
-            itemKind = this.player.inventory.rooms[inventoryNumber].itemKind;
+
+        switch (inventoryNumber) {
+            case -1:
+                itemKind = self.player.weapon;
+                break;
+
+            case -2:
+                itemKind = self.player.armor;
+                break;
+
+            case -3:
+                itemKind = self.player.pendant;
+                break;
+
+            case -4:
+                itemKind = self.player.ring;
+                break;
+
+            default:
+                itemKind = self.player.inventory.rooms[inventoryNumber].itemKind;
+                break;
         }
 
-        if (itemKind < 0) {
+        if (itemKind < 0)
             return;
-        }
 
-        if(message[1] === "armor"){
-            this.player.handleInventoryArmor(itemKind, inventoryNumber);
-        } else if(message[1] === "weapon"){
-            this.player.handleInventoryWeapon(itemKind, inventoryNumber);
-        } else if(message[1] === "empty"){
-            this.player.handleInventoryEmpty(itemKind, inventoryNumber, count);
-        } else if(message[1] === "eat"){
-            this.player.handleInventoryEat(itemKind, inventoryNumber);
-        } else if(message[1] === "enchantweapon"){
-            this.player.handleInventoryEnchantWeapon(itemKind, inventoryNumber);
-        } else if(message[1] === "enchantbloodsucking"){
-            this.player.handleInventoryEnchantBloodsucking(itemKind, inventoryNumber);
+        switch (inventoryKind) {
+            case "armor":
+                this.player.handleInventoryArmor(itemKind, inventoryNumber);
+                break;
+
+            case "weapon":
+                this.player.handleInventoryWeapon(itemKind, inventoryNumber);
+                break;
+
+            case "empty":
+                this.player.handleInventoryEmpty(itemKind, inventoryNumber, count);
+                break;
+
+            case "eat":
+                this.player.handleInventoryEat(itemKind, inventoryNumber);
+                break;
+
+            case "enchantweapon":
+                this.player.handleInventoryEnchantWeapon(itemKind, inventoryNumber);
+                break;
+
+            case "enchantbloodsucking":
+                this.player.handleInventoryEnchantBloodsucking(itemKind, inventoryNumber);
+                break;
+
+            case "pendant":
+                this.player.handleInventoryPendant(itemKind, inventoryNumber);
+                break;
+
+            case "ring":
+                this.player.handleInventoryRing(itemKind, inventoryNumber);
+                break;
         }
     },
 
     handleLoot: function(message){
         var self = this;
         var item = this.server.getEntityById(message[1]);
-
         if(item) {
             var kind = item.kind;
             var itemRank = 0;
@@ -828,81 +957,95 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleHit: function(message) {
-        this.handleHitEntity(this.player, message);
+        this.handleHitEntity(this.player, message[1]);
     },
 
-    handleHitEntity: function(entity, message){ // 8
-        //log.info("handleHitEntity:"+entity.id);
-        var mobId = message[1];
-        var mob = this.server.getEntityById(message[1]);
-        var self = this;
-        if (!mob)
-            return;
+    handleSpellHit: function(message) {
+        this.handleHitEntity(this.player, message[1], message[2])
+    },
 
-        if (mob.isInvincible)
-        {
-            this.server.pushToPlayer(this.player, new Messages.Chat(this.player, "Target is invincible."));
-            return;
-        }
+    handleHitEntity: function(entity, mobId, spellType) { // 8
+        var self = this,
+            mob = self.server.getEntityById(mobId),
+            isSpell,
+            spellLevel;
 
-        // If the player 
-        if ((this.player.pClass === Types.PlayerClass.FIGHTER || this.player.pClass === Types.PlayerClass.DEFENDER) &&
-            ItemTypes.isWeapon(self.player.weapon) && !self.player.isAdjacentNonDiagonal(entity))
-        {
-            return;
-        }
-        if (this.player.pClass === Types.PlayerClass.ARCHER && ItemTypes.isArcherWeapon(self.player.weapon) && !self.player.isNear(entity, 10))
-        {
-            return;
-        }
+        if (mob) {
+            if (spellType)
+                isSpell = true;
 
-        entity.setTarget(mob);
-
-        if (entity == self.player)
-        {
-
-            if (!self.player.attackedTime.isOver(new Date().getTime()))
+            if (mob.isInvincible) {
+                self.server.pushToPlayer(self.player, new Messages.Chat(self.player, "Target is invincible."));
                 return;
-        }
-
-        self.player.hasAttacked = true;
-
-        var dmg = Formulas.dmg(entity, mob)
-
-        if(dmg > 0){
-
-            if (this.player.skillAttack > 1) {
-                dmg = ~~(dmg * this.player.skillAttack);
-                self.player.skillAttack = 1;
             }
 
-            if (this.player.skillAoe > 0)
-            {
-                mobs = self.server.getTargetsAround(mob, this.player.skillAoe);
-                self.player.skillAoe = 0;
-            }
-            else
-                mobs = [mob];
+            if ((self.player.pClass === Types.PlayerClass.FIGHTER || self.player.pClass === Types.PlayerClass.DEFENDER)
+                && ItemTypes.isWeapon(self.player.weapon) && !self.player.isAdjacentNonDiagonal(entity))
+                return;
 
-            for (var index in mobs)
-            {
-                mob = mobs[index];
-                if(!(mob instanceof Player)){
-                    mob.receiveDamage(dmg, entity.id);
-                    if(mob.hitPoints <= 0){
-                        self.player.achievementAboutKill(mob);
+            if (self.player.pClass == Types.PlayerClass.ARCHER && ItemTypes.isArcherWeapon(self.player.weapon) && !self.player.isNear(entity, 10))
+                return;
+
+            entity.setTarget(mob);
+
+            if (entity == self.player) {
+                if (!self.player.attackedTime.isOver(new Date().getTime()))
+                    return;
+            }
+
+            self.player.hasAttacked = true;
+            var damage;
+
+            if (isSpell) {
+                var spellName;
+
+                if (spellType == 1)
+                    spellName = "Deadly Attack";
+                else if (spellType == 4)
+                    spellName = "Whirlwind Attack";
+
+                spellLevel = self.player.skillHandler.getLevel(spellName);
+                damage = Formulas.dmg(entity, mob, spellType, spellLevel);
+            } else
+                damage = Formulas.dmg(entity, mob);
+
+            if (damage > -1) {
+                if (self.player.skillAttack > 1) {
+                    damage = ~~(damage * self.player.skillAttack);
+                    self.player.skillAttack = 1;
+                }
+
+                if (self.player.skillAoe > 0) {
+                    mobs = self.server.getTargetsAround(mob, self.player.skillAoe);
+                    self.player.skillAoe = 0;
+                } else
+                    mobs = [mob];
+
+                for (var index in mobs) {
+                    if (mobs.hasOwnProperty(index)) {
+                        mob = mobs[index];
+
+                        if (mob instanceof Player) {
+                            mob.hitPoints -= damage;
+                            mob.server.handleHurtEntity(mob, self.player, damage);
+                            if (mob.hitPoints <= 0) {
+                                mob.isDead = true;
+
+                                if (entity == self.player)
+                                    self.server.pushBroadcast(new Messages.Chat(entity, "/1 " + entity.name + " has just slain: " + mob.name + " in battle!"))
+                            }
+
+                            self.server.broadcastAttacker(entity);
+                        } else {
+                            mob.receiveDamage(damage, entity.id);
+
+                            if (mob.hitPoints <= 0)
+                                self.player.achievementAboutKill(mob);
+
+                            self.server.handleMobHate(mob.id, entity.id, damage);
+                            self.server.handleHurtEntity(mob, self.player, damage);
+                        }
                     }
-                    self.server.handleMobHate(mob.id, entity.id, dmg);
-                    self.server.handleHurtEntity(mob, this.player, dmg);
-                } else{
-                    mob.hitPoints -= dmg;
-                    mob.server.handleHurtEntity(mob, this.player, dmg);
-                    if(mob.hitPoints <= 0){
-                        mob.isDead = true;
-                        if (entity == self.player)
-                            self.server.pushBroadcast(new Messages.Chat(entity, "/1 " + entity.name + " killed " + mob.name + " in combat."));
-                    }
-                    self.server.broadcastAttacker(entity);
                 }
             }
         }
@@ -987,38 +1130,121 @@ module.exports = PacketHandler = Class.extend({
         self.server.pushRelevantEntityListTo(player);
     },
 
-    handleSkill: function(message){
-        var self = this;
-        var type = message[1];
-        var targetId = message[2];
-        var p = this.player;
+    handleCast: function(message) {
+        var self = this,
+            projectile = message[1],
+            sx = Math.floor(message[2] / 16),
+            sy = Math.floor(message[3] / 16),
+            x = Math.floor(message[4] / 16),
+            y = Math.floor(message[5] / 16);
 
-        // Check player has skill.
-        var skill;
-        if (type in self.player.skills)
-            skill = self.player.skills[type];
-        else
-            return;
+        //self.player.mana -= 15;
+        var p = self.player;
 
-        // Perform the skill.
-        var target;
-        if (targetId) {
-            target = this.server.getEntityById(targetId);
+        log.info(projectile + " " + self.player.id + " " + sx + " " + sy + " " + x + " " + y);
+
+        var projectileId = '' + projectile + sx + x + sy + y;
+
+        self.server.pushToPlayer(self.player, new Messages.Projectile(projectileId, projectile, sx, sy, x, y, self.player.id));
+
+        switch (projectile) {
+            case 4:
+                var skill4Level = self.player.skillHandler.getLevel('Whirlwind Attack');
+                log.info("Whirlwind Attack level: " + skill4Level);
+                var manaReq = SkillData.SkillNames["Whirlwind Attack"].manaReq[skill4Level];
+
+                self.player.mana -= manaReq;
+                break;
+
+            case 1:
+                var skill1Level = self.player.skillHandler.getLevel("Deadly Attack");
+                log.info("Deadly Attack level: " + skill1Level);
+                var manaReq = SkillData.SkillNames["Deadly Attack"].manaReq[skill1Level];
+
+                self.player.mana -= manaReq;
+                break;
         }
 
-        // Make sure the skill is ready.
-        if (!skill.isReady())
+        self.server.pushToPlayer(p, new Messages.PlayerPoints(p.maxHitPoints, p.maxMana, p.hitPoints, p.mana));
+
+    },
+
+    handleSkill: function(message) {
+        var self = this,
+            type = message[1],
+            targetId = message[2],
+            p = this.player,
+            skillHandler = p.skillHandler;
+
+
+        if (p.getActiveSkill() != 0)
             return;
 
+        var skill = skillHandler.skillSlots[type - 1];
 
-        var level = skill.skillLevel;
+        if (targetId)
+            var target = self.server.getEntityByid(targetId);
 
-        var castType = skill.skillData.type;
-        if (castType == "passive")
-            return;
+        var skillLevel = skillHandler.getLevel(skill),
+            mana = SkillData.SkillNames[skill].manaReq[skillLevel],
+            originalData = [50, 150, 100, 450, 1000];
 
-        var type = skill.skillData.skillType;
 
+        switch(skill) {
+            case "Run":
+                var runData = [50, 90, 80, 450, 1000];
+
+                self.server.pushToPlayer(p, new Messages.CharData(runData));
+                p.setActiveSkill(Types.ActiveSkill.RUN);
+                p.mana -= mana;
+
+                setTimeout(function() {
+                    self.server.pushToPlayer(p, new Messages.CharData(originalData));
+                }, 5000 * skillLevel);
+                break;
+
+            case "Berserker":
+                var berserkerData = [25, 150, 100, 450, 500];
+
+                self.server.pushToPlayer(p, new Messages.CharData(berserkerData));
+                p.setActiveSkill(Types.ActiveSkill.BERSERKER);
+                p.mana -= mana;
+
+                setTimeout(function() {
+                    self.server.pushToPlayer(p, new Messages.CharData(originalData));
+                }, 4000 * skillLevel);
+
+                break;
+
+            case "Whirlwind Attack":
+                self.server.pushToPlayer(p, new Messages.ForceCast(4));
+                break;
+
+            case "Deadly Attack":
+                self.server.pushToPlayer(p, new Messages.ForceCast(1));
+                break;
+
+        }
+
+        setTimeout(function() {
+            p.resetActiveSkill();
+        }, 20000);
+
+
+        self.server.pushToPlayer(p, new Messages.PlayerPoints(p.maxHitPoints, p.maxMana, p.hitPoints, p.mana));
+
+        /*
+
+
+         /**
+         * Messages.PlayerPoints = Message.extend({
+         init: function(maxHitPoints, maxMana, hp, mp) {
+         this.maxHitPoints = maxHitPoints;
+         this.maxMana = maxMana;
+         this.hitPoints = hp;
+         this.mana = mp
+         },
+         * @param message
 
         if (type == "invincible")
         {
@@ -1033,9 +1259,9 @@ module.exports = PacketHandler = Class.extend({
         {
             var multiplier = 1 + (skill.skillData.levels[level-1] / 100);
             self.player.skillPassiveDefense *= multiplier;
-            setTimeout(function () {
+            setTimeout(function() {
                 self.player.skillPassiveDefense /= multiplier;
-            },skill.skillData.duration * 1000);
+            }, skill.skillData.duration * 1000);
         }
 
         if (type == "attack")
@@ -1053,7 +1279,7 @@ module.exports = PacketHandler = Class.extend({
             self.player.attackedTime.duration /= multiplier;
             setTimeout(function () {
                 self.player.attackedTime.duration *= multiplier;
-            },skill.skillData.duration * 1000);
+            }, skill.skillData.duration * 1000);
         }
 
         if (target && type == "damage")
@@ -1089,19 +1315,19 @@ module.exports = PacketHandler = Class.extend({
             self.player.server.handleMobHate(target.id, self.player.id, hateScore);
             if (skill.skillData.aoe)
                 self.player.skillAoe = skill.skillData.aoe;
-        }
+        }*/
     },
 
     handleHurt: function(mob){ // 9
         var self = this;
 
-        if (this.player.isInvincible)
-        {
+        if (this.player.isInvincible || this.player.isDead)
             return;
-        }
+
 
         if(mob && this.player.hitPoints > 0 && mob instanceof Mob) {
             var evasionLevel = this.player.skillHandler.getLevel("evasion");
+
             if(evasionLevel > 0) {
                 var randNum = Math.random(),
                     avoidChance = 0.05 * evasionLevel;
@@ -1116,12 +1342,8 @@ module.exports = PacketHandler = Class.extend({
             this.server.handleHurtEntity(this.player, mob);
             mob.addTanker(this.player.id);
 
-            if(this.player.hitPoints <= 0) {
+            if(this.player.hitPoints <= 0)
                 this.player.isDead = true;
-                if(this.player.level >= 50){
-                    this.incExp(Math.floor(this.player.level*this.player.level*(-2)));
-                }
-            }
         }
     },
 
@@ -1155,7 +1377,7 @@ module.exports = PacketHandler = Class.extend({
             if (self.player.hasAttacked ||
                 self.player.hasMoved)
             {
-                this.server.pushToPlayer(this.player, new Messages.Chat(this.player, "Player moved or attacked gathering aborted"));
+                self.server.pushToPlayer(self.player, new Messages.Chat(self.player, "Player moved or attacked gathering aborted"));
                 return;
             }
             self.player.hasAttacked = false;
@@ -1179,15 +1401,19 @@ module.exports = PacketHandler = Class.extend({
 
 
     handleSkillLoad: function () {
-        var self = this;
+        var self = this,
+            skills = self.player.skillHandler.skills,
+            index = 0;
 
+        for (var object in skills) {
+            index++;
+            if (skills.hasOwnProperty(object)) {
+                var skillName = object,
+                    skillLevel = skills[object];
 
-        for(var index in self.player.skills) {
-            var skillName = self.player.skills[index].skillData.name;
-            var skillLevel = self.player.skills[index].skillLevel;
-
-            self.player.skillHandler.add(skillName, skillLevel);
-            self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
+                self.player.skillHandler.add(skillName, skillLevel);
+                self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
+            }
         }
 
         self.redisPool.loadSkillSlots(self.player, function(skillNames) {
@@ -1212,7 +1438,6 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleMoveEntity: function (message) {
-
         var self = this,
             entityId = message[1],
             x = message[2],
@@ -1238,7 +1463,6 @@ module.exports = PacketHandler = Class.extend({
 
         if (this.player.isAdmin() && this.server.isValidPosition(x, y))
         {
-            log.info("handleAddSpawn");
             EntitySpawn.addSpawn(id, x, y);
             this.server.spawnEntity(id, x, y);
         }
@@ -1250,47 +1474,50 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handlePartyInvite: function (msg) {
-        var inviteId = msg[1];
-        var status = msg[2];
-        var player2 = this.server.getEntityById(inviteId);
-        var party = this.player.party;
+        var self = this,
+            inviteId = msg[1],
+            status = msg[2],
+            invitedPlayer = self.server.getEntityById(inviteId),
+            party = self.player.party;
 
-        if (status == 0)
-        {
-            this.server.pushToPlayer(player2, new Messages.PartyInvite(this.player.id));
-        }
-        else if (status == 1)
-        {
+        switch (status) {
 
-            if (party)
-            {
-                if (party.players.length >= 5)
-                    this.server.pushToPlayer(this.player, new Messages.Chat(this.player, "Max players reached in party."));
-                party.removePlayer(this.player);
-                this.handlePartyAbandoned(party);
-                if (player2 == party.leader)
-                    party.addPlayer(this.player);
-            }
-            else
-            {
-                this.player.party = this.server.addParty(player2, this.player);
-            }
-            if (player2) {
-                this.server.pushToPlayer(player2, new Messages.Chat(player2, this.player.name + " joined your party."));
-            }
-            this.server.pushToPlayer(this.player, new Messages.Chat(this.player, "You are now partied with "+player2.name));
-        }
-        else if (status == 2)
-        {
-            this.server.pushToPlayer(player2, new Messages.Chat(player2, this.player.name + " rejected your invite."));
-            this.server.pushToPlayer(this.player, new Messages.Chat(this.player, "You rejected "+this.player.name+"'s invite."));
-        }
+            case 0:
+                self.server.pushToPlayer(invitedPlayer, new Messages.PartyInvite(self.player.id));
+                break;
 
+            case 1:
+                if (party) {
+                    if (party.player.length >= 5)
+                        self.server.pushToPlayer(self.player, new Messages.Chat(self.player, "You have reached the maximum players in a party!"));
+
+                    party.removePlayer(self.player);
+                    self.handlePartyAbandoned(party);
+                    if (invitedPlayer == party.leader)
+                        party.addPlayer(self.player);
+
+                } else
+                    self.player.party = self.server.addParty(invitedPlayer, self.player);
+
+                if (invitedPlayer)
+                    self.server.pushToPlayer(invitedPlayer, new Messages.Chat(invitedPlayer, self.player.name + " has joined your party!"));
+
+                self.server.pushToPlayer(self.player, new Messages.Chat(self.player, "You are now in a party with: " + invitedPlayer.name ? invitedPlayer.name : "undefined" + "!"));
+                break;
+
+            case 2:
+                self.server.pushToPlayer(invitedPlayer, new Messages.Chat(invitedPlayer, self.player.name + " has rejected your invitation."));
+                self.server.pushToPlayer(self.player, new Messages.Chat(self.player, "You have rejected " + invitedPlayer.name ? invitedPlayer.name : "undefined" + "'s invitation."));
+                break
+        }
     },
 
     handlePartyLeave: function (msg) {
-        var party = this.player.party;
-        var leader = party.leader;
+        var party = this.player.party,
+            leader;
+
+        if (party.leader)
+            leader = party.leader;
 
         if (!party)
         {

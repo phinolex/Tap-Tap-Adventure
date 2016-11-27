@@ -1,59 +1,92 @@
 define(['area'], function(Area) {
     var AudioManager = Class.extend({
         init: function(game) {
-            var self = this;
-
             this.enabled = true;
-            this.extension = "ogg";
+            this.extension = "mp3";
             this.sounds = {};
             this.game = game;
             this.currentMusic = null;
             this.areas = [];
-            this.loadedMusic = {"beach":false,
-            			"boss":false,
-            			"cave":false,
-            			"desert":false,
-            			"dungeon":false, 
-            			"forest":false, 
-            			"lavaland":false,
-            			"tutorial":false,
-            			"underthesea1":false,
-            			"underthesea2":false,
-            			"veloma":false,
-            			"village":false};
-            this.loadedSound = {"loot":false,
-            	    "hit1":false,
-            	    "hit2":false,
-            	    "hurt":false,
-            	    "heal":false,
-            	    "chat":false,
-            	    "revive":false,
-            	    "death":false,
-            	    "firefox":false,
-            	    "achievement":false,
-            	    "kill1":false,
-            	    "kill2":false,
-            	    "noloot":false,
-            	    "teleport":false,
-            	    "chest":false,
-            	    "npc":false,
-            	    "npc-end":false};
+            this.loadedMusic = {
+                "ancientcavern": false,
+                "beach": false,
+                "darkestregion": false,
+                "exploration": false,
+                "farawaycity": false,
+                "gameover": false,
+                "icebeach": false,
+                "royalcity": false,
+                "icetown": false,
+                "peacefultown": false,
+                "thebattle": false,
+                "theconclusion": false,
+                "unknowing": false,
+                "mysterio": false,
+                "royalpalace": false,
+                "darkcavern": false,
+                "dungeon": false,
+                "underthesea": false,
+                "deepunderthesea": false,
+                "campusmap": false,
+                "cornfields": false,
+                "desert": false,
+                "lostland": false,
+                "sketchyland": false,
+                "volcano": false,
+                "meadowofthepast": false,
+                "sililoquy": false,
+                "veloma": false,
+                "boss": false,
+                "cave": false,
+                "dangerouscave": false
+            };
+            this.loadedSound = {
+                "loot":false,
+                "hit1":false,
+                "hit2":false,
+                "hurt":false,
+                "heal":false,
+                "chat":false,
+                "revive":false,
+                "death":false,
+                "firefox":false,
+                "achievement":false,
+                "kill1":false,
+                "kill2":false,
+                "noloot":false,
+                "teleport":false,
+                "chest":false,
+                "npc":false,
+                "npc-end":false
+            };
 
-            if(!(Detect.isSafari() && Detect.isWindows())) {
-            } else {
-                this.enabled = false; // Disable audio on Safari Windows
-            }
+            this.switchDisabled = false;
         },
+        //Functions to individually set the music state
+        setOn: function() {
+            this.enabled = true;
+            if (this.currentMusic)
+                this.currentMusic = null;
+
+            this.updateMusic();
+        },
+
+        setOff: function() {
+            this.enabled = false;
+            if (this.currentMusic)
+                this.resetMusic(this.currentMusic);
+        },
+
         toggle: function() {
             if(this.enabled) {
                 this.enabled = false;
-
+                this.switchDisabled = true;
                 if(this.currentMusic) {
                     this.resetMusic(this.currentMusic);
                 }
             } else {
                 this.enabled = true;
-
+                this.switchDisabled = false;
                 if(this.currentMusic) {
                     this.currentMusic = null;
                 }
@@ -91,12 +124,13 @@ define(['area'], function(Area) {
         loadSound: function(name, handleLoaded) {
             this.load("audio/sounds/", name, handleLoaded, 4);
         },
-        loadMusic: function(name, handleLoaded) {
+        loadMusic: function(name, handleLoaded, preventLoop) {
             this.load("audio/music/", name, handleLoaded, 1);
             var music = this.sounds[name][0];
             music.loop = true;
             music.addEventListener('ended', function() { music.play() }, false);
         },
+
         getSound: function(name) {
             if(!this.sounds[name]) {
                 return null;
@@ -112,20 +146,20 @@ define(['area'], function(Area) {
             return sound;
         },
         playSound: function(name) {
-        	if (this.enabled)
-        	{
-			if (name in this.loadedSound &&
-				this.loadedSound[name] == false)
-			{
-				this.loadSound(name);
-				this.loadedSound[name] = true;
-			}  
-			var sound = this.getSound(name);
-			if(sound) {
-                sound.volume = 0.075;
-                sound.play();
+            if (this.enabled)
+            {
+                if (name in this.loadedSound &&
+                    this.loadedSound[name] == false)
+                {
+                    this.loadSound(name);
+                    this.loadedSound[name] = true;
+                }
+                var sound = this.getSound(name);
+                if(sound) {
+                    sound.volume = 0.60;
+                    sound.play();
+                }
             }
-		}
         },
         addArea: function(x, y, width, height, musicName) {
             var area = new Area(x, y, width, height);
@@ -148,20 +182,36 @@ define(['area'], function(Area) {
                 var music = this.getSurroundingMusic(this.game.player);
 
                 if(music) {
-                    if(!this.isCurrentMusic(music)) {
-                        if(this.currentMusic) {
-                            this.fadeOutCurrentMusic();
+                    if (this.game.renderer.mobile) {
+                        if (!this.isCurrentMusic(music)) {
+                            this.resetMusic(this.currentMusic);
+                            if (music.name in this.loadedMusic &&
+                                this.loadedMusic[music.name] == false)
+                            {
+                                this.loadMusic(music.name);
+                                this.loadedMusic[music.name] = true;
+                            }
+                            this.playMusic(music);
                         }
-                        if (music.name in this.loadedMusic &&
-                        	this.loadedMusic[music.name] == false)
-                        {
-                        	this.loadMusic(music.name);
-                        	this.loadedMusic[music.name] = true;
+                    } else {
+                        if(!this.isCurrentMusic(music)) {
+                            if(this.currentMusic) {
+                                this.fadeOutCurrentMusic();
+                            }
+                            if (music.name in this.loadedMusic &&
+                                this.loadedMusic[music.name] == false)
+                            {
+                                this.loadMusic(music.name);
+                                this.loadedMusic[music.name] = true;
+                            }
+                            this.playMusic(music);
                         }
-                        this.playMusic(music);
                     }
                 } else {
-                    this.fadeOutCurrentMusic();
+                    if (this.game.renderer.mobile)
+                        this.resetMusic(this.currentMusic);
+                    else
+                        this.fadeOutCurrentMusic();
                 }
             }
         },
@@ -200,7 +250,7 @@ define(['area'], function(Area) {
                         self.clearFadeOut(music);
                         ended_callback(music);
                     }
-                }, 50);
+                }, 100);
             }
         },
         fadeInMusic: function(music) {
@@ -208,7 +258,7 @@ define(['area'], function(Area) {
             if(music && !music.sound.fadingIn) {
                 this.clearFadeOut(music);
                 music.sound.fadingIn = setInterval(function() {
-                    var step = 0.01;
+                    var step = 0.1;
                     volume = music.sound.volume + step;
 
                     if(self.enabled && volume < 1 - step) {
@@ -217,7 +267,7 @@ define(['area'], function(Area) {
                         music.sound.volume = 1;
                         self.clearFadeIn(music);
                     }
-                }, 30);
+                }, 300);
             }
         },
         clearFadeOut: function(music) {

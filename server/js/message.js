@@ -382,12 +382,11 @@ Messages.TradeStates = Message.extend({
 });
 
 Messages.Mana = Message.extend({
-    init: function(player) {
-        this.mana = player.mana;
-        this.maxMana = player.maxMana;
+    init: function(mana) {
+        this.mana = mana;
     },
     serialize: function() {
-        return [Types.Messages.MANA, this.mana, this.maxMana];
+        return [Types.Messages.MANA, this.mana];
     }
 });
 
@@ -526,5 +525,51 @@ Messages.CharData = Message.extend({
             attackRate = this.data[4];
 
         return [Types.Messages.CHARDATA, attackSpeed, moveSpeed, walkSpeed, idleSpeed, attackRate];
+    }
+});
+
+Messages.Interface = Message.extend({
+    init: function(interfaceId) {
+        this.interfaceId = interfaceId;
+    },
+
+    serialize: function() {
+        return [Types.Messages.INTERFACE, this.interfaceId];
+    }
+});
+
+Messages.GuiNotify = Message.extend({
+    init: function(message) {
+        this.message = message;
+    },
+
+    serialize: function() {
+        return [Types.Messages.GUINOTIFY, this.message];
+    }
+});
+
+Messages.ForceCast = Message.extend({
+    init: function(spellType) {
+        this.spellType = spellType;
+    },
+
+    serialize: function() {
+        return [Types.Messages.FORCECAST, this.spellType];
+    }
+});
+
+Messages.Projectile = Message.extend({
+    init: function(id, projectileType, sx, sy, x, y, owner) {
+        this.id = id;
+        this.projectileType = projectileType;
+        this.sx = sx;
+        this.sy = sy;
+        this.x = x;
+        this.y = y;
+        this.owner = owner;
+    },
+
+    serialize: function() {
+        return [Types.Messages.PROJECTILE, this.id, this.projectileType, this.sx, this.sy, this.x, this.y, this.owner];
     }
 });

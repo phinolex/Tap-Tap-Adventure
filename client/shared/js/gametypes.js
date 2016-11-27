@@ -168,7 +168,23 @@ Types = {
         CLASSREQUEST: 127,
         CRAFTINGREQUEST: 128,
         INTERFACE: 129,
-        PLAYERREADY: 130
+        PLAYERREADY: 130,
+        GUINOTIFY: 131,
+        CAST: 132,
+        SPELL: 133,
+        FORCECAST: 134,
+        PROJECTILE: 135,
+        SPELLHIT: 136
+    },
+
+    Interfaces: {
+        AUCTION: 1,
+        BANK: 2,
+        CLASS: 3,
+        CRAFTING: 4,
+        ENCHANTMENT: 5,
+        STORE: 6,
+        NOTIFY: 7
     },
 
     Orientations: {
@@ -215,34 +231,55 @@ Types = {
         ARCHER: 1,
         DEFENDER: 2,
         MAGE: 3
+    },
+
+    ActiveSkill: {
+        POWERGAIN: 1,
+        BERSERKER: 2,
+        WHIRLWINDATTACK: 3,
+        DEADLYATTACK: 4,
+        CONCUSSION: 5,
+        EVASION: 6,
+        RUN: 7
+    },
+
+    Projectiles: {
+        FIREBALL: 1,
+        ICEBALL: 2,
+        PINEARROW: 3,
+        TORNADO: 4,
+        TERROR: 5,
+        LAVABALL: 101,
+        DRAGONBALL: 102,
+        BOULDER: 103,
+        HEALBALL: 201
     }
 };
 
 
 Types.expForLevel = [];
 Types.expForLevel[0] = 0;
-for(var i = 1; i < 200; i++) {
-    var points = Math.floor((i * 60) * Math.pow(2, i / 7.));
-    //log.info("level_"+i+"="+points);
-    Types.expForLevel[i] = points;
-};
 
+for (var i = 1; i < 200; i++) {
+    var points = Math.floor((1/4) * Math.floor(i + 300 * Math.pow(2, i / 7)));
+    Types.expForLevel[i] = points + Types.expForLevel[i - 1];
+}
 
 Types.getLevel = function(exp){
-    if (exp==0) return 0;
-    for(var i = 1; i < 165; i++){
-        if(exp < Types.expForLevel[i]){
+    if (exp == 0)
+        return 0;
+
+    for(var i = 1; i < 100; i++){
+        if(exp < Types.expForLevel[i])
             return i;
-        }
+
     }
-    return 165;
+    return 100;
 };
 
 
 Types.isPlayer = function(kind) {
-    if (kind === 1 || kind === 222)
-        return true;
-    return false;
+    return kind === 1 || kind === 222;
 };
 
 Types.getOrientationAsString = function(orientation) {

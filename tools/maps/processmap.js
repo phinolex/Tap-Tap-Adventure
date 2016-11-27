@@ -38,6 +38,7 @@ module.exports = function processMap(json, options) {
         map.musicAreas = [];
     }
     if(mode === "server") {
+        map.bossAreas = [];
         map.roamingAreas = [];
         map.chestAreas = [];
         map.pvpAreas = [];
@@ -141,6 +142,28 @@ module.exports = function processMap(json, options) {
                 });
             }
         }
+
+        //Boss Areas
+        else if (layerName === "bossareas" && layerType === "objectgroup" && mode === "serer") {
+            log.info("** Parsing boss areas...");
+            var areas = layer.objects;
+
+            for (var j = 0; j < areas.length; j++) {
+                if (areas[j].properties)
+                    var nb = parseInt(areas[j].properties.nb, 10);
+
+                map.bossAreas[j] = {
+                    id: j,
+                    x: areas[j].x / map.tilesize,
+                    y: areas[j].y / map.tilesize,
+                    width: areas[j].width / map.tilesize,
+                    height: areas[j].height / map.tilesize,
+                    bossname: areas[j].bossname,
+                    nb: nb
+                };
+            }
+        }
+
         // Roaming Mob Areas
         else if (layerName === "roaming" && layerType === "objectgroup" && mode === "server") {
             log.info("** Processing roaming mob areas...");
@@ -202,11 +225,11 @@ module.exports = function processMap(json, options) {
                 var newChest = {
                     x: chest.x / map.tilesize,
                     y: chest.y / map.tilesize
-                }
+                };
 
                 // get items
                 newChest['i'] = _.map(chest.properties.items.split(','), function(name) {
-                    return ItemTypes.getKindFromString(name);
+                    return name;
                 });
 
                 map.staticChests.push(newChest);

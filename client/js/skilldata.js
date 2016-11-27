@@ -8,7 +8,7 @@ define(['text!../shared/data/skills.json'], function(SkillsJSON) {
 	for (var i in skillsParse)
 	{
 		var value = skillsParse[i];
-		
+
 		Skill.Data.push({
 		    name:value.name,
 		    class:value.class,
@@ -19,7 +19,8 @@ define(['text!../shared/data/skills.json'], function(SkillsJSON) {
 		    attain: value.attain ? value.attain : 25,
 		    levels: value.levels,
 		    recharge: value.recharge ? value.recharge : 0,
-		    iconOffset: value.iconOffset,
+            manaReq: value.manaReq ? value.manaReq : [10, 25, 45, 70],
+		    iconOffset: value.iconOffset
 		});
 		Skill.Names[value.name] = Skill.Data[i];
 	}

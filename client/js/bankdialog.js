@@ -437,14 +437,13 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                 for(var inventoryNumber = 6; inventoryNumber < game.inventoryHandler.maxInventoryNumber; inventoryNumber++) {
                     var item = game.inventoryHandler.inventories[inventoryNumber];
                     if(item && item.kind) {
-                        if(ItemTypes.isWeapon(item.kind) || ItemTypes.isArcherWeapon(item.kind)) {
-                            //log.info(JSON.stringify(item));
+                        if(ItemTypes.isWeapon(item.kind) || ItemTypes.isArcherWeapon(item.kind) || ItemTypes.isPendant(item.kind) || ItemTypes.isRing(item.kind))
                             this.inventories[inventoryNumber-6].assign(item.kind, item.count, item.skillKind, item.skillLevel);
-                        } else if (ItemTypes.isArmor(item.kind) || ItemTypes.isArcherArmor(item.kind)) {
+                        else if (ItemTypes.isArmor(item.kind) || ItemTypes.isArcherArmor(item.kind))
                             this.inventories[inventoryNumber-6].assign(item.kind, item.count, 0, 0);
-                        } else if (ItemTypes.isCraft(item.kind)) {
+                        else if (ItemTypes.isCraft(item.kind))
                             this.inventories[inventoryNumber-6].assign(item.kind, item.count, 0, 0);
-                        }
+
 			    else if (ItemTypes.isGold(item.kind)) {
 			    	    this.goldNumber.html(item.count);
 	                            this.inventories[inventoryNumber-6].assign(item.kind, item.count, 0, 0);
@@ -578,7 +577,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                 for(var bankNumber = 0; bankNumber < game.bankHandler.maxBankNumber; bankNumber++) {
                     var item = game.bankHandler.banks[bankNumber];
                     if(item && item.kind) {
-                        if(ItemTypes.isWeapon(item.kind) || ItemTypes.isArcherWeapon(item.kind)) {
+                        if(ItemTypes.isWeapon(item.kind) || ItemTypes.isArcherWeapon(item.kind) || ItemTypes.isPendant(item.kind) || ItemTypes.isRing(item.kind)) {
                             this.banks[bankNumber].assign(item.kind, item.count, item.skillKind, item.skillLevel);
                         } else if (ItemTypes.isArmor(item.kind) || ItemTypes.isArcherArmor(item.kind)) {
                             this.banks[bankNumber].assign(item.kind, item.count, 0, 0);

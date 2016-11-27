@@ -9,9 +9,9 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             $('#characterItemWeapon').click(function(event) {
                 if (self.game.ready){
                     self.game.menu.clickEquipped(1);
-                    var p = self.player;
-                    self.game.createBubble(p.weapon, Item.getInfoMsgEx(p.weapon, p.weaponEnchantedPoint, p.weaponSkillKind, p.weaponSkillLevel));
-                    var id = $("#"+p.weapon);
+                    var p = self.game.player;
+                    //self.game.createBubble(p.weaponName, Item.getInfoMsgEx(p.weaponName, p.weaponEnchantedPoint, p.weaponSkillKind, p.weaponSkillLevel));
+                    var id = $("#"+p.weaponName);
                     $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
                     $(id).css("top",self.game.mouse.y-$(id).height()+"px");
                 }
@@ -20,35 +20,40 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             $('#characterItemArmor').click(function(event) {
                 if (self.game.ready){
                     self.game.menu.clickEquipped(2);
-                    var p = self.player;
-                    self.game.createBubble(p.armor, Item.getInfoMsgEx(p.armor, p.armorEnchantedPoint, p.armorSkillKind, p.armorSkillLevel));
-                    var id = $("#"+p.armor);
+                    var p = self.game.player;
+                    //self.game.createBubble(p.armorName, Item.getInfoMsgEx(p.armorName, p.armorEnchantedPoint, p.armorSkillKind, p.armorSkillLevel));
+                    var id = $("#"+p.armorName);
                     $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
                     $(id).css("top",self.game.mouse.y-$(id).height()+"px");
                 }
             });
 
+            $('#characterItemPendant').click(function(event) {
+                if (self.game.ready){
+                    self.game.menu.clickEquipped(3);
+                    var p = self.game.player;
+                    //self.game.createBubble(p.pendant, Item.getInfoMsgEx(p.pendant, p.pendantEnchantedPoint, p.pendantSkillKind, p.pendantSkillLevel));
+                    var id = $("#" + p.pendant);
+                    $(id).css("left", self.game.mouse.x - $(id).width() / 2 + "px");
+                    $(id).css("top", self.game.mouse.y - $(id).height() + "px");
+                }
+            });
+
+            $('#characterItemRing').click(function(event) {
+                if (self.game.ready){
+                    self.game.menu.clickEquipped(4);
+                    var p = self.game.player;
+                    //self.game.createBubble(p.ring, Item.getInfoMsgEx(p.ring, p.ringEnchantedPoint, p.ringSkillKind, p.ringSkillLevel));
+                    var id = $("#" + p.ring);
+                    $(id).css("left", self.game.mouse.x - $(id).width() / 2 + "px");
+                    $(id).css("top", self.game.mouse.y - $(id).height() + "px");
+                }
+            });
         },
         assign: function(datas) {
             var game = this.game,
                 width1, height1, width2, height2, width3, height3;
 
-            this.player = {
-                kind: datas[0],
-                armor: datas[1],
-                armorEnchantedPoint: datas[2],
-                weapon: datas[3],
-                weaponEnchantedPoint: datas[4],
-                weaponSkillKind: datas[5],
-                weaponSkillLevel: datas[6],
-                experience: datas[7],
-                level: datas[8],
-                maxHitPoints: datas[9],
-                hitPoints: datas[10],
-                admin: datas[11],
-                pClass: datas[12]
-            };
-            var player = this.player;
 
             if (this.game.renderer) {
                 if (this.game.renderer.mobile) {
@@ -66,13 +71,13 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             }
 
             $('#characterName').text(game.player.name);
-            $('#characterLevel').text(player.level);
-            $('#characterExp').text(
-                player.experience
-            );
+            $('#characterLevel').text(this.game.player.level);
+            $('#characterExp').text(this.game.player.experience);
 
-            var playerArmour = this.player.armor;
-            var playerWeapon = player.weapon;
+            var playerArmour = this.game.player.spriteName;
+            var playerWeapon = this.game.player.weaponName;
+            var playerPendant = this.game.player.pendant;
+            var playerRing = this.game.player.ring;
 
             if (typeof playerArmour == 'undefined' || playerArmour == null || playerArmour == 'undefined')
                 playerArmour = 'clotharmor';
@@ -80,27 +85,22 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             if (typeof playerWeapon == 'undefined' || playerWeapon == null || playerWeapon == 'undefined')
                 playerWeapon = 'sword1';
 
-            log.info("PlayerArmour: " + playerArmour + " PlayerWeapon: " + playerWeapon);
 
-            $('#characterItemWeapon').css('background-image', 'url("img/' + this.scale + '/item-' + ItemTypes.getKindAsString(playerWeapon) + '.png")');
-            $('#characterItemWeapon').attr(
-                'title',
-                Item.getInfoMsgEx(playerWeapon, player.weaponEnchantedPoint, player.weaponSkillKind, player.weaponSkillLevel)
-            );
+            $('#characterItemWeapon').css('background-image', 'url("img/' + this.scale + '/item-' + playerWeapon + '.png")');
+            $('#characterItemWeapon').attr('title', Item.getInfoMsgEx(playerWeapon, this.game.player.weaponEnchantedPoint, this.game.player.weaponSkillKind, this.game.player.weaponSkillLevel));
 
+            $('#characterItemArmor').css('background-image', 'url("img/' + this.scale + '/item-' + playerArmour + '.png")');
+            $('#characterItemArmor').attr('title', Item.getInfoMsgEx(playerArmour, this.game.player.armorEnchantedPoint, this.game.player.armorSkillKind, this.game.player.armorSkillLevel));
 
-            $('#characterItemArmor').css('background-image', 'url("img/' + this.scale + '/item-' + ItemTypes.getKindAsString(playerArmour) + '.png")');
+            $('#characterItemPendant').css('background-image', 'url("img/' + this.scale + '/item-' + playerPendant + '.png")');
+            $('#characterItemPendant').attr('title', Item.getInfoMsgEx(playerPendant, this.game.player.pendantEnchantedPoint, this.game.player.pendantSkillKind, this.game.player.pendantSkillLevel));
 
-            $('#characterItemArmor').attr(
-                'title',
-                Item.getInfoMsgEx(player.spriteName, player.armorEnchantedPoint, player.armorSkillKind, player.armorSkillLevel)
-            );
+            $('#characterItemRing').css('background-image', 'url("img/' + this.scale + '/item-' + playerRing + '.png")');
+            $('#characterItemRing').attr('title', Item.getInfoMsgEx(playerRing, this.game.player.ringEnchantedPoint, this.game.player.ringSkillKind, this.game.player.ringSkillLevel));
+
 
             var weapon = game.sprites[playerWeapon];
             var armor = game.sprites[playerArmour];
-
-            log.info("Weapon: " + weapon + ".");
-            log.info("Armour: " + armor + ".");
 
             switch (this.scale) {
                 case 1:
@@ -193,7 +193,9 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             this.game = game;
 
             if (this.game.renderer) {
-                this.scale = this.game.renderer.getScaleFactor();
+                this.scale = this.game.renderer.scale;
+                if (this.game.renderer.mobile)
+                    this.scale = 1;
             }
 
             this.body.css({
@@ -239,7 +241,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             if (SkillData.Names[self.name].type == "active")
             {
                 this.body.bind('dragstart', function(event) {
-                    log.info("Began DragStart.")
+                    log.info("Began DragStart.");
                     event.originalEvent.dataTransfer.setData("skllName", self.name);
                     DragData = {};
                     DragData.skillName = self.name;
@@ -290,11 +292,12 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             this._super('#characterDialogFrameSkillPage');
             this.game = game;
             this.skills = [];
-
         },
 
         setSkill: function(name, level) {
-            this.skills.push({name: name, level: level, skill: null});
+            this.skills.push(
+                {name: name, level: level, skill: null}
+            );
         },
 
         clear: function() {
@@ -316,27 +319,47 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
 
         assign: function(player) {
             var scale = this.game.renderer.getScaleFactor();
-            for(var id in this.skills) {
+            if (this.game.renderer.mobile)
+                scale = 1;
 
-                var tSkill = this.skills[id];
-                if(tSkill) {
-                    log.info('#characterSkill1' + id);
-                    var skill = new Skill('#characterSkill1' + id, tSkill.name,
-                        SkillData.Names[tSkill.name].iconOffset[scale-1], this.game);
-                    skill.background.css({
-                        'position': 'absolute',
-                        'left': '' + ((id % 2) ? 70 : 14) * scale + 'px',
-                        'top': '' + (17 + (Math.floor(id / 2) * 20)) * scale + 'px',
-                        'width': '84px',
-                        'height': '30px',
-                        'display': 'block'
-                    });
-                    this.skills[id].skill = skill;
-                    //log.info("this.skills[id].skill="+JSON.stringify(this.skills[id].skill));
-                    $('#characterSkill1' + id).attr('title', tSkill.name + " Lv: " + tSkill.level);
-                    skill.setLevel(tSkill.level);
+            try {
+                var passiveSkillId = 0,
+                    activeSkillId = 0;
+
+                for (var id = 0; id < this.skills.length; id++) {
+                    var skill = this.skills[id],
+                        skillData = SkillData.Names[skill.name],
+                        isPassive = skillData.type == 'passive';
+
+                    if (skill) {
+                        var iconOffset = skillData.iconOffset[scale - 1],
+                            skillId = id + 10,
+                            s = new Skill('#characterSkill' + skillId, skill.name, iconOffset, this.game);
+
+                        s.background.css({
+                            'position': 'absolute',
+                            'left': '' + ((isPassive ? passiveSkillId : activeSkillId) % 2 ? 70 : 14) * scale + 'px',
+                            'top': '' + (isPassive ? 113 + (Math.floor(passiveSkillId / 2) * 20) : 17 + (Math.floor(activeSkillId / 2) * 20)) * scale + 'px',
+                            "width": '42px',
+                            'height': '15px',
+                            'display': 'block'
+                        });
+
+                        this.skills[id].skill = s;
+                        $("#characterSkill" + skillId).attr('title', skill.name + " Lv: " + skill.level);
+                        s.setLevel(skill.level);
+
+                        if (isPassive)
+                            passiveSkillId++;
+                        else
+                            activeSkillId++;
+                    }
                 }
+            } catch (e) {
+
+                log.info("Caught error: " + e);
             }
+
         }
 
     });
@@ -378,9 +401,8 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             this.movePreviousButton.attr('class', this.index > 1 ? 'enabled' : '');
             this.moveNextButton.attr('class', this.index < this.count ? 'enabled' : '');
 
-            if(this.changeHandler) {
+            if(this.changeHandler)
                 this.changeHandler(this);
-            }
         },
         getVisible: function() {
             return this.body.css('display') === 'block';

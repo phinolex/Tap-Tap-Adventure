@@ -23,27 +23,27 @@
 
   {
     "npcId":44,
-    "type": 2,
-    "name": "Mooscles",
+    "type": 1,
+    "name": "Sneaky Situation",
     "desc": "Help Bulk Bogan poomp his mooscles!",
     "beforeTalk" : [
-      "Yiss, poomping ze mooscles.",
-      "Yiss, you must help me.",
-      "Yiss, kill pesky gobln fr me."
+      "Yiss! Help me!",
+      "Bring me mail armour!",
+      "I will reward you! I promish."
     ],
     "afterTalk": [
       "Yisss, now I can continue getting stronker."
     ],
-    "mobId": 4,
-    "mobCount": 5,
+    "itemId": 23,
+    "itemCount": 1,
     "xp":45
   },
 
   {
     "npcId": 51,
-    "type": 3,
+    "type": 2,
     "name": "Crabby",
-    "desc": "Help Randy relax by killing a few crabs.",
+    "desc": "Help Randy relax by killing some crabs.",
     "beforeTalk" : [
       "Hey man!",
       "I have this small issue..",
@@ -54,27 +54,709 @@
     "afterTalk": [
       "Thank you kind sir!"
     ],
-    "mobId": 61,
-    "mobCount": 1,
+    "mobId": 7,
+    "mobCount": 10,
     "xp":45
   },
 
   {
     "npcId":44,
-    "type": 3,
-    "name": "Nip Noops",
-    "desc": "Bulk Bogan is in dire need of your mooscles!",
+    "type": 2,
+    "name": "Wait What?",
+    "desc": "Bulk Bogan requires your help once again!",
     "beforeTalk" : [
-      "Yiss sir.. I request your help again!",
-      "Yiss, you must help me.",
-      "Yiss, you must bring me mail armor.",
-      "Yiss, it's to cover my Nip Noops."
+      "Oooh hello once again",
+      "You see, I need help with rats.",
+      "They infesting and are awful.",
+      "I'm too stronk for them, so you must slay..",
+      "Hmm.. Let me think of a reasonable number..",
+      "300? No.. 500.. Wait no.. 25!"
     ],
     "afterTalk": [
-      "Yisss, now I don't shiver."
+      "Yisss, now I safe."
     ],
-    "itemId": 4,
-    "itemCount": 1,
+    "mobId": 2,
+    "mobCount": 25,
     "xp":45
+  },
+
+  {
+    "npcId": 244,
+    "type": 2,
+    "name": "Sneks!",
+    "desc": "Slay 10 Sneks!",
+    "beforeTalk": [
+      "Hello adventurer!",
+      "I am heading towards the Skeleton King!",
+      "However, I need your help to get there.",
+      "Those silly sneks are blocking the way",
+      "I need you to slay 10 of them so I can get through.",
+      "I will meet you at the Skeleton King's lair entrance after!"
+    ],
+
+    "mobId": 11,
+    "mobCount": 10,
+    "xp": 200
+  },
+
+  {
+    "npcId": 47,
+    "type": 1,
+    "name": "Secret Security?",
+    "desc": "The secret agent asked you to bring him a secret CD.",
+    "beforeTalk": [
+      "Okay, so you can't really tell anyone. But I am from",
+      "The future. Yea it's not exactly hard to tell me apart.",
+      "Someone in our time has hidden a CD with valuable information",
+      "Here. The thing is, it's hidden somewhere in this land.",
+      "Please find it."
+    ],
+
+    "afterTalk": [
+      "Unfortunately, that was the wrong disc.",
+      "Which leads me to think we've been fooled",
+      "Anyway, thanks for your efforts."
+    ],
+
+    "itemId": 173,
+    "itemCount": 1,
+    "xp": 750
+  },
+
+  {
+    "npcId": 299,
+    "type": 2,
+    "name": "Crabby Part Two",
+    "desc": "Help Randy's girlfriend by killing 15 Hermit Crabs!",
+    "beforeTalk": [
+      "Oh my, it's you!",
+      "Randy told me so much about you.",
+      "He told me about your bravery in slaying crabs",
+      "Well, I am on an exotic vacation in the ice world!",
+      "But these darn Hermit Crabs are disrupting my peace",
+      "Please help me out, kill at least 15 for me!!"
+    ],
+
+    "afterTalk": [
+      "Thank you so much!",
+      "I'll be sure to tell all my friends about your",
+      "Willingness to help out!"
+    ],
+    "mobId": 141,
+    "mobCount": 15,
+    "xp": 1250
+  },
+
+  {
+    "npcId": 54,
+    "type": 2,
+    "name": "Ogry King",
+    "desc": "Slay the Ogre King!",
+    "beforeTalk": [
+      "You! You seem suitable for this task.",
+      "I need someone strong enough to slay the",
+      "Ogre King! I will reward you some great",
+      "Experience if you proceed to do so."
+    ],
+
+    "afterTalk": [
+      "I truly appreciate it",
+      "Now this land won't be burdened any further."
+    ],
+
+    "mobId": 124,
+    "mobCount": 1,
+    "xp": 1052
+  },
+
+  {
+    "npcId": 244,
+    "type": 2,
+    "name": "Skelly King",
+    "desc": "Slay the Skeleton King!",
+    "beforeTalk": [
+      "Young warrior!",
+      "I need your help, I've been wounded",
+      "From fighting the Skeleton King.",
+      "You have to slay him for me so I can",
+      "Take the credits for my bravery.",
+      "Now go do it!"
+    ],
+
+    "afterTalk": [
+        "Thanks no thanks."
+    ],
+
+    "mobId": 13,
+    "mobCount": 1,
+    "xp": 526
+  },
+
+  {
+    "npcId": 316,
+    "type": 1,
+    "name": "An Elf's Task",
+    "desc": "The ancient elf asked you to bring her a Pearl Pendant.",
+    "beforeTalk": [
+      "Oh hello there!",
+      "Please bring me a pearl pendant.",
+      "I will grant you the ability to wield",
+      "Them in exchange for your efforts."
+    ],
+
+    "afterTalk": [
+      "Thank you adventurer",
+      "Pendants are very powerful.",
+      "They can be enchanted and in terms increase",
+      "Your combat abilities."
+    ],
+
+    "itemId": 353,
+    "itemCount": 1,
+    "xp": 2000
+  },
+
+  {
+    "npcId": 287,
+    "type": 2,
+    "name": "A Farmer's Job",
+    "desc": "Kill 20 of the wolves attacking the Shepherd's farm.",
+    "beforeTalk": [
+      "Oh you need to help me please!",
+      "Those darn wolves are completely",
+      "Tearing my farm apart. Please kill",
+      "25 of them. I will provide you information",
+      "On the missing princess."
+    ],
+    "afterTalk": [
+      "Well, the truth is I don't know where the",
+      "Princess is located.. But thanks for the help!"
+    ],
+
+    "mobId": [150, 109],
+    "mobCount": 20,
+    "xp": 1450
+  },
+
+  {
+    "npcId": 236,
+    "type": 2,
+    "name": "Rodentz",
+    "desc": "The odd-eyed cat asked you to kill 20 red mice!",
+    "beforeTalk": [
+      "Meow.",
+      "Adventurer, you must help me!",
+      "You have to kill 20 red mice for me..",
+      "You see, I would do it myself but..",
+      "I don't want to. I'll give you a reward in return."
+    ],
+
+    "afterTalk": [
+      "Thank you very much, meow."
+    ],
+    "mobId": 80,
+    "mobCount": 20,
+    "xp": 500
+  },
+
+  {
+    "npcId": 53,
+    "type": 2,
+    "name": "Birds!",
+    "desc": "Help out billey by slaughtering 30 vultures!",
+    "beforeTalk": [
+      "Heilo main",
+      "You gotta help a brother out.",
+      "Deeze dam vultures have been dismarupting ma sleep.",
+      "You gotta kill 30 for your brotha Billy.",
+      "I'll reward you something really nice, I promise man!"
+    ],
+    "afterTalk": [
+      "Thanks brotha."
+    ],
+    "mobId": 144,
+    "mobCount": 30,
+    "xp": 1400
+  },
+
+  {
+    "npcId": 230,
+    "type": 2,
+    "name": "Ogre Infestation!",
+    "desc": "Clear out 75 ogres from the vampire cave.",
+    "beforeTalk": [
+      "You know, this cave used to be filled with bats",
+      "However, ever since the ogres came, they've been",
+      "Eradicated. My kind, simply gone. I am one of the",
+      "Last ones. Please, kill 75 of those filthy ogres",
+      "And I will reward you the art of Deadly Attack."
+    ],
+
+    "afterTalk": [
+      "Thank you.. But they just keep coming."
+    ],
+
+    "mobId": [171, 123, 68, 124],
+    "mobCount": 75,
+    "skillName": "Deadly Attack",
+    "skillLevel": 1,
+    "xp": 1750
+  },
+
+  {
+    "npcId": 43,
+    "type": 1,
+    "name": "Moving On...",
+    "desc": "Gather ten potatoes for Azaria!",
+    "beforeTalk": [
+      "Bombard, Bombard.",
+      "You must help me adventurer!",
+      "I am in dire need of potatoes, you see..",
+      "Potatoes are the greatest fruit of all time",
+      "I love them so much..",
+      "Would you be so kind to please bring me 10 potatoes?",
+      "There is a farm nearby, you should be able to find it!"
+    ],
+    "afterTalk": [
+      "Thank you so much dear adventurer",
+      "I really wish we would have gotten",
+      "To know one another better.",
+      "Maybe it's just not our time",
+      "Well, it was fun while it lasted"
+    ],
+    "itemId": 1000,
+    "itemCount": 10,
+    "xp": 526
+  },
+
+  {
+    "npcId": 367,
+    "type": 2,
+    "name": "A Queen",
+    "desc": "Kill the Ant Queen!",
+    "beforeTalk": [
+      "Kill the Ant Queen!",
+      "Just do it!",
+      "It'll be worth it man, come on."
+    ],
+
+    "afterTalk": [
+      "kthxbyee"
+    ],
+
+    "mobId": 262,
+    "mobCount": 1,
+    "xp": 2500
+  },
+
+  {
+    "npcId": 249,
+    "type": 2,
+    "name": "Fishy & Dangerous",
+    "desc": "The mermaid asked you to kill 20 mermaids.",
+    "beforeTalk": [
+      "Oh no. My sisters, they've become corrupted",
+      "You have to stop them before they take over",
+      "The undersea. Please, slay 20 of them to at",
+      "least slow down their evil plans."
+    ],
+    "afterTalk": [
+      "You know, it's a bit hypocritical of me",
+      "But sometimes doing something morally wrong",
+      "Is the only way to do the right thing."
+    ],
+
+    "mobId": 87,
+    "mobCount": 20,
+    "xp": 1000
+  },
+
+  {
+    "npcId": 257,
+    "type": 2,
+    "name": "A Sponge..?",
+    "desc": "Clear the cave of 30 monsters for the Sponge.",
+    "beforeTalk": [
+      "Kill off 30 of the monsters in the cave.",
+      "Just do it man come on.",
+      "Please..?",
+      "Okay, I know what'll convince you to do it.",
+      "How about...",
+      "I'll teach you how to stun enemies.",
+      "Yea, what do you think?"
+    ],
+    "afterTalk": [
+      "Thank you, but I don't think",
+      "I want to actually move now.",
+      "But thank you nevertheless."
+    ],
+
+    "mobId": [296, 85],
+    "mobCount": 30,
+    "skillName": "Concussion",
+    "skillLevel": 1,
+    "xp": 1500
+  },
+
+  {
+    "npcId": 288,
+    "type": 2,
+    "name": "Dead Relationship",
+    "desc": "Look for the zombie boyfriend by slaying 50 zombies.",
+    "beforeTalk": [
+      "My boyfriend has disappeared.. Again..",
+      "You know, by now I should be used to it.. I guess",
+      "Sometimes we just can't 'Be Together'.",
+      "Please kill off 50 of the zombies and maybe",
+      "Just maybe you'll be able to find him.."
+    ],
+
+    "afterTalk": [
+      "I guess, we can't even be together on the Dark Side",
+      "It's weird how neither life or death gives you a break."
+    ],
+
+    "mobId": 121,
+    "mobCount": 50,
+    "xp": 1600
+  },
+
+  {
+    "npcId": 45,
+    "type": 2,
+    "name": "Holy Quest",
+    "desc": "Help Father Pastor kill off 25 Blue Preta's..",
+    "beforeTalk": [
+      "Oh what a tragedy..",
+      "This once thriving community has been",
+      "Overtaken by Blue Preta's.",
+      "We have yet to discover what they are, but..",
+      "They come in all different shapes and colours",
+      "Please kill off some of them, I will reward you",
+      "I will teach you the Berserker skill!"
+    ],
+
+    "afterTalk": [
+      "Thank you dear adventurer",
+      "Too bad some things remain broken no matter",
+      "How hard you try to fix them."
+    ],
+    "mobId": 107,
+    "mobCount": 25,
+    "skillName": "Berserker",
+    "skillLevel": 1,
+    "xp": 1500
+  },
+
+  {
+    "npcId": 50,
+    "type": 1,
+    "name": "Moddah Sorcery",
+    "desc": "The Sorcerer requires you to find Topaz Ring.",
+    "beforeTalk": [
+      "Hello there",
+      "Find me a Topaz Ring.. I will reward you the art of Power Gain..",
+      "It is an ancient art that gathers a very powerful attack.",
+      "The one thing I know, is that those darn Dark Wizards",
+      "Have a Topaz Ring somewhere.. Maybe you could start there?"
+    ],
+    "afterTalk": [
+      "Thank you, and you should thank me."
+    ],
+
+    "itemId": 600,
+    "itemCount": 1,
+    "skillName": "Power Gain",
+    "skillLevel": 1,
+    "xp": 2500
+  },
+
+  {
+    "npcId": 283,
+    "type": 1,
+    "name": "Fairy Well..",
+    "desc": "The Fairy has asked you to bring her a Trident.",
+    "beforeTalk": [
+      "Heyyyyy",
+      "So listen, bring me a Trident.. And...",
+      "Well.. I'll teach you a Whirlwind Attack!"
+    ],
+    "afterTalk": [
+      "Thank you!!!"
+    ],
+    "itemId": 89,
+    "itemCount": 1,
+    "skillName": "Whirlwind Attack",
+    "skillLevel": 1,
+    "xp": 3000
+  },
+
+  {
+    "npcId": 303,
+    "type": 1,
+    "name": "A Mystery?",
+    "desc": "The missing princess may be in Azgardia..",
+    "beforeTalk": [
+      "Oh hello there, I take you are a messenger of the king?",
+      "Well, I did happen to see his daughter.. She was headed",
+      "Towards the kingdom of Azgardia last time I've checked.",
+      "Best of luck adventurer!"
+    ],
+
+    "afterTalk": [
+      "Oh hello there, I take you are a messenger of the king?",
+      "Well, I did happen to see his daughter.. She was headed",
+      "Towards the kingdom of Azgardia last time I've checked.",
+      "Best of luck adventurer!"
+    ],
+
+    "mobId": 0,
+    "mobCount": 0,
+    "xp": 0
+  },
+
+  {
+    "npcId": 298,
+    "type": 1,
+    "name": "The Lost Treasure",
+    "desc": "Pirates need your help to rescue their treasure!",
+    "beforeTalk": [
+      "Oh what a tragedy..",
+      "What irony this world is full of..",
+      "Our pirate treasure, our marble pendant..",
+      "Has been stolen. Please find it! Those darn",
+      "Skeleton pirates have robbed us!"
+    ],
+    "afterTalk": [
+      "I greatly respect your effort brave adventurer!"
+    ],
+    "itemId": 372,
+    "itemCount": 1,
+    "xp": 450
+  },
+
+  {
+    "npcId": 335,
+    "type": 2,
+    "desc": "Kill a 45 Dark Skeletons for information.",
+    "beforeTalk": [
+      "Hello adventurer, I see you are looking for the missing princess.",
+      "You see, I will be able to provide information",
+      "But I will require a favour in return.",
+      "You see, there is a skeleton infestation outside",
+      "My kingdom, and not that it's any of my business",
+      "But I want to ensure that freedom is maintained.",
+      "If you kill 45 of them, I will offer you information",
+      "And a skill in return."
+    ],
+
+    "afterTalk": [
+      "Well, I lied, I don't exactly know where she is",
+      "I just really needed someone to help me out.",
+      "I do know one thing though, the sky elves have",
+      "Kidnapped her. I know you can access their lair",
+      "Through a series of interconnected tunnels.",
+      "Which makes you wonder, isn't this what you've",
+      "Been doing in this game all along? Anyway.. Good Luck!"
+    ],
+
+    "mobId": 102,
+    "mobCount": 45,
+    "skillName": "Evasion",
+    "skillLevel": 2,
+    "xp": 5000
+  },
+
+  {
+    "npcId": 227,
+    "type": 2,
+    "requirement": 1,
+    "name": "The Ear..?",
+    "desc": "Kill some 15 goblins without weapons.",
+    "beforeTalk": [
+      "I don't always bite a man's ear off",
+      "But when my skills are challenged",
+      "I definitely will.",
+      "Dear Adventurer, I will teach you the",
+      "Art of evasion, if you can kill 15 goblins",
+      "Without a weapon."
+    ],
+    "afterTalk": [
+      "I am fairly surprised you were able to..",
+      "I was gonna bite your ear off otherwise."
+    ],
+    "mobId": 4,
+    "mobCount": 15,
+    "skillName": "Evasion",
+    "skillLevel": 1,
+    "xp": 600
+  },
+
+  {
+    "npcId": 245,
+    "type": 2,
+    "name": "Fishy Situation",
+    "desc": "The fisherman wants you to catch 25 green fesh.",
+    "beforeTalk": [
+      "...",
+      "An old soul like myself requires your help adventurer",
+      "I need you to go kill 25 green fesh for me..",
+      "It's but the mere thought of having them slain",
+      "That will satisfy me."
+    ],
+    "afterTalk": [
+      "...."
+    ],
+    "mobId": 91,
+    "mobCount": 25,
+    "xp": 300
+  },
+
+  {
+    "npcId": 46,
+    "type": 1,
+    "name": "For Science!",
+    "desc": "The professor has asked you to collect flasks!",
+    "beforeTalk": [
+      "Good day young adventurer.",
+      "I am currently trying to devise the formula",
+      "For an invincibility potion.",
+      "However, I need 100 flasks to do so.",
+      "Bring me some and I will teach you how to make them."
+    ],
+    "afterTalk": [
+      "You know, I honestly didn't believe you would",
+      "Actually follow through with my request."
+    ],
+    "itemId": 35,
+    "itemCount": 100,
+    "xp": 1000
+  },
+
+  {
+    "npcId": 352,
+    "type": 2,
+    "name": "Lightning Slayer",
+    "desc": "Slay the Lightning Guardian!",
+    "beforeTalk": [
+      "Corruption! Corruption!",
+      "Corruption all amongst us..",
+      "The Lightning Guardian has betrayed us.",
+      "The once renown guardian of this world has",
+      "Simply turned against us.",
+      "Slay the Lightning Guardian, and in return",
+      "I will teach you the art of Haste."
+    ],
+    "afterTalk": [
+      "You have saved us brave adventurer!"
+    ],
+
+    "mobId": 195,
+    "mobCount": 1,
+    "skillName": "Run",
+    "skillLevel": 1,
+    "xp": 1600
+  },
+
+  {
+    "npcId": 246,
+    "type": 2,
+    "name": "Brothers",
+    "desc": "Slay the Great Squid!",
+    "beforeTalk": [
+      "Squid and Octopuses are not the same",
+      "But I must say that the Great Squid was",
+      "Like a brother to me..",
+      "However, his reign has created corruption",
+      "Amongst the undersea community..",
+      "Slay him! I shall reward you with",
+      "Second level of Evasion!"
+    ],
+
+    "afterTalk": [
+      "Great job brave adventurer."
+    ],
+    "mobId": 214,
+    "mobCount": 1,
+    "skillName": "Evasion",
+    "skillLevel": 2,
+    "xp": 3500
+  },
+
+  {
+    "npcId": 389,
+    "type": 2,
+    "name": "Dark Region",
+    "desc": "Kill Tenebris.",
+    "beforeTalk": [
+      "Not many adventurers make it this far.",
+      "Sometimes not many even make it beyond the first frontline.",
+      "But there are some that manage to get even further.",
+      "I see that potential in you.",
+      "Kill Tenebris. I will personally teach you",
+      "The third level of the Evasion skill."
+    ],
+    "afterTalk": [
+      "My speculations were correct.",
+      "You are one of the chosen ones."
+    ],
+
+    "mobId": 157,
+    "mobCount": 1,
+    "skillName": "Evasion",
+    "skillLevel": 3,
+    "xp": 3000
+  },
+
+  {
+    "npcId": 41,
+    "type": 2,
+    "name": "A New Adventure",
+    "desc": "The king needs your help to find the missing princess!",
+    "beforeTalk": [
+      "Please help me dear adventurer!",
+      "I send you forth on a quest!",
+      "My daughter, the princess of Maearth",
+      "Has gone missing. You must find her",
+      "Please set forth onto this adventure",
+      "And find her. I have no clue as to where",
+      "She may have gone. I will greatly reward you.",
+      "If you find her that is."
+    ],
+
+    "afterTalk": [
+      "Thank you, I proclaim you the hero of the people."
+    ],
+
+    "mobId": 100,
+    "mobCount": 10,
+    "xp": 10000
+  },
+
+  {
+    "npcId": 382,
+    "type": 1,
+    "name": "Ooh! A Secret!",
+    "desc": "Help the Monky with his plan!",
+    "beforeTalk": [
+      "Oh. Hello, I didn't think you'd find",
+      "My secret outpost. Outside the Undersea..",
+      "Nonetheless, I request you assistance.",
+      "Bring me a Black Potion.",
+      "In exchange, I will teach you the second level",
+      "Of Power Gain."
+    ],
+
+    "afterTalk": [
+      "You know, if you have seen this girl..",
+      "Her name is Azaria.. Please tell her that..",
+      "I miss her.."
+    ],
+
+    "itemId": 306,
+    "itemCount": 1,
+    "skillName": "Power Gain",
+    "skillLevel": 2,
+    "xp": 2500
   }
 ]

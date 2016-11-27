@@ -189,30 +189,23 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     $('#users').html("" + worldPlayers + " player");
                 }
             });
-            game.onGuildPopulationChange( function(guildName, guildPopulation) {
-                var setGuildPlayersString = function(string) {
-                    $("#guild-population").find("span:nth-child(2)").text(string);
-                };
-                $('#guild-population').addClass("visible");
-                $("#guild-population").find("span").text(guildPopulation);
-                $('#guild-name').text(guildName);
-                if(guildPopulation == 1) {
-                    setGuildPlayersString("player");
-                } else {
-                    setGuildPlayersString("players");
-                }
-            });
 
             game.onGameStart(function() {
                 $('#parchment').removeClass();
-                $('#chatLog').css('visibility', 'hidden');
+                //$('#chatLog').css('visibility', 'hidden');
                 var entry = new EntryPoint();
                 entry.execute(game);
             });
 
             game.onDisconnect(function(message) {
-                $('#death').find('p').html(message + "<em>Click anywhere to reload the page.</em>");
+                var reloadMessage = game.renderer.mobile ? "You have been disconnected, the page will refresh within 5 seconds." : message + "<em>Click anywhere to reload the page.</em>";
+                $('#death').find('p').html(reloadMessage);
                 game.isDisconnected = true;
+                if (game.renderer.mobile) {
+                    setInterval(function() {
+                        location.reload();
+                    }, 5000)
+                }
                 $('#respawn').hide();
             });
 
@@ -313,25 +306,44 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $('#characterButton').click(function(event) {
                 $('#characterButton').toggleClass('active');
 
-                if ($('#characterButton').hasClass('active'))
+                if ($('#characterButton').hasClass('active')) {
                     game.client.sendCharacterInfo();
-                else
+                    if ($('#inventoryButton').hasClass('active')) {
+                        $('#inventoryButton').toggleClass('active');
+                        game.inventoryHandler.toggleAllInventory();
+                    }
+                } else
                     game.characterDialog.hide();
             });
 
             $('#inventoryButton').click(function(event) {
                 $('#inventoryButton').toggleClass('active');
-
                 game.inventoryHandler.toggleAllInventory();
+
+                if ($('#characterButton').hasClass('active')) {
+                    $('#characterButton').toggleClass('active');
+                    game.characterDialog.hide();
+                }
             });
 
             $('#warpbutton').click(function(event) {
-                $('#warpbutton').toggleClass('active');
+                //$('#warpbutton').toggleClass('active');
+                game.showGraphicNotification("This feature is under construction!")
 
             });
 
             $('#chatbutton').click(function(event) {
                 $('#chatbutton').toggleClass('active');
+
+                if ($('#inventoryButton').hasClass('active')) {
+                    $('#inventoryButton').toggleClass('active');
+                    game.inventoryHandler.toggleAllInventory();
+                }
+
+                if ($('#characterButton').hasClass('active')) {
+                    $('#characterButton').toggleClass('active');
+                    game.characterDialog.hide();
+                }
 
                 if ($('#chatbutton').hasClass('active'))
                     app.showChat();
@@ -404,6 +416,19 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 var key = e.which,
                     $chat = $('#chatinput');
 
+                if ($('#inventoryButton').hasClass('active')) {
+                    $('#inventoryButton').toggleClass('active');
+                    game.inventoryHandler.toggleAllInventory();
+                }
+
+                if ($('#characterButton').hasClass('active')) {
+                    $('#characterButton').toggleClass('active');
+                    game.characterDialog.hide();
+                }
+
+                if ($('#achievements').hasClass('active'))
+                    $('#achievements').toggleClass('active');
+
                 if(key === Types.Keys.ENTER) {
                     if($('#chatbox').hasClass('active')) {
                         app.hideChat();
@@ -421,6 +446,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         case Types.Keys.LEFT:
                         case Types.Keys.A:
                         case Types.Keys.KEYPAD_4:
+
                             game.player.moveLeft = true;
                             break;
                         case Types.Keys.RIGHT:
@@ -473,10 +499,10 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     placeholder = $(this).attr("placeholder");
 
                 if(key === 13) {
-                    if($chat.attr('value') !== '') {
-                        if(game.player) {
-                            game.say($chat.attr('value'));
-                        }
+                    if($chat.val() !== '') {
+                        if(game.player)
+                            game.say($chat.val());
+
                         $chat.attr('value', '');
                         app.hideChat();
                         $('#foreground').focus();
@@ -586,9 +612,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $('#next').click(function() {
                 var $achievements = $('#achievements'),
                     $lists = $('#lists'),
-                    nbPages = $lists.children('ul').length;
-
-                log.info("Pages: " + nbPages + "/" + app.currentPage);
+                    nbPages = 8;
 
                 if(app.currentPage === nbPages) {
                     return false;
@@ -604,6 +628,16 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
             $('#helpbutton').click(function() {
                 $('#achievements').toggleClass('active');
+
+                if ($('#inventoryButton').hasClass('active')) {
+                    $('#inventoryButton').toggleClass('active');
+                    game.inventoryHandler.toggleAllInventory();
+                }
+
+                if ($('#characterButton').hasClass('active')) {
+                    $('#characterButton').toggleClass('active');
+                    game.characterDialog.hide();
+                }
             });
 
 
@@ -771,12 +805,16 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
         });
 
         $(window).blur(function(){
-            if (game.client && game.player && game.started)
-                game.client.sendHasFocus(0);
+            if (game.client && game.player && game.started) {
+                if (game.renderer.mobile)
+                    game.audioManager.setOff();
+            }
         });
-        $(window).focus(function(){
-            if (game.client && game.player && game.started)
-                game.client.sendHasFocus(1);
+        $(window).focus(function() {
+            if (game.client && game.player && game.started) {
+                if (game.renderer.mobile && !game.audioManager.switchDisabled)
+                    game.audioManager.setOn();
+            }
         });
 
     };

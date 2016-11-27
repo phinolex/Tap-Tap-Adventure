@@ -2,6 +2,28 @@
  * Created by Flavius on 15-07-19.
  */
 
+@font-face {
+    font-family: 'GraphicPixel';
+    src: url('../fonts/graphicpixel-webfont.eot');
+    src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/graphicpixel-webfont.woff') format('woff'),
+    url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
+    url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AdvoCut';
+    src: url('../fonts/advocut-webfont.eot');
+    src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/advocut-webfont.woff') format('woff'),
+    url('../fonts/advocut-webfont.ttf') format('truetype'),
+    url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @media screen and (min-width: 1501px) {
 
     #skillcontainer.vertical {
@@ -68,6 +90,7 @@
         color: white;
         cursor: default;
         display: none;
+        font-family: 'GraphicPixel', sans-serif;
     }
 
     .vertical #skill00, .vertical #skill01, .vertical #skill02, .vertical #skill03,
@@ -156,6 +179,7 @@
         cursor: default;
         display: none;
         z-index:10;
+        font-family: 'GraphicPixel', sans-serif;
     }
 
 
@@ -246,6 +270,7 @@
         cursor: default;
         display: none;
         z-index:10;
+        font-family: 'GraphicPixel', sans-serif;
     }
 
 
@@ -331,6 +356,7 @@
         color: white;
         cursor: default;
         display: none;
+        font-family: 'GraphicPixel', sans-serif;
     }
 
     .horizontal #skill00, .horizontal #skill01, .horizontal #skill02, .horizontal #skill03,
@@ -417,6 +443,7 @@
         color: white;
         cursor: default;
         display: none;
+        font-family: 'GraphicPixel', sans-serif;
     }
 
     .vertical #skill00, .vertical #skill01, .vertical #skill02, .vertical #skill03,
@@ -504,6 +531,7 @@
         cursor: default;
         display: none;
         z-index:10;
+        font-family: 'GraphicPixel', sans-serif;
     }
 
     .horizontal #skill00, .horizontal #skill01, .horizontal #skill02, .horizontal #skill03,

@@ -30,9 +30,8 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
 
                             self.game.menu.clickInventory(inventoryNumber);
                         }
-                        var item = self.inventoryDisplay[inventoryNumber];
+                        /*var item = self.inventoryDisplay[inventoryNumber];
                         var p = self.player;
-                        log.info("item="+JSON.stringify(item));
                         self.game.createBubble('bubble'+item.inv, Item.getInfoMsgEx(
                         	item.inv,
                         	item.num,
@@ -40,7 +39,7 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
                         	item.skillLevel));
                         var id = $("#bubble"+item.kind);
                         $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
-                        $(id).css("top",self.game.mouse.y-$(id).height()+"px");
+                        $(id).css("top",self.game.mouse.y-$(id).height()+"px");*/
                     }
                 });
 

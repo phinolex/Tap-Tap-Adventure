@@ -7,7 +7,7 @@ define(['text!../shared/data/items.json', 'item', '../shared/js/itemtypes'], fun
 	var itemParse = JSON.parse(ItemsJson);
 	//log.info(JSON.stringify(itemParse));
 	$.each( itemParse, function( itemKey, itemValue ) {
-		if (itemValue.type == "weapon" || itemValue.type == "weaponarcher") {
+		if (itemValue.type == "weapon" || itemValue.type == "weaponarcher" || itemValue.type == "pendant" || itemValue.type == "ring") {
 			Items[itemKey] = Item.extend({
 				init: function(id, skillKind, skillLevel) {
 					this._super(id, itemValue.kind, itemValue.type, skillKind, skillLevel);

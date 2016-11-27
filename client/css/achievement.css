@@ -25,6 +25,7 @@
     .achievement16 .coin {background-position:-1080px -666px;}
     .achievement17 .coin {background-position:-1152px -666px;}
 
+
     .achievement18 .coin {background-position:-648px -822px;}
     .achievement19 .coin {background-position:-720px -822px;}
     .achievement20 .coin {background-position:-792px -822px;}
@@ -33,20 +34,28 @@
     .achievement23 .coin {background-position:-1008px -822px;}
     .achievement24 .coin {background-position:-1080px -822px;}
     .achievement25 .coin {background-position:-1152px -822px;}
+    .achievement26 .coin {background-position:-648px -822px;}
+    .achievement27 .coin {background-position:-720px -822px;}
+    .achievement28 .coin {background-position:-792px -822px;}
+    .achievement29 .coin {background-position:-864px -822px;}
+    .achievement30 .coin {background-position:-936px -822px;}
+    .achievement31 .coin {background-position:-1008px -822px;}
+    .achievement32 .coin {background-position:-1080px -822px;}
+    .achievement33 .coin {background-position:-1152px -822px;}
 
     #achievements-wrapper {height:387px;width:1116px;margin:60px 0 30px 60px;}
     #achievements ul {float:left;margin-left:60px;}
     #achievements nav {height:66px;width:202px;margin:0 auto;}
     #previous, #next {height:66px;width:102px;display:inline-block;}
     .page1 #previous, .upscaled .page1 #previous {background-position:0px -846px;}
-    .page7 #next, .upscaled .page7 #next {background-position:-99px -846px;}
+    .page8 #next, .upscaled .page8 #next {background-position:-99px -846px;}
     #previous, .upscaled #previous {background-position:-201px -846px;}
     #previous:active, .upscaled #previous:active {background-position:-402px -846px;}
     #next, .upscaled #next {margin-left:-15px;background-position:-300px -846px;}
     #next:active, .upscaled #next:active {background-position:-501px -846px;}
 
     .page1 #previous:hover, .page1 #previous:active {background-position:0px -846px;}
-    .page7 #next:hover, .page7 #next:active {background-position:-99px -846px}
+    .page8 #next:hover, .page8 #next:active {background-position:-99px -846px}
 
     #lists {width:12000px;}
     #achievements.page1 #lists {left:0;}
@@ -64,7 +73,7 @@
     #achievements-count {margin:18px 72px 0 0;}
 
     #achievements, #achievements li, #achievements .coin, #achievement-notification, #achievement-notification .coin, #coinsparks, .achievement-sharing a, #previous, #next {background-size:1248px;}
-    #achievements {height:588px;width:1248px;margin-left:-624px;margin-top:-324px;font-size:30px;}
+    #achievements {height:588px;width:1248px;margin-left:-624px;margin-top:-324px;font-size:28px;}
     #achievements li, .upscaled #achievements li {height:78px;width:1116px;background-position:0 -588px;margin:15px 0;}
     #achievements li .coin {margin-right:45px;}
     #achievements li span {padding-top:27px;}
@@ -110,20 +119,28 @@
     .achievement23 .coin {background-position:-672px -548px;}
     .achievement24 .coin {background-position:-720px -548px;}
     .achievement25 .coin {background-position:-768px -548px;}
+    .achievement26 .coin {background-position:-432px -548px;}
+    .achievement27 .coin {background-position:-480px -548px;}
+    .achievement28 .coin {background-position:-528px -548px;}
+    .achievement29 .coin {background-position:-576px -548px;}
+    .achievement30 .coin {background-position:-624px -548px;}
+    .achievement31 .coin {background-position:-672px -548px;}
+    .achievement32 .coin {background-position:-720px -548px;}
+    .achievement33 .coin {background-position:-768px -548px;}
 
     #achievements-wrapper {height:258px;width:744px;margin:40px 0 20px 40px;}
     #achievements ul {float:left;margin-left:40px;}
     #achievements nav {height:44px;width:134px;margin:0 auto;}
     #previous, #next {height:44px;width:68px;display:inline-block;}
     .page1 #previous, .upscaled .page1 #previous {background-position:0px -564px;}
-    .page7 #next, .upscaled .page7 #next {background-position:-66px -564px;}
+    .page8 #next, .upscaled .page8 #next {background-position:-66px -564px;}
     #previous, .upscaled #previous {background-position:-134px -564px;}
     #previous:active, .upscaled #previous:active {background-position:-268px -564px;}
     #next, .upscaled #next {margin-left:-10px;background-position:-200px -564px;}
     #next:active, .upscaled #next:active {background-position:-334px -564px;}
 
     .page1 #previous:hover, .page1 #previous:active {background-position:0px -564px;}
-    .page7 #next:hover, .page7 #next:active {background-position:-66px -564px}
+    .page8 #next:hover, .page8 #next:active {background-position:-66px -564px}
 
     #lists {width:8000px;}
     #achievements.page1 #lists {left:0;}
@@ -140,7 +157,7 @@
     #achievements-count {margin:12px 48px 0 0;}
 
     #achievements, #achievements li, #achievements .coin, #achievement-notification, #achievement-notification .coin, #coinsparks, .upscaled #coinsparks, .achievement-sharing a, #previous, #next {background-size:832px;}
-    #achievements {height:392px;width:832px;margin-left:-416px;margin-top:-216px;font-size:20px;}
+    #achievements {height:392px;width:832px;margin-left:-416px;margin-top:-216px;font-size:18px;}
     #achievements li, .upscaled #achievements li {
         height:51px;
         top: -12px;
@@ -198,20 +215,28 @@
     .achievement23 .coin {background-position:-672px -548px;}
     .achievement24 .coin {background-position:-720px -548px;}
     .achievement25 .coin {background-position:-768px -548px;}
+    .achievement26 .coin {background-position:-432px -548px;}
+    .achievement27 .coin {background-position:-480px -548px;}
+    .achievement28 .coin {background-position:-528px -548px;}
+    .achievement29 .coin {background-position:-576px -548px;}
+    .achievement30 .coin {background-position:-624px -548px;}
+    .achievement31 .coin {background-position:-672px -548px;}
+    .achievement32 .coin {background-position:-720px -548px;}
+    .achievement33 .coin {background-position:-768px -548px;}
 
     #achievements-wrapper {height:258px;width:744px;margin:40px 0 20px 40px;}
     #achievements ul {float:left;margin-left:40px;}
     #achievements nav {height:44px;width:135px;margin:0 auto;}
     #previous, #next {height:44px;width:68px;display:inline-block;}
     .page1 #previous, .upscaled .page1 #previous {background-position:0px -564px;}
-    .page7 #next, .upscaled .page7 #next {background-position:-66px -564px;}
+    .page8 #next, .upscaled .page8 #next {background-position:-66px -564px;}
     #previous, .upscaled #previous {background-position:-134px -564px;}
     #previous:active, .upscaled #previous:active {background-position:-268px -564px;}
     #next, .upscaled #next {margin-left:-10px;background-position:-200px -564px;}
     #next:active, .upscaled #next:active {background-position:-334px -564px;}
 
     .page1 #previous:hover, .page1 #previous:active {background-position:0px -564px;}
-    .page7 #next:hover, .page7 #next:active {background-position:-66px -564px}
+    .page8 #next:hover, .page8 #next:active {background-position:-66px -564px}
 
     #lists {width:8000px;}
     #achievements.page1 #lists {left:0;}
@@ -229,7 +254,7 @@
     #achievements-count {margin:12px 48px 0 0;}
 
     #achievements, #achievements li, #achievements .coin, #achievement-notification, #achievement-notification .coin, #coinsparks, .upscaled #coinsparks, .achievement-sharing a, #previous, #next {background-size:832px;}
-    #achievements {height:391px;width:832px;margin-left:-416px;margin-top:-216px;font-size:20px;}
+    #achievements {height:391px;width:832px;margin-left:-416px;margin-top:-216px;font-size:18px;}
     #achievements li, .upscaled #achievements li {
         height:51px;
         top: -12px;
@@ -281,20 +306,28 @@
     .achievement23 .coin {background-position:-336px -274px;}
     .achievement24 .coin {background-position:-360px -274px;}
     .achievement25 .coin {background-position:-384px -274px;}
+    .achievement26 .coin {background-position:-216px -274px;}
+    .achievement27 .coin {background-position:-240px -274px;}
+    .achievement28 .coin {background-position:-264px -274px;}
+    .achievement29 .coin {background-position:-288px -274px;}
+    .achievement30 .coin {background-position:-312px -274px;}
+    .achievement31 .coin {background-position:-336px -274px;}
+    .achievement32 .coin {background-position:-360px -274px;}
+    .achievement33 .coin {background-position:-384px -274px;}
 
     #achievements-wrapper {height:128px;width:372px;margin:20px 0 10px 20px;}
     #achievements ul {float:left;margin-left:20px;}
     #achievements nav {height:22px;width:68px;margin:0 auto;}
     #previous, #next {height:22px;width:34px;display:inline-block;}
     .page1 #previous, .upscaled .page1 #previous {background-position:0px -282px;}
-    .page7 #next, .upscaled .page7 #next {background-position:-33px -282px;}
+    .page8 #next, .upscaled .page8 #next {background-position:-33px -282px;}
     #previous, .upscaled #previous {background-position:-67px -282px;}
     #previous:active, .upscaled #previous:active {background-position:-134px -282px;}
     #next, .upscaled #next {margin-left:-5px;background-position:-100px -282px;}
     #next:active, .upscaled #next:active {background-position:-167px -282px;}
 
     .page1 #previous:hover, .page1 #previous:active {background-position:0px -282px;}
-    .page7 #next:hover, .page7 #next:active {background-position:-33px -282px}
+    .page8 #next:hover, .page8 #next:active {background-position:-33px -282px}
 
     #lists {width:4000px;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
     #achievements.page1 #lists {left:0;}
@@ -357,18 +390,26 @@
     #achievement-notification.achievement23 .coin {background-position:-672px -444px;}
     #achievement-notification.achievement24 .coin {background-position:-720px -548px;}
     #achievement-notification.achievement25 .coin {background-position:-768px -548px;}
+    #achievement-notification.achievement26 .coin {background-position:-432px -548px;}
+    #achievement-notification.achievement27 .coin {background-position:-480px -548px;}
+    #achievement-notification.achievement28 .coin {background-position:-528px -548px;}
+    #achievement-notification.achievement29 .coin {background-position:-576px -444px;}
+    #achievement-notification.achievement30 .coin {background-position:-624px -444px;}
+    #achievement-notification.achievement31 .coin {background-position:-672px -444px;}
+    #achievement-notification.achievement32 .coin {background-position:-720px -548px;}
+    #achievement-notification.achievement33 .coin {background-position:-768px -548px;}
 
     #achievements nav {height:22px;width:68px;margin:0 auto;}
     #previous, #next {height:22px;width:34px;display:inline-block;}
     .page1 #previous, .upscaled .page1 #previous {background-position:0px -282px;}
-    .page7 #next, .upscaled .page7 #next {background-position:-33px -282px;}
+    .page8 #next, .upscaled .page8 #next {background-position:-33px -282px;}
     #previous, .upscaled #previous {background-position:-67px -282px;}
     #previous:active, .upscaled #previous:active {background-position:-134px -282px;}
     #next, .upscaled #next {margin-left:-5px;background-position:-100px -282px;}
     #next:active, .upscaled #next:active {background-position:-167px -282px;}
 
     .page1 #previous:hover, .page1 #previous:active {background-position:0px -282px;}
-    .page7 #next:hover, .page7 #next:active {background-position:-33px -282px}
+    .page8 #next:hover, .page8 #next:active {background-position:-33px -282px}
 
     #lists {width:4000px;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
     #achievements.page1 #lists {left:0;}

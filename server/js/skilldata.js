@@ -4,28 +4,25 @@ var SkillsJSON = require("../../shared/data/skills.json");
 var Skills = [];
 var SkillNames = {};
 
-for (var index in SkillsJSON)
-{
-	var value = SkillsJSON[index];
+for (var index = 0; index < SkillsJSON.length; index++) {
+    var value = SkillsJSON[index];
 
-	
-	Skills.push({
-	    name:value.name,
-	    class:value.class,
-	    type:value.type ? value.type : "cast",
-	    skillType:value.skillType,
-	    target:value.target,
-	    duration:value.duration ? value.duration : 0,
-	    attain: value.attain ? value.attain : 25,
-	    levels: value.levels,
-	    recharge: value.recharge ? value.recharge : 0,
-	    aoe: value.aoe
-	});
-	
-	SkillNames[value.name] = Skills[index];
+    Skills.push({
+        skillName: value.name,
+        skillClass: value.class,
+        type: value.type ? value.type : "passive",
+        levelRequirement: value.reqLevel,
+        skillType: value.skillType,
+        target: value.target,
+        duration: value.duration ? value.duration : 0,
+        recharge: value.recharge ? value.recharge : 0,
+        levels: value.levels ? value.levels : 5,
+        manaReq: value.manaReq ? value.manaReq : [10, 25, 45, 70],
+        aoe: value.aoe ? value.aoe : 0
+    });
+
+    SkillNames[value.name] = Skills[index];
 }
-
-//log.info("skills: "+JSON.stringify(Skills));
 
 module.exports.Skills = Skills;
 module.exports.SkillNames = SkillNames;

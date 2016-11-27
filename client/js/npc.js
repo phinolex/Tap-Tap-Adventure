@@ -9,46 +9,70 @@ define(['character', 'achievemethandler', 'npcdata'], function(Character, QH, Np
             this.title = name;
         },
 
-        talk: function(isAchievement, achievement, completedAchievement) {
-            var messages;
+        talk: function(achievement, completedAchievement) {
+            var self = this,
+                messages;
 
-            if (isAchievement) {
-                if (completedAchievement)
+            var finishedAchievement = achievement.completed;
+
+            messages = finishedAchievement ? achievement.afterTalk : achievement.beforeTalk;
+
+            log.info("Talk Index: " + this.talkIndex);
+
+            if (messages) {
+                var message, talkCount = messages.length;
+
+                if (this.talkIndex > talkCount)
                     this.talkIndex = 0;
 
-                messages = completedAchievement ? achievement.afterTalk : achievement.beforeTalk;
+                if (this.talkIndex < talkCount)
+                    message = messages[this.talkIndex];
 
-                if (messages) {
-                    var message,
-                        talkCount = messages.length;
+                this.talkIndex++;
 
-                    if (this.talkIndex > talkCount)
-                        this.talkIndex = 0;
+                return message;
+            }
+        },
 
-                    if (this.talkIndex < talkCount)
-                        message = messages[this.talkIndex];
+        nonAchievementTalk: function(isMobile) {
+            var self = this,
+                messages;
 
-                    this.talkIndex++;
+            if (self.kind == 55)
 
-                    return message;
-                }
-            } else {
-                if (this.name = "Doctor") {
-                    messages = ["Test", "Test2"];
+                messages = isMobile ? [
+                    "Welcome young adventurer!",
+                    "Call me 'The coder'",
+                    "I'm the very man that runs your existence.",
+                    "Nonetheless, welcome!",
+                    "Welcome to Tap Tap Adventure",
+                    "Or as some citizens here call it...",
+                    "Maearth."
+                ] : [
+                    "Welcome young adventurer!",
+                "Call my 'The coder'",
+                "I'm the very man that runs your existence.",
+                "Nonetheless, welcome!",
+                "Welcome to Tap Tap Adventure",
+                "Or as some citizens here call it...",
+                "Maearth.",
+                    "Please ensure you report any bugs you may find",
+                    "On the forums. You may use the forums with your",
+                    "Ingame account without having to register!"
+                ];
 
-                    var message,
-                        talkCount = messages.length;
+            if (messages) {
+                var message, talkCount = messages.length;
 
-                    if (this.talkIndex > talkCount)
-                        this.talkIndex = 0;
+                if (this.talkIndex > talkCount)
+                    this.talkIndex = 0;
 
-                    if (this.talkIndex < talkCount)
-                        message = messages[this.talkIndex];
+                if (this.talkIndex < talkCount)
+                    message = messages[this.talkIndex];
 
-                    this.talkIndex++;
+                this.talkIndex++;
 
-                    return message;
-                }
+                return message;
             }
         },
 

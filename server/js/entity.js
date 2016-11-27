@@ -149,30 +149,76 @@ module.exports = Entity = cls.Class.extend({
 	    despawn: function () {
 		    return new Messages.Despawn(this.id);
 	    },
-	
+
+        getComplexPositionRelativeTo: function(entity) {
+            var pos = null;
+
+            if (entity) {
+                pos = {};
+                var r = Utils.random(7);
+
+                pos.x = entity.x;
+                pos.y = entity.y;
+
+                if (r === 0)
+                    pos.y -= 1;
+
+                if (r === 1)
+                    pos.y += 1;
+
+                if (r === 2)
+                    pos.x -= 1;
+
+                if (r === 3)
+                    pos.y += 1;
+
+                if (r === 4) {
+                    pos.x -= 1;
+                    pos.y -= 1;
+                }
+
+                if (r === 5) {
+                    pos.x += 1;
+                    pos.y -= 1;
+                }
+
+                if (r === 6) {
+                    pos.x -= 1;
+                    pos.y += 1;
+                }
+
+                if (r === 7) {
+                    pos.x += 1;
+                    pos.y += 1;
+                }
+            }
+
+            return pos;
+        },
+
 	    getPositionNextTo: function (entity) {
 		var pos = null;
-		if (entity) {
-		    pos = {};
-		    // This is a quick & dirty way to give mobs a random position
-		    // close to another entity.
-		    var r = Utils.random(4);
-	
-		    pos.x = entity.x;
-		    pos.y = entity.y;
-		    if (r === 0) {
-			pos.y -= 1;
-		    }
-		    if (r === 1) {
-			pos.y += 1;
-		    }
-		    if (r === 2) {
-			pos.x -= 1;
-		    }
-		    if (r === 3) {
-			pos.x += 1;
-		    }
-		}
+            if (entity) {
+                pos = {};
+                // This is a quick & dirty way to give mobs a random position
+                // close to another entity.
+                var r = Utils.random(3);
+
+                pos.x = entity.x;
+                pos.y = entity.y;
+                if (r === 0) {
+                    pos.y -= 1;
+                }
+                if (r === 1) {
+                    pos.y += 1;
+                }
+                if (r === 2) {
+                    pos.x -= 1;
+                }
+                if (r === 3) {
+                    pos.x += 1;
+                }
+            }
 		return pos;
 	    },
 	    

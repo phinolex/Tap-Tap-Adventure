@@ -23,7 +23,6 @@ module.exports = MobController = cls.Class.extend({
                 this.pathingGrid[i][j] = this.map.grid[i][j];
             }
         }
-        log.info("Initialized the pathing grid with static colliding cells.");
     },
 
     handleStep: function() {
@@ -36,7 +35,6 @@ module.exports = MobController = cls.Class.extend({
         {
             var entity = this.worldServer.mobs[mobId];
             entity.onStep(function() {
-
             });
 
             entity.onRequestPath(function(x, y) {
@@ -79,7 +77,6 @@ module.exports = MobController = cls.Class.extend({
 
             entity.onStopPathing(function(x, y) {
 
-
             });
         }
     },
@@ -95,8 +92,8 @@ module.exports = MobController = cls.Class.extend({
             for(var playerId in this.worldServer.players)
             {
                 var player = this.worldServer.players[playerId];
-                if (!player.isDead && player.isNear(mob, mob.aggroRange) && !mob.hasTarget())
-                {
+
+                if (!player.isDead && player.isNear(mob, mob.aggroRange) && !mob.hasTarget()) {
                     if (mob.level * 2 > player.level) {
                         //log.info("Aggroed by " + mob.id + " at ("+player.x+", "+player.y+")");
                         player.server.handleMobHate(mob.id, player.id, 5);
@@ -122,6 +119,7 @@ module.exports = MobController = cls.Class.extend({
             if (mob.target && mob.canAttack(time) && mob.canReach(mob.target) ) {
                 if (mob.path)
                     mob.path = null;
+
                 mob.target.packetHandler.handleHurt(mob);
             }
         }
@@ -172,9 +170,14 @@ module.exports = MobController = cls.Class.extend({
                 }
 
             }
-            if (!mob.target)
+/*
+            if (mob.distanceToSpawningPoint(mob.x, mob.y) > 7) {
+                mob.forgetEveryone();
                 mob.returnToSpawningPosition(1);
-
+            }*/
+/*
+            if (!mob.target)
+                mob.returnToSpawningPosition(1);*/
         }
     },
 

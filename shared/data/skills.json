@@ -3,32 +3,41 @@
 	    "name":"Power Gain",
 	    "class":0,
 	    "type":"passive",
+        "reqLevel": 1,
 	    "skillType":"attack",
 	    "target":"self",
 	    "levels": [
 	        5, 10, 15, 20	    
 	    ],
-	    "iconOffset": [
-	      "-16px 0px",
-	      "-32px 0px",
-	      "-48px 0px"
-	    ]
-	},	
+        "manaRequirements": [
+            10, 20, 35, 50
+        ],
+        "iconOffset": [
+          "-80px 0px",
+          "-160px 0px",
+          "-240px 0px"
+        ]
+	},
+
 	{
-	    "name":"Beserker",
+	    "name": "Berserker",
 	    "class":0,
 	    "type":"active",
+        "reqLevel": 1,
 	    "skillType":"haste-attack",
 	    "target":"self",
 	    "duration":5,
-	    "recharge":30,
+	    "recharge":20,
 	    "levels": [
 	        25, 50, 75, 100	    
 	    ],
+        "manaRequirements": [
+          15, 30, 50, 75
+        ],
 	    "iconOffset": [
-	      "-16px 0px",
-	      "-32px 0px",
-	      "-48px 0px"
+	      "0px 0px",
+	      "0px 0px",
+	      "0px 0px"
 	    ]
 	},	
 
@@ -36,79 +45,100 @@
 	    "name":"Whirlwind Attack",
 	    "class":0,
 	    "type":"active",
+        "reqLevel": 1,
 	    "skillType": "damage",
-	    "recharge":10,
+	    "recharge":1,
 	    "aoe": 2,
 	    "levels": [
 	        5, 10, 15, 20	    
 	    ],
-	    "iconOffset": [
-	      "0px 0px",
-	      "0px 0px",
-	      "0px 0px"
-	    ]
+        "manaRequirements": [
+          10, 25, 50, 90
+        ],
+      "iconOffset": [
+        "-48px 0px",
+        "-96px 0px",
+        "-144px 0px"
+      ]
+
 	},
 	{
 	    "name":"Deadly Attack",
 	    "class":0,
 	    "type":"active",
+        "reqLevel": 1,
 	    "skillType":"damage",
-	    "recharge":15,
+	    "recharge":1,
 	    "levels": [
 	        25, 50, 100, 200	    
 	    ],
-	    "iconOffset": [
-	      "0px 0px",
-	      "0px 0px",
-	      "0px 0px"
-	    ]
+        "manaRequirements": [
+          25, 55, 95, 120
+        ],
+      "iconOffset": [
+        "-64px 0px",
+        "-128px 0px",
+        "-192px 0px"
+      ]
+
 	},
+
 	{
 	    "name":"Concussion",
 	    "class":0,
 	    "type":"active",
+        "reqLevel": 1,
 	    "skillType":"stun",
 	    "duration": [2,3,4,5],
-	    "recharge":30,
-	    "iconOffset": [
-	      "0px 0px",
-	      "0px 0px",
-	      "0px 0px"
-	    ]
-	},	
-	
+	    "recharge":40,
+        "manaReq": [
+          5, 20, 40, 65
+        ],
+        "iconOffset": [
+          "-32px 0px",
+          "-64px 0px",
+          "-96px 0px"
+        ]
+
+	},
 	
 	{
 	    "name":"Evasion",
-	    "class":1,
+	    "class":0,
 	    "type":"passive",
+        "reqLevel": 1,
 	    "skillType":"defense",
 	    "target":"self",
 	    "levels": [
 	        5, 10, 15, 20	    
 	    ],
 	    "iconOffset": [
-	      "-16px 0px",
-	      "-32px 0px",
-	      "-48px 0px"
+	      "-96px 0px",
+	      "-192px 0px",
+	      "-288px 0px"
 	    ]
 	},	
 	{
 	    "name":"Run",
-	    "class":1,
+	    "class":0,
 	    "type":"active",
-	    "skillType":"haste-move",
+        "reqLevel": 1,
+	    "skillType":"slow",
 	    "target":"self",
 	    "duration":10,
 	    "recharge":30,
 	    "levels": [
 	        25, 50, 75, 100	    
 	    ],
-	    "iconOffset": [
-	      "-16px 0px",
-	      "-32px 0px",
-	      "-48px 0px"
-	    ]
+        "manaReq": [
+          10, 20, 30, 40
+        ],
+        "iconOffset": [
+          "-16px 0px",
+          "-32px 0px",
+          "-48px 0px"
+        ]
+
 	      
 	},	
 
@@ -116,6 +146,7 @@
 	    "name":"Explosive Arrow",
 	    "class":1,
 	    "type":"active",
+      "reqLevel": 1,
 	    "skillType": "damage",
 	    "recharge":10,
 	    "aoe": 2,
@@ -132,6 +163,7 @@
 	    "name":"Deadly Arrow",
 	    "class":1,
 	    "type":"active",
+      "reqLevel": 1,
 	    "skillType":"damage",
 	    "recharge":15,
 	    "levels": [
@@ -148,6 +180,7 @@
 	    "name":"Slow Arrow",
 	    "class":1,
 	    "type":"active",
+      "reqLevel": 1,
 	    "skillType":"slow",
 	    "duration":10,
 	    "recharge":30,
@@ -159,13 +192,13 @@
 	      "0px 0px",
 	      "0px 0px"
 	    ]
-	},	
-	
-	
+	},
+
 	{
 	    "name":"Defense",
 	    "class":2,
 	    "type":"passive",
+      "reqLevel": 1,
 	    "skillType":"defence",
 	    "target":"self",
 	    "levels": [
@@ -176,11 +209,13 @@
 	      "-32px 0px",
 	      "-48px 0px"
 	    ]
-	},	
+	},
+
 	{
 	    "name":"Invincible",
 	    "class":2,
 	    "type":"active",
+      "reqLevel": 1,
 	    "skillType":"invincible",
 	    "target":"self",
 	    "duration": [3, 6, 9, 12],
@@ -196,6 +231,7 @@
 	    "name":"Strong Attack",
 	    "class":2,
 	    "type":"active",
+      "reqLevel": 1,
 	    "skillType": "damage",
 	    "recharge":10,
 	    "levels": [
@@ -207,10 +243,12 @@
 	      "0px 0px"
 	    ]
 	},
+
 	{
 	    "name":"Shield",
 	    "class":2,
 	    "type":"active",
+      "reqLevel": 1,
 	    "skillType":"defence",
 	    "target":"self",
 	    "recharge":20,
@@ -224,10 +262,12 @@
 	      "0px 0px"
 	    ]
 	},
+
 	{
 	    "name":"Provoke",
 	    "class":2,
 	    "type":"active",
+      "reqLevel": 1,
 	    "skillType":"provoke",
 	    "recharge":20,
 	    "aoe":2,

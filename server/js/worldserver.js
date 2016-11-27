@@ -44,21 +44,22 @@ module.exports = World = cls.Class.extend({
         self.npcs = {};
         self.pets = {};
         self.gather = {};
+        self.projectiles = {};
         self.playersPvpGame = [];
         self.mobAreas = [];
         self.chestAreas = [];
         self.groups = {};
         self.party = [];
-
         self.isDay = true;
         self.packets = {};
-        self.cycleSpeed = 200;
-        self.mobControllerSpeed = 5;
+        self.cycleSpeed = 50;
+        self.mobControllerSpeed = 200;
         self.pvpTime = 200;
         self.itemCount = 0;
         self.playerCount = 0;
         self.zoneGroupsReady = false;
         self.uselessDebugging = false;
+        self.positionUpdate = [];
 
 
         /**
@@ -75,15 +76,15 @@ module.exports = World = cls.Class.extend({
         });
 
         self.onPlayerEnter(function(player) {
-            if(!player.hasEnteredGame)
+            if (!player.hasEnteredGame)
                 self.incrementPlayerCount();
 
+            self.pushToPlayer(player, new Messages.Population(self.playerCount));
             self.pushRelevantEntityListTo(player);
 
             var move_callback = function(x, y) {
 
                 player.flagPVP(self.map.isPVP(x, y));
-                self.database.setPlayerPosition(player, x, y);
 
                 player.forEachAttacker(function(mob) {
                     if (mob.target == null)
@@ -94,11 +95,12 @@ module.exports = World = cls.Class.extend({
 
                     if (target) {
                         var pos = self.findPositionNextTo(mob, target);
-                        if (mob.distanceToSpawningPoint(pos.x, pos.y) > 20) {
+                        if (mob.distanceToSpawningPoint(pos.x, pos.y) >= 4) {
                             mob.clearTarget();
                             mob.forgetEveryone();
                             player.removeAttacker(mob);
-                        }
+                        } else
+                            self.moveEntity(mob, pos.x, pos.y);
                     }
                 });
 
@@ -126,7 +128,9 @@ module.exports = World = cls.Class.extend({
             });
 
             player.packetHandler.onExit(function() {
-
+                self.database.setPlayerPosition(player, player.x, player.y);
+                self.database.setPointsData(player.name, player.hitPoints, player.mana);
+                self.decrementPlayerCount();
                 self.removePlayer(player);
                 if (self.removed_callback)
                     self.removed_callback();
@@ -157,11 +161,17 @@ module.exports = World = cls.Class.extend({
                             character.regenHealthBy(1);
                             self.pushToPlayer(character, character.regen());
                         }
+
+                        if (!character.hasFullMana() && character.isAttacked()) {
+                            character.regenManaBy(1);
+                            self.pushToPlayer(character, new Messages.Mana(character.mana));
+                        }
                     }
                 }
             });
         });
 
+        log.info("World - " + self.id + " successfully initialized.");
     },
 
     moveEntity: function(entity, x, y) {
@@ -179,11 +189,12 @@ module.exports = World = cls.Class.extend({
         return false;
     },
 
-    addParty: function (player1, player2)
-    {
-        var party = new Party(player1, player2);
-        this.party.push(party);
-        return party;
+    addParty: function (player1, player2) {
+        if (player1 && player2) {
+            var party = new Party(player1, player2);
+            this.party.push(party);
+            return party;
+        }
     },
 
     removeParty: function (party)
@@ -235,8 +246,9 @@ module.exports = World = cls.Class.extend({
          * World Tasks.
          */
         self.initializeGameTick();
-        self.initializeGather();
-        self.initializeDayCycle();
+        //self.initializeGather();
+        self.initializeMobController();
+        //self.initializeDayCycle();
     },
 
     initializeDayCycle: function() {
@@ -281,14 +293,22 @@ module.exports = World = cls.Class.extend({
                 updateCount = 0;
             }
 
-            if (self.mobController) {
-                self.mobController.checkPetHit();
-                self.mobController.checkMove();
-                self.mobController.checkAggro();
-                self.mobController.checkHit();
-            }
-
         }, 1000 / self.getCycleSpeed());
+    },
+
+    initializeMobController: function() {
+        var self = this;
+
+        setInterval(function() {
+            if (self.mobController) {
+                setTimeout(function() {
+                    self.mobController.checkPetHit();
+                    self.mobController.checkMove();
+                    self.mobController.checkAggro();
+                    self.mobController.checkHit();
+                }, self.mobControllerSpeed - 10);
+            }
+        }, self.mobControllerSpeed);
     },
 
     initializeGather: function() {
@@ -376,9 +396,8 @@ module.exports = World = cls.Class.extend({
     },
 
     processPackets: function() {
-        var self = this;
-        var connection;
-
+        var self = this,
+            connection;
         for (var id in self.packets) {
             if (id != null && typeof id !== 'undefined') {
                 if (self.packets.hasOwnProperty(id)) {
@@ -487,10 +506,13 @@ module.exports = World = cls.Class.extend({
 
     pushToPlayer: function(player, message) {
         var self = this;
+
         if (player && player.id in self.packets)
             self.packets[player.id].push(message.serialize());
-        else
-            log.error("Player is undefined (pushToPlayer).");
+        else {
+            log.error("Player is undefined (pushToPlayer)");
+        }
+
     },
 
     pushToGroup: function(groupId, message, ignoredPlayer) {
@@ -608,6 +630,12 @@ module.exports = World = cls.Class.extend({
         self.gather[gather.id] = gather;
     },
 
+    addProjectile: function(projectile) {
+        var self = this;
+        self.addEntity(projectile);
+        self.projectiles[projectile.id] = projectile;
+    },
+
     addNpc: function(kind, x, y) {
         var self = this;
 
@@ -693,14 +721,10 @@ module.exports = World = cls.Class.extend({
             }
             player.pets = null;
         }
-        try {
-            player.redisPool.setPointsData(player.name, player.hitPoints, player.mana);
-        } catch (e) {}
-
 
         player.packetHandler.broadcast(player.despawn());
         self.removeEntity(player);
-        self.decrementPlayerCount();
+        //self.decrementPlayerCount();
 
         delete self.players[player.id];
         delete self.packets[player.id];
@@ -722,6 +746,7 @@ module.exports = World = cls.Class.extend({
     createChest: function(x, y, items) {
         var self = this;
         var chest = self.createItem(37, x, y); // CHEST
+        //log.info("Items: " + items);
         chest.setItems(items);
         return chest;
     },
@@ -739,6 +764,7 @@ module.exports = World = cls.Class.extend({
         var self = this;
         var item = self.createItem(kind, x, y);
         item.isFromChest = true;
+
         return self.addItem(item);
     },
 
@@ -850,6 +876,8 @@ module.exports = World = cls.Class.extend({
         self.database.setPlayerPosition(player, player.x, player.y);
 
         self.handleEntityGroupMembership(player);
+        //self.pushToPreviousGroups(player, new Messages.Destroy(player));
+        //self.pushRelevantEntityListTo(player);
     },
 
     handleMobHate: function(mobId, entityId, hatePoints) {
@@ -891,7 +919,7 @@ module.exports = World = cls.Class.extend({
             self.pushToPlayer(entity, entity.health(attacker));
 
         if (attacker instanceof Player)
-            self.pushToPlayer(attacker, new Messages.Damage(entity, damage, entity.hitPoints, entity.maxHitPoints));
+            self.pushToPlayer(attacker, new Messages.Damage(entity, damage == 0 ? "MISS" : damage, entity.hitPoints, entity.maxHitPoints));
 
 
         if (entity.hitPoints <= 0) {
@@ -914,7 +942,7 @@ module.exports = World = cls.Class.extend({
 
                     else
                     {
-                        var exp = attacker.incExp(MobData.Kinds[mob.kind].xp, mob);
+                        attacker.incExp(MobData.Kinds[mob.kind].xp, mob);
                         self.pushToPlayer(attacker, new Messages.Kill(mob, attacker.level, mob.xp));
                     }
                 }
@@ -985,7 +1013,8 @@ module.exports = World = cls.Class.extend({
         self.pushToAdjacentGroups(chest.group, chest.despawn());
         self.removeEntity(chest);
 
-        var kind = chest.getRandomItem();
+        var itemString = chest.getRandomItem();
+        var kind = ItemTypes.getKindFromString(itemString);
         if (kind) {
             var item = self.addItemFromChest(kind, chest.x, chest.y);
             self.handleItemDespawn(item);
@@ -1100,7 +1129,6 @@ module.exports = World = cls.Class.extend({
         var p = 0;
         var m = 0;
         var item = null;
-        log.info("v="+v);
         for (var itemName in drops) {
             if (drops.hasOwnProperty(itemName)) {
                 var percentage = drops[itemName];
@@ -1133,8 +1161,8 @@ module.exports = World = cls.Class.extend({
                 p += getPercentage;
 
                 if (v >= m && v < p) {
-
-                    item = self.createItem(ItemTypes.getKindFromString(itemName), mob.x, mob.y, ItemTypes.getKindFromString(itemName) == 400 ? Utils.randomInt(0, mob.level) : 1);
+                    var logic = ItemTypes.getKindFromString(itemName) == 400 ? Utils.randomInt(1, mob.level * (Math.floor(Math.pow(2, mob.level / 7) / (mob.level / 4)))) : 1;
+                    item = self.createItem(ItemTypes.getKindFromString(itemName), mob.x, mob.y, logic);
                     self.addItem(item);
 
                     return item;
@@ -1228,24 +1256,30 @@ module.exports = World = cls.Class.extend({
     },
 
     updatePopulation: function(totalPlayers) {
-        var self = this;
-
-        setTimeout( function() {
-            self.pushBroadcast(new Messages.Population(self.playerCount, totalPlayers ? totalPlayers : self.playerCount), false);
-        },2000);
-        //self.pushToPlayer(self.player, new Messages.Population(self.playerCount));
+        this.pushBroadcast(new Messages.Population(this.playerCount, totalPlayers ? totalPlayers : this.playerCount));
     },
 
     incrementPlayerCount: function() {
-        ++this.playerCount;
-        this.updatePopulation();
+        this.setPlayerCount(this.playerCount + 1);
+    },
+
+    getPlayerCount: function() {
+        var count = 0;
+        for (var p in this.players) {
+            if (this.players.hasOwnProperty(p))
+                count += 1;
+        }
+
+        return count;
+    },
+
+    setPlayerCount: function(count) {
+        this.playerCount = count;
     },
 
     decrementPlayerCount: function() {
-        if(this.playerCount > 0) {
-            --this.playerCount;
-        }
-        this.updatePopulation(this.playerCount);
+        if (this.playerCount > 0)
+            this.setPlayerCount(this.playerCount - 1);
     },
     /*
      * Very Important notice:
@@ -1339,10 +1373,10 @@ module.exports = World = cls.Class.extend({
     resetCharacterData: function() {
         var self = this,
             dAttackSpeed = 50,
-            dMoveSpeed = 120,
+            dMoveSpeed = 150,
             dWalkSpeed = 100,
             dIdleSpeed = 450,
-            dAttackRate = 800;
+            dAttackRate = 1000;
 
         var data = [dAttackSpeed, dMoveSpeed, dWalkSpeed, dIdleSpeed, dAttackRate];
 

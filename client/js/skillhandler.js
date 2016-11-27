@@ -40,7 +40,7 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
     var SkillActive = Skill.extend({
         init: function(name, skillIndex) {
             this._super(name, skillIndex);
-            
+
             this.cooltime = SkillData.Data[skillIndex].recharge;
             this.cooltimeCounter = 0;
             this.cooltimeTickHandle = null;
@@ -59,82 +59,79 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                 this.cooltimeDoneHandle = null;
             }
         },
+
+        /**
+         * Warning, this is still experimental
+         * all of this data has to be sent to the server
+         * after which the server responds accordingly,
+         * rather than having it all being handled directly
+         * in the client. This is good for now, but after 50
+         * players are online simultaneously, it will be dangerous
+         * to keep this much information client-sided.
+         */
+
         execute: function(game) {
-        	var self = this;
-        	
-        	if (this.cooltimeDoneHandle)
-        	{
-                    game.chathandler.addNotification('Wait for cooldown.');
-        	    return;
-        	}
-		if (this.skillData.target == "enemy")
-		{
-		    if(!this.cooltimeDoneHandle
-			&& game.player.target
-			&& game.player.target instanceof Character)
-		    {
-			if (this.execute_callback)
-			    this.execute_callback(self, game);
-			else
-		    	    game.client.sendSkill(this.skillIndex, game.player.target.id);
-		    } else{
-			game.chathandler.addNotification('No target chosen.');
-			return;
-		    }
-		}
-		else if (this.skillData.target == "self")
-		{
-		    if(!this.cooltimeDoneHandle)
-			if (this.execute_callback)
-			{
-			    log.info("execute_callback");
-			    this.execute_callback(self, game);
-			}
-			else
-		    	    game.client.sendSkill(this.skillIndex);
-		}
+            var self = this;
+
+            if (this.cooltimeDoneHandle) {
+                game.chathandler.addNotification('Your skill has not cooled down yet.');
+                return;
+            }
+
+            var skillData = SkillData.Names[self.name],
+                skillTarget = skillData.target,
+                manaReq = skillData.manaReq[self.level];
 
 
-                this.cooltimeCounter = this.cooltime;
+            if (game.player.mana - manaReq < 0) {
+                game.chathandler.addNotification('You do not have enough mana points to use this ability!');
+                return;
+            }
 
-                this.cooltimeTickHandle = setInterval(function() {
-                    if(self.cooltimeCounter >= 0.2) {
-                        self.cooltimeCounter -= 0.2;
+            if(!this.cooltimeDoneHandle)
+                game.client.sendSkill(this.skillIndex);
 
-                        self.tick(game);
-                        for(var index = 0; index < self.slots.length; index++) {
-                            self.slots[index].tick(self);
-                        }
-                    }
-                }, 200);
-                this.cooltimeDoneHandle = setTimeout(function() {
-                    clearInterval(self.cooltimeTickHandle);
-                    self.cooltimeTickHandle = null;
 
-                    self.cooltimeDoneHandle = null;
+            this.cooltimeCounter = this.cooltime;
 
-                    self.done(game);
+            this.cooltimeTickHandle = setInterval(function() {
+                if(self.cooltimeCounter >= 0.2) {
+                    self.cooltimeCounter -= 0.2;
+
+                    self.tick(game);
                     for(var index = 0; index < self.slots.length; index++) {
-                        self.slots[index].done(self);
+                        self.slots[index].tick(self);
                     }
-                }, this.cooltime * 1000);
-
-                for(var index = 0; index < this.slots.length; index++) {
-                    this.slots[index].execute_(this);
                 }
+            }, 200);
+            this.cooltimeDoneHandle = setTimeout(function() {
+                clearInterval(self.cooltimeTickHandle);
+                self.cooltimeTickHandle = null;
+
+                self.cooltimeDoneHandle = null;
+
+                self.done(game);
+                for(var index = 0; index < self.slots.length; index++) {
+                    self.slots[index].done(self);
+                }
+            }, this.cooltime * 1000);
+
+            for(var index = 0; index < this.slots.length; index++) {
+                this.slots[index].execute_(this);
+            }
 
         },
         tick: function(game) {
         },
         done: function(game) {
         },
-        
+
         onExecuting: function(handler) {
             this.executingHandler = handler;
         }
     });
 
-    
+
     var SkillFactory = {
         make: function(name, index) {
             if(name in SkillFactory.Skills) {
@@ -142,76 +139,76 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
             } else {
                 return null;
             }
-        }    
+        }
     };
-    
+
     SkillFactory.Skills = {};
     for (var i = 0; i < SkillData.Data.length; ++i)
     {
-    	var skillName = SkillData.Data[i].name;
-    	if (SkillData.Data[i].type == "passive")
-    	{
-    		SkillFactory.Skills[skillName] =  SkillPassive;
-    	}
-    	else
-    	{
-    		SkillFactory.Skills[skillName] =  SkillActive;
-    	}
+        var skillName = SkillData.Data[i].name;
+        if (SkillData.Data[i].type == "passive")
+        {
+            SkillFactory.Skills[skillName] =  SkillPassive;
+        }
+        else
+        {
+            SkillFactory.Skills[skillName] =  SkillActive;
+        }
     };
     log.info("SKillFactory.Skills:" + JSON.stringify(SkillFactory.Skills));
-    
-    var haste_attack_execute_callback = function(self, game) {
-    	var level = ~~(game.player.level / self.skillData.attain);
-    	var speedMultiplier = 1 + (self.skillData.levels[level-1] / 100); 
-    	game.player.attackCooldown.duration /= speedMultiplier;
-    	setTimeout(function() {
-    	   game.player.attackCooldown.duration *= speedMultiplier;
-    	}, self.skillData.duration * 1000)
 
-    	game.client.sendSkill(this.skillIndex);
+    var haste_attack_execute_callback = function(self, game) {
+        var level = ~~(game.player.level / self.skillData.attain);
+        var speedMultiplier = 1 + (self.skillData.levels[level-1] / 100);
+        game.player.attackCooldown.duration /= speedMultiplier;
+        setTimeout(function() {
+            game.player.attackCooldown.duration *= speedMultiplier;
+        }, self.skillData.duration * 1000);
+
+        game.client.sendSkill(this.skillIndex);
     };
 
     var haste_move_execute_callback = function(self, game) {
-    	var level = ~~(game.player.level / self.skillData.attain);
-    	var speedMultiplier = 1 + (self.skillData.levels[level-1] / 100); 
-    	game.player.moveSpeed /= speedMultiplier;
-    	setTimeout(function() {
-    	   game.player.moveSpeed *= speedMultiplier;
-    	}, self.skillData.duration * 1000)
+        var level = ~~(game.player.level / self.skillData.attain);
+        var speedMultiplier = 1 + (self.skillData.levels[level-1] / 100);
+        game.player.moveSpeed /= speedMultiplier;
+        setTimeout(function() {
+            game.player.moveSpeed *= speedMultiplier;
+        }, self.skillData.duration * 1000);
 
-    	game.client.sendSkill(this.skillIndex);
+        game.client.sendSkill(this.skillIndex);
     };
 
-    
-    var slow_execute_callback = function(self, game) {
-    	var target = game.player.target;
-    	var level = ~~(game.player.level / self.skillData.attain);
-    	var speedMultiplier = 1 + (self.skillData.levels[level-1] / 100); 
-    	target.moveSpeed *= speedMultiplier;
-    	target.attackCooldown.duration *= speedMultiplier;
-    	
-    	setTimeout(function() {
-    	    target.moveSpeed /= speedMultiplier;
-      	    target.attackCooldown.duration /= speedMultiplier;
-    	}, self.skillData.duration * 1000)
 
-    	game.client.sendSkill(this.skillIndex, target.id);
+    var slow_execute_callback = function(self, game) {
+        var target = game.player.target;
+        var level = ~~(game.player.level / self.skillData.attain);
+        var speedMultiplier = 1 + (self.skillData.levels[level-1] / 100);
+        target.moveSpeed *= speedMultiplier;
+        target.attackCooldown.duration *= speedMultiplier;
+
+        setTimeout(function() {
+            target.moveSpeed /= speedMultiplier;
+            target.attackCooldown.duration /= speedMultiplier;
+        }, self.skillData.duration * 1000);
+
+        game.client.sendSkill(this.skillIndex, target.id);
     };
 
     var stun_execute_callback = function(self, game) {
-    	var target = game.player.target;
-    	var level = ~~(game.player.level / self.skillData.attain);
-    	var duration = self.skillData.duration[level-1]; 
-    	target.isStunned = true;
-    	setTimeout(function() {
-    	    target.isStunned = false;
-    	}, duration * 1000)
+        var target = game.player.target;
+        var level = ~~(game.player.level / self.skillData.attain);
+        var duration = self.skillData.duration[level-1];
+        target.isStunned = true;
+        setTimeout(function() {
+            target.isStunned = false;
+        }, duration * 1000);
 
-    	game.client.sendSkill(this.skillIndex, target.id);
+        game.client.sendSkill(this.skillIndex, target.id);
     };
 
 
-    
+
     var SkillSlot = Class.extend({
         init: function(game, parent, index, id) {
             this.game = game;
@@ -242,31 +239,30 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                 log.info("Drag is dropped.");
                 if(DragData && DragData.skillName) {
                     self.parent.game.client.sendSkillInstall(self.index, DragData.skillName);
-		    DragData.skillName = null;
+                    DragData.skillName = null;
                 }
             });
         },
 
         setLevel: function(value) {
-            var scale = this.game.renderer.getScaleFactor();
-            /*var levelPosition = [
-            	["-329px -278px"],
-            	["-658px -556px"],
-            	["-987px -835px"]
-            ]*/
-            //log.info("levelPosition: " + levelPosition[scale-1]);
+            var self = this,
+                renderer = self.game.renderer,
+                scale = renderer.getScaleFactor();
+
+            if (renderer.mobile)
+                scale = 1;
+
             for(var index = 0; index < value; index++) {
-            	    this.levels[index].css({
-            	            'display': 'block',
-            	    	    //'background-position': levelPosition[scale-1]
-            	    });
-                
+                this.levels[index].css({
+                    'display': 'block',
+                    'left': '' + (4.5 * scale * index) + 'px'
+                });
+
             }
             for(var index = value; index < this.levels.length; index++) {
                 this.levels[index].css('display', 'none');
             }
         },
-
 
         clear: function() {
             if(this.skill) {
@@ -275,45 +271,45 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
             }
         },
         hideShortcut: function() {
-                this.body.css({
-                    'background-image': '',
-                    'background-position': ''
-                });
-                this.body.attr('title', '');
+            this.body.css({
+                'background-image': '',
+                'background-position': ''
+            });
+            this.body.attr('title', '');
             for(var index = 0; index < this.levels.length; index++) {
                 this.levels[index].css('display', 'none');
             }
-        	
+
         },
-        
+
         displayShortcut: function() {
-                if (this.name)
-                {
-			var scale = this.game.renderer.getScaleFactor();
-			
-			this.body.css({
-			    'background-image': 'url("img/'+scale+'/skillicons.png")',
-			    //'background-position': SkillPositions[scale][this.name]
-			    'background-position': SkillData.Names[this.name].iconOffset[scale-1],
-			    'background-repeat': 'no-repeat'
-			});
-                }
+            if (this.name)
+            {
+                var scale = this.game.renderer.getScaleFactor();
+                if (this.game.renderer.mobile)
+                    scale = 1;
+                this.body.css({
+                    'background-image': 'url("img/'+scale+'/skillicons.png")',
+                    //'background-position': SkillPositions[scale][this.name]
+                    'background-position': SkillData.Names[this.name].iconOffset[scale-1],
+                    'background-repeat': 'no-repeat'
+                });
+            }
         },
         assign: function(name) {
-        	//log.info("name"+name);
             this.name = name;
             if(this.skill) {
                 this.skill.remove(this);
             }
 
             this.skill = this.parent.getSkill(name);
-            //log.info("skill:"+JSON.stringify(this.skill));
             if(this.skill) {
                 this.skill.add(this);
 
                 var self = this;
                 var scale = this.game.renderer.getScaleFactor();
-                this.displayShortcut();               
+
+                this.displayShortcut();
                 this.body.attr('title', name);
 
                 this.setLevel(this.skill.level);
@@ -360,70 +356,70 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                 this.skillSlots[index].assign();
             }
 
-            	var self = this;
-            	self.isDragging = false;
+            var self = this;
+            self.isDragging = false;
 
-            	this.container.bind("touchstart", function(ev) {
-                    self.isClicked = true;
-    		});
-		this.container.mousedown(function() {
-		    self.isClicked = true;
-		});
-		
-		this.container.mousemove(function() {
-		    self.isDragging = true;
-		});
-		
-		$("#container").mousemove(function() {
-		    if (self.isUnlocked && self.isDragging && self.isClicked) {
-			    self.moveShortcuts();
-		    }			    
-		 });
-            	$("#container").bind("touchmove", function(ev) {
-            	    self.isDragging = true;
-		    if (self.isUnlocked && self.isDragging && self.isClicked) {
-			    self.game.app.setMouseCoordinates(ev.originalEvent.touches[0]);
-		    	    self.moveShortcuts();
-		    }			    
-    		});
+            this.container.bind("touchstart", function(ev) {
+                self.isClicked = true;
+            });
+            this.container.mousedown(function() {
+                self.isClicked = true;
+            });
 
-		this.container.mouseup(function(event) {
-	            self.isDragging = false;
-	            self.isClicked = false;
-		});
-            	this.container.bind("touchend", function(ev) {
-	            self.isDragging = false;
-	            self.isClicked = false;
-    		});
-		
-		self.isVertical = true;
-		$('#skillcontainermove').click(function (event) {
-		    if (self.isVertical)
-		    	$('#skillcontainer').attr("class","vertical");
-		    else
-		        $('#skillcontainer').attr("class","horizontal");
-		    self.isVertical = !self.isVertical;
-		});
-		
-		self.isUnlocked = false;
-		$('#skillcontainerswitch').click(function (event) {
-		    self.isUnlocked = !self.isUnlocked;
-		});
+            this.container.mousemove(function() {
+                self.isDragging = true;
+            });
+
+            $("#container").mousemove(function() {
+                if (self.isUnlocked && self.isDragging && self.isClicked) {
+                    self.moveShortcuts();
+                }
+            });
+            $("#container").bind("touchmove", function(ev) {
+                self.isDragging = true;
+                if (self.isUnlocked && self.isDragging && self.isClicked) {
+                    self.game.app.setMouseCoordinates(ev.originalEvent.touches[0]);
+                    self.moveShortcuts();
+                }
+            });
+
+            this.container.mouseup(function(event) {
+                self.isDragging = false;
+                self.isClicked = false;
+            });
+            this.container.bind("touchend", function(ev) {
+                self.isDragging = false;
+                self.isClicked = false;
+            });
+
+            self.isVertical = true;
+            $('#skillcontainermove').click(function (event) {
+                if (self.isVertical)
+                    $('#skillcontainer').attr("class","vertical");
+                else
+                    $('#skillcontainer').attr("class","horizontal");
+                self.isVertical = !self.isVertical;
+            });
+
+            self.isUnlocked = false;
+            $('#skillcontainerswitch').click(function (event) {
+                self.isUnlocked = !self.isUnlocked;
+            });
         },
-        
+
         moveShortcuts: function() {
-	    this.container.css({
-		"left":this.game.mouse.x + "px",
-		"top":this.game.mouse.y + "px"
-	    });        	
+            this.container.css({
+                "left":this.game.mouse.x + "px",
+                "top":this.game.mouse.y + "px"
+            });
         },
-        
+
         displayShortcuts: function() {
             for(var i = 0; i < 5; ++i) {
                 this.skillSlots[i].displayShortcut();
             }
         },
-        
+
         hideShortcuts: function() {
             for(var i = 0; i < 5; ++i) {
                 this.skillSlots[i].hideShortcut();
@@ -440,25 +436,23 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
             }
         },
         add: function(name, level, skillIndex) {
-            log.info("skillIndex:" + skillIndex);
             var skill = null;
             if(name in this.skills) {
                 skill = this.skills[name];
             } else {
                 skill = SkillFactory.make(name, skillIndex);
-                log.info("skill="+JSON.stringify(skill));
                 if(skill) {
                     if(skill instanceof SkillActive) {
                         var self = this;
                         var type = skill.skillData.skillType;
                         if (type == "haste-attack")
-                        	skill.execute_callback = haste_attack_execute_callback;
+                            skill.execute_callback = haste_attack_execute_callback;
                         else if (type == "haste-move")
-                        	skill.execute_callback = haste_move_execute_callback;
+                            skill.execute_callback = haste_move_execute_callback;
                         else if (type == "slow")
-                        	skill.execute_callback = slow_execute_callback;
+                            skill.execute_callback = slow_execute_callback;
                         else if (type == "stun")
-                        	skill.execute_callback = stun_execute_callback;
+                            skill.execute_callback = stun_execute_callback;
 
                         skill.onExecuting(function(sender) {
                             self.game.chathandler.addNotification('You have to wait for ' + sender.name + ' to cool down.');

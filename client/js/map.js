@@ -10,9 +10,7 @@ define(['jquery', 'area', 'detect'], function($, Area, Detect) {
             this.mapLoaded = false;
             this.loadMultiTilesheets = loadMultiTilesheets;
 
-            var useWorker = !(this.game.renderer.mobile || this.game.renderer.tablet || this.game.renderer.isSafari);
-
-            this._loadMap(useWorker);
+            this._loadMap();
             this._initTilesets();
         },
 
@@ -25,33 +23,18 @@ define(['jquery', 'area', 'detect'], function($, Area, Detect) {
             }
         },
 
-        _loadMap: function(useWorker) {
+        _loadMap: function() {
             var self = this,
                 filepath = "maps/world_client.json";
 
-            if(useWorker) {
-                log.info("Loading map with web worker.");
-                var worker = new Worker('js/mapworker.js');
-                worker.postMessage(1);
-
-                worker.onmessage = function(event) {
-                    var map = event.data;
-                    self._initMap(map);
-                    self.grid = map.grid;
-                    self.plateauGrid = map.plateauGrid;
-                    self.mapLoaded = true;
-                    self._checkReady();
-                };
-            } else {
-                log.info("Loading map via Ajax.");
-                $.get(filepath, function (data) {
-                    self._initMap(data);
-                    self._generateCollisionGrid();
-                    self._generatePlateauGrid();
-                    self.mapLoaded = true;
-                    self._checkReady();
-                }, 'json');
-            }
+            log.info("Loading map via Ajax.");
+            $.get(filepath, function (data) {
+                self._initMap(data);
+                self._generateCollisionGrid();
+                self._generatePlateauGrid();
+                self.mapLoaded = true;
+                self._checkReady();
+            }, 'json');
         },
 
         _initTilesets: function() {

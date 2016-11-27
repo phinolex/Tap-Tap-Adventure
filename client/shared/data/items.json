@@ -100,7 +100,7 @@
     "kind":137,
     "type":"weapon",
     "attack":17,
-    "name":""
+    "name": "Heavy Sword"
   },
   "Redmetalsword": {
     "kind":136,
@@ -165,7 +165,7 @@
   "Daywalker": {
     "kind":186,
     "type":"weapon",
-    "attack":28,
+    "attack":20,
     "name":"Day Walker"
   },
   "Purplecloudkallege": {
@@ -267,7 +267,7 @@
   "Cactusaxe": {
     "kind":327,
     "type":"weapon",
-    "attack":45,
+    "attack":9,
     "name":"Cactus Axe"
   },
   "Devilkazyasword": {
@@ -285,7 +285,7 @@
   "Paewoldo": {
     "kind":377,
     "type":"weapon",
-    "attack":48,
+    "attack":30,
     "name":"Paewoldo"
   },
   "Magicspear": {
@@ -299,6 +299,76 @@
     "type":"weapon",
     "attack":50,
     "name":"Fire Sword"
+  },
+
+  "Pendant1": {
+    "kind":304,
+    "type":"pendant",
+    "pLevel": 5,
+    "name": "Emerald Pendant"
+  },
+
+  "GreenPendant": {
+    "kind":330,
+    "type":"pendant",
+    "pLevel": 10,
+    "name": "Jade Pendant"
+  },
+
+  "PearlPendant": {
+    "kind":353,
+    "type":"pendant",
+    "pLevel": 15,
+    "name": "Pearl Pendant"
+  },
+
+  "MarblePendant": {
+    "kind":372,
+    "type":"pendant",
+    "pLevel": 25,
+    "name": "Diamond Pendant"
+  },
+
+  "Ring1": {
+    "kind":305,
+    "type":"ring",
+    "rLevel": 5,
+    "name": "Emerald Ring"
+  },
+
+  "SproutRing": {
+    "kind":323,
+    "type":"ring",
+    "rLevel": 10,
+    "name": "Sprout Ring"
+  },
+
+  "PearlRing": {
+    "kind":345,
+    "type":"ring",
+    "rLevel": 15,
+    "name": "Pearl Ring"
+  },
+
+  "TopazRing": {
+    "kind": 600,
+    "type": "ring",
+    "rLevel": 20,
+    "name": "Topaz Ring"
+  },
+
+  "SpiritRing": {
+    "kind":360,
+    "type":"ring",
+    "rLevel": 25,
+    "name": "Spirit Ring"
+  },
+
+  "EssentialRage": {
+    "kind":383,
+    "type": "ring",
+    "rLevel": 35,
+    "name": "Essential Rage"
   },
 
   "armorarcher1": {
@@ -462,7 +532,7 @@
     "kind":384,
     "defense":27,
     "type":"armorarcher",
-    "name":"Gay Archer Armor"
+    "name":"Sketchy Archer Armour"
   },
 
   "WoodenBow": {
@@ -781,7 +851,7 @@
   },
   "CrystalArmor": {
     "kind":133,
-    "defense":26,
+    "defense":23,
     "type":"armor",
     "name":"Crystal Armor"
   },
@@ -817,7 +887,7 @@
   },
   "RegionArmor": {
     "kind":163,
-    "defense":32,
+    "defense":37,
     "type":"armor",
     "name":"Region Armor"
   },
@@ -931,7 +1001,7 @@
   },
   "CockroachSuit": {
     "kind":241,
-    "defense":51,
+    "defense":27,
     "type":"armor",
     "name":"Cockroach Suit"
   },
@@ -943,7 +1013,7 @@
   },
   "CatArmor": {
     "kind":251,
-    "defense":53,
+    "defense":18,
     "type":"armor",
     "name":"Cat Armor"
   },
@@ -973,13 +1043,13 @@
   },
   "WizardRobe": {
     "kind":279,
-    "defense":58,
+    "defense":14,
     "type":"armor",
     "name":"Wizard Robe"
   },
   "IronknightArmor": {
-    "kind":282,
-    "defense":59,
+    "kind": 282,
+    "defense": 25,
     "type":"armor",
     "name":"Iron Knight Armor"
   },
@@ -1009,7 +1079,7 @@
   },
   "BridalMask": {
     "kind":342,
-    "defense":64,
+    "defense":26,
     "type":"armor",
     "name":"Bridal Mask"
   },
@@ -1073,6 +1143,7 @@
     "type":"armor",
     "name":"Frankenstein Armor"
   },
+
   "AdminArmor": {
     "kind":175,
     "defense":150,
@@ -1083,23 +1154,33 @@
   "Flask": {
     "kind":35,
     "type":"object",
-    "name":"Flask +100 HP",
-    "buyCount":5
-  ,"buy":1
+    "name":"Flask [+100 HP]",
+    "buyCount": 10,
+    "buy": 150
   },
+
+  "ManaFlask": {
+    "kind": 300,
+    "type": "object",
+    "name": "Mana Flask [+45 MP]",
+    "buyCount": 10,
+    "buy": 200
+  },
+
   "Burger": {
     "kind":36,
     "type":"object",
-    "name":"Burger +200 HP",
-    "buyCount":5
-  ,"buy":2
+    "name":"Burger [+200 HP]",
+    "buyCount": 10,
+    "buy": 350
   },
+
   "BigFlask": {
     "kind":401,
     "type":"object",
-    "name":"Big Flask +35% HP",
-    "buyCount":5
-  ,"buy":5
+    "name":"Big Flask [+35% HP]",
+    "buyCount": 10,
+    "buy": 600
   },
   "Chest": {
     "kind":37,
@@ -1149,16 +1230,12 @@
   "MountSeaDragon": {
     "kind":450,
     "type":"object",
-    "name":"Mount Sea Dragon",
-    "buyCount":5,
-    "buy":25
+    "name":"Mount Sea Dragon"
   },
   "MountForestDragon": {
     "kind":451,
     "type":"object",
-    "name":"Mount Forest Dragon",
-    "buyCount":5,
-    "buy":25
+    "name":"Mount Forest Dragon"
   },
   "MountWhiteTiger": {
     "kind":452,

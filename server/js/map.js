@@ -34,6 +34,7 @@ var Map = cls.Class.extend({
         this.width = thismap.width;
         this.height = thismap.height;
         this.collisions = thismap.collisions;
+        this.bossAreas = thismap.bossAreas;
         this.mobAreas = thismap.roamingAreas;
         this.chestAreas = thismap.chestAreas;
         this.staticChests = thismap.staticChests;
@@ -90,55 +91,11 @@ var Map = cls.Class.extend({
 
     loadCollisionGrid: function() {
         var self = this;
-        var collisionGrid = require('../data/map/collisions.json');
+        var collisionGrid = require('../data/map/collisiongrid.json');
 
+        self.grid = collisionGrid;
 
-        if (self.generateCollisions) {
-            var filePath = ('./server/data/map/collisiongrid.json')
-            fs.exists(filePath, function(exists) {
-                if (exists) {
-                    log.info("JSON Collision Grid already exists.. Assigning");
-                    self.grid = collisionGrid;
-                } else {
-                    log.info("Generating collision grid...");
-                    self.grid = [];
-                    if (self.isLoaded) {
-                        var tileIndex = 0;
-                        log.info("height:"+self.height+",width:"+self.width);
-                        for (var i = 0; i < self.height; i++) {
-                            self.grid[i] = [];
-                            for (var j = 0; j < self.width; j++) {
-                                if (_.include(self.collisions, tileIndex)) {
-                                    self.grid[i][j] = 1;
-                                } else {
-                                    self.grid[i][j] = 0;
-                                }
-                                tileIndex += 1;
-                            }
-                        }
-                    } else {
-                        log.info("An error has occured, map has not loaded.");
-                    }
-                    fs.writeFile(filePath, JSON.stringify(self.grid), function(err) {
-                        if (err)
-                            log.info(err);
-                        else
-                            log.info("Successfully generated the collision grid");
-                    
-			if (this.readyFunc) {
-			    this.readyFunc();
-			}                    
-                    });
-
-                }
-            });
-        } else
-            self.grid = collisionGrid;
-
-
-        log.info("Collision Grid Loaded");
-
-        
+        log.info("Loaded collision grid.");
     },
 
 
@@ -220,8 +177,8 @@ var Map = cls.Class.extend({
         var y = position.y;
         // surrounding groups
         var list = [pos(x-1, y-1), pos(x, y-1), pos(x+1, y-1),
-            pos(x-1, y),   pos(x, y),   pos(x+1, y),
-            pos(x-1, y+1), pos(x, y+1), pos(x+1, y+1)];
+                    pos(x-1, y),   pos(x, y),   pos(x+1, y),
+                    pos(x-1, y+1), pos(x, y+1), pos(x+1, y+1)];
 
         // groups connected via doors
         _.each(this.connectedGroups[id], function (position) {

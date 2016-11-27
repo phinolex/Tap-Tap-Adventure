@@ -8,6 +8,7 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
             this.isLoaded = false;
             this.offsetX = 0;
             this.offsetY = 0;
+            this.offsetAngle = 0;
             this.loadJSON(sprites[name]);
             this.whiteSprite = {
                 isLoaded: false
@@ -25,6 +26,7 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
             this.height = data.height;
             this.offsetX = (data.offset_x !== undefined) ? data.offset_x : -16;
             this.offsetY = (data.offset_y !== undefined) ? data.offset_y : -16;
+            this.offsetAngle = (data.offset_angle !== undefined) ? data.offset_angle : 0;
 
             //this.load();
         },

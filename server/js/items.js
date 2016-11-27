@@ -14,6 +14,8 @@ _.each( ItemsJson, function( value, key ) {
 		type: (value.type) ? value.type : "object",
 		attack: (value.attack) ? value.attack : 0,
 		defense: (value.defense) ? value.defense : 0,
+        pLevel: (value.pLevel) ? value.pLevel : 0,
+        rLevel: (value.rLevel) ? value.rLevel : 0,
 		name: (value.name) ? value.name : "Blank",
 		buy: (value.buy) ? value.buy : 0,
 		buyCount: (value.buyCount) ? value.buyCount : 0

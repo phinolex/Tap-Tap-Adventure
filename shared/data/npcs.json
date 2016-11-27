@@ -15,7 +15,7 @@
     "npcId": 51
   },
   "Agent": {
-    "name": "Auctioneer",
+    "name": "Secret Agent",
     "npcId": 47
   },
   "Nyan": {
@@ -35,7 +35,7 @@
     "npcId": 46
   },
   "DesertNpc": {
-    "name": "My Mooscles",
+    "name": "Billey",
     "npcId": 53
   },
   "LavaNpc": {
@@ -43,7 +43,7 @@
     "npcId": 54
   },
   "Boxingman": {
-    "name": "Boxing Man",
+    "name": "Mike Tyson",
     "npcId": 227
   },
   "Vampire": {
@@ -53,6 +53,7 @@
     "npcId": 235
   },
   "Oddeyecat": {
+    "name": "Odd-Eyed Cat",
     "npcId": 236
   },
   "Sorcerer": {
@@ -87,21 +88,25 @@
     "npcId": 283
   },
   "Shepherdboy": {
+    "name": "Shepherd Boy",
     "npcId": 287
   },
   "Zombiegf": {
+    "name": "Zombie Girlfriend",
     "npcId": 288
   },
   "Pirategirlnpc": {
     "npcId": 298
   },
   "Bluebikinigirlnpc": {
+    "name": "Pretzel",
     "npcId": 299
   },
   "Redbikinigirlnpc": {
     "npcId": 0
   },
   "Iamverycoldnpc": {
+    "name": "Babushka",
     "npcId": 303
   },
   "Iceelfnpc": {
@@ -111,7 +116,7 @@
     "npcId": 335
   },
   "Snowshepherdboy": {
-    "name": "Tutorial",
+    "name": "Shepherd Boy",
     "npcId": 347
   },
   "Angelnpc": {
@@ -121,6 +126,7 @@
     "npcId": 361
   },
   "Superiorangelnpc": {
+    "name": "Mentor",
     "npcId": 367
   },
   "Firstsonangelnpc": {
@@ -130,21 +136,23 @@
     "npcId": 376
   },
   "Mojojojonpc": {
+    "name": "Monky",
     "npcId": 382
   },
   "Ancientmanumentnpc": {
+    "name": "Ancient Monument",
     "npcId": 389
   },
   "Vendingmachine": {
-    "name": "Enchant",
+    "name": "Enchantment Table",
     "npcId": 239
   },
   "Redstoremannpc": {
-    "name": "Shop",
+    "name": "Banker",
     "npcId": 317
   },
   "Bluestoremannpc": {
-    "name": "Bank",
+    "name": "Clerk",
     "npcId": 318
   }
 }

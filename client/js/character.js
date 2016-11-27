@@ -57,6 +57,8 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             self.walkSpeed = data[2];
             self.idleSpeed = data[3];
             self.setRate(data[4]);
+            self.attackCooldown = null;
+
             self.setAttackRate();
         },
 

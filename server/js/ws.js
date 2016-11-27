@@ -95,11 +95,12 @@ WS.WebsocketServer = Server.extend({
     _connections: {},
     _counter: 0,
 
-    init: function (port, useOnePort, ip) {
+    init: function (port, useOnePort, ip, serverVersion) {
         var self = this;
 
         this._super(port);
         this.ip = ip;
+        this.serverVersion = serverVersion;
 
         // Are we doing both client and server on one port?
         if (useOnePort === true) {
@@ -235,20 +236,27 @@ WS.WebsocketServer = Server.extend({
                 log.info('Server (only) is listening on port ' + port);
             });
         }
-        var canProceed = false;
+
         var isUnityClient = false;
+
         this._ioServer = new socketio(this._httpServer);
         this._ioServer.on('connection', function webSocketListener(socket) {
             log.info('Client socket connected from ' + socket.conn.remoteAddress);
             // Add remoteAddress property
             var c = new WS.socketioConnection(self._createId(), socket, self);
 
-            socket.on('html_client', function () {
+            socket.on('html_client', function (clientVersion) {
                 socket.remoteAddress = socket.conn.remoteAddress;
+
+                log.info("Received client connection - Version: " + clientVersion);
+/*
+                if (clientVersion !== self.serverVersion) {
+                    c.sendUTF8('updated');
+                    c.close("Mismatch in build version.");
+                }*/
 
                 if (self.connectionCallback)
                     self.connectionCallback(c);
-
 
                 self.addConnection(c);
             });
@@ -318,8 +326,6 @@ WS.socketioConnection = Connection.extend({
     send: function(message) {
 
         var data = JSON.stringify(message);
-
-
 
         this.sendUTF8(data);
     },

@@ -12,45 +12,19 @@ var cls = require("../lib/class"),
     inventory = require("../inventory");
 
 module.exports = DatabaseHandler = cls.Class.extend({
+
     init: function(config){
         client = redis.createClient(config.redis_port, config.redis_host, {socket_nodelay: true});
-        client.auth("ki24SimpleYetMisleading009109256256");
-    },
-
-    updatePassword: function (player) {
-        var userKey = "u:" + player.name;
-        client.smembers("usr", function(err, replies){
-            for(var index = 0; index < replies.length; index++){
-                if(replies[index].toString() === player.name){
-                    client.multi()
-                        .hget(userKey, "pw") // 0
-
-                        .exec(function(err, replies){
-                            // Check Password
-                            log.info("name: " + player.name+", oldpassword: " + player.pw + ", dbpassword" + replies[0]);
-                            bcrypt.compare(player.pw, replies[0], function(err, res) {
-                                if(!res) {
-                                    player.connection.sendUTF8("invalidlogin");
-                                    player.connection.close("Wrong Password: " + player.name);
-                                } else {
-                                    client.hset(userKey, "pw", player.newpw);
-                                    log.info("passwordChanged:" + player.newpw);
-                                    player.connection.sendUTF8("passwordChanged");
-                                }
-                            });
-                        });
-                }
-            }
-        });
+        //client.auth("ki24SimpleYetMisleading009109256256");
     },
 
     loadPlayer: function(player) {
-        var self = this;
-        var userKey = "u:" + player.name;
-        var curTime = new Date().getTime();
+        var self = this,
+            userKey = "u:" + player.name;
+
         client.smembers("usr", function(err, replies) {
             for(var index = 0; index < replies.length; index++) {
-                if(replies[index].toString() === player.name){
+                if(replies[index].toString() === player.name) {
                     client.multi()
                         .hget(userKey, "pw") // 0
                         .hget(userKey, "armor") // 1
@@ -237,7 +211,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
     },
 
     createPlayer: function(player) {
-
+        var self = this;
         var userKey = "u:" + player.name;
         var curTime = new Date().getTime();
 
@@ -247,25 +221,21 @@ module.exports = DatabaseHandler = cls.Class.extend({
                 player.connection.sendUTF8("userexists");
                 player.connection.close("Username not available: " + player.name);
             } else {
-                // Add the player
-                //this.checkBan(player);
-                var startWeapon = "";
-                var startArmor = "";
-
                 client.multi()
 
                     .sadd("usr", player.name)
                     .hset(userKey, "pw", player.pw)
                     .hset(userKey, "email", player.email)
-                    .hset(userKey, "armor", startArmor)
-                    .hset(userKey, "weapon", startWeapon)
+                    .hset(userKey, "armor", "")
+                    .hset(userKey, "weapon", "")
                     .hset(userKey, "exp", 0)
                     .hset("b:" + player.connection._connection.remoteAddress, "loginTime", curTime)
                     .hget("b:" + player.connection._connection.remoteAddress, "rtime") //9
                     .hset(userKey, "class", "")
                     .hset(userKey, "rights", 0)
 
-                    .exec(function(err, replies){
+                    .exec(function(err, replies) {
+
                         var banTime = 0;
                         var curTime = new Date().getTime();
 
@@ -278,10 +248,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             return;
                         }
 
-                        
+
                         player.sendWelcome(
-                            startArmor, 
-                            startWeapon, 
+                            "",
+                            "",
                             0,
                             null, 
                             null, 
@@ -313,11 +283,15 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             0,
                             player.pClass,
                             false,
-                            40,
+                            50,
                             10);
 
+                        player.pClass = Types.PlayerClass.FIGHTER;
 
+                        player.updateHitPoints();
                     });
+
+
             }
         });
     },
@@ -326,8 +300,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
 
     checkBan: function(player) {
-        log.info("Name: " + player.name + "IP: " + player.connection._connection.remoteAddress);
-
         client.smembers("ipban", function(err, replies){
             for(var index = 0; index < replies.length; index++){
                 if(replies[index].toString() === player.connection._connection.remoteAddress){
@@ -487,7 +459,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
                     log.info(banMsg);
                 }
-                return;
             });
         }
     },
@@ -586,7 +557,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
     },
 
     emptyOutBankItem: function(player, number) {
-        log.info("Emptying Player's Item slot: " + number + " of: " + player.name);
         client.hdel("u:" + player.name, "bank" + number);
         client.hdel("u:" + player.name, "bank" + number + ":number");
         client.hdel("u:" + player.name, "bank" + number + ":skillKind");
@@ -676,7 +646,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
          }*/
     },
     makeEmptyInventory: function(player, number){
-        log.info("Empty Inventory: " + player.name + " " + number);
         client.hdel("u:" + player.name, "inventory" + number);
         client.hdel("u:" + player.name, "inventory" + number + ":number");
         client.hdel("u:" + player.name, "inventory" + number + ":skillKind");
@@ -684,24 +653,37 @@ module.exports = DatabaseHandler = cls.Class.extend({
         player.send([Types.Messages.INVENTORY, number, null, 0]);
     },
 
-
     banTerm: function(time){
         return Math.pow(2, time) * 500 * 60;
     },
+
     equipArmor: function(name, armor, enchantedPoint, skillKind, skillLevel){
-        log.info("Set Armor: " + name + " " + armor);
         client.hset("u:" + name, "armor", armor);
         client.hset("u:" + name, "armorEnchantedPoint", enchantedPoint);
         client.hset("u:" + name, "armorSkillKind", skillKind);
         client.hset("u:" + name, "armorSkillLevel", skillLevel);
     },
     equipWeapon: function(name, weapon, enchantedPoint, skillKind, skillLevel){
-        log.info("Set Weapon: " + name + " " + weapon + " +" + enchantedPoint);
         client.hset("u:" + name, "weapon", weapon);
         client.hset("u:" + name, "weaponEnchantedPoint", enchantedPoint);
         client.hset("u:" + name, "weaponSkillKind", skillKind);
         client.hset("u:" + name, "weaponSkillLevel", skillLevel);
     },
+
+    equipPendant: function(name, pendant, enchantedPoint, skillKind, skillLevel) {
+        client.hset("u:" + name, "pendant", pendant);
+        client.hset("u:" + name, "pendantEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "pendantSkillKind", skillKind);
+        client.hset("u:" + name, "pendantSkillLevel", skillLevel)
+    },
+
+    equipRing: function(name, ring, enchantedPoint, skillKind, skillLevel) {
+        client.hset("u:" + name, "ring", ring);
+        client.hset("u:" + name, "ringEnchantedPoint", enchantedPoint);
+        client.hset("u:" + name, "ringSkillKind", skillKind);
+        client.hset("u:" + name, "ringSkillLevel", skillLevel)
+    },
+
     enchantWeapon: function(name, enchantedPoint){
         log.info("Enchant Weapon: " + name + " " + enchantedPoint);
         client.hset("u:" + name, "weaponEnchantedPoint", enchantedPoint);
@@ -713,7 +695,6 @@ module.exports = DatabaseHandler = cls.Class.extend({
     },
 
     setExp: function(name, exp){
-        //log.info("Set Exp: " + name + " " + exp);
         client.hset("u:" + name, "exp", exp);
     },
 
@@ -721,15 +702,15 @@ module.exports = DatabaseHandler = cls.Class.extend({
         try {
             client.hset("u:" + name, "hitpoints", hitpoints);
             client.hset("u:" + name, "mana", mana);
-        } catch (e) {}
+        } catch (e) {
+            log.info("An error has occured saving player data: " + e);
+        }
     },
 
     foundAchievement: function(name, number){
-        log.info("Found Achievement: " + name + " " + number);
         client.hset("u:" + name, "achievement" + number + ":found", "true");
     },
     progressAchievement: function(name, number, progress){
-        log.info("Progress Achievement: " + name + " " + number + " " + progress);
         client.hset("u:" + name, "achievement" + number + ":progress", progress);
     },
 
@@ -770,6 +751,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
     setPlayerPosition: function(player, x, y) {
         client.hset("u:" + player.name, "x", x);
         client.hset("u:" + player.name, "y", y);
+    },
+
+    setRights: function(player, rights) {
+        client.hset("u:" + player.name, "rights", rights);
     },
 
     teleportPlayer: function(adminPlayer, player, x, y) {
@@ -871,14 +856,20 @@ module.exports = DatabaseHandler = cls.Class.extend({
         }
         multi.exec(function(err, data) {
             var i = 0;
-            var skillName = [];
-            var skillLevel = [];
+            var skillNames = [];
+            var skillLevels = [];
+
             for (i = 0; i < maxSkills; i++) {
-                skillName.push(data.shift());
-                skillLevel.push(data.shift());
+                var sN = data.shift(),
+                    sL = data.shift();
+
+                if (sN && sL) {
+                    skillNames.push(sN);
+                    skillLevels.push(sL);
+                }
             }
 
-            callback(skillName.length, skillName, skillLevel);
+            callback(skillNames, skillLevels);
 
         });
     },

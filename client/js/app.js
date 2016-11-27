@@ -116,7 +116,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             self.setPlayButtonState(false);
             if (!self.ready || !self.canStartGame()) {
                 var watchCanStart = setInterval(function() {
-                    log.debug("waiting...");
                     if(self.canStartGame()) {
                         clearInterval(watchCanStart);
                         self.startGame(action, username, userpw, email, newpw, pClass);
@@ -126,22 +125,69 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 self.startGame(action, username, userpw, email, newpw, pClass);
         },
 
+        handleError: function(reason) {
+            var self = this;
+
+            self.setPlayButtonState(true);
+
+            switch(reason) {
+
+                case "timeout":
+                    self.addValidationError(null, "Timeout whilst attempting to establish connection to TTA servers.");
+                    break;
+
+                case 'invalidlogin':
+                    self.addValidationError(null, 'The username or password you entered is incorrect.');
+                    break;
+
+                case 'userexists':
+                    self.addValidationError(null, 'The username you have entered is not available.');
+                    break;
+
+                case 'invalidusername':
+                    self.addValidationError(null, 'The username you entered contains invalid characters.');
+                    break;
+
+                case 'loggedin':
+                    self.addValidationError(null, 'A player with the specified username is already logged in.');
+                    break;
+
+                case 'ban':
+                    self.addValidationError(null, 'You have been banned.');
+                    break;
+
+                case 'full':
+                    self.addValidationError(null, "All TTA gameservers are currently full.");
+                    break;
+
+                case 'failedattempts':
+                    self.addValidationError(null, "You have too many failed attempts at logging in.");
+                    break;
+
+                case 'cheating':
+                    self.addValidationError(null, "Attempts to cheat the system will not be tolerated.");
+                    break;
+
+                case 'errorconnecting':
+                    self.addValidationError(null, "Unable to connect to the game server, please try again.");
+                    break;
+
+                case 'updated':
+                    self.addValidationError(null, "The game has been updated, please restart your client!");
+                    break;
+
+                default:
+                    self.addValidationError(null, 'Failed to launch the game: ' + (result.reason ? result.reason : '(unknown error)'));
+                    break;
+            }
+        },
+
         startGame: function(action, username, userpw, email, newuserpw, pClass) {
             var self = this;
 
             if(username && !this.game.started) {
-                var optionsSet = false,
-                    config = this.config;
 
-                if(config.local)
-                    this.game.setServerOptions(config.local.host, config.local.port, username, userpw, email, newuserpw, pClass);
-                else
-                    this.game.setServerOptions(config.dev.host, config.dev.port, username, userpw, email, newuserpw, pClass);
-
-                optionsSet = true;
-
-                if(!optionsSet)
-                    this.game.setServerOptions(config.build.host, config.build.port, username, userpw, email, newuserpw, pClass);
+                this.game.setServerOptions(username, userpw, email, newuserpw, pClass);
 
                 if(!self.isDesktop)
                     self.game.loadMap();
@@ -150,66 +196,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 this.game.run(action, function(result) {
                     if(result.success === true)
                         self.start();
-                    else {
-
-                        self.setPlayButtonState(true);
-
-                        switch(result.reason) {
-
-                            case "timeout":
-                                self.addValidationError(null, "Timeout whilst attempting to establish connection to TTA servers.");
-                                break;
-
-                            case 'invalidlogin':
-                                // Login information was not correct (either username or password)
-                                self.addValidationError(null, 'The username or password you entered is incorrect.');
-                                //self.getUsernameField().focus();
-                                break;
-
-                            case 'userexists':
-                                // Attempted to create a new user, but the username was taken
-                                self.addValidationError(null, 'The username you entered is not available.');
-                                break;
-
-                            case 'invalidusername':
-                                // The username contains characters that are not allowed (rejected by the sanitizer)
-                                self.addValidationError(null, 'The username you entered contains invalid characters.');
-                                break;
-
-                            case 'loggedin':
-                                // Attempted to log in with the same user multiple times simultaneously
-                                self.addValidationError(null, 'A player with the specified username is already logged in.');
-                                break;
-
-                            case 'ban':
-                                self.addValidationError(null, 'You have been banned.');
-                                break;
-
-                            case 'full':
-                                self.addValidationError(null, "All TTA gameservers are currently full.")
-                                break;
-
-                            case 'passwordChanged':
-                                self.animateParchment('changePassword', 'loadcharacter');
-                                break;
-
-                            case 'failedattempts':
-                                self.addValidationError(null, "");
-                                break;
-
-                            case 'cheating':
-                                self.addValidationError(null, "Attempts to cheat the system will not be tolerated.");
-                                break;
-
-                            case 'errorconnecting':
-                                self.addValidationError(null, "Unable to connect to the game server, please try again.");
-                                break;
-
-                            default:
-                                self.addValidationError(null, 'Failed to launch the game: ' + (result.reason ? result.reason : '(unknown error)'));
-                                break;
-                        }
-                    }
                 });
             }
         },
@@ -319,6 +305,16 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 return false;
             }
 
+            if (username.length < 3) {
+                this.addValidationError(this.$nameinput, "A minimum of 3 characters is required for a username.");
+                return;
+            }
+
+            if (userpw.length < 4) {
+                this.addValidationError(this.$pwinput, "A minimum of 4 characters is required for a password.");
+                return;
+            }
+
             if(!userpw) {
                 this.addValidationError(this.$pwinput, 'Please enter a password.');
                 return false;
@@ -341,6 +337,11 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
             if(email && !this.validateEmail(email)) {
                 this.addValidationError(this.$email, 'The email you entered appears to be invalid. Please enter a valid email address.');
+                return false;
+            }
+
+            if (username.toLowerCase() == userpw.toLowerCase()) {
+                this.addValidationError(this.$nameinput, "Your password cannot be the same as your username.");
                 return false;
             }
 
@@ -553,23 +554,17 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             }
         },
         initManaBar: function() {
-            var maxWidth = $("#manabar").width() - (11 * scale);
-            if (this.game.renderer) {
-                if (this.game.renderer.mobile) {
-                    var scale = 1;
-                } else {
-                    var scale = this.game.renderer.getScaleFactor();
-                }
-            } else {
-                var scale = 2;
-            }
+            var scale = this.game.renderer ? this.game.renderer.getScaleFactor() : 2,
+                manaMaxWidth = $("#manabar").width() - (11 * scale);
 
+            if (this.game.renderer && this.game.renderer.mobile)
+                scale = 1;
 
-            if (scale == 1) {
-                maxWidth = 77;
-            }
+            if (scale == 1)
+                manaMaxWidth = 77;
+
             this.game.onPlayerManaChange(function(mana, maxMana) {
-                var barWidth = Math.round((maxWidth / maxMana) * (mana > 0 ? mana : 0));
+                var barWidth = Math.round((manaMaxWidth / maxMana) * (mana > 0 ? mana : 0));
                 $('#mana').css('width', barWidth + "px");
                 $('#manatext').html("<p>MP: " + mana + "/" + maxMana + "</p>");
             });
@@ -678,7 +673,18 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 $('#chatbox').addClass('active');
                 $('#chatinput').focus();
                 $('#chatbutton').addClass('active');
-                $('#chatLog').css('visibility', 'visible');
+                this.displayChatLog(false);
+            }
+        },
+
+        displayChatLog: function(withFading) {
+            $('#chatLog').fadeIn('slow');
+
+            if (withFading && !($('#chatbox').hasClass('active'))) {
+                var duration = 5000;
+                this.showChatLog = setTimeout(function() {
+                    $('#chatLog').fadeOut('slow');
+                }, duration);
             }
         },
 
@@ -687,12 +693,12 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 $('#chatbox').removeClass('active');
                 $('#chatinput').blur();
                 $('#chatbutton').removeClass('active');
+                var duration = 5000;
                 this.showChatLog = setTimeout(function() {
-                    $('#chatLog').css('visibility', 'hidden');
-                }, 1000);
+                    $('#chatLog').fadeOut('slow');
+                }, duration);
             }
         },
-
 
         showDropDialog: function(inventoryNumber) {
             if(this.game.started) {
@@ -863,6 +869,11 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             $('#total-achievements').text($('#achievements').find('li').length);
         },
 
+        addUnlockedCount: function() {
+            var nb = parseInt($('#unlocked-achievements').text());
+            $('#unlocked-achievements').text(nb + 1);
+        },
+
         relistAchievement: function(achievement) {
             var self = this,
                 achievementId = achievement.id;
@@ -872,15 +883,22 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
         unlockAchievement: function(achievementId) {
             var $achievement = $('#achievements li.achievement' + (achievementId + 1));
-            $achievement.addClass('unlocked')
+            $achievement.addClass('unlocked');
+
         },
 
         initUnlockedAchievements: function(achievements) {
             var self = this;
 
             _.each(achievements, function(achievement) {
-                if (achievement.completed)
+                if (achievement.completed) {
                     self.unlockAchievement(achievement.id);
+
+                    var nb = parseInt($('#unlocked-achievements').text());
+                    $('#unlocked-achievements').text(nb + 1);
+                }
+
+
             });
 
         },
@@ -893,12 +911,11 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
         closeInGameScroll: function(content) {
             $('body').removeClass(content);
             $('#parchment').removeClass(content);
-            if(!this.game.player) {
+            if(!this.game.player)
                 $('body').addClass('death');
-            }
-            if(content === 'about') {
+
+            if(content === 'about')
                 $('#helpbutton').removeClass('active');
-            }
         },
 
         togglePopulationInfo: function() {
@@ -928,7 +945,9 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             left = (w / 2) - (popupWidth / 2);
 
             newwindow = window.open(url,'name','height=' + popupHeight + ',width=' + popupWidth + ',top=' + top + ',left=' + left);
-            if (window.focus) {newwindow.focus();}
+            if (window.focus)
+                newwindow.focus();
+
         },
 
         animateParchment: function(origin, destination) {
@@ -1006,7 +1025,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                     this.game.updateBars();
                 } else {
                     var newScale = this.game.renderer.getScaleFactor();
-
                     this.game.renderer.rescale(newScale);
                 }
             }

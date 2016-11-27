@@ -4,18 +4,15 @@
 define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'], function(Player, EntityFactory, MobData, GatherData, Pet, BISON) {
 
     var GameClient = Class.extend({
-        init: function(host, port) {
+        init: function(game) {
+            this.game = game;
             this.connection = null;
-            this.host = host;
-            this.port = port;
-
             this.connected_callback = null;
             this.spawn_callback = null;
             this.movement_callback = null;
             this.ban_callback = null;
             this.wanted_callback = null;
             this.fail_callback = null;
-
             this.notify_callback = null;
 
             this.handlers = [];
@@ -64,6 +61,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.PVPGAME] = this.receivePVPGame;
             this.handlers[Types.Messages.POISON] = this.receivePoison;
             this.handlers[Types.Messages.INTERFACE] = this.receiveInterface;
+            this.handlers[Types.Messages.GUINOTIFY] = this.receiveGraphicNotification;
+            this.handlers[Types.Messages.FORCECAST] = this.receiveForceCast;
+            this.handlers[Types.Messages.PROJECTILE] = this.receiveProjectile;
 
             this.useBison = false;
 
@@ -78,12 +78,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.isListening = false;
         },
 
-        connect: function(dispatcherMode) {
+        connect: function() {
 
             var self = this,
                 url = "ws://127.0.0.1:50526/";
-
-            log.info("Trying to connect to server : "+url);
 
             this.connection = io(url, {
                 forceNew: true,
@@ -91,10 +89,14 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 }
             );
 
+            this.connection.on('connect_failed', function() {
+                self.game.app.handleError('errorconnecting');
+                self.game.started = false;
+            });
+
             this.connection.on('connect_error', function() {
-                log.info("Could not connect to the game server.");
-                if (self.fail_callback)
-                    self.fail_callback('errorconnecting');
+                self.game.app.handleError('errorconnecting');
+                self.game.started = false;
             });
 
             this.connection.on('message', function(e) {
@@ -113,8 +115,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                     case 'passwordChanged':
                     case 'failedattempts':
                     case 'timeout':
-                        if (self.fail_callback)
-                            self.fail_callback(e);
+                    case 'updated':
+                        self.game.app.handleError(e);
+                        self.game.started = false;
                         return;
 
                     default:
@@ -141,10 +144,6 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         },
 
-        downloadFiles: function() {
-
-        },
-
         sendMessage: function(json) {
             var data;
             if(this.connection.connected === true) {
@@ -158,13 +157,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             if (this.isListening) {
                 data = JSON.parse(message);
                 if (data instanceof Array) {
-                    if (data[0] instanceof Array) {
-                        // Multiple actions received
+                    if (data[0] instanceof Array)
                         this.receiveActionBatch(data);
-                    } else {
-                        // Only one action received
+                    else
                         this.receiveAction(data);
-                    }
                 }
             }
         },
@@ -174,7 +170,6 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
             if(this.handlers[action] && _.isFunction(this.handlers[action]))
                 this.handlers[action].call(this, data);
-
         },
 
         receiveActionBatch: function(actions) {
@@ -202,7 +197,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 membership = data.shift(),
                 kind = data.shift(),
                 rights = data.shift(),
-                pClass = data.shift();
+                pClass = data.shift(),
+                pendant = ItemTypes.getKindAsString(data.shift()),
+                ring = ItemTypes.getKindAsString(data.shift()),
+                boots = ItemTypes.getKindAsString(data.shift());
+
 
             var maxInventoryNumber = data.shift();
             var inventory = [];
@@ -243,16 +242,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                     inventorySkillKind, inventorySkillLevel, maxBankNumber,
                     bankKind, bankNumber, bankSkillKind, bankSkillLevel,
                     maxAchievementNumber, achievementFound, achievementProgress, doubleExp,
-                    expMultiplier, membership, kind, rights, pClass);
-            }
-        },
-
-        receiveMana: function(data) {
-            if (this.mana_callback) {
-
-                var mana = data[1];
-                var maxMana = data[2];
-                this.mana_callback(mana, maxMana);
+                    expMultiplier, membership, kind, rights, pClass, pendant, ring, boots);
             }
         },
 
@@ -401,6 +391,13 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
             if (this.health_callback)
                 this.health_callback(points, isRegen ? isRegen : false, isPoison ? isPoison : false);
+        },
+
+        receiveMana: function(data) {
+            var mana = data[1];
+
+            if (this.mana_callback)
+                this.mana_callback(mana);
         },
 
         receiveChat: function(data) {
@@ -655,6 +652,33 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 this.interface_callback(interfaceId);
         },
 
+        receiveGraphicNotification: function(data) {
+            var message = data[1];
+            if (this.graphic_callback)
+                this.graphic_callback(message);
+        },
+
+        receiveForceCast: function(data) {
+            var castType = data[1];
+
+            if (this.forceCast_callback)
+                this.forceCast_callback(castType);
+        },
+
+        receiveProjectile: function(data) {
+            var id = data[1],
+                projectileType = data[2],
+                sx = data[3],
+                sy = data[4],
+                x = data[5],
+                y = data[6],
+                owner = data[7];
+
+
+            if (this.projectile_callback)
+                this.projectile_callback([id, projectileType, sx, sy, x, y, owner]);
+        },
+
         receiveData: function(data) {
             var attackSpeed = data[1],
                 moveSpeed = data[2],
@@ -760,20 +784,15 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         onPVPChange: function(callback){
             this.pvp_callback = callback;
         },
-
         onPVPGame: function(callback) {
             this.pvpGame_callback = callback;
         },
-
-
         onNotify: function(callback){
             this.notify_callback = callback;
         },
-
         onMana: function(callback) {
             this.mana_callback = callback;
         },
-
         onAchievement: function(callback) {
             this.achievement_callback = callback;
         },
@@ -845,6 +864,18 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.interface_callback = callback;
         },
 
+        onGraphicNotification: function(callback) {
+            this.graphic_callback = callback;
+        },
+
+        onForceCast: function(callback) {
+            this.forceCast_callback = callback;
+        },
+
+        onProjectile: function(callback) {
+            this.projectile_callback = callback;
+        },
+
         sendPartyInvite: function(playerId, status) { // 0 for request, 1, for yes, 2 for no.
             this.sendMessage([Types.Messages.PARTYINVITE,
                 playerId, status]);
@@ -886,6 +917,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             //alert("sendNewPassword");
         },
 
+        sendCastSpell: function(projectile, sx, sy, x, y) {
+            this.sendMessage([Types.Messages.CAST, projectile, sx, sy, x, y]);
+        },
 
         sendMove: function(x, y) {
             this.sendMessage([Types.Messages.MOVE,
@@ -938,10 +972,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 mob.id]);
         },
 
-        /*sendHurt: function(mob) {
-         this.sendMessage([Types.Messages.HURT,
-         mob.id]);
-         },*/
+        sendSpellHit: function(mob, spellType) {
+            this.sendMessage([Types.Messages.SPELLHIT, mob.id, spellType]);
+        },
+
         sendChat: function(text) {
             this.sendMessage([Types.Messages.CHAT,
                 text]);

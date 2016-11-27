@@ -6,7 +6,7 @@
     optimizeCss: "standard.keepLines",
 
     paths: {
-        "jquery": "lib/require-jquery"
+        "jquery": "jquery"
     },
 
     modules: [

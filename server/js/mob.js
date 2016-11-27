@@ -83,11 +83,11 @@ module.exports = Mob = Character.extend({
             this.hatelist.push({ id: playerId, hate: points });
         }
 
-        /*
+
          log.debug("Hatelist : "+this.id);
          _.each(this.hatelist, function(obj) {
          log.debug(obj.id + " -> " + obj.hate);
-         });*/
+         });
 
         if (this.returnTimeout) {
             // Prevent the mob from returning to its spawning position
@@ -144,7 +144,6 @@ module.exports = Mob = Character.extend({
                 if(this.hateCount > size*1.3){
                     this.hateCount = 0;
                     i = size - 1 - Utils.random(size-1);
-                    log.info("CHANGE TARGET: " + i);
                 } else{
                     return 0;
                 }

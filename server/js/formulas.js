@@ -5,7 +5,7 @@ var Utils = require('./utils'),
     Formulas = {};
 
 
-Formulas.dmg = function(attacker, defender) {
+Formulas.dmg = function(attacker, defender, spellType, spellLevel) {
     var damage, damageDealt, damageAbsorbed, usingRange, attackerLevel, defenderLevel, defenderArmourLevel, attackerArmourLevel, attackerWeaponLevel;
 
     defenderArmourLevel = defender.armorLevel;
@@ -32,80 +32,80 @@ Formulas.dmg = function(attacker, defender) {
         attackerWeaponLevel = 1;
 
 
-    damageDealt = Math.round((attackerLevel * Utils.randomRange(0.25, 2.1875)) + (attackerWeaponLevel * (1.125 + (Utils.randomRange(-0.5, 0.50))) * (usingRange ? 1.85 + (Utils.randomRange(-0.25, 0.35)) : 2.15 + (Utils.randomRange(-0.95, 1.25)))));
-    damageAbsorbed = Math.round((defenderLevel + (Utils.random (0, defenderArmourLevel))) * (1.115 + Utils.random(-0.35, 0.05)));
+    damageDealt = (attackerLevel * Utils.randomRange(0.25, 2.1875)) + (attackerWeaponLevel * (1.125 + (Utils.randomRange(-0.5, 0.50))) * (usingRange ? 1.85 + (Utils.randomRange(-0.25, 0.35)) : 2.15 + (Utils.randomRange(-0.95, 1.25))));
+
+    if (attacker instanceof Player && attacker.type != 'mob') {
+
+        if (attacker.hasRing()) {
+            var ringLevel = ItemTypes.getRingLevel(attacker.getRing());
+
+            if (ringLevel > 0)
+                damageDealt = damageDealt + (damageDealt * Utils.randomRange(0.0025, (0.02 * ringLevel)));
+        }
+
+        if (attacker.hasPendant()) {
+            var pendantLevel = ItemTypes.getPendantLevel(attacker.getPendant());
+
+            if (pendantLevel > 0)
+                damageDealt = damageDealt + (damageDealt * Utils.randomRange(0.0025, (0.02 * pendantLevel)));
+        }
+        if (spellType && spellLevel) {
+            var spellBonus;
+            if (spellType == 1)
+                spellBonus = 1.111;
+            else if (spellType == 4)
+                spellBonus = 1.221;
+
+
+            damageDealt = (attacker.level * Utils.randomRange(1.01, spellLevel) * spellBonus);
+        }
+    }
+
+
+    damageAbsorbed = (defenderLevel + (Utils.randomRange (0, defenderArmourLevel))) * (1.115 + Utils.random(-0.35, 0.05));
+
+    if (defender instanceof Player && defender.type != 'mob') {
+        if (defender.hasRing()) {
+            var rLevel = ItemTypes.getRingLevel(defender.getRing());
+
+            if (rLevel > 0)
+                damageAbsorbed = damageAbsorbed + (damageAbsorbed * Utils.randomRange(0.0025, (0.02 * rLevel)));
+        }
+
+        if (defender.hasPendant()) {
+            var pLevel = ItemTypes.getPendantLevel(defender.getPendant());
+
+            if (pLevel > 0)
+                damageAbsorbed = damageAbsorbed + (damageAbsorbed * Utils.randomRange(0.0025, (0.02 * pLevel)));
+        }
+    }
+
+    damageDealt = Math.round(damageDealt);
+    damageAbsorbed = Math.round(damageAbsorbed);
 
     if (damageAbsorbed > damageDealt)
         damageAbsorbed = damageDealt - 1;
 
     damage = damageDealt - damageAbsorbed;
 
-
     if (damage < 0)
         damage = 0;
 
-    if (ItemTypes.isArcherArmor(attacker.weapon) && attacker.isAdjacentNonDiagonal(defender))
+    if (ItemTypes.isArcherWeapon(attacker.weapon) && attacker.isAdjacentNonDiagonal(defender))
         damage *= Utils.randomRange(1.01, 1 + (attacker.weaponLevel / 100));
 
     damage = Math.round(damage);
 
     return damage;
 };
-/*
-Formulas.dmg = function(attacker, defender) {
-    var dealt, absorbed, dmg;
-
-    dealt = (attacker.weaponLevel + attacker.level * 0.5 + 5) * Utils.randomRange(4, 8);
-    // Passive Attack
-    if (attacker instanceof Player && attacker.skillPassiveAttack > 0)
-    {
-    	log.info("dealt="+dealt);
-        dealt = ~~(dealt * (1 + attacker.skillPassiveAttack / 100));
-        log.info("dealt="+dealt);
-    }
-
-    absorbed = (defender.armorLevel * 2.0 + defender.level * 2.0);
-    // Passive Defense
-    if (defender instanceof Player && defender.skillPassiveDefense > 0)
-    {
-    	absorbed = ~~(absorbed * (1 + defender.skillPassiveDefense / 100));    
-    }
-        
-    dmg = dealt - absorbed;
-
-    if(defender.royalAzaleaBenefTimeout){
-        dmg = Math.floor(dmg * 0.66);
-    } else{
-        dmg = Math.floor(dmg);
-    }
-
-    // Make Mobs do 15% more damage
-    if (attacker instanceof Mob && defender instanceof Player) {
-    	dmg = Math.floor(dmg * 1.15);	    
-    }
-
-    // Bows do 75% damage when close quarters.
-    if (ItemTypes.isArcherWeapon(attacker.weapon) && attacker.isAdjacentNonDiagonal(defender))
-    {
-    	dmg = Math.floor(dmg * 0.75);
-    }
-    
-    if(dmg <= 0) {
-        return 0;
-    } else {
-        return dmg;
-    }
-};*/
 
 Formulas.hp = function(entityLevel) {
-    var hp = 300 + (entityLevel * 8) * 5;
-    return hp;
+    return 300 + (entityLevel * 8) * 5;
 };
 
 Formulas.mana = function(entityLevel) {
     //Do not check kind yet, will be implemented later on.
     return 50 + entityLevel * 2;
-    //This requires more work, look around "kind".
 };
 
 Formulas.getExpArray = function() {

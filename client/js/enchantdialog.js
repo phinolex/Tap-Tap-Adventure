@@ -25,91 +25,91 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
 
             this.rescale();
             var self = this;
-                        	    
-	    this.body.click(function(event) {
-		self.parent.select(self);
-	    });
+
+            this.body.click(function(event) {
+                self.parent.select(self);
+            });
         },
-        
+
         rescale: function() {
             this.scale = this.parent.parent.scale;
             if (this.scale == 1)
             {
-		    this.background.css({
-			'position': 'absolute',
-			'left': '' + (15 + Math.floor(this.index % 6) * 17) + 'px',
-			'top': '' + (22 + Math.floor(this.index / 6) * 23) + 'px',
-			'width': '16px',
-			'height': '15px',
-			'background-image': 'url("img/1/storedialogsheet.png")',
-			'background-position': '-300px -172px'
-		    });
-		    this.body.css({
-			'position': 'absolute',
-			'width': '16px',
-			'height': '15px',
-			'bottom': '1px'
-		    });
-		    this.number.css({
-		    	'margin-top': '15px',
-			'color': '#fff',
-			'text-size': '6px',
-			'text-align': 'center'
-		    });
+                this.background.css({
+                    'position': 'absolute',
+                    'left': '' + (15 + Math.floor(this.index % 6) * 17) + 'px',
+                    'top': '' + (22 + Math.floor(this.index / 6) * 23) + 'px',
+                    'width': '16px',
+                    'height': '15px',
+                    'background-image': 'url("img/1/storedialogsheet.png")',
+                    'background-position': '-300px -172px'
+                });
+                this.body.css({
+                    'position': 'absolute',
+                    'width': '16px',
+                    'height': '15px',
+                    'bottom': '1px'
+                });
+                this.number.css({
+                    'margin-top': '15px',
+                    'color': '#fff',
+                    'text-size': '6px',
+                    'text-align': 'center'
+                });
             }
             else if (this.scale == 2)
             {
-		    this.background.css({
-			'position': 'absolute',
-			'left': '' + (30 + Math.floor(this.index % 6) * 33) + 'px',
-			'top': '' + (44 + Math.floor(this.index / 6) * 45) + 'px',
-			'width': '32px',
-			'height': '30px',
-			'background-image': 'url("img/2/storedialogsheet.png")',
-			'background-position': '-600px -344px'
-		    });
-		    this.body.css({
-			'position': 'absolute',
-			'width': '32px',
-			'height': '30px',
-			'bottom': '2px'
-		    });
-		    this.number.css({
-		    	'margin-top': '30px',
-			'color': '#fff',
-			'text-size': '9px',
-			'text-align': 'center'
-		    });
+                this.background.css({
+                    'position': 'absolute',
+                    'left': '' + (30 + Math.floor(this.index % 6) * 33) + 'px',
+                    'top': '' + (44 + Math.floor(this.index / 6) * 45) + 'px',
+                    'width': '32px',
+                    'height': '30px',
+                    'background-image': 'url("img/2/storedialogsheet.png")',
+                    'background-position': '-600px -344px'
+                });
+                this.body.css({
+                    'position': 'absolute',
+                    'width': '32px',
+                    'height': '30px',
+                    'bottom': '2px'
+                });
+                this.number.css({
+                    'margin-top': '30px',
+                    'color': '#fff',
+                    'text-size': '9px',
+                    'text-align': 'center'
+                });
             }
             else if (this.scale == 3)
             {
-		    this.background.css({
-			'position': 'absolute',
-			'left': '' + (45 + Math.floor(this.index % 6) * 50) + 'px',
-			'top': '' + (66 + Math.floor(this.index / 6) * 68) + 'px',
-			'width': '48px',
-			'height': '45px',
-			'background-image': 'url("img/3/storedialogsheet.png")',
-			'background-position': '-900px -516px'
-		    });
-		    this.body.css({
-			'position': 'absolute',
-			'width': '48px',
-			'height': '45px',
-			'bottom': '3px'
-		    });
-		    this.number.css({
-		    	'margin-top': '45px',
-			'color': '#fff',
-			'text-size': '12px',
-			'text-align': 'center'
-		    });		
+                this.background.css({
+                    'position': 'absolute',
+                    'left': '' + (45 + Math.floor(this.index % 6) * 50) + 'px',
+                    'top': '' + (66 + Math.floor(this.index / 6) * 68) + 'px',
+                    'width': '48px',
+                    'height': '45px',
+                    'background-image': 'url("img/3/storedialogsheet.png")',
+                    'background-position': '-900px -516px'
+                });
+                this.body.css({
+                    'position': 'absolute',
+                    'width': '48px',
+                    'height': '45px',
+                    'bottom': '3px'
+                });
+                this.number.css({
+                    'margin-top': '45px',
+                    'color': '#fff',
+                    'text-size': '12px',
+                    'text-align': 'center'
+                });
             }
-            if (this.itemKind) {
+            if (this.itemKind)
                 this.restore();
-            }
+
         },
-        
+
         getIndex: function() {
             return this.index;
         },
@@ -125,7 +125,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         },
         getComment: function() {
             if (ItemTypes.isGold(this.itemKind))
-            	    return '';
+                return '';
             var game = getGame(this);
             var enchantPrice = ItemTypes.getEnchantPrice(this.itemName, this.enchantLevel);
             return Item.getInfoMsgEx(this.itemKind, this.enchantLevel, this.skillKind, this.skillLevel) +
@@ -158,25 +158,26 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.body.css('background-image', this.itemName ? 'url("img/'+this.scale+'/item-' + this.itemName + '.png")' : '');
             this.body.attr('title', this.getComment());
             if (this.itemCount > 1) {
-            	if (ItemTypes.isObject(this.itemKind))
-            		this.number.html(this.itemCount);
-            	else
-            		this.number.html("+"+this.itemCount);
+                if (ItemTypes.isObject(this.itemKind))
+                    this.number.html(this.itemCount);
+                else
+                    this.number.html("+"+this.itemCount);
             } else {
-            	    this.number.html("");
+                this.number.html("");
             }
-            
+
         }
     });
 
     var InventoryFrame = Class.extend({
         init: function(parent) {
+            var self = this;
+
             this.parent = parent;
             this.inventories = [];
-            
-            for(var index = 0; index < 18; index++) {
+
+            for(var index = 0; index < 18; index++)
                 this.inventories.push(new Inventory(this, index));
-            }
 
             this.basket = $('#enchantDialogBasket');
             this.enchantButton = $('#enchantDialogEnchantButton');
@@ -185,20 +186,24 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.goldBackground = $('#enchantDialogGoldBackground');
             this.goldIcon = $('#enchantDialogGoldBody');
             this.goldNumber = $('#enchantDialogGoldNumber');
-            
+
             this.selectedInventory = null;
 
-            var self = this;
-            
+            this.basket.click(function(event) {
+                log.info("Hi");
+
+            });
+
             this.enchantButton.click(function(event) {
                 if(self.selectedInventory) {
                     var game = getGame(self);
                     if(game && game.ready) {
-                        var enchantPrice = ItemTypes.getEnchantPrice(self.selectedInventory.itemName, self.selectedInventory.enchantLevel);
-                        var enchantString = 'Cost ' + enchantPrice + ' to upgrade to +' + (self.selectedInventory.enchantLevel+1);
+                        var enchantPrice = ItemTypes.getEnchantPrice(self.selectedInventory.itemName, self.selectedInventory.enchantLevel),
+                            enchantString = "The cost is: " + enchantPrice + " to upgrade to: " + (self.selectedInventory.enchantLevel + 1) + " enchantment.";
+                        //var enchantString = 'Cost ' + enchantPrice + ' to upgrade to +' + (self.selectedInventory.enchantLevel+1);
                         self.parent.confirm(enchantString, function(result) {
                             if(result) {
-                                game.client.sendStoreEnchant(self.selectedInventory.getIndex()+6);
+                                game.client.sendStoreEnchant(self.selectedInventory.getIndex() + 6);
                                 self.release();
                             }
                         });
@@ -209,138 +214,138 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
         },
 
         rescale: function(scale) {
-	    if (scale == 1)
-	    {
-		    this.basket.css({
-			'position': 'absolute',
-			'left': '44px',
-			'top': '125px',
-			'width': '16px',
-			'height': '15px',
-			'background-position': '0px -2px'
-		    });
-		    this.enchantButton.css({
-			'position': 'absolute',
-			'left': '65px',
-			'top': '125px',
-			'width': '30px',
-			'height': '19px',
-			'margin-left': '4px',
-		    	'margin-top': '5px',
-			'color': '#fff',
-			'font-size': '6px',
-		    });
-		    this.goldBackground.css({
-			'position': 'absolute',
-			'left': '15px',
-			'top': '125px',
-			'width': '16px',
-			'height': '15px',
-			'background-image': 'url("img/1/storedialogsheet.png")',
-			'background-position': '-300px -172px'
-		    });
-		    this.goldIcon.css({
-			'position': 'absolute',
-			'width': '16px',
-			'height': '15px',
-			'background-image': 'url("img/1/item-gold.png")'
-		    });
-		    this.goldNumber.css({
-			'position': 'absolute',
-			'margin-top': '15px',
-			'color': '#000',
-			'text-align': 'center'
-		    });			    
-	    }
-	    else if (scale == 2)
-	    {
-		    this.basket.css({
-			'position': 'absolute',
-			'left': '88px',
-			'top': '250px',
-			'width': '32px',
-			'height': '30px',
-			'background-position': '0px -5px'
-		    });
-		    this.enchantButton.css({
-			'position': 'absolute',
-			'left': '130px',
-			'top': '246px',
-			'width': '60px',
-			'height': '38px',
-			'margin-left': '8px',
-			'margin-top': '10px',
-			'color': '#fff',
-			'font-size': '12px',
-		    });
-		    this.goldBackground.css({
-			'position': 'absolute',
-			'left': '30px',
-			'top': '246px',
-			'width': '32px',
-			'height': '30px',
-			'background-image': 'url("img/2/storedialogsheet.png")',
-			'background-position': '-600px -344px'
-		    });
-		    this.goldIcon.css({
-			'position': 'absolute',
-			'width': '32px',
-			'height': '30px',
-			'background-image': 'url("img/2/item-gold.png")'
-		    });
-		    this.goldNumber.css({
-			'position': 'absolute',
-			'margin-top': '30px',
-			'color': '#000',
-			'text-align': 'center'
-		    });			    
-		    		    	    
-	    }
-	    else if (scale == 3)
-	    {
-		    this.basket.css({
-			'position': 'absolute',
-			'left': '132px',
-			'top': '375px',
-			'width': '48px',
-			'height': '45px',
-			'background-position': '0px -5px'
-		    });
-		    this.enchantButton.css({
-			'position': 'absolute',
-			'left': '195px',
-			'top': '369px',
-			'width': '90px',
-			'height': '57px',
-			'margin-left': '12px',
-			'margin-top': '15px',
-			'color': '#fff',
-			'font-size': '18px',			
-		    });
-		    this.goldBackground.css({
-			'position': 'absolute',
-			'left': '45px',
-			'top': '375px',
-			'width': '48px',
-			'height': '45px',
-			'background-image': 'url("img/3/storedialogsheet.png")',
-			'background-position': '-900px -516px'
-		    });
-		    this.goldIcon.css({
-			'position': 'absolute',
-			'width': '48px',
-			'height': '45px',
-			'background-position': '0px 0px',
-			'background-image': 'url("img/3/item-gold.png")'
-		    });
-		    this.goldNumber.css({
-			'position': 'absolute',
-			'margin-top': '45px',
-			'color': '#000',
-			'text-align': 'center'
-		    });		    
-	    }
-	    
+            if (scale == 1)
+            {
+                this.basket.css({
+                    'position': 'absolute',
+                    'left': '44px',
+                    'top': '125px',
+                    'width': '16px',
+                    'height': '15px',
+                    'background-position': '0px -2px'
+                });
+                this.enchantButton.css({
+                    'position': 'absolute',
+                    'left': '65px',
+                    'top': '125px',
+                    'width': '30px',
+                    'height': '19px',
+                    'margin-left': '4px',
+                    'margin-top': '5px',
+                    'color': '#fff',
+                    'font-size': '6px',
+                });
+                this.goldBackground.css({
+                    'position': 'absolute',
+                    'left': '15px',
+                    'top': '125px',
+                    'width': '16px',
+                    'height': '15px',
+                    'background-image': 'url("img/1/storedialogsheet.png")',
+                    'background-position': '-300px -172px'
+                });
+                this.goldIcon.css({
+                    'position': 'absolute',
+                    'width': '16px',
+                    'height': '15px',
+                    'background-image': 'url("img/1/item-gold.png")'
+                });
+                this.goldNumber.css({
+                    'position': 'absolute',
+                    'margin-top': '15px',
+                    'color': '#000',
+                    'text-align': 'center'
+                });
+            }
+            else if (scale == 2)
+            {
+                this.basket.css({
+                    'position': 'absolute',
+                    'left': '88px',
+                    'top': '250px',
+                    'width': '32px',
+                    'height': '30px',
+                    'background-position': '0px -5px'
+                });
+                this.enchantButton.css({
+                    'position': 'absolute',
+                    'left': '130px',
+                    'top': '246px',
+                    'width': '60px',
+                    'height': '38px',
+                    'margin-left': '8px',
+                    'margin-top': '10px',
+                    'color': '#fff',
+                    'font-size': '12px',
+                });
+                this.goldBackground.css({
+                    'position': 'absolute',
+                    'left': '30px',
+                    'top': '246px',
+                    'width': '32px',
+                    'height': '30px',
+                    'background-image': 'url("img/2/storedialogsheet.png")',
+                    'background-position': '-600px -344px'
+                });
+                this.goldIcon.css({
+                    'position': 'absolute',
+                    'width': '32px',
+                    'height': '30px',
+                    'background-image': 'url("img/2/item-gold.png")'
+                });
+                this.goldNumber.css({
+                    'position': 'absolute',
+                    'margin-top': '30px',
+                    'color': '#000',
+                    'text-align': 'center'
+                });
+
+            }
+            else if (scale == 3)
+            {
+                this.basket.css({
+                    'position': 'absolute',
+                    'left': '132px',
+                    'top': '375px',
+                    'width': '48px',
+                    'height': '45px',
+                    'background-position': '0px -5px'
+                });
+                this.enchantButton.css({
+                    'position': 'absolute',
+                    'left': '195px',
+                    'top': '369px',
+                    'width': '90px',
+                    'height': '57px',
+                    'margin-left': '12px',
+                    'margin-top': '15px',
+                    'color': '#fff',
+                    'font-size': '18px',
+                });
+                this.goldBackground.css({
+                    'position': 'absolute',
+                    'left': '45px',
+                    'top': '375px',
+                    'width': '48px',
+                    'height': '45px',
+                    'background-image': 'url("img/3/storedialogsheet.png")',
+                    'background-position': '-900px -516px'
+                });
+                this.goldIcon.css({
+                    'position': 'absolute',
+                    'width': '48px',
+                    'height': '45px',
+                    'background-position': '0px 0px',
+                    'background-image': 'url("img/3/item-gold.png")'
+                });
+                this.goldNumber.css({
+                    'position': 'absolute',
+                    'margin-top': '45px',
+                    'color': '#000',
+                    'text-align': 'center'
+                });
+            }
+
             for(var index = 0; index < 18; index++) {
                 this.inventories[index].rescale();
             }
@@ -352,7 +357,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
 
         open: function() {
             this.release();
-            
+
             for(var index = 0; index < this.inventories.length; index++) {
                 this.inventories[index].release();
             }
@@ -369,13 +374,15 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
                             this.inventories[inventoryNumber-6].assign(item.kind, item.count, 0, 0);
                         } else if (ItemTypes.isGold(item.kind)) {
                             this.goldNumber.html(item.count);
-                        	
+
                         }
                     }
                 }
-            }         
+            }
         },
         select: function(inventory) {
+            var self = this;
+
             if(this.selectedInventory) {
                 this.inventories[this.selectedInventory.getIndex()].restore();
             }
@@ -385,6 +392,9 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.basket.css('background-image', inventory.getItemName() ? 'url("img/'+this.parent.scale+'/item-' + inventory.getItemName() + '.png")' : '');
             this.basket.attr('title', inventory.getComment());
             this.enchantButton.css('cursor', 'pointer');
+
+            var enchantPrice = ItemTypes.getEnchantPrice(self.selectedInventory.itemName, self.selectedInventory.enchantLevel);
+            self.goldNumber.html('' + enchantPrice);
         },
         release: function() {
             if(this.selectedInventory) {
@@ -406,7 +416,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.setScale();
 
             this.inventoryFrame = new InventoryFrame(this);
-            
+
             this.closeButton = $('#enchantDialogCloseButton');
             this.modal = $('#enchantDialogModal');
             this.modalNotify = $('#enchantDialogModalNotify');
@@ -418,7 +428,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             this.modalConfirmButton2 = $('#enchantDialogModalConfirmButton2');
             this.confirmCallback = null;
             this.scale=0;
-            
+
 
             var self = this;
 
@@ -447,61 +457,56 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
             });
         },
         setScale: function() {
-	    if (this.game.renderer) {
-		if (this.game.renderer.mobile) {
-		    this.scale = 1;
-		} else {
-		    this.scale = this.game.renderer.getScaleFactor();
-		}
-	    } else {
-		this.scale = 2;
-	    }
-        	
-        },        
+            if (this.game.renderer) {
+                if (this.game.renderer.mobile) {
+                    this.scale = 1;
+                } else {
+                    this.scale = this.game.renderer.getScaleFactor();
+                }
+            } else {
+                this.scale = 2;
+            }
+
+        },
         rescale: function() {
-        	this.setScale();
-		if (this.scale == 1)
-		{
-		    this.closeButton.css({
-			'position': 'absolute',
-			'left': '120px',
-			'top': '15px',
-			'width': '16px',
-			'height': '16px',
-			'background-image': 'url("img/1/storedialogsheet.png")',
-			'background-position': '-32px -165px',
-			'cursor': 'pointer'
-		    });
-				
-		}
-		else if (this.scale == 2)
-		{
-		    this.closeButton.css({
-			'position': 'absolute',
-			'left': '240px',
-			'top': '31px',
-			'width': '32px',
-			'height': '32px',
-			'background-image': 'url("img/2/storedialogsheet.png")',
-			'background-position': '-64px -330px',
-			'cursor': 'pointer'
-		    });
-			
-		}    
-		else if (this.scale == 3)
-		{	
-		    this.closeButton.css({
-			'position': 'absolute',
-			'left': '360px',
-			'top': '52px',
-			'width': '48px',
-			'height': '48px',
-			'background-image': 'url("img/3/storedialogsheet.png")',
-			'background-position': '-97px -496px',
-			'cursor': 'pointer'
-		    });
-		}
-		this.inventoryFrame.rescale(this.scale);
+            this.setScale();
+            if (this.scale == 1) {
+                this.closeButton.css({
+                    'position': 'absolute',
+                    'left': '120px',
+                    'top': '15px',
+                    'width': '16px',
+                    'height': '16px',
+                    'background-image': 'url("img/1/storedialogsheet.png")',
+                    'background-position': '-32px -165px',
+                    'cursor': 'pointer'
+                });
+
+            } else if (this.scale == 2) {
+                this.closeButton.css({
+                    'position': 'absolute',
+                    'left': '240px',
+                    'top': '31px',
+                    'width': '32px',
+                    'height': '32px',
+                    'background-image': 'url("img/2/storedialogsheet.png")',
+                    'background-position': '-64px -330px',
+                    'cursor': 'pointer'
+                });
+
+            } else if (this.scale == 3) {
+                this.closeButton.css({
+                    'position': 'absolute',
+                    'left': '360px',
+                    'top': '52px',
+                    'width': '48px',
+                    'height': '48px',
+                    'background-image': 'url("img/3/storedialogsheet.png")',
+                    'background-position': '-97px -496px',
+                    'cursor': 'pointer'
+                });
+            }
+            this.inventoryFrame.rescale(this.scale);
         },
 
         show: function() {
@@ -510,7 +515,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item'], function(Dialog, TabBook, TabPa
 
             this._super();
         },
-        
+
         notify: function(message) {
             this.modalNotifyMessage.text(message);
             this.modalNotify.css('display', 'block');

@@ -8,41 +8,41 @@ ItemTypes.ItemData = ItemData;
 ItemTypes.KindData = KindData;
 
 ItemTypes.setItemData = function(itemData) {
-	ItemData = itemData;
-	//log.info(JSON.stringify(ItemData));
-	ItemTypes.ItemData = itemData;
+    ItemData = itemData;
+    //log.info(JSON.stringify(ItemData));
+    ItemTypes.ItemData = itemData;
 };
 
 ItemTypes.setKindData = function(kindData) {
-	//log.info(JSON.stringify(kindData));
-	KindData = kindData;
-	ItemTypes.KindData = kindData;
+    //log.info(JSON.stringify(kindData));
+    KindData = kindData;
+    ItemTypes.KindData = kindData;
 };
 
 ItemTypes.getKindFromString = function (name) {
     //if (name == null) return 0;
     try {
-    	 if(name in ItemData) {
-    	 	 //log.info("kind:"+ItemData[name].kind);
-    	 	 return ItemData[name].kind;
-    	 }
-    	 else {
-    	 	 return null;
-    	 }
+        if(name in ItemData) {
+            //log.info("kind:"+ItemData[name].kind);
+            return ItemData[name].kind;
+        }
+        else {
+            return null;
+        }
     } catch(e) {
         log.error("No kind found for name: "+name);
         log.error('Error stack: ' + e.stack);
     }
-}
+};
 
 
 ItemTypes.getKindAsString = function(kind) {
     //if (kind == null) return null;
     try {
-	    if(kind in KindData) {
-	        //log.info("key:"+KindData[kind].key);
-		return KindData[kind].key;
-	    }
+        if(kind in KindData) {
+            //log.info("key:"+KindData[kind].key);
+            return KindData[kind].key;
+        }
     } catch(e) {
         log.error("No kind found for kind: "+kind);
         log.error('Error stack: ' + e.stack);
@@ -54,20 +54,22 @@ ItemTypes.getKindAsString = function(kind) {
 ItemTypes.getName = function(kind) {
     //if (kind == null) return false;
     try {
-    	var item = KindData[kind];
-    	if (!item) return '';
+        var item = KindData[kind];
+        if (!item)
+            return '';
         return item.name;
-   } catch(e) {
-        log.error("No name found for item: "+KindData[kind]);
+    } catch (e) {
+        log.error("No name found for item: " + KindData[kind]);
         log.error('Error stack: ' + e.stack);
-    }	
-}
+    }
+};
 
 ItemTypes.getWeaponLevel = function(kind) {
     //if (kind == null) return false;
     try {
-    	var item = KindData[kind];
-    	if (!item) return 0;
+        var item = KindData[kind];
+        if (!item)
+            return 0;
         return item.attack;
     } catch(e) {
         log.error("No level found for weapon: "+KindData[kind]);
@@ -79,39 +81,80 @@ ItemTypes.getWeaponLevel = function(kind) {
 ItemTypes.getArmorLevel = function(kind) {
     //if (kind == null) return false;
     try {
-    	var item = KindData[kind];
-        if (!item) return 0;
-    	return item.defense;
+        var item = KindData[kind];
+        if (!item)
+            return 0;
+
+        return item.defense;
     } catch(e) {
         log.error("No level found for armor: "+KindData[kind]);
         log.error('Error stack: ' + e.stack);
     }
 };
 
+ItemTypes.getPendantLevel = function(kind) {
+    try {
+        var item = KindData[kind];
+        if (!item)
+            return 0;
+
+        return item.pLevel;
+    } catch(e) {
+        log.error("No level found for pendant: " + KindData[kind]);
+        log.error('Error stack: ' + e.stack);
+    }
+};
+
+ItemTypes.getRingLevel = function(kind) {
+    try {
+        var item = KindData[kind];
+        if (!item)
+            return 0;
+
+        return item.rLevel;
+    } catch(e) {
+        log.error("No level found for ring: " + KindData[kind]);
+        log.error('Error stack: ' + e.stack);
+    }
+};
+
+ItemTypes.getBootsLevel = function(kind) {
+    try {
+        var item = KindData[kind];
+        if (!item)
+            return 0;
+
+        return item.bLevel;
+    } catch(e) {
+        log.error("No level found for boots: " + KindData[kind]);
+        log.error('Error stack: ' + e.stack);
+    }
+};
+
 ItemTypes.getItemByLevel = function(type, level) {
-	for (var kind in KindData)
-	{
-	    var item = KindData[kind];
-	    if ((item.type == "armor" || item.type == "armorarcher") &&
-		item.type == type && level == item.defense)
-	    {
-		return item;
-	    }
-	    if ((item.type == "weapon" || item.type == "weaponarcher") &&
-		item.type == type && level == item.attack)
-	    {
-		return item;
-	    }
-	    
-	}
-	return null;
+    for (var kind in KindData)
+    {
+        var item = KindData[kind];
+        if ((item.type == "armor" || item.type == "armorarcher") &&
+            item.type == type && level == item.defense)
+        {
+            return item;
+        }
+        if ((item.type == "weapon" || item.type == "weaponarcher") &&
+            item.type == type && level == item.attack)
+        {
+            return item;
+        }
+
+    }
+    return null;
 };
 
 
 ItemTypes.getType = function(kind) {
     //if (kind == null) return false;
     try {
-    	var item = KindData[kind];
+        var item = KindData[kind];
         return item.type;
     } catch(e) {
         log.error("No type found for item: "+kind);
@@ -120,69 +163,70 @@ ItemTypes.getType = function(kind) {
 };
 
 ItemTypes.getBuyPrice = function(itemName) {
-    	var item = ItemData[itemName];
-        if (!item) return 0;
-        
-        if (item.type == "weapon" || item.type == "weaponarcher") {
-        	return Math.floor(Math.pow(1.4,item.attack+1));
-        } else if (item.type == "armor" || item.type == "armorarcher") {
-        	return Math.floor(Math.pow(1.4,item.defense+1));
-        } else if (item.type == "object" && item.buy > 0) {
-        	if (item.buyCount > 1)
-        		return (item.buy * item.buyCount);
-        	else
-        		return item.buy;
-        }
-    	return 0;
+    var item = ItemData[itemName];
+    if (!item) return 0;
+
+    if (item.type == "weapon" || item.type == "weaponarcher") {
+        return Math.floor(Math.pow(1.4,item.attack+1));
+    } else if (item.type == "armor" || item.type == "armorarcher") {
+        return Math.floor(Math.pow(1.4,item.defense+1));
+    } else if (item.type == "object" && item.buy > 0) {
+        if (item.buyCount > 1)
+            return (item.buy * item.buyCount);
+        else
+            return item.buy;
+    }
+    return 0;
 };
 
-ItemTypes.getSellPrice = function(itemName) {    	
-	return Math.floor( ItemTypes.getBuyPrice(itemName) / 3) ;
+ItemTypes.getSellPrice = function(itemName) {
+    return Math.floor( ItemTypes.getBuyPrice(itemName) / 3) ;
 };
 
 ItemTypes.getBuyPriceByKind = function(itemKind) {
-    	var item = KindData[itemKind];
-        if (!item) return 0;
-        
-        if (item.type == "weapon" || item.type == "weaponarcher") {
-        	return Math.floor(Math.pow(1.4,item.attack+1));
-        } else if (item.type == "armor" || item.type == "armorarcher") {
-        	return Math.floor(Math.pow(1.4,item.defense+1));
-        } else if (item.type == "object" && item.buy > 0) {
-        	if (item.buyCount > 1)
-        		return (item.buy * item.buyCount);
-        	else
-        		return item.buy;
-        }
-    	return 0;
+    var item = KindData[itemKind];
+    if (!item) return 0;
+
+    switch (item.type) {
+        case "weapon":
+        case "weaponarcher":
+            return item.attack * 5;
+
+        case "armor":
+        case "armorarcher":
+            return item.defense * 5;
+
+        default:
+            return 10;
+    }
 };
 
-ItemTypes.getSellPriceByKind = function(itemKind) {    	
-	return Math.floor( ItemTypes.getBuyPriceByKind(itemKind) / 3) ;
+ItemTypes.getSellPriceByKind = function(itemKind) {
+    return Math.floor( ItemTypes.getBuyPriceByKind(itemKind) / 3) ;
 };
 
 ItemTypes.getEnchantPrice = function(itemName, enchantLevel) {
-    	var item = ItemData[itemName];
-        if (!item) return 0;
-        
-        var level;
-        if (item.type == "weapon" || item.type == "weaponarcher") {
-        	level = item.attack;
-        	
-        } else if (item.type == "armor" || item.type == "armorarcher") {
-        	level = item.defense;
-        }
-        return Math.floor(Math.pow(1.4,level + enchantLevel + 1));
+    var item = ItemData[itemName];
+    if (!item) return 0;
+
+    var level;
+    if (item.type == "weapon" || item.type == "weaponarcher") {
+        level = item.attack;
+
+    } else if (item.type == "armor" || item.type == "armorarcher") {
+        level = item.defense;
+    }
+    return Math.floor(Math.pow(1.4,level + enchantLevel + 1));
 };
 
 ItemTypes.getItemDataByKind = function (kind) {
-       for (var key in ItemData) {
-       	       var value = ItemData[key];
-		if (value.kind == kind) {
-			return value;
-		}
-	};
-	return null;
+    for (var key in ItemData) {
+        var value = ItemData[key];
+        if (value.kind == kind) {
+            return value;
+        }
+    };
+    return null;
 }
 
 ItemTypes.isArmor = function(kind) {
@@ -223,8 +267,20 @@ ItemTypes.isBenef = function(kind) {
 
 ItemTypes.isCraft = function(kind) {
     var item = KindData[kind];
-    //if (!item) return false;
+    if (!item) return false;
     return item.type === "craft";
+};
+
+ItemTypes.isPendant = function(kind) {
+    var item = KindData[kind];
+
+    return item.type === "pendant";
+};
+
+ItemTypes.isRing = function(kind) {
+    var item = KindData[kind];
+
+    return item.type === "ring";
 };
 
 
@@ -233,13 +289,14 @@ ItemTypes.isGold = function(kind) {
 };
 
 ItemTypes.isConsumableItem = function(kind) {
-    return kind === 35 
+    return kind === 35
         || kind === 36
         || kind === 212
         || kind === 401
         || kind === 450
         || kind === 451
-    	|| kind === 452;        
+        || kind === 452
+        || kind === 300;
 };
 
 ItemTypes.isHealingItem = function(kind) {
@@ -250,8 +307,8 @@ ItemTypes.isHealingItem = function(kind) {
 
 ItemTypes.isMount = function(kind) {
     return kind === 450
-    || kind === 451
-    || kind === 452;	
+        || kind === 451
+        || kind === 452;
 };
 
 ItemTypes.isExpendableItem = function(kind) {
@@ -268,17 +325,19 @@ ItemTypes.isItem = function (kind) {
     var item = ItemTypes.getItemDataByKind(kind);
     if (!item) return false;
     return item.type == "weaponarcher" ||
-    	item.type == "weapon" ||
-    	item.type == "armor" ||
-    	item.type == "armorarcher" ||
-    	item.type == "object" ||
-    	item.type == "craft";
+        item.type == "weapon" ||
+        item.type == "armor" ||
+        item.type == "armorarcher" ||
+        item.type == "object" ||
+        item.type == "craft" ||
+        item.type == "pendant" ||
+        item.type == "ring";
 }
 
 // TODO - what should the callback be?
 ItemTypes.forEachKind = function(callback) {
     for(var k in itemData) {
-    	//log.info("k="+JSON.stringify(k));
+        //log.info("k="+JSON.stringify(k));
         callback(KindData[k], k);
     }
 };
@@ -318,70 +377,70 @@ ItemTypes.forEachArcherWeaponKind = function(callback) {
 ItemTypes.getItemListBy = function (itemType) {
     var ItemsList = [];
     for(var k in ItemData) {
-    	var item = ItemData[k];
+        var item = ItemData[k];
         if (itemType == 1 && item.type == "object" && item.buy > 0)
         {
             ItemsList.push({
-		name: k,
-		kind: item.kind,
-		buyCount: item.buyCount,
-		buyPrice: ItemTypes.getBuyPrice(k)
+                name: k,
+                kind: item.kind,
+                buyCount: item.buyCount,
+                buyPrice: ItemTypes.getBuyPrice(k)
             });
         }
         else if (itemType == 2 && (item.type == "armor" || item.type == "armorarcher") && item.defense >= 10) {
             ItemsList.push({
-		name: k,
-		kind: item.kind,
-		buyCount: item.buyCount,
-		buyPrice: ItemTypes.getBuyPrice(k),
-		rank: item.defense
+                name: k,
+                kind: item.kind,
+                buyCount: item.buyCount,
+                buyPrice: ItemTypes.getBuyPrice(k),
+                rank: item.defense
             });
         }
         else if (itemType == 3 && (item.type == "weapon" || item.type == "weaponarcher") && item.attack >= 10) {
             ItemsList.push({
-		name: k,
-		kind: item.kind,
-		buyCount: item.buyCount,
-		buyPrice: ItemTypes.getBuyPrice(k),
-		rank: item.attack
-            });        	
+                name: k,
+                kind: item.kind,
+                buyCount: item.buyCount,
+                buyPrice: ItemTypes.getBuyPrice(k),
+                rank: item.attack
+            });
         }
-        
+
     }
     if (ItemsList.length > 0 && ItemsList[0].rank > 0)
-	ItemsList.sort(function(a, b) {
-	    return a.rank - b.rank;
-    });
+        ItemsList.sort(function(a, b) {
+            return a.rank - b.rank;
+        });
     return ItemsList;
 };
 
-ItemTypes.setupStore = function() 
+ItemTypes.setupStore = function()
 {
-	ItemTypes.Store.Potions = ItemTypes.getItemListBy(1);
-	ItemTypes.Store.Armors = ItemTypes.getItemListBy(2);
-	ItemTypes.Store.Weapons = ItemTypes.getItemListBy(3);	
+    ItemTypes.Store.Potions = ItemTypes.getItemListBy(1);
+    ItemTypes.Store.Armors = ItemTypes.getItemListBy(2);
+    ItemTypes.Store.Weapons = ItemTypes.getItemListBy(3);
 };
 
 ItemTypes.Store = {
     isBuy: function(itemName) {
         var item = ItemData[itemName];
         if (!item) return false;
-        return (item.buy > 0) ? true : false;        
+        return (item.buy > 0) ? true : false;
     },
     isBuyMultiple: function(itemName) {
-    	var item = ItemData[itemName];
+        var item = ItemData[itemName];
         if (!item) return false;
-    	return (item.buyCount > 0) ? true : false;
+        return (item.buyCount > 0) ? true : false;
     },
     isSell: function(itemName) {
         var item = ItemData[itemName];
         if (!item) return false;
-        return (item.buy >= 2) ? true : false;        
+        return (item.buy >= 2) ? true : false;
     },
     getBuyCount: function(itemName) {
-    	var item = ItemData[itemName];
+        var item = ItemData[itemName];
         if (!item) return false;
-    	return (item.buyCount > 1) ? item.buyCount : 1;
+        return (item.buyCount > 1) ? item.buyCount : 1;
     },
 };
 

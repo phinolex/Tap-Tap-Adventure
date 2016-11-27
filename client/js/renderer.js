@@ -104,9 +104,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
             rescale: function(factor) {
                 this.setZoom();
-
                 this.scale = this.getScaleFactor();
-
                 this.createCamera();
 
                 this.context.mozImageSmoothingEnabled = false;
@@ -227,7 +225,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
             drawRect: function(ctx, x, y, width, height, color) {
                 ctx.fillStyle = color;
-                ctx.fillRect(x * this.scale, y * this.scale, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
+                ctx.fillRect(x * this.scale, y * this.scale, (this.tilesize * this.scale) * width, (this.tilesize * this.scale) * height);
                 ctx.fill();
             },
 
@@ -295,21 +293,16 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     return;
 
                 if(this.mobile) {
-                    if(this.game.drawTarget) {
-                        var x = this.game.selectedX,
-                            y = this.game.selectedY;
+                    var x = this.game.selectedX,
+                        y = this.game.selectedY;
 
-                        //this.context.clearRect(x-this.tilesize, y-this.tilesize, this.tilesize*2, this.tilesize*2);
-                        this.drawCellHighlight(x, y, "rgb(51, 255, 0)");
-                        this.lastTargetPos = { x: x,
-                            y: y };
-                        this.game.drawTarget = false;
-                    }
+                    //this.context.clearRect(x-this.tilesize, y-this.tilesize, this.tilesize*2, this.tilesize*2);
+                    this.drawCellHighlight(x, y, "rgb(51, 255, 0)");
+                    this.lastTargetPos = { x: x, y: y };
+                    //this.game.drawTarget = false;
                 } else {
-
-
                     if(sprite && anim) {
-                        var    frame = anim.currentFrame,
+                        var frame = anim.currentFrame,
                             s = this.scale,
                             x = frame.x * os,
                             y = frame.y * os,
@@ -343,12 +336,14 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     os = this.upscaledRendering ? 1 : this.scale;
 
                 this.context.save();
-                if (!this.game.currentCursor.isLoaded)
-                    this.game.currentCursor.load();
 
-                if(this.game.currentCursor && this.game.currentCursor.isLoaded)
-                    this.context.drawImage(this.game.currentCursor.image, 0, 0, 14 * os, 14 * os, mx, my, 14*s, 14*s);
+                if (this.game.currentCursor) {
+                    if (!this.game.currentCursor.isLoaded)
+                        this.game.currentCursor.load();
 
+                    if(this.game.currentCursor.isLoaded)
+                        this.context.drawImage(this.game.currentCursor.image, 0, 0, 14 * os, 14 * os, mx, my, 14*s, 14*s);
+                }
 
                 this.context.restore();
             },
@@ -531,6 +526,85 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                                 shadow.width * os * ds, shadow.height * os * ds);
                         }
 
+                        if(entity.isFlareDance){
+                            var benef = this.game.sprites["flaredanceeffect"];
+                            if (!benef.isLoaded) benef.load();
+                            if(benef){
+                                var benefAnimData1 = benef.animationData[anim.name];
+                                if(benefAnimData1){
+                                    var index = this.game.benef4Animation.currentFrame.index < benefAnimData1.length ? this.game.benef4Animation.currentFrame.index : this.game.benef4Animation.currentFrame.index % benefAnimData1.length,
+                                        bx = benef.width * index * os,
+                                        by = benef.height * benefAnimData1.row * os,
+                                        bw = benef.width * os,
+                                        bh = benef.height * os;
+
+                                    this.context.drawImage(benef.image, bx, by, bw, bh,
+                                        benef.offsetX * s,
+                                        benef.offsetY * s,
+                                        bw * ds, bh * ds);
+                                }
+                            }
+                        }
+                        if(entity.isSuperCat){
+                            var benef = this.game.sprites["supercateffect"];
+                            if (!benef.isLoaded) benef.load();
+                            if(benef){
+                                var benefAnimData2 = benef.animationData[anim.name];
+                                if(benefAnimData2){
+                                    var index = this.game.benef10Animation.currentFrame.index < benefAnimData2.length ? this.game.benef10Animation.currentFrame.index : this.game.bene104Animation.currentFrame.index % benefAnimData2.length,
+                                        bx = benef.width * index * os,
+                                        by = benef.height * benefAnimData2.row * os,
+                                        bw = benef.width * os,
+                                        bh = benef.height * os;
+
+                                    this.context.drawImage(benef.image, bx, by, bw, bh,
+                                        benef.offsetX * s,
+                                        benef.offsetY * s,
+                                        bw * ds, bh * ds);
+                                }
+                            }
+                        }
+                        if(entity.isProvocation){
+                            var benef = this.game.sprites["provocationeffect"];
+                            if (!benef.isLoaded) benef.load();
+                            if(benef){
+                                var benefAnimData3 = benef.animationData[anim.name];
+                                if(benefAnimData3){
+                                    var index = this.game.benef10Animation.currentFrame.index < benefAnimData3.length ? this.game.benef10Animation.currentFrame.index : this.game.bene104Animation.currentFrame.index % benefAnimData3.length,
+                                        bx = benef.width * index * os,
+                                        by = benef.height * benefAnimData3.row * os,
+                                        bw = benef.width * os,
+                                        bh = benef.height * os;
+
+                                    this.context.drawImage(benef.image, bx, by, bw, bh,
+                                        benef.offsetX * s,
+                                        benef.offsetY * s,
+                                        bw * ds, bh * ds);
+                                }
+                            }
+                        }
+
+
+
+                        if(entity.isRoyalAzaleaBenef){
+                            var benef = this.game.sprites["bucklerbenef"];
+                            if (!benef.isLoaded) benef.load();
+                            if(benef){
+                                var benefAnimData4 = benef.animationData[anim.name];
+                                if(benefAnimData4){
+                                    var index = this.game.benef10Animation.currentFrame.index < benefAnimData4.length ? this.game.benef10Animation.currentFrame.index : this.game.benef10Animation.currentFrame.index % benefAnimData4.length,
+                                        bx = benef.width * index * os,
+                                        by = benef.height * benefAnimData4.row * os,
+                                        bw = benef.width * os,
+                                        bh = benef.height * os;
+
+                                    this.context.drawImage(benef.image, bx, by, bw, bh,
+                                        benef.offsetX * s,
+                                        benef.offsetY * s,
+                                        bw * ds, bh * ds);
+                                }
+                            }
+                        }
 
                         try {
                             this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
@@ -552,9 +626,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                                 sparks.offsetX * s,
                                 sparks.offsetY * s,
                                 sw * ds, sh * ds);
-
-                            if (entity.count > 1)
-                                this.drawText(this.textcontext, entity.count, entity.x + 8, entity.y - 0.3, true, "white");
                         }
                     }
 
@@ -573,6 +644,74 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                                 weapon.offsetX * s,
                                 weapon.offsetY * s,
                                 ww * ds, wh * ds);
+                        }
+                    }
+
+                    if(entity.invincible){
+                        var benef = this.game.sprites["shieldbenef"];
+                        if (!benef.isLoaded) benef.load();
+                        if(benef){
+                            var benefAnimData5 = benef.animationData[anim.name];
+                            if(benefAnimData5){
+                                var index = this.game.benefAnimation.currentFrame.index < benefAnimData5.length ? this.game.benefAnimation.currentFrame.index : this.game.benefAnimation.currentFrame.index % benefAnimData5.length,
+                                    bx = benef.width * index * os,
+                                    by = benef.height * benefAnimData5.row * os,
+                                    bw = benef.width * os,
+                                    bh = benef.height * os;
+
+                                this.context.drawImage(benef.image, bx, by, bw, bh,
+                                    benef.offsetX * s,
+                                    benef.offsetY * s,
+                                    bw * ds, bh * ds);
+                            }
+                        }
+                    }
+                    if(entity.isStun){
+                        var benef = this.game.sprites["stuneffect"];
+                        if (!benef.isLoaded) benef.load();
+                        if(benef){
+                            var index = entity.stunAnimation.currentFrame.index,
+                                bx = benef.width * index * os,
+                                by = benef.height * entity.stunAnimation.row,
+                                bw = benef.width * os,
+                                bh = benef.height * os;
+
+                            this.context.drawImage(benef.image, bx, by, bw, bh,
+                                benef.offsetX * s,
+                                (benef.offsetY - entity.sprite.height)*s,
+                                bw * ds, bh * ds);
+                        }
+                    }
+                    if(entity.isCritical){
+                        var benef = this.game.sprites["criticaleffect"];
+                        if (!benef.isLoaded) benef.load();
+                        if(benef){
+                            var index = entity.criticalAnimation.currentFrame.index,
+                                bx = benef.width * index * os,
+                                by = benef.height * entity.criticalAnimation.row * os,
+                                bw = benef.width * os,
+                                bh = benef.height * os;
+
+                            this.context.drawImage(benef.image, bx, by, bw, bh,
+                                benef.offsetX * s,
+                                benef.offsetY * s,
+                                bw * ds, bh * ds);
+                        }
+                    }
+                    if(entity.isHeal){
+                        var benef = this.game.sprites["healeffect"];
+                        if (!benef.isLoaded) benef.load();
+                        if(benef){
+                            var index = entity.healAnimation.currentFrame.index,
+                                bx = benef.width * index * os,
+                                by = benef.height * entity.healAnimation.row * os,
+                                bw = benef.width * os,
+                                bh = benef.height * os;
+
+                            this.context.drawImage(benef.image, bx, by, bw, bh,
+                                benef.offsetX * s,
+                                benef.offsetY * s,
+                                bw * ds, bh * ds);
                         }
                     }
 
@@ -624,6 +763,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         self.clearDirtyRect(entity.oldDirtyRect);
                 });
 
+                this.game.forEachProjectile(function(projectile) {
+                    if (projectile.isDirty && projectile.oldDirtyRect)
+                        self.clearDirtyRect(projectile.oldDirtyRect);
+                });
 
                 this.game.forEachAnimatedTile(function(tile) {
                     if(tile.isDirty)
@@ -760,8 +903,70 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     this.drawText(ctx, entity.title, (entity.x + 8), (entity.y - 10), true, npcColour);
                 }
 
+                if (entity instanceof Item) {
+                    if (entity.count > 1)
+                        this.drawText(ctx, entity.count, entity.x + 8, entity.y - 0.3, true, "white");
+                }
+
                 ctx.restore();
             },
+
+            drawProjectile: function(projectile) {
+                var sprite = projectile.sprite,
+                    anim = projectile.currentAnimation,
+                    os = this.upscaledRendering ? 1 : this.scale,
+                    ds = this.upscaledRendering ? this.scale : 1;
+
+                if(anim && sprite) {
+                    var frame = anim.currentFrame,
+                        s = this.scale,
+                        x = frame.x * os,
+                        y = frame.y * os,
+                        w = sprite.width * os,
+                        h = sprite.height * os,
+                        ox = sprite.offsetX * s,
+                        oy = sprite.offsetY * s,
+                        dx = projectile.x * s,
+                        dy = projectile.y * s,
+                        dw = w * ds,
+                        dh = h * ds;
+
+
+                    this.context.save();
+                    this.context.translate(dx, dy);
+                    this.context.rotate(sprite.offsetAngle * (Math.PI / 180));
+                    this.context.rotate(projectile.angle * Math.PI / 180);
+                    if(projectile.visible) {
+                        if (!sprite.isLoaded)
+                            sprite.load();
+
+                        this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
+                    }
+
+                    this.context.restore();
+
+                }
+            },
+
+            /*
+             if(dirtyOnly) {
+             if(entity.isDirty) {
+             self.drawEntity(entity);
+
+             entity.isDirty = false;
+             entity.oldDirtyRect = entity.dirtyRect;
+             entity.dirtyRect = null;
+             }
+             */
+            drawProjectiles: function(dirtyOnly) {
+                var self = this;
+
+                self.game.forEachProjectile(function(projectile) {
+                    self.drawProjectile(projectile);
+                });
+            },
+
+
             drawInventory: function(){
                 var s = this.scale;
                 this.textcontext.save();
@@ -770,7 +975,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.textcontext.restore();
             },
 
-            drawInventoryMenu: function(){
+            drawInventoryMenu: function() {
                 if(this.game.player && this.game.menu && this.game.menu.selectedEquipped !== null) {
                     var equippedNumber = this.game.menu.selectedEquipped;
                     var leftTextAlign = 12 * this.tilesize;
@@ -912,9 +1117,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     tilesetWidth = this.tileset.width / m.tilesize,
                     optimized = false;
 
-                if (p && p.isMoving && !this.forceRedraw)
+                if (p && p.isMoving && !this.forceRedraw) {
+                    this.game.bubbleManager.clean();
                     optimized = true;
-
+                }
 
                 foregroundContext.save();
                 self.clearScreen(foregroundContext);
@@ -991,13 +1197,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 }
             },
 
-
-
             drawDirtyAnimatedTiles: function(ctx) {
                 this.drawAnimatedTiles(true, ctx);
             },
-
-
 
             drawBackground: function(ctx, color) {
                 ctx.fillStyle = color;
@@ -1056,9 +1258,16 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     case 3: this.setFontSize(30); break;
                 }
                 this.game.infoManager.forEachInfo(function(info) {
+                    var text;
+
+                    if (isNaN(info.value) || info.value == 0)
+                        text = "MISS";
+                    else
+                        text = info.value;
+
                     self.textcontext.save();
                     self.textcontext.globalAlpha = info.opacity;
-                    self.drawText(self.textcontext, info.value, (info.x + 8), Math.floor(info.y), true, info.fillColor, info.strokeColor);
+                    self.drawText(self.textcontext, text, (info.x + 8), Math.floor(info.y), true, info.fillColor, info.strokeColor);
                     self.textcontext.restore();
                 });
                 this.initFont();
@@ -1122,7 +1331,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
             renderStaticCanvases: function() {
 
-                if (this.game.player.isMoving)
+                if (this.game.player && this.game.player.isMoving)
                     this.drawOldTerrain();
 
                 if (this.forceRedraw || this.game.player && !this.game.player.isMoving()) {
@@ -1145,9 +1354,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.renderStaticCanvases();
 
+                this.context.save();
                 this.textcontext.save();
                 this.toptextcontext.save();
-                this.context.save();
 
                 this.setCameraView(this.context);
                 this.setCameraView(this.textcontext);
@@ -1156,7 +1365,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.drawAnimatedTiles(this.mobile, this.context);
 
                 this.drawSelectedCell();
-
+                this.drawProjectiles(this.mobile);
                 this.drawEntityNames();
 
                 if (!this.mobile && !this.tablet) {
@@ -1184,6 +1393,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             preventFlickeringBug: function() {
                 if(this.fixFlickeringTimer.isOver(this.game.currentTime))
                     this.context.fillRect(0, 0, 0, 0);
+
+
             },
 
             cleanPathing: function() {

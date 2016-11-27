@@ -12,7 +12,7 @@ function main(config) {
         case "debug":
         case "info":
             log = new Log(Log.INFO || Log.DEBUG || Log.ERROR);
-        break;
+            break;
     }
 
     var production_config = new ProductionConfig(config);
@@ -35,6 +35,7 @@ function main(config) {
                     lastTotalPlayers = totalPlayers;
                     _.each(worlds, function(world) {
                         world.updatePopulation(totalPlayers);
+                        log.info("Player Population Updated - " + totalPlayers);
                     });
                 }
             });
@@ -49,10 +50,10 @@ function main(config) {
     server.onConnect(function(connection) {
         var world; // the one in which the player will be spawned
         var connect = function() {
-                if(world) {
-                    world.connect_callback(new Player(connection, world, databaseHandler));
-                }
-            };
+            if(world) {
+                world.connect_callback(new Player(connection, world, databaseHandler));
+            }
+        };
 
         if(metrics) {
             metrics.getOpenWorldCount(function(open_world_count) {
@@ -73,7 +74,7 @@ function main(config) {
 
     server.onError(function() {
         log.error(Array.prototype.join.call(arguments, ", "));
-        
+
     });
 
     var onPopulationChange = function() {
@@ -110,7 +111,7 @@ function main(config) {
         //log.info(JSON.stringify(e));
 
         log.error('uncaughtException: ' + e.stack);
-        
+
     });
 }
 
