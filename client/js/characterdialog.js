@@ -2,9 +2,9 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
     var StatePage = TabPage.extend({
         init: function(parent, game) {
             this._super('#characterDialogFrameStatePage');
+            var self = this;
             this.parent = parent;
             this.game = game;
-            var self = this;
 
             $('#characterItemWeapon').click(function(event) {
                 if (self.game.ready){
@@ -53,6 +53,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
         assign: function(datas) {
             var game = this.game,
                 width1, height1, width2, height2, width3, height3;
+
 
 
             if (this.game.renderer) {
@@ -185,12 +186,14 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
 
     var Skill = Class.extend({
         init: function(id, name, position, game) {
+            log.info("Skill: " + name);
             this.background = $(id);
             this.body = $(id + 'Body');
             this.levels = [];
             this.name = name;
             this.level = 0;
             this.game = game;
+            this.cooldown = false;
 
             if (this.game.renderer) {
                 this.scale = this.game.renderer.scale;
@@ -238,19 +241,21 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             var self = this;
             var dragStart = false;
 
-            if (SkillData.Names[self.name].type == "active")
-            {
+            if (SkillData.Names[self.name].type == "active") {
                 this.body.bind('dragstart', function(event) {
-                    log.info("Began DragStart.");
-                    event.originalEvent.dataTransfer.setData("skllName", self.name);
+                    event.originalEvent.dataTransfer.setData("skillName", self.name);
                     DragData = {};
                     DragData.skillName = self.name;
                     dragStart = true;
                 });
 
-                this.body.bind('mouseup', function(event){
-                    if(!dragStart) {
+                this.body.bind('mouseup', function(event) {
+                    if(!dragStart && !self.game.player.skillHandler.containsSkill(self.name) && !self.cooldown) {
+                        self.cooldown = true;
                         self.game.client.sendSkillInstall(self.game.selectedSkillIndex++ % 5, self.name);
+                        setTimeout(function() {
+                            self.cooldown = false;
+                        }, 1000)
                     }
                     dragStart = false;
                 });
@@ -304,7 +309,6 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             for (var i = this.skills.length-1; i >= 0; --i)
             {
                 var tSkill = this.skills[i];
-                //log.info("tSkill="+JSON.stringify(tSkill));
                 if(tSkill.skill) {
                     tSkill.skill.background.css({
                         'display': 'none'
@@ -322,46 +326,40 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             if (this.game.renderer.mobile)
                 scale = 1;
 
-            try {
-                var passiveSkillId = 0,
-                    activeSkillId = 0;
+            var passiveSkillId = 0,
+                activeSkillId = 0;
 
-                for (var id = 0; id < this.skills.length; id++) {
-                    var skill = this.skills[id],
-                        skillData = SkillData.Names[skill.name],
-                        isPassive = skillData.type == 'passive';
+            for (var id = 0; id < this.skills.length; id++) {
+                var skill = this.skills[id],
+                    skillData = SkillData.Names[skill.name],
+                    isPassive = skillData.type == 'passive';
 
-                    if (skill) {
-                        var iconOffset = skillData.iconOffset[scale - 1],
-                            skillId = id + 10,
-                            s = new Skill('#characterSkill' + skillId, skill.name, iconOffset, this.game);
+                if (skill) {
+                    var iconOffset = skillData.iconOffset[scale - 1],
+                        skillId = id + 10,
+                        s = new Skill('#characterSkill' + skillId, skill.name, iconOffset, this.game);
 
-                        s.background.css({
-                            'position': 'absolute',
-                            'left': '' + ((isPassive ? passiveSkillId : activeSkillId) % 2 ? 70 : 14) * scale + 'px',
-                            'top': '' + (isPassive ? 113 + (Math.floor(passiveSkillId / 2) * 20) : 17 + (Math.floor(activeSkillId / 2) * 20)) * scale + 'px',
-                            "width": '42px',
-                            'height': '15px',
-                            'display': 'block'
-                        });
+                    s.background.css({
+                        'position': 'absolute',
+                        'left': '' + ((isPassive ? passiveSkillId : activeSkillId) % 2 ? 70 : 14) * scale + 'px',
+                        'top': '' + (isPassive ? 113 + (Math.floor(passiveSkillId / 2) * 20) : 17 + (Math.floor(activeSkillId / 2) * 20)) * scale + 'px',
+                        "width": '42px',
+                        'height': '15px',
+                        'display': 'block'
+                    });
 
-                        this.skills[id].skill = s;
-                        $("#characterSkill" + skillId).attr('title', skill.name + " Lv: " + skill.level);
-                        s.setLevel(skill.level);
+                    this.skills[id].skill = s;
+                    $("#characterSkill" + skillId).attr('title', skill.name + " Lv: " + skill.level);
+                    s.setLevel(skill.level);
 
-                        if (isPassive)
-                            passiveSkillId++;
-                        else
-                            activeSkillId++;
-                    }
+                    if (isPassive)
+                        passiveSkillId++;
+                    else
+                        activeSkillId++;
+
                 }
-            } catch (e) {
-
-                log.info("Caught error: " + e);
             }
-
         }
-
     });
 
     var PageNavigator = Class.extend({

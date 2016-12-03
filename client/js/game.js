@@ -76,6 +76,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.statehandler = new StateHandler(this);
                 this.logicTime = new Date().getTime();
 
+
                 // FPS
                 this.lastFPSTime = new Date().getTime();
                 this.FPSCount = 0;
@@ -344,6 +345,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             initPlayer: function() {
                 this.app.initTargetHud();
 
+                log.info("Player Sprite: " + this.player.getSpriteName());
                 this.player.setSprite(this.sprites[this.player.getSpriteName()]);
 
                 this.player.idle();
@@ -388,7 +390,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     if(achievement.id === parseInt(id))
                         found = achievement;
 
-                    log.info("Key: " + key);
                 });
                 return found;
             },
@@ -424,25 +425,21 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
 
             loadSprite: function(name) {
-                if(this.renderer.upscaledRendering || this.renderer.mobile) {
-                    this.spritesets[0][name] = new Sprite(name, 1);
-                    this.spritesets[1][name] = new Sprite(name, 2);
-                } else if (this.renderer.tablet)
-                    this.spritesets[1][name] = new Sprite(name, 2);
-                else {
-                    this.spritesets[0][name] = new Sprite(name, 1);
-                    this.spritesets[1][name] = new Sprite(name, 2);
-                    this.spritesets[2][name] = new Sprite(name, 3);
+                var scale = this.renderer.getScaleFactor(),
+                    isMobile = this.renderer.mobile;
+
+                if (this.renderer.mobile) {
+                    scale = 1;
+                    this.spritesets[scale][name] = new Sprite(name, scale + 1);
                 }
+
+                this.spritesets[scale - 1][name] = new Sprite(name, scale);
             },
 
             setSpriteScale: function(scale) {
                 var self = this;
 
-                if(this.renderer.upscaledRendering || scale == 1)
-                    this.sprites = this.spritesets[0];
-                else
-                    this.sprites = this.spritesets[scale - 1];
+                this.sprites = this.spritesets[scale + (this.renderer.mobile ? 0 : -1)];
 
                 _.each(this.entities, function(entity) {
                     entity.setSprite(self.sprites[entity.getSpriteName()]);
@@ -453,13 +450,17 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             loadSprites: function() {
-                log.info("Loading sprites...");
+                var scale = this.renderer.getScaleFactor();
+                if (this.renderer.mobile)
+                    scale = 1;
+
                 this.spritesets = [];
                 this.spritesets[0] = {};
                 this.spritesets[1] = {};
                 this.spritesets[2] = {};
                 _.map(this.spriteNames, this.loadSprite, this);
-                this.setSpriteScale(this.renderer.scale);
+
+                this.setSpriteScale(scale);
             },
 
             setCursor: function(name) {
@@ -739,23 +740,25 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             tick: function() {
-                this.currentTime = new Date().getTime();
+                if (this.started) {
+                    
+                    this.currentTime = new Date().getTime();
 
-                if(this.started) {
                     this.updateCursorLogic();
                     this.updater.update();
                     this.renderer.renderFrame();
+
                     this.FPSCount++;
                     if (this.currentTime - this.lastFPSTime > 1000) {
                         $('#fps').html("FPS: " + this.FPSCount);
                         this.lastFPSTime = this.currentTime;
                         this.FPSCount = 0;
                     }
+
+                    if(!this.isStopped)
+                        requestAnimFrame(this.tick.bind(this));
+
                 }
-
-                if(!this.isStopped)
-                    requestAnimFrame(this.tick.bind(this));
-
             },
 
             start: function() {
@@ -809,14 +812,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 self.initCursors();
                 self.initAnimations();
                 self.initShadows();
-                self.initHurtSprites();
+                //self.initHurtSprites();
                 self.initEntityGrid();
                 self.initItemGrid();
                 self.initPathingGrid();
                 self.initRenderingGrid();
                 self.initAnimatedTiles();
                 self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
-                self.initPlayer();
                 self.setCursor("hand");
 
             },
@@ -930,6 +932,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.initializeAchievements();
                     self.client.sendReady(self.playerId);
                     self.audioManager.updateMusic();
+
+                    if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
+                        self.player.setAtkRange(6);
+
                     self.player.onStartPathing(function(path) {
                         var i = path.length - 1,
                             x =  path[i][0],
@@ -1051,6 +1057,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
                             var dest = self.map.getDoorDestination(x, y);
+                            //self.client.sendDoor(x, y, dest.x, dest.y, dest.orientation);
 
                             self.player.setGridPosition(dest.x, dest.y);
                             self.player.nextGridX = dest.x;
@@ -1431,8 +1438,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 self.removeItem(entity);
                             } else if(entity instanceof Character) {
                                 entity.forEachAttacker(function(attacker) {
-                                    if(attacker.canReachTarget())
+                                    if(attacker.canReachTarget()) {
+                                        attacker.stop();
                                         attacker.hit();
+                                    }
 
                                 });
                                 entity.die();
@@ -1539,6 +1548,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         var np = new Projectile(id, projectiletype);
 
+                        self.clickToFire = null;
+
                         np.setPosition(sx * 16, sy * 16);
                         np.setTarget(x * 16, y * 16); // (sets angle)
 
@@ -1549,31 +1560,31 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if (projectiletype == Types.Projectiles.FIREBALL) {
                             np.setSprite(self.sprites["projectile-fireball"]);
                             np.setAnimation("travel", 60,0,null);
-                            np.speed = 0.25;
+                            np.speed = 100;
                         }
 
                         if (projectiletype == Types.Projectiles.ICEBALL) {
                             np.setSprite(self.sprites["projectile-iceball"]);
                             np.setAnimation("travel", 60,0,null);
-                            np.speed = 0.25;
+                            np.speed = 100;
                         }
 
                         if (projectiletype == Types.Projectiles.PINEARROW) {
                             np.setSprite(self.sprites["projectile-pinearrow"]);
                             np.setAnimation("travel", 60,0,null);
-                            np.speed = 0.30;
+                            np.speed = 350;
                         }
 
                         if (projectiletype == Types.Projectiles.BOULDER) {
                             np.setSprite(self.sprites["projectile-boulder"]);
                             np.setAnimation("travel", 60,0,null);
-                            np.speed = 0.15;
+                            np.speed = 100;
                         }
 
                         if (projectiletype == Types.Projectiles.HEALBALL1) {
                             np.setSprite(self.sprites["projectile-none"]);
                             np.setAnimation("travel", 60,0,null);
-                            np.speed = 16 * 8;
+                            np.speed = 100;
                             np.angle = 0; // no vectoring
                         }
 
@@ -1588,14 +1599,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if (projectiletype == Types.Projectiles.TORNADO) {
                             np.setSprite(self.sprites["projectile-tornado"]);
                             np.setAnimation("travel", 60,0,null);
-                            np.speed = 0.15;
+                            np.speed = 85;
                             np.angle = 0; // no vectoring
                         }
 
                         if (projectiletype == Types.Projectiles.TERROR) {
                             np.setSprite(self.sprites["projectile-terror"]);
                             np.setAnimation("travel", 60,0,null);
-                            np.speed = 0.25;
+                            np.speed = 25;
                         }
 
                         np.visible = true;
@@ -1608,17 +1619,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 y: Math.floor(p.ty/16)
                             };
 
-                            if (p.kind == Types.Projectiles.FIREBALL || p.kind == Types.Projectiles.TORNADO ||
-                                p.kind == Types.Projectiles.TERROR || p.kind == Types.Projectiles.ICEBALL ||
-                                p.kind == p.kind == Types.Projectiles.PINEARROW) {
-
-                                if (p.owner == self.playerId)
+                            if (p.owner == self.playerId) {
+                                if (p.kind == Types.Projectiles.FIREBALL || p.kind == Types.Projectiles.TORNADO ||
+                                    p.kind == Types.Projectiles.TERROR || p.kind == Types.Projectiles.ICEBALL)
                                     self.detectCollateral(impactPos.x, impactPos.y, 2, p.kind, projectiletype);
+
+                                if (p.kind == Types.Projectiles.PINEARROW)
+                                    self.detectCollateral(impactPos.x, impactPos.y, 1, p.kind, projectiletype);
                             }
-
-                            if (p.kind == Types.Projectiles.HEALBALL1)
-                                self.detectHeal(impactPos.x,impactPos.y,1,p.kind);
-
 
                             self.renderer.cleanPathing();
                         });
@@ -1633,6 +1641,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.client.onPlayerDamageMob(function(mobId, points, healthPoints, maxHp) {
                         var mob = self.getEntityById(mobId);
+
                         if (isNaN(points)) {
                             self.infoManager.addDamageInfo("MISS", mob.x, mob.y - 15, "inflicted");
                         }
@@ -1654,10 +1663,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.player.level = level;
                         self.player.experience += exp;
                         self.updateExpBar();
-                        var expInThisLevel = self.player.experience - Types.expForLevel[self.player.level - 1];
-                        var expForLevelUp = Types.expForLevel[self.player.level] - Types.expForLevel[self.player.level - 1];
-                        var expPercentThisLevel = (100 * expInThisLevel / expForLevelUp);
-
+                        self.player.stop();
                     });
 
                     self.client.onWanted(function (id, isWanted) {
@@ -1782,6 +1788,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 }
                             } else if(ItemTypes.isWeapon(itemKind) || ItemTypes.isArcherWeapon(itemKind)) {
                                 player.switchWeapon(itemName, self.sprites[itemName]);
+                                if (ItemTypes.isArcherArmor(itemKind))
+                                    player.setAtkRange(6);
                                 if(self.player.id === player.id){
                                     self.audioManager.playSound("loot");
                                 }
@@ -2012,17 +2020,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.client.onSkillInstall(function(datas) {
-                        //self.player.setSkill(datas[0], datas[1]);
                         self.player.skillHandler.install(datas[0], datas[1]);
                     });
 
                     self.client.onSkillLoad(function(datas) {
-                        var skillIndex = datas[0];
-                        var skillName = datas[1];
-                        var skillLevel = datas[2];
-                        var skillData = [skillIndex, skillName, skillLevel];
-
-                        log.info("SkillData: " + skillData);
+                        var skillIndex = datas[0],
+                            skillName = datas[1],
+                            skillLevel = datas[2];
 
                         self.player.setSkill(skillName, skillLevel, skillIndex);
                         self.characterDialog.frame.pages[1].setSkill(skillName, skillLevel);
@@ -2348,15 +2352,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 var andPlayers = this.pvpFlag;
 
                 this.forEachMob(function(mob) {
-                    if (mob.gridX >= x-range){
-                        if (mob.gridX <= x+range){
-                            if (mob.gridY >= y-range){
-                                if (mob.gridY <= y+range){
-                                    self.applyCollateral(player, mob, x, y, kind, projectileType);
-                                }
-                            }
-                        }
-                    }
+                    if (mob.gridX >= x - range && mob.gridX <= x + range && mob.gridY >= y - range && mob.gridY <= y + range)
+                        self.applyCollateral(player, mob, x, y, kind, projectileType);
+
                 }, andPlayers);
 
             },
@@ -2369,6 +2367,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 //player.hit(mob);
                 this.client.sendSpellHit(mob, projectileType);
 
+                return;
             },
 
             /**
@@ -2836,7 +2835,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if (this.clickToFire !== null && this.started) {
                     this.client.sendCastSpell(this.clickToFire, this.player.x + 8, this.player.y + 8, pos.x * 16 + 8, pos.y * 16 + 8);
-                    this.clickToFire = null;
                     return;
                 }
 
@@ -2849,17 +2847,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     && !this.hoveringPlateauTile) {
                     entity = this.getEntityAt(pos.x, pos.y);
 
-                    if(entity === this.player && (!this.renderer.mobile || !this.renderer.tablet)) {
-                        this.showInventory = ++this.showInventory % 4;
-                        if (this.showInventory == 1)
-                            this.makeConsumablesCircle();
-                        else if (this.showInventory == 2)
-                            this.makeWeaponsCircle();
-                        else if (this.showInventory == 3)
-                            this.makeArmorsCircle();
-                        else
-                            this.activeCircle = null;
-                    }
 
                     if (this.map.isDoor(pos.x,pos.y))
                     {
@@ -2874,9 +2861,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         this.makePlayerGoTo(pos.x, pos.y);
                         return;
                     }
-                    if(entity instanceof Player && entity !== this.player && (!this.player.pvpFlag || !this.pvpFlag) && !this.map.isDoor(entity.gridX,entity.gridY)){
-                        this.playerPopupMenu.click(entity);
-                    } else if((entity instanceof Mob) && !(entity instanceof Pet) || (entity instanceof Player && entity !== this.player && (this.player.pvpFlag && this.pvpFlag))) {
+                    if((entity instanceof Mob) && !(entity instanceof Pet) || (entity instanceof Player && entity !== this.player && (this.player.pvpFlag && this.pvpFlag))) {
                         this.makePlayerAttack(entity);
                     } else if(entity instanceof Item) {
                         this.makePlayerGoToItem(entity);
@@ -3050,11 +3035,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             character.hit();
 
-
                             if(character.id === this.playerId) {
-                                this.client.sendHit(character.target);
-
+                                if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
+                                    self.client.sendCastSpell(3, character.x + 8, character.y + 8, character.target.x + 8, character.target.y + 8);
+                                else
+                                    self.client.sendHit(character.target, self.pClass);
                             }
+
+
 
                             if(character instanceof Player && this.camera.isVisible(character)) {
                                 this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
@@ -3197,8 +3185,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             assignBubbleTo: function(character) {
-
-                log.info("Character: " + character.name);
                 try {
                     var bubble = this.bubbleManager.getBubbleById(character.id);
 
@@ -3594,93 +3580,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     }
                 }
                 this.menu.close();
-            },
-            makeEntitiesCircle: function(inventories, radius, center) {
-                var os = this.renderer.upscaledRendering ? 1 : this.renderer.scale;
-                var slice = 2 * Math.PI / inventories.length;
-                mouseCollide=[];
-                for (var i = 0; i < inventories.length; ++i)
-                {
-                    var angle = slice * i;
-                    var x = ~~(center.x + radius * Math.cos(angle));
-                    var y = ~~(center.y + radius * Math.sin(angle));
-                    var filename = "item-"+ItemTypes.KindData[inventories[i].item].key;
-                    var item = this.sprites[filename];
-
-                    mouseCollide.push({"x": x, "y": y,
-                        "w": item.width * os * 1.1,
-                        "h": item.height * os * 1.1,
-                        "inv": inventories[i]});
-                }
-                return mouseCollide;
-            },
-            makeConsumablesCircle: function()
-            {
-                if (!this.player || jQuery.isEmptyObject(ItemTypes.KindData))
-                    return;
-
-                var consumables = [];
-                for (var i=0; i < 6; ++i)
-                {
-                    var item = this.inventoryHandler.inventory[i];
-                    if (!item) continue;
-                    consumables.push({"item": item, "index": i});
-                }
-                var radius = 36 * this.renderer.scale;
-                var point = {"x": this.renderer.canvas.width / 2,"y": this.renderer.canvas.height / 2};
-                this.activeCircle = this.makeEntitiesCircle(consumables, radius, point);
-            },
-
-            makeWeaponsCircle: function ()
-            {
-                if (!this.player || jQuery.isEmptyObject(ItemTypes.KindData))
-                    return;
-
-                var weapons = [];
-                for (var i=6; i < 24; ++i)
-                {
-                    var item = this.inventoryHandler.inventory[i];
-                    if (!item) continue;
-                    //log.info("item.kind="+item.kind);
-                    if (ItemTypes.isWeapon(item) || ItemTypes.isArcherWeapon(item))
-                        weapons.push({"item": item, "index": i});
-                }
-                var radius = 48 * this.renderer.scale;
-                var point = {"x": this.renderer.canvas.width / 2,"y": this.renderer.canvas.height / 2};
-                this.activeCircle = this.makeEntitiesCircle(weapons, radius, point);
-            },
-
-            makeArmorsCircle: function ()
-            {
-                if (!this.player || jQuery.isEmptyObject(ItemTypes.KindData))
-                    return;
-
-                var armors = [];
-                for (var i=6; i < 24; ++i)
-                {
-                    var item = this.inventoryHandler.inventory[i];
-                    if (!item) continue;
-                    if (ItemTypes.isArmor(item) || ItemTypes.isArcherArmor(item))
-                        armors.push({"item": item, "index": i});
-                }
-                var radius = 48 * this.renderer.scale;
-
-                var point = {"x": this.renderer.canvas.width / 2,"y": this.renderer.canvas.height / 2};
-                this.activeCircle = this.makeEntitiesCircle(armors, radius, point);
-            },
-
-            getCircleSelected: function (x, y) {
-                for (var i = 0; i < this.activeCircle.length; ++i)
-                {
-                    var circleItem = this.activeCircle[i];
-
-                    if (x >= circleItem.x && x <= circleItem.x + circleItem.w &&
-                        y >= circleItem.y && y <= circleItem.y + circleItem.h)
-                    {
-                        return this.activeCircle[i].inv;
-                    }
-                }
-                return null;
             }
         });
 

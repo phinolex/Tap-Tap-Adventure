@@ -487,6 +487,9 @@ footer div  {display:inline-block;}
 
 @media screen and (min-width: 1501px), screen and (min-height: 801px) {
 
+
+
+
     #partyconfirm {
         position: absolute;
         width: 150px;
@@ -672,12 +675,12 @@ footer div  {display:inline-block;}
     #chatbox {
         position: absolute;
         left: 52.75%;
-        bottom: 72.7px;
-        width: 787px;
-        height: 32px;
-        margin-left: -394px;
-        background-image: url('../img/2/main.png');
-        background-position: 0 -596px;
+        bottom: 111px;
+        width: 1180.5px;
+        height: 48px;
+        margin-left: -591px;
+        background-image: url('../img/3/main.png');
+        background-position: 0 -894px;
         display: none;
         zoom: 82%
     }
@@ -685,7 +688,7 @@ footer div  {display:inline-block;}
         display: block;
     }
     #chatbox input {
-        font-size:10px;
+        font-size:25px;
         color:#eee;
         background:none;
         width:90%;
@@ -695,13 +698,13 @@ footer div  {display:inline-block;}
     }
     #chatbox .legend{
         position: absoute;
-        top: -20px;
-        left: 10px;
-        padding: 4px 6px;
+        top: -30px;
+        left: 15px;
+        padding: 6px 9px;
         color: #FFF;
         background: rgba(45,45,45,0.8);
-        z_index: 4;
-        border-radius: 3px 3px 0 0;
+        z_index: 6;
+        border-radius: 4.5px 4.5px 0 0;
         diplay: none;
     }
     #chatbox .legend p{
@@ -759,7 +762,7 @@ footer div  {display:inline-block;}
         font-family:'GraphicPixel';
         color:#e3e3e3;
         position:absolute;
-        width: 276px;
+        width: 600px;
         left: 85%;
         margin-left: -972px;
         top: 60%;
@@ -778,7 +781,7 @@ footer div  {display:inline-block;}
         line-height: 1;
         color: rgba(255,255,255,1);
         font-family:'GraphicPixel'
-    font-size: 16px;
+    font-size: 30px;
 
     }
     #chatLog p .name{
@@ -1353,7 +1356,7 @@ footer div  {display:inline-block;}
         font-family:'GraphicPixel';
         color:#e3e3e3;
         position:absolute;
-        width: 184px;
+        width: 400px;
         left: 85%;
         margin-left: -648px;
         top: 60%;
@@ -1370,7 +1373,7 @@ footer div  {display:inline-block;}
         padding: 0;
         line-height: 1;
         color: rgba(255,255,255,1);
-        font-size: 12px;
+        font-size: 15px;
     }
     #chatLog p .name{
         font-weight: bold;
@@ -1837,10 +1840,10 @@ footer div  {display:inline-block;}
         font-family:'GraphicPixel';
         color:#e3e3e3;
         position:absolute;
-        width: 92px;
+        width: 300px;
         left: 85%;
         margin-left: -324px;
-        top: 60%;
+        top: 58%;
         background: rgba(0, 0, 0, 0);
         padding: 5px;
         overflow-y: hidden;
@@ -1850,13 +1853,12 @@ footer div  {display:inline-block;}
         pointer-events: none;
     }
     #chatLog p{
-        font-size: 6px;
-        margin-bottom: 1.5px;
+        font-family:'GraphicPixel';
+        font-size: 10px;
+        margin-bottom: 1px;
         padding: 0;
         line-height: 1;
         color: rgba(255,255,255,1);
-        font-family:'GraphicPixel'
-        font-size: 4px;
     }
     #chatLog p .name{
         font-weight: bold;

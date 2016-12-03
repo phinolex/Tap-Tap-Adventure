@@ -166,10 +166,15 @@ define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mou
         },
         setWeaponName: function(name) {
             this.weaponName = name;
+            
+            var isArcherWeapon = ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(name));
+            
+            this.hasArcherWeapon = isArcherWeapon;
         },
         hasWeapon: function() {
             return this.weaponName !== null;
         },
+        
         switchArmor: function(armorName, sprite){
             this.setSpriteName(armorName);
             this.setSprite(sprite);
@@ -329,13 +334,8 @@ define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mou
             }
             else if (pClass == Types.PlayerClass.ARCHER)
             {
-                this.setAtkRange(7);
+                this.setAtkRange(4);
             }
-            /*else if (pClass == Types.PlayerClass.MAGE)
-             {
-             this.setAtkRange(10);
-             }*/
-
         },
 
         setPendant: function(name) {

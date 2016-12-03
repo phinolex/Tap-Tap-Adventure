@@ -1,16 +1,18 @@
-var cls = require("./lib/class");
-var SkillData = require("./skilldata.js");
+var cls = require("./lib/class"),
+    SkillData = require("./skilldata.js"),
+    _ = require('underscore');
 
 module.exports = SkillHandler = cls.Class.extend({
     init: function() {
         this.skills = {};
         this.skillSlots = [];
-        for (var index = 0; index < 5; index++)
+
+        for (var indx = 0; indx < 5; indx++)
             this.skillSlots.push('');
     },
 
     clear: function() {
-        for (var index = 4; index >= 0; index--)
+        for (var index = 4; index >=0; index--)
             delete this.skillSlots[index];
 
         delete this.skillSlots;
@@ -20,12 +22,32 @@ module.exports = SkillHandler = cls.Class.extend({
         this.skillSlots = [];
     },
 
+    getSkillByName: function(name) {
+        for (var s in this.skills) {
+            if (this.skills.hasOwnProperty(s)) {
+                if (s == name)
+                    return s;
+            }
+        }
+        return null;
+    },
+
     getLevel: function(name) {
         return this.skills[name] ? this.skills[name] : 0;
     },
 
     add: function(name, level) {
-        this.skills[name] = level;
+        if (this.hasSkill(name)) {
+            var skillLevel = this.getLevel(name);
+
+            if (level > skillLevel) {
+                delete this.skills[name];
+                this.skills[name] = level;
+            }
+
+        } else
+            this.skills[name] = level;
+
     },
 
     install: function(index, name) {
@@ -33,68 +55,36 @@ module.exports = SkillHandler = cls.Class.extend({
     },
 
     getIndexByName: function(name) {
-        var i = 0;
-        for (var skillName in this.skills) {
-            if (skillName == name)
-                return i;
+        var index = 0;
 
-            i++;
+        for (var skill in this.skills) {
+            if (this.skills.hasOwnProperty(skill)) {
+                if (skill == name)
+                    return index;
+            }
+
+            index++;
         }
-        log.info("Index: " + i);
 
         return 0;
     },
 
-    installSkills: function(player) {
-        player.skills = {};
-
-        for (var index = 0; index < SkillData.Skills; index++) {
-            var skill = SkillData.Skills[index];
-            if (player.pClass == skill.class) {
-                if (player.level >= skill.levelRequirement) {
-                    var skillLevel = ~~(player.level / skill.levelRequirement);
-                    if (skillLevel > 4)
-                        skillLevel = 4;
-
-                    player.skills[index] = new Skill(player, id, skillLevel);
-
-                    if (skill.type == "passive") {
-                        switch(skill.skillType) {
-                            case "attack":
-                                player.skillPassiveAttack = skill.levels[skillLevel - 1];
-                                break;
-
-                            case "defense":
-                                player.skillPassiveDefense = skill.levels[skillLevel - 1];
-                                break;
-                        }
-                    }
-                }
-            }
+    hasSkill: function(name) {
+        for (var skill in this.skills) {
+            if (skill == name)
+                return true;
         }
-    }
 
-});
-
-Skill = cls.Class.extend({
-
-    init: function(player, skillIndex, skillLevel) {
-        this.player = player;
-        this.skillData = SkillData.Skills[skillIndex];
-        this.skillIndex = skillIndex;
-        this.skillLevel = skillLevel;
-
-        if (this.skillData.recharge > 0)
-            this.skillCooldown = new Timer(this.skillData.recharge);
+        return false;
     },
 
-    getSkill: function() {
-        return this.skillData;
-    },
+    remove: function(name) {
+        log.info("Before: " + this.skills);
 
-    isReady: function() {
-        time = new Date().getTime();
-        return this.skillCooldown.isOver(time);
+        this.skills = _.reject(this.skills, function(el) {
+            return el == name;
+        });
+
+        log.info("After: " + this.skills);
     }
-
 });

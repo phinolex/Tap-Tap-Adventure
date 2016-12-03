@@ -38,6 +38,7 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             // Health
             this.hitPoints = 0;
             this.maxHitPoints = 0;
+            this.hasArcherWeapon = false;
 
             // Modes
             this.isDead = false;
@@ -136,7 +137,7 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         hit: function(orientation) {
             this.setOrientation(orientation);
             this.animate("atk", this.atkSpeed, 1);
-            //this.stop();
+            this.stop();
         },
 
         walk: function(orientation) {
@@ -374,13 +375,11 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         follow: function(entity, engagingPC) {
             this.engagingPC = engagingPC === undefined ? false : engagingPC
             if (entity && ((this.engagingPC && this.kind === 1) || (this.engagingPC == false && entity.kind != 1) || (this.kind !== 1))) {
-                //log.info("pClass="+this.pClass);
-
-                if (typeof this.pClass !== 'undefined' && (this.pClass==Types.PlayerClass.ARCHER || this.pClass==Types.PlayerClass.MAGE))
-                {
-                    log.info("Archer or mage ranged attack");
+                if (this.hasArcherWeapon && this.canReachTarget()) {
+                    this.stop();
                     return;
                 }
+
                 this.followingMode = true;
                 this.moveTo_(entity.gridX, entity.gridY);
             }
@@ -391,9 +390,8 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
          * Stops a moving character.
          */
         stop: function() {
-            if(this.isMoving()) {
+            if(this.isMoving())
                 this.interrupted = true;
-            }
         },
 
         /**
@@ -607,21 +605,22 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
          *
          */
         canAttack: function(time) {
-            if(!this.isDead && this.canReachTarget() && this.attackCooldown.isOver(time)) {
+            if(!this.isDead && this.canReachTarget() && this.attackCooldown.isOver(time))
                 return true;
-            }
+            
             return false;
         },
 
         canReachTarget: function() {
-            if(this.attackRange > 1){
-                if(this.hasTarget() && this.getDistanceToEntity(this.target) < this.attackRange)
+            if (this.hasArcherWeapon) {
+                if (this.hasTarget() && this.getDistanceToEntity(this.target) < 7)
                     return true;
-
             } else {
+                log.info("No archer");
                 if(this.hasTarget() && this.isAdjacentNonDiagonal(this.target))
                     return true;
             }
+
             return false;
         },
 

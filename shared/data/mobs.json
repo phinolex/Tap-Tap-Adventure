@@ -6,7 +6,7 @@
     "hp": 10,
     "armor": 0,
     "weapon": 0,
-    "xp": 2,
+    "xp": 4,
     "level": 1,
     "aggroRange": 1,
     "attackRange": 1,
@@ -23,7 +23,7 @@
     "hp": 20,
     "armor": 0,
     "weapon": 1,
-    "xp": 5,
+    "xp": 11,
     "level": 3,
     "aggroRange": 1,
     "attackRange": 1,
@@ -40,8 +40,8 @@
     "hp": 35,
     "armor": 0,
     "weapon": 0,
-    "xp": 5,
-    "level": 3,
+    "xp": 7,
+    "level": 2,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": false,
@@ -280,7 +280,7 @@
     "armor": 10,
     "weapon": 3,
     "xp": 150,
-    "level": 35,
+    "level": 13,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -768,7 +768,7 @@
   "IceGolem": {
     "name": "Ice Golem",
     "kind": 126,
-    "drops": {"bluesword": 450, "crystalarmor": 20, "crystalarcherarmor": 20, "daywalker": 10, "gold": 500},
+    "drops": {"bluesword": 450, "crystalarmor": 20, "crystalarcherarmor": 20, "gold": 500},
     "hp": 700,
     "armor": 9,
     "weapon": 5,
@@ -785,7 +785,7 @@
   "IceKnight": {
     "name": "Ice Knight",
     "kind": 151,
-    "drops": {"gold": 1000},
+    "drops": {"gold": 700, "icerose": 300},
     "hp": 1000,
     "armor": 30,
     "weapon": 15,
@@ -1199,7 +1199,7 @@
     "armor": 1,
     "weapon": 1,
     "xp": 60,
-    "level": 30,
+    "level": 11,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -1551,7 +1551,7 @@
   "WhiteTiger": {
     "name": "Tiger",
     "kind": 275,
-    "drops": {"gold": 1000},
+    "drops": {"tigerarmor": 500, "gold": 500},
     "hp": 3350,
     "armor": 1,
     "weapon": 15,
@@ -1568,12 +1568,12 @@
   "Wolf": {
     "name": "Wolf",
     "kind": 109,
-    "drops": {"gold": 1000},
+    "drops": {"wolfarmor": 100, "wolfarcherarmor": 200, "gold": 700},
     "hp": 650,
-    "armor": 1,
+    "armor": 15,
     "weapon": 10,
-    "xp": 50,
-    "level": 37,
+    "xp": 200,
+    "level": 74,
     "aggroRange": 1,
     "attackRange": 1,
     "isAggressive": true,
@@ -1708,9 +1708,9 @@
     "spawnDelay": 75000
   },
 
-  "WhiteGuardian": {
-    "name": "Sky Guardian",
-    "kind": 1006,
+  "WindGuardian": {
+    "name": "Wind Guardian",
+    "kind": 1111,
     "drops": {"gold": 1000},
     "hp": 15000,
     "armor": 40,
@@ -1726,7 +1726,7 @@
   },
 
   "LightningGuardian": {
-    "name": "Lighting Guardian",
+    "name": "Lightning Guardian",
     "kind": 195,
     "drops": {"magicspear": 25, "essentialrage": 50, "marblependant": 25, "bridalmask": 50, "gold": 850},
     "hp": 4500,
@@ -1771,7 +1771,19 @@
 
   "MiniSeaDragon": {
     "name": "Mini Sea Dragon",
-    "kind": 202
+    "kind": 202,
+    "drops": {"miniseadragonarmor": 300, "daywalker": 300, "gold": 400},
+    "hp": 100,
+    "armor": 5,
+    "weapon": 10,
+    "xp": 135,
+    "level": 11,
+    "aggroRange": 4,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1500,
+    "moveSpeed": 600,
+    "spawnDelay": 95000
   },
 
   "MoleKing": {
@@ -1801,7 +1813,19 @@
 
   "ForestDragon": {
     "name": "Gragon",
-    "kind": 145
+    "kind": 145,
+    "drops": {"dragonarmor": 25, "bamboospear": 25, "gold": 900, "marblependant": 25, "essentialrage": 25},
+    "hp": 25000,
+    "armor": 150,
+    "weapon": 120,
+    "xp": 30000,
+    "level": 143,
+    "aggroRange": 2,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 800,
+    "spawnDelay": 95000
   },
 
   "Eliminator": {
@@ -1811,17 +1835,53 @@
 
   "Enel": {
     "name": "Lucendi",
-    "kind": 197
+    "kind": 197,
+    "drops": {"redenelbow": 25, "enelarmor": 25, "eneltrident": 50, "marblependant": 100, "gold": 800},
+    "hp": 25000,
+    "armor": 150,
+    "weapon": 120,
+    "xp": 30000,
+    "level": 256,
+    "aggroRange": 2,
+    "attackRange": 2,
+    "isAggressive": true,
+    "attackRate": 1100,
+    "moveSpeed": 800,
+    "spawnDelay": 95000
   },
 
   "SeaDragon": {
     "name": "Sea Dragon",
-    "kind": 189
+    "kind": 189,
+    "drops": {"seadragonarmor": 100, "seahorsebow": 300, "gold": 400},
+    "hp": 100,
+    "armor": 5,
+    "weapon": 10,
+    "xp": 135,
+    "level": 11,
+    "aggroRange": 4,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1500,
+    "moveSpeed": 600,
+    "spawnDelay": 95000
   },
 
   "MiniDragon": {
     "name": "Mini Dragon",
-    "kind": 201
+    "kind": 201,
+    "drops": {"dragonarmor": 300, "spiritring": 200, "gold": 400},
+    "hp": 100,
+    "armor": 5,
+    "weapon": 10,
+    "xp": 135,
+    "level": 11,
+    "aggroRange": 4,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1500,
+    "moveSpeed": 600,
+    "spawnDelay": 95000
   },
 
   "JirisanMoonBear": {
@@ -1841,7 +1901,19 @@
 
   "PirateCaptain": {
     "name": "Pirate Captain",
-    "kind": 122
+    "kind": 122,
+    "drops": {"scimitar": 100, "piratearcherarmor": 100, "bluepiratearmor": 100, "marblependant": 200, "gold": 500},
+    "hp": 100,
+    "armor": 5,
+    "weapon": 10,
+    "xp": 200,
+    "level": 21,
+    "aggroRange": 4,
+    "attackRange": 1,
+    "isAggressive": true,
+    "attackRate": 1500,
+    "moveSpeed": 600,
+    "spawnDelay": 95000
   },
 
   "PirateKing": {
@@ -1895,13 +1967,25 @@
 
   "SkyDinosaur": {
     "name": "Fulgur",
-    "kind": 311
+    "kind": 311,
+    "drops": {"conferencecall": 25, "essentialrage": 100, "gold": 875},
+    "hp": 50000,
+    "armor": 400,
+    "weapon": 200,
+    "xp": 52500,
+    "level": 435,
+    "aggroRange": 4,
+    "attackRange": 2,
+    "isAggressive": true,
+    "attackRate": 1800,
+    "moveSpeed": 500,
+    "spawnDelay": 95000
   },
 
   "Squid": {
     "name": "Great Squid",
     "kind": 214,
-    "drops": {"searage": 25, "frostarmor": 25, "bluewingarcherarmor": 300, "gold": 650},
+    "drops": {"searage": 10, "frostarmor": 25, "bluewingarcherarmor": 315, "gold": 650},
     "hp": 2800,
     "armor": 45,
     "weapon": 30,

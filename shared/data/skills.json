@@ -9,7 +9,7 @@
 	    "levels": [
 	        5, 10, 15, 20	    
 	    ],
-        "manaRequirements": [
+        "manaReq": [
             10, 20, 35, 50
         ],
         "iconOffset": [
@@ -31,7 +31,7 @@
 	    "levels": [
 	        25, 50, 75, 100	    
 	    ],
-        "manaRequirements": [
+        "manaReq": [
           15, 30, 50, 75
         ],
 	    "iconOffset": [
@@ -52,7 +52,7 @@
 	    "levels": [
 	        5, 10, 15, 20	    
 	    ],
-        "manaRequirements": [
+        "manaReq": [
           10, 25, 50, 90
         ],
       "iconOffset": [
@@ -72,7 +72,7 @@
 	    "levels": [
 	        25, 50, 100, 200	    
 	    ],
-        "manaRequirements": [
+        "manaReq": [
           25, 55, 95, 120
         ],
       "iconOffset": [

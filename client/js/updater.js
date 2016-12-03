@@ -20,6 +20,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             this.updateKeyboardMovement();
             this.updateInfos();
             this.updateProjectiles();
+            this.lastUpdate = new Date();
         },
 
         updateProjectiles: function() {

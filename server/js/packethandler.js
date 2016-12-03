@@ -219,11 +219,12 @@ module.exports = PacketHandler = Class.extend({
                 case Types.Messages.CAST:
                     self.handleCast(message);
                     break;
-
                 case Types.Messages.SPELLHIT:
                     self.handleSpellHit(message);
                     break;
-
+                case Types.Messages.DOOR:
+                    self.handleDoor(message);
+                    break;
                 default:
                     if (self.message_callback)
                         self.player.message_callback(message);
@@ -394,125 +395,174 @@ module.exports = PacketHandler = Class.extend({
         if (self.verifyMessage(sanitizedMessage)) {
             var text = sanitizedMessage.substr(0, 256),
                 command = text.split(" ");
-/*
-            if (command[0] == "/makeadmin" && self.player.name == "Tachyon") {
-                self.player.rights = 2;
-                self.player.redisPool.setRights(self.player.name, 2);
-            }*/
 
-            switch(command[0]) {
-                case "/teleport":
-                    if (command.length < 3) {
-                        self.sendGUIMessage("Invalid command syntax");
-                        return;
-                    }
+            if (command[0] == "/teleport") {
+                if (command.length < 3) {
+                    self.sendGUIMessage("Invalid command syntax");
+                    return;
+                }
 
-                    self.player.movePlayer(command[1], command[2]);
-                    break;
-
-                case "/attackers":
-                    log.info("Attackers: " + self.player.attackers.kind);
-                    break;
-
-                case "/interface":
-                    if (command.length < 2) {
-                        self.sendGUIMessage("Invalid command syntax.");
-                        return;
-                    }
-
-                    self.server.pushToPlayer(self.player, new Messages.Interface(command[1]));
-                    break;
-
-                case "/players":
-
-                    for (var player in self.server.players) {
-                        if (self.server.players.hasOwnProperty(player))
-                            log.info("Player: " + player.name);
-                    }
-                    break;
-
-                case "/addskill":
-                    if (command.length < 3) {
-                        self.sendGUIMessage("Invalid command syntax.");
-                        return;
-                    }
-
-                    var skillName = command[1];
-                    var skillLevel = command[2];
-
-                    self.player.skillHandler.add(skillName, skillLevel);
-                    var index = self.player.skillHandler.getIndexByName(skillName);
-
-                    self.redisPool.handleSkills(self.player, index, skillName, skillLevel);
-                    self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
-                    break;
-
-
-                case "/addattack":
-                    var sName = "Deadly Attack",
-                        sLevel = 2;
-
-                    self.player.skillHandler.add(sName, sLevel);
-                    var index = self.player.skillHandler.getIndexByName(sName);
-
-                    self.redisPool.handleSkills(self.player, index, sName, sLevel);
-                    self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, sName, sLevel));
-                    break;
-
-                case "/addattack2":
-                    var sName = "Whirlwind Attack",
-                        sLevel = 4;
-
-                    self.player.skillHandler.add(sName, sLevel);
-                    var index = self.player.skillHandler.getIndexByName(sName);
-
-                    self.redisPool.handleSkills(self.player, index, sName, sLevel);
-                    self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, sName, sLevel));
-                    break;
-
-                case "/addpower":
-                    var sName = "Power Gain",
-                        sLevel = 1;
-
-                    self.player.skillHandler.add(sName, sLevel);
-                    var index = self.player.skillHandler.getIndexByName(sName);
-
-                    self.redisPool.handleSkills(self.player, index, sName, sLevel);
-                    self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, sName, sLevel));
-                    break;
-
-                case "/spawn":
-                    if (command.length < 2) {
-                        self.sendGUIMessage("Invalid command syntax.");
-                        return;
-                    }
-                    var itemKind = command[1];
-                    try {
-                        self.player.inventory.putInventory(itemKind, 1);
-                    } catch (e) {
-                        self.sendGUIMessage("Invalid item Id.");
-                    }
-
-                    break;
-
-                case "/forcespell":
-                    if (command.length < 2) {
-                        self.sendGUIMessage("Invalid command syntax.");
-                        return;
-                    }
-
-                    var spellType = command[1];
-
-                    if (spellType)
-                        self.server.pushToPlayer(self.player, new Messages.ForceCast(spellType));
-
-                    break;
-
+                self.player.movePlayer(command[1], command[2]);
+                return;
             }
-            if ((new Date().getTime()) > self.player.chatBanEndTime)
-                self.broadcastToZone(new Messages.Chat(self.player, text), false);
-            else
-                self.sendGUIMessage("You are currently muted.");
+
+            if (command[0] == "/addskill") {
+                if (command.length < 3) {
+                    self.sendGUIMessage("Invalid command syntax.");
+                    return;
+                }
+
+                var skillName = command[1];
+                var skillLevel = command[2];
+
+                self.player.skillHandler.add(skillName, skillLevel);
+                var index = self.player.skillHandler.getIndexByName(skillName);
+
+                self.redisPool.handleSkills(self.player, index, skillName, skillLevel);
+                self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
+            }
+
+            if (command[0] == "/finishachievement") {
+                var achievementId = command[1];
+                
+                self.player.finishAchievement(achievementId);
+            }
+            
+            
+            if (self.player.rights == 2) {
+                switch(command[0]) {
+                    case "/finishall":
+
+                        self.player.finishAllAchievements();
+                        break;
+
+                    case "/maxmana":
+                        var p = self.player;
+                        self.player.mana = self.player.maxMana;
+
+                        self.server.pushToPlayer(p, new Messages.PlayerPoints(p.maxHitPoints, p.maxMana, p.hitPoints, p.mana), false);
+                        break;
+
+                    case "/teleport":
+                        if (command.length < 3) {
+                            self.sendGUIMessage("Invalid command syntax");
+                            return;
+                        }
+
+                        self.player.movePlayer(command[1], command[2]);
+                        break;
+
+                    case "/attackers":
+                        log.info("Attackers: " + self.player.attackers.kind);
+                        break;
+
+                    case "/interface":
+                        if (command.length < 2) {
+                            self.sendGUIMessage("Invalid command syntax.");
+                            return;
+                        }
+
+                        self.server.pushToPlayer(self.player, new Messages.Interface(command[1]));
+                        break;
+
+                    case "/players":
+
+                        for (var player in self.server.players) {
+                            if (self.server.players.hasOwnProperty(player))
+                                log.info("Player: " + player.name);
+                        }
+                        break;
+
+                    case "/addskill":
+                        if (command.length < 3) {
+                            self.sendGUIMessage("Invalid command syntax.");
+                            return;
+                        }
+
+                        var skillName = command[1];
+                        var skillLevel = command[2];
+
+                        self.player.skillHandler.add(skillName, skillLevel);
+                        var index = self.player.skillHandler.getIndexByName(skillName);
+
+                        self.redisPool.handleSkills(self.player, index, skillName, skillLevel);
+                        self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
+                        break;
+
+
+                    case "/addattack":
+                        var sName = "Deadly Attack",
+                            sLevel = 2;
+
+                        self.player.skillHandler.add(sName, sLevel);
+                        var index = self.player.skillHandler.getIndexByName(sName);
+
+                        self.redisPool.handleSkills(self.player, index, sName, sLevel);
+                        self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, sName, sLevel));
+                        break;
+
+                    case "/addattack2":
+                        var sName = "Whirlwind Attack",
+                            sLevel = 4;
+
+                        self.player.skillHandler.add(sName, sLevel);
+                        var index = self.player.skillHandler.getIndexByName(sName);
+
+                        self.redisPool.handleSkills(self.player, index, sName, sLevel);
+                        self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, sName, sLevel));
+                        break;
+
+                    case "/addpower":
+                        var sName = "Power Gain",
+                            sLevel = 1;
+
+                        self.player.skillHandler.add(sName, sLevel);
+                        var index = self.player.skillHandler.getIndexByName(sName);
+
+                        self.redisPool.handleSkills(self.player, index, sName, sLevel);
+                        self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, sName, sLevel));
+                        break;
+
+                    case "/spawn":
+                        if (command.length < 2) {
+                            self.sendGUIMessage("Invalid command syntax.");
+                            return;
+                        }
+                        var itemKind = command[1];
+                        try {
+                            self.player.inventory.putInventory(itemKind, 1);
+                        } catch (e) {
+                            self.sendGUIMessage("Invalid item Id.");
+                        }
+
+                        break;
+
+                    case "/forcespell":
+                        if (command.length < 2) {
+                            self.sendGUIMessage("Invalid command syntax.");
+                            return;
+                        }
+
+                        var spellType = command[1];
+
+                        if (spellType)
+                            self.server.pushToPlayer(self.player, new Messages.ForceCast(spellType));
+
+                        break;
+
+                    default:
+                        if ((new Date().getTime()) > self.player.chatBanEndTime)
+                            self.broadcastToZone(new Messages.Chat(self.player, text), false);
+                        else
+                            self.sendGUIMessage("You are currently muted.");
+                }
+            } else {
+                if ((new Date().getTime()) > self.player.chatBanEndTime)
+                    self.broadcastToZone(new Messages.Chat(self.player, text), false);
+                else
+                    self.sendGUIMessage("You are currently muted.");
+            }
+
         }
     },
 
@@ -719,9 +769,9 @@ module.exports = PacketHandler = Class.extend({
             id = message[1],
             x = message[2],
             y = message[3];
-/*
-        if (id !== self.player.id || !self.server.isValidPosition(x, y))
-            return;*/
+        /*
+         if (id !== self.player.id || !self.server.isValidPosition(x, y))
+         return;*/
 
         self.player.setPosition(x, y);
         self.player.movePlayer(x, y);
@@ -956,6 +1006,17 @@ module.exports = PacketHandler = Class.extend({
         }
     },
 
+    handleDoor: function(message) {
+        var doorX = message[1],
+            doorY = message[2],
+            toX = message[3],
+            toY = message[4],
+            orientation = message[5];
+
+
+
+    },
+
     handleHit: function(message) {
         this.handleHitEntity(this.player, message[1]);
     },
@@ -1088,10 +1149,10 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleUpdate: function(message) {
-          var self = this,
-              id = message[1],
-              x = message[2],
-              y = message[3];
+        var self = this,
+            id = message[1],
+            x = message[2],
+            y = message[3];
 
         if (self.player.id != id)
             return;
@@ -1138,58 +1199,65 @@ module.exports = PacketHandler = Class.extend({
             x = Math.floor(message[4] / 16),
             y = Math.floor(message[5] / 16);
 
-        //self.player.mana -= 15;
         var p = self.player;
 
-        log.info(projectile + " " + self.player.id + " " + sx + " " + sy + " " + x + " " + y);
+        var projectileId = '' + Utils.randomInt(0, projectile) + Utils.randomInt(0, sx) + Utils.randomInt(0, x) + Utils.randomInt(0, sy) + Utils.randomInt(0, y);
 
-        var projectileId = '' + projectile + sx + x + sy + y;
+        log.info("ProjectileId: "+ projectileId);
 
-        self.server.pushToPlayer(self.player, new Messages.Projectile(projectileId, projectile, sx, sy, x, y, self.player.id));
+        self.broadcast(new Messages.Projectile(projectileId, projectile, sx, sy, x, y, self.player.id), false);
+
 
         switch (projectile) {
-            case 4:
-                var skill4Level = self.player.skillHandler.getLevel('Whirlwind Attack');
-                log.info("Whirlwind Attack level: " + skill4Level);
-                var manaReq = SkillData.SkillNames["Whirlwind Attack"].manaReq[skill4Level];
-
-                self.player.mana -= manaReq;
-                break;
-
             case 1:
                 var skill1Level = self.player.skillHandler.getLevel("Deadly Attack");
-                log.info("Deadly Attack level: " + skill1Level);
-                var manaReq = SkillData.SkillNames["Deadly Attack"].manaReq[skill1Level];
 
-                self.player.mana -= manaReq;
+                self.player.mana -= SkillData.SkillNames["Deadly Attack"].manaReq[skill1Level - 1];
                 break;
+
+            case 4:
+                var skill4Level = self.player.skillHandler.getLevel('Whirlwind Attack');
+
+                self.player.mana -= SkillData.SkillNames["Whirlwind Attack"].manaReq[skill4Level - 1];
+                break;
+
+            default:
+                return;
         }
 
-        self.server.pushToPlayer(p, new Messages.PlayerPoints(p.maxHitPoints, p.maxMana, p.hitPoints, p.mana));
+        if (self.player.mana < 0 || isNaN(self.player.mana))
+            self.player.mana = 0;
 
+
+        self.server.pushToPlayer(p, new Messages.PlayerPoints(p.maxHitPoints, p.maxMana, p.hitPoints, p.mana), false);
     },
 
     handleSkill: function(message) {
         var self = this,
-            type = message[1],
+            value = message[1],
             targetId = message[2],
             p = this.player,
-            skillHandler = p.skillHandler;
+            skillHandler = p.skillHandler,
+            skill;
 
+        log.info("Received Skill Data: " + value);
+
+        if (typeof value != 'string')
+            skill = skillHandler.skillSlots[value - 1];
+        else
+            skill = value;
 
         if (p.getActiveSkill() != 0)
             return;
 
-        var skill = skillHandler.skillSlots[type - 1];
-
         if (targetId)
-            var target = self.server.getEntityByid(targetId);
+            var target = self.server.getEntityById(targetId);
 
         var skillLevel = skillHandler.getLevel(skill),
             mana = SkillData.SkillNames[skill].manaReq[skillLevel],
             originalData = [50, 150, 100, 450, 1000];
 
-
+        
         switch(skill) {
             case "Run":
                 var runData = [50, 90, 80, 450, 1000];
@@ -1232,90 +1300,6 @@ module.exports = PacketHandler = Class.extend({
 
 
         self.server.pushToPlayer(p, new Messages.PlayerPoints(p.maxHitPoints, p.maxMana, p.hitPoints, p.mana));
-
-        /*
-
-
-         /**
-         * Messages.PlayerPoints = Message.extend({
-         init: function(maxHitPoints, maxMana, hp, mp) {
-         this.maxHitPoints = maxHitPoints;
-         this.maxMana = maxMana;
-         this.hitPoints = hp;
-         this.mana = mp
-         },
-         * @param message
-
-        if (type == "invincible")
-        {
-            var duration = skill.skillData.duration[level-1];
-            self.player.isInvincible = true;
-            setTimeout(function () {
-                self.player.isInvincible = false;
-            }, duration * 1000);
-        }
-
-        if (type == "defence")
-        {
-            var multiplier = 1 + (skill.skillData.levels[level-1] / 100);
-            self.player.skillPassiveDefense *= multiplier;
-            setTimeout(function() {
-                self.player.skillPassiveDefense /= multiplier;
-            }, skill.skillData.duration * 1000);
-        }
-
-        if (type == "attack")
-        {
-            var multiplier = 1 + (skill.skillData.levels[level-1] / 100);
-            self.player.skillPassiveAttack *= multiplier;
-            setTimeout(function () {
-                self.player.skillPassiveAttack /= multiplier;
-            },skill.skillData.duration * 1000);
-        }
-
-        if (type == "haste-attack")
-        {
-            multiplier = 1 + (skill.skillData.levels[level-1] / 100);
-            self.player.attackedTime.duration /= multiplier;
-            setTimeout(function () {
-                self.player.attackedTime.duration *= multiplier;
-            }, skill.skillData.duration * 1000);
-        }
-
-        if (target && type == "damage")
-        {
-            self.player.skillAttack = 1 + (skill.skillData.levels[level-1] / 100);
-            if (skill.skillData.aoe)
-                self.player.skillAoe = skill.skillData.aoe;
-        }
-
-        if (target && type == "slow")
-        {
-            var multiplier = 1 + (skill.skillData.levels[level-1] / 100);
-            target.attackCooldown.duration *= multiplier;
-            target.moveCooldown.duration *= multiplier;
-            setTimeout(function () {
-                target.attackCooldown.duration /= multiplier;
-                target.moveCooldown.duration /= multiplier;
-            },skill.skillData.duration * 1000);
-        }
-
-        if (target && type == "stun")
-        {
-            var duration = skill.skillData.duration[level-1];
-            target.isStunned = true;
-            setTimeout(function () {
-                target.isStunned = false;
-            }, duration * 1000);
-        }
-
-        if (target && type == "provoke")
-        {
-            var hateScore = skill.skillData.levels[level-1];
-            self.player.server.handleMobHate(target.id, self.player.id, hateScore);
-            if (skill.skillData.aoe)
-                self.player.skillAoe = skill.skillData.aoe;
-        }*/
     },
 
     handleHurt: function(mob){ // 9
@@ -1422,6 +1406,7 @@ module.exports = PacketHandler = Class.extend({
                 var skillName = skillNames[index];
                 if (!skillName)
                     break;
+
                 self.player.skillHandler.install(index, skillName);
                 self.server.pushToPlayer(self.player, new Messages.SkillInstall(index, skillName));
 
@@ -1648,8 +1633,7 @@ module.exports = PacketHandler = Class.extend({
                 self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
             }
         }
-
-
+        
     },
 
 

@@ -220,10 +220,10 @@
     "npcId": 287,
     "type": 2,
     "name": "A Farmer's Job",
-    "desc": "Kill 20 of the wolves attacking the Shepherd's farm.",
+    "desc": "Kill 20 of the snow wolves attacking the Shepherd's farm.",
     "beforeTalk": [
       "Oh you need to help me please!",
-      "Those darn wolves are completely",
+      "Those darn snow wolves are completely",
       "Tearing my farm apart. Please kill",
       "25 of them. I will provide you information",
       "On the missing princess."
@@ -233,7 +233,7 @@
       "Princess is located.. But thanks for the help!"
     ],
 
-    "mobId": [150, 109],
+    "mobId": 150,
     "mobCount": 20,
     "xp": 1450
   },
@@ -523,48 +523,16 @@
     "beforeTalk": [
       "Oh what a tragedy..",
       "What irony this world is full of..",
-      "Our pirate treasure, our marble pendant..",
+      "Our pirate treasure, our emerald pendant..",
       "Has been stolen. Please find it! Those darn",
       "Skeleton pirates have robbed us!"
     ],
     "afterTalk": [
       "I greatly respect your effort brave adventurer!"
     ],
-    "itemId": 372,
+    "itemId": 304,
     "itemCount": 1,
     "xp": 450
-  },
-
-  {
-    "npcId": 335,
-    "type": 2,
-    "desc": "Kill a 45 Dark Skeletons for information.",
-    "beforeTalk": [
-      "Hello adventurer, I see you are looking for the missing princess.",
-      "You see, I will be able to provide information",
-      "But I will require a favour in return.",
-      "You see, there is a skeleton infestation outside",
-      "My kingdom, and not that it's any of my business",
-      "But I want to ensure that freedom is maintained.",
-      "If you kill 45 of them, I will offer you information",
-      "And a skill in return."
-    ],
-
-    "afterTalk": [
-      "Well, I lied, I don't exactly know where she is",
-      "I just really needed someone to help me out.",
-      "I do know one thing though, the sky elves have",
-      "Kidnapped her. I know you can access their lair",
-      "Through a series of interconnected tunnels.",
-      "Which makes you wonder, isn't this what you've",
-      "Been doing in this game all along? Anyway.. Good Luck!"
-    ],
-
-    "mobId": 102,
-    "mobCount": 45,
-    "skillName": "Evasion",
-    "skillLevel": 2,
-    "xp": 5000
   },
 
   {
@@ -656,6 +624,39 @@
     "skillName": "Run",
     "skillLevel": 1,
     "xp": 1600
+  },
+
+
+  {
+    "npcId": 335,
+    "type": 2,
+    "desc": "Kill a 45 Dark Skeletons for information.",
+    "beforeTalk": [
+      "Hello adventurer, I see you are looking for the missing princess.",
+      "You see, I will be able to provide information",
+      "But I will require a favour in return.",
+      "You see, there is a skeleton infestation outside",
+      "My kingdom, and not that it's any of my business",
+      "But I want to ensure that freedom is maintained.",
+      "If you kill 45 of them, I will offer you information",
+      "And a skill in return."
+    ],
+
+    "afterTalk": [
+      "Well, I lied, I don't exactly know where she is",
+      "I just really needed someone to help me out.",
+      "I do know one thing though, the sky elves have",
+      "Kidnapped her. I know you can access their lair",
+      "Through a series of interconnected tunnels.",
+      "Which makes you wonder, isn't this what you've",
+      "Been doing in this game all along? Anyway.. Good Luck!"
+    ],
+
+    "mobId": 102,
+    "mobCount": 45,
+    "skillName": "Run",
+    "skillLevel": 2,
+    "xp": 5000
   },
 
   {
@@ -758,5 +759,147 @@
     "skillName": "Power Gain",
     "skillLevel": 2,
     "xp": 2500
+  },
+
+  {
+    "npcId": 361,
+    "type": 2,
+    "name": "Woof Woof!",
+    "desc": "Slay 50 Wolves!",
+    "beforeTalk": [
+      "Hey, since you're not doing anything too important..",
+      "Would you mind slaying 50 wolves? Tell you what, I'll trade you",
+      "The second level of the Deadly Attack in exchange."
+    ],
+
+    "afterTalk": [
+      "Oh hi!"
+    ],
+
+    "mobId": 109,
+    "mobCount": 50,
+    "skillName": "Deadly Attack",
+    "skillLevel": 2,
+    "xp": 5000
+  },
+
+  {
+    "npcId": 361,
+    "type": 2,
+    "name": "Scratch Scratch!",
+    "desc": "Kill 100 white tigers!",
+    "beforeTalk": [
+      "Alright, I know I've asked for a favour already",
+      "But this time I legitimately need it.",
+      "Please slay 100 of those white tigers, I will teach you",
+      "The third level of the Deadly Attack in exchange."
+    ],
+    "afterTalk": [
+      "Alright, I don't have any other requests....",
+      "For Now."
+    ],
+
+    "mobId": 275,
+    "mobCount": 100,
+    "skillName": "Deadly Attack",
+    "skillLevel": 3,
+    "xp": 15000
+  },
+
+  {
+    "npcId": 347,
+    "type": 2,
+    "name": "Snazzy Sea Serpent",
+    "desc": "Slay the Sea Dragon for the Boy!",
+    "beforeTalk": [
+      "Oh hello there, I require your help..",
+      "Yea.. Well.. You see, there's this big dragon.",
+      "He's fierce and I don't want to go in there and deal",
+      "With him myself. My parents kicked me out, and the",
+      "Only way I can redeem myself is by slaying him..",
+      "Care to lend a hand? I will reward you",
+      "The second level Whirlwind Attack skill."
+    ],
+
+    "afterTalk": [
+      "Thank You."
+    ],
+    "mobId": 189,
+    "mobCount": 1,
+    "skillName": "Whirlwind Attack",
+    "skillLevel": 2,
+    "xp": 12500
+  },
+
+  {
+    "npcId": 347,
+    "type": 2,
+    "name": "Mini Snazz",
+    "desc": "Help the Boy slay the Mini Sea Dragon.",
+    "beforeTalk": [
+      "Oh.. It's you again.. Well you walked in on the perfect",
+      "Time. I was just about to slay this majestic dragon over there",
+      "But since you're here. You can do it for me. In exchange, I'll teach",
+      "You the third level of the Whirlwind Attack skill!"
+    ],
+
+    "afterTalk": [
+      "You're a hero! Thank you so much brave adventurer!"
+    ],
+
+    "mobId": 202,
+    "mobCount": 1,
+    "skillName": "Whirlwind Attack",
+    "skillLevel": 3,
+    "xp": 10000
+  },
+
+
+  {
+    "npcId": 376,
+    "type": 2,
+    "name": "End Game",
+    "desc": "Slay the Sky Dinosaur.",
+    "beforeTalk": [
+      "I can't believe someone made it this far..",
+      "It's not often that I see someone so brave and capable",
+      "Of this. But your final quest lies ahead. Slay the",
+      "Sky Dinosaur.",
+      "I highly suggest you bring a whole team of people",
+      "For this boss is far too dangerous to take on alone.",
+      "I will reward you the fourth level of the Whirlwind Attack."
+    ],
+
+    "afterTalk": [
+      "I am most proud of you adventurer!",
+      "You are by true nature, a real resident of Maearth."
+    ],
+
+    "mobId": 311,
+    "mobCount": 1,
+    "skillName": "Whirlwind Attack",
+    "skillLevel": 4,
+    "xp": 200000
+  },
+
+
+  {
+    "npcId": 371,
+    "type": 2,
+    "name": "Sky Father",
+    "desc": "Enel must be destroyed at all costs!",
+    "beforeTalk": [
+      "Oh my! Adventurer! Please help us!",
+      "Our Sky Guardian, Enel has completely lost his mind",
+      "Please slay him!",
+      "I will teach you the fourth level of the Evasion Skill!"
+    ],
+
+    "mobId": 197,
+    "mobCount": 1,
+    "skillName": "Evasion",
+    "skillLevel": 4,
+    "xp": 25000
   }
+
 ]

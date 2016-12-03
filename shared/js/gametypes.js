@@ -174,7 +174,8 @@ Types = {
         SPELL: 133,
         FORCECAST: 134,
         PROJECTILE: 135,
-        SPELLHIT: 136
+        SPELLHIT: 136,
+        DOOR: 137
     },
 
     Interfaces: {
@@ -269,12 +270,12 @@ Types.getLevel = function(exp){
     if (exp == 0)
         return 0;
 
-    for(var i = 1; i < 100; i++){
+    for(var i = 1; i < 150; i++){
         if(exp < Types.expForLevel[i])
             return i;
 
     }
-    return 100;
+    return 150;
 };
 
 

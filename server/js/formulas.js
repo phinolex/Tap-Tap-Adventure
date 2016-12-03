@@ -32,7 +32,7 @@ Formulas.dmg = function(attacker, defender, spellType, spellLevel) {
         attackerWeaponLevel = 1;
 
 
-    damageDealt = (attackerLevel * Utils.randomRange(0.25, 2.1875)) + (attackerWeaponLevel * (1.125 + (Utils.randomRange(-0.5, 0.50))) * (usingRange ? 1.85 + (Utils.randomRange(-0.25, 0.35)) : 2.15 + (Utils.randomRange(-0.95, 1.25))));
+    damageDealt = (attackerLevel * Utils.randomRange(0.25, 2.1875)) + (attackerWeaponLevel * (1.125 + (Utils.randomRange(-0.5, 0.55))) * (usingRange ? 1.15 + (Utils.randomRange(-0.45, 0.15)) : 2.15 + (Utils.randomRange(-0.95, 1.25))));
 
     if (attacker instanceof Player && attacker.type != 'mob') {
 
@@ -55,7 +55,6 @@ Formulas.dmg = function(attacker, defender, spellType, spellLevel) {
                 spellBonus = 1.111;
             else if (spellType == 4)
                 spellBonus = 1.221;
-
 
             damageDealt = (attacker.level * Utils.randomRange(1.01, spellLevel) * spellBonus);
         }
@@ -90,9 +89,6 @@ Formulas.dmg = function(attacker, defender, spellType, spellLevel) {
 
     if (damage < 0)
         damage = 0;
-
-    if (ItemTypes.isArcherWeapon(attacker.weapon) && attacker.isAdjacentNonDiagonal(defender))
-        damage *= Utils.randomRange(1.01, 1 + (attacker.weaponLevel / 100));
 
     damage = Math.round(damage);
 

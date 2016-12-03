@@ -19,7 +19,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             this.inventoryNumber = 0;
             this.showChatLog = null;
 
-            this.classNames = ["loadcharacter", "createcharacter", "changePassword"];
+            this.classNames = ["loadcharacter", "createcharacter"];
             this.frontPage = this.classNames[0];
 
         },
@@ -53,27 +53,14 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             this.$pwinput2 = $('#pwinput2');
             this.$email = $('#emailinput');
             this.createNewCharacterFormFields = [this.$nameinput, this.$pwinput, this.$pwinput2, this.$email];
-
-            // Create change password form fields
-            this.$pwnameinput = $('#cpnameinput');
-            this.$pwinputold = $('#cppwinputold');
-            this.$pwinputnew = $('#cppwinput');
-            this.$pwinputnew2 = $('#cppwinput2');
-            this.createNewPasswordFormFields = [this.$pwnameinput, this.$pwinputold, this.$pwinputnew, this.$pwinputnew2];
-
         },
 
         center: function() {
             window.scrollTo(0, 1);
-
         },
 
         canStartGame: function() {
-            if(this.isDesktop) {
-                return (this.game && this.game.map && this.game.map.isLoaded);
-            } else {
-                return this.game;
-            }
+            return this.game;
         },
 
         tryStartingGame: function() {
@@ -112,6 +99,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
         preStartGame: function (action, username, userpw, email, newpw, pClass) {
             var self = this;
+            log.info("Pre Start game.");
 
             self.setPlayButtonState(false);
             if (!self.ready || !self.canStartGame()) {
@@ -173,7 +161,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                     break;
 
                 case 'updated':
-                    self.addValidationError(null, "The game has been updated, please restart your client!");
+                    self.addValidationError(null, "The game has been updated, please restart your client with CTRL + F5!");
                     break;
 
                 default:
@@ -189,8 +177,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
                 this.game.setServerOptions(username, userpw, email, newuserpw, pClass);
 
-                if(!self.isDesktop)
-                    self.game.loadMap();
+                self.game.loadMap();
 
                 this.center();
                 this.game.run(action, function(result) {
@@ -410,8 +397,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 fields = this.loginFormFields;
             else if (this.createNewCharacterFormActive())
                 fields = this.createNewCharacterFormFields;
-            else if (this.changePasswordFormActive())
-                fields = this.createNewPasswordFormFields;
 
             if (fields)
             {
@@ -452,17 +437,16 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
             //log.info(mouse.x+","+mouse.y);
 
-            if(mouse.x <= 0) {
+            if (mouse.x <= 0)
                 mouse.x = 0;
-            } else if(mouse.x >= width) {
+            else if (mouse.x >= width)
                 mouse.x = width - 1;
-            }
 
-            if(mouse.y <= 0) {
+            if (mouse.y <= 0)
                 mouse.y = 0;
-            } else if(mouse.y >= height) {
+            else if (mouse.y >= height)
                 mouse.y = height - 1;
-            }
+
         },
         //Init the hud that makes it show what creature you are mousing over and attacking
         initTargetHud: function(){
@@ -537,10 +521,10 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 $("#target .health").css('width', Math.ceil(target.healthPoints/target.maxHp*100) + "%");
                 $("#target .life").text(target.healthPoints < 0 ? 0 : target.healthPoints + "/" + target.maxHp);
                 $("#target .life").css('text-transform', 'capitalize');
-                if(self.game.player.inspecting && self.game.player.inspecting.id === target.id) {
+
+                if(self.game.player.inspecting && self.game.player.inspecting.id === target.id)
                     $("#inspector .health").css('width', Math.ceil(target.healthPoints/target.maxHp*100) + "%");
 
-                }
             });
 
             if (this.game.player) {
@@ -575,32 +559,22 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
             this.game.onPlayerExpChange(function(level, expInThisLevel, expForLevelUp){
 
-                var rate = expInThisLevel/expForLevelUp;
-                if(rate > 1){
-                    rate = 1;
-                } else if(rate < 0){
-                    rate = 0;
-                }
-                $('#exp').css('width', (rate*maxWidth).toFixed(0) + "px");
-                $('#expbar').attr("title", "Level: "+level+", Exp: " + (rate*100).toFixed(3) + "%");
-                $('#expbar').html("Level: "+level+", Exp: " + (rate*100).toFixed(3) + "%");
+                var rate = expInThisLevel / expForLevelUp;
+
+                $('#exp').css('width', (rate * maxWidth).toFixed(0) + "px");
             });
         },
 
         initHealthBar: function() {
-            var self = this;
-            var scale;
-            if (this.game.renderer) {
-                if (this.game.renderer.mobile) {
-                    scale = 1;
-                } else {
-                    scale = this.game.renderer.getScaleFactor();
-                }
-            } else {
-                scale = 2;
-            }
+            var self = this,
+                renderer = this.game.renderer,
+                scale = renderer.getScaleFactor();
+
+            if (renderer.mobile)
+                scale = 1;
 
             var healthMaxWidth = $("#healthbar").width() - (11 * scale);
+
             if (scale == 1)
                 healthMaxWidth = 77;
 
@@ -665,11 +639,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
 
         showChat: function() {
             if(this.game.started) {
-                if (this.showChatLog) {
-                    clearTimeout(this.showChatLog);
-                    this.showChatLog = null;
-                }
-
                 $('#chatbox').addClass('active');
                 $('#chatinput').focus();
                 $('#chatbutton').addClass('active');
@@ -680,6 +649,8 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
         displayChatLog: function(withFading) {
             $('#chatLog').fadeIn('slow');
 
+            clearTimeout(this.showChatLog);
+
             if (withFading && !($('#chatbox').hasClass('active'))) {
                 var duration = 5000;
                 this.showChatLog = setTimeout(function() {
@@ -689,6 +660,8 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
         },
 
         hideChat: function() {
+            var self = this;
+
             if(this.game.started) {
                 $('#chatbox').removeClass('active');
                 $('#chatinput').blur();
@@ -696,6 +669,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 var duration = 5000;
                 this.showChatLog = setTimeout(function() {
                     $('#chatLog').fadeOut('slow');
+                    clearTimeout(self.showChatLog);
                 }, duration);
             }
         },
@@ -897,8 +871,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                     var nb = parseInt($('#unlocked-achievements').text());
                     $('#unlocked-achievements').text(nb + 1);
                 }
-
-
             });
 
         },
@@ -961,9 +933,9 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 $parchment.removeClass(origin).addClass(destination);
             } else {
                 if(this.isParchmentReady) {
-                    if(this.isTablet) {
+                    if(this.isTablet)
                         duration = 0;
-                    }
+
                     this.isParchmentReady = !this.isParchmentReady;
 
                     $parchment.toggleClass('animate');
@@ -1015,7 +987,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
         },
 
         resizeUi: function() {
-            log.info("Rescaling..");
             if(this.game) {
                 if(this.game.started) {
                     this.game.resize();

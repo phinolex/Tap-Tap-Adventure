@@ -971,6 +971,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.sendMessage([Types.Messages.HIT,
                 mob.id]);
         },
+        
+        sendArcherHit: function(mob) {
+            
+        },
 
         sendSpellHit: function(mob, spellType) {
             this.sendMessage([Types.Messages.SPELLHIT, mob.id, spellType]);
@@ -1059,6 +1063,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
             this.sendMessage([Types.Messages.MEMBERSHIP, hasMembership]);
         },
+        
         sendSkill: function(type, targetId){
 
             this.sendMessage([Types.Messages.SKILL, type, targetId]);
@@ -1153,6 +1158,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         sendReady: function(id) {
             this.sendMessage([Types.Messages.PLAYERREADY, id]);
+        },
+
+        sendDoor: function(doorX, doorY, toX, toY, orientation) {
+            this.sendMessage([Types.Messages.DOOR, doorX, doorY, toX, toY, orientation])
         }
     });
 

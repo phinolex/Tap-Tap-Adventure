@@ -285,7 +285,6 @@ module.exports = Player = Character.extend({
                         var index = self.skillHandler.getIndexByName(skillName);
                         databaseHandler.handleSkills(self, index, skillName, skillLevel);
                         self.server.pushToPlayer(self, new Messages.SkillLoad(index, skillName, skillLevel));
-
                     }
                 });
             }
@@ -511,7 +510,7 @@ module.exports = Player = Character.extend({
 
                     self.send(sendMessage);
 
-                    databaseHandler.loadSkillSlots(self, function(names) {
+                    /*databaseHandler.loadSkillSlots(self, function(names) {
                         for(var index = 0; index < names.length; index++) {
                             if(names[index]) {
                                 self.skillHandler.install(index, names[index]);
@@ -520,12 +519,9 @@ module.exports = Player = Character.extend({
                             }
                         }
                         self.setAbility();
-                    });
+                    });*/
 
-                    databaseHandler.getSkills(self, function(skillNames, skillLevels) {
-                        for (var i = 0; i < skillNames.length; i++)
-                            self.skillHandler.add(skillNames[i], skillLevels[i]);
-                    });
+                    self.reviewSkills();
 
                     databaseHandler.loadPets(self, function(kinds) {
                         for(var index = 0; index < kinds.length; index++) {
@@ -533,6 +529,7 @@ module.exports = Player = Character.extend({
                                 var pet = self.server.addPet(self, kinds[index], self.x, self.y);
                         }
                     });
+
                 });
             });
         });
@@ -978,7 +975,54 @@ module.exports = Player = Character.extend({
             default:
                 return 40 + (this.level * 10);
         }
+    },
 
+    reviewSkills: function() {
+        var self = this,
+            skillHandler = self.skillHandler,
+            achievements = Achievements.AchievementData,
+            index = 0,
+            skills = [];
+
+        for (var a in achievements) {
+            if (achievements.hasOwnProperty(a)) {
+                if (self.achievement[index].progress == 999 && achievements[a].skillName) {
+                    skills.push({
+                        name: achievements[a].skillName,
+                        level: achievements[a].skillLevel
+                    });
+                }
+                index++;
+            }
+        }
+
+        for (var index = 0; index < skills.length; index++) {
+            var name = skills[index].name,
+                level = skills[index].level;
+
+            self.skillHandler.add(name, level);
+        }
+    },
+
+    finishAllAchievements: function() {
+        var self = this,
+            index = 0;
+
+        for (var a in Achievements.AchievementData) {
+            var achievement = self.achievement[index];
+
+            achievement.progress = 999;
+            self.redisPool.progressAchievement(self.name, index, 999);
+            index++;
+        }
+    },
+
+    finishAchievement: function(achievementId) {
+        var self = this,
+            achievement = self.achievement[achievementId];
+
+        achievement.progress = 999;
+        self.redisPool.progressAchievement(self.name, achievementId, 999);
     },
 
     getMp: function () {

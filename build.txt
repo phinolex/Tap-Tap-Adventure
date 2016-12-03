@@ -132,6 +132,7 @@ js/bankdialog.js
 text!../shared/data/craft.json
 js/craftdata.js
 js/craftdialog.js
+js/projectile.js
 js/guild.js
 js/gamedata.js
 js/util.js

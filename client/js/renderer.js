@@ -51,10 +51,11 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.highTileCount = 0;
                 this.tablet = Detect.isTablet(window.innerWidth);
                 this.fixFlickeringTimer = new Timer(100);
+                this.finishedDrawing = false;
 
                 this.mobile = false;
 
-                this.forceRedraw = true;
+                this.forceRedraw = false;
             },
 
             setZoom: function () {
@@ -85,19 +86,15 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     h = window.innerHeight,
                     scale;
 
-                this.mobile = false;
-
-                //if(w <= 1136) {
-                if(w <= 1000) {
+                if (w <= 1000) {
                     scale = 2;
                     this.mobile = true;
-                } else if(w <= 1500 || h <= 870) {
-
+                } else if (w <= 1500 || h <= 870)
                     scale = 2;
-                } else {
-
+                else
                     scale = 3;
-                }
+
+
 
                 return scale;
             },
@@ -114,9 +111,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.toptextcontext.mozImageSmoothingEnabled = false;
                 this.initFont();
 
-                if(!this.upscaledRendering && this.game.map && this.game.map.tilesets) {
+                if(!this.upscaledRendering && this.game.map && this.game.map.tilesets)
                     this.setTileset(this.game.map.tilesets[this.scale - 1]);
-                }
 
                 if(this.game.ready && this.game.renderer) {
                     this.game.setSpriteScale(this.scale);
@@ -608,7 +604,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                         try {
                             this.context.drawImage(sprite.image, x, y, w, h, ox, oy, dw, dh);
-                        } catch(e) { log.info(e); }
+                        } catch(e) { log.info("Caught exception for: " + entity.name); }
 
                         if(entity instanceof Item && entity.kind !== 39) {
 
@@ -992,8 +988,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     var itemKind = this.game.inventoryHandler.inventory[inventoryNumber];
 
                     if (!this.game.bankShowing) {
-                        var leftTextAlign = 12 * this.tilesize;
-                        var leftRectAlign = 11 * this.tilesize;
+                        var leftTextAlign = 12 * this.tilesize,
+                            leftRectAlign = 11 * this.tilesize;
+
+
                         if(itemKind === 39 || itemKind === 173) {
                             this.drawRect(this.textcontext, leftRectAlign, (this.camera.gridH-3) * this.tilesize, 3, 1, "rgba(0, 0, 0, 0.5)");
                             this.drawText(this.textcontext, "Drop", leftTextAlign, (this.camera.gridH-2.4) * this.tilesize, true, "white", "black");
@@ -1134,7 +1132,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         self.drawTile(backgroundContext, id, self.tileset, tilesetWidth, m.width, index);
                 }, 1, optimized);
 
-
                 foregroundContext.restore();
             },
 
@@ -1158,43 +1155,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         self.animatedTileCount += 1;
                     }
                 });
-            },
-
-            drawHighTiles: function(ctx) {
-                var self = this,
-                    m = this.game.map,
-                    tilesetwidth = this.tileset.width / m.tilesize;
-
-                this.highTileCount = 0;
-                var p = this.game.player;
-
-                var optimized = false;
-                if (p && p.isMoving() && !this.forceRedraw)
-                {
-                    optimized = true;
-                }
-
-                this.game.forEachVisibleTile(function (id, index) {
-                    if(m.isHighTile(id)) {
-                        self.clearTile(ctx, m.width, index);
-                        self.drawTile(ctx, id, self.tileset, tilesetwidth, m.width, index);
-                        self.highTileCount += 1;
-                    }
-                }, 1, optimized);
-
-            },
-
-            drawHighTerrain: function() {
-                var p = this.game.player;
-
-                if (!p || !p.isMoving() || this.forceRedraw)
-                {
-                    this.foreground.save();
-                    this.clearScreen(this.foreground);
-                    this.setCameraView(this.foreground);
-                    this.drawHighTiles(this.foreground);
-                    this.foreground.restore();
-                }
             },
 
             drawDirtyAnimatedTiles: function(ctx) {
@@ -1230,15 +1190,16 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 var nowTime = new Date(),
                     diffTime = nowTime.getTime() - this.lastTime.getTime();
 
-                if (diffTime >= 2000) {
+                if (diffTime >= 100) {
                     this.realFPS = this.frameCount;
                     this.frameCount = 0;
                     this.lastTime = nowTime;
                     this.FPS = this.realFPS;
                 }
                 this.frameCount++;
+                
+                
 
-                //this.drawText(this.toptextcontext, "FPS: " + this.realFPS + " / " + this.maxFPS, 30, 30, false);
                 this.drawText(this.toptextcontext, "FPS: " + this.realFPS, 10, 11, false);
             },
 
@@ -1330,15 +1291,13 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             renderStaticCanvases: function() {
-
-                if (this.game.player && this.game.player.isMoving)
+                if (this.forceRedraw || this.game.player && this.game.player.isMoving()) {
                     this.drawOldTerrain();
-
-                if (this.forceRedraw || this.game.player && !this.game.player.isMoving()) {
                     this.background.save();
                     this.setCameraView(this.background);
                     this.drawTerrain(this.background, this.foreground);
                     this.background.restore();
+                    this.forceRedraw = false;
                 }
             },
 
@@ -1393,8 +1352,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             preventFlickeringBug: function() {
                 if(this.fixFlickeringTimer.isOver(this.game.currentTime))
                     this.context.fillRect(0, 0, 0, 0);
-
-
             },
 
             cleanPathing: function() {

@@ -770,6 +770,22 @@ module.exports = DatabaseHandler = cls.Class.extend({
             }
         });
     },
+
+    setReset: function(name, hasReset) {
+        client.hset("u:" + name, "reset", hasReset);
+    },
+
+    getReset: function(name, callback) {
+        var self = this,
+            userKey = "u:" + name,
+            multi = client.multi();
+
+        multi.hget(userKey, "reset");
+        multi.exec(function(err, data) {
+            callback(data.shift());
+        });
+    },
+
     assignPosition: function(player, x, y) {
         client.hset("u:" + player.name, "x", x);
         client.hset("u:" + player.name, "y", y);

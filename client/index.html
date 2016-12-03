@@ -31,10 +31,10 @@
     <link href="img/common/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
     <link href="img/common/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
 
-    <!--<script src="http://192.168.0.20:9000/target/target-script-min.js#anonymous" type="text/javascript"></script>-->
     <script src="js/lib/modernizr.js" type="text/javascript"></script>
 
     <script src="js/detect.js" type="text/javascript"></script>
+
     <title>Tap Tap Adventure</title>
 </head>
 
@@ -148,13 +148,14 @@
                     Music by <a class="clickable" target="_blank" href="http://opengameart.org/users/marcelofg55">Marcelofg55</a>,
                             <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>,
                     <a class="clickable" target="_blank" href="https://soundcloud.com/gyrowolf/sets/gyrowolfs-rpg-maker-music-pack">Gyrowolf</a>,
+                    <br>
                     <a class="clickable" target="_blank" href="https://soundcloud.com/freakified/what-dangers-await-campus-map">Freakified</a>,
                     <a class="clickable" target="_blank" href="http://blog.dayjo.org/free-rpg-music-pack-part-1/">Dayjo</a>,
                     <a class="clickable" target="_blank" href="http://opengameart.org/users/matthewpablo">Matthew Pablo</a>
                     <br>
                     Developer: Tachyon
                     <br>
-                    Special thanks to the Pretzel
+                    Special thanks to Pretzel
                 </div>
                 <div id="close-credits">
                     <span>- click anywhere to close -</span>
@@ -225,7 +226,7 @@
 </div>
 
 <div id="container">
-    <div id="mainborder" width="1470" height="737">
+    <div id="mainborder">
         <div id="canvas">
             <canvas id="backgroundbuffer"></canvas>
             <canvas id="background"></canvas>
@@ -940,6 +941,7 @@
 
 <div id="resize-check"></div>
 <script src="javascripts/socket.io.js"></script>
+
 <script type="text/javascript">
     var ctx = document.querySelector('canvas').getContext('2d'),
             parchment = document.getElementById("parchment");
@@ -953,9 +955,12 @@
 </script>
 
 <script src="js/lib/log.js"></script>
+
 <script>
     var require = { waitSeconds: 60 };
 </script>
+
 <script data-main="js/home" src="js/require.js"></script>
+
 </body>
 </html>

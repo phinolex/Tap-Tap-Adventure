@@ -57,13 +57,9 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
             $('#toggle-legal').click(function() {
                 app.toggleScrollContent('legal');
-                if(game.renderer.mobile) {
-                    if($('#parchment').hasClass('legal')) {
-                        $(this).text('close');
-                    } else {
-                        $(this).text('Privacy');
-                    }
-                };
+                if(game.renderer.mobile)
+                    $(this).text($('#parchment').hasClass('legal') ? 'Close' : 'Privacy');
+
             });
 
             $('#create-new span').click(function() {
@@ -172,22 +168,13 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 input = document.getElementById("chatinput");
 
             game = new Game(app);
+
             game.setup('#bubbles', canvas, backgroundbuffer, background, foreground, textcanvas, toptextcanvas, input);
 
             app.setGame(game);
 
-            if(app.isDesktop && app.supportsWorkers) {
-                game.loadMap();
-            }
-
             game.onNbPlayersChange(function(worldPlayers, totalPlayers){
-                if (worldPlayers !== 1) {
-
-                    $('#users').html("" + worldPlayers + " players");
-                } else {
-
-                    $('#users').html("" + worldPlayers + " player");
-                }
+                $('#users').html("" + totalPlayers + " " + (worldPlayers == 1 ? "player" : "players"));
             });
 
             game.onGameStart(function() {
@@ -202,17 +189,19 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 $('#death').find('p').html(reloadMessage);
                 game.isDisconnected = true;
                 if (game.renderer.mobile) {
+
                     setInterval(function() {
                         location.reload();
                     }, 5000)
+
                 }
                 $('#respawn').hide();
             });
 
             game.onPlayerDeath(function() {
-                if($('body').hasClass('credits')) {
+                if($('body').hasClass('credits'))
                     $('body').removeClass('credits');
-                }
+
                 $('body').addClass('death');
             });
 
@@ -293,14 +282,12 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 game.respawn();
                 $('body').removeClass('death');
             });
+
             if (game.renderer) {
-                if (game.renderer.mobile) {
+                this.scale = game.renderer.getScaleFactor();
+                
+                if (game.renderer.mobile)
                     this.scale = 1;
-                } else {
-                    this.scale = game.renderer.scale; //temporary fix - use getScaleFactor();
-                }
-            } else {
-                this.scale = 2;
             }
 
             $('#characterButton').click(function(event) {
@@ -612,7 +599,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $('#next').click(function() {
                 var $achievements = $('#achievements'),
                     $lists = $('#lists'),
-                    nbPages = 8;
+                    nbPages = 10;
 
                 if(app.currentPage === nbPages) {
                     return false;
@@ -689,12 +676,11 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     if (key >= 49 && key <= 54) { // 1 to 6 for now
                         game.keyDown(key);
                         return false;
-
-                    } else if (key === 107) { // +
+                    } else if (key === 107)// +
                         game.chathandler.incChatWindow();
-                    } else if (key === 109) {
+                    else if (key === 109)
                         game.chathandler.decChatWindow();
-                    } else if ([81, 69, 82, 84, 89].indexOf(key) >= 0 && game.ready && game.player) { // q, e, r, t, y
+                    else if ([81, 69, 82, 84, 89].indexOf(key) >= 0 && game.ready && game.player) { // q, e, r, t, y
                         game.player.skillHandler.execute(key);
                         return false;
                     }
@@ -703,11 +689,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         return false;
                     }
 
-                    if (key == 66) {  // B for Backpack
-                        //if(game && game.ready) {
+                    if (key == 66)
                         game.inventoryHandler.toggleAllInventory();
-                        //}
-                    }
 
                     if (key == 67) { // C for Character
                         //if(game && game.ready) {
@@ -725,16 +708,13 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     if (key == 77) // M for Music
                     {
                         //if(game && game.ready) {
-                        if(game.audioManager.toggle()) {
+                        if(game.audioManager.toggle())
                             game.soundButton.down();
-                        } else {
+                        else
                             game.soundButton.up();
-                        }
-                        //}
                     }
 
                 }
-                //}
             });
 
             $('#healthbar').click(function(e) {
@@ -753,8 +733,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                             if(((game.player.hitPoints / game.player.maxHitPoints) <= game.hpGuide) &&
                                 (game.healShortCut >= 0) &&
                                 ItemTypes.isConsumableItem(game.player.inventory[game.healShortCut]) &&
-                                (game.player.inventoryCount[game.healShortCut] > 0)
-                            ) {
+                                (game.player.inventoryCount[game.healShortCut] > 0)) {
                                 game.eat(game.healShortCut);
                             }
                         }, 100);
@@ -766,42 +745,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
                 return false;
             });
-            if(game.renderer.tablet) {
+            if(game.renderer.tablet)
                 $('body').addClass('tablet');
-            }
-        });
-        $('#healthbar').bind('mousedown', function (event) {
-            if(event.button === 2) {
-                return false;
-            }
-        });
-
-        $('#healthbar').bind('mouseup', function (event) {
-            if(event.button === 2) {
-                if(game.autoEattingHandler) {
-                    clearInterval(game.autoEattingHandler);
-
-                    $('#hpguide').css('display', 'none');
-                }
-                return false;
-            }
-        });
-
-        $('#hpguide').bind('mousedown', function (event) {
-            if(event.button === 2) {
-                return false;
-            }
-        });
-
-        $('#hpguide').bind('mouseup', function (event) {
-            if(event.button === 2) {
-                if(game.autoEattingHandler) {
-                    clearInterval(game.autoEattingHandler);
-
-                    $('#hpguide').css('display', 'none');
-                }
-                return false;
-            }
         });
 
         $(window).blur(function(){

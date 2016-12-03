@@ -57,7 +57,7 @@
   "Scimitar": {
     "kind":84,
     "type":"weapon",
-    "attack":10,
+    "attack":11,
     "name":"Pirate's Scimitar"
   },
   "Trident": {
@@ -189,7 +189,7 @@
   "Eneltrident": {
     "kind":199,
     "type":"weapon",
-    "attack":32,
+    "attack":45,
     "name":"Enel Trident"
   },
   "Rainbowsword": {
@@ -259,10 +259,10 @@
     "name":"Pink Sword"
   },
   "Conferencecall": {
-    "kind":313,
-    "type":"weapon",
-    "attack":44,
-    "name":"Conference Call"
+    "kind": 313,
+    "type": "weapon",
+    "attack": 70,
+    "name": "Stick"
   },
   "Cactusaxe": {
     "kind":327,
@@ -482,7 +482,7 @@
   },
   "WolfarcherArmor": {
     "kind":343,
-    "defense":19,
+    "defense":26,
     "type":"armorarcher",
     "name":"Wolf Archer Armor"
   },
@@ -592,7 +592,7 @@
   "RedenelBow": {
     "kind":302,
     "type":"weaponarcher",
-    "attack":10,
+    "attack":30,
     "name":"Redenel Bow"
   },
   "MermaidBow": {
@@ -809,7 +809,7 @@
   },
   "WolfArmor": {
     "kind":114,
-    "defense":19,
+    "defense":34,
     "type":"armor",
     "name":"Wolf Armor"
   },
@@ -833,7 +833,7 @@
   },
   "DragonArmor": {
     "kind":130,
-    "defense":23,
+    "defense":48,
     "type":"armor",
     "name":"Dragon Armor"
   },
@@ -935,7 +935,7 @@
   },
   "EnelArmor": {
     "kind":198,
-    "defense":40,
+    "defense":50,
     "type":"armor",
     "name":"Enel Armor"
   },
@@ -1037,7 +1037,7 @@
   },
   "TigerArmor": {
     "kind":276,
-    "defense":57,
+    "defense":49,
     "type":"armor",
     "name":"Tiger Armor"
   },
@@ -1146,7 +1146,7 @@
 
   "AdminArmor": {
     "kind":175,
-    "defense":150,
+    "defense":75,
     "type":"armor",
     "name":"Admin Armor"
   },

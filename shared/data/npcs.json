@@ -96,7 +96,8 @@
     "npcId": 288
   },
   "Pirategirlnpc": {
-    "npcId": 298
+    "npcId": 298,
+    "name": "Pirate Girl"
   },
   "Bluebikinigirlnpc": {
     "name": "Pretzel",
@@ -110,30 +111,36 @@
     "npcId": 303
   },
   "Iceelfnpc": {
-    "npcId": 316
+    "npcId": 316,
+    "name": "Ice Elf"
   },
   "Elfnpc": {
-    "npcId": 335
+    "npcId": 335,
+    "name": "Elf"
   },
   "Snowshepherdboy": {
-    "name": "Shepherd Boy",
+    "name": "Some Boy",
     "npcId": 347
   },
   "Angelnpc": {
-    "npcId": 352
+    "npcId": 352,
+    "name": "Angel"
   },
   "Momangelnpc": {
-    "npcId": 361
+    "npcId": 361,
+    "name": "Archangel"
   },
   "Superiorangelnpc": {
     "name": "Mentor",
     "npcId": 367
   },
   "Firstsonangelnpc": {
-    "npcId": 371
+    "npcId": 371,
+    "name": "Angel"
   },
   "Secondsonangelnpc": {
-    "npcId": 376
+    "npcId": 376,
+    "name": "Superior Angel"
   },
   "Mojojojonpc": {
     "name": "Monky",

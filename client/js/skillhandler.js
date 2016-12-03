@@ -6,7 +6,7 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
             this.level = 0;
             this.slots = [];
             this.skillIndex = skillIndex;
-            this.skillData = SkillData.Data[skillIndex];
+            this.skillData = SkillData.Names[name];
         },
 
         getName: function() {
@@ -35,13 +35,15 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
             }
         }
     });
+    
     var SkillPassive = Skill.extend({
     });
+    
     var SkillActive = Skill.extend({
         init: function(name, skillIndex) {
             this._super(name, skillIndex);
 
-            this.cooltime = SkillData.Data[skillIndex].recharge;
+            this.cooltime = SkillData.Names[name].recharge;
             this.cooltimeCounter = 0;
             this.cooltimeTickHandle = null;
             this.cooltimeDoneHandle = null;
@@ -89,7 +91,7 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
             }
 
             if(!this.cooltimeDoneHandle)
-                game.client.sendSkill(this.skillIndex);
+                game.client.sendSkill(self.name);
 
 
             this.cooltimeCounter = this.cooltime;
@@ -103,7 +105,8 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                         self.slots[index].tick(self);
                     }
                 }
-            }, 200);
+            }, 100);
+
             this.cooltimeDoneHandle = setTimeout(function() {
                 clearInterval(self.cooltimeTickHandle);
                 self.cooltimeTickHandle = null;
@@ -111,19 +114,24 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                 self.cooltimeDoneHandle = null;
 
                 self.done(game);
-                for(var index = 0; index < self.slots.length; index++) {
+                for(var index = 0; index < self.slots.length; index++)
                     self.slots[index].done(self);
-                }
-            }, this.cooltime * 1000);
+
+            }, this.cooltime * 1000 * self.level);
+
 
             for(var index = 0; index < this.slots.length; index++) {
                 this.slots[index].execute_(this);
             }
 
         },
+        
         tick: function(game) {
+            
         },
+        
         done: function(game) {
+            
         },
 
         onExecuting: function(handler) {
@@ -219,24 +227,19 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
             this.levels = [];
             this.name;
 
-            for(var index = 0; index< 4; index++) {
+            for(var index = 0; index< 4; index++)
                 this.levels.push($(id + index));
-            }
 
             var self = this;
 
             this.body.unbind('click').bind('click', function(event) {
-                log.info("click?")
                 self.execute(self.parent.game);
             });
             this.body.unbind('dragover').bind('dragover', function(event) {
-                log.info("Drag is over.");
-                if(DragData && DragData.skillName) {
+                if(DragData && DragData.skillName)
                     event.preventDefault();
-                }
             });
             this.body.unbind('drop').bind('drop', function(event) {
-                log.info("Drag is dropped.");
                 if(DragData && DragData.skillName) {
                     self.parent.game.client.sendSkillInstall(self.index, DragData.skillName);
                     DragData.skillName = null;
@@ -257,11 +260,9 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                     'display': 'block',
                     'left': '' + (4.5 * scale * index) + 'px'
                 });
-
             }
-            for(var index = value; index < this.levels.length; index++) {
+            for(var index = value; index < this.levels.length; index++)
                 this.levels[index].css('display', 'none');
-            }
         },
 
         clear: function() {
@@ -275,11 +276,11 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                 'background-image': '',
                 'background-position': ''
             });
-            this.body.attr('title', '');
-            for(var index = 0; index < this.levels.length; index++) {
-                this.levels[index].css('display', 'none');
-            }
 
+            this.body.attr('title', '');
+
+            for(var index = 0; index < this.levels.length; index++)
+                this.levels[index].css('display', 'none');
         },
 
         displayShortcut: function() {
@@ -288,10 +289,10 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                 var scale = this.game.renderer.getScaleFactor();
                 if (this.game.renderer.mobile)
                     scale = 1;
+
                 this.body.css({
-                    'background-image': 'url("img/'+scale+'/skillicons.png")',
-                    //'background-position': SkillPositions[scale][this.name]
-                    'background-position': SkillData.Names[this.name].iconOffset[scale-1],
+                    'background-image': 'url("img/' + scale + '/skillicons.png")',
+                    'background-position': SkillData.Names[this.name].iconOffset[scale - 1],
                     'background-repeat': 'no-repeat'
                 });
             }
@@ -398,13 +399,23 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                     $('#skillcontainer').attr("class","vertical");
                 else
                     $('#skillcontainer').attr("class","horizontal");
+
                 self.isVertical = !self.isVertical;
             });
 
             self.isUnlocked = false;
+
             $('#skillcontainerswitch').click(function (event) {
                 self.isUnlocked = !self.isUnlocked;
             });
+        },
+
+        containsSkill: function(skillName) {
+            for (var index = 0; index < 5; index++) {
+                if (this.skillSlots[index].name == skillName)
+                    return true;
+            }
+            return false;
         },
 
         moveShortcuts: function() {
@@ -461,10 +472,9 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                     this.skills[name] = skill;
                 }
             }
-            if(skill) {
+
+            if(skill)
                 skill.setLevel(level);
-            }
-            //alert(JSON.stringify(this.skills));
         },
         install: function(index, name) {
             if((index >= 0) && (index < this.skillSlots.length)) {
@@ -473,9 +483,8 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
         },
         execute: function(key) {
             var index = [81, 69, 82, 84, 89].indexOf(key); // q, w, e, r, t
-            if(index >= 0) {
+            if(index >= 0)
                 this.skillSlots[index].execute(this.game);
-            }
         }
     });
 

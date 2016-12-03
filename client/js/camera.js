@@ -33,6 +33,7 @@ define(function() {
         setRealCoords: function() {
             if (!this.game.player)
                 return;
+
             this.x = this.game.player.x - (this.gridW2 * this.renderer.tilesize);
             this.y = this.game.player.y - (this.gridH2 * this.renderer.tilesize);
 
@@ -40,12 +41,10 @@ define(function() {
             this.gridY = Math.round(this.game.player.y / 16) - this.gridH2;
 
             this.isattached = true;
-
-            //log.info("x:"+this.x+",y:"+this.y+",gridX:"+this.gridX+",gridY:"+this.gridY);
         },
 
         forEachVisibleValidPosition: function(callback, extra, map) {
-            var extra = extra || 0;
+            var extra = 1;
 
             var w = this.gridW;
             var h = this.gridH;
@@ -53,8 +52,8 @@ define(function() {
             var minX = Math.max(0, this.gridX - extra);
             var minY = Math.max(0, this.gridY - extra);
 
-            var maxX = Math.min(map.height - 1, this.gridX + w + (2 * extra));
-            var maxY = Math.min(map.width - 1, this.gridY + h + (2 * extra));
+            var maxX = Math.min(map.height - 1, this.gridX + w + extra);
+            var maxY = Math.min(map.width - 1, this.gridY + h + extra);
 
             for (var y = minY; y < maxY; ++y) {
                 for (var x = minX; x < maxX; ++x)

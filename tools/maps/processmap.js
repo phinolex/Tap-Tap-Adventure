@@ -202,9 +202,8 @@ module.exports = function processMap(json, options) {
 
                 // get items
                 chestArea['i'] = _.map(area.properties.items.split(','), function(name) {
-                    return ItemTypes.getKindFromString(name);
+                    return name;
                 });
-
                 // iterate through remaining area's properties
                 _.each(area.properties, function(value, name) {
                     if (name !== 'items') {
