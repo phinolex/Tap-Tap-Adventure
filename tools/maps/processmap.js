@@ -42,6 +42,7 @@ module.exports = function processMap(json, options) {
         map.roamingAreas = [];
         map.chestAreas = [];
         map.pvpAreas = [];
+        map.pvpGameAreas = [];
         map.staticChests = [];
         map.staticEntities = {};
     }
@@ -276,19 +277,32 @@ module.exports = function processMap(json, options) {
             });
         }
 
-	else if(layer.name === "pvpareas" && mode === "server"){
-                 log.info("Processing pvp areas...");
-                 var areas = layer.objects;
-                 for(var i = 0; i < areas.length; i++){
-                     var pvpArea = {
-                         x: areas[i].x / map.tilesize,
-                         y: areas[i].y / map.tilesize,
-                         w: areas[i].width / map.tilesize,
-                         h: areas[i].height / map.tilesize
-                     };
-                     map.pvpAreas.push(pvpArea);
-                 }
-             }
+	    else if (layer.name === "pvpAreas" && mode === "server") {
+            log.info("Processing pvp areas...");
+            var areas = layer.objects;
+            for(var i = 0; i < areas.length; i++){
+                var pvpArea = {
+                    x: areas[i].x / map.tilesize,
+                    y: areas[i].y / map.tilesize,
+                    w: areas[i].width / map.tilesize,
+                    h: areas[i].height / map.tilesize
+                };
+                map.pvpAreas.push(pvpArea);
+            }
+        } else if (layer.name === "pvpGameAreas" && mode === "server") {
+            log.info("Processing game areas...");
+            var areas = layer.objects;
+            for (var i = 0; i < areas.length; i++) {
+                var pvpGameArea = {
+                    x: areas[i].x / map.tilesize,
+                    y: areas[i].y / map.tilesize,
+                    w: areas[i].width / map.tilesize,
+                    h: areas[i].height / map.tilesize
+                }
+                map.pvpGameAreas.push(pvpGameArea);
+            };
+
+        }
 
     });
 

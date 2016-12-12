@@ -279,32 +279,6 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             var game = this.game;
             var player = this.game.player;
 
-            if (game.joystick)
-            {
-                player.moveRight = false;
-                player.moveLeft = false;
-                player.moveUp = false;
-                player.moveDown = false;
-
-                if (game.joystick.right())
-                {
-                    player.moveRight = true;
-                }
-                else if (game.joystick.left())
-                {
-                    player.moveLeft = true;
-                }
-                else if (game.joystick.up())
-                {
-                    player.moveUp = true;
-                }
-                else if (game.joystick.down())
-                {
-                    player.moveDown = true;
-                }
-
-            }
-
             var pos = {
                 x: player.gridX,
                 y: player.gridY
@@ -317,13 +291,13 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             }
             else if(player.moveDown)
             {
-                pos.y += 1;
+                pos.y = parseInt(pos.y) + 1;
                 game.keys(pos, Types.Orientations.DOWN);
 
             }
             else if(player.moveRight)
             {
-                pos.x += 1;
+                pos.x = parseInt(pos.x) + 1;
                 game.keys(pos, Types.Orientations.RIGHT);
 
             }
@@ -333,7 +307,6 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                 game.keys(pos, Types.Orientations.LEFT);
 
             }
-
         },
 
         updateAnimations: function() {

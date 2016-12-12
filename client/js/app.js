@@ -732,6 +732,16 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                 $('#achievementsbutton').removeClass('active');
             }
             this.game.closeItemInfo();
+            this.game.menu.close();
+            if ($('#inventoryButton').hasClass('active')) {
+                $('#inventoryButton').toggleClass('active');
+                this.game.inventoryHandler.toggleAllInventory();
+            }
+
+            if ($('#characterButton').hasClass('active')) {
+                $('#characterButton').toggleClass('active');
+                this.game.characterDialog.hide();
+            }
         },
 
         resetPage: function() {

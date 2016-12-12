@@ -40,8 +40,9 @@ define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mou
 
             // PVP Flag
             this.pvpFlag = false;
-            this.pvpWaitFlag = false;
-            this.inPVPGame = false;
+            this.gameFlag = false;
+            this.pvpTeam = -1;
+
 
             this.isWanted = false;
             // Benef
@@ -248,7 +249,10 @@ define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mou
             this.pvpFlag = pvpFlag;
         },
 
-        // Override walk, idle, and updateMovement for mounts.
+        flagGame: function(gameFlag) {
+            this.gameFlag = gameFlag;
+        },
+
         walk: function(orientation) {
             this.setOrientation(orientation);
             if (this.mount) {
@@ -348,6 +352,14 @@ define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mou
 
         setBoots: function(name) {
             this.boots = name;
+        },
+
+        setTeam: function(team) {
+            this.pvpTeam = team;
+        },
+
+        getTeam: function() {
+            return this.pvpTeam;
         }
 
 

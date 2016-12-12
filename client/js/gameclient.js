@@ -64,6 +64,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.GUINOTIFY] = this.receiveGraphicNotification;
             this.handlers[Types.Messages.FORCECAST] = this.receiveForceCast;
             this.handlers[Types.Messages.PROJECTILE] = this.receiveProjectile;
+            this.handlers[Types.Messages.GAMEFLAG] = this.receiveGameFlag;
+            this.handlers[Types.Messages.DOOR] = this.receiveDoor;
+            this.handlers[Types.Messages.GAMEDATA] = this.receiveMinigameData;
+            this.handlers[Types.Messages.TEAM] = this.receiveTeam;
+            this.handlers[Types.Messages.STOP] = this.receiveStop;
 
             this.useBison = false;
 
@@ -519,14 +524,37 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             }
         },
 
-        receivePVPGame: function(data) {
-            var inGame = data[1],
-                pvpTime = data[2];
+        receiveGameFlag: function(data) {
+            var gameFlag = data[1];
 
-            if (this.pvpGame_callback)
-                this.pvpGame_callback(inGame, pvpTime);
+            if (this.gameFlag_callback)
+                this.gameFlag_callback(gameFlag);
+        },
+        
+        receiveDoor: function(data) {
+            var x = data[1],
+                y = data[2],
+                orientation = data[3],
+                playerId = data[4];
+
+            if (this.door_callback)
+                this.door_callback(x, y, orientation, playerId);
         },
 
+        receiveMinigameData: function(data) {
+            if (this.minigameData_callback)
+                this.minigameData_callback(data[1], data[2], data[3]);
+        },
+
+        receiveTeam: function(data) {
+            if (this.team_callback)
+                this.team_callback(data[1], data[2])
+        },
+
+        receiveStop: function(data) {
+            if (this.stop_callback)
+                this.stop_callback(data[1], data[2], data[3]);
+        },
 
         receiveRanking: function(data){
             data.shift();
@@ -787,6 +815,21 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         onPVPGame: function(callback) {
             this.pvpGame_callback = callback;
         },
+        onGameFlag: function(callback) {
+            this.gameFlag_callback = callback;
+        },
+        onDoor: function(callback) {
+            this.door_callback = callback;
+        },
+        onMinigameData: function(callback) {
+            this.minigameData_callback = callback;
+        },
+        onTeam: function(callback) {
+            this.team_callback = callback;
+        },
+        onStop: function(callback) {
+            this.stop_callback = callback;
+        },
         onNotify: function(callback){
             this.notify_callback = callback;
         },
@@ -937,7 +980,6 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         },
 
         sendStep: function(entity) {
-            log.info("sending step");
             this.sendMessage([Types.Messages.STEP, entity.id, entity.gridX, entity.gridY]);
         },
 
@@ -1160,8 +1202,16 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.sendMessage([Types.Messages.PLAYERREADY, id]);
         },
 
-        sendDoor: function(doorX, doorY, toX, toY, orientation) {
-            this.sendMessage([Types.Messages.DOOR, doorX, doorY, toX, toY, orientation])
+        sendDoor: function(toX, toY, orientation) {
+            this.sendMessage([Types.Messages.DOOR, toX, toY, orientation]);
+        },
+
+        sendRespawn: function(id) {
+            this.sendMessage([Types.Messages.RESPAWN, id]);
+        },
+
+        sendDoorRequest: function(doorX, doorY, toX, toY, orientation) {
+            this.sendMessage([Types.Messages.DOORREQUEST, doorX, doorY, toX, toY, orientation]);
         }
     });
 

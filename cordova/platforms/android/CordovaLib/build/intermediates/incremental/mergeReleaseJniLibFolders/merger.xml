@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/media/ubuntu/b2b07394-f5c5-48fa-9bea-7961c9317a3d/Workspace/original/cordova/platforms/android/CordovaLib/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/media/ubuntu/b2b07394-f5c5-48fa-9bea-7961c9317a3d/Workspace/original/cordova/platforms/android/CordovaLib/src/release/jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/flavius/Projects/Tap Tap Adventure/main/cordova/platforms/android/CordovaLib/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/Users/flavius/Projects/Tap Tap Adventure/main/cordova/platforms/android/CordovaLib/src/release/jniLibs"/></dataSet></merger>

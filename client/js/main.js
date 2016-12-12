@@ -660,11 +660,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
                 if(key === 27) { // ESC
                     app.hideWindows();
-                    _.each(game.player.attackers, function(attacker) {
-                        attacker.stop();
-                    });
                     return false;
-                    //use E and F for arrow keys and E F for WSAD
                 }
                 if(game.ready &&
                     !app.dropDialogPopuped &&

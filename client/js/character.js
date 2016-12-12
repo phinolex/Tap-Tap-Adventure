@@ -146,13 +146,15 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         },
 
         moveTo_: function(x, y, callback) {
+            if (this.isStunned)
+                return;
+            
             this.destination = { gridX: x, gridY: y };
             this.adjacentTiles = {};
 
             if(this.isMoving()) {
                 this.continueTo(x, y);
-            }
-            else {
+            } else {
                 var path = this.requestPathfindingTo(x, y);
 
                 this.followPath(path);
@@ -223,6 +225,8 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         },
 
         nextStep: function() {
+            if (this.isStunned)
+                return;
 
             var stop = false,
                 x, y, path;
@@ -241,8 +245,7 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
                 if(this.interrupted) { // if Character.stop() has been called
                     stop = true;
                     this.interrupted = false;
-                }
-                else {
+                } else {
                     if(this.hasNextStep()) {
                         this.nextGridX = this.path[this.step+1][0];
                         this.nextGridY = this.path[this.step+1][1];
@@ -282,9 +285,13 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
                         this.followingMode = false;
                         this.engagingPC = false;
                     }
-                    if(this.stop_pathing_callback) {
-                        this.stop_pathing_callback(this.gridX, this.gridY);
-                    }
+
+
+                    if(this.stop_pathing_callback)
+                        this.stop_pathing_callback(this.gridX, this.gridY, this.forced);
+
+                    if (this.forced)
+                        this.forced = null;
                 }
             }
         },
@@ -358,6 +365,9 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
          *
          */
         go: function(x, y) {
+            if (this.isStunned)
+                return;
+
             if(this.isAttacking()) {
                 this.disengage();
             }
@@ -372,40 +382,51 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         /**
          * Makes the character follow another one.
          */
-        follow: function(entity, engagingPC) {
-            this.engagingPC = engagingPC === undefined ? false : engagingPC
-            if (entity && ((this.engagingPC && this.kind === 1) || (this.engagingPC == false && entity.kind != 1) || (this.kind !== 1))) {
+        follow: function(entity, engaging, attacker) {
+            if (this.isStunned)
+                return;
+
+            if (engaging) {
+                if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(attacker.weaponName))) {
+                    attacker.stop();
+                    return;
+                }
+
                 if (this.hasArcherWeapon && this.canReachTarget()) {
                     this.stop();
                     return;
                 }
 
-                this.followingMode = true;
-                this.moveTo_(entity.gridX, entity.gridY);
             }
+
+            this.followingMode = true;
+            this.moveTo_(entity.gridX, entity.gridY);
         },
 
 
         /**
          * Stops a moving character.
          */
-        stop: function() {
-            if(this.isMoving())
+        stop: function(isTeleport) {
+            if(this.isMoving()) {
                 this.interrupted = true;
+                if (isTeleport)
+                    this.forced = isTeleport;
+            }
         },
 
         /**
          * Makes the character attack another character. Same as Character.follow but with an auto-attacking behavior.
          * @see Character.follow
          */
-        engage: function(character) {
+        engage: function(attacker, character) {
             this.attackingMode = true;
             this.setTarget(character);
             var engagingPC = false;
             if (this.kind === 1 && character.kind === 1) {
                 engagingPC = true;
             }
-            this.follow(character, engagingPC);
+            this.follow(character, true, attacker);
         },
         disengage: function() {
             this.attackingMode = false;
@@ -482,9 +503,9 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
                 log.info(this.id + " is not attacked by " + character.id);
             }
         },
-        forceStop: function () {
+        forceStop: function (teleport) {
             if (this.isMoving()) {
-                //this.interrupted = true;
+                this.interrupted = true;
                 this.path = null;
                 this.newDestination = null;
                 this.idle();
@@ -616,7 +637,7 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
                 if (this.hasTarget() && this.getDistanceToEntity(this.target) < 7)
                     return true;
             } else {
-                log.info("No archer");
+                //log.info("No archer");
                 if(this.hasTarget() && this.isAdjacentNonDiagonal(this.target))
                     return true;
             }
@@ -624,6 +645,11 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
             return false;
         },
 
+        onTeleportStopped: function(callback) {
+            log.info("Teleport stopped.");
+            if (this.movementStopped_callback)
+                this.movementStopped_callback = callback;
+        },
 
         /**
          *

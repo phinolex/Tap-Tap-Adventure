@@ -461,11 +461,12 @@ Messages.MinigameTime = Message.extend({
 });
 
 Messages.MinigameTeam = Message.extend({
-    init: function(team) {
+    init: function(team, playerId) {
         this.team = team;
+        this.playerId = playerId
     },
     serialize: function() {
-        return [Types.Messages.TEAM, this.team];
+        return [Types.Messages.TEAM, this.team, this.playerId];
     }
 });
 
@@ -571,5 +572,64 @@ Messages.Projectile = Message.extend({
 
     serialize: function() {
         return [Types.Messages.PROJECTILE, this.id, this.projectileType, this.sx, this.sy, this.x, this.y, this.owner];
+    }
+});
+
+Messages.GameFlag = Message.extend({
+    init: function(gameFlag) {
+        this.gameFlag = gameFlag;
+    },
+
+    serialize: function() {
+        return [Types.Messages.GAMEFLAG, this.gameFlag];
+    }
+});
+
+Messages.Door = Message.extend({
+    init: function(toX, toY, orientation, playerId) {
+        this.toX = toX;
+        this.toY = toY;
+        this.orientation = orientation;
+        this.playerId = playerId
+    },
+
+    serialize: function() {
+        return [Types.Messages.DOOR, this.toX, this.toY, this.orientation, this.playerId];
+    }
+});
+
+Messages.GameData = Message.extend({
+    init: function(time, redKills, blueKills) {
+        this.time = time;
+        this.redKills = redKills;
+        this.blueKills = blueKills;
+    },
+
+    serialize: function() {
+        return [Types.Messages.GAMEDATA, this.time, this.redKills, this.blueKills];
+    }
+});
+
+Messages.GameTeam = Message.extend({
+    init: function(team, playerId) {
+        this.team = team;
+        this.playerId = playerId;
+    },
+
+    serialize: function() {
+        return [Types.Messages.TEAM, this.team, this.playerId];
+    }
+});
+
+Messages.Stop = Message.extend({
+    init: function(toX, toY, orientation, playerId) {
+        this.toX = toX;
+        this.toY = toY;
+        this.orientation = orientation;
+        this.playerId = playerId
+    },
+
+    serialize: function() {
+        return [Types.Messages.STOP, this.toX, this.toY, this.orientation, this.playerId];
     }
 });

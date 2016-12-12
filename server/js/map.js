@@ -51,7 +51,7 @@ var Map = cls.Class.extend({
         this.initConnectedGroups(thismap.doors);
         this.initCheckpoints(thismap.checkpoints);
         this.initPVPAreas(thismap.pvpAreas);
-        this.initPVPWaitingArea(thismap.pvpGameAreas);
+        this.initGameAreas(thismap.pvpGameAreas);
         this.loadCollisionGrid();
 
         if (!this.generateCollisions && this.readyFunc) {
@@ -98,6 +98,47 @@ var Map = cls.Class.extend({
         log.info("Loaded collision grid.");
     },
 
+    generateCollisionGrid: function() {
+        var self = this;
+        var collisionGrid = require('../data/map/collisions.json');
+
+        var filePath = ('./server/data/map/collisiongrid.json')
+        fs.exists(filePath, function(exists) {
+            log.info("Generating collision grid...");
+            self.grid = [];
+            if (self.isLoaded) {
+                var tileIndex = 0;
+                log.info("height:"+self.height+",width:"+self.width);
+                for (var i = 0; i < self.height; i++) {
+                    self.grid[i] = [];
+                    for (var j = 0; j < self.width; j++) {
+                        if (_.include(self.collisions, tileIndex)) {
+                            self.grid[i][j] = 1;
+                        } else {
+                            self.grid[i][j] = 0;
+                        }
+                        tileIndex += 1;
+                    }
+                }
+            } else {
+                log.info("An error has occured, map has not loaded.");
+            }
+            fs.writeFile(filePath, JSON.stringify(self.grid), function(err) {
+                if (err)
+                    log.info(err);
+                else
+                    log.info("Successfully generated the collision grid");
+
+                if (this.readyFunc) {
+                    this.readyFunc();
+                }
+            });
+        });
+
+
+        log.info("Collision Grid Loaded");
+    },
+
 
     isOutOfBounds: function (x, y) {
         return x <= 0 || x >= this.width || y <= 0 || y >= this.height;
@@ -119,18 +160,19 @@ var Map = cls.Class.extend({
             return area.contains(x,y);
         });
 
-        return area;
+        return area ? true : false;
     },
 
     isGameArea: function(x, y) {
         var id = 0,
             area = null;
 
+
         area = _.detect(this.pvpGameAreas, function(area) {
-            return area.contains(x, y);
+           return area.contains(x, y);
         });
 
-        return area;
+        return area ? true : false;
     },
 
     isHealingArea: function(x, y) {
@@ -275,11 +317,11 @@ var Map = cls.Class.extend({
         });
     },
 
-    initPVPWaitingArea: function(pvpGameAreas) {
+    initGameAreas: function(gameAreas) {
         var self = this;
+
         this.pvpGameAreas = [];
-        //Only one.
-        _.each(pvpGameAreas, function(area) {
+        _.each(gameAreas, function(area) {
             var gameArea = new Area(area.id, area.x, area.y, area.w, area.h, null);
             self.pvpGameAreas.push(gameArea);
         });

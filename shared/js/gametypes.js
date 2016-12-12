@@ -175,7 +175,12 @@ Types = {
         FORCECAST: 134,
         PROJECTILE: 135,
         SPELLHIT: 136,
-        DOOR: 137
+        DOOR: 137,
+        GAMEFLAG: 138,
+        GAMEDATA: 139,
+        RESPAWN: 140,
+        STOP: 141,
+        DOORREQUEST: 142
     },
 
     Interfaces: {
@@ -254,6 +259,13 @@ Types = {
         DRAGONBALL: 102,
         BOULDER: 103,
         HEALBALL: 201
+    },
+
+    MinigameResult: {
+        REDWIN: 1,
+        BLUEWIN: 2,
+        DRAW: 3,
+        UNKNOWN: 4
     }
 };
 

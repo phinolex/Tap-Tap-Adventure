@@ -56,6 +56,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.mobile = false;
 
                 this.forceRedraw = false;
+                this.renderingEnabled = true;
             },
 
             setZoom: function () {
@@ -268,10 +269,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             drawPathingCells: function() {
                 var grid = this.game.pathingGrid;
 
-                if(grid && this.game.debugPathing) {
+                if(grid) {
                     for(var y=0; y < grid.length; y += 1) {
                         for(var x=0; x < grid[y].length; x += 1) {
-                            if(grid[y][x] === 1 && this.game.camera.isVisiblePosition(x, y)) {
+                            if(grid[y][x] != 0 && this.game.camera.isPositionVisible(x, y)) {
                                 this.drawCellHighlight(x, y, "rgba(50, 50, 255, 0.5)");
                             }
                         }
@@ -864,6 +865,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         var colour = entity.isWanted ? "red" : (entity.id === this.game.playerId) ? "#fcda5c" : entity.admin ? "#ff0000" : "white",
                             level = "Level: " + entity.level;
 
+                        if (entity.pvpTeam != -1)
+                            colour = (entity.pvpTeam === Types.Messages.BLUETEAM) ? "#cf7c6a" : "#0085E5";
+
                         this.drawText(ctx, level, (entity.x + 8), (entity.y - 17), true, colour);
                         this.drawText(ctx, entity.name, (entity.x + 8), (entity.y - 10), true, colour);
                     }
@@ -1235,34 +1239,23 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             drawHUD: function() {
-                if (this.game && this.game.player && (this.game.player.pvpFlag || this.game.player.pvpWaitFlag)) {
+                if (this.game && this.game.player && this.game.player.gameFlag) {
                     this.toptextcontext.save();
-                    var time = this.game.getPVPTimer();
 
+                    var time = this.game.getPVPTimer(),
+                        scale = this.getScaleFactor();
 
-                    switch (this.scale) {
-                        case 1: this.setFontSize(10); break;
-                        case 2: this.setFontSize(20); break;
-                        case 3: this.setFontSize(30); break;
-                    }
+                    if (this.mobile)
+                        scale = 1;
 
-                    this.drawText(this.toptextcontext, "" + this.game.redkills,
-                        this.getWidth() / 2 - 100 * this.scale,
-                        10 * this.scale,
-                        true,
-                        "#cf7c6a");
+                    this.setFontSize(this.mobile ? 20 : 10 * scale);
 
-                    this.drawText(this.toptextcontext, time,
-                        this.getWidth() / 2,
-                        10 * this.scale,
-                        true,
-                        "#fcda5c");
+                    if (scale == 3)
+                        scale = 2;
 
-                    this.drawText(this.toptextcontext, "" + this.game.bluekills,
-                        this.getWidth() / 2 + 100 * this.scale,
-                        10 * this.scale,
-                        true,
-                        "#0085E5");
+                    this.drawText(this.toptextcontext, "" + this.game.redKills, 10, 10 * scale, true, '#cf7c6a');
+                    this.drawText(this.toptextcontext, time, 125 * scale, 10 * scale, true, '#fcda5c');
+                    this.drawText(this.toptextcontext, "" + this.game.blueKills, 235 * scale, 10 * scale, true, '#0085e5')
 
                     this.toptextcontext.restore();
 
@@ -1301,7 +1294,18 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 }
             },
 
+            disableCamera: function() {
+                this.renderingEnabled = false;
+            },
+
+            enableCamera: function() {
+                this.renderingEnabled = true;
+            },
+
             renderFrame: function() {
+                if (!this.renderingEnabled)
+                    return;
+
                 if (this.mobile) {
                     this.clearDirtyRects();
                     this.preventFlickeringBug();
@@ -1323,6 +1327,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                 this.drawAnimatedTiles(this.mobile, this.context);
 
+                //this.drawOccupiedCells();
+                //this.drawPathingCells();
                 this.drawSelectedCell();
                 this.drawProjectiles(this.mobile);
                 this.drawEntityNames();
@@ -1347,6 +1353,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         this.drawCursor();
                 }
 
+                this.drawHUD();
             },
 
             preventFlickeringBug: function() {

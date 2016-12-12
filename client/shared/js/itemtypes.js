@@ -249,7 +249,8 @@ ItemTypes.isWeapon = function(kind) {
 
 ItemTypes.isArcherWeapon = function(kind) {
     var item = KindData[kind];
-    if (!item) return false;
+    if (!item)
+        return false;
     return item.type === "weaponarcher";
 };
 

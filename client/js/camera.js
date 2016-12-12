@@ -15,7 +15,6 @@ define(function() {
         },
 
         rescale: function() {
-            //var factor = 2;
             var factor = this.renderer.mobile ? 1 : 2;
 
             this.gridW = 15 * factor;
@@ -30,6 +29,22 @@ define(function() {
             log.debug("W:"+this.gridW + " H:" + this.gridH);
         },
 
+        setPosition: function(x, y) {
+            this.x = x;
+            this.y = y;
+
+            this.gridX = Math.floor( x / 16 );
+            this.gridY = Math.floor( y / 16 );
+        },
+
+        setGridPosition: function(x, y) {
+            this.gridX = x;
+            this.gridY = y;
+
+            this.x = this.gridX * 16;
+            this.y = this.gridY * 16;
+        },
+
         setRealCoords: function() {
             if (!this.game.player)
                 return;
@@ -39,6 +54,19 @@ define(function() {
 
             this.gridX = Math.round(this.game.player.x / 16) - this.gridW2;
             this.gridY = Math.round(this.game.player.y / 16) - this.gridH2;
+
+            this.isattached = true;
+        },
+
+        setChunkyCoords: function() {
+            if (!this.game.player)
+                return;
+
+            this.x = this.game.player.gridX * 16 - (this.gridW2 * this.renderer.tilesize);
+            this.y = this.game.player.gridY * 16 - (this.gridH2 * this.renderer.tilesize);
+
+            this.gridX = this.game.player.gridX - this.gridW2;
+            this.gridY = this.game.player.gridY - this.gridH2;
 
             this.isattached = true;
         },
@@ -114,6 +142,24 @@ define(function() {
                 return false;
             }
         },
+
+        isPositionVisible: function(x, y) {
+            if(y >= this.gridY && y < this.gridY + this.gridH
+                && x >= this.gridX && x < this.gridX + this.gridW) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+
+        focusEntity: function(entity) {
+            var w = this.gridW - 2,
+                h = this.gridH - 2,
+                x = Math.floor((entity.gridX - 1) / w) * w,
+                y = Math.floor((entity.gridY - 1) / h) * h;
+
+            this.setGridPosition(x, y);
+        }
 
     });
 

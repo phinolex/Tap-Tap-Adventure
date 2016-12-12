@@ -100,7 +100,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.autoEattingHandler = null;
                 // pvp
                 this.pvpFlag = false;
-                this.pvpTimer = null;
+                this.pvpTimer = 100;
                 //
                 this.dialogs = [];
                 this.characterDialog = new CharacterDialog(this);
@@ -118,6 +118,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.activeCircle = null;
                 this.selectedSkillIndex = 0;
                 this.bankShowing = false;
+
+                //Minigame
+
+                this.blueKills = 0;
+                this.redKills = 0;
+
+                //Rendering
+
+                this.renderTime = new Date().getTime();
 
 
 
@@ -479,7 +488,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if (this.started) {
                     if (this.hoveringPlayer) {
-                        this.setCursor(this.player.pvpFlag ? "sword" : "hand");
+                        if (this.player)
+                            this.setCursor(this.player.pvpFlag ? "sword" : "hand");
                         this.hoveringMob = false;
                         this.targetCellVisible = false;
                     } else if (this.hoveringMob && this.clickToFire == null) {
@@ -664,6 +674,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              * @param {Entity} entity The moving entity
              */
             unregisterEntityPosition: function(entity) {
+                log.info("Unregistering entity..");
                 if(entity) {
                     this.removeFromEntityGrid(entity, entity.gridX, entity.gridY);
                     this.removeFromPathingGrid(entity.gridX, entity.gridY);
@@ -677,10 +688,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             registerEntityPosition: function(entity) {
+                log.info("Registering entity..");
                 var x = entity.gridX,
                     y = entity.gridY;
-
-                log.info("Re-Registering to: " + x + " " + y);
 
                 if(entity) {
                     if(entity instanceof Character || entity instanceof Chest) {
@@ -744,9 +754,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     
                     this.currentTime = new Date().getTime();
 
-                    this.updateCursorLogic();
-                    this.updater.update();
-                    this.renderer.renderFrame();
+                    if (this.currentTime - this.renderTime > 15) {
+                        this.updateCursorLogic();
+                        this.updater.update();
+                        this.renderer.renderFrame();
+                        this.renderTime = this.currentTime;
+                    }
 
                     this.FPSCount++;
                     if (this.currentTime - this.lastFPSTime > 1000) {
@@ -981,11 +994,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.player.onStep(function() {
-                        for (var i=0; i < self.player.pets.length; ++i) {
-                            var pet = self.player.pets[i];
-                            log.info("Pet follow Step");
-                            pet.follow(this);
-                        }
 
                         if(self.player.hasNextStep())
                             self.registerEntityDualPosition(self.player);
@@ -993,11 +1001,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if(self.isZoningTile(self.player.gridX, self.player.gridY))
                             self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
 
+                        if (!self.map.isDoor(self.player.gridX, self.player.gridY) && !self.player.hasTarget())
+                            self.client.sendStep(self.player);
 
                         self.player.forEachAttacker(self.makeAttackerFollow);
 
 
-                        self.updatePlayerCheckpoint();
                         if(!self.player.isDead) {
                             self.audioManager.updateMusic();
                             if (self.renderer.mobile)
@@ -1007,12 +1016,30 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.client.onPVPChange(function(pvpFlag) {
                         self.player.flagPVP(pvpFlag);
+                        self.pvpFlag = pvpFlag;
                     });
 
-                    self.client.onPVPGame(function(inGame, pvpTimer) {
-                        self.pvpTimer = pvpTimer;
-                        self.player.pvpWaitFlag = true;
-                        self.player.inPVPGame = inGame;
+                    self.client.onMinigameData(function(pvpTime, redKills, blueKills) {
+                        self.pvpTimer = pvpTime;
+                        self.redKills = redKills;
+                        self.blueKills = blueKills;
+                    });
+                    
+                    self.client.onTeam(function(team, playerId) {
+                        if (self.player.id == playerId)
+                            self.player.setTeam(team);
+                        else {
+                            var entity = self.getEntityById(playerId);
+
+                            if (entity)
+                                entity.setTeam(team);
+                        }
+
+                        log.info("id: " + playerId + " team: " + team);
+                    });
+
+                    self.client.onGameFlag(function(gameFlag) {
+                        self.player.flagGame(gameFlag);
                     });
 
                     self.client.onCharData(function(attackSpeed, movementSpeed, walkSpeed, idleSpeed, attackRate) {
@@ -1025,45 +1052,31 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.player.setData(charData);
                     });
 
-                    self.player.onStopPathing(function(x, y) {
+                    self.client.onStop(function(x, y, orientation) {
+                        if (self.player.isMoving())
+                            self.player.stop([x, y, orientation]);
+                        else
+                            self.client.sendDoor(x, y, orientation);
+                    });
 
-                        if(self.player.hasTarget()) {
-                            self.player.lookAtTarget();
-                        }
+                    self.client.onDoor(function(x, y, orientation, playerId) {
 
-                        self.selectedCellVisible = false;
+                        if (playerId == self.player.id) {
+                            log.info("Setting: " + x + " y: " + y);
+                            self.unregisterEntityPosition(self.player);
 
-                        if(self.isItemAt(x, y)) {
-                            var item = self.getItemAt(x, y);
+                            self.selectedCellVisible = false;
+                            self.player.forceStop();
+                            self.selectedX = x;
+                            self.selectedy = y;
+                            self.previousClickPosition = {};
 
-                            try {
-                                self.client.sendLoot(item);
-                            } catch(e) {
-                                throw e;
-                            }
-                        }
+                            self.player.setGridPosition(x, y);
+                            self.player.nextGridX = x;
+                            self.player.nextGridY = y;
+                            self.player.turnTo(orientation);
 
-                        if (self.player.pvpFlag && !self.notifyPVPMessageSent) {
-                            self.chathandler.addGameNotification("Notification", "You are currently in a PvP area.");
-                            self.notifyPVPMessageSent = true;
-                            self.pvpFlag = true;
-                        } else {
-                            if (!self.player.pvpFlag && self.notifyPVPMessageSent) {
-                                self.chathandler.addGameNotification("Notification", "You are no longer in the PvP area.");
-                                self.notifyPVPMessageSent = false;
-                                self.pvpFlag = false;
-                            }
-                        }
-
-                        if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
-                            var dest = self.map.getDoorDestination(x, y);
-                            //self.client.sendDoor(x, y, dest.x, dest.y, dest.orientation);
-
-                            self.player.setGridPosition(dest.x, dest.y);
-                            self.player.nextGridX = dest.x;
-                            self.player.nextGridY = dest.y;
-                            self.player.turnTo(dest.orientation);
-                            self.client.sendTeleport(self.player.id, dest.x, dest.y);
+                            self.client.sendTeleport(self.player.id, x, y);
 
                             self.resetZone();
 
@@ -1074,46 +1087,95 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             self.updatePlateauMode();
 
-                            if(self.renderer.mobile || self.renderer.tablet)
-                                self.renderer.clearScreen(self.renderer.context);
-
-                            if(dest.portal)
-                                self.audioManager.playSound("teleport");
-
-                            self.camera.setRealCoords();
+                            self.renderer.clearScreen(self.renderer.context);
+                            self.renderer.cleanPathing();
 
                             self.renderer.drawBackground(self.renderer.background, "#12100D");
                             self.renderbackground = true;
                             self.renderer.forceRedraw = true;
+
+                            self.player.isStunned = false;
+
+                            self.camera.setRealCoords();
+                            self.registerEntityPosition(self.player);
+
+                        } else {
+                            var entity = self.getEntityById(playerId);
+
+                            if(entity) {
+                                var currentOrientation = orientation;
+
+                                self.makeCharacterTeleportTo(entity, x, y);
+                                entity.setOrientation(currentOrientation);
+
+                                entity.forEachAttacker(function(attacker) {
+                                    attacker.disengage();
+                                    attacker.idle();
+                                    attacker.stop();
+                                });
+                            }
+                        }
+                        
+                    });
+
+                    self.player.onStopPathing(function(x, y, forced) {
+
+                        if (self.player.hasTarget())
+                            self.player.lookAtTarget();
+
+                        self.selectedCellVisible = false;
+
+                        if (self.isItemAt(x, y)) {
+                            var item = self.getItemAt(x, y);
+
+                            try {
+                                self.client.sendLoot(item);
+                            } catch (e) {
+                                throw e;
+                            }
                         }
 
-                        self.client.sendMoveEntity2(self.player.id, x, y, 2);
-                        self.client.sendStep(self.player);
+                        if (forced) {
+                            self.player.isStunned = true;
+                            self.client.sendDoorRequest(self.player.gridX, self.player.gridY, forced[0], forced[1], forced[2]);
+                            return;
+                        }
 
-                        if(self.player.target instanceof Npc)
+                        if (!self.player.hasTarget() && self.map.isDoor(x, y)) {
+                            log.info("Player Target: " + self.player.target);
+                            var destination = self.map.getDoorDestination(x, y);
+                            self.player.isStunned = true;
+                            self.client.sendDoorRequest(x, y, destination.x, destination.y, destination.orientation);
+                            return;
+                        }
+
+                        log.info("After door?");
+
+                        if (!self.map.isDoor(x, y)) {
+                            self.client.sendMoveEntity2(self.player.id, x, y, 2);
+                            self.client.sendStep(self.player);
+                        }
+
+                        if (self.player.target instanceof Npc)
                             self.makeNpcTalk(self.player.target);
-                        else if(self.player.target instanceof Chest) {
+                        else if (self.player.target instanceof Chest) {
                             self.client.sendOpen(self.player.target);
                             self.audioManager.playSound("chest");
                         }
 
                         self.player.forEachAttacker(function(attacker) {
-                            if(!attacker.isAdjacentNonDiagonal(self.player)) {
-                                attacker.follow(self.player);
-                            }
+                            if (!attacker.isAdjacentNonDiagonal(self.player))
+                                attacker.follow(self.player, true);
                         });
 
                         if(!(self.player.moveUp || self.player.moveDown || self.player.moveLeft || self.player.moveRight))
                             self.renderer.forceRedraw = true;
 
-
                         if (self.renderer.mobile)
                             self.renderer.cleanPathing();
 
-
                         self.unregisterEntityPosition(self.player);
                         self.registerEntityPosition(self.player);
-
                     });
 
                     self.player.onRequestPath(function(x, y) {
@@ -1121,7 +1183,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         if(self.player.hasTarget())
                             ignored.push(self.player.target);
-
+                        
                         var path = self.findPath(self.player, x, y, ignored);
 
 
@@ -1150,9 +1212,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.player = undefined;
                             self.client.disable();
 
-                            setTimeout(function() {
-                                self.playerdeath_callback();
-                            }, 1000);
+                            self.playerdeath_callback();
 
                         });
 
@@ -1160,12 +1220,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             attacker.disengage();
                             attacker.idle();
                         });
-                        //this.loadMusic(music.name);
-                        //this.loadedMusic[music.name] = true;
+
                         self.audioManager.fadeOutCurrentMusic();
-                        /*self.audioManager.loadMusic("gameover", true);
-                        self.audioManager.loadedMusic["gameover"] = true;
-                        self.audioManager.playMusic({ sound: self.audioManager.getSound("gameover"), name: "gameover" });*/
                         self.audioManager.playSound("death");
                     });
 
@@ -1284,7 +1340,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                                     if(attacker.isAdjacent(attacker.target)) {
                                                         attacker.lookAtTarget();
                                                     } else {
-                                                        attacker.follow(entity);
+                                                        attacker.follow(entity, true);
                                                     }
                                                 });
                                             }
@@ -1302,9 +1358,19 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                                     entity.lookAtTarget();
                                                 }
 
+                                                if(entity instanceof Player) {
+                                                    var gridX = entity.destination.gridX,
+                                                        gridY = entity.destination.gridY;
+
+                                                    if (self.map.isDoor(gridX, gridY)) {
+                                                        var dest = self.map.getDoorDestination(gridX, gridY);
+                                                        entity.setGridPosition(dest.x, dest.y);
+                                                    }
+                                                }
+
                                                 entity.forEachAttacker(function(attacker) {
                                                     if(!attacker.isAdjacentNonDiagonal(entity) && attacker.id !== self.playerId) {
-                                                        attacker.follow(entity);
+                                                        attacker.follow(entity, true);
                                                     }
                                                 });
 
@@ -1816,45 +1882,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.client.onPlayerTeleport(function(id, x, y) {
                         var entity = null,
                             currentOrientation;
-                        if (id == self.playerId) {
 
-                            self.player.setGridPosition(x, y);
-                            self.player.nextGridX = x;
-                            self.player.nextGridY = y;
-
-                            self.resetZone();
-
-                            self.player.forEachAttacker(function(attacker) {
-                                attacker.disengage();
-                                attacker.idle();
-                            });
-
-                            self.updatePlateauMode();
-
-                            self.camera.setRealCoords();
-
-                            self.renderer.drawBackground(self.renderer.background, "#12100D");
-                            self.renderbackground = true;
-                            self.renderer.forceRedraw = true;
-
-                            if (self.renderer.mobile || self.renderer.tablet)
-                                this.renderer.clearScreen(this.renderer.context);
-
-
-                            for (var i = 0; i < self.player.pets.length; ++i) {
-                                var pet = self.player.pets[i];
-                                pet.path = null;
-                                pet.setGridPosition(x, y);
-                            }
-
-                            self.unregisterEntityPosition(self.player);
-                            self.registerEntityPosition(self.player);
-                        } else {
+                        if (id != self.playerId) {
 
                             entity = self.getEntityById(id);
-
-                            log.info("Entity: " + entity.name + " teleported: " + x + " " + y);
-
+                            
                             if(entity) {
                                 currentOrientation = entity.orientation;
 
@@ -2064,7 +2096,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 if(attacker.hasTarget()) {
                     attacker.removeTarget();
                 }
-                attacker.engage(target);
+                
+                attacker.engage(attacker, target);
 
                 if(attacker.id !== this.playerId) {
                     target.addAttacker(attacker);
@@ -2202,6 +2235,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              *
              */
             makePlayerAttack: function(mob) {
+                log.info("Attack");
                 this.createAttackLink(this.player, mob);
                 this.client.sendAttack(mob);
             },
@@ -2295,9 +2329,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              * Same as forEachEntity but only for instances of the Mob subclass.
              * @see forEachEntity
              */
-            forEachMob: function(callback) {
+            forEachMob: function(callback, andPlayers) {
                 _.each(this.entities, function(entity) {
-                    if(entity instanceof Mob && !(entity instanceof Pet)) {
+                    if(entity instanceof Mob || (andPlayers && entity instanceof Player)) {
                         callback(entity);
                     }
                 });
@@ -2347,9 +2381,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
 
             detectCollateral: function(x, y, range, kind, projectileType) {
-                var self = this;
-                var player = this.player;
-                var andPlayers = this.pvpFlag;
+                var self = this,
+                    player = this.player,
+                    andPlayers = this.pvpFlag;
+
 
                 this.forEachMob(function(mob) {
                     if (mob.gridX >= x - range && mob.gridX <= x + range && mob.gridY >= y - range && mob.gridY <= y + range)
@@ -2381,7 +2416,20 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             getPVPTimer: function() {
-                return this.pvpTimer;
+                var interval = this.pvpTimer;
+
+                var minutes = Math.floor(interval / (60));
+                var seconds = Math.floor((interval - (minutes * 60)));
+
+                if (minutes < 10)
+                    minutes = "0" + minutes;
+
+                if (seconds < 10)
+                    seconds = "0" + seconds;
+
+                var time = minutes + ':' + seconds;
+
+                return time;
             },
 
             forEachVisibleTile: function(callback, extra, optimized) {
@@ -2538,6 +2586,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     isPlayer = (character === this.player);
 
                 if(this.map.isColliding(x, y)) {
+                    log.info("Position: " + " x: " + x + " y: " + y + " is colliding.");
                     self.renderer.forceRedraw = true;
                     return path;
                 }
@@ -2848,11 +2897,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     entity = this.getEntityAt(pos.x, pos.y);
 
 
-                    if (this.map.isDoor(pos.x,pos.y))
+                    /*if (this.map.isDoor(pos.x,pos.y))
                     {
                         this.makePlayerGoTo(pos.x, pos.y);
                         return;
-                    }
+                    }*/
                     if (entity instanceof Entity)
                         this.renderer.forceRedraw = true;
 
@@ -2862,7 +2911,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         return;
                     }
                     if((entity instanceof Mob) && !(entity instanceof Pet) || (entity instanceof Player && entity !== this.player && (this.player.pvpFlag && this.pvpFlag))) {
-                        this.makePlayerAttack(entity);
+                        if (this.player.gameFlag && entity.pvpTeam != this.player.pvpTeam)
+                            this.makePlayerAttack(entity);
                     } else if(entity instanceof Item) {
                         this.makePlayerGoToItem(entity);
                     } else if(entity instanceof Npc) {
@@ -2991,21 +3041,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 var time = this.currentTime,
                     self = this;
 
-                if (character instanceof Pet)
-                {
-                    //var player = self.getEntityById(character.playerId);
-                    //if (player && player.target)
-                    //	    character.target = player.target;
-                    if (character.target && !character.target.isDead)
-                    {
-                        if (character.isNear(character.target,1)) {
-                            character.lookAtTarget();
-                            character.hit();
-                        }
-                        character.follow(character.target);
-                    }
-                }
-
                 // If mob has finished moving to a different tile in order to avoid stacking, attack again from the new position.
                 if(character.previousTarget && !character.isMoving() && character instanceof Mob && !(character instanceof Pet)) {
                     var t = character.previousTarget;
@@ -3022,19 +3057,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     if(character.canAttack(time)) {
                         if(!isMoving) { // don't hit target if moving to a different tile.
-                            if (character.hasTarget() && character.target instanceof Pet)
-                            {
 
-                                log.info("PETTTTT");
-                                return;
-                            }
                             if(character.hasTarget() && character.getOrientationTo(character.target) !== character.orientation) {
                                 character.lookAtTarget();
                             }
 
-
                             character.hit();
-
                             if(character.id === this.playerId) {
                                 if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
                                     self.client.sendCastSpell(3, character.x + 8, character.y + 8, character.target.x + 8, character.target.y + 8);
@@ -3054,7 +3082,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             && character.target instanceof Player
                             && !character.target.isMoving())
                         {
-                            character.follow(character.target);
+                            character.follow(character.target, true);
                         }
                     }
                 }
@@ -3157,9 +3185,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
             resetZone: function() {
                 this.bubbleManager.clean();
-                //this.initAnimatedTiles();
-                //this.renderer.renderStaticCanvases();
-                this.renderbackground = true;
+                this.initAnimatedTiles();
+                this.renderer.forceRedraw = true;
             },
 
             resetCamera: function() {
@@ -3243,10 +3270,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.client.enable();
                 this.client.sendLogin(this.player);
 
-                if(this.renderer.mobile || this.renderer.tablet)
+                if (this.renderer.mobile || this.renderer.tablet)
                     this.renderer.clearScreen(this.renderer.context);
 
-                this.client.sendMoveEntity(this.player);
+                //self.client.sendRespawn(self.player.id);
             },
 
             onGameStart: function(callback) {
@@ -3401,10 +3428,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 if(nb > 0) {
                     _.each(this.obsoleteEntities, function(entity) {
                         //if(entity.id != self.player.id) { // never remove yourself
-                        if(!(entity instanceof Player) && !(entity instanceof Pet)) { // never remove Players or Pets.
-                            log.info("Removed Entity: "+ entity.id);
+                        if(!(entity instanceof Player) && !(entity instanceof Pet)) // never remove Players or Pets.
                             self.removeEntity(entity);
-                        }
                     });
                     //log.debug("Removed "+nb+" entities: "+_.pluck(_.reject(this.obsoleteEntities, function(id) { return id === self.player.id }), 'id'));
                     this.obsoleteEntities = null;
@@ -3467,7 +3492,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 if(attacker.isAdjacent(attacker.target)) {
                     attacker.lookAtTarget();
                 } else {
-                    attacker.follow(target);
+                    attacker.follow(target, true);
                 }
             },
 

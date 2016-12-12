@@ -225,6 +225,12 @@ module.exports = PacketHandler = Class.extend({
                 case Types.Messages.DOOR:
                     self.handleDoor(message);
                     break;
+                case Types.Messages.RESPAWN:
+                    self.handleRespawn(message);
+                    break;
+                case Types.Messages.DOORREQUEST:
+                    self.handleDoorRequest(message);
+                    break;
                 default:
                     if (self.message_callback)
                         self.player.message_callback(message);
@@ -402,7 +408,7 @@ module.exports = PacketHandler = Class.extend({
                     return;
                 }
 
-                self.player.movePlayer(command[1], command[2]);
+                self.server.pushToPlayer(self.player, new Messages.Stop(parseInt(command[1]), parseInt(command[2]), 2));
                 return;
             }
 
@@ -441,15 +447,6 @@ module.exports = PacketHandler = Class.extend({
                         self.player.mana = self.player.maxMana;
 
                         self.server.pushToPlayer(p, new Messages.PlayerPoints(p.maxHitPoints, p.maxMana, p.hitPoints, p.mana), false);
-                        break;
-
-                    case "/teleport":
-                        if (command.length < 3) {
-                            self.sendGUIMessage("Invalid command syntax");
-                            return;
-                        }
-
-                        self.player.movePlayer(command[1], command[2]);
                         break;
 
                     case "/attackers":
@@ -774,13 +771,9 @@ module.exports = PacketHandler = Class.extend({
          return;*/
 
         self.player.setPosition(x, y);
-        self.player.movePlayer(x, y);
-        self.player.clearTarget();
-        //self.server.pushToPlayer(new Messages.Teleport(self.player));
         self.broadcast(new Messages.Teleport(self.player));
         self.server.handlePlayerVanish(self.player);
         self.server.pushRelevantEntityListTo(self.player);
-
     },
 
     handleAttack: function(message) {
@@ -1006,17 +999,30 @@ module.exports = PacketHandler = Class.extend({
         }
     },
 
-    handleDoor: function(message) {
-        var doorX = message[1],
+
+    handleDoorRequest: function(message) {
+        var self = this,
+            doorX = message[1],
             doorY = message[2],
             toX = message[3],
             toY = message[4],
             orientation = message[5];
 
-
-
+        self.server.pushToPlayer(self.player, new Messages.Stop(toX, toY, orientation));
     },
 
+    handleDoor: function(message) {
+        var self = this,
+            toX = message[1],
+            toY = message[2],
+            orientation = message[3];
+        
+        self.player.setPosition(toX, toY);
+        self.player.flagPVP(self.server.map.isPVP(toX, toY));
+        self.player.checkGameFlag(self.server.map.isGameArea(toX, toY));
+        self.server.pushToPlayer(self.player, new Messages.Door(toX, toY, orientation, self.player.id));
+    },
+    
     handleHit: function(message) {
         this.handleHitEntity(this.player, message[1]);
     },
@@ -1129,6 +1135,9 @@ module.exports = PacketHandler = Class.extend({
 
             entity.setPosition(x, y);
             self.broadcast(new Messages.Move(entity));
+
+            if (self.server.map.isPVP(x, y) && self.server.map.isGameArea(x, y) && !self.server.minigameStarted)
+                self.server.pushToPlayer(self.player, new Messages.Stop(33, 90, 4));
         }
     },
 
@@ -1144,8 +1153,30 @@ module.exports = PacketHandler = Class.extend({
             self.redisPool.setPointsData(self.player.name, self.player.maxHitPoints, self.player.maxMana);
             self.redisPool.setPlayerPosition(self.player, x, y);
             self.player.setPosition(x, y);
-
+            self.player.pvpFlag = false;
+            self.player.gameFlag = false;
         }
+    },
+
+
+    handleRespawn: function(message) {
+        var self = this,
+            playerId = message[1];
+
+        if (playerId != self.player.id) {
+            log.info("This should not be happening.");
+            return;
+        }
+
+        var spawnPosition = self.player.getSpawnPoint(),
+            x = spawnPosition[0],
+            y = spawnPosition[1],
+            orientation = Utils.randomInt(1, 4);
+
+
+
+        if (self.server.map.isPVP(x, y) && self.server.map.isGameArea(x, y) && !self.server.minigameStarted)
+            self.server.pushToPlayer(self.player, new Messages.Stop(33, 90, 4));
     },
 
     handleUpdate: function(message) {
@@ -1202,9 +1233,7 @@ module.exports = PacketHandler = Class.extend({
         var p = self.player;
 
         var projectileId = '' + Utils.randomInt(0, projectile) + Utils.randomInt(0, sx) + Utils.randomInt(0, x) + Utils.randomInt(0, sy) + Utils.randomInt(0, y);
-
-        log.info("ProjectileId: "+ projectileId);
-
+        
         self.broadcast(new Messages.Projectile(projectileId, projectile, sx, sy, x, y, self.player.id), false);
 
 

@@ -52,6 +52,7 @@ module.exports = Player = Character.extend({
 
         this.inventory = null;
         this.pvpFlag = false;
+        this.gameFlag = false;
         this.bannedTime = 0;
         this.banUseTime = 0;
         this.membershipTime = 0;
@@ -67,7 +68,6 @@ module.exports = Player = Character.extend({
         this.inPVPLobby = false;
         this.inPVPGame = false;
         this.healExecuted = 0;
-        this.teamId = -1;
         this.flareDanceCallback = null;
         this.flareDanceExecuted1 = 0;
         this.flareDanceExecuted2 = 0;
@@ -88,6 +88,7 @@ module.exports = Player = Character.extend({
         this.attackedTime = new Timer(950);
         this.packetHandler = new PacketHandler(this, connection, worldServer, databaseHandler);
         this.pClass = 0;
+        this.minigameTeam = -1;
     },
 
 
@@ -120,20 +121,28 @@ module.exports = Player = Character.extend({
         this.connection.send(message);
     },
 
-    setInPVPLobby: function(inPVPLobby) {
-        if (this.inPVPLobby !== inPVPLobby)
-            this.inPVPLobby = inPVPLobby;
-    },
+    verifyPositioning: function() {
 
-    setInPVPGame: function(inPVPGame) {
-        if (this.inPVPGame !== inPVPGame)
-            this.inPVPGame = inPVPGame;
     },
 
     flagPVP: function(pvpFlag){
         if(this.pvpFlag !== pvpFlag){
             this.pvpFlag = pvpFlag;
-            this.send(new Messages.PVP(this.pvpFlag).serialize());
+            this.server.pushToPlayer(this, new Messages.PVP(this.pvpFlag));
+            this.server.pushToPlayer(this, new Messages.Chat(this, this.pvpFlag ? "You are now in a PVP zone!" : "You are no longer in a PVP zone!"));
+        }
+    },
+
+    checkGameFlag: function(gameFlag) {
+        if (this.gameFlag !== gameFlag) {
+            this.gameFlag = gameFlag;
+            this.server.pushToPlayer(this, new Messages.GameFlag(this.gameFlag));
+            this.server.pushToPlayer(this, new Messages.Chat(this, this.gameFlag ? "You have entered the lobby!" : "You are no longer in lobby."));
+
+            if (this.gameFlag)
+                this.server.addPlayerToMinigame(this);
+            else
+                this.server.removePlayerFromMinigame(this);
         }
     },
 
@@ -255,7 +264,16 @@ module.exports = Player = Character.extend({
     },
 
     getSpawnPoint: function() {
-          return [325 + Utils.randomInt(0, 3), 87 + Utils.randomInt(0, 2)];
+        var self = this,
+            playerTeam = self.getTeam(),
+            offset = Utils.randomInt(-2, 2);
+
+        if (playerTeam == Types.Messages.REDTEAM)
+            return [163 + offset, 499 + offset];
+        else if (playerTeam == Types.Messages.BLUETEAM)
+            return [133 + offset, 471 + offset];
+        else
+            return [325 + offset, 87 + offset];
     },
 
     onRequestPosition: function(callback) {
@@ -549,12 +567,12 @@ module.exports = Player = Character.extend({
             return false;
         }
 
-        if ((ItemTypes.isArmor(itemKind) && (this.pClass != Types.PlayerClass.FIGHTER && this.pClass != Types.PlayerClass.DEFENDER)) ||
+        /*if ((ItemTypes.isArmor(itemKind) && (this.pClass != Types.PlayerClass.FIGHTER && this.pClass != Types.PlayerClass.DEFENDER)) ||
             (ItemTypes.isArcherArmor(itemKind) && this.pClass != Types.PlayerClass.ARCHER)) {
 
             this.server.pushToPlayer(this, new Messages.GuiNotify("Your class cannot wield this armour."));
             return false;
-        }
+        }*/
 
         return true;
     },
@@ -570,12 +588,12 @@ module.exports = Player = Character.extend({
             return false;
         }
 
-        if ((ItemTypes.isWeapon(itemKind) && (this.pClass != Types.PlayerClass.FIGHTER && this.pClass != Types.PlayerClass.DEFENDER)) ||
+        /*if ((ItemTypes.isWeapon(itemKind) && (this.pClass != Types.PlayerClass.FIGHTER && this.pClass != Types.PlayerClass.DEFENDER)) ||
             (ItemTypes.isArcherWeapon(itemKind) && this.pClass != Types.PlayerClass.ARCHER)) {
 
             this.server.pushToPlayer(this, new Messages.GuiNotify("Your class cannot wield this weapon."));
             return false;
-        }
+        }*/
 
         return true;
     },
@@ -947,10 +965,6 @@ module.exports = Player = Character.extend({
         return this.poisoned;
     },
 
-    setTeam: function(id) {
-        this.teamId = id;
-    },
-
     setPoison: function(state) {
         var self = this;
         self.server.pushToPlayer(self, new Messages.Poison(state));
@@ -1052,5 +1066,21 @@ module.exports = Player = Character.extend({
 
     getActiveSkill: function() {
         return this.activeSkill;
+    },
+
+    forcefullyTeleport: function(x, y, orientation) {
+        var self = this;
+
+        log.info("Teleporting: " + self.name);
+
+        self.server.pushToPlayer(self, new Messages.Stop(x, y, orientation));
+    },
+
+    setTeam: function(team) {
+        this.minigameTeam = team;
+    },
+
+    getTeam: function(team) {
+        return this.minigameTeam;
     }
 });
