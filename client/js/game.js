@@ -19,7 +19,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile, Guild, GameData, Button2, Util) {
         var Game = Class.extend({
             init: function(app) {
-                $('head').append( $('<link rel="stylesheet" type="text/css" />').attr('href', 'css/game.css') );
+                $('head').append($('<link rel="stylesheet" type="text/css" />').attr('href', 'css/game.css'));
 
                 this.app = app;
                 this.version = 1;
@@ -130,7 +130,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
 
 
-                this.spriteNames = [ "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
+                this.spriteNames = [
+                    "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
                     "bearseonbiarmor", "item-bearseonbiarmor", "frankensteinarmor",
                     "item-gayarcherarmor", "redsicklebow", "item-redsicklebow", "jirisanmoonbear",
                     "halloweenjkarmor", "item-halloweenjkarmor", "mojojojonpc", "gayarcherarmor",
@@ -257,36 +258,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     "skyelf", "skylightsaber", "item-skylightsaber", "redelf", "redlightsaber",
                     "item-redlightsaber", "item-sidesword", "sidesword", "yellowmouse",
                     "whitemouse", "brownmouse", "spear", "item-spear", "guardarmor",
-                    "item-guardarmor",
-                    "item-pendant1", "item-ring1",
-                    "item-topazring",
-                    "item-gold", "item-bigflask",
-                    "item-mountseadragon", "item-mountforestdragon", "item-mountwhitetiger",
-                    "item-armorbinding",
-                    "item-armorcommon",
-                    "item-armorpatches",
-                    "item-armorrare",
-                    "item-armoruncommon",
-                    "item-bowcommon",
-                    "item-bowlimb",
-                    "item-bowrare",
-                    "item-bowstring",
-                    "item-bowuncommon",
-                    "item-branch",
-                    "item-cloth",
-                    "item-element",
-                    "item-leaf",
-                    "item-mineral",
-                    "item-rock",
-                    "item-seed",
-                    "item-weaponblade",
-                    "item-weaponcommon",
-                    "item-weaponhilt",
-                    "item-weaponrare",
-                    "item-weaponuncommon",
-                    "item-wood",
-                    "icegoblin",
-                    "item-manaflask",
+                    "item-guardarmor", "item-pendant1", "item-ring1", "item-topazring",
+                    "item-gold", "item-bigflask", "item-mountseadragon", "item-mountforestdragon",
+                    "item-mountwhitetiger", "item-armorbinding", "item-armorcommon", "item-armorpatches",
+                    "item-armorrare", "item-armoruncommon", "item-bowcommon", "item-bowlimb",
+                    "item-bowrare", "item-bowstring", "item-bowuncommon", "item-branch",
+                    "item-cloth", "item-element", "item-leaf", "item-mineral", "item-rock",
+                    "item-seed", "item-weaponblade", "item-weaponcommon", "item-weaponhilt",
+                    "item-weaponrare", "item-weaponuncommon", "item-wood", "icegoblin", "item-manaflask",
                     "projectile-fireball", "projectile-iceball", "projectile-boulder",
                     "projectile-pinearrow", "projectile-none", "projectile-tornado",
                     "projectile-terror", "explosion-fireball", "explosion-heal",
@@ -434,15 +413,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
 
             loadSprite: function(name) {
-                var scale = this.renderer.getScaleFactor(),
-                    isMobile = this.renderer.mobile;
-
-                if (this.renderer.mobile) {
-                    scale = 1;
-                    this.spritesets[scale][name] = new Sprite(name, scale + 1);
+                if(this.renderer.upscaledRendering || this.renderer.mobile) {
+                    this.spritesets[0][name] = new Sprite(name, 1);
+                    this.spritesets[1][name] = new Sprite(name, 2);
+                } else if (this.renderer.tablet)
+                    this.spritesets[1][name] = new Sprite(name, 2);
+                else {
+                    this.spritesets[0][name] = new Sprite(name, 1);
+                    this.spritesets[1][name] = new Sprite(name, 2);
+                    this.spritesets[2][name] = new Sprite(name, 3);
                 }
-
-                this.spritesets[scale - 1][name] = new Sprite(name, scale);
             },
 
             setSpriteScale: function(scale) {
@@ -674,7 +654,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              * @param {Entity} entity The moving entity
              */
             unregisterEntityPosition: function(entity) {
-                log.info("Unregistering entity..");
                 if(entity) {
                     this.removeFromEntityGrid(entity, entity.gridX, entity.gridY);
                     this.removeFromPathingGrid(entity.gridX, entity.gridY);
@@ -688,7 +667,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             registerEntityPosition: function(entity) {
-                log.info("Registering entity..");
                 var x = entity.gridX,
                     y = entity.gridY;
 
@@ -754,12 +732,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     
                     this.currentTime = new Date().getTime();
 
-                    if (this.currentTime - this.renderTime > 15) {
-                        this.updateCursorLogic();
-                        this.updater.update();
-                        this.renderer.renderFrame();
-                        this.renderTime = this.currentTime;
-                    }
+                    this.updateCursorLogic();
+                    this.updater.update();
+                    this.renderer.renderFrame();
 
                     this.FPSCount++;
                     if (this.currentTime - this.lastFPSTime > 1000) {
@@ -1034,8 +1009,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             if (entity)
                                 entity.setTeam(team);
                         }
-
-                        log.info("id: " + playerId + " team: " + team);
                     });
 
                     self.client.onGameFlag(function(gameFlag) {
@@ -1059,10 +1032,17 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.client.sendDoor(x, y, orientation);
                     });
 
+                    self.client.onAd(function(playerId) {
+                         try {
+                             adbuddiz.showAd();
+                         } catch(e) {
+                             log.info(e);
+                         }
+                    });
+
                     self.client.onDoor(function(x, y, orientation, playerId) {
 
                         if (playerId == self.player.id) {
-                            log.info("Setting: " + x + " y: " + y);
                             self.unregisterEntityPosition(self.player);
 
                             self.selectedCellVisible = false;
@@ -1098,6 +1078,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             self.camera.setRealCoords();
                             self.registerEntityPosition(self.player);
+
+                            try {
+                                self.player.disengage();
+                                self.player.idle();
+                            } catch (e) {}
 
                         } else {
                             var entity = self.getEntityById(playerId);
@@ -1142,14 +1127,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         }
 
                         if (!self.player.hasTarget() && self.map.isDoor(x, y)) {
-                            log.info("Player Target: " + self.player.target);
                             var destination = self.map.getDoorDestination(x, y);
                             self.player.isStunned = true;
                             self.client.sendDoorRequest(x, y, destination.x, destination.y, destination.orientation);
                             return;
                         }
-
-                        log.info("After door?");
 
                         if (!self.map.isDoor(x, y)) {
                             self.client.sendMoveEntity2(self.player.id, x, y, 2);
@@ -1223,6 +1205,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         self.audioManager.fadeOutCurrentMusic();
                         self.audioManager.playSound("death");
+
+                        try {
+                            adbuddiz.showAd();
+                        } catch (e) {}
                     });
 
                     self.player.onHasMoved(function(player) {
@@ -1610,7 +1596,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             sy = data[3],
                             x = data[4],
                             y = data[5],
-                            owner = data[6];
+                            owner = data[6],
+                            isMobOwner = data[7];
 
                         var np = new Projectile(id, projectiletype);
 
@@ -1688,10 +1675,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             if (p.owner == self.playerId) {
                                 if (p.kind == Types.Projectiles.FIREBALL || p.kind == Types.Projectiles.TORNADO ||
                                     p.kind == Types.Projectiles.TERROR || p.kind == Types.Projectiles.ICEBALL)
-                                    self.detectCollateral(impactPos.x, impactPos.y, 2, p.kind, projectiletype);
+                                    self.detectCollateral(impactPos.x, impactPos.y, 2, p.kind, projectiletype, isMobOwner);
 
                                 if (p.kind == Types.Projectiles.PINEARROW)
-                                    self.detectCollateral(impactPos.x, impactPos.y, 1, p.kind, projectiletype);
+                                    self.detectCollateral(impactPos.x, impactPos.y, 1, p.kind, projectiletype, isMobOwner);
                             }
 
                             self.renderer.cleanPathing();
@@ -1705,7 +1692,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.addProjectile(np);
                     });
 
-                    self.client.onPlayerDamageMob(function(mobId, points, healthPoints, maxHp) {
+                    self.client.onPlayerDamageMob(function(mobId, points, healthPoints, maxHp, playerId) {
                         var mob = self.getEntityById(mobId);
 
                         if (isNaN(points)) {
@@ -1715,11 +1702,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.infoManager.addDamageInfo(-points, mob.x, mob.y - 15, "inflicted");
                         }
 
-                        if(self.player.hasTarget()){
-                            self.updateTarget(mobId, points, healthPoints, maxHp);
+                        if (self.player.id == playerId) {
+                            if(self.player.hasTarget())
+                                self.updateTarget(mobId, points, healthPoints, maxHp);
                         }
-
-
+                        
                     });
 
                     self.client.onPlayerKillMob(function(id, level, exp) {
@@ -2097,11 +2084,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     attacker.removeTarget();
                 }
                 
-                attacker.engage(attacker, target);
+                attacker.engage(attacker, target, attacker instanceof Player);
 
-                if(attacker.id !== this.playerId) {
+                if(attacker.id !== this.playerId)
                     target.addAttacker(attacker);
-                }
             },
 
             /**
@@ -2380,10 +2366,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              */
 
 
-            detectCollateral: function(x, y, range, kind, projectileType) {
+            detectCollateral: function(x, y, range, kind, projectileType, isMobOwner) {
                 var self = this,
                     player = this.player,
-                    andPlayers = this.pvpFlag;
+                    andPlayers = isMobOwner ? true : this.pvpFlag;
 
 
                 this.forEachMob(function(mob) {
@@ -2889,37 +2875,29 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 if(this.started
                     && this.player
-                        //&& !this.isZoning()
-                        //&& !this.isZoningTile(this.player.nextGridX, this.player.nextGridY)
-                    && !this.player.isDead
-                    && !this.hoveringCollidingTile
-                    && !this.hoveringPlateauTile) {
+                    && !this.hoveringCollidingTile) {
                     entity = this.getEntityAt(pos.x, pos.y);
+                    log.info("Here..");
 
-
-                    /*if (this.map.isDoor(pos.x,pos.y))
-                    {
-                        this.makePlayerGoTo(pos.x, pos.y);
-                        return;
-                    }*/
                     if (entity instanceof Entity)
                         this.renderer.forceRedraw = true;
 
-                    if (entity instanceof Pet)
-                    {
+                    if (entity instanceof Pet) {
                         this.makePlayerGoTo(pos.x, pos.y);
                         return;
                     }
-                    if((entity instanceof Mob) && !(entity instanceof Pet) || (entity instanceof Player && entity !== this.player && (this.player.pvpFlag && this.pvpFlag))) {
+
+                    if (entity instanceof Mob)
+                        this.makePlayerAttack(entity);
+                    else if (entity instanceof Player && entity.id != this.player && (this.player.pvpFlag && this.pvpFlag)) {
                         if (this.player.gameFlag && entity.pvpTeam != this.player.pvpTeam)
                             this.makePlayerAttack(entity);
-                    } else if(entity instanceof Item) {
+                    } else if(entity instanceof Item)
                         this.makePlayerGoToItem(entity);
-                    } else if(entity instanceof Npc) {
-
-                        if(this.player.isAdjacentNonDiagonal(entity) === false) {
+                    else if(entity instanceof Npc) {
+                        if(this.player.isAdjacentNonDiagonal(entity) === false)
                             this.makePlayerTalkTo(entity);
-                        } else {
+                        else {
                             if(!this.player.disableKeyboardNpcTalk) {
                                 this.makeNpcTalk(entity);
 
@@ -2927,17 +2905,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                     this.player.disableKeyboardNpcTalk = true;
                             }
                         }
-                    } else if(entity instanceof Chest) {
+                    } else if(entity instanceof Chest)
                         this.makePlayerOpenChest(entity);
-                    } else if(entity instanceof Gather) {
-                        if (this.player.isAdjacentNonDiagonal(entity) === true) {
+                    else if(entity instanceof Gather) {
+                        if (this.player.isAdjacentNonDiagonal(entity) === true)
                             this.client.sendGather(entity.id);
-                        }
 
-                    } else if (!this.joystick || ((this.renderer.tablet || this.renderer.mobile) && this.joystick.isActive())) {
+                    } else if (!this.joystick || ((this.renderer.tablet || this.renderer.mobile) && this.joystick.isActive()))
                         this.makePlayerGoTo(pos.x, pos.y);
-
-                    }
                 }
             },
 
@@ -3064,6 +3039,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             character.hit();
                             if(character.id === this.playerId) {
+                                //Determine what kind of hit server-sided
+                                //self.client.sendDetermineHit(character, character.target);
+                                
+
                                 if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
                                     self.client.sendCastSpell(3, character.x + 8, character.y + 8, character.target.x + 8, character.target.y + 8);
                                 else
@@ -3251,6 +3230,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
             respawn: function() {
                 log.debug("Beginning respawn");
+                var self = this;
+
                 this.entities = {};
                 this.initEntityGrid();
                 this.initPathingGrid();
@@ -3266,13 +3247,19 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 this.initPlayer();
 
-                this.started = true;
+                self.selectedCellVisible = false;
+                self.selectedX = self.player.gridX;
+                self.selectedy = self.player.gridY;
+                self.previousClickPosition = {};
+
                 this.client.enable();
                 this.client.sendLogin(this.player);
 
                 if (this.renderer.mobile || this.renderer.tablet)
                     this.renderer.clearScreen(this.renderer.context);
 
+                this.started = true;
+                this.player.isDead = false;
                 //self.client.sendRespawn(self.player.id);
             },
 

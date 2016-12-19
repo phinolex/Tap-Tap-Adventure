@@ -39,6 +39,10 @@
                         {
                             "xml": "<preference default=\"16\" name=\"android-minSdkVersion\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -54,6 +58,28 @@
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
                             "count": 1
                         }
+                    ],
+                    "/manifest/application": [
+                        {
+                            "xml": "<activity android:name=\"com.purplebrain.adbuddiz.sdk.AdBuddizActivity\" android:theme=\"@android:style/Theme.Translucent\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/manifest": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"AdBuddizBridge\"><param name=\"android-package\" value=\"com.purplebrain.adbuddiz.sdk.AdBuddizBridge\" /></feature>",
+                            "count": 1
+                        }
                     ]
                 }
             }
@@ -65,12 +91,39 @@
         },
         "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "com.taptapadventure"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.taptapadventure"
+        },
+        "com.purplebrain.adbuddiz.sdk": {
+            "PACKAGE_NAME": "com.taptapadventure"
         }
     },
     "dependent_plugins": {},
-    "modules": [],
+    "modules": [
+        {
+            "file": "plugins/cordova-plugin-device/www/device.js",
+            "id": "cordova-plugin-device.device",
+            "clobbers": [
+                "device"
+            ]
+        },
+        {
+            "file": "plugins/com.purplebrain.adbuddiz.sdk/www/adbuddizbridge.js",
+            "id": "com.purplebrain.adbuddiz.sdk.AdBuddizBridge"
+        },
+        {
+            "file": "plugins/com.purplebrain.adbuddiz.sdk/www/adbuddiz.js",
+            "id": "com.purplebrain.adbuddiz.sdk.AdBuddiz",
+            "clobbers": [
+                "adbuddiz"
+            ]
+        }
+    ],
     "plugin_metadata": {
         "cordova-plugin-whitelist": "1.2.2",
-        "cordova-plugin-crosswalk-webview": "2.0.0"
+        "cordova-plugin-crosswalk-webview": "2.0.0",
+        "cordova-plugin-device": "1.1.4",
+        "com.purplebrain.adbuddiz.sdk": "3.1.11"
     }
 }

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.taptapadventure" version="0.0.58" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="100009" id="net.udeva.TTA" version="0.9.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
@@ -12,13 +12,19 @@
     <preference default="embedded" name="xwalkMode" />
     <preference default="true" name="xwalkMultipleApk" />
     <preference default="16" name="android-minSdkVersion" />
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="AdBuddizBridge">
+        <param name="android-package" value="com.purplebrain.adbuddiz.sdk.AdBuddizBridge" />
+    </feature>
     <allow-intent href="market:*" />
-    <name>Maearth</name>
+    <name>Tap Tap Adventure</name>
     <description>
-	A Browser based MMORPG.
+	A HTML5 cross-platform adventure .
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="taptapadventure@gmail.com" href="http://taptapadventure.com">
+        TTA Development Team
     </author>
     <content src="main.html" />
     <access origin="*" />
@@ -33,4 +39,6 @@
     <preference name="xwalkMode" value="embedded" />
     <preference name="xwalkMultipleApk" value="true" />
     <preference name="android-minSdkVersion" value="16" />
+    <preference name="orientation" value="landscape" />
+    <preference name="DisallowOverscroll" value="true" />
 </widget>

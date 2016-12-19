@@ -19,7 +19,6 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
         },
 
         loadJSON: function(data) {
-            log.info("Loading: " + this.name);
             this.id = data.id;
             this.filepath = "img/" + this.scale + "/" + this.id + ".png";
             this.animationData = data.animations;
@@ -38,7 +37,6 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
 
             this.image = new Image();
             this.image.crossOrigin = "Anonymous";
-            log.info("filepath:"+this.filepath);
             this.image.src = this.filepath;
 
             this.image.onload = function() {
@@ -100,7 +98,7 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
                 };
 
             } catch(e) {
-                log.error("Error getting image data for sprite : "+this.name);
+                //log.error("Error getting image data for sprite : "+this.name);
             }
         },
 

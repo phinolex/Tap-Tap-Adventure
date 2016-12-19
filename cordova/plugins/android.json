@@ -12,7 +12,14 @@
         },
         "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "com.taptapadventure"
+        },
+        "com.purplebrain.adbuddiz.sdk": {
+            "PACKAGE_NAME": "com.taptapadventure"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.taptapadventure"
+        }
+    }
 }

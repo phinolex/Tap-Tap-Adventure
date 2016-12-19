@@ -180,7 +180,9 @@ Types = {
         GAMEDATA: 139,
         RESPAWN: 140,
         STOP: 141,
-        DOORREQUEST: 142
+        DOORREQUEST: 142,
+        DETERMINEHIT: 143,
+        SENDAD: 144
     },
 
     Interfaces: {

@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta
+            name="viewport"
+            content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <link rel="icon" type="image/png" href="img/common/favicon.png">
     <meta property="og:title" content="TapTap">
     <meta property="og:type" content="website">
@@ -136,9 +138,9 @@
             <article id="credits">
                 <h1>
                     <span class="left-ornament"></span>
-         	               <span class="title">
-         	                   Special thanks to Little Workshop
-         	               </span>
+                            <span class="title">
+                                Special thanks to Little Workshop
+                            </span>
                     <span class="right-ornament"></span>
                 </h1>
                 <div id="authors">
@@ -146,7 +148,7 @@
                     <br>
                     <br>
                     Music by <a class="clickable" target="_blank" href="http://opengameart.org/users/marcelofg55">Marcelofg55</a>,
-                            <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>,
+                    <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>,
                     <a class="clickable" target="_blank" href="https://soundcloud.com/gyrowolf/sets/gyrowolfs-rpg-maker-music-pack">Gyrowolf</a>,
                     <br>
                     <a class="clickable" target="_blank" href="https://soundcloud.com/freakified/what-dangers-await-campus-map">Freakified</a>,
@@ -940,8 +942,8 @@
 <img src="img/common/thingy.png" alt="" class="preload">
 
 <div id="resize-check"></div>
-<!--<script src="javascripts/socket.io.js"></script>-->
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script src="javascripts/socket.io.js"></script>
+<script src="cordova.js"></script>
 
 <script type="text/javascript">
     var ctx = document.querySelector('canvas').getContext('2d'),
@@ -953,6 +955,26 @@
         document.querySelector('body').className += ' upscaled';
     }
     parchment.className = "loadcharacter";
+</script>
+
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1133204880132577',
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+
+        // ADD ADDITIONAL FACEBOOK CODE HERE
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 </script>
 
 <script src="js/lib/log.js"></script>

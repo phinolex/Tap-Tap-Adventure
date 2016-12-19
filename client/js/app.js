@@ -22,6 +22,13 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             this.classNames = ["loadcharacter", "createcharacter"];
             this.frontPage = this.classNames[0];
 
+            try {
+                adbuddiz.setAndroidPublisherKey("c7a9619a-7450-4461-bb6a-cb1a7ab6b36d");
+                adbuddiz.setIOSPublisherKey("81eff358-ab4f-41e7-aa87-a54d10625624");
+                adbuddiz.cacheAds();
+            } catch (e) {
+                log.info("error: " + e);
+            }
         },
 
         setGame: function(game) {

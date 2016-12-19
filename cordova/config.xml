@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.taptapadventure" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="net.udeva.TTA" android-versionCode="100009" version="0.9.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Tap Tap Adventure</name>
     <description>
-	A HTML5 cross-platform MMORPG!.
+	A HTML5 cross-platform adventure .
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="taptapadventure@gmail.com" href="http://taptapadventure.com">
+        TTA Development Team
     </author>
     <content src="main.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
@@ -28,4 +28,6 @@
     <preference name="xwalkMode" value="embedded" />
     <preference name="xwalkMultipleApk" value="true" />
     <preference name="android-minSdkVersion" value="16" />
+    <preference name="orientation" value="landscape" />
+    <preference name="DisallowOverscroll" value="true" />
 </widget>

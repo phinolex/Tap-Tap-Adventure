@@ -231,6 +231,9 @@ module.exports = PacketHandler = Class.extend({
                 case Types.Messages.DOORREQUEST:
                     self.handleDoorRequest(message);
                     break;
+                case Types.Messages.DETERMINEHIT:
+                    self.handleDetermineHit(message);
+                    break;
                 default:
                     if (self.message_callback)
                         self.player.message_callback(message);
@@ -353,13 +356,13 @@ module.exports = PacketHandler = Class.extend({
             }
         };
 
-        if (developmentMode) {
+        /*if (developmentMode) {
             self.player.name = playerName.substr(0, 36).trim();
             self.player.pw = playerPassword.substr(0, 45);
             self.player.email = "Me@me.me";
             self.redisPool.loadPlayer(self.player);
             return;
-        }
+        }*/
 
         if (self.server.loggedInPlayer(playerName.substr(0, 36).trim())) {
             self.connection.sendUTF8('loggedin');
@@ -411,32 +414,23 @@ module.exports = PacketHandler = Class.extend({
                 self.server.pushToPlayer(self.player, new Messages.Stop(parseInt(command[1]), parseInt(command[2]), 2));
                 return;
             }
-
-            if (command[0] == "/addskill") {
-                if (command.length < 3) {
-                    self.sendGUIMessage("Invalid command syntax.");
-                    return;
-                }
-
-                var skillName = command[1];
-                var skillLevel = command[2];
-
-                self.player.skillHandler.add(skillName, skillLevel);
-                var index = self.player.skillHandler.getIndexByName(skillName);
-
-                self.redisPool.handleSkills(self.player, index, skillName, skillLevel);
-                self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
-            }
-
-            if (command[0] == "/finishachievement") {
-                var achievementId = command[1];
-                
-                self.player.finishAchievement(achievementId);
-            }
             
             
             if (self.player.rights == 2) {
                 switch(command[0]) {
+
+                    case "/teleto":
+                        var playerName = '';
+                        for (var i = 1; i < command.length; i++)
+                            playerName += command[i];
+                        
+
+                        var toPlayer = self.server.getPlayerByName(playerName);
+
+                        self.server.pushToPlayer(self.player, new Messages.Stop(parseInt(toPlayer.x), parseInt(toPlayer.y)));
+
+                        break;
+
                     case "/finishall":
 
                         self.player.finishAllAchievements();
@@ -1022,6 +1016,33 @@ module.exports = PacketHandler = Class.extend({
         self.player.checkGameFlag(self.server.map.isGameArea(toX, toY));
         self.server.pushToPlayer(self.player, new Messages.Door(toX, toY, orientation, self.player.id));
     },
+
+    handleDetermineHit: function(message) {
+        var self = this,
+            mobId = message[1],
+            mobX = message[2],
+            mobY = message[3],
+            playerX = message[4],
+            playerY = message[5],
+            mob = self.server.getEntityById(mobId),
+            isArcher = ItemTypes.isArcherWeapon(self.player.weapon);
+
+
+        if (isArcher) {
+            var projectile = 3,
+                sx = Math.floor(playerX / 16),
+                sy = Math.floor(playerY / 16),
+                x = Math.floor(mobX / 16),
+                y = Math.floor(mobY / 16);
+
+            var projectileId = '' + Utils.randomInt(0, projectile) + Utils.randomInt(0, sx) + Utils.randomInt(0, x) + Utils.randomInt(0, sy) + Utils.randomInt(0, y);
+
+            self.broadcast(new Messages.Projectile(projectileId, projectile, sx, sy, x, y, self.player.id), false);
+            return;
+        }
+
+        self.handleHitEntity(self.player, mobId);
+    },
     
     handleHit: function(message) {
         this.handleHitEntity(this.player, message[1]);
@@ -1155,6 +1176,7 @@ module.exports = PacketHandler = Class.extend({
             self.player.setPosition(x, y);
             self.player.pvpFlag = false;
             self.player.gameFlag = false;
+            self.player.isDead = true;
         }
     },
 
@@ -1220,6 +1242,7 @@ module.exports = PacketHandler = Class.extend({
         var player = self.server.getEntityById(id);
 
         self.server.pushRelevantEntityListTo(player);
+        self.server.pushToPlayer(self.player, new Messages.SendAd(self.player.id));
     },
 
     handleCast: function(message) {
@@ -1235,7 +1258,6 @@ module.exports = PacketHandler = Class.extend({
         var projectileId = '' + Utils.randomInt(0, projectile) + Utils.randomInt(0, sx) + Utils.randomInt(0, x) + Utils.randomInt(0, sy) + Utils.randomInt(0, y);
         
         self.broadcast(new Messages.Projectile(projectileId, projectile, sx, sy, x, y, self.player.id), false);
-
 
         switch (projectile) {
             case 1:
@@ -1259,6 +1281,7 @@ module.exports = PacketHandler = Class.extend({
 
 
         self.server.pushToPlayer(p, new Messages.PlayerPoints(p.maxHitPoints, p.maxMana, p.hitPoints, p.mana), false);
+
     },
 
     handleSkill: function(message) {
@@ -1268,9 +1291,7 @@ module.exports = PacketHandler = Class.extend({
             p = this.player,
             skillHandler = p.skillHandler,
             skill;
-
-        log.info("Received Skill Data: " + value);
-
+        
         if (typeof value != 'string')
             skill = skillHandler.skillSlots[value - 1];
         else
@@ -1345,7 +1366,7 @@ module.exports = PacketHandler = Class.extend({
                 var randNum = Math.random(),
                     avoidChance = 0.05 * evasionLevel;
 
-                if(randNum < avoidChance){
+                if(randNum < avoidChance) {
                     this.server.pushToPlayer(this.player, new Messages.Damage(this.player, 'MISS', mob.hitPoints, mob.maxHitPoints));
                     return;
                 }
@@ -1458,6 +1479,9 @@ module.exports = PacketHandler = Class.extend({
             y = message[3];
 
         var entity = self.server.getEntityById(entityId);
+
+        if (!entity)
+            return;
 
         try {
             if (self.server.isValidPosition(x, y)) {

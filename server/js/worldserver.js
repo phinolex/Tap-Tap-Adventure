@@ -959,7 +959,6 @@ module.exports = World = cls.Class.extend({
         self.removeEntity(target);
 
         if (item && item.count > 0) {
-            //log.info("Item dropped");
             self.pushToAdjacentGroups(target.group, target.drop(item));
             self.pushToPlayer(player, target.drop(item));
             self.handleItemDespawn(item);
@@ -968,12 +967,12 @@ module.exports = World = cls.Class.extend({
 
     handleHurtEntity: function(entity, attacker, damage) {
         var self = this;
-
+        
         if (entity instanceof Player)
             self.pushToPlayer(entity, entity.health(attacker));
 
         if (attacker instanceof Player)
-            self.pushToPlayer(attacker, new Messages.Damage(entity, damage == 0 ? "MISS" : damage, entity.hitPoints, entity.maxHitPoints));
+            attacker.packetHandler.broadcast(new Messages.Damage(entity, damage == 0 ? "MISS" : damage, entity.hitPoints, entity.maxHitPoints, attacker.id), false);
 
 
         if (entity.hitPoints <= 0) {
@@ -1455,14 +1454,14 @@ module.exports = World = cls.Class.extend({
                 offset = Utils.randomInt(-5, 5);
 
             if (entity) {
-                log.info("Sending entity: " + entity.name + " out of game.");
                 entity.forcefullyTeleport(147 + offset, 433 + offset, orientation);
-                entity.setTeam(-1);
-                entity.packetHandler.broadcast(new Messages.MinigameTeam(entity.getTeam(), entity.id), false);
 
                 if (winningTeam == -1) {
                     self.pushToPlayer(entity, new Messages.Chat(entity, "The game resulted in a draw."));
-                } else if (entity.getTeam() == winningTeam) {
+                    continue;
+                }
+
+                if (entity.getTeam() == winningTeam) {
                     self.pushToPlayer(entity, new Messages.Chat(entity, "You have received 3000 gold and 1500 exp for your victory!"));
                     entity.incExp(1500);
                     self.pushToPlayer(self, new Messages.Kill("null", entity.level, 1500));
@@ -1472,6 +1471,9 @@ module.exports = World = cls.Class.extend({
                     self.pushToPlayer(entity, new Messages.Chat(entity, "You have lost, you have received: " + randomValue + " coins for your attempts."));
                     entity.inventory.putInventory(400, randomValue);
                 }
+
+                entity.setTeam(-1);
+                entity.packetHandler.broadcast(new Messages.MinigameTeam(entity.getTeam(), entity.id), false);
             }
         }
 

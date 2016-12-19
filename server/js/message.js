@@ -229,18 +229,22 @@ Messages.Teleport = Message.extend({
     }
 });
 Messages.Damage = Message.extend({
-    init: function (entity, points, hp, maxHp) {
+    init: function (entity, points, hp, maxHp, playerId) {
         this.entity = entity;
         this.points = points;
         this.hp = hp;
         this.maxHitPoints = maxHp;
+        this.playerId = playerId
     },
     serialize: function () {
-        return [Types.Messages.DAMAGE,
+        return [
+            Types.Messages.DAMAGE,
             this.entity.id,
             this.points,
             this.hp,
-            this.maxHitPoints];
+            this.maxHitPoints,
+            this.playerId
+        ];
     }
 });
 Messages.CharacterInfo = Message.extend({
@@ -560,7 +564,7 @@ Messages.ForceCast = Message.extend({
 });
 
 Messages.Projectile = Message.extend({
-    init: function(id, projectileType, sx, sy, x, y, owner) {
+    init: function(id, projectileType, sx, sy, x, y, owner, mobOwner) {
         this.id = id;
         this.projectileType = projectileType;
         this.sx = sx;
@@ -568,10 +572,11 @@ Messages.Projectile = Message.extend({
         this.x = x;
         this.y = y;
         this.owner = owner;
+        this.mobOwner = mobOwner;
     },
 
     serialize: function() {
-        return [Types.Messages.PROJECTILE, this.id, this.projectileType, this.sx, this.sy, this.x, this.y, this.owner];
+        return [Types.Messages.PROJECTILE, this.id, this.projectileType, this.sx, this.sy, this.x, this.y, this.owner, this.mobOwner];
     }
 });
 
@@ -631,5 +636,15 @@ Messages.Stop = Message.extend({
 
     serialize: function() {
         return [Types.Messages.STOP, this.toX, this.toY, this.orientation, this.playerId];
+    }
+});
+
+Messages.SendAd = Message.extend({
+    init: function(playerId) {
+        this.playerId = playerId;
+    },
+
+    serialize: function() {
+        return [Types.Messages.SENDAD, this.playerId];
     }
 });

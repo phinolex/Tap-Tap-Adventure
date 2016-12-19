@@ -69,6 +69,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.GAMEDATA] = this.receiveMinigameData;
             this.handlers[Types.Messages.TEAM] = this.receiveTeam;
             this.handlers[Types.Messages.STOP] = this.receiveStop;
+            this.handlers[Types.Messages.SENDAD] = this.receiveAd;
 
             this.useBison = false;
 
@@ -86,7 +87,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         connect: function() {
 
             var self = this,
-                url = "ws://127.0.0.1:50526/";
+                url = "wss://game.taptapadventure.com";
 
             this.connection = io(url, {
                 forceNew: true,
@@ -452,13 +453,13 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         receiveDamage: function(data) {
             var id = data[1],
-                dmg = data[2];
-            hp = parseInt(data[3]),
-                maxHp = parseInt(data[4]);
+                dmg = data[2],
+                hp = parseInt(data[3]),
+                maxHp = parseInt(data[4]),
+                playerId = data[5];
 
-            if(this.dmg_callback) {
-                this.dmg_callback(id, dmg, hp, maxHp);
-            }
+            if(this.dmg_callback)
+                this.dmg_callback(id, dmg, hp, maxHp, playerId);
         },
 
         receivePopulation: function(data) {
@@ -554,6 +555,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         receiveStop: function(data) {
             if (this.stop_callback)
                 this.stop_callback(data[1], data[2], data[3]);
+        },
+
+        receiveAd: function(data) {
+            if (this.ad_callback)
+                this.ad_callback(data[1]);
         },
 
         receiveRanking: function(data){
@@ -700,11 +706,12 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 sy = data[4],
                 x = data[5],
                 y = data[6],
-                owner = data[7];
+                owner = data[7],
+                mobOwner = data[8];
 
 
             if (this.projectile_callback)
-                this.projectile_callback([id, projectileType, sx, sy, x, y, owner]);
+                this.projectile_callback([id, projectileType, sx, sy, x, y, owner, mobOwner]);
         },
 
         receiveData: function(data) {
@@ -829,6 +836,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         },
         onStop: function(callback) {
             this.stop_callback = callback;
+        },
+        onAd: function(callback) {
+            this.ad_callback = callback; 
         },
         onNotify: function(callback){
             this.notify_callback = callback;
@@ -1012,6 +1022,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         sendHit: function(mob) {
             this.sendMessage([Types.Messages.HIT,
                 mob.id]);
+        },
+
+        sendDetermineHit: function(player, mob) {
+            this.sendMessage([Types.Messages.DETERMINEHIT, mob.id, mob.x, mob.y, player.x, player.y]);
         },
         
         sendArcherHit: function(mob) {

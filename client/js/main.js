@@ -144,7 +144,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
 
             document.addEventListener("touchstart", function() {},false);
-
+            document.addEventListener('touchmove', function(e) { e.preventDefault(); });
             $('#resize-check').bind("transitionend", app.resizeUi.bind(app));
             $('#resize-check').bind("webkitTransitionEnd", app.resizeUi.bind(app));
             $('#resize-check').bind("oTransitionEnd", app.resizeUi.bind(app));

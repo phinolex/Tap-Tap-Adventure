@@ -16,6 +16,32 @@ Detect.isTablet = function(screenWidth) {
     return (isAppleTablet || isAndroidTablet) && screenWidth >= 640;
 };
 
+Detect.isIOS = function() {
+    var iDevices = [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod'
+    ];
+
+    if (!!navigator.platform) {
+        while (iDevices.length) {
+            if (navigator.platform === iDevices.pop()) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+
+};
+
+Detect.isAndroid = function() {
+    return /Android/i.test(navigator.userAgent);
+};
+
 Detect.isWindows = function() {
     return Detect.userAgentContains('Windows');
 };

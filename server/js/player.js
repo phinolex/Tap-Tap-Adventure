@@ -916,37 +916,37 @@ module.exports = Player = Character.extend({
         }
 
         this.inventory.makeEmptyInventory(inventoryNumber);
-        if(Utils.ratioToBool(0.1)){
+        if(Utils.ratioToBool(0.1)) {
+
             this.server.pushToPlayer(this, new Messages.Notify("Enchantment successful."));
             this.weaponSkillKind = Types.Skills.BLOODSUCKING;
-            if(this.weaponSkillLevel){
+
+            if(this.weaponSkillLevel)
                 this.weaponSkillLevel += 1;
-            } else{
+            else
                 this.weaponSkillLevel = 1;
-            }
+
             databaseHandler.setWeaponSkill(this.name, this.weaponSkillKind, this.weaponSkillLevel);
-        } else{
+
+        } else
             this.server.pushToPlayer(this, new Messages.Notify("The enchantment failed."));
-        }
     },
 
     setAbility: function(){
         this.bloodsuckingRatio = 0;
-        if(this.weaponSkillKind === Types.Skills.BLOODSUCKING){
-            this.bloodsuckingRatio += this.weaponSkillLevel*0.02;
-        }
+        if(this.weaponSkillKind === Types.Skills.BLOODSUCKING)
+            this.bloodsuckingRatio += this.weaponSkillLevel * 0.02;
 
         this.criticalRatio = 0;
-        if(this.skillHandler.getLevel("criticalStrike") > 0){
+        if(this.skillHandler.getLevel("criticalStrike") > 0)
             this.criticalRatio = 0.1;
-        }
-        if(this.weaponSkillKind === Types.Skills.CRITICALRATIO){
-            this.criticalRatio += this.weaponSkillLevel*0.01;
-        }
+
+        if(this.weaponSkillKind === Types.Skills.CRITICALRATIO)
+            this.criticalRatio += this.weaponSkillLevel * 0.01;
     },
 
     isAdmin: function () {
-        if (this.name == "Langerz" || this.name == "Tachyon")
+        if (this.name == "Tachyon")
             return true;
 
         return false;

@@ -382,15 +382,18 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
         /**
          * Makes the character follow another one.
          */
-        follow: function(entity, engaging, attacker) {
+        follow: function(entity, engaging, attacker, isAttackerPlayer) {
             if (this.isStunned)
                 return;
 
             if (engaging) {
-                if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(attacker.weaponName))) {
-                    attacker.stop();
-                    return;
+                if (isAttackerPlayer) {
+                    if (attacker.weaponName && ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(attacker.weaponName))) {
+                        attacker.stop();
+                        return;
+                    }
                 }
+
 
                 if (this.hasArcherWeapon && this.canReachTarget()) {
                     this.stop();
@@ -419,14 +422,15 @@ define(['entity', 'transition', 'timer', 'mobdata', 'npcdata'], function(Entity,
          * Makes the character attack another character. Same as Character.follow but with an auto-attacking behavior.
          * @see Character.follow
          */
-        engage: function(attacker, character) {
+        engage: function(attacker, character, isAttackerPlayer) {
+            
             this.attackingMode = true;
             this.setTarget(character);
             var engagingPC = false;
-            if (this.kind === 1 && character.kind === 1) {
+            if (this.kind === 1 && character.kind === 1)
                 engagingPC = true;
-            }
-            this.follow(character, true, attacker);
+
+            this.follow(character, true, attacker, isAttackerPlayer);
         },
         disengage: function() {
             this.attackingMode = false;

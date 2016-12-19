@@ -5,50 +5,54 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             var self = this;
             this.parent = parent;
             this.game = game;
+            try {
+                $('#characterItemWeapon').click(function(event) {
+                    if (self.game.ready){
+                        self.game.menu.clickEquipped(1);
+                        var p = self.game.player;
+                        //self.game.createBubble(p.weaponName, Item.getInfoMsgEx(p.weaponName, p.weaponEnchantedPoint, p.weaponSkillKind, p.weaponSkillLevel));
+                        var id = $("#"+p.weaponName);
+                        $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
+                        $(id).css("top",self.game.mouse.y-$(id).height()+"px");
+                    }
 
-            $('#characterItemWeapon').click(function(event) {
-                if (self.game.ready){
-                    self.game.menu.clickEquipped(1);
-                    var p = self.game.player;
-                    //self.game.createBubble(p.weaponName, Item.getInfoMsgEx(p.weaponName, p.weaponEnchantedPoint, p.weaponSkillKind, p.weaponSkillLevel));
-                    var id = $("#"+p.weaponName);
-                    $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
-                    $(id).css("top",self.game.mouse.y-$(id).height()+"px");
-                }
+                });
+                $('#characterItemArmor').click(function(event) {
+                    if (self.game.ready){
+                        self.game.menu.clickEquipped(2);
+                        var p = self.game.player;
+                        //self.game.createBubble(p.armorName, Item.getInfoMsgEx(p.armorName, p.armorEnchantedPoint, p.armorSkillKind, p.armorSkillLevel));
+                        var id = $("#"+p.armorName);
+                        $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
+                        $(id).css("top",self.game.mouse.y-$(id).height()+"px");
+                    }
+                });
 
-            });
-            $('#characterItemArmor').click(function(event) {
-                if (self.game.ready){
-                    self.game.menu.clickEquipped(2);
-                    var p = self.game.player;
-                    //self.game.createBubble(p.armorName, Item.getInfoMsgEx(p.armorName, p.armorEnchantedPoint, p.armorSkillKind, p.armorSkillLevel));
-                    var id = $("#"+p.armorName);
-                    $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
-                    $(id).css("top",self.game.mouse.y-$(id).height()+"px");
-                }
-            });
+                $('#characterItemPendant').click(function(event) {
+                    if (self.game.ready){
+                        self.game.menu.clickEquipped(3);
+                        var p = self.game.player;
+                        //self.game.createBubble(p.pendant, Item.getInfoMsgEx(p.pendant, p.pendantEnchantedPoint, p.pendantSkillKind, p.pendantSkillLevel));
+                        var id = $("#" + p.pendant);
+                        $(id).css("left", self.game.mouse.x - $(id).width() / 2 + "px");
+                        $(id).css("top", self.game.mouse.y - $(id).height() + "px");
+                    }
+                });
 
-            $('#characterItemPendant').click(function(event) {
-                if (self.game.ready){
-                    self.game.menu.clickEquipped(3);
-                    var p = self.game.player;
-                    //self.game.createBubble(p.pendant, Item.getInfoMsgEx(p.pendant, p.pendantEnchantedPoint, p.pendantSkillKind, p.pendantSkillLevel));
-                    var id = $("#" + p.pendant);
-                    $(id).css("left", self.game.mouse.x - $(id).width() / 2 + "px");
-                    $(id).css("top", self.game.mouse.y - $(id).height() + "px");
-                }
-            });
+                $('#characterItemRing').click(function(event) {
+                    if (self.game.ready){
+                        self.game.menu.clickEquipped(4);
+                        var p = self.game.player;
+                        //self.game.createBubble(p.ring, Item.getInfoMsgEx(p.ring, p.ringEnchantedPoint, p.ringSkillKind, p.ringSkillLevel));
+                        var id = $("#" + p.ring);
+                        $(id).css("left", self.game.mouse.x - $(id).width() / 2 + "px");
+                        $(id).css("top", self.game.mouse.y - $(id).height() + "px");
+                    }
+                });
+            } catch (e) {
 
-            $('#characterItemRing').click(function(event) {
-                if (self.game.ready){
-                    self.game.menu.clickEquipped(4);
-                    var p = self.game.player;
-                    //self.game.createBubble(p.ring, Item.getInfoMsgEx(p.ring, p.ringEnchantedPoint, p.ringSkillKind, p.ringSkillLevel));
-                    var id = $("#" + p.ring);
-                    $(id).css("left", self.game.mouse.x - $(id).width() / 2 + "px");
-                    $(id).css("top", self.game.mouse.y - $(id).height() + "px");
-                }
-            });
+            }
+
         },
         assign: function(datas) {
             var game = this.game,
