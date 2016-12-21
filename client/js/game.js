@@ -75,6 +75,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.partyHandler = new PartyHandler(this);
                 this.statehandler = new StateHandler(this);
                 this.logicTime = new Date().getTime();
+                this.isCentered = true;
 
 
                 // FPS
@@ -335,6 +336,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 log.info("Player Sprite: " + this.player.getSpriteName());
                 this.player.setSprite(this.sprites[this.player.getSpriteName()]);
+                this.player.setWeaponName(this.player.weaponName);
 
                 this.player.idle();
             },
@@ -745,7 +747,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     if(!this.isStopped)
                         requestAnimFrame(this.tick.bind(this));
-
                 }
             },
 
@@ -908,7 +909,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.initPlayer();
                     self.updateBars();
                     self.updateExpBar();
-                    self.resetCamera();
                     self.updatePlateauMode();
                     self.addEntity(self.player);
                     self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
@@ -920,6 +920,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.initializeAchievements();
                     self.client.sendReady(self.playerId);
                     self.audioManager.updateMusic();
+                    self.resetCamera();
 
                     if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
                         self.player.setAtkRange(6);
@@ -976,6 +977,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if(self.isZoningTile(self.player.gridX, self.player.gridY))
                             self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
 
+
                         if (!self.map.isDoor(self.player.gridX, self.player.gridY) && !self.player.hasTarget())
                             self.client.sendStep(self.player);
 
@@ -984,7 +986,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         if(!self.player.isDead) {
                             self.audioManager.updateMusic();
-                            if (self.renderer.mobile)
+                            if (self.renderer.mobile && self.isCentered)
                                 self.renderer.cleanPathing();
                         }
                     });
@@ -1034,10 +1036,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.client.onAd(function(playerId) {
                          try {
-                             adbuddiz.showAd();
+                             self.app.window.unityads.showVideoAd();
                          } catch(e) {
                              log.info(e);
                          }
+                    });
+
+                    self.client.onCamera(function(playerId) {
+                        self.player.stop();
+                        self.isCentered = !self.isCentered;
                     });
 
                     self.client.onDoor(function(x, y, orientation, playerId) {
@@ -1133,7 +1140,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             return;
                         }
 
-                        if (!self.map.isDoor(x, y)) {
+                        if (!self.map.isDoor(x, y) && self.isCentered) {
                             self.client.sendMoveEntity2(self.player.id, x, y, 2);
                             self.client.sendStep(self.player);
                         }
@@ -1205,10 +1212,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         self.audioManager.fadeOutCurrentMusic();
                         self.audioManager.playSound("death");
-
-                        try {
-                            adbuddiz.showAd();
-                        } catch (e) {}
                     });
 
                     self.player.onHasMoved(function(player) {
@@ -1364,7 +1367,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                                 self.unregisterEntityPosition(entity);
                                                 self.registerEntityPosition(entity);
 
-/*
+                                                if (self.renderer.mobile)
+                                                    self.renderer.cleanPathing();
+
+                                                /*
                                                 if (self.map.isDoor(x, y)) {
                                                     self.removeFromRenderingGrid(entity, entity.gridX, entity.gridY);
                                                     self.removeFromPathingGrid(entity.gridX, entity.gridY);
@@ -1680,8 +1686,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 if (p.kind == Types.Projectiles.PINEARROW)
                                     self.detectCollateral(impactPos.x, impactPos.y, 1, p.kind, projectiletype, isMobOwner);
                             }
-
-                            self.renderer.cleanPathing();
                         });
 
                         np.onImpactCompleted(function(p) {
@@ -1717,6 +1721,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.player.experience += exp;
                         self.updateExpBar();
                         self.player.stop();
+
+                        if (self.renderer.mobile)
+                            self.renderer.cleanPathing();
                     });
 
                     self.client.onWanted(function (id, isWanted) {
@@ -2095,7 +2102,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              * @returns {Object} An object containing x and y properties.
              */
             getMouseGridPosition: function() {
-                this.camera.setRealCoords();
+                //this.camera.setRealCoords();
                 var r = this.renderer,
                     c = this.camera,
                     mx = this.mouse.x,
@@ -2333,14 +2340,25 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 var self = this,
                     m = this.map;
 
-                this.camera.forEachVisibleValidPosition(function(x, y) {
-                    if(self.renderingGrid[y][x]) {
-                        _.each(self.renderingGrid[y][x], function(entity) {
-                            callback(entity);
-                        });
-                    }
-                }, this.renderer.mobile ? 1 : 2, m);
-
+                if (this.isCentered) {
+                    this.camera.forEachVisibleValidPosition(function(x, y) {
+                        if(self.renderingGrid[y][x]) {
+                            _.each(self.renderingGrid[y][x], function(entity) {
+                                callback(entity);
+                            });
+                        }
+                    }, this.renderer.mobile ? 1 : 2, m);
+                } else {
+                    this.camera.forEachVisiblePosition(function(x, y) {
+                        if(!m.isOutOfBounds(x, y)) {
+                            if(self.renderingGrid[y][x]) {
+                                _.each(self.renderingGrid[y][x], function(entity) {
+                                    callback(entity);
+                                });
+                            }
+                        }
+                    }, this.renderer.mobile ? 1 : 2);
+                }
             },
 
             /**
@@ -2349,15 +2367,22 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             forEachVisibleTileIndex: function(callback, extra, optimized) {
                 var m = this.map;
 
-                if (optimized)
-                {
-                    this.camera.forEachNewTile(function(x, y) {
-                        callback(m.GridPositionToTileIndex(x, y) - 1);
-                    }, extra, m);
+                if (!this.isCentered) {
+                    this.camera.forEachVisiblePosition(function(x, y) {
+                        if(!m.isOutOfBounds(x, y))
+                            callback(m.GridPositionToTileIndex(x, y) - 1);
+                    }, extra);
                 } else {
-                    this.camera.forEachVisibleValidPosition(function(x, y) {
-                        callback(m.GridPositionToTileIndex(x, y) - 1);
-                    }, extra, m);
+                    if (optimized)
+                    {
+                        this.camera.forEachNewTile(function(x, y) {
+                            callback(m.GridPositionToTileIndex(x, y) - 1);
+                        }, extra, m);
+                    } else {
+                        this.camera.forEachVisibleValidPosition(function(x, y) {
+                            callback(m.GridPositionToTileIndex(x, y) - 1);
+                        }, extra, m);
+                    }
                 }
             },
 
@@ -2436,6 +2461,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     }, extra, optimized);
                 }
             },
+
 
             /**
              *
@@ -2628,19 +2654,19 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             addProjectile: function(projectile) {
                 var self = this;
                 log.info("Adding Projectile to: " + "x: " + projectile.x + " y: " + projectile.y);
-                if(this.projectiles[projectile.id] === undefined) {
+                if(this.projectiles[projectile.id] === undefined)
                     this.projectiles[projectile.id] = projectile;
 
-                    projectile.onDirty(function(p) {
-                        if (p.visible) {
-                            p.dirtyRect = self.renderer.getEntityBoundingRect(p);
-                            self.checkOtherDirtyRects(p.dirtyRect, p, Math.floor(p.x / 16), Math.floor(p.y / 16));
-                        }
-                    });
-                }
-                else {
+                    if(this.renderer.mobile || this.renderer.tablet) {
+                        projectile.onDirty(function(e) {
+                            log.info("Dirty:");
+                            e.dirtyRect = self.renderer.getEntityBoundingRect(e);
+                            log.info("e dirty rect: " + e.dirtyRect);
+                            //self.checkOtherDirtyRects(e.dirtyRect, e, e.gridX, e.gridY);
+                        });
+                    }
+                else
                     log.error("This projectile already exists : " + projectile.id);
-                }
             },
 
             removeProjectile: function(projectile) {
@@ -2652,10 +2678,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 }
             },
 
-
-            /**
-             *
-             */
             movecursor: function() {
                 var mouse = this.getMouseGridPosition(),
                     x = mouse.x,
@@ -3071,10 +3093,23 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              *
              */
             isZoningTile: function(x, y) {
-                if (this.player.gridX % 8 === 0 ||
-                    this.player.gridY % 8 === 0)
-                    return true;
-                return false;
+
+                if (!this.isCentered) {
+                    var c = this.camera;
+
+                    x = x - c.gridX;
+                    y = y - c.gridY;
+
+                    if(x === 0 || y === 0 || x === c.gridW-1 || y === c.gridH-1) {
+                        return true;
+                    }
+                    return false;
+                } else {
+                    if (this.player.gridX % 8 === 0 ||
+                        this.player.gridY % 8 === 0)
+                        return true;
+                    return false;
+                }
             },
 
             /**
@@ -3165,11 +3200,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             resetZone: function() {
                 this.bubbleManager.clean();
                 this.initAnimatedTiles();
-                this.renderer.forceRedraw = true;
+                if (!this.isCentered)
+                    this.renderer.renderStaticCanvases();
+                else
+                    this.renderer.forceRedraw = true;
             },
 
             resetCamera: function() {
-                //this.camera.focusEntity(this.player);
+                if (!this.isCentered)
+                    this.camera.focusEntity(this.player);
+
                 this.resetZone();
             },
 
@@ -3311,6 +3351,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 this.renderer.rescale(newScale);
                 this.camera = this.renderer.camera;
+                this.camera.setRealCoords();
 
                 this.renderer.renderStaticCanvases();
                 this.renderbackground = true;
@@ -3345,15 +3386,18 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 }
             },
             updateTarget: function(targetId, points, healthPoints, maxHp){
-                if(this.player.hasTarget() && this.updatetarget_callback){
-                    var target = this.getEntityById(targetId);
-                    if(target instanceof Mob){
-                        target.name = MobData.Kinds[target.kind].name;
-                    }
-                    target.points = points;
-                    target.healthPoints = healthPoints;
-                    target.maxHp = maxHp;
-                    this.updatetarget_callback(target);
+                if(this.player.hasTarget() && this.updatetarget_callback) {
+                    try {
+                        var target = this.getEntityById(targetId);
+
+                        if(target instanceof Mob) {
+                            target.name = MobData.Kinds[target.kind].name;
+                        }
+                        target.points = points;
+                        target.healthPoints = healthPoints;
+                        target.maxHp = maxHp;
+                        this.updatetarget_callback(target);
+                    } catch (e) { log.info("Caught exception: " + e); }
                 }
             },
 

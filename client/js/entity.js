@@ -53,12 +53,12 @@ define(['animation', 'mobdata'], function(Animation, MobData) {
             this.isHighlighted = false;
             this.visible = true;
             this.isFading = false;
-            this.setDirty();
-            
             this.prevX=0;
             this.prevY=0;
             this.prevOrientation=null;
             this.name = "";
+            
+            this.setDirty();
         },
 
         setName: function(name) {

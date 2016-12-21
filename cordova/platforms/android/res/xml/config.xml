@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="100009" id="net.udeva.TTA" version="0.9.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="100010" id="net.udeva.TTA" version="0.9.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
@@ -14,6 +14,9 @@
     <preference default="16" name="android-minSdkVersion" />
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="UnityAdsPlugin">
+        <param name="android-package" value="com.cranberrygame.cordova.plugin.ad.unityads.UnityAdsPlugin" />
     </feature>
     <feature name="AdBuddizBridge">
         <param name="android-package" value="com.purplebrain.adbuddiz.sdk.AdBuddizBridge" />

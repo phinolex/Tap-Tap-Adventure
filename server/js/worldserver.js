@@ -278,21 +278,22 @@ module.exports = World = cls.Class.extend({
     },
 
     initializeMinigameTick: function() {
-        var self = this,
-            pvpPlayers = self.playersPvpGame;
-
+        var self = this;
 
         setInterval(function() {
             if (self.playersPvpGame.length > 1) {
                 if (self.pvpTime <= 0) {
                     self.handleMinigameCountdown();
-                    self.pvpTime = 30;
+                    self.pvpTime = 130;
                 }
 
-                for (var i = 0; i < pvpPlayers.length; i++) {
-                    var entity = self.getEntityById(pvpPlayers[i]);
+                for (var i = 0; i < self.playersPvpGame.length; i++) {
+                    var entity = self.getEntityById(self.playersPvpGame[i]);
 
                     if (entity) {
+                        if (!entity.gameFlag)
+                            self.removePlayerFromMinigame(entity);
+
                         try {
                             self.pushToPlayer(entity, new Messages.GameData(self.pvpTime, self.redScore, self.blueScore));
                             entity.packetHandler.broadcast(new Messages.MinigameTeam(entity.getTeam(), entity.id), false);

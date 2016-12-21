@@ -23,11 +23,14 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             this.frontPage = this.classNames[0];
 
             try {
-                adbuddiz.setAndroidPublisherKey("c7a9619a-7450-4461-bb6a-cb1a7ab6b36d");
-                adbuddiz.setIOSPublisherKey("81eff358-ab4f-41e7-aa87-a54d10625624");
-                adbuddiz.cacheAds();
+                var gameId = "1238691",
+                    videoPlacement = 'video',
+                    rewardPlacement = 'rewardedVideo',
+                    developmentMode = false;
+
+                window.unityads.setUp(gameId, videoPlacement, rewardPlacement, developmentMode);
             } catch (e) {
-                log.info("error: " + e);
+                log.info("Error encountered whilst initializing Unity Ads: " + e);
             }
         },
 

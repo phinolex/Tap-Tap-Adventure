@@ -43,6 +43,10 @@
                         {
                             "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"UnityAdsPlugin\"><param name=\"android-package\" value=\"com.cranberrygame.cordova.plugin.ad.unityads.UnityAdsPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -52,16 +56,24 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 1
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
                             "count": 1
                         }
                     ],
                     "/manifest/application": [
                         {
                             "xml": "<activity android:name=\"com.purplebrain.adbuddiz.sdk.AdBuddizActivity\" android:theme=\"@android:style/Theme.Translucent\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<activity android:configChanges=\"fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen\" android:hardwareAccelerated=\"true\" android:name=\"com.unity3d.ads.android.view.UnityAdsFullscreenActivity\" android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\" />",
                             "count": 1
                         }
                     ],
@@ -97,6 +109,12 @@
         },
         "com.purplebrain.adbuddiz.sdk": {
             "PACKAGE_NAME": "com.taptapadventure"
+        },
+        "cordova-plugin-ad-unityads-sdk": {
+            "PACKAGE_NAME": "net.udeva.TTA"
+        },
+        "cordova-plugin-ad-unityads": {
+            "PACKAGE_NAME": "net.udeva.TTA"
         }
     },
     "dependent_plugins": {},
@@ -118,12 +136,21 @@
             "clobbers": [
                 "adbuddiz"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-ad-unityads/www/unityads.js",
+            "id": "cordova-plugin-ad-unityads.unityads",
+            "clobbers": [
+                "window.unityads"
+            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-whitelist": "1.2.2",
         "cordova-plugin-crosswalk-webview": "2.0.0",
         "cordova-plugin-device": "1.1.4",
-        "com.purplebrain.adbuddiz.sdk": "3.1.11"
+        "com.purplebrain.adbuddiz.sdk": "3.1.11",
+        "cordova-plugin-ad-unityads-sdk": "1.0.3",
+        "cordova-plugin-ad-unityads": "1.0.35"
     }
 }

@@ -182,7 +182,8 @@ Types = {
         STOP: 141,
         DOORREQUEST: 142,
         DETERMINEHIT: 143,
-        SENDAD: 144
+        SENDAD: 144,
+        CENTERCAMERA: 145
     },
 
     Interfaces: {

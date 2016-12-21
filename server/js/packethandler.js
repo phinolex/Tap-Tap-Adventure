@@ -116,7 +116,6 @@ module.exports = PacketHandler = Class.extend({
                 case Types.Messages.STOREBUY:
                     self.handleStoreBuy(message);
                     break;
-
                 case Types.Messages.ATTACK:
                     self.handleAttack(message);
                     break;
@@ -356,13 +355,13 @@ module.exports = PacketHandler = Class.extend({
             }
         };
 
-        /*if (developmentMode) {
+        if (developmentMode) {
             self.player.name = playerName.substr(0, 36).trim();
             self.player.pw = playerPassword.substr(0, 45);
             self.player.email = "Me@me.me";
             self.redisPool.loadPlayer(self.player);
             return;
-        }*/
+        }
 
         if (self.server.loggedInPlayer(playerName.substr(0, 36).trim())) {
             self.connection.sendUTF8('loggedin');
@@ -414,7 +413,18 @@ module.exports = PacketHandler = Class.extend({
                 self.server.pushToPlayer(self.player, new Messages.Stop(parseInt(command[1]), parseInt(command[2]), 2));
                 return;
             }
-            
+
+            if (command[0] == "/centercamera") {
+                self.server.pushToPlayer(self.player, new Messages.CenterCamera(self.player.id));
+                return;
+            }
+
+            if (command[0] == "/showad") {
+
+                self.server.pushToPlayer(self.player, new Messages.SendAd(self.player.id));
+                return;
+            }
+
             
             if (self.player.rights == 2) {
                 switch(command[0]) {

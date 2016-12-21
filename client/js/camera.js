@@ -58,19 +58,6 @@ define(function() {
             this.isattached = true;
         },
 
-        setChunkyCoords: function() {
-            if (!this.game.player)
-                return;
-
-            this.x = this.game.player.gridX * 16 - (this.gridW2 * this.renderer.tilesize);
-            this.y = this.game.player.gridY * 16 - (this.gridH2 * this.renderer.tilesize);
-
-            this.gridX = this.game.player.gridX - this.gridW2;
-            this.gridY = this.game.player.gridY - this.gridH2;
-
-            this.isattached = true;
-        },
-
         forEachVisibleValidPosition: function(callback, extra, map) {
             var extra = 1;
 
@@ -126,6 +113,14 @@ define(function() {
 
         isVisible: function(entity) {
             return this.isVisiblePosition(entity.gridX, entity.gridY);
+        },
+
+        forEachVisiblePosition: function(callback, extra) {
+            var extra = extra || 0;
+            for(var y = this.gridY - extra, maxY = this.gridY + this.gridH + (extra * 2); y < maxY; y += 1) {
+                for(var x = this.gridX - extra, maxX = this.gridX + this.gridW + (extra * 2); x < maxX; x += 1)
+                    callback(x, y);
+            }
         },
 
         isVisiblePosition: function(x, y) {

@@ -32,6 +32,7 @@ define(function() {
             // owner
             this.owner = null;
             this.isDirty = false;
+            this.dirtyRect = null;
 
             // Modes
             this.isLoaded = false;

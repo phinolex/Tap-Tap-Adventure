@@ -17,6 +17,13 @@ module.exports = [
         "clobbers": [
             "adbuddiz"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-ad-unityads/www/unityads.js",
+        "id": "cordova-plugin-ad-unityads.unityads",
+        "clobbers": [
+            "window.unityads"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -25,7 +32,9 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.2.2",
     "cordova-plugin-crosswalk-webview": "2.0.0",
     "cordova-plugin-device": "1.1.4",
-    "com.purplebrain.adbuddiz.sdk": "3.1.11"
+    "com.purplebrain.adbuddiz.sdk": "3.1.11",
+    "cordova-plugin-ad-unityads-sdk": "1.0.3",
+    "cordova-plugin-ad-unityads": "1.0.35"
 };
 // BOTTOM OF METADATA
 });

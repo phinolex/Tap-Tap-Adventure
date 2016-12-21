@@ -5,9 +5,10 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             var self = this;
             this.parent = parent;
             this.game = game;
-            try {
-                $('#characterItemWeapon').click(function(event) {
-                    if (self.game.ready){
+
+            $('#characterItemWeapon').click(function(event) {
+                try {
+                    if (self.game.ready) {
                         self.game.menu.clickEquipped(1);
                         var p = self.game.player;
                         //self.game.createBubble(p.weaponName, Item.getInfoMsgEx(p.weaponName, p.weaponEnchantedPoint, p.weaponSkillKind, p.weaponSkillLevel));
@@ -15,9 +16,10 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
                         $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
                         $(id).css("top",self.game.mouse.y-$(id).height()+"px");
                     }
-
-                });
-                $('#characterItemArmor').click(function(event) {
+                } catch (e) {}
+            });
+            $('#characterItemArmor').click(function(event) {
+                try {
                     if (self.game.ready){
                         self.game.menu.clickEquipped(2);
                         var p = self.game.player;
@@ -26,9 +28,11 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
                         $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
                         $(id).css("top",self.game.mouse.y-$(id).height()+"px");
                     }
-                });
+                } catch (e) {}
+            });
 
-                $('#characterItemPendant').click(function(event) {
+            $('#characterItemPendant').click(function(event) {
+                try {
                     if (self.game.ready){
                         self.game.menu.clickEquipped(3);
                         var p = self.game.player;
@@ -37,9 +41,11 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
                         $(id).css("left", self.game.mouse.x - $(id).width() / 2 + "px");
                         $(id).css("top", self.game.mouse.y - $(id).height() + "px");
                     }
-                });
+                } catch (e) {}
+            });
 
-                $('#characterItemRing').click(function(event) {
+            $('#characterItemRing').click(function(event) {
+                try {
                     if (self.game.ready){
                         self.game.menu.clickEquipped(4);
                         var p = self.game.player;
@@ -48,10 +54,8 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
                         $(id).css("left", self.game.mouse.x - $(id).width() / 2 + "px");
                         $(id).css("top", self.game.mouse.y - $(id).height() + "px");
                     }
-                });
-            } catch (e) {
-
-            }
+                } catch (e) {}
+            });
 
         },
         assign: function(datas) {

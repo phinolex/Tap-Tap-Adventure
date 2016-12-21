@@ -648,3 +648,13 @@ Messages.SendAd = Message.extend({
         return [Types.Messages.SENDAD, this.playerId];
     }
 });
+
+Messages.CenterCamera = Message.extend({
+    init: function(playerId) {
+        this.playerId = playerId;
+    },
+    
+    serialize: function() {
+        return [Types.Messages.CENTERCAMERA, this.playerId];
+    }
+});

@@ -36,7 +36,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             var self = this;
 
             if (!p.impacted) {
-                self.game.renderer.cleanPathing();
+                //self.game.renderer.cleanPathing();
                 var mdist = p.speed * self.deltaSeconds;
                 var dx = p.tx-p.x;
                 var dy = p.ty-p.y;
@@ -154,7 +154,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                 z = g.currentZoning,
                 s = 3,
                 ts = 16,
-                speed = 500;
+                speed = 100;
 
             if(z && z.inProgress === false) {
                 var orientation = this.game.zoningOrientation,
@@ -167,11 +167,19 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                     startValue = (orientation === Types.Orientations.LEFT) ? c.x - ts : c.x + ts;
                     endValue = (orientation === Types.Orientations.LEFT) ? c.x - offset : c.x + offset;
                     updateFunc = function(x) {
-                        g.camera.setRealCoords();
-                        g.renderbackground = true;
-
+                        if (!g.isCentered) {
+                            c.setPosition(x, c.y);
+                            g.initAnimatedTiles();
+                            g.renderer.renderStaticCanvases();
+                        } else {
+                            g.camera.setRealCoords();
+                            g.renderbackground = true;
+                        }
                     },
                         endFunc = function() {
+                            if (!g.isCentered)
+                                c.setPosition(z.endValue, c.y);
+
                             g.endZoning();
                         };
                 } else if(orientation === Types.Orientations.UP || orientation === Types.Orientations.DOWN) {
@@ -179,12 +187,20 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                     startValue = (orientation === Types.Orientations.UP) ? c.y - ts : c.y + ts;
                     endValue = (orientation === Types.Orientations.UP) ? c.y - offset : c.y + offset;
                     updateFunc = function(y) {
-                        g.camera.setRealCoords();
-                        g.renderbackground = true;
+                        if (!g.isCentered) {
+                            c.setPosition(c.x, y);
+                            g.initAnimatedTiles();
+                            g.renderer.renderStaticCanvases();
+                        } else {
+                            g.camera.setRealCoords();
+                            g.renderbackground = true;
+                        }
                     },
                         endFunc = function() {
-                            g.endZoning();
+                            if (!g.isCentered)
+                                c.setPosition(c.x, z.endValue);
 
+                            g.endZoning();
                         };
                 }
 
@@ -259,15 +275,18 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                         c.moveSpeed);
                 }
             }
-            if(c.isMoving() && c instanceof Player)
-                this.game.camera.setRealCoords();
 
-            // Set Dirty all visible entities so it renders properly.
-            if (c == this.game.player && this.game.player.isMoving())
-            {
-                this.game.forEachVisibleEntityByDepth(function(entity) {
-                    entity.setDirty();
-                });
+            if (this.game.isCentered) {
+                if(c.isMoving() && c instanceof Player)
+                    this.game.camera.setRealCoords();
+
+                // Set Dirty all visible entities so it renders properly.
+                if (c == this.game.player && this.game.player.isMoving())
+                {
+                    this.game.forEachVisibleEntityByDepth(function(entity) {
+                        entity.setDirty();
+                    });
+                }
             }
         },
 
@@ -291,13 +310,13 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             }
             else if(player.moveDown)
             {
-                pos.y = parseInt(pos.y) + 1;
+                pos.y += 1;
                 game.keys(pos, Types.Orientations.DOWN);
 
             }
             else if(player.moveRight)
             {
-                pos.x = parseInt(pos.x) + 1;
+                pos.x += 1;
                 game.keys(pos, Types.Orientations.RIGHT);
 
             }
@@ -324,7 +343,8 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
             this.game.forEachProjectile(function(projectile) {
                 var anim = projectile.currentAnimation;
                 if(anim) {
-                    anim.update(t);
+                    if(anim.update(t))
+                        projectile.setDirty();
                 }
             });
 

@@ -167,9 +167,9 @@ ItemTypes.getBuyPrice = function(itemName) {
     if (!item) return 0;
 
     if (item.type == "weapon" || item.type == "weaponarcher") {
-        return Math.floor(Math.pow(1.1, item.attack + 1));
+        return Math.floor(Math.pow(1.2, item.attack + 1));
     } else if (item.type == "armor" || item.type == "armorarcher") {
-        return Math.floor(Math.pow(1.1, item.defense + 1));
+        return Math.floor(Math.pow(1.2, item.defense + 1));
     } else if (item.type == "object" && item.buy > 0) {
         if (item.buyCount > 1)
             return (item.buy * item.buyCount);
@@ -185,7 +185,8 @@ ItemTypes.getSellPrice = function(itemName) {
 
 ItemTypes.getBuyPriceByKind = function(itemKind) {
     var item = KindData[itemKind];
-    if (!item) return 0;
+    if (!item)
+        return 0;
     //2^(i/4)
     switch (item.type) {
         case "weapon":
@@ -216,7 +217,7 @@ ItemTypes.getEnchantPrice = function(itemName, enchantLevel) {
     } else if (item.type == "armor" || item.type == "armorarcher") {
         level = item.defense;
     }
-    return Math.floor(Math.pow(1.4,level + enchantLevel + 1));
+    return Math.floor(Math.pow(1.4, level + enchantLevel + 1));
 };
 
 ItemTypes.getItemDataByKind = function (kind) {

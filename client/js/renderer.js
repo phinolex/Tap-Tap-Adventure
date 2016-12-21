@@ -1,5 +1,3 @@
-/* global Detect, Class, _, log, Types, font */
-
 define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
     function(Camera, Item, Character, Player, Timer, Mob, Npc, Pet) {
 
@@ -735,10 +733,27 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                                 entity.oldDirtyRect = entity.dirtyRect;
                                 entity.dirtyRect = null;
                             }
-                        } else {
+                        } else
                             self.drawEntity(entity);
-                        }
                     }
+                });
+            },
+
+
+            drawProjectiles: function(dirtyOnly) {
+                var self = this;
+
+                self.game.forEachProjectile(function(projectile) {
+                    if (dirtyOnly) {
+                        if (projectile.isDirty) {
+                            self.drawProjectile(projectile);
+
+                            projectile.isDirty = false;
+                            projectile.oldDirtyRect = projectile.dirtyRect;
+                            projectile.dirtyRect = null;
+                        }
+                    } else
+                        self.drawProjectile(projectile);
                 });
             },
 
@@ -747,7 +762,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             clearDirtyRect: function(r) {
-                this.context.clearRect(r.x, r.y, r.w, r.h);
+                if (r)
+                    this.context.clearRect(r.x, r.y, r.w, r.h);
             },
 
             clearDirtyRects: function() {
@@ -948,25 +964,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 }
             },
 
-            /*
-             if(dirtyOnly) {
-             if(entity.isDirty) {
-             self.drawEntity(entity);
-
-             entity.isDirty = false;
-             entity.oldDirtyRect = entity.dirtyRect;
-             entity.dirtyRect = null;
-             }
-             */
-            drawProjectiles: function(dirtyOnly) {
-                var self = this;
-
-                self.game.forEachProjectile(function(projectile) {
-                    self.drawProjectile(projectile);
-                });
-            },
-
-
             drawInventory: function(){
                 var s = this.scale;
                 this.textcontext.save();
@@ -1139,6 +1136,32 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 foregroundContext.restore();
             },
 
+            drawStaticTerrain: function() {
+                var self = this,
+                    m = this.game.map,
+                    tilesetwidth = this.tileset.width / m.tilesize;
+
+                this.game.forEachVisibleTile(function (id, index) {
+                    if(!m.isHighTile(id) && !m.isAnimatedTile(id)) { // Don't draw unnecessary tiles
+                        self.drawTile(self.background, id, self.tileset, tilesetwidth, m.width, index);
+                    }
+                }, 1);
+            },
+
+            drawHighTiles: function(ctx) {
+                var self = this,
+                    m = this.game.map,
+                    tilesetwidth = this.tileset.width / m.tilesize;
+
+                this.highTileCount = 0;
+                this.game.forEachVisibleTile(function (id, index) {
+                    if(m.isHighTile(id)) {
+                        self.drawTile(ctx, id, self.tileset, tilesetwidth, m.width, index);
+                        self.highTileCount += 1;
+                    }
+                }, 1);
+            },
+
             drawAnimatedTiles: function(dirtyOnly, ctx) {
                 if (!this.camera.isattached)
                     return;
@@ -1263,8 +1286,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 }
             },
 
-            setCameraView: function(ctx) {
-                this.camera.setRealCoords();
+            setCameraView: function(ctx, isCentered) {
+                if (this.game.isCentered)
+                    this.camera.setRealCoords();
+
                 ctx.translate(-this.camera.x * this.scale, -this.camera.y * this.scale);
             },
             setCameraViewText: function(ctx) {
@@ -1284,13 +1309,28 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             renderStaticCanvases: function() {
-                if (this.forceRedraw || this.game.player && this.game.player.isMoving()) {
-                    this.drawOldTerrain();
+                if (this.game.isCentered) {
+                    if (this.forceRedraw || this.game.player && this.game.player.isMoving()) {
+                        this.drawOldTerrain();
+                        this.background.save();
+                        this.setCameraView(this.background);
+                        this.drawTerrain(this.background, this.foreground);
+                        this.background.restore();
+                        this.forceRedraw = false;
+                    }
+                } else {
                     this.background.save();
                     this.setCameraView(this.background);
-                    this.drawTerrain(this.background, this.foreground);
+                    this.drawStaticTerrain();
                     this.background.restore();
-                    this.forceRedraw = false;
+
+                    if(this.mobile || this.tablet) {
+                        this.clearScreen(this.foreground);
+                        this.foreground.save();
+                        this.setCameraView(this.foreground);
+                        this.drawHighTiles(this.foreground);
+                        this.foreground.restore();
+                    }
                 }
             },
 
@@ -1303,19 +1343,20 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             renderFrame: function() {
-                if (!this.renderingEnabled)
+                if (!this.renderingEnabled) 
                     return;
-
+                
                 if (this.mobile) {
                     this.clearDirtyRects();
                     this.preventFlickeringBug();
-                } else
+                } else 
                     this.clearScreen(this.context);
 
                 this.clearScreenText(this.textcontext);
                 this.clearScreenText(this.toptextcontext);
 
-                this.renderStaticCanvases();
+                if (this.game.isCentered)
+                    this.renderStaticCanvases();
 
                 this.context.save();
                 this.textcontext.save();
@@ -1343,6 +1384,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.drawEntities(this.mobile);
                 this.drawCombatInfo();
                 this.drawInventory();
+
+                if (!this.game.isCentered && !this.mobile)
+                    this.drawHighTiles(this.context);
 
                 this.context.restore();
                 this.textcontext.restore();

@@ -70,6 +70,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.TEAM] = this.receiveTeam;
             this.handlers[Types.Messages.STOP] = this.receiveStop;
             this.handlers[Types.Messages.SENDAD] = this.receiveAd;
+            this.handlers[Types.Messages.CENTERCAMERA] = this.receiveCamera;
 
             this.useBison = false;
 
@@ -87,8 +88,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         connect: function() {
 
             var self = this,
-                url = "wss://game.taptapadventure.com";
-
+                url = "ws://127.0.0.1:50526";
+            //144.217.92.76
             this.connection = io(url, {
                 forceNew: true,
                 reconnection: false
@@ -562,6 +563,12 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 this.ad_callback(data[1]);
         },
 
+        receiveCamera: function(data) {
+            if (this.camera_callback)
+                this.camera_callback(data[1]);
+
+        },
+
         receiveRanking: function(data){
             data.shift();
             if(this.ranking_callback){
@@ -839,6 +846,9 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         },
         onAd: function(callback) {
             this.ad_callback = callback; 
+        },
+        onCamera: function(callback) {
+            this.camera_callback = callback;
         },
         onNotify: function(callback){
             this.notify_callback = callback;

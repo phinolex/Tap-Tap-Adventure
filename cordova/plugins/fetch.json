@@ -30,5 +30,22 @@
         },
         "is_top_level": false,
         "variables": {}
+    },
+    "cordova-plugin-ad-unityads": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-ad-unityads"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-ad-unityads-sdk": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cranberrygame/cordova-plugin-ad-unityads-sdk",
+            "subdir": "."
+        },
+        "is_top_level": false,
+        "variables": {}
     }
 }
