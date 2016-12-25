@@ -78,6 +78,9 @@ html, body {height:100%;}
 body {padding:0;margin:0;background:#111;overflow:hidden;image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;border-top:2px solid #707070;}
 
 canvas { position:absolute;image-rendering:optimizeSpeed;}
+#background { background:url('../img/common/loading.png') no-repeat center center, #000;}
+.error #background { background:url('../img/common/loading-error.png') no-repeat center center, #000;}
+
 #backgroundbuffer { display:none;}
 
 #backgroundbuffer, #background, #textcanvas, #toptextcanvas, #foreground {
@@ -283,7 +286,7 @@ footer div  {display:inline-block;}
 #sharing .facebook:hover {background-position:-822px -224px;}
 #sharing .twitter {height:22px;width:32px;background-position:-770px -224px;margin:0 12px 0 0;}
 #sharing .twitter:hover {background-position:-770px -224px;}
-#sharing .gplus {height:22px;width:22px;background:url('../img/common/gplus.png');margin:0 12px 0 0;}
+#sharing .gplus {height:22px;width:22px;background:url('../img/common/gplus.png');margin:0 12px 0 0px;}
 #toggle-credits {display:inline-block;margin-left:12px;}
 #legal-link a {text-decoration:none;color:inherit;}
 #credits-link span:hover, #privacy-link span:hover, #forum-link span:hover, #legal-link a:hover {color:#fcda5c;cursor:pointer;}
@@ -487,9 +490,6 @@ footer div  {display:inline-block;}
 
 @media screen and (min-width: 1501px), screen and (min-height: 801px) {
 
-
-
-
     #partyconfirm {
         position: absolute;
         width: 150px;
@@ -534,7 +534,7 @@ footer div  {display:inline-block;}
     }
     #playerPopupMenuContainer div {
         position: absolute;
-        left: 0;
+        left: 0px;
         width: 96px;
         height: 36px;
         background: rgba(0, 0, 0, 0);
@@ -543,20 +543,20 @@ footer div  {display:inline-block;}
         text-align: center;
         margin-top: 12px;
     }
-    #playerPopupMenuName{ top: 0; }
+    #playerPopupMenuName{ top: 0px; }
     #playerPopupMenuAttack{ top: 36px; }
     #playerPopupMenuPartyInvite{ top: 72px; }
     #playerPopupMenuPartyLeader{ top: 72px; }
     #playerPopupMenuPartyKick{ top: 108px; }
 
-    #target {
+    #target{
         font-family:'GraphicPixel';
         color:#e3e3e3;
         position: absolute;
         top: 15px;
         left: 15px;
         width: 210px;
-        margin-left: 0;
+        margin-left: 0px;
         padding: 6px;
         background: rgba(45,45,45,0.8);
         display: none;
@@ -600,12 +600,10 @@ footer div  {display:inline-block;}
         -o-transition:.5s width ease;
         -ms-transition:.5s width ease;
         transition:.5s width ease;
-        border-radius: 6px 6px 6px 6px;
     }
 
     #target .life {
         float: right;
-        border-radius: 6px 6px 6px 6px;
         margin-bottom: 12px;
         text-transform: capitalize;
 
@@ -622,7 +620,7 @@ footer div  {display:inline-block;}
         padding: 6px;
         background: rgba(45,45,45,0.8);
         display: none;
-        border-radius: 9px 9px 9px 9px;
+        border-radius: 0 0 9px 9px;
         pointer-events: none;
     }
     #inspector .headshot {
@@ -633,24 +631,20 @@ footer div  {display:inline-block;}
         margin-right: 4.5px;
         background: #FFF;
         overflow: hidden;
-        border-radius: 6px 6px 6px 6px;
     }
     #inspector .headshot div {
         position: relative;
         top: 50%;
         left: 50%;
-        border-radius: 6px 6px 6px 6px;
     }
     #inspector .details {
         float: left;
         width: 150px;
-        border-radius: 6px 6px 6px 6px;
     }
     #inspector .health {
         float: left;
         height: 15px;
         width: 100%;
-        border-radius: 6px 6px 6px 6px;
         background: red;
         clear: left;
     }
@@ -675,12 +669,12 @@ footer div  {display:inline-block;}
     #chatbox {
         position: absolute;
         left: 52.75%;
-        bottom: 111px;
-        width: 1180.5px;
-        height: 48px;
-        margin-left: -591px;
-        background-image: url('../img/3/main.png');
-        background-position: 0 -894px;
+        bottom: 72.7px;
+        width: 787px;
+        height: 32px;
+        margin-left: -394px;
+        background-image: url('../img/2/main.png');
+        background-position: 0px -596px;
         display: none;
         zoom: 82%
     }
@@ -688,7 +682,7 @@ footer div  {display:inline-block;}
         display: block;
     }
     #chatbox input {
-        font-size:25px;
+        font-size:10px;
         color:#eee;
         background:none;
         width:90%;
@@ -698,13 +692,13 @@ footer div  {display:inline-block;}
     }
     #chatbox .legend{
         position: absoute;
-        top: -30px;
-        left: 15px;
-        padding: 6px 9px;
+        top: -20px;
+        left: 10px;
+        padding: 4px 6px;
         color: #FFF;
         background: rgba(45,45,45,0.8);
-        z_index: 6;
-        border-radius: 4.5px 4.5px 0 0;
+        z_index: 4;
+        border-radius: 3px 3px 0 0;
         diplay: none;
     }
     #chatbox .legend p{
@@ -739,7 +733,7 @@ footer div  {display:inline-block;}
     #parchment.createcharacter input {margin-top:20px;height:50px;}
     #createcharacter .play {margin: 10px auto 10px auto;}
     .button {height:153px;width:375px;background-position:-687px -306px;margin:30px auto 0 auto;position:relative;}
-    .play div {height:153px;width:375px;background-position:-687px 0;}
+    .play div {height:153px;width:375px;background-position:-687px 0px;}
     .play div:active {background-position:-687px -459px;}
     .play.loading div {background-position:-681px -2178px;}
     .play.loading img {width:24px;height:24px;}
@@ -780,9 +774,9 @@ footer div  {display:inline-block;}
         padding: 0;
         line-height: 1;
         color: rgba(255,255,255,1);
-        font-family:'GraphicPixel'
-    font-size: 30px;
-
+        font-family:'GraphicPixel';
+        font-size: 30px;
+        font-weight: 900;
     }
     #chatLog p .name{
         font-weight: bold;
@@ -944,9 +938,9 @@ footer div  {display:inline-block;}
         height: 50%;
         background: rgba(0,0,0,0.7);
         color: rgba(255, 255, 255, 1);
-        margin-left: 0;
+        margin-left: 0px;
         padding: 1%;
-        border: 0;
+        border: 0px;
     }
     #textWindow h1 {font-size:64px;}
     #textWindow h2 {font-size:48px;}
@@ -966,11 +960,11 @@ footer div  {display:inline-block;}
         left: 50%;
         margin-left: -735px;
         top: 15px;
-        border: 0;
+        border: 0px;
         padding: 15px;
         background-image: url('../img/3/main.png' );
         background-repeat: no-repeat;
-        background-position: 0 0;
+        background-position: 0px 0px;
     }
 
     #fade {width:1440px;height:672px;top:15px;left:15px;}
@@ -1111,7 +1105,7 @@ footer div  {display:inline-block;}
     }
     #playerPopupMenuContainer div {
         position: absolute;
-        left: 0;
+        left: 0px;
         width: 48px;
         height: 18px;
         background: rgba(0, 0, 0, 0);
@@ -1120,7 +1114,7 @@ footer div  {display:inline-block;}
         text-align: center;
         margin-top: 6px;
     }
-    #playerPopupMenuName{ top: 0; }
+    #playerPopupMenuName{ top: 0px; }
     #playerPopupMenuAttack{ top: 18px; }
     #playerPopupMenuPartyInvite{ top: 36px; }
     #playerPopupMenuPartyLeader{ top: 36px; }
@@ -1133,7 +1127,7 @@ footer div  {display:inline-block;}
         top: 10px;
         left: 10px;
         width: 140px;
-        margin-left: 0;
+        margin-left: 0px;
         padding: 4px;
         background: rgba(45,45,45,0.8);
         display: none;
@@ -1177,7 +1171,6 @@ footer div  {display:inline-block;}
         -o-transition:.5s width ease;
         -ms-transition:.5s width ease;
         transition:.5s width ease;
-        border-radius: 4px 4px 4px 4px;
     }
 
     #target .life {
@@ -1197,7 +1190,7 @@ footer div  {display:inline-block;}
         padding: 4px;
         background: rgba(45,45,45,0.8);
         display: none;
-        border-radius: 6px 6px 6px 6px;
+        border-radius: 0 0 6px 6px;
         pointer-events: none;
     }
     #inspector .headshot {
@@ -1208,28 +1201,26 @@ footer div  {display:inline-block;}
         margin-right: 3px;
         background: #FFF;
         overflow: hidden;
-        border-radius: 4px 4px 4px 4px;
     }
     #inspector .headshot div {
         position: relative;
         top: 50%;
         left: 50%;
-        border-radius: 4px 4px 4px 4px;
     }
     #inspector .details {
         float: left;
         width: 100px;
-        border-radius: 4px 4px 4px 4px;
     }
     #inspector .health {
         float: left;
         height: 10px;
         width: 100%;
-        border-radius: 4px 4px 4px 4px;
         background: red;
         clear: left;
-
     }
+
+
+
 
     #iteminfo {
         display: none;
@@ -1255,7 +1246,7 @@ footer div  {display:inline-block;}
         height: 32px;
         margin-left: -394px;
         background-image: url('../img/2/main.png');
-        background-position: 0 -596px;
+        background-position: 0px -596px;
         display: none;
         zoom: 82%;
     }
@@ -1316,7 +1307,7 @@ footer div  {display:inline-block;}
     #parchment.createcharacter input {margin-top:15px;height:30px;}
     #createcharacter .play {margin: 8px auto 8px auto;}
     .button {height:102px;width:250px;background-position:-458px -204px;margin:20px auto 0 auto;position:relative;}
-    .play div {height:102px;width:250px;background-position:-458px 0;}
+    .play div {height:102px;width:250px;background-position:-458px 0px;}
     .play div:active {background-position:-458px -306px;}
     .play.loading div {background-position:-454px -1452px;}
     .play.loading img {height:16px;width:16px;}
@@ -1374,11 +1365,11 @@ footer div  {display:inline-block;}
         line-height: 1;
         color: rgba(255,255,255,1);
         font-size: 15px;
+        font-weight: 900;
     }
     #chatLog p .name{
         font-weight: bold;
     }
-
     #kungLog{
         position: absolute;
         width: 180px;
@@ -1522,10 +1513,13 @@ footer div  {display:inline-block;}
         height: 50%;
         background: rgba(0,0,0,0.7);
         color: rgba(255, 255, 255, 1);
-        margin-left: 0;
+        margin-left: 0px;
         padding: 1%;
-        border: 0;
+        border: 0px;
     }
+
+//2 - Upscale here
+
 
 
       #textWindow h1 {font-size:64px;}
@@ -1536,7 +1530,7 @@ footer div  {display:inline-block;}
     #textWindow h6 {font-size:12px;text-indent:32px;}
     #textWindow p {font-size:12px;text-indent:32px;margin:2px 2px;}
     #textWindow td {color: rgba(255, 255, 255, 1);}
-    #canvasborder {padding:10px;background:url('../img/2/border.png') no-repeat;}
+//#canvasborder {padding:10px;background:url('../img/2/border.png') no-repeat;}
     #canvas {width:100%;height:448px;}
 
 
@@ -1547,11 +1541,11 @@ footer div  {display:inline-block;}
         left: 50%;
         margin-left: -490px;
         top: 10px;
-        border: 0;
+        border: 0px;
         padding: 10px;
         background-image: url('../img/2/main.png' );
         background-repeat: no-repeat;
-        background-position: 0 0;
+        background-position: 0px 0px;
     }
 
 
@@ -1698,7 +1692,7 @@ footer div  {display:inline-block;}
     }
     #playerPopupMenuContainer div {
         position: absolute;
-        left: 0;
+        left: 0px;
         width: 24px;
         height: 9px;
         background: rgba(0, 0, 0, 0);
@@ -1707,7 +1701,7 @@ footer div  {display:inline-block;}
         text-align: center;
         margin-top: 3px;
     }
-    #playerPopupMenuName{ top: 0; }
+    #playerPopupMenuName{ top: 0px; }
     #playerPopupMenuPartyAttack{ top: 9px; }
     #playerPopupMenuPartyInvite{ top: 18px; }
     #playerPopupMenuPartyLeader{ top: 18px; }
@@ -1720,7 +1714,7 @@ footer div  {display:inline-block;}
         top: 5px;
         left: 5px;
         width: 70px;
-        margin-left: 0;
+        margin-left: 0px;
         padding: 2px;
         background: rgba(45,45,45,0.8);
         display: none;
@@ -1764,14 +1758,12 @@ footer div  {display:inline-block;}
         -o-transition:.5s width ease;
         -ms-transition:.5s width ease;
         transition:.5s width ease;
-        border-radius: 2px 2px 2px 2px;
     }
 
     #target .life {
         float: right;
         margin-bottom: 4px;
         text-transform: capitalize;
-        border-radius: 2px 2px 2px 2px;
     }
 
     #inspector {
@@ -1785,7 +1777,7 @@ footer div  {display:inline-block;}
         padding: 2px;
         background: rgba(45,45,45,0.8);
         display: none;
-        border-radius: 3px 3px 3px 3px;
+        border-radius: 0 0 3px 3px;
         pointer-events: none;
     }
     #inspector .headshot {
@@ -1796,24 +1788,20 @@ footer div  {display:inline-block;}
         margin-right: 1.5px;
         background: #FFF;
         overflow: hidden;
-        border-radius: 2px 2px 2px 2px;
     }
     #inspector .headshot div {
         position: relative;
         top: 50%;
         left: 50%;
-        border-radius: 2px 2px 2px 2px;
     }
     #inspector .details {
         float: left;
         width: 50px;
-        border-radius: 2px 2px 2px 2px;
     }
     #inspector .health {
         float: left;
         height: 5px;
         width: 100%;
-        border-radius: 2px 2px 2px 2px;
         background: red;
         clear: left;
     }
@@ -1855,6 +1843,7 @@ footer div  {display:inline-block;}
     #chatLog p{
         font-family:'GraphicPixel';
         font-size: 10px;
+        font-weight: 900;
         margin-bottom: 1px;
         padding: 0;
         line-height: 1;
@@ -1872,7 +1861,7 @@ footer div  {display:inline-block;}
         height: 16px;
         margin-left: -197px;
         background-image: url('../img/1/main.png');
-        background-position: 0 -298px;
+        background-position: 0px -298px;
         display: none;
         zoom: 82.25%;
     }
@@ -1930,7 +1919,7 @@ footer div  {display:inline-block;}
     #parchment select {margin-top:8px; padding:0 5px; border:1px dashed #b2af9b; font-size:10px;border-radius:3px;height:16px;width:24%;}
     #parchment.createcharacter input {margin-top:4px;height:15px;}
     .button {height:51px;width:125px;background-position:-229px -102px;margin:10px auto 0 auto;position:relative;}
-    .play div {height:51px;width:125px;background-position:-229px 0;}
+    .play div {height:51px;width:125px;background-position:-229px 0px;}
     .play div:active {background-position:-229px -153px;}
     .play.loading div {background-position:-227px -726px;}
     .play.loading img {height:11px;width:11px;}
@@ -1961,11 +1950,11 @@ footer div  {display:inline-block;}
         left: 50%;
         margin-left: -245px;
         top: 5px;
-        border: 0;
+        border: 0px;
         padding: 5px;
         background-image: url('../img/1/main.png' );
         background-repeat: no-repeat;
-        background-position: 0 0;
+        background-position: 0px 0px;
     }
 
 

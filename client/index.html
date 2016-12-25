@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta
-            name="viewport"
-            content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" type="image/png" href="img/common/favicon.png">
     <meta property="og:title" content="TapTap">
     <meta property="og:type" content="website">
@@ -33,10 +31,10 @@
     <link href="img/common/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
     <link href="img/common/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
 
+    <!--<script src="http://192.168.0.20:9000/target/target-script-min.js#anonymous" type="text/javascript"></script>-->
     <script src="js/lib/modernizr.js" type="text/javascript"></script>
 
     <script src="js/detect.js" type="text/javascript"></script>
-
     <title>Tap Tap Adventure</title>
 </head>
 
@@ -72,14 +70,18 @@
                     <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="32">
                     <input type="password" id="pwinput" class="stroke" name="player-pw" placeholder="Password" maxlength="200">
                     <input type="password" id="pwinput2" class="stroke" name="player-pw2" placeholder="Confirm Password" maxlength="200">
+                    <div id="charclassinput">Choose your Class:
+                        <select id="selectClassSwitch2">
+                            <option value="0">Fighter</option>
+                            <option value="1">Archer</option>
+                            <option value="2">Defender</option>
+                            <!--<option value="3">Mage</option>-->
+                        </select>
+                    </div>
                     <input type="email" id="emailinput" class="stroke" name="player-email" placeholder="Email address" maxlength="64">
                 </form>
-                <div></div>
                 <div class="play">
                     <span class="link">Create</span>
-                </div>
-                <div id="cancel">
-                    <span class="link">Cancel</span>
                 </div>
                 <div class="validation-summary"></div>
             </article>
@@ -138,26 +140,20 @@
             <article id="credits">
                 <h1>
                     <span class="left-ornament"></span>
-                            <span class="title">
-                                Special thanks to Little Workshop
-                            </span>
+         	               <span class="title">
+         	                   Special thanks to Little Workshop
+         	               </span>
                     <span class="right-ornament"></span>
                 </h1>
                 <div id="authors">
                     For the initial code and pixel art.
                     <br>
                     <br>
-                    Music by <a class="clickable" target="_blank" href="http://opengameart.org/users/marcelofg55">Marcelofg55</a>,
-                    <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>,
-                    <a class="clickable" target="_blank" href="https://soundcloud.com/gyrowolf/sets/gyrowolfs-rpg-maker-music-pack">Gyrowolf</a>,
+                    Music by <a class="clickable" target="_blank" href="http://opengameart.org/users/marcelofg55">Marcelofg55</a>, <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>
                     <br>
-                    <a class="clickable" target="_blank" href="https://soundcloud.com/freakified/what-dangers-await-campus-map">Freakified</a>,
-                    <a class="clickable" target="_blank" href="http://blog.dayjo.org/free-rpg-music-pack-part-1/">Dayjo</a>,
-                    <a class="clickable" target="_blank" href="http://opengameart.org/users/matthewpablo">Matthew Pablo</a>
+                    Developers: Tachyon, H0lyByte and Langerz
                     <br>
-                    Developer: Tachyon
-                    <br>
-                    Special thanks to Pretzel
+                    Contributors: Pretzel and Asky Team
                 </div>
                 <div id="close-credits">
                     <span>- click anywhere to close -</span>
@@ -228,7 +224,7 @@
 </div>
 
 <div id="container">
-    <div id="mainborder">
+    <div id="mainborder" width="1470" height="737">
         <div id="canvas">
             <canvas id="backgroundbuffer"></canvas>
             <canvas id="background"></canvas>
@@ -294,7 +290,7 @@
                 </div>
             </div>
             <div id="achievements-count" class="stroke">
-                Completed:
+                Completed
                 <div>
                     <span id="unlocked-achievements">0</span>
                     /
@@ -369,43 +365,9 @@
         </div>
 
 
-        <div id="inventorycontainer" class="vertical">
-            <div id="inventorycontainermove"></div>
-            <div id="inventorycontainerswitch"></div>
-            <div id="inventorybackground0">
-                <div id="inventory0"></div>
-                <div id="inventorynumber0"></div>
-                <div id="inventory0Cooltime"></div>
-            </div>
-            <div id="inventorybackground1">
-                <div id="inventory1"></div>
-                <div id="inventorynumber1"></div>
-                <div id="inventory1Cooltime"></div>
-            </div>
-            <div id="inventorybackground2">
-                <div id="inventory2"></div>
-                <div id="inventorynumber2"></div>
-                <div id="inventory2Cooltime"></div>
-            </div>
-            <div id="inventorybackground3">
-                <div id="inventory3"></div>
-                <div id="inventorynumber3"></div>
-                <div id="inventory3Cooltime"></div>
-            </div>
-            <div id="inventorybackground4">
-                <div id="inventory4"></div>
-                <div id="inventorynumber4"></div>
-                <div id="inventory4Cooltime"></div>
-            </div>
-            <div id="inventorybackground5">
-                <div id="inventory5"></div>
-                <div id="inventorynumber5"></div>
-                <div id="inventory5Cooltime"></div>
-            </div>
-        </div>
+
 
         <div id="basebarcontainer">
-
             <div id="hpcontainer">
                 <div id="health"> </div>
                 <div id="healthbar"></div>
@@ -421,18 +383,32 @@
                 <div id="exp"></div>
                 <div id="expbar"></div>
             </div>
-            <div id="users"></div>
+            <div id="inventorybackground0">
+                <div id="inventory0"></div>
+                <div id="inventorynumber0"></div>
+            </div>
+            <div id="inventorybackground1">
+                <div id="inventory1"></div>
+                <div id="inventorynumber1"></div>
+            </div>
+            <div id="inventorybackground2">
+                <div id="inventory2"></div>
+                <div id="inventorynumber2"></div>
+            </div>
+            <div id="inventorybackground3">
+                <div id="inventory3"></div>
+                <div id="inventorynumber3"></div>
+            </div>
+            <div id="inventorybackground4">
+                <div id="inventory4"></div>
+                <div id="inventorynumber4"></div>
+            </div>
+            <div id="inventorybackground5">
+                <div id="inventory5"></div>
+                <div id="inventorynumber5"></div>
+            </div>
+
             <div id="inventoryButton"></div>
-            <div id="characterButton"></div>
-            <div id="helpbutton"></div>
-            <div id="soundbutton"></div>
-            <div id="warpbutton"></div>
-            <div id="chatbutton"></div>
-            <div id="fps">FPS: 60</div>
-        </div>
-        <div id="skillcontainer" class="vertical">
-            <div id="skillcontainermove"></div>
-            <div id="skillcontainerswitch"></div>
             <div id="skill0">
                 <div id="skill0Body"></div>
                 <div id="skill0Cooltime"></div>
@@ -473,6 +449,11 @@
                 <div id="skill42"></div>
                 <div id="skill43"></div>
             </div>
+            <div id="users"></div>
+            <div id="characterButton"></div>
+            <div id="helpbutton"></div>
+            <div id="soundbutton"></div>
+            <div id="fps">FPS: 60</div>
         </div>
 
         <div id="characterDialog">
@@ -920,9 +901,6 @@
         <span id="toggle-credits">Credits</span>
     </div>
 
-    <div id="legal-link" class="clickable">
-        <span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="https://forum.taptapadventure.com">Forums</a>
-    </div>
 </footer>
 
 
@@ -943,8 +921,6 @@
 
 <div id="resize-check"></div>
 <script src="javascripts/socket.io.js"></script>
-<script src="cordova.js"></script>
-
 <script type="text/javascript">
     var ctx = document.querySelector('canvas').getContext('2d'),
             parchment = document.getElementById("parchment");
@@ -957,28 +933,7 @@
     parchment.className = "loadcharacter";
 </script>
 
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '1133204880132577',
-            xfbml      : true,
-            version    : 'v2.8'
-        });
-
-        // ADD ADDITIONAL FACEBOOK CODE HERE
-    };
-
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
-
 <script src="js/lib/log.js"></script>
-
 <script>
     var require = { waitSeconds: 60 };
 </script>

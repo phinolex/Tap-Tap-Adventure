@@ -126,8 +126,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.canvas.width = this.camera.gridW * this.tilesize * this.scale;
                 this.canvas.height = this.camera.gridH * this.tilesize * this.scale;
 
-                if (this.mobile)
-                    this.canvas.height += 15;
+                //if (this.mobile)
+                //    this.canvas.height += 15;
 
                 this.backbuffercanvas.width = this.canvas.width + 2 * this.tilesize;
                 this.backbuffercanvas.height = this.canvas.height+ 2 * this.tilesize;
@@ -362,7 +362,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
             drawTile: function(ctx, tileid, tileset, setW, gridW, cellid) {
                 var s = this.upscaledRendering ? 1 : this.scale;
-                if(tileid !== -1) { // -1 when tile is empty in Tiled. Don't attempt to draw it.
+                if(tileid != -1) { // -1 when tile is empty in Tiled. Don't attempt to draw it.
                     this.drawScaledImage(ctx,
                         tileset,
                         getX(tileid + 1, (setW / s)) * this.tilesize,
@@ -628,6 +628,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         var weapon = this.game.sprites[entity.getWeaponName()];
                         if(weapon) {
                             if (!weapon.isLoaded) weapon.load();
+
                             var weaponAnimData = weapon.animationData[anim.name],
                                 index = frame.index < weaponAnimData.length ? frame.index : frame.index % weaponAnimData.length,
                                 wx = weapon.width * index * os,
@@ -1163,8 +1164,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             drawAnimatedTiles: function(dirtyOnly, ctx) {
-                if (!this.camera.isattached)
-                    return;
+
                 var self = this,
                     m = this.game.map,
                     tilesetwidth = this.tileset.width / m.tilesize;
@@ -1401,12 +1401,21 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             preventFlickeringBug: function() {
-                if(this.fixFlickeringTimer.isOver(this.game.currentTime))
+                if(this.fixFlickeringTimer.isOver(this.game.currentTime)) {
+                    this.background.fillRect(0, 0, 0, 0);
                     this.context.fillRect(0, 0, 0, 0);
+                    this.foreground.fillRect(0, 0, 0, 0);
+                }
             },
 
             cleanPathing: function() {
                 this.clearScreen(this.context);
+            },
+
+            cleanScreenEntirely: function() {
+                this.clearScreen(this.context);
+                this.clearScreen(this.buffer);
+                this.clearScreen(this.foreground);
             }
         });
 

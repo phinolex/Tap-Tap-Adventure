@@ -355,13 +355,13 @@ module.exports = PacketHandler = Class.extend({
             }
         };
 
-        if (developmentMode) {
+        /*if (developmentMode) {
             self.player.name = playerName.substr(0, 36).trim();
             self.player.pw = playerPassword.substr(0, 45);
             self.player.email = "Me@me.me";
             self.redisPool.loadPlayer(self.player);
             return;
-        }
+        }*/
 
         if (self.server.loggedInPlayer(playerName.substr(0, 36).trim())) {
             self.connection.sendUTF8('loggedin');

@@ -154,7 +154,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                 z = g.currentZoning,
                 s = 3,
                 ts = 16,
-                speed = 100;
+                speed = 200;
 
             if(z && z.inProgress === false) {
                 var orientation = this.game.zoningOrientation,

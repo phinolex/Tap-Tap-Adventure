@@ -75,12 +75,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.partyHandler = new PartyHandler(this);
                 this.statehandler = new StateHandler(this);
                 this.logicTime = new Date().getTime();
-                this.isCentered = true;
-
-
-                // FPS
                 this.lastFPSTime = new Date().getTime();
                 this.FPSCount = 0;
+                this.FPSAverage = 0;
+                this.countAverage = true;
+                this.averageCount = 0;
+
+                //Camera
+                this.isCentered = true;
 
                 // zoning
                 this.currentZoning = null;
@@ -99,6 +101,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.healShortCut = -1;
                 this.hpGuide = 0;
                 this.autoEattingHandler = null;
+                
                 // pvp
                 this.pvpFlag = false;
                 this.pvpTimer = 100;
@@ -121,15 +124,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.bankShowing = false;
 
                 //Minigame
-
                 this.blueKills = 0;
                 this.redKills = 0;
 
                 //Rendering
-
                 this.renderTime = new Date().getTime();
-
-
 
                 this.spriteNames = [
                     "item-frankensteinarmor", "ancientmanumentnpc", "provocationeffect",
@@ -601,7 +600,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         tile.y = pos.y;
                         self.animatedTiles.push(tile);
                     }
-                }, 1, false);
+                }, 1);
             },
 
             addToRenderingGrid: function(entity, x, y) {
@@ -741,6 +740,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     this.FPSCount++;
                     if (this.currentTime - this.lastFPSTime > 1000) {
                         $('#fps').html("FPS: " + this.FPSCount);
+
+                        if (this.countAverage)
+                            this.FPSAverage = (this.FPSAverage + this.FPSCount) / 2;
+
                         this.lastFPSTime = this.currentTime;
                         this.FPSCount = 0;
                     }
@@ -751,12 +754,26 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             start: function() {
+                var self = this;
                 this.tick();
+
+                var averageInterval = setInterval(function() {
+                    if (self.averageCount > 2 || self.FPSAverage < 4) {
+                        self.centerCamera();
+                        self.countAverage = false;
+                        clearInterval(averageInterval);
+                    }
+
+                    if (self.FPSAverage < 25)
+                        self.averageCount++;
+                    else
+                        self.averageCount = 0;
+
+                }, 1000);
                 this.hasNeverStarted = false;
             },
 
             stop: function() {
-                log.info("Game stopped.");
                 this.isStopped = true;
             },
 
@@ -920,7 +937,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.initializeAchievements();
                     self.client.sendReady(self.playerId);
                     self.audioManager.updateMusic();
+                    self.renderer.clearScreen(self.renderer.context);
+                    self.renderer.cleanPathing();
+                    self.renderer.drawBackground(self.renderer.background, "#12100D");
                     self.resetCamera();
+                    self.determineCentration();
 
                     if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
                         self.player.setAtkRange(6);
@@ -986,8 +1007,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         if(!self.player.isDead) {
                             self.audioManager.updateMusic();
-                            if (self.renderer.mobile && self.isCentered)
-                                self.renderer.cleanPathing();
+                            //if (self.renderer.mobile && self.isCentered)
+                            //    self.renderer.cleanPathing();
                         }
                     });
 
@@ -1043,15 +1064,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.client.onCamera(function(playerId) {
-                        self.player.stop();
-                        self.isCentered = !self.isCentered;
+                        self.centerCamera();
                     });
 
                     self.client.onDoor(function(x, y, orientation, playerId) {
 
                         if (playerId == self.player.id) {
-                            self.unregisterEntityPosition(self.player);
-
                             self.selectedCellVisible = false;
                             self.player.forceStop();
                             self.selectedX = x;
@@ -1065,7 +1083,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             self.client.sendTeleport(self.player.id, x, y);
 
-                            self.resetZone();
+                            if (!this.isCentered)
+                                self.camera.focusEntity(self.player);
 
                             self.player.forEachAttacker(function(attacker) {
                                 attacker.disengage();
@@ -1074,16 +1093,25 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                             self.updatePlateauMode();
 
-                            self.renderer.clearScreen(self.renderer.context);
-                            self.renderer.cleanPathing();
+                            if (self.renderer.mobile || self.renderer.tablet)
+                                self.renderer.clearScreen(self.renderer.context);
 
-                            self.renderer.drawBackground(self.renderer.background, "#12100D");
-                            self.renderbackground = true;
-                            self.renderer.forceRedraw = true;
+                            if (!this.isCentered) {
+                                self.renderer.cleanPathing();
+
+                                self.renderer.drawBackground(self.renderer.background, "#12100D");
+                                self.renderbackground = true;
+                                self.renderer.forceRedraw = true;
+                            }
+
+                            if (this.isCentered)
+                                self.camera.setRealCoords();
 
                             self.player.isStunned = false;
 
-                            self.camera.setRealCoords();
+                            self.resetZone();
+
+                            self.unregisterEntityPosition(self.player);
                             self.registerEntityPosition(self.player);
 
                             try {
@@ -1160,8 +1188,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if(!(self.player.moveUp || self.player.moveDown || self.player.moveLeft || self.player.moveRight))
                             self.renderer.forceRedraw = true;
 
-                        if (self.renderer.mobile)
-                            self.renderer.cleanPathing();
+                        //if (self.renderer.mobile)
+                         //   self.renderer.cleanPathing();
 
                         self.unregisterEntityPosition(self.player);
                         self.registerEntityPosition(self.player);
@@ -1215,7 +1243,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.player.onHasMoved(function(player) {
-                        self.initAnimatedTiles();
+                        if (self.isCentered)
+                            self.initAnimatedTiles();
+
                         self.assignBubbleTo(player);
                     });
 
@@ -2462,6 +2492,26 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 }
             },
 
+            centerCamera: function() {
+                var self = this;
+
+
+                self.player.stop();
+                self.isCentered = !self.isCentered;
+                self.renderer.cleanPathing();
+                self.renderer.clearScreen(self.renderer.context);
+                self.renderer.cleanScreenEntirely();
+                self.renderer.renderStaticCanvases();
+                self.countAverage = false;
+            },
+
+            determineCentration: function() {
+                var self = this;
+
+                if (self.renderer.tablet)
+                    self.centerCamera();
+            },
+
 
             /**
              *
@@ -2730,12 +2780,22 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.hoveringCollidingTile = false;
                 this.hoveringPlateauTile = false;
 
-                if((pos.x === this.previousClickPosition.x
-                    && pos.y === this.previousClickPosition.y)) {
-                    return;
+                if (this.isCentered) {
+                    if((pos.x === this.previousClickPosition.x
+                        && pos.y === this.previousClickPosition.y)) {
+                        return;
+                    } else {
+                        if(!this.player.disableKeyboardNpcTalk)
+                            this.previousClickPosition = pos;
+                    }
                 } else {
-                    if(!this.player.disableKeyboardNpcTalk)
-                        this.previousClickPosition = pos;
+                    if((pos.x === this.previousClickPosition.x
+                        && pos.y === this.previousClickPosition.y) || this.isZoning()) {
+                        return;
+                    } else {
+                        if(!this.player.disableKeyboardNpcTalk)
+                            this.previousClickPosition = pos;
+                    }
                 }
 
                 if(!this.player.isMoving()) {
@@ -3155,7 +3215,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     } else if(z === Types.Orientations.UP || z === Types.Orientations.DOWN) {
                         y = (z === Types.Orientations.UP) ? c.y - yoffset : c.y + yoffset;
                     }
-                    //c.setPosition(x, y);
+                    if (!this.isCentered)
+                        c.setPosition(x, y);
 
                     this.renderer.clearScreen(this.renderer.context);
                     this.endZoning();
@@ -3183,14 +3244,19 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             endZoning: function() {
+                var self = this;
+
                 this.currentZoning = null;
-                this.resetZone();
                 this.zoningQueue.shift();
 
                 if(this.zoningQueue.length > 0) {
                     var pos = this.zoningQueue[0];
                     this.startZoningFrom(pos.x, pos.y);
                 }
+                this.renderer.clearScreen(this.renderer.context);
+                this.renderer.cleanPathing();
+                this.renderer.drawBackground(this.renderer.background, "#12100D");
+                this.resetZone();
             },
 
             isZoning: function() {
@@ -3214,12 +3280,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             say: function(message) {
-                log.info("Message: " + message);
-                //All commands must be handled server side
-                if(!this.chathandler.processSendMessage(message)){
+                if(!this.chathandler.processSendMessage(message))
                     this.client.sendChat(message);
-                }
-
             },
 
             createBubble: function(id, message) {

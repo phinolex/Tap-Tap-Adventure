@@ -18,11 +18,11 @@ define(function() {
             var factor = this.renderer.mobile ? 1 : 2;
 
             this.gridW = 15 * factor;
-            this.gridH = ~~(7.5 * factor);
+            this.gridH = 7 * factor;
             this.gridW2 = Math.floor(this.gridW / 2);
             this.gridH2 = Math.floor(this.gridH / 2);
 
-            this.isattached = false;
+            //this.isattached = false;
 
             log.debug("---------");
             log.debug("Factor:"+factor);

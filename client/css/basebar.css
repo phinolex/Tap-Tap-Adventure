@@ -62,89 +62,53 @@ footer, header, hgroup, menu, nav, section {
     font-style: normal;
 }
 
-#mana {
-    /* Safari 5.1, Chrome 10+ */
-    background: -webkit-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
-    /* Firefox 3.6+ */
-    background: -moz-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
-}
-
-#mana.white {
-    -moz-animation:flash 0.5s linear 1;
-    -webkit-animation:flash 0.5s linear 1;
-    -o-animation:flash 0.5s linear 1;
-    -ms-animation:flash 0.5s linear 1;
-    animation:flash 0.5s linear 1;
-}
-
-#health {
-    /* Safari 5.1, Chrome 10+ */
-    background: -webkit-linear-gradient(top, #FF8888, #FF0000);
-    /* Firefox 3.6+ */
-    background: -moz-linear-gradient(top, #FF8888, #FF0000);
-}
-
-#health.white {
-    -moz-animation:flash 0.5s linear 1;
-    -webkit-animation:flash 0.5s linear 1;
-    -o-animation:flash 0.5s linear 1;
-    -ms-animation:flash 0.5s linear 1;
-    animation:flash 0.5s linear 1;
-}
-
-
-#health.invincible {
-    -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
-    -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
-    -o-animation:invincible 0.3s steps(3, end) alternate infinite;
-    -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
-}
-
 @media screen and (min-width: 1501px) {
 
     #basebarcontainer {
+        font-family:'GraphicPixel';
         position: absolute;
-        width: 970px;
+        width: 1440px;
         height: 66px;
-        top: 672px;
-        left: calc(50% - 444px);
-        border: 0px;
+        top: 669px;
+        left: 15px;
+        margin-left: 0;
+        border: 0;
         text-align: center;
         font-size: 21px;
-        background-image: url('../img/3/main.png' );
-        background-position: -370px -768px;
+        background-image: url('../img/3/maintwo.png' );
+        background-position: 0 -768px;
         -moz-user-select: none;
         -webkit-user-select: none;
     }
 
     #hpcontainer, #mpcontainer{
-	font-family:'GraphicPixel';
-	color:#e3e3e3;
-	position:absolute;
+        font-family:'GraphicPixel';
+        position: absolute;
         top: 9px;
         width: 264px;
         height: -18px;
-        border: 0px;
-        margin-left: 0px;
+        border: 0;
+        margin-left: 0;
         text-align: center;
         cursor: default;
         -moz-user-select: none;
         -webkit-user-select: none;
     }
     #hpcontainer {
-        left: 6px;
+        left: 3px;
     }
     #mpcontainer {
-        left: 288px;
+        left: 279px;
     }
     #expcontainer {
         position: absolute;
-        left: 0px;
-        top: 48px;
-        width: 572px;
+        left: 0;
+        top: 51px;
+        width: 564px;
         height: 15px;
-        border: 0px;
-        margin-left: 0px;
+        border: 0;
+        margin-left: 0;
+        font-size: 0;
         text-align: center;
         cursor: default;
         -moz-user-select: none;
@@ -152,13 +116,13 @@ footer, header, hgroup, menu, nav, section {
     }
     #health, #mana {
         position: absolute;
-        top: 4.5px;
+        top: 3px;
         left: 30px;
         width: 230px;
-        height: 26px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        height: 30px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         text-align: center;
         -moz-transition:.5s width ease;
         -webkit-transition:.5s width ease;
@@ -166,7 +130,26 @@ footer, header, hgroup, menu, nav, section {
         -ms-transition:.5s width ease;
         transition:.5s width ease;
     }
+    #health {
+        /* Safari 5.1, Chrome 10+ */
+        background: -webkit-linear-gradient(top, #FF8888, #FF0000);
+        /* Firefox 3.6+ */
+        background: -moz-linear-gradient(top, #FF8888, #FF0000);
+    }
+    #health.white {
+        -moz-animation:flash 0.5s linear 1;
+        -webkit-animation:flash 0.5s linear 1;
+        -o-animation:flash 0.5s linear 1;
+        -ms-animation:flash 0.5s linear 1;
+        animation:flash 0.5s linear 1;
+    }
 
+    #health.invincible {
+        -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -o-animation:invincible 0.3s steps(3, end) alternate infinite;
+        -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
+    }
     #mana {
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
@@ -175,27 +158,32 @@ footer, header, hgroup, menu, nav, section {
     }
     #exp {
         position: absolute;
-        top: 1.5px;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 564px;
         height: 15px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, #44FF44, #008800);
         /* Firefox 3.6+ */
         background: -moz-linear-gradient(top, #44FF44, #008800);
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
     #healthbar, #manabar {
         position: absolute;
-        top: 0px;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 264px;
         height: 39px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         text-align: center;
         color: white;
     }
@@ -204,38 +192,35 @@ footer, header, hgroup, menu, nav, section {
         line-height: 0%;
     }
     #healthbar {
-        background-image: url('../img/3/main.png' );
-        background-position: 0px -834px;
+        background-image: url('../img/3/maintwo.png' );
+        background-position: 0 -834px;
     }
     #manabar {
-        background-image: url('../img/3/main.png' );
+        background-image: url('../img/3/maintwo.png' );
         background-position: -264px -834px;
     }
 
     #expbar {
         position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 560px;
+        top: 0;
+        left: 0;
+        width: 564px;
         height: 15px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
-        background-image: url('../img/3/main.png' );
-        background-position: 0px -873px;
-        color: rgba(255, 255, 255, 1);
-        font-size: 0px;
-        text-align: center;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        background-image: url('../img/3/maintwo.png' );
+        background-position: 0 -873px;
     }
     #healthtext, #manatext {
         position: absolute;
-        top: 9px;
-        left: 0px;
+        top: 6px;
+        left: 0;
         width: 264px;
         height: 39px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         line-height: 39px;
         text-align: center;
         color: white;
@@ -248,15 +233,105 @@ footer, header, hgroup, menu, nav, section {
         height: 33px;
         width: 3px;
         top: 3px;
-        left: 0px;
+        left: 0;
     }
-
+    #inventorybackground0, #inventorybackground1, #inventorybackground2, #inventorybackground3, #inventorybackground4, #inventorybackground5 {
+        position: absolute;
+        width: 48px;
+        height: 60px;
+        top: 6px;
+        left: 549px;
+        margin: 0;
+        border: 0;
+        background-image: url('../img/3/maintwo.png' );
+    }
+    #inventorybackground0 {
+        margin-left: 0;
+        background-position: -597px -834px;
+    }
+    #inventorybackground0.empty {
+        background-position: -549px -834px;
+    }
+    #inventorybackground1 {
+        margin-left: 34px;
+        background-position: -645px -834px;
+    }
+    #inventorybackground1.empty {
+        background-position: -549px -834px;
+    }
+    #inventorybackground2 {
+        margin-left: 68px;
+        background-position: -693px -834px;
+    }
+    #inventorybackground2.empty {
+        background-position: -549px -834px;
+    }
+    #inventorybackground3 {
+        margin-left: 102px;
+        background-position: -741px -834px;
+    }
+    #inventorybackground3.empty {
+        background-position: -549px -834px;
+    }
+    #inventorybackground4 {
+        margin-left: 136px;
+        background-position: -789px -834px;
+    }
+    #inventorybackground4.empty {
+        background-position: -549px -834px;
+    }
+    #inventorybackground5 {
+        margin-left: 170px;
+        background-position: -837px -834px;
+        display: none;
+    }
+    #inventorybackground5.empty {
+        background-position: -549px -834px;
+    }
+    #inventorybackground0 { margin-left: 0; }
+    #inventorybackground1 { margin-left: 51px; }
+    #inventorybackground2 { margin-left: 99px; }
+    #inventorybackground3 { margin-left: 153px; display: none; }
+    #inventorybackground4 { margin-left: 204px; display: none; }
+    #inventorybackground5 { margin-left: 255px; display: none; }
+    #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
+        position: absolute;
+        top: -7.5px;
+        left: 00px;
+        width: 48px;
+        height: 48px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
+        position: absolute;
+        width: 48px;
+        height: 12px;
+        left: 1px;
+        top: 42px;
+        border: 0;
+        color: rgba(255, 255, 255, 1);
+        font-size: 13.5px;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+    #moreinventorybutton{
+        position: absolute;
+        display: none;
+        width: 48px;
+        height: 51px;
+        top: 0;
+        left: 852px;
+        margin: 0;
+        border: 0;
+        background: url('../img/3/maintwo.png') no-repeat -591px -556px;
+    }
     #inventoryButton {
         position: absolute;
         width: 42px;
         height: 45px;
         top: 3px;
-        left: 565.5px;
+        left: 856.5px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -276,7 +351,7 @@ footer, header, hgroup, menu, nav, section {
         width: 42px;
         height: 45px;
         top: 3px;
-        left: 609px;
+        left: 1305px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -297,7 +372,7 @@ footer, header, hgroup, menu, nav, section {
         width: 42px;
         height: 45px;
         top: 3px;
-        left: 654px;
+        left: 1350px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -317,7 +392,7 @@ footer, header, hgroup, menu, nav, section {
         width: 42px;
         height: 45px;
         top: 3px;
-        left: 744px;
+        left: 1395px;
         margin: 0px;
         border: 0px;
         background: url('../img/3/main.png' ) no-repeat -378px -942px;
@@ -350,54 +425,31 @@ footer, header, hgroup, menu, nav, section {
         background: url('../img/3/main.png' ) no-repeat -1050px -942px;
     }
 
-    #chatbutton {
-        position: absolute;
-        width: 42px;
-        height: 45px;
-        top: 3px;
-        left: 789px;
-        margin: 0px;
-        border: 0px;
-        background: url('../img/3/main.png' ) no-repeat -1134px -942px;
-    }
-
-    #chatbutton:hover {
-        background: url('../img/3/main.png' ) no-repeat -1092px -942px;
-    }
-
-    #chatbutton.active {
-        background: url('../img/3/main.png' ) no-repeat -1176px -942px;
-    }
-
     #users {
-	font-family:'GraphicPixel';
-	color:#e3e3e3;
-	position:absolute;
-        width: 80px;
+        font-family:'GraphicPixel';
+        position: absolute;
+        width: 96px;
         height: 60px;
         top: 18px;
-        left: 878px;
-        margin: 0px;
-        border: 0px;
+        left: 1203px;
+        margin: 0;
+        border: 0;
         color: white;
-        font-family: 'GraphicPixel', sans-serif;
-        font-size: 18px;
-    }
 
+    }
     #fps {
-	font-family:'GraphicPixel';
-	color:#e3e3e3;
-	position:absolute;
-        width: 150px;
+        font-family:'GraphicPixel';
+        position: absolute;
+        width: 132px;
         height: 12px;
-        left: 624px;
-        top: 46px;
-        border: 0px;
+        left: 1305px;
+        top: 49.5px;
+        border: 0;
         color: rgba(255, 255, 255, 1);
         font-size: 13.5px;
         text-align: center;
-        padding: 0px;
-        margin: 0px;
+        padding: 0;
+        margin: 0;
     }
 
 }
@@ -405,51 +457,57 @@ footer, header, hgroup, menu, nav, section {
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
     #basebarcontainer {
         position: absolute;
-        width: 650px;
+        width: 960px;
         height: 44px;
-        top: 447px;
-        left: calc(50% - 296px);
-        border: 0px;
+        top: 446px;
+        left: 10px;
+        margin-left: 0;
+        border: 0;
         text-align: center;
         font-size: 14px;
-        background-image: url('../img/2/main.png' );
-        background-position: -244px -510px;
+        background-image: url('../img/2/maintwo.png' );
+        background-position: 0 -512px;
         -moz-user-select: none;
         -webkit-user-select: none;
     }
 
     #hpcontainer, #mpcontainer{
         font-family:'GraphicPixel';
-	    color:#e3e3e3;
-	    position:absolute;
-        top: 4px;
+        position: absolute;
+        top: 6px;
         width: 176px;
         height: 26px;
-        border: 0px;
-        margin-left: 0px;
+        border: 0;
+        margin-left: 0;
         text-align: center;
         cursor: default;
         -moz-user-select: none;
         -webkit-user-select: none;
     }
     #hpcontainer {
-        left: 4px;
+        left: 2px;
     }
     #mpcontainer {
-        left: 196px;
+        left: 186px;
     }
     #expcontainer {
         position: absolute;
-        left: 0px;
+        left: 0;
         top: 34px;
-        width: 372px;
+        width: 376px;
         height: 10px;
-        border: 0px;
-        margin-left: 0px;
+        border: 0;
+        margin-left: 0;
         text-align: center;
         cursor: default;
+        font-size: 0;
         -moz-user-select: none;
         -webkit-user-select: none;
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
     #health, #mana {
         position: absolute;
@@ -457,9 +515,9 @@ footer, header, hgroup, menu, nav, section {
         left: 20px;
         width: 154px;
         height: 20px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         text-align: center;
         -moz-transition:.5s width ease;
         -webkit-transition:.5s width ease;
@@ -467,7 +525,26 @@ footer, header, hgroup, menu, nav, section {
         -ms-transition:.5s width ease;
         transition:.5s width ease;
     }
+    #health {
+        /* Safari 5.1, Chrome 10+ */
+        background: -webkit-linear-gradient(top, #FF8888, #FF0000);
+        /* Firefox 3.6+ */
+        background: -moz-linear-gradient(top, #FF8888, #FF0000);
+    }
+    #health.white {
+        -moz-animation:flash 0.5s linear 1;
+        -webkit-animation:flash 0.5s linear 1;
+        -o-animation:flash 0.5s linear 1;
+        -ms-animation:flash 0.5s linear 1;
+        animation:flash 0.5s linear 1;
+    }
 
+    #health.invincible {
+        -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -o-animation:invincible 0.3s steps(3, end) alternate infinite;
+        -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
+    }
     #mana {
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
@@ -476,27 +553,32 @@ footer, header, hgroup, menu, nav, section {
     }
     #exp {
         position: absolute;
-        top: 1px;
-        left: 0px;
-        width: 372px;
-        height: 9px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        top: 0;
+        left: 0;
+        width: 376px;
+        height: 10px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, #44FF44, #008800);
         /* Firefox 3.6+ */
         background: -moz-linear-gradient(top, #44FF44, #008800);
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
     #healthbar, #manabar {
         position: absolute;
-        top: 0px;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 176px;
         height: 26px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         text-align: center;
         color: white;
     }
@@ -505,39 +587,35 @@ footer, header, hgroup, menu, nav, section {
         line-height: 0%;
     }
     #healthbar {
-        background-image: url('../img/2/main.png' );
-        background-position: 0px -556px;
+        background-image: url('../img/2/maintwo.png' );
+        background-position: 0 -556px;
     }
     #manabar {
-        background-image: url('../img/2/main.png' );
+        background-image: url('../img/2/maintwo.png' );
         background-position: -176px -556px;
     }
 
     #expbar {
         position: absolute;
-        top: 0px;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 376px;
-        height: 9px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
-        background-image: url('../img/2/main.png' );
-        background-position: 0px -582px;
-        color: rgba(255, 255, 255, 1);
-        font-size: 0px;
-        text-align: center;
-
+        height: 10px;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        background-image: url('../img/2/maintwo.png' );
+        background-position: 0 -582px;
     }
     #healthtext, #manatext {
         position: absolute;
-        top: 6px;
-        left: 0px;
+        top: 4px;
+        left: 0;
         width: 176px;
         height: 26px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         line-height: 26px;
         text-align: center;
         color: white;
@@ -549,15 +627,108 @@ footer, header, hgroup, menu, nav, section {
         height: 22px;
         width: 2px;
         top: 2px;
-        left: 0px;
+        left: 0;
     }
+    #inventorybackground0, #inventorybackground1, #inventorybackground2, #inventorybackground3, #inventorybackground4, #inventorybackground5 {
+        position: absolute;
+        width: 32px;
+        height: 40px;
+        top: 4px;
+        left: 366px;
+        margin: 0;
+        border: 0;
+        background-image: url('../img/2/maintwo.png' );
+    }
+    #inventorybackground0 {
+        margin-left: 0;
+        background-position: -398px -556px;
+    }
+    #inventorybackground0.empty {
+        background-position: -366px -556px;
+    }
+    #inventorybackground1 {
+        margin-left: 34px;
+        background-position: -430px -556px;
+    }
+    #inventorybackground1.empty {
+        background-position: -366px -556px;
+    }
+    #inventorybackground2 {
+        margin-left: 68px;
+        background-position: -462px -556px;
+    }
+    #inventorybackground2.empty {
+        background-position: -366px -556px;
+    }
+    #inventorybackground3 {
+        margin-left: 102px;
+        background-position: -494px -556px;
+    }
+    #inventorybackground3.empty {
+        background-position: -366px -556px;
+    }
+    #inventorybackground4 {
+        margin-left: 136px;
+        background-position: -526px -556px;
+    }
+    #inventorybackground4.empty {
+        background-position: -366px -556px;
+    }
+    #inventorybackground5 {
+        margin-left: 170px;
+        background-position: -558px -556px;
+        display: none;
+    }
+    #inventorybackground5.empty {
+        background-position: -366px -556px;
+    }
+    #inventorybackground0 { margin-left: 0; }
+    #inventorybackground1 { margin-left: 34px; }
+    #inventorybackground2 { margin-left: 68px; }
+    #inventorybackground3 { margin-left: 102px; display: none; }
+    #inventorybackground4 { margin-left: 136px; display: none; }
+    #inventorybackground5 { margin-left: 170px; display: none; }
+    #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
+        position: absolute;
+        top: -5px;
+        left: 0;
+        width: 32px;
+        height: 32px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
+        position: absolute;
+        width: 32px;
+        height: 8px;
+        left: 0;
+        top: 29px;
+        border: 0;
+        color: rgba(255, 255, 255, 1);
+        font-size: 9px;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+    #moreinventorybutton{
+        position: absolute;
+        display: none;
+        width: 32px;
+        height: 34px;
+        top: 0;
+        left: 568px;
+        margin: 0;
+        border: 0;
+        background: url('../img/2/maintwo.png') no-repeat -591px -556px;
+    }
+
+
 
     #inventoryButton {
         position: absolute;
         width: 28px;
         height: 30px;
         top: 2px;
-        left: 377px;
+        left: 571px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -577,7 +748,7 @@ footer, header, hgroup, menu, nav, section {
         width: 28px;
         height: 30px;
         top: 2px;
-        left: 406px;
+        left: 870px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -598,7 +769,7 @@ footer, header, hgroup, menu, nav, section {
         width: 28px;
         height: 30px;
         top: 2px;
-        left: 436px;
+        left: 900px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -618,7 +789,7 @@ footer, header, hgroup, menu, nav, section {
         width: 28px;
         height: 30px;
         top: 2px;
-        left: 496px;
+        left: 930px;
         margin: 0px;
         border: 0px;
         background: url('../img/2/main.png' ) no-repeat -252px -628px;
@@ -669,34 +840,30 @@ footer, header, hgroup, menu, nav, section {
     #chatbutton.active {
         background: url('../img/2/main.png' ) no-repeat -784px -628px;
     }
-
     #users {
         font-family:'GraphicPixel';
-        color:#e3e3e3;
-        position:absolute;
-        width: 60px;
+        position: absolute;
+        width: 64px;
         height: 40px;
         top: 12px;
-        left: 585px;
-        margin: 0px;
-        border: 0px;
-        font-size: 12px;
+        left: 802px;
+        margin: 0;
+        border: 0;
         color: white;
     }
     #fps {
-	font-family:'GraphicPixel';
-	color:#e3e3e3;
-	position:absolute;
-        width: 100px;
+        font-family:'GraphicPixel';
+        position: absolute;
+        width: 88px;
         height: 8px;
-        left: 416px;
+        left: 870px;
         top: 33px;
-        border: 0px;
+        border: 0;
         color: rgba(255, 255, 255, 1);
-        font-size: 9px;
+        font-size: 7px;
         text-align: center;
-        padding: 0px;
-        margin: 0px;
+        padding: 0;
+        margin: 0;
     }
 
 
@@ -706,63 +873,62 @@ footer, header, hgroup, menu, nav, section {
 
     #basebarcontainer {
         position: absolute;
-        width: 326px;
+        width: 480px;
         height: 22px;
         top: 223px;
-        left: calc(50% - 146px);
-        margin-left: 0px;
-        border: 0px;
+        left: 5px;
+        margin-left: 0;
+        border: 0;
         text-align: center;
         font-size: 7px;
-        background-image: url('../img/1/main.png' );
-        background-position: -122px -256px;
+        background-image: url('../img/1/maintwo.png' );
+        background-position: 0 -256px;
         -moz-user-select: none;
         -webkit-user-select: none;
-        margin-right:100px;
     }
 
     #hpcontainer, #mpcontainer{
-	font-family:'GraphicPixel';
-	color:#e3e3e3;
-	position:absolute;
+        font-family:'GraphicPixel';
+        position: absolute;
         top: 3px;
         width: 88px;
-        height: 0px;
-        border: 0px;
-        margin-left: 0px;
+        height: -6px;
+        border: 0;
+        margin-left: 0;
         text-align: center;
         cursor: default;
         -moz-user-select: none;
         -webkit-user-select: none;
     }
     #hpcontainer {
-        left: 2px;
+        left: 1px;
     }
     #mpcontainer {
-        left: 99px;
+        left: 93px;
     }
     #expcontainer {
         position: absolute;
-        left: 0px;
-        top: 16px;
+        left: 0;
+        top: 17px;
         width: 188px;
         height: 5px;
-        border: 0px;
-        margin-left: 0px;
+        border: 0;
+        margin-left: 0;
         text-align: center;
         cursor: default;
+        font-size: 0;
         -moz-user-select: none;
         -webkit-user-select: none;
     }
     #health, #mana {
         position: absolute;
-        top: 1.5px;
+        top: 1px;
         left: 10px;
         width: 77px;
-        height: 9px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        height: 10px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         text-align: center;
         -moz-transition:.5s width ease;
         -webkit-transition:.5s width ease;
@@ -770,7 +936,26 @@ footer, header, hgroup, menu, nav, section {
         -ms-transition:.5s width ease;
         transition:.5s width ease;
     }
+    #health {
+        /* Safari 5.1, Chrome 10+ */
+        background: -webkit-linear-gradient(top, #FF8888, #FF0000);
+        /* Firefox 3.6+ */
+        background: -moz-linear-gradient(top, #FF8888, #FF0000);
+    }
+    #health.white {
+        -moz-animation:flash 0.5s linear 1;
+        -webkit-animation:flash 0.5s linear 1;
+        -o-animation:flash 0.5s linear 1;
+        -ms-animation:flash 0.5s linear 1;
+        animation:flash 0.5s linear 1;
+    }
 
+    #health.invincible {
+        -moz-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -webkit-animation: invincible 0.3s steps(3, end) alternate infinite;
+        -o-animation:invincible 0.3s steps(3, end) alternate infinite;
+        -ms-animation:invincible 0.3s steps(3, end) alternate infinite;
+    }
     #mana {
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, rgb(94, 145, 221), rgb(55, 84, 128));
@@ -779,27 +964,33 @@ footer, header, hgroup, menu, nav, section {
     }
     #exp {
         position: absolute;
-        top: 0.5px;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 188px;
         height: 5px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 0;
         /* Safari 5.1, Chrome 10+ */
         background: -webkit-linear-gradient(top, #44FF44, #008800);
         /* Firefox 3.6+ */
         background: -moz-linear-gradient(top, #44FF44, #008800);
+        -moz-transition:.5s width ease;
+        -webkit-transition:.5s width ease;
+        -o-transition:.5s width ease;
+        -ms-transition:.5s width ease;
+        transition:.5s width ease;
     }
     #healthbar, #manabar {
         position: absolute;
-        top: 0px;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 88px;
         height: 13px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         text-align: center;
         color: white;
     }
@@ -808,47 +999,45 @@ footer, header, hgroup, menu, nav, section {
         line-height: 0%;
     }
     #healthbar {
-        background-image: url('../img/1/main.png' );
-        background-position: 0px -278px;
+        background-image: url('../img/1/maintwo.png' );
+        background-position: 0 -278px;
     }
     #manabar {
-        background-image: url('../img/1/main.png' );
+        background-image: url('../img/1/maintwo.png' );
         background-position: -88px -278px;
     }
     #expbar {
         position: absolute;
-        top: 0px;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 188px;
         height: 5px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
-        background-image: url('../img/1/main.png' );
-        background-position: 0px -291px;
-        color: rgba(255, 255, 255, 1);
-        font-size: 0px;
-        text-align: center;         
+        border: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 0;
+        background-image: url('../img/1/maintwo.png' );
+        background-position: 0 -291px;
     }
     #healthtext, #manatext {
         position: absolute;
-        top: 3px;
-        left: 0px;
+        top: 2px;
+        left: 0;
         width: 88px;
         height: 13px;
-        border: 0px;
-        margin: 0px;
-        padding: 0px;
+        border: 0;
+        margin: 0;
+        padding: 0;
         line-height: 13px;
         text-align: center;
         color: white;
 
     }
     #healthtext p {
-        font-size: 7px;
+        font-size: 9;
     }
     #manatext p {
-        font-size: 7px;
+        font-size: 9;
     }
     #hpguide{
         background: rgb(128,64,64);
@@ -857,16 +1046,106 @@ footer, header, hgroup, menu, nav, section {
         height: 11px;
         width: 1px;
         top: 1px;
-        left: 0px;
+        left: 0;
     }
-
+    #inventorybackground0, #inventorybackground1, #inventorybackground2, #inventorybackground3, #inventorybackground4, #inventorybackground5 {
+        position: absolute;
+        width: 16px;
+        height: 20px;
+        top: 2px;
+        left: 183px;
+        margin: 0;
+        border: 0;
+        background-image: url('../img/1/maintwo.png' );
+    }
+    #inventorybackground0 {
+        margin-left: 0;
+        background-position: -199px -278px;
+    }
+    #inventorybackground0.empty {
+        background-position: -183px -278px;
+    }
+    #inventorybackground1 {
+        margin-left: 34px;
+        background-position: -215px -278px;
+    }
+    #inventorybackground1.empty {
+        background-position: -183px -278px;
+    }
+    #inventorybackground2 {
+        margin-left: 68px;
+        background-position: -231px -278px;
+    }
+    #inventorybackground2.empty {
+        background-position: -183px -278px;
+    }
+    #inventorybackground3 {
+        margin-left: 102px;
+        background-position: -247px -278px;
+    }
+    #inventorybackground3.empty {
+        background-position: -183px -278px;
+    }
+    #inventorybackground4 {
+        margin-left: 136px;
+        background-position: -263px -278px;
+    }
+    #inventorybackground4.empty {
+        background-position: -183px -278px;
+    }
+    #inventorybackground5 {
+        margin-left: 170px;
+        background-position: -279px -278px;
+        display: none;
+    }
+    #inventorybackground5.empty {
+        background-position: -183px -278px;
+    }
+    #inventorybackground0 { margin-left: 0; }
+    #inventorybackground1 { margin-left: 17px; }
+    #inventorybackground2 { margin-left: 33px; }
+    #inventorybackground3 { margin-left: 51px; display: none; }
+    #inventorybackground4 { margin-left: 68px; display: none; }
+    #inventorybackground5 { margin-left: 85px; display: none; }
+    #inventory0, #inventory1, #inventory2, #inventory3, #inventory4, #inventory5 {
+        position: absolute;
+        top: -2.5px;
+        left: 0;
+        width: 16px;
+        height: 16px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
+        position: absolute;
+        width: 16px;
+        height: 4px;
+        left: 0;
+        top: 15.5px;
+        border: 0;
+        color: rgba(255, 255, 255, 1);
+        font-size: 4.5px;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+    #moreinventorybutton{
+        position: absolute;
+        display: none;
+        width: 16px;
+        height: 17px;
+        top: 0;
+        left: 285.5px;
+        margin: 0;
+        border: 0;
+        background: url('../img/1/maintwo.png') no-repeat -591px -556px;
+    }
 
     #inventoryButton {
         position: absolute;
         width: 14px;
         height: 15px;
         top: 1px;
-        left: 188.5px;
+        left: 285.5px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -886,7 +1165,7 @@ footer, header, hgroup, menu, nav, section {
         width: 14px;
         height: 15px;
         top: 1px;
-        left: 203px;
+        left: 435px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -907,7 +1186,7 @@ footer, header, hgroup, menu, nav, section {
         width: 14px;
         height: 15px;
         top: 1px;
-        left: 218px;
+        left: 450px;
         margin: 0px;
         border: 0px;
         background-color: rgba(0, 0, 0, 0);
@@ -927,7 +1206,7 @@ footer, header, hgroup, menu, nav, section {
         width: 14px;
         height: 15px;
         top: 1px;
-        left: 248px;
+        left: 465px;
         margin: 0px;
         border: 0px;
         background: url('../img/1/main.png' ) no-repeat -126px -314px;
@@ -979,38 +1258,30 @@ footer, header, hgroup, menu, nav, section {
         background: url('../img/1/main.png' ) no-repeat -392px -314px;
     }
 
-
-
     #users {
-	font-family:'GraphicPixel';
-	color:#e3e3e3;
-	position:absolute;
-        width: 30px;
+        font-family:'GraphicPixel';
+        position: absolute;
+        width: 32px;
         height: 20px;
         top: 6px;
-        left: 293px;
-        margin: 0px;
-        border: 0px;
+        left: 401px;
+        margin: 0;
+        border: 0;
         color: white;
-        font-family: 'GraphicPixel', sans-serif;
-        font-size: 6px;
     }
-    
-    
     #fps {
-	font-family:'GraphicPixel';
-	color:#e3e3e3;
-	position:absolute;
-        width: 50px;
+        font-family:'GraphicPixel';
+        position: absolute;
+        width: 44px;
         height: 4px;
-        left: 208px;
+        left: 435px;
         top: 16.5px;
-        border: 0px;
+        border: 0;
         color: rgba(255, 255, 255, 1);
         font-size: 4.5px;
         text-align: center;
-        padding: 0px;
-        margin: 0px;
+        padding: 0;
+        margin: 0;
     }
 }
 

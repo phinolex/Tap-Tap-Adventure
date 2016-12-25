@@ -291,6 +291,8 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             }
 
             $('#characterButton').click(function(event) {
+                //app.showChat();
+
                 $('#characterButton').toggleClass('active');
 
                 if ($('#characterButton').hasClass('active')) {

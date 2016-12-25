@@ -136,7 +136,7 @@ define(['jquery'], function() {
 
         addToChatLog: function(message){
             var self = this;
-            var el = $('<p style="color: green">' + message + '</p>');
+            var el = $('<p style="color: cyan">' + message + '</p>');
             $(el).appendTo(this.chatLog);
             $(this.chatLog).scrollTop(999999);
         },

@@ -299,16 +299,13 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
         },
         assign: function(name) {
             this.name = name;
-            if(this.skill) {
+
+            if(this.skill)
                 this.skill.remove(this);
-            }
 
             this.skill = this.parent.getSkill(name);
             if(this.skill) {
                 this.skill.add(this);
-
-                var self = this;
-                var scale = this.game.renderer.getScaleFactor();
 
                 this.displayShortcut();
                 this.body.attr('title', name);
