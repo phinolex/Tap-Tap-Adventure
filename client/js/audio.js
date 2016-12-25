@@ -1,10 +1,10 @@
 define(['area'], function(Area) {
     var AudioManager = Class.extend({
         init: function(game) {
-            this.enabled = true;
+            this.game = game;
+            this.enabled = game.app.storage.getSettings().musicOn;
             this.extension = "mp3";
             this.sounds = {};
-            this.game = game;
             this.currentMusic = null;
             this.areas = [];
             this.loadedMusic = {
@@ -60,7 +60,13 @@ define(['area'], function(Area) {
                 "npc-end":false
             };
 
-            this.switchDisabled = false;
+            if ( this.enabled ) {
+                $('#soundbutton').attr('class', '');
+                this.switchDisabled = false;
+            } else {
+                $('#soundbutton').attr('class', 'active');
+                this.switchDisabled = true;
+            }
         },
         //Functions to individually set the music state
         setOn: function() {
@@ -92,6 +98,9 @@ define(['area'], function(Area) {
                 }
                 this.updateMusic();
             }
+
+            this.game.app.storage.getSettings().musicOn = this.enabled;
+            this.game.app.storage.save();
             return this.enabled;
         },
         load: function (basePath, name, loaded_callback, channels) {

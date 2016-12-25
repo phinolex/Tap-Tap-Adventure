@@ -1,11 +1,19 @@
 
 /* global Mob, Types, Item, log, _, TRANSITIONEND, Class */
 
-define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, MobData, Button2) {
+/*
+TODO!!:
+    Storage will save some game settings and username/password in browser's local storage
+    these are not yet crypted. and thus hacking them is as simple as injecting a js file
+    Changing password is not yet supported, but should update password locally when that change.
+*/
+
+define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function($, Mob, Item, MobData, Button2, Storage) {
 
     var App = Class.extend({
         init: function() {
             this.window = window;
+            this.storage = new Storage;
             this.rotation = null;
             this.currentPage = 1;
             this.blinkInterval = null;
@@ -27,7 +35,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
                     videoPlacement = 'video',
                     rewardPlacement = 'rewardedVideo',
                     developmentMode = false;
-
+                
                 window.unityads.setUp(gameId, videoPlacement, rewardPlacement, developmentMode);
             } catch (e) {
                 log.info("Error encountered whilst initializing Unity Ads: " + e);
@@ -63,6 +71,13 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             this.$pwinput2 = $('#pwinput2');
             this.$email = $('#emailinput');
             this.createNewCharacterFormFields = [this.$nameinput, this.$pwinput, this.$pwinput2, this.$email];
+            
+            if ( this.storage.playedBefore() ) {
+                var player = this.storage.getPlayer();
+
+                this.$loginnameinput.val(player.username);
+                this.$loginpwinput.val(player.password);
+            }
         },
 
         center: function() {
@@ -186,13 +201,19 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2'], function($, Mob, Item, M
             if(username && !this.game.started) {
 
                 this.game.setServerOptions(username, userpw, email, newuserpw, pClass);
-
                 self.game.loadMap();
 
                 this.center();
                 this.game.run(action, function(result) {
-                    if(result.success === true)
+                    if(result.success === true) {
                         self.start();
+
+                        //Save the last succesfully connected user
+                        self.storage.setPlayer('username', username);
+                        self.storage.setPlayer('password', userpw);
+                        self.storage.data.playedBefore = true;
+                        self.storage.save();
+                    }
                 });
             }
         },
