@@ -19,7 +19,8 @@ define(function() {
 					frameColour: 'default',
 					musicOn: true,
 					sfxOn: true,
-					isCentered: true //Camera
+					isCentered: true,
+					disableAnimatedTiles: false
 				}
 			};
 		},

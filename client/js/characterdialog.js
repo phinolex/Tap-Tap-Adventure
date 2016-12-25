@@ -299,6 +299,16 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
         }
     });
 
+    var SettingsPage = TabPage.extend({
+        init: function(frame, game) {
+            this._super('#characterDialogFrameSettingsPage');
+            this.game = game;
+        },
+
+        assign: function() {
+
+        }
+    });
 
     var SkillPage = TabPage.extend({
         init: function(frame, game) {
@@ -430,6 +440,7 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             this.game = game;
             this.add(new StatePage(this, this.game));
             this.add(new SkillPage(this, this.game));
+            this.add(new SettingsPage(this, this.game));
 
             this.pageNavigator = new PageNavigator();
             this.pageNavigator.setCount(this.getPageCount());

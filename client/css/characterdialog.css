@@ -21,7 +21,7 @@
         width: 100%;
         height: 100%;
     }
-    #characterDialogFrameStatePage, #characterDialogFrameSkillPage {
+    #characterDialogFrameStatePage, #characterDialogFrameSkillPage, #characterDialogFrameSettingsPage {
         position: absolute;
         left: 0px;
         top: 0px;
@@ -131,6 +131,10 @@
         background-position: -372px 0px;
     }
 
+    #characterDialogFrameSettingsPage {
+        background-position: -744px 0px;
+    }
+
     #characterDialogFramePageNavigator {
         position: absolute;
         left: 240px;
@@ -187,7 +191,7 @@
         width: 100%;
         height: 100%;
     }
-    #characterDialogFrameStatePage, #characterDialogFrameSkillPage {
+    #characterDialogFrameStatePage, #characterDialogFrameSkillPage, #characterDialogFrameSettingsPage {
         position: absolute;
         left: 0px;
         top: 0px;
@@ -297,6 +301,10 @@
         background-position: -248px 0px;
     }
 
+    #characterDialogFrameSettingsPage {
+        background-position: -496px 0px;
+    }
+
     #characterDialogFramePageNavigator {
         position: absolute;
         left: 160px;
@@ -353,7 +361,7 @@
         width: 100%;
         height: 100%;
     }
-    #characterDialogFrameStatePage, #characterDialogFrameSkillPage {
+    #characterDialogFrameStatePage, #characterDialogFrameSkillPage, #characterDialogFrameSettingsPage {
         position: absolute;
         left: 0px;
         top: 0px;
@@ -462,6 +470,10 @@
     #characterDialogFrameSkillPage {
         background-position: -124px 0px;
     }
+
+   #characterDialogFrameSettingsPage {
+       background-position: -248px 0px;
+   }
 
     #characterDialogFramePageNavigator {
         position: absolute;

@@ -61,6 +61,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.hoveringTarget = false;
                 this.hoveringCollidingTile = false;
                 this.clickToFire = null;
+                this.disableAnimatedTiles = this.app.storage.getSettings().disableAnimatedTiles;
 
                 // Item Info
                 this.itemInfoOn = true;
@@ -741,8 +742,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     if (this.currentTime - this.lastFPSTime > 1000) {
                         $('#fps').html("FPS: " + this.FPSCount);
 
-                        if (this.countAverage)
-                            this.FPSAverage = (this.FPSAverage + this.FPSCount) / 2;
+                        this.FPSAverage = (this.FPSAverage + this.FPSCount) / 2;
 
                         this.lastFPSTime = this.currentTime;
                         this.FPSCount = 0;
@@ -759,7 +759,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.hasNeverStarted = false;
 
                 //Since this is not centered, to need to check if we should uncenter it
-                if ( !self.isCentered )
+                if (!self.isCentered)
                     return;
 
                 var averageInterval = setInterval(function() {

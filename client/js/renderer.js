@@ -1366,13 +1366,18 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.setCameraView(this.textcontext);
                 this.setCameraView(this.toptextcontext);
 
-                this.drawAnimatedTiles(this.mobile, this.context);
-
-                //this.drawOccupiedCells();
-                //this.drawPathingCells();
+                if (!this.game.disableAnimatedTiles) {
+                    if (this.game.FPSAverage < 10 && !this.game.isCentered) {
+                        this.game.disableAnimatedTiles = true;
+                        this.game.app.storage.getSettings().disableAnimatedTiles = this.game.disableAnimatedTiles;
+                    } else
+                        this.drawAnimatedTiles(this.mobile, this.context);
+                }
                 this.drawSelectedCell();
                 this.drawProjectiles(this.mobile);
-                this.drawEntityNames();
+
+                if (this.game.FPSAverage > 10)
+                    this.drawEntityNames();
 
                 if (!this.mobile && !this.tablet) {
                     if (this.game.cursorVisible) {
@@ -1382,7 +1387,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 }
 
                 this.drawEntities(this.mobile);
+
                 this.drawCombatInfo();
+
                 this.drawInventory();
 
                 if (!this.game.isCentered && !this.mobile)
