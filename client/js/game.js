@@ -82,7 +82,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.averageCount = 0;
 
                 //Camera
-                this.isCentered = true;
+                this.isCentered = this.app.storage.getSettings().isCentered;
 
                 // zoning
                 this.currentZoning = null;
@@ -756,6 +756,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             start: function() {
                 var self = this;
                 this.tick();
+                this.hasNeverStarted = false;
+
+                //Since this is not centered, to need to check if we should uncenter it
+                if ( !self.isCentered )
+                    return;
 
                 var averageInterval = setInterval(function() {
                     if (self.averageCount > 2 || self.FPSAverage < 4) {
@@ -770,7 +775,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         self.averageCount = 0;
 
                 }, 1000);
-                this.hasNeverStarted = false;
             },
 
             stop: function() {
@@ -2495,7 +2499,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             centerCamera: function() {
                 var self = this;
 
-
                 self.player.stop();
                 self.isCentered = !self.isCentered;
                 self.renderer.cleanPathing();
@@ -2503,6 +2506,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 self.renderer.cleanScreenEntirely();
                 self.renderer.renderStaticCanvases();
                 self.countAverage = false;
+
+                self.app.storage.getSettings().isCentered = self.isCentered;
+                self.app.storage.save();
             },
 
             determineCentration: function() {
