@@ -47,6 +47,10 @@
                         {
                             "xml": "<feature name=\"UnityAdsPlugin\"><param name=\"android-package\" value=\"com.cranberrygame.cordova.plugin.ad.unityads.UnityAdsPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBillingPlugin\"><param name=\"android-package\" value=\"com.smartmobilesoftware.inappbilling.InAppBillingPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -81,6 +85,10 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"com.android.vending.BILLING\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -90,6 +98,16 @@
                     "/*": [
                         {
                             "xml": "<feature name=\"AdBuddizBridge\"><param name=\"android-package\" value=\"com.purplebrain.adbuddiz.sdk.AdBuddizBridge\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "res/values/billing_key_param.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<string name=\"billing_key_param\">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgiaFGFQ8fnTSi++a1vXp6is0rWL67+AJh5MkPtRTveT3xx/kRfEVlToJv1IhdJ6akTJ355NfbmwL49I9Bi6ksnX4BJkj+RIUt0RF3c70xKEoaNDLnHR5vl8aQrOk9wAYuakKhzynaFBANtuu/i38zZNS9nqNcubuo15pojPay0VW5g+xIkcX0tscXgPEgw4xFCkq413zZALG9Q7SWm5xApMkeNw+bPE2Y3/ZqItfB5cTHO2jIh2K3zz8UoBhLAACJARgc0J7mVnCXGcvy508SGcdL+ujxFlezpikhQA4uFSLCUkMl9AIqLO606b1phfUubi7Tiaj7yo4gI/MYkoRVwIDAQAB</string>",
                             "count": 1
                         }
                     ]
@@ -114,6 +132,10 @@
             "PACKAGE_NAME": "net.udeva.TTA"
         },
         "cordova-plugin-ad-unityads": {
+            "PACKAGE_NAME": "net.udeva.TTA"
+        },
+        "cc.fovea.cordova.purchase": {
+            "BILLING_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgiaFGFQ8fnTSi++a1vXp6is0rWL67+AJh5MkPtRTveT3xx/kRfEVlToJv1IhdJ6akTJ355NfbmwL49I9Bi6ksnX4BJkj+RIUt0RF3c70xKEoaNDLnHR5vl8aQrOk9wAYuakKhzynaFBANtuu/i38zZNS9nqNcubuo15pojPay0VW5g+xIkcX0tscXgPEgw4xFCkq413zZALG9Q7SWm5xApMkeNw+bPE2Y3/ZqItfB5cTHO2jIh2K3zz8UoBhLAACJARgc0J7mVnCXGcvy508SGcdL+ujxFlezpikhQA4uFSLCUkMl9AIqLO606b1phfUubi7Tiaj7yo4gI/MYkoRVwIDAQAB",
             "PACKAGE_NAME": "net.udeva.TTA"
         }
     },
@@ -143,6 +165,13 @@
             "clobbers": [
                 "window.unityads"
             ]
+        },
+        {
+            "file": "plugins/cc.fovea.cordova.purchase/www/store-android.js",
+            "id": "cc.fovea.cordova.purchase.InAppBillingPlugin",
+            "clobbers": [
+                "store"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -151,6 +180,7 @@
         "cordova-plugin-device": "1.1.4",
         "com.purplebrain.adbuddiz.sdk": "3.1.11",
         "cordova-plugin-ad-unityads-sdk": "1.0.3",
-        "cordova-plugin-ad-unityads": "1.0.35"
+        "cordova-plugin-ad-unityads": "1.0.35",
+        "cc.fovea.cordova.purchase": "6.0.0"
     }
 }

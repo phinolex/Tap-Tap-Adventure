@@ -236,7 +236,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     .hget("b:" + player.connection._connection.remoteAddress, "rtime") //9
                     .hset(userKey, "class", "")
                     .hset(userKey, "rights", 0)
-                    .hset(userkey, "ttacoins", 0)
+                    .hset(userKey, "ttacoins", 0)
 
                     .exec(function(err, replies) {
 
@@ -865,7 +865,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
         return rights;
     },
-    
+
     getSkills: function(player, callback) {
         var maxSkills = 12;
 

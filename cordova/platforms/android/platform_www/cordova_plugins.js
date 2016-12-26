@@ -24,6 +24,13 @@ module.exports = [
         "clobbers": [
             "window.unityads"
         ]
+    },
+    {
+        "file": "plugins/cc.fovea.cordova.purchase/www/store-android.js",
+        "id": "cc.fovea.cordova.purchase.InAppBillingPlugin",
+        "clobbers": [
+            "store"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -34,7 +41,8 @@ module.exports.metadata =
     "cordova-plugin-device": "1.1.4",
     "com.purplebrain.adbuddiz.sdk": "3.1.11",
     "cordova-plugin-ad-unityads-sdk": "1.0.3",
-    "cordova-plugin-ad-unityads": "1.0.35"
+    "cordova-plugin-ad-unityads": "1.0.35",
+    "cc.fovea.cordova.purchase": "6.0.0"
 };
 // BOTTOM OF METADATA
 });

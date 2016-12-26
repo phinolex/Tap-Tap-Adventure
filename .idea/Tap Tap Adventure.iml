@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/cordova/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/cordova/plugins/cc.fovea.cordova.purchase/src/js/platforms" />
       <excludeFolder url="file://$MODULE_DIR$/cordova/plugins/cordova-plugin-crosswalk-webview/platforms" />
     </content>
     <orderEntry type="inheritedJdk" />
