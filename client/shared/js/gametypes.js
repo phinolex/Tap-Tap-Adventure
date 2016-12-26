@@ -183,7 +183,9 @@ Types = {
         DOORREQUEST: 142,
         DETERMINEHIT: 143,
         SENDAD: 144,
-        CENTERCAMERA: 145
+        CENTERCAMERA: 145,
+        SHOWINSTURCTIONS: 146,
+        SHOWINAPPSTORE: 147
     },
 
     Interfaces: {

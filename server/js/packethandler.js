@@ -414,14 +414,23 @@ module.exports = PacketHandler = Class.extend({
                 return;
             }
 
+            if (command[0] == "/showinstructions") {
+                self.server.pushToPlayer(self.player, new Messages.Instructions(self.player.id));
+                return;
+            }
+            
             if (command[0] == "/centercamera") {
                 self.server.pushToPlayer(self.player, new Messages.CenterCamera(self.player.id));
                 return;
             }
 
             if (command[0] == "/showad") {
-
                 self.server.pushToPlayer(self.player, new Messages.SendAd(self.player.id));
+                return;
+            }
+
+            if (command[0] == "/showstore") {
+                self.server.pushToPlayer(self.player, new Messages.InAppStore(self.player.id, 0));
                 return;
             }
 
@@ -1177,9 +1186,9 @@ module.exports = PacketHandler = Class.extend({
             id = message[1];
 
         if (self.player) {
-            var spawnPoint = self.player.getSpawnPoint();
-            var x = spawnPoint[0];
-            var y = spawnPoint[1];
+            var spawnPoint = self.player.getSpawnPoint(),
+                x = spawnPoint[0],
+                y = spawnPoint[1];
 
             self.redisPool.setPointsData(self.player.name, self.player.maxHitPoints, self.player.maxMana);
             self.redisPool.setPlayerPosition(self.player, x, y);
@@ -1204,8 +1213,6 @@ module.exports = PacketHandler = Class.extend({
             x = spawnPosition[0],
             y = spawnPosition[1],
             orientation = Utils.randomInt(1, 4);
-
-
 
         if (self.server.map.isPVP(x, y) && self.server.map.isGameArea(x, y) && !self.server.minigameStarted)
             self.server.pushToPlayer(self.player, new Messages.Stop(33, 90, 4));

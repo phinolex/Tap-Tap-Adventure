@@ -66,18 +66,10 @@
                     Create New Character
                     <span class="right-ornament"></span>
                 </h1>
-                <form action="none" method="get" accept-charset="utf-8">
+                <form method="get" accept-charset="utf-8">
                     <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="32">
                     <input type="password" id="pwinput" class="stroke" name="player-pw" placeholder="Password" maxlength="200">
                     <input type="password" id="pwinput2" class="stroke" name="player-pw2" placeholder="Confirm Password" maxlength="200">
-                    <div id="charclassinput">Choose your Class:
-                        <select id="selectClassSwitch2">
-                            <option value="0">Fighter</option>
-                            <option value="1">Archer</option>
-                            <option value="2">Defender</option>
-                            <!--<option value="3">Mage</option>-->
-                        </select>
-                    </div>
                     <input type="email" id="emailinput" class="stroke" name="player-email" placeholder="Email address" maxlength="64">
                 </form>
                 <div class="play">
@@ -124,7 +116,7 @@
                     Change Password
                     <span class="right-ornament"></span>
                 </h1>
-                <form action="none" method="get" accept-charset="utf-8">
+                <form method="get" accept-charset="utf-8">
                     <input type="text" id="cpnameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="32">
                     <input type="password" id="cppwinputold" class="stroke" name="player-pwold" placeholder="Old Password" maxlength="200">
                     <input type="password" id="cppwinput" class="stroke" name="player-pw" placeholder="New Password" maxlength="200">
@@ -224,7 +216,7 @@
 </div>
 
 <div id="container">
-    <div id="mainborder" width="1470" height="737">
+    <div id="mainborder">
         <div id="canvas">
             <canvas id="backgroundbuffer"></canvas>
             <canvas id="background"></canvas>
@@ -272,18 +264,26 @@
             <div id="inventorynumber23"></div>
         </div>
         <div id="bubbles"></div>
-        <div id="classSwitcher">
-            Choose your class:<br/>
-            <select id="selectClassSwitch">
-                <option value="0">Fighter</option>
-                <option value="1">Archer</option>
-                <option value="2">Defender</option>
-                <!--<option value="3">Mage</option>-->
-            </select>
-            <div id="classSwitcherButton">Save</div>
-        </div>
         <div id="chatLog"></div>
-        <arltcle id="achievements" class="page1 clickable">
+        <article id="inappstore" class="clickable">
+            <div class="close"></div>
+            <p>- Click anywhere to close -</p>
+        </article>
+        <article id="instructions" class="clickable">
+            <div class="close"></div>
+            <h1>
+                <span class="left-ornament"></span>
+                How to play
+                <span class="right-ornament"></span>
+            </h1>
+            <ul>
+                <li><span class="icon"></span>Left click, tap, WSAD or Arrow Keys to move and attack.</li>
+                <li><span class="icon"></span>Press ENTER to chat.</li>
+                <li><span class="icon"></span>Your character is saved on all devices!</li>
+            </ul>
+            <p>- Click anywhere to close -</p>
+        </article>
+        <article id="achievements" class="page1 clickable">
             <div class="close"></div>
             <div id="achievements-wrapper">
                 <div id="lists">
@@ -301,7 +301,7 @@
                 <div id="previous"></div>
                 <div id="next"></div>
             </nav>
-        </arltcle>
+        </article>
         <div id="achievement-notification">
             <div id="achievement-info">
                 <div class="title">New Achievement Unlocked!</div>
@@ -311,7 +311,7 @@
 
 
         <div id="chatbox">
-            <form action="none" method="get" accept-charset="utf-8">
+            <form method="get" accept-charset="utf-8">
                 <input id="chatinput" class="gp" type="text" maxlength="256">
             </form>
         </div>
@@ -363,9 +363,6 @@
             <div id="partyconfirmyes">Yes</div>
             <div id="partyconfirmno">No</div>
         </div>
-
-
-
 
         <div id="basebarcontainer">
             <div id="hpcontainer">
@@ -923,7 +920,10 @@
 <img src="img/common/thingy.png" alt="" class="preload">
 
 <div id="resize-check"></div>
+
 <script src="javascripts/socket.io.js"></script>
+<script src="cordova.js"></script>
+
 <script type="text/javascript">
     var ctx = document.querySelector('canvas').getContext('2d'),
             parchment = document.getElementById("parchment");

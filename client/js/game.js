@@ -763,7 +763,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     return;
 
                 var averageInterval = setInterval(function() {
-                    if (self.averageCount > 2 || self.FPSAverage < 4) {
+                    if (self.averageCount > 2) {
                         self.centerCamera();
                         self.countAverage = false;
                         clearInterval(averageInterval);
@@ -774,7 +774,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     else
                         self.averageCount = 0;
 
-                }, 1000);
+                }, 1500);
             },
 
             stop: function() {
@@ -939,13 +939,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.renderbackground = true;
                     self.renderer.forceRedraw = true;
                     self.initializeAchievements();
-                    self.client.sendReady(self.playerId);
                     self.audioManager.updateMusic();
                     self.renderer.clearScreen(self.renderer.context);
                     self.renderer.cleanPathing();
                     self.renderer.drawBackground(self.renderer.background, "#12100D");
                     self.resetCamera();
-                    self.determineCentration();
+                    self.client.sendReady(self.playerId);
+                    if (self.player.experience == 0)
+                        self.app.toggleInstructions();
+
 
                     if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
                         self.player.setAtkRange(6);
@@ -1057,6 +1059,20 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.player.stop([x, y, orientation]);
                         else
                             self.client.sendDoor(x, y, orientation);
+                    });
+
+                    self.client.onInstructions(function(playerId) {
+                        self.app.toggleInstructions();
+                    });
+
+                    self.client.onInAppStore(function(playerId, selection) {
+                        /**
+                         * Ensure that we do something with the selection
+                         * variable later on, and how to implement this
+                         * interface fully!
+                         */
+
+                        self.app.toggleInAppStore();
                     });
 
                     self.client.onAd(function(playerId) {

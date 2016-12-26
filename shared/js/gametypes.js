@@ -183,7 +183,9 @@ Types = {
         DOORREQUEST: 142,
         DETERMINEHIT: 143,
         SENDAD: 144,
-        CENTERCAMERA: 145
+        CENTERCAMERA: 145,
+        SHOWINSTURCTIONS: 146,
+        SHOWINAPPSTORE: 147
     },
 
     Interfaces: {
@@ -269,6 +271,15 @@ Types = {
         BLUEWIN: 2,
         DRAW: 3,
         UNKNOWN: 4
+    },
+
+    InAppStore: {
+        REMOVEADS: 1,
+        ENABLESKINSLOT: 2,
+        REGENBOOST: 3,
+        DROPRATEENHANCER: 4,
+        NAMECHANGE: 5,
+        MINIGAMEBOOST: 6
     }
 };
 

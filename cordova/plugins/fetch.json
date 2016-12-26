@@ -47,5 +47,15 @@
         },
         "is_top_level": false,
         "variables": {}
+    },
+    "cc.fovea.cordova.purchase": {
+        "source": {
+            "type": "registry",
+            "id": "cc.fovea.cordova.purchase"
+        },
+        "is_top_level": true,
+        "variables": {
+            "BILLING_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgiaFGFQ8fnTSi++a1vXp6is0rWL67+AJh5MkPtRTveT3xx/kRfEVlToJv1IhdJ6akTJ355NfbmwL49I9Bi6ksnX4BJkj+RIUt0RF3c70xKEoaNDLnHR5vl8aQrOk9wAYuakKhzynaFBANtuu/i38zZNS9nqNcubuo15pojPay0VW5g+xIkcX0tscXgPEgw4xFCkq413zZALG9Q7SWm5xApMkeNw+bPE2Y3/ZqItfB5cTHO2jIh2K3zz8UoBhLAACJARgc0J7mVnCXGcvy508SGcdL+ujxFlezpikhQA4uFSLCUkMl9AIqLO606b1phfUubi7Tiaj7yo4gI/MYkoRVwIDAQAB"
+        }
     }
 }

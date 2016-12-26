@@ -142,7 +142,7 @@ h1 {font-weight:normal;}
 
 .game #logo {display:none;-moz-animation:none;-webkit-animation:none;-o-animation:none;-ms-animation:none;animation:none;}
 
-#logo,  .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, #tilt, .parchment-left, .parchment-middle, .parchment-right, .avatar, .facebook, .twitter, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background:url('../img/1/spritesheet.png');image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;}
+#logo,  .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #inappstore, #instructions, .icon, #tilt, .parchment-left, .parchment-middle, .parchment-right, .avatar, .facebook, .twitter, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background:url('../img/1/spritesheet.png');image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;}
 
 #moztab {height:49px;width:118px;position:fixed;top:0;right:15%;background:url('../img/1/spritesheet.png') no-repeat -229px -204px;display:block;}
 #vignetting {height:100%;width:100%;position:absolute;top:0;left:0;pointer-events:none;}
@@ -221,8 +221,24 @@ div.clear{
 }
 
 
-#instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease-in-out, 0.4s opacity linear;-o-transition:0.4s top ease-in-out, 0.4s opacity linear;-ms-transition:0.4s top ease-in-out, 0.4s opacity linear;transition:0.4s top ease-in-out, 0.4s opacity linear;}
-#instructions.active, #achievements.active {opacity:1;pointer-events:auto;}
+#instructions, #inappstore {
+    position:absolute;
+    top:50%;
+    left:50%;
+    z-index:1000;
+    font-family: 'GraphicPixel';
+    pointer-events:none;
+    opacity:0;
+    -moz-transition:0.25s opacity linear;
+    -webkit-transition:0.4s top ease-in-out, 0.4s opacity linear;
+    -o-transition:0.4s top ease-in-out, 0.4s opacity linear;
+    -ms-transition:0.4s top ease-in-out, 0.4s opacity linear;
+    transition:0.4s top ease-in-out, 0.4s opacity linear;
+}
+
+#instructions.active, #achievements.active, #inappstore.active {
+    opacity:1;pointer-events:auto;
+}
 
 #weapon, #armor {image-rendering:-moz-crisp-edges;}
 
@@ -301,7 +317,7 @@ footer div  {display:inline-block;}
 .ribbon .top {-moz-transition:0.25s height ease-in-out;-webkit-transition:0.25s height ease-in-out;-o-transition:0.25s height ease-in-out;-ms-transition:0.25s height ease-in-out;transition:0.25s height ease-in-out;}
 
 .alert {height:50px;background:#d83939;width:100%;color:#eee;font-size:20px;font-family:'GraphicPixel', arial, sans-serif;text-align:center;line-height:50px;border-bottom:1px solid #000;}
-#instructions, #achievements, #lists, #about, #credits, .ribbon, .play, .play div, .barbutton {-webkit-tap-highlight-color:transparent;}
+#instructions, #inappstore, #achievements, #lists, #about, #credits, .ribbon, .play, .play div, .barbutton {-webkit-tap-highlight-color:transparent;}
 #nameinput::-webkit-input-placeholder  {color:#fff;}
 #resize-check {position:absolute;height:0;top:0;left:0;-moz-transition:0.001s height ease-in-out;-webkit-transition:0.001s height ease-in-out;-o-transition:0.001s height ease-in-out;-ms-transition:0.001s height ease-in-out;transition:0.001s height ease-in-out;}
 #death p em {display:block;font-style:normal;}
@@ -704,7 +720,7 @@ footer div  {display:inline-block;}
     #chatbox .legend p{
         line-height: 1;
     }
-    .upscaled #logo, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/3/spritesheet.png');}
+    .upscaled #logo, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled #inappstore, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/3/spritesheet.png');}
     .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/3/achievements.png');}
 
 
@@ -718,7 +734,7 @@ footer div  {display:inline-block;}
         -o-background-size: cover;
     }
 
-    #logo, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:1266px auto;}
+    #logo, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, #inappstore, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:1266px auto;}
     #logo {height:126px;width:687px;position:absolute;top:10%;left:50%;margin-left:-344px;z-index:3;}
     #parchment, #loadcharacter, #changePassword, #confirmation, #error, #legal {width:1266px;height:546px;position:absolute;top:55%;left:50%;margin-left:-633px;margin-top:-273px;font-size:30px;text-align:center;z-index:2;}
     #parchment h1 {margin-top:60px;font-weight:normal;}
@@ -969,7 +985,16 @@ footer div  {display:inline-block;}
 
     #fade {width:1440px;height:672px;top:15px;left:15px;}
 
-    #instructions {height:516px;width:1251px;background-position:0 -1581px;margin-left:-624px;margin-top:-279px;color:#373737;}
+    #instructions, #inappstore {
+        height:516px;
+        width:1251px;
+        background-position:0 -1581px;
+        margin-left:-624px;
+        margin-top:-279px;
+        color:#373737;
+    }
+
+
     #instructions h1 {font-size:40px;text-align:center;margin:50px 0;}
     #instructions ul {font-size:30px;margin-top:30px;}
     #instructions ul li {margin:20px 0; clear:left;}
@@ -1277,7 +1302,7 @@ footer div  {display:inline-block;}
         line-height: 1;
     }
 
-    .upscaled #logo, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
+    .upscaled #logo, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled #inappstore, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
     .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/2/achievements.png');}
 
 
@@ -1290,7 +1315,7 @@ footer div  {display:inline-block;}
         -moz-background-size: cover;
         -o-background-size: cover;
     }
-    #logo, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
+    #logo, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, #inappstore, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
     #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
 
 
@@ -1551,7 +1576,16 @@ footer div  {display:inline-block;}
 
 
     #fade {width:960px;height:448px;top:10px;left:10px;}
-    #instructions {height:344px;width:834px;background-position:0 -1054px;margin-left:-416px;margin-top:-186px;color:#373737;}
+    #instructions, #inappstore {
+        height:344px;
+        width:834px;
+        background-position:0 -1054px;
+        margin-left:-416px;
+        margin-top:-186px;
+        color:#373737;
+    }
+
+
     #instructions h1 {font-size:30px;text-align:center;margin:40px 0;}
     #instructions ul {font-size:20px;margin-top:40px;}
     #instructions ul li {margin:20px 0; clear:left;}
@@ -1905,7 +1939,7 @@ footer div  {display:inline-block;}
         -moz-background-size: cover;
         -o-background-size: cover;
     }
-    #logo,  .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:422px auto;}
+    #logo,  .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, #inappstore, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:422px auto;}
     #logo {height:42px;width:229px;position:absolute;top:10%;left:50%;margin-left:-114px;z-index:3;}
     #parchment, #loadcharacter, #changePassword, #confirmation, #error, #legal {width:422px;height:182px;position:absolute;top:50%;left:50%;margin-left:-211px;margin-top:-91px;font-size:10px;text-align:center;z-index:2;}
     #parchment h1, #instructions h1 {margin-top:20px;font-weight:normal;}
@@ -1960,7 +1994,16 @@ footer div  {display:inline-block;}
 
     #fade {width:480px;height:224px;top:5px;left:5px;}
 
-    #instructions {height:172px;width:417px;background-position:0 -527px;margin-left:-208px;margin-top:-93px;color:#373737;}
+    #instructions, #inappstore {
+        height:172px;
+        width:417px;
+        background-position:0 -527px;
+        margin-left:-208px;
+        margin-top:-93px;
+        color:#373737;
+    }
+
+
     #instructions h1 {font-size:20px;text-align:center;margin-bottom:0;}
     #instructions ul {font-size:10px;margin-top:10px;}
     #instructions ul li {margin:10px 0; clear:left;}
@@ -2051,7 +2094,7 @@ footer div  {display:inline-block;}
 /* Tablet mode */
 
 .tablet .animate .parchment-left, .tablet .animate .parchment-right, .tablet .animate .parchment-middle {-webkit-animation:none;-moz-animation:none;-o-animation:none;-ms-animation:none;}
-.tablet #instructions, .tablet #achievements, .tablet #lists {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
+.tablet #instructions, .tablet #inappstore, .tablet #achievements, .tablet #lists {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
 .tablet #achievements li.unlocked .achievement-sharing {display:block;}
 .tablet #coinsparks {display:none; -moz-animation:none;}
 
@@ -2060,7 +2103,7 @@ footer div  {display:inline-block;}
 
 /* Workarounds for chrome windows bugs */
 
-.windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification,
+.windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #inappstore, .windows #achievements, .windows #achievement-notification,
 .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about,
 .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows .bubble p, .windows #population {font-family:'AdvoCut';}
 
@@ -2069,7 +2112,7 @@ footer div  {display:inline-block;}
 .opera.intro #bubbles, .opera.intro #canvas, .opera.intro #container { z-index: -30000;}
 .opera .credits #credits, .opera .createcharacter #createcharacter, .opera .loadcharacter #loadcharacter, .opera .confirmation #confirmation, .opera .death #death,
 .opera .error #error, .opera .about #about { z-index: 30000; }
-.opera #instructions, .opera #achievements { z-index: -30000;}
-.opera #achievements.active, .opera #instructions.active { z-index: 30000;}
+.opera #instructions, .opera #inappstore, .opera #achievements { z-index: -30000;}
+.opera #achievements.active, .opera #instructions.active, .opera #inappstore { z-index: 30000;}
 .opera #coinsparks {display:none;}
 .opera #death, .opera #about, .opera #credits, .opera #error, .opera #confirmation, .opera #loadcharacter { z-index: -30000; }

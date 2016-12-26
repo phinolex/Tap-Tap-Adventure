@@ -120,7 +120,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 "pClass": Utils.NaN2Zero(replies[37]),
                                 "poisoned": replies[38],
                                 "hitpoints": Utils.NaN2Zero(replies[39]),
-                                "mana": Utils.NaN2Zero(replies[40])
+                                "mana": Utils.NaN2Zero(replies[40]),
+                                "ttacoins": Utils.NaN2Zero(replies[41])
                             };
 
 
@@ -157,7 +158,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             client.hset("b:" + player.connection._connection.remoteAddress, "loginTime", curTime);
 
 
-                            player.sendWelcome(
+                            player.sendWelcome (
                                 db_player.armor,
                                 db_player.weapon,
                                 db_player.exp,
@@ -192,7 +193,9 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 db_player.pClass,
                                 db_player.poisoned,
                                 db_player.hitpoints,
-                                db_player.mana);
+                                db_player.mana,
+                                db_player.ttacoins
+                            );
                         });
                     return;
                 }
@@ -233,6 +236,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     .hget("b:" + player.connection._connection.remoteAddress, "rtime") //9
                     .hset(userKey, "class", "")
                     .hset(userKey, "rights", 0)
+                    .hset(userkey, "ttacoins", 0)
 
                     .exec(function(err, replies) {
 
@@ -775,6 +779,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "reset", hasReset);
     },
 
+    setTTACoins: function(name, coins) {
+        client.hset("u:" + name, "ttacoins", coins);
+    },
+
     getReset: function(name, callback) {
         var self = this,
             userKey = "u:" + name,
@@ -857,7 +865,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
         return rights;
     },
-
+    
     getSkills: function(player, callback) {
         var maxSkills = 12;
 

@@ -37,6 +37,23 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                     developmentMode = false;
                 
                 window.unityads.setUp(gameId, videoPlacement, rewardPlacement, developmentMode);
+
+
+                if (window.store) {
+                    store.verbosity = store.INFO;
+
+                    store.register({
+                        id: "net.udeva.TTA.removeAds",
+                        alias: "Remove Advertisements",
+                        type: store.NON_CONSUMABLE
+                    });
+
+                    store.ready(function() {
+                        log.info("Store has successfully initialized.");
+                    });
+
+                    store.refresh();
+                }
             } catch (e) {
                 log.info("Error encountered whilst initializing Unity Ads: " + e);
             }
@@ -85,7 +102,14 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
         },
 
         canStartGame: function() {
-            return this.game;
+            var self = this;
+
+            self.startTimeout = setTimeout(function() {
+                self.handleError('unknown');
+                return false;
+            }, 7000);
+
+            return self.game;
         },
 
         tryStartingGame: function() {
@@ -131,9 +155,10 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                 var watchCanStart = setInterval(function() {
                     if(self.canStartGame()) {
                         clearInterval(watchCanStart);
+                        cleatInterval(self.startTimeout);
                         self.startGame(action, username, userpw, email, newpw, pClass);
                     }
-                }, 100);
+                }, 250);
             } else
                 self.startGame(action, username, userpw, email, newpw, pClass);
         },
@@ -187,6 +212,10 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
 
                 case 'updated':
                     self.addValidationError(null, "The game has been updated, please restart your client with CTRL + F5!");
+                    break;
+
+                case 'unknown':
+                    self.addValidationError(null, "An unexpected error has occurred, please refer to the forums!")
                     break;
 
                 default:
@@ -744,8 +773,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
             }
         },
 
-
-
         hideWindows: function() {
 
             if($('body').hasClass('credits')) {
@@ -773,6 +800,16 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                 $('#characterButton').toggleClass('active');
                 this.game.characterDialog.hide();
             }
+
+            if($('#instructions').hasClass('active')) {
+                this.toggleInstructions();
+                $('#helpbutton').removeClass('active');
+            }
+
+            if ($('#inappstore').hasClass('active')){
+                this.toggleInAppStore();
+                //add button here
+            }
         },
 
         resetPage: function() {
@@ -788,19 +825,20 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
             }
         },
 
+        toggleInAppStore: function() {
+            this.hideWindows();
+            
+            $('#inappstore').toggleClass('active');
+        },
+
         toggleInstructions: function() {
-            if($('#achievements').hasClass('active')) {
-                this.toggleAchievements();
-                $('#achievementsbutton').removeClass('active');
-            }
+            this.hideWindows();
+
             $('#instructions').toggleClass('active');
         },
 
         toggleAchievements: function() {
-            if($('#instructions').hasClass('active')) {
-                this.toggleInstructions();
-                $('#helpbutton').removeClass('active');
-            }
+            this.hideWindows();
             this.resetPage();
             $('#achievements').toggleClass('active');
         },

@@ -658,3 +658,24 @@ Messages.CenterCamera = Message.extend({
         return [Types.Messages.CENTERCAMERA, this.playerId];
     }
 });
+
+Messages.Instructions = Message.extend({
+    init: function(playerId) {
+        this.playerId = playerId;
+    },
+
+    serialize: function() {
+        return [Types.Messages.SHOWINSTURCTIONS, this.playerId];
+    }
+});
+
+Messages.InAppStore = Message.extend({
+    init: function(playerId, selection) {
+        this.playerId = playerId
+        this.selection = selection;
+    },
+
+    serialize: function() {
+        return [Types.Messages.SHOWINAPPSTORE, this.playerId, this.selection];
+    }
+});

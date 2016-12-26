@@ -71,6 +71,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.STOP] = this.receiveStop;
             this.handlers[Types.Messages.SENDAD] = this.receiveAd;
             this.handlers[Types.Messages.CENTERCAMERA] = this.receiveCamera;
+            this.handlers[Types.Messages.SHOWINSTURCTIONS] = this.receiveInstructions;
+            this.handlers[Types.Messages.SHOWINAPPSTORE] = this.receiveInAppStore;
 
             this.useBison = false;
 
@@ -88,7 +90,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         connect: function() {
 
             var self = this,
-                url = "ws://144.217.92.76:50526";
+                url = "ws://127.0.0.1:50526";
             //144.217.92.76
             this.connection = io(url, {
                 forceNew: true,
@@ -569,6 +571,16 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         },
 
+        receiveInstructions: function(data) {
+            if (this.instructions_callback)
+                this.instructions_callback(data[1]);
+        },
+
+        receiveInAppStore: function(data) {
+            if (this.inappstore_callback)
+                this.inappstore_callback(data[1], data[2]);
+        },
+
         receiveRanking: function(data){
             data.shift();
             if(this.ranking_callback){
@@ -849,6 +861,12 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         },
         onCamera: function(callback) {
             this.camera_callback = callback;
+        },
+        onInstructions: function(callback) {
+            this.instructions_callback = callback;
+        },
+        onInAppStore: function(callback) {
+            this.inappstore_callback = callback;  
         },
         onNotify: function(callback){
             this.notify_callback = callback;

@@ -290,6 +290,10 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                     this.scale = 1;
             }
 
+            $('#instructions').click(function() {
+                app.hideWindows();
+            });
+
             $('#characterButton').click(function(event) {
                 //app.showChat();
 
