@@ -679,3 +679,22 @@ Messages.InAppStore = Message.extend({
         return [Types.Messages.SHOWINAPPSTORE, this.playerId, this.selection];
     }
 });
+
+Messages.Purchase = Message.extend({
+    init: function(playerId) {
+        this.playerId = playerId;
+    },
+    
+    serialize: function() {
+        return [Types.Messages.PURCHASE, this.playerId];
+    }
+});
+
+Messages.PlayerState = Message.extend({
+    init: function(playerId) {
+        this.playerId = playerId;
+    },
+    serialize: function() {
+        return [Types.Messages.PLAYERSTATE, this.playerId];
+    }
+});

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/skill.css" type="text/css">
     <link rel="stylesheet" href="css/inventory.css" type="text/css">
     <link rel="stylesheet" href="css/achievement.css" type="text/css">
-    <!--<link rel="stylesheet" href="css/game.css" type="text/css">-->
+    <link rel="stylesheet" href="css/inappstore.css" type="text/css">
     <link rel="stylesheet" href="css/storedialog.css" type="text/css">
     <link rel="stylesheet" href="css/enchantdialog.css" type="text/css">
     <link rel="stylesheet" href="css/bankdialog.css" type="text/css">
@@ -133,19 +133,23 @@
                 <h1>
                     <span class="left-ornament"></span>
          	               <span class="title">
-         	                   Special thanks to Little Workshop
+         	                   A great thank you to Little Workshop and Asky!
          	               </span>
                     <span class="right-ornament"></span>
                 </h1>
                 <div id="authors">
-                    For the initial code and pixel art.
+                    Music by <a class="clickable" target="_blank" href="http://opengameart.org/users/marcelofg55">Marcelofg55</a>,
+                    <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>,
+                    <a class="clickable" target="_blank" href="https://soundcloud.com/gyrowolf/sets/gyrowolfs-rpg-maker-music-pack">Gyrowolf</a>,
+                    <br>
+                    <a class="clickable" target="_blank" href="https://soundcloud.com/freakified/what-dangers-await-campus-map">Freakified</a>,
+                    <a class="clickable" target="_blank" href="http://blog.dayjo.org/free-rpg-music-pack-part-1/">Dayjo</a>,
+                    <a class="clickable" target="_blank" href="http://opengameart.org/users/matthewpablo">Matthew Pablo</a>
+                    <br>
+                    Developers: Tachyon and Noccto
                     <br>
                     <br>
-                    Music by <a class="clickable" target="_blank" href="http://opengameart.org/users/marcelofg55">Marcelofg55</a>, <a class="clickable" target="_blank" href="http://opengameart.org/users/horrorpen">HorrorPen</a>
-                    <br>
-                    Developers: Tachyon, H0lyByte and Langerz
-                    <br>
-                    Contributors: Pretzel and Asky Team
+                    Lastly, a special kind of thanks to Pretzel.
                 </div>
                 <div id="close-credits">
                     <span>- click anywhere to close -</span>
@@ -265,9 +269,26 @@
         </div>
         <div id="bubbles"></div>
         <div id="chatLog"></div>
-        <article id="inappstore" class="clickable">
+
+        <article id="inappstore" class="storepage1 clickable">
             <div class="close"></div>
-            <p>- Click anywhere to close -</p>
+            <h1>
+                <span class="left-ornament"></span>
+                TTA Store
+                <span class="right-ornament"></span>
+            </h1>
+
+            <div id="storetext">You currently have: 10 TTA Coins!</div>
+
+            <div id="wrapper">
+                <div id="storelist"></div>
+            </div>
+
+            <nav class="clickable">
+                <div id="storeprevious"></div>
+                <div id="storenext"></div>
+            </nav>
+
         </article>
         <article id="instructions" class="clickable">
             <div class="close"></div>
@@ -450,6 +471,7 @@
             <div id="characterButton"></div>
             <div id="helpbutton"></div>
             <div id="soundbutton"></div>
+
             <div id="fps">FPS: 60</div>
         </div>
 
@@ -901,11 +923,22 @@
         <span id="toggle-credits">Credits</span>
     </div>
 
+    <div id="legal-link" class="clickable">
+        <span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="https://forum.taptapadventure.com">Forums</a>
+    </div>
+
 </footer>
 
-
-<ul id="page-tmpl" class="clickable" style="display:none">
+<ul id="storepage-tmpl" class="clickable" style="display:none"></ul>
+<ul>
+    <li id="item-tmpl" style="display:none">
+        <span class="item-name">First InApp</span>
+        <span class="item-description">Hello 2</span>
+        <span class="item-cost">$0.99</span>
+    </li>
 </ul>
+
+<ul id="page-tmpl" class="clickable" style="display:none"></ul>
 <ul>
     <li id="achievement-tmpl" style="display:none">
         <div class="coin"></div>

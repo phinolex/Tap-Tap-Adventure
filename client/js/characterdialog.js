@@ -83,19 +83,22 @@ define(['dialog', 'tabbook', 'tabpage', 'item', 'skilldata'], function(Dialog, T
             $('#characterLevel').text(this.game.player.level);
             $('#characterExp').text(this.game.player.experience);
 
-            var playerArmour = this.game.player.spriteName;
-            var playerWeapon = this.game.player.weaponName;
-            var playerPendant = this.game.player.pendant;
-            var playerRing = this.game.player.ring;
+            var playerArmour = this.game.player.spriteName,
+                playerWeapon = this.game.player.weaponName,
+                playerPendant = this.game.player.pendant,
+                playerRing = this.game.player.ring,
+                hasWeapon = true;
 
             if (typeof playerArmour == 'undefined' || playerArmour == null || playerArmour == 'undefined')
                 playerArmour = 'clotharmor';
 
-            if (typeof playerWeapon == 'undefined' || playerWeapon == null || playerWeapon == 'undefined')
+            if (typeof playerWeapon == 'undefined' || playerWeapon == null || playerWeapon == 'undefined') {
                 playerWeapon = 'sword1';
+                hasWeapon = false;
+            }
 
 
-            $('#characterItemWeapon').css('background-image', 'url("img/' + this.scale + '/item-' + playerWeapon + '.png")');
+            $('#characterItemWeapon').css('background-image', 'url("img/' + this.scale + '/item-' + hasWeapon ? playerWeapon : 'undefined' + '.png")');
             $('#characterItemWeapon').attr('title', Item.getInfoMsgEx(playerWeapon, this.game.player.weaponEnchantedPoint, this.game.player.weaponSkillKind, this.game.player.weaponSkillLevel));
 
             $('#characterItemArmor').css('background-image', 'url("img/' + this.scale + '/item-' + playerArmour + '.png")');

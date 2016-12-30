@@ -61,7 +61,8 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
         achievementAlarmShow: function (achievement, delay, type) {
             var $notification = $('#achievement-notification'),
                 $name = $notification.find('.name'),
-                $title = $notification.find('.title');
+                $title = $notification.find('.title'),
+                $button = $('#helpbutton');
 
             $notification.removeClass().addClass('active achievement' + 1);
 
@@ -69,10 +70,16 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
                 case "found":
                     $title.text("Achievement Found!");
                     $name.text(achievement.name);
+                    this.blinkInterval = setInterval(function() {
+                        $button.toggleClass('blink');
+                    }, 500);
                     break;
 
                 case "completed":
                     $title.text("Achievement completed!");
+                    this.blinkInterval = setInterval(function() {
+                        $button.toggleClass('blink');
+                    }, 500);
                     break;
 
                 case "progress":
@@ -82,8 +89,7 @@ define(['text!../shared/data/achievements_english.json', 'jquery'], function(Ach
 
             $name.text(achievement.name);
 
-
-
+            
             setTimeout(function() {
                 $notification.removeClass('active');
             }, 10000)

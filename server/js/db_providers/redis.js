@@ -121,7 +121,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 "poisoned": replies[38],
                                 "hitpoints": Utils.NaN2Zero(replies[39]),
                                 "mana": Utils.NaN2Zero(replies[40]),
-                                "ttacoins": Utils.NaN2Zero(replies[41])
+                                "ttacoins": Utils.NaN2Zero(replies[41]),
+                                "pvpKills": Utils.NaN2Zero(replies[42])
                             };
 
 
@@ -194,7 +195,8 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 db_player.poisoned,
                                 db_player.hitpoints,
                                 db_player.mana,
-                                db_player.ttacoins
+                                db_player.ttacoins,
+                                db_player.pvpKills
                             );
                         });
                     return;
@@ -237,6 +239,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                     .hset(userKey, "class", "")
                     .hset(userKey, "rights", 0)
                     .hset(userKey, "ttacoins", 0)
+                    .hset(userKey, "pvpKills", 0)
 
                     .exec(function(err, replies) {
 
@@ -288,7 +291,9 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             player.pClass,
                             false,
                             50,
-                            10);
+                            10,
+                            0,
+                            0);
 
                         player.pClass = Types.PlayerClass.FIGHTER;
 
@@ -700,6 +705,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
     setExp: function(name, exp){
         client.hset("u:" + name, "exp", exp);
+    },
+
+    setPVPKills: function(name, kills) {
+        client.hset("u:" + name, "pvpKills", kills);
     },
 
     setPointsData: function(name, hitpoints, mana) {

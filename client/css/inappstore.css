@@ -1,0 +1,69 @@
+#wrapper {
+    overflow:hidden;
+}
+
+#storelist {
+    -moz-transition:0.5s left ease-in-out;
+    -webkit-transition:0.5s left ease-in-out;
+    -o-transition:0.5s left ease-in-out;
+    -ms-transition:0.5s left ease-in-out;
+    transition:0.5s left ease-in-out;
+    position:relative;
+}
+
+@media screen and (min-width: 1501px) {
+
+}
+
+@media screen and (max-width: 1500px), screen and (max-height: 870px) {
+
+    #inappstore ul {float:left;margin-left:40px;}
+    #inappstore nav {height:44px;width:134px;margin:0 auto;}
+    #storeprevious, #storenext {height:44px;width:68px;display:inline-block;}
+    .storepage1 #storeprevious, .upscaled .storepage1 #storeprevious {background-position:0px -564px;}
+    .storepage4 #storenext, .upscaled .storepage4 #storenext {background-position:-66px -564px;}
+    #storeprevious, .upscaled #storeprevious {background-position:-134px -564px;}
+    #storeprevious:active, .upscaled #storeprevious:active {background-position:-268px -564px;}
+    #storenext, .upscaled #storenext {margin-left:-10px;background-position:-200px -564px;}
+    #storenext:active, .upscaled #storenext:active {background-position:-334px -564px;}
+    
+    #storelist {width:8000px;}
+    #inappstore.storepage1 #storelist {left:0;}
+    #inappstore.storepage2 #storelist {left:-784px;}
+    #inappstore.storepage3 #storelist {left:-1568px;}
+    #inappstore.storepage4 #storelist {left:-2352px;}
+
+    #inappstore li, .upscaled #inappstore li {
+        height:51px;
+        top: -12px;
+        width:744px;
+        background-position:0 -392px;
+        margin:15px 0;
+    }
+
+    #inappstore li span {padding-top:27px;}
+
+    #storeprevious, #storenext {
+        background-size:832px;
+    }
+    #storetext {
+        position: absolute;
+        width: 833px;
+        height: 20px;
+        top: 85px;
+        left: 0;
+        margin: 0;
+        border: 0;
+        text-align: center;
+    }
+
+    #wrapper {
+        height:135px;
+        width:744px;
+        margin:40px 0 20px 40px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+
+}

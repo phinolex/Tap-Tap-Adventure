@@ -60,6 +60,8 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
         },
 
         setGame: function(game) {
+            var self = this;
+
             this.game = game;
             this.isMobile = this.game.renderer.mobile;
             this.isTablet = this.game.renderer.tablet;
@@ -67,6 +69,14 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
             this.supportsWorkers = !!window.Worker;
             this.ready = true;
             this.rotation = this.window.orientation;
+
+            if (self.storage.data.settings.version != self.game.version) {
+                log.info("Parsing client version.");
+                self.storage.clear();
+                self.storage.data.settings.version = self.game.version;
+                self.storage.save();
+                log.info("Successfully updated client to version: " + self.storage.data.settings.version);
+            }
         },
 
         initFormFields: function() {
@@ -89,7 +99,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
             this.$email = $('#emailinput');
             this.createNewCharacterFormFields = [this.$nameinput, this.$pwinput, this.$pwinput2, this.$email];
             
-            if ( this.storage.playedBefore() ) {
+            if (this.storage.playedBefore()) {
                 var player = this.storage.getPlayer();
 
                 this.$loginnameinput.val(player.username);
@@ -107,7 +117,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
             self.startTimeout = setTimeout(function() {
                 self.handleError('unknown');
                 return false;
-            }, 7000);
+            }, 20000);
 
             return self.game;
         },
@@ -155,7 +165,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                 var watchCanStart = setInterval(function() {
                     if(self.canStartGame()) {
                         clearInterval(watchCanStart);
-                        cleatInterval(self.startTimeout);
+                        clearInterval(self.startTimeout);
                         self.startGame(action, username, userpw, email, newpw, pClass);
                     }
                 }, 250);
@@ -228,9 +238,8 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
             var self = this;
 
             if(username && !this.game.started) {
-
+                this.game.loadMap();
                 this.game.setServerOptions(username, userpw, email, newuserpw, pClass);
-                self.game.loadMap();
 
                 this.center();
                 this.game.run(action, function(result) {
@@ -242,6 +251,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                         self.storage.setPlayer('password', userpw);
                         self.storage.data.playedBefore = true;
                         self.storage.save();
+
                     }
                 });
             }
@@ -775,22 +785,27 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
 
         hideWindows: function() {
 
-            if($('body').hasClass('credits')) {
+            if($('body').hasClass('credits'))
                 this.closeInGameScroll('credits');
-            }
-            if($('body').hasClass('legal')) {
-                this.closeInGameScroll('legal');
-            }
-            if($('body').hasClass('about')) {
-                this.closeInGameScroll('about');
-            }
 
-            if($('#achievements').hasClass('active')) {
-                this.toggleAchievements();
-                $('#achievementsbutton').removeClass('active');
-            }
+            if($('body').hasClass('legal'))
+                this.closeInGameScroll('legal');
+
+            if($('body').hasClass('about'))
+                this.closeInGameScroll('about');
+
+            if($('#achievements').hasClass('active'))
+                this.toggleAchievements(true);
+
+            if($('#instructions').hasClass('active'))
+                this.toggleInstructions(true);
+
+            if ($('#inappstore.js').hasClass('active'))
+                this.toggleInAppStore(true);
+
             this.game.closeItemInfo();
             this.game.menu.close();
+
             if ($('#inventoryButton').hasClass('active')) {
                 $('#inventoryButton').toggleClass('active');
                 this.game.inventoryHandler.toggleAllInventory();
@@ -799,16 +814,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
             if ($('#characterButton').hasClass('active')) {
                 $('#characterButton').toggleClass('active');
                 this.game.characterDialog.hide();
-            }
-
-            if($('#instructions').hasClass('active')) {
-                this.toggleInstructions();
-                $('#helpbutton').removeClass('active');
-            }
-
-            if ($('#inappstore').hasClass('active')){
-                this.toggleInAppStore();
-                //add button here
             }
         },
 
@@ -825,22 +830,30 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
             }
         },
 
-        toggleInAppStore: function() {
-            this.hideWindows();
-            
+        toggleInAppStore: function(nonRecursive) {
+            if (!nonRecursive)
+                this.hideWindows();
+
             $('#inappstore').toggleClass('active');
         },
 
-        toggleInstructions: function() {
-            this.hideWindows();
+        toggleInstructions: function(nonRecursive) {
+            if (!nonRecursive)
+                this.hideWindows();
 
             $('#instructions').toggleClass('active');
         },
 
-        toggleAchievements: function() {
-            this.hideWindows();
+        toggleAchievements: function(nonRecursive) {
+            if (!nonRecursive)
+                this.hideWindows();
+
             this.resetPage();
             $('#achievements').toggleClass('active');
+            $('#helpbutton').toggleClass('active');
+
+            if (this.blinkInterval)
+                clearInterval(this.blinkInterval);
         },
 
         toggleScrollContent: function(content) {
@@ -872,14 +885,43 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
         showAchievementNotification: function(id, name) {
             var $notif = $('#achievement-notification'),
                 $name = $notif.find('.name'),
-                $button = $('#achievementsbutton');
+                $button = $('#helpbutton');
 
             $notif.removeClass().addClass('active achievement' + id);
             $name.text(name);
-            setTimeout(function() {
-                $notif.removeClass('active');
-                $button.removeClass('blink');
-            }, 5000);
+
+            this.blinkInterval = setInterval(function() {
+                $button.toggleClass('blink');
+            }, 500);
+        },
+
+        initInAppPurchases: function(storeList) {
+            var self = this,
+                $lists = $('#storelist'),
+                $page = $('#page-tmpl'),
+                $item = $('#item-tmpl'),
+                $coins = $('#storetext'),
+                page = 0,
+                count = 0,
+                $p = null;
+            
+            _.each(storeList, function(item) {
+                count++;
+
+                var $i = $item.clone();
+
+                $i.removeAttr('id');
+
+                $i.addClass('item' + count);
+
+                if((count - 1) % 4 === 0) {
+                    page++;
+                    $p = $page.clone();
+                    $p.attr('id', 'page'+page);
+                    $p.show();
+                    $lists.append($p);
+                }
+            });
         },
 
         initAchievementList: function(achievements) {

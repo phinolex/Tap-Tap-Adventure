@@ -172,6 +172,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             game.setup('#bubbles', canvas, backgroundbuffer, background, foreground, textcanvas, toptextcanvas, input);
 
             app.setGame(game);
+            
 
             game.onNbPlayersChange(function(worldPlayers, totalPlayers){
                 $('#users').html("" + totalPlayers + " " + (worldPlayers == 1 ? "player" : "players"));
@@ -591,27 +592,32 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 $('#name-tooltip').removeClass('visible');
             });
 
-            $('#previous').click(function() {
-                var $achievements = $('#achievements');
+            $('#next').click(function() {
+                if ($('#achievements').hasClass('active')) {
+                    var $achievements = $('#achievements'),
+                        $lists = $('#lists'),
+                        nbPages = 10;
 
-                if(app.currentPage === 1) {
-                    return false;
-                } else {
-                    app.currentPage -= 1;
-                    $achievements.removeClass().addClass('active page' + app.currentPage);
+                    if(app.currentPage === nbPages) {
+                        return false;
+                    } else {
+                        app.currentPage += 1;
+                        $achievements.removeClass().addClass('active page' + app.currentPage);
+                    }
                 }
             });
 
-            $('#next').click(function() {
-                var $achievements = $('#achievements'),
-                    $lists = $('#lists'),
-                    nbPages = 10;
+            $('#previous').click(function() {
+                if ($('#achievements').hasClass('active')) {
+                    log.info("Achievements active..");
+                    var $achievements = $('#achievements');
 
-                if(app.currentPage === nbPages) {
-                    return false;
-                } else {
-                    app.currentPage += 1;
-                    $achievements.removeClass().addClass('active page' + app.currentPage);
+                    if(app.currentPage === 1) {
+                        return false;
+                    } else {
+                        app.currentPage -= 1;
+                        $achievements.removeClass().addClass('active page' + app.currentPage);
+                    }
                 }
             });
 
@@ -620,7 +626,11 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
 
             $('#helpbutton').click(function() {
-                $('#achievements').toggleClass('active');
+                app.toggleAchievements(true);
+                if (game.achievementHandler.blinkInterval) {
+                    clearInterval(game.achievementHandler.blinkInterval);
+                    $('#helpbutton').removeClass('blink');
+                }
 
                 if ($('#inventoryButton').hasClass('active')) {
                     $('#inventoryButton').toggleClass('active');

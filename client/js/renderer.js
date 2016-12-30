@@ -5,9 +5,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             init: function(game, canvas, buffer, background, foreground, textcanvas, toptextcanvas) {
                 this.game = game;
 
-                this.setZoom();
-
-
                 this.context = (canvas && canvas.getContext) ? canvas.getContext("2d") : null;
                 this.buffer = (buffer && buffer.getContext) ? buffer.getContext("2d") : null;
                 this.background = (background && background.getContext) ? background.getContext("2d") : null;
@@ -628,7 +625,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         var weapon = this.game.sprites[entity.getWeaponName()];
                         if(weapon) {
                             if (!weapon.isLoaded) weapon.load();
-
+                            
                             var weaponAnimData = weapon.animationData[anim.name],
                                 index = frame.index < weaponAnimData.length ? frame.index : frame.index % weaponAnimData.length,
                                 wx = weapon.width * index * os,
@@ -1111,6 +1108,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             drawTerrain: function(backgroundContext, foregroundContext) {
+                if (!this.tileset)
+                    return;
+
                 var self = this,
                     m = this.game.map,
                     p = this.game.player,
@@ -1164,7 +1164,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             drawAnimatedTiles: function(dirtyOnly, ctx) {
+                if (!this.tileset)
+                    return;
 
+                
                 var self = this,
                     m = this.game.map,
                     tilesetwidth = this.tileset.width / m.tilesize;
@@ -1366,13 +1369,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.setCameraView(this.textcontext);
                 this.setCameraView(this.toptextcontext);
 
-                if (!this.game.disableAnimatedTiles) {
-                    if (this.game.FPSAverage < 10 && !this.game.isCentered) {
-                        this.game.disableAnimatedTiles = true;
-                        this.game.app.storage.getSettings().disableAnimatedTiles = this.game.disableAnimatedTiles;
-                    } else
-                        this.drawAnimatedTiles(this.mobile, this.context);
-                }
+                if (this.game.FPSAverage > 10 && !this.game.isCentered)
+                    this.drawAnimatedTiles(this.mobile, this.context);
+
+
                 this.drawSelectedCell();
                 this.drawProjectiles(this.mobile);
 

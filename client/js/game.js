@@ -8,7 +8,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'achievemethandler',
         'rankinghandler', 'inventoryhandler', 'bankhandler', 'partyhandler','bools', 'iteminfodialog',
         'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', 'enchantdialog', 'bankdialog', 'craftdialog', 'projectile' ,'guild',
-        'gamedata', 'button2', 'util',
+        'gamedata', 'button2', 'inappstore', 'util',
         '../shared/js/gametypes', '../shared/js/itemtypes'],
     function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
              GameClient, AudioManager, Updater, Transition, Pathfinder,
@@ -16,13 +16,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
              ShopHandler, PlayerPopupMenu, ClassPopupMenu, AchievementHandler, RankingHandler,
              InventoryHandler, BankHandler, PartyHandler, Bools, ItemInfoDialog, SkillHandler, StateHandler,
-             StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile, Guild, GameData, Button2, Util) {
+             StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile, Guild, GameData, Button2, InAppStore, Util) {
         var Game = Class.extend({
             init: function(app) {
                 $('head').append($('<link rel="stylesheet" type="text/css" />').attr('href', 'css/game.css'));
 
                 this.app = app;
-                this.version = 1;
+                this.version = 2;
                 this.verified = false;
                 this.ready = false;
                 this.started = false;
@@ -68,6 +68,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.menu = new Menu();
                 this.infoManager = new InfoManager(this);
                 this.achievementHandler = new AchievementHandler(this);
+                this.inAppStore = new InAppStore(this);
                 this.kkhandler = new KkHandler();
                 this.chathandler = new ChatHandler(this, this.kkhandler);
                 this.shopHandler = new ShopHandler(this);
@@ -81,6 +82,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.FPSAverage = 0;
                 this.countAverage = true;
                 this.averageCount = 0;
+                this.stopProcess = false;
 
                 //Camera
                 this.isCentered = this.app.storage.getSettings().isCentered;
@@ -731,7 +733,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
             tick: function() {
                 if (this.started) {
-                    
+
                     this.currentTime = new Date().getTime();
 
                     this.updateCursorLogic();
@@ -758,23 +760,25 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.tick();
                 this.hasNeverStarted = false;
 
-                //Since this is not centered, to need to check if we should uncenter it
                 if (!self.isCentered)
                     return;
 
                 var averageInterval = setInterval(function() {
-                    if (self.averageCount > 2) {
+                    if (self.app.window.unityads && self.app.window.unityads.isShowingVideoAd())
+                        return;
+
+                    if (self.averageCount > 3) {
                         self.centerCamera();
                         self.countAverage = false;
                         clearInterval(averageInterval);
                     }
 
-                    if (self.FPSAverage < 25)
+                    if (self.FPSAverage < 18)
                         self.averageCount++;
                     else
                         self.averageCount = 0;
 
-                }, 1500);
+                }, this.renderer.mobile ? 2500 : 1500);
             },
 
             stop: function() {
@@ -939,6 +943,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.renderbackground = true;
                     self.renderer.forceRedraw = true;
                     self.initializeAchievements();
+                    self.loadInAppPurchases();
                     self.audioManager.updateMusic();
                     self.renderer.clearScreen(self.renderer.context);
                     self.renderer.cleanPathing();
@@ -952,19 +957,22 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
                         self.player.setAtkRange(6);
 
+
                     self.player.onStartPathing(function(path) {
                         var i = path.length - 1,
                             x =  path[i][0],
                             y =  path[i][1];
 
-                        if(self.player.isMovingToLoot()) {
+                        if(self.player.isMovingToLoot())
                             self.player.isLootMoving = false;
-                        }
 
                         self.selectedX = x;
                         self.selectedY = y;
 
                         self.selectedCellVisible = true;
+
+                        //if (self.player.isDead && !self.stopProcess)
+                        //    self.player.isDead = false;
 
                         if(self.renderer.mobile || self.renderer.tablet) {
                             self.drawTarget = true;
@@ -1073,6 +1081,17 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                          */
 
                         self.app.toggleInAppStore();
+                        log.info("Toggle Store!");
+                    });
+
+                    self.client.onPurchase(function(playerId) {
+                        /**
+                         * Perhaps send a token as well and decrypt using RSA or whatever.
+                         */
+
+                        if (playerId == self.player.id) {
+                            log.info("Purchase successful, apply perk now to not have player relog.");
+                        }
                     });
 
                     self.client.onAd(function(playerId) {
@@ -1085,6 +1104,27 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.client.onCamera(function(playerId) {
                         self.centerCamera();
+                    });
+
+                    self.client.onPlayerState(function(playerId) {
+                        /**
+                         * The playerId is irrelevant at this instance,
+                         * we must expand those callbacks later on.
+                         */
+                        log.info("Received player state...");
+                        
+                        var death_timeout = setInterval(function() {
+                            log.info("Clearing the state of death of the player.");
+
+                            if (self.player.isDead)
+                                self.player.isDead = false;
+                            
+                            if (!self.player.isDead) {
+                                clearTimeout(death_timeout);
+                                self.player.id = playerId;
+                            }
+                        }, 200);
+
                     });
 
                     self.client.onDoor(function(x, y, orientation, playerId) {
@@ -1229,33 +1269,30 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.player.onDeath(function() {
                         log.info(self.playerId + " is dead");
-
+                        self.stopProcess = true;
                         self.client.sendDeath(self.playerId);
                         self.player.hitPoints = 0;
                         self.updateBars();
                         self.player.skillHandler.clear();
                         self.player.stopBlinking();
+                        self.player.disengage();
 
                         // FIX - Hack to fix dissappear bug.
                         self.player.kind = 1;
 
+                        self.player.forEachAttacker(function(attacker) {
+                            attacker.disengage();
+                            attacker.idle();
+                        });
+
                         self.player.setSprite(self.sprites["death"]);
                         self.player.animate("death", 120, 1, function() {
-                            log.info(self.playerId + " was removed");
-
                             self.removeEntity(self.player);
                             self.removeFromRenderingGrid(self.player, self.player.gridX, self.player.gridY);
                             self.player = null;
                             self.player = undefined;
                             self.client.disable();
-
                             self.playerdeath_callback();
-
-                        });
-
-                        self.player.forEachAttacker(function(attacker) {
-                            attacker.disengage();
-                            attacker.idle();
                         });
 
                         self.audioManager.fadeOutCurrentMusic();
@@ -2129,6 +2166,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 self.app.initUnlockedAchievements(self.achievementHandler.achievements);
             },
 
+            loadInAppPurchases: function() {
+                var self = this;
+                self.app.initInAppPurchases(self.inAppStore.storeData);
+            },
+
             /**
              * Links two entities in an attacker<-->target relationship.
              * This is just a utility method to wrap a set of instructions.
@@ -2820,9 +2862,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     }
                 }
 
-                if(!this.player.isMoving()) {
+                if (!this.player.isMoving()) {
                     this.cursorVisible = false;
-                    this.processInput(pos);
+                    this.processInput(pos, true);
                 }
             },
 
@@ -2969,19 +3011,19 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             /**
              * Processes game logic when the user triggers a click/touch event during the game.
              */
-            processInput: function(pos) {
+            processInput: function(pos, usingKeys) {
                 var entity;
 
-                if (this.clickToFire !== null && this.started) {
+                if (this.clickToFire !== null && this.started && !usingKeys) {
                     this.client.sendCastSpell(this.clickToFire, this.player.x + 8, this.player.y + 8, pos.x * 16 + 8, pos.y * 16 + 8);
                     return;
                 }
 
                 if(this.started
                     && this.player
-                    && !this.hoveringCollidingTile) {
+                    && !this.hoveringCollidingTile
+                    && !this.player.isDead) {
                     entity = this.getEntityAt(pos.x, pos.y);
-                    log.info("Here..");
 
                     if (entity instanceof Entity)
                         this.renderer.forceRedraw = true;
@@ -3370,6 +3412,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.player.email = this.email;
 
                 this.initPlayer();
+                this.player.disengage();
 
                 self.selectedCellVisible = false;
                 self.selectedX = self.player.gridX;
@@ -3383,8 +3426,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     this.renderer.clearScreen(this.renderer.context);
 
                 this.started = true;
-                this.player.isDead = false;
-                //self.client.sendRespawn(self.player.id);
+                this.stopProcess = false;
+                this.player.removeTarget();
+                log.info("Sending respawn: " + this.playerId);
+                this.client.sendRespawn(this.playerId);
             },
 
             onGameStart: function(callback) {
@@ -3498,39 +3543,30 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
             showNotification: function(message) {
                 if(this.storeDialog.visible) {
-                    if (message == "buy" || message == "sold") {
+                    if (message == "buy" || message == "sold")
                         this.storeDialog.inventoryFrame.open();
-                    }
-                    else {
+                    else
                         this.storeDialog.notify(message);
-                    }
                 } else if(this.auctionDialog.visible) {
                     if (message == "buy" || message == "sold") {
                         this.auctionDialog.inventoryFrame.open();
                         this.auctionDialog.storeFrame.open();
-
                         this.auctionDialog.storeFrame.pageMyAuctions.reload();
                         this.auctionDialog.storeFrame.pageArmor.reload();
                         this.auctionDialog.storeFrame.pageWeapon.reload();
 
-                    }
-                    else {
+                    } else
                         this.auctionDialog.notify(message);
-                    }
                 } else if(this.enchantDialog.visible) {
-                    if (message == "enchanted") {
+                    if (message == "enchanted")
                         this.enchantDialog.inventoryFrame.open();
-                    }
-                    else {
+                    else
                         this.enchatDialog.notify(message);
-                    }
                 } else if(this.craftDialog.visible) {
-                    if (message == "craft") {
+                    if (message == "craft")
                         this.craftDialog.inventoryFrame.open();
-                    }
-                    else {
+                    else
                         this.craftDialog.notify(message);
-                    }
                 } else {
                     this.chathandler.addNotification(message);
                 }

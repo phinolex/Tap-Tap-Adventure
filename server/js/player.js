@@ -441,7 +441,7 @@ module.exports = Player = Character.extend({
                           pendant, pendantEnchantedPoint, pendantSkillKind, pendantSkillLevel,
                           ring, ringEnchantedPoint, ringSkillKind, ringSkillLevel,
                           boots, bootsEnchantedPoint, bootsSkillKind, bootsSkillLevel,
-                          membership, membershipTime, kind, rights, pClass, poisoned, hitpoints, mana) {
+                          membership, membershipTime, kind, rights, pClass, poisoned, hitpoints, mana, ttacoins) {
 
         var self = this;
         self.kind = kind;
@@ -461,16 +461,15 @@ module.exports = Player = Character.extend({
         self.poisoned = poisoned;
         self.orientation = Utils.randomOrientation;
         self.pClass = pClass;
+        self.TTACoins = ttacoins;
         self.updateHitPoints();
         self.setHitPoints(hitpoints);
         self.setMana(mana);
 
-
-        if(x === 0 && y === 0) {
+        if(x === 0 && y === 0)
             self.updatePosition();
-        } else {
+        else
             self.setPosition(x, y);
-        }
 
         self.server.addPlayer(self);
         self.server.enter_callback(self);

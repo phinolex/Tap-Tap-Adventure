@@ -10,11 +10,9 @@ define(['jquery'], function() {
         },
         show: function(){
             $('#chatLog').css('display', 'block');
-            $('#kungLog').css('display', 'block');
             $('#gamebutton').css('display', 'block');
             $('#boardbutton').css('display', 'block');
             $('#partybutton').css('display', 'block');
-            $('#kungbutton').css('display', 'block');
         },
         processSendMessage: function(message) {
             return this.processSenders(null, message);
@@ -22,7 +20,6 @@ define(['jquery'], function() {
         processReceiveMessage: function(entityId, message) {
             return this.processRecievers(entityId, message);
         },
-
 
         handleIdEntity: function (data) {
             var m = this.game.getMouseGridPosition();
@@ -33,6 +30,7 @@ define(['jquery'], function() {
                     ", pos: (" + m.x + "," + m.y + ")");
             }
         },
+
         handlePartyInvite: function(data) {
             var m = this.game.getMouseGridPosition();
             var entity;
@@ -103,6 +101,11 @@ define(['jquery'], function() {
 
                         self.game.client.sendChat("/1 " + name + ": " + message);
                         return true;
+                    },
+
+                    "/t ": function(message) {
+                        self.game.client.sendChat("Hey: " + self.game.player.weaponName + " " + self.game.player.isDead);
+                        return;
                     }
                 };
             if (pattern in commandPatterns) {
@@ -136,17 +139,15 @@ define(['jquery'], function() {
 
         addToChatLog: function(message){
             var self = this;
-            var el = $('<p style="color: cyan">' + message + '</p>');
+            var el = $('<p style="color: darkcyan">' + message + '</p>');
             $(el).appendTo(this.chatLog);
             $(this.chatLog).scrollTop(999999);
         },
 
-        addNotification: function(message, withDuration) {
+        addNotification: function(message) {
             var self = this;
-            self.game.app.displayChatLog(true);
-            var el = $('<p style="color: rgba(128, 255, 128, 1)">' + message + '</p>');
-            $(el).appendTo(this.chatLog);
-            $(this.chatLog).scrollTop(999999);
+
+            self.addMessage('GAME', message);
         },
 
         addNormalChat: function(entity, message) {
@@ -154,17 +155,19 @@ define(['jquery'], function() {
 
             if (!entity) return;
 
-            self.game.app.displayChatLog(true);
-            var el = $('<p style="color: rgba(255, 255, 255, 1)">' + entity.name + ': ' + message + '</p>');
-            $(el).appendTo(this.chatLog);
-            $(this.chatLog).scrollTop(999999);
+            self.addMessage(entity.name, message);
         },
 
-        addGameNotification: function(notificationType, message) {
+        addMessage: function(sourceName, message, colour) { //TODO - Do different colours in a single function.
+            var self = this;
+
             self.game.app.displayChatLog(true);
-            var el = $('<p style="color: rgba(255, 255, 255, 1)">' + notificationType + ': ' + message + '</p>');
-            $(el).appendTo(this.chatLog);
-            $(this.chatLog).scrollTop(999999);
+
+
+
+            var syntax = $('<p style="color: rgba(255, 205, 0, 1)">' + '[' + sourceName + ']: ' + message + '</p>');
+            $(syntax).appendTo(this.chatLog);
+            $(self.chatLog.scrollTop(999999));
         }
 
     });

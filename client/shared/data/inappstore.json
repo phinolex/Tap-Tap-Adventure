@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "name": "Remove Ads!",
+    "cost": "15",
+    "type": "Permanent",
+    "description": "Remove advertisements on all mobile devices!"
+  },
+
+  {
+    "id": 2,
+    "name": "Extra Beauty!",
+    "cost": "10",
+    "type": "Permanent",
+    "description": "Enable the skin slot, allowing you to disguise your character in an armour!"
+  },
+
+  {
+    "id": 3,
+    "name": "Fast Healing!",
+    "cost": "20",
+    "type": "Permanent",
+    "description": "Gives your mana and health regen a 2.0x multiplier."
+  },
+
+  {
+    "id": 4,
+    "name": "Great Loot!",
+    "cost": "20",
+    "type": "Permanent",
+    "description": "Gives you a 50% higher change of getting a better loot!"
+  },
+
+  {
+    "id": 5,
+    "name": "New Identity!",
+    "cost": "10",
+    "type": "Permanent",
+    "description": "Allows you to change your name in the character menu!"
+  }
+]

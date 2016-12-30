@@ -1,98 +1,143 @@
-
-var cls = require("./lib/class");
-var MobData = require("./mobdata.js");
-var Messages = require("./message.js");
+var cls = require('./lib/class'),
+    MobData = require('./mobdata.js'),
+    Messages = require('./message.js');
 
 module.exports = Party = Class.extend({
-  init: function(player1, player2){
-    this.players = [player1, player2];
-    if(player1.party){ player1.party.removePlayer(player1); }
-    if(player2.party){ player2.party.removePlayer(player2); }
-    player1.party = this;
-    player2.party = this;
-    this.leader = player1;
-    this.sendMembersName();
-  },
-  
-  addPlayer: function(player){
-    if(player){
-      this.players.push(player);
-      if(player.party){
-        player.party.removePlayer(player);
-      }
-      player.party = this;
-    }
-    this.sendMembersName();
-  },
-  
-  removePlayer: function(player){
-    var i=0;
-    if (player == this.leader)
-    	    this.leader = this.players[0];
-    if(player){
-      for(i=0; i<this.players.length; i++){
-        if(player === this.players[i]){
-          this.players[i].send([Types.Messages.PARTY]);
-          this.players[i].party = null;
-          this.players.splice(i, 1);
-          this.sendMembersName();
-          break;
+    init: function(server, host, firstPlayer) {
+        var self = this;
+
+        self.server = server;
+        self.players = [host, firstPlayer];
+        self.assignParty();
+
+        self.leader = host;
+
+        self.updateMembers();
+    },
+
+    assignParty: function() {
+        var self = this;
+
+        for (var player in self.players) {
+            if (player.party)
+                player.party.removePlayer(player);
+
+            player.party = self;
         }
-      }
-    }   
-  },
+    },
 
-  sendMembersName: function(){
-    var i=0;
-    var msg = [Types.Messages.PARTY];
-    
-    var players = this.players;
+    addPlayer: function(player) {
+        var self = this;
 
-    if(players.length > 1){
-      msg.push(this.leader.name)
-      for(i=0; i<players.length; i++){
-        if (players[i] !== this.leader)
-            msg.push(players[i].name);
-      }
-    }
-    //log.info("msg="+JSON.stringify(msg));
-    for(i=0; i<players.length; i++){
-       players[i].server.pushToPlayer(players[i], new Messages.Party(msg));
-    }
-  },
+        if (player) {
+            self.players.push(player);
+            if (player.party)
+                player.party.removePlayer(player);
 
-  sumTotalLevel: function(){
-    var i=0;
-    var sum=0;
-    for(i=0; i<this.players.length; i++){
-      sum += this.players[i].level;
-    }
-    return sum+1;
-  },
-  incExp: function(mob, logHandler){
-    var i=0;
-    var totalLevel = this.sumTotalLevel();
-    var exp = MobData.Kinds[mob.kind].xp * ((10 + this.players.length) / 10);
-    for(i=0; i<this.players.length; i++){
-      var player = this.players[i],
-          exp1 = Math.ceil(exp * (player.level+1) / totalLevel);
+            player.party = self;
+        }
 
-      player.incExp(exp1);
-      //logHandler.addExpLog(player, 'kill', mob, exp1);
-      //log.info("exp1=" + exp1);
-      player.server.pushToPlayer(player, new Messages.Kill(mob, player.level, exp1));
+        self.updateMembers();
+    },
+
+    removePlayer: function(player) {
+        var self = this,
+            wasLeader = false;
+
+        if (player) {
+            for (var i = 0; i < self.players; i++) {
+                if (player === self.players[i]) {
+                    if (player == self.leader)
+                        wasLeader = true;
+
+                    self.players[i].send([Types.Messages.PARTY]);
+                    self.players[i].party = null;
+                    self.players.splice(i, 1);
+                    self.updateMembers();
+                    break;
+                }
+            }
+
+            if (wasLeader)
+                self.leader = self.players[0];
+        }
+    },
+
+    updateMembers: function() {
+        var self = this,
+            messageArray = [Types.Messages.PARTY];
+
+        if (self.players > 1) {
+            for (var player in self.players)
+                messageArray.push(player.name);
+        }
+        
+        self.pushToMembers(new Messages.Party(messageArray));
+    },
+
+    pushToMembers: function(message) {
+        var self = this;
+
+        /**
+         * This will be used in the future to send messages
+         * to the party itself, something you want only
+         * the members in the party to receive.
+         */
+
+        for (var player in self.players)
+            self.server.pushToPlayer(player, message);
+    },
+
+    getTotalLevel: function() {
+        var self = this
+            total = 0;
+
+        for (var player in self.players)
+            total += player.level;
+
+        return total;
+    },
+
+    incExp: function(mob) {
+        var self = this,
+            total = self.getTotalLevel(),
+            mobExp = MobData[mob.kidn].xp * ((10 + self.players.length) / 10);
+
+        for (var player in self.players) {
+            var exp = Math.ceil(exp * (player.level + 1) / totalLevel);
+
+            player.incExp(exp);
+
+            self.server.pushToPlayer(player, new Messages.Kill(mob, player.level, exp));
+        }
+    },
+
+    getHighestLevel: function() {
+        var self = this,
+            highestLevel = 0;
+
+        for (var player in self.players) {
+            if (highestLevel < player.level)
+                highestLevel = player.level;
+        }
+
+        return highestLevel;
+    },
+
+    getLowestLevel: function() {
+        var self = this,
+            lowestLevel = 999;
+
+        for (var player in self.players) {
+            if (lowestLevel > player.level)
+                lowestLevel = player.level;
+        }
     }
-  },
-  getHighestLevel: function(){
-    var i=0;
-    var highestLevel = 0;
-    for(i=0; i<this.players.length; i++){
-      if(highestLevel < this.players[i].level){
-        highestLevel = this.players[i].level;
-      }
-    }
-    return highestLevel;
-  },
+});
+
+
+/*
+
   getLowestLevel: function(){
     var i=0;
     var lowestLevel = 999;
@@ -104,3 +149,4 @@ module.exports = Party = Class.extend({
     return lowestLevel;
   }
 });
+*/

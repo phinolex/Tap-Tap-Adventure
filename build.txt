@@ -27,6 +27,10 @@ css/ie.css
 ----------------
 css/ie.css
 
+css/inappstore.css
+----------------
+css/inappstore.css
+
 css/inventory.css
 ----------------
 css/inventory.css
@@ -135,6 +139,8 @@ js/craftdialog.js
 js/projectile.js
 js/guild.js
 js/gamedata.js
+text!../shared/data/inappstore.json
+js/inappstore.js
 js/util.js
 js/../shared/js/gametypes.js
 js/game.js

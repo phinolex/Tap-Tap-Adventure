@@ -373,18 +373,21 @@ footer, header, hgroup, menu, nav, section {
         height: 45px;
         top: 3px;
         left: 1350px;
-        margin: 0px;
-        border: 0px;
-        background-color: rgba(0, 0, 0, 0);
-        background: url('../img/3/main.png' ) no-repeat -840px -942px;
+        margin: 0;
+        border: 0;
+        background: url('../img/3/main.png' ) no-repeat -126px -942px rgba(0, 0, 0, 0);
     }
 
-    #helpbutton:hover {
-        background: url('../img/3/main.png' ) no-repeat -882px -942px;
+    #helpbutton:hover, #helpbutton.blink:hover {
+        background: url('../img/3/main.png') no-repeat -168px -942px;
     }
 
     #helpbutton.active {
-        background: url('../img/3/main.png' ) no-repeat -924px -942px;
+        background: url('../img/3/main.png') no-repeat -210px -942px;
+    }
+
+    #helpbutton.blink {
+        background: url('../img/3/main.png') no-repeat -252px -942px;
     }
 
     #soundbutton {
@@ -763,7 +766,6 @@ footer, header, hgroup, menu, nav, section {
         background: url('../img/2/main.png') no-repeat -532px -628px;
     }
 
-
     #helpbutton {
         position: absolute;
         width: 28px;
@@ -772,16 +774,19 @@ footer, header, hgroup, menu, nav, section {
         left: 900px;
         margin: 0px;
         border: 0px;
-        background-color: rgba(0, 0, 0, 0);
-        background: url('../img/2/main.png' ) no-repeat -560px -628px;
+        background: url('../img/2/main.png' ) no-repeat -84px -628px rgba(0, 0, 0, 0);
     }
 
-    #helpbutton:hover {
-        background: url('../img/2/main.png' ) no-repeat -588px -628px;
+    #helpbutton:hover, #helpbutton.blink:hover {
+        background: url('../img/2/main.png') no-repeat -112px -628px;
     }
 
     #helpbutton.active {
-        background: url('../img/2/main.png' ) no-repeat -616px -628px;
+        background: url('../img/2/main.png') no-repeat -140px -628px;
+    }
+
+    #helpbutton.blink {
+        background: url('../img/2/main.png') no-repeat -167px -628px;
     }
 
     #soundbutton {
@@ -851,13 +856,45 @@ footer, header, hgroup, menu, nav, section {
         border: 0;
         color: white;
     }
+
+    #buttonExtra1 {
+        position: absolute;
+        width: 30px;
+        height: 34px;
+        top: -33px;
+        left: 930px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/2/maintwo.png' ) no-repeat -930px -557px;
+    }
+    #buttonExtra2 {
+        position: absolute;
+        width: 30px;
+        height: 34px;
+        top: -33px;
+        left: 900px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/2/maintwo.png' ) no-repeat -930px -557px;
+    }
+    #buttonExtra3 {
+        position: absolute;
+        width: 30px;
+        height: 34px;
+        top: -33px;
+        left: 870px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/2/maintwo.png' ) no-repeat -930px -557px;
+    }
+
     #fps {
         font-family:'GraphicPixel';
         position: absolute;
         width: 88px;
         height: 8px;
         left: 870px;
-        top: 33px;
+        top: 35px;
         border: 0;
         color: rgba(255, 255, 255, 1);
         font-size: 7px;
@@ -1187,18 +1224,21 @@ footer, header, hgroup, menu, nav, section {
         height: 15px;
         top: 1px;
         left: 450px;
-        margin: 0px;
-        border: 0px;
-        background-color: rgba(0, 0, 0, 0);
-        background: url('../img/1/main.png' ) no-repeat -280px -314px;
+        margin: 0;
+        border: 0;
+        background: url('../img/1/main.png' ) no-repeat -42px -314px rgba(0, 0, 0, 0);
     }
 
-    #helpbutton:hover {
-        background: url('../img/1/main.png' ) no-repeat -294px -314px;
+    #helpbutton:hover, #helpbutton.blink:hover {
+        background: url('../img/1/main.png') no-repeat -56px -314px;
     }
 
     #helpbutton.active {
-        background: url('../img/1/main.png' ) no-repeat -308px -314px;
+        background: url('../img/1/main.png') no-repeat -70px -314px;
+    }
+
+    #helpbutton.blink {
+        background: url('../img/1/main.png') no-repeat -84px -314px;
     }
 
     #soundbutton {

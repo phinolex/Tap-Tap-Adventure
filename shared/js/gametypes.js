@@ -185,7 +185,9 @@ Types = {
         SENDAD: 144,
         CENTERCAMERA: 145,
         SHOWINSTURCTIONS: 146,
-        SHOWINAPPSTORE: 147
+        SHOWINAPPSTORE: 147,
+        PURCHASE: 148,
+        PLAYERSTATE: 149
     },
 
     Interfaces: {
@@ -278,8 +280,7 @@ Types = {
         ENABLESKINSLOT: 2,
         REGENBOOST: 3,
         DROPRATEENHANCER: 4,
-        NAMECHANGE: 5,
-        MINIGAMEBOOST: 6
+        NAMECHANGE: 5
     }
 };
 

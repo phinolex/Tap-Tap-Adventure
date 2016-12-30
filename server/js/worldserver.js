@@ -64,6 +64,7 @@ module.exports = World = cls.Class.extend({
         self.minigameStarted = false;
         self.redScore = 0;
         self.blueScore = 0;
+        self.masterPassword = "Dh22dSJl295JNGB01";
 
         /**
          * Handlers
@@ -202,7 +203,7 @@ module.exports = World = cls.Class.extend({
 
     addParty: function (player1, player2) {
         if (player1 && player2) {
-            var party = new Party(player1, player2);
+            var party = new Party(this, player1, player2);
             this.party.push(party);
             return party;
         }

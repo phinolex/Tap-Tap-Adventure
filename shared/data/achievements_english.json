@@ -184,7 +184,7 @@
     ],
 
     "afterTalk": [
-        "Thanks no thanks."
+      "Thanks no thanks."
     ],
 
     "mobId": 13,
@@ -855,6 +855,26 @@
   },
 
 
+
+  {
+    "npcId": 371,
+    "type": 2,
+    "name": "Sky Father",
+    "desc": "Enel must be destroyed at all costs!",
+    "beforeTalk": [
+      "Oh my! Adventurer! Please help us!",
+      "Our Sky Guardian, Enel has completely lost his mind",
+      "Please slay him!",
+      "I will teach you the fourth level of the Evasion Skill!"
+    ],
+
+    "mobId": 197,
+    "mobCount": 1,
+    "skillName": "Evasion",
+    "skillLevel": 4,
+    "xp": 25000
+  },
+
   {
     "npcId": 376,
     "type": 2,
@@ -880,26 +900,5 @@
     "skillName": "Whirlwind Attack",
     "skillLevel": 4,
     "xp": 200000
-  },
-
-
-  {
-    "npcId": 371,
-    "type": 2,
-    "name": "Sky Father",
-    "desc": "Enel must be destroyed at all costs!",
-    "beforeTalk": [
-      "Oh my! Adventurer! Please help us!",
-      "Our Sky Guardian, Enel has completely lost his mind",
-      "Please slay him!",
-      "I will teach you the fourth level of the Evasion Skill!"
-    ],
-
-    "mobId": 197,
-    "mobCount": 1,
-    "skillName": "Evasion",
-    "skillLevel": 4,
-    "xp": 25000
   }
-
 ]
