@@ -17,7 +17,13 @@
 
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
 
-    #inappstore ul {float:left;margin-left:40px;}
+    #inappstore ul {
+        float:left;
+        margin-left:6px;
+        width: 800px;
+        height: 200px;
+        margin: 0 auto;
+    }
     #inappstore nav {height:44px;width:134px;margin:0 auto;}
     #storeprevious, #storenext {height:44px;width:68px;display:inline-block;}
     .storepage1 #storeprevious, .upscaled .storepage1 #storeprevious {background-position:0px -564px;}
@@ -34,10 +40,12 @@
     #inappstore.storepage4 #storelist {left:-2352px;}
 
     #inappstore li, .upscaled #inappstore li {
+        width: 368px;
+        display: inline-block;
+        vertical-align: top;
         height:51px;
         top: -12px;
-        width:744px;
-        background-position:0 -392px;
+        background-position:0 -608px;
         margin:15px 0;
     }
 
@@ -46,6 +54,7 @@
     #storeprevious, #storenext {
         background-size:832px;
     }
+
     #storetext {
         position: absolute;
         width: 833px;

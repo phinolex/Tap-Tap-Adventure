@@ -1111,11 +1111,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                          * The playerId is irrelevant at this instance,
                          * we must expand those callbacks later on.
                          */
-                        log.info("Received player state...");
-                        
-                        var death_timeout = setInterval(function() {
-                            log.info("Clearing the state of death of the player.");
 
+                        var death_timeout = setInterval(function() {
                             if (self.player.isDead)
                                 self.player.isDead = false;
                             
@@ -1124,7 +1121,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 self.player.id = playerId;
                             }
                         }, 200);
-
                     });
 
                     self.client.onDoor(function(x, y, orientation, playerId) {

@@ -1607,7 +1607,7 @@ footer div  {display:inline-block;}
         clear: left;
         margin-top: 20px;
     }
-    #inappstore li:nth-child(1) span {
+    /*#inappstore li:nth-child(1) span {
         height:45px;
         width:65px;
         background-position:-714px -421px;
@@ -1617,7 +1617,7 @@ footer div  {display:inline-block;}
         position: absolute;
         left: 32px;
         top: 85px;
-    }
+    }*/
     #inappstoretext {
         font-family:'GraphicPixel';
         font-size:16px;

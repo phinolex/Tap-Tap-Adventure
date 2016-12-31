@@ -913,6 +913,8 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                 $i.removeAttr('id');
 
                 $i.addClass('item' + count);
+                self.setInAppData($i, item.name, item.description, item.cost);
+                $i.show();
 
                 if((count - 1) % 4 === 0) {
                     page++;
@@ -921,7 +923,17 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                     $p.show();
                     $lists.append($p);
                 }
+
+                $p.append($i);
             });
+        },
+
+
+
+        setInAppData: function($el, name, description, price) {
+            $el.find('.item-name').html(name);
+            $el.find('.item-description').html(description);
+            $el.find('.item-cost').html(price + " TTA Coins");
         },
 
         initAchievementList: function(achievements) {
