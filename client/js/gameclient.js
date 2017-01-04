@@ -75,6 +75,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.SHOWINAPPSTORE] = this.receiveInAppStore;
             this.handlers[Types.Messages.PURCHASE] = this.receivePurchase;
             this.handlers[Types.Messages.PLAYERSTATE] = this.receivePlayerState;
+            this.handlers[Types.Messages.GLOBALCHAT] = this.receiveGlobalChat;
 
             this.useBison = false;
 
@@ -92,7 +93,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         connect: function() {
 
             var self = this,
-                url = "ws://144.217.92.76:50526";
+                url = "ws://127.0.0.1:50526";
             //144.217.92.76
             this.connection = io(url, {
                 forceNew: true,
@@ -593,6 +594,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 this.state_callback(data[1]);
         },
 
+        receiveGlobalChat: function(data) {
+            if (this.globalChat_callback)
+                this.globalChat_callback(data[1], data[2]);
+        },
+
         receiveRanking: function(data){
             data.shift();
             if(this.ranking_callback){
@@ -605,11 +611,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             }
         },
 
-        receiveNotify: function(data){
+        receiveNotify: function(data) {
             var msg = data[1];
-            if(this.notify_callback){
+            if(this.notify_callback)
                 this.notify_callback(msg);
-            }
+            
         },
         receiveKung: function(data){
             var msg = data[1];
@@ -794,6 +800,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         onEntityAttack: function(callback) {
             this.attack_callback = callback;
+        },
+
+        onGlobalChat: function(callback) {
+            this.globalChat_callback = callback;
         },
 
         onPlayerChangeHealth: function(callback) {

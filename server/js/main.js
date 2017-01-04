@@ -1,6 +1,6 @@
 var fs = require('fs');
-var Metrics = require('./metrics');
-var ProductionConfig = require('./productionconfig');
+var Metrics = require('./game/utils/metrics');
+var ProductionConfig = require('./game/utils/productionconfig');
 var _ = require('underscore');
 
 /* global log, Player, databaseHandler */
@@ -20,13 +20,13 @@ function main(config) {
         _.extend(config, production_config.getProductionSettings());
     }
     var worldId = config.world_id;
-    var ws = require("./ws");
-    var WorldServer = require("./worldserver");
+    var ws = require("./game/network/ws");
+    var WorldServer = require("./game/world");
     var server = new ws.WebsocketServer(config.port, config.use_one_port, config.ip);
     var metrics = config.metrics_enabled ? new Metrics(config) : null;
     var worlds = [];
     var lastTotalPlayers = 0;
-    var DatabaseSelector = require("./databaseselector");
+    var DatabaseSelector = require("./game/utils/databaseselector");
     setInterval(function() {
         if(metrics && metrics.isReady) {
             metrics.updateWorldCount();

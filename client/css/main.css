@@ -691,44 +691,46 @@ footer div  {display:inline-block;}
         padding-top: 48px;
     }
 
-    #chatbox {
+    #chatbox{
         position: absolute;
-        left: 52.75%;
-        bottom: 72.7px;
-        width: 787px;
-        height: 32px;
-        margin-left: -394px;
-        background-image: url('../img/2/main.png');
-        background-position: 0px -596px;
+        left: 53.2%;
+        bottom: 111px;
+        width: 1182px;
+        height: 48px;
+        margin-left: -591px;
+        background-image: url('../img/3/main.png');
+        background-position: 0px -894px;
         display: none;
-        zoom: 82%
+        zoom: 82.25%;
     }
     #chatbox.active {
         display: block;
+
     }
     #chatbox input {
-        font-size:10px;
+        font-size:30px;
         color:#eee;
         background:none;
         width:90%;
         border:0;
         margin-left:2%;
-        padding:7px 0;
+        padding: 12px 0;
     }
     #chatbox .legend{
-        position: absoute;
-        top: -20px;
-        left: 10px;
-        padding: 4px 6px;
+        position: absolute;
+        top: -30px;
+        left: 15px;
+        padding: 6px 9px;
         color: #FFF;
         background: rgba(45,45,45,0.8);
-        z_index: 4;
-        border-radius: 3px 3px 0 0;
+        z_index: 2;
+        border-radius: 9px 9px 0 0;
         diplay: none;
     }
     #chatbox .legend p{
-        line-height: 1;
+        line-height: 3;
     }
+
     .upscaled #logo, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled #inappstore, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/3/spritesheet.png');}
     .upscaled #achievements, .upscaled #storenext, .upscaled #storeprevious, .upscaled #achievements li, .upscaled #inappstore li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/3/achievements.png');}
 
@@ -769,7 +771,7 @@ footer div  {display:inline-block;}
     #loadcharacter h1, #changePassword h1, #confirmation h1, #error h1, #legal h1 {margin-top:30px;}
     #playername {margin-top:15px;}
     .loadcharacter .play, .confirmation .delete {margin:15px auto 15px auto;}
-    #confirmation p, #error p {font-size:30px;margin-top:60px;line-height:40px;}
+    #confirmation p, #createcharacter p, #error p {font-size:30px;margin-top:60px;line-height:40px;}
     #legal p {margin:50px auto 0;}
     #error p {width:70%;margin:60px auto 0;}
     .button.delete {background-position:-687px -153px;}
@@ -781,7 +783,7 @@ footer div  {display:inline-block;}
         font-family:'GraphicPixel';
         color:#e3e3e3;
         position:absolute;
-        width: 600px;
+        width: 980px;
         left: 85%;
         margin-left: -972px;
         top: 60%;
@@ -1351,7 +1353,7 @@ footer div  {display:inline-block;}
     #loadcharacter h1, #changePassword h1, #confirmation h1, #error h1, #legal h1 {margin-top:20px;}
     #playername {margin-top:10px;}
     .loadcharacter .play, .confirmation .delete {margin:10px auto 10px auto;}
-    #confirmation p, #error p {font-size:20px;margin-top:40px;line-height:30px;}
+    #confirmation p, #createcharacter p, #error p {font-size:20px;margin-top:40px;line-height:30px;}
     #legal p {margin:30px auto 0;font-size:16px;line-height:24px;}
     #error p {width:70%;margin:40px auto 0;}
     .button.delete {background-position:-458px -102px;}
@@ -1381,7 +1383,7 @@ footer div  {display:inline-block;}
         font-family:'GraphicPixel';
         color:#e3e3e3;
         position:absolute;
-        width: 600px;
+        width: 650px;
         left: 85%;
         margin-left: -648px;
         top: 60%;
@@ -1912,7 +1914,7 @@ footer div  {display:inline-block;}
         font-family:'GraphicPixel';
         color:#e3e3e3;
         position:absolute;
-        width: 300px;
+        width: 325px;
         left: 85%;
         margin-left: -324px;
         top: 58%;
@@ -1940,7 +1942,7 @@ footer div  {display:inline-block;}
     #chatbox{
         position: absolute;
         left: 53.2%;
-        bottom: 37px;
+        bottom: 35px;
         width: 394px;
         height: 16px;
         margin-left: -197px;
@@ -2014,7 +2016,7 @@ footer div  {display:inline-block;}
     #loadcharacter h1, #changePassword h1, #confirmation h1, #error h1, #legal h1 {margin-top:20px;}
     #playername {margin-top:5px;}
     .loadcharacter .play, .confirmation .delete {margin:5px auto 5px auto;}
-    #confirmation p, #error p, #legal p {font-size:10px;margin-top:20px;line-height:20px;}
+    #confirmation p, #createcharacter p, #error p, #legal p {font-size:10px;margin-top:20px;line-height:20px;}
     #legal p {margin:20px auto 0;line-height:12px;}
     #error p {width:70%;margin:40px auto 0;}
     .button.delete {background-position:-229px -51px;}

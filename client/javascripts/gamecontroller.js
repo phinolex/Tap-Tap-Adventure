@@ -466,7 +466,7 @@
 
                 if( !e.touches || e.touches.length == 0 )
                 {
-                    // Draw once more to remove the touch area
+                    // Draw once more to remove the touch areas
                     _this.render();
                     _this.paused = true;
                 }
@@ -496,7 +496,7 @@
         },
 
         /**
-         * Adds the area to a list of touchable areas, draws
+         * Adds the areas to a list of touchable areas, draws
          * @param {object} options with properties: x, y, width, height, touchStart, touchEnd, touchMove
          */
         addTouchableDirection: function( options ) {
@@ -510,7 +510,7 @@
         },
 
         /**
-         * Adds the circular area to a list of touchable areas, draws
+         * Adds the circular areas to a list of touchable areas, draws
          * @param {object} options with properties: x, y, width, height, touchStart, touchEnd, touchMove
          */
         addJoystick: function( options ) { //x, y, radius, backgroundColor, touchStart, touchEnd ) {
@@ -524,7 +524,7 @@
         },
 
         /**
-         * Adds the circular area to a list of touchable areas, draws
+         * Adds the circular areas to a list of touchable areas, draws
          * @param {object} options with properties: x, y, width, height, touchStart, touchEnd, touchMove
          */
         addButton: function( options ) { //x, y, radius, backgroundColor, touchStart, touchEnd ) {
@@ -721,7 +721,7 @@
 
                 area.draw();
 
-                // Go through all touches to see if any hit this area
+                // Go through all touches to see if any hit this areas
                 var touched = false;
                 for( var k = 0, l = this.touches.length; k < l; k++ )
                 {
@@ -798,7 +798,7 @@
             // Render if the game isn't paused, or we're not in performanceFriendly mode (running when not paused keeps the semi-transparent gradients looking better for some reason)
             if( ! this.paused || ! this.performanceFriendly )
             {
-                // Process all the info for each touchable area
+                // Process all the info for each touchable areas
                 this.renderAreas();
             }
 

@@ -49,7 +49,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                 p.x += dx * amount;
                 p.y += dy * amount;
 
-                // game/emitter projected or in pvp area and not our projectile
+                // game/emitter projected or in pvp areas and not our projectile
                 // collision with players in transit behavior
                 if (p.owner == 0 || (this.game.pvpFlag && this.game.player && p.owner != this.game.player.id)) {
                     // which tile are we over

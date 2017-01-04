@@ -1,6 +1,5 @@
 <html lang="en">
 <head>
-    <!-- hi -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -75,6 +74,10 @@
                 <div class="play">
                     <span class="link">Create</span>
                 </div>
+                <p></p>
+                <div id="cancel">
+                    <span class="link">Cancel</span>
+                </div>
                 <div class="validation-summary"></div>
             </article>
             <article id="loadcharacter">
@@ -103,9 +106,11 @@
                     None right now - just Continue!<br><br>
                     <span class="right-ornament"></span>
                 </h1>
+                <p></p>
                 <div id="continue">
                     <span class="link">Continue</span>
                 </div>
+                <p></p>
                 <div id="cancel">
                     <span class="link">Cancel</span>
                 </div>
@@ -471,7 +476,7 @@
             <div id="characterButton"></div>
             <div id="helpbutton"></div>
             <div id="soundbutton"></div>
-
+            <div id="chatbutton"></div>
             <div id="fps">FPS: 60</div>
         </div>
 
@@ -955,6 +960,7 @@
 <div id="resize-check"></div>
 
 <script src="javascripts/socket.io.js"></script>
+<script src="javascripts/bridge.js"></script>
 <script src="cordova.js"></script>
 
 <script type="text/javascript">

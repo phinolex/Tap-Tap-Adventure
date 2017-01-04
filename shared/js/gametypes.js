@@ -187,7 +187,8 @@ Types = {
         SHOWINSTURCTIONS: 146,
         SHOWINAPPSTORE: 147,
         PURCHASE: 148,
-        PLAYERSTATE: 149
+        PLAYERSTATE: 149,
+        GLOBALCHAT: 150
     },
 
     Interfaces: {
@@ -295,7 +296,7 @@ for (var i = 1; i < 200; i++) {
 
 Types.getLevel = function(exp){
     if (exp == 0)
-        return 0;
+        return 1;
 
     for(var i = 1; i < 150; i++){
         if(exp < Types.expForLevel[i])

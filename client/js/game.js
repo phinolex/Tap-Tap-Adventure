@@ -1096,7 +1096,10 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.client.onAd(function(playerId) {
                          try {
-                             self.app.window.unityads.showVideoAd();
+                             if (self.app.window.unityAds)
+                                self.app.window.unityads.showVideoAd();
+                             else
+                                 self.app.swiftCall("Display.Ads");
                          } catch(e) {
                              log.info(e);
                          }
@@ -1799,7 +1802,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.client.onPlayerKillMob(function(id, level, exp) {
 
                         var levelChanged = self.player.level != level;
-                        self.infoManager.addDamageInfo(levelChanged ? "Level: " + level : "+" + exp, self.player.x, self.player.y - 15, "exp", levelChanged ? 5000 : 3000);
+                        self.infoManager.addDamageInfo(levelChanged ? "level: " + level : "+" + exp + " exp", self.player.x, self.player.y - 15, "exp", levelChanged ? 5000 : 3000);
                         self.player.level = level;
                         self.player.experience += exp;
                         self.updateExpBar();
@@ -2034,8 +2037,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.client.onTalkToNPC(function(npcKind, achievementId, isCompleted){
                             //Move things server sided, keep this here. It's useful
                     });
-                    self.client.onNotify(function(msg){
-                        self.showNotification(msg);
+                    self.client.onNotify(function(msg, differentSource) {
+                        self.showNotification(msg, differentSource);
+                    });
+                    
+                    self.client.onGlobalChat(function(message, isAdmin) {
+                        self.chathandler.addNotification(message, isAdmin);
                     });
 
                     self.client.onCharacterInfo(function(datas) {
@@ -3537,7 +3544,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
 
-            showNotification: function(message) {
+            showNotification: function(message, differentSource) {
                 if(this.storeDialog.visible) {
                     if (message == "buy" || message == "sold")
                         this.storeDialog.inventoryFrame.open();
@@ -3564,7 +3571,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     else
                         this.craftDialog.notify(message);
                 } else {
-                    this.chathandler.addNotification(message);
+                    this.chathandler.addNotification(message, differentSource);
                 }
             },
 

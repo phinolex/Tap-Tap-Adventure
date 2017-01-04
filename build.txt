@@ -93,7 +93,7 @@ js/sprite.js
 js/tile.js
 text!../shared/data/items.json
 js/../shared/js/itemtypes.js
-js/items.js
+js/itemdata.js
 js/mobs.js
 js/npcs.js
 js/chest.js

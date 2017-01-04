@@ -78,10 +78,12 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
 
             $('#cancel span').click(function() {
+
                 if ($('#parchment').hasClass('confirmation'))
                     app.animateParchment('confirmation', 'loadcharacter');
                 else if ($('#parchment').hasClass('createcharacter'))
                     app.animateParchment('createcharacter', 'loadcharacter');
+
             });
 
             $('.ribbon').click(function() {
@@ -148,7 +150,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             $('#resize-check').bind("transitionend", app.resizeUi.bind(app));
             $('#resize-check').bind("webkitTransitionEnd", app.resizeUi.bind(app));
             $('#resize-check').bind("oTransitionEnd", app.resizeUi.bind(app));
-
+            
             log.info("App initialized.");
 
             initGame();
@@ -175,7 +177,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             
 
             game.onNbPlayersChange(function(worldPlayers, totalPlayers){
-                $('#users').html("" + totalPlayers + " " + (worldPlayers == 1 ? "player" : "players"));
+                $('#users').html("" + totalPlayers);
             });
 
             game.onGameStart(function() {
@@ -514,6 +516,9 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
             });
 
             $('#chatinput').focus(function(e) {
+
+
+
                 var placeholder = $(this).attr("placeholder");
 
                 if(!Detect.isFirefoxAndroid()) {
@@ -581,11 +586,15 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
 
 
             $('#nameinput').focusin(function() {
+
+
                 $('#name-tooltip').addClass('visible');
+
             });
 
             $('#nameinput').focusout(function() {
                 $('#name-tooltip').removeClass('visible');
+                
             });
 
             $('#nameinput').keypress(function(event) {

@@ -38,7 +38,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                 
                 window.unityads.setUp(gameId, videoPlacement, rewardPlacement, developmentMode);
 
-
                 if (window.store) {
                     store.verbosity = store.INFO;
 
@@ -311,10 +310,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                 log.info("createcharacter");
                 return $('#createcharacter');
             }
-            else if(this.changePasswordFormActive()) {
-                log.info("changePassword");
-                return $('#changePassword');
-            }
             else {
                 log.info("loadcharacter");
                 return $('#loadcharacter');
@@ -328,11 +323,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
         createNewCharacterFormActive: function() {
             return $('#parchment').hasClass("createcharacter");
         },
-
-        changePasswordFormActive: function() {
-            return $('#parchment').hasClass("changePassword");
-        },
-
         /**
          * Performs some basic validation on the login / create new character forms (required fields are filled
          * out, passwords match, email looks valid). Assumes either the login or the create new character form
@@ -402,38 +392,6 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                 return false;
             }
 
-
-            return true;
-        },
-
-        validateChangePasswordForm: function (username, passwordold, userpw, userpw2)
-        {
-            this.clearValidationErrors();
-
-            if(!username) {
-                this.addValidationError(this.$pwnameinput, 'Please enter a username.');
-                return false;
-            }
-
-            if(!passwordold) {
-                this.addValidationError(this.$pwinputold, 'Please enter your old password.');
-                return false;
-            }
-
-            if(!userpw) {
-                this.addValidationError(this.$pwinputnew, 'Please enter a new password.');
-                return false;
-            }
-
-            if(!userpw2) {
-                this.addValidationError(this.$pwinputnew2, 'Please confirm your password by typing it again.');
-                return false;
-            }
-
-            if(userpw !== userpw2) {
-                this.addValidationError(this.$pwinputnew2, 'The new password you entered do not match. Please make sure you typed the same.');
-                return false;
-            }
 
             return true;
         },
@@ -1132,6 +1090,10 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                     this.game.renderer.rescale(newScale);
                 }
             }
+        },
+
+        swiftCall: function(message) {
+            this.window.webkit.messageHandlers.callbackHandler.postMessage(message);
         }
     });
 

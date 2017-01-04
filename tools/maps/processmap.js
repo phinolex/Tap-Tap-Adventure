@@ -205,7 +205,7 @@ module.exports = function processMap(json, options) {
                 chestArea['i'] = _.map(area.properties.items.split(','), function(name) {
                     return name;
                 });
-                // iterate through remaining area's properties
+                // iterate through remaining areas's properties
                 _.each(area.properties, function(value, name) {
                     if (name !== 'items') {
                         chestArea['t'+name] = (isNumber(parseInt(value, 10))) ? parseInt(value, 10) : value;

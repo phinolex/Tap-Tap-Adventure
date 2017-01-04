@@ -1249,12 +1249,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     case 3: this.setFontSize(30); break;
                 }
                 this.game.infoManager.forEachInfo(function(info) {
-                    var text;
-
-                    if (isNaN(info.value) || info.value == 0)
-                        text = "MISS";
-                    else
-                        text = info.value;
+                    var text = info.value;
 
                     self.textcontext.save();
                     self.textcontext.globalAlpha = info.opacity;

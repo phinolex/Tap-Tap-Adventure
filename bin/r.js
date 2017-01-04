@@ -4704,7 +4704,7 @@ define('logger', ['env!env/print'], function (print) {
     };
 
     // Ensure the condition is true, otherwise throw an error.
-    // This is only to have a better contract semantic, i.e. another safety net
+    // This is only to have a better contract semantic, i.e. another safety network
     // to catch a logic error. The condition shall be fulfilled in normal case.
     // Do NOT use this to enforce a certain condition on any user input.
 
@@ -25937,7 +25937,7 @@ define('build', function (require) {
                                 if (srcPath !== 'empty:') {
                                     //If the srcPath is a directory, copy the whole directory.
                                     if (file.exists(srcPath) && file.isDirectory(srcPath)) {
-                                        //Copy files to build area. Copy all files (the /\w/ regexp)
+                                        //Copy files to build areas. Copy all files (the /\w/ regexp)
                                         file.copyDir(srcPath, destPath, /\w/, true);
                                     } else {
                                         //Try a .js extension
@@ -25953,8 +25953,8 @@ define('build', function (require) {
             }
 
             //Figure out source file location for each module layer. Do this by seeding require
-            //with source area configuration. This is needed so that later the module layers
-            //can be manually copied over to the source area, since the build may be
+            //with source areas configuration. This is needed so that later the module layers
+            //can be manually copied over to the source areas, since the build may be
             //require multiple times and the above copyDir call only copies newer files.
             require({
                 baseUrl: config.baseUrl,
@@ -25992,7 +25992,7 @@ define('build', function (require) {
                                                    'FUNCTION' : config.out;
                 }
             } else if (!config.cssIn) {
-                //Now set up the config for require to use the build area, and calculate the
+                //Now set up the config for require to use the build areas, and calculate the
                 //build file locations. Pass along any config info too.
                 baseConfig = {
                     baseUrl: config.dirBaseUrl,
@@ -26877,7 +26877,7 @@ define('build', function (require) {
         mixConfig(config, cfg, true);
 
         //Fix paths to full paths so that they can be adjusted consistently
-        //lately to be in the output area.
+        //lately to be in the output areas.
         lang.eachProp(config.paths, function (value, prop) {
             if (lang.isArray(value)) {
                 throw new Error('paths fallback not supported in optimizer. ' +

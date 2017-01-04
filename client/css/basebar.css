@@ -69,7 +69,7 @@ footer, header, hgroup, menu, nav, section {
         position: absolute;
         width: 1440px;
         height: 66px;
-        top: 669px;
+        top: 672px;
         left: 15px;
         margin-left: 0;
         border: 0;
@@ -80,6 +80,7 @@ footer, header, hgroup, menu, nav, section {
         -moz-user-select: none;
         -webkit-user-select: none;
     }
+
 
     #hpcontainer, #mpcontainer{
         font-family:'GraphicPixel';
@@ -103,7 +104,7 @@ footer, header, hgroup, menu, nav, section {
     #expcontainer {
         position: absolute;
         left: 0;
-        top: 51px;
+        top: 47px;
         width: 564px;
         height: 15px;
         border: 0;
@@ -114,9 +115,10 @@ footer, header, hgroup, menu, nav, section {
         -moz-user-select: none;
         -webkit-user-select: none;
     }
+
     #health, #mana {
         position: absolute;
-        top: 3px;
+        top: 4px;
         left: 30px;
         width: 230px;
         height: 30px;
@@ -158,10 +160,10 @@ footer, header, hgroup, menu, nav, section {
     }
     #exp {
         position: absolute;
-        top: 0;
+        top: 1px;
         left: 0;
         width: 564px;
-        height: 15px;
+        height: 14px;
         border: 0;
         margin: 0;
         padding: 0;
@@ -303,11 +305,12 @@ footer, header, hgroup, menu, nav, section {
         background-color: rgba(0, 0, 0, 0);
     }
     #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
+        font-family:'GraphicPixel';
         position: absolute;
         width: 48px;
         height: 12px;
         left: 1px;
-        top: 42px;
+        top: 45px;
         border: 0;
         color: rgba(255, 255, 255, 1);
         font-size: 13.5px;
@@ -428,25 +431,43 @@ footer, header, hgroup, menu, nav, section {
         background: url('../img/3/main.png' ) no-repeat -1050px -942px;
     }
 
+    #chatbutton {
+        position: absolute;
+        width: 42px;
+        height: 45px;
+        top: 0px;
+        left: 1263px;
+        margin: 0px;
+        border: 0px;
+        background: url('../img/3/maintwo.png' ) no-repeat -588px -942px;
+    }
+
+    #chatbutton:hover {
+        background: url('../img/3/maintwo.png' ) no-repeat -630px -942px;
+    }
+
+    #chatbutton.active {
+        background: url('../img/3/maintwo.png' ) no-repeat -672px -942px;
+    }
     #users {
         font-family:'GraphicPixel';
         position: absolute;
-        width: 96px;
-        height: 60px;
-        top: 18px;
-        left: 1203px;
+        width: 18px;
+        height: 15px;
+        top: 19px;
+        left: 1220px;
         margin: 0;
         border: 0;
         color: white;
-
     }
+
     #fps {
         font-family:'GraphicPixel';
         position: absolute;
         width: 132px;
         height: 12px;
-        left: 1305px;
-        top: 49.5px;
+        left: 1282px;
+        top: 50px;
         border: 0;
         color: rgba(255, 255, 255, 1);
         font-size: 13.5px;
@@ -462,7 +483,7 @@ footer, header, hgroup, menu, nav, section {
         position: absolute;
         width: 960px;
         height: 44px;
-        top: 446px;
+        top: 448px;
         left: 10px;
         margin-left: 0;
         border: 0;
@@ -474,29 +495,10 @@ footer, header, hgroup, menu, nav, section {
         -webkit-user-select: none;
     }
 
-    #hpcontainer, #mpcontainer{
-        font-family:'GraphicPixel';
-        position: absolute;
-        top: 6px;
-        width: 176px;
-        height: 26px;
-        border: 0;
-        margin-left: 0;
-        text-align: center;
-        cursor: default;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-    }
-    #hpcontainer {
-        left: 2px;
-    }
-    #mpcontainer {
-        left: 186px;
-    }
     #expcontainer {
         position: absolute;
         left: 0;
-        top: 34px;
+        top: 32px;
         width: 376px;
         height: 10px;
         border: 0;
@@ -512,6 +514,29 @@ footer, header, hgroup, menu, nav, section {
         -ms-transition:.5s width ease;
         transition:.5s width ease;
     }
+
+    #hpcontainer, #mpcontainer{
+        font-family:'GraphicPixel';
+        position: absolute;
+        top: 6px;
+        width: 176px;
+        height: 26px;
+        border: 0;
+        margin-left: 0;
+        text-align: center;
+        cursor: default;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+    }
+
+    #hpcontainer {
+        left: 2px;
+    }
+
+    #mpcontainer {
+        left: 186px;
+    }
+
     #health, #mana {
         position: absolute;
         top: 3px;
@@ -700,11 +725,12 @@ footer, header, hgroup, menu, nav, section {
         background-color: rgba(0, 0, 0, 0);
     }
     #inventorynumber0, #inventorynumber1, #inventorynumber2, #inventorynumber3, #inventorynumber4, #inventorynumber5{
+        font-family:'GraphicPixel';
         position: absolute;
         width: 32px;
         height: 8px;
         left: 0;
-        top: 29px;
+        top: 31px;
         border: 0;
         color: rgba(255, 255, 255, 1);
         font-size: 9px;
@@ -747,16 +773,16 @@ footer, header, hgroup, menu, nav, section {
     }
 
     #characterButton {
-        position: absolute;
-        width: 28px;
-        height: 30px;
-        top: 2px;
-        left: 870px;
-        margin: 0px;
-        border: 0px;
-        background-color: rgba(0, 0, 0, 0);
-        background: url('../img/2/main.png') no-repeat -476px -628px;
-    }
+         position: absolute;
+         width: 28px;
+         height: 30px;
+         top: 2px;
+         left: 870px;
+         margin: 0px;
+         border: 0px;
+         background-color: rgba(0, 0, 0, 0);
+         background: url('../img/2/main.png') no-repeat -476px -628px;
+     }
 
     #characterButton:hover {
         background: url('../img/2/main.png') no-repeat -504px -628px;
@@ -832,24 +858,24 @@ footer, header, hgroup, menu, nav, section {
         width: 28px;
         height: 30px;
         top: 0px;
-        left: 526px;
+        left: 842px;
         margin: 0px;
         border: 0px;
-        background: url('../img/2/main.png' ) no-repeat -756px -628px;
+        background: url('../img/2/maintwo.png' ) no-repeat -392px -628px;
     }
 
     #chatbutton:hover {
-        background: url('../img/2/main.png' ) no-repeat -728px -628px;
+        background: url('../img/2/maintwo.png' ) no-repeat -420px -628px;
     }
 
     #chatbutton.active {
-        background: url('../img/2/main.png' ) no-repeat -784px -628px;
+        background: url('../img/2/maintwo.png' ) no-repeat -448px -628px;
     }
     #users {
         font-family:'GraphicPixel';
         position: absolute;
-        width: 64px;
-        height: 40px;
+        width: 35px;
+        height: 30px;
         top: 12px;
         left: 802px;
         margin: 0;
@@ -893,7 +919,7 @@ footer, header, hgroup, menu, nav, section {
         position: absolute;
         width: 88px;
         height: 8px;
-        left: 870px;
+        left: 858px;
         top: 35px;
         border: 0;
         color: rgba(255, 255, 255, 1);
@@ -924,6 +950,21 @@ footer, header, hgroup, menu, nav, section {
         -webkit-user-select: none;
     }
 
+    #expcontainer {
+        position: absolute;
+        left: 0;
+        top: 16px;
+        width: 188px;
+        height: 5px;
+        border: 0;
+        margin-left: 0;
+        text-align: center;
+        cursor: default;
+        font-size: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+    }
+
     #hpcontainer, #mpcontainer{
         font-family:'GraphicPixel';
         position: absolute;
@@ -937,26 +978,15 @@ footer, header, hgroup, menu, nav, section {
         -moz-user-select: none;
         -webkit-user-select: none;
     }
+
     #hpcontainer {
         left: 1px;
     }
+
     #mpcontainer {
         left: 93px;
     }
-    #expcontainer {
-        position: absolute;
-        left: 0;
-        top: 17px;
-        width: 188px;
-        height: 5px;
-        border: 0;
-        margin-left: 0;
-        text-align: center;
-        cursor: default;
-        font-size: 0;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-    }
+
     #health, #mana {
         position: absolute;
         top: 1px;
@@ -1157,7 +1187,7 @@ footer, header, hgroup, menu, nav, section {
         width: 16px;
         height: 4px;
         left: 0;
-        top: 15.5px;
+        top: 15px;
         border: 0;
         color: rgba(255, 255, 255, 1);
         font-size: 4.5px;
@@ -1284,37 +1314,37 @@ footer, header, hgroup, menu, nav, section {
         width: 14px;
         height: 15px;
         top: 0px;
-        left: 263px;
+        left: 421px;
         margin: 0px;
         border: 0px;
-        background: url('../img/1/main.png' ) no-repeat -378px -314px;
+        background: url('../img/1/maintwo.png' ) no-repeat -196px -314px;
     }
 
     #chatbutton:hover {
-        background: url('../img/1/main.png' ) no-repeat -364px -314px;
+        background: url('../img/1/maintwo.png' ) no-repeat -210px -314px;
     }
 
     #chatbutton.active {
-        background: url('../img/1/main.png' ) no-repeat -392px -314px;
+        background: url('../img/1/maintwo.png' ) no-repeat -224px -314px;
     }
-
     #users {
         font-family:'GraphicPixel';
         position: absolute;
-        width: 32px;
-        height: 20px;
+        width: 17.5px;
+        height: 15px;
         top: 6px;
         left: 401px;
         margin: 0;
         border: 0;
         color: white;
     }
+
     #fps {
         font-family:'GraphicPixel';
         position: absolute;
         width: 44px;
         height: 4px;
-        left: 435px;
+        left: 429px;
         top: 16.5px;
         border: 0;
         color: rgba(255, 255, 255, 1);

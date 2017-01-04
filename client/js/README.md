@@ -68,7 +68,7 @@ Get info about what you're attacking
 item.js
 Switch to the new weapon and armor you have picked up
 
-items.js
+itemdata.js
 Describes what happens when you pick up weapons (messages)
 
 lib/

@@ -144,10 +144,10 @@ define(['jquery'], function() {
             $(this.chatLog).scrollTop(999999);
         },
 
-        addNotification: function(message) {
+        addNotification: function(message, isAdmin) {
             var self = this;
 
-            self.addMessage('GAME', message);
+            self.addMessage(isAdmin ? 'ADMIN' : 'GAME', message);
         },
 
         addNormalChat: function(entity, message) {
@@ -162,9 +162,7 @@ define(['jquery'], function() {
             var self = this;
 
             self.game.app.displayChatLog(true);
-
-
-
+            
             var syntax = $('<p style="color: rgba(255, 205, 0, 1)">' + '[' + sourceName + ']: ' + message + '</p>');
             $(syntax).appendTo(this.chatLog);
             $(self.chatLog.scrollTop(999999));
