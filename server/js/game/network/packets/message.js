@@ -709,3 +709,16 @@ Messages.GlobalChat = Message.extend({
         return [Types.Messages.GLOBALCHAT, this.message, this.isAdmin]
     }
 });
+
+Messages.Trade = Message.extend({
+    init: function(tradeState, items, playerOneName, playerTwoName) {
+        this.tradeState = tradeState;
+        this.items = items;
+        this.playerOneName = playerOneName;
+        this.playerTwoName = playerTwoName;
+    },
+
+    serialize: function() {
+        return [Types.Messages.TRADE, this.tradeState, this.items, this.playerOneName, this.playerTwoName];
+    }
+});

@@ -51,6 +51,7 @@ module.exports = World = cls.Class.extend({
         self.chestAreas = [];
         self.groups = {};
         self.party = [];
+        self.tradingInstances = [];
         self.isDay = true;
         self.packets = {};
         self.cycleSpeed = 50;

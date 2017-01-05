@@ -1096,7 +1096,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     self.client.onAd(function(playerId) {
                          try {
-                             if (self.app.window.unityAds)
+                             if (self.app.window.unityads)
                                 self.app.window.unityads.showVideoAd();
                              else
                                  self.app.swiftCall("Display.Ads");
@@ -2043,6 +2043,22 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     
                     self.client.onGlobalChat(function(message, isAdmin) {
                         self.chathandler.addNotification(message, isAdmin);
+                    });
+
+                    self.client.onTrade(function(tradeState, items, playerOneName, playerTwoName) {
+                        switch(tradeState) {
+                            case 1:
+                                //update screen
+                                break;
+
+                            case 2:
+                                //update items
+                                break;
+
+                            case 3:
+                                //send items to inventory.
+                                break;
+                        }
                     });
 
                     self.client.onCharacterInfo(function(datas) {

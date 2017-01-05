@@ -76,6 +76,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.handlers[Types.Messages.PURCHASE] = this.receivePurchase;
             this.handlers[Types.Messages.PLAYERSTATE] = this.receivePlayerState;
             this.handlers[Types.Messages.GLOBALCHAT] = this.receiveGlobalChat;
+            this.handlers[Types.Messages.TRADE] = this.receiveTrade;
 
             this.useBison = false;
 
@@ -599,6 +600,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                 this.globalChat_callback(data[1], data[2]);
         },
 
+        receiveTrade: function(data) {
+            if (this.trade_callback)
+                this.trade_callback(data[1], data[2], data[3], data[4]);
+        },
+
         receiveRanking: function(data){
             data.shift();
             if(this.ranking_callback){
@@ -806,6 +812,10 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.globalChat_callback = callback;
         },
 
+        onTrade: function(callback) {
+            this.trade_callback = callback;  
+        },
+        
         onPlayerChangeHealth: function(callback) {
             this.health_callback = callback;
         },

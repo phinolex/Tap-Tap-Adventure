@@ -55,28 +55,6 @@ Types = {
         IGNORES: 46,
         LOBBY: 47,
         TRADE: 48,
-        TRADEINVALID: 49,
-        TRADEINVALIDTYPES: {
-            INVALIDKIND: 1,
-            UNKNOWNCOUNT: 2,
-            INVALIDLEVEL: 3,
-            UNTRADEABLE: 4
-        },
-        TRADESTATES: {
-            STARTED: 5,
-            INPROGRESS: 6,
-            PSENTREQUEST: 7,
-            OPSENTERQUEST: 8,
-            PACCEPTED: 9,
-            OPACCEPTED: 10,
-            PADDEDITEM: 11,
-            OPADDEDITEM: 12,
-            INVENTORYCOUNT: 13,
-            ITEMADDED: 14,
-            ITEMREMOVED: 15,
-            FINISHED: 16
-        },
-        TRADESCREEN: 50,
         CHARACTERINFO: 51,
         FLAREDANCE: 52,
         SELL: 53,
@@ -282,6 +260,12 @@ Types = {
         REGENBOOST: 3,
         DROPRATEENHANCER: 4,
         NAMECHANGE: 5
+    },
+
+    TradeStates: {
+        STARTED: 1,
+        ITEMCHANGE: 2,
+        FINISHED: 3
     }
 };
 

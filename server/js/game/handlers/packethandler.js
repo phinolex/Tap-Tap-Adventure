@@ -769,6 +769,7 @@ module.exports = PacketHandler = Class.extend({
             count = message[3],
             self = this;
 
+        log.info("Info: " + inventoryKind + " " + inventoryNumber + " " + count);
 
         if (inventoryNumber > self.player.inventory.number)
             return;

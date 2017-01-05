@@ -220,9 +220,9 @@ define(['jquery', 'button2', 'item'], function($, Button2, Item) {
                   	  	  $('#inventorynumber' + inventoryNumber).html(this.inventoryCount[inventoryNumber]);
                   	  else
                   	  	  $('#inventorynumber' + inventoryNumber).html('+' + this.inventoryCount[inventoryNumber]);
-                  }
-                          
-              
+                  } else if (number == 1)
+                      $('#inventorynumber' + inventoryNumber).html('');
+
             } 
 
             this.inventories[inventoryNumber] = {}; 

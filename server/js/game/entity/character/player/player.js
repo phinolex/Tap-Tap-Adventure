@@ -769,13 +769,15 @@ module.exports = Player = Character.extend({
     },
 
     handleInventoryEmpty: function (itemKind, inventoryNumber, count) {
-        var item = this.server.addItemFromChest(itemKind, this.x, this.y);
+        var self = this,
+            item = self.server.addItemFromChest(itemKind, self.x, self.y);
+
         if (ItemTypes.isConsumableItem(item.kind) || ItemTypes.isGold(item.kind)) {
-            if (count < 0) {
+            if (count > self.inventory.rooms[inventoryNumber].itemNumber)
+                count = self.inventory.rooms[inventoryNumber].itemNumber;
+            else if (count < 0)
                 count = 0;
-            } else if (count > this.inventory.rooms[inventoryNumber].itemNumber) {
-                count = this.inventory.rooms[inventoryNumber].itemNumber;
-            }
+
             item.count = count;
         } else if (ItemTypes.isWeapon(item.kind) || ItemTypes.isArcherWeapon(item.kind) ||
             ItemTypes.isArmor(item.kind) || ItemTypes.isArcherArmor(item.kind)) {
@@ -797,7 +799,7 @@ module.exports = Player = Character.extend({
             }
         }
 
-        if (item.count >= 0) {
+        if (item.count > 0) {
             this.server.pushToAdjacentGroups(this.group, new Messages.Drop(this, item));
             //this.server.addItemFromChest(itemKind, this.x, this.y);
             this.server.handleItemDespawn(item);

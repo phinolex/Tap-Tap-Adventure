@@ -7,210 +7,216 @@ var cls = require("./../../../../lib/class"),
     Types = require("../../../../../../../shared/js/gametypes");
 
 module.exports = Inventory = cls.Class.extend({
-    init: function(owner, number, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels){
-        var i=0;
-        this.owner = owner;
-        this.number = number;
-        this.rooms = [];
-        for(i=0; i<number; i++){
-            this.rooms.push(new InventoryRoom(itemKinds[i], itemNumbers[i], itemSkillKinds[i], itemSkillLevels[i]));
-        }
-    },
-    hasItem: function(itemKind) {
-        var i = 0;
-        for(i=0; i<this.number; i++){
-            if(this.rooms[i].itemKind === itemKind){
-                return true;
-            }
-        }
-        return false;
-    },
-    hasItems: function(itemKind, itemCount){
-        for (var i  = 0; i < this.number; i++) {
-            if (this.rooms[i].itemKind === itemKind) {
-                if (this.rooms[i].itemNumber >= itemCount)
-                    return true;
-            }
-        }
+    /**
+     * TODO - The inventory system is still very ambiguous,
+     * it has to be better defined using terminology such as
+     * slot, item, itemCount, inventoryType
+     */
 
-        return false;
-    },    
-    hasEmptyInventory: function(){
-        var i=0;
-        for(i=0; i<this.number; i++){
-            if(this.rooms[i].itemKind === null){
+    init: function(owner, number, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels) {
+        var self = this;
+
+        self.owner = owner;
+        self.number = number;
+        self.rooms = [];
+
+        for (var i = 0; i < self.number; i++)
+            self.rooms.push(new InventoryRoom(itemKinds[i], itemNumbers[i], itemSkillKinds[i], itemSkillLevels[i]));
+    },
+
+    hasItem: function(itemKind) {
+        var self = this;
+
+        for (var i = 0; i < self.number; i++) {
+            if (self.rooms[i].itemKind === itemKind)
                 return true;
+
+        }
+        return false;
+    },
+
+    hasItems: function(itemKind, itemCount) {
+        var self = this;
+
+        for (var i = 0; i < self.number; i++) {
+            if (self.rooms[i].itemKind === itemKind) {
+                if (self.rooms[i].number >= itemCount)
+                    return true;
+
             }
+        }
+        return false;
+    },
+
+    hasEmptyInventory: function() {
+        var self = this;
+
+        for (var i = 0; i < self.number; i++) {
+            if (self.rooms[i].itemKind === null)
+                return true;
+
         }
         return false;
     },
 
     takeOut: function(itemKind, itemCount) {
-        for (var i = 0; i < this.number; i++) {
-            var room = this.rooms[i];
+        var self = this;
+
+        for (var i = 0; i < self.number; i++) {
+            var room = self.rooms[i];
+
             if (room.itemKind === itemKind) {
                 if (room.itemNumber > itemCount) {
                     room.itemKind = itemKind;
                     room.itemNumber -= itemCount;
-                    databaseHandler.setInventory(this.owner, i, itemKind, room.itemNumber, 0, 0);
+
+                    databaseHandler.setInventory(self.owner, i, itemKind, room.itemNumber, 0, 0);
                 } else {
                     room.itemKind = null;
                     room.itemNumber = 0;
                     room.itemSkillKind = 0;
-                    room.itemSkilLevel = 0;
+                    room.itemSkillLevel = 0;
 
-                    databaseHandler.makeEmptyInventory(this.owner, i);
+                    databaseHandler.makeEmptyInventory(self.owner, i);
                 }
             }
         }
     },
 
-    makeEmptyInventory2: function(itemKind, itemCount) {
-        var i = 0;
-        var a = itemCount;
-        for(i = 0; i < this.number; i++) {
-            if(this.rooms[i].itemKind === itemKind){
-                this.rooms[i].itemKind = null;
-                this.rooms[i].itemNumber = 0;
-                this.rooms[i].itemSkillKind = 0;
-                this.rooms[i].itemSkillLevel = 0;
-                databaseHandler.makeEmptyInventory(this.owner, i);
+    makeEmptyInventory: function(inventoryNumber) {
+        var self = this;
 
-                if (--a == 0)
-                    return;
-            }
-        }   
-    },
-    
-    makeEmptyInventory: function(inventoryNumber){
-        this.rooms[inventoryNumber].itemKind = null;
-        this.rooms[inventoryNumber].itemNumber = 0;
-        this.rooms[inventoryNumber].itemSkillKind = 0;
-        this.rooms[inventoryNumber].itemSkillLevel = 0;
-        databaseHandler.makeEmptyInventory(this.owner, inventoryNumber);
-    },
-    getItemNumber: function(itemKind){
-        var i = 0;
+        self.rooms[inventoryNumber].itemKind = null;
+        self.rooms[inventoryNumber].itemNumber = 0;
+        self.rooms[inventoryNumber].itemSkillKind = 0;
+        self.rooms[inventoryNumber].itemSkillLevel = 0;
 
-        for(i=0; i<this.number; i++){
-            if(this.rooms[i].itemKind === itemKind){
-                
-                return this.rooms[i].itemNumber;
-            }
+        databaseHandler.makeEmptyInventory(self.owner, inventoryNumber);
+    },
+
+    getItemNumber: function(itemKind) {
+        var self = this;
+
+        for (var i = 0; i < self.number; i++) {
+            if (self.rooms[i].itemKind === itemKind)
+                return self.rooms[i].itemNumber;
+
         }
         return 0;
     },
-    getInventoryNumber: function(itemKind){
-        var i = 0;
 
-        for(i=0; i<this.number; i++){
-            if(this.rooms[i].itemKind === itemKind){
+    getInventoryNumber: function(itemKind) {
+        var self = this;
+
+        for (var i = 0; i < self.number; i++) {
+            if (self.rooms[i].itemKind === itemKind)
                 return i;
-            }
         }
+
         return -1;
     },
+
     getEmptyInventoryNumber: function() {
-        for(var index = 0; index < this.number; index++) {
-            if(this.rooms[index].itemKind === null) {
-                
-                return index;
-            }
+        var self = this;
+
+        for (var i = 0; i < self.number; i++) {
+            if (self.rooms[i].itemKind === null)
+                return i;
         }
+
         return -1;
     },
+
     getEmptyEquipmentNumber: function() {
-        for(var index = 6; index < this.number; index++) {
-            if(this.rooms[index].itemKind === null) {
-                
-                return index;
-            }
+        var self = this;
+
+        for (var i = 6; i < self.number; i++) {
+            if (self.rooms[i].itemKind === null)
+                return i;
         }
+
         return -1;
     },
-    putInventoryItem: function (item)
-    {
-    	this.putInventory(item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);    
+
+    putInventoryItem: function(item) {
+        this.putInventory(item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
     },
-    
+
     putInventory: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
-        itemNumber = (itemNumber) ? itemNumber : 1;
-        itemSkillKind = (itemSkillKind) ? itemSkillKind : 0;
-        itemSkillLevel = (itemSkillLevel) ? itemSkillLevel : 0;
+        var self = this,
+            itemCount = itemNumber ? itemNumber : 1;
 
+        itemSkillKind = itemSkillKind ? itemSkillKind : 0;
+        itemSkillLevel = itemSkillLevel ? itemSkillLevel : 0;
 
-        var i=0;
-        if(ItemTypes.isConsumableItem(itemKind) || ItemTypes.isGold(itemKind)){
-            for(i=0; i<this.number; i++){
-                if(this.rooms[i].itemKind === itemKind){
-                    this.rooms[i].itemNumber += itemNumber;
-                    if(this.rooms[i].itemNumber <= 0){
-                        
-                        this.makeEmptyInventory(i);
-                    } else{
-                        
-                        databaseHandler.setInventory(this.owner, i, itemKind, this.rooms[i].itemNumber, 0, 0);
-                    }
+        if (ItemTypes.isConsumableItem(itemKind) || ItemTypes.isGold(itemKind)) {
+            for (var i = 0; i < self.number; i++) {
+                if (self.rooms[i].itemKind === itemKind) {
+                    self.rooms[i].itemNumber += itemNumber;
+
+                    if (self.rooms[i].itemNumber <= 0)
+                        self.makeEmptyInventory(i);
+                    else
+                        databaseHandler.setInventory(self.owner, i, itemKind, self.rooms[i].itemNumber, 0, 0);
+
                     return true;
                 }
             }
-            if(i === this.number){
-                
-                return this._putInventory(itemKind, itemNumber, 0, 0);
-            }
-        } else {
-            return this._putInventory(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
-        }
+
+            if (i === self.number)
+                return self.addItem(itemKind, itemNumber, 0, 0);
+        } else
+            return self.addItem(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
     },
-    _putInventory: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel){
-        var i=0;
-        if(!ItemTypes.isConsumableItem(itemKind)) {
-        	i = 6;
-        }
-        for(; i < this.number; i++){
-            var item = this.rooms[i];
-            if(item.itemKind === null) {
-            	item.itemKind = itemKind;
+
+    addItem: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
+        var self = this,
+            index = 0;
+
+        if (!ItemTypes.isConsumableItem(itemKind))
+            index = 6;
+
+        for (; index < self.number; index++) {
+            var item = self.rooms[index];
+
+            if (item.itemKind === null) {
+                item.itemKind = itemKind;
                 item.itemNumber = itemNumber;
                 item.itemSkillKind = itemSkillKind;
                 item.itemSkillLevel = itemSkillLevel;
-                databaseHandler.setInventoryItem(this.owner, i, item);
+
+                databaseHandler.setInventoryItem(self.owner, index, item);
                 return true;
             }
-        } 
-        this.owner.server.pushToPlayer(this.owner, new Messages.Notify("Inventory is full."));
+        }
+
+        self.owner.server.pushToPlayer(self.owner, new Messages.Notify("Your inventory is full!"));
         return false;
     },
-    setInventory: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
-        this.rooms[inventoryNumber].set(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
-        databaseHandler.setInventory(this.owner, inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel);
+
+    setInventory: function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
+        var self = this;
+
+        self.rooms[inventoryNumber].set(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
+        databaseHandler.setInventory(self.owner, inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel);
     },
 
-    takeOutInventory: function(inventoryNumber, number){
-        var item = this.rooms[inventoryNumber];
-        if((ItemTypes.isConsumableItem(item.itemKind) || ItemTypes.isGold(item.itemKind) || ItemTypes.isCraft(item.itemKind)) && item.itemNumber > number) {
+    takeOutInventory: function(inventoryNumber, number) {
+        var self = this,
+            item = self.rooms[inventoryNumber];
+
+
+        if((ItemTypes.isConsumableItem(item.itemKind) ||
+            ItemTypes.isGold(item.itemKind) ||
+            ItemTypes.isCraft(item.itemKind)) && item.itemNumber > number) {
+
             item.itemNumber -= number;
-            databaseHandler.setInventoryItem(this.owner, inventoryNumber, item);
-        }
-        else {
-            this.makeEmptyInventory(inventoryNumber);
-        }	
+            databaseHandler.setInventoryItem(self.owner, inventoryNumber, item);
+        } else
+            self.makeEmptyInventory(inventoryNumber);
     },
 
-    incInventoryRoom: function(){
-        this.number++;
-        this.rooms.push(new InventoryRoom(null, 0, 0, 0));
-    },
-    toString: function(){
-        var i=0;
-        var inventoryString = "" + this.number;
+    getAvailableSpace: function() {
 
-        for(i=0; i<this.number; i++){
-            inventoryString += ", " + ItemTypes.getKindAsString(this.rooms[i].itemKind) + " ";
-            inventoryString += this.rooms[i].itemNumber + " ";
-            inventoryString += Types.getItemSkillNameByKind(this.rooms[i].itemSkillKind) + " ";
-            inventoryString += this.rooms[i].itemSkillLevel;
-        }
-        return inventoryString;
     }
 });
