@@ -26,8 +26,8 @@ var cls = require("./../../../lib/class"),
     request = require("request"),
     EntitySpawn = require("./../../entityspawn"),
     PacketHandler = require("./../../../handlers/packethandler"),
-    Quests = require('./../../../utils/data/questdata');
-
+    Quests = require('./../../../utils/data/questdata'),
+    QuestHandler = require('../../../handlers/questhandler');
 
 module.exports = Player = Character.extend({
     init: function (connection, worldServer, databaseHandler) {
@@ -84,6 +84,7 @@ module.exports = Player = Character.extend({
         this.hasFocus = true;
         this.attackedTime = new Timer(950);
         this.packetHandler = new PacketHandler(this, connection, worldServer, databaseHandler);
+        this.questHandler = new QuestHandler(this);
         this.pClass = 0;
         this.minigameTeam = -1;
     },

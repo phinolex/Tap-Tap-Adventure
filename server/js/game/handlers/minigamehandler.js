@@ -1,4 +1,5 @@
-var cls = require('../lib/class');
+var cls = require('../lib/class'),
+    PVPGame = require('../minigames/pvpgame');
 
 /**
  * This is similar in concept to
@@ -6,27 +7,24 @@ var cls = require('../lib/class');
  */
 
 module.exports = MinigameHandler = cls.Class.extend({
-    init: function(id, name) {
+    init: function(server) {
         var self = this;
 
-        self.id = id;
-        self.name = name;
-        self.minigames = {}; //We process every minigame as an instance
-    },
+        self.server = server;
+        self.minigames = {};
 
-    getId: function() {
-        return this.id;
-    },
-
-    getName: function() {
-        return this.name;
+        self.loadMinigames();
     },
 
     loadMinigames: function() {
-        //self.minigames["minigameName"] = new MinigameInstance();
-    },
-    
-    getMinigameState: function(minigame) {
+        var self = this;
 
+        self.minigames["PVPGame"] = new PVPGame(self.server, 1, "PVPGame");
+
+        log.info("Minigame Handler has been successfully initialized.");
+    },
+
+    getPVPMinigame: function() {
+        return this.minigames["PVPGame"];
     }
 });

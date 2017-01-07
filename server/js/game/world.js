@@ -24,7 +24,8 @@ var cls = require("./lib/class"),
     SkillData = require("./utils/data/skilldata"),
     GatherData = require("./utils/data/gatherdata"),
     Gather = require("./entity/item/gather"),
-    Lobby = require('./lobby');
+    Lobby = require('./lobby'),
+    MinigameHandler = require('./handlers/minigamehandler');
 
 module.exports = World = cls.Class.extend({
     init: function(id, maxPlayers, socket, database) {
@@ -34,7 +35,6 @@ module.exports = World = cls.Class.extend({
         self.maxPlayers = maxPlayers;
         self.socket = socket;
         self.database = database;
-        self.lobby = new Lobby(self);
         self.map = null;
         self.entities = {};
         self.players = {};
@@ -184,8 +184,14 @@ module.exports = World = cls.Class.extend({
                 }
             });
         });
-
         log.info("World - " + self.id + " successfully initialized.");
+
+        /**
+         * Just initialize those after everything is set, to be safe.
+         */
+
+        self.lobby = new Lobby(self);
+        self.minigameHandler = new MinigameHandler(self);
     },
 
     moveEntity: function(entity, x, y) {
@@ -289,6 +295,7 @@ module.exports = World = cls.Class.extend({
                     self.handleMinigameCountdown();
                     self.pvpTime = 130;
                 }
+
 
                 for (var i = 0; i < self.playersPvpGame.length; i++) {
                     var entity = self.getEntityById(self.playersPvpGame[i]);
@@ -1495,6 +1502,7 @@ module.exports = World = cls.Class.extend({
     addPlayerToMinigame: function(player) {
         var self = this;
         self.playersPvpGame.push(player.id);
+        self.minigameHandler.getPVPMinigame().addPlayer(player);
     },
 
     removePlayerFromMinigame: function(player) {

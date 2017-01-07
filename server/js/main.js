@@ -43,7 +43,7 @@ function main(config) {
     }, 1000);
 
 
-    log.info("Initializing TTA GameServer - World " + worldId);
+    log.info("Initializing TTA Game Engine!");
     var selector = DatabaseSelector(config);
     databaseHandler = new selector(config);
 

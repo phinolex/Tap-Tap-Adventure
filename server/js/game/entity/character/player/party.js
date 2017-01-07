@@ -18,7 +18,9 @@ module.exports = Party = Class.extend({
     assignParty: function() {
         var self = this;
 
-        for (var player in self.players) {
+        for (var p in self.players) {
+            var player = self.players[p];
+
             if (player.party)
                 player.party.removePlayer(player);
 
@@ -69,7 +71,7 @@ module.exports = Party = Class.extend({
 
         if (self.players > 1) {
             for (var player in self.players)
-                messageArray.push(player.name);
+                messageArray.push(self.players[player].name);
         }
         
         self.pushToMembers(new Messages.Party(messageArray));
@@ -85,7 +87,7 @@ module.exports = Party = Class.extend({
          */
 
         for (var player in self.players)
-            self.server.pushToPlayer(player, message);
+            self.server.pushToPlayer(self.players[player], message);
     },
 
     getTotalLevel: function() {
@@ -93,7 +95,7 @@ module.exports = Party = Class.extend({
             total = 0;
 
         for (var player in self.players)
-            total += player.level;
+            total += self.players[player].level;
 
         return total;
     },
@@ -103,7 +105,9 @@ module.exports = Party = Class.extend({
             total = self.getTotalLevel(),
             mobExp = MobData[mob.kidn].xp * ((10 + self.players.length) / 10);
 
-        for (var player in self.players) {
+        for (var p in self.players) {
+            var player = self.players[p];
+
             var exp = Math.ceil(exp * (player.level + 1) / totalLevel);
 
             player.incExp(exp);
@@ -116,7 +120,9 @@ module.exports = Party = Class.extend({
         var self = this,
             highestLevel = 0;
 
-        for (var player in self.players) {
+        for (var p in self.players) {
+            var player = self.players[p];
+
             if (highestLevel < player.level)
                 highestLevel = player.level;
         }
@@ -128,25 +134,11 @@ module.exports = Party = Class.extend({
         var self = this,
             lowestLevel = 999;
 
-        for (var player in self.players) {
+        for (var p in self.players) {
+            var player = self.players[p];
+
             if (lowestLevel > player.level)
                 lowestLevel = player.level;
         }
     }
 });
-
-
-/*
-
-  getLowestLevel: function(){
-    var i=0;
-    var lowestLevel = 999;
-    for(i=0; i<this.players.length; i++){
-      if(lowestLevel > this.players[i].level){
-        lowestLevel = this.players[i].level;
-      }
-    }
-    return lowestLevel;
-  }
-});
-*/
