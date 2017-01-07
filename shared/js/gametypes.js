@@ -265,7 +265,9 @@ Types = {
     TradeStates: {
         STARTED: 1,
         ITEMCHANGE: 2,
-        FINISHED: 3
+        FIRSTACCEPT: 3,
+        SECONDACCEPT: 4,
+        FINISHED: 5
     }
 };
 

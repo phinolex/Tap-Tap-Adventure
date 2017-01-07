@@ -20,16 +20,12 @@ ItemTypes.setKindData = function(kindData) {
 };
 
 ItemTypes.getKindFromString = function (name) {
-    //if (name == null) return 0;
     try {
-        if(name in ItemData) {
-            //log.info("kind:"+ItemData[name].kind);
+        if (name in ItemData)
             return ItemData[name].kind;
-        }
-        else {
+        else
             return null;
-        }
-    } catch(e) {
+    } catch (e) {
         log.error("No kind found for name: "+name);
         log.error('Error stack: ' + e.stack);
     }

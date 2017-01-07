@@ -51,7 +51,6 @@ define(['jquery', 'area', 'detect'], function($, Area, Detect) {
                 tileset2 = this._loadTileset('img/2/tilesheet.png');
                 tileset3 = this._loadTileset('img/3/tilesheet.png');
             }
-
             this.tilesets = [tileset1, tileset2, tileset3];
         },
 

@@ -24,7 +24,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.initFPS();
                 this.tilesize = 16;
 
-                this.upscaledRendering = this.context.mozImageSmoothingEnabled !== undefined;
+                this.upscaledRendering = false;
                 this.supportsSilhouettes = this.upscaledRendering;
                 this.isFirefox = Detect.isFirefox();
                 this.isCanary = Detect.isEdgeOnWindows();
@@ -1366,9 +1366,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.setCameraView(this.textcontext);
                 this.setCameraView(this.toptextcontext);
 
-                if (this.game.FPSAverage > 10 && !this.game.isCentered)
+                if (this.game.FPSAverage > 10)
                     this.drawAnimatedTiles(this.mobile, this.context);
-
 
                 this.drawSelectedCell();
                 this.drawProjectiles(this.mobile);

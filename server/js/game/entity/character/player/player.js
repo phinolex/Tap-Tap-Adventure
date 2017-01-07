@@ -8,7 +8,6 @@ var cls = require("./../../../lib/class"),
     Utils = require("./../../../utils/utils"),
     MobData = require("./../../../utils/data/mobdata"),
     Formulas = require("./../../../utils/formulas"),
-    check = require("./../../../network/packets/format").check,
     Party = require("./party"),
     Items = require("./../../../utils/data/itemdata"),
     Bank = require("./bank/bank"),
@@ -44,7 +43,6 @@ module.exports = Player = Character.extend({
         this.isDead = false;
         this.haters = {};
         this.lastCheckpoint = null;
-        this.formatChecker = new FormatChecker();
         this.friends = {};
         this.ignores = {};
         this.pets = [];

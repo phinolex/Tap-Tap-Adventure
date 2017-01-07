@@ -86,7 +86,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 //Camera
                 this.isCentered = this.app.storage.getSettings().isCentered;
-
+                //this.isCentered = false;
                 // zoning
                 this.currentZoning = null;
 

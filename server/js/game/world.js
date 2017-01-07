@@ -23,7 +23,8 @@ var cls = require("./lib/class"),
     Pet = require("./entity/character/player/pet"),
     SkillData = require("./utils/data/skilldata"),
     GatherData = require("./utils/data/gatherdata"),
-    Gather = require("./entity/item/gather");
+    Gather = require("./entity/item/gather"),
+    Lobby = require('./lobby');
 
 module.exports = World = cls.Class.extend({
     init: function(id, maxPlayers, socket, database) {
@@ -33,6 +34,7 @@ module.exports = World = cls.Class.extend({
         self.maxPlayers = maxPlayers;
         self.socket = socket;
         self.database = database;
+        self.lobby = new Lobby(self);
         self.map = null;
         self.entities = {};
         self.players = {};

@@ -1,6 +1,7 @@
 var cls = require("./../lib/class"),
     Utils = require('./../utils/utils'),
-    Messages = require('./../network/packets/message');
+    Messages = require('./../network/packets/message'),
+    ItemTypes = require('../../../../shared/js/itemtypes')
 
 module.exports = CommandHandler = cls.Class.extend({
 
@@ -22,10 +23,23 @@ module.exports = CommandHandler = cls.Class.extend({
          * command handling. /commandname, [parameter 1..n], <target>
          */
 
-        if (self.player.rights < 1)
-            return;
+
 
         var inputBlocks = input.substring(1).split(' ');
+
+        self.handlePlayerCommands(inputBlocks);
+
+        if (self.player.rights > 0)
+            self.handleModeratorCommands(inputBlocks);
+
+        if (self.player.rights > 1)
+            self.handleAdminCommands(inputBlocks);
+        
+    },
+
+    handleAdminCommands: function(input) {
+        var self = this,
+            inputBlocks = input; //Just a pointer for safety?
 
         switch(inputBlocks[0]) {
             case 'teletome':
@@ -49,11 +63,11 @@ module.exports = CommandHandler = cls.Class.extend({
                 else if (command == 'teleto')
                     self.player.forcefullyTeleport(playerEntity.x, playerEntity.y, orientation);
 
-                break;
+                return;
 
             case 'coords':
                 self.server.pushToPlayer(self.player, new Messages.Chat(self.player, "Coordinates - x: " + self.player.x + " y: " + self.player.y));
-                break;
+                return;
 
             case 'teleport':
                 inputBlocks.shift();
@@ -70,7 +84,7 @@ module.exports = CommandHandler = cls.Class.extend({
 
                 self.player.forcefullyTeleport(parseInt(x), parseInt(y), orientation);
 
-                break;
+                return;
 
             case 'yell':
                 inputBlocks.shift();
@@ -81,7 +95,7 @@ module.exports = CommandHandler = cls.Class.extend({
                     return;
 
                 self.server.pushBroadcast(new Messages.GlobalChat(message, true));
-                break;
+                return;
 
             case 'globalchat':
                 inputBlocks.shift();
@@ -89,27 +103,23 @@ module.exports = CommandHandler = cls.Class.extend({
                 var message = inputBlocks.join(' ');
 
                 self.server.pushBroadcast(new Messages.GlobalChat(message, false));
-                break;
+                return;
 
             case 'showstore':
                 self.server.pushToPlayer(self.player, new Messages.InAppStore(self.player.id, 0));
-                break;
+                return;
 
             case 'showad':
                 self.server.pushToPlayer(self.player, new Messages.SendAd(self.player.id));
-                break;
-
-            case 'centercamera':
-                self.server.pushToPlayer(self.player, new Messages.CenterCamera(self.player.id));
-                break;
+                return;
 
             case 'showinstructions':
                 self.server.pushToPlayer(self.player, new Messages.Instructions(self.player.id));
-                break;
+                return;
 
             case 'finishall':
                 self.player.finishAllAchievements();
-                break;
+                return;
 
             case 'interface':
                 inputBlocks.shift();
@@ -120,7 +130,7 @@ module.exports = CommandHandler = cls.Class.extend({
                     return;
 
                 self.server.pushToPlayer(self.player, new Messages.Interface(interfaceId));
-                break;
+                return;
 
             case 'addskill':
                 inputBlocks.shift();
@@ -140,14 +150,14 @@ module.exports = CommandHandler = cls.Class.extend({
                 self.redisPool.handleSkills(self.player, index, skillName, skillLevel);
                 self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, skillLevel));
 
-                break;
+                return;
 
             case 'players':
                 for (var id in self.server.players) {
                     var player = self.server.getEntityById(id);
                     log.info("Player: " + player.name);
                 }
-                break;
+                return;
 
             case 'item':
                 inputBlocks.shift();
@@ -160,7 +170,25 @@ module.exports = CommandHandler = cls.Class.extend({
                 }
 
                 self.player.inventory.putInventory(itemId, itemCount);
-                break;
+                return;
+
+            case 'spawn':
+                inputBlocks.shift();
+                var itemCount = inputBlocks.shift(),
+                    itemName = inputBlocks.join(' ');
+
+                log.info("Spawning: " + itemName + " " + itemCount);
+
+                if (itemCount && itemName) {
+                    var item = ItemTypes.getKindFromString(itemName.toLowerCase());
+                    if (item)
+                        self.player.inventory.putInventory(item, itemCount);
+                    else
+                        self.packetHandler.sendGUIMessage("Item: " + itemName + " could not be found in the database.");
+                } else
+                    self.packetHandler.sendGUIMessage("Command input is erroneous.");
+
+                return;
 
             case 'spell':
                 inputBlocks.shift();
@@ -175,11 +203,33 @@ module.exports = CommandHandler = cls.Class.extend({
                 if (spellType)
                     self.server.pushToPlayer(self.player, new Messages.ForceCast(spellType));
 
-                break;
+                return;
 
             case 'randommob':
                 log.info(self.server.getRandomMob());
-                break;
+                return;
+        }
+    },
+    
+    handleModeratorCommands: function(input) {
+        var self = this,
+            inputBlocks = input;
+        
+        switch (inputBlocks[0]) {
+            case 'mute':
+
+                return;
+        }
+    },
+    
+    handlePlayerCommands: function(input) {
+        var self = this,
+            inputBlocks = input;
+        
+        switch (inputBlocks[0]) {
+            case 'centercamera':
+                self.server.pushToPlayer(self.player, new Messages.CenterCamera(self.player.id));
+                return;
         }
     }
 });
