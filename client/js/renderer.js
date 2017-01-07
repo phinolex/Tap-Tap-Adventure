@@ -882,8 +882,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                         if (entity.pvpTeam != -1)
                             colour = (entity.pvpTeam === Types.Messages.BLUETEAM) ? "#cf7c6a" : "#0085E5";
 
-                        if (this.game.player.pvpFlag || this.game.player.gameFlag)
+                        if (this.game.player && (this.game.player.pvpFlag || this.game.player.gameFlag))
                             this.drawText(ctx, level, (entity.x + 8), (entity.y - 17), true, colour);
+
                         this.drawText(ctx, entity.name, (entity.x + 8), (entity.y - 10), true, colour);
                     }
                 }
@@ -903,7 +904,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
 
                         var levelText = "Level: " + mobLevel;
 
-                        if (this.game.player.pvpFlag || this.game.player.gameFlag)
+                        if (this.game.player && (this.game.player.pvpFlag || this.game.player.gameFlag))
                             this.drawText(ctx, levelText, (entity.x + 8), (entity.y - 17), true, mobColour);
                         this.drawText(ctx, mobName, (entity.x + 8), (entity.y - 10), true, mobColour);
                     }

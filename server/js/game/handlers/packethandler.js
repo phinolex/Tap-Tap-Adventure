@@ -1023,7 +1023,7 @@ module.exports = PacketHandler = Class.extend({
             entity.setPosition(x, y);
             self.broadcast(new Messages.Move(entity));
 
-            if (self.server.map.isPVP(x, y) && self.server.map.isGameArea(x, y) && !self.server.minigameStarted)
+            if (self.server.map.isPVP(x, y) && self.server.map.isGameArea(x, y) && !self.server.getMinigameHandler().getPVPMinigame().hasStarted())
                 self.server.pushToPlayer(self.player, new Messages.Stop(33, 90, 4));
         }
     },

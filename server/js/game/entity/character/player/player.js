@@ -138,9 +138,9 @@ module.exports = Player = Character.extend({
             this.server.pushToPlayer(this, new Messages.Chat(this, this.gameFlag ? "You have entered the lobby!" : "You are no longer in lobby."));
 
             if (this.gameFlag)
-                this.server.addPlayerToMinigame(this);
+                this.server.getMinigameHandler().getPVPMinigame().addPlayer(this);
             else
-                this.server.removePlayerFromMinigame(this);
+                this.server.getMinigameHandler().getPVPMinigame().removePlayer(this);
         }
     },
 

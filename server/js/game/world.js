@@ -47,8 +47,6 @@ module.exports = World = cls.Class.extend({
         self.pets = {};
         self.gather = {};
         self.projectiles = {};
-        self.playersPvpGame = [];
-        self.playersInMinigame = [];
         self.mobAreas = [];
         self.chestAreas = [];
         self.groups = {};
@@ -58,7 +56,6 @@ module.exports = World = cls.Class.extend({
         self.packets = {};
         self.cycleSpeed = 50;
         self.mobControllerSpeed = 200;
-        self.pvpTime = 30;
         self.itemCount = 0;
         self.playerCount = 0;
         self.zoneGroupsReady = false;
@@ -139,7 +136,7 @@ module.exports = World = cls.Class.extend({
             player.packetHandler.onExit(function() {
                 if (player.gameFlag) {
                     player.setPosition(33, 90);
-                    self.removePlayerFromMinigame(player);
+                    self.getMinigameHandler().getPVPMinigame().removePlayer(player);
                 }
 
                 self.database.setPlayerPosition(player, player.x, player.y);
@@ -268,7 +265,6 @@ module.exports = World = cls.Class.extend({
         self.initializeGameTick();
         //self.initializeGather();
         self.initializeMobController();
-        self.initializeMinigameTick();
         self.updatePlayers();
         //self.initializeDayCycle();
     },
@@ -285,41 +281,7 @@ module.exports = World = cls.Class.extend({
             }
         }, 2000);
     },
-
-    initializeMinigameTick: function() {
-        var self = this;
-
-        setInterval(function() {
-            if (self.playersPvpGame.length > 1) {
-                if (self.pvpTime <= 0) {
-                    self.handleMinigameCountdown();
-                    self.pvpTime = 130;
-                }
-
-
-                for (var i = 0; i < self.playersPvpGame.length; i++) {
-                    var entity = self.getEntityById(self.playersPvpGame[i]);
-
-                    if (entity) {
-                        if (!entity.gameFlag)
-                            self.removePlayerFromMinigame(entity);
-
-                        try {
-                            self.pushToPlayer(entity, new Messages.GameData(self.pvpTime, self.redScore, self.blueScore));
-                            entity.packetHandler.broadcast(new Messages.MinigameTeam(entity.getTeam(), entity.id), false);
-                        } catch (e) {
-                            log.info("Error Caught: " + e)
-                        }
-                    }
-                }
-
-                self.pvpTime--;
-            }
-        }, 1000);
-
-
-    },
-
+    
     initializeDayCycle: function() {
         var self = this,
             time = new Date().getTime();
@@ -1017,9 +979,9 @@ module.exports = World = cls.Class.extend({
             if (entity.type === 'player') {
 
                 if (entity.getTeam() == Types.Messages.REDTEAM)
-                    self.redScore += 1;
+                    self.getMinigameHandler().getPVPMinigame().redScore += 1;
                 else if (entity.getTeam() == Types.Messages.BLUETEAM)
-                    self.blueScore += 1;
+                    self.getMinigameHandler().getPVPMinigame().blueScore += 1;
 
                 attacker.addPVPKill();
                 entity.addPVPDeath();
@@ -1378,142 +1340,7 @@ module.exports = World = cls.Class.extend({
         return entities;
     },
 
-    getPVPTime: function() {
-        return this.pvpTime;
-    },
-
-    handleMinigameCountdown: function() {
-        var self = this;
-
-        if (self.playersPvpGame.length <= 0)
-            return;
-
-        if (self.minigameStarted) {
-            self.minigameStarted = false;
-            self.sendOutOfGame();
-            return;
-        }
-
-        var redPlayers = [],
-            bluePlayers = [],
-            allPlayers = self.playersPvpGame.slice(),
-            halfLength = Math.ceil(allPlayers.length / 2),
-            randomOutcome = Utils.randomInt(0, 1);
-
-        redPlayers = allPlayers.splice(0, halfLength);
-        bluePlayers = allPlayers;
-
-        if (redPlayers.length <= 0 || bluePlayers.length <= 0)
-            return;
-
-        for (var i = 0; i < redPlayers.length; i++) {
-            var playerId = redPlayers[i],
-                entity = self.getEntityById(playerId);
-
-            if (entity) {
-                var team = Types.Messages.REDTEAM;
-
-                entity.setTeam(team);
-            }
-        }
-
-        for (var i = 0; i < bluePlayers.length; i++) {
-            var playerId = bluePlayers[i],
-                entity = self.getEntityById(playerId);
-
-            if (entity) {
-                var team = Types.Messages.BLUETEAM;
-
-                entity.setTeam(team);
-            }
-        }
-
-        self.minigameStarted = true;
-        self.playersInMinigame = redPlayers.concat(bluePlayers);
-
-        self.sendIntoGame();
-    },
-
-    sendIntoGame: function() {
-        var self = this;
-
-        for (var i = 0; i < self.playersInMinigame.length; i++) {
-            var playerId = self.playersInMinigame[i],
-                orientation = Utils.randomInt(1, 4),
-                entity = self.getEntityById(playerId),
-                offset = Utils.randomInt(-2, 2);
-
-            if(entity) {
-                if (entity.getTeam() == Types.Messages.REDTEAM)
-                    entity.forcefullyTeleport(163 + offset, 499 + offset, orientation);
-                else if (entity.getTeam() == Types.Messages.BLUETEAM)
-                    entity.forcefullyTeleport(133 + offset, 471 + offset, orientation);
-            }
-        }
-    },
-
-    sendOutOfGame: function() {
-        var self = this,
-            winningTeam = self.getWinningTeam();
-
-        for (var i = 0; i < self.playersInMinigame.length; i++) {
-            var playerId = self.playersInMinigame[i],
-                orientation = Utils.randomInt(1, 4),
-                entity = self.getEntityById(playerId),
-                offset = Utils.randomInt(-5, 5);
-
-            if (entity) {
-                entity.forcefullyTeleport(147 + offset, 433 + offset, orientation);
-
-                if (winningTeam == -1) {
-                    self.pushToPlayer(entity, new Messages.Chat(entity, "The game resulted in a draw."));
-                    continue;
-                }
-
-                if (entity.getTeam() == winningTeam) {
-                    self.pushToPlayer(entity, new Messages.Chat(entity, "You have received 3000 gold and 1500 exp for your victory!"));
-                    entity.incExp(1500);
-                    self.pushToPlayer(self, new Messages.Kill("null", entity.level, 1500));
-                    entity.inventory.putInventory(400, 3000);
-                } else {
-                    var randomValue = Utils.randomInt(10, 50);
-                    self.pushToPlayer(entity, new Messages.Chat(entity, "You have lost, you have received: " + randomValue + " coins for your attempts."));
-                    entity.inventory.putInventory(400, randomValue);
-                }
-
-                entity.setTeam(-1);
-                entity.packetHandler.broadcast(new Messages.MinigameTeam(entity.getTeam(), entity.id), false);
-            }
-        }
-
-        self.redScore = 0;
-        self.blueScore = 0;
-    },
-    
-    getWinningTeam: function() {
-        var self = this;
-
-        if (self.redScore == self.blueScore)
-            return -1;
-
-        return self.redScore > self.blueScore ? Types.Messages.BLUETEAM : Types.Messages.REDTEAM;
-    },
-
-    addPlayerToMinigame: function(player) {
-        var self = this;
-        self.playersPvpGame.push(player.id);
-        self.minigameHandler.getPVPMinigame().addPlayer(player);
-    },
-
-    removePlayerFromMinigame: function(player) {
-        var self = this,
-            index = self.playersPvpGame.indexOf(player.id);
-
-        if (index > -1)
-            self.playersPvpGame.splice(index, 1);
-    },
-
-    getPlayerFromMinigame: function(player) {
-
+    getMinigameHandler: function() {
+        return this.minigameHandler;
     }
 });
