@@ -181,7 +181,7 @@ module.exports = World = cls.Class.extend({
                 }
             });
         });
-        log.info("World - " + self.id + " successfully initialized.");
+        log.info("[GameEngine] World - " + self.id + " successfully initialized.");
 
         /**
          * Just initialize those after everything is set, to be safe.

@@ -16,7 +16,7 @@ module.exports = Lobby = cls.Class.extend({
         self.server = server;
         self.players = [];
 
-        log.info("Player lobby has been successfully initialized.");
+        log.info("[Lobby] Has been successfully initialized!");
     },
 
     addPlayer: function(player) {

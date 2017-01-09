@@ -91,7 +91,7 @@ module.exports = PVPGame = Minigame.extend({
                             self.world.pushToPlayer(player, new Messages.GameData(self.timer, self.redScore, self.blueScore));
                             player.packetHandler.broadcast(new Messages.MinigameTeam(player.getTeam(), player.id), false);
                         } catch (e) {
-                            log.info('[PVPGame] An error has encountered: ' + e);
+                            log.info('[PVPGame] An error has been encountered: ' + e);
                         }
                     }
                 }

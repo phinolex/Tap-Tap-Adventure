@@ -1,5 +1,6 @@
 var cls = require('../lib/class'),
-    PVPGame = require('../minigames/pvpgame');
+    PVPGame = require('../minigames/pvpgame'),
+    KingOfTheHill = require('../minigames/kingofthehill')
 
 /**
  * This is similar in concept to
@@ -20,11 +21,25 @@ module.exports = MinigameHandler = cls.Class.extend({
         var self = this;
 
         self.minigames["PVPGame"] = new PVPGame(self.server, 1, "PVPGame");
+        self.minigames["KOTH"] = new KingOfTheHill(self.server, 1, "KOTH");
 
-        log.info("Minigame Handler has been successfully initialized.");
+        log.info("[MinigameHandler] Has been successfully initialized!");
+        log.info("[MinigameHandler] Loaded: " + self.getMinigameCount() + " minigames!");
     },
 
     getPVPMinigame: function() {
         return this.minigames["PVPGame"];
+    },
+
+    getKOTHMinigame: function() {
+        return this.minigames["KOTH"];
+    },
+
+    getMinigameCount: function() {
+        var count = 0;
+        for (var minigame in this.minigames)
+            count++;
+
+        return count;
     }
 });
