@@ -1,0 +1,66 @@
+@gameFont: "GraphicPixel";
+@largeScreen: ~"only screen and (min-width: 1501px)";
+@midScreen: ~"only screen and (max-width: 1500px), only screen and (max-height: 870px)";
+@smallScreen: ~"only screen and (max-width: 1000px)";
+
+.set(@left: 50%; @top: 50%) {
+	position: absolute;
+	left: @left;
+	top: @top;
+}
+
+.setr(@right: 50%; @top: 50%) {
+	position: absolute;
+	left: @right;
+	top: @top;
+}
+	    
+.box(@width; @height) {
+    width: @width;
+    height: @height;
+}
+	    
+.view(@position: ~"0% 0%") {
+    background-position: @position;
+}
+
+.hidden() {
+    display: none;
+}
+
+.hide-overflow() {
+    overflow: hidden;
+}
+
+.no-select() {
+    user-select: none;
+}
+
+.no-event() {
+    pointer-events: none;
+}
+
+.margin(@left; @top) {
+    margin-left: @left;
+    margin-top: @top;
+}
+
+.point() {
+    cursor: pointer;
+}
+
+.ignore() {
+    cursor: default;
+}
+
+.icenter() {
+    text-align: center;
+}
+
+.clear() {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+//After refactoring, do some experiments and remove unnecessary code
