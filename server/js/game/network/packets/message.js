@@ -121,16 +121,13 @@ Messages.PlayerPoints = Message.extend({
     }
 });
 Messages.TalkToNPC = Message.extend({
-    init: function(npcId, achievementNumber, isCompleted){
+    init: function(npcId, message) {
         this.npcId = npcId;
-        this.achievementNumber = achievementNumber;
-        this.isCompleted = isCompleted;
+        this.message = message;
     },
-    serialize: function(){
-        return [Types.Messages.TALKTONPC,
-            this.npcId,
-            this.achievementNumber,
-            this.isCompleted];
+    
+    serialize: function() {
+        return [Types.Messages.TALKTONPC, this.npcId, this.message];
     }
 });
 Messages.EquipItem = Message.extend({
@@ -720,5 +717,16 @@ Messages.Trade = Message.extend({
 
     serialize: function() {
         return [Types.Messages.TRADE, this.tradeState, this.items, this.playerOneName, this.playerTwoName];
+    }
+});
+
+Messages.Achievement = Message.extend({
+    init: function(type, id) {
+        this.type = type;
+        this.id = id;
+    },
+
+    serialize: function() {
+        return [Types.Messages.ACHIEVEMENT, this.type, this.id];
     }
 });

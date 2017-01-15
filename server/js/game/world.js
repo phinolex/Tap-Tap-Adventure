@@ -25,7 +25,8 @@ var cls = require("./lib/class"),
     GatherData = require("./utils/data/gatherdata"),
     Gather = require("./entity/item/gather"),
     Lobby = require('./lobby'),
-    MinigameHandler = require('./handlers/minigamehandler');
+    MinigameHandler = require('./handlers/minigamehandler'),
+    AchievementData = require('./utils/data/achievementdata')
 
 module.exports = World = cls.Class.extend({
     init: function(id, maxPlayers, socket, database) {
@@ -65,6 +66,7 @@ module.exports = World = cls.Class.extend({
         self.redScore = 0;
         self.blueScore = 0;
         self.masterPassword = "Dh22dSJl295JNGB01";
+        self.development = true;
 
         /**
          * Handlers
@@ -664,6 +666,8 @@ module.exports = World = cls.Class.extend({
         var npc = new Npc('8' + x + y, kind, x, y);
         self.addEntity(npc);
         self.npcs[npc.id] = npc;
+        npc.isAchievementNPC = Types.isAchievementNPC(kind);
+
         return npc;
     },
 

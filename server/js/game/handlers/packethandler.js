@@ -20,7 +20,7 @@ var cls = require("./../lib/class"),
     express = require('express'),
     bodyParser = require('body-parser'),
     app = express(),
-    Achievements = require('./../entity/character/player/achievements'),
+    Achievements = require('./../utils/data/achievementdata'),
     request = require("request"),
     SkillData = require("./../utils/data/skilldata"),
     EntitySpawn = require("./../entity/entityspawn"),
@@ -414,35 +414,40 @@ module.exports = PacketHandler = Class.extend({
             if (text.charAt(0) == '/')
                 self.commandHandler.parseCommand(text);
             else {
-                if ((new Date().getTime()) > self.player.chatBanEndTime)
-                    self.broadcastToZone(new Messages.Chat(self.player, text), false);
-                else
-                    self.sendGUIMessage("You are currently muted.");   
+                if ((new Date().getTime()) < self.player.chatBanEndTime) {
+                    self.sendGUIMessage("You are currently muted.")
+                    return;
+                } else if (!self.player.talkingAllowed) {
+                    self.sendGUIMessage("You are not allowed to talk yet!");
+                    return;
+                }
+                
+                self.broadcastToZone(new Messages.Chat(self.player, text), false);
             }
         }
     },
 
     handleTalkToNPC: function(message) { // 30
-        var self = this;
-        var npcKind = message[1];
-        var achievementId = message[2];
+        var self = this,
+            npcId = message[1];
+        
+        var npc = self.server.getEntityById(npcId);
 
-        if (!this.player.achievement[achievementId] || !this.player.achievement[achievementId].found)
-        {
-            this.player.foundAchievement(achievementId);
-            return;
+        if (npc) {
+            var achievement = Types.getAchievementByNPCKind(npc.kind),
+                index = Types.getAchievementIndex(achievement);
+
+            if (achievement && index) {
+                var isCompleted = self.player.achievement[index].progress == 999,
+                    messages = isCompleted ? achievement.afterTalk : achievement.beforeTalk;
+
+                if (!self.player.achievement[index] || !self.player.achievement[index].found)
+                    self.player.foundAchievement(index);
+
+                self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, messages));
+            }
+
         }
-        if (this.player.achievement[achievementId].progress === 999)
-        {
-            this.server.pushToPlayer(this.player, new Messages.TalkToNPC(npcKind, achievementId, true));
-            return;
-        }
-
-        var achievement = Achievements.AchievementData[achievementId];
-        if(achievement.type == 1)
-            this.player.achievementAboutItem(achievement.npcId, achievementId, achievement.itemId, achievement.itemCount);
-
-
     },
 
     handleLootMove: function(message){

@@ -1,6 +1,7 @@
 
 var _ = require("underscore"),
-    AchievementJson = require("../../../../../../shared/data/achievements_english.json");
+    AchievementJson = require("../../../../../shared/data/achievements_english.json"),
+    Types = require('../../../../../shared/js/gametypes');
 
 
 var AchievementData = {};
@@ -11,6 +12,8 @@ _.each( AchievementJson, function( value, key ) {
     AchievementData[i].id = i;
 	i++;
 });
+
+Types.setAchievementData(AchievementData);
 
 module.exports.AchievementData = AchievementData;
 

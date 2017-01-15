@@ -5,7 +5,7 @@ var cls = require("./../lib/class"),
     redis = require("redis"),
     bcrypt = require("bcrypt"),
     ItemTypes = require("../../../../shared/js/itemtypes"),
-    Achievements = require('./../entity/character/player/achievements'),
+    Achievements = require('./../utils/data/achievementdata'),
     inventory = require("./../entity/character/player/inventory/inventory"),
     Utils = require('./../utils/utils');
 
@@ -733,24 +733,23 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "achievement" + number + ":progress", progress);
     },
 
-    setQuestState: function(name, questId, state) {
-        client.hset("u:" + name, "quest" + questId + ":state", state);
+    setQuestStage: function(name, questId, stage) {
+        client.hset("u:" + name, "quest" + questId + ":stage", stage);
     },
 
-    getQuestState: function(name, questId, callback) {
+    getQuestStage: function(name, questId, callback) {
         var self = this,
             userKey = "u:" + name,
-            multi = client.multi(),
-            questState;
+            multi = client.multi();
 
-        multi.hget(userKey, "quest" + questId + ":state");
+        multi.hget(userKey, "quest" + questId + ":stage");
         multi.exec(function(err, data) {
-            questState = data.shift();
+            var questStage = data.shift();
 
-            if (isNaN(questState))
-                questState = -1;
+            if (isNaN(questStage))
+                questStage = -1;
 
-            callback(questState);
+            callback(questStage);
         });
     },
 

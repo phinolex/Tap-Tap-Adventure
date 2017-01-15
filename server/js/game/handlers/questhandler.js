@@ -21,8 +21,14 @@ module.exports = QuestHandler = cls.Class.extend({
     
     loadQuests: function() {
         var self = this;
-
+        
         self.quests[Quests.QuestData[0].name] = new Introduction(Quests.QuestData[0], self.player);
+    },
 
+    saveAll: function() {
+        var self = this;
+
+        for (var quest in self.quests)
+            quest.update();
     }
 });

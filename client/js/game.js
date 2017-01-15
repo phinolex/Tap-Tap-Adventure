@@ -2034,8 +2034,25 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if (self.bankDialog.visible)
                             self.bankDialog.inventoryFrame.open();
                     });
-                    self.client.onTalkToNPC(function(npcKind, achievementId, isCompleted){
-                            //Move things server sided, keep this here. It's useful
+                    self.client.onTalkToNPC(function(npcId, messages) {
+                        var npc = self.getEntityById(npcId);
+
+                        if (npc && messages) {
+                            self.previousClickPosition = {};
+
+                            var message = npc.talk(messages);
+
+                            if (message) {
+                                self.createBubble(npc.id, message);
+                                self.assignBubbleTo(npc);
+                                self.audioManager.playSound("npc");
+                            } else {
+                                self.destroyBubble(npc.id);
+                                self.audioManager.playSound("npc-end");
+                            }
+
+                            self.player.removeTarget();
+                        }
                     });
                     self.client.onNotify(function(msg, differentSource) {
                         self.showNotification(msg, differentSource);
@@ -2322,6 +2339,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              *
              */
             makePlayerTalkTo: function(npc) {
+                log.info("make player talk to");
                 if(npc) {
                     this.player.setTarget(npc);
                     this.player.follow(npc);
@@ -2348,10 +2366,20 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              *
              */
             makeNpcTalk: function(npc) {
-                if (!this.player.isAdjacentNonDiagonal(npc))
+                var self = this;
+
+                log.info("Talk");
+
+                if (!self.player.isAdjacentNonDiagonal(npc))
                     return;
 
-                var msg;
+                self.client.sendTalkToNPC(npc.id);
+
+                self.player.removeTarget();
+
+                self.previousClickPosition = {};
+
+                /*var msg;
 
                 if (npc) {
                     var npcData = NpcData.Kinds[npc.kind];
@@ -2384,7 +2412,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     }
 
                 }
-
+                */
             },
 
             openBankDialog: function() {
@@ -3060,7 +3088,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     } else if(entity instanceof Item)
                         this.makePlayerGoToItem(entity);
                     else if(entity instanceof Npc) {
-                        if(this.player.isAdjacentNonDiagonal(entity) === false)
+                        if(!this.player.isAdjacentNonDiagonal(entity))
                             this.makePlayerTalkTo(entity);
                         else {
                             if(!this.player.disableKeyboardNpcTalk) {

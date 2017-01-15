@@ -76,26 +76,28 @@ Utils.Mixin = function(target, source) {
         for (var key, keys = Object.keys(source), l = keys.length; l--; ) {
             key = keys[l];
 
-            if (source.hasOwnProperty(key)) {
+            if (source.hasOwnProperty(key))
                 target[key] = source[key];
-            }
         }
     }
     return target;
 };
+
 Utils.distanceTo = function(x, y, x2, y2) {
     var distX = Math.abs(x - x2);
     var distY = Math.abs(y - y2);
 
     return (distX > distY) ? distX : distY;
 };
-Utils.NaN2Zero = function(num){
-    if(isNaN(num*1)){
-        return 0;
-    } else{
-        return num*1;
-    }
+
+Utils.NaN2Zero = function(num) {
+    return isNaN(num * 1) ? 0 : num * 1;
 };
+
 Utils.trueFalse = function(bool){
     return bool === "true" ? true : false;
-}
+};
+
+Utils.isAchievementNPC = function(npcKind) {
+
+};

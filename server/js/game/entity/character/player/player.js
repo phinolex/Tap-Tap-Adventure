@@ -22,7 +22,7 @@ var cls = require("./../../../lib/class"),
     express = require('express'),
     bodyParser = require('body-parser'),
     app = express(),
-    Achievements = require('./achievements'),
+    Achievements = require('./../../../utils/data/achievementdata'),
     request = require("request"),
     EntitySpawn = require("./../../entityspawn"),
     PacketHandler = require("./../../../handlers/packethandler"),
@@ -46,7 +46,6 @@ module.exports = Player = Character.extend({
         this.friends = {};
         this.ignores = {};
         this.pets = [];
-
         this.inventory = null;
         this.pvpFlag = false;
         this.gameFlag = false;
@@ -83,10 +82,11 @@ module.exports = Player = Character.extend({
         this.isPlayer = true;
         this.hasFocus = true;
         this.attackedTime = new Timer(950);
-        this.packetHandler = new PacketHandler(this, connection, worldServer, databaseHandler);
-        this.questHandler = new QuestHandler(this);
         this.pClass = 0;
         this.minigameTeam = -1;
+        this.talkingAllowed = true;
+        this.questHandler = new QuestHandler(this);
+        this.packetHandler = new PacketHandler(this, connection, worldServer, databaseHandler);
     },
 
 
@@ -359,11 +359,12 @@ module.exports = Player = Character.extend({
     },
 
     foundAchievement: function (achievementId) {
+        var self = this;
 
-        this.achievement[achievementId] = {};
-        this.achievement[achievementId].found = true;
-        databaseHandler.foundAchievement(this.name, achievementId);
-        this.send([Types.Messages.ACHIEVEMENT, "found", achievementId]);
+        self.achievement[achievemntId] = {};
+        self.achievement[achievementId].found = true;
+        self.redisPool.foundAchievement(self.name, achievementId);
+        self.server.pushToPlayer(self, new Messages.Achievement('found', achievementId));
     },
 
     incExp: function (gotexp, mob) {

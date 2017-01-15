@@ -276,13 +276,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             }
         },
         receiveTalkToNPC: function(data){
-            var npcKind = data[1];
-            var achievementId = data[2];
-            var isCompleted = data[3];
+            var npcId = data[1],
+                messages = data[2];
 
-            if(this.talkToNPC_callback){
-                this.talkToNPC_callback(npcKind, achievementId, isCompleted);
-            }
+            if (this.talkToNPC_callback)
+                this.talkToNPC_callback(npcId, messages);
         },
         receiveMove: function(data) {
             var id = data[1],
@@ -1137,9 +1135,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             ids.unshift(Types.Messages.WHO);
             this.sendMessage(ids);
         },
-        sendTalkToNPC: function(kind, achievementId){
-            this.sendMessage([Types.Messages.TALKTONPC,
-                kind, achievementId]);
+        sendTalkToNPC: function(id){
+            this.sendMessage([Types.Messages.TALKTONPC, id]);
         },
         sendMagic: function(magicName, target){
             this.sendMessage([Types.Messages.MAGIC,

@@ -35,6 +35,7 @@ function main(config) {
                     lastTotalPlayers = totalPlayers;
                     _.each(worlds, function(world) {
                         world.updatePopulation(totalPlayers);
+                        world.development = false;
                         log.info("Player Population Updated - " + totalPlayers);
                     });
                 }

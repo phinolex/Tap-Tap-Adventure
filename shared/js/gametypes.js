@@ -372,6 +372,40 @@ Types.getItemSkillNameByKind = function(kind){
     return 'NoSkill';
 };
 
+var AchievementData = {};
+Types.AchievementData = AchievementData;
+
+Types.setAchievementData = function(achievementData) {
+    AchievementData = achievementData;
+    Types.AchievementData = achievementData;
+};
+
+
+Types.isAchievementNPC = function(kind) {
+    for (var index in AchievementData)
+        if (AchievementData[index].npcId == kind)
+            return true;
+
+    return false;
+};
+
+Types.getAchievementByNPCKind = function(kind) {
+    for (var index in AchievementData) {
+        if (AchievementData[index].npcId == kind)
+            return AchievementData[index];
+    }
+
+    return null;
+};
+
+Types.getAchievementIndex = function(achievement) {
+    for (var index in AchievementData) {
+        if (AchievementData[index] == achievement)
+            return index;
+    }
+
+    return -1;
+};
 
 if(!(typeof exports === 'undefined')) {
     module.exports = Types;

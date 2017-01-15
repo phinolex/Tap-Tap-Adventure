@@ -78,6 +78,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
             }
         },
 
+
         initFormFields: function() {
             var self = this;
 
@@ -323,6 +324,7 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
         createNewCharacterFormActive: function() {
             return $('#parchment').hasClass("createcharacter");
         },
+        
         /**
          * Performs some basic validation on the login / create new character forms (required fields are filled
          * out, passwords match, email looks valid). Assumes either the login or the create new character form

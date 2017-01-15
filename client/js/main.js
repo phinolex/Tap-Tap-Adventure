@@ -663,8 +663,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                         $chat.focus();
                         return false;
                     } else {
-                        if (app.loginFormActive() || app.createNewCharacterFormActive() ||
-                            app.changePasswordFormActive())
+                        if (app.loginFormActive() || app.createNewCharacterFormActive())
                         {
                             $('input').blur();      // exit keyboard on mobile
                             app.tryStartingGame();
@@ -674,8 +673,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
                 }
 
                 //if($('#chatinput:focus').size() === 0 && $('#nameinput:focus').size() === 0) {
-                if (app.loginFormActive() || app.createNewCharacterFormActive() ||
-                    app.changePasswordFormActive() || $chat.is(":focus"))
+                if (app.loginFormActive() || app.createNewCharacterFormActive() || $chat.is(":focus"))
                 {
                     //game.keyDown(key);
                     //alert("aborting since not started");
