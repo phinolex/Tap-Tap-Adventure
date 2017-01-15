@@ -1,0 +1,152 @@
+@import "variables.less";
+
+._quest() {
+    
+    //Hardcoded
+    #questlog {
+        background: rgba(0, 0, 0, 0.3);
+        text-align: left;
+        .set(8%, 65%);
+        .no-event();
+    }
+    
+    #questalarm{
+        background: rgba(0, 0, 0, 0.5);
+        color: rgba(255, 255, 255, 1);
+        .set(~"calc(90% - 55px)", ~"calc(50% - 160px)");
+        .box(320px, 55px);
+        .hidden();
+        .no-event();
+        .icenter();
+    }
+    
+    .rebuild(@scale) {
+        
+        @alarm-font-size: 20px;
+        @alarm-shadowX: 0;
+        @alarm-shadowY: 1px;
+        @alarm-shadow-blur: 0px;
+        @alarm-shadow-color: #000000;
+
+        @log-font-add: @scale*3px;
+        @table-max-width: @scale*30px;
+
+        @col13-1-width: 30px;
+        @col13-2-width: 40px;
+        @col13-3-width: 60px;
+        @col2-width: @scale*30px;
+
+        @quest-offsetX: 50%;
+        @quest-top-offsetY: @scale*259px;
+        @quest-bottom-offsetY: @scale*5px;
+        @quest-width: @scale*480px;
+        @quest-margin-left: @scale*-240px;
+        @border-thickness: 1px;
+        @border-color: #9c9898;
+        @quest-padding: @scale*2.5px;
+        @quest-background-color: rgba(255, 255, 255, 1);
+        @quest-color: rgba(0, 0, 0, 1);
+        @quest-font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+
+        @col-font-size: 1.2em;
+        @col-order-color: #98bf21;
+        @col-padding-left: 3px;
+        @col-padding-top: 7px;
+        @col-padding-right: 2px;
+        @col-padding-bottom: 7px;
+        @col-border-color: #98bf21;
+
+        @head-font-size: 1.4em;
+        @head-padding-top: 5px;
+        @head-padding-bottom: 4px;
+        @head-color: #fff;
+        @head-background-color: #a7c942;
+
+        @alt-color: rgba(0, 0, 0 , 1);
+        @alt-background-color: #eaf2d3;
+        
+        #questalarm h2 {
+            font-size: @alarm-font-size; /*no font multiplication until ... idk*/
+            text-shadow: @alarm-shadowX @alarm-shadowY @alarm-shadow-blur @alarm-shadow-color;
+        }
+        
+        #questLogInfo {
+            font-size: 3px + @log-font-add;
+        }
+        
+        #questLogInfo td {
+            max-width: 30px + @table-max-width;
+        }
+        
+        #questLogInfo:nth-child(3), #questLogInfo:nth-child(1) {
+            ._width() when (@scale = 1) {
+                width: @col13-1-width;
+            }
+            
+            ._width() when (@scale = 2) {
+                width: @col13-2-width;
+            }
+            
+            ._width() when (@scale = 3) {
+                width: @col13-3-width;
+            }
+            
+            ._width();
+        }
+        
+        #questLogInfo:nth-child(2) {
+            width: 30px + @col2-width;
+        }
+        
+        #quest {
+            position: absolute;
+            left: @quest-offsetX;
+            top: @quest-top-offsetY;
+            bottom: @quest-bottom-offsetY;
+            border: @border-thickness solid @border-color;
+            width: @quest-width;
+            margin-left: @quest-margin-left;
+            padding: @quest-padding;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            border-collapse: collapse;
+            font-family: @quest-font-family;
+            background: @quest-background-color;
+            color: @quest-color;
+            .hidden();
+        }
+        
+        #quest td {
+            font-size: @col-font-size;
+            border: @border-thickness solid @col-border-color;
+            padding: @col-padding-left @col-padding-top @col-padding-right @col-padding-bottom;
+        }
+        
+        #quest th {
+            font-size: @head-font-size;
+            padding: @col-padding-left @head-padding-top @col-padding-right @head-padding-top;
+            text-align: left;
+            color: @head-color;
+            background: @head-background-color;
+        }
+        
+        #quest tr.alt td {
+            color: @alt-color;
+            background-color: @alt-background-color;
+        }
+    }
+    
+    @media @largeScreen {
+        .rebuild(3);
+    }
+    
+    @media @midScreen {
+        .rebuild(2);
+    }
+    
+    @media @smallScreen {
+        .rebuild(1);
+    }
+}
+
+._quest();
