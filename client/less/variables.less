@@ -34,6 +34,8 @@
 
 .no-select() {
     user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
 .no-event() {
@@ -57,10 +59,23 @@
     text-align: center;
 }
 
+.bcenter() {
+    display: block;
+    margin: 0 auto;
+}
+
 .clear() {
     padding: 0;
     border: 0;
     margin: 0;
+}
+
+.linear-gradient(@direction, @from, @to) {
+    background: linear-gradient(@direction, @from, @to);
+    background: -webkit-linear-gradient(@direction, @from, @to);
+    background: -moz-linear-gradient(@direction, @from, @to);
+    background: -o-linear-gradient(@direction, @from, @to);
+    background: -ms-linear-gradient(@direction, @from, @to);
 }
 
 //After refactoring, do some experiments and remove unnecessary code
