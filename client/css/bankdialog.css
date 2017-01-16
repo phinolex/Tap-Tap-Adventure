@@ -1,114 +1,102 @@
-/**
- * Created by Flavius on 15-07-19.
- */
-
-
-@media screen and (min-width: 1501px) {
-    #bankDialog {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin-left: -459px;
-        margin-top: -319.5px;
-        font-family: 'GraphicPixel';
-        font-size: 13.5pt;
-        font-weight: bold;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        display: none;
-    }
-
-    #bankDialogInventory {
-        position: absolute;
-        left: 0px;
-        top: 66px;
-        width: 387px;
-        height: 465px;
-        background-image: url('../img/3/storedialogsheet.png');
-        background-position: 0px 0px;
-    }
-
-    #bankDialogBank {
-        position: absolute;
-        left: 387px;
-        top: 66px;
-        width: 387px;
-        height: 465px;
-        background-image: url('../img/3/storedialogsheet.png');
-        background-position: 0px 0px;
-    }
+@media only screen and (min-width: 1501px) {
+  #bankDialog {
+    font-size: "GraphicPixel";
+    font-size: 13.5pt;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -459px;
+    margin-top: -319.5px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    display: none;
+  }
+  #bankDialogInventory {
+    background-image: url("../img/3/storedialogsheet.png");
+    background-position: 0 0;
+    position: absolute;
+    left: 0;
+    top: 66px;
+    width: 387px;
+    height: 465px;
+  }
+  #bankDialogBank {
+    background-image: url("../img/3/storedialogsheet.png");
+    background-position: 0 0;
+    position: absolute;
+    left: 387px;
+    top: 66px;
+    width: 387px;
+    height: 465px;
+  }
 }
-
-@media screen and (max-width: 1500px), screen and (max-height: 870px) {
-    #bankDialog {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin-left: -306px;
-        margin-top: -213px;
-        font-family: 'GraphicPixel';
-        font-size: 9pt;
-        font-weight: bold;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        display: none;
-    }
-
-    #bankDialogInventory {
-        position: absolute;
-        left: 0px;
-        top: 44px;
-        width: 258px;
-        height: 310px;
-        background-image: url('../img/2/storedialogsheet.png');
-        background-position: 0px 0px;
-    }
-    
-    #bankDialogBank {
-        position: absolute;
-        left: 258px;
-        top: 44px;
-        width: 258px;
-        height: 310px;
-        background-image: url('../img/2/storedialogsheet.png');
-        background-position: 0px 0px;
-    }    
+@media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
+  #bankDialog {
+    font-size: "GraphicPixel";
+    font-size: 9pt;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -306px;
+    margin-top: -213px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    display: none;
+  }
+  #bankDialogInventory {
+    background-image: url("../img/2/storedialogsheet.png");
+    background-position: 0 0;
+    position: absolute;
+    left: 0;
+    top: 44px;
+    width: 258px;
+    height: 310px;
+  }
+  #bankDialogBank {
+    background-image: url("../img/2/storedialogsheet.png");
+    background-position: 0 0;
+    position: absolute;
+    left: 258px;
+    top: 44px;
+    width: 258px;
+    height: 310px;
+  }
 }
-
-@media screen and (max-width: 1000px) {
-
-    #bankDialog {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin-left: -153px;
-        margin-top: -106.5px;
-        font-family: 'GraphicPixel';
-        font-size: 4.5pt;
-        font-weight: bold;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        display: none;
-    }
-
-    #bankDialogInventory {
-        position: absolute;
-        left: 0px;
-        top: 22px;
-        width: 129px;
-        height: 155px;
-        background-image: url('../img/1/storedialogsheet.png');
-        background-position: 0px 0px;
-    }
-    
-    #bankDialogBank {
-        position: absolute;
-        left: 129px;
-        top: 22px;
-        width: 129px;
-        height: 155px;
-        background-image: url('../img/1/storedialogsheet.png');
-        background-position: 0px 0px;
-    }
+@media only screen and (max-width: 1000px) {
+  #bankDialog {
+    font-size: "GraphicPixel";
+    font-size: 4.5pt;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -153px;
+    margin-top: -106.5px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    display: none;
+  }
+  #bankDialogInventory {
+    background-image: url("../img/1/storedialogsheet.png");
+    background-position: 0 0;
+    position: absolute;
+    left: 0;
+    top: 22px;
+    width: 129px;
+    height: 155px;
+  }
+  #bankDialogBank {
+    background-image: url("../img/1/storedialogsheet.png");
+    background-position: 0 0;
+    position: absolute;
+    left: 129px;
+    top: 22px;
+    width: 129px;
+    height: 155px;
+  }
 }
-

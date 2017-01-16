@@ -1,78 +1,264 @@
-#wrapper {
-    overflow:hidden;
-}
-
+/*Next and previous*/
 #storelist {
-    -moz-transition:0.5s left ease-in-out;
-    -webkit-transition:0.5s left ease-in-out;
-    -o-transition:0.5s left ease-in-out;
-    -ms-transition:0.5s left ease-in-out;
-    transition:0.5s left ease-in-out;
-    position:relative;
+  -moz-transition: left 0.5s ease-in-out;
+  -webkit-transition: left 0.5s ease-in-out;
+  -o-transition: left 0.5s ease-in-out;
+  -ms-transition: left 0.5s ease-in-out;
+  transition: left 0.5s ease-in-out;
+  position: relative;
 }
-
-@media screen and (min-width: 1501px) {
-
+@media only screen and (min-width: 1501px) {
+  #inappstore ul {
+    float: left;
+    margin-left: 9px;
+    width: 1200px;
+    height: 300;
+    display: block;
+    margin: 0 auto;
+  }
+  #inappstore nav {
+    width: 201px;
+    height: 66px;
+    display: block;
+    margin: 0 auto;
+  }
+  #storeprevious,
+  #storenext {
+    width: 204px;
+    height: 66px;
+  }
+  .storepage1 #storeprevious {
+    background-position: 0px -846px;
+  }
+  .storepage4 #storenext {
+    background-position: -99px -846px;
+  }
+  #storeprevious {
+    background-position: -201px -846px;
+    background-size: 1248px;
+  }
+  #storeprevious:active {
+    background-position: -402px -846px;
+  }
+  #storenext {
+    margin-left: -10px;
+    background-position: -300px -771px;
+    background-size: 1248px;
+  }
+  #storenext:active {
+    background-position: -501px -771px;
+  }
+  #storelist {
+    width: 4000px;
+  }
+  #inappstore.storepage4 #storelist {
+    left: -3528px;
+  }
+  #inappstore.storepage3 #storelist {
+    left: -2352px;
+  }
+  #inappstore.storepage2 #storelist {
+    left: -1176px;
+  }
+  #inappstore.storepage1 #storelist {
+    left: 0px;
+  }
+  #inappstore li {
+    display: inline-block;
+    vertical-align: top;
+    margin: 45px 0;
+    top: -18px;
+    background-position: 0 -912px;
+    width: 552px;
+    height: 76.5px;
+  }
+  #inappstore li span {
+    padding-top: 40.5px;
+  }
+  #storetext {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    width: 1234.5px;
+    height: 30px;
+    position: absolute;
+    left: 0;
+    top: 127.5px;
+    text-align: center;
+  }
+  #wrapper {
+    margin: 60px 0 30px 60px;
+    width: 1116px;
+    height: 202.5px;
+  }
 }
-
-@media screen and (max-width: 1500px), screen and (max-height: 870px) {
-
-    #inappstore ul {
-        float:left;
-        margin-left:6px;
-        width: 800px;
-        height: 200px;
-        margin: 0 auto;
-    }
-    #inappstore nav {height:44px;width:134px;margin:0 auto;}
-    #storeprevious, #storenext {height:44px;width:68px;display:inline-block;}
-    .storepage1 #storeprevious, .upscaled .storepage1 #storeprevious {background-position:0px -564px;}
-    .storepage4 #storenext, .upscaled .storepage4 #storenext {background-position:-66px -564px;}
-    #storeprevious, .upscaled #storeprevious {background-position:-134px -564px;}
-    #storeprevious:active, .upscaled #storeprevious:active {background-position:-268px -564px;}
-    #storenext, .upscaled #storenext {margin-left:-10px;background-position:-200px -564px;}
-    #storenext:active, .upscaled #storenext:active {background-position:-334px -564px;}
-    
-    #storelist {width:8000px;}
-    #inappstore.storepage1 #storelist {left:0;}
-    #inappstore.storepage2 #storelist {left:-784px;}
-    #inappstore.storepage3 #storelist {left:-1568px;}
-    #inappstore.storepage4 #storelist {left:-2352px;}
-
-    #inappstore li, .upscaled #inappstore li {
-        width: 368px;
-        display: inline-block;
-        vertical-align: top;
-        height:51px;
-        top: -12px;
-        background-position:0 -608px;
-        margin:15px 0;
-    }
-
-    #inappstore li span {padding-top:27px;}
-
-    #storeprevious, #storenext {
-        background-size:832px;
-    }
-
-    #storetext {
-        position: absolute;
-        width: 833px;
-        height: 20px;
-        top: 85px;
-        left: 0;
-        margin: 0;
-        border: 0;
-        text-align: center;
-    }
-
-    #wrapper {
-        height:135px;
-        width:744px;
-        margin:40px 0 20px 40px;
-    }
+@media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
+  #inappstore ul {
+    float: left;
+    margin-left: 6px;
+    width: 800px;
+    height: 200;
+    display: block;
+    margin: 0 auto;
+  }
+  #inappstore nav {
+    width: 134px;
+    height: 44px;
+    display: block;
+    margin: 0 auto;
+  }
+  #storeprevious,
+  #storenext {
+    width: 136px;
+    height: 44px;
+  }
+  .storepage1 #storeprevious {
+    background-position: 0px -564px;
+  }
+  .storepage4 #storenext {
+    background-position: -66px -564px;
+  }
+  #storeprevious {
+    background-position: -134px -564px;
+    background-size: 832px;
+  }
+  #storeprevious:active {
+    background-position: -268px -564px;
+  }
+  #storenext {
+    margin-left: -10px;
+    background-position: -200px -514px;
+    background-size: 832px;
+  }
+  #storenext:active {
+    background-position: -334px -514px;
+  }
+  #storelist {
+    width: 4000px;
+  }
+  #inappstore.storepage4 #storelist {
+    left: -2352px;
+  }
+  #inappstore.storepage3 #storelist {
+    left: -1568px;
+  }
+  #inappstore.storepage2 #storelist {
+    left: -784px;
+  }
+  #inappstore.storepage1 #storelist {
+    left: 0px;
+  }
+  #inappstore li {
+    display: inline-block;
+    vertical-align: top;
+    margin: 30px 0;
+    top: -12px;
+    background-position: 0 -608px;
+    width: 368px;
+    height: 51px;
+  }
+  #inappstore li span {
+    padding-top: 27px;
+  }
+  #storetext {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    width: 823px;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    top: 85px;
+    text-align: center;
+  }
+  #wrapper {
+    margin: 40px 0 20px 40px;
+    width: 744px;
+    height: 135px;
+  }
 }
-
-@media screen and (max-width: 1000px) {
-
+@media only screen and (max-width: 1000px) {
+  #inappstore ul {
+    float: left;
+    margin-left: 3px;
+    width: 400px;
+    height: 100;
+    display: block;
+    margin: 0 auto;
+  }
+  #inappstore nav {
+    width: 67px;
+    height: 22px;
+    display: block;
+    margin: 0 auto;
+  }
+  #storeprevious,
+  #storenext {
+    width: 68px;
+    height: 22px;
+  }
+  .storepage1 #storeprevious {
+    background-position: 0px -282px;
+  }
+  .storepage4 #storenext {
+    background-position: -33px -282px;
+  }
+  #storeprevious {
+    background-position: -67px -282px;
+    background-size: 416px;
+  }
+  #storeprevious:active {
+    background-position: -134px -282px;
+  }
+  #storenext {
+    margin-left: -10px;
+    background-position: -100px -257px;
+    background-size: 416px;
+  }
+  #storenext:active {
+    background-position: -167px -257px;
+  }
+  #storelist {
+    width: 4000px;
+  }
+  #inappstore.storepage4 #storelist {
+    left: -1176px;
+  }
+  #inappstore.storepage3 #storelist {
+    left: -784px;
+  }
+  #inappstore.storepage2 #storelist {
+    left: -392px;
+  }
+  #inappstore.storepage1 #storelist {
+    left: 0px;
+  }
+  #inappstore li {
+    display: inline-block;
+    vertical-align: top;
+    margin: 15px 0;
+    top: -6px;
+    background-position: 0 -304px;
+    width: 184px;
+    height: 25.5px;
+  }
+  #inappstore li span {
+    padding-top: 13.5px;
+  }
+  #storetext {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    width: 411.5px;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    top: 42.5px;
+    text-align: center;
+  }
+  #wrapper {
+    margin: 20px 0 10px 20px;
+    width: 372px;
+    height: 67.5px;
+  }
 }
