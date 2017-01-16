@@ -1,8 +1,12 @@
-//Leave as is
-body { 
-    background: url('../img/2/wood.png') repeat;
+._ie() {
+    //Leave as is
+    body { 
+        background: url('../img/2/wood.png') repeat;
+    }
+
+    #container, .no-opacity #credits, .no-opacity #loadcharacter, .no-opacity #changePassword, .no-opacity #createcharacter, .no-opacity #death, .no-opacity #confirmation, .no-opacity #about {
+        display:none;
+    }
 }
 
-#container, .no-opacity #credits, .no-opacity #loadcharacter, .no-opacity #changePassword, .no-opacity #createcharacter, .no-opacity #death, .no-opacity #confirmation, .no-opacity #about {
-    display:none;
-}
+._ie();
