@@ -1,0 +1,162 @@
+@import "variables.less";
+
+._inappstore() {
+    @transition-duration: 0.5s;
+    @transition-property: left;
+    @transition-function: ease-in-out;
+    
+    @list-margin-left: 3px;
+    @list-width: 400px;
+    @list-height: 100;
+    
+    @navigation-width: 67px;
+    @navigation-height: 22px;
+    
+    /*Next and previous*/
+    @nav-height: 22px;
+    @nav-width: 68px;
+    
+    @store-list-width: 4000px; //wtf
+    @store-list-page-offsetX: 0;
+    @store-list-page-next-offsetX: -392px;
+    
+    @element-width: 184px;
+    @element-height: 25.5px;
+    @element-offsetY: -6px;
+    @element-vmargin: 15px;
+    
+    @element-span-padding-top: 13.5px;
+    @button-size: 416px;
+    
+    @text-left: 0;
+    @text-top: 42.5px;
+    @text-width: 411.5px;
+    @text-height: 10px;
+    
+    @wrapper-width: 372px;
+    @wrapper-height: 67.5px;
+    
+    #storelist {
+        -moz-transition: @transition-property @transition-duration @transition-function;
+        -webkit-transition: @transition-property @transition-duration @transition-function;
+        -o-transition: @transition-property @transition-duration @transition-function;
+        -ms-transition: @transition-property @transition-duration @transition-function;
+        transition: @transition-property @transition-duration @transition-function;
+        position: relative;
+    }
+    
+    .rebuild(@scale) {
+        
+        #inappstore {
+            ul {
+                float: left;
+                margin-left: @scale*@list-margin-left;
+                .box(@scale*@list-width, @scale*@list-height);
+                .bcenter();   
+            }
+            
+            nav {
+                .box(@scale*@navigation-width, @scale*@navigation-height);
+                .bcenter();
+            }
+        }
+        
+        #storeprevious, #storenext {
+            .box(@scale*@nav-width, @scale*@nav-height);
+        }
+        
+        @page1-previous-background-position: 0px @scale*-282px;
+        @page4-next-background-position: @scale*-33px @scale*-282px;
+        
+        @previous-background-position: @scale*-67px @scale*-282px;
+        @active-previous-background-position: @scale*-134px @scale*-282px;
+        @next-margin-left: -10px;
+        @next-background-position: @scale*-100px @scale*-257px;
+        @active-next-background-position: @scale*-167px @scale*-257px;
+        
+        .storepage1 #storeprevious {
+            background-position: @page1-previous-background-position;
+        }
+        
+        .storepage4 #storenext {
+            background-position: @page4-next-background-position;
+        }
+        
+        #storeprevious {
+            background-position: @previous-background-position;
+            background-size: @scale*@button-size;
+        }
+        
+        #storeprevious:active {
+            background-position: @active-previous-background-position;
+        }
+        
+        #storenext { 
+            margin-left: @next-margin-left;
+            background-position: @next-background-position;
+            background-size: @scale*@button-size;
+        }
+        
+        #storenext:active {
+            background-position: @active-next-background-position;
+        }
+        
+        #storelist {
+            width: @store-list-width;
+        }
+        
+        .pagify(@i) when (@i < 5) {
+            .pagify(@i + 1);
+            
+            #inappstore.storepage@{i} #storelist {
+                left: @store-list-page-offsetX + (@i - 1)*@scale*@store-list-page-next-offsetX;
+            }
+        }
+        
+        .pagify(1);
+        
+        @element-background-position: 0 @scale*-304px;
+        
+        #inappstore li {
+            display: inline-block;
+            vertical-align: top;
+            margin: @scale*@element-vmargin 0;
+            top: @scale*@element-offsetY;
+            background-position: @element-background-position;
+            .box(@scale*@element-width, @scale*@element-height);
+            
+            span {
+                padding-top: @scale*@element-span-padding-top;
+            }
+        }
+        
+        #storetext {
+            .clear();
+            .box(@scale*@text-width, @scale*@text-height);
+            .set(@scale*@text-left, @scale*@text-top);
+            .icenter();
+        }
+        
+        @wrapper-margin: @scale*20px @scale*0 @scale*10px @scale*20px;
+        
+        #wrapper {
+            margin: @wrapper-margin;
+            .box(@scale*@wrapper-width, @scale*@wrapper-height);
+        }
+    }
+    
+    @media @largeScreen {
+        .rebuild(3);
+    }
+    
+    @media @midScreen {
+        .rebuild(2);
+    }
+    
+    @media @smallScreen {
+        .rebuild(1);
+    }
+}
+
+
+._inappstore();
