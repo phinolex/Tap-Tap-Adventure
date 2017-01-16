@@ -1,0 +1,139 @@
+@import "variables.less";
+
+._enchantdialog() {
+    
+    @dialog-font-size: 4pt;
+    @dialog-margin-left: -153px;
+    @dialog-margin-top: -106.5px;
+    
+    @inventory-offsetX: 0;
+    @inventory-offsetY: 22px;
+    @inventory-width: 129px;
+    @inventory-height: 155px;
+    
+    @modal-font-size: 4.5pt;
+    @modal-background-color: rgba(100, 100, 100, 0.3);
+    
+    @notify-width: 167px;
+    @notify-height: 47px;
+    @notify-margin-left: -83.5px;
+    @notify-margin-top: -23.5px;
+    
+    @notify-message-offsetX: 33.5px;
+    @notify-message-offsetY: 14px;
+    @notify-message-width: 123.5px;
+    @notify-message-height: 16.5px;
+    
+    @notify-button-width: 14px;
+    @notify-button-height: 7px;
+    @notify-button-offsetX: 143px;
+    @notify-button-offsetY: 34px;
+    
+    @confirm-button1-offsetX: 127px;
+
+    .rebuild(@scale) {
+        #enchantDialog {
+            font-family: @gameFont;
+            font-size: @scale*@dialog-font-size;
+            font-weight: bold;  
+            .set();
+            .margin(@scale*@dialog-margin-left, @scale*@dialog-margin-top);
+            .no-select();
+            .hidden();
+        }
+        
+        #enchantDialogInventory {
+            background-image: url(@sheet);
+            background-position: 0px 0px;
+            .set(@scale*@inventory-offsetX, @scale*@inventory-offsetY);
+            .box(@scale*@inventory-width, @scale*@inventory-height);
+        }
+        
+        #enchantDialogModal {
+            font-family: @gameFont;
+            font-size: @scale*@modal-font-size;
+            font-weight: bold;
+            background-color: @modal-background-color;
+            .set(0, 0);
+            .box(100%, 100%);
+            .no-select();
+            .hidden();
+        }
+        
+        @notify-background-position: @scale*-300px @scale*-47px;
+        #enchantDialogModalNotify {
+            background-image: url(@sheet);
+            background-position: @notify-background-position;
+            .set();
+            .box(@scale*@notify-width, @scale*@notify-height);
+            .margin(@scale*@notify-margin-left, @scale*@notify-margin-top);
+            .hidden();
+        }
+        
+        #enchantDialogModalNotifyMessage {
+            line-height: @notify-message-height;
+            .set(@notify-message-offsetX, @notify-message-offsetY);
+            .box(@notify-message-width, @notify-message-height);
+        }
+        
+        #enchantDialogModalNotifyButton1 {
+            .set(@notify-button-offsetX, @notify-button-offsetY);
+            .box(@notify-button-width, @notify-button-height);
+            .box(@notify-button-width, @notify-button-height);
+            .icenter();
+            .point();
+        }
+        
+        @confirm-background-position: @scale*-300px @scale*0;
+        #enchantDialogModalConfirm {
+            background-image: url(@sheet);
+            background-position: @confirm-background-position;
+            .set();
+            .box(@scale*@notify-width, @scale*@notify-height);
+            .margin(@scale*@notify-margin-left, @scale*@notify-margin-top);
+            .hidden();
+        }
+        
+        #enchantDialogModalConfirmMessage {
+            line-height: @notify-message-height;
+            .set(@notify-message-offsetX, @notify-message-offsetY);
+            .box(@notify-message-width, @notify-message-height);
+        }
+        
+        #enchantDialogModalConfirmButton1 {
+            .set(@confirm-button1-offsetX, @notify-button-offsetY);
+            .box(@notify-button-width, @notify-button-height);
+            .box(@notify-button-width, @notify-button-height);
+            .icenter();
+            .point();
+        }
+        
+        #enchantDialogModalConfirmButton2 {
+            .set(@notify-button-offsetX, @notify-button-offsetY);
+            .box(@notify-button-width, @notify-button-height);
+            .box(@notify-button-width, @notify-button-height);
+            .icenter();
+            .point();
+        }
+    }
+    
+    @media @largeScreen {
+        @sheet: "../img/3/storedialogsheet.png";
+        
+        .rebuild(3);
+    }
+    
+    @media @midScreen {
+        @sheet: "../img/2/storedialogsheet.png";
+        
+        .rebuild(2);
+    }
+    
+    @media @smallScreen {
+        @sheet: "../img/1/storedialogsheet.png";
+        
+        .rebuild(1);
+    }
+}
+
+._enchantdialog();
