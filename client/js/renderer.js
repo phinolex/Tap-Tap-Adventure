@@ -1287,6 +1287,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 }
             },
 
+            drawTutorialInterface: function() {
+
+            },
+
             setCameraView: function(ctx, isCentered) {
                 if (this.game.isCentered)
                     this.camera.setRealCoords();

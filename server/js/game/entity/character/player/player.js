@@ -33,72 +33,75 @@ module.exports = Player = Character.extend({
     init: function (connection, worldServer, databaseHandler) {
         var self = this;
 
-        this.server = worldServer;
-        this.connection = connection;
-        this.redisPool = databaseHandler;
+        self.server = worldServer;
+        self.connection = connection;
+        self.redisPool = databaseHandler;
 
-        this._super(this.connection.id, "player", 1, 0, 0, "");
+        self._super(this.connection.id, "player", 1, 0, 0, "");
 
-        this.hasEnteredGame = false;
-        this.isDead = false;
-        this.haters = {};
-        this.lastCheckpoint = null;
-        this.friends = {};
-        this.ignores = {};
-        this.pets = [];
-        this.inventory = null;
-        this.pvpFlag = false;
-        this.gameFlag = false;
-        this.bannedTime = 0;
-        this.banUseTime = 0;
-        this.membershipTime = 0;
-        this.experience = 0;
-        this.level = 0;
-        this.lastWorldChatMinutes = 99;
-        this.achievement = [];
-        this.royalAzaleaBenefTimeout = null;
-        this.cooltimeTimeout = null;
-        this.consumeTimeout = null;
-        this.rights = 0;
-        this.skillHandler = new SkillHandler();
-        this.inPVPLobby = false;
-        this.inPVPGame = false;
-        this.healExecuted = 0;
-        this.flareDanceCallback = null;
-        this.flareDanceExecuted1 = 0;
-        this.flareDanceExecuted2 = 0;
-        this.flareDanceCount = 0;
-        this.activeSkill = 0;
-        this.stunExecuted = 0;
-        this.quests = [];
-        this.superCatCallback = null;
-        this.superCatExecuted = 0;
-        this.poisoned = false;
-        this.provocationExecuted = 0;
-        this.pubPointBuyTimeout = null;
-        this.variations = new Variations();
-        this.membership = false;
-        this.chatBanEndTime = 0;
-        this.isPlayer = true;
-        this.hasFocus = true;
-        this.attackedTime = new Timer(950);
-        this.pClass = 0;
-        this.minigameTeam = -1;
-        this.talkingAllowed = true;
-        this.questHandler = new QuestHandler(this);
-        this.packetHandler = new PacketHandler(this, connection, worldServer, databaseHandler);
+        self.hasEnteredGame = false;
+        self.isDead = false;
+        self.haters = {};
+        self.lastCheckpoint = null;
+        self.friends = {};
+        self.ignores = {};
+        self.pets = [];
+        self.inventory = null;
+        self.pvpFlag = false;
+        self.gameFlag = false;
+        self.bannedTime = 0;
+        self.banUseTime = 0;
+        self.membershipTime = 0;
+        self.experience = 0;
+        self.level = 0;
+        self.lastWorldChatMinutes = 99;
+        self.achievement = [];
+        self.royalAzaleaBenefTimeout = null;
+        self.cooltimeTimeout = null;
+        self.consumeTimeout = null;
+        self.rights = 0;
+        self.skillHandler = new SkillHandler();
+        self.inPVPLobby = false;
+        self.inPVPGame = false;
+        self.kothLobby = false;
+        self.kothGame = false;
+        self.healExecuted = 0;
+        self.flareDanceCallback = null;
+        self.flareDanceExecuted1 = 0;
+        self.flareDanceExecuted2 = 0;
+        self.flareDanceCount = 0;
+        self.activeSkill = 0;
+        self.stunExecuted = 0;
+        self.quests = [];
+        self.superCatCallback = null;
+        self.superCatExecuted = 0;
+        self.poisoned = false;
+        self.provocationExecuted = 0;
+        self.pubPointBuyTimeout = null;
+        self.variations = new Variations();
+        self.membership = false;
+        self.chatBanEndTime = 0;
+        self.isPlayer = true;
+        self.hasFocus = true;
+        self.attackedTime = new Timer(950);
+        self.pClass = 0;
+        self.minigameTeam = -1;
+        self.talkingAllowed = true;
+        self.questHandler = new QuestHandler(self);
+        self.packetHandler = new PacketHandler(self, connection, worldServer, databaseHandler);
     },
 
 
     destroy: function () {
         var self = this;
 
-        this.forEachAttacker(function (mob) {
+        self.forEachAttacker(function (mob) {
             mob.clearTarget();
         });
-        this.attackers = {};
 
-        this.forEachHater(function (mob) {
+        self.attackers = {};
+
+        self.forEachHater(function (mob) {
             mob.forgetPlayer(self.id);
         });
         this.haters = {};

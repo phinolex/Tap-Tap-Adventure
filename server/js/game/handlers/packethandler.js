@@ -445,7 +445,8 @@ module.exports = PacketHandler = Class.extend({
                     self.player.foundAchievement(index);
 
                 self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, messages));
-            }
+            } else
+                self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, ["Lorem ipsum", "Potato."]));
 
         }
     },

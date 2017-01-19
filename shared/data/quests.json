@@ -2,6 +2,12 @@
     "Introduction": {
         "id": 0,
         "name": "A Great Start",
-        "description": "Teaching you the basics about Tap Tap Adventure!"
+        "description": "Teaching you the basics about Tap Tap Adventure!",
+        "instructions": [
+            "Talk to the -decide NPC here-",
+            "Find the missing item",
+            "Lorem ipsum",
+            "potato"
+        ]
     }
 }

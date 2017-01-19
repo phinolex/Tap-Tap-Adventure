@@ -44,7 +44,7 @@ module.exports = Introduction = Quest.extend({
             if (self.stage < 10)
                 self.toggleTalking();
 
-
+                log.info("Triggering future interface.");
         });
     },
 
@@ -85,6 +85,20 @@ module.exports = Introduction = Quest.extend({
 
         self.stage++;
         self.update();
+    },
+    
+    getInstructions: function() {
+        var self = this,
+            s;
+
+        if (self.stage < 10)
+            s = 1;
+        else if (self.stage > 10 && self.stage < 20)
+            s = 2;
+        else
+            s = 3;
+
+        return self.jsonData.instructions[s];
     },
 
     onFinishedLoading: function(callback) {
