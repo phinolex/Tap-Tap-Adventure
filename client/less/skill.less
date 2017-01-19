@@ -1,0 +1,112 @@
+@import "variables.less";
+
+._skills() {
+    
+    .rebuild(@scale) {
+        @skill-offsetY: @scale*2px;
+        @skill-width: @scale*17px;
+        @skill-height: @scale*20px;
+        
+        @skills-offset: @scale*301px;
+        @skills-next: @scale*17px;
+        
+        @skill-body-offsetX: 0;
+        @skill-body-offsetY: 0;
+        @skill-body-width: @scale*16px;
+        @skill-body-height: @scale*15px;
+        
+        @skill-cooltime-offsetX: 0;
+        @skill-cooltime-offsetY: 0;
+        @skill-cooltime-width: @scale*16px;
+        @skill-cooltime-height: @scale*15px;
+        @skill-cooltime-color: white;
+        @skill-cooltime-background-color: rgba(255, 0, 0, 0.5);
+        @skill-cooltime-font-size: @scale*7px;
+        @skill-cooltime-padding-top: @scale*4px;
+        
+        @subskill-background-position: (@scale*-330px) (@scale*-279px);
+        @subskill-offsetY: @scale*15px;
+        @subskill-width: @scale*3px;
+        @subskill-height: @scale*8px; /*Maybe 4px ?*/
+        @subskill-offset: @scale*1px;
+        @subskill-next: @scale*4px;
+        
+        .skillify(@i) when (@i < 5) {
+            .skillify(@i+1);
+            
+            #skill@{i} {
+                left: @skills-offset + @i*@skills-next;   
+            }
+        }
+        
+        .subskillify(@i) when (@i < 4) {
+            .subskillify(@i + 1);
+            
+            #skill0@{i}, #skill1@{i}, #skill2@{i}, #skill3@{i}, #skill4@{i} {
+                left: @subskill-offset + @i*@subskill-next;
+            }
+        }
+        
+        #skill0, #skill1, #skill2, #skill3, #skill4 {
+            .set(initial, @skill-offsetY);
+            .box(@skill-width, @skill-height);
+            .clear();
+        }
+        
+        #skill0Body, #skill1Body, #skill2Body, #skill3Body, #skill4Body {
+            .set(@skill-body-offsetX, @skill-body-offsetX);
+            .box(@skill-body-width, @skill-body-height);
+        }
+        
+        #skill0Cooltime, #skill1Cooltime, #skill2Cooltime, #skill3Cooltime, #skill4Cooltime {
+            color: @skill-cooltime-color;
+            background-color: @skill-cooltime-background-color;
+            font-size: @skill-cooltime-font-size;
+            padding-top: @skill-cooltime-padding-top;
+            
+            .set(@skill-cooltime-offsetX, @skill-cooltime-offsetY);
+            .box(@skill-cooltime-width, @skill-cooltime-height);
+            .icenter();
+            .hidden();
+            .ignore();
+        }
+        
+        .skillify(0);
+        
+        #skill00, #skill01, #skill02, #skill03,
+        #skill10, #skill11, #skill12, #skill13,
+        #skill20, #skill21, #skill22, #skill23,
+        #skill30, #skill31, #skill32, #skill33,
+        #skill40, #skill41, #skill42, #skill43 {
+            border: none;
+            display: none;
+            background-image: url(@sheet);
+            background-position: @subskill-background-position;
+            .set(initial, @subskill-offsetY);
+            .box(@subskill-width, @subskill-height);
+        }
+        
+        .subskillify(0);
+    }
+    
+    @media @largeScreen {
+        @sheet: "../img/3/main.png";
+        
+        .rebuild(3);
+    }
+    
+    @media @midScreen {
+        @sheet: "../img/2/main.png";
+        
+        .rebuild(2);
+    }
+    
+    @media @smallScreen {
+        @sheet: "../img/1/main.png";
+        
+        .rebuild(1);
+    }
+}
+
+
+._skills();

@@ -1,0 +1,196 @@
+@import "variables.less";
+
+//No need to make this file any lesser
+//Because, IDK, Tachy will decide
+._game() {
+    
+    @media @largeScreen {
+
+        #classSwitcher {
+            position: absolute;
+            width:128px;
+            height:96px;
+            left: calc(50% - 64px);
+            top: calc(50% - 48px);
+            display: none;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding:8px;
+            text-align: center;
+            font-size:12px;
+        }
+        
+        #classSwitcherButton {
+            margin:8px;
+            border: 1px solid #000;
+        }
+
+        #bubbles{
+            font-family:'GraphicPixel';
+            width:960px;
+            height:448px;
+            margin-bottom:-448px;
+            position: absolute;
+            top: 20px;
+            left: 12px;
+            pointer-events:none;
+            overflow: hidden;
+            z-index:5;
+        }
+
+        .bubble {
+            background:rgba(45,45,45,0.7);
+            padding:3px 10px 0 10px;
+            border-radius:8px;
+            color:rgba(255,255,255,0.8);
+            display:inline-block;
+            text-align:center;
+            position:absolute;
+            -moz-user-select:none;
+            -webkit-user-select:none;
+        }
+
+        .thingy {
+            height:10px;
+            width:11px;
+            background:url('../img/common/thingy.png');
+            margin:0 auto;
+            margin-top:-6px;
+            top:10px;
+            position:relative;
+        }
+
+        #bubbles a {
+            pointer-events:auto;
+            text-decoration:none;
+            color:#fcda5c;
+        }
+    }
+
+    @media screen and (max-width: 1500px), screen and (max-height: 870px) {
+
+        #classSwitcher {
+            position: absolute;
+            width:64px;
+            height:48px;
+            left: calc(50% - 32px);
+            top: calc(50% - 24px);
+            display: none;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding:4px;
+            text-align: center;
+            font-size:8px;
+        }
+        
+        #classSwitcherButton {
+            margin:4px;
+            border: 1px solid #000;
+        }
+
+        #bubbles{
+            font-family:'GraphicPixel';
+            width:960px;
+            height:448px;
+            margin-bottom:-448px;
+            position: absolute;
+            top: 20px;
+            left: 12px;
+            pointer-events:none;
+            overflow: hidden;
+            z-index:5;
+        }
+        .bubble {
+            background:rgba(45,45,45,0.7);
+            padding:3px 10px 0 10px;
+            border-radius:8px;
+            color:rgba(255,255,255,0.8);
+            display:inline-block;
+            text-align:center;
+            position:absolute;
+            -moz-user-select:none;
+            -webkit-user-select:none;
+        }
+        .thingy {
+            height:10px;
+            width:11px;
+            background:url('../img/common/thingy.png');
+            margin:0 auto;
+            margin-top:-6px;
+            top:10px;
+            position:relative;
+        }
+        
+        #bubbles a {
+            pointer-events:auto;
+            text-decoration:none;
+            color:#fcda5c;
+        }
+
+    }
+
+    @media screen and (max-width: 1000px) {
+
+        #bubbles{
+            font-family:'GraphicPixel';
+            width:960px;
+            height:448px;
+            margin-bottom:-448px;
+            position: absolute;
+            top: 20px;
+            left: 7px;
+            pointer-events:none;
+            overflow: hidden;
+            z-index:5;
+        }
+
+        .bubble {
+            background:rgba(45,45,45,0.7);
+            padding:3px 10px 0 10px;
+            border-radius:8px;
+            color:rgba(255,255,255,0.8);
+            display:inline-block;
+            text-align:center;
+            position:absolute;
+            -moz-user-select:none;
+            -webkit-user-select:none;
+        }
+
+        .thingy {
+            height:10px;
+            width:11px;
+            background:url('../img/common/thingy.png');
+            margin:0 auto;
+            margin-top:-6px;
+            top:10px;
+            position:relative;
+        }
+
+        #bubbles a {
+            pointer-events:auto;
+            text-decoration:none;
+            color:#fcda5c;
+        }
+
+        #classSwitcher {
+            position: absolute;
+            width:32px;
+            height:24px;
+            left: calc(50% - 16px);
+            top: calc(50% - 12px);
+            display: none;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding:2px;
+            text-align: center;
+            font-size:6px;
+        }
+
+        #classSwitcherButton {
+            margin:2px;
+            border: 1px solid #000;
+        }
+    }
+}
+
+._game();
