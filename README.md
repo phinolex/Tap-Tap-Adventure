@@ -76,6 +76,6 @@ Done! You can connect to the game using http://127.0.0.1:8080/client
 
 ## Copyright
 
-Under the Mozilla Public License 2.0 TTA is released under, everyone must provide updated source code if to start their own version of the game. Images, and music are exempt from this.
+Because TTA is released under the MPL 2.0 license, everyone must provide the updated source code in one way or another if they choose to start their own version of the game. Images, music and any other form of arts that do not go under this license are exempt from this.
 
 If you are to provide new sprites to this repository, you must have proper permissions from the author or be under CC-BY-SA 3.0. In both instances, you must provide proof of this in your pull requests, and any other information regarding copyright.
