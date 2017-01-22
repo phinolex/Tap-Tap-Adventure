@@ -484,7 +484,7 @@ div.clear {
   display: inline;
 }
 #create-new {
-  margin-top: 2em;
+  margin-top: 0.5em;
 }
 #playername {
   color: #fff;
@@ -3787,7 +3787,7 @@ footer div {
     width: 38px;
     height: 24px;
     left: calc(31%);
-    top: calc(38%);
+    atetop: calc(38%);
     background: rgba(0, 0, 0, 0.5);
     display: none;
   }

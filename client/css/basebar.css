@@ -107,8 +107,8 @@
   }
   #healthtext p,
   #manatext p {
-    font-size: 27px;
-    line-height: 27px;
+    font-size: 21px;
+    line-height: 21px;
   }
   #healthbar {
     background-image: url("../img/3/maintwo.png");
@@ -132,9 +132,10 @@
   }
   #healthtext,
   #manatext {
-    top: 18px;
+    top: -13.5px;
     line-height: 13px;
     color: white;
+    z-index: 1;
     position: absolute;
     left: 0;
     top: 6px;
@@ -282,7 +283,6 @@
     background: url("../img/3/main.png") no-repeat -672px -942px;
   }
   #characterButton {
-    background-color: rgba(0, 0, 0, 0);
     background: url("../img/3/main.png") no-repeat -714px -942px;
     position: absolute;
     left: 1305px;
@@ -293,14 +293,14 @@
     border: 0;
     margin: 0;
   }
-  #characterButton.active {
+  #characterButton:hover {
     background: url("../img/3/main.png") no-repeat -756px -942px;
   }
-  #characterButton:hover {
+  #characterButton.active {
     background: url("../img/3/main.png") no-repeat -798px -942px;
   }
   #helpbutton {
-    background: url("../img/3/main.png") no-repeat -126px -942px rgba(0, 0, 0, 0);
+    background: url("../img/3/main.png") no-repeat -126px -942px;
     position: absolute;
     left: 1350px;
     top: 3px;
@@ -310,17 +310,18 @@
     border: 0;
     margin: 0;
   }
-  #helpbutton.active {
+  #helpbutton:hover,
+  #helpbutton.blink:hover {
     background: url("../img/3/main.png") no-repeat -168px -942px;
   }
-  #helpbutton.blink {
+  #helpbutton.active {
     background: url("../img/3/main.png") no-repeat -210px -942px;
   }
-  #helpbutton:hover {
+  #helpbutton.blink {
     background: url("../img/3/main.png") no-repeat -252px -942px;
   }
   #soundbutton {
-    background: url("../img/3/main.png") no-repeat -126px -314px;
+    background: url("../img/3/main.png") no-repeat -378px -942px;
     position: absolute;
     left: 1395px;
     top: 3px;
@@ -330,14 +331,14 @@
     border: 0;
     margin: 0;
   }
-  #soundbutton.active {
-    background: url("../img/3/main.png") no-repeat -294px -942px;
-  }
   #soundbutton:hover {
     background: url("../img/3/main.png") no-repeat -336px -942px;
   }
+  #soundbutton.active {
+    background: url("../img/3/main.png") no-repeat -294px -942px;
+  }
   #warpbutton {
-    background: url("../img/3/main.png") no-repeat -126px -314px;
+    background: url("../img/3/main.png") no-repeat -966px -942px;
     position: absolute;
     left: 699px;
     top: 3px;
@@ -347,11 +348,11 @@
     border: 0;
     margin: 0;
   }
+  #warpbutton:hover {
+    background: url("../img/3/main.png") no-repeat -1008px -942px;
+  }
   #warpbutton.active {
     background: url("../img/3/main.png") no-repeat -1050px -942px;
-  }
-  active- #warpbutton:hover {
-    background: url("../img/3/main.png") no-repeat -1008px -942px;
   }
   #chatbutton {
     background: url("../img/3/maintwo.png") no-repeat -588px -942px;
@@ -364,11 +365,11 @@
     border: 0;
     margin: 0;
   }
-  #chatbutton.active {
-    background: url("../img/3/maintwo.png") no-repeat -672px -942px;
-  }
   #chatbutton:hover {
     background: url("../img/3/maintwo.png") no-repeat -630px -942px;
+  }
+  #chatbutton.active {
+    background: url("../img/3/maintwo.png") no-repeat -672px -942px;
   }
   #users {
     font-family: "GraphicPixel";
@@ -506,8 +507,8 @@
   }
   #healthtext p,
   #manatext p {
-    font-size: 18px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 14px;
   }
   #healthbar {
     background-image: url("../img/2/maintwo.png");
@@ -531,9 +532,10 @@
   }
   #healthtext,
   #manatext {
-    top: 12px;
+    top: -9px;
     line-height: 13px;
     color: white;
+    z-index: 1;
     position: absolute;
     left: 0;
     top: 4px;
@@ -681,7 +683,6 @@
     background: url("../img/2/main.png") no-repeat -448px -628px;
   }
   #characterButton {
-    background-color: rgba(0, 0, 0, 0);
     background: url("../img/2/main.png") no-repeat -476px -628px;
     position: absolute;
     left: 870px;
@@ -692,14 +693,14 @@
     border: 0;
     margin: 0;
   }
-  #characterButton.active {
+  #characterButton:hover {
     background: url("../img/2/main.png") no-repeat -504px -628px;
   }
-  #characterButton:hover {
+  #characterButton.active {
     background: url("../img/2/main.png") no-repeat -532px -628px;
   }
   #helpbutton {
-    background: url("../img/2/main.png") no-repeat -84px -628px rgba(0, 0, 0, 0);
+    background: url("../img/2/main.png") no-repeat -84px -628px;
     position: absolute;
     left: 900px;
     top: 2px;
@@ -709,17 +710,18 @@
     border: 0;
     margin: 0;
   }
-  #helpbutton.active {
+  #helpbutton:hover,
+  #helpbutton.blink:hover {
     background: url("../img/2/main.png") no-repeat -112px -628px;
   }
-  #helpbutton.blink {
+  #helpbutton.active {
     background: url("../img/2/main.png") no-repeat -140px -628px;
   }
-  #helpbutton:hover {
+  #helpbutton.blink {
     background: url("../img/2/main.png") no-repeat -168px -628px;
   }
   #soundbutton {
-    background: url("../img/2/main.png") no-repeat -126px -314px;
+    background: url("../img/2/main.png") no-repeat -252px -628px;
     position: absolute;
     left: 930px;
     top: 2px;
@@ -729,14 +731,14 @@
     border: 0;
     margin: 0;
   }
-  #soundbutton.active {
-    background: url("../img/2/main.png") no-repeat -196px -628px;
-  }
   #soundbutton:hover {
     background: url("../img/2/main.png") no-repeat -224px -628px;
   }
+  #soundbutton.active {
+    background: url("../img/2/main.png") no-repeat -196px -628px;
+  }
   #warpbutton {
-    background: url("../img/2/main.png") no-repeat -126px -314px;
+    background: url("../img/2/main.png") no-repeat -644px -628px;
     position: absolute;
     left: 466px;
     top: 2px;
@@ -746,11 +748,11 @@
     border: 0;
     margin: 0;
   }
+  #warpbutton:hover {
+    background: url("../img/2/main.png") no-repeat -672px -628px;
+  }
   #warpbutton.active {
     background: url("../img/2/main.png") no-repeat -700px -628px;
-  }
-  active- #warpbutton:hover {
-    background: url("../img/2/main.png") no-repeat -672px -628px;
   }
   #chatbutton {
     background: url("../img/2/maintwo.png") no-repeat -392px -628px;
@@ -763,11 +765,11 @@
     border: 0;
     margin: 0;
   }
-  #chatbutton.active {
-    background: url("../img/2/maintwo.png") no-repeat -448px -628px;
-  }
   #chatbutton:hover {
     background: url("../img/2/maintwo.png") no-repeat -420px -628px;
+  }
+  #chatbutton.active {
+    background: url("../img/2/maintwo.png") no-repeat -448px -628px;
   }
   #users {
     font-family: "GraphicPixel";
@@ -905,8 +907,8 @@
   }
   #healthtext p,
   #manatext p {
-    font-size: 9px;
-    line-height: 9px;
+    font-size: 7px;
+    line-height: 7px;
   }
   #healthbar {
     background-image: url("../img/1/maintwo.png");
@@ -930,9 +932,10 @@
   }
   #healthtext,
   #manatext {
-    top: 6px;
+    top: -4.5px;
     line-height: 13px;
     color: white;
+    z-index: 1;
     position: absolute;
     left: 0;
     top: 2px;
@@ -1080,7 +1083,6 @@
     background: url("../img/1/main.png") no-repeat -224px -314px;
   }
   #characterButton {
-    background-color: rgba(0, 0, 0, 0);
     background: url("../img/1/main.png") no-repeat -238px -314px;
     position: absolute;
     left: 435px;
@@ -1091,14 +1093,14 @@
     border: 0;
     margin: 0;
   }
-  #characterButton.active {
+  #characterButton:hover {
     background: url("../img/1/main.png") no-repeat -252px -314px;
   }
-  #characterButton:hover {
+  #characterButton.active {
     background: url("../img/1/main.png") no-repeat -266px -314px;
   }
   #helpbutton {
-    background: url("../img/1/main.png") no-repeat -42px -314px rgba(0, 0, 0, 0);
+    background: url("../img/1/main.png") no-repeat -42px -314px;
     position: absolute;
     left: 450px;
     top: 1px;
@@ -1108,13 +1110,14 @@
     border: 0;
     margin: 0;
   }
-  #helpbutton.active {
+  #helpbutton:hover,
+  #helpbutton.blink:hover {
     background: url("../img/1/main.png") no-repeat -56px -314px;
   }
-  #helpbutton.blink {
+  #helpbutton.active {
     background: url("../img/1/main.png") no-repeat -70px -314px;
   }
-  #helpbutton:hover {
+  #helpbutton.blink {
     background: url("../img/1/main.png") no-repeat -84px -314px;
   }
   #soundbutton {
@@ -1128,14 +1131,14 @@
     border: 0;
     margin: 0;
   }
-  #soundbutton.active {
-    background: url("../img/1/main.png") no-repeat -98px -314px;
-  }
   #soundbutton:hover {
     background: url("../img/1/main.png") no-repeat -112px -314px;
   }
+  #soundbutton.active {
+    background: url("../img/1/main.png") no-repeat -98px -314px;
+  }
   #warpbutton {
-    background: url("../img/1/main.png") no-repeat -126px -314px;
+    background: url("../img/1/main.png") no-repeat -322px -314px;
     position: absolute;
     left: 233px;
     top: 1px;
@@ -1145,11 +1148,11 @@
     border: 0;
     margin: 0;
   }
+  #warpbutton:hover {
+    background: url("../img/1/main.png") no-repeat -336px -314px;
+  }
   #warpbutton.active {
     background: url("../img/1/main.png") no-repeat -350px -314px;
-  }
-  active- #warpbutton:hover {
-    background: url("../img/1/main.png") no-repeat -336px -314px;
   }
   #chatbutton {
     background: url("../img/1/maintwo.png") no-repeat -196px -314px;
@@ -1162,11 +1165,11 @@
     border: 0;
     margin: 0;
   }
-  #chatbutton.active {
-    background: url("../img/1/maintwo.png") no-repeat -224px -314px;
-  }
   #chatbutton:hover {
     background: url("../img/1/maintwo.png") no-repeat -210px -314px;
+  }
+  #chatbutton.active {
+    background: url("../img/1/maintwo.png") no-repeat -224px -314px;
   }
   #users {
     font-family: "GraphicPixel";

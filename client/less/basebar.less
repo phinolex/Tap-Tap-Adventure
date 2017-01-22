@@ -52,7 +52,7 @@
     @statbar-offsetY: 0;
     @statbar-width: 88px;
     @statbar-height: 13px;
-    @stat-font-size: 9px;
+    @stat-font-size: 7px;
     
     @expbar-offsetX: 0;
     @expbar-offsetY: 0;
@@ -246,10 +246,11 @@
         }
         
         #healthtext, #manatext {
-            top: @scale*6px; //HARDCODED !
+            top: @scale*-4.5px; //HARDCODED !
             line-height: @stat-text-height;
             text-align: center;
             color: white;
+            z-index: 1;
             .set(@scale*@stat-text-offsetX, @scale*@stat-text-offsetY);
             .box(@scale*@stat-text-width, @scale*@stat-text-height);
             .icenter();
@@ -337,44 +338,45 @@
         }
         
         @character-background-position: @scale*-238px @scale*-314px;
-        @character-active-background-position: @scale*-252px @scale*-314px;
-        @character-hover-background-position: @scale*-266px @scale*-314px;
+        @character-active-background-position: @scale*-266px @scale*-314px;
+        @character-hover-background-position: @scale*-252px @scale*-314px;
         #characterButton {
-            background-color: @character-color;
             background: url(@sheet2) no-repeat @character-background-position;
+
             .set(@scale*@character-offsetX, @scale*@character-offsetY);
             .box(@scale*@character-width, @scale*@character-height);
             .clear();
-            
-            &.active {
-                background: url(@sheet2) no-repeat @character-active-background-position;
-            }
-            
+
+
             &:hover {
                 background: url(@sheet2) no-repeat @character-hover-background-position;
+            }
+
+            &.active {
+                background: url(@sheet2) no-repeat @character-active-background-position;
             }
         }
         
         @help-background-position: @scale*-42px @scale*-314px;
-        @help-active-background-position: @scale*-56px @scale*-314px;
-        @help-blink-background-position: @scale*-70px @scale*-314px;
-        @help-hover-background-position: @scale*-84px @scale*-314px;
+        @help-active-background-position: @scale*-70px @scale*-314px;
+        @help-blink-background-position: @scale*-84px @scale*-314px;
+        @help-hover-background-position: @scale*-56px @scale*-314px;
         #helpbutton {
-            background: url(@sheet2) no-repeat @help-background-position @help-background-color;
+            background: url(@sheet2) no-repeat @help-background-position;
             .set(@scale*@help-offsetX, @scale*@help-offsetY);
             .box(@scale*@help-width, @scale*@help-height);
             .clear();
-            
+
+            &:hover, &.blink:hover {
+                background: url(@sheet2) no-repeat @help-hover-background-position;
+            }
+
             &.active {
                 background: url(@sheet2) no-repeat @help-active-background-position;
             }
-            
+
             &.blink {
-                 background: url(@sheet2) no-repeat @help-blink-background-position;               
-            }
-            
-            &:hover {
-                background: url(@sheet2) no-repeat @help-hover-background-position;
+                background: url(@sheet2) no-repeat @help-blink-background-position;
             }
         }
         
@@ -382,17 +384,17 @@
         @sound-hover-background-position: @scale*-112px @scale*-314px;
         @sound-active-background-position: @scale*-98px @scale*-314px;
         #soundbutton {
-            background: url(@sheet2) no-repeat -126px -314px;
+            background: url(@sheet2) no-repeat @sound-background-position;
             .set(@scale*@sound-offsetX, @scale*@sound-offsetY);
             .box(@scale*@sound-width, @scale*@sound-height);
             .clear();
+
+            &:hover {
+                background: url(@sheet2) no-repeat @sound-hover-background-position;
+            }
             
             &.active {
                  background: url(@sheet2) no-repeat @sound-active-background-position;               
-            }
-            
-            &:hover {
-                background: url(@sheet2) no-repeat @sound-hover-background-position;
             }
         }
         
@@ -400,18 +402,19 @@
         @warp-hover-background-position: @scale*-336px @scale*-314px;
         @warp-active-background-position: @scale*-350px @scale*-314px;
         #warpbutton {
-            background: url(@sheet2) no-repeat -126px -314px;
+            background: url(@sheet2) no-repeat @warp-background-position;
             .set(@scale*@warp-offsetX, @scale*@warp-offsetY);
             .box(@scale*@warp-width, @scale*@warp-height);
             .clear();
-            
-            &.active {
-                 background: url(@sheet2) no-repeat @warp-active-background-position;               
-            }
- active-          
+
             &:hover {
                 background: url(@sheet2) no-repeat @warp-hover-background-position;
             }
+
+            &.active {
+                 background: url(@sheet2) no-repeat @warp-active-background-position;               
+            }
+
         }
         
         @chat-background-position: @scale*-196px @scale*-314px;
@@ -422,13 +425,13 @@
             .set(@scale*@chat-offsetX, @scale*@chat-offsetY);
             .box(@scale*@chat-width, @scale*@chat-height);
             .clear();
-            
-            &.active {
-                 background: url(@sheet) no-repeat @chat-active-background-position;               
-            }
-            
+
             &:hover {
                 background: url(@sheet) no-repeat @chat-hover-background-position;
+            }
+
+            &.active {
+                 background: url(@sheet) no-repeat @chat-active-background-position;               
             }
         }
         
