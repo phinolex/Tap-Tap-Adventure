@@ -1,14 +1,44 @@
 # Tap Tap Adventure
 
-Tap Tap Adventure is an advanced expasion of the 2012 experimental HTML5 game developed by Little Workshop to show how WebSockets could be used to create a realtime MMORPG in the comfort of your browser.
+A massively multiplayer online experience based on Little Workshop's 2012 experimental HTML5 game - BrowserQuest. Initially, making use of WebSockets, the game has been revamped with more modern approaches such as Socket.io to ensure maximum networking performance in the comfort of your browser.
 
-With the visual potential behind the original game, TTA takes a leap forward towards expanding the game from many of the ideas and suggestions from earlier development releases of the game. Thus, with the expansion hundreds of new mobs, items, and sprites have been added to the game to offer a higher field of actions. 
+Since BrowserQuest, we have improved tons of things, rewriting the backend nearly entirely at this point, updates such as:
 
-Further accomplishments include improvements towards the rendering engine, game engine, migration of WebSockets to Socket.IO, quests, levels, new areas, inventory, party system, character information, database saving, API login & registration, and abilities. The list does not cover all of the new features and is but merely to point in the direction the game is heading.
+* Centered Camera Rendering & Side-Scroller mode
+* Over a thousand new sprites (items, mobs, areas, etc.)
+* API Registration and Login w/ Anti-Bruteforce protection
+* Skills and Abilities
+* Inventory System
+* Changes towards the UI
+* Questing Handler (allowing full control over a quest)
+* Minigame Handler (anyone can create minigames)
+* Party System -> (To be transformed into guilds)
+* Levelling sytem
+* Proper arrangement of internal server files
+* Complete refactoring of major files
+* Improvements to the packet system
+* Tons of exploits fixed due to accessible client files
+* Banking, Enchanting, Shop, Crafting Systems
+* Projectiles
+* Archery Class
 
-The initial intent behind TTA is to offer a large-scaled MMORPG whereby players are able to access it from all devices in a comfortable manner, thus said the data, RAM, and CPU usage must be maintained at a minimal to ensure perfect compatibility. HTML5 comes into play when we wish to allow players to access the game from a wide variety of devices. This includes Android and Apple phones, phablets and tablets as well as Linux based machines and older OS computers.
+Though those changes give the game a greater purpose, there is much to be done, the following are examples:
 
-All of the music and game art is signed under CC-BY-SA 3.0 and in compliance with those terms have credited the rightful authors for their contributions towards the development
+* Improve the rendering to offer maximum performance on all devices
+* Create a storyline for the game to follow 
+* Smoothen out the interfaces to properly fit the game
+* Add various activities (cutting wood, making fire, fishing, etc.)
+* Proper interfaces for Achievements and Quests
+* Re-arrange the map to fit in more content
+* Add tutorials for new players
+* Change or completely redo the interface
+* Trading System amongst players
+* Create a form of economy through the shops (player sells, player buys)
+* Ranking system to players (promoting PVP)
+* Add multiple world support (easy and not important right now)
+* Inventory interface needs to be updated
+
+The intent behind Tap Tap Adventure is to provide a cross-platform experience to everyone, being able to continue your progress at any time while utilizing minimal amounts of data, RAM and CPU. At the same time, we would like to invite everyone to contribute towards the development of the game. All updates posted on GitHub will be voted by other players and included in the game, or adversely, refused.
 
 
 ## Running the Repo
@@ -42,3 +72,10 @@ You will need a separate terminal window for each of the following (ensure you a
 `$ http-server`
 
 Done! You can connect to the game using http://127.0.0.1:8080/client
+
+
+## Copyright
+
+Under the Mozilla Public License 2.0 TTA is released under, everyone must provide updated source code if to start their own version of the game. Images, and music are exempt from this.
+
+If you are to provide new sprites to this repository, you must have proper permissions from the author or be under CC-BY-SA 3.0. In both instances, you must provide proof of this in your pull requests, and any other information regarding copyright.
