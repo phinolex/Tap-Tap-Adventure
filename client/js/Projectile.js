@@ -1,5 +1,5 @@
 /**
- * Created by flavius on 2016-11-23.
+ * Credits to Paragon Quest
  */
 define(function() {
 
