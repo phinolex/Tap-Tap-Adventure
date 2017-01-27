@@ -1,17 +1,19 @@
 /**
  * Created by flavius on 2017-01-07.
  */
-var cls = require('../lib/class');
+var cls = require('../lib/class'),
+    Minigame = require('./minigame');
 
 /**
  * We will have to draw an interface with all the players,
  * and it has to be scrollable. After we redo the CSS with less.
  */
 
-module.exports = KingOfTheHill = cls.Class.extend({
+module.exports = KingOfTheHill = Minigame.extend({
     init: function(world, id, name) {
         var self = this;
 
+        self._super(id, name);
         self.winnerIndex = null;
         self.scoreThreshold = 0;
         self.started = false;
