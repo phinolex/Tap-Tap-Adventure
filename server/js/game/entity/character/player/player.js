@@ -363,7 +363,7 @@ module.exports = Player = Character.extend({
     foundAchievement: function (achievementId) {
         var self = this;
 
-        self.achievement[achievemntId] = {};
+        self.achievement[achievementId] = {};
         self.achievement[achievementId].found = true;
         self.redisPool.foundAchievement(self.name, achievementId);
         self.server.pushToPlayer(self, new Messages.Achievement('found', achievementId));
