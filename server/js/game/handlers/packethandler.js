@@ -444,9 +444,26 @@ module.exports = PacketHandler = Class.extend({
                     self.player.foundAchievement(index);
 
                 self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, messages));
-            } else
-                self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, ["Lorem ipsum", "Potato."]));
+            } else {
 
+                switch (npc.kind) {
+                    case 318: // Clerk
+                        self.server.pushToPlayer(self.player, new Messages.Interface(Types.Interfaces.STORE));
+                        break;
+
+                    case 317: // Banker
+                        self.server.pushToPlayer(self.player, new Messages.Interface(Types.Interfaces.BANK))
+                        break;
+
+                    case 239: // Enchantment Table
+                        self.server.pushToPlayer(self.player, new Messages.Interface(Types.Interfaces.ENCHANTMENT))
+                        break;
+
+                    default:
+                        self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, ["Hello there young adventurer."]));
+                        break;
+                }
+            }
         }
     },
 

@@ -1,5 +1,4 @@
-var cls = require('../lib/class'),
-    Minigame = require('./minigame'),
+var Minigame = require('./minigame'),
     Messages = require('../network/packets/message'),
     Types = require('../../../../shared/js/gametypes'),
     Utils = require('../utils/utils');

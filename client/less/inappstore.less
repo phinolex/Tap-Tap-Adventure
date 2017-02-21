@@ -5,16 +5,16 @@
     @transition-property: left;
     @transition-function: ease-in-out;
     
-    @list-margin-left: 3px;
-    @list-width: 400px;
-    @list-height: 100;
+    @list-margin-left: -12.5px;
+    @list-width: 500px;
+    @list-height: 100px;
     
     @navigation-width: 67px;
     @navigation-height: 22px;
     
     /*Next and previous*/
     @nav-height: 22px;
-    @nav-width: 68px;
+    @nav-width: 34px;
     
     @store-list-width: 4000px; //wtf
     @store-list-page-offsetX: 0;
@@ -52,12 +52,12 @@
                 float: left;
                 margin-left: @scale*@list-margin-left;
                 .box(@scale*@list-width, @scale*@list-height);
-                .bcenter();   
             }
             
             nav {
+                margin: 0 auto;
+                display: flex;
                 .box(@scale*@navigation-width, @scale*@navigation-height);
-                .bcenter();
             }
         }
         
@@ -92,7 +92,7 @@
         }
         
         #storenext { 
-            margin-left: @next-margin-left;
+            //margin-left: @next-margin-left;
             background-position: @next-background-position;
             background-size: @scale*@button-size;
         }
@@ -104,25 +104,25 @@
         #storelist {
             width: @store-list-width;
         }
+
+        @element-background-position: 0 @scale*-304px;
         
         .pagify(@i) when (@i < 5) {
             .pagify(@i + 1);
             
             #inappstore.storepage@{i} #storelist {
-                left: @store-list-page-offsetX + (@i - 1)*@scale*@store-list-page-next-offsetX;
+                left: @store-list-page-offsetX + (@i - 1) * @scale * @store-list-page-next-offsetX;
             }
         }
         
         .pagify(1);
         
-        @element-background-position: 0 @scale*-304px;
-        
         #inappstore li {
             display: inline-block;
             vertical-align: top;
-            margin: @scale*@element-vmargin 0;
+            margin: 10px 0;
             top: @scale*@element-offsetY;
-            background-position: @element-background-position;
+
             .box(@scale*@element-width, @scale*@element-height);
             
             span {

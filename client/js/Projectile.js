@@ -1,5 +1,5 @@
 /**
- * Credits to Paragon Quest
+ * Created by flavius on 2016-11-23.
  */
 define(function() {
 

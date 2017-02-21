@@ -24,7 +24,6 @@ var cls = require("./lib/class"),
     SkillData = require("./utils/data/skilldata"),
     GatherData = require("./utils/data/gatherdata"),
     Gather = require("./entity/item/gather"),
-    Lobby = require('./lobby'),
     MinigameHandler = require('./handlers/minigamehandler'),
     AchievementData = require('./utils/data/achievementdata')
 
@@ -67,6 +66,8 @@ module.exports = World = cls.Class.extend({
         self.blueScore = 0;
         self.masterPassword = "Dh22dSJl295JNGB01";
         self.development = true;
+        self.doubleEXP = false;
+        self.expMultiplier = 1;
 
         /**
          * Handlers
@@ -188,8 +189,7 @@ module.exports = World = cls.Class.extend({
         /**
          * Just initialize those after everything is set, to be safe.
          */
-
-        self.lobby = new Lobby(self);
+        
         self.minigameHandler = new MinigameHandler(self);
     },
 

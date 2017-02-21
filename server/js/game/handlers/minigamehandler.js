@@ -21,7 +21,7 @@ module.exports = MinigameHandler = cls.Class.extend({
         var self = this;
 
         self.minigames["PVPGame"] = new PVPGame(self.server, 1, "PVPGame");
-        self.minigames["KOTH"] = new KingOfTheHill(self.server, 1, "KOTH");
+        self.minigames["KOTH"] = new KingOfTheHill(self.server, 2, "KOTH");
 
         log.info("[MinigameHandler] Has been successfully initialized!");
         log.info("[MinigameHandler] Loaded: " + self.getMinigameCount() + " minigames!");

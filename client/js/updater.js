@@ -170,7 +170,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                         if (!g.isCentered) {
                             c.setPosition(x, c.y);
                             g.initAnimatedTiles();
-                            g.renderer.renderStaticCanvases();
+                            g.renderer.renderSideScrollerCanvas();
                         } else {
                             g.camera.setRealCoords();
                             g.renderbackground = true;
@@ -190,7 +190,7 @@ define(['character', 'timer', 'player'], function(Character, Timer, Player) {
                         if (!g.isCentered) {
                             c.setPosition(c.x, y);
                             g.initAnimatedTiles();
-                            g.renderer.renderStaticCanvases();
+                            g.renderer.renderSideScrollerCanvas();
                         } else {
                             g.camera.setRealCoords();
                             g.renderbackground = true;

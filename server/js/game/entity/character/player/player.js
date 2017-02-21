@@ -16,7 +16,7 @@ var cls = require("./../../../lib/class"),
     bcrypt = require('bcrypt'),
     Inventory = require("./inventory/inventory"),
     Mob = require('./../mob/mob'),
-    SkillHandler = require("./../../../handlers/skillhandler"),
+    SkillHandler = require("./../../../handlers/skillhandler")
     Trade = require('./trade'),
     express = require('express'),
     bodyParser = require('body-parser'),
@@ -77,7 +77,6 @@ module.exports = Player = Character.extend({
         self.poisoned = false;
         self.provocationExecuted = 0;
         self.pubPointBuyTimeout = null;
-        self.variations = new Variations();
         self.membership = false;
         self.chatBanEndTime = 0;
         self.isPlayer = true;
@@ -491,8 +490,8 @@ module.exports = Player = Character.extend({
                         self.weapon, //7
                         self.experience, //10
                         self.maxMana ? self.maxMana : 10, //11
-                        self.variations.doubleEXP, //12
-                        self.variations.expMultiplier, //13
+                        self.server.doubleEXP, //12
+                        self.server.expMultiplier, //13
                         self.membership, //14
                         self.kind, //15
                         self.rights, //16
@@ -1072,6 +1071,11 @@ module.exports = Player = Character.extend({
         log.info("Teleporting: " + self.name);
 
         self.server.pushToPlayer(self, new Messages.Stop(x, y, orientation));
+    },
+
+    getActivityExp: function(activityId) {
+        //Handle it in redis later, fine for now.
+        
     },
 
     setTeam: function (team) {

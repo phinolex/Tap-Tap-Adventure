@@ -10,21 +10,19 @@
 @media only screen and (min-width: 1501px) {
   #inappstore ul {
     float: left;
-    margin-left: 9px;
-    width: 1200px;
-    height: 300;
-    display: block;
-    margin: 0 auto;
+    margin-left: -37.5px;
+    width: 1500px;
+    height: 300px;
   }
   #inappstore nav {
+    margin: 0 auto;
+    display: flex;
     width: 201px;
     height: 66px;
-    display: block;
-    margin: 0 auto;
   }
   #storeprevious,
   #storenext {
-    width: 204px;
+    width: 102px;
     height: 66px;
   }
   .storepage1 #storeprevious {
@@ -41,7 +39,6 @@
     background-position: -402px -846px;
   }
   #storenext {
-    margin-left: -10px;
     background-position: -300px -771px;
     background-size: 1248px;
   }
@@ -66,9 +63,8 @@
   #inappstore li {
     display: inline-block;
     vertical-align: top;
-    margin: 45px 0;
+    margin: 10px 0;
     top: -18px;
-    background-position: 0 -912px;
     width: 552px;
     height: 76.5px;
   }
@@ -95,21 +91,19 @@
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
   #inappstore ul {
     float: left;
-    margin-left: 6px;
-    width: 800px;
-    height: 200;
-    display: block;
-    margin: 0 auto;
+    margin-left: -25px;
+    width: 1000px;
+    height: 200px;
   }
   #inappstore nav {
+    margin: 0 auto;
+    display: flex;
     width: 134px;
     height: 44px;
-    display: block;
-    margin: 0 auto;
   }
   #storeprevious,
   #storenext {
-    width: 136px;
+    width: 68px;
     height: 44px;
   }
   .storepage1 #storeprevious {
@@ -126,7 +120,6 @@
     background-position: -268px -564px;
   }
   #storenext {
-    margin-left: -10px;
     background-position: -200px -514px;
     background-size: 832px;
   }
@@ -151,9 +144,8 @@
   #inappstore li {
     display: inline-block;
     vertical-align: top;
-    margin: 30px 0;
+    margin: 10px 0;
     top: -12px;
-    background-position: 0 -608px;
     width: 368px;
     height: 51px;
   }
@@ -180,21 +172,19 @@
 @media only screen and (max-width: 1000px) {
   #inappstore ul {
     float: left;
-    margin-left: 3px;
-    width: 400px;
-    height: 100;
-    display: block;
-    margin: 0 auto;
+    margin-left: -12.5px;
+    width: 500px;
+    height: 100px;
   }
   #inappstore nav {
+    margin: 0 auto;
+    display: flex;
     width: 67px;
     height: 22px;
-    display: block;
-    margin: 0 auto;
   }
   #storeprevious,
   #storenext {
-    width: 68px;
+    width: 34px;
     height: 22px;
   }
   .storepage1 #storeprevious {
@@ -211,7 +201,6 @@
     background-position: -134px -282px;
   }
   #storenext {
-    margin-left: -10px;
     background-position: -100px -257px;
     background-size: 416px;
   }
@@ -236,9 +225,8 @@
   #inappstore li {
     display: inline-block;
     vertical-align: top;
-    margin: 15px 0;
+    margin: 10px 0;
     top: -6px;
-    background-position: 0 -304px;
     width: 184px;
     height: 25.5px;
   }

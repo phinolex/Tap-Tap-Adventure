@@ -1,8 +1,7 @@
 /**
  * Created by flavius on 2017-01-07.
  */
-var cls = require('../lib/class'),
-    Minigame = require('./minigame');
+var Minigame = require('./minigame')
 
 /**
  * We will have to draw an interface with all the players,
@@ -22,7 +21,6 @@ module.exports = KingOfTheHill = Minigame.extend({
         self.scores = [];
         self.timer = 100;
         self.name = name;
-        self.id = id;
 
         self.start();
 

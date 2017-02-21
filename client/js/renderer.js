@@ -1313,29 +1313,29 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 ctx.clearRect(0, 0, this.textcanvas.width, this.textcanvas.height);
             },
 
-            renderStaticCanvases: function() {
-                if (this.game.isCentered) {
-                    if (this.forceRedraw || this.game.player && this.game.player.isMoving()) {
-                        this.drawOldTerrain();
-                        this.background.save();
-                        this.setCameraView(this.background);
-                        this.drawTerrain(this.background, this.foreground);
-                        this.background.restore();
-                        this.forceRedraw = false;
-                    }
-                } else {
+            renderCenteredCanvas: function() {
+                if (this.forceRedraw || this.game.player && this.game.player.isMoving()) {
+                    this.drawOldTerrain();
                     this.background.save();
                     this.setCameraView(this.background);
-                    this.drawStaticTerrain();
+                    this.drawTerrain(this.background, this.foreground);
                     this.background.restore();
+                    this.forceRedraw = false;
+                }
+            },
 
-                    if(this.mobile || this.tablet) {
-                        this.clearScreen(this.foreground);
-                        this.foreground.save();
-                        this.setCameraView(this.foreground);
-                        this.drawHighTiles(this.foreground);
-                        this.foreground.restore();
-                    }
+            renderSideScrollerCanvas: function() {
+                this.background.save();
+                this.setCameraView(this.background);
+                this.drawStaticTerrain();
+                this.background.restore();
+
+                if(this.mobile || this.tablet) {
+                    this.clearScreen(this.foreground);
+                    this.foreground.save();
+                    this.setCameraView(this.foreground);
+                    this.drawHighTiles(this.foreground);
+                    this.foreground.restore();
                 }
             },
 
@@ -1361,7 +1361,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.clearScreenText(this.toptextcontext);
 
                 if (this.game.isCentered)
-                    this.renderStaticCanvases();
+                    this.renderCenteredCanvas();
 
                 this.context.save();
                 this.textcontext.save();
@@ -1425,6 +1425,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                 this.clearScreen(this.buffer);
                 this.clearScreen(this.foreground);
             }
+
         });
 
         var getX = function(id, w) {

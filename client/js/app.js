@@ -863,7 +863,8 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
                 $coins = $('#storetext'),
                 page = 0,
                 count = 0,
-                $p = null;
+                $p = null,
+                scale = self.getScale();
             
             _.each(storeList, function(item) {
                 count++;
@@ -874,7 +875,9 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
 
                 $i.addClass('item' + count);
                 self.setInAppData($i, item.name, item.description, item.cost);
+                $i.css('background-position', '0 ' + scale * (-304) + 'px');
                 $i.show();
+                
 
                 if((count - 1) % 4 === 0) {
                     page++;
@@ -1077,6 +1080,15 @@ define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function
 
         resetMessageTimer: function() {
             clearTimeout(this.messageTimer);
+        },
+
+        getScale: function() {
+            var scale = this.game.renderer.getScaleFactor();
+
+            if (this.game.renderer.mobile)
+                scale = 1;
+
+            return scale;
         },
 
         resizeUi: function() {

@@ -950,9 +950,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.renderer.drawBackground(self.renderer.background, "#12100D");
                     self.resetCamera();
                     self.client.sendReady(self.playerId);
+
                     if (self.player.experience == 0)
                         self.app.toggleInstructions();
-
 
                     if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
                         self.player.setAtkRange(6);
@@ -1009,12 +1009,11 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         if(self.player.hasNextStep())
                             self.registerEntityDualPosition(self.player);
 
-                        if(self.isZoningTile(self.player.gridX, self.player.gridY))
-                            self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
-
-
                         if (!self.map.isDoor(self.player.gridX, self.player.gridY) && !self.player.hasTarget())
                             self.client.sendStep(self.player);
+
+                        if(self.isZoningTile(self.player.gridX, self.player.gridY) && !self.map.isDoor(self.player.gridX, self.player.gridY))
+                            self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
 
                         self.player.forEachAttacker(self.makeAttackerFollow);
 
@@ -2609,11 +2608,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 self.renderer.cleanPathing();
                 self.renderer.clearScreen(self.renderer.context);
                 self.renderer.cleanScreenEntirely();
-                self.renderer.renderStaticCanvases();
                 self.countAverage = false;
-
                 self.app.storage.getSettings().isCentered = self.isCentered;
                 self.app.storage.save();
+
+                if (self.isCentered)
+                    self.renderer.renderCenteredCanvas();
+                else
+                    self.renderer.renderSideScrollerCanvas();
+
             },
 
             determineCentration: function() {
@@ -3378,7 +3381,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.bubbleManager.clean();
                 this.initAnimatedTiles();
                 if (!this.isCentered)
-                    this.renderer.renderStaticCanvases();
+                    this.renderer.renderSideScrollerCanvas();
                 else
                     this.renderer.forceRedraw = true;
             },
@@ -3529,8 +3532,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.camera = this.renderer.camera;
                 this.camera.setRealCoords();
 
-                this.renderer.renderStaticCanvases();
-                this.renderbackground = true;
+                if (this.isCentered) {
+                    this.renderer.renderCenteredCanvas();
+                    this.renderbackground = true;
+                } else
+                    this.renderer.renderSideScrollerCanvas();
+
 
                 this.inventoryHandler.inventoryDisplayShow();
                 if (this.player) {

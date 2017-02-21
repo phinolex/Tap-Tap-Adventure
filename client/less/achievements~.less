@@ -1,0 +1,182 @@
+@import "variables.less";
+
+//The actual less file was somehow deleted
+//TODO: REMAKE THIS A LESS FILE
+._achievement() {
+  #achievements-wrapper {
+    overflow:hidden;
+  }
+  #achievements ul:first-child {
+    margin-left:0;
+  }
+  #lists {
+    -moz-transition:0.5s left ease-in-out;
+    -webkit-transition:0.5s left ease-in-out;
+    -o-transition:0.5s left ease-in-out;
+    -ms-transition:0.5s left ease-in-out;
+    transition:0.5s left ease-in-out;
+    position:relative;
+  }
+  #achievements-count {
+    float:right;
+    color:#fff;
+  }
+  #achievements-count div {
+    display:inline-block;
+  }
+  #achievement-notification .coin {
+    -moz-transition:0.2s opacity linear;
+    -webkit-transition:0.2s opacity linear;
+    -o-transition:0.2s opacity linear;
+    -ms-transition:0.2s opacity linear;
+    transition:0.2s opacity linear;
+  }
+
+  .rebuild(@scale) {
+    @coin-width: 48px;
+    @coin-height: 52px;
+
+    #achievement-notification.coin {
+      width: @coin-width * @scale;
+      height: @coin-height * @scale;
+    }
+
+    .addachievements(@i) when (@i < 33) {
+      .addachievements(@i + 1);
+
+      #achievement-notification.achievement@{i} .coin {
+        background-position: (@scale * -48) * (@i - 1) -444px;
+      }
+    }
+
+    #achievements nav {
+      height: 22px * @scale;
+      width: 68px * @scale;
+      margin: 0 auto;
+    }
+
+    #previous, #next {
+      height: 22px * @scale;
+      width: 34px * @scale;
+      display: inline-block;
+    }
+
+    .page1 #previous {
+      background-position: 0px @scale * -282px;
+    }
+
+    .page10 #next {
+      background-position: -33px * @scale @scale * -282px;
+    }
+
+    #previous {
+      background-position: -67px * @scale @scale * -282px;
+    }
+
+    #previous:active {
+      background-position: -134px * @scale @scale * -282px;
+    }
+
+    #next {
+      margin-left: -5px * @scale;
+      background-position: -100px * @scale @scale * -282px;
+    }
+
+    #next:active {
+      background-position: -167px * @scale @scale * -282px;
+    }
+
+    .page1 #previous:hover, .page1 #previous:active {
+      background-position: 0px -282px * @scale;
+    }
+
+    .page10 #next:hover, .page10 #next:active {
+      background-position: -33px * @scale @scale * -282px;
+    }
+
+    #lists {
+      width: 4000px * @scale;
+      -moz-transition:none;
+      -webkit-transition:none;
+      -o-transition:none;
+      -ms-transition:none;
+      transition:none;
+    }
+
+    .addpages(@i) when (@i < 10) {
+      .addpages(@i + 1);
+
+      #achievements.page@{i} #lists {
+        left: (@i - 1) * -392px;
+      }
+    }
+
+    #achievements-count {
+      margin: 6px * @scale @scale * 24px 0 0;
+    }
+
+    #achievement-notification, #achievement-notification .coin, #coinsparks {
+      background-size: 832px * @scale;
+    }
+
+    #achievement-notification {
+      width: 432px * @scale;
+      bottom: 34px * @scale;
+      height: 0;
+      margin-left: -216px * @scale;
+      background-position: 0 -496px * @scale;
+    }
+
+    #achievement-notification.active {
+      height: 68px;
+    }
+
+    #achievement-notification .coin {
+      position: absolute;
+      top: -40px * @scale;
+      left: 50%;
+      margin-left: -24px * @scale;
+      opacity: 0;
+    }
+
+    #achievement-notification.active .coin {
+      opacity: 1;
+    }
+
+    #achievement-notification.active #coinsparks {
+      display: none;
+    }
+
+    #achievement-notification .title {
+      color: #fce045;
+      font-size: 14px * @scale;
+      margin: 18px * @scale 0 6px * @scale 0;
+    }
+
+    #achievement-notification .name {
+      color: #eee;
+      font-size: 20px * @scale;
+      margin: 6px * @scale 0;
+    }
+
+    #achievements li.unlocked .achievement-sharing {
+      display: block;
+    }
+
+  }
+
+  @media @largeScreen {
+  @sheet "../img/3/achievements.png";
+    .rebuild(3);
+  }
+
+  @media @midScreen {
+    .rebuild(2);
+  }
+
+  @media @smallScreen {
+    .rebuild(1);
+  }
+}
+
+._achievement();
