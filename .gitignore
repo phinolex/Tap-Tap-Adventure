@@ -1,11 +1,4 @@
-/nbproject/private/
-/iOSClient/nbproject/private/
-/server/nbproject/private/
-/shared/nbproject/private/
-/tools/nbproject/private/
-/client/nbproject/private/
-/Learning/nbproject/private/
-/node_modules
-/client-build
-/node_modules/
-/cordova/
+client-build
+node_modules
+cordova
+
