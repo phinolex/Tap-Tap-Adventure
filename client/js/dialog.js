@@ -1,30 +1,38 @@
 define(function() {
     var Dialog = Class.extend({
         init: function(game, id) {
-            this.game = game;
-            this.id = id;
-            this.body = $(id);
-            this.visible = false;
+            var self = this;
+
+            self.game = game;
+            self.body = $(id);
+            self.visible = false;
         },
+
         show: function() {
-            if(this.showHandler){
-                this.showHandler(this);
-            }
+            var self = this;
 
-            this.visible = true;
-            $(this.id).css('display', 'block');
+            if (self.showHandler)
+                self.showHandler(self);
+            
+            self.visible = true;
+            self.body.css('display', 'block');
         },
+
         hide: function() {
-            this.visible = false;
-            $(this.id).css('display', 'none');
+            var self = this;
 
-            if(this.hideHandler){
-                this.hideHandler(this);
-            }
+            self.visible = false;
+
+            self.body.css('display', 'none');
+
+            if (self.hideHandler)
+                self.hideHandler(self);
         },
+
         onShow: function(handler) {
             this.showHandler = handler;
         },
+
         onHide: function(handler) {
             this.hideHandler = handler;
         }

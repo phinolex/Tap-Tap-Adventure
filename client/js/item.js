@@ -40,7 +40,7 @@ define(['entity'], function(Entity) {
         },
         
 
-        getInfoMsg: function(){
+        getInfoMsg: function() {
             
             return this.getInfoMsgEx(this.kind, this.count, this.skillKind, this.skillLevel);
         },

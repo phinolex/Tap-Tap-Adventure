@@ -1,13 +1,64 @@
 define(function() {
+
+    var TabPage = Class.extend({
+        init: function(id, buttonId) {
+            var self = this;
+
+            self.id = id;
+            self.body = $(id);
+            self.button = buttonId ? new TabButton(buttonId, this) : null;
+            self.parent = null;
+
+            self.activeHandler = null;
+        },
+
+        getParent: function() {
+            return this.parent;
+        },
+
+        getVisible: function() {
+            return this.body.css('display') === 'block';
+        },
+
+        setParent: function(parent) {
+            this.parent = parent;
+        },
+
+        setVisible: function(isVisible) {
+            var self = this;
+
+            if (self.button)
+                self.button.setVisible(isVisible);
+
+            self.body.css('display', isVisible ? 'block' : 'none');
+
+            if (self.visibleChangeHandler)
+                self.visibleChangeHandler(self, isVisible);
+        },
+
+        active: function() {
+            var self = this;
+
+            if (self.parent)
+                self.parent.setActivePage(self);
+        },
+
+        onVisibleChange: function(handler) {
+            this.visibleChangeHandler = handler;
+        }
+    });
+
     var TabButton = Class.extend({
         init: function(id, page) {
-            this.id = id;
-            this.body = $(id);
-            this.page = page;
+            var self = this;
 
-            this.visibleChangeHandler = null;
+            self.id = id;
+            self.body = $(id);
+            self.page = page;
 
-            this.body.click(function(event) {
+            self.visibleChangeHandler = null;
+
+            self.body.click(function(event) {
                 page.active();
             });
         },
@@ -15,54 +66,17 @@ define(function() {
         getVisible: function() {
             return this.body.attr('class') === 'active';
         },
-        setVisible: function(value) {
-            if(value) {
-                this.body.addClass('active');
-            } else {
-                this.body.removeClass('active');
-            }
+
+        setVisible: function(isVisible) {
+            var self = this;
+
+            if (isVisible)
+                self.body.addClass('active');
+            else
+                self.body.removeClass('active');
         }
     });
 
-    var TabPage = Class.extend({
-        init: function(id, buttonId) {
-            this.id = id;
-            this.body = $(id);
-            this.button = buttonId ? new TabButton(buttonId, this) : null;
-            this.parent = null;
 
-            this.activeHandler = null;
-        },
-
-        getParent: function() {
-            return this.parent;
-        },
-        setParent: function(value) {
-            this.parent = value;
-        },
-        getVisible: function() {
-            return this.body.css('display') === 'block';
-        },
-        setVisible: function(value) {
-            if(this.button) {
-                this.button.setVisible(value);
-            }
-            this.body.css('display', value ? 'block' : 'none');
-
-            if(this.visibleChangeHandler) {
-                this.visibleChangeHandler(self, value);
-            }
-        },
-
-        active: function() {
-            if(this.parent) {
-                this.parent.setActivePage(this);
-            }
-        },
-
-        onVisibleChange: function(handler) {
-            this.visibleChangeHandler = handler;
-        }
-    });
     return TabPage;
 });

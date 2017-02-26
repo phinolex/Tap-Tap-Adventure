@@ -1,31 +1,20 @@
 /* global require, module, log, databaseHandler */
 
-var cls = require("./../../../lib/class"),
-    _ = require("underscore"),
+var _ = require("underscore"),
     Character = require('./../character'),
-    Chest = require('./../../item/chest'),
     Messages = require("./../../../network/packets/message"),
     Utils = require("./../../../utils/utils"),
     MobData = require("./../../../utils/data/mobdata"),
-    Formulas = require("./../../../utils/formulas"),
-    Party = require("./party"),
-    Items = require("./../../../utils/data/itemdata"),
     Bank = require("./bank/bank"),
     Types = require("../../../../../../shared/js/gametypes"),
     ItemTypes = require("../../../../../../shared/js/itemtypes"),
     bcrypt = require('bcrypt'),
     Inventory = require("./inventory/inventory"),
-    Mob = require('./../mob/mob'),
-    SkillHandler = require("./../../../handlers/skillhandler")
-    Trade = require('./trade'),
+    SkillHandler = require("./../../../handlers/skillhandler"),
     express = require('express'),
-    bodyParser = require('body-parser'),
-    app = express(),
     Achievements = require('./../../../utils/data/achievementdata'),
     request = require("request"),
-    EntitySpawn = require("./../../entityspawn"),
     PacketHandler = require("./../../../handlers/packethandler"),
-    Quests = require('./../../../utils/data/questdata'),
     QuestHandler = require('../../../handlers/questhandler');
 
 module.exports = Player = Character.extend({
@@ -1082,7 +1071,7 @@ module.exports = Player = Character.extend({
         this.minigameTeam = team;
     },
 
-    getTeam: function (team) {
+    getTeam: function () {
         return this.minigameTeam;
     },
 
@@ -1105,6 +1094,5 @@ module.exports = Player = Character.extend({
     addPVPDeath: function () {
         this.pvpDeaths += 1;
         this.redisPool.setPVPDeaths(this.name, this.pvpDeaths);
-        log.info("PVP Deaths: " + this.pvpDeaths);
     }
 });

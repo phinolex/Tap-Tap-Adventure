@@ -7,8 +7,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pet', 'mobs', 'mobdata', 'gather', 'exceptions', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'achievemethandler',
         'rankinghandler', 'inventoryhandler', 'bankhandler', 'partyhandler','bools', 'iteminfodialog',
-        'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', 'enchantdialog', 'bankdialog', 'craftdialog', 'projectile' ,'guild',
-        'gamedata', 'button2', 'inappstore', 'util',
+        'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', './dialog/enchant/enchantdialog', 'bankdialog', 'craftdialog', 'projectile' ,'guild',
+        'gamedata', 'inappstore', 'util', 'dialog/character/characterdialog',
         '../shared/js/gametypes', '../shared/js/itemtypes'],
     function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
              GameClient, AudioManager, Updater, Transition, Pathfinder,
@@ -16,7 +16,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
              ShopHandler, PlayerPopupMenu, ClassPopupMenu, AchievementHandler, RankingHandler,
              InventoryHandler, BankHandler, PartyHandler, Bools, ItemInfoDialog, SkillHandler, StateHandler,
-             StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile, Guild, GameData, Button2, InAppStore, Util) {
+             StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile, Guild, GameData,
+             InAppStore, Util, CharacterDialog) {
         var Game = Class.extend({
             init: function(app) {
                 $('head').append($('<link rel="stylesheet" type="text/css" />').attr('href', 'css/game.css'));
@@ -69,13 +70,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.infoManager = new InfoManager(this);
                 this.achievementHandler = new AchievementHandler(this);
                 this.inAppStore = new InAppStore(this);
-                this.kkhandler = new KkHandler();
-                this.chathandler = new ChatHandler(this, this.kkhandler);
+                this.chatHandler = new ChatHandler(this);
                 this.shopHandler = new ShopHandler(this);
                 this.boardhandler = new BoardHandler(this);
-                this.playerPopupMenu = new PlayerPopupMenu(this);
                 this.partyHandler = new PartyHandler(this);
                 this.statehandler = new StateHandler(this);
+                this.playerPopupMenu = new PlayerPopupMenu(this);
                 this.logicTime = new Date().getTime();
                 this.lastFPSTime = new Date().getTime();
                 this.FPSCount = 0;
@@ -939,7 +939,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
                     self.achievementHandler.initAchievement(achievementFound, achievementProgress);
                     self.client.sendSkillLoad();
-                    self.chathandler.show();
+                    self.chatHandler.show();
                     self.renderbackground = true;
                     self.renderer.forceRedraw = true;
                     self.initializeAchievements();
@@ -1829,7 +1829,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                         var invitee = self.getEntityById(id);
 
-                        self.partyHandler.inviteconfirm(invitee);
+                        self.partyHandler.confirmInvite(invitee);
 
                     });
 
@@ -1854,7 +1854,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 var slot;
                                 for(var i = 0; i < potions.length; ++i)
                                 {
-                                    slot = self.inventoryHandler.getItemInventorSlotByKind(potions[i]);
+                                    slot = self.inventoryHandler.getItemSlotByKind(potions[i]);
                                     if (slot >= 0)
                                         self.eat(slot);
                                 }
@@ -1992,14 +1992,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                     });
 
                     self.client.onChatMessage(function(entityId, message) {
-                        if(!self.chathandler.processReceiveMessage(entityId, message)){
-                            var entity = self.getEntityById(entityId);
-                            self.createBubble(entityId, message);
-                            self.assignBubbleTo(entity);
-                            self.chathandler.addNormalChat(entity, message);
-                            self.app.displayChatLog(true);
-                        }
-                        self.audioManager.playSound("chat");
+                        var entity = self.getEntityById(entityId);
+
+                        self.createBubble(entityId, message);
+                        self.assignBubbleTo(entity);
+                        self.chatHandler.pushChat(message, entity);
+                        self.app.displayChatLog(true);
+
                     });
 
                     self.client.onPopulationChange(function(worldPlayers, totalPlayers) {
@@ -2053,12 +2052,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                             self.player.removeTarget();
                         }
                     });
-                    self.client.onNotify(function(msg, differentSource) {
-                        self.showNotification(msg, differentSource);
+                    self.client.onNotify(function(msg) {
+                        self.showNotification(msg);
                     });
                     
                     self.client.onGlobalChat(function(message, isAdmin) {
-                        self.chathandler.addNotification(message, isAdmin);
+                        self.chatHandler.pushNotification(message, isAdmin)
                     });
 
                     self.client.onTrade(function(tradeState, items, playerOneName, playerTwoName) {
@@ -2077,9 +2076,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         }
                     });
 
-                    self.client.onCharacterInfo(function(datas) {
-                        log.info("Datas: " + datas);
-                        self.characterDialog.show(datas);
+                    self.client.onCharacterInfo(function() {
+                        self.characterDialog.show();
                     });
 
                     self.client.onParty(function (members) {
@@ -2985,6 +2983,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                         && itemKind !== 400)
                     {
                         if(ItemTypes.isConsumableItem(itemKind)){
+                            log.info("click?")
                             this.eat(inventoryNumber);
                             return;
                         } else if(itemKind === 200){
@@ -3394,8 +3393,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             say: function(message) {
-                if(!this.chathandler.processSendMessage(message))
-                    this.client.sendChat(message);
+                this.client.sendChat(message);
             },
 
             createBubble: function(id, message) {
@@ -3540,17 +3538,18 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
 
                 this.inventoryHandler.inventoryDisplayShow();
-                if (this.player) {
+
+                if (this.player)
                     this.player.skillHandler.displayShortcuts();
-                }
+
                 if (this.storeDialog.visible)
                     this.storeDialog.rescale();
-                if (this.enchantDialog.visible) {
-                    this.enchantDialog.rescale();
-                }
-                if (this.bankDialog.visible) {
+
+                if (this.enchantDialog.visible)
+                    this.enchantDialog.load();
+
+                if (this.bankDialog.visible)
                     this.bankDialog.rescale();
-                }
             },
 
             updateBars: function() {
@@ -3569,60 +3568,76 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 }
             },
             updateTarget: function(targetId, points, healthPoints, maxHp){
-                if(this.player.hasTarget() && this.updatetarget_callback) {
-                    try {
-                        var target = this.getEntityById(targetId);
+                var self = this;
 
-                        if(target instanceof Mob) {
+                if (self.player.hasTarget() && self.updatetarget_callback) {
+                    try {
+                        var target = self.getEntityById(targetId);
+
+                        if (target instanceof Mob)
                             target.name = MobData.Kinds[target.kind].name;
-                        }
+
                         target.points = points;
                         target.healthPoints = healthPoints;
                         target.maxHp = maxHp;
-                        this.updatetarget_callback(target);
-                    } catch (e) { log.info("Caught exception: " + e); }
+
+                        self.updatetarget_callback(target);
+
+                    } catch (e) {
+                        log.info("Error caught whilst in updateTarget(): " + e);
+                    }
                 }
             },
-
-            getDeadMobPosition: function(mobId) {
-                var position;
-
-                if(mobId in this.deathpositions) {
-                    position = this.deathpositions[mobId];
-                    delete this.deathpositions[mobId];
-                }
-                return position;
-            },
-
 
             showNotification: function(message, differentSource) {
-                if(this.storeDialog.visible) {
-                    if (message == "buy" || message == "sold")
-                        this.storeDialog.inventoryFrame.open();
-                    else
-                        this.storeDialog.notify(message);
-                } else if(this.auctionDialog.visible) {
-                    if (message == "buy" || message == "sold") {
-                        this.auctionDialog.inventoryFrame.open();
-                        this.auctionDialog.storeFrame.open();
-                        this.auctionDialog.storeFrame.pageMyAuctions.reload();
-                        this.auctionDialog.storeFrame.pageArmor.reload();
-                        this.auctionDialog.storeFrame.pageWeapon.reload();
+                var self = this;
 
-                    } else
-                        this.auctionDialog.notify(message);
-                } else if(this.enchantDialog.visible) {
-                    if (message == "enchanted")
-                        this.enchantDialog.inventoryFrame.open();
-                    else
-                        this.enchatDialog.notify(message);
-                } else if(this.craftDialog.visible) {
-                    if (message == "craft")
-                        this.craftDialog.inventoryFrame.open();
-                    else
-                        this.craftDialog.notify(message);
-                } else {
-                    this.chathandler.addNotification(message, differentSource);
+                switch(message) {
+                    case 'buy':
+                    case 'sell':
+                            if (self.storeDialog.visible)
+                                self.storeDialog.inventoryFrame.open();
+
+                            if (self.auctionDialog.visible) {
+                                self.auctionDialog.inventoryFrame.open();
+                                self.auctionDialog.storeFrame.open();
+                                self.auctionDialog.storeFrame.pageMyAuctions.reload();
+                                self.auctionDialog.storeFrame.pageArmor.reload();
+                                self.auctionDialog.storeFrame.pageWeapon.reload();
+                            }
+
+                        return;
+
+                    case 'enchanted':
+                            if (self.enchantDialog.visible)
+                                self.enchantDialog.inventoryFrame.open();
+                        return;
+
+                    case 'craft':
+                            if (self.craftDialog.visible)
+                                self.craftDialog.inventoryFrame.open();
+
+                        return;
+
+                    default:
+
+                            if (self.storeDialog.visible)
+                                self.storeDialog.notify(message);
+
+                            else if (self.auctionDialog.visible)
+                                self.auctionDialog.notify(message);
+
+                            else if (self.enchantDialog.visible)
+                                self.enchantDialog.notify(message);
+                        
+                            else if (self.craftDialog.visible)
+                                self.craftDialog.notify(message);
+                        
+                            else
+                                self.chatHandler.pushNotification(message, differentSource);
+                        
+                        return;
+
                 }
             },
 
@@ -3662,33 +3677,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              * Change player plateau mode when necessary
              */
             updatePlateauMode: function() {
-                if(this.map.isPlateau(this.player.gridX, this.player.gridY)) {
-                    this.player.isOnPlateau = true;
-                } else {
-                    this.player.isOnPlateau = false;
-                }
-            },
-
-            updatePlayerCheckpoint: function() {
-                var checkpoint = this.map.getCurrentCheckpoint(this.player);
-
-                if(checkpoint) {
-                    var lastCheckpoint = this.player.lastCheckpoint;
-                    if(!lastCheckpoint || (lastCheckpoint && lastCheckpoint.id !== checkpoint.id)) {
-                        this.player.lastCheckpoint = checkpoint;
-                        this.client.sendCheck(checkpoint.id);
-                    }
-                }
-            },
-
-            checkUnderground: function() {
-                var music = this.audioManager.getSurroundingMusic(this.player);
-
-                if(music) {
-                    if(music.name === 'cave') {
-
-                    }
-                }
+                this.player.isOnPlateau = this.map.isPlateau(this.player.gridX, this.player.gridY)
             },
 
             makeAttackerFollow: function(attacker) {
@@ -3761,36 +3750,63 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 var self = this;
                 if(key >= 49 && key <= 54){ // 1, 2, 3, 4, 5, 6
                     var inventoryNumber = key - 49;
-                    if(ItemTypes.isConsumableItem(this.inventoryHandler.inventory[inventoryNumber])){
+                    if(ItemTypes.isConsumableItem(this.inventoryHandler.inventory[inventoryNumber]))
                         this.eat(inventoryNumber);
-                    }
+
                 }
             },
             equip: function(inventoryNumber){
-                var itemKind = this.inventoryHandler.inventory[inventoryNumber];
-                log.info("ItemKind: " + itemKind);
+                var itemKind = this.inventoryHandler.inventory[inventoryNumber],
+                    itemTypes = ItemTypes;
 
-                if(ItemTypes.isArmor(itemKind) || ItemTypes.isArcherArmor(itemKind))
+                if(itemTypes.isArmor(itemKind) || itemTypes.isArcherArmor(itemKind))
                     this.client.sendInventory("armor", inventoryNumber, 1);
-                else if(ItemTypes.isWeapon(itemKind) || ItemTypes.isArcherWeapon(itemKind))
+                else if(itemTypes.isWeapon(itemKind) || itemTypes.isArcherWeapon(itemKind))
                     this.client.sendInventory("weapon", inventoryNumber, 1);
-                else if (ItemTypes.isPendant(itemKind))
+                else if (itemTypes.isPendant(itemKind))
                     this.client.sendInventory("pendant", inventoryNumber, 1);
-                else if (ItemTypes.isRing(itemKind))
+                else if (itemTypes.isRing(itemKind))
                     this.client.sendInventory("ring", inventoryNumber, 1);
 
                 this.menu.close();
             },
+
             unequip: function(index) {
-                log.info("Index: " + index);
-                if(index == 1)
-                    this.client.sendInventory("weapon", -index, 1);
-                else if(index == 2)
-                    this.client.sendInventory("armor", -index, 1);
-                else if (index == 3)
-                    this.client.sendInventory("pendant", -index, 1);
-                else if (index == 4)
-                    this.client.sendInventory("ring", -index, 1);
+                var self = this,
+                    idx = -index;
+
+                switch (index) {
+                    case 1:
+                        self.client.sendInventory('weapon', idx, 1);
+                        break;
+
+                    case 2:
+                        self.client.sendInventory('armor', idx, 1);
+                        break;
+
+                    case 3:
+                        self.client.sendInventory('pendant', idx, 1);
+                        break;
+
+                    case 4:
+                        self.client.sendInventory('ring', idx, 1);
+                        break;
+                }
+            },
+
+            getScaleFactor: function() {
+                var w = window.innerWidth,
+                    h = window.innerHeight,
+                    scale;
+
+                if (w <= 1000)
+                    scale = 1;
+                else if (w <= 1500 || h <= 870)
+                    scale = 2;
+                else
+                    scale = 3;
+
+                return scale;
             },
 
             avatar: function(inventoryNumber){
@@ -3798,18 +3814,18 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.audioManager.playSound("loot");
                 this.menu.close();
             },
-            eat: function(inventoryNumber){
-                var kind = this.inventoryHandler.inventory[inventoryNumber];
-                if(kind && this.inventoryHandler.healingCoolTimeCallback === null &&
-                    (ItemTypes.isConsumableItem(kind) ||
-                    (ItemTypes.isHealingItem(kind) && this.player.hitPoints < this.player.maxHitPoints)))
-                {
-                    if(this.inventoryHandler.decInventory(inventoryNumber)){
-                        this.client.sendInventory("eat", inventoryNumber, 1);
-                        this.audioManager.playSound("heal");
+            eat: function(inventoryNumber) {
+                var self = this,
+                    kind = self.inventoryHandler.inventory[inventoryNumber];
+
+                if (kind && self.inventoryHandler.healingCooldown === null && (ItemTypes.isConsumableItem(kind) || ItemTypes.isHealingItem(kind)) && self.player.hitPoints < self.player.maxHitPoints) {
+                    if (self.inventoryHandler.decInventory(inventoryNumber)) {
+                        self.client.sendInventory('eat', inventoryNumber, 1);
+                        self.audioManager.playSound('heal');
                     }
                 }
-                this.menu.close();
+
+                self.menu.close();
             }
         });
 

@@ -8,7 +8,7 @@ TODO!!:
     Changing password is not yet supported, but should update password locally when that change.
 */
 
-define(['jquery', 'mob', 'item', 'mobdata', 'button2', 'localstorage'], function($, Mob, Item, MobData, Button2, Storage) {
+define(['jquery', 'mob', 'item', 'mobdata', 'localstorage'], function($, Mob, Item, MobData, Storage) {
 
     var App = Class.extend({
         init: function() {

@@ -41,10 +41,9 @@ module.exports = Introduction = Quest.extend({
         self.load();
 
         self.onFinishedLoading(function() {
-            if (self.stage < 10)
+            /*if (self.stage < 10)
                 self.toggleTalking();
-
-                log.info("Triggering future interface.");
+            */
         });
     },
 

@@ -1,338 +1,287 @@
-/* global Types, Class */
+/* global Types, Class, ItemTypes */
 
-define(['jquery', 'button2', 'item'], function($, Button2, Item) {
+define(['jquery', 'item'], function($, Item) {
     var InventoryHandler = Class.extend({
         init: function(game) {
-            this.game = game;
-
-            this.maxInventoryNumber = 24;
-            this.inventory = [];
-            this.inventoryCount = [];
-            this.inventories = [];
-            this.inventoryDisplay = [];
-            this.scale = this.getScale();
-            
-            //this.moreInventoryButton = new Button2('#moreinventorybutton', {background: {left: 196 * this.scale, top: 314 * this.scale, width: 17 * this.scale}, kinds: [0, 2], visible: false});
-            this.showInventoryButton();
-
-            this.healingCoolTimeCallback = null;
-            
-            this.isShowAllInventory = false;
-
-            var i=0;
             var self = this;
-            for(i=0; i < 30; i++) {
-                $('#inventory' + i).click( function(event) {
-                    if(self.game.ready){
-                        var inventoryNumber = parseInt(this.id.slice(9));
-                        var kind = self.game.inventoryHandler.inventory[inventoryNumber];
-                        if(kind) {
 
+            self.game = game;
+
+            self.maxInventoryNumber = 24;
+            self.inventory = [];
+            self.inventoryCount = [];
+            self.inventories = [];
+            self.inventoryDisplay = [];
+            self.scale = self.getScale();
+            self.healingCooldown = null;
+            self.showEntireInventory = false;
+
+            self.initClickEvents();
+        },
+
+        initClickEvents: function() {
+            var self = this;
+
+
+            // Set all the events here
+            for (var i = 0; i < 30; i++) {
+                var inventoryIndex = $('#inventory' + i);
+
+                /**
+                 * Handling when a player clicks on an
+                 * inventory button through events.
+                 */
+
+                inventoryIndex.click(function(event) {
+                    if (self.game.ready) {
+                        var inventoryNumber = parseInt(this.id.slice(9)), //Has to be declared in each callback.
+                            kind = self.getInventory(inventoryNumber);
+
+                        if (kind)
                             self.game.menu.clickInventory(inventoryNumber);
-                        }
-                        /*var item = self.inventoryDisplay[inventoryNumber];
-                        var p = self.player;
-                        self.game.createBubble('bubble'+item.inv, Item.getInfoMsgEx(
-                        	item.inv,
-                        	item.num,
-                        	item.skillKind,
-                        	item.skillLevel));
-                        var id = $("#bubble"+item.kind);
-                        $(id).css("left",self.game.mouse.x-$(id).width()/2+"px");
-                        $(id).css("top",self.game.mouse.y-$(id).height()+"px");*/
                     }
                 });
 
-                $('#inventory' + i).attr('draggable',true);
-                $('#inventory' + i).draggable = true;
-		    $('#inventory' + i).bind('dragstart', function(event) {
-		    var inventoryNumber = parseInt(this.id.slice(9));
-		    event.originalEvent.dataTransfer.setData("invNumber", inventoryNumber);
-		    DragDataInv = {};
-		    DragDataInv.invNumber = inventoryNumber;
-		    
-		});
-		
-		$('#inventory' + i).bind('touchstart', function(event) {
-		    var inventoryNumber = parseInt(this.id.slice(9));
-		    DragDataInv = {};
-		    DragDataInv.invNumber = inventoryNumber;
-		});
-		    $('#inventory' + i).bind('touchend', function(event) {
-			//event.preventDefault();
-			var touch = event.originalEvent.changedTouches[0];
-			var elem = document.elementFromPoint(touch.clientX, touch.clientY);
-									
-			if(elem.id=="toptextcanvas" && DragDataInv && DragDataInv.invNumber >= 0) {
-			    self.game.dropItem(DragDataInv.invNumber);
-			    DragDataInv.invNumber = null;
-			}
-		    });		
-	
-			
-                $('#inventory' + i).dblclick(function(event) {
-                    if(self.game.ready){
-                        var inventoryNumber = parseInt(this.id.slice(9));
-                        var inventory = self.game.inventoryHandler.inventory[inventoryNumber];
-                        if(inventory) {
-                            if(ItemTypes.isConsumableItem(inventory)) {
+                inventoryIndex.dblclick(function(event) {
+                    if (self.game.ready) {
+                        var inventoryNumber = parseInt(this.id.slice(9)),
+                            inventory = self.getInventory(inventoryNumber);
+
+
+                        if (inventory) {
+
+                            if (ItemTypes.isConsumableItem(inventory))
                                 self.game.eat(inventoryNumber);
-                            }
                             else
-                            {
-                            	self.game.equip(inventoryNumber);
-                            }
+                                self.game.equip(inventoryNumber);
                         }
                     }
                 });
-                
-                
 
-            }
+                /**
+                 * Drag and drop method here, only active on
+                 * desktop client. Has to be worked on for mobiles.
+                 */
 
-            	this.container = $('#inventorycontainer');
-            	var self = this;
-            	self.isDragging = false;
+                if (self.isDesktop()) {
+                    inventoryIndex.attr('draggable', true);
+                    inventoryIndex.draggable = true;
 
-            	this.container.bind("touchstart", function(ev) {
-                    self.isClicked = true;
-    		});
-		this.container.mousedown(function() {
-		    self.isClicked = true;
-		});
-		
-		this.container.mousemove(function() {
-		    self.isDragging = true;
-		});
-		
-		$("#container").mousemove(function() {
-		    if (self.isUnlocked && self.isDragging && self.isClicked) {
-			    self.moveShortcuts();
-		    }			    
-		 });
-            	$("#container").bind("touchmove", function(ev) {
-            	    self.isDragging = true;
-		    if (self.isUnlocked && self.isDragging && self.isClicked) {
-			    self.game.app.setMouseCoordinates(ev.originalEvent.touches[0]);
-		    	    self.moveShortcuts();
-		    }			    
-    		});
+                    inventoryIndex.bind('dragstart', function (event) {
+                        var inventoryNumber = parseInt(this.id.splice(9));
 
-		this.container.mouseup(function(event) {
-	            self.isDragging = false;
-	            self.isClicked = false;
-		});
-            	this.container.bind("touchend", function(ev) {
-	            self.isDragging = false;
-	            self.isClicked = false;
-    		});
-		
-		self.isVertical = true;
-		$('#inventorycontainermove').click(function (event) {
-		    if (self.isVertical)
-		    	$('#inventorycontainer').attr("class","vertical");
-		    else
-		        $('#inventorycontainer').attr("class","horizontal");
-		    self.isVertical = !self.isVertical;
-		});
-		
-		self.isUnlocked = false;
-		$('#inventorycontainerswitch').click(function (event) {
-		    self.isUnlocked = !self.isUnlocked;
-		});		
-		
-        },
+                        event.originalEvent.dataTransfer.setData('invNumber', inventoryNumber);
 
-        moveShortcuts: function(x,y) {
-	    this.container.css({
-		"left":this.game.mouse.x + "px",
-		"top":this.game.mouse.y + "px"
-	    });        	
-        },
-                
-        showInventoryButton: function() {
-        	var scale = this.getScale();
-        	//this.moreInventoryButton.setBackground({left: 196 * scale, top: 314 * scale, width: 17 * scale});
-        },
+                        DragDataInv = {};
+                        DragDataInv.invNumber = inventoryNumber;
+                    });
 
-        getScale: function () {
-            if (this.game.renderer) {
-                if (this.game.renderer.mobile) {
-                    return 1;
-                } else {
-                    return this.game.renderer.getScaleFactor();
+                    inventoryIndex.bind('touchstart', function(event) {
+                        var inventoryNumber = parseInt(this.id.slice(9));
+
+                        DragDataInv = {};
+                        DragDataInv.invNumber = inventoryNumber;
+                    });
+
+                    inventoryIndex.bind('touchend', function(event) {
+                        var touch = event.originalEvent.changedTouches[0],
+                            element = document.elementFromPoint(touch.clientX, touch.clientY);
+
+                        if (element.id == 'toptextcanvas' && DragDataInv && DragDataInv.invNumber >= 0) {
+                            self.game.dropItem(DragData.invNumber);
+                            DragData.invNumber = null;
+                        }
+                    });
                 }
-            } else {
-                return 2;
             }
-        	
-        },
-        
-        inventoryDisplayShow: function () {
-            this.scale = this.getScale();
-            this.showInventoryButton();
-
-            for(var i=0; i<this.maxInventoryNumber; i++){
-
-                this.setInventory(this.inventoryDisplay[i].inv,
-                	i,
-                	this.inventoryDisplay[i].num,
-                	this.inventoryDisplay[i].skillkind,
-                	this.inventoryDisplay[i].skilllevel);
-            }       	
         },
 
         initInventory: function(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel) {
-            var i=0;
-            this.setMaxInventoryNumber(maxInventoryNumber);
-            this.inventoryDisplay = [];
-            for(i=0; i<this.maxInventoryNumber; i++){
-                var setInvObj = {inv: inventory[i], num: inventoryNumber[i], skillkind: inventorySkillKind[i], skilllevel: inventorySkillLevel[i]}
-                this.inventoryDisplay.push(setInvObj);
+            var self = this;
+
+            self.setMaxInventoryNumber(maxInventoryNumber);
+            self.inventoryDisplay = [];
+
+            for (var i = 0; i < self.maxInventoryNumber; i++) {
+                var invObject = {
+                    inv: inventory[i],
+                    num: inventoryNumber[i],
+                    skillKind: inventorySkillKind[i],
+                    skillLevel: inventorySkillLevel[i]
+                };
+
+                self.inventoryDisplay.push(invObject);
             }
-            this.inventoryDisplayShow();  
+
+            self.inventoryDisplayShow();
         },
+
+        //Put functions on the outside for better control
+        getInventory: function(inventoryNumber) {
+              return this.inventory[inventoryNumber];
+        },
+
+        inventoryDisplayShow: function() {
+            var self = this;
+
+            for (var i = 0; i < self.maxInventoryNumber; i++) {
+                var inv = self.inventoryDisplay[i];
+
+                self.setInventory(inv.inv, i, inv.num, inv.skillKind, inv.skillLevel);
+            }
+        },
+
         setInventory: function(itemKind, inventoryNumber, number, itemSkillKind, itemSkillLevel) {
-            this.inventory[inventoryNumber] = itemKind;
-            
-            if(number){
-                  this.inventoryCount[inventoryNumber] = number;
-            } else{
-                  this.inventoryCount[inventoryNumber] = 0;
+            var self = this,
+                spriteName,
+                inventory  = $('#inventory' + inventoryNumber),
+                sellInventory = $('#sellInventory' + inventoryNumber),
+                invNumber = $('#inventorynumber' + inventoryNumber);
+
+            self.inventory[inventoryNumber] = itemKind;
+            self.inventoryCount[inventoryNumber] = number ? number : 0;
+
+            if (itemKind) {
+                if (inventoryNumber >= 0 && inventoryNumber < 6)
+                    $('#inventorybackground' + inventoryNumber).attr('class', 'empty');
+
+                spriteName = (ItemTypes.KindData[itemKind].spriteName !== '') ? ItemTypes.KindData[itemKind].spriteName : ItemTypes.getKindAsString(itemKind);
+
+                inventory.css('background-image', "url('img/" + self.scale + "/item-" + spriteName + ".png')");
+                inventory.attr('title', Item.getInfoMsgEx(itemKind, number, itemSkillKind, itemSkillLevel));
+                sellInventory.css('background-image', "url('img/" + self.scale + "/item-" + spriteName + ".png'");
+
+                if (number > 1)
+                    invNumber.html(((ItemTypes.isObject(itemKind) || ItemTypes.isCraft(itemKind)) ? '' : '+') + '' + self.inventoryCount[inventoryNumber]);
+                else if (number == 1)
+                    invNumber.html('');
             }
 
-            if(itemKind){
-                  if(inventoryNumber >= 0 && inventoryNumber < 6) {
-
-                      $('#inventorybackground' + inventoryNumber).attr('class', 'empty');
-                  }
-                  var spriteName;
-                  if (ItemTypes.KindData[itemKind].spriteName !== "")
-                  	  spriteName = ItemTypes.KindData[itemKind].spriteName;
-                  else
-                  	  spriteName = ItemTypes.getKindAsString(itemKind);
-                  	  
-                  $('#inventory' + inventoryNumber).css('background-image', "url('img/" + this.scale + "/item-" + spriteName + ".png')");
-                  $('#inventory' + inventoryNumber).attr('title', Item.getInfoMsgEx(itemKind, number, itemSkillKind, itemSkillLevel));
-                  $('#sellInventory' + inventoryNumber).css('background-image', "url('img/" + this.scale + "/item-" + spriteName + ".png')");
-                  if (number > 1) {
-                  	  if (ItemTypes.isObject(itemKind) || ItemTypes.isCraft(itemKind))
-                  	  	  $('#inventorynumber' + inventoryNumber).html(this.inventoryCount[inventoryNumber]);
-                  	  else
-                  	  	  $('#inventorynumber' + inventoryNumber).html('+' + this.inventoryCount[inventoryNumber]);
-                  } else if (number == 1)
-                      $('#inventorynumber' + inventoryNumber).html('');
-
-            } 
-
-            this.inventories[inventoryNumber] = {}; 
-            this.inventories[inventoryNumber].kind = itemKind ? itemKind : 0;
-            this.inventories[inventoryNumber].count = number ? number : 0;
-            this.inventories[inventoryNumber].skillKind = itemSkillKind ? itemSkillKind : 0;
-            this.inventories[inventoryNumber].skillLevel = itemSkillLevel ? itemSkillLevel : 0;
+            self.inventories[inventoryNumber] = {};
+            self.inventories[inventoryNumber].kind = itemKind ? itemKind : 0;
+            self.inventories[inventoryNumber].count = number ? number : 0;
+            self.inventories[inventoryNumber].skillKind = itemSkillKind ? itemSkillKind : 0;
+            self.inventories[inventoryNumber].skillLevel = itemSkillLevel ? itemSkillLevel : 0;
 
         },
 
+        setMaxInventoryNumber: function(maxInventoryNumber) {
+            var self = this;
 
-        setMaxInventoryNumber: function(maxInventoryNumber){
-            var i = 0;
-            this.maxInventoryNumber = maxInventoryNumber;
-            /*for(i=0; i<18; i++){
-                $('#inventorybackground' + i).css('display', 'none');
-                $('#inventorynumber' + i).css('display', 'none');
-            }*/
-            for(i=0; i<24; i++){
+            self.maxInventoryNumber = maxInventoryNumber;
+
+            for (var i = 0; i < 24; i++) {
                 $('#inventorybackground' + i).css('display', 'block');
                 $('#inventorynumber' + i).css('display', 'block');
             }
-
         },
-        
-        makeEmptyInventory: function(inventoryNumber){
-            if(inventoryNumber < this.maxInventoryNumber){
-                this.inventory[inventoryNumber] = null;
-                if(inventoryNumber >= 0 && inventoryNumber < 24) {
+
+        makeEmptyInventory: function(inventoryNumber) {
+            var self = this;
+
+            if (inventoryNumber < self.maxInventoryNumber) {
+                self.inventory[inventoryNumber] = null;
+
+                if (inventoryNumber >= 0 && inventoryNumber < 24)
                     $('#inventorybackground' + inventoryNumber).attr('class', '');
-                }
-                $('#inventory' + inventoryNumber).css('background-image', 'none');
-                $('#inventory' + inventoryNumber).attr('title', '');
+
+                var inventory = $('#inventory' + inventoryNumber);
+
+                inventory.css('background-image', 'none');
+                inventory.attr('title', '');
+
                 $('#inventorynumber' + inventoryNumber).html('');
                 $('#sellInventory' + inventoryNumber).css('background-image', 'none');
 
-                this.inventories[inventoryNumber] = null;
-                this.game.storeDialog.inventoryFrame.inventories[inventoryNumber].clear();
+                self.inventories[inventoryNumber] = null;
+                self.game.storeDialog.inventoryFrame.inventories[inventoryNumber].clear();
             }
         },
-        decInventory: function(invNum){
-            var self = this;
-                        
-            if(this.healingCoolTimeCallback === null){ 
-            	var cooltimeName = '#inventory'+invNum+'Cooltime';
-		var cooltime = $(cooltimeName);
 
-		// Not very classy but will work for now.
-            	cooltime.css('display', 'block');
-            	
-            	cooltime.html(4);
-		setTimeout(function(){
-		    cooltime.html(3);
-		}, 1000);
-		setTimeout(function(){
-		    cooltime.html(2);
-		}, 2000);
-		setTimeout(function(){
-		    cooltime.html(1);
-		}, 3000);
-            	this.healingCoolTimeCallback = setTimeout(function(){
-                    cooltime.css('display', 'none');
-                    self.healingCoolTimeCallback = null;
-                }, 4000);
-                this.inventoryCount[invNum] -= 1;
-                if(this.inventoryCount[invNum] <= 0){
-                    this.inventory[invNum] = null;
-                }
-                this.inventories[invNum].count -= 1;
-                if(this.inventories[invNum].count <= 0) {
-                    this.inventories[invNum] = null;
-                }
+        decInventory: function(inventoryNumber) {
+            var self = this;
+
+            if (self.healingCooldown == null) {
+                var cooltime = $('#inventory' + inventoryNumber + 'Cooltime'),
+                    time = 4;
+
+                cooltime.css('display', 'block');
+                cooltime.html(time);
+
+                self.healingCooldown = setInterval(function() {
+                    if (time <= 0) {
+                        cooltime.css('display', 'none');
+                        clearInterval(self.healingCooldown);
+                        self.healingCooldown = null;
+                    } else
+                        cooltime.html(time - 1);
+                }, 1000);
+
+                self.inventoryCount[inventoryNumber] -= 1;
+
+                if (self.inventoryCount[inventoryNumber] <= 0)
+                    self.inventory[inventoryNumber] = null;
+
+                self.inventories[inventoryNumber] -= 1;
+
+                if (self.inventories[inventoryNumber] <= 0)
+                    self.inventories[inventoryNumber] = null;
+
                 return true;
             }
+
             return false;
         },
-        
-        toggleAllInventory: function () {
-        	this.isShowAllInventory = !this.isShowAllInventory;
-        	if (this.isShowAllInventory)
-        		this.showAllInventory();
-        	else
-        		this.hideAllInventory();
+
+        toggleAllInventory: function() {
+            var self = this,
+                inventoryWindow = $('#allinventorywindow');
+
+            self.showEntireInventory = !self.showEntireInventory;
+
+            inventoryWindow.css('display', self.showEntireInventory ? 'block' : 'none');
         },
-        
-        showAllInventory: function(){
-            $('#allinventorywindow').css('display', 'block');
-            //this.isShowAllInventory = false;
-        },
-        hideAllInventory: function(){
-            $('#allinventorywindow').css('display', 'none');
-            //this.isShowAllInventory = true;
-        },
-        getItemInventorSlotByKind: function (kind) {
-            for(i=0; i<this.maxInventoryNumber; i++){
-            	    if (this.inventories[i] && kind == this.inventories[i].kind)
-            	    	    return i;
+
+        getItemSlotByKind: function(kind) {
+            var self = this;
+
+            for (var i = 0; i < self.maxInventoryNumber; i++) {
+                if (self.inventories[i] && kind == self.inventories[i].kind)
+                    return i;
             }
+        },
+
+        getScale: function() {
+            var self = this,
+                scale;
+
+            scale = self.game.renderer.getScaleFactor();
+
+            if (self.game.renderer.mobile)
+                scale = 1;
+
+            return scale;
         },
 
         isInventoryEquipmentFull: function() {
-        	for (var i=6; i < this.maxInventoryNumber; ++i)
-        	{
-        		if (this.inventories[i] == null || this.inventories[i].kind == 0) {
-        			return false;
-        		}
-        	}
-        	return true;
-        }       
+            var self = this;
+
+            for (var i = 6; i < self.maxInventoryNumber; ++i) {
+                if (self.inventories[i] == null || self.inventories[i].kind == 0)
+                    return false;
+            }
+
+            return true;
+        },
+
+        isDesktop: function() {
+            var self = this,
+                isMobile = self.game.renderer.mobile,
+                isTablet = self.game.renderer.tablet;
+
+            return !isMobile && !isTablet;
+        }
     });
-    
+
     return InventoryHandler;
 });

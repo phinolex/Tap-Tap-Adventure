@@ -24,7 +24,9 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
         },
 
         clear: function() {
+
         },
+
         add: function(slot) {
             this.slots.push(slot);
         },
@@ -76,7 +78,7 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
             var self = this;
 
             if (this.cooltimeDoneHandle) {
-                game.chathandler.addNotification('Your skill has not cooled down yet.');
+                game.chathandler.pushNotification('Your skill has not cooled down yet.');
                 return;
             }
 
@@ -86,7 +88,7 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
 
 
             if (game.player.mana - manaReq < 0) {
-                game.chathandler.addNotification('You do not have enough mana points to use this ability!');
+                game.chathandler.pushNotification('You do not have enough mana points to use this ability!');
                 return;
             }
 
@@ -463,7 +465,7 @@ define(['mob', 'skilldata', 'character'], function(Mob, SkillData, Character) {
                             skill.execute_callback = stun_execute_callback;
 
                         skill.onExecuting(function(sender) {
-                            self.game.chathandler.addNotification('You have to wait for ' + sender.name + ' to cool down.');
+                            self.game.chathandler.pushNotification('You have to wait for ' + sender.name + ' to cool down.');
                         });
                     }
                     this.skills[name] = skill;

@@ -1,8 +1,7 @@
 
 /* global Types */
 
-define(['jquery', 'app', 'entrypoint', 'characterdialog',
-    'button2', 'dialog', 'iteminfodialog', 'game', 'bubble', 'settings'], function($, App, EntryPoint, Settings) {
+define(['jquery', 'app', 'entrypoint', 'dialog', 'iteminfodialog', 'game', 'bubble', 'settings'], function($, App, EntryPoint, Settings) {
     var app, game;
 
     var initApp = function() {
@@ -158,7 +157,7 @@ define(['jquery', 'app', 'entrypoint', 'characterdialog',
     };
 
     var initGame = function() {
-        require(['game', 'button2'], function(Game, Button2) {
+        require(['game'], function(Game) {
             log.info("Initialized Game.");
 
             var canvas = document.getElementById("entities"),

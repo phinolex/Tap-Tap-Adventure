@@ -94,7 +94,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         connect: function() {
 
             var self = this,
-                url = "ws://127.0.0.1:50526";
+                url = "ws://127.0.0.1:1800";
             //144.217.92.76
             this.connection = io(url, {
                 forceNew: true,
@@ -221,8 +221,7 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             var inventoryNumber = [];
             var inventorySkillKind = [];
             var inventorySkillLevel = [];
-            for(var i=0; i < maxInventoryNumber; ++i)
-            {
+            for(var i = 0; i < maxInventoryNumber; ++i) {
                 inventory.push(data.shift());
                 inventoryNumber.push(data.shift());
                 inventorySkillKind.push(data.shift());
@@ -261,9 +260,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
         receiveAchievement: function(data){
             data.shift();
-            if(this.achievement_callback){
+            if (this.achievement_callback)
                 this.achievement_callback(data);
-            }
         },
         receiveInventory: function(data){
             var inventoryNumber = data[1];
@@ -271,9 +269,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             var itemCount = data[3];
             var itemSkillKind = data[4];
             var itemSkillLevel = data[5];
-            if(this.inventory_callback){
+            if (this.inventory_callback)
                 this.inventory_callback(inventoryNumber, itemKind, itemCount, itemSkillKind, itemSkillLevel);
-            }
         },
         receiveTalkToNPC: function(data){
             var npcId = data[1],
@@ -326,18 +323,19 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
 
             //if (!kind) return;
 
-            if(ItemTypes.isItem(kind)) {
-                var item = EntityFactory.createEntity(kind, id);
-                item.count = count;
-                if(this.spawn_item_callback) {
-                    this.spawn_item_callback(item, x, y);
-                }
-            } else if(ItemTypes.isChest(kind)) {
-                var item = EntityFactory.createEntity(kind, id);
+            var item = EntityFactory.createEntity(kind, id);
 
-                if(this.spawn_chest_callback) {
+            if(ItemTypes.isItem(kind)) {
+
+                item.count = count;
+                if (this.spawn_item_callback)
+                    this.spawn_item_callback(item, x, y);
+
+            } else if(ItemTypes.isChest(kind)) {
+
+                if (this.spawn_chest_callback)
                     this.spawn_chest_callback(item, x, y);
-                }
+
             } else {
                 var name, orientation, target, weapon, armor, level, playerId, pClass;
 
@@ -348,9 +346,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
                     weapon = data[8];
                     level = data[9];
                     pClass = data[10];
-                    if(data.length > 10) {
+                    if (data.length > 10)
                         target = data[10];
-                    }
                 }
                 else if(MobData.Kinds[kind]) {
                     orientation = data[5];
@@ -415,9 +412,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             var id = data[1],
                 text = data[2];
 
-            if(this.chat_callback) {
+            if(this.chat_callback)
                 this.chat_callback(id, text);
-            }
         },
 
         receiveEquipItem: function(data) {

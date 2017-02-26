@@ -219,6 +219,17 @@ module.exports = CommandHandler = cls.Class.extend({
             case 'mute':
 
                 return;
+
+            case 'kick':
+                inputBlocks.shift();
+
+                var username = inputBlocks.join(' '),
+                    player = self.server.getPlayerByName(username);
+                
+                if (player)
+                    player.connection._connection.close();
+
+                return;
         }
     },
     
@@ -230,6 +241,9 @@ module.exports = CommandHandler = cls.Class.extend({
             case 'centercamera':
                 self.server.pushToPlayer(self.player, new Messages.CenterCamera(self.player.id));
                 return;
+
+            default:
+                inputBlocks.shift();
         }
     }
 });

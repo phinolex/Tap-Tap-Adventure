@@ -1,78 +1,87 @@
 define(['jquery'], function() {
-  var PartyHandler = Class.extend({
-    init: function(game) {
-	this.game = game;
-	this.toggle = false;
-	this.members = [];
-	//$('#partyconfirm').css('display', 'none');
-	var self = this;    
-	$('#partyleave').click(function(event){
-	    self.game.client.sendPartyLeave();
-	    $('#partynames').html("");
-	    self.show();
-	});            
-    },
 
-    inviteconfirm: function (invitee)
-    {
-    	    var self = this;
-    	    
-    	    $('#partyconfirmtitle').html("Party " + invitee.name + "?");
-    	   
-	    $('#partyconfirmyes').click(function(event){
-		    self.game.client.sendPartyInvite(invitee.id, 1);
-		    $('#partyconfirm').css('display', 'none');
-	    });
-	    $('#partyconfirmno').click(function(event){
-		    self.game.client.sendPartyInvite(invitee.id, 2);
-		    $('#partyconfirm').css('display', 'none');
-	    });
-	     $('#partyconfirm').css('display', 'block');
-    },
+    var PartyHandler = Class.extend({
+        init: function(game) {
+            var self = this;
 
-    show: function() {
-        this.toggle = !this.toggle;
-    	if (this.toggle)
-    	{
-            $('#party').css('display', 'block');
-            this.display();
+            self.game = game;
+            self.members = [];
+            self.toggle = false;
+
+            $('#partyleave').click(function(event) {
+                self.game.client.sendPartyLeave();
+                $('#partynames').html('');
+                self.show();
+            });
+        },
+
+        show: function() {
+            var self = this,
+                party = $('#party');
+
+            self.toggle = !self.toggle;
+
+            if (self.toggle) {
+                party.css('display', 'block');
+                self.display();
+            } else
+                party.css('display', 'none');
+
+        },
+
+        confirmInvite: function(entity) {
+            var self = this,
+                confirmTitle = $('#partyconfirmtitle'),
+                confirmYes = $('#partyconfirmyes'),
+                confirmNo = $('#partyconfirmno'),
+                confirm = $('#partyconfirm');
+
+            confirmTitle.html('Join party of: ' + entity.name + '?');
+
+            confirmYes.click(function(event) {
+                self.game.client.sendPartyInvite(entity.id, 1);
+                confirm.css('display', 'none');
+            });
+
+            confirmNo.click(function(event) {
+                self.game.client.sendPartyInvite(entity.id, 2);
+                confirm.css('display', 'none');
+            });
+
+            confirm.css('display', 'block');
+        },
+        
+        display: function() {
+            var self = this,
+                tableString = '<table><tr><th>Members</th></tr>',
+                partyNames = $('#partynames');
+            
+            if (!self.members) {
+                partyNames.html('');
+                return;
+            }
+
+            for (var i = 0; i < self.members; i++)
+                tableString += '<tr><td>' + self.members[i] + i == 0 ? '[L]' : '' + '</td></tr>'
+
+            tableString += '</table>';
+
+            partyNames.html(tableString);
+        },
+
+        setMembers: function(members) {
+            this.members = members;
+        },
+
+        isLeader: function(name) {
+            return name == this.members[0];
+        },
+
+        isMember: function(name) {
+            return this.members.indexOf(name) > -1;
         }
-        else
-        {
-            $('#party').css('display', 'none');
-        }
-    },
-    setMembers: function(members){
-      this.members = members;
-      //log.info("this.members[0]="+this.members[0]);
-    },
-    
-    display: function () {
-      if (!this.members)
-      {
-      	  $('#partynames').html("");
-          return;
-      }
+    });
 
-      var htmlStr = "<table><tr><th>Name</th></tr>";
-      htmlStr += "<tr><td>" + this.members[0] + " (L)</td></tr>";
-      for(var i=1; i < this.members.length; ++i){
-          htmlStr += "<tr><td>" + this.members[i] + "</td></tr>";
-      }
-      htmlStr += "</table>";
-      $('#partynames').html(htmlStr);
-    	    
-    },
-    
-    isLeader: function (name) {
-    	//log.info("name="+name+",this.members[0]="+this.members[0]);
-    	return name === this.members[0];	    
-    },
-    
-    isMember: function (name) {
-    	return (this.members.indexOf(name) > -1);	    
-    }
-  });
-  return PartyHandler;
+    return PartyHandler;
 });
 

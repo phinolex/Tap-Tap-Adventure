@@ -55,12 +55,13 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
             },
 
             setZoom: function () {
-                if (this.getScaleFactor() == 3)
-                    return;
 
-                var zoom = $(window).width() / $('#container').width();
-                $('body').css('zoom', zoom);
-                $('body').css('-moz-transform', 'scale('+zoom+')');
+                var zoom = $(window).width() / $('#container').width(),
+                    body = $('body');
+
+
+                body.css('zoom', zoom);
+                body.css('-moz-transform', 'scale('+zoom+')');
                 $('#mainborder').css("top", 0);
 
             },
@@ -89,8 +90,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'mob', 'npc', 'pet'],
                     scale = 2;
                 else
                     scale = 3;
-
-
 
                 return scale;
             },

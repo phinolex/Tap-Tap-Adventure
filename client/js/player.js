@@ -15,9 +15,9 @@ define(['character', 'exceptions', 'mount'], function(Character, Exceptions, Mou
             this.nameOffsetY = -10;
             this.rights = 0;
             // sprites
-            this.spriteName = "clotharmor";
-            this.armorName = "clotharmor";
-            this.weaponName = "sword1";
+            this.spriteName = null;
+            this.armorName = null;
+            this.weaponName = null;
             this.pendant = null;
             this.ring = null;
             this.boots = null;

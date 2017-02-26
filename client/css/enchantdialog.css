@@ -1,45 +1,58 @@
-@media only screen and (min-width: 1501px) {
+/**
+ * Created by Flavius on 15-07-19.
+ */
+
+
+@media screen and (min-width: 1501px) {
   #enchantDialog {
-    font-family: "GraphicPixel";
-    font-size: 12pt;
-    font-weight: bold;
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -459px;
     margin-top: -319.5px;
-    user-select: none;
-    -webkit-user-select: none;
+    font-family: 'GraphicPixel';
+    font-size: 13.5pt;
+    font-weight: bold;
     -moz-user-select: none;
+    -webkit-user-select: none;
     display: none;
   }
+
   #enchantDialogInventory {
-    background-image: url("../img/3/storedialogsheet.png");
-    background-position: 0px 0px;
     position: absolute;
-    left: 0;
+    left: 0px;
     top: 66px;
     width: 387px;
     height: 465px;
+    background-image: url('../img/3/storedialogsheet.png');
+    background-position: 0px 0px;
   }
+
+  #enchantDialogStore {
+    position: absolute;
+    left: 387px;
+    top: 0px;
+    width: 513px;
+    height: 570px;
+    background-image: url('../img/3/storedialogsheet.png');
+    background-position: -387px 0px;
+  }
+
   #enchantDialogModal {
-    font-family: "GraphicPixel";
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    font-family: 'GraphicPixel';
     font-size: 13.5pt;
     font-weight: bold;
     background-color: rgba(100, 100, 100, 0.3);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    user-select: none;
-    -webkit-user-select: none;
     -moz-user-select: none;
+    -webkit-user-select: none;
     display: none;
   }
   #enchantDialogModalNotify {
-    background-image: url("../img/3/storedialogsheet.png");
-    background-position: -900px -141px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -47,106 +60,109 @@
     height: 141px;
     margin-left: -250.5px;
     margin-top: -70.5px;
+    background-image: url('../img/3/storedialogsheet.png');
+    background-position: -900px -141px;
     display: none;
   }
   #enchantDialogModalNotifyMessage {
-    line-height: 16.5px;
     position: absolute;
-    left: 33.5px;
-    top: 14px;
-    width: 123.5px;
-    height: 16.5px;
+    left: 102px;
+    top: 27px;
+    width: 372px;
+    height: 51px;
+    font-size: 18px;
+    line-height: 33px;
   }
   #enchantDialogModalNotifyButton1 {
     position: absolute;
-    left: 143px;
-    top: 34px;
-    width: 14px;
-    height: 7px;
+    left: 329px;
+    top: 102px;
+    width: 42px;
+    height: 21px;
     text-align: center;
     cursor: pointer;
   }
   #enchantDialogModalConfirm {
-    background-image: url("../img/3/storedialogsheet.png");
-    background-position: -900px 0;
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 675px;
+    top: 375px;
     width: 501px;
     height: 141px;
     margin-left: -250.5px;
     margin-top: -70.5px;
+    background-image: url('../img/3/storedialogsheet.png');
+    background-position: -900px 0;
     display: none;
   }
   #enchantDialogModalConfirmMessage {
-    line-height: 16.5px;
     position: absolute;
-    left: 33.5px;
-    top: 14px;
-    width: 123.5px;
-    height: 16.5px;
+    left: 102px;
+    top: 27px;
+    width: 345px;
+    height: 51px;
+    font-size: 15px;
+    line-height: 33px;
   }
   #enchantDialogModalConfirmButton1 {
     position: absolute;
-    left: 127px;
-    top: 34px;
-    width: 14px;
-    height: 7px;
+    left: 371px;
+    top: 102px;
+    width: 42px;
+    height: 21px;
     text-align: center;
     cursor: pointer;
   }
   #enchantDialogModalConfirmButton2 {
     position: absolute;
-    left: 143px;
-    top: 34px;
-    width: 14px;
-    height: 7px;
+    left: 429px;
+    top: 102px;
+    width: 42px;
+    height: 21px;
     text-align: center;
     cursor: pointer;
   }
 }
-@media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
+
+@media screen and (max-width: 1500px), screen and (max-height: 870px) {
   #enchantDialog {
-    font-family: "GraphicPixel";
-    font-size: 8pt;
-    font-weight: bold;
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -306px;
     margin-top: -213px;
-    user-select: none;
-    -webkit-user-select: none;
+    font-family: 'GraphicPixel';
+    font-size: 9pt;
+    font-weight: bold;
     -moz-user-select: none;
+    -webkit-user-select: none;
     display: none;
   }
+
   #enchantDialogInventory {
-    background-image: url("../img/2/storedialogsheet.png");
-    background-position: 0px 0px;
     position: absolute;
-    left: 0;
+    left: 0px;
     top: 44px;
     width: 258px;
     height: 310px;
+    background-image: url('../img/2/storedialogsheet.png');
+    background-position: 0px 0px;
   }
+
   #enchantDialogModal {
-    font-family: "GraphicPixel";
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    font-family: 'GraphicPixel';
     font-size: 9pt;
     font-weight: bold;
     background-color: rgba(100, 100, 100, 0.3);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    user-select: none;
-    -webkit-user-select: none;
     -moz-user-select: none;
+    -webkit-user-select: none;
     display: none;
   }
   #enchantDialogModalNotify {
-    background-image: url("../img/2/storedialogsheet.png");
-    background-position: -600px -94px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -154,106 +170,111 @@
     height: 94px;
     margin-left: -167px;
     margin-top: -47px;
+    background-image: url('../img/2/storedialogsheet.png');
+    background-position: -600px -94px;
     display: none;
   }
   #enchantDialogModalNotifyMessage {
-    line-height: 16.5px;
     position: absolute;
-    left: 33.5px;
-    top: 14px;
-    width: 123.5px;
-    height: 16.5px;
+    left: 67px;
+    top: 18px;
+    width: 247px;
+    height: 33px;
+    font-size: 11px;
+    line-height: 21px;
   }
   #enchantDialogModalNotifyButton1 {
     position: absolute;
-    left: 143px;
-    top: 34px;
-    width: 14px;
-    height: 7px;
+    left: 286px;
+    top: 68px;
+    width: 28px;
+    height: 14px;
     text-align: center;
     cursor: pointer;
   }
   #enchantDialogModalConfirm {
-    background-image: url("../img/2/storedialogsheet.png");
-    background-position: -600px 0;
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 450px;
+    top: 250px;
     width: 334px;
     height: 94px;
     margin-left: -167px;
     margin-top: -47px;
+    background-image: url('../img/2/storedialogsheet.png');
+    background-position: -600px 0;
     display: none;
   }
   #enchantDialogModalConfirmMessage {
-    line-height: 16.5px;
     position: absolute;
-    left: 33.5px;
-    top: 14px;
-    width: 123.5px;
-    height: 16.5px;
+    left: 67px;
+    top: 18px;
+    width: 230px;
+    height: 33px;
+    font-size: 10px;
+    line-height: 21px;
   }
   #enchantDialogModalConfirmButton1 {
     position: absolute;
-    left: 127px;
-    top: 34px;
-    width: 14px;
-    height: 7px;
+    left: 254px;
+    top: 68px;
+    width: 28px;
+    height: 14px;
     text-align: center;
     cursor: pointer;
   }
   #enchantDialogModalConfirmButton2 {
     position: absolute;
-    left: 143px;
-    top: 34px;
-    width: 14px;
-    height: 7px;
+    left: 286px;
+    top: 68px;
+    width: 28px;
+    height: 14px;
     text-align: center;
     cursor: pointer;
   }
+
 }
-@media only screen and (max-width: 1000px) {
+
+@media screen and (max-width: 1000px) {
+
   #enchantDialog {
-    font-family: "GraphicPixel";
-    font-size: 4pt;
-    font-weight: bold;
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -153px;
     margin-top: -106.5px;
-    user-select: none;
-    -webkit-user-select: none;
+    font-family: 'GraphicPixel';
+    font-size: 4.5pt;
+    font-weight: bold;
     -moz-user-select: none;
+    -webkit-user-select: none;
     display: none;
   }
+
   #enchantDialogInventory {
-    background-image: url("../img/1/storedialogsheet.png");
-    background-position: 0px 0px;
     position: absolute;
-    left: 0;
+    left: 0px;
     top: 22px;
     width: 129px;
     height: 155px;
+    background-image: url('../img/1/storedialogsheet.png');
+    background-position: 0px 0px;
   }
+
   #enchantDialogModal {
-    font-family: "GraphicPixel";
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    font-family: 'GraphicPixel';
     font-size: 4.5pt;
     font-weight: bold;
     background-color: rgba(100, 100, 100, 0.3);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    user-select: none;
-    -webkit-user-select: none;
     -moz-user-select: none;
+    -webkit-user-select: none;
     display: none;
   }
   #enchantDialogModalNotify {
-    background-image: url("../img/1/storedialogsheet.png");
-    background-position: -300px -47px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -261,15 +282,18 @@
     height: 47px;
     margin-left: -83.5px;
     margin-top: -23.5px;
+    background-image: url('../img/1/storedialogsheet.png');
+    background-position: -300px -47px;
     display: none;
   }
   #enchantDialogModalNotifyMessage {
-    line-height: 16.5px;
     position: absolute;
-    left: 33.5px;
-    top: 14px;
-    width: 123.5px;
-    height: 16.5px;
+    left: 34px;
+    top: 9px;
+    width: 124px;
+    height: 17px;
+    font-size: 6px;
+    line-height: 11px;
   }
   #enchantDialogModalNotifyButton1 {
     position: absolute;
@@ -281,24 +305,25 @@
     cursor: pointer;
   }
   #enchantDialogModalConfirm {
-    background-image: url("../img/1/storedialogsheet.png");
-    background-position: -300px 0;
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 225px;
+    top: 125px;
     width: 167px;
     height: 47px;
     margin-left: -83.5px;
     margin-top: -23.5px;
+    background-image: url('../img/1/storedialogsheet.png');
+    background-position: -300px 0;
     display: none;
   }
   #enchantDialogModalConfirmMessage {
-    line-height: 16.5px;
     position: absolute;
-    left: 33.5px;
-    top: 14px;
-    width: 123.5px;
-    height: 16.5px;
+    left: 34px;
+    top: 9px;
+    width: 115px;
+    height: 17px;
+    font-size: 5px;
+    line-height: 11px;
   }
   #enchantDialogModalConfirmButton1 {
     position: absolute;
