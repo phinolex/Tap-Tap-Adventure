@@ -20,16 +20,12 @@ ItemTypes.setKindData = function(kindData) {
 };
 
 ItemTypes.getKindFromString = function (name) {
-    //if (name == null) return 0;
     try {
-        if(name in ItemData) {
-            //log.info("kind:"+ItemData[name].kind);
+        if (name in ItemData)
             return ItemData[name].kind;
-        }
-        else {
+        else
             return null;
-        }
-    } catch(e) {
+    } catch (e) {
         log.error("No kind found for name: "+name);
         log.error('Error stack: ' + e.stack);
     }
@@ -53,15 +49,12 @@ ItemTypes.getKindAsString = function(kind) {
 
 ItemTypes.getName = function(kind) {
     //if (kind == null) return false;
-    try {
-        var item = KindData[kind];
-        if (!item)
-            return '';
-        return item.name;
-    } catch (e) {
-        log.error("No name found for item: " + KindData[kind]);
-        log.error('Error stack: ' + e.stack);
-    }
+
+    var item = KindData[kind];
+    if (!item)
+        return '';
+
+    return item.name;
 };
 
 ItemTypes.getWeaponLevel = function(kind) {
@@ -226,9 +219,18 @@ ItemTypes.getItemDataByKind = function (kind) {
         if (value.kind == kind) {
             return value;
         }
-    };
+    }
     return null;
-}
+};
+
+ItemTypes.isEitherArmor = function(kind) {
+    var item = KindData[kind];
+
+    if (!item)
+        return false;
+
+    return item.type === 'armor' || item.type === 'armorarcher';
+};
 
 ItemTypes.isArmor = function(kind) {
     var item = KindData[kind];
@@ -240,6 +242,15 @@ ItemTypes.isArcherArmor = function(kind) {
     var item = KindData[kind];
     if (!item) return false;
     return item.type === "armorarcher";
+};
+
+ItemTypes.isEitherWeapon = function(kind) {
+    var item = KindData[kind];
+
+    if (!item)
+        return false;
+
+    return item.type === 'weapon' || item.type === 'weaponarcher';
 };
 
 ItemTypes.isWeapon = function(kind) {
@@ -304,7 +315,8 @@ ItemTypes.isConsumableItem = function(kind) {
 ItemTypes.isHealingItem = function(kind) {
     return kind === 35
         || kind === 36
-        || kind === 401;
+        || kind === 401
+        || kind === 300;
 };
 
 ItemTypes.isMount = function(kind) {

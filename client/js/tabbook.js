@@ -6,7 +6,7 @@ define(function() {
             self.id = id;
             self.body = $(id);
             self.pages = [];
-            self.pageIndex = -1;
+            self.index = -1;
 
             self.openHandler = null;
         },
@@ -16,26 +16,26 @@ define(function() {
         },
 
         getPageIndex: function() {
-            return this.pageIndex;
+            return this.index;
         },
 
         getActivePage: function() {
-            return this.pageIndex >= 0 ? this.pages[this.pageIndex] : null;
+            return this.index >= 0 ? this.pages[this.index] : null;
         },
 
-        setPageIndex: function(pageIndex) {
+        setIndex: function(index) {
             var self = this;
 
-            if (self.pageIndex >= 0)
-                self.pages[self.pageIndex].setVisible(false);
+            if (self.index >= 0)
+                self.pages[self.index].setVisible(false);
 
-            if (pageIndex >= 0 && pageIndex < self.pages.length) {
-                if (self.openHandler ? self.openHandler(self, pageIndex) : true) {
-                    self.pageIndex = pageIndex;
-                    self.pages[self.pageIndex].setVisible(true);
+            if (index >= 0 && index < self.pages.length) {
+                if (self.openHandler ? self.openHandler(self, index) : true) {
+                    self.index = index;
+                    self.pages[self.index].setVisible(true);
                 }
             } else
-                self.pageIndex = -1;
+                self.index = -1;
         },
 
         setActivePage: function(activePage) {
@@ -43,7 +43,7 @@ define(function() {
                 index = self.pages.indexOf(activePage);
 
             if (index >= 0)
-                self.setPageIndex(index);
+                self.setIndex(index);
         },
 
         add: function(page) {

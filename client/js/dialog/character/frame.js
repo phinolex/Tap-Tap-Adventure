@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-24.
  */
-define(['../../tabbook', './pagenavigator', './pages/statepage', './pages/skillpage'], function(TabBook, PageNavigator, StatePage, SkillPage) {
+define(['../../tabbook', '../pagenavigator', './pages/statepage', './pages/skillpage'], function(TabBook, PageNavigator, StatePage, SkillPage) {
 
     var Frame = TabBook.extend({
         init: function(characterDialog) {
@@ -35,11 +35,11 @@ define(['../../tabbook', './pagenavigator', './pages/statepage', './pages/skillp
              * between pages and their states.
              */
 
-            self.pageNavigator = new PageNavigator();
+            self.pageNavigator = new PageNavigator(self.game, 'characterDialogFrame');
             self.pageNavigator.setCount(self.getPageCount());
 
             self.pageNavigator.onChange(function(sender) {
-                self.setPageIndex(sender.getIndex() - 1);
+                self.setIndex(sender.getIndex() - 1);
             });
         },
 

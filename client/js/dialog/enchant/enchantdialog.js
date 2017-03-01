@@ -1,4 +1,4 @@
-define(['../../dialog', './inventoryframe'], function(Dialog, InventoryFrame) {
+define(['../../dialog', '../inventoryframe'], function(Dialog, InventoryFrame) {
 
     var EnchantDialog = Dialog.extend({
         init: function(game) {
@@ -9,6 +9,7 @@ define(['../../dialog', './inventoryframe'], function(Dialog, InventoryFrame) {
             self.game = game;
             self.scale = -1;
             self.confirmCallback = null;
+            self.dialogType = 'enchantDialog';
             self.inventoryFrame = new InventoryFrame(self);
 
             self.close = $('#enchantDialogCloseButton');
@@ -111,6 +112,10 @@ define(['../../dialog', './inventoryframe'], function(Dialog, InventoryFrame) {
             var self = this;
 
             self.scale = self.game.getScaleFactor();
+        },
+
+        getDialogType: function() {
+            return this.dialogType;
         }
     });
 

@@ -1230,8 +1230,8 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
             this.sendMessage([Types.Messages.AUCTIONDELETE, index]);
         },
 
-        sendStoreEnchant: function(inventoryNumber) {
-            this.sendMessage([Types.Messages.STOREENCHANT, inventoryNumber]);
+        sendStoreEnchant: function(itemKind) {
+            this.sendMessage([Types.Messages.STOREENCHANT, itemKind]);
         },
         sendBankStore: function(inventoryNumber) {
             this.sendMessage([Types.Messages.BANKSTORE, inventoryNumber]);

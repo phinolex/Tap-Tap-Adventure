@@ -494,23 +494,24 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleStoreSell: function(message) {
-        var inventoryNumber1 = message[1],
-            itemKind = null,
-            price = 0,
-            inventoryNumber2 = -1;
+        message.shift();
 
-        if((inventoryNumber1 >= 0) && (inventoryNumber1 < this.player.inventory.number)) {
-            itemKind = this.player.inventory.rooms[inventoryNumber1].itemKind;
-            if(itemKind && !ItemTypes.isConsumableItem(itemKind) && !ItemTypes.isGold(itemKind)) {
-                price = ItemTypes.getSellPrice(ItemTypes.getKindAsString(itemKind));
-                inventoryNumber2 = this.player.inventory.getInventoryNumber(400);
-                if(inventoryNumber2 < 0) {
-                    inventoryNumber2 = this.player.inventory.getEmptyInventoryNumber();
-                }
-                this.player.inventory.makeEmptyInventory(inventoryNumber1);
-                this.player.inventory.putInventory(400, price);
-                this.server.pushToPlayer(this.player, new Messages.Notify("sold"));
+        var self = this,
+            itemKind = message.shift();
+
+        if (itemKind) {
+            var itemIndex = self.player.inventory.getInventoryNumber(itemKind);
+
+            if (!ItemTypes.isObject(itemKind)) {
+                var name = ItemTypes.getKindAsString(itemKind),
+                    price = ItemTypes.getSellPrice(name);
+
+                self.player.inventory.makeEmptyInventory(itemIndex);
+                self.player.inventory.putInventory(400, price);
+
             }
+
+            self.server.pushToPlayer(self.player, new Messages.Notify('sell'));
         }
     },
 
@@ -574,18 +575,18 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleStoreEnchant: function(message) {
+        message.shift();
+
         var self = this,
-            inventoryNumber = message[1],
-            itemKind,
-            price = 0;
+            itemKind = parseInt(message.shift()),
+            goldCount = self.player.inventory.getItemNumber(400);
 
+        if (itemKind && !ItemTypes.isGold(itemKind)) {
+            var itemIndex = self.player.inventory.getInventoryNumber(itemKind),
+                item = self.player.inventory.rooms[itemIndex];
 
-        if ((inventoryNumber >= 6) && (inventoryNumber < self.player.inventory.number)) {
-            var item = self.player.inventory.rooms[inventoryNumber];
-
-            if (item && item.itemKind && !ItemTypes.isGold(item.itemKind)) {
-                price = ItemTypes.getEnchantPrice(ItemTypes.getKindAsString(item.itemKind), item.itemNumber);
-                goldCount = self.player.inventory.getItemNumber(400);
+            if (item) {
+                var price = ItemTypes.getEnchantPrice(ItemTypes.getKindAsString(itemKind), item.itemNumber);
 
                 if (goldCount < price) {
                     self.server.pushToPlayer(self.player, new Messages.GuiNotify("You do not have enough gold to enchant this item!"));
@@ -594,9 +595,10 @@ module.exports = PacketHandler = Class.extend({
 
                 item.itemNumber++;
 
-                self.redisPool.setInventory(self.player.inventory.owner, inventoryNumber, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
-                self.player.inventory.putInventory(400, -price);
-                self.server.pushToPlayer(self.player, new Messages.GuiNotify("You have successfully enchanted this item!"));
+                self.redisPool.setInventory(self.player.inventory.owner, itemIndex, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
+                self.player.inventory.putInventory(400, -price); //TODO - Change to take out.
+                self.server.pushToPlayer(self.player, new Messages.Notify('enchanted'));
+                self.server.pushToPlayer(self.player, new Messages.GuiNotify('You have successfully enchanted this item!'))
             }
         }
     },
@@ -857,27 +859,36 @@ module.exports = PacketHandler = Class.extend({
         }
     },
 
-    handleLoot: function(message){
-        var self = this;
-        var item = this.server.getEntityById(message[1]);
-        if(item) {
-            var kind = item.kind;
-            var itemRank = 0;
+    handleLoot: function(message) {
+        message.shift();
 
-            if(ItemTypes.isItem(kind)) {
-                if(kind === 38) { // FIREPOTION
-                    this.player.updateHitPoints();
-                    this.broadcast(this.player.equip(169), false); // FIREBENEF
-                    this.broadcast(item.despawn(), false);
-                    this.server.removeEntity(item);
-                    this.server.pushToPlayer(this.player, new Messages.PlayerPoints(this.player.maxHitPoints, this.player.maxMana, this.player.hitPoints, this.player.mana));
-                } else {
-                    if(self.player.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel)){
-                        this.broadcast(item.despawn(), false);
-                        this.server.removeEntity(item);
-                    }
+        var self = this,
+            item = self.server.getEntityById(message.shift());
+
+        if (item) {
+            var kind = item.kind,
+                rank = 0;
+
+            if (ItemTypes.isItem(kind)) {
+                switch (kind) {
+                    case 38:
+
+                        self.player.updateHitPoints();
+                        self.broadcast(self.player.equip(169), false);
+                        self.server.pushToPlayer(self.player, new Messages.PlayerPoints(self.player.maxHitPoints, self.player.maxMana, self.player.hitPoints, self.player.mana));
+
+                        break;
+
+                    default:
+
+                        self.player.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel);
+
+                        break;
                 }
             }
+
+            self.broadcast(item.despawn(), false);
+            self.server.removeEntity(item);
         }
     },
 

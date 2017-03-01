@@ -1,28 +1,13 @@
 {
-  "Lifetime Adventure": {
-    "itemReward": 150,
-    "itemRewardCount": 1,
-    "expReward": 200,
-    "states": {
-      "1": {
-        "npcTalk": 100,
-        "acquireItem": true,
-        "item": 100,
-        "npcText": [
-          "Hello sir, you must help us!",
-          "The Goblins have stolen our merchendise",
-          "Please bring back 15 gold!"
+    "Introduction": {
+        "id": 0,
+        "name": "A Great Start",
+        "description": "Teaching you the basics about Tap Tap Adventure!",
+        "instructions": [
+            "Talk to the -decide NPC here-",
+            "Find the missing item",
+            "Lorem ipsum",
+            "potato"
         ]
-      },
-
-      "2": {
-        "npcKill": 15,
-        "acquireItem": false,
-        "npcTalk": 100,
-        "npcText": [
-          "Thank you."
-        ]
-      }
     }
-  }
 }

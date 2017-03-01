@@ -7,6 +7,7 @@ var cls = require("./../../../../lib/class"),
     Types = require("../../../../../../../shared/js/gametypes");
 
 module.exports = Inventory = cls.Class.extend({
+
     /**
      * TODO - The inventory system is still very ambiguous,
      * it has to be better defined using terminology such as
@@ -22,6 +23,10 @@ module.exports = Inventory = cls.Class.extend({
 
         for (var i = 0; i < self.number; i++)
             self.rooms.push(new InventoryRoom(itemKinds[i], itemNumbers[i], itemSkillKinds[i], itemSkillLevels[i]));
+    },
+
+    getItemAtIndex: function(index) {
+        return this.rooms[index];
     },
 
     hasItem: function(itemKind) {
@@ -144,15 +149,23 @@ module.exports = Inventory = cls.Class.extend({
 
     putInventory: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel) {
         var self = this,
-            itemCount = itemNumber ? itemNumber : 1;
+            itemCount = itemNumber ? parseInt(itemNumber) : 1;
 
-        itemSkillKind = itemSkillKind ? itemSkillKind : 0;
-        itemSkillLevel = itemSkillLevel ? itemSkillLevel : 0;
+        itemKind = parseInt(itemKind);
+
+        /**
+         * TODO
+         * We parseInt() as the received values may vary, we need to ensure
+         * they are in the proper integer form. This is just a second layer
+         * of protection against bugs. It will be removed in the future when
+         * more of the code will be redone.
+         */
 
         if (ItemTypes.isConsumableItem(itemKind) || ItemTypes.isGold(itemKind)) {
+
             for (var i = 0; i < self.number; i++) {
-                if (self.rooms[i].itemKind === itemKind) {
-                    self.rooms[i].itemNumber += itemNumber;
+                if (self.rooms[i].itemKind == itemKind) {
+                    self.rooms[i].itemNumber += itemCount;
 
                     if (self.rooms[i].itemNumber <= 0)
                         self.makeEmptyInventory(i);
@@ -164,9 +177,10 @@ module.exports = Inventory = cls.Class.extend({
             }
 
             if (i === self.number)
-                return self.addItem(itemKind, itemNumber, 0, 0);
+                return self.addItem(itemKind, itemCount, 0, 0);
+
         } else
-            return self.addItem(itemKind, itemNumber, itemSkillKind, itemSkillLevel);
+            return self.addItem(itemKind, itemCount, itemSkillKind, itemSkillLevel);
     },
 
     addItem: function(itemKind, itemNumber, itemSkillKind, itemSkillLevel) {

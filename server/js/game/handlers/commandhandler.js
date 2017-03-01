@@ -27,6 +27,8 @@ module.exports = CommandHandler = cls.Class.extend({
 
         var inputBlocks = input.substring(1).split(' ');
 
+        log.info('Player rights: ' + self.player.rights);
+
         self.handlePlayerCommands(inputBlocks);
 
         if (self.player.rights > 0)
@@ -168,8 +170,8 @@ module.exports = CommandHandler = cls.Class.extend({
                     self.packetHandler.sendGUIMessage("Invalid command input!");
                     return;
                 }
-
-                self.player.inventory.putInventory(itemId, itemCount);
+                
+                self.player.inventory.putInventory(parseInt(itemId), parseInt(itemCount));
                 return;
 
             case 'spawn':
@@ -241,9 +243,6 @@ module.exports = CommandHandler = cls.Class.extend({
             case 'centercamera':
                 self.server.pushToPlayer(self.player, new Messages.CenterCamera(self.player.id));
                 return;
-
-            default:
-                inputBlocks.shift();
         }
     }
 });

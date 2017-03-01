@@ -55,28 +55,6 @@ Types = {
         IGNORES: 46,
         LOBBY: 47,
         TRADE: 48,
-        TRADEINVALID: 49,
-        TRADEINVALIDTYPES: {
-            INVALIDKIND: 1,
-            UNKNOWNCOUNT: 2,
-            INVALIDLEVEL: 3,
-            UNTRADEABLE: 4
-        },
-        TRADESTATES: {
-            STARTED: 5,
-            INPROGRESS: 6,
-            PSENTREQUEST: 7,
-            OPSENTERQUEST: 8,
-            PACCEPTED: 9,
-            OPACCEPTED: 10,
-            PADDEDITEM: 11,
-            OPADDEDITEM: 12,
-            INVENTORYCOUNT: 13,
-            ITEMADDED: 14,
-            ITEMREMOVED: 15,
-            FINISHED: 16
-        },
-        TRADESCREEN: 50,
         CHARACTERINFO: 51,
         FLAREDANCE: 52,
         SELL: 53,
@@ -282,6 +260,14 @@ Types = {
         REGENBOOST: 3,
         DROPRATEENHANCER: 4,
         NAMECHANGE: 5
+    },
+
+    TradeStates: {
+        STARTED: 1,
+        ITEMCHANGE: 2,
+        FIRSTACCEPT: 3,
+        SECONDACCEPT: 4,
+        FINISHED: 5
     }
 };
 
@@ -386,6 +372,40 @@ Types.getItemSkillNameByKind = function(kind){
     return 'NoSkill';
 };
 
+var AchievementData = {};
+Types.AchievementData = AchievementData;
+
+Types.setAchievementData = function(achievementData) {
+    AchievementData = achievementData;
+    Types.AchievementData = achievementData;
+};
+
+
+Types.isAchievementNPC = function(kind) {
+    for (var index in AchievementData)
+        if (AchievementData[index].npcId == kind)
+            return true;
+
+    return false;
+};
+
+Types.getAchievementByNPCKind = function(kind) {
+    for (var index in AchievementData) {
+        if (AchievementData[index].npcId == kind)
+            return AchievementData[index];
+    }
+
+    return null;
+};
+
+Types.getAchievementIndex = function(achievement) {
+    for (var index in AchievementData) {
+        if (AchievementData[index] == achievement)
+            return index;
+    }
+
+    return -1;
+};
 
 if(!(typeof exports === 'undefined')) {
     module.exports = Types;

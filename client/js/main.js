@@ -690,7 +690,7 @@ define(['jquery', 'app', 'entrypoint', 'dialog', 'iteminfodialog', 'game', 'bubb
                     !game.statehandler.buyingArcher &&
                     !game.statehandler.changingPassword  &&
                     !game.shopHandler.shown &&
-                    !game.storeDialog.visible) {
+                    !game.shopDialog.visible) {
                     if (key >= 49 && key <= 54) { // 1 to 6 for now
                         game.keyDown(key);
                         return false;

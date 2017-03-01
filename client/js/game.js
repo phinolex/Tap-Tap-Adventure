@@ -7,7 +7,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pet', 'mobs', 'mobdata', 'gather', 'exceptions', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'achievemethandler',
         'rankinghandler', 'inventoryhandler', 'bankhandler', 'partyhandler','bools', 'iteminfodialog',
-        'skillhandler', 'statehandler', 'storedialog', 'auctiondialog', './dialog/enchant/enchantdialog', 'bankdialog', 'craftdialog', 'projectile' ,'guild',
+        'skillhandler', 'statehandler', 'dialog/shop/shopdialog', 'auctiondialog', './dialog/enchant/enchantdialog', 'bankdialog', 'craftdialog', 'projectile' ,'guild',
         'gamedata', 'inappstore', 'util', 'dialog/character/characterdialog',
         '../shared/js/gametypes', '../shared/js/itemtypes'],
     function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
@@ -16,7 +16,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
              ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
              ShopHandler, PlayerPopupMenu, ClassPopupMenu, AchievementHandler, RankingHandler,
              InventoryHandler, BankHandler, PartyHandler, Bools, ItemInfoDialog, SkillHandler, StateHandler,
-             StoreDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile, Guild, GameData,
+             ShopDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile, Guild, GameData,
              InAppStore, Util, CharacterDialog) {
         var Game = Class.extend({
             init: function(app) {
@@ -286,8 +286,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.bankHandler = new BankHandler(this);
                 this.setChatInput(input);
 
-                this.storeDialog = new StoreDialog(this);
-                this.dialogs.push(this.storeDialog);
+                this.shopDialog = new ShopDialog(this);
+                this.dialogs.push(this.shopDialog);
                 this.enchantDialog = new EnchantDialog(this);
                 this.dialogs.push(this.enchantDialog);
                 this.bankDialog = new BankDialog(this);
@@ -2417,7 +2417,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             openStoreDialog: function() {
-                this.storeDialog.show();
+                this.shopDialog.show();
             },
 
             openEnchantmentDialog: function() {
@@ -2437,7 +2437,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
             },
 
             showGraphicNotification: function(message) {
-                this.storeDialog.notify(message);
+                log.info('Received graphic notification: ' + message);
+                this.shopDialog.notify(message);
             },
 
             handleForcedCast: function(spellType) {
@@ -3542,8 +3543,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 if (this.player)
                     this.player.skillHandler.displayShortcuts();
 
-                if (this.storeDialog.visible)
-                    this.storeDialog.rescale();
+                if (this.shopDialog.visible)
+                    this.shopDialog.rescale();
 
                 if (this.enchantDialog.visible)
                     this.enchantDialog.load();
@@ -3595,8 +3596,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 switch(message) {
                     case 'buy':
                     case 'sell':
-                            if (self.storeDialog.visible)
-                                self.storeDialog.inventoryFrame.open();
+                            if (self.shopDialog.visible)
+                                self.shopDialog.inventoryFrame.open();
 
                             if (self.auctionDialog.visible) {
                                 self.auctionDialog.inventoryFrame.open();
@@ -3621,21 +3622,21 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                     default:
 
-                            if (self.storeDialog.visible)
-                                self.storeDialog.notify(message);
+                            if (self.shopDialog.visible)
+                                self.shopDialog.notify(message);
 
                             else if (self.auctionDialog.visible)
                                 self.auctionDialog.notify(message);
 
                             else if (self.enchantDialog.visible)
                                 self.enchantDialog.notify(message);
-                        
+
                             else if (self.craftDialog.visible)
                                 self.craftDialog.notify(message);
-                        
+
                             else
                                 self.chatHandler.pushNotification(message, differentSource);
-                        
+
                         return;
 
                 }

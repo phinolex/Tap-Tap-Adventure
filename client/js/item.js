@@ -38,28 +38,38 @@ define(['entity'], function(Entity) {
              //log.info("item-"+ this.itemKind);
              return "item-"+ this.itemKind;
         },
-        
+
+        /**
+         * TODO: relocate getInfoMsgEx to game and rename the function
+         */
 
         getInfoMsg: function() {
-            
             return this.getInfoMsgEx(this.kind, this.count, this.skillKind, this.skillLevel);
         },
-        getInfoMsgEx: function(itemKind, enchantedPoint, skillKind, skillLevel) {
+
+        getInfoMsgEx: function(itemKind, enchantmentPoints, skillKind, skillLevel) {
             var msg = '';
-            if(ItemTypes.isWeapon(itemKind) || ItemTypes.isArcherWeapon(itemKind)){
-                msg = ItemTypes.getName(itemKind) + ": Lv " + (ItemTypes.getWeaponLevel(itemKind)*2) + (enchantedPoint ? "+" + enchantedPoint + " " : "");
-                if(skillKind === Types.Skills.BLOODSUCKING) {
-                    msg += " " + Types.getItemSkillNameByKind(skillKind) + " " + "+" + skillLevel*2 + "%";
-                } else if(skillKind === Types.Skills.CRITICALRATIO) {
-                    msg += " " + Types.getItemSkillNameByKind(skillKind) + " " + "+" + skillLevel + "%";
+
+            if (ItemTypes.isEitherWeapon(itemKind)) {
+                msg = ItemTypes.getName(itemKind) + ': Level ' + (ItemTypes.getWeaponLevel(itemKind) * 2) + (enchantmentPoints ? ' + ' + enchantmentPoints : '');
+
+                switch (skillKind) {
+                    case Types.Skills.BLOODSUCKING:
+                    case Types.Skills.CRITICALRATIO:
+
+                        msg += ' ' + Types.getItemSkillNameByKind(skillKind) + ' +' + (skillLevel * 2) + '%';
+
+                        break;
                 }
+                
                 return msg;
-            } else if(ItemTypes.isArmor(itemKind) || ItemTypes.isArcherArmor(itemKind)){
-                return ItemTypes.getName(itemKind) + ": Lv " + (ItemTypes.getArmorLevel(itemKind)*2) + (enchantedPoint ? "+" + enchantedPoint : "");
-            }
-            var name = ItemTypes.getName(itemKind);
-            return (name) ? name : '';
+                
+            } else if (ItemTypes.isEitherArmor(itemKind))
+                return ItemTypes.getName(itemKind) + ': Level ' + (ItemTypes.getArmorLevel(itemKind) * 2) + (enchantmentPoints ? ' + ' + enchantmentPoints : '');
+            
+            return ItemTypes.getName(itemKind);
         }
+
     });
   Item.getInfoMsgEx = Item.prototype.getInfoMsgEx;
   return Item;

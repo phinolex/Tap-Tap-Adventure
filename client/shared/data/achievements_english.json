@@ -1,6 +1,6 @@
 [
   {
-    "npcId":40,
+    "npcId": 40,
     "type": 1,
     "name": "Slash",
     "desc": "Acquire a Big Sword!",
@@ -22,7 +22,7 @@
   },
 
   {
-    "npcId":44,
+    "npcId": 44,
     "type": 1,
     "name": "Sneaky Situation",
     "desc": "Help Bulk Bogan poomp his mooscles!",
