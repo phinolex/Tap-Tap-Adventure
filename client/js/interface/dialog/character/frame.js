@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-24.
  */
-define(['../../tabbook', '../pagenavigator', './pages/statepage', './pages/skillpage'], function(TabBook, PageNavigator, StatePage, SkillPage) {
+define(['../../../tabbook', '../pagenavigator', './pages/statepage', './pages/skillpage'], function(TabBook, PageNavigator, StatePage, SkillPage) {
 
     var Frame = TabBook.extend({
         init: function(characterDialog) {

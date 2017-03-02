@@ -1233,11 +1233,11 @@ define(['player', 'entityfactory', 'mobdata', 'gatherdata', 'pet', 'lib/bison'],
         sendStoreEnchant: function(itemKind) {
             this.sendMessage([Types.Messages.STOREENCHANT, itemKind]);
         },
-        sendBankStore: function(inventoryNumber) {
-            this.sendMessage([Types.Messages.BANKSTORE, inventoryNumber]);
+        sendBankStore: function(itemKind) {
+            this.sendMessage([Types.Messages.BANKSTORE, itemKind]);
         },
-        sendBankRetrieve: function(inventoryNumber) {
-            this.sendMessage([Types.Messages.BANKRETRIEVE, inventoryNumber]);
+        sendBankRetrieve: function(itemKind) {
+            this.sendMessage([Types.Messages.BANKRETRIEVE, itemKind]);
         },
         sendHasFocus: function(flag) {
             //log.info("Skipping has focus.");

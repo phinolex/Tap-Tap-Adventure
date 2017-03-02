@@ -7,8 +7,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
         'pet', 'mobs', 'mobdata', 'gather', 'exceptions', 'chathandler', 'textwindowhandler',
         'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'achievemethandler',
         'rankinghandler', 'inventoryhandler', 'bankhandler', 'partyhandler','bools', 'iteminfodialog',
-        'skillhandler', 'statehandler', 'dialog/shop/shopdialog', 'auctiondialog', './dialog/enchant/enchantdialog', 'bankdialog', 'craftdialog', 'projectile' ,'guild',
-        'gamedata', 'inappstore', 'util', 'dialog/character/characterdialog',
+        'skillhandler', 'statehandler', 'interface/dialog/shop/shopdialog', 'auctiondialog', 'interface/dialog/enchant/enchantdialog', 'interface/dialog/bank/bankdialog', 'craftdialog', 'projectile' ,'guild',
+        'gamedata', 'inappstore', 'util', 'interface/dialog/character/characterdialog',
         '../shared/js/gametypes', '../shared/js/itemtypes'],
     function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
              GameClient, AudioManager, Updater, Transition, Pathfinder,
@@ -2376,40 +2376,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
 
                 self.previousClickPosition = {};
 
-                /*var msg;
-
-                if (npc) {
-                    var npcData = NpcData.Kinds[npc.kind];
-
-                    if (npcData.name == "Banker")
-                        this.openBankDialog();
-                    else if (npcData.name == "Enchantment Table")
-                        this.openEnchantmentDialog();
-                    else if (npcData.name == "Clerk")
-                        this.openStoreDialog();
-                    else {
-                        var hasAchievement = this.achievementHandler.isAchievementNPC(npc.kind);
-                        this.previousClickPosition = {};
-
-                        if (hasAchievement)
-                            msg = this.achievementHandler.talkToNPC(npc);
-                        else
-                            msg = npc.nonAchievementTalk(this.renderer.mobile);
-
-                        if (msg) {
-                            this.createBubble(npc.id, msg);
-                            this.assignBubbleTo(npc);
-                            this.audioManager.playSound("npc");
-                        } else {
-                            this.destroyBubble(npc.id);
-                            this.audioManager.playSound("npc-end");
-                        }
-
-                        this.player.removeTarget();
-                    }
-
-                }
-                */
             },
 
             openBankDialog: function() {
@@ -3606,6 +3572,18 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                                 self.auctionDialog.storeFrame.pageArmor.reload();
                                 self.auctionDialog.storeFrame.pageWeapon.reload();
                             }
+
+                        return;
+
+                    case 'bank':
+
+                        if (self.bankDialog.visible) {
+
+                            self.bankDialog.bankFrame.load();
+                            self.bankDialog.inventoryFrame.load();
+                            self.bankDialog.bankFrame.open();
+                            self.bankDialog.inventoryFrame.open();
+                        }
 
                         return;
 

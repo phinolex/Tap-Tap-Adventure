@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-27.
  */
-define(['../../item'], function(Item) {
+define(['../../../item'], function(Item) {
 
     var StoreRack = Class.extend({
 

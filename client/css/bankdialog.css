@@ -1,6 +1,18 @@
+@font-face {
+  font-family: 'GraphicPixel';
+  src: url('../fonts/graphicpixel-webfont.eot');
+  src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/graphicpixel-webfont.woff') format('woff'),
+  url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
+  url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 @media only screen and (min-width: 1501px) {
   #bankDialog {
-    font-size: "GraphicPixel";
+    font-family: "GraphicPixel";
     font-size: 13.5pt;
     font-weight: bold;
     position: absolute;
@@ -34,7 +46,7 @@
 }
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
   #bankDialog {
-    font-size: "GraphicPixel";
+    font-family: 'GraphicPixel';
     font-size: 9pt;
     font-weight: bold;
     position: absolute;
@@ -68,7 +80,7 @@
 }
 @media only screen and (max-width: 1000px) {
   #bankDialog {
-    font-size: "GraphicPixel";
+    font-family: 'GraphicPixel';
     font-size: 4.5pt;
     font-weight: bold;
     position: absolute;

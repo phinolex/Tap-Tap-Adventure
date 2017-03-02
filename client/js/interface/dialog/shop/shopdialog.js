@@ -1,4 +1,4 @@
-define(['jquery', '../../dialog', './storeframe', '../inventoryframe'], function($, Dialog, StoreFrame, InventoryFrame) {
+define(['jquery', '../../../dialog', './storeframe', '../inventoryframe'], function($, Dialog, StoreFrame, InventoryFrame) {
 
     /**
      * Follows the same premise as that of enchantment
@@ -102,7 +102,6 @@ define(['jquery', '../../dialog', './storeframe', '../inventoryframe'], function
             $('#storeDialogSellButton').css("display", "block");
 
             self._super();
-
 
             $('#storeDialogStorePotionButton').click();
         },

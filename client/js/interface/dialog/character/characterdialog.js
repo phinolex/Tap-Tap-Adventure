@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-24.
  */
-define(['../../dialog', './frame'], function(Dialog, Frame) {
+define(['../../../dialog', './frame'], function(Dialog, Frame) {
     var CharacterDialog = Dialog.extend({
         init: function(game) {
             var self = this;

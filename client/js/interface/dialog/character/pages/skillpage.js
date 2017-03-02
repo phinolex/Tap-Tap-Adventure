@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-24.
  */
-define(['../../../tabpage', '../../../skilldata'], function(TabPage, SkillData) {
+define(['../../../../tabpage', '../../../../skilldata'], function(TabPage, SkillData) {
     var SkillPage = TabPage.extend({
         init: function(frame) {
             var self = this;

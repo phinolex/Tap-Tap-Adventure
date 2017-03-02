@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-25.
  */
-define(['../item'], function(Item) {
+define(['../../item'], function(Item) {
 
     var FrameItem = Class.extend({
         init: function(frame, index, type) {
@@ -16,7 +16,9 @@ define(['../item'], function(Item) {
             self.enchantLevel = 0;
             self.skillKind = 0;
             self.skillLevel = 0;
-            self.name = type + self.value(self.index, 2);
+            self.type = type;
+
+            self.name = self.type + self.value(self.index, 2);
             self.background = $('#' + self.name + 'Background');
             self.body = $('#' + self.name + 'Body');
             self.number = $('#' + self.name + 'Number');
@@ -31,7 +33,6 @@ define(['../item'], function(Item) {
 
         load: function() {
             var self = this;
-
 
             self.background.css({
                 'position': 'absolute',
@@ -67,6 +68,9 @@ define(['../item'], function(Item) {
             if (self.frame.isEnchantDialog() && ItemTypes.isHealingItem(kind))
                 return;
 
+            if (!kind)
+                return;
+
             self.setKind(kind);
 
             if (self.frame.isEnchantDialog())
@@ -84,9 +88,12 @@ define(['../item'], function(Item) {
         revert: function() {
             var self = this;
 
+            if (!self.kind)
+                return;
+
             self.body.css('background-image', self.name ? 'url("img/' + self.scale + '/item-' + self.name + '.png")' : '');
 
-            if (self.frame.isStoreDialog()) {
+            if (self.frame.isStoreDialog() || self.frame.isBankDialog()) {
                 if (self.count > 1) {
                     if (ItemTypes.isObject(self.kind))
                         self.number.html(self.count);

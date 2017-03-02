@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-24.
  */
-define(['../../../tabpage', '../../../item'], function(TabPage, Item) {
+define(['../../../../tabpage', '../../../../item'], function(TabPage, Item) {
     
     var StatePage = TabPage.extend({
 
@@ -18,13 +18,46 @@ define(['../../../tabpage', '../../../item'], function(TabPage, Item) {
             self.frame = frame;
             self.game = self.frame.game;
             self.scale = self.frame.getScale();
+
+            self.itemWeapon = $('#characterItemWeapon');
+            self.itemArmor = $('#characterItemArmor');
+            self.itemPendant = $('#characterItemPendant');
+            self.itemRing = $('#characterItemRing');
+
+            self.itemWeapon.click(function(event) {
+                if (self.game.ready && self.game.player.weaponName) {
+                    self.game.unequip(1);
+                    self.setItemWeapon('undefined');
+                }
+            });
+
+            self.itemArmor.click(function(event) {
+                if (self.game.ready && self.game.player.spriteName != 'clotharmor') {
+                    self.game.unequip(2);
+                    self.setItemArmor('clotharmor')
+                }
+            });
+
+            self.itemPendant.click(function(event) {
+                if (self.game.ready && self.game.player.pendant) {
+                    self.setItemPendant('undefined');
+                    self.load();
+                }
+            });
+
+            self.itemRing.click(function(event) {
+                if (self.game.ready && self.game.player.ring) {
+                    self.setItemRing('undefined');
+                    self.load();
+                }
+            });
         },
 
         /**
          * Here we load the initial batch of data.
          */
 
-        load: function() {
+        load: function(doesClose) {
             var self = this;
 
             self.player = self.game.player;
@@ -100,32 +133,42 @@ define(['../../../tabpage', '../../../item'], function(TabPage, Item) {
             var self = this,
                 characterItemWeapon = $('#characterItemWeapon');
 
-            characterItemWeapon.css('background-image', 'url("img/' + self.scale + '/item-' + weapon + '.png")');
-            characterItemWeapon.attr('title', Item.getInfoMsgEx(weapon, self.player.weaponEnchantedPoint, self.player.weaponSkillKind, self.player.weaponSkillLevel));
+            try {
+                characterItemWeapon.css('background-image', 'url("img/' + self.scale + '/item-' + weapon + '.png")');
+                characterItemWeapon.attr('title', Item.getInfoMsgEx(weapon, self.player.weaponEnchantedPoint, self.player.weaponSkillKind, self.player.weaponSkillLevel));
+            } catch (e) {}
+
         },
 
         setItemArmor: function(armor) {
             var self = this,
                 characterItemArmor = $('#characterItemArmor');
 
-            characterItemArmor.css('background-image', 'url("img/' + self.scale + '/item-' + armor + '.png")');
-            characterItemArmor.attr('title', Item.getInfoMsgEx(armor, self.player.armorEnchantedPoint, self.player.armorSkillKind, self.player.armorSkillLevel));
+            try {
+                characterItemArmor.css('background-image', 'url("img/' + self.scale + '/item-' + armor + '.png")');
+                characterItemArmor.attr('title', Item.getInfoMsgEx(armor, self.player.armorEnchantedPoint, self.player.armorSkillKind, self.player.armorSkillLevel));
+            } catch (e) {}
         },
 
         setItemPendant: function(pendant) {
             var self = this,
                 characterItemPendant = $('#characterItemPendant');
 
-            characterItemPendant.css('background-image', 'url("img/' + self.scale + '/item-' + pendant + '.png")');
-            characterItemPendant.attr('title', Item.getInfoMsgEx(pendant, self.game.player.pendantEnchantedPoint, self.game.player.pendantSkillKind, self.game.player.pendantSkillLevel));
+            try {
+                characterItemPendant.css('background-image', 'url("img/' + self.scale + '/item-' + pendant + '.png")');
+                characterItemPendant.attr('title', Item.getInfoMsgEx(pendant, self.game.player.pendantEnchantedPoint, self.game.player.pendantSkillKind, self.game.player.pendantSkillLevel));
+            } catch (e) {}
+
         },
 
         setItemRing: function(ring) {
             var self = this,
                 characterItemRing = $('#characterItemRing');
 
-            characterItemRing.css('background-image', 'url("img/' + self.scale + '/item-' + ring + '.png")');
-            characterItemRing.attr('title', Item.getInfoMsgEx(ring, self.game.player.pendantEnchantedPoint, self.game.player.pendantSkillKind, self.game.player.pendantSkillLevel));
+            try {
+                characterItemRing.css('background-image', 'url("img/' + self.scale + '/item-' + ring + '.png")');
+                characterItemRing.attr('title', Item.getInfoMsgEx(ring, self.game.player.pendantEnchantedPoint, self.game.player.pendantSkillKind, self.game.player.pendantSkillLevel));
+            } catch (e) {}
         },
 
         updateScale: function() {

@@ -604,35 +604,44 @@ module.exports = PacketHandler = Class.extend({
     },
 
     handleBankStore: function(message) {
-        var inventoryNumber = message[1],
-            itemKind = null;
+        message.shift();
 
-        if((inventoryNumber >= 6) && (inventoryNumber < this.player.inventory.number)) {
-            var item = this.player.inventory.rooms[inventoryNumber];
+        var self = this,
+            itemKind = message.shift();
 
-            if(item && item.itemKind) {
-                var slot = this.player.bank.getEmptyBankNumber();
+        if (itemKind) {
+            var index = self.player.inventory.getInventoryNumber(itemKind),
+                item = self.player.inventory.rooms[index];
 
-                if (slot >= 0) {
-                    this.player.bank.putBankItem(item);
-                    this.player.inventory.takeOutInventory(inventoryNumber, item.itemNumber);
+            if (item && item.itemKind) {
+                var slot = self.player.bank.getEmptyBankNumber();
+
+                if (slot > -1) {
+                    self.player.bank.putBankItem(item);
+                    self.player.inventory.takeOutInventory(index, item.itemNumber);
+                    self.server.pushToPlayer(self.player, new Messages.Notify('bank'));
                 }
             }
         }
     },
 
     handleBankRetrieve: function(message) {
-        var bankNumber = message[1],
-            itemKind = null;
+        message.shift();
 
-        if((bankNumber >= 0) && (bankNumber < this.player.bank.number)) {
-            var item = this.player.bank.rooms[bankNumber];
+        var self = this,
+            itemKind = message.shift();
 
-            if(item && item.itemKind) {
-                var slot = this.player.inventory.getEmptyEquipmentNumber();
-                if (slot >= 0) {
-                    this.player.inventory.putInventoryItem(item);
-                    this.player.bank.takeOutBank(bankNumber, item.itemNumber);
+        if (itemKind) {
+            var index = self.player.bank.getBankNumber(itemKind),
+                item = self.player.bank.rooms[index];
+
+            if (item) {
+                var slot = self.player.inventory.getEmptyEquipmentNumber();
+
+                if (slot > -1) {
+                    self.player.inventory.putInventoryItem(item);
+                    self.player.bank.takeOutBank(index, item.itemNumber);
+                    self.server.pushToPlayer(self.player, new Messages.Notify('bank'));
                 }
             }
         }

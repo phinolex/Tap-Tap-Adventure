@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-25.
  */
-define(['../../../tabpage'], function(TabPage) {
+define(['../../../../tabpage'], function(TabPage) {
 
     var SettingsPage = TabPage.extend({
         init: function(frame) {

@@ -23,11 +23,16 @@ define(['jquery', './frameitem'], function($, FrameItem) {
             self.selectedItem = null;
             self.game = self.dialog.game;
 
-            self.basket = $('#' + self.dialogType + 'Basket');
-            self.button = $('#' + self.getButtonType());
-            self.goldBackground = $('#' + self.dialogType + 'GoldBackground');
-            self.goldIcon = $('#' + self.dialogType + 'GoldBody');
-            self.goldNumber = $('#' + self.dialogType + 'GoldNumber');
+            if (!self.isBankDialog()) {
+                self.basket = $('#' + self.dialogType + 'Basket');
+                self.button = $('#' + self.getButtonType());
+            }
+
+            var dialogType = self.isBankDialog() ? self.dialogType + 'Inventory' : self.dialogType;
+
+            self.goldBackground = $('#' + dialogType + 'GoldBackground');
+            self.goldIcon = $('#' + dialogType + 'GoldBody');
+            self.goldNumber = $('#' + dialogType + 'GoldNumber');
 
             self.updateScale();
             self.loadCSSData();
@@ -39,13 +44,15 @@ define(['jquery', './frameitem'], function($, FrameItem) {
         loadCSSData: function() {
             var self = this;
 
-            self.button.html(self.isStoreDialog() ? 'Sell' : 'Enchant');
+            if (!self.isBankDialog()) {
+                self.button.html(self.isStoreDialog() ? 'Sell' : 'Enchant');
 
-            self.basket.click(function(event) {
-                self.remove();
-                self.load();
-                self.goldNumber.html('')
-            });
+                self.basket.click(function(event) {
+                    self.remove();
+                    self.open();
+                    self.goldNumber.html('')
+                });
+            }
 
             switch (self.dialogType) {
 
@@ -89,26 +96,28 @@ define(['jquery', './frameitem'], function($, FrameItem) {
         load: function() {
             var self = this;
 
-            self.basket.css({
-                'position': 'absolute',
-                'left': (44 * self.scale) + 'px',
-                'top': (125 * self.scale) + 'px',
-                'width': (16 * self.scale) + 'px',
-                'height': (15 * self.scale) + 'px',
-                'background-position': '0px '+ (-2 * self.scale)+ 'px'
-            });
+            if (!self.isBankDialog()) {
+                self.basket.css({
+                    'position': 'absolute',
+                    'left': (44 * self.scale) + 'px',
+                    'top': (125 * self.scale) + 'px',
+                    'width': (16 * self.scale) + 'px',
+                    'height': (15 * self.scale) + 'px',
+                    'background-position': '0px '+ (-2 * self.scale)+ 'px'
+                });
 
-            self.button.css({
-                'position': 'absolute',
-                'left': (65 * self.scale) + 'px',
-                'top': (125 * self.scale) + 'px',
-                'width': (30 * self.scale) + 'px',
-                'height': (19 * self.scale) + 'px',
-                'margin-left': (4 * self.scale) + 'px',
-                'margin-top': (5 * self.scale) + 'px',
-                'color': '#fff',
-                'font-size': (6 * self.scale) + 'px'
-            });
+                self.button.css({
+                    'position': 'absolute',
+                    'left': (65 * self.scale) + 'px',
+                    'top': (125 * self.scale) + 'px',
+                    'width': (30 * self.scale) + 'px',
+                    'height': (19 * self.scale) + 'px',
+                    'margin-left': (4 * self.scale) + 'px',
+                    'margin-top': (5 * self.scale) + 'px',
+                    'color': '#fff',
+                    'font-size': (6 * self.scale) + 'px'
+                });
+            }
 
             self.goldBackground.css({
                 'position': 'absolute',
@@ -178,23 +187,32 @@ define(['jquery', './frameitem'], function($, FrameItem) {
         select: function(item) {
             var self = this;
 
-            if (self.selectedItem)
-                self.items[self.selectedItem.getIndex()].revert();
+            if (self.isBankDialog()) {
+                if (self.game.bankHandler.isBankFull())
+                    return;
 
-            self.selectedItem = item;
-            item.remove();
+                self.game.client.sendBankStore(item.kind);
+                item.remove();
 
-            self.setBasket(item.getName() ? 'url("img/' + self.scale + '/item-' + item.getName() + '.png")' : '');
-            self.setBasketAttribute('title', item.getDetails());
-            self.button.css('cursor', 'pointer');
+            } else {
+                if (self.selectedItem)
+                    self.items[self.selectedItem.getIndex()].revert();
 
-            self.setCost('');
+                self.selectedItem = item;
+                item.remove();
 
-            if (!ItemTypes.isConsumableItem(self.selectedItem.kind) && !ItemTypes.isGold(self.selectedItem.kind)) {
-                if (self.isEnchantDialog())
-                    self.setCost(ItemTypes.getEnchantPrice(self.selectedItem.getName(), self.selectedItem.getEnchantLevel()));
-                else
-                    self.setCost(ItemTypes.getSellPrice(self.selectedItem.getName()))
+                self.setBasket(item.getName() ? 'url("img/' + self.scale + '/item-' + item.getName() + '.png")' : '');
+                self.setBasketAttribute('title', item.getDetails());
+                self.button.css('cursor', 'pointer');
+
+                self.setCost('');
+
+                if (!ItemTypes.isConsumableItem(self.selectedItem.kind) && !ItemTypes.isGold(self.selectedItem.kind)) {
+                    if (self.isEnchantDialog())
+                        self.setCost(ItemTypes.getEnchantPrice(self.selectedItem.getName(), self.selectedItem.getEnchantLevel()));
+                    else
+                        self.setCost(ItemTypes.getSellPrice(self.selectedItem.getName()))
+                }
             }
         },
 
@@ -243,6 +261,10 @@ define(['jquery', './frameitem'], function($, FrameItem) {
 
         isEnchantDialog: function() {
             return this.dialogType == 'enchantDialog';
+        },
+
+        isBankDialog: function() {
+            return this.dialogType == 'bankDialog' || this.dialogType == 'bankDialogInventory' || this.dialogType == 'bankDialogBank';
         }
         
     });

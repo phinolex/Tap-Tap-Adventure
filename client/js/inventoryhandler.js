@@ -194,7 +194,7 @@ define(['jquery', 'item'], function($, Item) {
                 $('#sellInventory' + inventoryNumber).css('background-image', 'none');
 
                 self.inventories[inventoryNumber] = null;
-                self.game.storeDialog.inventoryFrame.inventories[inventoryNumber].clear();
+                //self.game.shopDialog.inventoryFrame.inventories[inventoryNumber].clear();
             }
         },
 
