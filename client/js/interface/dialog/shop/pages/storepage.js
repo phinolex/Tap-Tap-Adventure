@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-27.
  */
-define(['../../../../tabpage', '../storerack'], function(TabPage, StoreRack) {
+define(['../../../tabpage', '../storerack'], function(TabPage, StoreRack) {
 
     var StorePage = TabPage.extend({
         init: function(id, itemType, items, game) {

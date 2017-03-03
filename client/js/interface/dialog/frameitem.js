@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-25.
  */
-define(['../../item'], function(Item) {
+define(['../../entity/item/item'], function(Item) {
 
     var FrameItem = Class.extend({
         init: function(frame, index, type) {

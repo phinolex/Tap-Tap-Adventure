@@ -1,7 +1,7 @@
 
 /* global Types */
 
-define(['jquery', 'app', 'entrypoint', 'dialog', 'iteminfodialog', 'game', 'bubble', 'settings'], function($, App, EntryPoint, Settings) {
+define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'rendering/bubble'], function($, App, EntryPoint) {
     var app, game;
 
     var initApp = function() {
@@ -219,7 +219,6 @@ define(['jquery', 'app', 'entrypoint', 'dialog', 'iteminfodialog', 'game', 'bubb
             $('#pwinput2').attr('value', '');
             $('#emailinput').attr('value', '');
             $('#chatbox').attr('value', '');
-            var settings = new Settings();
             var ax, ay, bx, by;
 
             $('#canvas .clickable').click(function(event) {

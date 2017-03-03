@@ -1,22 +1,22 @@
 
 /* global Types, log, _, self, Class, CharacterDialog */
 
-define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
-        'tile', 'gameclient', 'audio', 'updater', 'transition',
-        'pathfinder', 'entity', 'item', 'items', 'mob', 'npc', 'npcdata', 'player', 'character', 'chest', 'mount',
-        'pet', 'mobs', 'mobdata', 'gather', 'exceptions', 'chathandler', 'textwindowhandler',
-        'menu', 'boardhandler', 'kkhandler', 'shophandler', 'playerpopupmenu', 'classpopupmenu', 'achievemethandler',
-        'rankinghandler', 'inventoryhandler', 'bankhandler', 'partyhandler','bools', 'iteminfodialog',
-        'skillhandler', 'statehandler', 'interface/dialog/shop/shopdialog', 'auctiondialog', 'interface/dialog/enchant/enchantdialog', 'interface/dialog/bank/bankdialog', 'craftdialog', 'projectile' ,'guild',
-        'gamedata', 'inappstore', 'util', 'interface/dialog/character/characterdialog',
+define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/map', 'entity/animation', 'rendering/sprites/sprite',
+        'rendering/tile', 'network/gameclient', 'audio/audio', 'rendering/updater', 'rendering/transition',
+        'utils/pathfinder', 'entity/entity', 'entity/item/item', 'entity/item/items', 'entity/character/mob/mob', 'entity/character/npc/npc', 'data/npcdata', 'entity/character/player/player', 'entity/character/character', 'entity/objects/chest', 'entity/character/player/mount',
+        'entity/character/mob/pet', 'entity/character/mob/mobs', 'data/mobdata', 'entity/gather/gather', 'utils/exceptions', 'handlers/chathandler', 'handlers/textwindowhandler',
+        'interface/menu', 'handlers/boardhandler', 'handlers/shophandler', 'interface/playerpopupmenu', 'interface/classpopupmenu', 'handlers/achievemethandler',
+        'handlers/rankinghandler', 'handlers/inventoryhandler', 'handlers/bankhandler', 'handlers/partyhandler',
+        'handlers/skillhandler', 'handlers/statehandler', 'interface/dialog/shop/shopdialog', 'interface/dialog/auction/auctiondialog', 'interface/dialog/enchant/enchantdialog', 'interface/dialog/bank/bankdialog', 'interface/dialog/craft/craftdialog', 'entity/projectile',
+        'interface/inappstore', 'utils/util', 'interface/dialog/character/characterdialog',
         '../shared/js/gametypes', '../shared/js/itemtypes'],
     function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
              GameClient, AudioManager, Updater, Transition, Pathfinder,
              Entity, Item, Items, Mob, Npc, NpcData, Player, Character, Chest, Mount, Pet, Mobs, MobData, Gather, Exceptions,
-             ChatHandler, TextWindowHandler, Menu, BoardHandler, KkHandler,
+             ChatHandler, TextWindowHandler, Menu, BoardHandler,
              ShopHandler, PlayerPopupMenu, ClassPopupMenu, AchievementHandler, RankingHandler,
-             InventoryHandler, BankHandler, PartyHandler, Bools, ItemInfoDialog, SkillHandler, StateHandler,
-             ShopDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile, Guild, GameData,
+             InventoryHandler, BankHandler, PartyHandler, SkillHandler, StateHandler,
+             ShopDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile,
              InAppStore, Util, CharacterDialog) {
         var Game = Class.extend({
             init: function(app) {
@@ -112,9 +112,6 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
                 this.dialogs = [];
                 this.characterDialog = new CharacterDialog(this);
                 this.dialogs.push(this.characterDialog);
-
-                this.itemInfoDialog = new ItemInfoDialog(this);
-                this.dialogs.push(this.itemInfoDialog);
 
                 //New Stuff
                 this.soundButton = null;

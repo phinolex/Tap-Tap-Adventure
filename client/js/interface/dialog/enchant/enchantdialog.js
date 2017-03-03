@@ -1,4 +1,4 @@
-define(['../../../dialog', '../inventoryframe'], function(Dialog, InventoryFrame) {
+define(['../../dialog', '../inventoryframe'], function(Dialog, InventoryFrame) {
 
     var EnchantDialog = Dialog.extend({
         init: function(game) {

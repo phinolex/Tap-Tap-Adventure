@@ -1,4 +1,4 @@
-define(['../../../tabbook', './pages/armorpage', './pages/potionpage', './pages/weaponpage', '../pagenavigator'], function(TabBook, ArmorPage, PotionPage, WeaponPage, PageNavigator) {
+define(['../../tabbook', './pages/armorpage', './pages/potionpage', './pages/weaponpage', '../pagenavigator'], function(TabBook, ArmorPage, PotionPage, WeaponPage, PageNavigator) {
 
     var StoreFrame = TabBook.extend({
 

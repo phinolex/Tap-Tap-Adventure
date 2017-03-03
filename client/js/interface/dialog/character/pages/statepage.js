@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-24.
  */
-define(['../../../../tabpage', '../../../../item'], function(TabPage, Item) {
+define(['../../../tabpage', '../../../../entity/item/item'], function(TabPage, Item) {
     
     var StatePage = TabPage.extend({
 

@@ -1,4 +1,4 @@
-define(['../../../dialog', '../inventoryframe', './bankframe'], function(Dialog, InventoryFrame, BankFrame) {
+define(['../../dialog', '../inventoryframe', './bankframe'], function(Dialog, InventoryFrame, BankFrame) {
 
     var BankDialog = Dialog.extend({
         init: function(game) {

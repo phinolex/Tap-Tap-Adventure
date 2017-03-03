@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-24.
  */
-define(['../../../skilldata'], function(SkillData) {
+define(['../../../data/skilldata'], function(SkillData) {
 
     /**
      * To be done:
