@@ -1,25 +1,15 @@
 var cls = require("./../lib/class"),
-    _ = require("underscore"),
-    Character = require('./../entity/character/character'),
     Chest = require('./../entity/item/chest'),
     Messages = require("./../network/packets/message"),
     Utils = require("./../utils/utils"),
     MobData = require("./../utils/data/mobdata"),
     Formulas = require("./../utils/formulas"),
-    Party = require("./../entity/character/player/party"),
     Items = require("./../utils/data/itemdata"),
-    Bank = require("./../entity/character/player/bank/bank"),
     Types = require("../../../../shared/js/gametypes"),
     ItemTypes = require("../../../../shared/js/itemtypes"),
     bcrypt = require('bcrypt'),
-    Inventory = require("./../entity/character/player/inventory/inventory"),
     Mob = require('./../entity/character/mob/mob'),
-    SkillHandler = require("./skillhandler"),
-    Trade = require('./../entity/character/player/trade'),
     express = require('express'),
-    bodyParser = require('body-parser'),
-    app = express(),
-    Achievements = require('./../utils/data/achievementdata'),
     request = require("request"),
     SkillData = require("./../utils/data/skilldata"),
     EntitySpawn = require("./../entity/entityspawn"),
@@ -30,7 +20,7 @@ var cls = require("./../lib/class"),
     http = require('http'),
     CommandHandler = require('./commandhandler');
 
-module.exports = PacketHandler = Class.extend({
+module.exports = PacketHandler = cls.Class.extend({
     init: function(player, connection, worldServer, databaseHandler) {
         var self = this;
 

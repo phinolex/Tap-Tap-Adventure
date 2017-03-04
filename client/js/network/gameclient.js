@@ -58,7 +58,6 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
             this.handlers[Types.Messages.AUCTIONOPEN] = this.receiveAuction;
             this.handlers[Types.Messages.CLASSSWITCH] = this.receiveClassSwitch;
             this.handlers[Types.Messages.CHARDATA] = this.receiveData;
-            this.handlers[Types.Messages.PVPGAME] = this.receivePVPGame;
             this.handlers[Types.Messages.POISON] = this.receivePoison;
             this.handlers[Types.Messages.INTERFACE] = this.receiveInterface;
             this.handlers[Types.Messages.GUINOTIFY] = this.receiveGraphicNotification;
@@ -77,6 +76,7 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
             this.handlers[Types.Messages.PLAYERSTATE] = this.receivePlayerState;
             this.handlers[Types.Messages.GLOBALCHAT] = this.receiveGlobalChat;
             this.handlers[Types.Messages.TRADE] = this.receiveTrade;
+            this.handlers[Types.Messages.POINTER] = this.receivePointer;
 
             this.useBison = false;
 
@@ -599,6 +599,11 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
                 this.trade_callback(data[1], data[2], data[3], data[4]);
         },
 
+        receivePointer: function(data) {
+            if (this.pointer_callback)
+                this.pointer_callback(data[1]);
+        },
+
         receiveRanking: function(data){
             data.shift();
             if(this.ranking_callback){
@@ -808,6 +813,10 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
 
         onTrade: function(callback) {
             this.trade_callback = callback;  
+        },
+
+        onPointer: function(callback) {
+            this.pointer_callback = callback;
         },
         
         onPlayerChangeHealth: function(callback) {

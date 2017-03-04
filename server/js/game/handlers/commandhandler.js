@@ -27,8 +27,6 @@ module.exports = CommandHandler = cls.Class.extend({
 
         var inputBlocks = input.substring(1).split(' ');
 
-        log.info('Player rights: ' + self.player.rights);
-
         self.handlePlayerCommands(inputBlocks);
 
         if (self.player.rights > 0)
@@ -204,6 +202,16 @@ module.exports = CommandHandler = cls.Class.extend({
 
                 if (spellType)
                     self.server.pushToPlayer(self.player, new Messages.ForceCast(spellType));
+
+                return;
+
+            case 'pointer':
+                inputBlocks.shift();
+
+                var entityId = inputBlocks.shift();
+
+                if (entityId)
+                    self.server.pushToPlayer(self.player, new Messages.Pointer(entityId));
 
                 return;
 

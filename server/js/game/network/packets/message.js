@@ -730,3 +730,13 @@ Messages.Achievement = Message.extend({
         return [Types.Messages.ACHIEVEMENT, this.type, this.id];
     }
 });
+
+Messages.Pointer = Message.extend({
+    init: function(id) {
+        this.id = id;
+    },
+
+    serialize: function() {
+        return [Types.Messages.POINTER, this.id];
+    }
+});

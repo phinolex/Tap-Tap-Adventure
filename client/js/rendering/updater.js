@@ -17,6 +17,7 @@ define(['../entity/character/character', '../utils/timer', '../entity/character/
             this.updateAnimations();
             this.updateAnimatedTiles();
             this.updateChatBubbles();
+            this.updatePointers();
             this.updateKeyboardMovement();
             this.updateInfos();
             this.updateProjectiles();
@@ -391,6 +392,10 @@ define(['../entity/character/character', '../utils/timer', '../entity/character/
             var t = this.game.currentTime;
 
             this.game.bubbleManager.update(t);
+        },
+        
+        updatePointers: function() {
+            this.game.pointerManager.update();
         },
 
         updateInfos: function() {

@@ -467,7 +467,8 @@ define(['./camera', '../entity/item/item', 'entity/character/character', '../ent
             },
 
             drawEntity: function(entity) {
-                var sprite = entity.sprite,
+                var self = this,
+                    sprite = entity.sprite,
                     shadow = this.game.shadows["small"],
                     anim = entity.currentAnimation,
                     os = this.upscaledRendering ? 1 : this.scale,
@@ -535,7 +536,7 @@ define(['./camera', '../entity/item/item', 'entity/character/character', '../ent
                                         bw * ds, bh * ds);
                                 }
                             }
-                        }
+                        } 
                         if(entity.isSuperCat){
                             var benef = this.game.sprites["supercateffect"];
                             if (!benef.isLoaded) benef.load();
@@ -555,6 +556,7 @@ define(['./camera', '../entity/item/item', 'entity/character/character', '../ent
                                 }
                             }
                         }
+                        
                         if(entity.isProvocation){
                             var benef = this.game.sprites["provocationeffect"];
                             if (!benef.isLoaded) benef.load();
@@ -574,8 +576,6 @@ define(['./camera', '../entity/item/item', 'entity/character/character', '../ent
                                 }
                             }
                         }
-
-
 
                         if(entity.isRoyalAzaleaBenef){
                             var benef = this.game.sprites["bucklerbenef"];

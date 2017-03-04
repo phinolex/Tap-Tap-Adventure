@@ -5,7 +5,6 @@ Types = {
         TOTAL_ACHIEVEMENT_NUMBER: 35
     },
     Messages: {
-
         CREATE: 0,
         LOGIN: 1,
         WELCOME: 2,
@@ -166,7 +165,8 @@ Types = {
         SHOWINAPPSTORE: 147,
         PURCHASE: 148,
         PLAYERSTATE: 149,
-        GLOBALCHAT: 150
+        GLOBALCHAT: 150,
+        POINTER: 151
     },
 
     Interfaces: {

@@ -8,7 +8,7 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
         'interface/menu', 'handlers/boardhandler', 'handlers/shophandler', 'interface/playerpopupmenu', 'interface/classpopupmenu', 'handlers/achievemethandler',
         'handlers/rankinghandler', 'handlers/inventoryhandler', 'handlers/bankhandler', 'handlers/partyhandler',
         'handlers/skillhandler', 'handlers/statehandler', 'interface/dialog/shop/shopdialog', 'interface/dialog/auction/auctiondialog', 'interface/dialog/enchant/enchantdialog', 'interface/dialog/bank/bankdialog', 'interface/dialog/craft/craftdialog', 'entity/projectile',
-        'interface/inappstore', 'utils/util', 'interface/dialog/character/characterdialog',
+        'interface/inappstore', 'utils/util', 'interface/dialog/character/characterdialog', 'rendering/pointer/pointermanager',
         '../shared/js/gametypes', '../shared/js/itemtypes'],
     function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
              GameClient, AudioManager, Updater, Transition, Pathfinder,
@@ -17,11 +17,9 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
              ShopHandler, PlayerPopupMenu, ClassPopupMenu, AchievementHandler, RankingHandler,
              InventoryHandler, BankHandler, PartyHandler, SkillHandler, StateHandler,
              ShopDialog, AuctionDialog, EnchantDialog, BankDialog, CraftDialog, Projectile,
-             InAppStore, Util, CharacterDialog) {
+             InAppStore, Util, CharacterDialog, PointerManager) {
         var Game = Class.extend({
             init: function(app) {
-                $('head').append($('<link rel="stylesheet" type="text/css" />').attr('href', 'css/game.css'));
-
                 this.app = app;
                 this.version = 2;
                 this.verified = false;
@@ -270,7 +268,7 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                     "projectile-pinearrow", "projectile-none", "projectile-tornado",
                     "projectile-terror", "explosion-fireball", "explosion-heal",
                     "explosion-iceball", "explosion-boulder", "explosion-terror",
-                    "explosion-lavaball"
+                    "explosion-lavaball", 'pointer'
                 ];
             },
 
@@ -293,6 +291,8 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                 this.dialogs.push(this.auctionDialog);
                 this.craftDialog = new CraftDialog(this);
                 this.dialogs.push(this.craftDialog);
+
+                this.pointerManager = new PointerManager(this);
 
                 this.classPopupMenu = new ClassPopupMenu(this);
             },
@@ -1532,7 +1532,6 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
 
                                         entity.onHasMoved(function(entity) {
                                             self.assignBubbleTo(entity); // Make chat bubbles follow moving entities
-
                                         });
 
                                         if(entity instanceof Mob) {
@@ -1986,6 +1985,17 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                             self.addItem(item, pos.gridX, pos.gridY);
                             self.updateCursor();
                         }
+                    });
+                    
+                    self.client.onPointer(function(entityId) {
+
+                        var entity = self.getEntityById(entityId);
+
+                        if (entity) {
+                            self.pointerManager.create(entityId);
+                            self.pointerManager.assignToEntity(entity);
+                        }
+
                     });
 
                     self.client.onChatMessage(function(entityId, message) {
@@ -3054,6 +3064,9 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                     } else if(entity instanceof Item)
                         this.makePlayerGoToItem(entity);
                     else if(entity instanceof Npc) {
+
+                        log.info('Clicked: ' + entity.id);
+
                         if(!this.player.isAdjacentNonDiagonal(entity))
                             this.makePlayerTalkTo(entity);
                         else {

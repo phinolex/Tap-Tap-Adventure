@@ -41,7 +41,9 @@ define(['./animation', '../data/mobdata'], function(Animation, MobData) {
                 self.mountAnimation.reset();
                 self.mountAnimation.count = 1;
             });
-            
+
+            this.isPointing = false;
+            this.pointerTimeout = null;
             
             this.shadowOffsetY = 0;
 
@@ -320,7 +322,20 @@ define(['./animation', '../data/mobdata'], function(Animation, MobData) {
                     self.provocationTimeout = null;
                 }, 1000 * level);
             }
+        },
+
+        point: function() {
+            var self = this;
+
+            self.pointerTimeout = setInterval(function() {
+                self.isPointing = !self.isPointing;
+            }, 700)
+        },
+
+        stopPointer: function() {
+            clearInterval(this.pointerTimeout);
         }
+
     });
 
     return Entity;

@@ -5620,6 +5620,13 @@
     "width": 12,
     "height": 12
   },
+
+  {
+    "id": "pointer",
+    "width": 32,
+    "height": 32
+  },
+
   {
     "id": "golem",
     "width": 32,

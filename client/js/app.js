@@ -493,26 +493,22 @@ define(['jquery', 'entity/character/mob/mob', 'entity/item/item', 'data/mobdata'
                     var x, y;
                     if (!self.game.renderer.isFirefox) {
                         if (ItemTypes.isItem(target.kind)) {
-                            x = ((sprite.animationData['idle'].length - 1) * sprite.width),
-                                y = ((sprite.animationData['idle'].row) * sprite.height);
+                            x = ((sprite.animationData['idle'].length - 1) * sprite.width);
+                            y = ((sprite.animationData['idle'].row) * sprite.height);
                         } else if (MobData.Kinds[target.kind]) {
                             if (sprite.animationData['idle_down'])
                             {
-                                x = ((sprite.animationData['idle_down'].length - 1) * sprite.width),
-                                    y = ((sprite.animationData['idle_down'].row) * sprite.height);
+                                x = ((sprite.animationData['idle_down'].length - 1) * sprite.width);
+                                y = ((sprite.animationData['idle_down'].row) * sprite.height);
                             }
                         } else {
                             return;
                         }
                     }
-                    if (target.title)
-                    {
-                        $(el+' .name').text(target.title);
-                    }
-                    else
-                    {
-                        $(el+' .name').text(name);
-                    }
+
+                    $(el + ' .name').text(target.title ? target.title : name);
+
+
                     $(el+' .name').css('text-transform', 'capitalize');
 
 
