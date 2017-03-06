@@ -222,6 +222,9 @@ module.exports = PacketHandler = cls.Class.extend({
                 case Types.Messages.DETERMINEHIT:
                     self.handleDetermineHit(message);
                     break;
+                case Types.Messages.BUTTON:
+                    self.handleButtonClick(message);
+                    break;
                 default:
                     if (self.message_callback)
                         self.player.message_callback(message);
@@ -416,9 +419,23 @@ module.exports = PacketHandler = cls.Class.extend({
         }
     },
 
-    handleTalkToNPC: function(message) { // 30
+    handleButtonClick: function(message) {
+        message.shift();
+
         var self = this,
-            npcId = message[1];
+            buttonId = message.shift(),
+            state = message.shift();
+
+        log.info('Received button click: ' + buttonId + ' ' + state);
+
+    },
+
+    handleTalkToNPC: function(message) {
+        message.shift();
+
+        var self = this,
+            npcId = message.shift(),
+            talkIndex = message.shift();
         
         var npc = self.server.getEntityById(npcId);
 
@@ -442,15 +459,17 @@ module.exports = PacketHandler = cls.Class.extend({
                         break;
 
                     case 317: // Banker
-                        self.server.pushToPlayer(self.player, new Messages.Interface(Types.Interfaces.BANK))
+                        self.server.pushToPlayer(self.player, new Messages.Interface(Types.Interfaces.BANK));
                         break;
 
                     case 239: // Enchantment Table
-                        self.server.pushToPlayer(self.player, new Messages.Interface(Types.Interfaces.ENCHANTMENT))
+                        self.server.pushToPlayer(self.player, new Messages.Interface(Types.Interfaces.ENCHANTMENT));
                         break;
 
                     default:
-                        self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, ["Hello there young adventurer."]));
+                        if (this.talkToNPC_callback)
+                            this.talkToNPC_callback(npc.kind, npcId, talkIndex);
+                        
                         break;
                 }
             }
@@ -941,7 +960,7 @@ module.exports = PacketHandler = cls.Class.extend({
 
         self.handleHitEntity(self.player, mobId);
     },
-    
+
     handleHit: function(message) {
         this.handleHitEntity(this.player, message[1]);
     },
@@ -1134,6 +1153,7 @@ module.exports = PacketHandler = cls.Class.extend({
         self.server.pushRelevantEntityListTo(player);
         self.server.pushToPlayer(self.player, new Messages.SendAd(self.player.id));
         self.server.pushToPlayer(self.player, new Messages.PlayerState(self.player.id));
+        self.player.postLoad();
     },
 
     handleCast: function(message) {
@@ -1578,9 +1598,12 @@ module.exports = PacketHandler = cls.Class.extend({
         
     },
 
+    onTalkToNPC: function(callback) {
+        this.talkToNPC_callback = callback;
+    },
 
     send: function(message) {
         this.connection.send(message);
-    },
+    }
 
 });

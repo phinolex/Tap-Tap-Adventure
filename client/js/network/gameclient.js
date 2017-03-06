@@ -601,7 +601,7 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
 
         receivePointer: function(data) {
             if (this.pointer_callback)
-                this.pointer_callback(data[1]);
+                this.pointer_callback(data[1], data[2]);
         },
 
         receiveRanking: function(data){
@@ -767,10 +767,6 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
                 this.chardata_callback(attackSpeed, moveSpeed, walkSpeed, idleSpeed, attackRate);
         },
 
-        onDispatched: function(callback) {
-            this.dispatched_callback = callback;
-        },
-
         onConnected: function(callback) {
             this.connected_callback = callback;
         },
@@ -873,9 +869,6 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
         onPVPChange: function(callback){
             this.pvp_callback = callback;
         },
-        onPVPGame: function(callback) {
-            this.pvpGame_callback = callback;
-        },
         onGameFlag: function(callback) {
             this.gameFlag_callback = callback;
         },
@@ -924,21 +917,10 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
         onParty: function (callback) {
             this.party_callback = callback;
         },
-        onRanking: function (callback) {
-            this.ranking_callback = callback;
-        },
         onInventory: function(callback) {
             this.inventory_callback = callback;
         },
-        onDoubleEXP: function(callback) {
-            this.doubleexp_callback = callback;
-        },
-        onEXPMultiplier: function(callback) {
-            this.expmultiplier_callback = callback;
-        },
-        onMembership: function(callback) {
-            this.membership_callback = callback;
-        },
+        
         onSkill: function (callback) {
             this.skill_callback = callback;
         },
@@ -1031,22 +1013,8 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
                 player.pw]);
         },
 
-        sendNewPassword: function(username, pw, newpw) {
-            this.sendMessage([Types.Messages.NEWPASSWORD,
-                username,
-                pw,
-                newpw]);
-            //alert("sendNewPassword");
-        },
-
         sendCastSpell: function(projectile, sx, sy, x, y) {
             this.sendMessage([Types.Messages.CAST, projectile, sx, sy, x, y]);
-        },
-
-        sendMove: function(x, y) {
-            this.sendMessage([Types.Messages.MOVE,
-                x,
-                y]);
         },
 
         // future move 1 for planned, 2 for arrived.
@@ -1093,14 +1061,6 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
                 mob.id]);
         },
 
-        sendDetermineHit: function(player, mob) {
-            this.sendMessage([Types.Messages.DETERMINEHIT, mob.id, mob.x, mob.y, player.x, player.y]);
-        },
-        
-        sendArcherHit: function(mob) {
-            
-        },
-
         sendSpellHit: function(mob, spellType) {
             this.sendMessage([Types.Messages.SPELLHIT, mob.id, spellType]);
         },
@@ -1131,22 +1091,14 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
                 chest.id]);
         },
 
-        sendCheck: function(id) {
-            this.sendMessage([Types.Messages.CHECK,
-                id]);
-        },
-
         sendWho: function(ids) {
             ids.unshift(Types.Messages.WHO);
             this.sendMessage(ids);
         },
-        sendTalkToNPC: function(id){
-            this.sendMessage([Types.Messages.TALKTONPC, id]);
+        sendTalkToNPC: function(id, talkIndex) {
+            this.sendMessage([Types.Messages.TALKTONPC, id, talkIndex]);
         },
-        sendMagic: function(magicName, target){
-            this.sendMessage([Types.Messages.MAGIC,
-                magicName, target]);
-        },
+        
         sendBoard: function(command, number, replynumber){
             this.sendMessage([Types.Messages.BOARD,
                 command,
@@ -1159,33 +1111,10 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
                 title,
                 content]);
         },
-        sendKung: function(word) {
-            this.sendMessage([Types.Messages.KUNG,
-                word]);
-        },
-        sendRanking: function(command){
-
-            this.sendMessage([Types.Messages.RANKING, command]);
-        },
-        sendAchievement: function(id, type){
-
-            this.sendMessage([Types.Messages.ACHIEVEMENT, id, type]);
-        },
+        
         sendInventory: function(type, inventoryNumber, count){
 
             this.sendMessage([Types.Messages.INVENTORY, type, inventoryNumber, count]);
-        },
-        sendDoubleEXP: function(enabled) {
-
-            this.sendMessage([Types.Messages.DOUBLE_EXP, enabled]);
-        },
-        sendEXPMultiplier: function(times) {
-
-            this.sendMessage([Types.Messages.EXP_MULTIPLIER, times]);
-        },
-        sendMembership: function(hasMembership) {
-
-            this.sendMessage([Types.Messages.MEMBERSHIP, hasMembership]);
         },
         
         sendSkill: function(type, targetId){
@@ -1203,25 +1132,30 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
         sendCharacterInfo: function() {
             this.sendMessage([Types.Messages.CHARACTERINFO]);
         },
+        
         sendSell: function(inventoryNumber, count){
             this.sendMessage([Types.Messages.SELL,
                 inventoryNumber,
                 count]);
         },
+        
         sendShop: function(command, number){
             this.sendMessage([Types.Messages.SHOP,
                 command,
                 number]);
         },
+        
         sendBuy: function(number, itemKind, goldCount){
             this.sendMessage([Types.Messages.BUY,
                 number,
                 itemKind,
                 goldCount]);
         },
+        
         sendStoreSell: function(inventoryNumber) {
             this.sendMessage([Types.Messages.STORESELL, inventoryNumber]);
         },
+        
         sendStoreBuy: function(itemType, itemKind, itemCount) {
             this.sendMessage([Types.Messages.STOREBUY, itemType, itemKind, itemCount]);
         },
@@ -1248,36 +1182,17 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
         sendBankRetrieve: function(itemKind) {
             this.sendMessage([Types.Messages.BANKRETRIEVE, itemKind]);
         },
-        sendHasFocus: function(flag) {
-            //log.info("Skipping has focus.");
-            //this.sendMessage([Types.Messages.CLIENTFOCUS, flag]);
-        },
-        sendAddSpawn: function (id, x, y) {
-            this.sendMessage([Types.Messages.ADDSPAWN, id, x, y]);
-        },
-
-        sendSaveSpawns: function () {
-            this.sendMessage([Types.Messages.SAVESPAWNS]);
-        },
-        sendPetCreate: function (targetId, kind) {
-            this.sendMessage([Types.Messages.PETCREATE, targetId, kind]);
-        },
+        
         sendClassSwitch: function (pClass) {
             this.sendMessage([Types.Messages.CLASSSWITCH, pClass]);
         },
-        sendGather: function (id) {
-            this.sendMessage([Types.Messages.GATHER, id]);
-        },
+        
         sendCraft: function (id) {
             this.sendMessage([Types.Messages.CRAFT, id]);
         },
 
         sendDeath: function(id) {
             this.sendMessage([Types.Messages.DEATH, id]);
-        },
-
-        requestWarp: function(id) {
-            this.sendMessage([Types.Messages.REQUESTWARP, id]);
         },
 
         sendReady: function(id) {
@@ -1294,6 +1209,10 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
 
         sendDoorRequest: function(doorX, doorY, toX, toY, orientation) {
             this.sendMessage([Types.Messages.DOORREQUEST, doorX, doorY, toX, toY, orientation]);
+        },
+
+        sendButton: function(type, state) {
+            this.sendMessage([Types.Messages.BUTTON, type, state]);
         }
     });
 

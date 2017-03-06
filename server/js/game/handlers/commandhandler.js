@@ -205,13 +205,79 @@ module.exports = CommandHandler = cls.Class.extend({
 
                 return;
 
+            case 'queststage':
+                inputBlocks.shift();
+
+                var questName = inputBlocks.join(' ');
+
+                if (!questName) {
+                    self.packetHandler.sendGUIMessage('You have entered an invalid quest name.');
+                    return;
+                }
+
+                var quest = self.player.questHandler.getQuest(questName);
+
+                if (quest)
+                    self.server.pushToPlayer(self.player, new Messages.Chat(self.player, 'Quest: ' + quest.name + ' stage: ' + quest.stage));
+                else
+                    log.info('Quest not found...');
+
+
+                return;
+
             case 'pointer':
                 inputBlocks.shift();
 
-                var entityId = inputBlocks.shift();
+                var pointerType = parseInt(inputBlocks.shift()), //0 or 1
+                    data = [];
 
-                if (entityId)
-                    self.server.pushToPlayer(self.player, new Messages.Pointer(entityId));
+                switch(pointerType) {
+                    case Types.Pointers.Location:
+
+                        var id = self.player.id + '' + Utils.randomInt(0, 500),
+                            posX = inputBlocks.shift(),
+                            posY = inputBlocks.shift();
+
+                        data.push(id);
+
+                        if (posX && posY) {
+                            posX = parseInt(posX);
+                            posY = parseInt(posY);
+
+                            data.push(posX);
+                            data.push(posY);
+
+                            self.server.pushToPlayer(self.player, new Messages.Pointer(pointerType, data));
+                        } else
+                            self.packetHandler.sendGUIMessage('You have entered some invalid coordinates.');
+
+                        break;
+
+                    case Types.Pointers.Entity:
+
+                        var entityId = inputBlocks.shift();
+
+                        if (!entityId) {
+                            self.packetHandler.sendGUIMessage('Please enter a valid ID.');
+                            return;
+                        }
+
+                        data.push(entityId);
+
+                        self.server.pushToPlayer(self.player, new Messages.Pointer(pointerType, data));
+
+                        break;
+
+                    case Types.Pointers.Clear:
+
+                        self.server.pushToPlayer(self.player, new Messages.Pointer(pointerType, null));
+
+                        break;
+
+                    default:
+                        self.packetHandler.sendGUIMessage('Please enter a valid pointer type.');
+                        break;
+                }
 
                 return;
 

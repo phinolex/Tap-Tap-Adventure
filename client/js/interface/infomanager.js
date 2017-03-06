@@ -12,7 +12,7 @@ define(function() {
             var time = this.game.currentTime,
                 id = time + "" + Math.abs(value) + "" + x + "" + y,
                 self = this,
-                info = new HoveringInfo(id, value, x, y, (duration) ? duration:1000, type);
+                info = new HoveringInfo(id, value, x, y, (duration) ? duration : 1000, type);
 
             info.onDestroy(function(id) {
                 self.destroyQueue.push(id);

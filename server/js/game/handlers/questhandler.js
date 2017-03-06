@@ -1,7 +1,5 @@
 var cls = require('../lib/class'),
     Introduction = require('../quests/introduction'),
-    GameTypes = require('../../../../shared/js/gametypes'),
-    QuestsJSON = require('../../../../shared/data/quests.json'),
     Quests = require('../utils/data/questdata');
 
 /**
@@ -23,6 +21,15 @@ module.exports = QuestHandler = cls.Class.extend({
         var self = this;
         
         self.quests[Quests.QuestData[0].name] = new Introduction(Quests.QuestData[0], self.player);
+    },
+    
+    getQuest: function(name) {
+        var self = this;
+
+        if (name in self.quests)
+            return self.quests[name];
+
+        return null;
     },
 
     saveAll: function() {

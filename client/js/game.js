@@ -293,7 +293,6 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                 this.dialogs.push(this.craftDialog);
 
                 this.pointerManager = new PointerManager(this);
-
                 this.classPopupMenu = new ClassPopupMenu(this);
             },
 
@@ -776,6 +775,8 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                         self.averageCount = 0;
 
                 }, this.renderer.mobile ? 2500 : 1500);
+
+                self.client.sendReady(self.playerId);
             },
 
             stop: function() {
@@ -946,7 +947,6 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                     self.renderer.cleanPathing();
                     self.renderer.drawBackground(self.renderer.background, "#12100D");
                     self.resetCamera();
-                    self.client.sendReady(self.playerId);
 
                     if (self.player.experience == 0)
                         self.app.toggleInstructions();
@@ -967,9 +967,6 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                         self.selectedY = y;
 
                         self.selectedCellVisible = true;
-
-                        //if (self.player.isDead && !self.stopProcess)
-                        //    self.player.isDead = false;
 
                         if(self.renderer.mobile || self.renderer.tablet) {
                             self.drawTarget = true;
@@ -1015,11 +1012,8 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                         self.player.forEachAttacker(self.makeAttackerFollow);
 
 
-                        if(!self.player.isDead) {
+                        if(!self.player.isDead)
                             self.audioManager.updateMusic();
-                            //if (self.renderer.mobile && self.isCentered)
-                            //    self.renderer.cleanPathing();
-                        }
                     });
 
                     self.client.onPVPChange(function(pvpFlag) {
@@ -1096,9 +1090,7 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                                 self.app.window.unityads.showVideoAd();
                              else
                                  self.app.swiftCall("Display.Ads");
-                         } catch(e) {
-                             log.info(e);
-                         }
+                         } catch(e) {}
                     });
 
                     self.client.onCamera(function(playerId) {
@@ -1987,13 +1979,39 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                         }
                     });
                     
-                    self.client.onPointer(function(entityId) {
+                    self.client.onPointer(function(type, data) {
 
-                        var entity = self.getEntityById(entityId);
+                        log.info('Received Pointer: ' + type + ' data: ' + data);
 
-                        if (entity) {
-                            self.pointerManager.create(entityId);
-                            self.pointerManager.assignToEntity(entity);
+                        switch(type) {
+                            case Types.Pointers.Entity:
+
+                                var entityId = data.shift(),
+                                    entity = self.getEntityById(entityId);
+
+                                if (entity) {
+                                    self.pointerManager.create(entityId, true);
+                                    self.pointerManager.assignToEntity(entity);
+                                }
+
+                                break;
+
+                            case Types.Pointers.Location:
+
+                                var id = data.shift(),
+                                    posX = parseInt(data.shift()),
+                                    posY = parseInt(data.shift());
+
+                                self.pointerManager.create(id, false);
+                                self.pointerManager.assignToPoint(id, posX * 16, posY * 16);
+
+                                break;
+
+                            case Types.Pointers.Clear:
+
+                                self.pointerManager.clear();
+
+                                break;
                         }
 
                     });
@@ -2377,7 +2395,7 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                 if (!self.player.isAdjacentNonDiagonal(npc))
                     return;
 
-                self.client.sendTalkToNPC(npc.id);
+                self.client.sendTalkToNPC(npc.id, npc.talkIndex);
 
                 self.player.removeTarget();
 
@@ -2903,6 +2921,8 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                     }
                 }
 
+
+
                 if (this.menu.selectedEquipped !== null)
                 {
                     var clickedMenu = this.menu.isClickedInventoryMenu(pos, this.camera);
@@ -2954,8 +2974,7 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                     } else if(clickedMenu === 2
                         && itemKind !== 39
                         && itemKind !== 173
-                        && itemKind !== 400)
-                    {
+                        && itemKind !== 400) {
                         if(ItemTypes.isConsumableItem(itemKind)){
                             log.info("click?")
                             this.eat(inventoryNumber);
@@ -2966,7 +2985,7 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                         } else if(itemKind === 306){
                             this.enchantBloodsucking(inventoryNumber);
                             return;
-                        } else{
+                        } else {
                             this.equip(inventoryNumber);
                             return;
                         }
@@ -2974,9 +2993,8 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                         this.menu.close();
                         this.dropItem(inventoryNumber);
                         return;
-                    } else{
+                    } else
                         this.menu.close();
-                    }
                 } else {
                     this.menu.close();
                     if ($('#inventoryButton').hasClass('active')) {
@@ -3035,56 +3053,38 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
              * Processes game logic when the user triggers a click/touch event during the game.
              */
             processInput: function(pos, usingKeys) {
-                var entity;
+                var self = this;
 
-                if (this.clickToFire !== null && this.started && !usingKeys) {
-                    this.client.sendCastSpell(this.clickToFire, this.player.x + 8, this.player.y + 8, pos.x * 16 + 8, pos.y * 16 + 8);
-                    return;
-                }
-
-                if(this.started
-                    && this.player
-                    && !this.hoveringCollidingTile
-                    && !this.player.isDead) {
-                    entity = this.getEntityAt(pos.x, pos.y);
-
-                    if (entity instanceof Entity)
-                        this.renderer.forceRedraw = true;
-
-                    if (entity instanceof Pet) {
-                        this.makePlayerGoTo(pos.x, pos.y);
+                if (self.started) {
+                    if (self.clickToFire !== null && !usingKeys) {
+                        self.client.sendCastSpell(self.clickToFire, self.player.x + 8, self.player.y + 8, pos.x * 16 + 8, pos.y * 16 + 8);
                         return;
                     }
 
-                    if (entity instanceof Mob)
-                        this.makePlayerAttack(entity);
-                    else if (entity instanceof Player && entity.id != this.player && (this.player.pvpFlag && this.pvpFlag)) {
-                        if (this.player.gameFlag && entity.pvpTeam != this.player.pvpTeam)
-                            this.makePlayerAttack(entity);
-                    } else if(entity instanceof Item)
-                        this.makePlayerGoToItem(entity);
-                    else if(entity instanceof Npc) {
+                    if (self.player && !self.hoveringCollidingTile && !self.player.isDead) {
+                        var entity = self.getEntityAt(pos.x, pos.y);
 
-                        log.info('Clicked: ' + entity.id);
+                        if (entity instanceof Mob)
+                            self.makePlayerAttack(entity);
+                        else if (entity instanceof Item)
+                            self.makePlayerGoToItem(entity);
+                        else if (entity instanceof Chest)
+                            self.makePlayerAttack(entity);
+                        else if (entity instanceof Player && entity.id != self.player.id && self.player.pvpFlag && self.pvpFlag && self.player.gameFlag && entity.pvpTeam != self.player.pvpTeam)
+                            self.makePlayerAttack(entity);
+                        else if (entity instanceof Npc) {
+                            if (self.player.isAdjacentNonDiagonal(entity)) {
+                                if (!self.player.disableKeyboardNpcTalk) {
+                                    self.makeNpcTalk(entity);
 
-                        if(!this.player.isAdjacentNonDiagonal(entity))
-                            this.makePlayerTalkTo(entity);
-                        else {
-                            if(!this.player.disableKeyboardNpcTalk) {
-                                this.makeNpcTalk(entity);
-
-                                if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
-                                    this.player.disableKeyboardNpcTalk = true;
-                            }
-                        }
-                    } else if(entity instanceof Chest)
-                        this.makePlayerOpenChest(entity);
-                    else if(entity instanceof Gather) {
-                        if (this.player.isAdjacentNonDiagonal(entity) === true)
-                            this.client.sendGather(entity.id);
-
-                    } else if (!this.joystick || ((this.renderer.tablet || this.renderer.mobile) && this.joystick.isActive()))
-                        this.makePlayerGoTo(pos.x, pos.y);
+                                    if (self.player.moveUp || self.player.moveDown || self.player.moveLeft || self.player.moveRight)
+                                        self.player.disableKeyboardNpcTalk = true;
+                                }
+                            } else
+                                self.makePlayerTalkTo(entity);
+                        } else
+                            self.makePlayerGoTo(pos.x, pos.y);
+                    }
                 }
             },
 

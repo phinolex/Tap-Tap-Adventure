@@ -140,23 +140,26 @@ define(['jquery', '../entity/item/item'], function($, Item) {
 
             self.inventory[inventoryNumber] = itemKind;
             self.inventoryCount[inventoryNumber] = number ? number : 0;
+            try {
+                if (itemKind) {
+                    if (inventoryNumber >= 0 && inventoryNumber < 6)
+                        $('#inventorybackground' + inventoryNumber).attr('class', 'empty');
 
-            if (itemKind) {
-                if (inventoryNumber >= 0 && inventoryNumber < 6)
-                    $('#inventorybackground' + inventoryNumber).attr('class', 'empty');
+                    spriteName = (ItemTypes.KindData[itemKind].spriteName !== '') ? ItemTypes.KindData[itemKind].spriteName : ItemTypes.getKindAsString(itemKind);
 
-                spriteName = (ItemTypes.KindData[itemKind].spriteName !== '') ? ItemTypes.KindData[itemKind].spriteName : ItemTypes.getKindAsString(itemKind);
+                    inventory.css('background-image', "url('img/" + self.scale + "/item-" + spriteName + ".png')");
+                    inventory.attr('title', Item.getInfoMsgEx(itemKind, number, itemSkillKind, itemSkillLevel));
+                    sellInventory.css('background-image', "url('img/" + self.scale + "/item-" + spriteName + ".png'");
 
-                inventory.css('background-image', "url('img/" + self.scale + "/item-" + spriteName + ".png')");
-                inventory.attr('title', Item.getInfoMsgEx(itemKind, number, itemSkillKind, itemSkillLevel));
-                sellInventory.css('background-image', "url('img/" + self.scale + "/item-" + spriteName + ".png'");
-
-                if (number > 1)
-                    invNumber.html(((ItemTypes.isObject(itemKind) || ItemTypes.isCraft(itemKind)) ? '' : '+') + '' + self.inventoryCount[inventoryNumber]);
-                else if (number == 1)
-                    invNumber.html('');
+                    if (number > 1)
+                        invNumber.html(((ItemTypes.isObject(itemKind) || ItemTypes.isCraft(itemKind)) ? '' : '+') + '' + self.inventoryCount[inventoryNumber]);
+                    else if (number == 1)
+                        invNumber.html('');
+                }
+            } catch (e) {
+                log.info('Oh hey, error: ' + e);
             }
-
+            
             self.inventories[inventoryNumber] = {};
             self.inventories[inventoryNumber].kind = itemKind ? itemKind : 0;
             self.inventories[inventoryNumber].count = number ? number : 0;

@@ -74,10 +74,20 @@ module.exports = Player = Character.extend({
         self.pClass = 0;
         self.minigameTeam = -1;
         self.talkingAllowed = true;
-        self.questHandler = new QuestHandler(self);
+        self.ready = false;
         self.packetHandler = new PacketHandler(self, connection, worldServer, databaseHandler);
     },
 
+    postLoad: function() {
+        var self = this;
+
+        self.ready = true;
+        setTimeout(function() {
+
+            self.questHandler = new QuestHandler(self);
+
+        }, 100)
+    },
 
     destroy: function () {
         var self = this;
@@ -515,17 +525,6 @@ module.exports = Player = Character.extend({
 
                     self.send(sendMessage);
 
-                    /*databaseHandler.loadSkillSlots(self, function(names) {
-                     for(var index = 0; index < names.length; index++) {
-                     if(names[index]) {
-                     self.skillHandler.install(index, names[index]);
-                     self.skillHandler.add(names[index], 3);
-                     self.send((new Messages.SkillInstall(index, names[index])).serialize());
-                     }
-                     }
-                     self.setAbility();
-                     });*/
-
                     self.reviewSkills();
 
                     databaseHandler.loadPets(self, function (kinds) {
@@ -554,12 +553,6 @@ module.exports = Player = Character.extend({
             return false;
         }
 
-        /*if ((ItemTypes.isArmor(itemKind) && (this.pClass != Types.PlayerClass.FIGHTER && this.pClass != Types.PlayerClass.DEFENDER)) ||
-         (ItemTypes.isArcherArmor(itemKind) && this.pClass != Types.PlayerClass.ARCHER)) {
-
-         this.server.pushToPlayer(this, new Messages.GuiNotify("Your class cannot wield this armour."));
-         return false;
-         }*/
 
         return true;
     },
@@ -1074,6 +1067,8 @@ module.exports = Player = Character.extend({
     getTeam: function () {
         return this.minigameTeam;
     },
+
+
 
     setPVPKills: function (kills) {
         this.pvpKills = kills;

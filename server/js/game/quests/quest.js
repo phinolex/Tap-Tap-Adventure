@@ -12,6 +12,7 @@ module.exports = Quest = cls.Class.extend({
         self.id = id;
         self.name = name;
         self.description = description;
+        self.stage = 0;
     },
 
     getId: function() {
@@ -20,6 +21,14 @@ module.exports = Quest = cls.Class.extend({
 
     getName: function() {
         return this.name;
+    },
+
+    getStage: function() {
+        return this.stage;
+    },
+    
+    finished: function() {
+        return this.stage == 9999;
     },
 
     getDescription: function() {

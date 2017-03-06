@@ -1,4 +1,4 @@
-define(['./pointer'], function(Pointer) {
+define(['./entitypointer', './locationpointer'], function(EntityPointer, LocationPointer) {
     
     var PointerManager = Class.extend({
 
@@ -10,13 +10,13 @@ define(['./pointer'], function(Pointer) {
             self.pointers = {};
         },
 
-        create: function(id) {
+        create: function(id, isEntity) {
             var self = this;
-            var el = $("<div class=\"thingy\"></div>"); //.attr('id', id);
+            var element = $("<div class=\"thingy\"></div>"); //.attr('id', id);
 
             self.updateScale();
 
-            el.css({
+            element.css({
                 'position': 'relative',
                 'width': '' + (16 + 16 * self.scale) + 'px',
                 'height': '' + (16 + 16 * self.scale) + 'px',
@@ -26,9 +26,10 @@ define(['./pointer'], function(Pointer) {
                 'background': 'url("img/' + self.scale + '/pointer.png")'
             });
 
-            $(el).appendTo(this.container);
+            $(element).appendTo(this.container);
 
-            self.pointers[id] = new Pointer(id, el);
+
+            self.pointers[id] = isEntity ? new EntityPointer(id, element) : new LocationPointer(id, element);
         },
 
         assignToEntity: function(character) {
@@ -52,7 +53,7 @@ define(['./pointer'], function(Pointer) {
             }
         },
 
-        assignTo: function(id, posX,  posY) {
+        assignToPoint: function(id, posX,  posY) {
             var self = this,
                 pointer = self.getPointerById(id);
 
@@ -63,6 +64,12 @@ define(['./pointer'], function(Pointer) {
                 if (!self.camera)
                     self.updateCamera();
 
+                if (pointer.x == -1)
+                    pointer.x = posX;
+
+                if (pointer.y == -1)
+                    pointer.y = posY;
+
                 var tileSize = 16 * self.scale,
                     x = ((posX - self.camera.x) * self.scale),
                     w = parseInt(pointer.element.css('width') + 24),
@@ -72,6 +79,7 @@ define(['./pointer'], function(Pointer) {
 
                 pointer.element.css('left', x - offset + 'px');
                 pointer.element.css('top', y + 'px');
+
 
             }
         },
@@ -89,13 +97,27 @@ define(['./pointer'], function(Pointer) {
         update: function() {
             var self = this;
 
-            for (var index in self.pointers) {
-                if (self.pointers.hasOwnProperty(index)) {
-                    var pointer = self.pointers[index],
-                        entity = self.game.getEntityById(pointer.id);
+            for (var id in self.pointers) {
+                if (self.pointers.hasOwnProperty(id)) {
+                    var pointer = self.pointers[id];
 
-                    if (entity)
-                        self.assignToEntity(entity);
+                    switch (pointer.getType()) {
+                        case Types.Pointers.Entity:
+
+                            var entity = self.game.getEntityById(pointer.id);
+
+                            if (entity)
+                                self.assignToEntity(entity);
+
+                            break;
+
+                        case Types.Pointers.Location:
+
+                            if (pointer.x != -1 && pointer.y != -1)
+                                self.assignToPoint(pointer.id, pointer.x, pointer.y);
+
+                            break;
+                    }
                 }
             }
         },
@@ -103,14 +125,15 @@ define(['./pointer'], function(Pointer) {
         clear: function() {
             var self = this;
 
-            for (var pointer in self.pointers)
-                pointer.destroy();
+            for (var id in self.pointers)
+                if (self.pointers.hasOwnProperty(id))
+                    self.pointers[id].destroy();
 
             self.pointers = {};
         },
 
         updateScale: function() {
-            this.scale = this.game.getScaleFactor();
+            this.scale = this.game.renderer.getScaleFactor();
         },
 
         updateCamera: function() {

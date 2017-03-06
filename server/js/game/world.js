@@ -534,7 +534,7 @@ module.exports = World = cls.Class.extend({
 
     pushToPlayer: function(player, message) {
         var self = this;
-
+        
         if (player && player.id in self.packets)
             self.packets[player.id].push(message.serialize());
     },

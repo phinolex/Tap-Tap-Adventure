@@ -166,7 +166,8 @@ Types = {
         PURCHASE: 148,
         PLAYERSTATE: 149,
         GLOBALCHAT: 150,
-        POINTER: 151
+        POINTER: 151,
+        BUTTON: 152
     },
 
     Interfaces: {
@@ -268,6 +269,13 @@ Types = {
         FIRSTACCEPT: 3,
         SECONDACCEPT: 4,
         FINISHED: 5
+    },
+
+    Pointers: {
+        Location: 0,
+        Entity: 1,
+        Clear: 2,
+        Static: 3
     }
 };
 

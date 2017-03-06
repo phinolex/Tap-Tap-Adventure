@@ -1,7 +1,10 @@
 /**
  * Created by flavius on 2017-01-07.
  */
-var Quest = require('./quest');
+var Quest = require('./quest'),
+    Messages = require('../network/packets/message'),
+    Types = require('../../../../shared/js/gametypes'),
+    Utils = require('../utils/utils');
 
 /**
  * Quest stages:
@@ -33,17 +36,33 @@ module.exports = Introduction = Quest.extend({
         var self = this;
 
         self._super(jsonData.id, jsonData.name, jsonData.name);
-
+        
         self.jsonData = jsonData;
         self.player = player;
-        self.stage = 0;
-
+        self.server = self.player.server;
+        
         self.load();
 
         self.onFinishedLoading(function() {
-            /*if (self.stage < 10)
+            if (self.stage == 9999)
+                return;
+
+            if (self.stage <= 10)
                 self.toggleTalking();
-            */
+
+            setTimeout(function() {
+                self.setPointer();
+            }, 100);
+
+
+            self.player.packetHandler.onTalkToNPC(function(npcKind, npcId, talkIndex) {
+                var conversation = self.getConversation(npcKind);
+
+                self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, conversation));
+
+                if (talkIndex >= conversation.length)
+                    self.checkProgress();
+            });
         });
     },
 
@@ -52,6 +71,8 @@ module.exports = Introduction = Quest.extend({
 
 
         self.player.redisPool.getQuestStage(self.player.name, self.getId(), function(stage) {
+
+
             if (!stage)
                 self.update();
             else
@@ -60,6 +81,12 @@ module.exports = Introduction = Quest.extend({
             if (self.finished_callback)
                 self.finished_callback();
         });
+    },
+
+    checkProgress: function() {
+        var self = this;
+
+
     },
 
     toggleTalking: function() {
@@ -79,28 +106,46 @@ module.exports = Introduction = Quest.extend({
         self.player.redisPool.setQuestStage(self.player.name, self.getId(), self.stage);
     },
 
+    clearPointers: function() {
+        var self = this;
+
+        self.server.pushToPlayer(self.player, new Messages.Pointer(Types.Pointers.Clear, null));
+    },
+
+    setPointer: function() {
+        var self = this,
+            pointerData = self.jsonData.pointers[self.stage],
+            id = self.player.id + '' + Utils.random(0, 500),
+            data = [],
+            pointerType = pointerData.shift();
+
+        data.push(id);
+
+        for (var i = 0; i < pointerData.length; i++)
+            data.push(pointerData[i]);
+
+        self.server.pushToPlayer(self.player, new Messages.Pointer(pointerType, data));
+    },
+
+    getConversation: function(npcKind) {
+        var self = this,
+            conversationArray = self.jsonData.conversations[npcKind][self.stage];
+
+        return conversationArray;
+    },
+
     nextStage: function() {
         var self = this;
 
+        self.clearPointers();
+
         self.stage++;
         self.update();
-    },
-    
-    getInstructions: function() {
-        var self = this,
-            s;
 
-        if (self.stage < 10)
-            s = 1;
-        else if (self.stage > 10 && self.stage < 20)
-            s = 2;
-        else
-            s = 3;
-
-        return self.jsonData.instructions[s];
+        self.setPointer();
     },
 
     onFinishedLoading: function(callback) {
         this.finished_callback = callback;
     }
-})
+});

@@ -149,7 +149,7 @@ define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'render
             $('#resize-check').bind("transitionend", app.resizeUi.bind(app));
             $('#resize-check').bind("webkitTransitionEnd", app.resizeUi.bind(app));
             $('#resize-check').bind("oTransitionEnd", app.resizeUi.bind(app));
-            
+
             log.info("App initialized.");
 
             initGame();
@@ -181,7 +181,6 @@ define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'render
 
             game.onGameStart(function() {
                 $('#parchment').removeClass();
-                //$('#chatLog').css('visibility', 'hidden');
                 var entry = new EntryPoint();
                 entry.execute(game);
             });
@@ -284,70 +283,70 @@ define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'render
                 $('body').removeClass('death');
             });
 
-            if (game.renderer) {
-                this.scale = game.renderer.getScaleFactor();
-                
-                if (game.renderer.mobile)
-                    this.scale = 1;
-            }
-
             $('#instructions').click(function() {
                 app.hideWindows();
             });
 
-            $('#characterButton').click(function(event) {
-                //app.showChat();
+            var characterButton = $('#characterButton'),
+                inventoryButton = $('#inventoryButton'),
+                chatButton = $('#chatButton'),
+                soundButton = $('#soundbutton');
 
-                $('#characterButton').toggleClass('active');
+            characterButton.click(function(event) {
+                characterButton.toggleClass('active');
 
-                if ($('#characterButton').hasClass('active')) {
+
+                if (characterButton.hasClass('active')) {
                     game.client.sendCharacterInfo();
+
                     if ($('#inventoryButton').hasClass('active')) {
                         $('#inventoryButton').toggleClass('active');
                         game.inventoryHandler.toggleAllInventory();
                     }
                 } else
                     game.characterDialog.hide();
+
+                game.client.sendButton(characterButton.attr('id'), characterButton.hasClass('active'));
             });
 
-            $('#inventoryButton').click(function(event) {
-                $('#inventoryButton').toggleClass('active');
+
+            inventoryButton.click(function(event) {
+                inventoryButton.toggleClass('active');
                 game.inventoryHandler.toggleAllInventory();
 
-                if ($('#characterButton').hasClass('active')) {
-                    $('#characterButton').toggleClass('active');
+                if (inventoryButton.hasClass('active')) {
+                    inventoryButton.toggleClass('active');
                     game.characterDialog.hide();
                 }
+
+                game.client.sendButton(inventoryButton.attr('id'), inventoryButton.hasClass('active'));
             });
 
-            $('#warpbutton').click(function(event) {
-                //$('#warpbutton').toggleClass('active');
-                game.showGraphicNotification("This feature is under construction!")
+            chatButton.click(function(event) {
 
-            });
+                chatButton.toggleClass('active');
 
-            $('#chatbutton').click(function(event) {
-                $('#chatbutton').toggleClass('active');
-
-                if ($('#inventoryButton').hasClass('active')) {
-                    $('#inventoryButton').toggleClass('active');
+                if (inventoryButton.hasClass('active')) {
+                    inventoryButton.toggleClass('active');
                     game.inventoryHandler.toggleAllInventory();
                 }
 
-                if ($('#characterButton').hasClass('active')) {
-                    $('#characterButton').toggleClass('active');
+                if (characterButton.hasClass('active')) {
+                    characterButton.toggleClass('active');
                     game.characterDialog.hide();
                 }
 
-                if ($('#chatbutton').hasClass('active'))
+
+
+                if (chatButton.hasClass('active'))
                     app.showChat();
                 else
                     app.hideChat();
 
             });
 
-            $('#soundbutton').click(function(event) {
-                $('#soundbutton').toggleClass('active');
+            soundButton.click(function(event) {
+                soundButton.toggleClass('active');
                 game.audioManager.toggle();
             });
 
