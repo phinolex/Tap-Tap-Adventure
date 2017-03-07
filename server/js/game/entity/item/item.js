@@ -4,67 +4,64 @@ var Entity = require('./../entity'),
 	ItemTypes = require("../../../../../shared/js/itemtypes");
 
 module.exports = Item = Entity.extend({
-    init: function (id, kind, x, y, count) {
-        this._super(id, 'item', kind, x, y);
-        this.isStatic = false;
-        this.isFromChest = false;
-        this.skillKind = 0;
-        this.skillLevel = 0;
-        this.count = (count) ? count : 1;
-    },
 
-    handleDespawn: function (params) {
+    init: function(id, kind, x, y, count) {
         var self = this;
 
-        this.blinkTimeout = setTimeout(function () {
-            params.blinkCallback();
-            self.despawnTimeout = setTimeout(params.despawnCallback, params.blinkingDuration);
-        }, params.beforeBlinkDelay);
+        self._super(id, 'item', kind, x,  y);
 
+        self.isStatic = false;
+        self.isFromChest = false;
+        self.skillKind = 0;
+        self.skillLevel = 0;
+
+        self.count = count ? count : 1;
     },
 
-    destroy: function () {
-
-        if (this.blinkTimeout)
-            clearTimeout(this.blinkTimeout);
-
-        if (this.despawnTimeout)
-            clearTimeout(this.despawnTimeout);
-
-
-        if (this.isStatic)
-            this.scheduleRespawn(30000);
-
-    },
-
-    scheduleRespawn: function (delay) {
+    handleDespawn: function(parameters) {
         var self = this;
-        setTimeout(function () {
+
+        self.blinkTimeout = setTimeout(function() {
+            parameters.blinkCallback();
+            self.despawnTimeout = setTimeout(parameters.despawnCallback, parameters.blinkingDuration);
+        }, parameters.beforeBlinkDelay);
+    },
+
+    destroy: function() {
+        var self = this;
+
+        if (self.blinkTimeout)
+            clearTimeout(self.blinkTimeout);
+
+        if (self.despawnTimeout)
+            clearTimeout(self.despawnTimeout);
+
+        if (self.isStatic)
+            self.scheduleRespawn(30000);
+    },
+
+    scheduleRespawn: function(delay) {
+        var self = this;
+
+        setTimeout(function() {
             if (self.respawnCallback)
                 self.respawnCallback();
-
         }, delay);
     },
 
-    onRespawn: function (callback) {
+    onRespawn: function(callback) {
         this.respawnCallback = callback;
     },
+
     getState: function() {
-        //this._super.getState().push(this.count);
-        return [
-            parseInt(this.id),
-            this.kind,
-            this.x,
-            this.y,
-            this.count
-        ];
+        var self = this;
+
+        return [parseInt(self.id), self.kind, self.x, self.y, self.count];
     },
-    toString: function(){
-    return ItemTypes.getKindAsString(this.kind) + " "
-         + this.count + " "
-         + Types.getItemSkillNameByKind(this.skillKind) + " "
-         + this.skillLevel + " "
-         + this.x + " "
-         + this.y;
-  }
+
+    toString: function() {
+        var self = this;
+
+        return ItemTypes.getKindAsString(self.kind) + ' ' + self.count + ' ' + Types.getItemSkillNameByKind(self.skillKind) + ' ' + self.skillLevel + self.x + ' ' + self.y;
+    }
 });
