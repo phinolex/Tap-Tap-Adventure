@@ -63,6 +63,16 @@ module.exports = Introduction = Quest.extend({
                 if (talkIndex >= conversation.length)
                     self.checkProgress();
             });
+
+            self.player.packetHandler.onButtonClick(function(buttonId, state) {
+                log.info('Clicked button: ' + buttonId + ' state: ' + state);
+                
+                if (self.stage == 1) {
+                    if (buttonId == 'inventoryButton' && state) {
+                        log.info('Player clicked the inventory button appropriately.');
+                    }
+                }
+            });
         });
     },
 
@@ -71,7 +81,6 @@ module.exports = Introduction = Quest.extend({
 
 
         self.player.redisPool.getQuestStage(self.player.name, self.getId(), function(stage) {
-
 
             if (!stage)
                 self.update();
@@ -86,6 +95,7 @@ module.exports = Introduction = Quest.extend({
     checkProgress: function() {
         var self = this;
 
+        self.nextStage();
 
     },
 

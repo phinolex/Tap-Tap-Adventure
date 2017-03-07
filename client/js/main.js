@@ -294,7 +294,8 @@ define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'render
 
             characterButton.click(function(event) {
                 characterButton.toggleClass('active');
-
+                
+                game.client.sendButton(characterButton.attr('id'), characterButton.hasClass('active'));
 
                 if (characterButton.hasClass('active')) {
                     game.client.sendCharacterInfo();
@@ -305,8 +306,6 @@ define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'render
                     }
                 } else
                     game.characterDialog.hide();
-
-                game.client.sendButton(characterButton.attr('id'), characterButton.hasClass('active'));
             });
 
 
@@ -314,12 +313,13 @@ define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'render
                 inventoryButton.toggleClass('active');
                 game.inventoryHandler.toggleAllInventory();
 
+                game.client.sendButton(inventoryButton.attr('id'), inventoryButton.hasClass('active'));
+
                 if (inventoryButton.hasClass('active')) {
                     inventoryButton.toggleClass('active');
                     game.characterDialog.hide();
                 }
 
-                game.client.sendButton(inventoryButton.attr('id'), inventoryButton.hasClass('active'));
             });
 
             chatButton.click(function(event) {

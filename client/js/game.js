@@ -1983,14 +1983,16 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
 
                         log.info('Received Pointer: ' + type + ' data: ' + data);
 
+                        if (data)
+                            var id = data.shift();
+
                         switch(type) {
                             case Types.Pointers.Entity:
 
-                                var entityId = data.shift(),
-                                    entity = self.getEntityById(entityId);
+                                var entity = self.getEntityById(id);
 
                                 if (entity) {
-                                    self.pointerManager.create(entityId, true);
+                                    self.pointerManager.create(id, type);
                                     self.pointerManager.assignToEntity(entity);
                                 }
 
@@ -1998,11 +2000,10 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
 
                             case Types.Pointers.Location:
 
-                                var id = data.shift(),
-                                    posX = parseInt(data.shift()),
-                                    posY = parseInt(data.shift());
+                                var posX = data.shift(),
+                                    posY = data.shift();
 
-                                self.pointerManager.create(id, false);
+                                self.pointerManager.create(id, type);
                                 self.pointerManager.assignToPoint(id, posX * 16, posY * 16);
 
                                 break;
@@ -2011,6 +2012,17 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
 
                                 self.pointerManager.clear();
 
+                                break;
+                            
+                            case Types.Pointers.Static:
+
+                                var xPos = parseInt(data.shift()),
+                                    yPos = parseInt(data.shift());
+                                
+
+                                self.pointerManager.create(id, type);
+                                self.pointerManager.assignRelativeToScreen(id, xPos, yPos);
+                                
                                 break;
                         }
 

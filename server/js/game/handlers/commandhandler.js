@@ -229,13 +229,13 @@ module.exports = CommandHandler = cls.Class.extend({
                 inputBlocks.shift();
 
                 var pointerType = parseInt(inputBlocks.shift()), //0 or 1
-                    data = [];
+                    data = [],
+                    id = self.player.id + '' + Utils.randomInt(0, 500);
 
                 switch(pointerType) {
                     case Types.Pointers.Location:
 
-                        var id = self.player.id + '' + Utils.randomInt(0, 500),
-                            posX = inputBlocks.shift(),
+                        var posX = inputBlocks.shift(),
                             posY = inputBlocks.shift();
 
                         data.push(id);
@@ -271,6 +271,27 @@ module.exports = CommandHandler = cls.Class.extend({
                     case Types.Pointers.Clear:
 
                         self.server.pushToPlayer(self.player, new Messages.Pointer(pointerType, null));
+
+                        break;
+
+                    case Types.Pointers.Static:
+
+                        var xPos = inputBlocks.shift(),
+                            yPos = inputBlocks.shift();
+
+                        if (xPos && yPos) {
+
+                            xPos = parseInt(xPos);
+                            yPos = parseInt(yPos);
+
+                            data.push(id);
+                            data.push(xPos);
+                            data.push(yPos);
+
+                            self.server.pushToPlayer(self.player, new Messages.Pointer(pointerType, data));
+
+                        } else
+                            self.packetHandler.sendGUIMessage('Please enter a valid input for x and y.');
 
                         break;
 

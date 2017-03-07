@@ -425,8 +425,9 @@ module.exports = PacketHandler = cls.Class.extend({
         var self = this,
             buttonId = message.shift(),
             state = message.shift();
-
-        log.info('Received button click: ' + buttonId + ' ' + state);
+        
+        if (self.button_callback)
+            self.button_callback(buttonId, state);
 
     },
 
@@ -1600,6 +1601,10 @@ module.exports = PacketHandler = cls.Class.extend({
 
     onTalkToNPC: function(callback) {
         this.talkToNPC_callback = callback;
+    },
+
+    onButtonClick: function(callback) {
+        this.button_callback = callback;
     },
 
     send: function(message) {

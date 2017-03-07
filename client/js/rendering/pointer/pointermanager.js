@@ -1,4 +1,4 @@
-define(['./entitypointer', './locationpointer'], function(EntityPointer, LocationPointer) {
+define(['./entitypointer', './locationpointer', './staticpointer'], function(EntityPointer, LocationPointer, StaticPointer) {
     
     var PointerManager = Class.extend({
 
@@ -10,7 +10,7 @@ define(['./entitypointer', './locationpointer'], function(EntityPointer, Locatio
             self.pointers = {};
         },
 
-        create: function(id, isEntity) {
+        create: function(id, pointerType) {
             var self = this;
             var element = $("<div class=\"thingy\"></div>"); //.attr('id', id);
 
@@ -28,8 +28,23 @@ define(['./entitypointer', './locationpointer'], function(EntityPointer, Locatio
 
             $(element).appendTo(this.container);
 
+            var pointer;
 
-            self.pointers[id] = isEntity ? new EntityPointer(id, element) : new LocationPointer(id, element);
+            switch (pointerType) {
+                case Types.Pointers.Location:
+                    pointer = new LocationPointer(id, element);
+                    break;
+
+                case Types.Pointers.Entity:
+                    pointer = new EntityPointer(id, element);
+                    break;
+
+                case Types.Pointers.Static:
+                    pointer = new StaticPointer(id, element);
+                    break;
+            }
+
+            self.pointers[id] = pointer;
         },
 
         assignToEntity: function(character) {
@@ -84,13 +99,13 @@ define(['./entitypointer', './locationpointer'], function(EntityPointer, Locatio
             }
         },
 
-        removePointer: function(id) {
+        assignRelativeToScreen: function(id, x, y) {
             var self = this,
                 pointer = self.getPointerById(id);
-            
+
             if (pointer) {
-                pointer.destroy();
-                delete self.pointers[id]
+                pointer.element.css('left', (x * self.scale) + 'px');
+                pointer.element.css('top', (y * self.scale) + 'px');
             }
         },
 
@@ -101,22 +116,24 @@ define(['./entitypointer', './locationpointer'], function(EntityPointer, Locatio
                 if (self.pointers.hasOwnProperty(id)) {
                     var pointer = self.pointers[id];
 
-                    switch (pointer.getType()) {
-                        case Types.Pointers.Entity:
+                    if (pointer) {
+                        switch (pointer.getType()) {
+                            case Types.Pointers.Entity:
 
-                            var entity = self.game.getEntityById(pointer.id);
+                                var entity = self.game.getEntityById(pointer.id);
 
-                            if (entity)
-                                self.assignToEntity(entity);
+                                if (entity)
+                                    self.assignToEntity(entity);
 
-                            break;
+                                break;
 
-                        case Types.Pointers.Location:
+                            case Types.Pointers.Location:
 
-                            if (pointer.x != -1 && pointer.y != -1)
-                                self.assignToPoint(pointer.id, pointer.x, pointer.y);
+                                if (pointer.x != -1 && pointer.y != -1)
+                                    self.assignToPoint(pointer.id, pointer.x, pointer.y);
 
-                            break;
+                                break;
+                        }
                     }
                 }
             }
@@ -133,7 +150,7 @@ define(['./entitypointer', './locationpointer'], function(EntityPointer, Locatio
         },
 
         updateScale: function() {
-            this.scale = this.game.renderer.getScaleFactor();
+            this.scale = this.game.getScaleFactor();
         },
 
         updateCamera: function() {
