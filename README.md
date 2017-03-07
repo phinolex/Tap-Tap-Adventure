@@ -1,5 +1,7 @@
 # Tap Tap Adventure
 
+[![Dependency Status](https://gemnasium.com/badges/github.com/Tach-Yon/Tap-Tap-Adventure.svg)](https://gemnasium.com/github.com/Tach-Yon/Tap-Tap-Adventure)
+
 A massively multiplayer online experience based on Little Workshop's 2012 experimental HTML5 game - BrowserQuest. Initially, making use of WebSockets, the game has been revamped with more modern approaches such as Socket.io to ensure maximum networking performance in the comfort of your browser.
 
 Since BrowserQuest, we have improved tons of things, rewriting the backend nearly entirely at this point, updates such as:
