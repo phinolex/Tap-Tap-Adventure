@@ -16,14 +16,19 @@ define(['./entitypointer', './locationpointer', './staticpointer'], function(Ent
 
             self.updateScale();
 
+            var scale = self.scale;
+
+            if (self.game.renderer.mobile)
+                scale = 1;
+
             element.css({
                 'position': 'relative',
-                'width': '' + (16 + 16 * self.scale) + 'px',
-                'height': '' + (16 + 16 * self.scale) + 'px',
+                'width': '' + (16 + 16 * scale) + 'px',
+                'height': '' + (16 + 16 * scale) + 'px',
                 'margin': 'inherit',
-                'margin-top': '-' + (6 * self.scale) + 'px',
-                'top': '' + (10 * self.scale) + 'px',
-                'background': 'url("img/' + self.scale + '/pointer.png")'
+                'margin-top': '-' + (6 * scale) + 'px',
+                'top': '' + (10 * scale) + 'px',
+                'background': 'url("img/' + scale + '/pointer.png")'
             });
 
             $(element).appendTo(this.container);
@@ -84,6 +89,7 @@ define(['./entitypointer', './locationpointer', './staticpointer'], function(Ent
 
                 if (pointer.y == -1)
                     pointer.y = posY;
+
 
                 var tileSize = 16 * self.scale,
                     x = ((posX - self.camera.x) * self.scale),
@@ -150,7 +156,7 @@ define(['./entitypointer', './locationpointer', './staticpointer'], function(Ent
         },
 
         updateScale: function() {
-            this.scale = this.game.getScaleFactor();
+            this.scale = this.game.renderer.getScaleFactor();
         },
 
         updateCamera: function() {

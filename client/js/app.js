@@ -478,105 +478,128 @@ define(['jquery', 'entity/character/mob/mob', 'entity/item/item', 'data/mobdata'
                 mouse.y = height - 1;
 
         },
-        //Init the hud that makes it show what creature you are mousing over and attacking
-        initTargetHud: function(){
+
+        initTaskHud: function() {
             var self = this;
-            var scale = self.game.renderer.getScaleFactor(),
-                healthMaxWidth = $("#target .health").width() - (12 * scale),
+
+            if (self.game.player) {
+                self.game.onTaskUpdate(function(details, progress, goal, show) {
+                    var element = $('#task'),
+                        elDetails = $('#task .details'),
+                        elProgress = $('#task .progress');
+
+                    if (details && goal != 0) {
+                        elDetails.text('Task: ' + details);
+                        elProgress.text(progress + ' / ' + goal);
+                    }
+                    
+                    if (show)
+                        element.fadeIn('slow');
+                    else
+                        element.fadeOut('slow');
+                });
+            }
+        },
+
+        initTargetHud: function() {
+            var self = this,
+                scale = self.game.getScaleFactor(),
+                healthWidth = $('#target .health').width() - (12 * scale),
                 timeout;
 
-            if (this.game.player) {
-                this.game.player.onSetTarget(function(target, name, mouseover){
-                    var el = '#target';
-                    if(mouseover) el = '#inspector';
-                    var sprite = target.sprite;
-                    var x, y;
-                    if (!self.game.renderer.isFirefox) {
-                        if (ItemTypes.isItem(target.kind)) {
-                            x = ((sprite.animationData['idle'].length - 1) * sprite.width);
-                            y = ((sprite.animationData['idle'].row) * sprite.height);
-                        } else if (MobData.Kinds[target.kind]) {
-                            if (sprite.animationData['idle_down'])
-                            {
-                                x = ((sprite.animationData['idle_down'].length - 1) * sprite.width);
-                                y = ((sprite.animationData['idle_down'].row) * sprite.height);
-                            }
-                        } else {
-                            return;
-                        }
-                    }
+            if (self.game.player) {
+                self.game.player.onSetTarget(function(target, name, mouseOver) {
+                    var elementType = '#target',
+                        sprite = target.sprite,
+                        x, y;
 
-                    $(el + ' .name').text(target.title ? target.title : name);
+                    if (mouseOver)
+                        elementType = '#inspector';
+
+                    var element = $(elementType),
+                        nameEl = $(elementType + ' .name'),
+                        headshot = $(elementType + ' .headshot div'),
+                        details = $(elementType + ' .details'),
+                        health = $(elementType + ' .health'),
+                        isItem = ItemTypes.isItem(target.kind),
+                        animation = isItem ? 'idle' : 'idle_down';
+
+                    x = ((sprite.animationData[animation].length - 1) * sprite.width);
+                    y = ((sprite.animationData[animation].row) * sprite.height);
 
 
-                    $(el+' .name').css('text-transform', 'capitalize');
+                    nameEl.text(target.title ? target.title : name);
+                    nameEl.css('text-transform', 'capitalize');
 
+                    if (elementType == '#inspector')
+                        details.text(target instanceof Mob ? 'Level - ' + target.level : (target instanceof Item ? target.getInfoMsg() : 'null'));
 
+                    headshot.height(sprite.height);
+                    headshot.width(sprite.width);
+                    headshot.css({
+                        'margin-left': '-' + (sprite.width / 2) + 'px',
+                        'margin-top': '-' + (sprite.height / 2) + 'px',
+                        'background': 'url("img/1/' + (target instanceof Item ? 'item-' + name : name) + '.png") no-repeat -' + x + 'px -' + y + 'px'
+                    });
 
-                    if(el === '#inspector')
-                        $(el + ' .details').text(target instanceof Mob ? "Level - " + target.level : (target instanceof Item ? target.getInfoMsg() : "null"));
+                    health.css('width', target.healthPoints ? Math.round(target.healthPoints / target.maxHp * 100) : '100%');
 
-                    $(el+' .headshot div').height(sprite.height);
-                    $(el+' .headshot div').width(sprite.width);
-                    $(el+' .headshot div').css('margin-left', -sprite.width/2).css('margin-top', -sprite.height/2);
-                    $(el+' .headshot div').css('background', 'url(img/1/'+(target instanceof Item ? 'item-'+name : name)+'.png) no-repeat -'+x+'px -'+y+'px');
+                    element.fadeIn('fast');
 
-                    if(target.healthPoints) {
-                        $(el + " .health").css('width', Math.round(target.healthPoints / target.maxHp * 100) + '%');
-
-                    } else{
-                        $(el+" .health").css('width', '100%');
-                    }
-
-                    $(el).fadeIn('fast');
-                    if(mouseover){
+                    if (mouseOver) {
                         clearTimeout(timeout);
+
                         timeout = null;
-                        timeout = setTimeout(function(){
+
+                        timeout = setTimeout(function() {
                             $('#inspector').fadeOut('fast');
-                            if (self.game.player) {
+
+                            if (self.game.player)
                                 self.game.player.inspecting = null;
-                            }
                         }, 2000);
                     }
                 });
-            }
 
-            this.game.onUpdateTarget(function(target){
+                self.game.onUpdateTarget(function(target) {
+                    var health = $('#target .health'),
+                        life = $('#target .life'),
+                        inspectorHealth = $('#inspector .health');
 
-                $("#target .health").css('width', Math.ceil(target.healthPoints/target.maxHp*100) + "%");
-                $("#target .life").text(target.healthPoints < 0 ? 0 : target.healthPoints + "/" + target.maxHp);
-                $("#target .life").css('text-transform', 'capitalize');
+                    health.css('width', Math.ceil(target.healthPoints / target.maxHp * 100) + '%');
 
-                if(self.game.player.inspecting && self.game.player.inspecting.id === target.id)
-                    $("#inspector .health").css('width', Math.ceil(target.healthPoints/target.maxHp*100) + "%");
+                    life.text(target.healthPoints > 0 ? target.healthPoints + '/' + target.maxHp : 0);
+                    life.css('text-transform', 'capitalize');
 
-            });
+                    if (self.game.player.inspecting && self.game.player.inspecting.id == target.id)
+                        inspectorHealth.css('width', Math.ceil(target.healthPoints / target.maxHp * 100) + '%');
+                });
 
-            if (this.game.player) {
-                this.game.player.onRemoveTarget(function(targetId){
-                    $('#target').fadeOut('fast');
-                    if(self.game.player.inspecting && self.game.player.inspecting.id === targetId){
-                        $('#inspector').fadeOut('fast');
+                self.game.player.onRemoveTarget(function(targetId)  {
+                    var target = $('#target'),
+                        inspector = $('#inspector');
+
+                    target.fadeOut('fast');
+
+                    if (self.game.player.inspecting && self.game.player.inspecting.id === targetId) {
+                        inspector.fadeOut('fast');
                         self.game.player.inspecting = null;
                     }
                 });
             }
         },
         initManaBar: function() {
-            var scale = this.game.renderer ? this.game.renderer.getScaleFactor() : 2,
-                manaMaxWidth = $("#manabar").width() - (11 * scale);
-
-            if (this.game.renderer && this.game.renderer.mobile)
-                scale = 1;
+            var self = this,
+                scale = self.game.getScaleFactor(),
+                manaWidth = $('#manabar').width() - (11 * scale);
 
             if (scale == 1)
-                manaMaxWidth = 77;
+                manaWidth = 77;
 
-            this.game.onPlayerManaChange(function(mana, maxMana) {
-                var barWidth = Math.round((manaMaxWidth / maxMana) * (mana > 0 ? mana : 0));
-                $('#mana').css('width', barWidth + "px");
-                $('#manatext').html("<p>MP: " + mana + "/" + maxMana + "</p>");
+            self.game.onPlayerManaChange(function(mana, maxMana) {
+                var bar = Math.round((manaWidth / maxMana) * (mana > 0 ? mana : 0));
+
+                $('#mana').css('width', bar + 'px');
+                $('#manatext').html('<p>' + mana + '/' + maxMana + '</p>');
             });
         },
 
@@ -593,25 +616,20 @@ define(['jquery', 'entity/character/mob/mob', 'entity/item/item', 'data/mobdata'
 
         initHealthBar: function() {
             var self = this,
-                renderer = this.game.renderer,
-                scale = renderer.getScaleFactor();
-
-            if (renderer.mobile)
-                scale = 1;
-
-            var healthMaxWidth = $("#healthbar").width() - (11 * scale);
+                scale = self.game.getScaleFactor(),
+                healthWidth = $('#healthbar').width() - (11 * scale);
 
             if (scale == 1)
-                healthMaxWidth = 77;
+                healthWidth = 77;
 
+            self.game.onPlayerHealthChange(function(health, maxHealth) {
+                var bar = Math.round((healthWidth / maxHealth) * (health > 0 ? health : 0));
 
-            this.game.onPlayerHealthChange(function(hp, maxHp) {
-                var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));
-                $("#health").css('width', barWidth + "px");
-                $('#healthtext').html("<p>HP: " + hp + "/" + maxHp + "</p>");
+                $('#health').css('width', bar + 'px');
+                $('#healthtext').html('<p>' + health + '/' + maxHealth + '</p>');
             });
 
-            this.game.onPlayerHurt(this.blinkHealthBar.bind(this));
+            self.game.onPlayerHurt(self.blinkHealthBar.bind(self));
         },
 
         setPoison: function() {
@@ -1088,16 +1106,22 @@ define(['jquery', 'entity/character/mob/mob', 'entity/item/item', 'data/mobdata'
         },
 
         resizeUi: function() {
-            if(this.game) {
-                if(this.game.started) {
-                    this.game.resize();
-                    this.initHealthBar();
-                    this.initTargetHud();
-                    this.initExpBar();
-                    this.game.updateBars();
+            var self = this;
+
+            //TODO: Optimize this after finishing the tutorial.
+
+            if (self.game) {
+                if (self.game.started) {
+                    self.game.resize();
+                    self.initHealthBar();
+                    self.initTargetHud();
+                    self.initTaskHud();
+                    self.initExpBar();
+                    self.game.updateBars();
                 } else {
-                    var newScale = this.game.renderer.getScaleFactor();
-                    this.game.renderer.rescale(newScale);
+                    var scale = self.game.renderer.getScaleFactor();
+
+                    self.game.renderer.rescale(scale);
                 }
             }
         },

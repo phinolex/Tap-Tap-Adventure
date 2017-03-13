@@ -77,6 +77,9 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
             this.handlers[Types.Messages.GLOBALCHAT] = this.receiveGlobalChat;
             this.handlers[Types.Messages.TRADE] = this.receiveTrade;
             this.handlers[Types.Messages.POINTER] = this.receivePointer;
+            this.handlers[Types.Messages.ATTACKLINK] = this.receiveAttackLink;
+            this.handlers[Types.Messages.TASK] = this.receiveTask;
+            this.handlers[Types.Messages.TALKINDEX] = this.receiveTalkIndex;
 
             this.useBison = false;
 
@@ -299,12 +302,8 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
         },
 
         receiveAttack: function(data) {
-            var attacker = data[1],
-                target = data[2];
-
-            if(this.attack_callback) {
-                this.attack_callback(attacker, target);
-            }
+            if (this.attack_callback)
+                this.attack_callback(data[1], data[2]);
         },
         receiveParty: function (data) {
             data.shift();
@@ -767,6 +766,21 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
                 this.chardata_callback(attackSpeed, moveSpeed, walkSpeed, idleSpeed, attackRate);
         },
 
+        receiveAttackLink: function(data) {
+            if (this.attackLink_callback)
+                this.attackLink_callback(data[1]);
+        },
+
+        receiveTask: function(data) {
+            if (this.task_callback)
+                this.task_callback(data[1], data[2], data[3], data[4]);
+        },
+
+        receiveTalkIndex: function(data) {
+            if (this.talkIndex_callback)
+                this.talkIndex_callback(data[1], data[2]);
+        },
+
         onConnected: function(callback) {
             this.connected_callback = callback;
         },
@@ -978,6 +992,18 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
 
         onProjectile: function(callback) {
             this.projectile_callback = callback;
+        },
+
+        onAttackLink: function(callback) {
+            this.attackLink_callback = callback;
+        },
+
+        onTask: function(callback) {
+            this.task_callback = callback;
+        },
+        
+        onTalkIndex: function(callback) {
+            this.talkIndex_callback = callback;  
         },
 
         sendPartyInvite: function(playerId, status) { // 0 for request, 1, for yes, 2 for no.

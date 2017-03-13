@@ -69,7 +69,8 @@
     "npcId": 42
   },
   "Soldier": {
-    "npcId": 244
+    "npcId": 244,
+    "name": "Melee Instructor"
   },
   "Fisherman": {
     "npcId": 245

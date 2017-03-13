@@ -21,7 +21,7 @@ find "$BUILDDIR/js" -type f \
   -o -name "dialog.js" \
   -o -name "entity.js" \
   -o -name "item.js" \
-  -o -name "bubble.js" \
+  -o -name "bubblemanager.js" \
   -o -name "mob.js" \
   -o -name "mobs.js" \
   -o -name "mobdata.js" \  

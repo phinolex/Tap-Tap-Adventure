@@ -5,62 +5,63 @@ define(['./animation', '../data/mobdata'], function(Animation, MobData) {
         init: function(id, kind) {
             var self = this;
 
-            this.id = id;
-            this.kind = kind;
+            self.id = id;
+            self.kind = kind;
 
-            // Renderer
-            this.sprite = null;
-            this.flipSpriteX = false;
-            this.flipSpriteY = false;
-            this.animations = null;
-            this.currentAnimation = null;
+            self.sprite = null;
+            self.flipSpriteX = false;
+            self.flipSpriteY = false;
 
-            this.isCritical = false;
-            this.isHeal = false;
-            this.criticalAnimation = new Animation("atk_down", 10, 0, 48, 48);
-            this.criticalAnimation.setSpeed(30);
-            this.criticalAnimation.setCount(1, function(){
+            self.animations = null;
+            self.currentAnimation = null;
+
+            self.isCritical = false;
+            self.isHeal = false;
+
+            self.isPointing = false;
+            self.pointerTimeout = null;
+
+            self.shadowOffsetY = 0;
+
+            self.setGridPosition(0, 0);
+
+            self.isLoaded = false;
+            self.isHighlighted = false;
+            self.visible = true;
+            self.isFading = false;
+            self.prevX = 0;
+            self.prevY = 0;
+            self.prevOrientation = null;
+
+            self.name = "";
+
+            self.loadAnimations();
+            self.setDirty();
+        },
+
+        loadAnimations: function() {
+            var self = this;
+
+            self.criticalAnimation = new Animation('atk_down', 10, 0, 48, 48);
+            self.criticalAnimation.setSpeed(30);
+
+            self.healAnimation = new Animation('atk_down', 10, 0, 32, 32);
+            self.healAnimation.setSpeed(120);
+
+            self.stunAnimation = new Animation('atk_down', 6, 0, 48, 48);
+            self.stunAnimation.setSpeed(30);
+
+            self.criticalAnimation.setCount(1, function() {
                 self.isCritical = false;
                 self.criticalAnimation.reset();
                 self.criticalAnimation.count = 1;
             });
 
-            this.healAnimation = new Animation("atk_down", 10, 0, 32, 32);
-            this.healAnimation.setSpeed(120);
-            this.healAnimation.setCount(1, function(){
+            self.healAnimation.setCount(1, function() {
                 self.isHeal = false;
                 self.healAnimation.reset();
                 self.healAnimation.count = 1;
             });
-            this.stunAnimation = new Animation("atk_down", 6, 0, 48, 48);
-            this.stunAnimation.setSpeed(30);
-
-            this.mountAnimation = new Animation("idle_down", 6, 0, 32, 32);
-            this.mountAnimation.setSpeed(150);
-            this.mountAnimation.setCount(1, function(){
-                self.mountAnimation.reset();
-                self.mountAnimation.count = 1;
-            });
-
-            this.isPointing = false;
-            this.pointerTimeout = null;
-            
-            this.shadowOffsetY = 0;
-
-            // Position
-            this.setGridPosition(0, 0);
-
-            // Modes
-            this.isLoaded = false;
-            this.isHighlighted = false;
-            this.visible = true;
-            this.isFading = false;
-            this.prevX=0;
-            this.prevY=0;
-            this.prevOrientation=null;
-            this.name = "";
-            
-            this.setDirty();
         },
 
         setName: function(name) {
@@ -72,47 +73,81 @@ define(['./animation', '../data/mobdata'], function(Animation, MobData) {
             this.y = y;
         },
 
-        getSpawnPoint: function() {
-            return [325 + Utils.randomInt(0, 3), 87 + Utils.randomInt(0, 2)];
+        setGridPosition: function(gridX, gridY) {
+            var self = this;
+
+            self.gridX = gridX;
+            self.gridY = gridY;
+
+            self.setPosition(gridX * 16, gridY * 16);
         },
-
-        setGridPosition: function(x, y) {
-            this.gridX = x;
-            this.gridY = y;
-
-            this.setPosition(x * 16, y * 16);
-        },
-
+        
         setSprite: function(sprite) {
-            if(!sprite) {
-                log.error(this.id + " : sprite is null", true);
-                throw "Sprite error";
-            }
-
-            if(this.sprite && this.sprite.name === sprite.name) {
+            var self = this;
+            
+            if (!sprite)
+                throw 'Sprite not found: ' + self.id;
+            
+            if (self.sprite && self.sprite.name == sprite.name)
                 return;
-            }
+            
+            if (!sprite.isLoaded)
+                sprite.load();
+            
+            self.sprite = sprite;
+            self.normalSprite = self.sprite;
 
-            if (!sprite.isLoaded) sprite.load();
+            self.hurtSprite = sprite.getHurtSprite();
+            self.animations = sprite.createAnimations();
 
-            this.sprite = sprite;
-            this.normalSprite = this.sprite;
+            self.isLoaded = true;
 
-            try {
-                this.hurtSprite = sprite.getHurtSprite();
-            } catch (e) {}
+            if (self.ready_func)
+                self.ready_func();
+        },
 
-            this.animations = sprite.createAnimations();
+        setAnimation: function(name, speed, count, onEndCount) {
+            var self = this;
 
-            this.isLoaded = true;
-            if(this.ready_func) {
-                this.ready_func();
+            if (self.isLoaded) {
+                if (self.currentAnimation && self.currentAnimation.name === name)
+                    return;
+
+                var a = self.getAnimationByName(name);
+
+                if (a) {
+                    self.currentAnimation = a;
+
+                    if (name.substr(0, 3) === 'atk')
+                        self.currentAnimation.reset();
+
+                    self.currentAnimation.setSpeed(speed);
+
+                    self.currentAnimation.setCount(count ? count : 0, onEndCount || function() {
+                        self.idle();
+                    });
+                }
             }
         },
 
-        isMob: function(kind) {
-            var kinds = MobData.Kinds;
-            return kinds[kind] ? true : false;
+        setHighlight: function(highlight) {
+            var self = this;
+
+            self.sprite = highlight ? self.sprite.silhouetteSprite : self.normalSprite;
+            self.isHighlighted = highlight;
+        },
+
+        setVisible: function(visible) {
+            this.visible = visible;
+        },
+
+        setDirty: function() {
+            var self = this;
+
+            self.isDirty = true;
+
+            if (self.dirty_callback)
+                self.dirty_callback(self);
         },
 
         getSprite: function() {
@@ -124,77 +159,35 @@ define(['./animation', '../data/mobdata'], function(Animation, MobData) {
         },
 
         getAnimationByName: function(name) {
-            var animation = null;
+            var self = this,
+                animation;
 
-            if(name in this.animations) {
-                animation = this.animations[name];
-            }
-            else {
-                log.error("No animation called "+ name);
-            }
+            if (name in self.animations)
+                animation = self.animations[name];
+
             return animation;
         },
 
-        setAnimation: function(name, speed, count, onEndCount) {
-            var self = this;
+        isMob: function(kind) {
+            var kinds = MobData.Kinds;
 
-            if(this.isLoaded) {
-                if(this.currentAnimation && this.currentAnimation.name === name) {
-                    return;
-                }
-
-                var s = this.sprite,
-                    a = this.getAnimationByName(name);
-
-                if(a) {
-                    this.currentAnimation = a;
-                    if(name.substr(0, 3) === "atk")
-                        this.currentAnimation.reset();
-
-                    this.currentAnimation.setSpeed(speed);
-                    this.currentAnimation.setCount(count ? count : 0, onEndCount || function() {
-                        self.idle();
-                    });
-                }
-            }
-            else {
-                this.log_error("Not ready for animation");
-            }
+            return kinds[kind]? true : false;
         },
 
         hasShadow: function() {
             return false;
         },
 
-        ready: function(f) {
-            this.ready_func = f;
+        ready: function(callback) {
+            this.ready_func = callback;
+        },
+
+        onDirty: function(callback) {
+            this.dirty_callback = callback;
         },
 
         clean: function() {
             this.stopBlinking();
-        },
-
-        log_info: function(message) {
-            log.info("["+this.id+"] " + message);
-        },
-
-        log_error: function(message) {
-            log.error("["+this.id+"] " + message);
-        },
-
-        setHighlight: function(value) {
-            if(value === true) {
-                this.sprite = this.sprite.silhouetteSprite;
-                this.isHighlighted = true;
-            }
-            else {
-                this.sprite = this.normalSprite;
-                this.isHighlighted = false;
-            }
-        },
-
-        setVisible: function(value) {
-            this.visible = value;
         },
 
         isVisible: function() {
@@ -202,60 +195,44 @@ define(['./animation', '../data/mobdata'], function(Animation, MobData) {
         },
 
         toggleVisibility: function() {
-            if(this.visible) {
-                this.setVisible(false);
-            } else {
-                this.setVisible(true);
-            }
+            this.setVisible(!this.visible);
         },
 
-        /**
-         *
-         */
         getDistanceToEntity: function(entity) {
-            var distX = Math.abs(entity.gridX - this.gridX),
-                distY = Math.abs(entity.gridY - this.gridY);
+            var x = Math.abs(entity.gridX - this.gridX),
+                y = Math.abs(entity.gridY - this.gridY);
 
-            return (distX > distY) ? distX : distY;
+            return (x > y) ? x : y;
         },
 
         isCloseTo: function(entity) {
-            var dx, dy, d, close = false;
-            if(entity) {
-                dx = Math.abs(entity.gridX - this.gridX);
-                dy = Math.abs(entity.gridY - this.gridY);
+            var self = this,
+                dx, dy,
+                close = false;
 
-                if(dx < 30 && dy < 14) {
+            if (entity) {
+                dx = Math.abs(entity.gridX - self.gridX);
+                dy = Math.abs(entity.gridY - self.gridY);
+
+                if (dx < 30 && dy < 14)
                     close = true;
-                }
             }
+
             return close;
         },
 
-        /**
-         * Returns true if the entity is adjacent to the given one.
-         * @returns {Boolean} Whether these two entities are adjacent.
-         */
         isAdjacent: function(entity) {
-            var adjacent = false;
+            var self = this,
+                adjacent = false;
 
-            if(entity) {
-                adjacent = this.getDistanceToEntity(entity) <= 1;
-            }
+            if (entity)
+                adjacent = self.getDistanceToEntity(entity) <= 1;
+
             return adjacent;
         },
 
-        /**
-         *
-         */
         isAdjacentNonDiagonal: function(entity) {
-            var result = false;
-
-            if(this.isAdjacent(entity) && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY)) {
-                result = true;
-            }
-
-            return result;
+            return this.isAdjacent(entity) && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY);
         },
 
         isDiagonallyAdjacent: function(entity) {
@@ -263,11 +240,12 @@ define(['./animation', '../data/mobdata'], function(Animation, MobData) {
         },
 
         forEachAdjacentNonDiagonalPosition: function(callback) {
-            callback(this.gridX - 1, this.gridY, Types.Orientations.LEFT);
-            callback(this.gridX, this.gridY - 1, Types.Orientations.UP);
-            callback(this.gridX + 1, this.gridY, Types.Orientations.RIGHT);
-            callback(this.gridX, this.gridY + 1, Types.Orientations.DOWN);
+            var self = this;
 
+            callback(self.gridX - 1, self.gridY, Types.Orientations.LEFT);
+            callback(self.gridX, self.gridY - 1, Types.Orientations.UP);
+            callback(self.gridX + 1, self.gridY, Types.Orientations.RIGHT);
+            callback(self.gridX, self.gridY + 1, Types.Orientations.DOWN);
         },
 
         fadeIn: function(currentTime) {
@@ -275,65 +253,50 @@ define(['./animation', '../data/mobdata'], function(Animation, MobData) {
             this.startFadingTime = currentTime;
         },
 
-        blink: function(speed, callback) {
+        blink: function(speed) {
             var self = this;
 
-            this.blinking = setInterval(function() {
+            self.blinking = setInterval(function() {
                 self.toggleVisibility();
             }, speed);
         },
 
         stopBlinking: function() {
-            if(this.blinking) {
-                clearInterval(this.blinking);
-            }
-            this.setVisible(true);
-        },
-
-        setDirty: function() {
-            this.isDirty = true;
-            if(this.dirty_callback) {
-                this.dirty_callback(this);
-            }
-        },
-
-        onDirty: function(dirty_callback) {
-            this.dirty_callback = dirty_callback;
-        },
-        stun: function(level){
             var self = this;
-            if(!this.isStun){
-                this.isStun = true;
-                if(this.attackCooldown){
-                    this.attackCooldown.lastTime += 500*level;
-                }
-                this.stunTimeout = setTimeout(function(){
+
+            if (self.blinking)
+                clearInterval(self.blinking);
+
+            self.setVisible(true);
+        },
+
+        stun: function(level) {
+            var self = this;
+
+            if (!self.isStun) {
+                self.isStun = true;
+
+                if (self.attackCooldown)
+                    self.attackCooldown.lastTime += 500 * level;
+
+                self.stunTimeout = setTimeout(function() {
                     self.isStun = false;
                     self.stunTimeout = null;
-                }, 500*level);
+                }, 50 * level);
             }
         },
-        provocation: function(level){
+
+        provocation: function(level) {
             var self = this;
-            if(!this.isProvocation){
-                this.isProvocation = true;
-                this.stunTimeout = setTimeout(function(){
+
+            if (!self.isProvocation) {
+                self.isProvocation = true;
+
+                self.stunTimeout = setTimeout(function() {
                     self.isProvocation = false;
                     self.provocationTimeout = null;
-                }, 1000 * level);
+                }, 100 * level);
             }
-        },
-
-        point: function() {
-            var self = this;
-
-            self.pointerTimeout = setInterval(function() {
-                self.isPointing = !self.isPointing;
-            }, 700)
-        },
-
-        stopPointer: function() {
-            clearInterval(this.pointerTimeout);
         }
 
     });

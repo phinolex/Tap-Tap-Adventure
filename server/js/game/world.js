@@ -772,7 +772,6 @@ module.exports = World = cls.Class.extend({
     createChest: function(x, y, items) {
         var self = this;
         var chest = self.createItem(37, x, y); // CHEST
-        //log.info("Items: " + items);
         chest.setItems(items);
         return chest;
     },
@@ -1055,16 +1054,6 @@ module.exports = World = cls.Class.extend({
             self.handleItemDespawn(item);
         }
     },
-
-    /*despawn: function(entity) {
-     var self = this;
-     self.pushToAdjacentGroups(entity.group, entity.despawn());
-
-     if (entity.id in self.entities) {
-     if (self.entities.hasOwnProperty(entity.id))
-     self.removeEntity(entity);
-     }
-     },*/
 
     spawnStaticEntities: function() {
         var self = this;

@@ -1,7 +1,7 @@
 
 /* global Types, log, _, self, Class, CharacterDialog */
 
-define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/map', 'entity/animation', 'rendering/sprites/sprite',
+define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/renderer', 'map/map', 'entity/animation', 'rendering/sprites/sprite',
         'rendering/tile', 'network/gameclient', 'audio/audio', 'rendering/updater', 'rendering/transition',
         'utils/pathfinder', 'entity/entity', 'entity/item/item', 'entity/item/items', 'entity/character/mob/mob', 'entity/character/npc/npc', 'data/npcdata', 'entity/character/player/player', 'entity/character/character', 'entity/objects/chest', 'entity/character/player/mount',
         'entity/character/mob/pet', 'entity/character/mob/mobs', 'data/mobdata', 'entity/gather/gather', 'utils/exceptions', 'handlers/chathandler', 'handlers/textwindowhandler',
@@ -274,7 +274,6 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
 
 
             setup: function($bubbleContainer, canvas, backgroundbuffer, background, foreground, textcanvas, toptextcanvas, input) {
-                this.setBubbleManager(new BubbleManager($bubbleContainer));
                 this.setRenderer(new Renderer(this, canvas, backgroundbuffer, background, foreground, textcanvas, toptextcanvas));
                 this.camera = this.renderer.camera;
                 this.inventoryHandler = new InventoryHandler(this);
@@ -293,6 +292,7 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                 this.dialogs.push(this.craftDialog);
 
                 this.pointerManager = new PointerManager(this);
+                this.bubbleManager = new BubbleManager(this, $bubbleContainer);
                 this.classPopupMenu = new ClassPopupMenu(this);
             },
 
@@ -330,13 +330,15 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
             },
 
             initPlayer: function() {
-                this.app.initTargetHud();
+                var self = this;
 
-                log.info("Player Sprite: " + this.player.getSpriteName());
-                this.player.setSprite(this.sprites[this.player.getSpriteName()]);
-                this.player.setWeaponName(this.player.weaponName);
+                self.app.initTargetHud();
+                self.app.initTaskHud();
 
-                this.player.idle();
+                self.player.setSprite(self.sprites[self.player.getSpriteName()]);
+                self.player.setWeaponName(self.player.weaponName);
+
+                self.player.idle();
             },
 
             initShadows: function() {
@@ -987,7 +989,6 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                     self.player.onAggro(function(mob) {
                         if(!mob.isWaitingToAttack(self.player) && !self.player.isAttackedBy(mob)) {
                             if (mob.level * 2 > self.player.level) {
-                                self.player.log_info("Aggroed by " + mob.id + " at ("+self.player.gridX+", "+self.player.gridY+")");
                                 self.client.sendAggro(mob);
                                 mob.waitToAttack(self.player);
                             }
@@ -1053,10 +1054,15 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                     });
 
                     self.client.onStop(function(x, y, orientation) {
+                        var orient = orientation;
+
+                        if (!orient)
+                            orient = self.player.orientation;
+
                         if (self.player.isMoving())
-                            self.player.stop([x, y, orientation]);
+                            self.player.stop([x, y, orient]);
                         else
-                            self.client.sendDoor(x, y, orientation);
+                            self.client.sendDoor(x, y, orient);
                     });
 
                     self.client.onInstructions(function(playerId) {
@@ -1289,8 +1295,6 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                     self.player.onHasMoved(function(player) {
                         if (self.isCentered)
                             self.initAnimatedTiles();
-
-                        self.assignBubbleTo(player);
                     });
 
 
@@ -1522,10 +1526,6 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                                             self.updateCursor();
                                         });
 
-                                        entity.onHasMoved(function(entity) {
-                                            self.assignBubbleTo(entity); // Make chat bubbles follow moving entities
-                                        });
-
                                         if(entity instanceof Mob) {
                                             if(targetId) {
                                                 var player = self.getEntityById(targetId);
@@ -1638,6 +1638,26 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                                 self.makeCharacterGoTo(player, item.gridX, item.gridY);
                             }
                         }
+                    });
+                    
+                    self.client.onTalkIndex(function(npcId, talkIndex) {
+                        var npc = self.getEntityById(npcId);
+                        
+                        npc.talkIndex = talkIndex;
+                    });
+
+                    self.client.onTask(function(details, progress, goal, show) {
+                        
+                        if (self.task_callback)
+                            self.task_callback(details, progress, goal, show);
+
+                    });
+
+                    self.client.onAttackLink(function(entityId) {
+                        var entity = self.getEntityById(entityId);
+
+                        if (entity)
+                            self.createAttackLink(self.player, entity);
                     });
 
                     self.client.onEntityAttack(function(attackerId, targetId) {
@@ -2016,8 +2036,8 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                             
                             case Types.Pointers.Static:
 
-                                var xPos = parseInt(data.shift()),
-                                    yPos = parseInt(data.shift());
+                                var xPos = data.shift(),
+                                    yPos = data.shift();
                                 
 
                                 self.pointerManager.create(id, type);
@@ -2071,6 +2091,9 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                     });
                     self.client.onTalkToNPC(function(npcId, messages) {
                         var npc = self.getEntityById(npcId);
+
+                        if (messages.length == 1)
+                            npc.talkIndex = 0;
 
                         if (npc && messages) {
                             self.previousClickPosition = {};
@@ -2249,6 +2272,7 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
              * @param {Entity} target The target entity
              */
             createAttackLink: function(attacker, target) {
+
                 if(attacker.hasTarget()) {
                     attacker.removeTarget();
                 }
@@ -2341,9 +2365,8 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
             /**
              *
              */
-            makePlayerAttackTo: function(pos)
-            {
-                entity = this.getEntityAt(pos.x, pos.y);
+            makePlayerAttackTo: function(pos) {
+                var entity = this.getEntityAt(pos.x, pos.y);
                 if(entity instanceof Mob) {
                     this.makePlayerAttack(entity);
                 }
@@ -2391,8 +2414,6 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
              *
              */
             makePlayerAttack: function(mob) {
-                log.info("Attack");
-                this.createAttackLink(this.player, mob);
                 this.client.sendAttack(mob);
             },
 
@@ -3081,7 +3102,7 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                         else if (entity instanceof Item)
                             self.makePlayerGoToItem(entity);
                         else if (entity instanceof Chest)
-                            self.makePlayerAttack(entity);
+                            self.makePlayerOpenChest(entity);
                         else if (entity instanceof Player && entity.id != self.player.id && self.player.pvpFlag && self.pvpFlag && self.player.gameFlag && entity.pvpTeam != self.player.pvpTeam)
                             self.makePlayerAttack(entity);
                         else if (entity instanceof Npc) {
@@ -3191,7 +3212,10 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                 }
                 return false;
             },
-
+            
+            onTaskUpdate: function(callback) {
+                this.task_callback = callback;    
+            },
 
             /**
              *
@@ -3389,46 +3413,12 @@ define(['interface/infomanager', 'rendering/bubble', 'rendering/renderer', 'map/
                 this.bubbleManager.create(id, message, this.currentTime);
             },
 
-            destroyBubble: function(id) {
-                this.bubbleManager.destroyBubble(id);
+            assignBubbleTo: function(entity) {
+                this.bubbleManager.assignBubbleTo(entity);
             },
 
-            assignBubbleTo: function(character) {
-                try {
-                    var bubble = this.bubbleManager.getBubbleById(character.id);
-
-                    if(bubble) {
-                        var s = this.renderer.scale,
-                            t = 16 * s, // tile size
-                            x = ((character.x - this.camera.x) * s),
-                            w = parseInt(bubble.element.css('width')) + 24,
-                            offset = (w / 2) - (t / 2),
-                            offsetY,
-                            y;
-
-                        if(character instanceof Npc) {
-                            offsetY = 0;
-                        } else {
-                            if(s === 2) {
-                                if(this.renderer.mobile) {
-                                    offsetY = 0;
-                                } else {
-                                    offsetY = 15;
-                                }
-                            } else {
-                                offsetY = 12;
-                            }
-                        }
-
-                        y = ((character.y - this.camera.y) * s) - (t * 2) - offsetY;
-
-                        bubble.element.css('left', x - offset + 'px');
-                        bubble.element.css('top', y + 'px');
-                    }
-                } catch (e) {
-                    log.info("Caught exception: " + e);
-                }
-
+            destroyBubble: function(id) {
+                this.bubbleManager.destroyBubble(id);
             },
 
             respawn: function() {

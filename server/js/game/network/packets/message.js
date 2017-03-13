@@ -741,3 +741,37 @@ Messages.Pointer = Message.extend({
         return [Types.Messages.POINTER, this.type, this.data];
     }
 });
+
+Messages.AttackLink = Message.extend({
+    init: function(entityId) {
+        this.entityId = entityId;
+    },
+
+    serialize: function() {
+        return [Types.Messages.ATTACKLINK, this.entityId];
+    }
+});
+
+Messages.Task = Message.extend({
+    init: function(details, progress, goal, show) {
+        this.details = details;
+        this.progress = progress;
+        this.goal = goal;
+        this.show = show;
+    },
+
+    serialize: function() {
+        return [Types.Messages.TASK, this.details, this.progress, this.goal, this.show];
+    }
+});
+
+Messages.TalkIndex = Message.extend({
+    init: function(npcId, talkIndex) {
+        this.npcId = npcId;
+        this.talkIndex = talkIndex;
+    },
+
+    serialize: function() {
+        return [Types.Messages.TALKINDEX, this.npcId, this.talkIndex];
+    }
+});

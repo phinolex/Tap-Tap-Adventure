@@ -545,7 +545,7 @@ module.exports = Player = Character.extend({
     canEquipArmor: function (itemKind) {
         var armourLevel = ItemTypes.getArmorLevel(itemKind);
 
-        if (this.name == "Tachyon")
+        if (this.name == "Test")
             return true;
 
         if (armourLevel * 2 > this.level) {
@@ -560,7 +560,7 @@ module.exports = Player = Character.extend({
     canEquipWeapon: function (itemKind) {
         var weaponLevel = ItemTypes.getWeaponLevel(itemKind);
 
-        if (this.name == "Tachyon")
+        if (this.name == "Test")
             return true;
 
         if (weaponLevel * 2 > this.level) {
@@ -651,25 +651,29 @@ module.exports = Player = Character.extend({
     },
 
     handleInventoryWeapon: function (itemKind, inventoryNumber) {
+        var self = this;
+        
         if (inventoryNumber == -1) {
-            this.handleInventoryWeaponUnequip();
+            self.handleInventoryWeaponUnequip();
             return;
         }
-
-        if (!this.canEquipWeapon(itemKind))
+        
+        if (!self.canEquipWeapon(itemKind))
             return;
 
-        var enchantedPoint = this.inventory.rooms[inventoryNumber].itemNumber;
-        var weaponSkillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
-        var weaponSkillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
+        var enchantedPoints = self.inventory.rooms[inventoryNumber].itemNumber,
+            skillKind = self.inventory.rooms[inventoryNumber].itemSkillKind,
+            skillLevel = self.inventory.rooms[inventoryNumber].itemSkillLevel;
 
-        this.inventory.setInventory(inventoryNumber, this.weapon, this.weaponEnchantedPoint, this.weaponSkillKind, this.weaponSkillLevel);
+        self.inventory.setInventory(inventoryNumber, self.weapon, self.weaponEnchantedPoint, self.weaponSkillKind, self.weaponSkillLevel);
 
-        this.equipItem(itemKind, enchantedPoint, weaponSkillKind, weaponSkillLevel, false);
-        this.setAbility();
-        //if(!this.weaponAvatar){
-        this.packetHandler.broadcast(this.equip(itemKind), false);
-        //}
+        self.equipItem(itemKind, enchantedPoints, skillKind, skillLevel, false);
+        
+        self.setAbility();
+        self.packetHandler.broadcast(self.equip(itemKind), false);
+        
+        if (self.equipWeapon_callback)
+            self.equipWeapon_callback(itemKind);
     },
 
     handleInventoryArmor: function (itemKind, inventoryNumber) {
@@ -1067,8 +1071,10 @@ module.exports = Player = Character.extend({
     getTeam: function () {
         return this.minigameTeam;
     },
-
-
+    
+    finishedTutorial: function() {
+        return this.questHandler.getQuest('A Great Start').stage == 9999;
+    },
 
     setPVPKills: function (kills) {
         this.pvpKills = kills;
@@ -1089,5 +1095,9 @@ module.exports = Player = Character.extend({
     addPVPDeath: function () {
         this.pvpDeaths += 1;
         this.redisPool.setPVPDeaths(this.name, this.pvpDeaths);
+    },
+    
+    onEquipWeapon: function(callback) {
+        this.equipWeapon_callback = callback;
     }
 });

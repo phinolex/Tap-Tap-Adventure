@@ -103,9 +103,16 @@ define(['jquery', '../../entity/animation', './sprites'], function($, Animation,
         },
 
         getHurtSprite: function() {
-            if (!this.isLoaded) this.load();
-            this.createHurtSprite();
-            return this.whiteSprite;
+            var self = this;
+
+            try {
+                if (!self.isLoaded)
+                    self.load();
+
+                self.createHurtSprite();
+
+                return self.whiteSprite;
+            } catch (e) {}
         },
         
         createSilhouette: function() {

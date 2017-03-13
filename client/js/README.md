@@ -11,7 +11,7 @@ Area information (decides that game should do X or Y in area Z)
 audio.js
 How the game handles audio
 
-bubble.js
+bubblemanager.js
 How speech bubbles are handled
 
 build.js

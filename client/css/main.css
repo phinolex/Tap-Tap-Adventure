@@ -674,6 +674,35 @@ footer div  {display:inline-block;}
         clear: left;
     }
 
+    #task {
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 15px;
+        left: 89%;
+        width: 210px;
+        margin-left: -105px;
+        padding: 6px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border-radius: 0 0 9px 9px;
+        pointer-events: none;
+    }
+
+    #task .details {
+        float: left;
+        width: inherit;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    #task .progress {
+        float: left;
+        width: inherit;
+        text-align: center;
+        margin-top: 15px;
+    }
+
 
     #iteminfo {
         display: none;
@@ -1255,8 +1284,34 @@ footer div  {display:inline-block;}
         clear: left;
     }
 
+    #task {
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 10px;
+        left: 89%;
+        width: 140px;
+        margin-left: -70px;
+        padding: 4px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border-radius: 0 0 6px 6px;
+        pointer-events: none;
+    }
 
+    #task .details {
+        float: left;
+        width: inherit;
+        text-align: center;
+        font-size: 12px;
+    }
 
+    #task .progress {
+        float: left;
+        width: inherit;
+        text-align: center;
+        margin-top: 10px;
+    }
 
     #iteminfo {
         display: none;
@@ -1892,6 +1947,35 @@ footer div  {display:inline-block;}
         clear: left;
     }
 
+
+    #task {
+        font-family:'GraphicPixel';
+        color:#e3e3e3;
+        position: absolute;
+        top: 5px;
+        left: 89%;
+        width: 70px;
+        margin-left: -35px;
+        padding: 2px;
+        background: rgba(45,45,45,0.8);
+        display: none;
+        border-radius: 0 0 3px 3px;
+        pointer-events: none;
+    }
+
+    #task .details {
+        float: left;
+        width: inherit;
+        text-align: center;
+        font-size: 6px;
+    }
+
+    #task .progress {
+        float: left;
+        width: inherit;
+        text-align: center;
+        margin-top: 5px;
+    }
 
 
     #iteminfo {

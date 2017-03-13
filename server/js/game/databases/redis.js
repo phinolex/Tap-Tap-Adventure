@@ -737,6 +737,10 @@ module.exports = DatabaseHandler = cls.Class.extend({
         client.hset("u:" + name, "quest" + questId + ":stage", stage);
     },
 
+    setQuestMiniTask: function(name, questId, taskName, stage) {
+        client.hset('u:' + name, 'quest' + taskName + ':stage', stage);
+    },
+
     getQuestStage: function(name, questId, callback) {
         var self = this,
             userKey = "u:" + name,

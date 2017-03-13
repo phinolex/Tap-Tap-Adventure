@@ -1,7 +1,7 @@
 
 /* global Types */
 
-define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'rendering/bubble'], function($, App, EntryPoint) {
+define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'rendering/bubble/bubblemanager'], function($, App, EntryPoint) {
     var app, game;
 
     var initApp = function() {

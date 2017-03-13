@@ -167,7 +167,10 @@ Types = {
         PLAYERSTATE: 149,
         GLOBALCHAT: 150,
         POINTER: 151,
-        BUTTON: 152
+        BUTTON: 152,
+        ATTACKLINK: 153,
+        TASK: 154,
+        TALKINDEX: 155
     },
 
     Interfaces: {

@@ -139,9 +139,8 @@ define(['../character', 'utils/exceptions', './mount'], function(Character, Exce
 
         getSpriteName: function() {
             if (!this.spriteName)
-            {
-                setSpriteName(null);
-            }
+                this.setSpriteName(null);
+
             return this.spriteName;
         },
         setSpriteName: function(name) {

@@ -10,25 +10,87 @@
                     "The interface."
                 ],
 
-                "1": ["Click the sketchy bag icon as the arrow indicates", "This is your inventory!"],
+                "1": ["Click the sketchy character icon as the arrow indicates."],
 
-                "2": ["Now click character menu!", "Here you can see information about your equipment and skills."],
+                "2": ["Perfect, you are picking up quite quickly. Now let's continue!"],
 
-                "3": ["Lastly, clicking the golden cup will reveal your achievements."],
+                "3": ["Now click on the bag to open the inventory!"],
 
-                "4": ["Perfect. You may proceed with the tutorial now! Farewell adventurer", "We may, or may not meet again."]
+                "4": ["", "Splendid. That is as much as I can teach you about the interface.",
+                    "Other instructors will cover different parts of the tutorial.",
+                    "After all, I'm not that smart."],
+
+                "12": ["Oh ummm.. I bet you weren't expecting to see me.", "So the archery instructor is sick, and I",
+                    "have to cover for him.", "It's definitely not the creator's fault for running", "out of NPC sprites and using",
+                    "me as a placeholder until he draws one.", "Anyway. Not exactly sure what I'm supposed to do but",
+                    "Here. Take this bow and shoot a three skeletons."],
+
+                "13": ["So whenever you're ready.. Equip the bow in your inventory",
+                        "and shoot those spooky skeletons."],
+
+                "14": ["Okay let's see. You still need to learn about potions..",
+                      "and enchantments.. and the banks..",
+                      "oh and bosses.. and other players..",
+                      "and quantum entanglement.. and neural networks",
+                      "and gradient descent.. and stochastic expansions..",
+                      "So I'll just teleport you to your next stage..."]
+            },
+
+            "244": {
+                "7": ["Oh, what do we have here.. A newbie -.-", "I suppose it is in the best of interest",
+                    "to teach you about swords.", "-sigh- Take this sword and equip it."],
+
+                "8": ["Equip the sword.."],
+
+                "9": ["Great, at least you are not incapable of listening.",
+                    "Your task is to kill 5 rats. Go now soldier."],
+
+                "10": ["What are you waiting for? Kill 5 rats!"],
+
+                "11": ["Well, I must admit, I am impressed.",
+                    "But I still could do better.", "Either way. I am going to teleport you to your next area.",
+                    "You still have a bit more to learn."]
             }
         },
         "pointers": {
             "0": [0, 14, 554],
-            "1": [3, 428, 206]
+            "1": [3, 428, 206],
+            "2": [0, 14, 554],
+            "3": [3, 280, 206],
+            "4": [0, 14, 554],
+            "5": [0, 15, 561],
+            "6": [0, 20, 25],
+            "7": [0, 36, 535],
+            "8": [3, 280, 206],
+            "9": [0, 36, 535],
+            "10": ["m"],
+            "11": [0, 36, 535],
+            "12": [0, 78, 40],
+            "13": ["a"],
+            "14": [0, 78, 40]
+        },
+
+        "doors": {
+            "5": [15, 560],
+            "6": [20, 24]
         },
 
         "task": {
             "0": "talk",
             "1": "click",
-            "2": "click",
-            "3": "click"
+            "2": "talk",
+            "3": "click",
+            "4": "talk",
+            "5": "door",
+            "6": "door",
+            "7": "talk",
+            "8": "60",
+            "9": "talk",
+            "10": "kill",
+            "11": "talk",
+            "12": "talk",
+            "13": "kill",
+            "14": "talk"
         }
     }
 }

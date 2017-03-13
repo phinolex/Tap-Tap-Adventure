@@ -679,55 +679,67 @@ module.exports = PacketHandler = cls.Class.extend({
     },
 
     handleAttack: function(message) {
+        message.shift();
         var self = this,
-            mob = self.server.getEntityById(message[1]);
+            entityId = message.shift(),
+            mob = self.server.getEntityById(entityId);
 
+        if (!self.player.finishedTutorial()) {
+
+            if (self.attack_callback)
+                self.attack_callback(entityId);
+
+            return;
+        }
+        
         if (mob) {
+            self.server.pushToPlayer(self.player, new Messages.AttackLink(entityId));
             self.player.setTarget(mob);
             self.server.broadcastAttacker(self.player);
         }
     },
 
     handleStoreBuy: function(message) {
-        var itemType = message[1],
-            itemKind = message[2],
-            itemCount = message[3],
-            itemName = null,
-            price = 0,
-            goldCount = 0,
-            inventoryNumber = -1,
-            buyCount = 0;
+        message.shift();
 
-        if(itemCount <= 0) {
+        var self = this,
+            itemType = message.shift(),
+            itemKind = message.shift(),
+            itemCount = message.shift(),
+            itemName = null, price = 0,
+            goldCount = 0;
+
+        if (itemCount <= 0)
             return;
-        }
-        if(itemKind) {
+
+        if (itemKind)
             itemName = ItemTypes.getKindAsString(itemKind);
-        }
-        if(itemName) {
+
+        if (itemName) {
             price = ItemTypes.getBuyPrice(itemName);
-            if(price > 0) {
-                if(ItemTypes.Store.isBuyMultiple(itemName)) {
-                    price = price * itemCount;
-                } else {
-                    itemCount = 1;
-                }
-                goldCount = this.player.inventory.getItemNumber(400);
 
+            var buyMultiple = ItemTypes.Store.isBuyMultiple(itemName);
 
-                if(goldCount < price) {
-                    this.server.pushToPlayer(this.player, new Messages.Notify("You don't have enough Gold."));
-                    return;
-                }
+            if (buyMultiple)
+                price *= itemCount;
+            else
+                itemCount = 1;
 
-                if(this.player.inventory.hasEmptyInventory()) {
-                    this.player.inventory.putInventory(itemKind, ItemTypes.Store.getBuyCount(itemName) * itemCount);
-                    this.player.inventory.putInventory(400, -1 * price);
-                    this.server.pushToPlayer(this.player, new Messages.Notify("buy"));
-                } else {
-                    this.server.pushToPlayer(this.player, new Messages.Notify("There is not enough space in your inventory."));
-                }
+            goldCount = self.player.inventory.getItemNumber(400);
+
+            if (goldCount < price) {
+                self.server.pushToPlayer(self.player, new Messages.Notify('You do not have enough gold!'));
+                return;
             }
+
+            if (self.player.inventory.hasEmptyInventory()) {
+
+                self.player.inventory.putInventory(itemKind, ItemTypes.Store.getBuyCount(itemName) * itemCount);
+                self.player.inventory.putInventory(400, -1 * price);
+                self.server.pushToPlayer(self.player, new Messages.Notify('buy'));
+
+            } else
+                self.server.pushToPlayer(self.player, new Messages.Notify('You do not have enough space in your inventory.'));
         }
     },
 
@@ -919,6 +931,13 @@ module.exports = PacketHandler = cls.Class.extend({
             toX = message[3],
             toY = message[4],
             orientation = message[5];
+        
+        if (!self.player.finishedTutorial()) {
+            if (self.doorRequest_callback)
+                self.doorRequest_callback(doorX, doorY, toX, toY, orientation);
+
+            return;
+        }
 
         self.server.pushToPlayer(self.player, new Messages.Stop(toX, toY, orientation));
     },
@@ -1021,6 +1040,8 @@ module.exports = PacketHandler = cls.Class.extend({
                     self.player.skillAttack = 1;
                 }
 
+                var mobs;
+
                 if (self.player.skillAoe > 0) {
                     mobs = self.server.getTargetsAround(mob, self.player.skillAoe);
                     self.player.skillAoe = 0;
@@ -1036,17 +1057,21 @@ module.exports = PacketHandler = cls.Class.extend({
                             mob.server.handleHurtEntity(mob, self.player, damage);
                             if (mob.hitPoints <= 0) {
                                 mob.isDead = true;
-
                                 if (entity == self.player)
-                                    self.server.pushBroadcast(new Messages.Chat(entity, "/1 " + entity.name + " has just slain: " + mob.name + " in battle!"))
+                                    self.server.pushBroadcast(new Messages.GlobalChat(mob.name + ' has been slain by: ' + self.player.name, false));
                             }
 
                             self.server.broadcastAttacker(entity);
                         } else {
                             mob.receiveDamage(damage, entity.id);
 
-                            if (mob.hitPoints <= 0)
+                            if (mob.hitPoints <= 0) {
+
+                                if (self.killMob_callback)
+                                    self.killMob_callback(mob);
+
                                 self.player.achievementAboutKill(mob);
+                            }
 
                             self.server.handleMobHate(mob.id, entity.id, damage);
                             self.server.handleHurtEntity(mob, self.player, damage);
@@ -1605,6 +1630,18 @@ module.exports = PacketHandler = cls.Class.extend({
 
     onButtonClick: function(callback) {
         this.button_callback = callback;
+    },
+
+    onDoorRequest: function(callback) {
+        this.doorRequest_callback = callback;
+    },
+
+    onAttack: function(callback) {
+        this.attack_callback = callback;
+    },
+
+    onKillMob: function(callback) {
+        this.killMob_callback = callback;
     },
 
     send: function(message) {

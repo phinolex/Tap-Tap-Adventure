@@ -225,6 +225,33 @@ module.exports = CommandHandler = cls.Class.extend({
 
                 return;
 
+            case 'createchest':
+                inputBlocks.shift();
+
+                /**
+                 * Spawn the chest only in the current player's
+                 * instance rather than globally indicate
+                 * to others..
+                 */
+
+                var x = parseInt(inputBlocks.shift()),
+                    y = parseInt(inputBlocks.shift()),
+                    content = inputBlocks.shift(); //Just have one item;
+
+                var contents = [content];
+
+                if (x && y && content) {
+
+                    var chestEntity = self.server.createChest(x, y, contents);
+
+                    self.server.pushToPlayer(self.player, new Messages.Spawn(chestEntity));
+
+                } else
+                    self.packetHandler.sendGUIMessage('Malformed command, syntax: x, y, content');
+
+
+                return;
+
             case 'pointer':
                 inputBlocks.shift();
 
@@ -300,6 +327,12 @@ module.exports = CommandHandler = cls.Class.extend({
                         break;
                 }
 
+                return;
+            
+            case 'task':
+                
+                self.server.pushToPlayer(self.player, new Messages.Task("lorem ipsum", 5, 10));
+                
                 return;
 
             case 'randommob':
