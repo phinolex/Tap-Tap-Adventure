@@ -12,7 +12,7 @@ Since BrowserQuest, we have improved tons of things, rewriting the backend nearl
 * Skills and Abilities
 * Inventory System
 * Changes towards the UI
-* Questing Handler (allowing full control over a quest)
+* Questing Handler (gives quests malleability)
 * Minigame Handler (anyone can create minigames)
 * Party System -> (To be transformed into guilds)
 * Levelling sytem
@@ -23,17 +23,15 @@ Since BrowserQuest, we have improved tons of things, rewriting the backend nearl
 * Banking, Enchanting, Shop, Crafting Systems
 * Projectiles
 * Archery Class
+* Tutorial
 
 Though those changes give the game a greater purpose, there is much to be done, the following are examples:
 
 * Improve the rendering to offer maximum performance on all devices
-* Create a storyline for the game to follow 
-* Smoothen out the interfaces to properly fit the game
+* Create a storyline for the game to follow -- In Progress
 * Add various activities (cutting wood, making fire, fishing, etc.)
-* Proper interfaces for Achievements and Quests
+* Get a interface for Quests
 * Re-arrange the map to fit in more content
-* Add tutorials for new players
-* Change or completely redo the interface
 * Trading System amongst players
 * Create a form of economy through the shops (player sells, player buys)
 * Ranking system to players (promoting PVP)
