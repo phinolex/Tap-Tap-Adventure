@@ -986,7 +986,9 @@ module.exports = World = cls.Class.extend({
                 else if (entity.getTeam() == Types.Messages.BLUETEAM)
                     self.getMinigameHandler().getPVPMinigame().blueScore += 1;
 
-                attacker.addPVPKill();
+                if (attacker.type === 'player')
+                    attacker.addPVPKill();
+
                 entity.addPVPDeath();
 
                 self.handlePlayerVanish(entity);

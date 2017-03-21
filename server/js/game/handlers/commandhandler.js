@@ -169,7 +169,13 @@ module.exports = CommandHandler = cls.Class.extend({
                     return;
                 }
                 
-                self.player.inventory.putInventory(parseInt(itemId), parseInt(itemCount));
+                self.player.inventory.add(parseInt(itemId), parseInt(itemCount));
+                return;
+
+            case 'empty':
+
+                self.player.inventory.clearInventory();
+
                 return;
 
             case 'spawn':
@@ -182,7 +188,7 @@ module.exports = CommandHandler = cls.Class.extend({
                 if (itemCount && itemName) {
                     var item = ItemTypes.getKindFromString(itemName.toLowerCase());
                     if (item)
-                        self.player.inventory.putInventory(item, itemCount);
+                        self.player.inventory.add(item, itemCount);
                     else
                         self.packetHandler.sendGUIMessage("Item: " + itemName + " could not be found in the database.");
                 } else

@@ -6,7 +6,6 @@ var cls = require("./../lib/class"),
     bcrypt = require("bcrypt"),
     ItemTypes = require("../../../../shared/js/itemtypes"),
     Achievements = require('./../utils/data/achievementdata'),
-    inventory = require("./../entity/character/player/inventory/inventory"),
     Utils = require('./../utils/utils');
 
 module.exports = DatabaseHandler = cls.Class.extend({
@@ -67,61 +66,53 @@ module.exports = DatabaseHandler = cls.Class.extend({
                         .hget(userKey, "mana")
 
 
-                        //.get(userKey, "userGuild")
-                        /*
-                         * Add a .hget here to select the guild the player is in, use
-                         * the other ones above similarily.
-                         * .hget(userKey, "guild")
-                         *
-                         */
-
                         .exec(function(err, replies){
 
                             var db_player = {
-                                "pw":replies[0],
-                                "armor": replies[1],
-                                "weapon": replies[2],
-                                "exp": Utils.NaN2Zero(replies[3]),
-                                "bannedTime": Utils.NaN2Zero(replies[4]),
-                                "banUseTime": Utils.NaN2Zero(replies[5]),
-                                "lastLoginTime": Utils.NaN2Zero(replies[6]),
-                                "x": Utils.NaN2Zero(replies[7]),
-                                "y": Utils.NaN2Zero(replies[8]),
-                                "chatBanEndTime": Utils.NaN2Zero(replies[9]),
-                                "banTime": replies[10],
-                                "rank": isNaN(parseInt(replies[11])) ? 0 : parseInt(replies[11]),
-                                "armorEnchantedPoint": Utils.NaN2Zero(replies[12]),
-                                "armorSkillKind": Utils.NaN2Zero(replies[13]),
-                                "armorSkillLevel": Utils.NaN2Zero(replies[14]),
-                                "weaponEnchantedPoint": Utils.NaN2Zero(replies[15]),
-                                "weaponSkillKind": Utils.NaN2Zero(replies[16]),
-                                "weaponSkillLevel": Utils.NaN2Zero(replies[17]),
-                                "pendant": replies[18],
-                                "pendantEnchantedPoint": Utils.NaN2Zero(replies[19]),
-                                "pendantSkillKind": Utils.NaN2Zero(replies[20]),
-                                "pendantSkillLevel": Utils.NaN2Zero(replies[21]),
-                                "ring": replies[22],
-                                "ringEnchantedPoint": Utils.NaN2Zero(replies[23]),
-                                "ringSkillKind": Utils.NaN2Zero(replies[24]),
-                                "ringSkillLevel": Utils.NaN2Zero(replies[25]),
-                                "boots": replies[26],
-                                "bootsEnchantedPoint": Utils.NaN2Zero(replies[27]),
-                                "bootsSkillKind": Utils.NaN2Zero(replies[28]),
-                                "bootsSkillLevel": Utils.NaN2Zero(replies[29]),
-                                "membership": Utils.NaN2Zero(replies[30]),
-                                "membershipTime": replies[31],
-                                "membershipUseTime": replies[32],
-                                "membershipLoginTime": replies[33],
-                                "membershipRemainingTime": replies[34],
-                                "kind": Utils.NaN2Zero(replies[35]) === 222 ? 222 : 1,
-                                "rights": Utils.NaN2Zero(replies[36]),
-                                "pClass": Utils.NaN2Zero(replies[37]),
-                                "poisoned": replies[38],
-                                "hitpoints": Utils.NaN2Zero(replies[39]),
-                                "mana": Utils.NaN2Zero(replies[40]),
-                                "ttacoins": Utils.NaN2Zero(replies[41]),
-                                "pvpKills": Utils.NaN2Zero(replies[42]),
-                                "pvpDeaths": Utils.NaN2Zero(replies[43])
+                                "pw": replies.shift(),
+                                "armor": replies.shift(),
+                                "weapon": replies.shift(),
+                                "exp": Utils.NaN2Zero(replies.shift()),
+                                "bannedTime": Utils.NaN2Zero(replies.shift()),
+                                "banUseTime": Utils.NaN2Zero(replies.shift()),
+                                "lastLoginTime": Utils.NaN2Zero(replies.shift()),
+                                "x": Utils.NaN2Zero(replies.shift()),
+                                "y": Utils.NaN2Zero(replies.shift()),
+                                "chatBanEndTime": Utils.NaN2Zero(replies.shift()),
+                                "banTime": replies.shift(),
+                                "rank": parseInt(replies.shift()),
+                                "armorEnchantedPoint": Utils.NaN2Zero(replies.shift()),
+                                "armorSkillKind": Utils.NaN2Zero(replies.shift()),
+                                "armorSkillLevel": Utils.NaN2Zero(replies.shift()),
+                                "weaponEnchantedPoint": Utils.NaN2Zero(replies.shift()),
+                                "weaponSkillKind": Utils.NaN2Zero(replies.shift()),
+                                "weaponSkillLevel": Utils.NaN2Zero(replies.shift()),
+                                "pendant": replies.shift(),
+                                "pendantEnchantedPoint": Utils.NaN2Zero(replies.shift()),
+                                "pendantSkillKind": Utils.NaN2Zero(replies.shift()),
+                                "pendantSkillLevel": Utils.NaN2Zero(replies.shift()),
+                                "ring": replies.shift(),
+                                "ringEnchantedPoint": Utils.NaN2Zero(replies.shift()),
+                                "ringSkillKind": Utils.NaN2Zero(replies.shift()),
+                                "ringSkillLevel": Utils.NaN2Zero(replies.shift()),
+                                "boots": replies.shift(),
+                                "bootsEnchantedPoint": Utils.NaN2Zero(replies.shift()),
+                                "bootsSkillKind": Utils.NaN2Zero(replies.shift()),
+                                "bootsSkillLevel": Utils.NaN2Zero(replies.shift()),
+                                "membership": Utils.NaN2Zero(replies.shift()),
+                                "membershipTime": replies.shift(),
+                                "membershipUseTime": replies.shift(),
+                                "membershipLoginTime": replies.shift(),
+                                "membershipRemainingTime": replies.shift(),
+                                "kind": Utils.NaN2Zero(replies.shift()) === 222 ? 222 : 1,
+                                "rights": Utils.NaN2Zero(replies.shift()),
+                                "pClass": Utils.NaN2Zero(replies.shift()),
+                                "poisoned": replies.shift(),
+                                "hitpoints": Utils.NaN2Zero(replies.shift()),
+                                "mana": Utils.NaN2Zero(replies.shift()),
+                                "ttacoins": Utils.NaN2Zero(replies.shift()),
+                                "pvpKills": Utils.NaN2Zero(replies.shift()),
+                                "pvpDeaths": Utils.NaN2Zero(replies.shift())
                             };
 
 
@@ -298,6 +289,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                             0);
 
                         player.pClass = Types.PlayerClass.FIGHTER;
+                        player.new = true;
 
                         player.updateHitPoints();
                     });
@@ -628,33 +620,18 @@ module.exports = DatabaseHandler = cls.Class.extend({
 
 
     setInventoryItem: function(player, inventoryNumber, item) {
-        this.setInventory(player, inventoryNumber, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
+        this.setInventory(player, inventoryNumber, item.kind, item.count, item.skillKind, item.skillLevel);
     },
 
     setInventory: function(player, inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
-        /*log.info("SetInventory: " + player.name + ", "
-         + ItemTypes.getKindAsString(itemKind) + ", "
-         + inventoryNumber + ", "
-         + itemNumber + ", "
-         + itemSkillKind + ", "
-         + itemSkillLevel);*/
         if(itemKind){
             client.hset("u:" + player.name, "inventory" + inventoryNumber, ItemTypes.getKindAsString(itemKind));
             client.hset("u:" + player.name, "inventory" + inventoryNumber + ":number", itemNumber);
             client.hset("u:" + player.name, "inventory" + inventoryNumber + ":skillKind", itemSkillKind);
             client.hset("u:" + player.name, "inventory" + inventoryNumber + ":skillLevel", itemSkillLevel);
             player.server.pushToPlayer(player, new Messages.Inventory(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel));
-        } else{
+        } else
             this.makeEmptyInventory(player, inventoryNumber);
-        }
-
-        /*var i=0;
-         for(i=0; i < player.maxInventoryNumber; i++){
-         log.info("Inventory " + i + ": " + player.inventory.rooms[i].itemKind
-         + " " + player.inventory.rooms[i].itemNumber
-         + " " + player.inventory.rooms[i].itemSkillKind
-         + " " + player.inventory.rooms[i].itemSkillLevel);
-         }*/
     },
     makeEmptyInventory: function(player, number){
         client.hdel("u:" + player.name, "inventory" + number);

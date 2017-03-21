@@ -28,27 +28,32 @@ define(['../../../tabpage', '../../../../entity/item/item'], function(TabPage, I
                 if (self.game.ready && self.game.player.weaponName) {
                     self.game.unequip(1);
                     self.setItemWeapon('undefined');
+                    self.game.player.weaponName = null;
+                    self.load(true);
                 }
             });
 
             self.itemArmor.click(function(event) {
                 if (self.game.ready && self.game.player.spriteName != 'clotharmor') {
                     self.game.unequip(2);
-                    self.setItemArmor('clotharmor')
+                    self.game.player.armorName = 'clotharmor';
+                    self.setItemArmor('clotharmor');
                 }
             });
 
             self.itemPendant.click(function(event) {
                 if (self.game.ready && self.game.player.pendant) {
+                    self.game.unequip(3);
+                    self.game.player.pendant = null;
                     self.setItemPendant('undefined');
-                    self.load();
                 }
             });
 
             self.itemRing.click(function(event) {
                 if (self.game.ready && self.game.player.ring) {
+                    self.game.unequip(4);
+                    self.game.player.ring = null;
                     self.setItemRing('undefined');
-                    self.load();
                 }
             });
         },
@@ -57,18 +62,20 @@ define(['../../../tabpage', '../../../../entity/item/item'], function(TabPage, I
          * Here we load the initial batch of data.
          */
 
-        load: function(doesClose) {
+        load: function(bypassClose) {
             var self = this;
 
             self.player = self.game.player;
-
-            self.closeDialogs();
             self.updateScale();
 
-            self.setItemWeapon(self.player.weaponName ? self.player.weaponName : 'undefined');
-            self.setItemArmor(self.player.spriteName);
-            self.setItemPendant(self.player.pendant ? self.player.pendant : 'undefined');
-            self.setItemRing(self.player.ring ? self.player.ring : 'undefined');
+            if (!bypassClose) {
+                self.closeDialogs();
+                self.setItemWeapon(self.player.weaponName ? self.player.weaponName : 'undefined');
+                self.setItemArmor(self.player.spriteName);
+                self.setItemPendant(self.player.pendant ? self.player.pendant : 'undefined');
+                self.setItemRing(self.player.ring ? self.player.ring : 'undefined');
+            }
+
             self.setPlayerInfo();
 
             //We need sprites....
@@ -82,9 +89,7 @@ define(['../../../tabpage', '../../../../entity/item/item'], function(TabPage, I
                 maxWidth = Math.max(weaponWidth, armorWidth),
                 maxHeight = Math.max(weaponHeight, armorHeight);
 
-
             self.setCharacterLook(maxWidth, maxHeight, armorWidth, armorHeight, weaponWidth, weaponHeight);
-
         },
 
         setPlayerInfo: function() {

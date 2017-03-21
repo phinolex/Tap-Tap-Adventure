@@ -1297,11 +1297,6 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                             self.initAnimatedTiles();
                     });
 
-
-                    self.player.onArmorLoot(function(armorName) {
-                        self.player.switchArmor(armorName, self.sprites[armorName]);
-                    });
-
                     self.client.onSpawnItem(function(item, x, y) {
                         log.info("Spawned " + ItemTypes.getKindAsString(item.kind) + " (" + item.id + ") at "+x+", "+y);
                         self.addItem(item, x, y);
@@ -1960,8 +1955,6 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                                 if(self.player.id === player.id)
                                     self.audioManager.playSound("firefox");
 
-                            } else if(ItemTypes.isConsumableItem(itemKind)){
-                                player.setConsumable(itemKind);
                             }
                         }
                     });
@@ -2079,23 +2072,22 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                         self.achievementHandler.handleAchievement(data);
                     });
                     self.client.onInventory(function(inventoryNumber, itemKind, itemNumber, itemSkillKind, itemSkillLevel){
-                        //self.shopHandler.initSellInventory();
-                        //alert("onInventory - inventoryNumber="+inventoryNumber+",itemKind="+itemKind);
-                        if(itemKind){
-                            self.inventoryHandler.setInventory(itemKind, inventoryNumber, itemNumber, itemSkillKind, itemSkillLevel, this.scale);
-                        } else if(itemKind === null){
+                        if (itemKind)
+                            self.inventoryHandler.setInventory(itemKind, inventoryNumber, itemNumber, itemSkillKind, itemSkillLevel, self.scale);
+                        else
                             self.inventoryHandler.makeEmptyInventory(inventoryNumber);
-                        }
+
                         if (self.bankDialog.visible)
                             self.bankDialog.inventoryFrame.open();
                     });
                     self.client.onTalkToNPC(function(npcId, messages) {
                         var npc = self.getEntityById(npcId);
 
-                        if (messages.length == 1)
-                            npc.talkIndex = 0;
-
                         if (npc && messages) {
+
+                            if (messages.length == 1)
+                                npc.talkIndex = 0;
+
                             self.previousClickPosition = {};
 
                             var message = npc.talk(messages);
@@ -2193,36 +2185,54 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                         }
                     });
 
-                    self.client.onSkill(function(message){
-                        var msgType = message[0];
-                        var id = message[1];
-                        var skillLevel = message[2];
-                        var entity = self.getEntityById(id);
-                        if(entity){
-                            if(msgType === "critical"){
-                                entity.isCritical = true;
-                            } else if(msgType === "heal"){
-                                entity.isHeal = true;
-                            } else if(msgType === "flareDance"){
-                                entity.isFlareDance = true;
-                            } else if(msgType === "flareDanceOff"){
-                                entity.isFlareDance = false;
-                            } else if(msgType === "stun"){
-                                entity.stun(skillLevel);
-                            } else if(msgType === "superCat"){
-                                entity.isSuperCat = true;
-                                if(skillLevel === 1){
-                                    entity.moveSpeed -= 30;
-                                } else if(skillLevel === 2){
-                                    entity.moveSpeed -= 40;
-                                }
-                            } else if(msgType === "superCatOff"){
-                                entity.isSuperCat = false;
-                                entity.moveSpeed = 120;
-                            } else if(msgType === "provocation"){
-                                entity.provocation(skillLevel);
+                    self.client.onSkill(function(message) {
+                        var messageType = message.shift(),
+                            id = message.shift(),
+                            skillLevel = message.shift(),
+                            entity = self.getEntityById(id);
+
+                        if (entity) {
+                            switch (messageType) {
+
+                                case 'critical':
+                                    entity.isCritical = true;
+                                    break;
+
+                                case 'heal':
+                                    entity.isHeal = true;
+                                    break;
+
+                                case 'flareDance':
+                                    entity.isFlareDance = true;
+                                    break;
+
+                                case 'flareDanceOff':
+                                    entity.isFlareDance = false;
+                                    break;
+
+                                case 'stun':
+                                    entity.stun(skillLevel);
+                                    break;
+
+                                case 'superCat':
+                                    entity.isSuperCat = true;
+                                    entity.moveSpeed -= skillLevel == 1 ? 30 : 40;
+
+                                    break;
+
+                                case 'superCatOff':
+
+                                    entity.isSuperCat = false;
+                                    entity.moveSpeed = 120;
+
+                                    break;
+
+                                case 'provocation':
+                                    entity.provocation(skillLevel);
+                                    break;
                             }
                         }
+
                     });
 
                     self.client.onSkillInstall(function(datas) {
@@ -2414,6 +2424,9 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
              *
              */
             makePlayerAttack: function(mob) {
+
+                log.info('Mob Id: ' + mob.id);
+
                 this.client.sendAttack(mob);
             },
 

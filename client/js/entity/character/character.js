@@ -426,9 +426,6 @@ define(['../entity', '../../rendering/transition', '../../utils/timer', '../../d
             
             this.attackingMode = true;
             this.setTarget(character);
-            var engagingPC = false;
-            if (this.kind === 1 && character.kind === 1)
-                engagingPC = true;
 
             this.follow(character, true, attacker, isAttackerPlayer);
         },

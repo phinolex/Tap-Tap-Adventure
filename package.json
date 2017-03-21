@@ -1,6 +1,6 @@
 {
   "name": "TTA",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
     "bcrypt": "*",
@@ -17,7 +17,7 @@
     "morgan": "^1.5.0",
     "mysql": "*",
     "ng-annotate": "*",
-    "redis": ">=0",
+    "redis": "*",
     "request": "*",
     "requirejs": ">=2",
     "sanitizer": "~0.1.2",

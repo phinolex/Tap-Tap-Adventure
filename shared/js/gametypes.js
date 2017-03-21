@@ -279,6 +279,13 @@ Types = {
         Entity: 1,
         Clear: 2,
         Static: 3
+    },
+
+    Unequip: {
+        Weapon: -1,
+        Armor: -2,
+        Pendant: -3,
+        Ring: -4
     }
 };
 

@@ -15,7 +15,8 @@ var _ = require("underscore"),
     Achievements = require('./../../../utils/data/achievementdata'),
     request = require("request"),
     PacketHandler = require("./../../../handlers/packethandler"),
-    QuestHandler = require('../../../handlers/questhandler');
+    QuestHandler = require('../../../handlers/questhandler'),
+    Timer = require('../../../utils/timer');
 
 module.exports = Player = Character.extend({
     init: function (connection, worldServer, databaseHandler) {
@@ -74,7 +75,9 @@ module.exports = Player = Character.extend({
         self.pClass = 0;
         self.minigameTeam = -1;
         self.talkingAllowed = true;
+        self.new = false;
         self.ready = false;
+        
         self.packetHandler = new PacketHandler(self, connection, worldServer, databaseHandler);
     },
 
@@ -82,11 +85,12 @@ module.exports = Player = Character.extend({
         var self = this;
 
         self.ready = true;
+
         setTimeout(function() {
 
             self.questHandler = new QuestHandler(self);
 
-        }, 100)
+        }, self.new ? 1000 : 100)
     },
 
     destroy: function () {
@@ -224,33 +228,30 @@ module.exports = Player = Character.extend({
             }
         }
     },
-    unequipItem: function (itemKind) {
-        if (itemKind) {
-            log.debug(this.name + " unequips " + ItemTypes.getKindAsString(itemKind));
+    unequipItem: function (kind) {
+        var self = this;
 
-            if (ItemTypes.isArmor(itemKind) || ItemTypes.isArcherArmor(itemKind)) {
-                databaseHandler.equipArmor(this.name, '', 0, 0, 0);
-                this.equipArmor(0, 0, 0, 0);
-            } else if (ItemTypes.isWeapon(itemKind) || ItemTypes.isArcherWeapon(itemKind)) {
-                databaseHandler.equipWeapon(this.name, '', 0, 0, 0);
-                this.equipWeapon(0, 0, 0, 0);
-            } else if (ItemTypes.isPendant(itemKind)) {
-                databaseHandler.equipPendant(this.name, '', 0, 0, 0);
-                this.equipPendant(0, 0, 0, 0);
-            } else if (ItemTypes.isRing(itemKind)) {
-                databaseHandler.equipRing(this.name, '', 0, 0, 0);
-                this.equipRing(0, 0, 0, 0);
-            }
+        if (!kind)
+            return;
+
+        if (ItemTypes.isEitherWeapon(kind)) {
+            databaseHandler.equipWeapon(self.name, '', 0, 0, 0);
+            self.equipWeapon(0, 0, 0, 0);
+        } else if (ItemTypes.isEitherWeapon(kind)) {
+            databaseHandler.equipArmor(self.name, '', 0, 0, 0);
+            self.equipArmor(0, 0, 0, 0);
+        } else if (ItemTypes.isPendant(kind)) {
+            databaseHandler.equipPendant(self.name, '', 0, 0, 0);
+            self.equipPendant(0, 0, 0, 0);
+        } else if (ItemTypes.isRing(kind)) {
+            databaseHandler.equipRing(self.name, '', 0, 0, 0);
+            self.equipRing(0, 0, 0, 0);
         }
     },
 
     updateHitPoints: function () {
         this.resetHitPoints(this.getHp());
         this.resetMana(this.getMp());
-    },
-
-    refreshMaxHitpoints: function () {
-
     },
 
     updatePosition: function () {
@@ -305,7 +306,7 @@ module.exports = Player = Character.extend({
     },
 
     achievementAboutItem: function (npcKind, achievementNumber, itemKind, itemCount, callback) {
-        var achievementData = Achievements.AchievementData[achievementNumber],
+        /*var achievementData = Achievements.AchievementData[achievementNumber],
             achievement = this.achievement[achievementNumber];
 
         if (achievement.found && achievement.progress !== 999) {
@@ -322,7 +323,7 @@ module.exports = Player = Character.extend({
                 this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, achievementNumber, true));
             } else
                 this.server.pushToPlayer(this, new Messages.TalkToNPC(npcKind, achievementNumber, false));
-        }
+        }*/
 
     },
 
@@ -474,8 +475,11 @@ module.exports = Player = Character.extend({
 
         databaseHandler.getBankItems(self, function (maxBankNumber, bankKinds, bankNumbers, bankSkillKinds, bankSkillLevels) {
             self.bank = new Bank(self, maxBankNumber, bankKinds, bankNumbers, bankSkillKinds, bankSkillLevels);
+
             databaseHandler.getAllInventory(self, function (maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels) {
                 self.inventory = new Inventory(self, maxInventoryNumber, itemKinds, itemNumbers, itemSkillKinds, itemSkillLevels);
+                
+                
                 databaseHandler.loadAchievement(self, function () {
                     var i = 0;
                     var sendMessage = [
@@ -500,12 +504,15 @@ module.exports = Player = Character.extend({
                         self.boots
                     ];
 
-                    sendMessage.push(self.inventory.number);
-                    for (i = 0; i < self.inventory.number; i++) {
-                        sendMessage.push(self.inventory.rooms[i].itemKind);
-                        sendMessage.push(self.inventory.rooms[i].itemNumber);
-                        sendMessage.push(self.inventory.rooms[i].itemSkillKind);
-                        sendMessage.push(self.inventory.rooms[i].itemSkillLevel);
+                    sendMessage.push(self.inventory.size);
+
+                    for (i = 0; i < self.inventory.size; i++) {
+                        var item = self.inventory.slots[i];
+
+                        sendMessage.push(item.kind);
+                        sendMessage.push(item.count);
+                        sendMessage.push(item.skillKind);
+                        sendMessage.push(item.skillLevel);
                     }
 
                     sendMessage.push(self.bank.number);
@@ -552,7 +559,6 @@ module.exports = Player = Character.extend({
             this.server.pushToPlayer(this, new Messages.GuiNotify("You need to be at least level " + armourLevel * 2 + " to equip this."));
             return false;
         }
-
 
         return true;
     },
@@ -614,45 +620,80 @@ module.exports = Player = Character.extend({
         return true;
     },
 
+   //TODO: convert all unequip functions into a single one.
+
     handleInventoryWeaponUnequip: function () {
-        if (this.inventory.putInventory(this.weapon, this.weaponEnchantedPoint, this.weaponSkillKind, this.weaponSkillLevel)) {
-            this.unequipItem(this.weapon);
-            this.packetHandler.broadcast(this.equip(-1), false);
-            return true;
+        var self = this;
+
+        log.info('Unequipping???');
+
+        if (!self.inventory.hasSpace()) {
+            self.packetHandler.sendGUIMessage('You do not have any space in your inventory.');
+            return false;
         }
-        return false;
+
+        self.inventory.add(self.weapon, self.weaponEnchantedPoint, self.weaponSkillKind, self.weaponSkillLevel);
+        self.unequipItem(self.weapon);
+
+
+        self.packetHandler.broadcast(self.equip(-1), false);
+
+        return true;
     },
 
     handleInventoryArmorUnequip: function () {
-        if (this.inventory.putInventory(this.armor, this.armorEnchantedPoint, this.armorSkillKind, this.armorSkillLevel)) {
-            this.unequipItem(this.armor);
-            this.packetHandler.broadcast(this.equip(-2), false);
-            return true;
+        var self = this;
+
+        if (!self.inventory.hasSpace()) {
+            self.packetHandler.sendGUIMessage('You do not have any space in your inventory.');
+            return false;
         }
-        return false;
+
+        self.inventory.add(self.armor, self.armorEnchantedPoint, self.armorSkillKind, self.armorSkillLevel);
+        self.unequipItem(self.armor);
+
+        self.packetHandler.broadcast(self.equip(-2), false);
+
+        return true;
     },
 
     handleInventoryPendantUnequip: function () {
-        if (this.inventory.putInventory(this.pendant, this.pendantEnchantedPoint, this.pendantSkillKind, this.pendantSkillLevel)) {
-            this.unequipItem(this.pendant);
-            this.packetHandler.broadcast(this.equip(-3), false);
-            return true;
+        var self = this;
+
+        if (!self.inventory.hasSpace()) {
+            self.packetHandler.sendGUIMessage('You do not have any space in your inventory.');
+            return false;
         }
-        return false;
+
+        self.inventory.add(self.pendant, self.pendantEnchantedPoint, self.pendantSkillKind, self.pendantSkillLevel);
+        self.unequipItem(self.pendant);
+
+        self.packetHandler(self.equip(-3), false);
+
+        return true;
     },
 
     handleInventoryRingUnequip: function () {
-        if (this.inventory.putInventory(this.ring, this.ringEnchantedPoint, this.ringSkillKind, this.ringSkillLevel)) {
-            this.unequipItem(this.ring);
-            this.packetHandler.broadcast(this.equip(-4), false);
-            return true;
+        var self = this;
+
+        if (!self.inventory.hasSpace()) {
+            self.packetHandler.sendGUIMessage('You do not have any space in your inventory.');
+            return false;
         }
-        return false;
+
+        self.inventory.add(self.ring, self.ringEnchantedPoint, self.ringSkillKind, self.ringSkillLevel);
+        self.unequipItem(self.ring);
+
+        self.packetHandler.broadcast(self.equip(-4), false);
+
+        return true;
     },
 
     handleInventoryWeapon: function (itemKind, inventoryNumber) {
         var self = this;
-        
+
+        log.info('Weapon: ' + inventoryNumber);
+
         if (inventoryNumber == -1) {
             self.handleInventoryWeaponUnequip();
             return;
@@ -661,11 +702,11 @@ module.exports = Player = Character.extend({
         if (!self.canEquipWeapon(itemKind))
             return;
 
-        var enchantedPoints = self.inventory.rooms[inventoryNumber].itemNumber,
-            skillKind = self.inventory.rooms[inventoryNumber].itemSkillKind,
-            skillLevel = self.inventory.rooms[inventoryNumber].itemSkillLevel;
+        var enchantedPoints = self.inventory.slots[inventoryNumber].count,
+            skillKind = self.inventory.slots[inventoryNumber].skillKind,
+            skillLevel = self.inventory.slots[inventoryNumber].skillLevel;
 
-        self.inventory.setInventory(inventoryNumber, self.weapon, self.weaponEnchantedPoint, self.weaponSkillKind, self.weaponSkillLevel);
+        self.inventory.empty(inventoryNumber);
 
         self.equipItem(itemKind, enchantedPoints, skillKind, skillLevel, false);
         
@@ -755,110 +796,175 @@ module.exports = Player = Character.extend({
         this.packetHandler.broadcast(this.equip(itemKind), false);
     },
 
-    handleInventoryEmpty: function (itemKind, inventoryNumber, count) {
+    handleInventoryEmpty: function (kind, index, count) {
         var self = this,
-            item = self.server.addItemFromChest(itemKind, self.x, self.y);
+            item = self.server.addItemFromChest(kind, self.x, self.y),
+            inventoryItem = self.inventory.slots[index];
+
 
         if (ItemTypes.isConsumableItem(item.kind) || ItemTypes.isGold(item.kind)) {
-            if (count > self.inventory.rooms[inventoryNumber].itemNumber)
-                count = self.inventory.rooms[inventoryNumber].itemNumber;
+
+            if (count > inventoryItem.count)
+                count = inventoryItem.count;
             else if (count < 0)
                 count = 0;
 
             item.count = count;
-        } else if (ItemTypes.isWeapon(item.kind) || ItemTypes.isArcherWeapon(item.kind) ||
-            ItemTypes.isArmor(item.kind) || ItemTypes.isArcherArmor(item.kind)) {
 
-            if (inventoryNumber > 0) {
-                item.count = this.inventory.rooms[inventoryNumber].itemNumber;
-                item.skillKind = this.inventory.rooms[inventoryNumber].itemSkillKind;
-                item.skillLevel = this.inventory.rooms[inventoryNumber].itemSkillLevel;
-            }
-            else if (inventoryNumber == -1) {
-                item.count = this.weaponEnchantedPoint;
-                item.skillKind = this.weaponSkillKind;
-                item.skillLevel = this.weaponSkillLevel;
-            }
-            else if (inventoryNumber == -2) {
-                item.count = this.armorEnchantedPoint;
-                item.skillKind = this.armorSkillKind;
-                item.skillLevel = this.armorSkillLevel;
+        } else if (ItemTypes.isEitherArmor(item.kind) || ItemTypes.isEitherArmor(item.kind) || ItemTypes.isPendant(item.kind) || ItemTypes.isRing(item.kind)) {
+
+            switch(index) {
+                case -1:
+
+                    item.count = self.weaponEnchantedPoint;
+                    item.skillKind = self.weaponSkillKind;
+                    item.skillLevel = self.weaponSkillLevel;
+
+                    break;
+
+                case -2:
+
+                    item.count = self.armorEnchantedPoint;
+                    item.skillKind = self.armorSkillKind;
+                    item.skillLevel = self.armorSkillLevel;
+
+                    break;
+
+                case -3:
+
+                    item.count = self.pendantEnchantedPoint;
+                    item.skillKind = self.pendantSkillKind;
+                    item.skillLevel = self.pendantSkillLevel;
+
+                    break;
+
+                case -4:
+
+                    item.count = self.ringEnchantedPoint;
+                    item.skillKind = self.ringSkillKind;
+                    item.skillLevel = self.ringSkillLevel;
+
+                    break;
+
+                default:
+
+                    if (index < 0 || index == 0)
+                        return;
+
+                    item.count = inventoryItem.count;
+                    item.skillKind = inventoryItem.skillKind;
+                    item.skillLevel = inventoryItem.skillLevel;
+
+                    break;
+
             }
         }
 
         if (item.count > 0) {
-            this.server.pushToAdjacentGroups(this.group, new Messages.Drop(this, item));
-            //this.server.addItemFromChest(itemKind, this.x, this.y);
-            this.server.handleItemDespawn(item);
 
-            if (inventoryNumber >= 0) {
-                if (ItemTypes.isConsumableItem(item.kind) || ItemTypes.isGold(item.kind) || ItemTypes.isCraft(item.kind)) {
-                    this.inventory.takeOutInventory(inventoryNumber, item.count);
-                } else {
-                    this.inventory.makeEmptyInventory(inventoryNumber);
-                }
+            self.server.pushToAdjacentGroups(self.group, new Messages.Drop(self, item));
+            self.server.handleItemDespawn(item);
+
+            switch(index) {
+
+                case -1:
+                    self.unequipItem(self.weapon);
+                    self.packetHandler.broadcast(self.equip(index), false);
+                    break;
+
+                case -2:
+                    self.unequipItem(self.armor);
+                    self.packetHandler.broadcast(self.equip(index), false);
+                    break;
+
+                case -3:
+                    self.unequipItem(self.pendant);
+                    self.packetHandler.broadcast(self.equip(index), false);
+                    break;
+
+                case -4:
+                    self.unequipItem(self.ring);
+                    self.packetHandler.broadcast(self.equip(index), false);
+                    break;
+
+                default:
+
+                    if (index < 0)
+                        return;
+
+                    if (ItemTypes.isConsumableItem(item.kind) || ItemTypes.isGold(item.kind) || ItemTypes.isCraft(item.kind))
+                        self.inventory.remove(item.kind, item.count);
+                    else
+                        self.inventory.empty(index);
+
+                    break;
+
             }
-            else if (inventoryNumber == -1) {
-                this.unequipItem(this.weapon);
-                this.packetHandler.broadcast(this.equip(-1), false);
-            }
-            else if (inventoryNumber == -2) {
-                this.unequipItem(this.armor);
-                this.packetHandler.broadcast(this.equip(-2), false);
-            }
+
         } else {
-            this.server.removeEntity(item);
-            this.inventory.makeEmptyInventory(inventoryNumber);
+            self.server.removeEntity(item);
+            self.inventory.empty(index);
         }
     },
     handleInventoryEat: function (itemKind, inventoryNumber) {
-        if (this.consumeTimeout) {
-            return;
-        } else {
-            this.consumeTimeout = setTimeout(function () {
-                self.consumeTimeout = null;
-            }, 4000);
-        }
-
         var self = this;
-        if (itemKind === 212) { // ROYALAZALEA
-            this.packetHandler.broadcast(this.equip(213), false); // ROYALAZALEABENEF
-            if (this.royalAzaleaBenefTimeout) {
-                clearTimeout(this.royalAzaleaBenefTimeout);
-            }
-            this.royalAzaleaBenefTimeout = setTimeout(function () {
-                self.royalAzaleaBenefTimeout = null;
-            }, 15000);
-        } else if (ItemTypes.isMount(itemKind)) {
-            this.packetHandler.broadcast(this.equip(itemKind), false);
-        } else if (itemKind === 300) {
-            if (!this.hasFullMana()) {
-                this.regenManaBy(75);
-                this.server.pushToPlayer(this, new Messages.Mana(this.mana));
-            }
-        } else {
-            var amount;
 
-            switch (itemKind) {
-                case 35: // FLASK
-                    amount = 100;
-                    break;
-                case 36: // BURGER
-                    amount = 200;
-                    break;
-                case 401: // BIGFLASK
-                    amount = ~~(this.maxHitPoints * 0.35);
-                    break;
-            }
+        if (self.consumeTimeout)
+            return;
 
-            if (!this.hasFullHealth()) {
-                this.regenHealthBy(amount);
-                this.server.pushToPlayer(this, this.health());
-            }
+        self.consumeTimeout = setTimeout(function() {
+            self.consumeTimeout = null;
+        }, 4000);
+
+        switch (itemKind) {
+
+            case 212:
+
+                self.packetHandler.broadcast(self.equip(213), false);
+
+                if (self.royalAzaleaBenefTimeout)
+                    clearTimeout(self.royalAzaleaBenefTimeout);
+
+                self.royalAzaleaBenefTimeout = setTimeout(function() {
+                    self.royalAzaleaBenefTimeout = null;
+                }, 15000);
+
+                break;
+
+            case 300:
+
+                if (!self.hasFullMana()) {
+                    self.regenManaBy(75);
+                    self.server.pushToPlayer(self, new Messages.Mana(self.mana));
+                }
+
+                break;
+
+            default:
+
+                var healingAmount;
+
+                if (itemKind == 35)
+                    healingAmount = 100;
+                else if (itemKind == 200)
+                    healingAmount = 200;
+                else if (itemKind == 401)
+                    healingAmount = ~~(self.maxHitPoints * 0.35);
+
+                if (!self.hasFullHealth()) {
+                    self.regenHealthBy(healingAmount);
+                    self.server.pushToPlayer(self, self.health());
+                }
+
+                break;
         }
 
-        this.inventory.takeOutInventory(inventoryNumber, 1);
+        if (self.healing_callback)
+            self.healing_callback(itemKind);
+
+        self.inventory.takeOutInventory(inventoryNumber, 1);
     },
+
     handleInventoryEnchantWeapon: function (itemKind, inventoryNumber) {
         if (itemKind !== 200) { // SNOWPOTION
             this.server.pushToPlayer(this, new Messages.Notify("This isn't a snowpotion."));
@@ -1099,5 +1205,9 @@ module.exports = Player = Character.extend({
     
     onEquipWeapon: function(callback) {
         this.equipWeapon_callback = callback;
+    },
+    
+    onHealPotion: function(callback) {
+        this.healing_callback = callback;
     }
 });

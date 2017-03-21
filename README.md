@@ -37,6 +37,7 @@ Though those changes give the game a greater purpose, there is much to be done, 
 * Ranking system to players (promoting PVP)
 * Add multiple world support (easy and not important right now)
 * Inventory interface needs to be updated
+* Redo the combat system
 
 The intent behind Tap Tap Adventure is to provide a cross-platform experience to everyone, being able to continue your progress at any time while utilizing minimal amounts of data, RAM and CPU. At the same time, we would like to invite everyone to contribute towards the development of the game. All updates posted on GitHub will be voted by other players and included in the game, or adversely, refused.
 

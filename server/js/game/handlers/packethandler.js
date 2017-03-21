@@ -510,14 +510,14 @@ module.exports = PacketHandler = cls.Class.extend({
             itemKind = message.shift();
 
         if (itemKind) {
-            var itemIndex = self.player.inventory.getInventoryNumber(itemKind);
+            var itemIndex = self.player.inventory.getIndex(itemKind);
 
             if (!ItemTypes.isObject(itemKind)) {
                 var name = ItemTypes.getKindAsString(itemKind),
                     price = ItemTypes.getSellPrice(name);
 
-                self.player.inventory.makeEmptyInventory(itemIndex);
-                self.player.inventory.putInventory(400, price);
+                self.player.inventory.empty(itemIndex);
+                self.player.inventory.add(400, price);
 
             }
 
@@ -530,7 +530,7 @@ module.exports = PacketHandler = cls.Class.extend({
             price = message[2];
 
         if((inventoryNumber1 >= 0) && (inventoryNumber1 < this.player.inventory.number)) {
-            item = this.player.inventory.rooms[inventoryNumber1];
+            item = this.player.inventory.slots[inventoryNumber1];
             //log.info(JSON.stringify(item));
             if(item.itemKind && !ItemTypes.isConsumableItem(item.itemKind) && !ItemTypes.isGold(item.itemKind)) {
                 this.redisPool.handleSaveAuctionItem(this.player, item, price, inventoryNumber1);
@@ -592,8 +592,8 @@ module.exports = PacketHandler = cls.Class.extend({
             goldCount = self.player.inventory.getItemNumber(400);
 
         if (itemKind && !ItemTypes.isGold(itemKind)) {
-            var itemIndex = self.player.inventory.getInventoryNumber(itemKind),
-                item = self.player.inventory.rooms[itemIndex];
+            var itemIndex = self.player.inventory.getIndex(itemKind),
+                item = self.player.inventory.slots[itemIndex];
 
             if (item) {
                 var price = ItemTypes.getEnchantPrice(ItemTypes.getKindAsString(itemKind), item.itemNumber);
@@ -606,7 +606,7 @@ module.exports = PacketHandler = cls.Class.extend({
                 item.itemNumber++;
 
                 self.redisPool.setInventory(self.player.inventory.owner, itemIndex, item.itemKind, item.itemNumber, item.itemSkillKind, item.itemSkillLevel);
-                self.player.inventory.putInventory(400, -price); //TODO - Change to take out.
+                self.player.inventory.remove(400, price); //TODO - Change to take out.
                 self.server.pushToPlayer(self.player, new Messages.Notify('enchanted'));
                 self.server.pushToPlayer(self.player, new Messages.GuiNotify('You have successfully enchanted this item!'))
             }
@@ -620,15 +620,15 @@ module.exports = PacketHandler = cls.Class.extend({
             itemKind = message.shift();
 
         if (itemKind) {
-            var index = self.player.inventory.getInventoryNumber(itemKind),
-                item = self.player.inventory.rooms[index];
+            var index = self.player.inventory.getIndex(itemKind),
+                item = self.player.inventory.slots[index];
 
-            if (item && item.itemKind) {
+            if (item && item.kind) {
                 var slot = self.player.bank.getEmptyBankNumber();
 
                 if (slot > -1) {
                     self.player.bank.putBankItem(item);
-                    self.player.inventory.takeOutInventory(index, item.itemNumber);
+                    self.player.inventory.remove(itemKind, item.count);
                     self.server.pushToPlayer(self.player, new Messages.Notify('bank'));
                 }
             }
@@ -646,10 +646,10 @@ module.exports = PacketHandler = cls.Class.extend({
                 item = self.player.bank.rooms[index];
 
             if (item) {
-                var slot = self.player.inventory.getEmptyEquipmentNumber();
+                var slot = self.player.inventory.getEmptySlot(true);
 
                 if (slot > -1) {
-                    self.player.inventory.putInventoryItem(item);
+                    self.player.inventory.add(item.itemKind, item.itemNumber);
                     self.player.bank.takeOutBank(index, item.itemNumber);
                     self.server.pushToPlayer(self.player, new Messages.Notify('bank'));
                 }
@@ -725,17 +725,17 @@ module.exports = PacketHandler = cls.Class.extend({
             else
                 itemCount = 1;
 
-            goldCount = self.player.inventory.getItemNumber(400);
+            goldCount = self.player.inventory.getIndex(400);
 
             if (goldCount < price) {
                 self.server.pushToPlayer(self.player, new Messages.Notify('You do not have enough gold!'));
                 return;
             }
 
-            if (self.player.inventory.hasEmptyInventory()) {
+            if (self.player.inventory.hasSpace()) {
 
-                self.player.inventory.putInventory(itemKind, ItemTypes.Store.getBuyCount(itemName) * itemCount);
-                self.player.inventory.putInventory(400, -1 * price);
+                self.player.inventory.add(itemKind, ItemTypes.Store.getBuyCount(itemName) * itemCount);
+                self.player.inventory.remove(400, price);
                 self.server.pushToPlayer(self.player, new Messages.Notify('buy'));
 
             } else
@@ -751,7 +751,7 @@ module.exports = PacketHandler = cls.Class.extend({
 
         var recipe = CraftData.Properties[craft];
 
-        if(!this.player.inventory.hasEmptyInventory())
+        if(!this.player.inventory.hasSpace())
         {
             this.server.pushToPlayer(this.player, new Messages.Notify("You don't have enough space."));
             return;
@@ -818,17 +818,11 @@ module.exports = PacketHandler = cls.Class.extend({
     },
 
     handleInventory: function(message) { // 28
-        var inventoryKind = message[1],
+        var self = this,
+            inventoryKind = message[1],
             inventoryNumber = message[2],
             count = message[3],
-            self = this;
-
-        log.info("Info: " + inventoryKind + " " + inventoryNumber + " " + count);
-
-        if (inventoryNumber > self.player.inventory.number)
-            return;
-
-        var itemKind;
+            itemKind;
 
         switch (inventoryNumber) {
             case -1:
@@ -848,7 +842,7 @@ module.exports = PacketHandler = cls.Class.extend({
                 break;
 
             default:
-                itemKind = self.player.inventory.rooms[inventoryNumber].itemKind;
+                itemKind = self.player.inventory.slots[inventoryNumber].kind;
                 break;
         }
 
@@ -912,7 +906,7 @@ module.exports = PacketHandler = cls.Class.extend({
 
                     default:
 
-                        self.player.inventory.putInventory(item.kind, item.count, item.skillKind, item.skillLevel);
+                        self.player.inventory.add(item.kind, item.count, item.skillKind, item.skillLevel);
 
                         break;
                 }

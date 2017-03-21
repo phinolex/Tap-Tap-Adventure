@@ -16,9 +16,9 @@
 
                 "3": ["Now click on the bag to open the inventory!"],
 
-                "4": ["", "Splendid. That is as much as I can teach you about the interface.",
+                "4": ["Splendid. That is as much as I can teach you about the interface.",
                     "Other instructors will cover different parts of the tutorial.",
-                    "After all, I'm not that smart."],
+                    "After all, I'm not that smart.", "Just remember one thing.. Follow the shells."],
 
                 "12": ["Oh ummm.. I bet you weren't expecting to see me.", "So the archery instructor is sick, and I",
                     "have to cover for him.", "It's definitely not the creator's fault for running", "out of NPC sprites and using",
@@ -50,6 +50,14 @@
                 "11": ["Well, I must admit, I am impressed.",
                     "But I still could do better.", "Either way. I am going to teleport you to your next area.",
                     "You still have a bit more to learn."]
+            },
+
+            "46": {
+                "15": ["Hello there fellow adventurer!", "Wait what's that?"],
+                "16": ["Oh no! It seems as the side-effects of fighting kicked in.", "Not to worry! I have the perfect antidote for that damage.",
+                        "Here, take this potion and drink it!"],
+                "17": ["Just press 1 on the keypad to drink the health.", "Or you could do it the old fashioned way by clicking the icon."],
+                "18": ["Okay, phew. That was close.", "You must always watch your health in this world.", "You never know when you'll get one hit."]
             }
         },
         "pointers": {
@@ -67,7 +75,11 @@
             "11": [0, 36, 535],
             "12": [0, 78, 40],
             "13": ["a"],
-            "14": [0, 78, 40]
+            "14": [0, 78, 40],
+            "15": [0, 46, 18],
+            "16": [0, 46, 18],
+            "17": [3, 280, 206],
+            "18": [0, 46, 18]
         },
 
         "doors": {
@@ -90,7 +102,10 @@
             "11": "talk",
             "12": "talk",
             "13": "kill",
-            "14": "talk"
+            "14": "talk",
+            "15": "talk",
+            "16": "wait",
+            "17": "35"
         }
     }
 }

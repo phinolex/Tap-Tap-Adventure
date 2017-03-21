@@ -18,17 +18,14 @@ module.exports = Introduction = Quest.extend({
         self.killCount = 0;
         self.displayTask = false;
         self.currentTask = '';
-        self.ratIds = [72772, 72773, 72774, 72775, 72776, 72777];
-        self.skeletonIds = [];
+        self.lastNpcTalk = null;
+        self.progressTimeout = null;
+        self.ratIds = [72784, 72783, 72782, 72781, 72780, 72779];
+        self.skeletonIds = [7356, 7360, 7351];
         
         self.load();
 
         self.onFinishedLoading(function() {
-            if (self.server.development) {
-                self.setStage(0);
-                self.player.forcefullyTeleport(15, 555, 2);
-            }
-
             if (self.stage == 9999)
                 return;
 
@@ -50,18 +47,27 @@ module.exports = Introduction = Quest.extend({
             }, 100);
 
 
-            self.player.onEquipWeapon(function(itemKind) {
+            /**
+             * Convert these two callbacks into an
+             * inventory callback in the Packet Handler.
+             * If necessary that is.
+             */
 
+            self.player.onEquipWeapon(function(itemKind) {
                 if (self.checkProgress(itemKind))
                     self.forceTalk();
+            });
 
+            self.player.onHealPotion(function(itemKind) {
                 self.checkProgress(itemKind);
             });
 
             self.player.packetHandler.onKillMob(function(mob) {
+                log.info('Mob Killed: ' + mob.id);
                 
                 if (self.currentTask != 'kill')
                     return;
+
                 
                 self.clearPointers();
                 self.setKillCount(self.killCount + 1);
@@ -75,7 +81,9 @@ module.exports = Introduction = Quest.extend({
                         return;
                     }
 
-                    self.setRatPointer();
+                    log.info('Update pointer here.');
+
+                    //self.setRatPointer();
 
                 } else if (self.stage == 13) {
 
@@ -86,16 +94,21 @@ module.exports = Introduction = Quest.extend({
                         return;
                     }
 
-                    self.setSkeletonPointer();
+                    log.info('Update pointer here.');
+                    //self.setSkeletonPointer();
                 }
             });
 
             self.player.packetHandler.onTalkToNPC(function(npcKind, npcId, talkIndex) {
                 log.info('Received NPC Talk: ' + npcKind + ' id: ' + npcId + ' index: ' + talkIndex);
 
+                if (self.progressTimeout)
+                    return;
+
                 var conversation = self.getConversation(npcKind);
 
                 self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, conversation));
+                self.lastNpcTalk = npcId;
 
                 if (conversation && talkIndex >= conversation.length) {
                     self.resetTalkIndex(npcId);
@@ -118,9 +131,9 @@ module.exports = Introduction = Quest.extend({
             self.player.packetHandler.onDoorRequest(function(doorX, doorY, toX, toY, orientation) {
                 log.info('Received door: ' + doorX + ' y: ' + doorY);
 
-                if (self.stage < 5) {
+                if (self.stage < 5 || self.currentTask != 'door') {
                     self.teleport(doorX, doorY, orientation, false);
-                    self.notify('You are not allowed to leave the starting area yet.');
+                    self.notify('You are not allowed to go through the door right now.');
                     return;
                 }
 
@@ -169,7 +182,6 @@ module.exports = Introduction = Quest.extend({
     load: function() {
         var self = this;
 
-
         self.player.redisPool.getQuestStage(self.player.name, self.getId(), function(stage) {
 
             if (!stage)
@@ -194,19 +206,26 @@ module.exports = Introduction = Quest.extend({
         switch (action) {
 
             case 'talk':
+                var withTimeout = false;
 
                 if (self.stage == 7)
-                    self.player.inventory.putInventory(60, 1);
+                    self.player.inventory.add(60, 1);
                 else if (self.stage == 9)
                     self.server.pushToPlayer(self.player, new Messages.Task('Kill five rats!', self.killCount, 5, true));
                 else if (self.stage == 11)
                     self.player.forcefullyTeleport(82, 43, Utils.random(1, 4));
                 else if (self.stage == 12) {
-                    self.player.inventory.putInventory(224, 1);
+                    self.player.inventory.add(224, 1);
                     self.server.pushToPlayer(self.player, new Messages.Task('Kill three skeletons', self.killCount, 3, true));
-                }
+                } else if (self.stage == 14)
+                    self.player.forcefullyTeleport(38, 20, Utils.random(1, 4));
+                else if (self.stage == 15) {
+                    self.damagePlayer(self.player.hitPoints - 1);
+                    withTimeout = true;
+                } else if (self.stage == 16)
+                    self.player.inventory.add(35, 1);
 
-                self.nextStage();
+                self.nextStage(withTimeout);
 
                 return true;
 
@@ -217,7 +236,7 @@ module.exports = Introduction = Quest.extend({
 
                 self.nextStage();
 
-                break;
+                return true;
 
             default:
                 self.nextStage();
@@ -249,10 +268,18 @@ module.exports = Introduction = Quest.extend({
     
     setPointer: function() {
         var self = this,
-            pointerData = self.jsonData.pointers[self.stage],
-            pointerType = pointerData.shift();
+            pointerData = self.jsonData.pointers[self.stage];
 
-        switch (pointerType) {
+        if (!pointerData)
+            return;
+
+        var pointerType = pointerData[0];
+
+        if (pointerType > 3)
+            pointerType = 0;
+
+        switch(pointerType) {
+
             case 'm':
                 self.setRatPointer();
                 break;
@@ -262,16 +289,17 @@ module.exports = Introduction = Quest.extend({
                 break;
 
             default:
+
                 var id = self.player.id + '' + Utils.random(0, 500),
-                    data = [];
+                    data = [id];
 
-                data.push(id);
-
-                for (var i = 0; i < pointerData.length; i++)
+                for (var i = 1; i < pointerData.length; i++)
                     data.push(pointerData[i]);
 
                 self.server.pushToPlayer(self.player, new Messages.Pointer(pointerType, data));
+
                 break;
+
         }
     },
 
@@ -279,7 +307,7 @@ module.exports = Introduction = Quest.extend({
         var self = this,
             randomIndex = Utils.randomInt(0, self.ratIds.length);
 
-        log.info('index: ' + randomIndex);
+        log.info('Setting rat pointer: ' + self.ratIds[randomIndex]);
 
         self.server.pushToPlayer(self.player, new Messages.Pointer(Types.Pointers.Entity, [self.ratIds[randomIndex]]));
     },
@@ -287,6 +315,8 @@ module.exports = Introduction = Quest.extend({
     setSkeletonPointer: function() {
         var self = this,
             randomIndex = Utils.randomInt(0, self.skeletonIds.length);
+
+        log.info('Setting skeleton pointer: ' + self.skeletonIds[randomIndex]);
 
         self.server.pushToPlayer(self.player, new Messages.Pointer(Types.Pointers.Entity, [self.skeletonIds[randomIndex]]));
     },
@@ -302,30 +332,55 @@ module.exports = Introduction = Quest.extend({
         return doorData ? doorData : [-1, -1];
     },
 
-    nextStage: function() {
+    nextStage: function(withTimeout) {
         var self = this;
 
-        self.stage++;
-        self.killCount = 0;
+        if (self.progressTimeout)
+            return;
 
         self.clearPointers();
-        self.update();
 
-        self.setPointer();
+        self.progressTimeout = setTimeout(function() {
+            self.stage++;
+            self.killCount = 0;
+            self.currentTask = self.jsonData.task[self.stage];
+
+            self.update();
+            self.setPointer();
+
+            self.progressTimeout = null;
+
+        }, withTimeout ? 1500 : 1);
+
     },
 
     setKillCount: function(count) {
-        var self = this;
+        var self = this,
+            message = '',
+            goal = 0;
+
+        if (self.stage == 10) {
+            message = 'Kill five rats!';
+            goal = 5;
+        } else if (self.stage == 13) {
+            message = 'Kill three skeletons!';
+            goal = 3;
+        }
 
         self.killCount = count;
 
-        self.server.pushToPlayer(self.player, new Messages.Task('Kill five rats!', self.killCount, 5, true));
+        self.server.pushToPlayer(self.player, new Messages.Task(message, self.killCount, goal, true));
     },
 
     forceTalk: function(messageData, npcId) {
         var self = this;
 
         self.server.pushToPlayer(self.player, new Messages.TalkToNPC(npcId, messageData));
+        self.resetTalkIndex(npcId);
+    },
+
+    damagePlayer: function(damage) {
+        this.player.hitPoints -= damage;
     },
 
     notify: function(message) {
