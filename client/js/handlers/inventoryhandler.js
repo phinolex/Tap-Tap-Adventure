@@ -96,7 +96,7 @@ define(['jquery', '../entity/item/item'], function($, Item) {
             }
         },
 
-        initInventory: function(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel) {
+        loadInventory: function(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel) {
             var self = this;
 
             self.setMaxInventoryNumber(maxInventoryNumber);

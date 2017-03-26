@@ -204,14 +204,15 @@ Messages.SkillLoad = Message.extend({
 });
 
 Messages.Chat = Message.extend({
-    init: function (player, message) {
+    init: function (player, message, avoidDisplay) {
         this.playerId = player.id;
         this.message = message;
+        this.avoidDisplay = avoidDisplay;
     },
     serialize: function () {
         return [Types.Messages.CHAT,
             this.playerId,
-            this.message];
+            this.message, this.avoidDisplay];
     }
 });
 Messages.Teleport = Message.extend({

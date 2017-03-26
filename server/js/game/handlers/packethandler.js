@@ -693,6 +693,8 @@ module.exports = PacketHandler = cls.Class.extend({
         }
         
         if (mob) {
+            log.info('setting target and all..');
+
             self.server.pushToPlayer(self.player, new Messages.AttackLink(entityId));
             self.player.setTarget(mob);
             self.server.broadcastAttacker(self.player);
@@ -980,7 +982,13 @@ module.exports = PacketHandler = cls.Class.extend({
     },
 
     handleSpellHit: function(message) {
-        this.handleHitEntity(this.player, message[1], message[2])
+        var self = this;
+
+        if (!self.player.finishedTutorial())
+            if (self.spellHit_callback)
+                self.spellHit_callback(message[1]);
+
+        self.handleHitEntity(self.player, message[1], message[2]);
     },
 
     handleHitEntity: function(entity, mobId, spellType) { // 8
@@ -1356,6 +1364,11 @@ module.exports = PacketHandler = cls.Class.extend({
             name = message[2],
             self = this;
 
+        if (!self.player.finishedTutorial())
+            if (self.skillInstall_callback)
+                self.skillInstall_callback(name);
+
+
         if(((index >= 0) && (index < 5)) && (name in SkillData.SkillNames)) {
             self.redisPool.handleSkillInstall(this.player, index, name, function() {
                 self.player.skillHandler.install(index, name);
@@ -1636,6 +1649,14 @@ module.exports = PacketHandler = cls.Class.extend({
 
     onKillMob: function(callback) {
         this.killMob_callback = callback;
+    },
+
+    onInstallSkill: function(callback) {
+        this.skillInstall_callback = callback;
+    },
+
+    onSpellHit: function(callback) {
+        this.spellHit_callback = callback;
     },
 
     send: function(message) {

@@ -148,9 +148,9 @@ define(['./entitypointer', './locationpointer', './staticpointer'], function(Ent
         clear: function() {
             var self = this;
 
-            for (var id in self.pointers)
-                if (self.pointers.hasOwnProperty(id))
-                    self.pointers[id].destroy();
+            _.each(self.pointers, function(pointer) {
+                pointer.destroy();
+            });
 
             self.pointers = {};
         },

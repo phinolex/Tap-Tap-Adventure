@@ -106,18 +106,16 @@ module.exports = Character = Entity.extend({
         this.setOrientation(orientation);
     },
 
-    moveTo_: function(x, y, callback) {
-        this.destination = { x: x, y: y };
-        //this.adjacentTiles = {};
+    moveTo_: function(x, y) {
+        var self = this;
 
-        if(this.isMoving()) {
-            this.continueTo(x, y);
-        }
-        else {
-            var path = this.requestPathfindingTo(x, y);
+        if (!self.isMoving()) {
+            var path = self.requestPathfindingTo(x, y);
 
-            this.followPath(path);
-        }
+            self.followPath(path);
+        } else
+            self.continueTo(x, y);
+
     },
 
     requestPathfindingTo: function(x, y) {
@@ -551,17 +549,11 @@ module.exports = Character = Entity.extend({
      *
      */
     canAttack: function(time) {
-        if(this.isDead == false && this.attackCooldown.isOver(time)) {
-            return true;
-        }
-        return false;
+        return this.isDead == false && this.attackCooldown.isOver(time);
     },
 
     canMove: function(time) {
-        if(this.isDead == false && this.moveCooldown.isOver(time)) {
-            return true;
-        }
-        return false;
+        return this.isDead == false && this.moveCooldown.isOver(time);
     },
 
     canReach: function(entity) {
@@ -625,7 +617,6 @@ module.exports = Character = Entity.extend({
         this.moveCooldown = new Timer(rate);
     },
 
-// Server Character
     getState: function () {
         var basestate = this._getBaseState(),
             state = [];

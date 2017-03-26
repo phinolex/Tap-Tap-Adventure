@@ -54,6 +54,16 @@ module.exports = SkillHandler = cls.Class.extend({
         this.skillSlots[index] = name;
     },
 
+    hasInstalled: function(name) {
+        var self = this;
+
+        for (var i = 0; i < self.skillSlots.length; i++)
+            if (self.skillSlots[i] == name)
+                return true;
+
+        return false;
+    },
+
     getIndexByName: function(name) {
         var index = 0;
 
@@ -79,12 +89,9 @@ module.exports = SkillHandler = cls.Class.extend({
     },
 
     remove: function(name) {
-        log.info("Before: " + this.skills);
-
+        
         this.skills = _.reject(this.skills, function(el) {
             return el == name;
         });
-
-        log.info("After: " + this.skills);
     }
 });

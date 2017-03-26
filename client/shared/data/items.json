@@ -2,7 +2,7 @@
   "Sword1": {
     "kind":60,
     "type":"weapon",
-    "attack":1,
+    "attack":0,
     "name":"Sword"
 
   },
@@ -538,7 +538,7 @@
   "WoodenBow": {
     "kind":224,
     "type":"weaponarcher",
-    "attack":1,
+    "attack":0,
     "name":"Wooden Bow"
   },
   "PlasticBow": {

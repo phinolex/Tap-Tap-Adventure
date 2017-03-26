@@ -2,28 +2,32 @@
 define(function() {
 
     var InfoManager = Class.extend({
+
         init: function(game) {
-            this.game = game;
-            this.infos = {};
-            this.destroyQueue = [];
+            var self = this;
+
+            self.game = game;
+            self.infos = {};
+            self.destroyQueue = [];
         },
 
         addDamageInfo: function(value, x, y, type, duration) {
-            var time = this.game.currentTime,
-                id = time + "" + Math.abs(value) + "" + x + "" + y,
-                self = this,
-                info = new HoveringInfo(id, value, x, y, (duration) ? duration : 1000, type);
+            var self = this,
+                time = self.game.currentTime,
+                id = time + '' + Math.abs(value) + '' + x + '' + y,
+                info = new HoveringInfo(id, value, x, y, duration ? duration : 1000, type);
 
             info.onDestroy(function(id) {
                 self.destroyQueue.push(id);
             });
-            this.infos[id] = info;
+
+            self.infos[id] = info;
         },
 
         forEachInfo: function(callback) {
             var self = this;
 
-            _.each(this.infos, function(info, id) {
+            _.each(self.infos, function(info, id) {
                 callback(info);
             });
         },
@@ -31,60 +35,70 @@ define(function() {
         update: function(time) {
             var self = this;
 
-            this.forEachInfo(function(info) {
+            self.forEachInfo(function(info) {
                 info.update(time);
             });
 
-            _.each(this.destroyQueue, function(id) {
+            _.each(self.destroyQueue, function(id) {
                 delete self.infos[id];
             });
-            this.destroyQueue = [];
+
+            self.destroyQueue = [];
         }
+
     });
 
-
     var damageInfoColors = {
-        "received": {
-            fill: "rgb(255, 50, 50)",
-            stroke: "rgb(255, 180, 180)"
+        'received': {
+            fill: 'rgb(255, 50, 50)',
+            stroke: 'rgb(255, 180, 180)'
         },
-        "inflicted": {
-            fill: "white",
-            stroke: "#373737"
+
+        'inflicted': {
+            fill: 'white',
+            stroke: '#373737'
         },
-        "healed": {
-            fill: "rgb(80, 255, 80)",
-            stroke: "rgb(50, 120, 50)"
-         },
-        "health": {
-            fill: "white",
-            stroke: "#373737"
+
+        'healed': {
+            fill: 'rgb(80, 255, 80)',
+            stroke: 'rgb(50, 120, 50)'
         },
-        "exp": {
-            fill: "rgb(80, 80, 255)",
-            stroke: "rgb(50, 50, 255)"
+
+        'health': {
+            fill: 'white',
+            stroke: '#373737'
         },
-        "poison": {
-            fill: "rgb(66, 183, 77)",
-            stroke: "rgb(50, 120, 50)"
+
+        'exp': {
+            fill: 'rgb(80, 80, 255)',
+            stroke: 'rgb(50, 50, 255)'
+        },
+
+        'poison': {
+            fill: 'rgb(66, 183, 77)',
+            stroke: 'rgb(50, 120 , 50)'
         }
     };
-
 
     var HoveringInfo = Class.extend({
         DURATION: 1000,
 
         init: function(id, value, x, y, duration, type) {
-            this.id = id;
-            this.value = value;
-            this.duration = duration;
-            this.x = x;
-            this.y = y;
-            this.opacity = 1.0;
-            this.lastTime = 0;
-            this.speed = 100;
-            this.fillColor = damageInfoColors[type].fill;
-            this.strokeColor = damageInfoColors[type].stroke;
+            var self = this;
+
+            self.id = id;
+            self.value = value;
+            self.x = x;
+            self.y = y;
+            self.duration = duration;
+            self.type = type;
+
+            self.opacity = 1.0;
+            self.lastTime = 0;
+            self.speed = 100;
+
+            self.fillColor = damageInfoColors[type].fill;
+            self.strokeColor = damageInfoColors[type].stroke;
         },
 
         isTimeToAnimate: function(time) {
@@ -92,28 +106,33 @@ define(function() {
         },
 
         update: function(time) {
-            if(this.isTimeToAnimate(time)) {
-                this.lastTime = time;
-                this.tick();
+            var self = this;
+
+            if (self.isTimeToAnimate(time)) {
+                self.lastTime = time;
+                self.tick();
             }
         },
 
         tick: function() {
-            if(this.type !== 'health') this.y -= 1;
-            this.opacity -= (70/this.duration);
-            if(this.opacity < 0) {
-                this.destroy();
-            }
-        },
+            var self = this;
 
-        onDestroy: function(callback) {
-            this.destroy_callback = callback;
+            if (self.type !== 'health')
+                this.y -= 1;
+
+            self.opacity -= 70 / self.duration;
+
+            if (self.opacity < 0)
+                self.destroy();
         },
 
         destroy: function() {
-            if(this.destroy_callback) {
+            if (this.destroy_callback)
                 this.destroy_callback(this.id);
-            }
+        },
+
+        onDestroy: function(callback) {
+            this.destroy_callback = callback;
         }
     });
 

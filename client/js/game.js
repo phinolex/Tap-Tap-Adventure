@@ -102,7 +102,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                 this.healShortCut = -1;
                 this.hpGuide = 0;
                 this.autoEattingHandler = null;
-                
+
                 // pvp
                 this.pvpFlag = false;
                 this.pvpTimer = 100;
@@ -902,53 +902,57 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                     }
                 });
 
-                this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon, experience, inventory, inventoryNumber, maxInventoryNumber,
-                                               inventorySkillKind, inventorySkillLevel, maxBankNumber, bankKind, bankNumber, bankSkillKind, bankSkillLevel,
+                this.client.onWelcome(function(id, name, x, y, hp, mana, armor, weapon, experience, inventory, inventoryNumber, inventorySize,
+                                               inventorySkillKind, inventorySkillLevel, bankSize, bankKind, bankNumber, bankSkillKind, bankSkillLevel,
                                                achievementNumber, achievementFound, achievementProgress, doubleExp, expMultiplier, membership, kind, rights, pClass, pendant, ring, boots) {
 
-                    self.player.id = id;
                     self.playerId = id;
-                    self.player.kind = kind;
+                    self.player.id = id;
                     self.player.name = name;
+                    self.player.kind = kind;
                     self.player.rights = rights;
-                    self.player.experience = experience;
-                    self.player.level = Types.getLevel(experience);
+                    self.player.setClass(parseInt(pClass));
                     self.player.setGridPosition(x, y);
                     self.player.setMaxHitPoints(hp);
                     self.player.setMaxMana(mana);
-                    self.player.setArmorName(armor);
-                    self.player.setSpriteName(armor);
+                    self.player.setLook(armor);
                     self.player.setWeaponName(weapon);
                     self.player.setPendant(pendant);
                     self.player.setRing(ring);
+                    self.player.setBoots(boots);
+                    self.player.experience = experience;
+                    self.inventoryHandler.loadInventory(inventorySize, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
+                    self.bankHandler.loadBank(bankSize, bankKind, bankNumber, bankSkillKind, bankSkillLevel);
+                    self.shopHandler.setMaxInventoryNumber(inventorySize);
+                    self.achievementHandler.initAchievement(achievementFound, achievementProgress);
                     self.player.skillHandler = new SkillHandler(self);
-                    self.player.setClass(parseInt(pClass));
-                    self.doubleEXP = doubleExp;
-                    self.expMultiplier = expMultiplier;
-                    self.membership = membership;
-                    self.inventoryHandler.initInventory(maxInventoryNumber, inventory, inventoryNumber, inventorySkillKind, inventorySkillLevel);
-                    self.shopHandler.setMaxInventoryNumber(maxInventoryNumber);
-                    self.bankHandler.initBank(maxBankNumber, bankKind, bankNumber, bankSkillKind, bankSkillLevel);
+
                     self.camera.setRealCoords();
+
                     self.resetZone();
                     self.initPlayer();
-                    self.updateBars();
-                    self.updateExpBar();
+                    self.updateBars(); //Merge exp bar into the updateBars() function
+                    self.updateExpBar(); //TODO
                     self.updatePlateauMode();
+
                     self.addEntity(self.player);
+
                     self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
-                    self.achievementHandler.initAchievement(achievementFound, achievementProgress);
+
                     self.client.sendSkillLoad();
+
                     self.chatHandler.show();
-                    self.renderbackground = true;
-                    self.renderer.forceRedraw = true;
                     self.initializeAchievements();
                     self.loadInAppPurchases();
                     self.audioManager.updateMusic();
+
+                    self.renderer.forceRedraw = true;
                     self.renderer.clearScreen(self.renderer.context);
                     self.renderer.cleanPathing();
-                    self.renderer.drawBackground(self.renderer.background, "#12100D");
+                    self.renderer.drawBackground(self.renderer.background, '#12100D');
+
                     self.resetCamera();
+
 
                     if (self.player.experience == 0)
                         self.app.toggleInstructions();
@@ -1027,7 +1031,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                         self.redKills = redKills;
                         self.blueKills = blueKills;
                     });
-                    
+
                     self.client.onTeam(function(team, playerId) {
                         if (self.player.id == playerId)
                             self.player.setTeam(team);
@@ -1112,7 +1116,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                         var death_timeout = setInterval(function() {
                             if (self.player.isDead)
                                 self.player.isDead = false;
-                            
+
                             if (!self.player.isDead) {
                                 clearTimeout(death_timeout);
                                 self.player.id = playerId;
@@ -1188,7 +1192,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                                 });
                             }
                         }
-                        
+
                     });
 
                     self.player.onStopPathing(function(x, y, forced) {
@@ -1253,7 +1257,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
 
                         if(self.player.hasTarget())
                             ignored.push(self.player.target);
-                        
+
                         var path = self.findPath(self.player, x, y, ignored);
 
 
@@ -1634,15 +1638,15 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                             }
                         }
                     });
-                    
+
                     self.client.onTalkIndex(function(npcId, talkIndex) {
                         var npc = self.getEntityById(npcId);
-                        
+
                         npc.talkIndex = talkIndex;
                     });
 
                     self.client.onTask(function(details, progress, goal, show) {
-                        
+
                         if (self.task_callback)
                             self.task_callback(details, progress, goal, show);
 
@@ -1798,7 +1802,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                             if(self.player.hasTarget())
                                 self.updateTarget(mobId, points, healthPoints, maxHp);
                         }
-                        
+
                     });
 
                     self.client.onPlayerKillMob(function(id, level, exp) {
@@ -1966,7 +1970,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                         if (id != self.playerId) {
 
                             entity = self.getEntityById(id);
-                            
+
                             if(entity) {
                                 currentOrientation = entity.orientation;
 
@@ -1991,7 +1995,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                             self.updateCursor();
                         }
                     });
-                    
+
                     self.client.onPointer(function(type, data) {
 
                         log.info('Received Pointer: ' + type + ' data: ' + data);
@@ -2026,16 +2030,16 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                                 self.pointerManager.clear();
 
                                 break;
-                            
+
                             case Types.Pointers.Static:
 
                                 var xPos = data.shift(),
                                     yPos = data.shift();
-                                
+
 
                                 self.pointerManager.create(id, type);
                                 self.pointerManager.assignRelativeToScreen(id, xPos, yPos);
-                                
+
                                 break;
                         }
 
@@ -2107,7 +2111,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                     self.client.onNotify(function(msg) {
                         self.showNotification(msg);
                     });
-                    
+
                     self.client.onGlobalChat(function(message, isAdmin) {
                         self.chatHandler.pushNotification(message, isAdmin)
                     });
@@ -2286,7 +2290,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                 if(attacker.hasTarget()) {
                     attacker.removeTarget();
                 }
-                
+
                 attacker.engage(attacker, target, attacker instanceof Player);
 
                 if(attacker.id !== this.playerId)
@@ -3225,9 +3229,9 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                 }
                 return false;
             },
-            
+
             onTaskUpdate: function(callback) {
-                this.task_callback = callback;    
+                this.task_callback = callback;
             },
 
             /**
@@ -3262,7 +3266,7 @@ define(['interface/infomanager', 'rendering/bubble/bubblemanager', 'rendering/re
                             if(character.id === this.playerId) {
                                 //Determine what kind of hit server-sided
                                 //self.client.sendDetermineHit(character, character.target);
-                                
+
 
                                 if (ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(self.player.weaponName)))
                                     self.client.sendCastSpell(3, character.x + 8, character.y + 8, character.target.x + 8, character.target.y + 8);

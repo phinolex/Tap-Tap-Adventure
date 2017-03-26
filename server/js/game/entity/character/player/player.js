@@ -270,6 +270,8 @@ module.exports = Player = Character.extend({
             return [163 + offset, 499 + offset];
         else if (playerTeam == Types.Messages.BLUETEAM)
             return [133 + offset, 471 + offset];
+        else if (!self.finishedTutorial())
+            return [17 + offset, 557 + offset];
         else
             return [325 + offset, 87 + offset];
     },
@@ -532,7 +534,11 @@ module.exports = Player = Character.extend({
 
                     self.send(sendMessage);
 
-                    self.reviewSkills();
+                    databaseHandler.getSkills(self, function(names, levels) {
+
+                        for (var i = 0; i < names.length; i++)
+                            self.skillHandler.add(names[i], levels[i]);
+                    });
 
                     databaseHandler.loadPets(self, function (kinds) {
                         for (var index = 0; index < kinds.length; index++) {
@@ -962,7 +968,7 @@ module.exports = Player = Character.extend({
         if (self.healing_callback)
             self.healing_callback(itemKind);
 
-        self.inventory.takeOutInventory(inventoryNumber, 1);
+        self.inventory.remove(itemKind, 1);
     },
 
     handleInventoryEnchantWeapon: function (itemKind, inventoryNumber) {
@@ -1080,33 +1086,6 @@ module.exports = Player = Character.extend({
         }
     },
 
-    reviewSkills: function () {
-        var self = this,
-            skillHandler = self.skillHandler,
-            achievements = Achievements.AchievementData,
-            index = 0,
-            skills = [];
-
-        for (var a in achievements) {
-            if (achievements.hasOwnProperty(a)) {
-                if (self.achievement[index].progress == 999 && achievements[a].skillName) {
-                    skills.push({
-                        name: achievements[a].skillName,
-                        level: achievements[a].skillLevel
-                    });
-                }
-                index++;
-            }
-        }
-
-        for (var index = 0; index < skills.length; index++) {
-            var name = skills[index].name,
-                level = skills[index].level;
-
-            self.skillHandler.add(name, level);
-        }
-    },
-
     finishAllAchievements: function () {
         var self = this,
             index = 0;
@@ -1179,7 +1158,10 @@ module.exports = Player = Character.extend({
     },
     
     finishedTutorial: function() {
-        return this.questHandler.getQuest('A Great Start').stage == 9999;
+        var self = this,
+            quest = self.questHandler.getQuest('A Great Start');
+
+        return quest ? quest.stage >= 9999 : true;
     },
 
     setPVPKills: function (kills) {

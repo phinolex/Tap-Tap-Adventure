@@ -1239,6 +1239,10 @@ define(['../entity/character/player/player', '../entity/entityfactory', 'data/mo
 
         sendButton: function(type, state) {
             this.sendMessage([Types.Messages.BUTTON, type, state]);
+        },
+
+        sendClick: function(x, y) {
+            this.sendMessage([Types.Messages.CLICK, x, y]);
         }
     });
 

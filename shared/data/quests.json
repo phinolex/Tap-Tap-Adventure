@@ -58,6 +58,25 @@
                         "Here, take this potion and drink it!"],
                 "17": ["Just press 1 on the keypad to drink the health.", "Or you could do it the old fashioned way by clicking the icon."],
                 "18": ["Okay, phew. That was close.", "You must always watch your health in this world.", "You never know when you'll get one hit."]
+            },
+
+            "50": {
+                "20": [":O", "O:"],
+                "22": ["It's rare to see a human around here..", "I am the mysterious sorcerer who shall not be named",
+                        "I will basically teach you about spells.", "But only for the sake of the tutorial.", "Oh since we're on that topic..",
+                        "This is your last stage in your introduction!", "How does that make you feel?"],
+                "24": ["Okay that's great!", "Now let's get to work.", "Firstly we gotta teach you how to load spells into your slots."],
+                "25": ["The premise is simple, open your character menu.", "Shift screens and simply click on the spell."],
+
+                "26": ["Okay perfect! Now simply click the spell and launch it at the rats!", "Or anywhere as a matter of fact..",
+                        "Truthfully, I do not really care.. and I am", "definitely not skipping some conditionals because the",
+                        "developer is being lazy and refuses to ensure you attack rats.", "But just launch the darn projectile already."],
+
+                "27": ["Well, are you going to launch the projectile or not?"],
+                "28": ["Oh my, you are truly one of the best wizards I have ever met.", "No I'm just kidding, I was programmed to say that",
+                        "You're pretty mediocre, literally everyone that passes", "through here has to do the exact same thing so..",
+                        "don't flatter yourself.", "Anyway, I suppose we are done here. I will be teleporting you away form here.",
+                        "Best of luck on your endeavours adventurer, and do not forget..", "Follow the seashells when lost.."]
             }
         },
         "pointers": {
@@ -79,12 +98,23 @@
             "15": [0, 46, 18],
             "16": [0, 46, 18],
             "17": [3, 280, 206],
-            "18": [0, 46, 18]
+            "18": [0, 46, 18],
+            "19": [0, 51, 17],
+            "20": [0, 37, 497],
+            "21": [0, 37, 497],
+            "22": [0, 37, 497],
+            "23": [0, 37, 497],
+            "24": [0, 37, 497],
+            "25": [3, 428, 206],
+            "26": [0, 37, 497],
+            "27": [3, 264, 206],
+            "28": [0, 37, 497]
         },
 
         "doors": {
             "5": [15, 560],
-            "6": [20, 24]
+            "6": [20, 24],
+            "19": [51, 16]
         },
 
         "task": {
@@ -104,8 +134,19 @@
             "13": "kill",
             "14": "talk",
             "15": "talk",
-            "16": "wait",
-            "17": "35"
+            "16": "talk",
+            "17": "35",
+            "18": "talk",
+            "19": "door",
+            "20": "talk",
+            "21": "talk",
+            "22": "talk",
+            "23": "talk",
+            "24": "talk",
+            "25": "skill",
+            "26": "talk",
+            "27": "spell",
+            "28": "talk"
         }
     }
 }

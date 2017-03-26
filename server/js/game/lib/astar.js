@@ -115,7 +115,7 @@
                         max = f;
                         min = i;
                     }
-                };
+                }
                 current = open.splice(min, 1)[0];
                 if (current.v != end.v) {
                     --length;

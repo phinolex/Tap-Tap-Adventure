@@ -170,7 +170,8 @@ Types = {
         BUTTON: 152,
         ATTACKLINK: 153,
         TASK: 154,
-        TALKINDEX: 155
+        TALKINDEX: 155,
+        CLICK: 156
     },
 
     Interfaces: {

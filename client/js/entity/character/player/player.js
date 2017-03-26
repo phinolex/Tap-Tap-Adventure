@@ -116,6 +116,13 @@ define(['../character', 'utils/exceptions', './mount'], function(Character, Exce
             }
         },
 
+        setLook: function(name) {
+            var self = this;
+
+            self.setSpriteName(name);
+            self.setArmorName(name);
+        },
+
         setSpriteName: function(name) {
             var self = this;
 
@@ -133,6 +140,7 @@ define(['../character', 'utils/exceptions', './mount'], function(Character, Exce
 
         setWeaponName: function(weaponName) {
             this.weaponName = weaponName;
+            this.hasArcherWeapon = ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(weaponName));
         },
 
         setPendant: function(name) {

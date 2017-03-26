@@ -25,11 +25,18 @@ module.exports = QuestHandler = cls.Class.extend({
     
     getQuest: function(name) {
         var self = this;
-
+        
         if (name in self.quests)
             return self.quests[name];
 
         return null;
+    },
+
+    finishAll: function() {
+        var self = this;
+        
+        for (var quest in self.quests)
+            quest.finalizeQuest();
     },
 
     saveAll: function() {

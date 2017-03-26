@@ -26,7 +26,7 @@ module.exports = Introduction = Quest.extend({
         self.load();
 
         self.onFinishedLoading(function() {
-            if (self.stage == 9999)
+            if (self.stage >= 9999)
                 return;
 
             if (self.stage <= 10)
@@ -44,6 +44,8 @@ module.exports = Introduction = Quest.extend({
                         self.server.pushToPlayer(self.player, new Messages.Task('Kill three skeletons', self.killCount, 3, true));
                 }
 
+                self.tick();
+                
             }, 100);
 
 
@@ -63,8 +65,6 @@ module.exports = Introduction = Quest.extend({
             });
 
             self.player.packetHandler.onKillMob(function(mob) {
-                log.info('Mob Killed: ' + mob.id);
-                
                 if (self.currentTask != 'kill')
                     return;
 
@@ -86,7 +86,7 @@ module.exports = Introduction = Quest.extend({
                     //self.setRatPointer();
 
                 } else if (self.stage == 13) {
-
+                    
                     self.skeletonIds.splice(self.skeletonIds.indexOf(mob.id), 1);
 
                     if (self.killCount >= 3) {
@@ -100,10 +100,18 @@ module.exports = Introduction = Quest.extend({
             });
 
             self.player.packetHandler.onTalkToNPC(function(npcKind, npcId, talkIndex) {
-                log.info('Received NPC Talk: ' + npcKind + ' id: ' + npcId + ' index: ' + talkIndex);
-
                 if (self.progressTimeout)
                     return;
+
+                if (self.stage == 21) {
+                    self.checkProgress('talk');
+                    self.forceTalk(['What??'], self.lastNpcTalk);
+                    return;
+                } else if (self.stage == 23) {
+                    self.checkProgress('talk');
+                    self.forceTalk(['Umm.. I guess it-', self.lastNpcTalk]);
+                    return;
+                }
 
                 var conversation = self.getConversation(npcKind);
 
@@ -143,6 +151,23 @@ module.exports = Introduction = Quest.extend({
                     self.checkProgress('door');
 
                 self.teleport(toX, toY, orientation, true);
+            });
+
+            self.player.packetHandler.onInstallSkill(function(name) {
+                log.info('Installing skill: ' + name);
+
+                self.checkProgress('skill')
+            });
+
+            self.player.packetHandler.onSpellHit(function(mobId) {
+                /**
+                 * TODO: Have the tutorial check if the player is launching the spell at a rat.
+                 * For now it should be left out to avoid any unwanted complications.
+                 * But should be done once the tutorial is fully checked for bugs.
+                 */
+
+                self.checkProgress('spell');
+
             });
 
             self.player.packetHandler.onButtonClick(function(buttonId, state) {
@@ -224,6 +249,8 @@ module.exports = Introduction = Quest.extend({
                     withTimeout = true;
                 } else if (self.stage == 16)
                     self.player.inventory.add(35, 1);
+                else if (self.stage == 24)
+                    self.addSpell('Deadly Attack');
 
                 self.nextStage(withTimeout);
 
@@ -242,6 +269,16 @@ module.exports = Introduction = Quest.extend({
                 self.nextStage();
                 return true;
         }
+    },
+
+    tick: function() {
+        var self = this;
+
+        self.tickInterval = setInterval(function() {
+            if (self.stage == 25 && self.player.skillHandler.hasInstalled('Deadly Attack'))
+                self.checkProgress('skill')
+
+        }, 1200);
     },
 
     toggleTalking: function() {
@@ -338,6 +375,9 @@ module.exports = Introduction = Quest.extend({
         if (self.progressTimeout)
             return;
 
+        if (self.stage == 28)
+            self.finalizeQuest();
+
         self.clearPointers();
 
         self.progressTimeout = setTimeout(function() {
@@ -394,6 +434,21 @@ module.exports = Introduction = Quest.extend({
 
         self.server.pushToPlayer(self.player, new Messages.Stop(x, y, orientation));
     },
+    
+    addSpell: function(skillName) {
+        var self = this,
+            index = self.player.skillHandler.getIndexByName(skillName);
+        
+        self.player.skillHandler.add(skillName, 1);
+        self.player.redisPool.handleSkills(self.player, index, skillName, 1);
+        self.server.pushToPlayer(self.player, new Messages.SkillLoad(index, skillName, 1));
+    },
+
+    forceChat: function(message) {
+        var self = this;
+
+        self.server.pushToPlayer(self.player, new Messages.Chat(self.player, message, true));
+    },
 
     setStage: function(stage) {
         var self = this;
@@ -401,7 +456,24 @@ module.exports = Introduction = Quest.extend({
         self.clearPointers();
         self.stage = stage;
         self.update();
-        self.setPointer();
+
+        if (stage < 9999)
+            self.setPointer();
+    },
+
+    finalizeQuest: function() {
+        var self = this;
+
+        self.setStage(9999);
+        self.stop();
+        self.teleport(326, 87, 2);
+    },
+
+    stop: function() {
+        var self = this;
+
+        clearInterval(self.tickInterval);
+        self.tickInterval = null;
     },
 
     onFinishedLoading: function(callback) {

@@ -1,7 +1,7 @@
 /**
  * Created by flavius on 2017-02-24.
  */
-define(['../../../tabpage', '../../../../data/skilldata'], function(TabPage, SkillData) {
+define(['../../../tabpage', '../../../../data/skilldata', '../skillinfo'], function(TabPage, SkillData, SkillInfo) {
     var SkillPage = TabPage.extend({
         init: function(frame) {
             var self = this;
@@ -30,20 +30,22 @@ define(['../../../tabpage', '../../../../data/skilldata'], function(TabPage, Ski
 
             self.updateScale();
 
+
             for (var id = 0; id < self.skills.length; id++) {
+
                 var skill = self.skills[id],
                     skillData = SkillData.Names[skill.name],
                     isPassive = skillData.type == 'passive';
 
                 if (skill) {
-                    var iconOffset = skillData.iconOffset[scale - 1],
+                    var iconOffset = skillData.iconOffset[self.scale - 1],
                         skillId = id + 10,
-                        s = new Skill('#characterSkill' + skillId, skill.name, iconOffset, self.game);
+                        s = new SkillInfo('#characterSkill' + skillId, skill.name, iconOffset, self.game);
 
                     s.background.css({
                         'position': 'absolute',
-                        'left': '' + ((isPassive ? passiveSkillId : activeSkillId) % 2 ? 70 : 14) * scale + 'px',
-                        'top': '' + (isPassive ? 113 + (Math.floor(passiveSkillId / 2) * 20) : 17 + (Math.floor(activeSkillId / 2) * 20)) * scale + 'px',
+                        'left': '' + ((isPassive ? passiveSkillId : activeSkillId) % 2 ? 70 : 14) * self.scale + 'px',
+                        'top': '' + (isPassive ? 113 + (Math.floor(passiveSkillId / 2) * 20) : 17 + (Math.floor(activeSkillId / 2) * 20)) * self.scale + 'px',
                         "width": '42px',
                         'height': '15px',
                         'display': 'block'
@@ -52,6 +54,7 @@ define(['../../../tabpage', '../../../../data/skilldata'], function(TabPage, Ski
                     self.skills[id].skill = s;
 
                     $('#characterSkill' + skillId).attr('title', skill.name + " Lv: " + skill.level);
+
                     s.setLevel(skill.level);
 
                     if (isPassive)

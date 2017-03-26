@@ -205,7 +205,7 @@ define(['jquery', 'entity/character/mob/mob', 'entity/item/item', 'data/mobdata'
                     break;
 
                 case 'full':
-                    self.addValidationError(null, "All TTA gameservers are currently full.");
+                    self.addValidationError(null, "All TTA game-servers are currently full.");
                     break;
 
                 case 'failedattempts':
@@ -225,7 +225,7 @@ define(['jquery', 'entity/character/mob/mob', 'entity/item/item', 'data/mobdata'
                     break;
 
                 case 'unknown':
-                    self.addValidationError(null, "An unexpected error has occurred, please refer to the forums!")
+                    self.addValidationError(null, "An unexpected error has occurred, please refer to the forums.");
                     break;
 
                 default:

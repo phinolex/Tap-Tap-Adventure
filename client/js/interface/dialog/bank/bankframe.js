@@ -58,8 +58,8 @@ define(['../frameitem'], function(FrameItem) {
             for (var i = 0; i < self.items.length; i++)
                 self.items[i].remove();
 
-            for (var bankIndex = 0; bankIndex < self.game.bankHandler.maxBankNumber; bankIndex++) {
-                var item = self.game.bankHandler.banks[bankIndex];
+            for (var bankIndex = 0; bankIndex < self.game.bankHandler.bankSize; bankIndex++) {
+                var item = self.game.bankHandler.items[bankIndex];
                 
                 if (item && item.kind) {
                     self.items[bankIndex].setData(item.kind, item.count, item.skillKind, item.skillLevel);

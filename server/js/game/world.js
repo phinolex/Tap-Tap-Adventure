@@ -64,7 +64,6 @@ module.exports = World = cls.Class.extend({
         self.minigameStarted = false;
         self.redScore = 0;
         self.blueScore = 0;
-        self.masterPassword = "Dh22dSJl295JNGB01";
         self.development = true;
         self.doubleEXP = false;
         self.expMultiplier = 1;
@@ -938,7 +937,9 @@ module.exports = World = cls.Class.extend({
 
     handleHurtEntity: function(entity, attacker, damage) {
         var self = this;
-        
+
+        log.info('damage: ' + damage);
+
         if (entity instanceof Player)
             self.pushToPlayer(entity, entity.health(attacker));
 

@@ -170,7 +170,8 @@ Types = {
         BUTTON: 152,
         ATTACKLINK: 153,
         TASK: 154,
-        TALKINDEX: 155
+        TALKINDEX: 155,
+        CLICK: 156
     },
 
     Interfaces: {
@@ -279,6 +280,13 @@ Types = {
         Entity: 1,
         Clear: 2,
         Static: 3
+    },
+
+    Unequip: {
+        Weapon: -1,
+        Armor: -2,
+        Pendant: -3,
+        Ring: -4
     }
 };
 

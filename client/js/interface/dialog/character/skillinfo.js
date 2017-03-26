@@ -11,19 +11,20 @@ define(['../../../data/skilldata'], function(SkillData) {
      * push into an array.
      */
 
-    var Skill = Class.extend({
+    var SkillInfo = Class.extend({
         init: function(id, name, position, game) {
             var self = this;
 
+            self.id = id;
             self.name = name;
             self.game = game;
             self.position = position;
             self.background = $(id);
             self.body = $(id + 'Body');
             self.levels = [];
-            self.level = level;
+            self.level = 0;
             self.cooldown = false;
-            self.scale = -1;
+            self.scale = self.game.getScaleFactor();
 
             self.loadCSSData();
         },
@@ -56,16 +57,16 @@ define(['../../../data/skilldata'], function(SkillData) {
             }
 
             for (var i = 0; i < 4; i++) {
-                var level = $(id + 'Level' + (1 + i));
+                var level = $(self.id + 'Level' + (i + 1));
 
                 level.css({
                     'position': 'absolute',
-                    'left': (19 + (index * 6)) * this.scale + 'px',
-                    'top': 9 * this.scale,
-                    'width': 5 * this.scale,
-                    'height': 8 * this.scale,
-                    'background-image': 'url("img/' + this.scale + '/main.png")',
-                    'background-position': levelPosition[this.scale-1],
+                    'left': (19 + (i * 6)) * self.scale + 'px',
+                    'top': 9 * self.scale,
+                    'width': 5 * self.scale,
+                    'height': 8 * self.scale,
+                    'background-image': 'url("img/' + self.scale + '/main.png")',
+                    'background-position': levelPosition[self.scale - 1],
                     'display': 'none'
                 });
 
@@ -103,43 +104,18 @@ define(['../../../data/skilldata'], function(SkillData) {
             return this.level;
         },
 
-        getScale: function() {
-            var self = this,
-                scale;
-
-            scale = self.game.renderer.getScaleFactor();
-
-            if (self.game.renderer.mobile)
-                scale = 1;
-
-            return scale;
-        },
-
         setLevel: function(level) {
             var self = this;
 
             self.level = level;
 
-            if (level > 0) {
-                self.body.css('display', 'block');
+            for (var i = 0; i < 4; i++)
+                self.levels[i].css('display', 'none');
 
-                if (self.body[0])
-                    self.body[0].draggable = true;
-
-                for (var i = 0; i < level; i++)
-                    self.levels[i].css('display', 'block');
-
-                for (var id = 0; id < self.levels.length; id++)
-                    self.levels[id].css('display', 'none');
-            } else {
-                self.body.css('display', 'none');
-
-                if (self.body[0])
-                    self.body[0].draggable = false;
-
-                for (var ind = 0; ind < self.levels.length; ind++)
-                    self.levels[ind].css('display', 'none');
-            }
+            for (var id = 0; id < self.level; id++)
+                self.levels[id].css('display', 'block');
         }
     });
+
+    return SkillInfo;
 });

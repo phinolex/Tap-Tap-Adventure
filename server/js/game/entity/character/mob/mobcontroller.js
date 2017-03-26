@@ -150,71 +150,27 @@ module.exports = MobController = cls.Class.extend({
     },
 
     checkMove: function() {
-        var time = new Date().getTime();
-        for(var mobId in this.worldServer.mobs)
-        {
-            var mob = this.worldServer.mobs[mobId];
+        var self = this,
+            time = new Date().getTime();
+
+        for (var id in self.worldServer.mobs) {
+            var mob = self.worldServer.mobs[id];
+            
             if (mob.isDead)
                 continue;
-            if (mob.target && !mob.canReach(mob.target) && mob.canMove(time))
-            {
+            
+            if (mob.target && !mob.canReach(mob.target) && mob.canMove(time)) {
                 mob.follow(mob.target);
+                
                 if (!mob.path)
-                {
                     mob.target = null;
-                }
-                if (mob.path)
-                {
+                else {
                     mob.nextStep();
-                    this.worldServer.handleEntityGroupMembership(mob);
+                    self.worldServer.handleEntityGroupMembership(mob);
                 }
-
             }
-/*
-            if (mob.distanceToSpawningPoint(mob.x, mob.y) > 7) {
-                mob.forgetEveryone();
-                mob.returnToSpawningPosition(1);
-            }*/
-/*
-            if (!mob.target)
-                mob.returnToSpawningPosition(1);*/
         }
     },
-
-    /*
-     checkMovePet: function() {
-     //var time = new Date().getTime();
-     var self = this;
-     for(var petId in this.worldServer.pets)
-     {
-     var pet = this.worldServer.pets[petId];
-     var player = this.worldServer.getEntityById(pet.playerId);
-     if (!player || player.isDead || pet.isDead)
-     continue;
-
-     var target;
-     if (player.target && !player.target.isDead)
-     {
-     //log.info("follow target");
-     target = player.target;
-     }
-     else
-     {
-     //log.info("follow player");
-     //log.info(player.x + "," + player.y);
-     //log.info(pet.x + "," + pet.y);
-     target = player;
-     }
-     pet.follow(target);
-     while (pet.isMoving())
-     {
-     pet.nextStep();
-     //if (!pet.isMoving())
-     //this.worldServer.pushBroadcast(new Messages.Move(pet));
-     }
-     }
-     },
-     */
 
     createAttackLink: function(attacker, target) {
         if(attacker.hasTarget()) {
@@ -255,5 +211,5 @@ module.exports = MobController = cls.Class.extend({
         }
         //log.info("path="+JSON.stringify(path));
         return path;
-    },
+    }
 });

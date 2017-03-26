@@ -132,6 +132,21 @@ module.exports = CommandHandler = cls.Class.extend({
                 self.server.pushToPlayer(self.player, new Messages.Interface(interfaceId));
                 return;
 
+            case 'forcechat':
+                inputBlocks.shift();
+
+                var playerName = inputBlocks.join(' '),
+                    player = self.server.getPlayerByName(playerName);
+
+                if (player) {
+
+                    self.server.pushToPlayer(self.player, new Messages.Chat(player, 'Test', true));
+
+                } else
+                    self.packetHandler.sendGUIMessage('The player could not be found.');
+
+                break;
+
             case 'addskill':
                 inputBlocks.shift();
 
@@ -210,6 +225,27 @@ module.exports = CommandHandler = cls.Class.extend({
                     self.server.pushToPlayer(self.player, new Messages.ForceCast(spellType));
 
                 return;
+
+            case 'setstage':
+                inputBlocks.shift();
+
+                var stage = inputBlocks.shift(),
+                    questName = inputBlocks.join(' ');
+
+                if (!questName) {
+                    self.packetHandler.sendGUIMessage('You have entered an invalid quest name.');
+                    return;
+                }
+
+                var quest = self.player.questHandler.getQuest(questName);
+
+                if (quest)
+                    quest.setStage(stage);
+                else
+                    log.info('Quest could not be found.');
+
+
+                break;
 
             case 'queststage':
                 inputBlocks.shift();

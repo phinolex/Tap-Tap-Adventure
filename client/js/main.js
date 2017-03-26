@@ -685,8 +685,6 @@ define(['jquery', 'app', 'utils/entrypoint', 'interface/dialog', 'game', 'render
                 if(game.ready &&
                     !app.dropDialogPopuped &&
                     !app.auctionsellDialogPopuped &&
-                    !game.statehandler.buyingArcher &&
-                    !game.statehandler.changingPassword  &&
                     !game.shopHandler.shown &&
                     !game.shopDialog.visible) {
                     if (key >= 49 && key <= 54) { // 1 to 6 for now

@@ -875,7 +875,7 @@ define(['./camera', '../entity/item/item', 'entity/character/character', '../ent
 
                 if (entity.name) {
                     if (entity instanceof Player && entity.isMoving) {
-                        var colour = entity.isWanted ? "red" : (entity.id === this.game.playerId) ? "#fcda5c" : entity.admin ? "#ff0000" : "white",
+                        var colour = entity.isWanted ? "red" : (entity.id === this.game.player.id) ? "#fcda5c" : entity.admin ? "#ff0000" : "white",
                             level = "Level: " + entity.level;
 
                         if (entity.pvpTeam != -1)
@@ -1187,6 +1187,10 @@ define(['./camera', '../entity/item/item', 'entity/character/character', '../ent
                         self.animatedTileCount += 1;
                     }
                 });
+            },
+
+            isPortableDevice: function() {
+                return this.mobile || this.tablet;
             },
 
             drawDirtyAnimatedTiles: function(ctx) {
