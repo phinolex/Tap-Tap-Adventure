@@ -146,6 +146,6 @@ define(function() {
         return AStar;
 
     }());
-    
+
     return AStar;
 });

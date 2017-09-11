@@ -1,45 +1,45 @@
-/**
- * Created by flavius on 2017-02-24.
- */
-define(function() {
-    var Weapon = Class.extend({
-        init: function(name, type) {
-            var self = this;
-            
-            self.name = name;
-            self.type = type;
+define(['./equipment'], function(Equipment) {
 
-            self.establishKind(); //too lazy
-        },
+    return Equipment.extend({
 
-        establishKind: function() {
+        init: function(name, string, count, ability, abilityLevel) {
             var self = this;
 
-            self.kind = ItemTypes.getKindFromString(self.name);
+            self._super(name, string, count, ability, abilityLevel);
+
+            self.level = -1;
+            self.damage = -1;
+            self.ranged = false;
         },
 
-        getEnchantedPoints: function() {
-            return this.enchantedPoints;
+        exists: function() {
+            return this._super();
         },
 
-        getSkillKind: function() {
-            return this.skillKind;
+        setDamage: function(damage) {
+            this.damage = damage;
         },
 
-        getSkillLevel: function() {
-            return this.skillLevel;
+        setLevel: function(level) {
+            this.level = level;
         },
 
-        setEnchantedPoints: function(points) {
-            this.enchantedPoints = points;
+        getDamage: function() {
+            return this.damage;
         },
 
-        setSkillKind: function(skillKind) {
-            this.skillKind = skillKind;
+        getLevel: function() {
+            return this.level;
         },
 
-        setSkillLevel: function(skillLevel) {
-            this.skillLevel = skillLevel;
+        getString: function() {
+            return this._super();
+        },
+
+        update: function(name, string, count, ability, abilityLevel) {
+            this._super(name, string, count, ability, abilityLevel);
         }
+
     });
+
 });

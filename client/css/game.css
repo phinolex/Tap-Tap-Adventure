@@ -1,207 +1,107 @@
-/*
-@media screen and (width: 2048px), screen and (height: 1536px)
-{
-	body {zoom :130%;}	
+body.game {
+    background: #000;
 }
-@media screen and (width: 1920px), screen and (height: 1080px)
-{
-	body {zoom :125%;}
-}
-@media screen and (width: 1440px), screen and (height: 900px)
-{
-	body {zoom :145%;}
-}
-@media screen and (width: 1280px), screen and (height: 1024px)
-{
-	body {zoom :145%;}
-}
-@media screen and (width: 1280px), screen and (height: 800px)
-{
-	body {zoom :130%;}
-}
-@media screen and (width: 1024px), screen and (height: 768px)
-{
-	body {zoom :105%;}
-}
-*/
 
-@media screen and (min-width: 1501px) {
-
-  #classSwitcher {
-    position: absolute;
-    width:128px;
-    height:96px;
-    left: calc(50% - 64px);
-    top: calc(50% - 48px);
+.game #loadCharacter, .game #createCharacter, .game #error {
     display: none;
-    background-color: rgba(0,0,0,0.5);
-    color: white;
-    padding:8px;
-    text-align: center;
-    font-size:12px;
-  }
-  #classSwitcherButton {
-    margin:8px;
-    border: 1px solid #000;
-  }
-
-
-  #bubbles{
-    font-family:'GraphicPixel';
-    width:960px;
-    height:448px;
-    margin-bottom:-448px;
-    position: absolute;
-    top: 20px;
-    left: 12px;
-    pointer-events:none;
-    overflow: hidden;
-    z-index:5;
-  }
-  .bubble {
-    background:rgba(45,45,45,0.7);
-    padding:3px 10px 0 10px;
-    border-radius:8px;
-    color:rgba(255,255,255,0.8);
-    display:inline-block;
-    text-align:center;
-    position:absolute;
-    -moz-user-select:none;
-    -webkit-user-select:none;
-  }
-  .thingy {
-    height:10px;
-    width:11px;
-    background:url('../img/common/thingy.png');
-    margin:0 auto;
-    margin-top:-6px;
-    top:10px;
-    position:relative;
-  }
-  #bubbles a {
-    pointer-events:auto;
-    text-decoration:none;
-    color:#fcda5c;
-  }
 }
 
-@media screen and (max-width: 1500px), screen and (max-height: 870px) {
-
-  #classSwitcher {
-    position: absolute;
-    width:64px;
-    height:48px;
-    left: calc(50% - 32px);
-    top: calc(50% - 24px);
-    display: none;
-    background-color: rgba(0,0,0,0.5);
-    color: white;
-    padding:4px;
-    text-align: center;
-    font-size:8px;
-  }
-  #classSwitcherButton {
-    margin:4px;
-    border: 1px solid #000;
-  }
-
-  #bubbles{
-    font-family:'GraphicPixel';
-    width:960px;
-    height:448px;
-    margin-bottom:-448px;
-    position: absolute;
-    top: 20px;
-    left: 12px;
-    pointer-events:none;
-    overflow: hidden;
-    z-index:5;
-  }
-  .bubble {
-    background:rgba(45,45,45,0.7);
-    padding:3px 10px 0 10px;
-    border-radius:8px;
-    color:rgba(255,255,255,0.8);
-    display:inline-block;
-    text-align:center;
-    position:absolute;
-    -moz-user-select:none;
-    -webkit-user-select:none;
-  }
-  .thingy {
-    height:10px;
-    width:11px;
-    background:url('../img/common/thingy.png');
-    margin:0 auto;
-    margin-top:-6px;
-    top:10px;
-    position:relative;
-  }
-  #bubbles a {
-    pointer-events:auto;
-    text-decoration:none;
-    color:#fcda5c;
-  }
-
+.game #parchment {
+    z-index: 0;
+    -moz-transition: 0.5s opacity linear 0.5s, z-index 0s linear 1s;
+    -o-transition: 0.5s opacity linear 0.5s, z-index 0s linear 1s;
+    -webkit-transition: 0.5s opacity linear 0.5s, z-index 0s linear 1s;
+    transition: 0.5s opacity linear 0.5s, z-index 0s linear 1s;
+    top: 50%;
 }
 
-@media screen and (max-width: 1000px) {
+.game #credits, .game #death, .game #about, .game #git {
+    opacity: 0;
+    -moz-transition: 0s opacity linear 0s;
+    -o-transition: 0s opacity linear 0s;
+    -webkit-transition: 0s opacity linear 0s;
+    transition: 0s opacity linear 0s;
+    z-index: 1000;
+}
 
+.game.credits #credits, .game.death #death, .game.about #about, .game.git #git {
+    opacity: 1;
+    -moz-transition: 0.5s opacity linear 0.5s;
+    -o-transition: 0.5s opacity linear 0.5s;
+    -webkit-transition: 0.5s opacity linear 0.5s;
+    transition: 0.5s opacity linear 0.5s;
+    z-index: 1000;
+}
 
+.game.credits #parchment, .game.death #parchment, .game.about #parchment, .game.git #parchment {
+    opacity: 1;
+    -moz-transition: 0.5s opacity linear 0s;
+    -o-transition: 0.5s opacity linear 0s;
+    -webkit-transition: 0.5s opacity linear 0s;
+    transition: 0.5s opacity linear 0s;
+    z-index: 1000;
+}
 
+.game .parchment-left {
+    -moz-transition: 0.5s left ease-in-out;
+    -webkit-transition: 0.5s left ease-in-out;
+    -o-transition: 0.5s left ease-in-out;
+    transition: 0.5s left ease-in-out;
+    left: 41%;
+}
+.game .parchment-right {
+    -moz-transition: 0.5s right ease-in-out;
+    -webkit-transition: 0.5s right ease-in-out;
+    -o-transition: 0.5s right ease-in-out;
+    transition: 0.5s right ease-in-out;
+    right: 41%;
+}
+.game .parchment-middle {
+    -moz-transition: 0.5s width ease-in-out, 0.5s margin-left ease-in-out, 0.5s background-position ease-in-out;
+    -webkit-transition: 0.5s width ease-in-out, 0.5s margin-left ease-in-out, 0.5s background-position ease-in-out;
+    -o-transition: 0.5s width ease-in-out, 0.5s margin-left ease-in-out, 0.5s background-position ease-in-out;
+    transition: 0.5s width ease-in-out, 0.5s margin-left ease-in-out, 0.5s background-position ease-in-out;
+    width: 0;
+    margin-left: 0;
+}
 
-  #bubbles{
-    font-family:'GraphicPixel';
-    width:960px;
-    height:448px;
-    margin-bottom:-448px;
-    position: absolute;
-    top: 20px;
-    left: 7px;
-    pointer-events:none;
-    overflow: hidden;
-    z-index:5;
-  }
-  .bubble {
-    background:rgba(45,45,45,0.7);
-    padding:3px 10px 0 10px;
-    border-radius:8px;
-    color:rgba(255,255,255,0.8);
-    display:inline-block;
-    text-align:center;
-    position:absolute;
-    -moz-user-select:none;
-    -webkit-user-select:none;
-  }
-  .thingy {
-    height:10px;
-    width:11px;
-    background:url('../img/common/thingy.png');
-    margin:0 auto;
-    margin-top:-6px;
-    top:10px;
-    position:relative;
-  }
-  #bubbles a {
-    pointer-events:auto;
-    text-decoration:none;
-    color:#fcda5c;
-  }
-  #classSwitcher {
-    position: absolute;
-    width:32px;
-    height:24px;
-    left: calc(50% - 16px);
-    top: calc(50% - 12px);
-    display: none;
-    background-color: rgba(0,0,0,0.5);
-    color: white;
-    padding:2px;
-    text-align: center;
-    font-size:6px;
-  }
-  #classSwitcherButton {
-    margin:2px;
-    border: 1px solid #000;
-  }
+.game.credits .parchment-left, .game.death .parchment-left, .game.about .parchment-left, .game.git .parchment-left {
+    left: 0;
+}
+
+.game.credits .parchment-right, .game.death .parchment-right, .game.about .parchment-right, .game.git .parchment-right {
+    right: 0;
+}
+
+.game #container {
+    opacity: 1;
+}
+
+.started #canvas {
+    cursor: none;
+}
+
+@media only screen and (min-width: 1501px) {
+    
+    .game .parchment-middle {
+        background-position: -633px -882px;
+    }
+    
+    .game.credits .parchment-middle, .game.death .parchment-middle, .game.git .parchment-middle, .game.about .parchment-middle {
+        width: 1038px;
+        margin-left: -519px;
+        background-position: -114px -882px;
+    }
+    
+}
+
+@media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
+
+    
+}
+
+@media only screen and (max-width: 1000px) {
+    .started #canvas {
+        cursor: default;
+    }
 }

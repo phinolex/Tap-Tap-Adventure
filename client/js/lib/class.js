@@ -65,4 +65,3 @@ Class.extend = function(prop) {
 if(!(typeof exports === 'undefined')) {
     exports.Class = Class;
 }
-

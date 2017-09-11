@@ -1,82 +1,61 @@
 # Tap Tap Adventure
 
-[![Dependency Status](https://gemnasium.com/badges/github.com/Tach-Yon/Tap-Tap-Adventure.svg)](https://gemnasium.com/github.com/Tach-Yon/Tap-Tap-Adventure)
+Tap Tap Adventure (TTA) is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ).
 
-A massively multiplayer online experience based on Little Workshop's 2012 experimental HTML5 game - BrowserQuest. Initially, making use of WebSockets, the game has been revamped with more modern approaches such as Socket.io to ensure maximum networking performance in the comfort of your browser.
+The entirety of the source has been rewritten from the ground up, this includes rendering, networking, sprite parsing, map loading, etc. The code remains true to its coding conventions and follows it thoroughly. Although, compared to its predecessor, the code is far more comprehensive and adaptable, it is, as all other repositories on this website, a work in progress. If your capabilities include following onset conventions, you are welcome to contribute!
 
-Since BrowserQuest, we have improved tons of things, rewriting the backend nearly entirely at this point, updates such as:
+The Plan:
 
-* Centered Camera Rendering & Side-Scroller mode
-* Over a thousand new sprites (items, mobs, areas, etc.)
-* API Registration and Login w/ Anti-Bruteforce protection
-* Skills and Abilities
-* Inventory System
-* Changes towards the UI
-* Questing Handler (gives quests malleability)
-* Minigame Handler (anyone can create minigames)
-* Party System -> (To be transformed into guilds)
-* Levelling sytem
-* Proper arrangement of internal server files
-* Complete refactoring of major files
-* Improvements to the packet system
-* Tons of exploits fixed due to accessible client files
-* Banking, Enchanting, Shop, Crafting Systems
-* Projectiles
-* Archery Class
-* Tutorial
+- TTA is expected to remain completely open-source, allowing its community to collaborate and aid in the perfection of the game.
+- The players will be able to vote on what content gets added into the game, while the coders will aid in the creation and perfection of those features
+- There will be no purchases in game - the game will remain completely free
+- Anyone is free to create their own derivative of TTA, with no strings attached. We will even provide toplists.
+- Compatibility is, and will continue to be our number one priority.
 
-Though those changes give the game a greater purpose, there is much to be done, the following are examples:
+Currently, TTA is available on the three major platforms: iOS, Android & PC. Though compatibility is questionable on older devices, there are still features implemented to ensure maximum performance is achieved.
+If you are interested in researching previous versions of the rewritten source, be sure to check out [Kaetram](https://github.com/udeva/Kaetram)
 
-* Improve the rendering to offer maximum performance on all devices
-* Create a storyline for the game to follow -- In Progress
-* Add various activities (cutting wood, making fire, fishing, etc.)
-* Get a interface for Quests
-* Re-arrange the map to fit in more content
-* Trading System amongst players
-* Create a form of economy through the shops (player sells, player buys)
-* Ranking system to players (promoting PVP)
-* Add multiple world support (easy and not important right now)
-* Inventory interface needs to be updated
-* Redo the combat system
+### So what exactly is new in this version?
 
-The intent behind Tap Tap Adventure is to provide a cross-platform experience to everyone, being able to continue your progress at any time while utilizing minimal amounts of data, RAM and CPU. At the same time, we would like to invite everyone to contribute towards the development of the game. All updates posted on GitHub will be voted by other players and included in the game, or adversely, refused.
+Let us start out with this small list:
+
+- Rendering: Has been completely redone to only draw frames whenever necessary. This in turns boosts the performance on browsers such as Safari & Firefox.
+- Networking & Packets: Previously, everything regarding networking was crammed into a singular class, now it has all been laid out properly with every class pertaining necessary functions.
+- Dependencies: All dependencies have been brought up to date, and are constantly updated.
+- Client Rework: The stress put on the client previously was unbelievable, the client not only had to receive packet data, it was responsible for parsing music, achievements, quests, item data, and many other nonsense. This has all been moved to the server side, the client received information about whatever it needs from the server, removing upwards of 20MB of unnecessary data.
+- Source Structure: Since everything has been rewritten from scratch, the code itself is located in designated files following a logical structure, as opposed to random scattered code throughout the source. As an extra, the convention remains unanimous throughout the source, ensuring maximum readability is achieved all throughout. Many functions have been rewritten, and most classes incorporate the Object-Oriented Programming (OOP) paradigm. Ensuring the same thing isn't unnecessarily written a bunch of times.
+- Database Loading: The new version uses MySQL as opposed to Redis. This is because MySQL is far more reliable. With this, the source is able to generate its own database structure regardless of the chosen MySQL server. Everything is stored in its according type and retrieved upon logging in.
+- Data Parser: Located in server/js/util/ the parser loads all data regarding NPCs, Mobs, Items and so on right when the server starts. It is then able to use it throughout the source statically.
+- Map Loading: The client-sided map has been brought down to the bare minimum, it is only responsible for its fair share of collisions (checked both client and server sided) and determining tiles and what gets drawn where. While the server-side map loading ensures the location of objects, NPCs, areas and so on. The client receives information depending on the actions taken by the player (i.e. a player walks into a new zone and must receive new music)
+- Combat System: Completely rewritten and much more controlled, the combat system accounts for both single, multi, ranged or melee combat. It can easily be expanded to include special mobs (e.g. bosses). It is all done in the server-side, greatly reducing the chance of any exploit.
+- Controllers: Both the client and the server side contain a folder named `controllers`. The name is pretty self explanatory, this controls important functions of the game.
+- Quest System: The system for quests and achievements has been laid out already, all that must be done now is finish the interface (CSS mainly) and add new quests.
+
+Still, there are a couple things that have to be done:
+
+- Implementation of Quests and Achievements
+- Add Guilds, Abilities, and Trading
+- Minor tweaks to perfect the interface
 
 
-## Running the Repo
+## Running Tap Tap Adventure
 
-To run your own TTA server, you must `clone` the repository. You will need the latest version of NodeJS for optimal performance.
+Running the server is as easy as 1, 2, 3. I'm not kidding.
 
-Step 1: Install Dependencies
+First, you must `clone` the repository. There's really no way around it, you kinda need the source to run it, y'know?
 
-`$ sudo npm install -d`
+###### Step 1 - Install the dependencies
 
-Step 2: Install Redis Server - https://redis.io
+`sudo npm install -d`
 
-Step 3: Install Http-Server
+###### Step 2 - Run the server
 
-`$ sudo npm install -g http-server`
+`node server/js/main.js`
 
-Step 3.5 (Optional): Install `nodemon`
+###### Step 3 - Connect to the server
 
-If you're planning on developing TTA, `nodemon` is a neat tool that automatically restarts the server upon detecting a change.
+`http://127.0.0.1:1800`
 
-`$ sudo npm install -g nodemon`
+### For Developers
 
-Step 4: Run redis, the server and the client
-
-You will need a separate terminal window for each of the following (ensure you are in the server directory):
-
-`$ redis-server`
-
-`$ node server/js/main` or if you're using nodemon `$ nodemon server/js/main.js`
-
-`$ http-server`
-
-Done! You can connect to the game using http://127.0.0.1:8080/client
-
-
-## Copyright
-
-Because TTA is released under the MPL 2.0 license, everyone must provide the updated source code in one way or another if they choose to start their own version of the game. Images, music and any other form of arts that do not go under this license are exempt from this.
-
-If you are to provide new sprites to this repository, you must have proper permissions from the author or be under CC-BY-SA 3.0. In both instances, you must provide proof of this in your pull requests, and any other information regarding copyright.
+If you are planning on aiding with development, I highly suggest installing `nodemon` as a npm dependency, it automatically restarts the server and saves you the hassle.

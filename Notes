@@ -1,1 +1,0 @@
-Though it should not occur, if the interfaces refactored do appear to have some form of deformation (wrong scaling), the reason will be due to improper getScale() being called as the class still initializes.

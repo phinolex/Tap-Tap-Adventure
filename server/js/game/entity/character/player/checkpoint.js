@@ -1,22 +1,17 @@
-var cls = require('./../../../lib/class');
-var Utils = require('./../../../utils/utils');
+var cls = require('../../../../lib/class');
 
-var Checkpoint = cls.Class.extend({
-    init: function (id, x, y, width, height) {
-        this.id = id;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    },
+module.exports = Checkpoint = cls.Class.extend({
 
-    getRandomPosition: function () {
-        var pos = {};
+    init: function(id, player) {
+        var self = this;
 
-        pos.x = this.x + Utils.randomInt(0, this.width - 1);
-        pos.y = this.y + Utils.randomInt(0, this.height - 1);
-        return pos;
+        self.id = id;
+
+        self.player = player;
+        self.world = player.world;
+        self.map = self.world.map;
+
+
     }
-});
 
-module.exports = Checkpoint;
+});

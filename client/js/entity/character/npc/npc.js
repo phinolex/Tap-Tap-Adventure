@@ -1,37 +1,47 @@
-/* global Types */
+define(['../character'], function(Character) {
 
-define(['../character', '../../../handlers/achievemethandler', '../../../data/npcdata'], function(Character, QH, NpcData) {
-    var Npc = Character.extend({
-        init: function(id, kind, name) {
-            this._super(id, kind, 1);
-            this.itemKind = ItemTypes.getKindAsString(this.kind);
-            this.talkIndex = 0;
-            this.title = name;
+    return Character.extend({
+
+        init: function(id, kind) {
+            var self = this;
+
+            self._super(id, kind);
+
+            self.index = 0;
         },
 
         talk: function(messages) {
-            var self = this;
+            var self = this,
+                count = messages.length,
+                message;
 
-            var message,
-                talkCount = messages.length;
+            if (self.index > count)
+                self.index = 0;
 
-            log.info("Talk Index: " + self.talkIndex);
+            if (self.index < count)
+                message = messages[self.index];
 
-            if (self.talkIndex > talkCount)
-                self.talkIndex = 0;
-
-            if (self.talkIndex < talkCount)
-                message = messages[self.talkIndex];
-
-            self.talkIndex++;
+            self.index++;
 
             return message;
         },
 
-        getSpriteName: function() {
-            return NpcData.Kinds[this.kind].spriteName;
+        idle: function() {
+            this._super();
+        },
+
+        setSprite: function(sprite) {
+            this._super(sprite);
+        },
+
+        setName: function(name) {
+            this._super(name);
+        },
+
+        setGridPosition: function(x, y) {
+            this._super(x, y);
         }
 
     });
-    return Npc;
+
 });

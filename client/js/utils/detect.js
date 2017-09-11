@@ -1,47 +1,7 @@
-
-var Detect = {};
-
-Detect.supportsWebSocket = function() {
-    return window.WebSocket || window.MozWebSocket;
-};
-
-Detect.userAgentContains = function(string) {
-    return navigator.userAgent.indexOf(string) != -1;
-};
+Detect = {};
 
 Detect.isIpad = function() {
-    var isAppleTablet = /ipad/i.test(navigator.userAgent.toLowerCase());
-
-    return isAppleTablet;
-};
-
-Detect.isTablet = function(screenWidth) {
-    var isAppleTablet = /ipad/i.test(navigator.userAgent.toLowerCase()),
-        isAndroidTablet = /android/i.test(navigator.userAgent.toLowerCase());
-
-    return (isAppleTablet || isAndroidTablet) && screenWidth >= 640;
-};
-
-Detect.isIOS = function() {
-    var iDevices = [
-        'iPad Simulator',
-        'iPhone Simulator',
-        'iPod Simulator',
-        'iPad',
-        'iPhone',
-        'iPod'
-    ];
-
-    if (!!navigator.platform) {
-        while (iDevices.length) {
-            if (navigator.platform === iDevices.pop()) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-
+    return /ipad/i.test(navigator.userAgent.toLowerCase());
 };
 
 Detect.isAndroid = function() {
@@ -49,7 +9,7 @@ Detect.isAndroid = function() {
 };
 
 Detect.isWindows = function() {
-    return Detect.userAgentContains('Windows');
+      return Detect.userAgentContains('Windows');
 };
 
 Detect.isChromeOnWindows = function() {
@@ -64,14 +24,8 @@ Detect.isEdgeOnWindows = function() {
     return Detect.userAgentContains('Edge') && Detect.userAgentContains('Windows');
 };
 
-
 Detect.isFirefox = function() {
-    //alert("useragent="+navigator.userAgent);
     return Detect.userAgentContains('Firefox');
-};
-
-Detect.canPlayMP3 = function() {
-    return Modernizr.audio.mp3;
 };
 
 Detect.isSafari = function() {
@@ -84,4 +38,64 @@ Detect.isOpera = function() {
 
 Detect.isFirefoxAndroid = function() {
     return Detect.userAgentContains('Android') && Detect.userAgentContains('Firefox');
+};
+
+Detect.userAgentContains = function(string) {
+    return navigator.userAgent.indexOf(string) !== -1;
+};
+
+Detect.isTablet = function(screenWidth) {
+    var userAgent = navigator.userAgent.toLowerCase(),
+        isAppleTablet = /ipad/i.test(userAgent),
+        isAndroidTablet = /android/i.test(userAgent);
+
+    return (isAppleTablet || isAndroidTablet) && screenWidth >= 640;
+};
+
+Detect.iOSVersion = function() {
+    if(window.MSStream){
+        // There is some iOS in Windows Phone...
+        // https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
+        return '';
+    }
+    var match = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/),
+        version;
+
+    if (match !== undefined && match !== null) {
+        version = [
+            parseInt(match[1], 10),
+            parseInt(match[2], 10),
+            parseInt(match[3] || 0, 10)
+        ];
+        return parseFloat(version.join('.'));
+    }
+
+    return '';
+};
+
+Detect.androidVersion = function() {
+    var userAgent = navigator.userAgent.split('Android'), version;
+
+    if (userAgent.length > 1)
+        version = userAgent[1].split(';')[0];
+
+    return version;
+};
+
+Detect.isAppleDevice = function() {
+    var devices = [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod'
+    ];
+
+    if (!!navigator.platform)
+        while(devices.length)
+            if (navigator.platform = devices.pop())
+                return true;
+
+    return false;
 };

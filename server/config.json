@@ -1,20 +1,24 @@
 {
+  "name": "Tap Tap Adventure",
+  "host": "0.0.0.0",
   "port": 1800,
-  "ip": "0.0.0.0",
-  "debug_level": "debug",
-  "nb_players_per_world": 1000,
-  "nb_worlds": 1,
-  "map_filepath": "./server/maps/world_server.json",
-  "metrics_enabled": false,
-  "use_one_port": true,
-  "redis_port": 6379,
-  "redis_host": "127.0.0.1",
-  "memcached_host": "127.0.0.1",
-  "memcached_port": 11211,
-  "game_servers": [{"server": "0.0.0.0", "name": "TTA1"}],
-  "server_name" : "TTA1",
-  "world_id": 1,
-  "database": "redis",
-  "generateCollisions": true,
-  "serverVersion": 1
+
+  "offlineMode": true,
+  "devClient": true,
+  "development": false,
+
+  "mysqlHost": "127.0.0.1",
+  "mysqlPort": 3306,
+  "mysqlUser": "null",
+  "mysqlPassword": "null",
+  "mysqlDatabase": "TTA",
+
+  "debugLevel": "info",
+  "localDebug": false,
+  "worlds": 1,
+  "maxPlayers": 200,
+  "gver": 2,
+  "updateTime": 200,
+
+  "forceCollisions": false
 }

@@ -1,314 +1,281 @@
-/* global Types */
+/* global Modules, log */
 
-define(['../character', 'utils/exceptions', './mount'], function(Character, Exceptions, Mount) {
+define(['../character', './equipment/armour', './equipment/weapon',
+        './equipment/pendant', './equipment/boots', './equipment/ring'],
+        function(Character, Armour, Weapon, Pendant, Boots, Ring) {
 
-    var Player = Character.extend({
+    return Character.extend({
 
-        init: function(id, name, password, kind, game) {
+        init: function() {
             var self = this;
 
-            self._super(id, kind);
+            self._super(-1, Modules.Types.Player);
 
-            self.name = name;
-            self.password = password;
-            self.game = game;
+            self.username = '';
+            self.password = '';
+            self.email = '';
 
-            self.rights = 0; //Client sided rights don't do anything special
+            self.avatar = null;
 
-            self.spriteName = null;
-            self.armorName = null;
-            self.weaponName = null;
-            self.pendant = null;
-            self.ring = null;
-            self.boots = null;
-
-            self.initEquipmentStats();
-
-            self.isLootMoving = false;
-            self.isSwitchingWeapon = true;
-
-            self.pvpFlag = false;
-            self.gameFlag = false;
-            self.pvpTeam = -1;
-
+            self.rights = 0;
             self.wanted = false;
+            self.experience = -1;
+            self.level = -1;
+            self.pvpKills = -1;
+            self.pvpDeaths = -1;
 
-            self.invincible = false;
-            self.isRoyalAzaleaBenef = false;
-            self.poisoned = false;
-
-            self.pets = [];
+            self.hitPoints = -1;
+            self.maxHitPoints = -1;
+            self.mana = -1;
+            self.maxMana = -1;
 
             self.prevX = 0;
             self.prevY = 0;
 
-            self.pClass = 0;
+            self.direction = null;
+            self.pvp = false;
+
+            self.loadEquipment();
         },
 
-        initEquipmentStats: function() {
+        load: function(data) {
             var self = this;
 
-            self.armorEnchantedPoint = 0;
-            self.armorSkillKind = 0;
-            self.armorSkillLevel = 0;
+            self.setId(data.shift());
+            self.username = data.shift();
 
-            self.weaponEnchantedPoint = 0;
-            self.weaponSkillKind = 0;
-            self.weaponSkillLevel = 0;
+            var x = data.shift(),
+                y = data.shift();
 
-            self.pendantEnchantedPoint = 0;
-            self.pendantSkillKind = 0;
-            self.pendantSkillLevel = 0;
+            self.setGridPosition(x, y);
 
-            self.ringEnchantedPoint = 0;
-            self.ringSkillKind = 0;
-            self.ringSkillLevel = 0;
+            self.kind = data.shift();
+            self.rights = data.shift();
 
-            self.bootsEnchantedPoint = 0;
-            self.bootsSkillKind = 0;
-            self.bootsSkillLevel = 0;
+            var hitPointsData = data.shift(),
+                manaData = data.shift();
+
+            self.setHitPoints(hitPointsData.shift());
+            self.setMaxHitPoints(hitPointsData.shift());
+
+            self.setMana(manaData.shift());
+            self.setMaxMana(manaData.shift());
+
+            self.experience = data.shift();
+            self.level = data.shift();
+
+            self.lastLogin = data.shift();
+            self.pvpKills = data.shift();
+            self.pvpDeaths = data.shift();
+
+            self.type = 'player';
         },
 
-        setSkill: function(name, level, index) {
-            this.skillHandler.add(name, level, index);
-        },
-
-        setBenef: function(itemKind) {
+        loadHandler: function(game) {
             var self = this;
 
-            switch(itemKind) {
-                case 169:
-                    self.startInvincibility();
-                    break;
+            /**
+             * This is for other player characters
+             */
 
-                case 213:
-                    self.startRoyalAzaleaBenef();
-                    break;
-
-                case 20:
-                    self.stopInvincibility();
-                    break;
-            }
+            self.handler.setGame(game);
+            self.handler.load();
         },
 
-        flareDanceAttack: function() {
-            var self = this,
-                adjacentMobs = [],
-                entity, x, y;
-
-            for (x = self.gridX - 1; self.gridX + 2; x++) {
-                for (y = self.gridY - 1; y < self.gridY + 2; y++) {
-                    entity = self.game.getMobAt(x, y);
-
-                    if (entity)
-                        adjacentMobs.push(entity.id);
-                }
-            }
-
-            if (adjacentMobs.length > 0) {
-                for (var i = adjacentMobs.length; i < 4; i++)
-                    adjacentMobs.push(0);
-
-                if (adjacentMobs.length > 4)
-                    adjacentMobs = adjacentMobs.slice(0, 4);
-
-                self.game.client.sendFlareDance(adjacentMobs);
-            }
+        stop: function(force) {
+            this._super(force);
         },
 
-        setLook: function(name) {
+        setId: function(id) {
+            this.id = id;
+        },
+
+        idle: function() {
+            this._super();
+        },
+
+        loadEquipment: function() {
             var self = this;
 
-            self.setSpriteName(name);
-            self.setArmorName(name);
+            self.armour = null;
+            self.weapon = null;
+            self.pendant = null;
+            self.ring = null;
+            self.boots = null;
         },
 
-        setSpriteName: function(name) {
-            var self = this;
-
-            if (!name)
-                self.spriteName = 'clotharmor';
-            else if (name)
-                self.spriteName = name;
-            else
-                self.spriteName = self.armorName;
+        isRanged: function() {
+            return this.weapon && this.weapon.ranged;
         },
 
-        setArmorName: function(armorName) {
-            this.armorName = armorName;
+        follow: function(character) {
+            this._super(character);
         },
 
-        setWeaponName: function(weaponName) {
-            this.weaponName = weaponName;
-            this.hasArcherWeapon = ItemTypes.isArcherWeapon(ItemTypes.getKindFromString(weaponName));
-        },
-
-        setPendant: function(name) {
-            this.pendant = name;
-        },
-
-        setRing: function(name) {
-            this.ring = name;
-        },
-
-        setBoots: function(name) {
-            this.boots = name;
-        },
-
-        setTeam: function(team) {
-            this.pvpTeam = team;
-        },
-
-        setClass: function(pClass) {
-            var self = this;
-
-            self.pClass = pClass;
-
-            switch (pClass) {
-                case Types.PlayerClass.FIGHTER:
-                case Types.PlayerClass.DEFENDER:
-                    self.setAtkRange(1);
-                    break;
-
-                case Types.PlayerClass.ARCHER:
-                    self.setAtkRange(4);
-                    break;
-
-                case Types.PlayerClass.MAGE:
-                    self.setAtkRange(5);
-                    break;
-            }
-        },
-
-        getTeam: function() {
-            return this.pvpTeam;
-        },
-
-        getSpriteName: function() {
-            var self = this;
-
-            if (!self.spriteName)
-                self.setSpriteName(null);
-
-            return self.spriteName;
-        },
-
-        isMovingToLoot: function() {
-            return this.isLootMoving;
-        },
-
-        getWeaponName: function() {
-            return this.weaponName;
+        go: function(x, y, forced) {
+            this._super(x, y, forced);
         },
 
         hasWeapon: function() {
-            return this.weaponName !== null;
+            return this.weapon ? this.weapon.exists() : false;
         },
 
-        switchArmor: function(armor, sprite) {
+        performAction: function(orientation, action) {
+            this._super(orientation, action);
+        },
+
+        setName: function(name) {
             var self = this;
 
-            self.setSpriteName(armor);
-            self.setSprite(sprite);
-            self.setArmorName(armorName);
-
-            if (self.switch_callback)
-                self.switch_callback();
+            self.username = name;
+            self.name = name;
         },
 
-        switchWeapon: function(newWeapon) {
+        setSprite: function(sprite) {
+            this._super(sprite);
+        },
+
+        getSpriteName: function() {
+            return this.armour ? this.armour.string : 'clotharmor';
+        },
+
+        setGridPosition: function(x, y) {
+            this._super(x, y);
+        },
+
+        setHitPoints: function(hitPoints) {
+            this._super(hitPoints);
+        },
+
+        setMaxHitPoints: function(maxHitPoints) {
+            this._super(maxHitPoints);
+        },
+
+        setMana: function(mana) {
+            this.mana = mana;
+        },
+
+        setMaxMana: function(maxMana) {
+            this.maxMana = maxMana;
+        },
+
+        clearHealthBar: function() {
+            this._super();
+        },
+
+        getX: function() {
+            return this.gridX;
+        },
+
+        getY: function() {
+            return this.gridY;
+        },
+
+        setEquipment: function(type, info) {
             var self = this,
-                count = 14,
-                value = false;
+                name = info.shift(),
+                string = info.shift(),
+                count = info.shift(),
+                ability = info.shift(),
+                abilityLevel = info.shift();
 
-            var toggle = function() {
-                value = !value;
-                return value;
-            };
+            switch (type) {
+                case Modules.Equipment.Armour:
 
-            if (newWeapon != self.getWeaponName()) {
-                if (self.isSwitchingWeapon)
-                    clearInterval(blinking);
+                    if (!self.armour)
+                        self.armour = new Armour(name, string, count, ability, abilityLevel);
+                    else
+                        self.armour.update(name, string, count, ability, abilityLevel);
 
-                self.isSwitchingWeapon = true;
+                    if (self.updateArmourCallback)
+                        self.updateArmourCallback(string);
 
-                var blinking = setInterval(function() {
+                    break;
 
-                    self.setWeaponName(toggle() ? newWeapon : null);
+                case Modules.Equipment.Weapon:
 
-                    count -= 1;
+                    if (!self.weapon)
+                        self.weapon = new Weapon(name, string, count, ability, abilityLevel);
+                    else
+                        self.weapon.update(name, string, count, ability, abilityLevel);
 
-                    if (count == 1) {
-                        clearInterval(blinking)
+                    self.weapon.ranged = string.includes('bow');
 
-                        self.isSwitchingWeapon = false;
+                    break;
 
-                        if (self.switch_callback)
-                            self.switch_callback();
-                    }
+                case Modules.Equipment.Pendant:
 
-                }, 90);
+                    if (!self.pendant)
+                        self.pendant = new Pendant(name, string, count, ability, abilityLevel);
+                    else
+                        self.pendant.update(name, string, count, ability, abilityLevel);
+
+                    break;
+
+                case Modules.Equipment.Ring:
+
+                    if (!self.ring)
+                        self.ring = new Ring(name, string, count, ability, abilityLevel);
+                    else
+                        self.ring.update(name, string, count, ability, abilityLevel);
+
+                    break;
+
+                case Modules.Equipment.Boots:
+
+                    if (!self.boots)
+                        self.boots = new Boots(name, string, count, ability, abilityLevel);
+                    else
+                        self.boots.update(name, string, count, ability, abilityLevel);
+
+                    break;
+
             }
         },
 
-        onSwitchWeapon: function(callback) {
-            this.switch_callback = callback;
-        },
-
-        startRoyalAzaleaBenef: function() {
+        unequip: function(type) {
             var self = this;
 
-            if (!self.isRoyalAzaleaBenef)
-                self.isRoyalAzaleaBenef = true;
-            else
-                if (self.royalAzaleaBenefTimeout)
-                    clearTimeout(self.royalAzaleaBenefTimeout);
+            switch (type) {
+                case 'armour':
+                    self.armour.update('Cloth Armour', 'clotharmor', 1, -1, -1);
+                    break;
 
-            self.royalAzaleaBenefTimeout = setTimeout(function() {
-                self.stopRoyalAzaleaBenef();
-                self.idle();
-            }, 15000);
+                case 'weapon':
+                    self.weapon.update(null, null, -1, -1, -1);
+                    break;
+
+                case 'pendant':
+                    self.pendant.update(null, null, -1, -1, -1);
+                    break;
+
+                case 'ring':
+                    self.ring.update(null, null, -1, -1, -1);
+                    break;
+
+                case 'boots':
+                    self.boots.update(null, null, -1, -1, -1);
+                    break;
+            }
         },
 
-        stopRoyalAzaleaBenef: function() {
+        tempBlink: function() {
             var self = this;
 
-            self.isRoyalAzaleaBenef = false;
+            self.blink(90);
 
-            if (self.royalAzaleaBenefTimeout)
-                clearTimeout(self.royalAzaleaBenefTimeout);
+            if (!self.tempBlinkTimeout)
+                self.tempBlinkTimeout = setTimeout(function() { self.stopBlinking(); }, 500);
         },
 
-        flagPVP: function(pvpFlag) {
-            this.pvpFlag = pvpFlag;
+        getDistance: function(entity) {
+            return this._super(entity);
         },
 
-        flagGame: function(gameFlag) {
-            this.gameFlag = gameFlag;
-        },
-
-        walk: function(orientation) {
-            var self = this;
-
-            self.setOrientation(orientation);
-            self.animate('walk', self.walkSpeed);
-        },
-
-        idle: function(orientation) {
-            var self = this;
-
-            self.setOrientation(orientation);
-            self.animate('idle', self.idleSpeed);
-        },
-
-        updateMovement: function() {
-            this._super();
-        },
-
-        removeTarget: function() {
-            this._super();
+        onUpdateArmour: function(callback) {
+            this.updateArmourCallback = callback;
         }
+
     });
 
-    return Player;
 });

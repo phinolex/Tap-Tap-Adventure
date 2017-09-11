@@ -1,49 +1,1187 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c48d7ea8-5c56-4f6b-afdb-8c04901f739b" name="Default" comment="Introduction Quest Additions">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/network/incoming.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/network/parser.js" />
+    <list default="true" id="c48d7ea8-5c56-4f6b-afdb-8c04901f739b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/fonts/advocut/advocut-webfont.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/fonts/advocut/advocut-webfont.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/fonts/advocut/advocut-webfont.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/1/bank.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/1/buttons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/1/containers.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/1/skillslots.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/1/trade.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/bank.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/bow.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/buttons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/containers.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/ghost.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/item-apple.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/item-banana.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/item-orange.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/item-shardt1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/item-shardt2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/item-shardt3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/item-shardt4.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/item-shardt5.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/item-watermelon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/skillslots.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/2/trade.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/bank.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/buttons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/containers.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/ghost.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/item-apple.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/item-banana.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/item-orange.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/item-shardt1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/item-shardt2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/item-shardt3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/item-shardt4.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/item-shardt5.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/item-watermelon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/skillslots.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/3/trade.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/background.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/favicon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/loading.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/spinner.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/img/thingy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/map/data/mobset.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/map/data/tilesheet.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Notes.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/css/animations.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/css/interface.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/css/vars.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/data/config.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/data/maps/world_client.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/data/maps/world_client.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/data/sprites.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/fonts/advocut/advocut-webfont.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/audio.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/bubble.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/chat.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/entities.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/info.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/input.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/interface.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/overlay.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/pointer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/sprites.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/controllers/zoning.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/entity/character/player/equipment/armour.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/entity/character/player/equipment/boots.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/entity/character/player/equipment/pendant.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/entity/character/player/equipment/ring.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/entity/character/player/playerhandler.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/entity/entityhandler.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/entity/objects/item.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/entity/objects/projectile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/entity/sprite.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/abilities.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/actions.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/bank.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/container/container.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/container/slot.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/enchant.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/inventory.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/profile/page.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/profile/pages/ability.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/profile/pages/quest.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/profile/pages/settings.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/profile/pages/state.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/interface/profile/profile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/lib/home.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/network/messages.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/network/packets.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/network/socket.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/renderer/bubbles/blob.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/renderer/camera.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/renderer/grids.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/renderer/infos/splat.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/renderer/pointers/pointer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/renderer/renderer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/renderer/tile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/renderer/updater.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/utils/modules.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/utils/queue.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/utils/storage.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/js/utils/transition.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/lib/socket.io.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/lib/socket.io.js.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/data/abilities.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/data/achievements.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/data/guilds.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/data/items.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/data/map/world_server.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/data/mobs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/data/npcs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/data/quests.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/controllers/chat.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/controllers/commands.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/controllers/incoming.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/controllers/quests.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/database/creator.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/database/loader.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/database/mysql.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/combat/combatqueue.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/combat/hit.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/combat/impl/skeletonking.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/ability/abilities.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/ability/misc/ability.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/ability/misc/firestrike.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/ability/misc/iceattack.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/ability/misc/run.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/achievement.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/containers/bank/bank.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/containers/container.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/containers/inventory/constants.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/containers/inventory/inventory.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/containers/slot.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/enchant/enchant.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/armour.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/boots.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/equipment.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/pendant.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/ring.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/weapon.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/handler.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/points/hitpoints.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/points/mana.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/points/points.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/profession/profession.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/quest/misc/introduction.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/quest/quest.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/npc/npc.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/objects/item.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/objects/projectile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/formulas.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/lib/class.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/map/area.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/map/areas/musicareas.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/map/areas/pvpareas.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/map/groups.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/map/map.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/network/connection.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/network/messages.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/network/packets.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/network/socket.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/network/websocket.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/util/abilities.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/util/items.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/util/mobs.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/util/modules.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/util/npcs.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/util/parser.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/util/utils.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/api/registrar.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/file.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/map/data/map.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/map/exportmap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/map/processmap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/map/processmap.log" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Notes" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/config/config_build.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/config/config_local.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/achievement.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/bankdialog.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/basebar.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/characterdialog.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/enchantdialog.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/fonts.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/ie.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/inappstore.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/inventory.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/normalize.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/normalize.css^" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/quest.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/shop.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/skill.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/storedialog.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/css/variables.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/GraphicPixel.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/GraphicPixel/graphicpixel-webfont.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/GraphicPixel/graphicpixel-webfont.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/GraphicPixel/graphicpixel-webfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/GraphicPixel/graphicpixel-webfont.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/advocut-webfont.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/advocut-webfont.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/advocut-webfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/advocut-webfont.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/graphicpixel-webfont.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/graphicpixel-webfont.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/graphicpixel-webfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/fonts/graphicpixel-webfont.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/achievements.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/adherer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/adhererarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/adhererrobe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/adminarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/agent.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ancientmanumentnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/angelnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ant.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/archerarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/archerschooluniform.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/axe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/babyspider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bamboospear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/barsheet.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/basebarcontainer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bastardsword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/beachnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bearseonbiarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/beautifullife.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bee.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/beearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/beetle.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/beetlearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/blackpirateskeleton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/blackspiderarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/blackwizard.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/blazespider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bloodbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bloodsucking.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluebikinigirlnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluecockroach.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluedamboarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluepiratearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluepreta.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluescimitar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluestoremannpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluesword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluewingarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bluewingarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/boss.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/boxingman.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/breaker.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bridalmask.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bronzemedal.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/brownmouse.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/bucklerbenef.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/burgerarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/burningstrike.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/butcherknife.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cactus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cactusaxe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/candybar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/captainbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/catarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/characterbutton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/characterdialog.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cheoliarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cheoliarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/chest.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/christmasarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/clam.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/clotharmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cobra.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cockroachsuit.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/coder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cokearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/comb.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/combatuniform.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/conferencecall.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/crab.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/criticaleffect.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/criticalstrike.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/crystalarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/crystalarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/crystalbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/crystalscolpion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cursedhahoemask.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/cursedjangseung.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/damboarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/darkogre.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/darkregion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/darkregionillusion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/darkscolpion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/darkskeleton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/daywalker.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/death.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/deathbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/deathknight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/desertnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/desertscolpion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/devilkazya.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/devilkazyaarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/devilkazyasword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/dinosaurarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/doctor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/dovakinarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/dovakinarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/dragonarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/earthworm.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/elfnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/eliminator.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/enel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/enelarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/eneltrident.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/evasion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/evilarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/expbar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/explosion-boulder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/explosion-fireball.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/explosion-heal.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/explosion-iceball.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/explosion-lavaball.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/explosion-terror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/eye.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/fairynpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/fallenarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/fallenarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/firebenef.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/firefox.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/fireplay.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/fireshot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/firespider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/firesword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/firstsonangelnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/fisherman.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/flaredance.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/flaredanceeffect.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/flaredeathknight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/fluffy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/forestbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/forestdragon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/forestguardiansword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/forestnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/frankensteinarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/friedpotatoarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/frog.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/frogarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/frostarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/frostqueen.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/gayarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/gayarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/gaybow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/gbwingarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/gbwingarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ghostrider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/goblin.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/goldaxe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/goldenarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/goldenarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/goldenbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/goldensword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/goldgolem.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/goldmedal.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/golem.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greenarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greenarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greenbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greendamboarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greenfish.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greenlightbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greenlightsaber.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greenpirateskeleton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greenwingarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/greenwingarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/guard.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/guardarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/guardarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/halberd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/halloweenjkarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/hammer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/hand.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/heal.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/healactiveicon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/healeffect.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/hellspider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/helpbutton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/hermitcrab.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/hobgoblin.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/hongcheol.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/hongcheolarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/hpbar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/huniarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/hunterbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/iamverycoldnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/iceelfnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/icegoblin.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/icegolem.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/iceknight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/icerose.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/icevulture.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/infectedguard.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/inventory.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ironbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ironknightarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ironogre.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-adhererarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-adhererrobe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-adminarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-archerarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-archerschooluniform.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-armorbinding.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-armorcommon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-armorpatches.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-armorrare.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-armoruncommon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-axe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bamboospear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bastardsword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bearseonbiarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-beautifullife.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-beearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-beetlearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bigflask.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-blackpotion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-blackspiderarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bloodbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bluedamboarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bluepiratearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bluescimitar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bluesword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bluewingarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bluewingarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-book.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bowcommon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bowlimb.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bowrare.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bowstring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bowuncommon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-branch.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-breaker.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-bridalmask.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-burger.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-burgerarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-butcherknife.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-cactusaxe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-cake.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-candybar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-captainbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-catarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-cd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-cheoliarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-cheoliarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-christmasarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-cloth.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-clotharmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-cockroachsuit.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-cokearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-comb.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-combatuniform.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-conferencecall.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-crystalarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-crystalarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-crystalbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-damboarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-daywalker.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-deathbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-devilkazyaarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-devilkazyasword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-diamondring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-dinosaurarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-dolring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-dovakinarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-dovakinarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-dragonarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-element.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-emeraldring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-enelarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-eneltrident.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-essentialrage.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-evilarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-fallenarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-fallenarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-fireplay.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-firepotion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-fireshot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-firesword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-flask.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-forestbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-forestguardiansword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-frankensteinarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-friedpotatoarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-frogarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-frostarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-gayarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-gayarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-gaybow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-gbwingarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-gbwingarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-ghostrider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-gold.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-goldaxe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-goldenarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-goldenarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-goldenbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-goldensword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-goldring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-greenarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-greenarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-greenbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-greendamboarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-greenlightbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-greenlightsaber.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-greenpendant.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-greenwingarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-greenwingarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-guardarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-guardarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-halberd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-halloweenjkarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-hammer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-hongcheolarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-huniarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-hunterbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-icerose.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-ironbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-ironknightarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-justicebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-justicehammer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-leaf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-leatherarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-leatherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-legolasarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-loveactring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-machete.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-magicspear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-mailarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-mailarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-manaflask.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-marblependant.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-marinebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-memme.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-mermaidbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-mineral.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-miniseadragonarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-morningstar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-mountforestdragon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-mountseadragon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-mountwhitetiger.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-ninjaarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-paewoldo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-paladinarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-pearlpendant.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-pearlring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-pendant1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-pinkcockroacharmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-pinksword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-piratearcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-pirateking.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-plasticbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-platearcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-platearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-plunger.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-portalarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-powerarmour.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-powersword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-purplecloudkallege.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-rabbitarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-radisharmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-rainbowapro.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-rainbowsword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-ratarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-ratarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-reddamboarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redenelbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redguardarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redguardarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redlightbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redlightsaber.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redmetalbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redmetalsword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redsickle.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redsicklebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redsword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redwingarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-redwingarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-regionarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-ring1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-robocoparmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-rock.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-rose.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-rosebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-royalazalea.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-rubyring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-rudolfarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-sapphirering.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-schooluniform.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-scimitar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-seadragonarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-seahorsebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-searage.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-seed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-shadowregionarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-sickle.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-sicklebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-sidesword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-skylightbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-skylightsaber.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-snowfoxarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-snowfoxarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-snowmanarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-snowpotion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-spear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-spiritring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-sproutring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-squeakyhammer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-squidarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-sword1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-sword2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-taekwondo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-tamagotchiring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-thiefarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-tigerarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-topazring.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-trident.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-typhoon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-violetbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-watermelonbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-weaponblade.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-weaponcommon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-weaponhilt.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-weaponrare.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-weaponuncommon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-weastaff.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-whip.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-whitearcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-whitearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-wizardrobe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-wolfarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-wolfarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-wood.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/item-woodenbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/jirisanmoonbear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/justicebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/justicehammer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/kaonashi.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/king.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/lavanpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/leatherarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/leatherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/legolasarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/lightningguardian.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/livingarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/login.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/loot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/machete.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/magicspear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/mailarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/mailarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/mantis.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/marinebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/memme.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/mermaid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/mermaidbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/mermaidnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/mimic.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/minidragon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/miniemperor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/miniiceknight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/miniknight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/miniseadragon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/miniseadragonarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/mojojojonpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/moleking.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/momangelnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/moreinventorybutton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/morningstar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/newcharacter.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/nightmareregion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ninjaarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/nyan.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/octocat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/octopus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/oddeyecat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ogre.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ogrelord.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/oldogre.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/orc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/paewoldo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/pain.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/paladinarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/penguin.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/pierrot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/pinkcockroacharmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/pinkelf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/pinksword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/piratearcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/piratecaptain.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/pirategirlnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/pirateking.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/pirateskeleton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/plasticbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/platearcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/platearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/plunger.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/pointer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/poisonspider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/portalarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/powerarmour.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/powersword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/preta.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/priest.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/projectile-boulder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/projectile-fireball.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/projectile-iceball.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/projectile-none.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/projectile-pinearrow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/projectile-terror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/projectile-tornado.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/provocationeffect.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/purplecloudkallege.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/purplepreta.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/queenant.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/queenspider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rabbitarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/radisharmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rainbowapro.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rainbowsword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ratarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/ratarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redbikinigirlnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redcockroach.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/reddamboarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redelf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redenelbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redfish.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redguard.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redguardarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redguardarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redlightbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redlightsaber.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redmetalbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redmetalsword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redmouse.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redpirateskeleton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redsickle.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redsicklebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redstoremannpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redsword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redwingarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/redwingarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/regionarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/regionhenchman.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rhaphidophoridae.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rick.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/robocoparmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rose.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rosebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rudolf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/rudolfarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/santa.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/santaelf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/schooluniform.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/scientist.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/scimitar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/scorpion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/seadragon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/seadragonarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/seahorsebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/searage.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/secondsonangelnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/shadow16.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/shadowregion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/shadowregionarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/shepherdboy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/shieldbenef.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/sickle.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/sicklebow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/sidesword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/silvermedal.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/skeleton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/skeleton2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/skeletonking.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/skilllevel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/skydinosaur.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/skyelf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/skylightbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/skylightsaber.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/slime.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/smalldevil.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snek.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snowelf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snowfoxarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snowfoxarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snowlady.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snowman.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snowmanarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snowrabbit.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snowshepherdboy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/snowwolf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/soldier.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/soldierant.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/sorcerer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/soundbutton.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/soybeanbug.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/sparks.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/spear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/spectre.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/spell.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/spider.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/sponge.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/squeakyhammer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/squid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/squidarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/squirrel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/storedialogsheet.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/stuneffect.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/suicideghost.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/supercateffect.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/superiorangelnpc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/sword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/sword1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/sword2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/taekwondo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/talk.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/target.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/thiefarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/tigerarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/tilesheet.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/trident.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/typhoon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/vampire.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/vendingmachine.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/villagegirl.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/villager.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/violetbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/vulture.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/watermelonbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/weastaff.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/whip.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/whitearcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/whitearmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/whitebear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/whitemouse.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/whitetiger.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/windguardian.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/wizard.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/wizardrobe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/wolf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/wolfarcherarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/wolfarmor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/wood.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/wood2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/wood3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/woodenbow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/yellowbat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/yellowfish.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/yellowmouse.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/yellowpreta.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/zombie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/1/zombiegf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/2/characterdialog.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/2/storedialogsheet.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/3/storedialogsheet.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/apple-touch-icon-114x114.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/apple-touch-icon-144x144.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/apple-touch-icon-57x57.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/apple-touch-icon-72x72.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/arrow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/background.bmp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/background.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/background2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/favicon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/loading-error.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/loadingg.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/spinner.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/spinner2.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/img/common/thingy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/javascripts/LowLatencyAudio.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/javascripts/bridge.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/javascripts/gamecontroller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/javascripts/screenfull.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/javascripts/socket.io.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/.auctiondialog.js.marks" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/audio/audio.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/data/craftdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/data/gatherdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/data/mobdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/data/npcdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/data/skilldata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/character/mob/mobs.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/character/mob/pet.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/character/npc/npcs.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/character/player/equipment/armor.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/character/player/mount.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/entityfactory.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/gather/gather.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/item/item.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/item/items.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/entity/projectile.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/achievemethandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/bankhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/boardhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/chathandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/inventoryhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/lobbyhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/partyhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/rankinghandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/shophandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/skillhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/statehandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/handlers/textwindowhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/home.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/classpopupmenu.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/auction/auctiondialog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/bank/bankdialog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/bank/bankframe.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/character/characterdialog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/character/frame.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/character/pages/settingspage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/character/pages/skillpage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/character/pages/statepage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/character/skillinfo.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/craft/craftdialog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/enchant/enchantdialog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/frameitem.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/inventoryframe.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/pagenavigator.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/shop/pages/armorpage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/shop/pages/potionpage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/shop/pages/storepage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/shop/pages/weaponpage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/shop/shopdialog.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/shop/storeframe.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/dialog/shop/storerack.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/inappstore.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/infomanager.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/menu.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/playerpopupmenu.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/tabbook.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/interface/tabpage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/bison.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/css3-mediaqueries.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/require-jquery-backup.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/sha1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/lib/virtualjoystick.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/map/area.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/network/gameclient.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/network/incoming.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/network/parser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/bubble/bubble.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/bubble/bubblemanager.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/camera.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/pointer/entitypointer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/pointer/locationpointer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/pointer/pointer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/pointer/pointermanager.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/pointer/staticpointer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/renderer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/sprites/sprite.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/sprites/sprites.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/tile.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/transition.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/rendering/updater.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/utils/entrypoint.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/utils/exceptions.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/js/utils/localstorage.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/main.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/maps/world_client.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/maps/world_client.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/achievements.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/achievements_english.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/achievements_french.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/craft.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/entity_spawn.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/gather.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/inappstore.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/items.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/minigamedata.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/mobs.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/npcs.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/quests.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/skills.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/data/warps.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/js/boilerplate.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/js/file.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/js/gametypes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/js/itemtypes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/js/test_boilerplate.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/nbproject/private/private.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/nbproject/private/private.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/nbproject/project.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/shared/nbproject/project.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/sprites/main.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/.idea/server.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/data/languages/english.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/data/languages/french.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/data/map/collisiongrid.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/constants.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/activities/mining.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/databases/mysql.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/databases/redis.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/character/mob/mobcontroller.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/activity.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/bank/bank.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/bank/bankroom.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/inventory/inventory.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/inventory/inventoryslot.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/party.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/pet.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/entityspawn.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/item/chest.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/item/gather.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/item/item.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/entity/npc.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/handlers/activityhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/handlers/commandhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/handlers/minigamehandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/handlers/packethandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/handlers/questhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/handlers/skillhandler.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/lib/astar.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/lib/class.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/map/area.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/map/areas/chestarea.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/map/areas/mobarea.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/map/areas/pvparea.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/map/map.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/minigames/kingofthehill.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/minigames/minigame.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/minigames/pvpgame.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/network/packets/message.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/network/ws.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/quests/introduction.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/quests/quest.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/data/achievementdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/data/craftdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/data/gatherdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/data/itemdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/data/mobdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/data/npcdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/data/questdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/data/skilldata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/data/warpdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/databaseselector.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/formulas.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/metrics.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/pathfinder.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/productionconfig.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/timer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/transition.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/game/utils/utils.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/maps/world_server.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/achievements.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/achievements_english.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/achievements_french.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/craft.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/entity_spawn.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/gather.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/inappstore.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/items.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/minigamedata.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/mobs.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/npcs.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/quests.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/skills.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/data/warps.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/js/boilerplate.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/js/file.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/js/gametypes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/js/itemtypes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/js/test_boilerplate.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/nbproject/private/private.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/nbproject/private/private.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/nbproject/project.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/shared/nbproject/project.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/maps/dump.rdb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/maps/exportmap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/maps/genmap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/maps/pre_processmap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/maps/processmap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/maps/processmap.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/maps/tmx/map.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/maps/tmx/mobset.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/maps/tmx/tilesheet.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/sha1_encode.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/achievement.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/achievement.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/chat.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/chat.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/chest.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/chest.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/death.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/death.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/firefox.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/firefox.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/heal.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/heal.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/hit1.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/hit1.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/hit2.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/hit2.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/hurt.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/hurt.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/kill1.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/kill1.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/kill2.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/kill2.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/loot.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/loot.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/noloot.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/noloot.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/npc-end.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/npc-end.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/npc.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/npc.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/npctalk.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/npctalk.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/revive.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/revive.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/sounds/teleport.mp3" afterPath="$PROJECT_DIR$/client/audio/sounds/teleport.mp3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/border.png" afterPath="$PROJECT_DIR$/client/img/1/border.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/characterdialogsheet.png" afterPath="$PROJECT_DIR$/client/img/1/characterdialogsheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/main.png" afterPath="$PROJECT_DIR$/client/img/1/main.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/maintwo.png" afterPath="$PROJECT_DIR$/client/img/1/maintwo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/1/skillicons.png" afterPath="$PROJECT_DIR$/client/img/1/skillicons.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/2/border.png" afterPath="$PROJECT_DIR$/client/img/2/border.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/2/characterdialogsheet.png" afterPath="$PROJECT_DIR$/client/img/2/characterdialogsheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/2/projectile-pinearrow.png" afterPath="$PROJECT_DIR$/client/img/2/projectile-pinearrow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/2/skillicons.png" afterPath="$PROJECT_DIR$/client/img/2/skillicons.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/3/border.png" afterPath="$PROJECT_DIR$/client/img/3/border.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/3/bow.png" afterPath="$PROJECT_DIR$/client/img/3/bow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/3/characterdialogsheet.png" afterPath="$PROJECT_DIR$/client/img/3/characterdialogsheet.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/3/projectile-pinearrow.png" afterPath="$PROJECT_DIR$/client/img/3/projectile-pinearrow.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/img/3/skillicons.png" afterPath="$PROJECT_DIR$/client/img/3/skillicons.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LICENSE" afterPath="$PROJECT_DIR$/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/build.sh" afterPath="$PROJECT_DIR$/bin/build.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/game.css" afterPath="$PROJECT_DIR$/client/css/game.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/main.css" afterPath="$PROJECT_DIR$/client/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.html" afterPath="$PROJECT_DIR$/client/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/app.js" afterPath="$PROJECT_DIR$/client/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/build.js" afterPath="$PROJECT_DIR$/client/js/build.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/animation.js" afterPath="$PROJECT_DIR$/client/js/entity/animation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/character/character.js" afterPath="$PROJECT_DIR$/client/js/entity/character/character.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/character/mob/mob.js" afterPath="$PROJECT_DIR$/client/js/entity/character/mob/mob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/character/npc/npc.js" afterPath="$PROJECT_DIR$/client/js/entity/character/npc/npc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/character/player/equipment/equipment.js" afterPath="$PROJECT_DIR$/client/js/entity/character/player/equipment/equipment.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/character/player/equipment/weapon.js" afterPath="$PROJECT_DIR$/client/js/entity/character/player/equipment/weapon.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/character/player/player.js" afterPath="$PROJECT_DIR$/client/js/entity/character/player/player.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/entity.js" afterPath="$PROJECT_DIR$/client/js/entity/entity.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/objects/chest.js" afterPath="$PROJECT_DIR$/client/js/entity/objects/chest.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/game.js" afterPath="$PROJECT_DIR$/client/js/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/handlers/bankhandler.js" afterPath="$PROJECT_DIR$/client/js/handlers/bankhandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/handlers/inventoryhandler.js" afterPath="$PROJECT_DIR$/client/js/handlers/inventoryhandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/interface/dialog/bank/bankframe.js" afterPath="$PROJECT_DIR$/client/js/interface/dialog/bank/bankframe.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/interface/dialog/character/pages/skillpage.js" afterPath="$PROJECT_DIR$/client/js/interface/dialog/character/pages/skillpage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/interface/dialog/character/skillinfo.js" afterPath="$PROJECT_DIR$/client/js/interface/dialog/character/skillinfo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/interface/infomanager.js" afterPath="$PROJECT_DIR$/client/js/interface/infomanager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/lib/astar.js" afterPath="$PROJECT_DIR$/client/js/lib/astar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/lib/class.js" afterPath="$PROJECT_DIR$/client/js/lib/class.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/lib/jquery.js" afterPath="$PROJECT_DIR$/client/js/lib/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/lib/log.js" afterPath="$PROJECT_DIR$/client/js/lib/log.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/lib/require.js" afterPath="$PROJECT_DIR$/client/js/lib/require.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/main.js" afterPath="$PROJECT_DIR$/client/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/network/gameclient.js" afterPath="$PROJECT_DIR$/client/js/network/gameclient.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/rendering/pointer/pointermanager.js" afterPath="$PROJECT_DIR$/client/js/rendering/pointer/pointermanager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/rendering/renderer.js" afterPath="$PROJECT_DIR$/client/js/rendering/renderer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/maps/world_client.js" afterPath="$PROJECT_DIR$/client/maps/world_client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/maps/world_client.json" afterPath="$PROJECT_DIR$/client/maps/world_client.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/items.json" afterPath="$PROJECT_DIR$/client/shared/data/items.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/mobs.json" afterPath="$PROJECT_DIR$/client/shared/data/mobs.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/npcs.json" afterPath="$PROJECT_DIR$/client/shared/data/npcs.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/data/quests.json" afterPath="$PROJECT_DIR$/client/shared/data/quests.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/shared/js/gametypes.js" afterPath="$PROJECT_DIR$/client/shared/js/gametypes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/map/map.js" afterPath="$PROJECT_DIR$/client/js/map/map.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/map/mapworker.js" afterPath="$PROJECT_DIR$/client/js/map/mapworker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/text.js" afterPath="$PROJECT_DIR$/client/js/text.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/utils/detect.js" afterPath="$PROJECT_DIR$/client/js/utils/detect.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/utils/pathfinder.js" afterPath="$PROJECT_DIR$/client/js/utils/pathfinder.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/utils/timer.js" afterPath="$PROJECT_DIR$/client/js/utils/timer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/utils/util.js" afterPath="$PROJECT_DIR$/client/js/utils/util.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/config.json" afterPath="$PROJECT_DIR$/server/config.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/map/collisions.json" afterPath="$PROJECT_DIR$/server/data/map/collisions.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/character.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/character.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/mob/mobcontroller.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/mob/mobcontroller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/mob/mob.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/mob/mob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/checkpoint.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/checkpoint.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/guild.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/guild.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/handlers/commandhandler.js" afterPath="$PROJECT_DIR$/server/js/game/handlers/commandhandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/handlers/packethandler.js" afterPath="$PROJECT_DIR$/server/js/game/handlers/packethandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/handlers/questhandler.js" afterPath="$PROJECT_DIR$/server/js/game/handlers/questhandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/handlers/skillhandler.js" afterPath="$PROJECT_DIR$/server/js/game/handlers/skillhandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/lib/astar.js" afterPath="$PROJECT_DIR$/server/js/game/lib/astar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/network/packets/message.js" afterPath="$PROJECT_DIR$/server/js/game/network/packets/message.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/quests/introduction.js" afterPath="$PROJECT_DIR$/server/js/game/quests/introduction.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/trade.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/trade.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/entity.js" afterPath="$PROJECT_DIR$/server/js/game/entity/entity.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/world.js" afterPath="$PROJECT_DIR$/server/js/game/world.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/maps/world_server.json" afterPath="$PROJECT_DIR$/server/maps/world_server.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/mobs.json" afterPath="$PROJECT_DIR$/shared/data/mobs.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/data/quests.json" afterPath="$PROJECT_DIR$/shared/data/quests.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shared/js/gametypes.js" afterPath="$PROJECT_DIR$/shared/js/gametypes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/maps/processmap.log" afterPath="$PROJECT_DIR$/tools/maps/processmap.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/maps/tmx/map.json" afterPath="$PROJECT_DIR$/tools/maps/tmx/map.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/main.js" afterPath="$PROJECT_DIR$/server/js/main.js" />
     </list>
     <ignored path="Tap-Tap-Adventure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,37 +1192,14 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="Tap-Tap-Adventure" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="mobcontroller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/mob/mobcontroller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="149" column="6" selection-start-line="149" selection-start-column="6" selection-end-line="149" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="packethandler.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/server/js/game/handlers/packethandler.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-375">
-              <caret line="993" column="19" selection-start-line="993" selection-start-column="4" selection-end-line="993" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -99,7 +1214,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/css/main.css" />
         <option value="$PROJECT_DIR$/client/js/rendering/updater.js" />
         <option value="$PROJECT_DIR$/client/js/rendering/bubble.js" />
         <option value="$PROJECT_DIR$/client/js/rendering/bubble/bubble.js" />
@@ -107,7 +1221,6 @@
         <option value="$PROJECT_DIR$/shared/data/npcs.json" />
         <option value="$PROJECT_DIR$/client/js/app.js" />
         <option value="$PROJECT_DIR$/shared/data/items.json" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/combat/hit/HitQueue.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/combat/hit/hit.js" />
@@ -127,7 +1240,6 @@
         <option value="$PROJECT_DIR$/client/js/rendering/pointer/pointermanager.js" />
         <option value="$PROJECT_DIR$/server/js/game/quests/introduction.js" />
         <option value="$PROJECT_DIR$/shared/data/mobs.json" />
-        <option value="$PROJECT_DIR$/server/config.json" />
         <option value="$PROJECT_DIR$/shared/js/gametypes.js" />
         <option value="$PROJECT_DIR$/client/js/network/gameclient.js" />
         <option value="$PROJECT_DIR$/package.json" />
@@ -150,6 +1262,9 @@
         <option value="$PROJECT_DIR$/client/js/interface/infomanager.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/mob/mobcontroller.js" />
         <option value="$PROJECT_DIR$/server/js/game/world.js" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Notes.txt" />
+        <option value="$PROJECT_DIR$/server/config.json" />
       </list>
     </option>
   </component>
@@ -161,10 +1276,13 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="428" />
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="291" />
     <option name="y" value="22" />
-    <option name="width" value="851" />
+    <option name="width" value="989" />
     <option name="height" value="774" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -186,15 +1304,8 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
-    <OptionsSetting value="true" id="Add" />
-    <OptionsSetting value="true" id="Remove" />
-    <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
-    <OptionsSetting value="true" id="Status" />
-    <OptionsSetting value="true" id="Edit" />
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
-    <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -211,376 +1322,19 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shared" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shared" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shared" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="handlers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="entity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="entity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="character" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="entity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="character" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mob" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="interface" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="entity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tap-Tap-Adventure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="entity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="character" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
+          <expand>
+            <path>
+              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -590,6 +1344,8 @@
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="settings.editor.selected.configurable" value="Errors" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -600,9 +1356,38 @@
       <recent name="$PROJECT_DIR$/client/js/entity" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager" selected="JavaScript Debug.index.html">
-    <configuration default="false" name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Tap-Tap-Adventure/client/index.html">
-      <method />
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
     </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
@@ -628,15 +1413,6 @@
       <option name="filePath" />
       <method />
     </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
       <command value="run-script" />
       <scripts />
@@ -644,22 +1420,7 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <working-directory />
-      <pass-parent-env>true</pass-parent-env>
-      <envs />
-      <ui>bdd</ui>
-      <extra-mocha-options />
-      <test-kind>DIRECTORY</test-kind>
-      <test-directory />
-      <recursive>false</recursive>
-      <method />
-    </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
-    </list>
+    <configuration name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Tap-Tap-Adventure/client/index.html" />
     <recent_temporary>
       <list size="1">
         <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
@@ -748,6 +1509,8 @@
       <workItem from="1490461291621" duration="2242000" />
       <workItem from="1490500166536" duration="915000" />
       <workItem from="1490503259606" duration="4077000" />
+      <workItem from="1505150881480" duration="81000" />
+      <workItem from="1505150966023" duration="2957000" />
     </task>
     <task id="LOCAL-00001" summary="Client refactoring began - Fixing interfaces">
       <created>1488093277468</created>
@@ -760,22 +1523,21 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="295773000" />
+    <option name="totallyTimeSpent" value="298811000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="428" y="22" width="851" height="774" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="22" width="1280" height="774" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25499412" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1671875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968536" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -784,6 +1546,9 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.md" />
@@ -802,7 +1567,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Client refactoring began - Fixing interfaces" />
     <MESSAGE value="Introduction Quest Additions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Introduction Quest Additions" />
+    <MESSAGE value="Kaetram File Dump" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kaetram File Dump" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -811,382 +1577,152 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/js/game/network/packets/message.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3255">
-          <caret line="217" column="20" selection-start-line="217" selection-start-column="20" selection-end-line="217" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/data/skills.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/interface/dialog/character/characterdialog.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/interface/dialog/character/frame.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-240">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/skill.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3960">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/characterdialog.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="498" column="28" selection-start-line="498" selection-start-column="23" selection-end-line="498" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/interface/dialog/character/skillinfo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="70" column="19" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/handlers/commandhandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="673">
-          <caret line="244" column="55" selection-start-line="244" selection-start-column="55" selection-end-line="244" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/interface/dialog/character/pages/skillpage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="42" column="106" selection-start-line="42" selection-start-column="106" selection-end-line="42" selection-end-column="106" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/quests/quest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/rendering/pointer/pointer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="17" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/rendering/pointer/pointermanager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2265">
-          <caret line="151" column="34" selection-start-line="151" selection-start-column="34" selection-end-line="151" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/data/items.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/data/npcs.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="673">
-          <caret line="59" column="15" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/data/mobs.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="91" column="15" selection-start-line="91" selection-start-column="15" selection-end-line="91" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/data/quests.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2085">
-          <caret line="139" column="25" selection-start-line="139" selection-start-column="25" selection-end-line="139" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/databases/redis.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="673">
-          <caret line="250" column="42" selection-start-line="250" selection-start-column="31" selection-end-line="250" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/handlers/skillhandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="673">
-          <caret line="91" column="8" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="30" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/interface/dialog/character/frame.js" />
+    <entry file="file://$PROJECT_DIR$/client/css/skill.css" />
+    <entry file="file://$PROJECT_DIR$/client/css/characterdialog.css" />
+    <entry file="file://$PROJECT_DIR$/client/js/interface/dialog/character/skillinfo.js" />
+    <entry file="file://$PROJECT_DIR$/server/js/game/handlers/commandhandler.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/interface/dialog/character/pages/skillpage.js" />
+    <entry file="file://$PROJECT_DIR$/server/js/game/quests/quest.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/rendering/pointer/pointer.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/rendering/pointer/pointermanager.js" />
+    <entry file="file://$PROJECT_DIR$/shared/data/items.json" />
+    <entry file="file://$PROJECT_DIR$/shared/data/npcs.json" />
+    <entry file="file://$PROJECT_DIR$/shared/data/mobs.json" />
+    <entry file="file://$PROJECT_DIR$/shared/data/quests.json" />
+    <entry file="file://$PROJECT_DIR$/server/js/game/databases/redis.js" />
+    <entry file="file://$PROJECT_DIR$/server/js/game/handlers/skillhandler.js" />
+    <entry file="file://$PROJECT_DIR$/client/package.json" />
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/handlers/statehandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/handlers/boardhandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4427">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/handlers/bankhandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="44" column="24" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/js/itemtypes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1005">
-          <caret line="244" column="2" selection-start-line="244" selection-start-column="2" selection-end-line="244" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/network/parser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="86" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/network/incoming.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/handlers/inventoryhandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/handlers/statehandler.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/handlers/boardhandler.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/handlers/bankhandler.js" />
+    <entry file="file://$PROJECT_DIR$/shared/js/itemtypes.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/network/parser.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/network/incoming.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/handlers/inventoryhandler.js" />
     <entry file="file://$PROJECT_DIR$/client/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2569">
-          <caret line="628" column="14" selection-start-line="628" selection-start-column="14" selection-end-line="628" selection-end-column="14" />
-          <folding />
+          <caret line="628" column="14" lean-forward="false" selection-start-line="628" selection-start-column="14" selection-end-line="628" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/interface/dialog/bank/bankframe.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/handlers/questhandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/interface/dialog/bank/bankframe.js" />
+    <entry file="file://$PROJECT_DIR$/server/js/game/handlers/questhandler.js" />
     <entry file="file://$PROJECT_DIR$/client/js/entity/character/player/player.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
-          <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
-          <folding />
+          <caret line="20" column="32" lean-forward="false" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="265" column="34" selection-start-line="265" selection-start-column="30" selection-end-line="265" selection-end-column="34" />
-          <folding />
+          <caret line="265" column="34" lean-forward="false" selection-start-line="265" selection-start-column="30" selection-end-line="265" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/rendering/updater.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="403" column="33" selection-start-line="403" selection-start-column="22" selection-end-line="403" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/lib/astar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1815">
-          <caret line="121" column="45" selection-start-line="121" selection-start-column="45" selection-end-line="121" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/utils/pathfinder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="29" column="48" selection-start-line="29" selection-start-column="48" selection-end-line="29" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/utils/productionconfig.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/rendering/updater.js" />
+    <entry file="file://$PROJECT_DIR$/server/js/game/lib/astar.js" />
+    <entry file="file://$PROJECT_DIR$/server/js/game/utils/pathfinder.js" />
+    <entry file="file://$PROJECT_DIR$/server/js/game/utils/productionconfig.js" />
     <entry file="file://$PROJECT_DIR$/client/js/entity/entity.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1438">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding />
+          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/mob/mob.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="24" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="24" />
-          <folding />
+          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/character.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="109" column="24" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
-          <folding />
+          <caret line="109" column="24" lean-forward="false" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="688" column="47" selection-start-line="688" selection-start-column="47" selection-end-line="688" selection-end-column="47" />
-          <folding />
+          <caret line="688" column="47" lean-forward="false" selection-start-line="688" selection-start-column="47" selection-end-line="688" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/entity/character/character.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="601" column="17" selection-start-line="601" selection-start-column="8" selection-end-line="601" selection-end-column="17" />
-          <folding />
+          <caret line="601" column="17" lean-forward="false" selection-start-line="601" selection-start-column="8" selection-end-line="601" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shared/js/gametypes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="183" column="17" selection-start-line="183" selection-start-column="17" selection-end-line="183" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/rendering/renderer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="875" column="34" selection-start-line="875" selection-start-column="34" selection-end-line="875" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/network/gameclient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="367" column="38" selection-start-line="367" selection-start-column="30" selection-end-line="367" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/interface/infomanager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/js/gametypes.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/rendering/renderer.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/network/gameclient.js" />
+    <entry file="file://$PROJECT_DIR$/client/js/interface/infomanager.js" />
     <entry file="file://$PROJECT_DIR$/client/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
-          <caret line="914" column="54" selection-start-line="914" selection-start-column="54" selection-end-line="914" selection-end-column="54" />
-          <folding />
+          <caret line="914" column="54" lean-forward="false" selection-start-line="914" selection-start-column="54" selection-end-line="914" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/mob/mobcontroller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="149" column="6" selection-start-line="149" selection-start-column="6" selection-end-line="149" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/mob/mobcontroller.js" />
     <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+          <caret line="92" column="0" lean-forward="false" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/quests/introduction.js" />
+    <entry file="file://$PROJECT_DIR$/server/js/game/handlers/packethandler.js" />
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="6" column="11" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/quests/introduction.js">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="798">
+            <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor>
+            <js_state />
+          </second_editor>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Notes.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="133" column="16" selection-start-line="133" selection-start-column="16" selection-end-line="135" selection-end-column="59" />
+        <state relative-caret-position="382">
+          <caret line="33" column="50" lean-forward="false" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/handlers/packethandler.js">
+    <entry file="file://$PROJECT_DIR$/server/config.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-375">
-          <caret line="993" column="19" selection-start-line="993" selection-start-column="4" selection-end-line="993" selection-end-column="19" />
+        <state relative-caret-position="126">
+          <caret line="9" column="23" lean-forward="false" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
           <folding />
         </state>
       </provider>

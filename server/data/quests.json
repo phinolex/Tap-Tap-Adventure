@@ -1,0 +1,45 @@
+{
+  "Introduction": {
+    "id": 0,
+    "name": "A Great Start",
+    "description": "Teaching you the basics about Tap Tap Adventure!",
+    "npcs": [17],
+    "conversations": {
+      "17": {
+        "0": ["Hello there!", "Welcome to Maearth.",
+              "I do not wish to keep you for too long",
+              "So let us proceed with a quick tutorial."],
+        "1": ["See that strange pointing arrow?", "Yea I figured it must not be that hard to miss.",
+              "You should click it.", "Why are you even talking to me...", "Stop.", "Well..", "This is awkward",
+              "Wanna hear a secret?", "The creator of this entire realm is in a lot of pain.", "Hold on..",
+              "I do not think I was supposed to say that.."],
+
+        "2": ["Alright perfect, clearly you are capable of clicking things.", "This is the character menu.",
+              "It is pretty self explanatory so I do not want to drag this tutorial.",
+              "Please go to the next instructor to finish your quick tutorial."],
+
+        "3": ["Farewell "]
+      }
+
+    },
+
+    "pointers": {
+      "0": [0, 14, 554],
+      "1": [2, 400, 220],
+      "2": [0, 14, 554],
+      "4": [0, 14, 554]
+    },
+
+    "doors": {
+      "5": [15, 560],
+      "6": [20, 24],
+      "19": [51, 16]
+    },
+
+    "task": {
+      "0": "talk",
+      "1": "click",
+      "2": "talk"
+    }
+  }
+}

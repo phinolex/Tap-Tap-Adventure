@@ -1,256 +1,63 @@
+/* global Modules, log, _ */
 
-define(['./animation', '../data/mobdata'], function(Animation, MobData) {
+define(['./entityhandler'], function(EntityHandler) {
 
-    var Entity = Class.extend({
+    return Class.extend({
+
         init: function(id, kind) {
             var self = this;
 
             self.id = id;
             self.kind = kind;
 
+            self.x = 0;
+            self.y = 0;
+            self.gridX = 0;
+            self.gridY = 0;
+
+            self.name = '';
+
             self.sprite = null;
-            self.flipSpriteX = false;
-            self.flipSpriteY = false;
+            self.spriteFlipX = false;
+            self.spriteFlipY = false;
 
             self.animations = null;
             self.currentAnimation = null;
 
-            self.isCritical = false;
-            self.isHeal = false;
-
-            self.isPointing = false;
-            self.pointerTimeout = null;
-
             self.shadowOffsetY = 0;
+            self.hidden = false;
 
-            self.setGridPosition(0, 0);
-
-            self.isLoaded = false;
-            self.isHighlighted = false;
+            self.spriteLoaded = false;
             self.visible = true;
-            self.isFading = false;
-            self.prevX = 0;
-            self.prevY = 0;
-            self.prevOrientation = null;
+            self.fading = false;
+            self.handler = new EntityHandler(self);
 
-            self.name = "";
+            self.angled = false;
+            self.angle = 0;
 
-            self.loadAnimations();
-            self.setDirty();
+            self.loadDirty();
         },
 
-        loadAnimations: function() {
+        /**
+         * This is important for when the client is
+         * on a mobile screen. So the sprite has to be
+         * handled differently.
+         */
+
+        loadDirty: function() {
             var self = this;
 
-            self.criticalAnimation = new Animation('atk_down', 10, 0, 48, 48);
-            self.criticalAnimation.setSpeed(30);
+            self.dirty = true;
 
-            self.healAnimation = new Animation('atk_down', 10, 0, 32, 32);
-            self.healAnimation.setSpeed(120);
-
-            self.stunAnimation = new Animation('atk_down', 6, 0, 48, 48);
-            self.stunAnimation.setSpeed(30);
-
-            self.criticalAnimation.setCount(1, function() {
-                self.isCritical = false;
-                self.criticalAnimation.reset();
-                self.criticalAnimation.count = 1;
-            });
-
-            self.healAnimation.setCount(1, function() {
-                self.isHeal = false;
-                self.healAnimation.reset();
-                self.healAnimation.count = 1;
-            });
+            if (self.dirtyCallback)
+                self.dirtyCallback();
         },
 
-        setName: function(name) {
-            this.name = name;
-        },
-
-        setPosition: function(x, y) {
-            this.x = x;
-            this.y = y;
-        },
-
-        setGridPosition: function(gridX, gridY) {
+        fadeIn: function(time) {
             var self = this;
 
-            self.gridX = gridX;
-            self.gridY = gridY;
-
-            self.setPosition(gridX * 16, gridY * 16);
-        },
-        
-        setSprite: function(sprite) {
-            var self = this;
-            
-            if (!sprite)
-                throw 'Sprite not found: ' + self.id;
-            
-            if (self.sprite && self.sprite.name == sprite.name)
-                return;
-            
-            if (!sprite.isLoaded)
-                sprite.load();
-            
-            self.sprite = sprite;
-            self.normalSprite = self.sprite;
-
-            self.hurtSprite = sprite.getHurtSprite();
-            self.animations = sprite.createAnimations();
-
-            self.isLoaded = true;
-
-            if (self.ready_func)
-                self.ready_func();
-        },
-
-        setAnimation: function(name, speed, count, onEndCount) {
-            var self = this;
-
-            if (self.isLoaded) {
-                if (self.currentAnimation && self.currentAnimation.name === name)
-                    return;
-
-                var a = self.getAnimationByName(name);
-
-                if (a) {
-                    self.currentAnimation = a;
-
-                    if (name.substr(0, 3) === 'atk')
-                        self.currentAnimation.reset();
-
-                    self.currentAnimation.setSpeed(speed);
-
-                    self.currentAnimation.setCount(count ? count : 0, onEndCount || function() {
-                        self.idle();
-                    });
-                }
-            }
-        },
-
-        setHighlight: function(highlight) {
-            var self = this;
-
-            self.sprite = highlight ? self.sprite.silhouetteSprite : self.normalSprite;
-            self.isHighlighted = highlight;
-        },
-
-        setVisible: function(visible) {
-            this.visible = visible;
-        },
-
-        setDirty: function() {
-            var self = this;
-
-            self.isDirty = true;
-
-            if (self.dirty_callback)
-                self.dirty_callback(self);
-        },
-
-        getSprite: function() {
-            return this.sprite;
-        },
-
-        getSpriteName: function() {
-            return this.spriteName;
-        },
-
-        getAnimationByName: function(name) {
-            var self = this,
-                animation;
-
-            if (name in self.animations)
-                animation = self.animations[name];
-
-            return animation;
-        },
-
-        isMob: function(kind) {
-            var kinds = MobData.Kinds;
-
-            return kinds[kind]? true : false;
-        },
-
-        hasShadow: function() {
-            return false;
-        },
-
-        ready: function(callback) {
-            this.ready_func = callback;
-        },
-
-        onDirty: function(callback) {
-            this.dirty_callback = callback;
-        },
-
-        clean: function() {
-            this.stopBlinking();
-        },
-
-        isVisible: function() {
-            return this.visible;
-        },
-
-        toggleVisibility: function() {
-            this.setVisible(!this.visible);
-        },
-
-        getDistanceToEntity: function(entity) {
-            var x = Math.abs(entity.gridX - this.gridX),
-                y = Math.abs(entity.gridY - this.gridY);
-
-            return (x > y) ? x : y;
-        },
-
-        isCloseTo: function(entity) {
-            var self = this,
-                dx, dy,
-                close = false;
-
-            if (entity) {
-                dx = Math.abs(entity.gridX - self.gridX);
-                dy = Math.abs(entity.gridY - self.gridY);
-
-                if (dx < 30 && dy < 14)
-                    close = true;
-            }
-
-            return close;
-        },
-
-        isAdjacent: function(entity) {
-            var self = this,
-                adjacent = false;
-
-            if (entity)
-                adjacent = self.getDistanceToEntity(entity) <= 1;
-
-            return adjacent;
-        },
-
-        isAdjacentNonDiagonal: function(entity) {
-            return this.isAdjacent(entity) && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY);
-        },
-
-        isDiagonallyAdjacent: function(entity) {
-            return this.isAdjacent(entity) && !this.isAdjacentNonDiagonal(entity);
-        },
-
-        forEachAdjacentNonDiagonalPosition: function(callback) {
-            var self = this;
-
-            callback(self.gridX - 1, self.gridY, Types.Orientations.LEFT);
-            callback(self.gridX, self.gridY - 1, Types.Orientations.UP);
-            callback(self.gridX + 1, self.gridY, Types.Orientations.RIGHT);
-            callback(self.gridX, self.gridY + 1, Types.Orientations.DOWN);
-        },
-
-        fadeIn: function(currentTime) {
-            this.isFading = true;
-            this.startFadingTime = currentTime;
+            self.fading = true;
+            self.fadingTime = time;
         },
 
         blink: function(speed) {
@@ -270,36 +77,134 @@ define(['./animation', '../data/mobdata'], function(Animation, MobData) {
             self.setVisible(true);
         },
 
-        stun: function(level) {
-            var self = this;
-
-            if (!self.isStun) {
-                self.isStun = true;
-
-                if (self.attackCooldown)
-                    self.attackCooldown.lastTime += 500 * level;
-
-                self.stunTimeout = setTimeout(function() {
-                    self.isStun = false;
-                    self.stunTimeout = null;
-                }, 50 * level);
-            }
+        setName: function(name) {
+            this.name = name;
         },
 
-        provocation: function(level) {
+        setSprite: function(sprite) {
             var self = this;
 
-            if (!self.isProvocation) {
-                self.isProvocation = true;
+            if (!sprite || (self.sprite && self.sprite.name === sprite.name))
+                return;
 
-                self.stunTimeout = setTimeout(function() {
-                    self.isProvocation = false;
-                    self.provocationTimeout = null;
-                }, 100 * level);
-            }
+            if (!sprite.loaded)
+                sprite.load();
+
+            sprite.name = sprite.id;
+
+            self.sprite = sprite;
+
+            self.normalSprite = self.sprite;
+            self.hurtSprite = sprite.getHurtSprite();
+            self.animations = sprite.createAnimations();
+            self.spriteLoaded = true;
+
+            if (self.readyCallback)
+                self.readyCallback();
+        },
+
+        setPosition: function(x, y) {
+            var self = this;
+
+            self.x = x;
+            self.y = y;
+        },
+
+        setGridPosition: function(x, y) {
+            var self = this;
+
+            self.gridX = x;
+            self.gridY = y;
+
+            self.setPosition(x * 16, y * 16);
+        },
+
+        setAnimation: function(name, speed, count, onEndCount) {
+            var self = this;
+
+            if (!self.spriteLoaded || (self.currentAnimation && self.currentAnimation.name === name))
+                return;
+
+            var anim = self.getAnimationByName(name);
+
+            if (!anim)
+                return;
+
+            self.currentAnimation = anim;
+
+            if (name.substr(0, 3) === 'atk')
+                self.currentAnimation.reset();
+
+            self.currentAnimation.setSpeed(speed);
+
+            self.currentAnimation.setCount(count ? count : 0, onEndCount || function() {
+                self.idle();
+            });
+        },
+
+        setVisible: function(visible) {
+            this.visible = visible
+        },
+
+        getDistance: function(entity) {
+            var self = this,
+                x = Math.abs(self.gridX - entity.gridX),
+                y = Math.abs(self.gridY - entity.gridY);
+
+            return x > y ? x : y;
+        },
+
+        getCoordDistance: function(toX, toY) {
+            var self = this,
+                x = Math.abs(self.gridX - toX),
+                y = Math.abs(self.gridY - toY);
+
+            return x > y ? x : y;
+        },
+
+        inAttackRadius: function(entity) {
+            return entity && this.getDistance(entity) < 2 && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY);
+        },
+
+        inExtraAttackRadius: function(entity) {
+            return entity && this.getDistance(entity) < 3 && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY);
+        },
+
+        getAnimationByName: function(name) {
+            if (name in this.animations)
+                return this.animations[name];
+
+            return null;
+        },
+
+        getSprite: function() {
+            return this.sprite.name;
+        },
+
+        toggleVisibility: function() {
+            this.setVisible(!this.visible);
+        },
+
+        isVisible: function() {
+            return this.visible;
+        },
+
+        hasShadow: function() {
+            return false;
+        },
+
+        hasPath: function() {
+            return false;
+        },
+
+        onReady: function(callback) {
+            this.readyCallback = callback;
+        },
+
+        onDirty: function(callback) {
+            this.dirtyCallback = callback;
         }
 
     });
 
-    return Entity;
 });

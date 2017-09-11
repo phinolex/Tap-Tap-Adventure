@@ -1,0 +1,212 @@
+{
+  "King": {
+    "id": 45,
+    "name": "King"
+  },
+
+  "VillageGirl": {
+    "name": "Azaria",
+    "id": 1
+  },
+
+  "Villager": {
+    "id": 2,
+    "name": "Joneses",
+    "text": ["Hello Vilaalger", " I name Joneses."]
+  },
+
+  "BeachNpc": {
+    "id": 3,
+    "name": "Bubba"
+  },
+
+  "Agent": {
+    "id": 4,
+    "name": "Secret Agent"
+  },
+
+  "Nyan": {
+    "id": 5
+  },
+
+  "Rick": {
+    "id": 6
+  },
+
+  "Priest": {
+    "id": 7
+  },
+
+  "Guard": {
+    "id": 8
+  },
+
+  "Scientist": {
+    "id": 9
+  },
+
+  "DesertNpc": {
+    "id": 10,
+    "name": "Billey"
+  },
+  "LavaNpc": {
+    "id": 11,
+    "name": "Dying Man"
+  },
+
+  "Boxingman": {
+    "id": 12,
+    "name": "Mike Tyson"
+  },
+
+  "Vampire": {
+    "id": 13
+  },
+
+  "Doctor": {
+    "id": 14
+  },
+
+  "Oddeyecat": {
+    "id": 15,
+    "name": "Odd-Eyed Cat"
+  },
+
+  "Sorcerer": {
+    "id": 16,
+    "name": "Sorcerer"
+  },
+
+  "Coder": {
+    "id": 17,
+    "name": "Programmer"
+  },
+
+  "ForestNpc": {
+    "id": 18
+  },
+
+  "Octocat": {
+    "id": 19
+  },
+
+  "Soldier": {
+    "id": 20,
+    "name": "Melee Instructor"
+  },
+
+  "Fisherman": {
+    "id": 21
+  },
+
+  "Octopus": {
+    "id": 22
+  },
+
+  "Mermaidnpc": {
+    "id": 23,
+    "name": "Mermaid"
+  },
+
+  "Sponge": {
+    "id": 24
+  },
+
+  "Fairynpc": {
+    "id": 25
+  },
+
+  "Shepherdboy": {
+    "id": 26,
+    "name": "Shepherd Boy"
+  },
+
+  "Zombiegf": {
+    "id": 27,
+    "name": "Zombie Girlfriend"
+  },
+
+  "Pirategirlnpc": {
+    "id": 28,
+    "name": "Pirate Girl"
+  },
+
+  "Bluebikinigirlnpc": {
+    "id": 29,
+    "name": "Pretzel"
+  },
+
+  "Redbikinigirlnpc": {
+    "id": 30
+  },
+
+  "Iamverycoldnpc": {
+    "id": 31,
+    "name": "Babushka"
+  },
+
+  "Iceelfnpc": {
+    "id": 32,
+    "name": "Ice Elf"
+  },
+
+  "Elfnpc": {
+    "id": 33,
+    "name": "Elf"
+  },
+
+  "Snowshepherdboy": {
+    "id": 34,
+    "name": "Some Boy"
+  },
+
+  "Angelnpc": {
+    "id": 35,
+    "name": "Angel"
+  },
+
+  "Momangelnpc": {
+    "id": 36,
+    "name": "Archangel"
+  },
+
+  "Superiorangelnpc": {
+    "id": 37,
+    "name": "Mentor"
+  },
+
+  "Firstsonangelnpc": {
+    "id": 38,
+    "name": "Angel"
+  },
+
+  "Secondsonangelnpc": {
+    "id": 39,
+    "name": "Superior Angel"
+  },
+
+  "Mojojojonpc": {
+    "id": 40,
+    "name": "Monky"
+  },
+
+  "Ancientmanumentnpc": {
+    "id": 41,
+    "name": "Ancient Monument"
+  },
+
+  "Vendingmachine": {
+    "id": 42,
+    "name": "Enchantment Table"
+  },
+
+  "Redstoremannpc": {
+    "id": 43,
+    "name": "Banker"
+  },
+
+  "Bluestoremannpc": {
+    "id": 44,
+    "name": "Clerk"
+  }
+}

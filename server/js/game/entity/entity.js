@@ -1,244 +1,116 @@
-var cls = require('./../lib/class');
-var Messages = require('./../network/packets/message');
-var Utils = require('./../utils/utils');
+/* global module */
+
+var cls = require('../../lib/class'),
+    Messages = require('../../network/messages'),
+    Mobs = require('../../util/mobs'),
+    NPCs = require('../../util/npcs'),
+    Items = require('../../util/items');
 
 module.exports = Entity = cls.Class.extend({
-    init: function(id, type, kind, x, y) {
+
+    init: function(id, type, instance, x, y) {
         var self = this;
 
-        this.type = type;
+        self.id = id;
+        self.type = type;
+        self.instance = instance;
 
-        this.id = parseInt(id);
-        this.kind = kind;
+        self.x = x;
+        self.y = y;
 
-        this.isCritical = false;
-        this.isHeal = false;
+        self.combat = null;
 
-        this.shadowOffsetY = 0;
-        this.isAchievementNPC = false;
-        this.isQuestNPC = false;
+        self.dead = false;
 
-        // Position
-        this.setPosition(x, y);
-
-        this.name = "";
+        self.recentGroups = [];
     },
 
-    destroy: function() {
-
+    getCombat: function() {
+        return null;
     },
 
-    setName: function(name) {
-        this.name = name;
+    getDistance: function(entity) {
+        var self = this,
+            x = Math.abs(self.x - entity.x),
+            y = Math.abs(self.y - entity.y);
+
+        return x > y ? x : y;
+    },
+
+    getCoordDistance: function(toX, toY) {
+        var self = this,
+            x = Math.abs(self.x - toX),
+            y = Math.abs(self.y - toY);
+
+        return x > y ? x : y;
+    },
+
+    isAdjacent: function(entity) {
+        var self = this;
+
+        if (!entity)
+            return false;
+
+        return self.getDistance(entity) <= 1;
+    },
+
+    isNonDiagonal: function(entity) {
+        return this.isAdjacent(entity) && !(entity.x !== this.x && entity.y !== this.y);
+    },
+
+    isNear: function(entity, distance) {
+        var self = this,
+            near = false;
+
+        var dx = Math.abs(self.x - entity.x),
+            dy = Math.abs(self.y - entity.y);
+
+        if (dx <= distance && dy <= distance)
+            near = true;
+
+        return near;
+    },
+
+    drop: function(item) {
+        return new Messages.Drop(this, item);
+    },
+
+    isPlayer: function() {
+        return this.type === 'player';
+    },
+
+    isMob: function() {
+        return this.type === 'mob';
+    },
+
+    isNPC: function() {
+        return this.type === 'npc';
+    },
+
+    isItem: function() {
+        return this.type === 'item';
     },
 
     setPosition: function(x, y) {
-        this.x = x;
-        this.y = y;
-    },
-
-    ready: function(f) {
-        this.ready_func = f;
-    },
-
-
-    /**
-     *
-     */
-    getDistanceToEntity: function(entity) {
-        var distX = Math.abs(entity.x - this.x),
-            distY = Math.abs(entity.y - this.y);
-
-        return (distX > distY) ? distX : distY;
-    },
-
-    isCloseTo: function(entity) {
-        var dx, dy, d, close = false;
-        if(entity) {
-            dx = Math.abs(entity.x - this.x);
-            dy = Math.abs(entity.y - this.y);
-
-            if(dx < 30 && dy < 14) {
-                close = true;
-            }
-        }
-        return close;
-    },
-
-    /**
-     * Returns true if the entity is adjacent to the given one.
-     * @returns {Boolean} Whether these two entities are adjacent.
-     */
-    isAdjacent: function(entity) {
-        var adjacent = false;
-
-        if(entity) {
-            adjacent = this.getDistanceToEntity(entity) > 1 ? false : true;
-        }
-        return adjacent;
-    },
-
-    /**
-     *
-     */
-    isAdjacentNonDiagonal: function(entity) {
-        var result = false;
-
-        if(this.isAdjacent(entity) && !(this.x !== entity.x && this.y !== entity.y)) {
-            result = true;
-        }
-
-        return result;
-    },
-
-    isDiagonallyAdjacent: function(entity) {
-        return this.isAdjacent(entity) && !this.isAdjacentNonDiagonal(entity);
-    },
-
-    forEachAdjacentNonDiagonalPosition: function(callback) {
-        callback(this.x - 1, this.y, Types.Orientations.LEFT);
-        callback(this.x, this.y - 1, Types.Orientations.UP);
-        callback(this.x + 1, this.y, Types.Orientations.RIGHT);
-        callback(this.x, this.y + 1, Types.Orientations.DOWN);
-
-    },
-
-    stun: function(level){
         var self = this;
-        if(!this.isStun){
-            this.isStun = true;
-            if(this.attackCooldown){
-                this.attackCooldown.lastTime += 500*level;
-            }
-            this.stunTimeout = setTimeout(function(){
-                self.isStun = false;
-                self.stunTimeout = null;
-            }, 500*level);
-        }
-    },
-    provocation: function(level){
-        var self = this;
-        if(!this.isProvocation){
-            this.isProvocation = true;
-            this.stunTimeout = setTimeout(function(){
-                self.isProvocation = false;
-                self.provocationTimeout = null;
-            }, 1000*level);
-        }
+
+        self.x = x;
+        self.y = y;
     },
 
-    // Old Entity
+    getState: function() {
+        var self = this,
+            string = self.isMob() ? Mobs.idToString(self.id) : (self.isNPC() ? NPCs.idToString(self.id) : Items.idToString(self.id)),
+            name = self.isMob() ? Mobs.idToName(self.id) : (self.isNPC() ? NPCs.idToName(self.id) : Items.idToName(self.id));
 
-    _getBaseState: function () {
         return [
-            parseInt(this.id, 10),
-            this.kind,
-            this.x,
-            this.y
+            self.type,
+            self.instance,
+            string,
+            name,
+            self.x,
+            self.y
         ];
-    },
-
-    getState: function () {
-        return this._getBaseState();
-    },
-
-    spawn: function () {
-        //if (kind == null || id == null)
-        //    return;
-        return new Messages.Spawn(this);
-    },
-
-    despawn: function () {
-        return new Messages.Despawn(this.id);
-    },
-
-    getComplexPositionRelativeTo: function(entity) {
-        var pos = null;
-
-        if (entity) {
-            pos = {};
-            var r = Utils.random(7);
-
-            pos.x = entity.x;
-            pos.y = entity.y;
-
-            if (r === 0)
-                pos.y -= 1;
-
-            if (r === 1)
-                pos.y += 1;
-
-            if (r === 2)
-                pos.x -= 1;
-
-            if (r === 3)
-                pos.y += 1;
-
-            if (r === 4) {
-                pos.x -= 1;
-                pos.y -= 1;
-            }
-
-            if (r === 5) {
-                pos.x += 1;
-                pos.y -= 1;
-            }
-
-            if (r === 6) {
-                pos.x -= 1;
-                pos.y += 1;
-            }
-
-            if (r === 7) {
-                pos.x += 1;
-                pos.y += 1;
-            }
-        }
-
-        return pos;
-    },
-
-    getPositionNextTo: function (entity) {
-        var pos = null;
-        if (entity) {
-            pos = {};
-            // This is a quick & dirty way to give mobs a random position
-            // close to another entity.
-            var r = Utils.random(3);
-
-            pos.x = entity.x;
-            pos.y = entity.y;
-            if (r === 0) {
-                pos.y -= 1;
-            }
-            if (r === 1) {
-                pos.y += 1;
-            }
-            if (r === 2) {
-                pos.x -= 1;
-            }
-            if (r === 3) {
-                pos.x += 1;
-            }
-        }
-        return pos;
-    },
-
-    setRandomOrientation: function() {
-        r = Utils.random(4);
-
-        if(r === 0)
-            this.orientation = Types.Orientations.LEFT;
-        if(r === 1)
-            this.orientation = Types.Orientations.RIGHT;
-        if(r === 2)
-            this.orientation = Types.Orientations.UP;
-        if(r === 3)
-            this.orientation = Types.Orientations.DOWN;
-
-    },
+    }
 
 });
-
-module.exports = Entity;
-

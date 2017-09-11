@@ -1,69 +1,90 @@
-
 define(function() {
 
-    var Animation = Class.extend({
+    return Class.extend({
+
+        /**
+         * Ripped from BrowserQuest's client
+         */
+
         init: function(name, length, row, width, height) {
-            this.name = name;
-            this.length = length;
-            this.row = row;
-            this.width = width;
-            this.height = height;
-            this.reset();
+            var self = this;
+
+            self.name = name;
+            self.length = length;
+            self.row = row;
+            self.width = width;
+            self.height = height;
+
+            self.reset();
         },
 
         tick: function() {
-            var i = this.currentFrame.index;
+            var self = this,
+                i = self.currentFrame.index;
 
-            i = (i < this.length - 1) ? i + 1 : 0;
+            i = (i < self.length - 1) ? i + 1 : 0;
 
-            if(this.count > 0) {
-                if(i === 0) {
-                    this.count -= 1;
-                    if(this.count === 0) {
-                        this.currentFrame.index = 0;
-                        this.endcount_callback();
-                        return;
-                    }
+            if (self.count > 0 && i === 0) {
+                self.count -= 1;
+
+                if (self.count === 0) {
+                    self.currentFrame.index = 0;
+                    self.endCountCallback();
+                    return;
                 }
             }
 
-            this.currentFrame.x = this.width * i;
-            this.currentFrame.y = this.height * this.row;
-            this.currentFrame.index = i;
+            self.currentFrame.x = self.width * i;
+            self.currentFrame.y = self.height * self.row;
+
+            self.currentFrame.index = i;
+        },
+
+        update: function(time) {
+            var self = this;
+
+            if (self.lastTime === 0 && self.name.substr(0, 3) === 'atk')
+                self.lastTime = time;
+
+            if (self.readyToAnimate(time)) {
+                self.lastTime = time;
+                self.tick();
+
+                return true;
+            } else
+                return false;
+        },
+
+        setCount: function(count, onEndCount) {
+            var self = this;
+
+            self.count = count;
+            self.endCountCallback = onEndCount;
         },
 
         setSpeed: function(speed) {
             this.speed = speed;
         },
 
-        setCount: function(count, onEndCount) {
-            this.count = count;
-            this.endcount_callback = onEndCount;
+        setRow: function(row) {
+            this.row = row;
         },
 
-        isTimeToAnimate: function(time) {
+        readyToAnimate: function(time) {
             return (time - this.lastTime) > this.speed;
         },
 
-        update: function(time) {
-            if(this.lastTime === 0 && this.name.substr(0, 3) === "atk") {
-                this.lastTime = time;
-            }
-
-            if(this.isTimeToAnimate(time)) {
-                this.lastTime = time;
-                this.tick();
-                return true;
-            } else {
-                return false;
-            }
-        },
-
         reset: function() {
-            this.lastTime = 0;
-            this.currentFrame = { index: 0, x: 0, y: this.row * this.height };
+            var self = this;
+
+            self.lastTime = 0;
+            self.currentFrame = {
+                index: 0,
+                x: 0,
+                y: self.row * self.height
+            };
         }
+
     });
 
-    return Animation;
 });

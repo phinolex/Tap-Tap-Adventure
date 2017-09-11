@@ -1,22 +1,26 @@
-
 define(function() {
 
-    var Timer = Class.extend({
-        init: function(duration, startTime) {
-            this.lastTime = startTime || 0;
-            this.duration = duration;
+    return Class.extend({
+
+        init: function(start, duration) {
+            var self = this;
+
+            self.time = start;
+            self.duration = duration;
         },
 
         isOver: function(time) {
-            var over = false;
+            var self = this,
+                over = false;
 
-            if((time - this.lastTime) > this.duration) {
+            if (time - self.time > self.duration) {
                 over = true;
-                this.lastTime = time;
+                self.time = time;
             }
+
             return over;
         }
+
     });
 
-    return Timer;
 });

@@ -1,66 +1,52 @@
-var cls = require("./../../../lib/class"),
-    Messages = require('../../../network/packets/message'),
-    Types = require('../../../../../../shared/js/gametypes');
+var cls = require('../../../../lib/class'),
+    Modules = require('../../../../util/modules');
 
 module.exports = Trade = cls.Class.extend({
-    init: function(server, playerOne, playerTwo) {
+
+    /**
+     * Trade states proceed as follows..
+     *
+     * 1. Initial request (either player requests a trade)
+     * 2. Trading screen opens (player select their items)
+     * 3. First player accepts
+     * 4. Second player accepts
+     * 5. Trade finished.
+     *
+     * Each trading instance is assigned to a player,
+     * and it is only triggered whenever a trade is intiated.
+     *
+     * After the trade, the oPlayer for each repsective player is cleared.
+     *
+     */
+
+    init: function(player, oPlayer) {
         var self = this;
 
-        self.server = server;
-        self.players = [playerOne, playerTwo]; //For iteration purposes
-        self.items = [[], []]; //use id (311, 21, 125)
-        self.tradeState = 0;
+        self.player = player;
+        self.oPlayer = oPlayer;
 
-        self.startTrade();
+        self.playerItems = [];
+        self.oPlayerItems = [];
+
+        self.state = null;
     },
 
-    startTrade: function() {
-        var self = this;
-        
-        if (self.tradeState == 0) { //Just checking..
-            for (var player in self.players)
-                self.server.pushToPlayer(player, new Messages.Trade(Types.TradeStates.STARTED, self.items, self.players[1].name, self.players[2].name));
-        }
+    select: function(instance, slot) {
+
     },
 
-    addItem: function(player, item) {
-        var self = this,
-            playerIndex = self.getPlayerIndex(player);
-
-        self.items[playerIndex].push(item);
-        self.updateTrade();
-    },
-
-    getPlayerItems: function(player) {
-        return this.items[this.getPlayerIndex(player)];
-    },
-    
-    updateTrade: function() {
+    accept: function() {
         var self = this;
 
-        for (var player in self.players)
-            self.server.pushToPlayer(player, new Messages.Trade(Types.TradeStates.ITEMCHANGE, self.items, self.players[1].name, self.players[2].name));
+
     },
 
-    getPlayerIndex: function(player) {
-        for (var i = 0; i < this.players; i++) {
-            if (this.players[i].name == player.name)
-                return i;
-        }
+    decline: function() {
+
     },
 
-    finishTrade: function() {
-        var self = this;
-        /**
-         * When it comes to finishing a trade,
-         * we must ensure both players have enough
-         * space available in their inventory.
-         */
-
-        for (var player in self.players) {
-            if (self.getPlayerItems(player).length > player.inventory.getAvailableSpace()) {
-
-            }
-        }
+    isStarted: function() {
+        return this.state !== null;
     }
+
 });

@@ -1,41 +1,46 @@
+define(['../character'], function(Character) {
 
-define(['../character', '../../../data/mobdata'], function(Character, MobData) {
+    return Character.extend({
 
-    var Mob = Character.extend({
-        init: function(id, kind, name) {
-            this._super(id, kind);
+        init: function(id, kind) {
+            var self = this;
 
-            this.aggroRange = 1;
-            this.isAggressive = true;
-            this.moveSpeed = 200;
-            this.atkSpeed = 100;
-            this.idleSpeed = 150;
-            this.xp=0;
-            this.level=0;
-            
-            this.title=name;
+            self._super(id, kind);
+
+            self.name = name;
+
+            self.hitPoints = -1;
+            self.maxHitPoints = -1;
         },
 
-        idle: function(orientation) {
-            if (MobData.Kinds[this.kind].key === "deathknight" ||
-            	MobData.Kinds[this.kind].key === "skeletonking")
-            {
-                if(!this.hasTarget()) {
-                    this._super(Types.Orientations.DOWN);
-                } else {
-                    this._super(orientation);
-                }
-            }
-            else
-            {
-            	    this._super(orientation);
-            }
+        setHitPoints: function(hitPoints) {
+            this._super(hitPoints);
         },
-        
-        getSpriteName: function() {
-                return MobData.Kinds[this.kind].spriteName;
-        }        
+
+        setMaxHitPoints: function(maxHitPoints) {
+            this._super(maxHitPoints);
+        },
+
+        idle: function() {
+            this._super();
+        },
+
+        performAction: function(orientation, action) {
+            this._super(orientation, action);
+        },
+
+        setSprite: function(sprite) {
+            this._super(sprite);
+        },
+
+        setName: function(name) {
+            this.name = name;
+        },
+
+        setGridPosition: function(x, y) {
+            this._super(x, y);
+        }
+
     });
 
-    return Mob;
 });
