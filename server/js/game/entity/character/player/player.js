@@ -64,6 +64,8 @@ module.exports = Player = Character.extend({
         self.pvp = false;
 
         self.canTalk = true;
+
+        self.profileDialogOpen = false;
     },
 
     load: function(data) {
@@ -342,8 +344,15 @@ module.exports = Player = Character.extend({
         self.send(new Messages.Death(self.instance));
     },
 
-    teleport: function(x, y) {
+    teleport: function(x, y, isDoor) {
         var self = this;
+
+        if (isDoor && !self.finishedTutorial()) {
+            if (self.doorCallback)
+                self.doorCallback(x, y);
+
+            return;
+        }
 
         self.world.pushToAdjacentGroups(self.group, new Messages.Teleport(self.instance, x, y));
 
@@ -387,6 +396,15 @@ module.exports = Player = Character.extend({
 
     applyDamage: function(damage) {
         this.hitPoints.decrement(damage);
+    },
+
+    toggleProfile: function(state) {
+        var self = this;
+
+        self.profileDialogOpen = state;
+
+        if (self.profileToggleCallback)
+            self.profileToggleCallback();
     },
 
     getMana: function() {
@@ -641,7 +659,7 @@ module.exports = Player = Character.extend({
         if (!message)
             return;
 
-        self.send(new Messages.Notification(Packets.NotificationOpcode.Ok, message));
+        self.send(new Messages.Notification(Packets.NotificationOpcode.Text, message));
     },
 
     stopMovement: function(force) {
@@ -723,6 +741,14 @@ module.exports = Player = Character.extend({
 
     onTalkToNPC: function(callback) {
         this.npcTalkCallback = callback;
+    },
+
+    onDoor: function(callback) {
+        this.doorCallback = callback;
+    },
+
+    onProfile: function(callback) {
+        this.profileToggleCallback = callback;
     },
 
     onReady: function(callback) {

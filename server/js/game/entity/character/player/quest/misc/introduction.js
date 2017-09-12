@@ -41,12 +41,6 @@ module.exports = Introduction = Quest.extend({
                 self.toggleChat();
         });
 
-        self.player.onReady(function() {
-
-            self.updatePointers();
-
-        });
-
         self.onNPCTalk(function(npc) {
 
             var conversation = self.getConversation(npc.id);
@@ -66,6 +60,31 @@ module.exports = Introduction = Quest.extend({
             if (npc.talkIndex > conversation.length)
                 self.progress('talk');
         });
+
+        self.player.onReady(function() {
+
+            self.updatePointers();
+
+        });
+
+        self.player.onDoor(function(destX, destY) {
+            if (self.getTask() !== 'door') {
+                self.player.notify('You cannot go through this door yet.');
+                return;
+            }
+
+            if (!self.verifyDoor(destX, destY))
+                self.player.notify('You are not supposed to go through here.');
+            else
+                self.progress('door');
+        });
+
+        self.player.onProfile(function() {
+            if (self.player.profileDialogOpen)
+                self.progress('click');
+
+        });
+
     },
 
     progress: function(type) {
@@ -143,6 +162,10 @@ module.exports = Introduction = Quest.extend({
         return message;
     },
 
+    getTask: function() {
+        return this.data.task[this.stage];
+    },
+
     setStage: function(stage) {
         var self = this;
 
@@ -196,6 +219,13 @@ module.exports = Introduction = Quest.extend({
                 return true;
 
         return false;
+    },
+
+    verifyDoor: function(destX, destY) {
+        var self = this,
+            doorData = self.data.doors[self.stage];
+
+        return doorData[0] === destX && doorData[1] === destY;
     },
 
     onFinishedLoading: function(callback) {

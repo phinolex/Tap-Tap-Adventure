@@ -1478,6 +1478,11 @@
         position: absolute;
     }
 
+    #profileDialog {
+        left: 343px;
+        top: 24px;
+    }
+
     #statePage {
         background: url('../img/1/characterdialogsheet.png') 0 0;
         display: block;

@@ -28,6 +28,35 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
             self.pointers[id] = new Pointer(id, element, type);
         },
 
+        resize: function() {
+            var self = this;
+
+            _.each(self.pointers, function(pointer) {
+
+                switch (pointer.type) {
+
+                    case Modules.Pointers.Relative:
+
+                        var scale = self.getScale(),
+                            x = pointer.x,
+                            y = pointer.y,
+                            offsetX = 0,
+                            offsetY = 0;
+
+                        if (scale === 1) {
+                            offsetX = pointer.element.width() / 2 + 5;
+                            offsetY = pointer.element.height() / 2 - 4;
+                        }
+
+                        pointer.element.css('left', (x * scale) - offsetX + 'px');
+                        pointer.element.css('top', (y * scale) - offsetY + 'px');
+
+                        break;
+                }
+
+            });
+        },
+
         setSize: function(element) {
             var self = this;
 
@@ -104,14 +133,23 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
             if (!pointer)
                 return;
 
+            var scale = self.getScale(),
+                offsetX = 0,
+                offsetY = 0;
+
             /**
              * Must be set in accordance to the lowest scale.
              */
 
-            pointer.setPosition(x * self.scale, y * self.scale);
+            if (scale === 1) {
+                offsetX = pointer.element.width() / 2 + 5;
+                offsetY = pointer.element.height() / 2 - 4;
+            }
 
-            pointer.element.css('left', (x * self.scale) + 'px');
-            pointer.element.css('top', (y * self.scale) + 'px');
+            pointer.setPosition(x, y);
+
+            pointer.element.css('left', (x * scale) - offsetX + 'px');
+            pointer.element.css('top', (y * scale) - offsetY + 'px');
         },
 
         update: function() {
@@ -152,7 +190,7 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
         },
 
         updateScale: function() {
-            this.scale = this.getScale();
+            this.scale = this.getDrawingScale();
         },
 
         updateCamera: function() {
@@ -161,6 +199,10 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
 
         getScale: function() {
             return this.game.getScaleFactor();
+        },
+
+        getDrawingScale: function() {
+            return this.game.renderer.getDrawingScale();
         }
 
     });

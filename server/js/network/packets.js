@@ -49,7 +49,8 @@ var Packets = {
     Enchant: 35,
     Guild: 36,
     Pointer: 37,
-    PVP: 38
+    PVP: 38,
+    Click: 39
 };
 
 Packets.IntroOpcode = {

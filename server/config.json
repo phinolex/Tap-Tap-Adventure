@@ -7,10 +7,10 @@
   "devClient": true,
   "development": false,
 
-  "mysqlHost": "127.0.0.1",
+  "mysqlHost": "107.173.65.136",
   "mysqlPort": 3306,
-  "mysqlUser": "null",
-  "mysqlPassword": "null",
+  "mysqlUser": "flavius",
+  "mysqlPassword": "Demise255",
   "mysqlDatabase": "TTA",
 
   "debugLevel": "info",

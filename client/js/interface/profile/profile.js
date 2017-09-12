@@ -1,4 +1,4 @@
-/* global log, _ */
+/* global log, _, Packets */
 
 define(['jquery', './pages/state', './pages/ability', './pages/settings', './pages/quest'], function($, State, Ability, Settings, Quest) {
 
@@ -40,6 +40,8 @@ define(['jquery', './pages/state', './pages/ability', './pages/settings', './pag
 
                 if (!self.activePage.loaded)
                     self.activePage.load();
+
+                self.game.send(Packets.Click, ['profile', self.button.hasClass('active')]);
 
             });
 

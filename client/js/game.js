@@ -1073,6 +1073,9 @@ define(['./renderer/renderer', './utils/storage',
             var self = this;
 
             self.renderer.resize();
+
+            if (self.pointer)
+                self.pointer.resize();
         },
 
         createPlayer: function() {

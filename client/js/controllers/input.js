@@ -272,12 +272,12 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                         break;
 
                     case 'mob':
-                        self.setCursor(self.cursors[self.getAttackCursor()]);
+                        self.setCursor(self.getAttackCursor());
                         self.hovering = Modules.Hovering.Mob;
                         break;
 
                     case 'player':
-                        self.setCursor((self.game.pvp && entity.pvp) ? self.cursors[self.getAttackCursor()] : self.cursors['talk']);
+                        self.setCursor((self.game.pvp && entity.pvp) ? self.getAttackCursor() : self.cursors['talk']);
                         self.hovering = Modules.Hovering.Player;
                         break;
 

@@ -94,6 +94,10 @@ module.exports = Incoming = cls.Class.extend({
                     self.handleEnchant(message);
                     break;
 
+                case Packets.Click:
+                    self.handleClick(message);
+                    break;
+
             }
 
         });
@@ -387,7 +391,7 @@ module.exports = Incoming = cls.Class.extend({
                 if (self.world.map.isDoor(posX, posY)) {
                     var destination = self.world.map.getDoorDestination(posX, posY);
 
-                    self.player.teleport(destination.x, destination.y);
+                    self.player.teleport(destination.x, destination.y, true);
 
                 } else
                     self.player.setPosition(posX, posY);
@@ -458,7 +462,7 @@ module.exports = Incoming = cls.Class.extend({
 
                 var target = self.world.getEntityByInstance(instance);
 
-                if (!target || target.dead || !self.inPVP(self.player, target))
+                if (!target || target.dead || !self.canAttack(self.player, target))
                     return;
 
                 self.world.pushToAdjacentGroups(target.group, new Messages.Combat(Packets.CombatOpcode.Initiate, self.player.instance, target.instance));
@@ -483,7 +487,7 @@ module.exports = Incoming = cls.Class.extend({
                 var attacker = self.world.getEntityByInstance(message.shift()),
                     target = self.world.getEntityByInstance(message.shift());
 
-                if (!target || target.dead || !attacker || attacker.dead || !self.inPVP(attacker, target))
+                if (!target || target.dead || !attacker || attacker.dead || !self.canAttack(attacker, target))
                     return;
 
                 attacker.combat.start();
@@ -715,16 +719,33 @@ module.exports = Incoming = cls.Class.extend({
         }
     },
 
+    handleClick: function(message) {
+        var self = this,
+            type = message.shift(),
+            isOpen = message.shift();
+
+        switch (type) {
+            case 'profile':
+
+
+
+                break;
+        }
+    },
+
     cleanSocket: function() {
         this.world.removeLogging(this.connection.socket.conn.remoteAddress);
     },
 
-    inPVP: function(attacker, target) {
+    canAttack: function(attacker, target) {
 
         /**
          * Used to prevent client-sided manipulation. The client will send the packet to start combat
          * but if it was modified by a presumed hacker, it will simply cease when it arrives to this condition
          */
+
+        if (attacker.type === 'mob' || target.type === 'mob')
+            return true;
 
         return attacker.type === 'player' && target.type === 'player' && attacker.pvp && target.pvp;
     }

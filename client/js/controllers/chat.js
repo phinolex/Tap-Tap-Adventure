@@ -38,6 +38,8 @@ define(['jquery'], function($) {
             self.log.append(element);
             self.log.scrollTop(99999);
 
+            self.showChat();
+
             if (!self.isActive())
                 self.hideInput();
 
@@ -104,6 +106,11 @@ define(['jquery'], function($) {
 
         hideChat: function() {
             var self = this;
+
+            if (self.fadingTimeout) {
+                clearTimeout(self.fadingTimeout);
+                self.fadingTimeout = null;
+            }
 
             self.fadingTimeout = setTimeout(function() {
 
