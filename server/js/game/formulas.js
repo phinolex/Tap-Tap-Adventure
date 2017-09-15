@@ -47,6 +47,20 @@ Formulas.getDamage = function(attacker, target) {
     return damage;
 };
 
+Formulas.getCritical = function(attacker, target) {
+    if (!attacker || !target)
+        return;
+
+    /**
+     * The critical is the player's max hit plus *= critical multiplier of the weapon
+     */
+
+    var damage = Formulas.getDamage(attacker, target),
+        multiplier = attacker.weapon.abilityLevel / 10;
+    
+    return damage *= multiplier;
+};
+
 Formulas.expToLevel = function(experience) {
     if (experience < 0)
         return -1;

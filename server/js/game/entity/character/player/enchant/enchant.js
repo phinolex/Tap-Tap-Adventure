@@ -90,6 +90,7 @@ module.exports = Enchant = cls.Class.extend({
             self.generateAbility();
 
         self.player.inventory.remove(self.selectedShards.id, 10, self.selectedShards.index);
+        self.player.sync();
     },
 
     generateAbility: function() {

@@ -6,7 +6,8 @@ var fs = require('fs'),
     allowConnections = false,
     Parser = require('./util/parser'),
     ShutdownHook = require('shutdown-hook'),
-    Log = require('log');
+    Log = require('log'),
+    worlds = [], database;
 
 log = new Log(config.worlds > 1 ? 'notice' : config.debugLevel, config.localDebug ? fs.createWriteStream('runtime.log') : null);
 
@@ -15,10 +16,9 @@ function Main() {
     log.notice('Initializing ' + config.name + ' game engine...');
 
     var shutdownHook = new ShutdownHook(),
+        stdin = process.openStdin(),
         World = require('./game/world'),
-        worlds = [],
-        webSocket = new WebSocket.Server(config.host, config.port, config.gver),
-        database;
+        webSocket = new WebSocket.Server(config.host, config.port, config.gver);
 
     if (!config.offlineMode)
         database = new MySQL(config.mysqlHost, config.mysqlPort, config.mysqlUser, config.mysqlPassword, config.mysqlDatabase);
@@ -57,13 +57,13 @@ function Main() {
 
         log.notice('Finished creating ' + worlds.length + ' world' + (worlds.length > 1 ? 's' : '') + '!');
 
-        initializeWorlds(worlds);
+        initializeWorlds();
         loadParser();
 
     }, 200);
 
     webSocket.onRequestStatus(function() {
-        return JSON.stringify(getPopulations(worlds));
+        return JSON.stringify(getPopulations());
     });
 
     webSocket.onError(function() {
@@ -84,7 +84,66 @@ function Main() {
     });
 
     shutdownHook.on('ShutdownStarted', function(e) {
-        saveAll(worlds);
+        saveAll();
+    });
+
+    stdin.addListener('data', function(data) {
+        /**
+         * We have to cleanse the raw message because of the \n
+         */
+
+        var message = data.toString().replace(/(\r\n|\n|\r)/gm, ''),
+            type = message.charAt(0);
+
+        if (type !== '/')
+            return;
+
+        var blocks = message.substring(1).split(' '),
+            command = blocks.shift();
+
+        if (!command)
+            return;
+
+        switch (command) {
+
+            case 'stop':
+
+                log.info('Safely shutting down the server...');
+
+                saveAll();
+
+                process.exit();
+
+                break;
+
+            case 'saveall':
+
+                saveAll();
+
+                break;
+
+            case 'alter':
+
+                if (blocks.length !== 3) {
+                    log.error('Invalid command format. /alter [database] [table] [type]');
+                    return;
+                }
+
+                if (!database) {
+                    log.error('The database server is not available for this instance of ' + config.name + '.');
+                    log.error('Ensure that the database is enabled in the server configuration.');
+                    return;
+                }
+
+                var db = blocks.shift(),
+                    table = blocks.shift(),
+                    dType = blocks.shift();
+
+                database.alter(db, table, dType);
+
+                break;
+        }
+
     });
 
 }
@@ -93,13 +152,13 @@ function loadParser() {
     new Parser();
 }
 
-function initializeWorlds(worlds) {
+function initializeWorlds() {
     for (var worldId in worlds)
         if (worlds.hasOwnProperty(worldId))
             worlds[worldId].load();
 }
 
-function getPopulations(worlds) {
+function getPopulations() {
     var counts = [];
 
     for (var index in worlds)
@@ -109,12 +168,14 @@ function getPopulations(worlds) {
     return counts;
 }
 
-function saveAll(worlds) {
+function saveAll() {
     _.each(worlds, function(world) {
         world.saveAll();
     });
 
-    log.notice('Saved players for ' + worlds.length + ' world(s).')
+    var plural = worlds.length > 1;
+
+    log.notice('Saved players for ' + worlds.length + ' world' + (plural ? 's' : '') + '.');
 }
 
 if ( typeof String.prototype.startsWith !== 'function' ) {

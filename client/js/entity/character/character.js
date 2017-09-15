@@ -1,6 +1,6 @@
 /* global _, Modules, log */
 
-define(['../entity', '../../utils/transition'], function(Entity, Transition) {
+define(['../entity', '../../utils/transition', '../animation'], function(Entity, Transition, Animation) {
 
     return Entity.extend({
 
@@ -43,6 +43,24 @@ define(['../entity', '../../utils/transition'], function(Entity, Transition) {
             self.movementSpeed = 250;
 
             self.attackRange = 1;
+
+            self.load();
+        },
+
+        load: function() {
+            var self = this;
+
+            self.criticalAnimation = new Animation('atk_down', 10, 0, 48, 48);
+            self.criticalAnimation.setSpeed(30);
+            self.criticalAnimation.setCount(1, function() {
+                self.critical = false;
+
+                self.criticalAnimation.reset();
+                self.criticalAnimation.count = 1;
+            });
+
+            self.stunAnimation = new Animation('atk_down', 6, 0, 48, 48);
+            self.stunAnimation.setSpeed(30);
         },
 
         animate: function(animation, speed, count, onEndCount) {

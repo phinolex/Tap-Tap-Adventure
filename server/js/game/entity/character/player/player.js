@@ -21,7 +21,9 @@ var Character = require('../character'),
     Bank = require('./containers/bank/bank'),
     config = require('../../../../../config.json'),
     Enchant = require('./enchant/enchant'),
-    Guild = require('./guild');
+    Guild = require('./guild'),
+    Utils = require('../../../../util/utils'),
+    Hit = require('../combat/hit');
 
 module.exports = Player = Character.extend({
 
@@ -542,6 +544,14 @@ module.exports = Player = Character.extend({
         return this.mana.getMana() >= this.mana.getMaxMana();
     },
 
+    hasSpecialAttack: function() {
+        return this.weapon && (this.weapon.hasCritical() || this.weapon.hasExplosive() || this.weapon.hasStun());
+    },
+
+    canBeStunned: function() {
+        return true;
+    },
+
     getState: function() {
         var self = this;
 
@@ -584,6 +594,48 @@ module.exports = Player = Character.extend({
             position = { x: 17, y: 555 };
 
         return position;
+    },
+
+    getHitType: function(attacker, target) {
+        var self = this;
+
+        if (!self.hasSpecialAttack())
+            return;
+
+        var isSpecial = Utils.randomInt(0, 100) < self.weapon.abilityLevel / 100;
+
+        if (!isSpecial)
+            return;
+
+        var type, damage;
+
+        switch (self.weapon.ability) {
+
+            case Modules.Enchantment.Critical:
+
+                /**
+                 * Still experimental, not sure how likely it is that you're
+                 * gonna do a critical strike. I just do not want it getting
+                 * out of hand, it's easier to buff than to nerf..
+                 */
+
+                var multiplier = 1.00 + self.weapon.abilityLevel;
+
+                damage = Formulas.getDamage(attacker, target) * multiplier;
+
+                return new Hit(Modules.Hits.Critical, damage);
+
+            case Modules.Enchantment.Stun:
+
+
+
+                break;
+
+            case Modules.Enchantment.Explosive:
+
+                break;
+
+        }
     },
 
     isMuted: function() {

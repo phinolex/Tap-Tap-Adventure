@@ -35,6 +35,9 @@ define(['./entityhandler'], function(EntityHandler) {
             self.angled = false;
             self.angle = 0;
 
+            self.critical = false;
+            self.stunned = false;
+
             self.loadDirty();
         },
 

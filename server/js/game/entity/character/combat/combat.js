@@ -175,10 +175,13 @@ module.exports = Combat = cls.Class.extend({
     },
 
     attack: function(target) {
-        var self = this,
+        var self = this;
+
+
+        /*var self = this,
             hit = new Hit(Modules.Hits.Damage, Formulas.getDamage(self.character, target));
 
-        self.queue.add(hit);
+        self.queue.add(hit);*/
     },
 
     forceAttack: function() {

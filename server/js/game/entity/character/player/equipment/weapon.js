@@ -12,6 +12,18 @@ module.exports = Weapon = Equipment.extend({
         self.ranged = Items.isArcherWeapon(name);
     },
 
+    hasCritical: function() {
+        return this.ability === 1;
+    },
+
+    hasExplosive: function() {
+        return this.ability === 4;
+    },
+
+    hasStun: function() {
+        return this.ability === 5;
+    },
+
     isRanged: function() {
         return this.ranged;
     },

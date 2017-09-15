@@ -12,13 +12,8 @@ module.exports = MySQL = cls.Class.extend({
         var self = this;
 
         /**
-         * Don't bother hacking into the MySQL database,
-         * it is empty and for testing purposes, and will
-         * be erased as soon as Kaetram is finished and
-         * moved back into TTA.
-         *
-         * Note: Offline mode disables features such as abilities,
-         * skills, inventory, guilds, etc.
+         * Main file for MySQL, it splits into Creator and Loader.
+         * Responsible for creating and loading data, respectively.
          */
 
         self.host = host;
@@ -168,6 +163,19 @@ module.exports = MySQL = cls.Class.extend({
                 throw error;
 
             log.info('Successfully updated ' + database);
+        });
+    },
+
+    alter: function(database, column, type) {
+        var self = this;
+
+        self.connection.query('ALTER TABLE ' + database + ' ADD ' + column + ' ' + type, function(error, results, fields) {
+            if (error) {
+                log.error('Malformation in the database type and/or type.');
+                return;
+            }
+
+            log.info('Database ' + database + ' has been successfully altered.');
         });
     },
 

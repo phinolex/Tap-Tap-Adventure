@@ -3,7 +3,8 @@
     "id": 0,
     "name": "A Great Start",
     "description": "Teaching you the basics about Tap Tap Adventure!",
-    "npcs": [17],
+    "npcs": [17, 8],
+    "stages": 5,
     "conversations": {
       "17": {
         "0": ["Hello there!", "Welcome to Maearth.",
@@ -19,7 +20,11 @@
               "Please go to the next instructor to finish your quick tutorial."],
 
         "3": ["Farewell "]
-      }
+      },
+
+      "8": ["Oh, another one. Here, take this sword and get outta here.",
+          "I would bother teaching you but", "It is more fun to let newbies figure it out."
+      ]
 
     },
 
@@ -39,7 +44,10 @@
     "task": {
       "0": "talk",
       "1": "click",
-      "2": "talk"
+      "2": "talk",
+      "3": "door",
+      "4": "talk",
+      "5": "door"
     }
   }
 }

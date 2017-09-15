@@ -23,7 +23,10 @@ var Modules = {
         Heal: 2,
         Mana: 3,
         Experience: 4,
-        LevelUp: 5
+        LevelUp: 5,
+        Critical: 6,
+        Stun: 7,
+        Explosive: 8
     },
 
     Projectiles: {
@@ -50,7 +53,8 @@ var Modules = {
         Evasion: 2,
         Spike: 3,
         Explosive: 4,
-        Stun: 5
+        Stun: 5,
+        AntiStun: 6
     },
 
     Trade: {

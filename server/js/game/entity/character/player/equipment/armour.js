@@ -11,6 +11,10 @@ module.exports = Armour = Equipment.extend({
         self.defense = Items.getArmourLevel(name);
     },
 
+    hasAntiStun: function() {
+        return this.ability === 6
+    },
+
     setDefense: function(defense) {
         this.defense = defense;
     },

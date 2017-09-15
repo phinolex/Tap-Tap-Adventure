@@ -471,15 +471,24 @@ define(['./renderer/renderer', './utils/storage',
                             type = hitData.shift(),
                             isPlayer = target.id === self.player.id;
 
-                        if (type === Modules.Hits.Damage) {
-                            attacker.lookAt(target);
-                            attacker.performAction(attacker.orientation, Modules.Actions.Attack);
+                        attacker.lookAt(target);
+                        attacker.performAction(attacker.orientation, Modules.Actions.Attack);
 
-                            if (attacker.id === self.player.id && damage > 0)
-                                self.audio.play(Modules.AudioTypes.SFX, 'hit' + Math.floor(Math.random() * 2 + 1));
+                        switch (type) {
+                            case Modules.Hits.Damage:
+                            case Modules.Hits.Stun:
 
-                            self.info.create(type, [damage, isPlayer], target.x, target.y);
+                                if (attacker.id === self.player.id && damage > 0)
+                                    self.audio.play(Modules.AudioTypes.SFX, 'hit' + Math.floor(Math.random() * 2 + 1));
+
+                                break;
+
+                            case Modules.Hits.Critical:
+
+                                break;
                         }
+
+                        self.info.create(type, [damage, isPlayer], target.x, target.y);
 
                         attacker.triggerHealthBar();
                         target.triggerHealthBar();
@@ -665,10 +674,20 @@ define(['./renderer/renderer', './utils/storage',
 
                 switch (opcode) {
                     case Packets.QuestOpcode.Batch:
-                        var quests = info.quests,
-                            achievements = info.achievements;
 
-                       self.interface.getQuestPage().load(quests, achievements);
+                        self.interface.getQuestPage().load(info.quests, info.achievements);
+
+                        break;
+
+                    case Packets.QuestOpcode.Progress:
+
+                        self.interface.getQuestPage().progress(info.id, info.stage);
+
+                        break;
+
+                    case Packets.QuestOpcode.Finish:
+
+                        self.interface.getQuestPage().finish(info.id);
 
                         break;
                 }
@@ -851,15 +870,6 @@ define(['./renderer/renderer', './utils/storage',
 
                         break;
 
-                    case Packets.EnchantOpcode.Enchant:
-
-                        /**
-                         * We just send an update about the item? Probably
-                         * not even necessary considering we can just sync
-                         * up the player with the rest of the world.
-                         */
-
-                        break;
                 }
 
             });

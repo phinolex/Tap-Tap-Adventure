@@ -94,6 +94,10 @@ module.exports = Introduction = Quest.extend({
         if (!task || task !== type)
             return;
 
+        if (self.stage === self.data.stages) {
+            self.finish();
+        }
+
         switch (type) {
             case 'talk':
 
@@ -115,6 +119,11 @@ module.exports = Introduction = Quest.extend({
 
         self.update();
         self.updatePointers();
+
+        self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, {
+            id: self.id,
+            stage: self.stage
+        }));
     },
 
     update: function() {
@@ -180,6 +189,12 @@ module.exports = Introduction = Quest.extend({
         var self = this;
 
         self.setStage(9999);
+        self.clearPointers();
+        self.resetTalkIndex(self.lastNPC);
+
+        self.player.send(new Messages.Quest(Packets.QuestOpcode.Finish, {
+            id: self.id
+        }));
     },
 
     forceTalk: function(npc, message) {

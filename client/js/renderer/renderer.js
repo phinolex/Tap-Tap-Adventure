@@ -335,7 +335,11 @@ define(['jquery', './camera', './tile',
                     shadow.height * self.drawingScale);
             }
 
+            self.drawEntityBack(entity);
+
             self.context.drawImage(sprite.image, x, y, width, height, ox, oy, dw, dh);
+
+            self.drawEntityFore(entity);
 
             if (entity instanceof Character && !entity.dead && entity.hasWeapon()) {
                 var weapon = self.entities.getSprite(entity.weapon.getString());
@@ -376,6 +380,38 @@ define(['jquery', './camera', './tile',
 
             self.drawHealth(entity);
             self.drawName(entity);
+        },
+
+        drawEntityBack: function(entity) {
+            var self = this;
+
+            /**
+             * Function used to draw special effects prior
+             * to rendering the entity.
+             */
+
+        },
+
+        drawEntityFore: function(entity) {
+            var self = this;
+
+            /**
+             * Function used to draw special effects after
+             * having rendererd the entity
+             */
+
+            if (entity.critical) {
+                var sprite = self.entities.getSprite('criticaleffect');
+
+                if (!sprite.loaded)
+                    sprite.load();
+
+                if (sprite) {
+                    var index = entity.criticalAnimation.currentFrame.index,
+                        criticalX = sprite.width * index * self.drawingScale
+                }
+            }
+
         },
 
         drawHealth: function(entity) {
