@@ -16,7 +16,8 @@ var cls = require('../lib/class'),
     Character = require('./entity/character/character'),
     Projectile = require('./entity/objects/projectile'),
     Packets = require('../network/packets'),
-    Formulas = require('./formulas');
+    Formulas = require('./formulas'),
+    Modules = require('../util/modules');
 
 module.exports = World = cls.Class.extend({
 
@@ -248,7 +249,7 @@ module.exports = World = cls.Class.extend({
             character.die();
     },
 
-    createProjectile: function(dynamic, info) {
+    createProjectile: function(dynamic, info, hitInfo) {
         var self = this,
             projectile;
 
@@ -270,6 +271,9 @@ module.exports = World = cls.Class.extend({
 
             projectile.damage = Formulas.getDamage(attacker, target);
             projectile.owner = attacker;
+
+            if (hitInfo.type !== Modules.Hits.Damage)
+                projectile.special = hitInfo.type;
 
             self.addProjectile(projectile);
 

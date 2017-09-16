@@ -466,19 +466,17 @@ define(['./renderer/renderer', './utils/storage',
 
                     case Packets.CombatOpcode.Hit:
 
-                        var hitData = data.shift(),
-                            damage = hitData.shift(),
-                            type = hitData.shift(),
+                        var hit = data.shift(),
                             isPlayer = target.id === self.player.id;
 
                         attacker.lookAt(target);
                         attacker.performAction(attacker.orientation, Modules.Actions.Attack);
 
-                        switch (type) {
+                        switch (hit.type) {
                             case Modules.Hits.Damage:
                             case Modules.Hits.Stun:
 
-                                if (attacker.id === self.player.id && damage > 0)
+                                if (attacker.id === self.player.id && hit.damage > 0)
                                     self.audio.play(Modules.AudioTypes.SFX, 'hit' + Math.floor(Math.random() * 2 + 1));
 
                                 break;
@@ -488,12 +486,12 @@ define(['./renderer/renderer', './utils/storage',
                                 break;
                         }
 
-                        self.info.create(type, [damage, isPlayer], target.x, target.y);
+                        self.info.create(hit.type, [hit.damage, isPlayer], target.x, target.y);
 
                         attacker.triggerHealthBar();
                         target.triggerHealthBar();
 
-                        if (isPlayer && damage > 0)
+                        if (isPlayer && hit.damage > 0)
                             self.audio.play(Modules.AudioTypes.SFX, 'hurt');
 
                         break;

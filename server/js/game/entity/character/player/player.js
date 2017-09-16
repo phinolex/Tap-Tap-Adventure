@@ -596,18 +596,14 @@ module.exports = Player = Character.extend({
         return position;
     },
 
-    getHitType: function(attacker, target) {
+    getHitType: function(target) {
         var self = this;
 
-        if (!self.hasSpecialAttack())
-            return;
+        var isSpecial = Utils.randomInt(0, 100) < self.weapon.abilityLevel / 100,
+            defaultDamage = Formulas.getDamage(self, target);
 
-        var isSpecial = Utils.randomInt(0, 100) < self.weapon.abilityLevel / 100;
-
-        if (!isSpecial)
-            return;
-
-        var type, damage;
+        if (!self.hasSpecialAttack() || !isSpecial)
+            return new Hit(Modules.Hits.Damage, defaultDamage);
 
         switch (self.weapon.ability) {
 
@@ -619,21 +615,16 @@ module.exports = Player = Character.extend({
                  * out of hand, it's easier to buff than to nerf..
                  */
 
-                var multiplier = 1.00 + self.weapon.abilityLevel;
-
-                damage = Formulas.getDamage(attacker, target) * multiplier;
+                var multiplier = 1.00 + self.weapon.abilityLevel,
+                    damage = defaultDamage * multiplier;
 
                 return new Hit(Modules.Hits.Critical, damage);
 
             case Modules.Enchantment.Stun:
-
-
-
-                break;
+                return new Hit(Modules.Hits.Stun, defaultDamage);
 
             case Modules.Enchantment.Explosive:
-
-                break;
+                return new Hit(Modules.Hits.Explosive, defaultDamage);
 
         }
     },

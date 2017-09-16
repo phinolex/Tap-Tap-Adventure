@@ -44,10 +44,10 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
 
             self.attackRange = 1;
 
-            self.load();
+            self.loadGlobals();
         },
 
-        load: function() {
+        loadGlobals: function() {
             var self = this;
 
             self.criticalAnimation = new Animation('atk_down', 10, 0, 48, 48);

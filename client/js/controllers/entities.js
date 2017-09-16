@@ -69,7 +69,8 @@ define(['../renderer/grids', '../entity/objects/chest',
                         attacker = self.get(info.shift()),
                         target = self.get(info.shift()),
                         damage = info.shift(),
-                        pName = info.shift();
+                        pName = info.shift(),
+                        special = info.shift();
 
                     if (!attacker || !target)
                         return;
@@ -86,11 +87,12 @@ define(['../renderer/grids', '../entity/objects/chest',
 
                     projectile.angled = true;
                     projectile.type = type;
+                    projectile.special = special;
 
                     projectile.onImpact(function() {
 
-                        self.unregisterPosition(projectile);
-                        delete self.entities[projectile.getId()];
+                        if (projectile.special === Modules.Hits.Explosive)
+                            projectile.setSprite(self.get('explosion-fireball'));
 
                         /**
                          * Don't fool yourself, the client only knows the damage as a number,
@@ -103,6 +105,9 @@ define(['../renderer/grids', '../entity/objects/chest',
                         self.game.info.create(Modules.Hits.Damage, [damage, target.id === self.game.player.id], target.x, target.y);
 
                         target.triggerHealthBar();
+
+                        self.unregisterPosition(projectile);
+                        delete self.entities[projectile.getId()];
 
                     });
 

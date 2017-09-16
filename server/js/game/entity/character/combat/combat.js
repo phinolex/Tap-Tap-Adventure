@@ -175,13 +175,18 @@ module.exports = Combat = cls.Class.extend({
     },
 
     attack: function(target) {
-        var self = this;
+        var self = this,
+            hit;
 
-
-        /*var self = this,
+        if (self.isPlayer())
+            hit = self.character.getHitType(target);
+        else
             hit = new Hit(Modules.Hits.Damage, Formulas.getDamage(self.character, target));
 
-        self.queue.add(hit);*/
+        if (!hit)
+            return;
+
+        self.queue.add(hit);
     },
 
     forceAttack: function() {
@@ -331,15 +336,15 @@ module.exports = Combat = cls.Class.extend({
             return;
 
         if (character.isRanged()) {
-            var projectile = self.world.createProjectile(true, [character, target]);
+            var projectile = self.world.createProjectile(true, [character, target], hitInfo);
 
-            self.world.pushToAdjacentGroups(character.group, new Messages.Projectile(Packets.ProjectileOpcode.Create, [projectile.instance, projectile.id, character.instance, target.instance, projectile.damage, character.getProjectileName()]));
+            self.world.pushToAdjacentGroups(character.group, new Messages.Projectile(Packets.ProjectileOpcode.Create, [projectile.instance, projectile.id, character.instance, target.instance, projectile.damage, character.getProjectileName(), projectile.special]));
 
         } else {
 
             self.world.pushBroadcast(new Messages.Combat(Packets.CombatOpcode.Hit, character.instance, target.instance, hitInfo));
 
-            self.world.handleDamage(character, target, hitInfo[0]);
+            self.world.handleDamage(character, target, hitInfo.damage);
 
         }
 
@@ -379,6 +384,10 @@ module.exports = Combat = cls.Class.extend({
 
     colliding: function(x, y) {
         return this.world.map.isColliding(x, y);
+    },
+
+    isPlayer: function() {
+        return this.character.type === 'player'
     }
 
 });

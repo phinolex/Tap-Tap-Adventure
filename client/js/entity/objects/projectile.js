@@ -15,6 +15,8 @@ define(['../entity'], function(Entity) {
             self.destX = -1;
             self.destY = -1;
 
+            self.special = -1;
+
             self.static = false;
             self.dynamic = false;
 

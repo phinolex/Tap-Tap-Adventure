@@ -16,6 +16,7 @@ module.exports = Projectile = Entity.extend({
         self.static = false;
 
         self.damage = -1;
+        self.special = -1;
 
         self.owner = null;
     },
