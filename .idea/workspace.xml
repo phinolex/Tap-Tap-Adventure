@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c48d7ea8-5c56-4f6b-afdb-8c04901f739b" name="Default" comment="">
+    <list default="true" id="c48d7ea8-5c56-4f6b-afdb-8c04901f739b" name="Default" comment="getHitType() Fix">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/config.json" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/controllers/entities.js" afterPath="$PROJECT_DIR$/client/js/controllers/entities.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/character/character.js" afterPath="$PROJECT_DIR$/client/js/entity/character/character.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/objects/projectile.js" afterPath="$PROJECT_DIR$/client/js/entity/objects/projectile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/game.js" afterPath="$PROJECT_DIR$/client/js/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/combat/hit.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/combat/hit.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/objects/projectile.js" afterPath="$PROJECT_DIR$/server/js/game/entity/objects/projectile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/world.js" afterPath="$PROJECT_DIR$/server/js/game/world.js" />
     </list>
     <ignored path="Tap-Tap-Adventure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,11 +26,9 @@
       <file leaf-file-name="combat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
+            <state relative-caret-position="0">
               <caret line="344" column="36" lean-forward="false" selection-start-line="344" selection-start-column="23" selection-end-line="344" selection-end-column="36" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -45,7 +36,7 @@
       <file leaf-file-name="world.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
+            <state relative-caret-position="3878">
               <caret line="277" column="43" lean-forward="false" selection-start-line="277" selection-start-column="43" selection-end-line="277" selection-end-column="43" />
               <folding />
             </state>
@@ -55,8 +46,18 @@
       <file leaf-file-name="game.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="468" column="47" lean-forward="true" selection-start-line="468" selection-start-column="47" selection-end-line="468" selection-end-column="47" />
+            <state relative-caret-position="547">
+              <caret line="494" column="21" lean-forward="false" selection-start-line="494" selection-start-column="21" selection-end-line="494" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="98">
+              <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -73,7 +74,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onNPC</find>
       <find>resetTalk</find>
       <find>talk</find>
       <find>onQue</find>
@@ -103,6 +103,7 @@
       <find>hit:</find>
       <find>Hit</find>
       <find>hitInfo</find>
+      <find>Combat</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -111,7 +112,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/js/handlers/inventoryhandler.js" />
         <option value="$PROJECT_DIR$/client/js/interface/dialog/bank/bankframe.js" />
         <option value="$PROJECT_DIR$/client/js/handlers/bankhandler.js" />
         <option value="$PROJECT_DIR$/client/js/network/incoming.js" />
@@ -127,7 +127,6 @@
         <option value="$PROJECT_DIR$/Notes.txt" />
         <option value="$PROJECT_DIR$/client/index.html" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/server/config.json" />
         <option value="$PROJECT_DIR$/client/js/controllers/input.js" />
         <option value="$PROJECT_DIR$/client/js/controllers/chat.js" />
         <option value="$PROJECT_DIR$/client/js/controllers/interface.js" />
@@ -162,6 +161,8 @@
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
         <option value="$PROJECT_DIR$/client/js/game.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/server/config.json" />
       </list>
     </option>
   </component>
@@ -183,10 +184,10 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="464" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="169" />
     <option name="y" value="22" />
-    <option name="width" value="816" />
+    <option name="width" value="1111" />
     <option name="height" value="774" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -226,6 +227,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -480,8 +483,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -667,7 +668,9 @@
       <workItem from="1505415194227" duration="6041000" />
       <workItem from="1505489716191" duration="5390000" />
       <workItem from="1505523650923" duration="505000" />
-      <workItem from="1505538996122" duration="1476000" />
+      <workItem from="1505538996122" duration="1511000" />
+      <workItem from="1505677519053" duration="253000" />
+      <workItem from="1505859556365" duration="203000" />
     </task>
     <task id="LOCAL-00001" summary="Client refactoring began - Fixing interfaces">
       <created>1488093277468</created>
@@ -704,26 +707,33 @@
       <option name="project" value="LOCAL" />
       <updated>1505493924277</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="getHitType() Fix">
+      <created>1505541912278</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1505541912278</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="320826000" />
+    <option name="totallyTimeSpent" value="321317000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1280" height="774" extended-state="6" />
+    <frame x="169" y="22" width="1111" height="774" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24212421" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968536" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -776,7 +786,8 @@
     <MESSAGE value="Renaming" />
     <MESSAGE value="Fixes and Updates" />
     <MESSAGE value="Special Attacks, Enchantments and Terminal Command Console" />
-    <option name="LAST_COMMIT_MESSAGE" value="Special Attacks, Enchantments and Terminal Command Console" />
+    <MESSAGE value="getHitType() Fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="getHitType() Fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -789,13 +800,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="382">
           <caret line="33" column="50" lean-forward="false" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="6" column="11" lean-forward="true" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -995,7 +999,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="599">
           <caret line="410" column="51" lean-forward="true" selection-start-line="410" selection-start-column="51" selection-end-line="410" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1041,13 +1044,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="10" column="20" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/js/controllers/commands.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-128">
@@ -1087,7 +1083,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-838">
           <caret line="54" column="24" lean-forward="false" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1095,9 +1090,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117">
           <caret line="156" column="26" lean-forward="true" selection-start-line="156" selection-start-column="26" selection-end-line="156" selection-end-column="26" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1105,7 +1097,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1113,7 +1104,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="10" column="21" lean-forward="false" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1121,9 +1111,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="6" column="57" lean-forward="false" selection-start-line="6" selection-start-column="57" selection-end-line="6" selection-end-column="57" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1137,7 +1124,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
+        <state relative-caret-position="3878">
           <caret line="277" column="43" lean-forward="false" selection-start-line="277" selection-start-column="43" selection-end-line="277" selection-end-column="43" />
           <folding />
         </state>
@@ -1145,18 +1132,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
+        <state relative-caret-position="0">
           <caret line="344" column="36" lean-forward="false" selection-start-line="344" selection-start-column="23" selection-end-line="344" selection-end-column="36" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="468" column="47" lean-forward="true" selection-start-line="468" selection-start-column="47" selection-end-line="468" selection-end-column="47" />
+        <state relative-caret-position="547">
+          <caret line="494" column="21" lean-forward="false" selection-start-line="494" selection-start-column="21" selection-end-line="494" selection-end-column="21" />
           <folding />
         </state>
       </provider>

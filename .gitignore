@@ -5,3 +5,4 @@ cordova
 .DS_Store
 dump.rdb
 client/less
+server/config.json
