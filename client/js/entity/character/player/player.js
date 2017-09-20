@@ -1,4 +1,4 @@
-/* global Modules, log */
+/* global Modules, log, _ */
 
 define(['../character', './equipment/armour', './equipment/weapon',
         './equipment/pendant', './equipment/boots', './equipment/ring'],
@@ -41,34 +41,17 @@ define(['../character', './equipment/armour', './equipment/weapon',
         load: function(data) {
             var self = this;
 
-            self.setId(data.shift());
-            self.username = data.shift();
+            self.setId(data.instance);
+            self.setGridPosition(data.x, data.y);
+            self.setPointsData(data.hitPoints, data.mana);
 
-            var x = data.shift(),
-                y = data.shift();
+            self.username = data.username;
+            self.experience = data.experience;
+            self.level = data.level;
 
-            self.setGridPosition(x, y);
-
-            self.kind = data.shift();
-            self.rights = data.shift();
-
-            var hitPointsData = data.shift(),
-                manaData = data.shift();
-
-            self.setHitPoints(hitPointsData.shift());
-            self.setMaxHitPoints(hitPointsData.shift());
-
-            self.setMana(manaData.shift());
-            self.setMaxMana(manaData.shift());
-
-            self.experience = data.shift();
-            self.level = data.shift();
-
-            self.lastLogin = data.shift();
-            self.pvpKills = data.shift();
-            self.pvpDeaths = data.shift();
-
-            self.type = 'player';
+            self.lastLogin = data.lastLogin;
+            self.pvpKills = data.pvpKills;
+            self.pvpDeaths = data.pvpDeaths;
         },
 
         loadHandler: function(game) {
@@ -169,6 +152,20 @@ define(['../character', './equipment/armour', './equipment/weapon',
 
         getY: function() {
             return this.gridY;
+        },
+
+        setPointsData: function(hitPointsData, manaData) {
+            var self = this,
+                hitPoints = hitPointsData.shift(),
+                maxHitPoints = hitPointsData.shift(),
+                mana = manaData.shift(),
+                maxMana = manaData.shift();
+
+            self.setHitPoints(hitPoints);
+            self.setMana(mana);
+
+            self.setMaxHitPoints(maxHitPoints);
+            self.setMaxMana(maxMana);
         },
 
         setEquipment: function(type, info) {

@@ -54,6 +54,13 @@ module.exports = World = cls.Class.extend({
         self.onPlayerConnection(function(connection) {
             var remoteAddress = connection.socket.conn.remoteAddress;
 
+            if (config.development) {
+                connection.sendUTF8('maintenance');
+                connection.close();
+
+                return;
+            }
+
             if (self.logging.indexOf(remoteAddress) > -1) {
                 connection.sendUTF8('malform');
                 connection.close();

@@ -676,6 +676,8 @@ module.exports = Incoming = cls.Class.extend({
         switch (opcode) {
             case Packets.TradeOpcode.Request:
 
+
+
                 break;
 
             case Packets.TradeOpcode.Accept:

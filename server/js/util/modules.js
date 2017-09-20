@@ -58,9 +58,10 @@ var Modules = {
     },
 
     Trade: {
-        Started: 0,
-        Accepted: 1,
-        Finished: 2
+        Request: 0,
+        Started: 1,
+        Accepted: 2,
+        Finished: 3
     },
 
     Quests: {

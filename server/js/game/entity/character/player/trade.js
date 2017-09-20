@@ -4,45 +4,105 @@ var cls = require('../../../../lib/class'),
 module.exports = Trade = cls.Class.extend({
 
     /**
-     * Trade states proceed as follows..
-     *
-     * 1. Initial request (either player requests a trade)
-     * 2. Trading screen opens (player select their items)
-     * 3. First player accepts
-     * 4. Second player accepts
-     * 5. Trade finished.
-     *
-     * Each trading instance is assigned to a player,
-     * and it is only triggered whenever a trade is intiated.
-     *
-     * After the trade, the oPlayer for each repsective player is cleared.
-     *
+     * We maintain a trade instance for every player,
+     * and we trigger it whenever the trading is
+     * started and/or requested.
      */
 
-    init: function(player, oPlayer) {
+    init: function(player) {
         var self = this;
 
         self.player = player;
-        self.oPlayer = oPlayer;
+        self.oPlayer = null;
+
+        self.requestee = null;
+
+        self.state = null;
+        self.subState = null;
 
         self.playerItems = [];
         self.oPlayerItems = [];
-
-        self.state = null;
     },
 
-    select: function(instance, slot) {
+    start: function() {
+        var self = this;
+
+        self.oPlayer = self.requestee;
+        self.state = Modules.Trade.Started;
+    },
+
+    stop: function() {
+        var self = this;
+
+        self.oPlayer = null;
+        self.state = null;
+        self.subState = null;
+        self.requestee = null;
+
+        self.playerItems = [];
+        self.oPlayerItems = [];
+    },
+
+    finalize: function() {
+        var self = this;
+
+        if (!self.player.inventory.containsSpaces(self.oPlayerItems.length))
+            return;
+
+        for (var i in self.oPlayerItems) {
+            var item = self.oPlayerItems[i];
+
+            if (!item || item.id === -1)
+                continue;
+
+            self.oPlayer.inventory.remove(item.id, item.count, item.index);
+            self.player.inventory.add(item);
+        }
+    },
+
+    select: function(slot) {
+        var self = this,
+            item = self.player.inventory.slots[slot];
+
+        if (!item || item.id === -1 || self.playerItems.indexOf(item) < 0)
+            return;
+
+        self.playerItems.push(item);
+    },
+
+    request: function(oPlayer) {
+        var self = this;
+
+        self.requestee = oPlayer;
+
+        if (oPlayer.trade.getRequestee() === self.player.instance)
+            self.start();
+
 
     },
 
     accept: function() {
         var self = this;
 
+        self.subState = Modules.Trade.Accepted;
 
+        if (self.oPlayer.trade.subState === Modules.Trade.Accepted) {
+            self.finalize();
+            self.oPlayer.trade.finalize();
+        }
+    },
+
+    getRequestee: function() {
+        var self = this;
+
+        if (!self.requestee)
+            return null;
+
+        return self.requestee.instance;
     },
 
     decline: function() {
-
+        this.stop();
     },
 
     isStarted: function() {

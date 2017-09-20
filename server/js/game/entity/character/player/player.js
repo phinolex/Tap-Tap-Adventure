@@ -23,7 +23,8 @@ var Character = require('../character'),
     Enchant = require('./enchant/enchant'),
     Guild = require('./guild'),
     Utils = require('../../../../util/utils'),
-    Hit = require('../combat/hit');
+    Hit = require('../combat/hit'),
+    Trade = require('./trade');
 
 module.exports = Player = Character.extend({
 
@@ -57,6 +58,7 @@ module.exports = Player = Character.extend({
         self.quests = new Quests(self);
         self.abilities = new Abilities(self);
         self.enchant = new Enchant(self);
+        self.trade = new Trade(self);
 
         self.introduced = false;
         self.currentSong = null;
@@ -192,21 +194,21 @@ module.exports = Player = Character.extend({
         if (self.mana.getMana() < 0)
             self.mana.setMana(self.mana.getMaxMana());
 
-        var info = [
-                self.instance,
-                self.username,
-                self.x,
-                self.y,
-                self.kind,
-                self.rights,
-                self.hitPoints.getData(),
-                self.mana.getData(),
-                self.experience,
-                self.level,
-                self.lastLogin,
-                self.pvpKills,
-                self.pvpDeaths
-            ];
+        var info = {
+            instance: self.instance,
+            username: self.username,
+            x: self.x,
+            y: self.y,
+            kind: self.kind,
+            rights: self.rights,
+            hitPoints: self.hitPoints.getData(),
+            mana: self.mana.getMana(),
+            experience: self.experience,
+            level: self.level,
+            lastLogin: self.lastLogin,
+            pvpKills: self.pvpKills,
+            pvpDeaths: self.pvpDeaths
+        };
 
         self.groupPosition = [self.x, self.y];
 

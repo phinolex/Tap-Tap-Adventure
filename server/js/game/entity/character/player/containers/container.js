@@ -122,6 +122,17 @@ module.exports = Container = cls.Class.extend({
         return false;
     },
 
+    containsSpaces: function(count) {
+        var self = this,
+            emptySpaces = [];
+
+        for (var i = 0; i < self.slots.length; i++)
+            if (self.slots[i].id === -1)
+                emptySpaces.push(self.slots[i]);
+
+        return emptySpaces.length === count;
+    },
+
     hasSpace: function() {
         return this.getEmptySlot() > -1;
     },
