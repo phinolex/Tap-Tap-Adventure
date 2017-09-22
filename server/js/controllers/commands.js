@@ -38,9 +38,9 @@ module.exports = Commands = cls.Class.extend({
 
         switch(command) {
 
-            case 'test':
+            case 'tutstage':
 
-                self.player.getTutorial().setStage(5);
+                log.info(self.player.getTutorial().stage);
 
                 break;
 

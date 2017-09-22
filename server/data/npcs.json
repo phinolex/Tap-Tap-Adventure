@@ -80,7 +80,9 @@
 
   "Coder": {
     "id": 17,
-    "name": "Programmer"
+    "name": "Programmer",
+    "text": ["Oh.. This is awkward...", "You may be wondering why I'm here as well.", "Well just letting you know..",
+            "It's definitely not because we're running low on pixel art.."]
   },
 
   "ForestNpc": {

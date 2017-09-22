@@ -41,7 +41,7 @@ define(['jquery', './pages/state', './pages/ability', './pages/settings', './pag
                 if (!self.activePage.loaded)
                     self.activePage.load();
 
-                self.game.send(Packets.Click, ['profile', self.button.hasClass('active')]);
+                self.game.socket.send(Packets.Click, ['profile', self.button.hasClass('active')]);
 
             });
 

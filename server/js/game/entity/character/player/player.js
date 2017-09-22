@@ -202,7 +202,7 @@ module.exports = Player = Character.extend({
             kind: self.kind,
             rights: self.rights,
             hitPoints: self.hitPoints.getData(),
-            mana: self.mana.getMana(),
+            mana: self.mana.getData(),
             experience: self.experience,
             level: self.level,
             lastLogin: self.lastLogin,
@@ -354,8 +354,6 @@ module.exports = Player = Character.extend({
         if (isDoor && !self.finishedTutorial()) {
             if (self.doorCallback)
                 self.doorCallback(x, y);
-
-            return;
         }
 
         self.world.pushToAdjacentGroups(self.group, new Messages.Teleport(self.instance, x, y));

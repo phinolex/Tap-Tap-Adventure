@@ -10,21 +10,23 @@
         "0": ["Hello there!", "Welcome to Maearth.",
               "I do not wish to keep you for too long",
               "So let us proceed with a quick tutorial."],
-        "1": ["See that strange pointing arrow?", "Yea I figured it must not be that hard to miss.",
-              "You should click it.", "Why are you even talking to me...", "Stop.", "Well..", "This is awkward",
-              "Wanna hear a secret?", "The creator of this entire realm is in a lot of pain.", "Hold on..",
-              "I do not think I was supposed to say that.."],
+        "1": ["See that spooky arrow? You should click it.", "Trust me.. It's really the only way to progress...",
+              "Come on man.. Just do it please..", "I don't have a lot of time and there are other newbies here."],
 
         "2": ["Alright perfect, clearly you are capable of clicking things.", "This is the character menu.",
               "It is pretty self explanatory so I do not want to drag this tutorial.",
               "Please go to the next instructor to finish your quick tutorial."],
 
-        "3": ["Farewell "]
+        "3": ["Farewell Adventurer!"]
       },
 
-      "8": ["Oh, another one. Here, take this sword and get outta here.",
+      "8": {
+        "4": ["Oh, another one. Here, take this sword and get outta here.",
           "I would bother teaching you but", "It is more fun to let newbies figure it out."
-      ]
+        ],
+
+        "5": ["Go through the portal there to get to the main land."]
+      }
 
     },
 
@@ -32,13 +34,14 @@
       "0": [0, 14, 554],
       "1": [2, 431, 228],
       "2": [0, 14, 554],
-      "4": [0, 14, 554]
+      "3": [0, 15, 561],
+      "4": [0, 24, 18],
+      "5": [0, 20, 24]
     },
 
     "doors": {
-      "5": [15, 560],
-      "6": [20, 24],
-      "19": [51, 16]
+      "3": [15, 560],
+      "5": [20, 23]
     },
 
     "task": {

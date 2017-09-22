@@ -39,6 +39,8 @@ module.exports = Introduction = Quest.extend({
 
             if (self.stage < 10)
                 self.toggleChat();
+
+            self.updatePointers();
         });
 
         self.onNPCTalk(function(npc) {
@@ -73,14 +75,15 @@ module.exports = Introduction = Quest.extend({
                 return;
             }
 
-            if (!self.verifyDoor(destX, destY))
+            if (!self.verifyDoor(self.player.x, self.player.y))
                 self.player.notify('You are not supposed to go through here.');
             else
                 self.progress('door');
         });
 
-        self.player.onProfile(function() {
-            if (self.player.profileDialogOpen)
+        self.player.onProfile(function(isOpen) {
+
+            if (isOpen)
                 self.progress('click');
 
         });
@@ -94,19 +97,19 @@ module.exports = Introduction = Quest.extend({
         if (!task || task !== type)
             return;
 
-        if (self.stage === self.data.stages) {
+        if (self.stage === self.data.stages)
             self.finish();
-        }
 
         switch (type) {
             case 'talk':
 
-                break;
-
-            case 'click':
-
-                if (self.stage === 1)
-                    self.forceTalk(self.lastNPC, ['Great job! This is your character menu.']);
+                if (self.stage === 4)
+                    self.player.inventory.add({
+                        id: 248,
+                        count: 1,
+                        ability: -1,
+                        abilityLevel: -1
+                    });
 
 
                 break;
@@ -163,12 +166,7 @@ module.exports = Introduction = Quest.extend({
         if (!conversation || !conversation[self.stage])
             return [''];
 
-        var message = conversation[self.stage];
-
-        if (self.stage === 3)
-            message[0] += self.player.username;
-
-        return message;
+        return conversation[self.stage];
     },
 
     getTask: function() {
@@ -182,15 +180,13 @@ module.exports = Introduction = Quest.extend({
 
         self.update();
         self.clearPointers();
-
     },
 
     finish: function() {
-        var self = this;
+        var self = this,
+            position = self.player.getSpawn();
 
         self.setStage(9999);
-        self.clearPointers();
-        self.resetTalkIndex(self.lastNPC);
 
         self.player.send(new Messages.Quest(Packets.QuestOpcode.Finish, {
             id: self.id
@@ -239,6 +235,9 @@ module.exports = Introduction = Quest.extend({
     verifyDoor: function(destX, destY) {
         var self = this,
             doorData = self.data.doors[self.stage];
+
+        if (!doorData)
+            return;
 
         return doorData[0] === destX && doorData[1] === destY;
     },
