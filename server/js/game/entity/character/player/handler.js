@@ -29,7 +29,7 @@ module.exports = Handler = cls.Class.extend({
         });
 
         self.player.onDeath(function() {
-            log.info('Whoop de doo I died.')
+
         });
 
         self.player.onGroup(function() {

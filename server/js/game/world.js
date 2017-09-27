@@ -212,13 +212,12 @@ module.exports = World = cls.Class.extend({
 
                 self.pushToAdjacentGroups(target.group, new Messages.Combat(Packets.CombatOpcode.Finish, [attacker.instance, target.instance]));
 
-
                 /**
-                 * Why do we check here for entity type here?
+                 * Why do we check here for entity type?
                  *
                  * It is well built to implement special abilities in the future
                  * such as when a player dies - all the nearby attackers have a
-                 * wanted level on them or have some inflicted amage.
+                 * wanted level on them or have some inflicted damage.
                  */
 
                 if (target.type === 'mob')
@@ -232,7 +231,7 @@ module.exports = World = cls.Class.extend({
 
     },
 
-    handleDeath: function(character) {
+    handleDeath: function(character, ignoreDrops) {
         var self = this;
 
         if (character.type === 'mob') {
@@ -246,11 +245,12 @@ module.exports = World = cls.Class.extend({
 
             character.destroy();
 
-            var drop = character.getDrop();
+            if (!ignoreDrops) {
+                var drop = character.getDrop();
 
-            if (drop)
-                self.dropItem(drop.id, drop.count, deathX, deathY);
-
+                if (drop)
+                    self.dropItem(drop.id, drop.count, deathX, deathY);
+            }
 
         } else if (character.type === 'player')
             character.die();
@@ -265,7 +265,7 @@ module.exports = World = cls.Class.extend({
                 target = info.shift();
 
             if (!attacker || !target)
-                return;
+                return null;
 
             var startX = attacker.x,
                 startY = attacker.y,
@@ -276,7 +276,7 @@ module.exports = World = cls.Class.extend({
             projectile.setStart(startX, startY);
             projectile.setTarget(target);
 
-            projectile.damage = Formulas.getDamage(attacker, target);
+            projectile.damage = Formulas.getDamage(attacker, target, true);
             projectile.owner = attacker;
 
             if (hitInfo.type !== Modules.Hits.Damage)

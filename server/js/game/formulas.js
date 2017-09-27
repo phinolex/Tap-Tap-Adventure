@@ -5,7 +5,7 @@ Formulas.LevelExp = [];
 
 module.exports = Formulas;
 
-Formulas.getDamage = function(attacker, target) {
+Formulas.getDamage = function(attacker, target, special) {
     if (!attacker || !target)
         return;
 
@@ -14,7 +14,13 @@ Formulas.getDamage = function(attacker, target) {
         attackerArmourLevel = attacker.armour ? attacker.armour.getDefense() : attacker.armourLevel,
         targetArmourLevel = target.armour ? target.armour.getDefense() : target.armourLevel,
         usingRange = attacker.weapon ? attacker.weapon.isRanged() : attacker.isRanged(),
-        isPlayer = attacker.type === 'player';
+        isPlayer = attacker.type === 'player',
+        attackerPendant = attacker.pendant ? attacker.pendant : null,
+        attackerRing = attacker.ring ? attacker.ring : null,
+        attackerBoots = attacker.boots ? attacker.boots : null,
+        targetPendant = target.pendant ?  target.pendant : null,
+        targetRing = target.ring ? target.ring : null,
+        targetBoots = target.boots ? target.boots : null;
 
     /**
      * Set the baseline damage
@@ -29,12 +35,28 @@ Formulas.getDamage = function(attacker, target) {
     damage += (weaponLevel * (2.125 + (Utils.randomRange(0.1, 1.25))) * (usingRange ? Utils.randomRange(0.75, 1.15) : 2.15 + Utils.randomRange(2.1, 4.2)));
     damage += (attackerArmourLevel * (Utils.randomRange(0.15, 0.35)));
 
-    /**
-     * Handle damage absorption
-     * TODO - Improve upon this when pendants, rings and boots are added into the game
-     */
+    if (special)
+        damage *= Utils.randomRange(1.00, 3.10);
+
+    if (attackerPendant)
+        damage *= attackerPendant.getBaseAmplifier();
+
+    if (attackerRing)
+        damage *= attackerRing.getBaseAmplifier();
+
+    if (attackerBoots)
+        damage *= attackerBoots.getBaseAmplifier();
 
     damageAbsorbed = target.level + Utils.randomRange(0, targetArmourLevel) * (1.15 + Utils.randomRange(-0.35, 0.05));
+
+    if (targetPendant)
+        damageAbsorbed *= targetPendant.getBaseAmplifier();
+
+    if (targetRing)
+        damageAbsorbed *= targetRing.getBaseAmplifier();
+
+    if (targetBoots)
+        damageAbsorbed *= targetBoots.getBaseAmplifier();
 
     damage = Math.round(damage);
     damageAbsorbed = Math.round(damageAbsorbed);

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 var Log = require('log'),
     fs = require("fs"),
     file = require('../file'),

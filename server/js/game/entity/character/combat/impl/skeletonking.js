@@ -20,6 +20,16 @@ module.exports = SkeletonKing = Combat.extend({
         self.lastSpawn = 0;
 
         self.minions = [];
+
+        character.onDeath(function() {
+            _.each(self.minions, function(minion) {
+
+                self.world.handleDeath(minion, true);
+
+                self.lastSpawn = 0;
+
+            });
+        });
     },
 
     hit: function(character, target, hitInfo) {
@@ -52,6 +62,9 @@ module.exports = SkeletonKing = Combat.extend({
 
         _.each(self.minions, function(minion) {
             minion.onDeath(function() {
+                if (self.isLast())
+                    self.lastSpawn = new Date().getTime();
+
                 self.minions.splice(self.minions.indexOf(minion), 1);
             });
 
@@ -64,8 +77,12 @@ module.exports = SkeletonKing = Combat.extend({
         return this.minions.length > 0;
     },
 
+    isLast: function() {
+        return this.minions.length === 1;
+    },
+
     canSpawn: function() {
-        return (new Date().getTime() - this.lastSpawn > 27000) && !this.hasMinions();
+        return (new Date().getTime() - this.lastSpawn > 25000) && !this.hasMinions();
     }
 
 });

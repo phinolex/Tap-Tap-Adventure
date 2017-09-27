@@ -206,17 +206,17 @@
   "Adherer": {
     "name": "Dark Mage",
     "id": 12,
-    "drops": {"rose": 200, "redlightbow": 200, "redmetalsword": 100, "adhererarcherarmor": 300, "adhererrobe": 200},
-    "hitPoints": 85,
+    "drops": {"rose": 50, "redlightbow": 10, "redmetalsword": 10, "adhererarcherarmor": 10, "adhererrobe": 10},
+    "hitPoints": 200,
     "armour": 5,
-    "weapon": 2,
+    "weapon": 1,
     "xp": 50,
-    "level": 18,
-    "aggroRange": 1,
-    "attackRange": 2,
+    "level": 10,
+    "aggroRange": 16,
+    "attackRange": 16,
     "aggressive": true,
-    "attackRate": 1200,
-    "movementSpeed": 500,
+    "attackRate": 7000,
+    "movementSpeed": 1000,
     "spawnDelay": 35000
   },
 
@@ -1689,7 +1689,6 @@
     "id": 98
   },
 
-
   "Skeletonking": {
     "name": "Skeleton King",
     "id": 99,
@@ -1713,7 +1712,7 @@
     "id": 100,
     "drops": {"sidesword": 300, "bigflask": 100, "goldensword": 500, "pearlpendant": 50, "pearlring": 50},
     "hitPoints": 850,
-    "armour": 20,
+    "armour": 10,
     "weapon": 23,
     "xp": 150,
     "level": 35,

@@ -14,6 +14,10 @@ module.exports = Hit = cls.Class.extend({
         self.damage = damage;
     },
 
+    isRanged: function() {
+        return this.ranged;
+    },
+
     getDamage: function() {
         return this.damage;
     },
@@ -21,7 +25,8 @@ module.exports = Hit = cls.Class.extend({
     getData: function() {
         return {
             type: this.type,
-            damage: this.damage
+            damage: this.damage,
+            isRanged: this.isRanged()
         }
     }
 

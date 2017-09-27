@@ -4,7 +4,8 @@ var Entity = require('../entity'),
     _ = require('underscore'),
     Combat = require('./combat/combat'),
     Modules = require('../../../util/modules'),
-    SkeletonKing = require('./combat/impl/skeletonking');
+    SkeletonKing = require('./combat/impl/skeletonking'),
+    OgreLord = require('./combat/impl/ogrelord');
 
 module.exports = Character = Entity.extend({
 
@@ -34,6 +35,9 @@ module.exports = Character = Entity.extend({
         self.target = null;
         self.potentialTarget = null;
 
+        self.projectile = Modules.Projectiles.Arrow;
+        self.projectileName = 'projectile-pinearrow';
+
         self.loadCombat();
     },
 
@@ -47,7 +51,11 @@ module.exports = Character = Entity.extend({
 
                 break;
 
+            case 100:
 
+                self.combat = new OgreLord(self);
+
+                break;
 
             default:
 
@@ -129,11 +137,11 @@ module.exports = Character = Entity.extend({
     },
 
     getProjectile: function() {
-        return Modules.Projectiles.Arrow;
+        return this.projectile;
     },
 
     getProjectileName: function() {
-        return 'projectile-pinearrow';
+        return this.projectileName;
     },
 
     getDrop: function() {

@@ -34,6 +34,8 @@ module.exports = Mob = Character.extend({
         self.dead = false;
         self.boss = false;
         self.static = false;
+
+        self.projectileName = self.getProjectileName();
     },
 
     refresh: function() {
@@ -41,6 +43,10 @@ module.exports = Mob = Character.extend({
 
         self.hitPoints = self.data.hitPoints;
         self.maxHitPoints = self.data.hitPoints;
+
+        if (self.refreshCallback)
+            self.refreshCallback();
+
     },
 
     getDrop: function() {
@@ -81,6 +87,7 @@ module.exports = Mob = Character.extend({
 
         switch (self.id) {
             case 3:
+            case 12:
             case 17:
                 return 'projectile-fireball';
         }
@@ -160,6 +167,10 @@ module.exports = Mob = Character.extend({
 
     onMove: function(callback) {
         this.moveCallback = callback;
+    },
+
+    onRefresh: function(callback) {
+        this.refreshCallback = callback;
     },
 
     onDeath: function(callback) {

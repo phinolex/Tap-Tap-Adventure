@@ -335,10 +335,11 @@ module.exports = Combat = cls.Class.extend({
         if (time - self.lastHit < self.character.attackRate)
             return;
 
-        if (character.isRanged()) {
+        if (character.isRanged() || hitInfo.isRanged) {
+
             var projectile = self.world.createProjectile(true, [character, target], hitInfo);
 
-            self.world.pushToAdjacentGroups(character.group, new Messages.Projectile(Packets.ProjectileOpcode.Create, [projectile.instance, projectile.id, character.instance, target.instance, projectile.damage, character.getProjectileName(), projectile.special]));
+            self.world.pushToAdjacentGroups(character.group, new Messages.Projectile(Packets.ProjectileOpcode.Create, [projectile.instance, projectile.id, character.instance, target.instance, projectile.damage, character.projectileName, projectile.special]));
 
         } else {
 

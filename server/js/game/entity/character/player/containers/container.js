@@ -3,7 +3,8 @@
 var cls = require('../../../../../lib/class'),
     _ = require('underscore'),
     Slot = require('./slot'),
-    Items = require('../../../../../util/items');
+    Items = require('../../../../../util/items'),
+    Constants = require('../../../../../util/constants');
 
 module.exports = Container = cls.Class.extend({
 
@@ -56,8 +57,8 @@ module.exports = Container = cls.Class.extend({
     add: function(id, count, ability, abilityLevel) {
         var self = this;
 
-        if (!id || count < 0)
-            return;
+        if (!id || count < 0 || count >= Constants.MAX_STACK)
+            return null;
 
         if (self.contains(id) && Items.isStackable(id)) {
             var sSlot = self.getSlot(id);

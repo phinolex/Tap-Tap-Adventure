@@ -14,8 +14,6 @@ module.exports = Introduction = Quest.extend({
         self.lastNPC = null;
 
         self._super(data.id, data.name, data.description);
-
-        self.loadCallbacks();
     },
 
     load: function(stage) {
@@ -26,22 +24,17 @@ module.exports = Introduction = Quest.extend({
         else
             self.stage = stage;
 
-        if (self.finishedCallback)
-            self.finishedCallback();
+        self.loadCallbacks();
     },
 
     loadCallbacks: function() {
         var self = this;
 
-        self.onFinishedLoading(function() {
-            if (self.stage > 9999)
-                return;
+        if (self.stage >= 9999)
+            return;
 
-            if (self.stage < 10)
-                self.toggleChat();
-
-            self.updatePointers();
-        });
+        self.updatePointers();
+        self.toggleChat();
 
         self.onNPCTalk(function(npc) {
 
@@ -187,6 +180,7 @@ module.exports = Introduction = Quest.extend({
             position = self.player.getSpawn();
 
         self.setStage(9999);
+        self.toggleChat();
 
         self.player.send(new Messages.Quest(Packets.QuestOpcode.Finish, {
             id: self.id

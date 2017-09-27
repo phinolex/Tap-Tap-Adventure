@@ -109,11 +109,17 @@ define(['jquery', './pages/state', './pages/ability', './pages/settings', './pag
         },
 
         show: function() {
-            this.body.fadeIn('slow');
+            var self = this;
+
+            self.body.fadeIn('slow');
+            self.button.addClass('active');
         },
 
         hide: function() {
-            this.body.fadeOut('fast');
+            var self = this;
+
+            self.body.fadeOut('fast');
+            self.button.removeClass('active');
         },
 
         isVisible: function() {

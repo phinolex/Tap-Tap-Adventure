@@ -38,6 +38,10 @@ module.exports = Equipment = cls.Class.extend({
         return this.abilityLevel;
     },
 
+    getBaseAmplifier: function() {
+        return 1.00;
+    },
+
     getData: function() {
         return [Items.idToName(this.id), Items.idToString(this.id), this.count, this.ability, this.abilityLevel];
     },

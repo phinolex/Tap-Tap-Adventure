@@ -6,6 +6,12 @@ module.exports = Pendant = Equipment.extend({
         var self = this;
 
         self._super(name, id, count, ability, abilityLevel);
+
+        self.pendantLevel = 0;
+    },
+
+    getBaseAmplifier: function() {
+        return 1.00 + this.pendantLevel / 100;
     }
 
 });

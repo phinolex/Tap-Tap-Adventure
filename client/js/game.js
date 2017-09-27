@@ -793,13 +793,23 @@ define(['./renderer/renderer', './utils/storage',
                 switch(opcode) {
                     case Packets.NPCOpcode.Talk:
                         var npc = self.entities.get(info.id),
-                            messages = info.text;
+                            messages = info.text,
+                            nonNPC = info.nonNPC;
 
                         if (!npc)
                             return;
 
                         if (!messages) {
                             npc.talkIndex = 0;
+                            return;
+                        }
+
+                        if (nonNPC) {
+                            self.bubble.create(info.id, messages, self.time, 5000);
+                            self.bubble.setTo(npc);
+
+                            self.audio.play(Modules.AudioTypes.SFX, 'npc');
+
                             return;
                         }
 

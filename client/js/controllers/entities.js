@@ -79,20 +79,19 @@ define(['../renderer/grids', '../entity/objects/chest',
 
                     var projectile = new Projectile(id, pType, attacker);
 
+                    projectile.name = pName;
+
                     projectile.setStart(attacker.x, attacker.y);
                     projectile.setTarget(target);
 
-                    projectile.setSprite(self.getSprite(pName));
-                    projectile.setAnimation('travel', 60);
+                    projectile.setSprite(self.getSprite(projectile.name));
+                    projectile.setAnimation('travel', projectile.getSpeed());
 
                     projectile.angled = true;
                     projectile.type = type;
                     projectile.special = special;
 
                     projectile.onImpact(function() {
-
-                        if (projectile.special === Modules.Hits.Explosive)
-                            projectile.setSprite(self.get('explosion-fireball'));
 
                         /**
                          * Don't fool yourself, the client only knows the damage as a number,

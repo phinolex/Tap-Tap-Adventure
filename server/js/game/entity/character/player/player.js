@@ -351,10 +351,9 @@ module.exports = Player = Character.extend({
     teleport: function(x, y, isDoor) {
         var self = this;
 
-        if (isDoor && !self.finishedTutorial()) {
+        if (isDoor && !self.finishedTutorial())
             if (self.doorCallback)
                 self.doorCallback(x, y);
-        }
 
         self.world.pushToAdjacentGroups(self.group, new Messages.Teleport(self.instance, x, y));
 

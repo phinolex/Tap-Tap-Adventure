@@ -9,6 +9,8 @@ define(['../entity'], function(Entity) {
 
             self.owner = owner;
 
+            self.name = '';
+
             self.startX = -1;
             self.startY = -1;
 
@@ -84,6 +86,12 @@ define(['../entity'], function(Entity) {
 
                 self.updateAngle();
             });
+        },
+
+        getSpeed: function() {
+            var self = this;
+
+            return 1;
         },
 
         updateTarget: function(x, y) {

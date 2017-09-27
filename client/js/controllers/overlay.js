@@ -19,7 +19,7 @@ define(['jquery'], function($) {
         update: function(entity) {
             var self = this;
 
-            if (!entity) {
+            if (!entity || entity.id === self.getGame().player.id) {
                 if (self.isVisible() && !self.input.getPlayer().hasTarget())
                     self.hide();
 
@@ -82,6 +82,10 @@ define(['jquery'], function($) {
 
         isVisible: function() {
             return this.attackInfo.css('display') === 'block';
+        },
+
+        getGame: function() {
+            return this.input.game;
         }
 
     });
