@@ -127,7 +127,7 @@ Items.getShardTier = function(id) {
 };
 
 Items.isEquippable = function(string) {
-    return Items.isArmour(string) || Items.isWeapon(string);
+    return Items.isArmour(string) || Items.isWeapon(string) || Items.isPendant(string) || Items.isRing(string) || Items.isBoots(string);
 };
 
 Items.healsHealth = function(id) {

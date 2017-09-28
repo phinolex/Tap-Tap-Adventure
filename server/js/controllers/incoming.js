@@ -516,6 +516,7 @@ module.exports = Incoming = cls.Class.extend({
                     return;
 
                 self.world.handleDamage(projectile.owner, target, projectile.damage);
+                self.world.removeProjectile(projectile);
 
                 if (target.combat.started || target.dead || target.type !== 'mob')
                     return;

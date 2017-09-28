@@ -20,18 +20,19 @@ module.exports = OgreLord = Combat.extend({
 
         self.lastSpawn = 0;
 
+        self.loaded = false;
+
         character.projectile = Modules.Projectiles.Boulder;
         character.projectileName = 'projectile-boulder';
 
-        self.load();
-
-        character.onRefresh(function() {
-
-            self.load();
-
-        });
-
         character.onDeath(function() {
+
+            self.lastSpawn = 0;
+
+            var listCopy = self.minions.slice();
+
+            for (var i = 0; i < listCopy.length; i++)
+                self.world.kill(listCopy[i]);
 
             clearInterval(self.talkingInterval);
             clearInterval(self.updateInterval);
@@ -39,19 +40,9 @@ module.exports = OgreLord = Combat.extend({
             self.talkingInterval = null;
             self.updateInterval = null;
 
-            _.each(self.minions, function(minion) {
+            self.loaded = false;
 
-                if (minion) {
-
-                    minion.hitPoints = 0;
-
-                    self.world.handleDeath(minion);
-
-                    self.lastSpawn = 0;
-
-                }
-
-            });
+            log.info(self.minions);
 
         });
     },
@@ -68,12 +59,11 @@ module.exports = OgreLord = Combat.extend({
 
         self.updateInterval = setInterval(function() {
 
-            self.character.armourLevel += (self.minions.length * 5);
-
-            if (self.canSpawn())
-                self.spawnMinions();
+            self.character.armourLevel = 50 + (self.minions.length * 15);
 
         }, 2000);
+
+        self.loaded = true;
     },
 
     hit: function(character, target, hitInfo) {
@@ -86,8 +76,10 @@ module.exports = OgreLord = Combat.extend({
         } else
             character.attackRange = 1;
 
-
-        self._super(character, target, hitInfo);
+        if (self.canSpawn())
+            self.spawnMinions();
+        else
+            self._super(character, target, hitInfo);
     },
 
     forceTalk: function(message) {
@@ -110,10 +102,8 @@ module.exports = OgreLord = Combat.extend({
 
     spawnMinions: function() {
         var self = this,
-            xs = [414, 430, 414, 420, 430],
-            ys = [172, 172, 183, 185, 180];
-
-        log.info('Spawning..??');
+            xs = [414, 430, 415, 420, 429],
+            ys = [172, 173, 183, 185, 180];
 
         self.lastSpawn = new Date().getTime();
 
@@ -130,6 +120,7 @@ module.exports = OgreLord = Combat.extend({
                     self.lastSpawn = new Date().getTime();
 
                 self.minions.splice(self.minions.indexOf(minion), 1);
+
             });
 
             if (self.character.hasTarget())
@@ -137,6 +128,8 @@ module.exports = OgreLord = Combat.extend({
 
         });
 
+        if (!self.loaded)
+            self.load();
     },
 
     hasMinions: function() {

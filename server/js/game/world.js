@@ -190,6 +190,17 @@ module.exports = World = cls.Class.extend({
      * Entity related functions
      */
 
+    kill: function(entity) {
+        var self = this;
+
+        entity.applyDamage(entity.hitPoints);
+
+        self.pushToAdjacentGroups(entity.group, new Messages.Points(entity.instance, entity.getHitPoints(), null));
+        self.pushToAdjacentGroups(entity.group, new Messages.Despawn(entity.instance));
+
+        self.handleDeath(entity, true);
+    },
+
     handleDamage: function(attacker, target, damage) {
         var self = this;
 
@@ -271,7 +282,7 @@ module.exports = World = cls.Class.extend({
                 startY = attacker.y,
                 type = attacker.getProjectile();
 
-            projectile = new Projectile(type, Utils.generateInstance(5, type, startX));
+            projectile = new Projectile(type, Utils.generateInstance(5, type, startX + startY));
 
             projectile.setStart(startX, startY);
             projectile.setTarget(target);
@@ -700,6 +711,14 @@ module.exports = World = cls.Class.extend({
 
         delete self.players[player.instance];
         delete self.packets[player.instance];
+    },
+
+    removeProjectile: function(projectile) {
+        var self = this;
+
+        self.removeEntity(projectile);
+
+        delete self.projectiles[projectile.instance];
     },
 
     removeLogging: function(remoteAddress) {

@@ -19,11 +19,12 @@ define(['jquery'], function($) {
         update: function(entity) {
             var self = this;
 
-            if (!entity || entity.id === self.getGame().player.id) {
+            if (!self.validEntity(entity)) {
+                self.hovering = null;
+
                 if (self.isVisible() && !self.input.getPlayer().hasTarget())
                     self.hide();
 
-                self.hovering = null;
                 return;
             }
 
@@ -35,30 +36,37 @@ define(['jquery'], function($) {
             self.name.html(entity.type === 'player' ? entity.username : entity.name);
 
             if (self.hasHealth()) {
+
                 self.health.css({
                     'display': 'block',
                     'width': Math.ceil(entity.hitPoints / entity.maxHitPoints * 100) - 10 + '%'
                 });
 
                 self.details.html(entity.hitPoints + ' / ' + entity.maxHitPoints);
+
             } else {
+
                 self.health.css('display', 'none');
                 self.details.html('');
+
             }
 
-            if (self.hovering.type === 'npc' || self.hovering.type === 'item')
-                return;
-
-            self.hovering.onHitPoints(function(hitPoints) {
-                if (self.hovering) {
+            self.onUpdate(function(hitPoints) {
+                if (self.hovering && self.hovering.type !== 'npc' && self.hovering.type !== 'item') {
                     if (hitPoints < 1)
                         self.hide();
                     else {
-                        self.health.css('width', Math.ceil(hitPoints / self.hovering.maxHitPoints * 100) + '%');
+                        self.health.css('width', Math.ceil(hitPoints / self.hovering.maxHitPoints * 100) - 10 + '%');
                         self.details.html(hitPoints + ' / ' + self.hovering.maxHitPoints);
                     }
+
                 }
             });
+
+        },
+
+        validEntity: function(entity) {
+            return entity && entity.id !== this.input.getPlayer().id && entity.type !== 'projectile';
         },
 
         clean: function() {
@@ -86,6 +94,10 @@ define(['jquery'], function($) {
 
         getGame: function() {
             return this.input.game;
+        },
+
+        onUpdate: function(callback) {
+            this.updateCallback = callback;
         }
 
     });

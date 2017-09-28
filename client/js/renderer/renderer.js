@@ -111,16 +111,18 @@ define(['jquery', './camera', './tile',
         },
 
         loadCamera: function() {
-            var self = this;
+            var self = this,
+                storage = self.game.storage;
 
             self.camera = new Camera(this);
 
             self.loadSizes();
 
-            if (self.firefox || parseFloat(Detect.androidVersion()) < 6.0 || parseFloat(Detect.iOSVersion() < 9.0)) {
+            if (storage.data.new && (self.firefox || parseFloat(Detect.androidVersion()) < 6.0 || parseFloat(Detect.iOSVersion() < 9.0) || Detect.isIpad())) {
                 self.camera.centered = false;
-                self.game.storage.data.settings.centerCamera = false;
-                self.game.storage.save();
+
+                storage.data.settings.centerCamera = false;
+                storage.save();
             }
         },
 

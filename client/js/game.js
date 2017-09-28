@@ -545,8 +545,12 @@ define(['./renderer/renderer', './utils/storage',
                 if (!entity)
                     return;
 
-                if (hitPoints)
+                if (hitPoints) {
                     entity.setHitPoints(hitPoints);
+
+                    if (self.player.hasTarget() && self.player.target.id === entity.id && self.input.overlay.updateCallback)
+                        self.input.overlay.updateCallback(hitPoints);
+                }
 
                 if (mana)
                     entity.setMana(mana);
@@ -978,6 +982,10 @@ define(['./renderer/renderer', './utils/storage',
 
             self.updater.setSprites(self.entities.sprites);
 
+            if (self.storage.data.new) {
+                self.storage.data.new = false;
+                self.storage.save();
+            }
         },
 
         implementStorage: function() {
