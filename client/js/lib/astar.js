@@ -1,7 +1,7 @@
 
 define(function() {
 
-    var AStar = (function () {
+    return (function () {
 
         /**
          * A* (A-Star) algorithm for a path finder
@@ -78,8 +78,8 @@ define(function() {
         }
 
         function AStar(grid, start, end, f) {
-            var
-                cols = grid[0].length,
+
+            var cols = grid[0].length,
                 rows = grid.length,
                 limit = cols * rows,
                 f1 = Math.abs,
@@ -93,12 +93,12 @@ define(function() {
             end = {x:end[0], y:end[1], v:end[0]+end[1]*cols};
             switch (f) {
                 case "Diagonal":
+                case "Euclidean":
                     find = diagonalSuccessors;
                 case "DiagonalFree":
                     distance = diagonal;
                     break;
-                case "Euclidean":
-                    find = diagonalSuccessors;
+
                 case "EuclideanFree":
                     f2 = Math.sqrt;
                     distance = euclidean;
@@ -117,9 +117,10 @@ define(function() {
                         max = f;
                         min = i;
                     }
-                };
+                }
+
                 current = open.splice(min, 1)[0];
-                if (current.v != end.v) {
+                if (current.v !== end.v) {
                     --length;
                     next = successors(find, current.x, current.y, grid, rows, cols);
                     for(i = 0, j = next.length; i < j; ++i){
@@ -140,6 +141,7 @@ define(function() {
                     result.reverse();
                 }
             } while (length);
+
             return result;
         }
 
@@ -147,5 +149,4 @@ define(function() {
 
     }());
 
-    return AStar;
 });

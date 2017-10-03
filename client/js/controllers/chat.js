@@ -38,6 +38,8 @@ define(['jquery'], function($) {
             self.log.append(element);
             self.log.scrollTop(99999);
 
+            log.info(text);
+
             self.showChat();
 
             if (!self.isActive())
@@ -82,6 +84,7 @@ define(['jquery'], function($) {
                 self.showChat();
                 self.showInput();
             }
+
         },
 
         showChat: function() {

@@ -12,6 +12,10 @@ define(function() {
             self.offset = 0.5;
             self.x = 0;
             self.y = 0;
+
+            self.dX = 0;
+            self.dY = 0;
+
             self.gridX = 0;
             self.gridY = 0;
 

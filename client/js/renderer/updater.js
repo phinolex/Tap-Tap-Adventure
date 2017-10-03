@@ -48,8 +48,8 @@ define(['../entity/character/character'], function(Character) {
 
                 var animation = entity.currentAnimation;
 
-                if (animation && animation.update(self.game.time))
-                    entity.loadDirty();
+                if (animation)
+                    animation.update(self.game.time);
 
                 if (entity.type === 'projectile') {
                     var mDistance = entity.speed * self.timeDifferential,
@@ -79,7 +79,9 @@ define(['../entity/character/character'], function(Character) {
                     entity.movement.step(self.game.time);
 
                 if (entity instanceof Character && entity.hasPath() && !entity.movement.inProgress) {
-                    var tick = Math.round(16 / Math.round((entity.movementSpeed / (1000 / 60))));
+                    var tick = Math.round(266 / entity.movementSpeed);
+
+
 
                     switch (entity.orientation) {
                         case Modules.Orientation.Left:

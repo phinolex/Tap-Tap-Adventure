@@ -1,5 +1,6 @@
 var cls = require('../lib/class'),
     Introduction = require('../game/entity/character/player/quest/misc/introduction'),
+    BulkySituation = require('../game/entity/character/player/quest/misc/bulkysituation'),
     QuestData = require('../../data/quests.json'),
     AchievementData = require('../../data/achievements.json'),
     Achievement = require('../game/entity/character/player/achievement'),
@@ -18,10 +19,17 @@ module.exports = Quests = cls.Class.extend({
     },
 
     load: function() {
-        var self = this;
+        var self = this,
+            questCount = 0;
 
         _.each(QuestData, function(quest) {
-            self.quests[quest.id] = new Introduction(self.player, quest);
+
+            if (questCount === 0)
+                self.quests[quest.id] = new Introduction(self.player, quest);
+            else if (questCount === 1)
+                self.quests[quest.id] = new BulkySituation(self.player, quest);
+
+            questCount++;
         });
 
         _.each(AchievementData, function(achievement) {

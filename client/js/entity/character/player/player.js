@@ -52,6 +52,8 @@ define(['../character', './equipment/armour', './equipment/weapon',
             self.lastLogin = data.lastLogin;
             self.pvpKills = data.pvpKills;
             self.pvpDeaths = data.pvpDeaths;
+
+            self.type = 'player';
         },
 
         loadHandler: function(game) {

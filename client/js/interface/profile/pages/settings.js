@@ -25,7 +25,7 @@ define(['jquery', '../page'], function($, Page) {
             self.soundCheck = $('#soundCheck');
             self.cameraCheck = $('#cameraCheck');
             self.debugCheck = $('#debugCheck');
-            self.animateCheck = $('#animateCheck');
+            self.fpsCheck = $('#fpsCheck');
             self.nameCheck = $('#nameCheck');
             self.levelCheck = $('#levelCheck');
 
@@ -136,14 +136,14 @@ define(['jquery', '../page'], function($, Page) {
                 self.setDebug(!active);
             });
 
-            self.animateCheck.click(function() {
-                var active = self.animateCheck.hasClass('active');
+            self.fpsCheck.click(function() {
+                var active = self.fpsCheck.hasClass('active');
 
-                self.animateCheck.toggleClass('active');
+                self.fpsCheck.toggleClass('active');
 
-                self.renderer.animateTiles = !active;
+                self.renderer.maxFPS = !active ? 15 : 30;
 
-                self.setAnimate(!active);
+                self.setFPS(!active);
             });
 
             self.nameCheck.click(function() {
@@ -183,10 +183,8 @@ define(['jquery', '../page'], function($, Page) {
                 self.renderer.debugging = true;
             }
 
-            if (self.getAnimatedTiles())
-                self.animateCheck.addClass('active');
-            else
-                self.renderer.animateTiles = false;
+            if (self.getFPSCap())
+                self.fpsCheck.addClass('active');
 
             if (self.getName())
                 self.nameCheck.addClass('active');
@@ -243,10 +241,10 @@ define(['jquery', '../page'], function($, Page) {
             self.storage.save();
         },
 
-        setAnimate: function(state) {
+        setFPS: function(state) {
             var self = this;
 
-            self.storage.data.settings.animateTiles = state;
+            self.storage.data.settings.FPSCap = state;
             self.storage.save();
         },
 
@@ -288,8 +286,8 @@ define(['jquery', '../page'], function($, Page) {
             return this.storage.data.settings.debug;
         },
 
-        getAnimatedTiles: function() {
-            return this.storage.data.settings.animateTiles;
+        getFPSCap: function() {
+            return this.storage.data.settings.FPSCap;
         },
 
         getName: function() {

@@ -167,6 +167,10 @@ define(['jquery'], function($) {
 
         getSlots: function() {
             return this.enchantSlots.find('ul');
+        },
+
+        isVisible: function() {
+            return this.body.css('display') === 'block'
         }
 
     });

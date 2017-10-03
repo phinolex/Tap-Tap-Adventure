@@ -51,6 +51,9 @@ define(['jquery', './camera', './tile',
             self.renderedFrame = [0, 0];
             self.lastTarget = [0, 0];
 
+            //15 = 60FPS & 30 = 30FPS. Basic Math.
+            self.maxFPS = 15;
+
             self.animatedTiles = [];
 
             self.resizeTimeout = null;
@@ -190,7 +193,7 @@ define(['jquery', './camera', './tile',
 
             self.drawSelectedCell();
 
-            self.drawEntities(false);
+            self.drawEntities();
 
             self.drawInfos();
 
@@ -215,6 +218,7 @@ define(['jquery', './camera', './tile',
             self.updateDrawingView();
 
             self.forEachVisibleTile(function(id, index) {
+
                 var isHighTile = self.map.isHighTile(id),
                     context = isHighTile ? self.foreContext : self.backContext;
 
@@ -270,76 +274,83 @@ define(['jquery', './camera', './tile',
                 self.drawTile(self.context, tile.id, self.tileset, self.tileset.width / self.tileSize, self.map.width, tile.index);
                 tile.loaded = true;
             });
+
         },
 
-        drawEntities: function(dirty) {
+        drawEntities: function() {
             var self = this;
 
             self.forEachVisibleEntity(function(entity) {
 
-                if (entity.spriteLoaded) {
-
+                if (entity.spriteLoaded)
                     self.drawEntity(entity);
-
-                    if (dirty && entity.dirty) {
-                        entity.dirty = false;
-                        entity.oldDirtyRect = entity.dirtyRect;
-                        entity.dirtyRect = null;
-                    }
-                }
             });
         },
 
         drawEntity: function(entity) {
             var self = this,
                 sprite = entity.sprite,
-                shadow = self.entities.getSprite('shadow16'),
-                animation = entity.currentAnimation;
+                animation = entity.currentAnimation,
+                data = entity.renderingData;
 
-            if (!animation || !sprite || !entity.isVisible())
+            if (!sprite || !animation || !entity.isVisible())
                 return;
-
-            self.context.save();
 
             var frame = animation.currentFrame,
                 x = frame.x * self.drawingScale,
                 y = frame.y * self.drawingScale,
-                width = sprite.width * self.drawingScale,
-                height = sprite.height * self.drawingScale,
-                ox = sprite.offsetX * self.drawingScale,
-                oy = sprite.offsetY * self.drawingScale,
                 dx = entity.x * self.drawingScale,
                 dy = entity.y * self.drawingScale,
-                dw = width,
-                dh = height;
+                flipX = dx + self.tileSize * self.drawingScale,
+                flipY = dy + data.height;
+
+            self.context.save();
+
+            if (data.scale !== self.scale || data.sprite !== sprite) {
+
+                data.scale = self.scale;
+
+                data.sprite = sprite;
+
+                data.width = sprite.width * self.drawingScale;
+                data.height = sprite.height * self.drawingScale;
+                data.ox = sprite.offsetX * self.drawingScale;
+                data.oy = sprite.offsetY * self.drawingScale;
+
+                if (entity.angled)
+                    data.angle = entity.angle * Math.PI / 180;
+
+                if (entity.hasShadow()) {
+                    data.shadowWidth = self.shadowSprite.width * self.drawingScale;
+                    data.shadowHeight = self.shadowSprite.height * self.drawingScale;
+
+                    data.shadowOffsetY = entity.shadowOffsetY * self.drawingScale;
+                }
+
+            }
 
             if (entity.fading)
                 self.context.globalAlpha = entity.fadingAlpha;
 
             if (entity.spriteFlipX) {
-                self.context.translate(dx + self.tileSize * self.drawingScale, dy);
+                self.context.translate(flipX, dy);
                 self.context.scale(-1, 1);
             } else if (entity.spriteFlipY) {
-                self.context.translate(dx, dy + dh);
+                self.context.translate(dx, flipY);
                 self.context.scale(1, -1);
             } else
                 self.context.translate(dx, dy);
 
             if (entity.angled)
-                self.context.rotate(entity.angle * Math.PI / 180);
+                self.context.rotate(data.angle);
 
-            if (entity.hasShadow()) {
-                if (!shadow.loaded)
-                    shadow.load();
-
-                self.context.drawImage(shadow.image, 0, 0, shadow.width * self.drawingScale, shadow.height * self.drawingScale,
-                    0, entity.shadowOffsetY * self.drawingScale, shadow.width * self.drawingScale,
-                    shadow.height * self.drawingScale);
-            }
+            if (entity.hasShadow())
+                self.context.drawImage(self.shadowSprite.image, 0, 0, data.shadowWidth, data.shadowHeight,
+                    0, data.shadowOffsetY, data.shadowWidth, data.shadowHeight);
 
             self.drawEntityBack(entity);
 
-            self.context.drawImage(sprite.image, x, y, width, height, ox, oy, dw, dh);
+            self.context.drawImage(sprite.image, x, y, data.width, data.height, data.ox, data.oy, data.width, data.height);
 
             self.drawEntityFore(entity);
 
@@ -364,18 +375,21 @@ define(['jquery', './camera', './tile',
             }
 
             if (entity instanceof Item) {
-                var sparks = self.entities.getSprite('sparks'),
-                    sparksAnimation = self.entities.sprites.sparksAnimation,
-                    sparksFrame = sparksAnimation.currentFrame,
-                    sx = sparks.width * sparksFrame.index * self.drawingScale,
-                    sy = sparks.height * sparksAnimation.row * self.drawingScale,
-                    sw = sparks.width * self.drawingScale,
-                    sh = sparks.height * self.drawingScale;
 
-                if (!sparks.loaded)
-                    sparks.load();
+                var sparksAnimation = self.entities.sprites.sparksAnimation,
+                    sparksFrame = sparksAnimation.currentFrame;
 
-                self.context.drawImage(sparks.image, sx, sy, sw, sh, 0, 0, sw, sh);
+                if (data.scale !== self.scale) {
+
+                    data.sparksX = self.sparksSprite.width * sparksFrame.index * self.drawingScale;
+                    data.sparksY = self.sparksSprite.height * sparksAnimation.row * self.drawingScale;
+
+                    data.sparksWidth = self.sparksSprite.width * self.drawingScale;
+                    data.sparksHeight = self.sparksSprite.height * self.drawingScale;
+                }
+
+                self.context.drawImage(self.sparksSprite.image, data.sparksX, data.sparksY, data.sparksWidth, data.sparksHeight,
+                    0, 0, data.sparksWidth, data.sparksHeight);
             }
 
             self.context.restore();
@@ -412,6 +426,7 @@ define(['jquery', './camera', './tile',
                     var index = entity.criticalAnimation.currentFrame.index,
                         criticalX = sprite.width * index * self.drawingScale
                 }
+
             }
 
         },
@@ -846,14 +861,6 @@ define(['jquery', './camera', './tile',
             });
         },
 
-        saveDrawing: function() {
-            var self = this;
-
-            self.forEachDrawingContext(function(context) {
-                context.save();
-            });
-        },
-
         restoreAll: function() {
             var self = this;
 
@@ -932,6 +939,20 @@ define(['jquery', './camera', './tile',
                 return;
 
             $('#textCanvas').css('background', 'rgba(0, 0, 0, ' + (0.5 - level / 200) + ')');
+        },
+
+        loadStaticSprites: function() {
+            var self = this;
+
+            self.shadowSprite = self.entities.getSprite('shadow16');
+
+            if (!self.shadowSprite.loaded)
+                self.shadowSprite.load();
+
+            self.sparksSprite = self.entities.getSprite('sparks');
+
+            if (!self.sparksSprite.loaded)
+                self.sparksSprite.load();
         },
 
         /**

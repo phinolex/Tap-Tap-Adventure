@@ -38,6 +38,11 @@ define(['./entityhandler'], function(EntityHandler) {
             self.critical = false;
             self.stunned = false;
 
+            self.renderingData = {
+                scale: -1,
+                angle: 0
+            };
+
             self.loadDirty();
         },
 
@@ -147,6 +152,10 @@ define(['./entityhandler'], function(EntityHandler) {
 
         setVisible: function(visible) {
             this.visible = visible
+        },
+
+        hasWeapon: function() {
+            return false;
         },
 
         getDistance: function(entity) {

@@ -9,7 +9,8 @@ var cls = require('../lib/class'),
     Groups = require('./groups'),
     Modules = require('../util/modules'),
     PVPAreas = require('./areas/pvpareas'),
-    MusicAreas = require('./areas/musicareas');
+    MusicAreas = require('./areas/musicareas'),
+    Grids = require('./grids');
 
 module.exports = Map = cls.Class.extend({
 
@@ -22,6 +23,7 @@ module.exports = Map = cls.Class.extend({
 
         self.load();
         self.groups = new Groups(self);
+        self.grids = new Grids(self);
     },
 
     load: function() {

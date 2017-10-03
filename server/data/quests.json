@@ -1,5 +1,5 @@
 {
-  "Introduction": {
+  "The Knack Of": {
     "id": 0,
     "name": "A Great Start",
     "description": "Teaching you the basics about Tap Tap Adventure!",
@@ -52,5 +52,12 @@
       "4": "talk",
       "5": "door"
     }
+  },
+
+  "BulkySituation": {
+    "id": 1,
+    "name": "Bulky Situation",
+    "description": "Bulky mooscles require bulky armoor."
+
   }
 }

@@ -46,6 +46,8 @@ define(['./renderer/renderer', './utils/storage',
             self.pvp = false;
             self.population = -1;
 
+            self.lastTime = new Date().getTime();
+
             self.loadRenderer();
             self.loadControllers();
         },
@@ -77,8 +79,15 @@ define(['./renderer/renderer', './utils/storage',
 
                 self.time = new Date().getTime();
 
-                self.renderer.render();
-                self.updater.update();
+                var delta = self.time - self.lastTime;
+
+                if (delta > self.renderer.maxFPS) {
+
+                    self.renderer.render();
+                    self.updater.update();
+
+                    self.lastTime = self.time - (delta % self.renderer.maxFPS);
+                }
 
                 if (!self.stopped)
                     requestAnimFrame(self.tick.bind(self));
@@ -179,6 +188,7 @@ define(['./renderer/renderer', './utils/storage',
                 self.setUpdater(new Updater(self));
 
                 self.entities.load();
+
                 self.renderer.setEntities(self.entities);
 
                 self.app.sendStatus(null);
@@ -396,10 +406,12 @@ define(['./renderer/renderer', './utils/storage',
                 entity.setGridPosition(x, y);
 
                 if (isPlayer) {
+
                     self.entities.clearPlayers(self.player);
                     self.player.clearHealthBar();
                     self.renderer.camera.centreOn(entity);
                     self.renderer.updateAnimatedTiles();
+
                 } else {
                     delete self.entities.entities[entity.id];
                     return;
@@ -581,6 +593,10 @@ define(['./renderer/renderer', './utils/storage',
 
                     self.audio.play(Modules.AudioTypes.SFX, 'npctalk');
                 }
+
+                log.info(entity);
+
+                log.info(entity.type);
 
                 if (entity.type === 'player')
                     self.input.chatHandler.add(entity.username, text);
@@ -961,6 +977,8 @@ define(['./renderer/renderer', './utils/storage',
              * by the server and the client received the connection.
              */
 
+            self.renderer.loadStaticSprites();
+
             self.getCamera().setPlayer(self.player);
 
             self.renderer.renderedFrame[0] = -1;
@@ -1038,7 +1056,7 @@ define(['./renderer/renderer', './utils/storage',
 
             if (ignores)
                 self.pathfinder.clearIgnores();
-
+            
             return path;
         },
 

@@ -90,6 +90,14 @@ footer div {
     -ms-user-select: none;
 }
 
+#foreground, #background, #entities, #cursor {
+    -webkit-transform: translatez(0);
+    -moz-transform: translatez(0);
+    -ms-transform: translatez(0);
+    -o-transform: translatez(0);
+    transform: translatez(0);
+}
+
 .parchment-left, .parchment-middle, .parchment-right, #respawn {
     background: url('../img/3/spritesheet.png');
     image-rendering: -moz-crisp-edges;

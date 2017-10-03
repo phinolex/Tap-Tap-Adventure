@@ -106,7 +106,6 @@ define(['jquery', '../interface/inventory',
              */
 
             ok.click(function() {
-                log.info(self.notify.className);
 
                 self.hideNotify();
             });
@@ -117,7 +116,6 @@ define(['jquery', '../interface/inventory',
              */
 
             cancel.click(function() {
-                log.info(self.confirm.className);
 
                 self.hideConfirm();
             });
@@ -132,22 +130,22 @@ define(['jquery', '../interface/inventory',
         hideAll: function() {
             var self = this;
 
-            if (self.inventory)
+            if (self.inventory && self.inventory.isVisible())
                 self.inventory.hide();
 
-            if (self.actions)
+            if (self.actions && self.actions.isVisible())
                 self.actions.hide();
 
-            if (self.profile)
+            if (self.profile && self.profile.isVisible())
                 self.profile.hide();
 
             if (self.game.input && self.game.input.chatHandler && self.game.input.chatHandler.input.is(':visible'))
                 self.game.input.chatHandler.hideInput();
 
-            if (self.bank)
+            if (self.bank && self.bank.isVisible())
                 self.bank.hide();
 
-            if (self.enchant)
+            if (self.enchant && self.enchant.isVisible())
                 self.enchant.hide();
         },
 

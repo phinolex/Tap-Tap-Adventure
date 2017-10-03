@@ -37,7 +37,7 @@ define(function() {
                     sfx: 100,
                     brightness: 100,
                     soundEnabled: true,
-                    animateTiles: true,
+                    FPSCap: true,
                     centerCamera: true,
                     debug: false,
                     showNames: true,
