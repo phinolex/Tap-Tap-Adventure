@@ -49,6 +49,12 @@ module.exports = Handler = cls.Class.extend({
                 return;
             }
 
+            if (self.player.quests.isAchievementNPC(npc)) {
+                self.player.quests.getAchievementByNPC(npc).converse();
+
+                return;
+            }
+
             switch(npc.id) {
                 case 43:
                     self.player.send(new Messages.NPC(Packets.NPCOpcode.Bank, {}));
@@ -65,6 +71,8 @@ module.exports = Handler = cls.Class.extend({
                 return;
 
             npc.talk(text);
+
+
 
             self.player.send(new Messages.NPC(Packets.NPCOpcode.Talk, {
                 id: npc.instance,

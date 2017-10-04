@@ -25,6 +25,8 @@ define(['jquery', '../renderer/bubbles/blob'], function($, Blob) {
                 $(element).appendTo(self.container);
 
                 self.bubbles[id] = new Blob(id, time, element, duration);
+
+                return self.bubbles[id];
             }
         },
 

@@ -149,10 +149,8 @@ module.exports = Player = Character.extend({
             ids.pop();
             stages.pop();
 
-
             if (self.quests.getQuestSize() !== ids.length) {
                 log.info('Mismatch in quest data.');
-
                 self.save();
             }
 

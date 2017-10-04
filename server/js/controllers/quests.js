@@ -160,6 +160,17 @@ module.exports = Quests = cls.Class.extend({
         return null;
     },
 
+    getAchievementByNPC: function(npc) {
+        var self = this;
+
+        for (var id in self.achievements)
+            if (self.achievements.hasOwnProperty(id))
+                if (self.achievements[id].npc === npc.id)
+                    return self.achievements[id];
+
+        return null;
+    },
+
     isQuestNPC: function(npc) {
         var self = this;
 
@@ -171,6 +182,17 @@ module.exports = Quests = cls.Class.extend({
                     return true;
             }
         }
+    },
+
+    isAchievementNPC: function(npc) {
+        var self = this;
+
+        for (var id in self.achievements)
+            if (self.achievements.hasOwnProperty(id))
+                if (self.achievements[id].npc === npc.id)
+                    return true;
+
+        return false;
     },
 
     onReady: function(callback) {

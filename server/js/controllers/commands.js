@@ -50,6 +50,17 @@ module.exports = Commands = cls.Class.extend({
 
                 break;
 
+            case 'progress':
+
+                var tutorialQuest = self.player.getTutorial();
+
+                self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, {
+                    id: tutorialQuest.id,
+                    stage: tutorialQuest.stage
+                }));
+
+                break;
+
         }
     },
 

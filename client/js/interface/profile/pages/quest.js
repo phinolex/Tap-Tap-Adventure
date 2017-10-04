@@ -10,6 +10,9 @@ define(['jquery', '../page'], function($, Page) {
             self.achievements = $('#achievementList');
             self.quests = $('#questList');
 
+            self.achievementsList = self.achievements.find('ul');
+            self.questList = self.quests.find('ul');
+
         },
 
         load: function(quests, achievements) {
@@ -19,11 +22,26 @@ define(['jquery', '../page'], function($, Page) {
                 var item = self.getItem(false, achievement.id),
                     name = self.getName(false, achievement.id);
 
-                name.text(achievement.name);
+                name.text('????????');
+
+                name.css('background', 'rgba(255, 10, 10, 0.3)');
+
+                if (achievement.progress > 0 && achievement.progress < 9999) {
+                    name.css('background', 'rgba(255, 255, 10, 0.4)');
+
+                    if (achievement.type === 1)
+                        name.text(achievement.name + ' ' + achievement.progress + '/' + achievement.count);
+
+                } else if (achievement.progress > 9998)
+                    name.css('background', 'rgba(10, 255, 10, 0.3)');
 
                 item.append(name);
 
-                self.achievements.append(item);
+                var listItem = $('<li></li>');
+
+                listItem.append(item);
+
+                self.achievementsList.append(listItem);
             });
 
             _.each(quests, function(quest) {
@@ -41,7 +59,11 @@ define(['jquery', '../page'], function($, Page) {
 
                 item.append(name);
 
-                self.quests.append(item);
+                var listItem = $('<li></li>');
+
+                listItem.append(item);
+
+                self.questList.append(listItem);
             });
 
         },
@@ -50,10 +72,18 @@ define(['jquery', '../page'], function($, Page) {
             var self = this,
                 quest = self.getQuest(id);
 
+            log.info(quest);
+
+            if (stage > 9999) {
+
+                self.finish(id);
+                return;
+            }
+
             if (!quest)
                 return;
 
-            var name = quest.find('quest' + id + 'name');
+            var name = quest.find('#quest' + id + 'name');
 
             if (!name)
                 return;
@@ -65,10 +95,11 @@ define(['jquery', '../page'], function($, Page) {
             var self = this,
                 quest = self.getQuest(id);
 
+
             if (!quest)
                 return;
 
-            var name = quest.find('quest' + id + 'name');
+            var name = quest.find('#quest' + id + 'name');
 
             if (!name)
                 return;
@@ -77,7 +108,11 @@ define(['jquery', '../page'], function($, Page) {
         },
 
         getQuest: function(id) {
-            return this.achievements.find('ul').find('li')[id];
+            return $(this.questList.find('li')[id]).find('#quest' + id);
+        },
+
+        getAchievement: function(id) {
+            return $(this.achievementsList.find('li')[id]).find('#achievement' + id);
         },
 
         /**

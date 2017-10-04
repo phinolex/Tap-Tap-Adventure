@@ -4,6 +4,19 @@
     "name": "Rat Infestation",
     "description": "Slay 25 rats.",
     "type": 1,
-    "reward": 20
+    "count": 25,
+    "npc": 2,
+    "mobId": 128,
+    "reward": 115,
+    "text": [
+      "Hono dear adventurer!", "Yiss, please help.",
+      "Rets r al 'round here.", "Plz kill, I hav gift en return."
+    ]
+  },
+
+  "1": {
+    "id": 1,
+    "name": "Lost Potato",
+    "description": "Find the lost potato for Bulk Bogan."
   }
 }

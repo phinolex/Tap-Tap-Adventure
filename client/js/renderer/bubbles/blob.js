@@ -13,6 +13,10 @@ define(['../../utils/timer'], function(Timer) {
             self.timer = new Timer(self.time, self.duration);
         },
 
+        setClickable: function() {
+            this.element.css('pointer-events', 'auto');
+        },
+
         isOver: function(time) {
             return this.timer.isOver(time);
         },

@@ -811,36 +811,47 @@ define(['./renderer/renderer', './utils/storage',
             self.messages.onNPC(function(opcode, info) {
 
                 switch(opcode) {
-                    case Packets.NPCOpcode.Talk:
-                        var npc = self.entities.get(info.id),
-                            messages = info.text,
-                            nonNPC = info.nonNPC;
 
-                        if (!npc)
+                    case Packets.NPCOpcode.Talk:
+
+                        var entity = self.entities.get(info.id),
+                            messages = info.text,
+                            isNPC = !info.nonNPC,
+                            message;
+
+                        if (!entity)
                             return;
 
                         if (!messages) {
-                            npc.talkIndex = 0;
+                            entity.talkIndex = 0;
                             return;
                         }
 
-                        if (nonNPC) {
-                            self.bubble.create(info.id, messages, self.time, 5000);
-                            self.bubble.setTo(npc);
+                        message = isNPC ? entity.talk(messages) : messages;
 
-                            self.audio.play(Modules.AudioTypes.SFX, 'npc');
+                        if (isNPC) {
+                            var bubble = self.bubble.create(info.id, message, self.time, 5000);
 
-                            return;
+                            self.bubble.setTo(entity);
+
+                            if (bubble) {
+                                bubble.setClickable();
+
+                                bubble.element.click(function() {
+                                    var entity = self.entities.get(bubble.id);
+
+                                    if (entity)
+                                        self.input.click({x: entity.gridX, y: entity.gridY});
+                                });
+                            }
+                        } else {
+                            self.bubble.create(info.id, message, self.time, 5000);
+                            self.bubble.setTo(entity);
                         }
-
-                        var message = npc.talk(messages);
-
-                        self.bubble.create(info.id, message, self.time, 5000);
-                        self.bubble.setTo(npc);
 
                         var sound = 'npc';
 
-                        if (!message) {
+                        if (!message && isNPC) {
                             sound = 'npc-end';
                             self.bubble.destroy(info.id);
                         }

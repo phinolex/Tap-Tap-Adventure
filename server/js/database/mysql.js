@@ -4,7 +4,8 @@ var cls = require('../lib/class'),
     mysql = require('mysql'),
     Creator = require('./creator'),
     _ = require('underscore'),
-    Loader = require('./loader');
+    Loader = require('./loader'),
+    Config = require('../../config.json');
 
 module.exports = MySQL = cls.Class.extend({
 
@@ -54,6 +55,7 @@ module.exports = MySQL = cls.Class.extend({
 
         self.connection.connect(function(err) {
             if (err) {
+
                 log.info('[MySQL] No database found...');
 
                 self.connect(false, false);
@@ -142,13 +144,13 @@ module.exports = MySQL = cls.Class.extend({
     loadDatabases: function() {
         var self = this;
 
-        self.connection.query('CREATE DATABASE IF NOT EXISTS TTA', function(error, results, fields) {
+        self.connection.query('CREATE DATABASE IF NOT EXISTS ' + Config.mysqlDatabase, function(error, results, fields) {
             if (error)
                 throw error;
 
             log.info('[MySQL] Successfully generated database.');
 
-            self.connection.query('USE TTA', function(error, results, fields) {
+            self.connection.query('USE ' + Config.mysqlDatabase, function(error, results, fields) {
                 if (self.selectDatabase_callback)
                     self.selectDatabase_callback();
             });

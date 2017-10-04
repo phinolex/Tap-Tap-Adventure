@@ -118,7 +118,8 @@ module.exports = Introduction = Quest.extend({
 
         self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, {
             id: self.id,
-            stage: self.stage
+            stage: self.stage,
+            isQuest: true
         }));
     },
 
@@ -183,7 +184,8 @@ module.exports = Introduction = Quest.extend({
         self.toggleChat();
 
         self.player.send(new Messages.Quest(Packets.QuestOpcode.Finish, {
-            id: self.id
+            id: self.id,
+            isQuest: true
         }));
     },
 
