@@ -57,7 +57,8 @@
   "BulkySituation": {
     "id": 1,
     "name": "Bulky Situation",
-    "description": "Bulky mooscles require bulky armoor."
+    "description": "Bulky mooscles require bulky armoor.",
+    "npcs": []
 
   }
 }

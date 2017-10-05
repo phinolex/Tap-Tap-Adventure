@@ -189,7 +189,7 @@ module.exports = Quests = cls.Class.extend({
 
         for (var id in self.achievements)
             if (self.achievements.hasOwnProperty(id))
-                if (self.achievements[id].npc === npc.id)
+                if (self.achievements[id].npc === npc.id && !self.achievements[id].isFinished())
                     return true;
 
         return false;

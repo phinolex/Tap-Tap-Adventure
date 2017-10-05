@@ -68,22 +68,14 @@ define(['jquery', '../page'], function($, Page) {
 
         },
 
-        progress: function(id, stage) {
+        progress: function(id, stage, isQuest) {
             var self = this,
-                quest = self.getQuest(id);
+                item = isQuest ? self.getQuest(id) : self.getAchievement(id);
 
-            log.info(quest);
-
-            if (stage > 9999) {
-
-                self.finish(id);
-                return;
-            }
-
-            if (!quest)
+            if (!item)
                 return;
 
-            var name = quest.find('#quest' + id + 'name');
+            var name = item.find(isQuest ? '#quest' : '#achievement' + id + 'name');
 
             if (!name)
                 return;
@@ -91,20 +83,20 @@ define(['jquery', '../page'], function($, Page) {
             name.css('background', 'rgba(255, 255, 10, 0.4)');
         },
 
-        finish: function(id) {
+        finish: function(id, isQuest) {
             var self = this,
-                quest = self.getQuest(id);
+                item = isQuest ? self.getQuest(id) : self.getAchievement(id);
 
-
-            if (!quest)
+            if (!item)
                 return;
 
-            var name = quest.find('#quest' + id + 'name');
+            var name = item.find(isQuest ? '#quest' : '#achievement' + id + 'name');
 
             if (!name)
                 return;
 
             name.css('background', 'rgba(10, 255, 10, 0.3)');
+
         },
 
         getQuest: function(id) {

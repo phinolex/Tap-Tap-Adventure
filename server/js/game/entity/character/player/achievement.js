@@ -31,11 +31,19 @@ module.exports = Achievement = cls.Class.extend({
         }))
     },
 
-    converse: function() {
+    converse: function(npc) {
         var self = this;
 
         if (self.progress === self.data.count)
             self.finish();
+        else {
+            npc.talk(self.data.text);
+
+            self.player.send(new Messages.NPC(Packets.NPCOpcode.Talk, {
+                id: npc.instance,
+                text: self.data.text
+            }));
+        }
     },
 
     finish: function() {
@@ -51,6 +59,10 @@ module.exports = Achievement = cls.Class.extend({
 
     setProgress: function(progress) {
         this.progress = progress;
+    },
+
+    isFinished: function() {
+        return this.stage >= 9999;
     },
 
     getInfo: function() {

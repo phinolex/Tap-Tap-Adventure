@@ -50,7 +50,7 @@ module.exports = Handler = cls.Class.extend({
             }
 
             if (self.player.quests.isAchievementNPC(npc)) {
-                self.player.quests.getAchievementByNPC(npc).converse();
+                self.player.quests.getAchievementByNPC(npc).converse(npc);
 
                 return;
             }
@@ -71,8 +71,6 @@ module.exports = Handler = cls.Class.extend({
                 return;
 
             npc.talk(text);
-
-
 
             self.player.send(new Messages.NPC(Packets.NPCOpcode.Talk, {
                 id: npc.instance,
