@@ -6,7 +6,7 @@
     "type": 1,
     "count": 25,
     "npc": 2,
-    "mobId": 128,
+    "mob": 128,
     "reward": 115,
     "text": [
       "Hono dear adventurer!", "Yiss, plz help.",
@@ -17,6 +17,10 @@
   "1": {
     "id": 1,
     "name": "Lost Potato",
-    "description": "Find the lost potato for Bulk Bogan."
+    "description": "Find the lost potato for Bulk Bogan.",
+    "type": 2,
+    "mob": -1,
+    "npc": 2,
+    "item": 10
   }
 }

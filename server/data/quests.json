@@ -58,7 +58,36 @@
     "id": 1,
     "name": "Bulky Situation",
     "description": "Bulky mooscles require bulky armoor.",
-    "npcs": []
+    "npcs": [2],
+    "itemReq": {
+      "1": 115,
+      "3": 116
+    },
+    "stages": 4,
+    "conversations": {
+      "2": {
+        "0": ["Hoho! Heii", "Adventr, i ned hlp. Yu se.", "i lost me armur.",
+            "i wil giv u 200 gold if u find.", "its aboot ze siz of me body",
+            "and it made lether of."],
+
+        "1": ["Plz, how progrs goin'?", "I ned lethr armur."],
+
+        "2": ["Hono, tht iz rong armur. But i take anyway.", "i ment tu sey chain meil, but srry.",
+              "plz, find armr mde of chein"],
+
+        "3": ["Plz, i weight. I weight fur me chein meil armr.", "Pls bring."],
+
+        "4": ["Dank u adventurer.", "U hav helpd alot."]
+      }
+    },
+
+    "task": {
+      "0": "talk",
+      "1": "item",
+      "2": "talk",
+      "3": "item",
+      "4": "talk"
+    }
 
   }
 }

@@ -32,6 +32,12 @@ module.exports = Handler = cls.Class.extend({
 
         });
 
+        self.player.onKill(function(character) {
+
+            if (self.player.quests.isAchievementMob(character))
+                self.player.quests.getAchievementByMob(character).step();
+        });
+
         self.player.onGroup(function() {
             self.world.handleEntityGroup(self.player);
             self.world.pushEntities(self.player);

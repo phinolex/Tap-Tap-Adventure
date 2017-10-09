@@ -10,13 +10,18 @@ define(['jquery', '../page'], function($, Page) {
             self.achievements = $('#achievementList');
             self.quests = $('#questList');
 
+            self.achievementsCount = $('#achievementCount');
+            self.questCount = $('#questCount');
+
             self.achievementsList = self.achievements.find('ul');
             self.questList = self.quests.find('ul');
 
         },
 
         load: function(quests, achievements) {
-            var self = this;
+            var self = this,
+                finishedAchievements = 0,
+                finishedQuests = 0;
 
             _.each(achievements, function(achievement) {
                 var item = self.getItem(false, achievement.id),
@@ -30,10 +35,13 @@ define(['jquery', '../page'], function($, Page) {
                     name.css('background', 'rgba(255, 255, 10, 0.4)');
 
                     if (achievement.type === 1)
-                        name.text(achievement.name + ' ' + achievement.progress + '/' + achievement.count);
+                        name.text(achievement.name + ' ' + (achievement.progress - 1) + '/' + achievement.count);
 
                 } else if (achievement.progress > 9998)
                     name.css('background', 'rgba(10, 255, 10, 0.3)');
+
+                if (achievement.finished)
+                    finishedAchievements++;
 
                 item.append(name);
 
@@ -57,6 +65,9 @@ define(['jquery', '../page'], function($, Page) {
                 else if (quest.stage > 9998)
                     name.css('background', 'rgba(10, 255, 10, 0.3)');
 
+                if (quest.finished)
+                    finishedQuests++;
+
                 item.append(name);
 
                 var listItem = $('<li></li>');
@@ -66,19 +77,25 @@ define(['jquery', '../page'], function($, Page) {
                 self.questList.append(listItem);
             });
 
+            self.achievementsCount.html(finishedAchievements + '/' + achievements.length);
+            self.questCount.html(finishedQuests + '/' + quests.length);
+
         },
 
-        progress: function(id, stage, isQuest) {
+        progress: function(info) {
             var self = this,
-                item = isQuest ? self.getQuest(id) : self.getAchievement(id);
+                item = info.isQuest ? self.getQuest(info.id) : self.getAchievement(info.id);
 
             if (!item)
                 return;
 
-            var name = item.find(isQuest ? '#quest' : '#achievement' + id + 'name');
+            var name = item.find('' + (info.isQuest ? '#quest' : '#achievement') + info.id + 'name');
 
             if (!name)
                 return;
+
+            if (!info.isQuest)
+                name.text(info.name + ' ' + info.progress + '/' + info.count);
 
             name.css('background', 'rgba(255, 255, 10, 0.4)');
         },
@@ -90,7 +107,7 @@ define(['jquery', '../page'], function($, Page) {
             if (!item)
                 return;
 
-            var name = item.find(isQuest ? '#quest' : '#achievement' + id + 'name');
+            var name = item.find('' + (isQuest ? '#quest' : '#achievement') + id + 'name');
 
             if (!name)
                 return;

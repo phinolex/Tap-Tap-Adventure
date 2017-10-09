@@ -131,6 +131,30 @@ module.exports = Quests = cls.Class.extend({
         });
     },
 
+    getQuestsCompleted: function() {
+        var self = this,
+            count = 0;
+
+        for (var id in self.quests)
+            if (self.quests.hasOwnProperty(id))
+                if (self.quests[id].isFinished())
+                    count++;
+
+        return count;
+    },
+
+    getAchievementsCompleted: function() {
+        var self = this,
+            count = 0;
+
+        for (var id in self.achievements)
+            if (self.achievements.hasOwnProperty(id))
+                if (self.achievements[id].isFinished())
+                    count++;
+
+        return count;
+    },
+
     getQuestSize: function() {
         return Object.keys(this.quests).length;
     },
@@ -165,10 +189,45 @@ module.exports = Quests = cls.Class.extend({
 
         for (var id in self.achievements)
             if (self.achievements.hasOwnProperty(id))
-                if (self.achievements[id].npc === npc.id)
+                if (self.achievements[id].data.npc === npc.id)
                     return self.achievements[id];
 
         return null;
+    },
+
+    getAchievementByMob: function(mob) {
+        var self = this;
+
+        for (var id in self.achievements)
+            if (self.achievements.hasOwnProperty(id))
+                if (self.achievements[id].data.mob === mob.id)
+                    return self.achievements[id];
+
+        return null;
+    },
+
+    isQuestMob: function(mob) {
+        var self = this;
+
+        for (var id in self.quests) {
+            if (self.quests.hasOwnProperty(id)) {
+                var quest = self.quests[id];
+
+                if (!quest.isFinished() && quest.hasMob(mob.id))
+                    return true;
+            }
+        }
+    },
+
+    isAchievementMob: function(mob) {
+        var self = this;
+
+        for (var id in self.achievements)
+            if (self.achievements.hasOwnProperty(id))
+                if (self.achievements[id].data.mob === mob.id && !self.achievements[id].isFinished())
+                    return true;
+
+        return false;
     },
 
     isQuestNPC: function(npc) {
@@ -189,7 +248,7 @@ module.exports = Quests = cls.Class.extend({
 
         for (var id in self.achievements)
             if (self.achievements.hasOwnProperty(id))
-                if (self.achievements[id].npc === npc.id && !self.achievements[id].isFinished())
+                if (self.achievements[id].data.npc === npc.id && !self.achievements[id].isFinished())
                     return true;
 
         return false;

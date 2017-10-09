@@ -754,6 +754,13 @@ module.exports = Player = Character.extend({
         self.send(new Messages.Movement(Packets.MovementOpcode.Started));
     },
 
+    killCharacter: function(character) {
+        var self = this;
+
+        if (self.killCallback)
+            self.killCallback(character);
+    },
+
     save: function() {
         var self = this;
 
@@ -773,6 +780,10 @@ module.exports = Player = Character.extend({
 
     onHit: function(callback) {
         this.hitCallback = callback;
+    },
+
+    onKill: function(callback) {
+        this.killCallback = callback;
     },
 
     onDeath: function(callback) {

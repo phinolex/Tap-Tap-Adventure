@@ -54,6 +54,9 @@ module.exports = Inventory = Container.extend({
     remove: function(id, count, index) {
         var self = this;
 
+        if (!index)
+            index = self.getIndex(id);
+
         if (!self._super(index, id, count))
             return;
 

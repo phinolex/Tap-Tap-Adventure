@@ -234,8 +234,10 @@ module.exports = World = cls.Class.extend({
                 if (target.type === 'mob')
                     attacker.addExperience(Mobs.getXp(target.id));
 
-            });
+                if (attacker.type === 'player')
+                    attacker.killCharacter(target);
 
+            });
             self.pushToAdjacentGroups(target.group, new Messages.Despawn(target.instance));
             self.handleDeath(target);
         }

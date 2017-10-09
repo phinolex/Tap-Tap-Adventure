@@ -40,9 +40,6 @@ module.exports = Introduction = Quest.extend({
 
             var conversation = self.getConversation(npc.id);
 
-            if (!conversation)
-                return;
-
             self.lastNPC = npc;
 
             npc.talk(conversation);
@@ -90,8 +87,10 @@ module.exports = Introduction = Quest.extend({
         if (!task || task !== type)
             return;
 
-        if (self.stage === self.data.stages)
+        if (self.stage === self.data.stages) {
             self.finish();
+            return;
+        }
 
         switch (type) {
             case 'talk':
@@ -219,13 +218,7 @@ module.exports = Introduction = Quest.extend({
     },
 
     hasNPC: function(id) {
-        var self = this;
-
-        for (var i = 0; i < self.data.npcs.length; i++)
-            if (self.data.npcs[i] === id)
-                return true;
-
-        return false;
+        return this.data.npcs.indexOf(id) > -1;
     },
 
     verifyDoor: function(destX, destY) {

@@ -699,7 +699,7 @@ define(['./renderer/renderer', './utils/storage',
 
                     case Packets.QuestOpcode.Progress:
 
-                        self.interface.getQuestPage().progress(info.id, info.stage, info.isQuest);
+                        self.interface.getQuestPage().progress(info);
 
                         break;
 

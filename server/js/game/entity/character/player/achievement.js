@@ -19,14 +19,21 @@ module.exports = Achievement = cls.Class.extend({
         self.description = self.data.description;
 
         self.discovered = false;
+
     },
 
-    progress: function() {
+    step: function() {
         var self = this;
+
+        self.progress++;
+
+        self.update();
 
         self.player.send(new Messages.Quest(Packets.QuestOpcode.Progress, {
             id: self.id,
             name: self.name,
+            progress: self.progress - 1,
+            count: self.data.count,
             isQuest: false
         }))
     },
@@ -43,6 +50,9 @@ module.exports = Achievement = cls.Class.extend({
                 id: npc.instance,
                 text: self.data.text
             }));
+
+            if (!self.isStarted() && npc.talkIndex > self.data.text.length)
+                self.step();
         }
     },
 
@@ -50,6 +60,7 @@ module.exports = Achievement = cls.Class.extend({
         var self = this;
 
         self.setProgress(9999);
+        self.update();
 
         self.player.send(new Messages.Quest(Packets.QuestOpcode.Finish, {
             id: self.id,
@@ -57,12 +68,20 @@ module.exports = Achievement = cls.Class.extend({
         }));
     },
 
+    update: function() {
+        this.player.save();
+    },
+
     setProgress: function(progress) {
         this.progress = progress;
     },
 
+    isStarted: function() {
+        return this.stage > 0;
+    },
+
     isFinished: function() {
-        return this.stage >= 9999;
+        return this.stage > 9998;
     },
 
     getInfo: function() {
@@ -72,7 +91,8 @@ module.exports = Achievement = cls.Class.extend({
             type: this.data.type,
             description: this.description,
             count: this.data.count ? this.data.count : 1,
-            progress: this.progress
+            progress: this.progress,
+            finished: this.isFinished()
         }
     }
 

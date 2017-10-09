@@ -148,6 +148,21 @@ module.exports = Container = cls.Class.extend({
         return -1;
     },
 
+    getIndex: function(id) {
+        var self = this;
+
+        /**
+         * Used when the index is not determined,
+         * returns the first item found based on the id.
+         */
+
+        for (var i = 0; i < self.slots.length; i++)
+            if (self.slots[i].id === id)
+                return i;
+
+        return -1;
+    },
+
     check: function() {
         var self = this;
 

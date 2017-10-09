@@ -30,8 +30,6 @@ define(['jquery'], function($) {
                 dropCancel = $('#dropcancel');
 
             dropAccept.click(function(event) {
-                log.info(event);
-                log.info(self.activeClass);
 
                 if (self.activeClass === 'inventory')
                     self.interface.inventory.clickAction(event);

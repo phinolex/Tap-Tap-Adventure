@@ -39,6 +39,10 @@ define(['jquery', './container/container'], function($, Container) {
                 if (self.game.app.isMobile())
                     itemSlot.css('background-size', '600%');
 
+                itemSlot.dblclick(function(event) {
+                    self.clickDouble(event);
+                });
+
                 itemSlot.click(function(event) {
                     self.click(event);
                 });
@@ -93,9 +97,30 @@ define(['jquery', './container/container'], function($, Container) {
             self.actions.hideDrop();
         },
 
-        clickAction: function(event) {
+        clickDouble: function(event) {
             var self = this,
-                action = event.currentTarget.id;
+                index = event.currentTarget.id.substring(4),
+                slot = self.container.slots[index];
+
+            if (!slot.edible && !slot.equippable)
+                return;
+
+            var item = $(self.getList()[index]),
+                sSlot = item.find('#slot' + index);
+
+            self.clearSelection();
+
+            self.selectedSlot = sSlot;
+            self.selectedItem = slot;
+
+            self.clickAction(slot.edible ? 'eat' : 'wield');
+
+            self.actions.hideDrop();
+        },
+
+        clickAction: function(event, dAction) {
+            var self = this,
+                action = event.currentTarget ? event.currentTarget.id : event;
 
             if (!self.selectedSlot || !self.selectedItem)
                 return;

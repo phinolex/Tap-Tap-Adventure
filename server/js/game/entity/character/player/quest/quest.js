@@ -33,7 +33,8 @@ module.exports = Quest = cls.Class.extend({
             id: this.getId(),
             name: this.getName(),
             description: this.getDescription(),
-            stage: this.getStage()
+            stage: this.getStage(),
+            finished: this.isFinished()
         };
     },
 
@@ -49,7 +50,11 @@ module.exports = Quest = cls.Class.extend({
         this.stage = stage;
     },
 
-    hasNPC: function(id) {
+    hasNPC: function() {
+        return false;
+    },
+
+    hasMob: function() {
         return false;
     },
 

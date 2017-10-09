@@ -579,7 +579,11 @@ module.exports = Incoming = cls.Class.extend({
                 if (item.count > 1)
                     count = message.shift();
 
-                var id = Items.stringToId(item.string);
+                var id = Items.stringToId(item.string),
+                    iSlot = self.player.inventory.slots[item.index];
+
+                if (count > iSlot.count)
+                    count = iSlot.count;
 
                 self.player.inventory.remove(id, count ? count : item.count, item.index);
 
