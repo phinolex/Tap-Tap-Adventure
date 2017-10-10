@@ -51,12 +51,10 @@ define(['jquery', './camera', './tile',
             self.renderedFrame = [0, 0];
             self.lastTarget = [0, 0];
 
-            //15 = 60FPS & 30 = 30FPS. Basic Math.
-            self.maxFPS = 15;
-
             self.animatedTiles = [];
 
             self.resizeTimeout = null;
+            self.autoCentre = false;
 
             self.drawTarget = false;
             self.selectedCellVisible = false;
@@ -738,7 +736,7 @@ define(['jquery', './camera', './tile',
         drawTargetCell: function() {
             var self = this;
 
-            if (self.mobile || !self.input.targetVisible || !self.input || !self.camera)
+            if (self.mobile || self.tablet || !self.input.targetVisible || !self.input || !self.camera)
                 return;
 
             var location = self.input.getCoords();

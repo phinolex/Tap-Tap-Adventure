@@ -12,7 +12,8 @@
   "Villager": {
     "id": 2,
     "name": "Bulk Bogan",
-    "text": ["Hello Vilaalger", " Thinks for hielp."]
+    "text": ["Thank you kindly for the help, dear adventurer.", "I will ensure to contact you in the",
+          "nearby future regarding further adventures."]
   },
 
   "BeachNpc": {

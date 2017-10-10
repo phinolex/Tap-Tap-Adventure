@@ -199,7 +199,7 @@
     position: absolute;
 }
 
-#soundCheck, #cameraCheck, #debugCheck, #fpsCheck, #nameCheck, #levelCheck {
+#soundCheck, #cameraCheck, #debugCheck, #centreCheck, #nameCheck, #levelCheck {
     left: 50%;
 }
 
@@ -396,6 +396,7 @@
     border: 2px solid #373737;
     margin-top: 3px;
     color: white;
+    z-index: 1;
 }
 
 #achievementCount, #questCount {
@@ -716,7 +717,7 @@
         top: 105px;
     }
 
-    #fpsCheck {
+    #centreCheck {
         top: 156px;
     }
 
@@ -833,6 +834,11 @@
         height: 69px;
     }
 
+    #questList, #achievementList {
+        width: 318px;
+        height: 246px;
+    }
+
     .skillSlot {
         width: 48px;
         height: 48px;
@@ -845,6 +851,7 @@
     }
 
     #achievementCount, #questCount {
+        font-size: 24px;
         width: 90px;
         height: 24px;
     }
@@ -1199,7 +1206,7 @@
         top: 70px;
     }
 
-    #fpsCheck {
+    #centreCheck {
         top: 104px;
     }
 
@@ -1353,6 +1360,7 @@
     }
 
     #achievementCount, #questCount {
+        font-size: 16px;
         width: 60px;
         height: 16px;
     }
@@ -1714,7 +1722,7 @@
         top: 33px;
     }
 
-    #fpsCheck {
+    #centreCheck {
         top: 50px;
     }
 
@@ -1817,13 +1825,18 @@
         height: 23px;
     }
 
+    #questList, #achievementList {
+        width: 104px;
+        height: 82px;
+    }
+
     .skillSlot {
         width: 16px;
         height: 16px;
     }
 
     .questName {
-        border: 2px solid #373737;
+        border: 1px solid #373737;
         font-size: 10px;
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
@@ -1831,6 +1844,7 @@
     }
 
     #achievementCount, #questCount {
+        font-size: 8px;
         width: 30px;
         height: 8px;
     }

@@ -1,9 +1,14 @@
 var cls = require('../../../../lib/class'),
     Data = require('../../../../../data/achievements.json'),
     Messages = require('../../../../network/messages'),
-    Packets = require('../../../../network/packets');
+    Packets = require('../../../../network/packets'),
+    Modules = require('../../../../util/modules');
 
 module.exports = Achievement = cls.Class.extend({
+
+    /**
+     * TODO: Change the conditionals to use Modules to clarify what is done where.
+     */
 
     init: function(id, player) {
         var self = this;
@@ -25,6 +30,9 @@ module.exports = Achievement = cls.Class.extend({
     step: function() {
         var self = this;
 
+        if (self.isThreshold())
+            return;
+
         self.progress++;
 
         self.update();
@@ -41,8 +49,8 @@ module.exports = Achievement = cls.Class.extend({
     converse: function(npc) {
         var self = this;
 
-        if (self.progress === self.data.count)
-            self.finish();
+        if (self.isThreshold() || self.hasItem())
+            self.finish(npc);
         else {
             npc.talk(self.data.text);
 
@@ -56,20 +64,63 @@ module.exports = Achievement = cls.Class.extend({
         }
     },
 
-    finish: function() {
-        var self = this;
+    finish: function(npc) {
+        var self = this,
+            rewardType = self.data.rewardType;
+
+        switch (rewardType) {
+            case Modules.Achievements.Rewards.Item:
+
+                if (!self.player.inventory.hasSpace()) {
+                    self.player.notify('You do not have enough space in your inventory to finish this achievement.');
+                    return;
+                }
+
+                self.player.inventory.add({
+                    id: self.data.item,
+                    count: self.data.itemCount
+                });
+
+                break;
+
+            case Modules.Achievements.Rewards.Experience:
+
+                self.player.addExperience(self.data.reward);
+
+                break;
+        }
 
         self.setProgress(9999);
         self.update();
 
         self.player.send(new Messages.Quest(Packets.QuestOpcode.Finish, {
             id: self.id,
+            name: self.name,
             isQuest: false
         }));
+
+        if (npc && self.player.npcTalkCallback)
+            self.player.npcTalkCallback(npc);
     },
 
     update: function() {
         this.player.save();
+    },
+
+    isThreshold: function() {
+        return this.progress === this.data.count;
+    },
+
+    hasItem: function() {
+        var self = this;
+
+        if (self.data.type === Modules.Achievements.Type.Scavenge && self.player.inventory.contains(self.data.item)) {
+            self.player.inventory.remove(self.data.item, self.data.itemCount);
+
+            return true;
+        }
+
+        return false
     },
 
     setProgress: function(progress) {
@@ -77,11 +128,11 @@ module.exports = Achievement = cls.Class.extend({
     },
 
     isStarted: function() {
-        return this.stage > 0;
+        return this.progress > 0;
     },
 
     isFinished: function() {
-        return this.stage > 9998;
+        return this.progress > 9998;
     },
 
     getInfo: function() {

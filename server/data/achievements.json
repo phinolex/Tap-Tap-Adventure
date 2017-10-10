@@ -3,10 +3,11 @@
     "id": 0,
     "name": "Rat Infestation",
     "description": "Slay 25 rats.",
-    "type": 1,
-    "count": 25,
+    "type": 0,
+    "count": 26,
     "npc": 2,
     "mob": 128,
+    "rewardType": 1,
     "reward": 115,
     "text": [
       "Hono dear adventurer!", "Yiss, plz help.",
@@ -16,11 +17,19 @@
 
   "1": {
     "id": 1,
-    "name": "Lost Potato",
-    "description": "Find the lost potato for Bulk Bogan.",
-    "type": 2,
+    "name": "Lost Watermelon",
+    "description": "Find the lost watermelon for Bulk Bogan.",
+    "type": 1,
+    "count": 2,
     "mob": -1,
     "npc": 2,
-    "item": 10
+    "item": 250,
+    "itemCount": 1,
+    "rewardType": 2,
+    "reward": 400,
+    "text": [
+      "Hoho, hello agen.", "I ned favur, but this lst time.",
+      "I lst watrmln, could u plez find?", "I do'n't kno'w what do to."
+    ]
   }
 }

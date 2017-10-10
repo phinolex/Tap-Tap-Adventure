@@ -64,6 +64,19 @@ var Modules = {
         Finished: 3
     },
 
+    Achievements: {
+        Type: {
+            Killing: 0,
+            Scavenge: 1
+        },
+
+        Rewards: {
+            Item: 0,
+            Experience: 1,
+            Skill: 2
+        }
+    },
+
     Quests: {
         Introduction: 0
     },

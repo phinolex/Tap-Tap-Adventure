@@ -25,7 +25,7 @@ define(['jquery', '../page'], function($, Page) {
             self.soundCheck = $('#soundCheck');
             self.cameraCheck = $('#cameraCheck');
             self.debugCheck = $('#debugCheck');
-            self.fpsCheck = $('#fpsCheck');
+            self.centreCheck = $('#centreCheck');
             self.nameCheck = $('#nameCheck');
             self.levelCheck = $('#levelCheck');
 
@@ -136,14 +136,14 @@ define(['jquery', '../page'], function($, Page) {
                 self.setDebug(!active);
             });
 
-            self.fpsCheck.click(function() {
-                var active = self.fpsCheck.hasClass('active');
+            self.centreCheck.click(function() {
+                var active = self.centreCheck.hasClass('active');
 
-                self.fpsCheck.toggleClass('active');
+                self.centreCheck.toggleClass('active');
 
-                self.renderer.maxFPS = !active ? 15 : 30;
+                self.renderer.autoCentre = !active;
 
-                self.setFPS(!active);
+                self.setCentre(!active);
             });
 
             self.nameCheck.click(function() {
@@ -183,8 +183,8 @@ define(['jquery', '../page'], function($, Page) {
                 self.renderer.debugging = true;
             }
 
-            if (self.getFPSCap())
-                self.fpsCheck.addClass('active');
+            if (self.getCentreCap())
+                self.centreCheck.addClass('active');
 
             if (self.getName())
                 self.nameCheck.addClass('active');
@@ -241,10 +241,10 @@ define(['jquery', '../page'], function($, Page) {
             self.storage.save();
         },
 
-        setFPS: function(state) {
+        setCentre: function(state) {
             var self = this;
 
-            self.storage.data.settings.FPSCap = state;
+            self.storage.data.settings.autoCentre = state;
             self.storage.save();
         },
 
@@ -286,8 +286,8 @@ define(['jquery', '../page'], function($, Page) {
             return this.storage.data.settings.debug;
         },
 
-        getFPSCap: function() {
-            return this.storage.data.settings.FPSCap;
+        getCentreCap: function() {
+            return this.storage.data.settings.autoCentre;
         },
 
         getName: function() {

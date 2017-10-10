@@ -79,15 +79,8 @@ define(['./renderer/renderer', './utils/storage',
 
                 self.time = new Date().getTime();
 
-                var delta = self.time - self.lastTime;
-
-                if (delta > self.renderer.maxFPS) {
-
-                    self.renderer.render();
-                    self.updater.update();
-
-                    self.lastTime = self.time - (delta % self.renderer.maxFPS);
-                }
+                self.renderer.render();
+                self.updater.update();
 
                 if (!self.stopped)
                     requestAnimFrame(self.tick.bind(self));
@@ -705,7 +698,7 @@ define(['./renderer/renderer', './utils/storage',
 
                     case Packets.QuestOpcode.Finish:
 
-                        self.interface.getQuestPage().finish(info.id, info.isQuest);
+                        self.interface.getQuestPage().finish(info);
 
                         break;
                 }
@@ -834,6 +827,9 @@ define(['./renderer/renderer', './utils/storage',
 
                             self.bubble.setTo(entity);
 
+                            if (self.renderer.mobile && self.renderer.autoCentre)
+                                self.renderer.camera.centreOn(self.player);
+
                             if (bubble) {
                                 bubble.setClickable();
 
@@ -844,6 +840,7 @@ define(['./renderer/renderer', './utils/storage',
                                         self.input.click({x: entity.gridX, y: entity.gridY});
                                 });
                             }
+
                         } else {
                             self.bubble.create(info.id, message, self.time, 5000);
                             self.bubble.setTo(entity);

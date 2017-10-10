@@ -34,11 +34,12 @@ define(['jquery', '../page'], function($, Page) {
                 if (achievement.progress > 0 && achievement.progress < 9999) {
                     name.css('background', 'rgba(255, 255, 10, 0.4)');
 
-                    if (achievement.type === 1)
-                        name.text(achievement.name + ' ' + (achievement.progress - 1) + '/' + achievement.count);
+                    name.text(achievement.name + (achievement.count > 2 ? ' ' + (achievement.progress - 1) + '/' + (achievement.count - 1) : ''));
 
-                } else if (achievement.progress > 9998)
+                } else if (achievement.progress > 9998) {
+                    name.text(achievement.name);
                     name.css('background', 'rgba(10, 255, 10, 0.3)');
+                }
 
                 if (achievement.finished)
                     finishedAchievements++;
@@ -94,23 +95,26 @@ define(['jquery', '../page'], function($, Page) {
             if (!name)
                 return;
 
-            if (!info.isQuest)
-                name.text(info.name + ' ' + info.progress + '/' + info.count);
+            if (!info.isQuest && info.count > 2)
+                name.text(info.name + ' ' + info.progress + '/' + (info.count - 1));
 
             name.css('background', 'rgba(255, 255, 10, 0.4)');
         },
 
-        finish: function(id, isQuest) {
+        finish: function(info) {
             var self = this,
-                item = isQuest ? self.getQuest(id) : self.getAchievement(id);
+                item = info.isQuest ? self.getQuest(info.id) : self.getAchievement(info.id);
 
             if (!item)
                 return;
 
-            var name = item.find('' + (isQuest ? '#quest' : '#achievement') + id + 'name');
+            var name = item.find('' + (info.isQuest ? '#quest' : '#achievement') + info.id + 'name');
 
             if (!name)
                 return;
+
+            if (!info.isQuest)
+                name.text(info.name);
 
             name.css('background', 'rgba(10, 255, 10, 0.3)');
 
