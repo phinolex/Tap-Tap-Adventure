@@ -30,6 +30,7 @@ define(['jquery'], function($) {
             self.respawn = $('#respawn');
 
             self.rememberMe = $('#rememberMe');
+            self.guest = $('#guest');
 
             self.about = $('#toggle-about');
             self.credits = $('#toggle-credits');
@@ -99,6 +100,13 @@ define(['jquery'], function($) {
                 self.rememberMe.toggleClass('active');
 
                 self.game.storage.toggleRemember(!active);
+            });
+
+            self.guest.click(function() {
+                if (!self.game)
+                    return;
+
+                self.guest.toggleClass('active');
             });
 
             self.respawn.click(function() {
@@ -290,12 +298,12 @@ define(['jquery'], function($) {
                     if (self.loginFields.length === 0)
                         self.loginFields = [nameInput, passwordInput];
 
-                    if (!nameInput.val()) {
+                    if (!nameInput.val() && !self.isGuest()) {
                         self.sendError(nameInput, 'Please enter a username.');
                         return false;
                     }
 
-                    if (!passwordInput.val()) {
+                    if (!passwordInput.val() && !self.isGuest()) {
                         self.sendError(passwordInput, 'Please enter a password.');
                         return false;
                     }
@@ -399,6 +407,10 @@ define(['jquery'], function($) {
 
         isRegistering: function() {
             return this.getActiveForm() === 'createCharacter';
+        },
+
+        isGuest: function() {
+            return this.guest.hasClass('active');
         },
 
         resize: function() {

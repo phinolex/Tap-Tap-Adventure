@@ -711,6 +711,9 @@ module.exports = World = cls.Class.extend({
 
         self.cleanCombat(player);
 
+        if (player.isGuest)
+            self.database.delete(player);
+
         delete self.players[player.instance];
         delete self.packets[player.instance];
     },

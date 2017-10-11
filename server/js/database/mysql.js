@@ -141,6 +141,19 @@ module.exports = MySQL = cls.Class.extend({
         });
     },
 
+    delete: function(player) {
+        var self = this,
+            databases = ['player_data', 'player_equipment', 'player_inventory', 'player_abilities', 'player_bank', 'player_quests', 'player_achievements'];
+
+        _.each(databases, function(db) {
+            self.connection.query('DELETE FROM `' + db + '` WHERE `' + db + '`.`' + 'username`=' + "'" + player.username + "'", function(error) {
+                if (error)
+                    log.error('Error while deleting user: ' + player.username);
+
+            });
+        });
+    },
+
     loadDatabases: function() {
         var self = this;
 

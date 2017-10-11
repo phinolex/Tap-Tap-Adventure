@@ -65,6 +65,8 @@ module.exports = Player = Character.extend({
         self.acceptedTrade = false;
         self.invincible = false;
 
+        self.isGuest = false;
+
         self.pvp = false;
 
         self.canTalk = true;
@@ -764,7 +766,7 @@ module.exports = Player = Character.extend({
     save: function() {
         var self = this;
 
-        if (config.offlineMode)
+        if (config.offlineMode || self.isGuest)
             return;
 
         self.mysql.creator.save(self);

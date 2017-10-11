@@ -239,13 +239,26 @@ body {
 
 #rememberMe {
     top: 57%;
-    left: 22%;
+    left: 20%;
 }
 
 #rememberMeText {
     position: absolute;
     top: 57%;
-    left: 24%;
+    left: 22%;
+}
+
+#guest, #guestText {
+    position: absolute;
+    top: 57%;
+}
+
+#guest {
+    left: 70%;
+}
+
+#guestText {
+    left: 72%;
 }
 
 input[type="range"] {
@@ -523,8 +536,8 @@ html [type="button"],
         background-position: 0 -261px;
     }
 
-    #rememberMeText {
-        width: 150px;
+    #rememberMeText, #guestText {
+        width: 165px;
         height: 24px;
         font-size: 20px;
     }
@@ -758,8 +771,8 @@ html [type="button"],
         background-position: 0 -174px;
     }
 
-    #rememberMeText {
-        width: 100px;
+    #rememberMeText, #guestText {
+        width: 110px;
         height: 15px;
         font-size: 15px;
     }
@@ -992,8 +1005,8 @@ html [type="button"],
         background-position: 0 -87px;
     }
 
-    #rememberMeText {
-        width: 50px;
+    #rememberMeText, #guestText {
+        width: 55px;
         height: 8px;
         font-size: 8px;
     }

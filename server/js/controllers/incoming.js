@@ -10,7 +10,7 @@ var cls = require('../lib/class'),
     sanitizer = require('sanitizer'),
     Commands = require('./commands'),
     Items = require('../util/items'),
-    Npcs = require('../util/npcs');
+    Utils = require('../util/utils');
 
 module.exports = Incoming = cls.Class.extend({
 
@@ -109,8 +109,9 @@ module.exports = Incoming = cls.Class.extend({
             username = message.shift().toLowerCase(),
             password = message.shift(),
             isRegistering = loginType === Packets.IntroOpcode.Register,
+            isGuest = loginType === Packets.IntroOpcode.Guest,
             email = isRegistering ? message.shift() : '',
-            formattedUsername = username.charAt(0).toUpperCase() + username.slice(1);
+            formattedUsername = username ? username.charAt(0).toUpperCase() + username.slice(1) : '';
 
         self.player.username = formattedUsername.substr(0, 32).trim();
         self.player.password = password.substr(0, 32);
@@ -183,6 +184,15 @@ module.exports = Incoming = cls.Class.extend({
                     self.connection.close('API response is malformed!')
                 }
             });
+
+        } else if (isGuest) {
+
+            self.player.username = 'Guest' + Utils.randomInt(0, 2000000);
+            self.player.password = null;
+            self.player.email = null;
+            self.player.isGuest = true;
+
+            self.mysql.login(self.player);
 
         } else {
             var loginOptions = {

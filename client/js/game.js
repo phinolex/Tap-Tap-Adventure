@@ -84,6 +84,8 @@ define(['./renderer/renderer', './utils/storage',
 
                 if (!self.stopped)
                     requestAnimFrame(self.tick.bind(self));
+
+                //Could also use function() { self.tick(); }
             }
         },
 
@@ -221,6 +223,8 @@ define(['./renderer/renderer', './utils/storage',
                         email = registerInfo[3].val();
 
                     self.socket.send(Packets.Intro, [Packets.IntroOpcode.Register, username, password, email]);
+                } else if (self.app.isGuest()) {
+                    self.socket.send(Packets.Intro, [Packets.IntroOpcode.Guest, 'n', 'n', 'n'])
                 } else {
                     var loginInfo = self.app.loginFields,
                         name = loginInfo[0].val(),

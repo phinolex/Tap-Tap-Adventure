@@ -16,6 +16,7 @@ define(['../entity/character/character'], function(Character) {
 
         update: function() {
             this.timeDifferential = (new Date() - this.lastUpdate) / 1000;
+
             this.animateTiles();
             this.updateEntities();
             this.input.updateCursor();
@@ -24,6 +25,7 @@ define(['../entity/character/character'], function(Character) {
             this.verifyScale();
             this.updateInfos();
             this.updateBubbles();
+
             this.lastUpdate = new Date();
         },
 
@@ -80,8 +82,6 @@ define(['../entity/character/character'], function(Character) {
 
                 if (entity instanceof Character && entity.hasPath() && !entity.movement.inProgress) {
                     var tick = Math.round(266 / entity.movementSpeed);
-
-
 
                     switch (entity.orientation) {
                         case Modules.Orientation.Left:
