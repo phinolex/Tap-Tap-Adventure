@@ -31,5 +31,19 @@
       "Hoho, hello agen.", "I ned favur, but this lst time.",
       "I lst watrmln, could u plez find?", "I do'n't kno'w what do to."
     ]
+  },
+
+  "2": {
+    "id": 2,
+    "name": "Crabs Pinch",
+    "description": "Hunt the crabs to extinction.",
+    "type": 0,
+    "count": 41,
+    "npc": 3,
+    "mob": 2,
+    "rewardType": 1,
+    "reward": 750,
+    "text": ["Ay!", "I need some help.", "I can't relax because of those darn crabs.",
+            "See, I know they respawn and stuff.", "But can you kill forty of them?"]
   }
 }

@@ -12,24 +12,21 @@ define(['../entity/sprite', '../entity/animation'], function(Sprite, Animation) 
 
             self.renderer = renderer;
 
-            self.spriteData = null;
             self.sprites = {};
 
             self.sparksAnimation = null;
 
             $.getJSON('data/sprites.json', function(json) {
-                self.spriteData = json;
-
-                self.load();
+                self.load(json);
             });
 
             self.loadAnimations();
         },
 
-        load: function() {
+        load: function(spriteData) {
             var self = this;
 
-            _.each(self.spriteData, function(sprite) {
+            _.each(spriteData, function(sprite) {
                 self.sprites[sprite.id] = new Sprite(sprite, self.renderer.drawingScale);
             });
 

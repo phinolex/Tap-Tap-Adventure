@@ -38,6 +38,12 @@ module.exports = Commands = cls.Class.extend({
 
         switch(command) {
 
+            case 'players':
+
+                self.player.send(new Messages.Notification(Packets.NotificationOpcode.Text, 'There are currently ' + self.world.playerCount + ' online.'))
+
+                break;
+
             case 'tutstage':
 
                 log.info(self.player.getTutorial().stage);

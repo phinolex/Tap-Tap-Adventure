@@ -49,6 +49,7 @@ define(['jquery'], function($) {
             self.zoom();
             self.updateOrientation();
             self.load();
+
         },
 
         load: function() {

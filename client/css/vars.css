@@ -150,7 +150,6 @@ body {
 }
 
 .bubble {
-    overflow: auto;
     background: rgba(45, 45, 45, 0.7);
     padding: 3px 10px 0 10px;
     border-radius: 8px;

@@ -6,7 +6,9 @@
 
   "VillageGirl": {
     "name": "Azaria",
-    "id": 1
+    "id": 1,
+    "text": ["Eventually, fire turns to ash.", "And all that remains is but that.",
+            "The ability to reignite...", "Though it never will."]
   },
 
   "Villager": {
@@ -91,7 +93,9 @@
   },
 
   "Octocat": {
-    "id": 19
+    "id": 19,
+    "name": "Octocat",
+    "text": ["Hey there!", "I am the Octocat, the programmer and I", "are very well acquainted.", "Nonetheless, make sure that you <a target=\"_blank\" href=\"https://github.com/Tach-Yon/Tap-Tap-Adventure\">check out the source on GitHub!</a>"]
   },
 
   "Soldier": {
