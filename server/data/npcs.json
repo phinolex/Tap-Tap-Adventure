@@ -20,7 +20,8 @@
 
   "BeachNpc": {
     "id": 3,
-    "name": "Bubba"
+    "name": "Bubba",
+    "text": ["Well, thanks for the help.", "Not really doing much but thanks regardless."]
   },
 
   "Agent": {
@@ -60,7 +61,8 @@
 
   "Boxingman": {
     "id": 12,
-    "name": "Mike Tyson"
+    "name": "Mike Tyson",
+    "text": "Woosh."
   },
 
   "Vampire": {
@@ -136,7 +138,8 @@
 
   "Pirategirlnpc": {
     "id": 28,
-    "name": "Pirate Girl"
+    "name": "Pirate Girl",
+    "text": ["Hi"]
   },
 
   "Bluebikinigirlnpc": {

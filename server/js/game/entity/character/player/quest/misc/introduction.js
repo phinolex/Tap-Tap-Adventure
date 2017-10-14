@@ -67,8 +67,10 @@ module.exports = Introduction = Quest.extend({
 
             if (!self.verifyDoor(self.player.x, self.player.y))
                 self.player.notify('You are not supposed to go through here.');
-            else
+            else {
                 self.progress('door');
+                self.player.teleport(destX, destY, false);
+            }
         });
 
         self.player.onProfile(function(isOpen) {

@@ -45,126 +45,126 @@ define(['../entity/character/character'], function(Character) {
             var self = this;
 
             self.game.entities.forEachEntity(function(entity) {
-                if (entity.spriteLoaded)
+
+                if (entity.spriteLoaded) {
                     self.updateFading(entity);
 
-                var animation = entity.currentAnimation;
+                    var animation = entity.currentAnimation;
 
-                if (animation)
-                    animation.update(self.game.time);
+                    if (animation)
+                        animation.update(self.game.time);
 
-                if (entity.type === 'projectile') {
-                    var mDistance = entity.speed * self.timeDifferential,
-                        dx = entity.destX - entity.x,
-                        dy = entity.destY - entity.y,
-                        tDistance = Math.sqrt(dx * dx + dy * dy),
-                        amount = mDistance / tDistance;
+                    if (entity instanceof Character) {
 
-                    if (amount > 1)
-                        amount = 1;
+                        if (entity.movement && entity.movement.inProgress)
+                            entity.movement.step(self.game.time);
 
-                    entity.x += dx * amount;
-                    entity.y += dy * amount;
+                        if (entity.hasPath() && !entity.movement.inProgress) {
+                            var tick = Math.round(266 / entity.movementSpeed);
 
-                    /**
-                     * Prevents bug where the arrow becomes
-                     * lodged into the target without de-spawning.
-                     */
+                            switch (entity.orientation) {
+                                case Modules.Orientation.Left:
 
-                    if (tDistance < 5)
-                        entity.impact();
+                                    entity.movement.start(self.game.time,
+                                        function(x) {
+                                            entity.x = x;
+                                            entity.moved();
+                                        },
+                                        function() {
+                                            entity.x = entity.movement.endValue;
+                                            entity.moved();
+                                            entity.nextStep();
+                                        },
+                                        entity.x - tick,
+                                        entity.x - 16,
+                                        entity.movementSpeed);
 
-                    return;
-                }
+                                    break;
 
-                if (entity.movement && entity.movement.inProgress)
-                    entity.movement.step(self.game.time);
+                                case Modules.Orientation.Right:
 
-                if (entity instanceof Character && entity.hasPath() && !entity.movement.inProgress) {
-                    var tick = Math.round(266 / entity.movementSpeed);
+                                    entity.movement.start(self.game.time,
+                                        function(x) {
+                                            entity.x = x;
+                                            entity.moved();
+                                        },
+                                        function() {
+                                            entity.x = entity.movement.endValue;
+                                            entity.moved();
+                                            entity.nextStep();
+                                        },
+                                        entity.x + tick,
+                                        entity.x + 16,
+                                        entity.movementSpeed);
 
-                    switch (entity.orientation) {
-                        case Modules.Orientation.Left:
+                                    break;
 
-                            entity.movement.start(self.game.time,
-                                function(x) {
-                                    entity.x = x;
-                                    entity.moved();
-                                },
-                                function() {
-                                    entity.x = entity.movement.endValue;
-                                    entity.moved();
-                                    entity.nextStep();
-                                },
-                                entity.x - tick,
-                                entity.x - 16,
-                                entity.movementSpeed);
+                                case Modules.Orientation.Up:
 
-                            break;
+                                    entity.movement.start(self.game.time,
+                                        function(y) {
+                                            entity.y = y;
+                                            entity.moved();
+                                        },
+                                        function() {
+                                            entity.y = entity.movement.endValue;
+                                            entity.moved();
+                                            entity.nextStep();
+                                        },
+                                        entity.y - tick,
+                                        entity.y - 16,
+                                        entity.movementSpeed);
 
-                        case Modules.Orientation.Right:
+                                    break;
 
-                            entity.movement.start(self.game.time,
-                                function(x) {
-                                    entity.x = x;
-                                    entity.moved();
-                                },
-                                function() {
-                                    entity.x = entity.movement.endValue;
-                                    entity.moved();
-                                    entity.nextStep();
-                                },
-                                entity.x + tick,
-                                entity.x + 16,
-                                entity.movementSpeed);
+                                case Modules.Orientation.Down:
 
-                            break;
+                                    entity.movement.start(self.game.time,
+                                        function(y) {
+                                            entity.y = y;
+                                            entity.moved();
+                                        },
+                                        function() {
+                                            entity.y = entity.movement.endValue;
+                                            entity.moved();
+                                            entity.nextStep();
+                                        },
+                                        entity.y + tick,
+                                        entity.y + 16,
+                                        entity.movementSpeed);
 
-                        case Modules.Orientation.Up:
+                                    break;
+                            }
+                        }
 
-                            entity.movement.start(self.game.time,
-                                function(y) {
-                                    entity.y = y;
-                                    entity.moved();
-                                },
-                                function() {
-                                    entity.y = entity.movement.endValue;
-                                    entity.moved();
-                                    entity.nextStep();
-                                },
-                                entity.y - tick,
-                                entity.y - 16,
-                                entity.movementSpeed);
+                    } else if (entity.type === 'projectile') {
+                        var mDistance = entity.speed * self.timeDifferential,
+                            dx = entity.destX - entity.x,
+                            dy = entity.destY - entity.y,
+                            tDistance = Math.sqrt(dx * dx + dy * dy),
+                            amount = mDistance / tDistance;
 
-                            break;
+                        if (amount > 1)
+                            amount = 1;
 
-                        case Modules.Orientation.Down:
+                        entity.x += dx * amount;
+                        entity.y += dy * amount;
 
-                            entity.movement.start(self.game.time,
-                                function(y) {
-                                    entity.y = y;
-                                    entity.moved();
-                                },
-                                function() {
-                                    entity.y = entity.movement.endValue;
-                                    entity.moved();
-                                    entity.nextStep();
-                                },
-                                entity.y + tick,
-                                entity.y + 16,
-                                entity.movementSpeed);
 
-                            break;
+
+                        if (tDistance < 5)
+                            entity.impact();
+
                     }
                 }
-
             });
+
         },
 
         updateFading: function(entity) {
             var self = this;
 
-            if (!entity || !entity.fading || entity.type === 'projectile')
+            if (!entity || !entity.fading)
                 return;
 
             var duration = 1000,

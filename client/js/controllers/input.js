@@ -211,10 +211,10 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                     return;
                 }
 
-                if (entity.type === 'player') {
+                /*if (entity.type === 'player') {
                     self.getActions().showPlayerActions(entity, self.mouse.x, self.mouse.y);
                     return;
-                }
+                }*/
 
                 if (entity.type !== 'item') {
                     player.follow(entity);

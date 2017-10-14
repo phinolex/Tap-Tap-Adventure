@@ -45,5 +45,11 @@
     "reward": 750,
     "text": ["Ay!", "I need some help.", "I can't relax because of those darn crabs.",
             "See, I know they respawn and stuff.", "But can you kill forty of them?"]
+  },
+
+  "3": {
+    "id": 3,
+    "name": "Dodgey Dodge",
+    "description": ""
   }
 }
