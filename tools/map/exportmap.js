@@ -23,7 +23,7 @@ function getMap() {
 
 function onMap(data) {
     parseClient(data, '../../client/data/maps/world_client');
-    parseServer(data, '../../server/data/map/world_server.json');
+    parseServer(data, '../../server/data/map/world_server');
 }
 
 function parseClient(data, destination) {

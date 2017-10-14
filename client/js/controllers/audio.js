@@ -24,57 +24,32 @@ define(function() {
             var self = this;
 
             self.music = {
-                "ancientcavern": false,
-                "beach": false,
-                "darkestregion": false,
-                "exploration": false,
-                "farawaycity": false,
-                "gameover": false,
-                "icebeach": false,
-                "royalcity": false,
-                "icetown": false,
-                "peacefultown": false,
-                "thebattle": false,
-                "theconclusion": false,
-                "unknowing": false,
-                "mysterio": false,
-                "royalpalace": false,
-                "darkcavern": false,
-                "dungeon": false,
-                "underthesea": false,
-                "deepunderthesea": false,
-                "campusmap": false,
-                "cornfields": false,
-                "desert": false,
-                "lostland": false,
-                "sketchyland": false,
-                "volcano": false,
-                "meadowofthepast": false,
-                "sililoquy": false,
-                "veloma": false,
-                "boss": false,
-                "cave": false,
-                "dangerouscave": false
+                'codingroom': false,
+                'smalltown': false,
+                'village': false,
+                'beach': false,
+                'spookyship': false,
+                'meadowofthepast': false
             };
 
             self.sounds = {
-                "loot": false,
-                "hit1": false,
-                "hit2": false,
-                "hurt": false,
-                "heal": false,
-                "chat": false,
-                "revive": false,
-                "death": false,
-                "firefox": false,
-                "achievement": false,
-                "kill1": false,
-                "kill2": false,
-                "noloot": false,
-                "teleport": false,
-                "chest": false,
-                "npc": false,
-                "npc-end": false
+                'loot': false,
+                'hit1': false,
+                'hit2': false,
+                'hurt': false,
+                'heal': false,
+                'chat': false,
+                'revive': false,
+                'death': false,
+                'firefox': false,
+                'achievement': false,
+                'kill1': false,
+                'kill2': false,
+                'noloot': false,
+                'teleport': false,
+                'chest': false,
+                'npc': false,
+                'npc-end': false
             };
 
         },
@@ -167,6 +142,8 @@ define(function() {
 
             if (!self.isEnabled())
                 return;
+
+            log.info(self.songName);
 
             var song = self.getMusic(self.songName);
 

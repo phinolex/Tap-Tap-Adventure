@@ -74,8 +74,6 @@ define(['jquery', '../page'], function($, Page) {
             self.soundCheck.click(function() {
                 var isActive = self.soundCheck.hasClass('active');
 
-                self.audio.toggle();
-
                 self.setSound(!isActive);
 
                 if (isActive) {

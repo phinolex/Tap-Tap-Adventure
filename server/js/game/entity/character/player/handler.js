@@ -25,7 +25,7 @@ module.exports = Handler = cls.Class.extend({
 
             self.detectAggro();
             self.detectPVP();
-            self.detectMusic();
+            self.detectMusic(x, y);
         });
 
         self.player.onDeath(function() {
@@ -103,9 +103,10 @@ module.exports = Handler = cls.Class.extend({
         });
     },
 
-    detectMusic: function() {
+    detectMusic: function(x, y) {
         var self = this,
-            musicArea = _.detect(self.world.getMusicAreas(), function(area) { return area.contains(self.player.x, self.player.y); });
+            musicArea = _.find(self.world.getMusicAreas(), function(area) { return area.contains(x, y); }),
+            a2;
 
         if (musicArea && self.player.currentSong !== musicArea.id)
             self.player.updateMusic(musicArea.id);
@@ -113,9 +114,9 @@ module.exports = Handler = cls.Class.extend({
 
     detectPVP: function() {
         var self = this,
-            pvpArea = _.detect(self.world.getPVPAreas(), function(area) { return area.contains(self.player.x, self.player.y); });
+            pvpArea = _.find(self.world.getPVPAreas(), function(area) { return area.contains(self.player.x, self.player.y); });
 
-        self.player.updatePVP(pvpArea);
+        self.player.updatePVP(!!pvpArea);
     }
 
 });

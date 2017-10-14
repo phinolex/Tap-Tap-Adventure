@@ -19,7 +19,7 @@ module.exports = MusicAreas = cls.Class.extend({
         var self = this;
 
         _.each(map.musicAreas, function(m) {
-            var musicArea = new Area(m.id, m.x, m.y, m.w, m.h);
+            var musicArea = new Area(m.id, m.x, m.y, m.width, m.height);
 
             self.musicAreas.push(musicArea);
         });

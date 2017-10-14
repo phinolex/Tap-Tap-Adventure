@@ -111,33 +111,6 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
 
                             break;
 
-                        case Modules.Keys.One:
-
-                            self.renderer.camera.center();
-
-                            break;
-
-                        case Modules.Keys.Two:
-
-                            self.renderer.camera.decenter();
-
-                            break;
-
-                        case Modules.Keys.Three:
-
-                            self.game.app.body.toggleClass('death');
-
-                            break;
-
-                        case Modules.Keys.Four:
-
-                            self.game.renderer.forEachVisibleEntity(function(entity) {
-                                self.game.pointer.create(entity.id, Modules.Pointers.Entity);
-                                self.game.pointer.setToEntity(entity);
-                            });
-
-                            break;
-
                         case Modules.Keys.Enter:
 
                             self.chatHandler.toggle();
