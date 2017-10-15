@@ -40,13 +40,24 @@ Still, there are a couple things that have to be done:
 
 ## Running Tap Tap Adventure
 
-Running the server is as easy as 1, 2, 3. I'm not kidding.
+Running the server is as easy as 1, 2, 3. Mostly. I'm not kidding.
 
 First, you must `clone` the repository. There's really no way around it, you kinda need the source to run it, y'know?
 
 ###### Step 1 - Install the dependencies
 
 `sudo npm install -d`
+
+- Install MySQL
+- Create Schema
+- Create TTA user and grant permissions on Schema
+- Run tools/database.sql
+
+
+Copy `config.json-dist` and save as `config.json`
+
+Udpdate mysqlUser and mysqlPassword
+
 
 ###### Step 2 - Run the server
 
