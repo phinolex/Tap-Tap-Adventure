@@ -50,7 +50,7 @@ module.exports = Quests = cls.Class.extend({
         var self = this;
 
         for (var id = 0; id < ids.length; id++)
-            if (!isNaN(parseInt(ids[id])) && self.quests[id])
+            if (!isNaN(parseInt(ids[id])) && self.achievements[id])
                 self.achievements[id].setProgress(progress[id]);
 
         if (self.readyCallback)

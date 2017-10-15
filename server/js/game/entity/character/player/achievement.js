@@ -108,7 +108,7 @@ module.exports = Achievement = cls.Class.extend({
     },
 
     isThreshold: function() {
-        return this.progress === this.data.count;
+        return this.progress >= this.data.count;
     },
 
     hasItem: function() {

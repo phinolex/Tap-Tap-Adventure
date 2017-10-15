@@ -189,7 +189,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                     return;
                 }*/
 
-                if (entity.type !== 'item') {
+                if (entity.type !== 'item' && entity.type !== 'player') {
                     player.follow(entity);
                     return;
                 }

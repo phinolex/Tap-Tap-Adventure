@@ -225,7 +225,13 @@ module.exports = Player = Character.extend({
         var self = this;
 
         self.experience += exp;
+
+        var oldLevel = self.level;
+
         self.level = Formulas.expToLevel(self.experience);
+
+        if (oldLevel !== self.level)
+            self.hitPoints.setMaxHitPoints(Formulas.getMaxHitPoints(self.level));
 
         self.world.pushToAdjacentGroups(self.group, new Messages.Experience({
             id: self.instance,

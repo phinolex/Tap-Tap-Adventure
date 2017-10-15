@@ -570,33 +570,26 @@ define(['./renderer/renderer', './utils/storage',
             });
 
             self.messages.onChat(function(info) {
-                var id = info.shift(),
-                    text = info.shift(),
-                    duration = info.shift(),
-                    withBubble = info.shift(),
-                    entity = self.entities.get(id);
 
-                //TODO - Add colour control from the server side.
+                if (!info.duration)
+                    info.duration = 5000;
 
-                if (!entity)
-                    return;
+                if (info.withBubble) {
+                    var entity = self.entities.get(info.id);
 
-                if (!duration)
-                    duration = 5000;
+                    if (entity) {
+                        self.bubble.create(info.id, info.text, self.time, info.duration);
+                        self.bubble.setTo(entity);
 
-                if (withBubble) {
-                    self.bubble.create(id, text, self.time, duration);
-                    self.bubble.setTo(entity);
-
-                    self.audio.play(Modules.AudioTypes.SFX, 'npctalk');
+                        self.audio.play(Modules.AudioTypes.SFX, 'npctalk');
+                    }
                 }
 
-                log.info(entity);
+                if (info.isGlobal)
+                    info.name = '[Global] ' + info.name;
 
-                log.info(entity.type);
+                self.input.chatHandler.add(info.name, info.text, info.colour);
 
-                if (entity.type === 'player')
-                    self.input.chatHandler.add(entity.username, text);
             });
 
             self.messages.onCommand(function(info) {
@@ -762,6 +755,11 @@ define(['./renderer/renderer', './utils/storage',
                         break;
                 }
 
+                if (entity.hitPoints + info.amount > entity.maxHitPoints)
+                    entity.setHitPoints(entity.maxHitPoints);
+                else
+                    entity.setHitPoints(entity.hitPoints + info.amount);
+
                 entity.triggerHealthBar();
             });
 
@@ -778,6 +776,8 @@ define(['./renderer/renderer', './utils/storage',
                     self.info.create(Modules.Hits.LevelUp, null, entity.x, entity.y);
                 } else if (entity.id === self.player.id)
                     self.info.create(Modules.Hits.Experience, [info.amount], entity.x, entity.y);
+
+                self.interface.profile.update();
 
             });
 

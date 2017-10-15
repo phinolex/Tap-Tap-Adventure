@@ -34,8 +34,12 @@ module.exports = Handler = cls.Class.extend({
 
         self.player.onKill(function(character) {
 
-            if (self.player.quests.isAchievementMob(character))
-                self.player.quests.getAchievementByMob(character).step();
+            if (self.player.quests.isAchievementMob(character)) {
+                var achievement = self.player.quests.getAchievementByMob(character);
+
+                if (achievement && achievement.isStarted())
+                    self.player.quests.getAchievementByMob(character).step();
+            }
         });
 
         self.player.onGroup(function() {

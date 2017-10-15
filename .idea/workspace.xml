@@ -2,47 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c48d7ea8-5c56-4f6b-afdb-8c04901f739b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/ancientcavern.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/boss.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/campusmap.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/cave.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/cornfields.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/dangerouscave.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/darkcavern.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/darkestregion.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/deepunderthesea.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/desert.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/dungeon.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/exploration.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/farawaycity.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/gameover.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/icebeach.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/icetown.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/lostland.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/mysterio.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/peacefultown.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/royalcity.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/royalpalace.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/sililoquy.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/sketchyland.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/thebattle.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/theconclusion.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/underthesea.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/unknowing.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/veloma.mp3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/audio/music/volcano.mp3" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/audio/music/beach.mp3" afterPath="$PROJECT_DIR$/client/audio/music/beach.mp3" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/js/controllers/chat.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/controllers/audio.js" afterPath="$PROJECT_DIR$/client/js/controllers/audio.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/controllers/chat.js" afterPath="$PROJECT_DIR$/client/js/controllers/chat.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/controllers/input.js" afterPath="$PROJECT_DIR$/client/js/controllers/input.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/interface/profile/pages/settings.js" afterPath="$PROJECT_DIR$/client/js/interface/profile/pages/settings.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/achievements.json" afterPath="$PROJECT_DIR$/server/data/achievements.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/map/world_server.json" afterPath="$PROJECT_DIR$/server/data/map/world_server.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/npcs.json" afterPath="$PROJECT_DIR$/server/data/npcs.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/game.js" afterPath="$PROJECT_DIR$/client/js/game.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/mobs.json" afterPath="$PROJECT_DIR$/server/data/mobs.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/controllers/commands.js" afterPath="$PROJECT_DIR$/server/js/controllers/commands.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/controllers/incoming.js" afterPath="$PROJECT_DIR$/server/js/controllers/incoming.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/controllers/quests.js" afterPath="$PROJECT_DIR$/server/js/controllers/quests.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/achievement.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/achievement.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/handler.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/handler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/map/areas/musicareas.js" afterPath="$PROJECT_DIR$/server/js/map/areas/musicareas.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/map/data/map.json" afterPath="$PROJECT_DIR$/tools/map/data/map.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/map/exportmap.js" afterPath="$PROJECT_DIR$/tools/map/exportmap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/network/messages.js" afterPath="$PROJECT_DIR$/server/js/network/messages.js" />
     </list>
     <ignored path="Tap-Tap-Adventure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,18 +36,88 @@
       <file leaf-file-name="achievements.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/data/achievements.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="586">
-              <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="1" />
+            <state relative-caret-position="488">
+              <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="input.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/js/controllers/input.js">
+      <file leaf-file-name="items.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/data/items.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="113" column="43" lean-forward="true" selection-start-line="113" selection-start-column="43" selection-end-line="113" selection-end-column="43" />
+            <state relative-caret-position="153">
+              <caret line="1143" column="25" lean-forward="true" selection-start-line="1143" selection-start-column="25" selection-end-line="1143" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="player.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="475">
+              <caret line="375" column="24" lean-forward="true" selection-start-line="375" selection-start-column="24" selection-end-line="375" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="incoming.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/controllers/incoming.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="447">
+              <caret line="420" column="27" lean-forward="true" selection-start-line="420" selection-start-column="27" selection-end-line="420" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mobs.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/data/mobs.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="508">
+              <caret line="1950" column="23" lean-forward="true" selection-start-line="1949" selection-start-column="21" selection-end-line="1950" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="world.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="680" column="15" lean-forward="false" selection-start-line="680" selection-start-column="4" selection-end-line="680" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/js/game.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="109">
+              <caret line="387" column="36" lean-forward="false" selection-start-line="387" selection-start-column="26" selection-end-line="387" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="quests.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/controllers/quests.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="447">
+              <caret line="60" column="24" lean-forward="true" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="achievement.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/achievement.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="125" column="11" lean-forward="false" selection-start-line="125" selection-start-column="4" selection-end-line="125" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -92,36 +134,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>login</find>
-      <find>spriteData</find>
-      <find>bubble</find>
-      <find>population</find>
-      <find>rat</find>
-      <find>credits</find>
-      <find>forEachVisibleTile</find>
-      <find>forEachVisibleIndex</find>
-      <find>forEachEntity</find>
-      <find>_.each</find>
-      <find>fading</find>
-      <find>camera</find>
-      <find>updateAnimations</find>
-      <find>load</find>
-      <find>self.entities</find>
-      <find>pirate</find>
-      <find>hallo</find>
+      <find>add</find>
+      <find>healthBar</find>
+      <find>conference</find>
+      <find>focus</find>
+      <find>state</find>
+      <find>onExp</find>
+      <find>healing</find>
+      <find>update</find>
+      <find>profile</find>
+      <find>talk</find>
+      <find>click:</find>
+      <find>onEx</find>
+      <find>getHealingFactor</find>
+      <find>achievements</find>
+      <find>updateAchie</find>
+      <find>getData</find>
+      <find>getInfo</find>
+      <find>190</find>
+      <find>setProg</find>
+      <find>onReady</find>
+      <find>eat</find>
+      <find>onHeal</find>
+      <find>updateAc</find>
+      <find>maxHitPoints</find>
+      <find>revertPoints</find>
       <find>teleport:</find>
-      <find>abilityS</find>
-      <find>foreAchEnti</find>
-      <find>door</find>
-      <find>&quot;</find>
-      <find>update:</find>
-      <find>music</find>
-      <find>audio</find>
-      <find>onAudio</find>
-      <find>updateMusic</find>
-      <find>musicAreas</find>
-      <find>sound</find>
-      <find>toggle</find>
+      <find>onteleport</find>
+      <find>cleanCombat</find>
+      <find>teleport</find>
+      <find>pirate</find>
     </findStrings>
     <replaceStrings>
       <replace>fpsCheck</replace>
@@ -135,10 +177,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/js/interface/enchant.js" />
-        <option value="$PROJECT_DIR$/client/js/controllers/interface.js" />
-        <option value="$PROJECT_DIR$/client/js/controllers/chat.js" />
-        <option value="$PROJECT_DIR$/client/js/entity/character/player/player.js" />
         <option value="$PROJECT_DIR$/client/js/controllers/bubble.js" />
         <option value="$PROJECT_DIR$/server/config.json" />
         <option value="$PROJECT_DIR$/client/js/renderer/bubbles/blob.js" />
@@ -150,42 +188,46 @@
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/containers/inventory/inventory.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/quest/misc/bulkysituation.js" />
         <option value="$PROJECT_DIR$/server/js/util/modules.js" />
-        <option value="$PROJECT_DIR$/server/js/controllers/quests.js" />
         <option value="$PROJECT_DIR$/client/js/interface/profile/pages/quest.js" />
-        <option value="$PROJECT_DIR$/server/js/game/entity/character/player/achievement.js" />
         <option value="$PROJECT_DIR$/client/css/interface.css" />
         <option value="$PROJECT_DIR$/server/js/main.js" />
         <option value="$PROJECT_DIR$/client/js/utils/util.js" />
         <option value="$PROJECT_DIR$/client/js/network/packets.js" />
         <option value="$PROJECT_DIR$/server/js/network/packets.js" />
-        <option value="$PROJECT_DIR$/client/js/game.js" />
-        <option value="$PROJECT_DIR$/server/js/controllers/incoming.js" />
-        <option value="$PROJECT_DIR$/server/js/game/world.js" />
         <option value="$PROJECT_DIR$/server/js/database/mysql.js" />
         <option value="$PROJECT_DIR$/client/data/sprites.json" />
         <option value="$PROJECT_DIR$/client/js/app.js" />
         <option value="$PROJECT_DIR$/client/js/controllers/sprites.js" />
         <option value="$PROJECT_DIR$/client/css/vars.css" />
-        <option value="$PROJECT_DIR$/server/js/controllers/commands.js" />
         <option value="$PROJECT_DIR$/client/js/renderer/renderer.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/quest/misc/thelie.js" />
         <option value="$PROJECT_DIR$/server/data/minigames.json" />
         <option value="$PROJECT_DIR$/server/js/minigames/minigame.js" />
         <option value="$PROJECT_DIR$/server/js/controllers/minigames.js" />
-        <option value="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
         <option value="$PROJECT_DIR$/server/data/quests.json" />
         <option value="$PROJECT_DIR$/client/js/renderer/updater.js" />
         <option value="$PROJECT_DIR$/client/index.html" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/quest/misc/introduction.js" />
-        <option value="$PROJECT_DIR$/server/data/achievements.json" />
         <option value="$PROJECT_DIR$/client/js/controllers/audio.js" />
         <option value="$PROJECT_DIR$/client/js/interface/profile/pages/settings.js" />
         <option value="$PROJECT_DIR$/server/js/map/area.js" />
-        <option value="$PROJECT_DIR$/server/js/game/entity/character/player/handler.js" />
         <option value="$PROJECT_DIR$/tools/map/exportmap.js" />
         <option value="$PROJECT_DIR$/server/js/map/areas/musicareas.js" />
         <option value="$PROJECT_DIR$/server/data/npcs.json" />
+        <option value="$PROJECT_DIR$/client/js/controllers/chat.js" />
+        <option value="$PROJECT_DIR$/server/js/network/messages.js" />
+        <option value="$PROJECT_DIR$/server/js/controllers/incoming.js" />
+        <option value="$PROJECT_DIR$/server/js/controllers/commands.js" />
         <option value="$PROJECT_DIR$/client/js/controllers/input.js" />
+        <option value="$PROJECT_DIR$/client/js/interface/profile/pages/state.js" />
+        <option value="$PROJECT_DIR$/server/js/game/entity/character/player/achievement.js" />
+        <option value="$PROJECT_DIR$/server/js/game/entity/character/player/handler.js" />
+        <option value="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
+        <option value="$PROJECT_DIR$/server/js/controllers/quests.js" />
+        <option value="$PROJECT_DIR$/server/data/achievements.json" />
+        <option value="$PROJECT_DIR$/client/js/game.js" />
+        <option value="$PROJECT_DIR$/server/js/game/world.js" />
+        <option value="$PROJECT_DIR$/server/data/mobs.json" />
       </list>
     </option>
   </component>
@@ -208,8 +250,9 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="983" />
+    <option name="x" value="3" />
+    <option name="y" value="22" />
+    <option name="width" value="1144" />
     <option name="height" value="774" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -249,7 +292,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -301,6 +343,14 @@
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
               <item name="entity" type="462c0819:PsiDirectoryNode" />
+              <item name="character" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
               <item name="objects" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -326,6 +376,13 @@
               <item name="interface" type="462c0819:PsiDirectoryNode" />
               <item name="profile" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="network" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -392,15 +449,19 @@
               <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="map" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+              <item name="character" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
               <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="map" type="462c0819:PsiDirectoryNode" />
-              <item name="areas" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+              <item name="character" type="462c0819:PsiDirectoryNode" />
+              <item name="player" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -415,6 +476,13 @@
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
               <item name="network" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -444,6 +512,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -684,7 +753,8 @@
       <workItem from="1507865887497" duration="245000" />
       <workItem from="1507909136064" duration="1803000" />
       <workItem from="1507913632800" duration="3692000" />
-      <workItem from="1507939552489" duration="3741000" />
+      <workItem from="1507939552489" duration="4800000" />
+      <workItem from="1508007933502" duration="6834000" />
     </task>
     <task id="LOCAL-00001" summary="Client refactoring began - Fixing interfaces">
       <created>1488093277468</created>
@@ -826,17 +896,24 @@
       <option name="project" value="LOCAL" />
       <updated>1507939984230</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Music Fix and Removal of Development Hotkeys">
+      <created>1507945254863</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1507945254863</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="467370000" />
+    <option name="totallyTimeSpent" value="475263000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="983" height="774" extended-state="0" />
+    <frame x="3" y="22" width="1144" height="774" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23906408" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20541959" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -905,124 +982,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/js/database/loader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="18" column="18" lean-forward="false" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/database/creator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="49">
-          <caret line="96" column="73" lean-forward="false" selection-start-line="96" selection-start-column="73" selection-end-line="96" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/entity/sprite.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/data/sprites.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/controllers/sprites.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/database/mysql.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/interface.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="1725" column="18" lean-forward="true" selection-start-line="1725" selection-start-column="18" selection-end-line="1725" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="86" column="24" lean-forward="false" selection-start-line="86" selection-start-column="24" selection-end-line="86" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/game.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="89" column="105" lean-forward="false" selection-start-line="89" selection-start-column="105" selection-end-line="89" selection-end-column="105" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/data/mobs.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="47" column="14" lean-forward="false" selection-start-line="47" selection-start-column="11" selection-end-line="47" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/vars.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="151" column="9" lean-forward="false" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/build.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/controllers/commands.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="40" column="27" lean-forward="false" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/utils/util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
           <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="61" column="13" lean-forward="false" selection-start-line="61" selection-start-column="13" selection-end-line="61" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1044,9 +1007,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1065,14 +1025,6 @@
           <folding>
             <element signature="n#!!doc" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/data/items.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="1141" column="17" lean-forward="true" selection-start-line="1141" selection-start-column="17" selection-end-line="1141" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1102,7 +1054,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="70">
           <caret line="5" column="22" lean-forward="true" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1110,7 +1061,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
           <caret line="26" column="27" lean-forward="false" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1118,7 +1068,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1126,7 +1075,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="28">
           <caret line="2" column="1" lean-forward="false" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1134,7 +1082,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="107" column="0" lean-forward="true" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1142,22 +1089,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="573">
           <caret line="83" column="22" lean-forward="true" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/controllers/incoming.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="401" column="60" lean-forward="false" selection-start-line="401" selection-start-column="56" selection-end-line="401" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/controllers/quests.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="5" column="73" lean-forward="false" selection-start-line="5" selection-start-column="73" selection-end-line="5" selection-end-column="73" />
           <folding />
         </state>
       </provider>
@@ -1180,14 +1111,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="383" column="15" lean-forward="false" selection-start-line="383" selection-start-column="4" selection-end-line="383" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1204,29 +1127,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="804" column="29" lean-forward="false" selection-start-line="804" selection-start-column="29" selection-end-line="804" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/js/map/area.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/handler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="43">
-          <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1234,9 +1138,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="76" column="44" lean-forward="false" selection-start-line="76" selection-start-column="34" selection-end-line="76" selection-end-column="44" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1244,7 +1145,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="199" column="27" lean-forward="false" selection-start-line="199" selection-start-column="22" selection-end-line="199" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1252,7 +1152,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="574">
           <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1260,7 +1159,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1268,9 +1166,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1279,7 +1174,7 @@
         <state relative-caret-position="177">
           <caret line="83" column="56" lean-forward="true" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1288,24 +1183,209 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2847">
           <caret line="254" column="11" lean-forward="false" selection-start-line="254" selection-start-column="9" selection-end-line="254" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/controllers/chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/interface.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="69" column="9" lean-forward="false" selection-start-line="69" selection-start-column="4" selection-end-line="69" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/controllers/chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="35" column="67" lean-forward="false" selection-start-line="35" selection-start-column="67" selection-end-line="35" selection-end-column="67" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/data/achievements.json">
+    <entry file="file://$PROJECT_DIR$/client/js/network/messages.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="586">
-          <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="1" />
+        <state relative-caret-position="176">
+          <caret line="258" column="19" lean-forward="false" selection-start-line="258" selection-start-column="15" selection-end-line="258" selection-end-column="19" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/network/messages.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="200" column="41" lean-forward="false" selection-start-line="200" selection-start-column="41" selection-end-line="200" selection-end-column="41" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/entity/character/character.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="364" column="10" lean-forward="true" selection-start-line="364" selection-start-column="10" selection-end-line="364" selection-end-column="10" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="29" column="27" lean-forward="false" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4428">
+          <caret line="525" column="30" lean-forward="true" selection-start-line="525" selection-start-column="30" selection-end-line="525" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/controllers/commands.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/interface/profile/profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-601">
+          <caret line="2" column="32" lean-forward="false" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/js/controllers/input.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="113" column="43" lean-forward="true" selection-start-line="113" selection-start-column="43" selection-end-line="113" selection-end-column="43" />
+        <state relative-caret-position="352">
+          <caret line="191" column="62" lean-forward="false" selection-start-line="191" selection-start-column="62" selection-end-line="191" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/interface/profile/pages/state.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="84" column="14" lean-forward="false" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="14" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/formulas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="25" column="14" lean-forward="false" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/handler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="39" column="27" lean-forward="false" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/util/items.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="152" column="19" lean-forward="true" selection-start-line="152" selection-start-column="19" selection-end-line="152" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data/achievements.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data/items.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="1143" column="25" lean-forward="true" selection-start-line="1143" selection-start-column="25" selection-end-line="1143" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/achievement.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="125" column="11" lean-forward="false" selection-start-line="125" selection-start-column="4" selection-end-line="125" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/controllers/quests.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="60" column="24" lean-forward="true" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="387" column="36" lean-forward="false" selection-start-line="387" selection-start-column="26" selection-end-line="387" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="680" column="15" lean-forward="false" selection-start-line="680" selection-start-column="4" selection-end-line="680" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="375" column="24" lean-forward="true" selection-start-line="375" selection-start-column="24" selection-end-line="375" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/controllers/incoming.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="420" column="27" lean-forward="true" selection-start-line="420" selection-start-column="27" selection-end-line="420" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data/mobs.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="508">
+          <caret line="1950" column="23" lean-forward="true" selection-start-line="1949" selection-start-column="21" selection-end-line="1950" selection-end-column="23" />
           <folding />
         </state>
       </provider>

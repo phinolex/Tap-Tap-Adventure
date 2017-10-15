@@ -193,15 +193,12 @@ Messages.Network = Message.extend({
 
 Messages.Chat = Message.extend({
 
-    init: function(id, text, duration, withBubble) {
-        this.id = id;
-        this.text = text;
-        this.duration = duration;
-        this.withBubble = withBubble ? withBubble : true;
+    init: function(data) {
+        this.data = data;
     },
 
     serialize: function() {
-        return [Packets.Chat, [this.id, this.text, this.duration, this.withBubble]];
+        return [Packets.Chat, this.data];
     }
 
 });
