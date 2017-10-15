@@ -67,6 +67,18 @@ module.exports = Commands = cls.Class.extend({
 
                 break;
 
+            case 'global':
+
+                self.world.pushBroadcast(new Messages.Chat({
+                    name: self.player.username,
+                    text: blocks.join(' '),
+                    isGlobal: true,
+                    withBubble: false,
+                    colour: 'rgba(191, 191, 63, 1.0)'
+                }));
+
+                break;
+
         }
     },
 
@@ -145,6 +157,12 @@ module.exports = Commands = cls.Class.extend({
                 });
 
                 return;
+
+            case 'maxhealth':
+
+                self.player.notify('Max health is ' + self.player.hitPoints.getMaxHitPoints());
+
+                break;
 
             case 'ipban':
 

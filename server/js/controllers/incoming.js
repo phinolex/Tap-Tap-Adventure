@@ -569,7 +569,13 @@ module.exports = Incoming = cls.Class.extend({
                 return;
             }
 
-            self.world.pushToGroup(self.player.group, new Messages.Chat(self.player.instance, text, 7000));
+            self.world.pushToGroup(self.player.group, new Messages.Chat({
+                id: self.player.instance,
+                name: self.player.username,
+                withBubble: true,
+                text: text,
+                duration: 7000
+            }));
         }
 
     },

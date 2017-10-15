@@ -286,7 +286,7 @@
     "aggressive": true,
     "attackRate": 900,
     "movementSpeed": 400,
-    "spawnDelay": 35000
+    "spawnDelay": 65000
   },
 
   "GreenPirateSkeleton": {
@@ -303,7 +303,7 @@
     "aggressive": true,
     "attackRate": 900,
     "movementSpeed": 400,
-    "spawnDelay": 35000
+    "spawnDelay": 65000
   },
 
   "BlackWizard": {
@@ -1222,7 +1222,7 @@
     "aggressive": true,
     "attackRate": 900,
     "movementSpeed": 400,
-    "spawnDelay": 35000
+    "spawnDelay": 65000
   },
 
   "Rhaphidophoridae": {
@@ -1692,7 +1692,7 @@
   "Skeletonking": {
     "name": "Skeleton King",
     "id": 99,
-    "drops": {"goldensword": 400, "bigflask": 100, "1goldenbow": 400, "pearlpendant": 50, "pearlring": 50},
+    "drops": {"goldensword": 400, "bigflask": 100, "goldenbow": 400, "pearlpendant": 50, "pearlring": 50},
     "hitPoints": 2650,
     "armour": 15,
     "weapon": 16,
@@ -1929,7 +1929,7 @@
     "aggressive": true,
     "attackRate": 1500,
     "movementSpeed": 600,
-    "spawnDelay": 95000
+    "spawnDelay": 115000
   },
 
   "PirateKing": {
@@ -1941,7 +1941,7 @@
     "name": "Pirate Skeleton",
     "id": 122,
     "drops": {"morningstar": 300, "redbow": 300, "gold": 400},
-    "hitPoints": 100,
+    "hitPoints": 1500,
     "armour": 5,
     "weapon": 10,
     "xp": 135,

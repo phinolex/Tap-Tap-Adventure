@@ -31,14 +31,14 @@ define(['jquery'], function($) {
             });
         },
 
-        add: function(source, text) {
+        add: function(source, text, colour) {
             var self = this,
-                element = $('<p style="color: white">' + source + ': ' + text + '</pstyle>');
+                element = $('<p>' + source + ': ' + text + '</p>');
+
+            element.css('color', colour ? colour : 'white');
 
             self.log.append(element);
             self.log.scrollTop(99999);
-
-            log.info(text);
 
             self.showChat();
 
