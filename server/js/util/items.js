@@ -98,11 +98,17 @@ Items.getType = function(id) {
 };
 
 Items.isStackable = function(id) {
-    return id === 190 || id === 191 || id === 192 || id === 193 || id === 195 || id === 199 || id === 202 || id === 253 || id === 254 || id === 255 || id === 256 || id === 257;
+    if (id in Items.Ids)
+        return Items.Ids[id].stackable;
+
+    return false;
 };
 
 Items.isEdible = function(id) {
-    return id === 190 || id === 191 || id === 192 || id === 193;
+    if (id in Items.Ids)
+        return Items.Ids[id].edible;
+
+    return false;
 };
 
 Items.isShard = function(id) {
@@ -131,29 +137,29 @@ Items.isEquippable = function(string) {
 };
 
 Items.healsHealth = function(id) {
-    return id === 190 || id === 192 || id === 193;
+    if (id in Items.Ids)
+        return Items.Ids[id].healsHealth > 0;
+    
+    return false;
 };
+   
 
 Items.healsMana = function(id) {
-    return id === 191;
+    if (id in Items.Ids)
+        return Items.Ids[id].healsMana > 0;
 };
 
 Items.getHealingFactor = function(id) {
-    if (id === 190)
-        return 100;
-    else if (id === 192)
-        return 200;
-    else if (id === 193)
-        return 350;
+    if (id in Items.Ids)
+            return Items.Ids[id].healsHealth;
 
-    return -1;
+    return 0;
 };
 
 Items.getManaFactor = function(id) {
-    if (id === 191)
-        return 35;
-
-    return -1;
+    if (id in Items.Ids)
+            return Items.Ids[id].healsMana;
+    return 0;
 };
 
 module.exports = Items;
