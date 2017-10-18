@@ -35,17 +35,17 @@ define(['jquery'], function($) {
             var self = this,
                 element = $('<p>' + source + ': ' + text + '</p>');
 
-            element.css('color', colour ? colour : 'white');
-
-            self.log.append(element);
-            self.log.scrollTop(99999);
-
             self.showChat();
 
             if (!self.isActive())
                 self.hideInput();
 
             self.hideChat();
+
+            element.css('color', colour ? colour : 'white');
+
+            self.log.append(element);
+            self.log.scrollTop(99999);
         },
 
         key: function(data) {

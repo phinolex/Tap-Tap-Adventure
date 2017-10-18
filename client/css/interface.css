@@ -148,7 +148,7 @@
     color: #fcda5c;
 }
 
-#profileDialog {
+#profileDialog, #settingsPage {
     top: 11%;
     left: 72%;
 
@@ -438,21 +438,6 @@
         background: url('../img/3/maintwo.png') no-repeat -672px -942px;
     }
 
-    #soundButton {
-        position: relative;
-        width: 42px;
-        height: 45px;
-        background: url('../img/3/main.png') no-repeat -378px -942px;
-    }
-
-    #soundButton:hover {
-        background: url('../img/3/main.png') no-repeat -336px -942px;
-    }
-
-    #soundButton.active {
-        background: url('../img/3/main.png') no-repeat -294px -942px;
-    }
-
     #inventoryButton {
         position: relative;
         width: 42px;
@@ -481,6 +466,21 @@
 
     #profileButton.active {
         background: url('../img/3/main.png') no-repeat -798px -942px;
+    }
+
+    #settingsButton {
+        position: absolute;
+        width: 42px;
+        height: 45px;
+        background: url('../img/3/main.png') no-repeat -1218px -942px;
+    }
+
+    #settingsButton:hover {
+        background: url('../img/3/main.png') no-repeat -1260px -942px;
+    }
+
+    #settingsButton.active {
+        background: url('../img/3/main.png') no-repeat -1302px -942px;
     }
 
     #abilityShortcut {
@@ -880,21 +880,6 @@
         background: url('../img/2/maintwo.png') no-repeat -448px -628px;
     }
 
-    #soundButton {
-        position: relative;
-        width: 28px;
-        height: 30px;
-        background: url('../img/2/main.png') no-repeat -252px -628px;
-    }
-
-    #soundButton:hover {
-        background: url('../img/2/main.png') no-repeat -224px -628px;
-    }
-
-    #soundButton.active {
-        background: url('../img/2/main.png') no-repeat -196px -628px;
-    }
-
     #inventoryButton {
         position: relative;
         width: 28px;
@@ -923,6 +908,21 @@
 
     #profileButton.active {
         background: url('../img/2/main.png') no-repeat -532px -628px;
+    }
+
+    #settingsButton {
+        position: absolute;
+        width: 28px;
+        height: 30px;
+        background: url('../img/2/main.png') no-repeat -812px -628px;
+    }
+
+    #settingsButton:hover {
+        background: url('../img/2/main.png') no-repeat -840px -628px;
+    }
+
+    #settingsButton.active {
+        background: url('../img/2/main.png') no-repeat -868px -628px;
     }
 
     #abilityShortcut {
@@ -1392,21 +1392,6 @@
         background: url('../img/2/maintwo.png') no-repeat -448px -628px;
     }
 
-    #soundButton {
-        position: relative;
-        width: 28px;
-        height: 30px;
-        background: url('../img/2/main.png') no-repeat -252px -628px;
-    }
-
-    #soundButton:hover {
-        background: url('../img/2/main.png') no-repeat -224px -628px;
-    }
-
-    #soundButton.active {
-        background: url('../img/2/main.png') no-repeat -196px -628px;
-    }
-
     #inventoryButton {
         position: relative;
         width: 28px;
@@ -1435,6 +1420,21 @@
 
     #profileButton.active {
         background: url('../img/2/main.png') no-repeat -532px -628px;
+    }
+
+    #settingsButton {
+        position: absolute;
+        width: 28px;
+        height: 30px;
+        background: url('../img/2/main.png') no-repeat -812px -628px;
+    }
+
+    #settingsButton:hover {
+        background: url('../img/2/main.png') no-repeat -840px -628px;
+    }
+
+    #settingsButton.active {
+        background: url('../img/2/main.png') no-repeat -868px -628px;
     }
 
     #abilityShortcut {
@@ -1542,7 +1542,7 @@
         position: absolute;
     }
 
-    #profileDialog {
+    #profileDialog, #settingsPage {
         left: 343px;
         top: 24px;
     }

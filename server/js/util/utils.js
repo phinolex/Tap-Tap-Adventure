@@ -17,6 +17,41 @@ Utils.randomInt = function(min, max) {
     return min + Math.floor(Math.random() * (max - min + 1));
 };
 
+Utils.isVowel = function(letter) {
+    return letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u';
+};
+
+Utils.sort = function(array) {
+    var newArray = [];
+
+    for (var i = 0; i < array.length; i++) {
+        if (!array[i])
+            continue;
+
+        var largest = Utils.getLargest(array),
+            index = array.indexOf(largest);
+
+        array[index] = null;
+
+        newArray.unshift(largest);
+    }
+
+    return newArray;
+};
+
+Utils.getLargest = function(array) {
+    var largest = array[0];
+
+    if (isNaN(largest))
+        return null;
+
+    for (var n in array)
+        if (array[n] > largest)
+            largest = array[n];
+
+    return largest;
+};
+
 /**
  * There is seriously no way two clients can end up with the same ID
  */

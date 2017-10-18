@@ -205,6 +205,16 @@ module.exports = Commands = cls.Class.extend({
 
                 break;
 
+            case 'teletome':
+
+                var username = blocks.join(' '),
+                    player = self.world.getPlayerByName(username);
+
+                if (player)
+                    player.teleport(self.player.x, self.player.y);
+
+                break;
+
             case 'nohit':
 
                 self.player.invincible = !self.player.invincible;

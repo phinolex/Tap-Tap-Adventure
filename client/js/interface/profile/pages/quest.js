@@ -128,6 +128,8 @@ define(['jquery', '../page'], function($, Page) {
             return $(this.achievementsList.find('li')[id]).find('#achievement' + id);
         },
 
+
+
         /**
          * Might as well properly organize them based
          * on their type of item and id (index).

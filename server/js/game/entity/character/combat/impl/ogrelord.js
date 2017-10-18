@@ -67,14 +67,16 @@ module.exports = OgreLord = Combat.extend({
     },
 
     hit: function(character, target, hitInfo) {
-        var self = this,
-            chance = Utils.randomInt(0, 15) === 4;
+        var self = this;
 
-        if (chance) {
-            hitInfo.isRanged = true;
-            character.attackRange = 7;
-        } else
-            character.attackRange = 1;
+        if (!character.isNonDiagonal(target)) {
+            var distance = character.getDistance(target);
+
+            if (distance < 7) {
+                hitInfo.isRanged = true;
+                character.attackRange = 7;
+            }
+        }
 
         if (self.canSpawn())
             self.spawnMinions();

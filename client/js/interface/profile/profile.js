@@ -64,7 +64,7 @@ define(['jquery', './pages/state', './pages/ability', './pages/settings', './pag
             self.settings = new Settings(self.game);
             self.quests = new Quest(self.game);
 
-            self.pages.push(self.state, self.quests, self.ability, self.settings);
+            self.pages.push(self.state, self.quests, self.ability);
 
             self.activePage = self.state;
 

@@ -2,12 +2,10 @@
 
 define(['jquery', '../page'], function($, Page) {
 
-    return Page.extend({
+    return Class.extend({
 
         init: function(game) {
             var self = this;
-
-            self._super('#settingsPage');
 
             self.game = game;
             self.audio = game.audio;
@@ -15,12 +13,14 @@ define(['jquery', '../page'], function($, Page) {
             self.renderer = game.renderer;
             self.camera = game.renderer.camera;
 
+            self.body = $('#settingsPage');
+            self.button = $('#settingsButton');
+
             self.volume = $('#volume');
             self.sfx = $('#sfx');
             self.brightness = $('#brightness');
 
             self.info = $('#info');
-            self.soundButton = $('#soundButton');
 
             self.soundCheck = $('#soundCheck');
             self.cameraCheck = $('#cameraCheck');
@@ -49,6 +49,15 @@ define(['jquery', '../page'], function($, Page) {
             self.game.app.updateRange(self.brightness);
 
             self.renderer.adjustBrightness(self.getBrightness());
+
+            self.button.click(function() {
+                self.button.toggleClass('active');
+
+                if (self.isVisible())
+                    self.hide();
+                else
+                    self.show();
+            });
 
             self.volume.on('input', function() {
                 if (self.audio.song)
@@ -81,33 +90,10 @@ define(['jquery', '../page'], function($, Page) {
                     self.audio.song = null;
 
                     self.soundCheck.removeClass('active');
-                    self.soundButton.addClass('active');
                 } else {
                     self.audio.update();
 
                     self.soundCheck.addClass('active');
-                    self.soundButton.removeClass('active');
-                }
-            });
-
-            self.soundButton.click(function() {
-                var isActive = self.soundButton.hasClass('active');
-
-                self.setSound(isActive);
-
-                if (isActive) {
-                    self.audio.update();
-                    self.audio.enabled = true;
-
-                    self.soundCheck.addClass('active');
-                    self.soundButton.removeClass('active');
-                } else {
-                    self.audio.reset(self.audio.song);
-                    self.audio.song = null;
-                    self.audio.enabled = false;
-
-                    self.soundCheck.removeClass('active');
-                    self.soundButton.addClass('active');
                 }
             });
 
@@ -165,11 +151,8 @@ define(['jquery', '../page'], function($, Page) {
             });
 
 
-            if (self.getSound()) {
+            if (self.getSound())
                 self.soundCheck.addClass('active');
-                self.soundButton.removeClass('active');
-            } else
-                self.soundButton.addClass('active');
 
             if (self.getCamera())
                 self.cameraCheck.addClass('active');
@@ -195,6 +178,14 @@ define(['jquery', '../page'], function($, Page) {
                 self.renderer.drawLevels = false;
 
             self.loaded = true;
+        },
+
+        show: function() {
+            this.body.fadeIn('slow');
+        },
+
+        hide: function() {
+            this.body.fadeOut('fast');
         },
 
         setMusicLevel: function(musicLevel) {
@@ -294,8 +285,11 @@ define(['jquery', '../page'], function($, Page) {
 
         getLevel: function() {
             return this.storage.data.settings.showLevels;
-        }
+        },
 
+        isVisible: function() {
+            return this.body.css('display') === 'block';
+        }
 
     });
 

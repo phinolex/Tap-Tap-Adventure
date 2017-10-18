@@ -43,8 +43,6 @@ module.exports = World = cls.Class.extend({
         self.packets = {};
         self.groups = {};
 
-        self.logging = [];
-
         self.loadedGroups = false;
 
         self.ready = false;
@@ -61,25 +59,18 @@ module.exports = World = cls.Class.extend({
                 return;
             }
 
-            if (self.logging.indexOf(remoteAddress) > -1) {
-                connection.sendUTF8('malform');
-                connection.close();
+            var clientId = Utils.generateClientId(),
+                player = new Player(self, self.database, connection, clientId),
+                diff = new Date().getTime() - self.socket.ips[connection.socket.conn.remoteAddress];
 
-                if (!self.malformTimeout)
-                    self.malformTimeout = setTimeout(function() {
-                        self.removeLogging(remoteAddress);
-
-                        clearTimeout(self.malformTimeout);
-                        self.malformTimeout = null;
-                    }, 20000);
+            if (diff < 4000) {
+                connection.sendUTF8('malformed');
+                connection.close('Logging in too rapidly');
 
                 return;
             }
 
-            var clientId = Utils.generateClientId(),
-                player = new Player(self, self.database, connection, clientId);
-
-            self.logging.push(remoteAddress);
+            self.socket.ips[connection.socket.conn.remoteAddress] = new Date().getTime();
 
             self.addToPackets(player);
 
@@ -724,14 +715,6 @@ module.exports = World = cls.Class.extend({
         self.removeEntity(projectile);
 
         delete self.projectiles[projectile.instance];
-    },
-
-    removeLogging: function(remoteAddress) {
-        var self = this,
-            index = self.logging.indexOf(remoteAddress);
-
-        if (index > -1)
-            self.logging.splice(index, 1);
     },
 
     playerInWorld: function(username) {

@@ -156,21 +156,18 @@ module.exports = Incoming = cls.Class.extend({
 
                         case 'internal-server-error': //email
 
-                            self.cleanSocket();
                             self.connection.sendUTF8('emailexists');
                             self.connection.close('Email not available.');
                             break;
 
                         case 'not-authorised': //username
 
-                            self.cleanSocket();
                             self.connection.sendUTF8('userexists');
                             self.connection.close('Username not available.');
                             break;
 
                         default:
 
-                            self.cleanSocket();
                             self.connection.sendUTF8('error');
                             self.connection.close('Unknown API Response: ' + error);
                             break;
@@ -179,7 +176,6 @@ module.exports = Incoming = cls.Class.extend({
                 } catch (e) {
                     log.info('Could not decipher API message');
 
-                    self.cleanSocket();
                     self.connection.sendUTF8('disallowed');
                     self.connection.close('API response is malformed!')
                 }
@@ -220,14 +216,12 @@ module.exports = Incoming = cls.Class.extend({
 
                 } catch (e) {
                     log.info('Could not decipher API message');
-                    self.cleanSocket();
 
                     self.connection.sendUTF8('disallowed');
                     self.connection.close('API response is malformed!');
                 }
 
                 if (data && data.message) {
-                    self.cleanSocket();
 
                     self.connection.sendUTF8('invalidlogin');
                     self.connection.close('Wrong password entered for: ' + self.player.username);
@@ -254,8 +248,6 @@ module.exports = Incoming = cls.Class.extend({
         self.player.loadInventory();
         self.player.loadBank();
         self.player.loadQuests();
-
-        self.cleanSocket();
 
         self.player.handler.detectMusic();
 
@@ -755,10 +747,6 @@ module.exports = Incoming = cls.Class.extend({
 
                 break;
         }
-    },
-
-    cleanSocket: function() {
-        this.world.removeLogging(this.connection.socket.conn.remoteAddress);
     },
 
     canAttack: function(attacker, target) {

@@ -90,6 +90,10 @@ define(['jquery', './camera', './tile',
 
             self.forEachContext(function(context) {
                 context.imageSmoothingEnabled = false;
+                context.webkitImageSmoothingEnabled = false;
+                context.mozImageSmoothingEnabled = false;
+                context.msImageSmoothingEnabled = false;
+                context.oImageSmoothingEnabled = false;
             });
         },
 
@@ -200,6 +204,7 @@ define(['jquery', './camera', './tile',
             self.restoreAll();
 
             self.drawCursor();
+
         },
 
         /**
@@ -217,7 +222,7 @@ define(['jquery', './camera', './tile',
 
             self.forEachVisibleTile(function(id, index) {
 
-                var isHighTile = self.map.isHighTile(id),
+                var isHighTile = self.map.isHighTile(id), //h4cked
                     context = isHighTile ? self.foreContext : self.backContext;
 
                 if (!self.map.isAnimatedTile(id) || !self.animateTiles)

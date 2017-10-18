@@ -23,6 +23,8 @@ WebSocket.Server = Socket.extend({
         self.host = host;
         self.version = version;
 
+        self.ips = {};
+
         //Serve statically for faster development
 
         var app = connect();

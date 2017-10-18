@@ -451,6 +451,7 @@ define(['./renderer/renderer', './utils/storage',
                     self.entities.unregisterPosition(entity);
                     delete self.entities.entities[entity.id];
                 });
+
             });
 
             self.messages.onCombat(function(data) {

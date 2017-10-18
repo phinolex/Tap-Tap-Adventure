@@ -167,10 +167,10 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
             if (self.renderer.mobile && self.chatHandler.input.is(':visible') && self.chatHandler.input.val() === '')
                 self.chatHandler.hideInput();
 
-            if ((self.game.zoning && self.game.zoning.direction) || (position.x === player.gridX && position.y === player.gridY))
+            if ((self.game.zoning && self.game.zoning.direction))
                 return;
 
-            var entity = self.game.getEntityAt(position.x, position.y);
+            var entity = self.game.getEntityAt(position.x, position.y, (position.x === player.gridX && position.y === player.gridY));
 
             if (entity) {
                 self.setAttackTarget();
@@ -184,6 +184,9 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                     return;
                 }
 
+                if (entity.gridX === player.gridX && entity.gridY === player.gridY)
+                    self.game.socket.send(Packets.Target, [Packets.TargetOpcode.Attack, entity.id]);
+
                 /*if (entity.type === 'player') {
                     self.getActions().showPlayerActions(entity, self.mouse.x, self.mouse.y);
                     return;
@@ -195,6 +198,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                 }
             } else
                 player.removeTarget();
+
 
             self.getActions().hidePlayerActions();
 
@@ -227,11 +231,12 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                 return;
 
             var position = self.getCoords(),
-                entity = self.game.getEntityAt(position.x, position.y);
+                player = self.getPlayer(),
+                entity = self.game.getEntityAt(position.x, position.y, player.gridX === position.x && player.gridY === position.y);
 
             self.overlay.update(entity);
 
-            if (!entity || (entity.id === self.getPlayer().id)) {
+            if (!entity || (entity.id === player.id)) {
                 self.setCursor(self.cursors['hand']);
                 self.hovering = null;
             } else {
