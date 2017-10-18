@@ -95,7 +95,11 @@ module.exports = Parser = cls.Class.extend({
                 defense: value.defense ? value.defense : 0,
                 name: value.name ? value.name : key,
                 price: value.price ? value.price : 1,
-                storeCount: value.storeCount ? value.storeCount : 1
+                storeCount: value.storeCount ? value.storeCount : 1,
+                stackable: value.stackable ? value.stackable : 0,
+                edible: value.edible ? value.edible : 0,
+                healsHealth: value.healsHealth ? value.healsHealth : 0,
+                healsMana: value.healsMana ? value.healsMana : 0
             };
 
             Items.Ids[value.id] = Items.Data[key];
