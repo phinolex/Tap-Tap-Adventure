@@ -17,7 +17,8 @@ var cls = require('../lib/class'),
     Projectile = require('./entity/objects/projectile'),
     Packets = require('../network/packets'),
     Formulas = require('./formulas'),
-    Modules = require('../util/modules');
+    Modules = require('../util/modules'),
+    Minigames = require('../controllers/minigames');
 
 module.exports = World = cls.Class.extend({
 

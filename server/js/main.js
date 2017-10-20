@@ -53,12 +53,12 @@ function Main() {
         for (var i = 0; i < config.worlds; i++)
             worlds.push(new World(i + 1, webSocket, database));
 
-        allowConnections = true;
-
         log.notice('Finished creating ' + worlds.length + ' world' + (worlds.length > 1 ? 's' : '') + '!');
 
         initializeWorlds();
         loadParser();
+
+        allowConnections = true;
 
     }, 200);
 
