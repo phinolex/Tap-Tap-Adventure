@@ -126,6 +126,11 @@ module.exports = Incoming = cls.Class.extend({
             return;
         }
 
+        if (config.overrideAuth) {
+            self.mysql.login(self.player);
+            return;
+        }
+
         if (config.offlineMode) {
             var creator = new Creator(null);
 

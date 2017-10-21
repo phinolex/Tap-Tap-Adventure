@@ -6,6 +6,7 @@
   "offlineMode": false,
   "devClient": true,
   "development": false,
+  "overrideAuth": false,
 
   "mysqlHost": "127.0.0.1",
   "mysqlPort": 3306,
