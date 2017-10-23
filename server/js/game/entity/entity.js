@@ -15,6 +15,8 @@ module.exports = Entity = cls.Class.extend({
         self.type = type;
         self.instance = instance;
 
+        self.oldX = x;
+        self.oldY = y;
         self.x = x;
         self.y = y;
 
@@ -100,10 +102,24 @@ module.exports = Entity = cls.Class.extend({
 
         self.x = x;
         self.y = y;
+
+        if (self.setPositionCallback)
+            self.setPositionCallback();
     },
 
     hasSpecialAttack: function() {
         return false;
+    },
+
+    updatePosition: function() {
+        var self = this;
+
+        self.oldX = self.x;
+        self.oldY = self.y;
+    },
+
+    onSetPosition: function(callback) {
+        this.setPositionCallback = callback;
     },
 
     getState: function() {

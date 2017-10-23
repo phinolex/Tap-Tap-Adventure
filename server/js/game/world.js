@@ -594,6 +594,13 @@ module.exports = World = cls.Class.extend({
         self.entities[entity.instance] = entity;
         self.handleEntityGroup(entity);
 
+        if (entity.x > 0 && entity.y > 0)
+            self.getGrids().addToEntityGrid(entity, entity.x, entity.y);
+
+        entity.onSetPosition(function() {
+            self.getGrids().updateEntityPosition(entity);
+        });
+
         if (entity instanceof Character)
             entity.getCombat().setWorld(self);
 
@@ -666,6 +673,8 @@ module.exports = World = cls.Class.extend({
 
         if (entity.instance in self.items)
             delete self.items[entity.instance];
+
+        self.getGrids().removeFromEntityGrid(entity, entity.x, entity.y)
 
         self.removeFromGroups(entity);
     },
@@ -754,6 +763,10 @@ module.exports = World = cls.Class.extend({
 
     getMusicAreas: function() {
         return this.map.areas['Music'].musicAreas;
+    },
+
+    getGrids: function() {
+        return this.map.grids;
     },
 
     onPopulationUpdate: function(callback) {

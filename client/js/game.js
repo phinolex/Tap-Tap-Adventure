@@ -478,8 +478,12 @@ define(['./renderer/renderer', './utils/storage',
                         var hit = data.shift(),
                             isPlayer = target.id === self.player.id;
 
-                        attacker.lookAt(target);
-                        attacker.performAction(attacker.orientation, Modules.Actions.Attack);
+
+                        if (!hit.isAoE) {
+                            attacker.lookAt(target);
+                            attacker.performAction(attacker.orientation, Modules.Actions.Attack);
+                        }
+
 
                         switch (hit.type) {
                             case Modules.Hits.Damage:

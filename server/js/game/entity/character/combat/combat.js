@@ -193,6 +193,27 @@ module.exports = Combat = cls.Class.extend({
         self.queue.add(hit);
     },
 
+    dealAoE: function(radius) {
+        var self = this;
+
+        if (!self.world)
+            return;
+
+        var entities = self.world.getGrids().getSurroundingEntities(self.character, radius);
+
+        for (var i in entities) {
+            if (entities.hasOwnProperty(i)) {
+                var entity = entities[i],
+                    hit = new Hit(Modules.Hits.Damage, Formulas.getAoEDamage(self.character, entity)),
+                    hitData = hit.getData();
+
+                hitData.isAoE = true;
+
+                self.hit(self.character, entity, hitData);
+            }
+        }
+    },
+
     forceAttack: function() {
         var self = this;
 
@@ -336,7 +357,7 @@ module.exports = Combat = cls.Class.extend({
         var self = this,
             time = self.getTime();
 
-        if (time - self.lastHit < self.character.attackRate)
+        if (time - self.lastHit < self.character.attackRate && !hitInfo.isAoE)
             return;
 
         if (character.isRanged() || hitInfo.isRanged) {
