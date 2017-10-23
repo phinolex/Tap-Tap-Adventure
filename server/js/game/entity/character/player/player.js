@@ -382,9 +382,14 @@ module.exports = Player = Character.extend({
         if (self.pvp === pvp)
             return;
 
+        if (self.pvp && !pvp)
+            self.notify('You are no longer in a PvP zone!');
+        else
+            self.notify('You have entered a PvP zone!');
+
         self.pvp = pvp;
 
-        self.send(new Messages.PVP(self.instance, pvp));
+        self.sendToGroup(new Messages.PVP(self.instance, self.pvp));
     },
 
     updateMusic: function(song) {
@@ -658,6 +663,10 @@ module.exports = Player = Character.extend({
 
     send: function(message) {
         this.world.pushToPlayer(this, message);
+    },
+
+    sendToGroup: function(message) {
+        this.world.pushToGroup(this.group, message);
     },
 
     sendEquipment: function() {

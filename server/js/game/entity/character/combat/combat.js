@@ -97,7 +97,7 @@ module.exports = Combat = cls.Class.extend({
         self.started = false;
 
         self.cleanTimeout = setTimeout(function() {
-            if (self.getTime() - self.lastHit > 7000 && self.character.type === 'mob') {
+            if (self.getTime() - self.lastHit > 7000 && self.isMob()) {
                 self.forget();
                 self.character.removeTarget();
                 self.sendToSpawn();
@@ -131,25 +131,31 @@ module.exports = Combat = cls.Class.extend({
     parseFollow: function() {
         var self = this;
 
-        if (!self.character.isRanged())
-            self.sendFollow();
+        if (self.isMob()) {
+            if (!self.character.isRanged())
+                self.sendFollow();
 
-        if (self.character.type === 'mob' && !self.character.isAtSpawn() && !self.isAttacked()) {
-            self.character.return();
-            self.move(self.character, self.character.x, self.character.y);
-        }
+            if (!self.character.isAtSpawn() && !self.isAttacked()) {
+                self.character.return();
+                self.move(self.character, self.character.x, self.character.y);
+            }
 
-        if (self.onSameTile()) {
-            var position = self.getNewPosition();
-            self.move(self.character, position.x, position.y);
-        }
+            if (self.onSameTile()) {
+                var newPosition = self.getNewPosition();
 
-        if (self.character.hasTarget() && !self.inProximity() && (self.character.type === 'mob' || self.isRetaliating())) {
-            var attacker = self.getClosestAttacker();
+                self.move(self.character, newPosition.x, newPosition.y);
+            }
 
-            if (attacker)
-                self.follow(self.character, attacker);
-        }
+            if (self.character.hasTarget() && !self.inProximity()) {
+                var attacker = self.getClosestAttacker();
+
+                if (attacker)
+                    self.follow(self.character, attacker);
+
+            }
+        } else if (self.isPlayer() && self.character.hasTarget())
+            self.follow(self.character, self.character.target);
+
     },
 
     parseHealing: function() {
@@ -158,9 +164,7 @@ module.exports = Combat = cls.Class.extend({
         if (self.character.isDead() || self.character.hasMaxHitPoints() || self.character.hasTarget() || self.isAttacked())
             return;
 
-        var isPlayer = self.character.type === 'player';
-
-        if (isPlayer) {
+        if (self.isPlayer()) {
             self.character.hitPoints.heal(1);
             self.character.mana.heal(1);
         } else
@@ -169,8 +173,8 @@ module.exports = Combat = cls.Class.extend({
         self.world.pushBroadcast(new Messages.Sync({
             hitPoints: self.character.getHitPoints(),
             maxHitPoints: self.character.getMaxHitPoints(),
-            mana: isPlayer ? self.character.mana.getMana() : null,
-            maxMana: isPlayer ? self.character.mana.getMaxMana() : null
+            mana: self.isPlayer() ? self.character.mana.getMana() : null,
+            maxMana: self.isPlayer() ? self.character.mana.getMaxMana() : null
         }));
     },
 
@@ -230,7 +234,7 @@ module.exports = Combat = cls.Class.extend({
     sendToSpawn: function() {
         var self = this;
 
-        if (self.character.type === 'mob' && Object.keys(self.attackers).length === 0) {
+        if (self.isMob() && Object.keys(self.attackers).length === 0) {
             self.character.return();
             self.move(self.character, self.character.spawnLocation[0], self.character.spawnLocation[1]);
         }
@@ -353,9 +357,7 @@ module.exports = Combat = cls.Class.extend({
     },
 
     follow: function(character, target) {
-        var self = this;
-
-        self.world.pushBroadcast(new Messages.Movement(Packets.MovementOpcode.Follow, [character.instance, target.instance, character.isRanged(), character.attackRange]));
+        this.world.pushBroadcast(new Messages.Movement(Packets.MovementOpcode.Follow, [character.instance, target.instance, character.isRanged(), character.attackRange]));
     },
 
     end: function() {
@@ -365,7 +367,7 @@ module.exports = Combat = cls.Class.extend({
     sendFollow: function() {
         var self = this;
 
-        if (!self.character.hasTarget() || !self.character.target || self.character.target.isDead())
+        if (!self.character.hasTarget() || self.character.target.isDead())
             return;
 
         var ignores = [self.character.instance, self.character.target.instance];
@@ -389,6 +391,10 @@ module.exports = Combat = cls.Class.extend({
 
     isPlayer: function() {
         return this.character.type === 'player'
+    },
+
+    isMob: function() {
+        return this.character.type === 'mob';
     }
 
 });

@@ -222,7 +222,7 @@ define(['jquery', './camera', './tile',
 
             self.forEachVisibleTile(function(id, index) {
 
-                var isHighTile = self.map.isHighTile(id), //h4cked
+                var isHighTile = self.map.isHighTile(id),
                     context = isHighTile ? self.foreContext : self.backContext;
 
                 if (!self.map.isAnimatedTile(id) || !self.animateTiles)
@@ -231,6 +231,21 @@ define(['jquery', './camera', './tile',
             });
 
             self.saveFrame();
+        },
+
+        drawAnimatedTiles: function() {
+            var self = this;
+
+            self.setCameraView(self.context);
+
+            if (!self.animateTiles)
+                return;
+
+            self.forEachAnimatedTile(function(tile) {
+                self.drawTile(self.context, tile.id, self.tileset, self.tileset.width / self.tileSize, self.map.width, tile.index);
+                tile.loaded = true;
+            });
+
         },
 
         drawInfos: function() {
@@ -263,21 +278,6 @@ define(['jquery', './camera', './tile',
                 self.drawPosition();
                 self.drawPathing();
             }
-        },
-
-        drawAnimatedTiles: function() {
-            var self = this;
-
-            self.setCameraView(self.context);
-
-            if (!self.animateTiles)
-                return;
-
-            self.forEachAnimatedTile(function(tile) {
-                self.drawTile(self.context, tile.id, self.tileset, self.tileset.width / self.tileSize, self.map.width, tile.index);
-                tile.loaded = true;
-            });
-
         },
 
         drawEntities: function() {
@@ -722,9 +722,6 @@ define(['jquery', './camera', './tile',
             self.context.lineWidth = 2 * self.drawingScale;
 
             self.context.translate(x + 2, y + 2);
-
-            if (self.mobile)
-                self.context.clearRect(-8, -8, multiplier + 16, multiplier + 16);
 
             self.context.strokeStyle = colour;
             self.context.strokeRect(0, 0, multiplier - 4, multiplier - 4);

@@ -71,6 +71,10 @@ module.exports = Entity = cls.Class.extend({
         return near;
     },
 
+    talk: function() {
+        log.info('Who is screwing around with the client?')
+    },
+
     drop: function(item) {
         return new Messages.Drop(this, item);
     },

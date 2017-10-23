@@ -20,7 +20,7 @@ module.exports = PVPAreas = cls.Class.extend({
             list = map.pvpAreas;
 
         _.each(list, function(p) {
-            var pvpArea = new Area(p.id, p.x, p.y, p.w, p.h);
+            var pvpArea = new Area(p.id, p.x, p.y, p.width, p.height);
 
             self.pvpAreas.push(pvpArea);
         });

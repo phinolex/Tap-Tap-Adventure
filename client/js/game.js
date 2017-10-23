@@ -467,7 +467,6 @@ define(['./renderer/renderer', './utils/storage',
                         attacker.setTarget(target);
 
                         target.addAttacker(attacker);
-                        target.setTarget(attacker);
 
                         if (target.id === self.player.id || attacker.id === self.player.id)
                             self.socket.send(Packets.Combat, [Packets.CombatOpcode.Initiate, attacker.id, target.id]);
