@@ -26,8 +26,10 @@ module.exports = MySQL = cls.Class.extend({
         self.loader = null;
 
         self.connect(true, false);
+		
+		self.loadCreator();
         self.loadCallbacks();
-        self.loadCreator();
+        
     },
 
     connect: function(usingDB, forceCallbacks) {
@@ -55,15 +57,13 @@ module.exports = MySQL = cls.Class.extend({
 
         self.connection.connect(function(err) {
             if (err) {
-
                 log.info('[MySQL] No database found...');
-
                 self.connect(false, false);
-
                 self.loadDatabases();
                 return;
             }
 
+			self.creator.createTables();
             log.info('Successfully established connection to the MySQL database!');
             self.loader = new Loader(self);
         });
@@ -91,10 +91,12 @@ module.exports = MySQL = cls.Class.extend({
     login: function(player) {
         var self = this,
             found;
-
-        self.connection.query('SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`=' + "'" + player.username + "'", function(error, rows, fields) {
-            if (error)
+            log.info('Initiating login for: ' + player.username)
+            self.connection.query("SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? ", [player.username],  function(error, rows, fields) {
+            if (error) {
+                log.error(error);
                 throw error;
+            }
 
             _.each(rows, function(row) {
                 if (row.username === player.username) {
@@ -121,7 +123,7 @@ module.exports = MySQL = cls.Class.extend({
     register: function(player) {
         var self = this;
 
-        self.connection.query('SELECT * FROM `player_data` WHERE `player_data`.`username`=' + "'" + player.username + "'", function(error, rows, fields) {
+        self.connection.query("SELECT * FROM `player_data` WHERE `player_data`.`username`= ?", [player.username], function(error, rows, fields) {
             var exists;
 
             _.each(rows, function(row) {
@@ -130,6 +132,7 @@ module.exports = MySQL = cls.Class.extend({
             });
 
             if (!exists) {
+                log.info('No player data found. Creating new player data for: ' + player.username)
                 player.isNew = true;
                 player.load(self.creator.getPlayerData(player));
 
@@ -140,28 +143,28 @@ module.exports = MySQL = cls.Class.extend({
             }
         });
     },
+    
 
     delete: function(player) {
         var self = this,
             databases = ['player_data', 'player_equipment', 'player_inventory', 'player_abilities', 'player_bank', 'player_quests', 'player_achievements'];
 
         _.each(databases, function(db) {
-            self.connection.query('DELETE FROM `' + db + '` WHERE `' + db + '`.`' + 'username`=' + "'" + player.username + "'", function(error) {
+            self.connection.query('DELETE FROM `' + db + '` WHERE `' + db + '`.`' + 'username`=?',[player.username], function(error) {
                 if (error)
                     log.error('Error while deleting user: ' + player.username);
-
             });
         });
     },
 
     loadDatabases: function() {
         var self = this;
-
+		log.info('[MySQL] Creating database....');
         self.connection.query('CREATE DATABASE IF NOT EXISTS ' + Config.mysqlDatabase, function(error, results, fields) {
             if (error)
                 throw error;
 
-            log.info('[MySQL] Successfully generated database.');
+            log.info('[MySQL] Successfully created database.');
 
             self.connection.query('USE ' + Config.mysqlDatabase, function(error, results, fields) {
                 if (self.selectDatabase_callback)

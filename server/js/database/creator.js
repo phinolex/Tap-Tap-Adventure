@@ -10,84 +10,123 @@ module.exports = Creator = cls.Class.extend({
         self.mysql = mysql;
 
     },
-
+	
+	tableNotExists: function(tableName,ifNotExists) {
+			var self = this;
+			var exists = 0;
+			
+			self.mysql.connection.query("SELECT count(*) as count FROM information_schema.TABLES WHERE (TABLE_SCHEMA = ?) AND (TABLE_NAME = ?)", ['tta',tableName], function (err,rows) {
+					if (err) {
+							log.error(err);
+							throw err;
+					}
+					exists = rows[0].count;
+					if (exists == 0) {
+						ifNotExists();
+					}
+			});
+	},
+	
     createTables: function() {
         var self = this;
+		log.info("Creating tables");
+		
+		function makeErrorHandler(tableName) {
+				return function(error) {
+						if (error) {
+							log.error("[MySQL] Failed to created table " + tableName + " : " + error);
+							throw error;
+						} else {
+							log.info("[MySQL] Created table " + tableName);
+						}
+				}
+		}
+		
+		this.tableNotExists('player_data', function() {
+			self.mysql.connection.query('CREATE TABLE player_data (' +
+				'username varchar(64),' +
+				'email varchar(64),' +
+				'x int,' +
+				'y int,' +
+				'experience int,' +
+				'kind int,' +
+				'rights int,' +
+				'poisoned tinyint,' +
+				'hitPoints int,' +
+				'mana int,' +
+				'pvpKills int,' +
+				'pvpDeaths int,' +
+				'rank int,' +
+				'ban int(64),' +
+				'mute int(64),' +
+				'membership int(64),' +
+				'lastLogin int(64),' +
+				'guild varchar(64),' +
+				'PRIMARY KEY(username))', makeErrorHandler("player_data"));
+		});
+		
+		this.tableNotExists('player_equipment', function() {
+			self.mysql.connection.query('CREATE TABLE player_equipment (' +
+				'username varchar(64),' +
+				'armour varchar(64),' +
+				'weapon varchar(64),' +
+				'pendant varchar(64),' +
+				'ring varchar(64),' +
+				'boots varchar(64),' +
+				'PRIMARY KEY(username))',  makeErrorHandler("player_equipment"))
+		});
 
-        self.mysql.connection.query('CREATE TABLE IF NOT EXISTS player_data (' +
-            'username varchar(64),' +
-            'email varchar(64),' +
-            'x int,' +
-            'y int,' +
-            'experience int,' +
-            'kind int,' +
-            'rights int,' +
-            'poisoned tinyint,' +
-            'hitPoints int,' +
-            'mana int,' +
-            'pvpKills int,' +
-            'pvpDeaths int,' +
-            'rank int,' +
-            'ban int(64),' +
-            'mute int(64),' +
-            'membership int(64),' +
-            'lastLogin int(64),' +
-            'guild varchar(64),' +
-            'PRIMARY KEY(username))');
+		this.tableNotExists('player_quests', function() {
+			self.mysql.connection.query('CREATE TABLE player_quests (' +
+				'username varchar(64),' +
+				'ids text COLLATE utf8_unicode_ci NOT NULL,' +
+				'stages text COLLATE utf8_unicode_ci NOT NULL,' +
+				'PRIMARY KEY(username))',  makeErrorHandler("player_quests"))
+		});
 
-        self.mysql.connection.query('CREATE TABLE IF NOT EXISTS player_equipment (' +
-            'username varchar(64),' +
-            'armour varchar(64),' +
-            'weapon varchar(64),' +
-            'pendant varchar(64),' +
-            'ring varchar(64),' +
-            'boots varchar(64),' +
-            'PRIMARY KEY(username))');
+		this.tableNotExists('player_achievements', function() {
+			self.mysql.connection.query('CREATE TABLE player_achievements (' +
+				'username varchar(64),' +
+				'ids text COLLATE utf8_unicode_ci NOT NULL,' +
+				'progress text COLLATE utf8_unicode_ci NOT NULL,' +
+				'PRIMARY KEY(username))',  makeErrorHandler("player_achievements"))
+		});
 
-        self.mysql.connection.query('CREATE TABLE IF NOT EXISTS player_quests (' +
-            'username varchar(64),' +
-            'ids text COLLATE utf8_unicode_ci NOT NULL,' +
-            'stages text COLLATE utf8_unicode_ci NOT NULL,' +
-            'PRIMARY KEY(username))');
+		this.tableNotExists('player_bank', function() {
+			self.mysql.connection.query('CREATE TABLE player_bank (' +
+				'username varchar(64),' +
+				'ids text COLLATE utf8_unicode_ci NOT NULL,' +
+				'counts text COLLATE utf8_unicode_ci NOT NULL,' +
+				'abilities text COLLATE utf8_unicode_ci NOT NULL,' +
+				'abilityLevels text COLLATE utf8_unicode_ci NOT NULL,' +
+				'PRIMARY KEY(username))', makeErrorHandler("player_bank"))
+		});
 
-        self.mysql.connection.query('CREATE TABLE IF NOT EXISTS player_achievements (' +
-            'username varchar(64),' +
-            'ids text COLLATE utf8_unicode_ci NOT NULL,' +
-            'progress text COLLATE utf8_unicode_ci NOT NULL,' +
-            'PRIMARY KEY(username))');
+		this.tableNotExists('player_abilities', function() {
+			self.mysql.connection.query('CREATE TABLE player_abilities (' +
+				'username varchar(64),' +
+				'abilities text COLLATE utf8_unicode_ci NOT NULL,' +
+				'abilityLevels text COLLATE utf8_unicode_ci NOT NULL,' +
+				'shortcuts text COLLATE utf8_unicode_ci NOT NULL,' +
+				'PRIMARY KEY (username))', makeErrorHandler("player_abilities"))
+		});
 
-        self.mysql.connection.query('CREATE TABLE IF NOT EXISTS player_bank (' +
-            'username varchar(64),' +
-            'ids text COLLATE utf8_unicode_ci NOT NULL,' +
-            'counts text COLLATE utf8_unicode_ci NOT NULL,' +
-            'abilities text COLLATE utf8_unicode_ci NOT NULL,' +
-            'abilityLevels text COLLATE utf8_unicode_ci NOT NULL,' +
-            'PRIMARY KEY(username))');
+		this.tableNotExists('player_inventory', function() {
+			self.mysql.connection.query('CREATE TABLE player_inventory (' +
+				'username varchar(64),' +
+				'ids text COLLATE utf8_unicode_ci NOT NULL,' +
+				'counts text COLLATE utf8_unicode_ci NOT NULL,' +
+				'abilities text COLLATE utf8_unicode_ci NOT NULL,' +
+				'abilityLevels text COLLATE utf8_unicode_ci NOT NULL,' +
+				'PRIMARY KEY(username))', makeErrorHandler("player_inventory"))
+		});
 
-        self.mysql.connection.query('CREATE TABLE IF NOT EXISTS player_abilities (' +
-            'username varchar(64),' +
-            'abilities text COLLATE utf8_unicode_ci NOT NULL,' +
-            'abilityLevels text COLLATE utf8_unicode_ci NOT NULL,' +
-            'shortcuts text COLLATE utf8_unicode_ci NOT NULL,' +
-            'PRIMARY KEY (username))');
-
-        self.mysql.connection.query('CREATE TABLE IF NOT EXISTS player_inventory (' +
-            'username varchar(64),' +
-            'ids text COLLATE utf8_unicode_ci NOT NULL,' +
-            'counts text COLLATE utf8_unicode_ci NOT NULL,' +
-            'abilities text COLLATE utf8_unicode_ci NOT NULL,' +
-            'abilityLevels text COLLATE utf8_unicode_ci NOT NULL,' +
-            'PRIMARY KEY(username))');
-
-        self.mysql.connection.query('CREATE TABLE IF NOT EXISTS ipbans (' +
-            'ip varchar(64),' +
-            'ipban int(64),' +
-            'PRIMARY KEY(ip))', function(error) {
-            if (!error) {
-                log.info('[MySQL] Successfully created 7 tables.');
-                self.mysql.connect(true, true);
-            }
-        });
+		this.tableNotExists('ipbans', function () {
+			self.mysql.connection.query('CREATE TABLE IF NOT EXISTS ipbans (' +
+				'ip varchar(64),' +
+				'ipban int(64),' +
+				'PRIMARY KEY(ip))', makeErrorHandler("ipbans"))
+		});
     },
 
     save: function(player) {
@@ -96,13 +135,19 @@ module.exports = Creator = cls.Class.extend({
             playerData = self.formatData(self.getPlayerData(player), 'data'),
             equipmentData = self.formatData(self.getPlayerData(player), 'equipment');
 
-        self.mysql.connection.query(queryKey + ' `player_data` SET ?', playerData);
-        self.mysql.connection.query(queryKey + ' `player_equipment` SET ?', equipmentData);
-        self.mysql.connection.query(queryKey + ' `player_inventory` SET ?', player.inventory.getArray());
-        self.mysql.connection.query(queryKey + ' `player_abilities` SET ?', player.abilities.getArray());
-        self.mysql.connection.query(queryKey + ' `player_bank` SET ?', player.bank.getArray());
-        self.mysql.connection.query(queryKey + ' `player_quests` SET ?', player.quests.getQuests());
-        self.mysql.connection.query(queryKey + ' `player_achievements` SET ?', player.quests.getAchievements());
+        
+		var handleError = function (error) {
+				if (error)
+					log.error(error);
+		};
+		
+		self.mysql.connection.query(queryKey + ' `player_data` SET ?', playerData, handleError);
+        self.mysql.connection.query(queryKey + ' `player_equipment` SET ?', equipmentData, handleError);
+        self.mysql.connection.query(queryKey + ' `player_inventory` SET ?', player.inventory.getArray(), handleError);
+        self.mysql.connection.query(queryKey + ' `player_abilities` SET ?', player.abilities.getArray(), handleError);
+        self.mysql.connection.query(queryKey + ' `player_bank` SET ?', player.bank.getArray(), handleError);
+        self.mysql.connection.query(queryKey + ' `player_quests` SET ?', player.quests.getQuests(), handleError);
+        self.mysql.connection.query(queryKey + ' `player_achievements` SET ?', player.quests.getAchievements(), handleError);
     },
 
     formatData: function(data, type) {
