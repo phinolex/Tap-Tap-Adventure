@@ -6,14 +6,13 @@ module.exports = Loader = cls.Class.extend({
 
     init: function(mysql) {
         var self = this;
-
         self.mysql = mysql;
     },
 
     getInventory: function(player, callback) {
         var self = this;
-
-        self.mysql.connection.query('SELECT * FROM `player_inventory` WHERE `player_inventory`.`username`=' + "'" + player.username + "'", function(error, rows, fields) {
+        
+        self.mysql.connection.query("SELECT * FROM `player_inventory` WHERE `player_inventory`.`username`=?", [player.username] , function(error, rows, fields) {            
             var info = rows.shift();
 
             if (info.username !== player.username)
@@ -27,7 +26,7 @@ module.exports = Loader = cls.Class.extend({
     getBank: function(player, callback) {
         var self = this;
 
-        self.mysql.connection.query('SELECT * FROM `player_bank` WHERE `player_bank`.`username`=' + "'" + player.username + "'", function(error, rows, fields) {
+        self.mysql.connection.query("SELECT * FROM `player_bank` WHERE `player_bank`.`username`=?" , [player.username] , function(error, rows, fields) {
             var info = rows.shift();
 
             if (info.username !== player.username)
@@ -40,7 +39,7 @@ module.exports = Loader = cls.Class.extend({
     getQuests: function(player, callback) {
         var self = this;
 
-        self.mysql.connection.query('SELECT * FROM `player_quests` WHERE `player_quests`.`username`=' + "'" + player.username + "'", function(error, rows, fields) {
+        self.mysql.connection.query("SELECT * FROM `player_quests` WHERE `player_quests`.`username`=?", [player.username], function(error, rows, fields) {
             var info = rows.shift();
 
             if (info.username !== player.username)
@@ -53,7 +52,7 @@ module.exports = Loader = cls.Class.extend({
     getAchievements: function(player, callback) {
         var self = this;
 
-        self.mysql.connection.query('SELECT * FROM `player_achievements` WHERE `player_achievements`.`username`=' + "'" + player.username + "'", function(error, rows, fields) {
+        self.mysql.connection.query("SELECT * FROM `player_achievements` WHERE `player_achievements`.`username`=?", [player.username] , function(error, rows, fields) {
             var info = rows.shift();
 
             if (info.username !== player.username)
