@@ -192,7 +192,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                     return;
                 }*/
 
-                if (entity.type !== 'item' && entity.type !== 'player') {
+                if (entity.type !== 'item' || self.isAttackable(entity)) {
                     player.follow(entity);
                     return;
                 }

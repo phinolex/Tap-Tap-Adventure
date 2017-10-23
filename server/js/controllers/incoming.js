@@ -478,8 +478,8 @@ module.exports = Incoming = cls.Class.extend({
 
             case Packets.TargetOpcode.None:
 
-                if (self.player.hasTarget())
-                    self.player.removeTarget();
+                self.player.combat.stop();
+                self.player.removeTarget();
 
                 break;
         }
@@ -507,11 +507,9 @@ module.exports = Incoming = cls.Class.extend({
 
                     attacker.combat.attack(target);
 
-                    attacker.setTarget(target);
-
                 }
 
-                if (target.combat && target.combat.isAttacked())
+                if (target.combat)
                     target.combat.addAttacker(attacker);
 
                 break;

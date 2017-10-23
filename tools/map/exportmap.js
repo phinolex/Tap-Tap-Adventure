@@ -53,7 +53,7 @@ function parseServer(data, destination) {
         mode: 'server'
     }));
 
-    fs.writeFile(destination, map, function(err, file) {
+    fs.writeFile(destination + '.json', map, function(err, file) {
         if (err)
             log.error(JSON.stringify(err));
         else

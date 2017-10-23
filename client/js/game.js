@@ -467,7 +467,6 @@ define(['./renderer/renderer', './utils/storage',
                         attacker.setTarget(target);
 
                         target.addAttacker(attacker);
-                        target.setTarget(attacker);
 
                         if (target.id === self.player.id || attacker.id === self.player.id)
                             self.socket.send(Packets.Combat, [Packets.CombatOpcode.Initiate, attacker.id, target.id]);
@@ -479,8 +478,12 @@ define(['./renderer/renderer', './utils/storage',
                         var hit = data.shift(),
                             isPlayer = target.id === self.player.id;
 
-                        attacker.lookAt(target);
-                        attacker.performAction(attacker.orientation, Modules.Actions.Attack);
+
+                        if (!hit.isAoE) {
+                            attacker.lookAt(target);
+                            attacker.performAction(attacker.orientation, Modules.Actions.Attack);
+                        }
+
 
                         switch (hit.type) {
                             case Modules.Hits.Damage:

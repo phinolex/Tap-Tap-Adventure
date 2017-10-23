@@ -21,10 +21,11 @@ module.exports = Handler = cls.Class.extend({
         var self = this;
 
         self.player.onMovement(function(x, y) {
+
             self.player.checkGroups();
 
             self.detectAggro();
-            self.detectPVP();
+            self.detectPVP(x, y);
             self.detectMusic(x, y);
         });
 
@@ -116,9 +117,9 @@ module.exports = Handler = cls.Class.extend({
             self.player.updateMusic(musicArea.id);
     },
 
-    detectPVP: function() {
+    detectPVP: function(x, y) {
         var self = this,
-            pvpArea = _.find(self.world.getPVPAreas(), function(area) { return area.contains(self.player.x, self.player.y); });
+            pvpArea = _.find(self.world.getPVPAreas(), function(area) { return area.contains(x, y); });
 
         self.player.updatePVP(!!pvpArea);
     }

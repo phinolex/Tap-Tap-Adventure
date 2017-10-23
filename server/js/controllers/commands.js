@@ -3,8 +3,9 @@
 var cls = require('../lib/class'),
     Messages = require('../network/messages'),
     Packets = require('../network/packets'),
-    Utils = require('../util/utils'),
-    Mob = require('../game/entity/character/mob/mob');
+    Hit = require('../game/entity/character/combat/hit'),
+    Formulas = require('../game/formulas'),
+    Modules = require('../util/modules');
 
 module.exports = Commands = cls.Class.extend({
 
@@ -242,6 +243,12 @@ module.exports = Commands = cls.Class.extend({
                     x: posX,
                     y: posY
                 }));
+
+                break;
+
+            case 'attackaoe':
+
+                self.player.combat.dealAoE(1);
 
                 break;
 

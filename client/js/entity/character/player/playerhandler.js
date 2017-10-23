@@ -70,7 +70,8 @@ define(function() {
                 self.socket.send(Packets.Movement, [Packets.MovementOpcode.Stop, x, y, id]);
 
                 if (self.player.target) {
-                    self.socket.send(Packets.Target, [self.player.target.type === 'mob' ? Packets.TargetOpcode.Attack : Packets.TargetOpcode.Talk, self.player.target.id]);
+                    log.info(self.isAttackable());
+                    self.socket.send(Packets.Target, [self.isAttackable() ? Packets.TargetOpcode.Attack : Packets.TargetOpcode.Talk, self.player.target.id]);
                     self.player.lookAt(self.player.target);
                 }
 
@@ -93,6 +94,10 @@ define(function() {
             });
 
             self.player.onStep(function() {
+                self.player.forEachAttacker(function(attacker) {
+                    attacker.follow(self.player);
+                });
+
                 if (self.player.hasNextStep())
                     self.entities.registerDuality(self.player);
 
@@ -113,6 +118,10 @@ define(function() {
 
                 if (self.camera.centered)
                     self.camera.centreOn(self.player);
+
+                if (self.player.hasTarget())
+                    self.player.follow(self.player.target);
+
             });
 
             self.player.onUpdateArmour(function(armourName) {
@@ -121,12 +130,13 @@ define(function() {
         },
 
         isAttackable: function() {
-            var self = this;
+            var self = this,
+                target = self.player.target;
 
-            if (!self.player.target)
+            if (!target)
                 return;
 
-            return self.player.target.type === 'mob' || (self.game.pvp && self.player.target.pvp && self.player.target.type === 'player');
+            return target.type === 'mob' || (target.type === 'player' && target.pvp);
         },
 
         checkBounds: function() {

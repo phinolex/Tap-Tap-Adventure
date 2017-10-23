@@ -83,6 +83,15 @@ Formulas.getCritical = function(attacker, target) {
     return damage *= multiplier;
 };
 
+Formulas.getAoEDamage = function(attacker, target) {
+    /**
+     * Preliminary setup until this function is expanded
+     * and fits in the necessary algorithms.
+     */
+
+    return Formulas.getDamage(attacker, target);
+};
+
 Formulas.expToLevel = function(experience) {
     if (experience < 0)
         return -1;
