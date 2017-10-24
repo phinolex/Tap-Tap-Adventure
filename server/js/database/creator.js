@@ -8,14 +8,13 @@ module.exports = Creator = cls.Class.extend({
         var self = this;
 
         self.mysql = mysql;
-
     },
 
-    tableNotExists: function(tableName,ifNotExists) {
+    tableNotExists: function(tableName, ifNotExists) {
         var self = this,
             exists = 0;
 
-        self.mysql.connection.query('SELECT count(*) as count FROM information_schema.TABLES WHERE (TABLE_SCHEMA = ?) AND (TABLE_NAME = ?)', ['tta', tableName], function (err, rows) {
+        self.mysql.connection.query('SELECT count(*) as count FROM information_schema.TABLES WHERE (TABLE_SCHEMA = ?) AND (TABLE_NAME = ?)', [self.mysql.database, tableName], function (err, rows) {
             if (err) {
                 log.error(err);
                 throw err;
@@ -31,8 +30,6 @@ module.exports = Creator = cls.Class.extend({
 
     createTables: function() {
         var self = this;
-
-        log.info('Generating tables...');
 
         function handleError(tableName) {
             return function(error) {

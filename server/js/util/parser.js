@@ -150,6 +150,8 @@ module.exports = Parser = cls.Class.extend({
                 count: value.count
             };
 
+            Shops.Ids[value.id] = Shops.Data[key];
+
             shopCounter++;
         });
 

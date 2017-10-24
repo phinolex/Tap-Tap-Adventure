@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c48d7ea8-5c56-4f6b-afdb-8c04901f739b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/data/shops.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/util/shops.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/items.json" afterPath="$PROJECT_DIR$/server/data/items.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/database/creator.js" afterPath="$PROJECT_DIR$/server/js/database/creator.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/database/loader.js" afterPath="$PROJECT_DIR$/server/js/database/loader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/database/mysql.js" afterPath="$PROJECT_DIR$/server/js/database/mysql.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/util/modules.js" afterPath="$PROJECT_DIR$/server/js/util/modules.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/util/parser.js" afterPath="$PROJECT_DIR$/server/js/util/parser.js" />
     </list>
     <ignored path="Tap-Tap-Adventure.iws" />
@@ -50,18 +43,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loader.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/server/js/database/loader.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="mysql.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/js/database/mysql.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -72,11 +53,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="creator.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/js/database/creator.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="parser.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/js/util/parser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1918">
-              <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+            <state relative-caret-position="423">
+              <caret line="143" column="36" lean-forward="true" selection-start-line="143" selection-start-column="36" selection-end-line="143" selection-end-column="36" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -193,12 +184,12 @@
         <option value="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
         <option value="$PROJECT_DIR$/server/js/util/modules.js" />
         <option value="$PROJECT_DIR$/server/js/util/shops.js" />
-        <option value="$PROJECT_DIR$/server/js/util/parser.js" />
         <option value="$PROJECT_DIR$/server/data/shops.json" />
         <option value="$PROJECT_DIR$/server/data/items.json" />
-        <option value="$PROJECT_DIR$/server/js/database/creator.js" />
         <option value="$PROJECT_DIR$/server/js/database/mysql.js" />
         <option value="$PROJECT_DIR$/server/js/database/loader.js" />
+        <option value="$PROJECT_DIR$/server/js/util/parser.js" />
+        <option value="$PROJECT_DIR$/server/js/database/creator.js" />
       </list>
     </option>
   </component>
@@ -756,7 +747,7 @@
       <workItem from="1508517099120" duration="13788000" />
       <workItem from="1508649662976" duration="578000" />
       <workItem from="1508783701764" duration="9037000" />
-      <workItem from="1508804366209" duration="606000" />
+      <workItem from="1508804366209" duration="971000" />
     </task>
     <task id="LOCAL-00001" summary="Client refactoring began - Fixing interfaces">
       <created>1488093277468</created>
@@ -947,11 +938,18 @@
       <option name="project" value="LOCAL" />
       <updated>1508797632314</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Convention Fix &amp; Start on Shops">
+      <created>1508804991536</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1508804991536</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="518925000" />
+    <option name="totallyTimeSpent" value="519290000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="774" extended-state="6" />
@@ -995,7 +993,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Renaming" />
     <MESSAGE value="Fixes and Updates" />
     <MESSAGE value="Special Attacks, Enchantments and Terminal Command Console" />
     <MESSAGE value="getHitType() Fix" />
@@ -1020,7 +1017,8 @@
     <MESSAGE value="Overriding auth" />
     <MESSAGE value="PvP Combat System implementation" />
     <MESSAGE value="AoE Damage &amp; Entity Grids" />
-    <option name="LAST_COMMIT_MESSAGE" value="AoE Damage &amp; Entity Grids" />
+    <MESSAGE value="Convention Fix &amp; Start on Shops" />
+    <option name="LAST_COMMIT_MESSAGE" value="Convention Fix &amp; Start on Shops" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1149,13 +1147,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="7" column="23" lean-forward="true" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/entity/character/player/player.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="490">
@@ -1202,6 +1193,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="133" column="44" lean-forward="false" selection-start-line="133" selection-start-column="44" selection-end-line="133" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1217,6 +1209,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
           <caret line="424" column="10" lean-forward="true" selection-start-line="424" selection-start-column="10" selection-end-line="424" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1365,21 +1358,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/server/config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="7" column="23" lean-forward="true" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server/js/util/parser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1918">
-          <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+        <state relative-caret-position="423">
+          <caret line="143" column="36" lean-forward="true" selection-start-line="143" selection-start-column="36" selection-end-line="143" selection-end-column="36" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/database/creator.js">
+    <entry file="file://$PROJECT_DIR$/server/js/database/loader.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
-          <caret line="11" column="6" lean-forward="true" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-          <folding />
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1399,13 +1402,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/database/loader.js">
+    <entry file="file://$PROJECT_DIR$/server/js/database/creator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="252">
+          <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>
