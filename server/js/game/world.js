@@ -681,7 +681,7 @@ module.exports = World = cls.Class.extend({
         if (entity.instance in self.items)
             delete self.items[entity.instance];
 
-        self.getGrids().removeFromEntityGrid(entity, entity.x, entity.y)
+        self.getGrids().removeFromEntityGrid(entity, entity.x, entity.y);
 
         self.removeFromGroups(entity);
     },
@@ -692,6 +692,7 @@ module.exports = World = cls.Class.extend({
         _.each(this.entities, function(oEntity) {
             if (oEntity instanceof Character && oEntity.combat.hasAttacker(entity))
                 oEntity.combat.removeAttacker(entity);
+
         });
     },
 

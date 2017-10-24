@@ -390,12 +390,13 @@ module.exports = Incoming = cls.Class.extend({
                 var posX = message.shift(),
                     posY = message.shift(),
                     id = message.shift(),
+                    hasTarget = message.shift(),
                     entity = self.world.getEntityByInstance(id);
 
-                if (entity && entity.type === 'item')
+                if (entity && entity.type === 'item' && !hasTarget)
                     self.player.inventory.add(entity);
 
-                if (self.world.map.isDoor(posX, posY)) {
+                if (self.world.map.isDoor(posX, posY) && !hasTarget) {
                     var destination = self.world.map.getDoorDestination(posX, posY);
 
                     self.player.teleport(destination.x, destination.y, true);

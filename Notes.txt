@@ -1,14 +1,8 @@
 TTA To-Do List:
 
 - Directly download map data from the server.
-- Save player orientation upon logout.
-- Review combat and test out PvP
-- Load projectiles prior to attacking if necessary.
-- Multi-combat smoothening
-
 - Add experience bar under abilities
 - Move container down on mobile
-- Fix combat initialization delay
 - Implement quick actions - for hotkey
 
 
@@ -40,6 +34,14 @@ Finished:
 - Add close button to interfaces ✓
 - Combat Formula improvements ✓
 - Handle Player death ✓
+- Fix combat initialization delay ✓
+- Multi-combat smoothening ✓
+- Review combat and test out PvP ✓
+- Server-sided AoE damage ✓
+- Custom Boss combat data ✓
+- Finished banking system ✓
+- Implement Questing and Achievement system alongside interfaces for it ✓
+- Add framework for abiltiies and enchantmnets ✓
 
 
 Reasoning:

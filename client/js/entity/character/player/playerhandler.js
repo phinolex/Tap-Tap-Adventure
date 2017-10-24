@@ -67,11 +67,13 @@ define(function() {
                 if (entity)
                     id = entity.id;
 
-                self.socket.send(Packets.Movement, [Packets.MovementOpcode.Stop, x, y, id]);
+                var hasTarget = self.player.hasTarget();
 
-                if (self.player.target) {
-                    log.info(self.isAttackable());
+                self.socket.send(Packets.Movement, [Packets.MovementOpcode.Stop, x, y, id, hasTarget]);
+
+                if (hasTarget) {
                     self.socket.send(Packets.Target, [self.isAttackable() ? Packets.TargetOpcode.Attack : Packets.TargetOpcode.Talk, self.player.target.id]);
+
                     self.player.lookAt(self.player.target);
                 }
 

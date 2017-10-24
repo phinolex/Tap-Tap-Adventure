@@ -36,8 +36,6 @@ module.exports = Grids = cls.Class.extend({
         if (entity && entity.oldX === entity.x && entity.oldY === entity.y)
             return;
 
-        log.info('Entity: ' + entity.instance + ' moved from [' + entity.oldX + ' ' + entity.oldY + '] to [' + entity.x + ' ' + entity.y + ']');
-
         self.removeFromEntityGrid(entity, entity.oldX, entity.oldY);
         self.addToEntityGrid(entity, entity.x, entity.y);
 
