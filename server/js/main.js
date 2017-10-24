@@ -163,7 +163,7 @@ function getPopulations() {
 
     for (var index in worlds)
         if (worlds.hasOwnProperty(index))
-            counts.push(worlds[index].playerCount);
+            counts.push(worlds[index].getPopulation());
 
     return counts;
 }

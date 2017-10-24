@@ -77,14 +77,18 @@ module.exports = World = cls.Class.extend({
 
             self.pushToPlayer(player, new Messages.Handshake(clientId, config.devClient));
 
-            self.populationCallback(self.playerCount + 1);
         });
 
-        self.onPopulationUpdate(function(newPopulation) {
-            self.playerCount = newPopulation;
+        self.onPopulationChange(function() {
+            /**
+             * Grab the exact number of players from
+             * the array of packets instead of adding
+             * and subtracting and risking uncertainties.
+             */
 
-            self.pushBroadcast(new Messages.Population(self.playerCount));
+            self.pushBroadcast(new Messages.Population(self.getPopulation()));
         });
+
     },
 
     load: function() {
@@ -611,6 +615,9 @@ module.exports = World = cls.Class.extend({
 
         self.addEntity(player);
         self.players[player.instance] = player;
+
+        if (self.populationCallback)
+            self.populationCallback();
     },
 
     addToPackets: function(player) {
@@ -703,10 +710,11 @@ module.exports = World = cls.Class.extend({
 
         self.pushToAdjacentGroups(player.group, new Messages.Despawn(player.instance));
 
-        self.populationCallback(self.playerCount - 1);
-
         if (player.ready)
             player.save();
+
+        if (self.populationCallback)
+            self.populationCallback();
 
         self.removeEntity(player);
 
@@ -769,12 +777,16 @@ module.exports = World = cls.Class.extend({
         return this.map.grids;
     },
 
-    onPopulationUpdate: function(callback) {
-        this.populationCallback = callback;
+    getPopulation: function() {
+        return _.size(this.players);
     },
 
     onPlayerConnection: function(callback) {
         this.playerConnectCallback = callback;
+    },
+
+    onPopulationChange: function(callback) {
+        this.populationCallback = callback;
     }
 
 });
