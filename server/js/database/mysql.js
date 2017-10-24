@@ -91,9 +91,12 @@ module.exports = MySQL = cls.Class.extend({
     login: function(player) {
         var self = this,
             found;
-            log.info('Initiating login for: ' + player.username)
-            self.connection.query("SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? ", [player.username],  function(error, rows, fields) {
-            if (error) {
+
+            log.info('Initiating login for: ' + player.username);
+
+            self.connection.query('SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? ', [player.username],  function(error, rows, fields) {
+
+                if (error) {
                 log.error(error);
                 throw error;
             }
@@ -123,7 +126,7 @@ module.exports = MySQL = cls.Class.extend({
     register: function(player) {
         var self = this;
 
-        self.connection.query("SELECT * FROM `player_data` WHERE `player_data`.`username`= ?", [player.username], function(error, rows, fields) {
+        self.connection.query('SELECT * FROM `player_data` WHERE `player_data`.`username`= ?', [player.username], function(error, rows, fields) {
             var exists;
 
             _.each(rows, function(row) {
@@ -132,7 +135,8 @@ module.exports = MySQL = cls.Class.extend({
             });
 
             if (!exists) {
-                log.info('No player data found. Creating new player data for: ' + player.username)
+                log.info('No player data found. Creating new player data for: ' + player.username);
+
                 player.isNew = true;
                 player.load(self.creator.getPlayerData(player));
 
@@ -159,7 +163,9 @@ module.exports = MySQL = cls.Class.extend({
 
     loadDatabases: function() {
         var self = this;
+
 		log.info('[MySQL] Creating database....');
+
         self.connection.query('CREATE DATABASE IF NOT EXISTS ' + Config.mysqlDatabase, function(error, results, fields) {
             if (error)
                 throw error;

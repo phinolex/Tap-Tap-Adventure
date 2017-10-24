@@ -54,7 +54,8 @@ var Modules = {
         Spike: 3,
         Explosive: 4,
         Stun: 5,
-        AntiStun: 6
+        AntiStun: 6,
+        Splash: 7
     },
 
     Trade: {

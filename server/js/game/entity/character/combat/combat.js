@@ -203,8 +203,12 @@ module.exports = Combat = cls.Class.extend({
 
         for (var i in entities) {
             if (entities.hasOwnProperty(i)) {
-                var entity = entities[i],
-                    hit = new Hit(Modules.Hits.Damage, Formulas.getAoEDamage(self.character, entity)),
+                var entity = entities[i];
+
+                if (entity.type !== 'mob')
+                    continue;
+
+                var hit = new Hit(Modules.Hits.Damage, Formulas.getAoEDamage(self.character, entity)),
                     hitData = hit.getData();
 
                 hitData.isAoE = true;
