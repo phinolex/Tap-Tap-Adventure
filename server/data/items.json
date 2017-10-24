@@ -1152,7 +1152,8 @@
     "price": 150,
     "stackable": 1,
     "edible": 1,
-    "healsHealth": 100
+    "healsHealth": 100,
+    "maxStackSize": 5
   },
 
   "ManaFlask": {
@@ -1163,7 +1164,8 @@
     "price": 200,
     "stackable": 1,
     "edible": 1,
-    "healsMana": 35
+    "healsMana": 35,
+    "maxStackSize": 5
   },
 
   "Burger": {

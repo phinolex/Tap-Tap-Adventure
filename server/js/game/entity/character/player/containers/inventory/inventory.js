@@ -30,18 +30,21 @@ module.exports = Inventory = Container.extend({
         self.owner.send(new Messages.Inventory(Packets.InventoryOpcode.Batch, [self.size, self.slots]));
     },
 
-    add: function(item) {
+    add: function(item, count = -1) {
         var self = this;
 
-        if (!self.hasSpace() && !(self.contains(item.id) && Items.isStackable(item.id))) {
+        if (count == -1)  //default to moving whole stack
+                count = parseInt(item.count);
+
+        if (!self.canHold(item.id, count)) {
             self.owner.send(new Messages.Notification(Packets.NotificationOpcode.Text, Constants.InventoryFull));
-            return;
+            return false;
         }
 
-        var slot = self._super(item.id, parseInt(item.count), item.ability, item.abilityLevel);
+        var slot = self._super(item.id, count, item.ability, item.abilityLevel);
 
         if (!slot)
-            return;
+            return false;
 
         self.owner.send(new Messages.Inventory(Packets.InventoryOpcode.Add, slot));
 
@@ -49,6 +52,8 @@ module.exports = Inventory = Container.extend({
 
         if (item.instance)
             self.owner.world.removeItem(item);
+
+        return true;
     },
 
     remove: function(id, count, index) {
