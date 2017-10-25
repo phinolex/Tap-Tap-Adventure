@@ -646,9 +646,6 @@ module.exports = Incoming = cls.Class.extend({
         var self = this,
             opcode = message.shift();
 
-        /*if (!self.player.bank.open)
-            return;*/
-
         switch (opcode) {
             case Packets.BankOpcode.Select:
                 var type = message.shift(),
@@ -658,14 +655,17 @@ module.exports = Incoming = cls.Class.extend({
                 if (isBank) {
                     var bankSlot = self.player.bank.slots[index];
 
-                    self.player.inventory.add(bankSlot);
-                    self.player.bank.remove(bankSlot.id, bankSlot.count, index);
+                    //Infinite stacks move all at onces, otherwise move one by one.
+                    var moveAmount = Items.maxStackSize(bankSlot.id) == -1 ? bankSlot.count : 1;
+                    
+                    if (self.player.inventory.add(bankSlot,moveAmount))
+                        self.player.bank.remove(bankSlot.id, moveAmount, index);
 
                 } else {
                     var inventorySlot = self.player.inventory.slots[index];
 
-                    self.player.bank.add(inventorySlot.id, inventorySlot.count, inventorySlot.ability, inventorySlot.abilityLevel);
-                    self.player.inventory.remove(inventorySlot.id, inventorySlot.count, index);
+                    if (self.player.bank.add(inventorySlot.id, inventorySlot.count, inventorySlot.ability, inventorySlot.abilityLevel))
+                        self.player.inventory.remove(inventorySlot.id, inventorySlot.count, index);
                 }
 
                 break;

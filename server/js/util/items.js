@@ -111,6 +111,14 @@ Items.isEdible = function(id) {
     return false;
 };
 
+Items.maxStackSize = function(id) {
+    if (id in Items.Ids)
+        return Items.Ids[id].maxStackSize;
+
+    return false;
+};
+
+
 Items.isShard = function(id) {
     return id === 253 || id === 254 || id === 255 || id === 256 || id === 257;
 };
