@@ -22,13 +22,13 @@ module.exports = SkeletonKing = Combat.extend({
         self.minions = [];
 
         character.onDeath(function() {
-            _.each(self.minions, function(minion) {
 
-                self.world.handleDeath(minion, true);
+            self.lastSpawn = 0;
 
-                self.lastSpawn = 0;
+            var listCopy = self.minions.slice();
 
-            });
+            for (var i = 0; i < listCopy.length; i++)
+                self.world.kill(listCopy[i]);
         });
     },
 

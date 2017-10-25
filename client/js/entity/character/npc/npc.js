@@ -8,6 +8,8 @@ define(['../character'], function(Character) {
             self._super(id, kind);
 
             self.index = 0;
+
+            self.type = 'npc';
         },
 
         talk: function(messages) {

@@ -13,6 +13,8 @@ define(['../entity'], function(Entity) {
 
             self.dropped = false;
             self.stackable = false;
+
+            self.type = 'item';
         },
 
         idle: function() {

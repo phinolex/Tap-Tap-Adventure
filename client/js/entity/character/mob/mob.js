@@ -11,6 +11,8 @@ define(['../character'], function(Character) {
 
             self.hitPoints = -1;
             self.maxHitPoints = -1;
+
+            self.type = 'mob';
         },
 
         setHitPoints: function(hitPoints) {

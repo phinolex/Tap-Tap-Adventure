@@ -243,6 +243,9 @@ module.exports = World = cls.Class.extend({
     handleDeath: function(character, ignoreDrops) {
         var self = this;
 
+        if (!character)
+            return;
+
         if (character.type === 'mob') {
             var deathX = character.x,
                 deathY = character.y;

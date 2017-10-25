@@ -42,8 +42,6 @@ module.exports = OgreLord = Combat.extend({
 
             self.loaded = false;
 
-            log.info(self.minions);
-
         });
     },
 

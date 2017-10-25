@@ -175,7 +175,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
             if (entity) {
                 self.setAttackTarget();
 
-                if (self.isAttackable(entity) && entity.type !== 'item')
+                if (self.isTargetable(entity))
                     player.setTarget(entity);
 
                 if (player.getDistance(entity) < 7 && player.isRanged() && self.isAttackable(entity)) {
@@ -192,7 +192,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                     return;
                 }*/
 
-                if (self.isAttackable(entity) && entity.type !== 'item') {
+                if (self.isTargetable(entity)) {
                     player.follow(entity);
                     return;
                 }
@@ -357,6 +357,10 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                 dw: sprite.width * scale,
                 dh: sprite.height * scale
             }
+        },
+
+        isTargetable: function(entity) {
+            return this.isAttackable(entity) || entity.type === 'npc' || entity.type === 'chest';
         },
 
         isAttackable: function(entity) {
