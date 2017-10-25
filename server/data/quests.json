@@ -63,6 +63,10 @@
       "1": 115,
       "3": 116
     },
+    "itemReward": {
+      "id": 202,
+      "count": 500
+    },
     "stages": 4,
     "conversations": {
       "2": {

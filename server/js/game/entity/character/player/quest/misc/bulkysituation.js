@@ -12,7 +12,7 @@ module.exports = BulkySituation = Quest.extend({
 
         self.lastNPC = null;
 
-        self._super(data.id, data.name, data.description);
+        self._super(player, data);
     },
 
     load: function(stage) {
@@ -89,66 +89,11 @@ module.exports = BulkySituation = Quest.extend({
     },
 
     finish: function() {
-        var self = this;
-
-        if (!self.player.inventory.hasSpace()) {
-            self.player.notify('You do not have enough space in your inventory.');
-            self.player.notify('Please make room prior to finishing the quest.');
-
-            return;
-        }
-
-        self.setStage(9999);
-
-        self.player.inventory.add({ id: 202, count: 400 });
-        self.player.send(new Messages.Quest(Packets.QuestOpcode.Finish, {
-            id: self.id,
-            isQuest: true
-        }));
-    },
-
-    resetTalkIndex: function(npc) {
-        var self = this;
-
-        if (!npc)
-            return;
-
-        npc.talkIndex = 0;
-
-        self.player.send(new Messages.NPC(Packets.NPCOpcode.Talk, {
-            id: npc.instance,
-            text: null
-        }));
-    },
-
-    update: function() {
-        this.player.save();
-    },
-
-    getTask: function() {
-        return this.data.task[this.stage];
-    },
-
-    getConversation: function(id) {
-        var self = this,
-            conversation = self.data.conversations[id];
-
-        if (!conversation || !conversation[self.stage])
-            return [''];
-
-        return conversation[self.stage];
-    },
-
-    getItem: function() {
-        return this.data.itemReq[this.stage];
+        this._super();
     },
 
     hasRequirement: function() {
         return this.getTask() === 'item' && this.player.inventory.contains(this.getItem());
-    },
-
-    hasNPC: function(id) {
-        return this.data.npcs.indexOf(id) > -1;
     }
 
 });

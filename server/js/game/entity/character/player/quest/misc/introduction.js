@@ -13,7 +13,7 @@ module.exports = Introduction = Quest.extend({
 
         self.lastNPC = null;
 
-        self._super(data.id, data.name, data.description);
+        self._super(player, data);
     },
 
     load: function(stage) {
@@ -124,48 +124,8 @@ module.exports = Introduction = Quest.extend({
         }));
     },
 
-    update: function() {
-        this.player.save();
-    },
-
-    updatePointers: function() {
-        var self = this,
-            pointer = self.data.pointers[self.stage];
-
-        if (!pointer)
-            return;
-
-        var opcode = pointer[0],
-            x = pointer[1],
-            y = pointer[2];
-
-        self.player.send(new Messages.Pointer(opcode, {
-            id: Utils.generateRandomId(),
-            x: x,
-            y: y
-        }));
-    },
-
-    clearPointers: function() {
-        this.player.send(new Messages.Pointer(Packets.PointerOpcode.Remove, {}));
-    },
-
     toggleChat: function() {
         this.player.canTalk = !this.player.canTalk;
-    },
-
-    getConversation: function(id) {
-        var self = this,
-            conversation = self.data.conversations[id];
-
-        if (!conversation || !conversation[self.stage])
-            return [''];
-
-        return conversation[self.stage];
-    },
-
-    getTask: function() {
-        return this.data.task[this.stage];
     },
 
     setStage: function(stage) {
@@ -173,54 +133,14 @@ module.exports = Introduction = Quest.extend({
 
         self._super(stage);
 
-        self.update();
         self.clearPointers();
     },
 
     finish: function() {
-        var self = this,
-            position = self.player.getSpawn();
+        var self = this;
 
-        self.setStage(9999);
         self.toggleChat();
-
-        self.player.send(new Messages.Quest(Packets.QuestOpcode.Finish, {
-            id: self.id,
-            isQuest: true
-        }));
-    },
-
-    forceTalk: function(npc, message) {
-        var self = this;
-
-        /**
-         * The message must be in an array format.
-         */
-
-        npc.talkIndex = 0;
-
-        self.player.send(new Messages.NPC(Packets.NPCOpcode.Talk, {
-            id: npc.instance,
-            text: message
-        }));
-    },
-
-    resetTalkIndex: function(npc) {
-        var self = this;
-
-        if (!npc)
-            return;
-
-        npc.talkIndex = 0;
-
-        self.player.send(new Messages.NPC(Packets.NPCOpcode.Talk, {
-            id: npc.instance,
-            text: null
-        }));
-    },
-
-    hasNPC: function(id) {
-        return this.data.npcs.indexOf(id) > -1;
+        self._super();
     },
 
     verifyDoor: function(destX, destY) {
