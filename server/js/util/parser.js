@@ -72,7 +72,8 @@ module.exports = Parser = cls.Class.extend({
                 key: key,
                 id: value.id,
                 name: value.name ? value.name : key,
-                text: value.text ? value.text : null
+                text: value.text ? value.text : null,
+                type: value.type ? value.type : null
             };
 
             NPCs.Ids[value.id] = NPCs.Properties[key];

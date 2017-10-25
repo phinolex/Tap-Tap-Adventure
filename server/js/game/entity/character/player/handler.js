@@ -66,12 +66,12 @@ module.exports = Handler = cls.Class.extend({
                 return;
             }
 
-            switch(npc.id) {
-                case 43:
+            switch(Npcs.getType(npc.id)) {
+                case 'banker':
                     self.player.send(new Messages.NPC(Packets.NPCOpcode.Bank, {}));
                     return;
 
-                case 42:
+                case 'echanter':
                     self.player.send(new Messages.NPC(Packets.NPCOpcode.Enchant, {}));
                     break;
             }
