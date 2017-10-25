@@ -83,6 +83,19 @@ Formulas.getCritical = function(attacker, target) {
     return damage *= multiplier;
 };
 
+Formulas.getWeaponBreak = function(attacker, target) {
+    if (!attacker || !target)
+        return;
+    /**
+     * The chance a weapon will break ....
+     */
+
+    var breakChance = Utils.randomRange(1, 100);
+
+    return breakChance > 75;
+};
+
+
 Formulas.getAoEDamage = function(attacker, target) {
     /**
      * Preliminary setup until this function is expanded
