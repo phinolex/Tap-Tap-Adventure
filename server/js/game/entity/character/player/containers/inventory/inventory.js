@@ -30,11 +30,14 @@ module.exports = Inventory = Container.extend({
         self.owner.send(new Messages.Inventory(Packets.InventoryOpcode.Batch, [self.size, self.slots]));
     },
 
-    add: function(item, count = -1) {
+    add: function(item, count) {
         var self = this;
 
-        if (count == -1)  //default to moving whole stack
-                count = parseInt(item.count);
+        if (!count)
+            count = -1;
+
+        if (count === -1)  //default to moving whole stack
+            count = parseInt(item.count);
 
         if (!self.canHold(item.id, count)) {
             self.owner.send(new Messages.Notification(Packets.NotificationOpcode.Text, Constants.InventoryFull));
