@@ -22,17 +22,17 @@ module.exports = Quest = cls.Class.extend({
         var self = this;
 
         if (self.hasItemReward()) {
-            if (self.hasInventorySpace()) {
-                var itemReward = self.getItemReward();
+            var item = self.getItemReward();
 
-                if (itemReward)
-                    self.player.inventory.add(itemReward.id, itemReward.count);
+            if (item) {
+                if (self.hasInventorySpace(item.id, item.count))
+                    self.player.inventory.add(item.id, item.count);
+                else {
+                    self.player.notify('You do not have enough space in your inventory.');
+                    self.player.notify('Please make room prior to finishing the quest.');
 
-            } else {
-                self.player.notify('You do not have enough space in your inventory.');
-                self.player.notify('Please make room prior to finishing the quest.');
-
-                return;
+                    return;
+                }
             }
         }
 
@@ -179,8 +179,8 @@ module.exports = Quest = cls.Class.extend({
         return this.hasItemReward() ? this.data.itemReward : null;
     },
 
-    hasInventorySpace: function() {
-        return this.player.inventory.hasSpace();
+    hasInventorySpace: function(id, count) {
+        return this.player.inventory.canHold(id, count);
     },
 
     getInfo: function() {
