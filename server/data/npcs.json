@@ -210,12 +210,14 @@
 
   "Vendingmachine": {
     "id": 42,
-    "name": "Enchantment Table"
+    "name": "Enchantment Table",
+    "type": "echanter"
   },
 
   "Redstoremannpc": {
     "id": 43,
-    "name": "Banker"
+    "name": "Banker",
+    "type": "banker"
   },
 
   "Bluestoremannpc": {
