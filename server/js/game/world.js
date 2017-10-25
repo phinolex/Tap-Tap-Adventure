@@ -91,7 +91,7 @@ module.exports = World = cls.Class.extend({
 
     },
 
-    load: function() {
+    load: function(onWorldLoad) {
         var self = this;
 
         log.info('************ World ' + self.id + ' ***********');
@@ -108,7 +108,14 @@ module.exports = World = cls.Class.extend({
             self.loadGroups();
 
             self.spawnEntities();
+
+            self.loaded();
+            onWorldLoad();
         });
+    },
+
+    loaded: function() {
+        var self = this;
         /**
          * Similar to TTA engine here, but it's loaded upon initialization
          * rather than being called from elsewhere.
@@ -123,6 +130,7 @@ module.exports = World = cls.Class.extend({
 
         log.info('********************************');
     },
+
 
     tick: function() {
         var self = this;

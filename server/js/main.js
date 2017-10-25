@@ -10,6 +10,8 @@ var fs = require('fs'),
     worlds = [], database,
     Bot = require('../../tools/bot/bot');
 
+var worldsCreated = 0;
+
 log = new Log(config.worlds > 1 ? 'notice' : config.debugLevel, config.localDebug ? fs.createWriteStream('runtime.log') : null);
 
 function Main() {
@@ -54,12 +56,8 @@ function Main() {
         for (var i = 0; i < config.worlds; i++)
             worlds.push(new World(i + 1, webSocket, database));
 
-        log.notice('Finished creating ' + worlds.length + ' world' + (worlds.length > 1 ? 's' : '') + '!');
-
-        initializeWorlds();
         loadParser();
-
-        allowConnections = true;
+        initializeWorlds();
 
     }, 200);
 
@@ -160,6 +158,21 @@ function Main() {
 
 }
 
+
+function onWorldLoad() {
+    worldsCreated++;
+    if (worldsCreated == worlds.length)
+        allWorldsCreated();
+}
+
+function allWorldsCreated() {
+    log.notice('Finished creating ' + worlds.length + ' world' + (worlds.length > 1 ? 's' : '') + '!');
+    allowConnections = true;
+
+    var host = config.host == '0.0.0.0' ? 'localhost' : config.host;
+    log.notice('Connect locally via http://' + host + ":" + config.port);
+}
+
 function loadParser() {
     new Parser();
 }
@@ -167,7 +180,7 @@ function loadParser() {
 function initializeWorlds() {
     for (var worldId in worlds)
         if (worlds.hasOwnProperty(worldId))
-            worlds[worldId].load();
+            worlds[worldId].load(onWorldLoad);
 }
 
 function getPopulations() {
