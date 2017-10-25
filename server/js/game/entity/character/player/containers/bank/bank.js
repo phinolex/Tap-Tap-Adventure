@@ -25,9 +25,9 @@ module.exports = Slot = Container.extend({
     add: function(id, count, ability, abilityLevel) {
         var self = this;
 
-        if (!self.hasSpace() && !(self.contains(id) && Items.isStackable(id))) {
+        if (!self.canHold(id, count)) {
             self.owner.send(new Messages.Notification(Packets.NotificationOpcode.Text, 'You do not have enough space in your bank.'));
-            return;
+            return false;
         }
 
         var slot = self._super(id, parseInt(count), ability, abilityLevel);
@@ -35,6 +35,7 @@ module.exports = Slot = Container.extend({
         self.owner.send(new Messages.Bank(Packets.BankOpcode.Add, slot));
 
         self.owner.save();
+        return true;
     },
 
     remove: function(id, count, index) {
