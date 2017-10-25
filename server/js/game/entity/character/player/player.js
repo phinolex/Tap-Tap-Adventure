@@ -774,6 +774,15 @@ module.exports = Player = Character.extend({
         self.send(new Messages.Movement(Packets.MovementOpcode.Started));
     },
 
+    walkRandomly: function() {
+        var self = this;
+
+        setInterval(function() {
+            self.setPosition(self.x + Utils.randomInt(-5, 5), self.y + Utils.randomInt(-5, 5));
+        }, 2000);
+
+    },
+
     killCharacter: function(character) {
         var self = this;
 

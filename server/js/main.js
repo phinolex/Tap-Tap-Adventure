@@ -7,7 +7,8 @@ var fs = require('fs'),
     Parser = require('./util/parser'),
     ShutdownHook = require('shutdown-hook'),
     Log = require('log'),
-    worlds = [], database;
+    worlds = [], database,
+    Bot = require('../../tools/bot/bot');
 
 log = new Log(config.worlds > 1 ? 'notice' : config.debugLevel, config.localDebug ? fs.createWriteStream('runtime.log') : null);
 
@@ -140,6 +141,17 @@ function Main() {
                     dType = blocks.shift();
 
                 database.alter(db, table, dType);
+
+                break;
+
+            case 'bot':
+
+                var count = parseInt(blocks.shift());
+
+                if (!count)
+                    count = 1;
+
+                new Bot(worlds[0], count);
 
                 break;
         }

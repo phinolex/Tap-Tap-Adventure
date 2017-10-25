@@ -3,9 +3,7 @@
 var cls = require('../lib/class'),
     Messages = require('../network/messages'),
     Packets = require('../network/packets'),
-    Hit = require('../game/entity/character/combat/hit'),
-    Formulas = require('../game/formulas'),
-    Modules = require('../util/modules');
+    _ = require('underscore');
 
 module.exports = Commands = cls.Class.extend({
 
@@ -41,7 +39,7 @@ module.exports = Commands = cls.Class.extend({
 
             case 'players':
 
-                self.player.send(new Messages.Notification(Packets.NotificationOpcode.Text, 'There are currently ' + self.world.playerCount + ' online.'))
+                self.player.send(new Messages.Notification(Packets.NotificationOpcode.Text, 'There are currently ' + self.world.getPopulation() + ' online.'));
 
                 break;
 
@@ -246,9 +244,22 @@ module.exports = Commands = cls.Class.extend({
 
                 break;
 
+            case 'teleall':
+
+                _.each(self.world.players, function(player) {
+                    player.teleport(self.player.x, self.player.y);
+                });
+
+                break;
+
             case 'attackaoe':
 
-                self.player.combat.dealAoE(1);
+                var radius = parseInt(blocks.shift());
+
+                if (!radius)
+                    radius = 1;
+
+                self.player.combat.dealAoE(radius);
 
                 break;
 

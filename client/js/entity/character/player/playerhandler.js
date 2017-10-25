@@ -78,6 +78,7 @@ define(function() {
                 }
 
                 self.input.setPassiveTarget();
+
             });
 
             self.player.onBeforeStep(function() {
@@ -96,15 +97,15 @@ define(function() {
             });
 
             self.player.onStep(function() {
-                self.player.forEachAttacker(function(attacker) {
-                    attacker.follow(self.player);
-                });
-
                 if (self.player.hasNextStep())
                     self.entities.registerDuality(self.player);
 
                 if (!self.camera.centered)
                     self.checkBounds();
+
+                self.player.forEachAttacker(function(attacker) {
+                    attacker.follow(self.player);
+                });
 
                 self.socket.send(Packets.Movement, [Packets.MovementOpcode.Step, self.player.gridX, self.player.gridY]);
             });

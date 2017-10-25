@@ -65,6 +65,7 @@ define(['jquery', './camera', './tile',
             self.brightness = 100;
             self.drawNames = true;
             self.drawLevels = true;
+            self.forceRendering = false;
 
             self.load();
         },
@@ -917,6 +918,9 @@ define(['jquery', './camera', './tile',
         hasRenderedFrame: function() {
             var self = this;
 
+            if (self.forceRendering)
+                return false;
+
             if (!self.camera || self.stopRendering || !self.input)
                 return true;
 
@@ -991,6 +995,10 @@ define(['jquery', './camera', './tile',
             self.mobile = self.game.app.isMobile();
             self.tablet = self.game.app.isTablet();
             self.firefox = Detect.isFirefox();
+        },
+
+        verifyCentration: function() {
+            this.forceRendering = (this.mobile || this.tablet) && this.camera.centered;
         },
 
         isPortableDevice: function() {

@@ -63,6 +63,8 @@ define(function() {
 
             self.centered = true;
             self.centreOn(self.player);
+
+            self.renderer.verifyCentration();
         },
 
         decenter: function() {
@@ -73,6 +75,8 @@ define(function() {
 
             self.clip();
             self.centered = false;
+
+            self.renderer.verifyCentration();
         },
 
         setGridPosition: function(x, y) {

@@ -1016,6 +1016,8 @@ define(['./renderer/renderer', './utils/storage',
 
             self.updater.setSprites(self.entities.sprites);
 
+            self.renderer.verifyCentration();
+
             if (self.storage.data.new) {
                 self.storage.data.new = false;
                 self.storage.save();

@@ -51,6 +51,8 @@ define(['jquery', '../page'], function($, Page) {
             self.renderer.adjustBrightness(self.getBrightness());
 
             self.button.click(function() {
+                self.game.interface.hideAll();
+
                 self.button.toggleClass('active');
 
                 if (self.isVisible())
@@ -156,8 +158,10 @@ define(['jquery', '../page'], function($, Page) {
 
             if (self.getCamera())
                 self.cameraCheck.addClass('active');
-            else
+            else {
                 self.camera.centered = false;
+                self.renderer.verifyCentration();
+            }
 
             if (self.getDebug()) {
                 self.debugCheck.addClass('active');

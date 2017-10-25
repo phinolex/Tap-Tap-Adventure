@@ -28,6 +28,7 @@ define(['jquery', './pages/state', './pages/ability', './pages/settings', './pag
             self.button.click(function() {
 
                 self.game.interface.hideAll();
+                self.settings.hide();
 
                 if (self.isVisible()) {
                     self.hide();

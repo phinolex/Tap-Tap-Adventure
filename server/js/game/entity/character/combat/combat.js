@@ -153,8 +153,7 @@ module.exports = Combat = cls.Class.extend({
                     self.follow(self.character, attacker);
 
             }
-        } else if (self.isPlayer() && self.character.hasTarget())
-            self.follow(self.character, self.character.target);
+        }
 
     },
 
@@ -420,6 +419,10 @@ module.exports = Combat = cls.Class.extend({
 
     isMob: function() {
         return this.character.type === 'mob';
+    },
+
+    isTargetMob: function() {
+        return this.character.target.type === 'mob';
     }
 
 });

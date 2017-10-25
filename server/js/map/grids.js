@@ -45,14 +45,14 @@ module.exports = Grids = cls.Class.extend({
     addToEntityGrid: function(entity, x, y) {
         var self = this;
 
-        if (entity && x > 0 && y > 0 && self.entityGrid[y][x])
+        if (entity && x > 0 && y > 0 && x < self.map.width && x < self.map.height && self.entityGrid[y][x])
             self.entityGrid[y][x][entity.instance] = entity;
     },
 
     removeFromEntityGrid: function(entity, x, y) {
         var self = this;
 
-        if (entity && x > 0 && y > 0 && self.entityGrid[y][x] && entity.instance in self.entityGrid[y][x])
+        if (entity && x > 0 && y > 0 && x < self.map.width && y < self.map.height && self.entityGrid[y][x] && entity.instance in self.entityGrid[y][x])
             delete self.entityGrid[y][x][entity.instance];
     },
 

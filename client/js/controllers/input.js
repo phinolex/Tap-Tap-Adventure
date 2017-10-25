@@ -175,7 +175,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
             if (entity) {
                 self.setAttackTarget();
 
-                if (entity.type !== 'item')
+                if (self.isAttackable(entity) && entity.type !== 'item')
                     player.setTarget(entity);
 
                 if (player.getDistance(entity) < 7 && player.isRanged() && self.isAttackable(entity)) {
@@ -192,7 +192,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                     return;
                 }*/
 
-                if (entity.type !== 'item' || self.isAttackable(entity)) {
+                if (self.isAttackable(entity) && entity.type !== 'item') {
                     player.follow(entity);
                     return;
                 }
@@ -253,7 +253,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                         break;
 
                     case 'player':
-                        self.setCursor((self.game.pvp && entity.pvp) ? self.getAttackCursor() : self.cursors['talk']);
+                        self.setCursor((self.game.pvp && entity.pvp) ? self.getAttackCursor() : self.cursors['hand']);
                         self.hovering = Modules.Hovering.Player;
                         break;
 
