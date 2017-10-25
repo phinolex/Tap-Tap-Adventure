@@ -455,6 +455,13 @@ module.exports = Player = Character.extend({
         self.armour = new Armour(Items.idToString(id), id, count, ability, abilityLevel);
     },
 
+    breakWeapon: function() {
+        var self = this;
+
+        self.setWeapon(-1,0,0,0);
+        self.sendEquipment();
+    },
+
     setWeapon: function(id, count, ability, abilityLevel) {
         var self = this;
 
