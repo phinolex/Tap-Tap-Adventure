@@ -289,7 +289,6 @@ define(['./renderer/renderer', './utils/storage',
                         if (type === 'armour')
                             self.player.setSprite(self.getSprite(self.player.getSpriteName()));
 
-
                         self.interface.profile.update();
 
                         break;
@@ -354,6 +353,7 @@ define(['./renderer/renderer', './utils/storage',
 
                 switch(opcode) {
                     case Packets.MovementOpcode.Move:
+
                         var id = info.shift(),
                             x = info.shift(),
                             y = info.shift(),
@@ -372,6 +372,7 @@ define(['./renderer/renderer', './utils/storage',
                         break;
 
                     case Packets.MovementOpcode.Follow:
+
                         var follower = self.entities.get(info.shift()),
                             followee = self.entities.get(info.shift());
 
@@ -379,6 +380,22 @@ define(['./renderer/renderer', './utils/storage',
                             return;
 
                         follower.follow(followee);
+
+                        break;
+
+                    case Packets.MovementOpcode.Freeze:
+
+                        var fEntity = self.entities.get(info.shift()),
+                            frozen = info.shift();
+
+                        if (!fEntity)
+                            return;
+
+                        if (frozen) {
+                            fEntity.stop(true);
+                            fEntity.frozen = true;
+                        } else
+                            fEntity.frozen = false;
 
                         break;
                 }
@@ -508,10 +525,13 @@ define(['./renderer/renderer', './utils/storage',
                         var hit = data.shift(),
                             isPlayer = target.id === self.player.id;
 
-
                         if (!hit.isAoE) {
                             attacker.lookAt(target);
                             attacker.performAction(attacker.orientation, Modules.Actions.Attack);
+
+                        } else {
+                            if (hit.hasTerror)
+                                target.terror = true;
                         }
 
 

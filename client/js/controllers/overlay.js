@@ -22,7 +22,7 @@ define(['jquery'], function($) {
             if (!self.validEntity(entity)) {
                 self.hovering = null;
 
-                if (self.isVisible() && !self.input.getPlayer().hasTarget())
+                if (self.isVisible())
                     self.hide();
 
                 return;

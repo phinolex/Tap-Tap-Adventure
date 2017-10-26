@@ -15,6 +15,7 @@ module.exports = Hit = cls.Class.extend({
 
         self.ranged = false;
         self.aoe = false;
+        self.terror = false;
     },
 
     isRanged: function() {
@@ -34,7 +35,8 @@ module.exports = Hit = cls.Class.extend({
             type: this.type,
             damage: this.damage,
             isRanged: this.isRanged(),
-            isAoE: this.isAoE()
+            isAoE: this.isAoE(),
+            hasTerror: this.terror
         }
     }
 

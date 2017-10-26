@@ -64,6 +64,7 @@
     "aggressive": true,
     "attackRate": 1100,
     "movementSpeed": 350,
+    "projectileName": "projectile-fireball",
     "spawnDelay": 35000
   },
 
@@ -217,6 +218,7 @@
     "aggressive": true,
     "attackRate": 7000,
     "movementSpeed": 1000,
+    "projectileName": "projectile-fireball",
     "spawnDelay": 35000
   },
 
@@ -320,6 +322,7 @@
     "aggressive": true,
     "attackRate": 900,
     "movementSpeed": 400,
+    "projectileName": "projectile-fireball",
     "spawnDelay": 35000
   },
 
@@ -1927,6 +1930,7 @@
     "aggroRange": 4,
     "attackRange": 7,
     "aggressive": false,
+    "projectileName": "projectile-iceball",
     "attackRate": 1500,
     "movementSpeed": 600,
     "spawnDelay": 115000
@@ -1968,6 +1972,7 @@
     "aggressive": true,
     "attackRate": 1500,
     "movementSpeed": 600,
+    "projectileName": "projectile-terror",
     "spawnDelay": 95000
   },
 

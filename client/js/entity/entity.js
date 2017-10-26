@@ -37,6 +37,7 @@ define(['./entityhandler'], function(EntityHandler) {
 
             self.critical = false;
             self.stunned = false;
+            self.terror = false;
 
             self.renderingData = {
                 scale: -1,

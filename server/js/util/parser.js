@@ -50,6 +50,7 @@ module.exports = Parser = cls.Class.extend({
                 isPoisonous: value.isPoisonous ? value.isPoisonous : false,
                 attackRate: value.attackRate ? value.attackRate : 1000,
                 movementSpeed: value.movementSpeed ? value.movementSpeed : 200,
+                projectileName: value.projectileName ? value.projectileName : null,
                 spawnDelay: value.spawnDelay ? value.spawnDelay : 60000
             };
 

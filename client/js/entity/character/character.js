@@ -52,11 +52,22 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
 
             self.criticalAnimation = new Animation('atk_down', 10, 0, 48, 48);
             self.criticalAnimation.setSpeed(30);
+
             self.criticalAnimation.setCount(1, function() {
                 self.critical = false;
 
                 self.criticalAnimation.reset();
                 self.criticalAnimation.count = 1;
+            });
+
+            self.terrorAnimation = new Animation('explosion', 8, 0, 64, 64);
+            self.terrorAnimation.setSpeed(50);
+
+            self.terrorAnimation.setCount(1, function() {
+                self.terror = false;
+
+                self.terrorAnimation.reset();
+                self.terrorAnimation.count = 1;
             });
 
             self.stunAnimation = new Animation('atk_down', 6, 0, 48, 48);

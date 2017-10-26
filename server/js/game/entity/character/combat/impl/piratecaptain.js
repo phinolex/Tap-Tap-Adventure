@@ -19,9 +19,6 @@ module.exports = PirateCaptain = Combat.extend({
 
         character.spawnDistance = 20;
 
-        character.projectile = Modules.Projectiles.Boulder;
-        character.projectileName = 'projectile-boulder';
-
         self.teleportLocations = [];
 
         self.lastTeleportIndex = 0;

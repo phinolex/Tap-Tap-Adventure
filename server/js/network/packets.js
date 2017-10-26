@@ -72,7 +72,8 @@ Packets.MovementOpcode = {
     Stop: 3,
     Move: 4,
     Follow: 5,
-    Entity: 6
+    Entity: 6,
+    Freeze: 7
 };
 
 Packets.TargetOpcode = {

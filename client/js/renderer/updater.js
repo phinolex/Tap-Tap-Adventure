@@ -54,7 +54,12 @@ define(['../entity/character/character'], function(Character) {
                     if (animation)
                         animation.update(self.game.time);
 
+
+
                     if (entity instanceof Character) {
+
+                        if (entity.terror && entity.terrorAnimation)
+                            entity.terrorAnimation.update(self.game.time);
 
                         if (entity.movement && entity.movement.inProgress)
                             entity.movement.step(self.game.time);
@@ -207,7 +212,7 @@ define(['../entity/character/character'], function(Character) {
             var self = this,
                 target = self.input.targetAnimation;
 
-            if (target)
+            if (target && self.input.selectedCellVisible && !self.renderer.mobile)
                 target.update(self.game.time);
 
             if (!self.sprites)

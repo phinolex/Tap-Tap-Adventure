@@ -420,15 +420,20 @@ define(['jquery', './camera', './tile',
              * having rendererd the entity
              */
 
-            if (entity.critical) {
-                var sprite = self.entities.getSprite('criticaleffect');
+            if (entity.terror) {
+                var terrorSprite = self.entities.getSprite('explosion-terror');
 
-                if (!sprite.loaded)
-                    sprite.load();
+                if (!terrorSprite.loaded)
+                    terrorSprite.load();
 
-                if (sprite) {
-                    var index = entity.criticalAnimation.currentFrame.index,
-                        criticalX = sprite.width * index * self.drawingScale
+                if (terrorSprite) {
+                    var index = entity.terrorAnimation.currentFrame.index,
+                        terrorX = terrorSprite.width * index * self.drawingScale,
+                        terrorY = terrorSprite.height * entity.criticalAnimation.row * self.drawingScale,
+                        terrorWidth = terrorSprite.width * self.drawingScale,
+                        terrorHeight = terrorSprite.height * self.drawingScale;
+
+                    self.context.drawImage(terrorSprite.image, terrorX, terrorY, terrorWidth, terrorHeight, 0, 0, terrorWidth, terrorHeight);
                 }
 
             }

@@ -36,6 +36,7 @@ module.exports = Mob = Character.extend({
         self.static = false;
 
         self.projectileName = self.getProjectileName();
+        
     },
 
     refresh: function() {
@@ -83,16 +84,7 @@ module.exports = Mob = Character.extend({
     },
 
     getProjectileName: function() {
-        var self = this;
-
-        switch (self.id) {
-            case 3:
-            case 12:
-            case 17:
-                return 'projectile-fireball';
-        }
-
-        return 'projectile-pinearrow';
+        return this.data.projectileName ? this.data.projectileName : 'projectile-pinearrow';
     },
 
     canAggro: function(player) {

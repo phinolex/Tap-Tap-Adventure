@@ -116,6 +116,12 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                             self.chatHandler.toggle();
 
                             break;
+
+                        case Modules.Keys.One:
+
+                            self.getPlayer().terror = true;
+
+                            break;
                     }
 
                     break;
