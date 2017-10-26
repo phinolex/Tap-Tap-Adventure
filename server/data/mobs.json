@@ -1925,8 +1925,8 @@
     "xp": 200,
     "level": 21,
     "aggroRange": 4,
-    "attackRange": 1,
-    "aggressive": true,
+    "attackRange": 7,
+    "aggressive": false,
     "attackRate": 1500,
     "movementSpeed": 600,
     "spawnDelay": 115000

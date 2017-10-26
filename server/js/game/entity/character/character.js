@@ -5,7 +5,8 @@ var Entity = require('../entity'),
     Combat = require('./combat/combat'),
     Modules = require('../../../util/modules'),
     SkeletonKing = require('./combat/impl/skeletonking'),
-    OgreLord = require('./combat/impl/ogrelord');
+    OgreLord = require('./combat/impl/ogrelord'),
+    PirateCaptain = require('./combat/impl/piratecaptain');
 
 module.exports = Character = Entity.extend({
 
@@ -44,6 +45,10 @@ module.exports = Character = Entity.extend({
     loadCombat: function() {
         var self = this;
 
+        /**
+         * Gotta figure out to dehardcode this...
+         */
+
         switch (self.id) {
             case 99:
 
@@ -54,6 +59,12 @@ module.exports = Character = Entity.extend({
             case 100:
 
                 self.combat = new OgreLord(self);
+
+                break;
+
+            case 120:
+
+                self.combat = new PirateCaptain(self);
 
                 break;
 

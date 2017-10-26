@@ -275,7 +275,7 @@ define(['jquery', './camera', './tile',
 
             self.drawFPS();
 
-            if (self.game.development && !self.mobile) {
+            if (!self.mobile) {
                 self.drawPosition();
                 self.drawPathing();
             }

@@ -2,6 +2,7 @@
   "1": {
     "npc": 44,
     "items": [1, 4],
-    "count": 100
+    "count": 100,
+    "currency": 202
   }
 }

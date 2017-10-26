@@ -89,14 +89,15 @@ Messages.Movement = Message.extend({
 
 Messages.Teleport = Message.extend({
 
-    init: function(id, x, y) {
+    init: function(id, x, y, withAnimation) {
         this.id = id;
         this.x = x;
         this.y = y;
+        this.withAnimation = withAnimation;
     },
 
     serialize: function() {
-        return [Packets.Teleport, [this.id, this.x, this.y]];
+        return [Packets.Teleport, [this.id, this.x, this.y, this.withAnimation]];
     }
 
 });

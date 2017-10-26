@@ -389,6 +389,7 @@ define(['./renderer/renderer', './utils/storage',
                 var id = data.shift(),
                     x = data.shift(),
                     y = data.shift(),
+                    withAnimation = data.shift(),
                     isPlayer = id === self.player.id,
                     entity = self.entities.get(id);
 
@@ -398,27 +399,56 @@ define(['./renderer/renderer', './utils/storage',
                 entity.stop(true);
                 entity.frozen = true;
 
-                self.entities.unregisterPosition(entity);
+                /**
+                 * Teleporting an entity seems to cause a glitch with the
+                 * hitbox. Make sure you keep an eye out for this.
+                 */
 
-                entity.setGridPosition(x, y);
+                var doTeleport = function() {
 
-                if (isPlayer) {
+                    self.entities.unregisterPosition(entity);
+                    entity.setGridPosition(x, y);
 
-                    self.entities.clearPlayers(self.player);
-                    self.player.clearHealthBar();
-                    self.renderer.camera.centreOn(entity);
-                    self.renderer.updateAnimatedTiles();
+                    if (isPlayer) {
 
-                } else {
-                    delete self.entities.entities[entity.id];
-                    return;
-                }
+                        self.entities.clearPlayers(self.player);
+                        self.player.clearHealthBar();
+                        self.renderer.camera.centreOn(entity);
+                        self.renderer.updateAnimatedTiles();
 
-                self.socket.send(Packets.Request, [self.player.id]);
+                    } else if (entity.type === 'player') {
+                        delete self.entities.entities[entity.id];
+                        return;
+                    }
 
-                self.entities.registerPosition(entity);
+                    self.socket.send(Packets.Request, [self.player.id]);
 
-                entity.frozen = false;
+                    self.entities.registerPosition(entity);
+
+                    log.info('Registered..');
+
+                    entity.frozen = false;
+
+                };
+
+                if (withAnimation) {
+
+                    var originalSprite = entity.sprite;
+
+                    entity.setSprite(self.getSprite('death'));
+
+                    entity.animate('death', 240, 1, function() {
+                        doTeleport();
+
+                        entity.currentAnimation = null;
+
+                        entity.setSprite(originalSprite);
+                        entity.idle();
+
+                    });
+
+                } else
+                    doTeleport();
 
             });
 
