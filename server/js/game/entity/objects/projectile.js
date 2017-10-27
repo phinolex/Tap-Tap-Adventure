@@ -12,8 +12,7 @@ module.exports = Projectile = Entity.extend({
         self.destX = -1;
         self.destY = -1;
 
-        self.target = false;
-        self.static = false;
+        self.target = null;
 
         self.damage = -1;
         self.special = -1;
@@ -31,7 +30,7 @@ module.exports = Projectile = Entity.extend({
     setTarget: function(target) {
         var self = this;
 
-        self.target = true;
+        self.target = target;
 
         self.destX = target.x;
         self.destY = target.y;
@@ -44,6 +43,28 @@ module.exports = Projectile = Entity.extend({
 
         self.destX = x;
         self.destY = y;
+    },
+
+    getData: function() {
+        var self = this;
+
+        /**
+         * Cannot generate a projectile
+         * unless it has a target.
+         */
+
+        if (!self.owner || !self.target)
+            return;
+
+        return {
+            id: self.instance,
+            name: self.owner.projectileName,
+            characterId: self.owner.instance,
+            targetId: self.target.instance,
+            damage: self.damage,
+            special: self.special,
+            type: self.type
+        }
     }
 
 });

@@ -370,21 +370,9 @@ module.exports = Combat = cls.Class.extend({
 
         if (character.isRanged() || hitInfo.isRanged) {
 
-            var projectile = self.world.createProjectile(true, [character, target], hitInfo),
-                data = {
-                    id: projectile.instance,
-                    characterId: character.instance,
-                    targetId: target.instance,
-                    damage: projectile.damage,
-                    projectileType: projectile.id,
-                    name: character.projectileName,
-                    special: projectile.special,
-                    type: 'projectile'
-                };
+            var projectile = self.world.createProjectile([character, target], hitInfo);
 
-            //TODO - Move data to projectile class.
-
-            self.world.pushToAdjacentGroups(character.group, new Messages.Projectile(Packets.ProjectileOpcode.Create, data));
+            self.world.pushToAdjacentGroups(character.group, new Messages.Projectile(Packets.ProjectileOpcode.Create, projectile.getData()));
 
         } else {
 

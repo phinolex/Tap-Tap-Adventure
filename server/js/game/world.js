@@ -280,35 +280,30 @@ module.exports = World = cls.Class.extend({
             character.die();
     },
 
-    createProjectile: function(dynamic, info, hitInfo) {
+    createProjectile: function(info, hitInfo) {
         var self = this,
-            projectile;
+            attacker = info.shift(),
+            target = info.shift();
 
-        if (dynamic) {
-            var attacker = info.shift(),
-                target = info.shift();
+        if (!attacker || !target)
+            return null;
 
-            if (!attacker || !target)
-                return null;
+        var startX = attacker.x,
+            startY = attacker.y,
+            type = attacker.getProjectile();
 
-            var startX = attacker.x,
-                startY = attacker.y,
-                type = attacker.getProjectile();
+        var projectile = new Projectile(type, Utils.generateInstance(5, type, startX + startY));
 
-            projectile = new Projectile(type, Utils.generateInstance(5, type, startX + startY));
+        projectile.setStart(startX, startY);
+        projectile.setTarget(target);
 
-            projectile.setStart(startX, startY);
-            projectile.setTarget(target);
+        projectile.damage = Formulas.getDamage(attacker, target, true);
+        projectile.owner = attacker;
 
-            projectile.damage = Formulas.getDamage(attacker, target, true);
-            projectile.owner = attacker;
+        if (hitInfo.type !== Modules.Hits.Damage)
+            projectile.special = hitInfo.type;
 
-            if (hitInfo.type !== Modules.Hits.Damage)
-                projectile.special = hitInfo.type;
-
-            self.addProjectile(projectile);
-
-        }
+        self.addProjectile(projectile);
 
         return projectile;
     },

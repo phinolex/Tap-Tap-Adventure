@@ -55,15 +55,18 @@ module.exports = PirateCaptain = Combat.extend({
         var self = this,
             position = self.getRandomPosition();
 
+        if (!position)
+            return;
+
         self.stop();
 
         self.lastTeleport = new Date().getTime();
         self.lastTeleportIndex = position.index;
 
+        self.character.setPosition(position.x, position.y);
+
         if (self.world)
             self.world.pushToGroup(self.character.group, new Messages.Teleport(self.character.instance, self.character.x, self.character.y, true));
-
-        self.character.setPosition(position.x, position.y);
 
         self.forEachAttacker(function(attacker) {
             attacker.removeTarget();
@@ -75,18 +78,11 @@ module.exports = PirateCaptain = Combat.extend({
 
     getRandomPosition: function() {
         var self = this,
-            random = 0,
-            randomize = function() {
-                random = Utils.randomInt(0, self.teleportLocations.length - 1);
-            };
+            random = Utils.randomInt(0, self.teleportLocations.length - 1),
+            position = self.teleportLocations[random];
 
-        while (random === self.lastTeleportIndex)
-            randomize();
-
-        var position = self.teleportLocations[random];
-
-        if (!position)
-            return;
+        if (!position || random === self.lastTeleportIndex)
+            return null;
 
         return {
             x: position.x,
