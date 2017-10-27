@@ -10,6 +10,7 @@ var cls = require('../lib/class'),
     Modules = require('../util/modules'),
     PVPAreas = require('./areas/pvpareas'),
     MusicAreas = require('./areas/musicareas'),
+    ChestAreas = require('./areas/chestareas'),
     Grids = require('./grids');
 
 module.exports = Map = cls.Class.extend({
@@ -35,9 +36,8 @@ module.exports = Map = cls.Class.extend({
         self.bossAreas = map.bossAreas;
         self.roamingAreas = map.roamingAreas;
         self.chestAreas = map.chestAreas;
-        self.staticChests = map.staticChests;
+        self.chests = map.chests;
         self.staticEntities = map.staticEntities;
-        self.checkpoints = map.checkpoints;
 
         self.zoneWidth = 30;
         self.zoneHeight = 15;
@@ -75,6 +75,7 @@ module.exports = Map = cls.Class.extend({
 
         self.areas['PVP'] = new PVPAreas();
         self.areas['Music'] = new MusicAreas();
+        self.areas['Chests'] = new ChestAreas(self.world);
     },
 
     loadDoors: function() {

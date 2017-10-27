@@ -456,13 +456,21 @@ module.exports = Incoming = cls.Class.extend({
         switch (opcode) {
 
             case Packets.TargetOpcode.Talk:
-                var npc = self.world.getEntityByInstance(instance);
+                var entity = self.world.getEntityByInstance(instance);
 
-                if (!npc || npc.dead)
+                if (!entity)
+                    return;
+
+                if (entity.type === 'chest') {
+                    entity.openChest();
+                    return;
+                }
+
+                if (entity.dead)
                     return;
 
                 if (self.player.npcTalkCallback)
-                    self.player.npcTalkCallback(npc);
+                    self.player.npcTalkCallback(entity);
 
                 break;
 

@@ -56,6 +56,20 @@ define(['../renderer/grids', '../entity/objects/chest',
 
                 switch (info.type) {
 
+                    case 'chest':
+
+                        /**
+                         * Here we will parse the different types of chests..
+                         * We can go Dark Souls style and implement mimics
+                         * the proper way -ahem- TTA V1.0
+                         */
+
+                        var chest = new Chest(info.id, info.string);
+
+                        entity = chest;
+
+                        break;
+
                     case 'npc':
 
                         var npc = new NPC(info.id, info.string);
@@ -267,7 +281,7 @@ define(['../renderer/grids', '../entity/objects/chest',
                 if (!entity)
                     return;
 
-                if (entity.type === 'player' || entity.type === 'mob' || entity.type === 'npc') {
+                if (entity.type === 'player' || entity.type === 'mob' || entity.type === 'npc' || entity.type === 'chest') {
 
                     self.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);
 

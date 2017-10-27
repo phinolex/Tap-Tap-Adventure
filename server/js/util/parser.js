@@ -28,8 +28,7 @@ module.exports = Parser = cls.Class.extend({
     },
 
     loadMobData: function() {
-        var self = this,
-            mobCounter = 0;
+        var mobCounter = 0;
 
         _.each(MobData, function(value, key) {
             key = key.toLowerCase();
@@ -63,8 +62,7 @@ module.exports = Parser = cls.Class.extend({
     },
 
     loadNPCData: function() {
-        var self = this,
-            npcCounter = 0;
+        var npcCounter = 0;
 
         _.each(NPCData, function(value, key) {
             key = key.toLowerCase();
@@ -86,8 +84,7 @@ module.exports = Parser = cls.Class.extend({
     },
 
     loadItemData: function() {
-        var self = this,
-            itemCounter = 0;
+        var itemCounter = 0;
 
         _.each(ItemData, function(value, key) {
             key = key.toLowerCase();
@@ -117,8 +114,7 @@ module.exports = Parser = cls.Class.extend({
     },
 
     loadAbilityData: function() {
-        var self = this,
-            skillCounter = 0;
+        var skillCounter = 0;
 
         _.each(AbilityData, function(value, key) {
             key = key.toLowerCase();
@@ -140,8 +136,7 @@ module.exports = Parser = cls.Class.extend({
     },
 
     loadShops: function() {
-        var self = this,
-            shopCounter = 0;
+        var shopCounter = 0;
 
         _.each(ShopsData, function(value, key) {
             key = key.toLowerCase();

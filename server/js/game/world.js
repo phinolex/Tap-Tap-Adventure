@@ -13,6 +13,7 @@ var cls = require('../lib/class'),
     NPC = require('./entity/npc/npc'),
     Items = require('../util/items'),
     Item = require('./entity/objects/item'),
+    Chest = require('./entity/objects/chest'),
     Character = require('./entity/character/character'),
     Projectile = require('./entity/objects/projectile'),
     Packets = require('../network/packets'),
@@ -37,6 +38,7 @@ module.exports = World = cls.Class.extend({
         self.players = {};
         self.entities = {};
         self.items = {};
+        self.chests = {};
         self.mobs = {};
         self.npcs = {};
         self.projectiles = {};
@@ -107,6 +109,7 @@ module.exports = World = cls.Class.extend({
         self.map.isReady(function() {
             self.loadGroups();
 
+            self.spawnChests();
             self.spawnEntities();
 
             self.loaded();
@@ -242,6 +245,7 @@ module.exports = World = cls.Class.extend({
                     attacker.killCharacter(target);
 
             });
+
             self.pushToAdjacentGroups(target.group, new Messages.Despawn(target.instance));
             self.handleDeath(target);
         }
@@ -518,11 +522,13 @@ module.exports = World = cls.Class.extend({
                 mob.static = true;
 
                 mob.onRespawn(function() {
+
                     mob.dead = false;
 
                     mob.refresh();
 
                     self.addMob(mob);
+
                 });
 
                 self.addMob(mob);
@@ -545,6 +551,20 @@ module.exports = World = cls.Class.extend({
         log.info('Spawned ' + Object.keys(self.entities).length + ' entities!');
     },
 
+    spawnChests: function() {
+        var self = this,
+            chests = 0;
+
+        _.each(self.map.chests, function(info) {
+
+            self.spawnChest(info.i, info.x, info.y, true);
+
+            chests++;
+        });
+
+        log.info('Spawned ' + Object.keys(self.chests).length + ' static chests');
+    },
+
     spawnMob: function(id, x, y) {
         var self = this,
             instance = Utils.generateInstance(2, id, x + id, y),
@@ -556,6 +576,41 @@ module.exports = World = cls.Class.extend({
         self.addMob(mob);
 
         return mob;
+    },
+
+    spawnChest: function(items, x, y, staticChest) {
+        var self = this,
+            chestCount = Object.keys(self.chests).length,
+            instance = Utils.generateInstance(5, 259, chestCount, x, y),
+            chest = new Chest(259, instance, x, y);
+
+        chest.items = items;
+
+        if (staticChest) {
+
+            chest.static = staticChest;
+
+            chest.onRespawn(self.addChest.bind(self, chest));
+
+        }
+
+        chest.onOpen(function() {
+
+            /**
+             * Pretty simple concept, detect when the player opens the chest
+             * then remove it and drop an item instead. Give it a 25 second
+             * cooldown prior to respawning and voila.
+             */
+
+            self.removeChest(chest);
+
+            self.dropItem(Items.stringToId(chest.getItem()), 1, chest.x, chest.y);
+
+        });
+
+        self.addChest(chest);
+
+        return chest;
     },
 
     dropItem: function(id, count, x, y) {
@@ -657,6 +712,8 @@ module.exports = World = cls.Class.extend({
         self.addEntity(mob);
         self.mobs[mob.instance] = mob;
 
+        mob.addToChestArea(self.getChestAreas());
+
         mob.onHit(function(attacker) {
             if (mob.isDead() || mob.combat.started)
                 return;
@@ -680,6 +737,13 @@ module.exports = World = cls.Class.extend({
 
         self.addEntity(projectile);
         self.projectiles[projectile.instance] = projectile;
+    },
+
+    addChest: function(chest) {
+        var self = this;
+
+        self.addEntity(chest);
+        self.chests[chest.instance] = chest;
     },
 
     removeEntity: function(entity) {
@@ -749,6 +813,18 @@ module.exports = World = cls.Class.extend({
         delete self.projectiles[projectile.instance];
     },
 
+    removeChest: function(chest) {
+        var self = this;
+
+        self.removeEntity(chest);
+        self.pushBroadcast(new Messages.Despawn(chest.instance));
+
+        if (chest.static)
+            chest.respawn();
+        else
+            delete self.chests[chest.instance];
+    },
+
     playerInWorld: function(username) {
         var self = this;
 
@@ -785,6 +861,10 @@ module.exports = World = cls.Class.extend({
 
     getMusicAreas: function() {
         return this.map.areas['Music'].musicAreas;
+    },
+
+    getChestAreas: function() {
+        return this.map.areas['Chests'].chestAreas;
     },
 
     getGrids: function() {

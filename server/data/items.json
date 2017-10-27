@@ -1803,6 +1803,12 @@
     "id": 258,
     "type": "armor",
     "name": "Ghost"
+  },
+
+  "Chest": {
+    "id": 259,
+    "type": "object",
+    "name": "Chest"
   }
 
 }

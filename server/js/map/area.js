@@ -20,7 +20,10 @@ module.exports = Area = cls.Class.extend({
         self.height = height;
 
         self.entities = [];
+        self.items = [];
+
         self.hasRespawned = true;
+        self.chest = null;
 
         self.maxEntities = 0;
     },
@@ -29,19 +32,29 @@ module.exports = Area = cls.Class.extend({
         return x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
     },
 
-    addToArea: function(entity) {
+    addEntity: function(entity) {
         var self = this;
+
+        if (self.entities.indexOf(entity) > 0)
+            return;
 
         self.entities.push(entity);
         entity.area = self;
+
+        if (self.spawnCallback)
+            self.spawnCallback();
     },
 
-    removeFromArea: function(entity) {
+    removeEntity: function(entity) {
         var self = this,
             index = self.entities.indexOf(entity);
 
         if (index > -1)
             self.entities.splice(index, 1);
+
+        if (self.entities.length === 0 && self.emptyCallback)
+            self.emptyCallback();
+
     },
 
     isFull: function() {
@@ -54,6 +67,10 @@ module.exports = Area = cls.Class.extend({
 
     onEmpty: function(callback) {
         this.emptyCallback = callback;
+    },
+
+    onSpawn: function(callback) {
+        this.spawnCallback = callback;
     }
 
 });

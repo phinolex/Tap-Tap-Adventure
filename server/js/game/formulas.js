@@ -86,6 +86,7 @@ Formulas.getCritical = function(attacker, target) {
 Formulas.getWeaponBreak = function(attacker, target) {
     if (!attacker || !target)
         return;
+
     /**
      * The chance a weapon will break ....
      */

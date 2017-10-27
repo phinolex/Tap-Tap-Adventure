@@ -103,6 +103,9 @@ module.exports = Mob = Character.extend({
         self.clearTarget();
         self.resetPosition();
         self.respawn();
+
+        if (self.area)
+            self.area.removeEntity(self);
     },
 
     return: function() {
@@ -123,6 +126,14 @@ module.exports = Mob = Character.extend({
 
     isAtSpawn: function() {
         return this.x === this.spawnLocation[0] && this.y === this.spawnLocation[1];
+    },
+
+    addToChestArea: function(chestAreas) {
+        var self = this,
+            area = _.find(chestAreas, function(area) { return area.contains(self.x, self.y) });
+
+        if (area)
+            area.addEntity(self);
     },
 
     respawn: function() {

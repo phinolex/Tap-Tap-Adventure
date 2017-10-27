@@ -476,9 +476,23 @@ define(['./renderer/renderer', './utils/storage',
 
                 entity.stop();
 
-                if (entity.type === 'item') {
-                    self.entities.removeItem(entity);
-                    return;
+                switch (entity.type) {
+                    case 'item':
+
+                        self.entities.removeItem(entity);
+
+                        return;
+
+                    case 'chest':
+
+                        entity.setSprite(self.getSprite('death'));
+
+                        entity.setAnimation('death', 120, 1, function() {
+                            self.entities.unregisterPosition(entity);
+                            delete self.entities.entities[entity.id];
+                        });
+
+                        return;
                 }
 
                 if (entity.id !== self.player.id && self.player.getDistance(entity) < 5)

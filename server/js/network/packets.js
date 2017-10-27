@@ -51,6 +51,7 @@ var Packets = {
     Pointer: 37,
     PVP: 38,
     Click: 39
+    
 };
 
 Packets.IntroOpcode = {

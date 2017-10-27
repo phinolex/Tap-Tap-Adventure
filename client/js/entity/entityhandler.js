@@ -27,8 +27,6 @@ define(['./character/character'], function(Character) {
                 });
 
                 self.entity.onBeforeStep(function() {
-                    //There it is, this causes an issue with teleportation
-
                     self.entities.unregisterPosition(self.entity);
                 });
 

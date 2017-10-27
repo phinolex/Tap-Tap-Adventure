@@ -54,8 +54,6 @@ define(['../entity/character/character'], function(Character) {
                     if (animation)
                         animation.update(self.game.time);
 
-
-
                     if (entity instanceof Character) {
 
                         if (entity.terror && entity.terrorAnimation)

@@ -38,14 +38,14 @@ module.exports = function parse(json, options) {
         case 'server':
 
             map.roamingAreas = [];
-            map.chestAreas = [];
             map.pvpAreas = [];
             map.gameAreas = [];
-            map.staticChests = [];
             map.doors = [];
             map.musicAreas = [];
 
             map.staticEntities = {};
+            map.chestAreas = [];
+            map.chests = [];
 
             break;
     }
@@ -192,7 +192,7 @@ module.exports = function parse(json, options) {
                             return name;
                         });
 
-                        map.staticChests.push(oChest);
+                        map.chests.push(oChest);
                     });
 
                     break;

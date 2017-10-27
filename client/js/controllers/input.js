@@ -250,6 +250,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
 
                 switch (entity.type) {
                     case 'item':
+                    case 'chest':
                         self.setCursor(self.cursors['loot']);
                         self.hovering = Modules.Hovering.Item;
                         break;

@@ -17,7 +17,6 @@ module.exports = NPC = Entity.extend({
             self.talkIndex = 0;
 
         self.talkIndex++;
-
     }
 
 });
