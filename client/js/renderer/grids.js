@@ -37,6 +37,18 @@ define(function() {
             log.info('Finished loading preliminary grids.');
         },
 
+        checkPathingGrid: function(player, xRadius, yRadius) {
+            var self = this;
+
+            //mobile 1 = 15 * 8
+            //desktop 2 = 30 x 16
+
+            for (var y = player.gridY - yRadius; y < player.gridY + yRadius; y++)
+                for (var x = player.gridX - xRadius; x < player.gridX + xRadius; x++)
+                    if (!self.map.isColliding(x, y) && _.size(self.entityGrid[y][x] === 0))
+                        self.removeFromPathingGrid(x, y);
+        },
+
         resetPathingGrid: function() {
             var self = this;
 

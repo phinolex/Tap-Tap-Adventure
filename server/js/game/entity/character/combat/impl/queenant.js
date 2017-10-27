@@ -21,6 +21,11 @@ module.exports = QueenAnt = Combat.extend({
         self.lastAoE = 0;
         self.aoeRadius = 2;
 
+        self.lastSpawn = 0;
+        self.minions = [];
+
+        self.character.spawnDistance = 8;
+
         self.frozen = false;
 
         self.onDeath(function() {
@@ -30,10 +35,18 @@ module.exports = QueenAnt = Combat.extend({
              * any powerful AoE attack after dying.
              */
 
+            self.lastSpawn = 0;
+
             if (self.aoeTimeout) {
                 clearTimeout(self.aoeTimeout);
                 self.aoeTimeout = null;
             }
+
+            var listCopy = self.minions.slice();
+
+            for (var i = 0; i < listCopy.length; i++)
+                self.world.kill(listCopy[i]);
+
         });
     },
 
@@ -64,6 +77,14 @@ module.exports = QueenAnt = Combat.extend({
             self._super(self.aoeRadius, true);
 
         }, 5000);
+
+    },
+
+    spawnMinions: function() {
+        var self = this;
+
+        self.lastMinions = new Date().getTime();
+
 
     },
 

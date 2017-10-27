@@ -39,6 +39,8 @@ define(['./entityhandler'], function(EntityHandler) {
             self.stunned = false;
             self.terror = false;
 
+            self.nonPathable = false;
+
             self.renderingData = {
                 scale: -1,
                 angle: 0

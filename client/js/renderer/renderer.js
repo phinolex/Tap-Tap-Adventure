@@ -433,7 +433,8 @@ define(['jquery', './camera', './tile',
                         terrorWidth = terrorSprite.width * self.drawingScale,
                         terrorHeight = terrorSprite.height * self.drawingScale;
 
-                    self.context.drawImage(terrorSprite.image, terrorX, terrorY, terrorWidth, terrorHeight, 0, 0, terrorWidth, terrorHeight);
+                    self.context.drawImage(terrorSprite.image, terrorX, terrorY, terrorWidth, terrorHeight,
+                        terrorSprite.offsetX * self.drawingScale, terrorSprite.offsetY * self.drawingScale, terrorWidth, terrorHeight);
                 }
 
             }

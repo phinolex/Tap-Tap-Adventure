@@ -297,10 +297,7 @@ define(['./renderer/renderer', './utils/storage',
             });
 
             self.messages.onSpawn(function(data) {
-                var mobData = data.shift(),
-                    type = mobData.shift();
-
-                self.entities.create(type, mobData);
+                self.entities.create(data.shift());
             });
 
             self.messages.onEntityList(function(data) {
@@ -529,11 +526,9 @@ define(['./renderer/renderer', './utils/storage',
                             attacker.lookAt(target);
                             attacker.performAction(attacker.orientation, Modules.Actions.Attack);
 
-                        } else {
+                        } else
                             if (hit.hasTerror)
                                 target.terror = true;
-                        }
-
 
                         switch (hit.type) {
                             case Modules.Hits.Damage:
@@ -585,14 +580,17 @@ define(['./renderer/renderer', './utils/storage',
                 entity.animate(animation, speed, count);
             });
 
-            self.messages.onProjectile(function(type, info) {
-                switch (type) {
+            self.messages.onProjectile(function(opcode, info) {
+
+                switch (opcode) {
+
                     case Packets.ProjectileOpcode.Create:
 
-                        self.entities.create('projectile', info);
+                        self.entities.create(info);
 
                         break;
                 }
+
             });
 
             self.messages.onPopulation(function(population) {

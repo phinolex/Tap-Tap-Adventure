@@ -73,7 +73,9 @@ module.exports = Item = Entity.extend({
         var self = this,
             state = self._super();
 
-        state.push(self.count, self.ability, self.abilityLevel);
+        state.count = self.count;
+        state.ability = self.ability;
+        state.abilityLevel = self.abilityLevel;
 
         return state;
     },

@@ -607,7 +607,9 @@ module.exports = World = cls.Class.extend({
             log.info('Entity ' + entity.instance + ' already exists.');
 
         self.entities[entity.instance] = entity;
-        self.handleEntityGroup(entity);
+
+        if (entity.type !== 'projectile')
+            self.handleEntityGroup(entity);
 
         if (entity.x > 0 && entity.y > 0)
             self.getGrids().addToEntityGrid(entity, entity.x, entity.y);

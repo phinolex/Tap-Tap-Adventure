@@ -127,14 +127,14 @@ module.exports = Entity = cls.Class.extend({
             string = self.isMob() ? Mobs.idToString(self.id) : (self.isNPC() ? NPCs.idToString(self.id) : Items.idToString(self.id)),
             name = self.isMob() ? Mobs.idToName(self.id) : (self.isNPC() ? NPCs.idToName(self.id) : Items.idToName(self.id));
 
-        return [
-            self.type,
-            self.instance,
-            string,
-            name,
-            self.x,
-            self.y
-        ];
+        return {
+            type: self.type,
+            id: self.instance,
+            string: string,
+            name: name,
+            x: self.x,
+            y: self.y
+        }
     }
 
 });

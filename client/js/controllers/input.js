@@ -119,9 +119,10 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
 
                         case Modules.Keys.One:
 
-                            self.getPlayer().terror = true;
+                            self.game.entities.grids.checkPathingGrid(self.getPlayer(), 30, 8);
 
                             break;
+                            
                     }
 
                     break;

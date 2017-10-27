@@ -575,24 +575,25 @@ module.exports = Player = Character.extend({
     getState: function() {
         var self = this;
 
-        return [
-            self.type,
-            self.instance,
-            self.username,
-            self.x,
-            self.y,
-            self.rights,
-            self.level,
-            self.pvp,
-            self.hitPoints.getData(),
-            self.pvpKills,
-            self.pvpDeaths,
-            self.armour.getData(),
-            self.weapon.getData(),
-            self.pendant.getData(),
-            self.ring.getData(),
-            self.boots.getData()
-        ]
+        return {
+            type: self.type,
+            id: self.instance,
+            name: self.username,
+            x: self.x,
+            y: self.y,
+            rights: self.rights,
+            level: self.level,
+            pvp: self.pvp,
+            pvpKills: self.pvpKills,
+            pvpDeaths: self.pvpDeaths,
+            hitPoints: self.hitPoints.getData(),
+            mana: self.mana.getData(),
+            armour: self.armour.getData(),
+            weapon: self.weapon.getData(),
+            pendant: self.pendant.getData(),
+            ring: self.ring.getData(),
+            boots: self.boots.getData()
+        };
     },
 
     getRemoteAddress: function() {
