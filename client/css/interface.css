@@ -1,6 +1,6 @@
 #buttons {
     margin-top: 49%;
-    margin-left: 86%;
+    margin-left: 83%;
     overflow-x: hidden;
     overflow-y: hidden;
     background-color: rgba(0, 0, 0, 0);
@@ -416,10 +416,23 @@
     top: 45.5%;
 }
 
+#mapFrame {
+    position: absolute;
+    top: 15%;
+    left: 22%;
+    background-repeat: no-repeat;
+    display: none;
+}
+
+#closeMapFrame {
+    top: 0;
+    left: 95%;
+}
+
 @media only screen and (min-width: 1501px) {
 
     #buttons {
-        width: 168px;
+        width: 210px;
         height: 45px;
     }
 
@@ -469,7 +482,7 @@
     }
 
     #settingsButton {
-        position: absolute;
+        position: relative;
         width: 42px;
         height: 45px;
         background: url('../img/3/main.png') no-repeat -1218px -942px;
@@ -481,6 +494,21 @@
 
     #settingsButton.active {
         background: url('../img/3/main.png') no-repeat -1302px -942px;
+    }
+
+    #warpButton {
+        position: relative;
+        width: 42px;
+        height: 45px;
+        background: url('../img/3/main.png') no-repeat -966px -942px;
+    }
+
+    #warpButton:hover {
+        background: url('../img/3/main.png') no-repeat -1008px -942px;
+    }
+
+    #warpButton.active {
+        background: url('../img/3/main.png') no-repeat -1050px -942px;
     }
 
     #abilityShortcut {
@@ -856,12 +884,18 @@
         height: 24px;
     }
 
+    #mapFrame {
+        width: 810px;
+        height: 540px;
+        background: url('../img/3/mapframe.png');;
+    }
+
 }
 
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
 
     #buttons {
-        width: 112px;
+        width: 140px;
         height: 30px;
     }
 
@@ -911,7 +945,7 @@
     }
 
     #settingsButton {
-        position: absolute;
+        position: relative;
         width: 28px;
         height: 30px;
         background: url('../img/2/main.png') no-repeat -812px -628px;
@@ -923,6 +957,21 @@
 
     #settingsButton.active {
         background: url('../img/2/main.png') no-repeat -868px -628px;
+    }
+
+    #warpButton {
+        position: relative;
+        width: 28px;
+        height: 30px;
+        background: url('../img/2/main.png') no-repeat -644px -628px;
+    }
+
+    #warpButton:hover {
+        background: url('../img/2/main.png') no-repeat -672px -628px;
+    }
+
+    #warpButton.active {
+        background: url('../img/2/main.png') no-repeat -700px -628px;
     }
 
     #abilityShortcut {
@@ -1365,12 +1414,18 @@
         height: 16px;
     }
 
+    #mapFrame {
+        width: 540px;
+        height: 360px;
+        background: url('../img/2/mapframe.png');;
+    }
+
 }
 
 @media only screen and (max-width: 1000px) {
 
     #buttons {
-        width: 112px;
+        width: 140px;
         height: 30px;
         transform: scale(0.80);
         margin-left: 380px;
@@ -1423,7 +1478,7 @@
     }
 
     #settingsButton {
-        position: absolute;
+        position: relative;
         width: 28px;
         height: 30px;
         background: url('../img/2/main.png') no-repeat -812px -628px;
@@ -1435,6 +1490,21 @@
 
     #settingsButton.active {
         background: url('../img/2/main.png') no-repeat -868px -628px;
+    }
+
+    #warpButton {
+        position: relative;
+        width: 28px;
+        height: 30px;
+        background: url('../img/2/main.png') no-repeat -644px -628px;
+    }
+
+    #warpButton:hover {
+        background: url('../img/2/main.png') no-repeat -672px -628px;
+    }
+
+    #warpButton.active {
+        background: url('../img/2/main.png') no-repeat -700px -628px;
     }
 
     #abilityShortcut {
@@ -1847,6 +1917,12 @@
         font-size: 8px;
         width: 30px;
         height: 8px;
+    }
+
+    #mapFrame {
+        width: 270px;
+        height: 180px;
+        background: url('../img/1/mapframe.png');;
     }
 
 }

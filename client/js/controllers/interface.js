@@ -2,7 +2,8 @@
 
 define(['jquery', '../interface/inventory',
         '../interface/profile/profile', '../interface/actions',
-        '../interface/bank', '../interface/enchant'], function($, Inventory, Profile, Actions, Bank, Enchant) {
+        '../interface/bank', '../interface/enchant', '../interface/warp'],
+    function($, Inventory, Profile, Actions, Bank, Enchant, Warp) {
 
     return Class.extend({
 
@@ -24,6 +25,7 @@ define(['jquery', '../interface/inventory',
 
             self.loadNotifications();
             self.loadActions();
+            self.loadWarp();
 
             self.done.click(function() {
                 self.hideNotify();
@@ -93,6 +95,13 @@ define(['jquery', '../interface/inventory',
 
             if (!self.enchant)
                 self.enchant = new Enchant(self.game, self);
+        },
+
+        loadWarp: function() {
+            var self = this;
+
+            if (!self.warp)
+                self.warp = new Warp(self.game, self);
         },
 
         loadNotifications: function() {

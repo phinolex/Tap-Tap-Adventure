@@ -130,7 +130,7 @@ module.exports = Mob = Character.extend({
 
     addToChestArea: function(chestAreas) {
         var self = this,
-            area = _.find(chestAreas, function(area) { return area.contains(self.x, self.y) });
+            area = _.find(chestAreas, function(area) { return area.contains(self.x, self.y); });
 
         if (area)
             area.addEntity(self);

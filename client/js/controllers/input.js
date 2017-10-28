@@ -119,7 +119,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
 
                         case Modules.Keys.One:
 
-                            self.game.entities.grids.checkPathingGrid(self.getPlayer(), 30, 8);
+                            self.game.interface.warp.display();
 
                             break;
                             
