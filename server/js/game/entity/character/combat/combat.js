@@ -288,7 +288,7 @@ module.exports = Combat = cls.Class.extend({
     },
 
     isAttacked: function() {
-        return Object.keys(this.attackers).length > 0;
+        return this.attackers && Object.keys(this.attackers).length > 0;
     },
 
     getNewPosition: function() {

@@ -50,13 +50,17 @@ module.exports = Parser = cls.Class.extend({
                 attackRate: value.attackRate ? value.attackRate : 1000,
                 movementSpeed: value.movementSpeed ? value.movementSpeed : 200,
                 projectileName: value.projectileName ? value.projectileName : null,
-                spawnDelay: value.spawnDelay ? value.spawnDelay : 60000
+                spawnDelay: value.spawnDelay ? value.spawnDelay : 60000,
+                combatPlugin: value.combatPlugin ? value.combatPlugin : null,
             };
 
             Mobs.Ids[value.id] = Mobs.Properties[key];
 
             mobCounter++;
         });
+
+        Mobs.Plugins = require ('../util/plugins')(__dirname + '/../../data/combat/');
+        log.info("Loaded Mob plugins: " + Object.keys(Mobs.Plugins))
 
         log.info('Finished loading ' + mobCounter + ' mobs.');
     },
@@ -112,8 +116,9 @@ module.exports = Parser = cls.Class.extend({
             itemCounter++;
         });
 
-        Items.Plugins = require ('../game/entity/objects/pluginItems')();
 
+        Items.Plugins = require ('../util/plugins')(__dirname + '/../../data/items/');
+        log.info("Loaded Item plugins: " + Object.keys(Items.Plugins))
 
 
         log.info('Finished loading ' + itemCounter + ' items.');

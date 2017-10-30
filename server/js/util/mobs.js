@@ -2,6 +2,7 @@ var Mobs = {};
 
 Mobs.Properties = {};
 Mobs.Ids = {};
+Mobs.Plugins = {};
 
 Mobs.idToString = function(id) {
 
@@ -12,7 +13,6 @@ Mobs.idToString = function(id) {
 };
 
 Mobs.idToName = function(id) {
-
     if (id in Mobs.Ids)
         return Mobs.Ids[id].name;
 
@@ -32,5 +32,19 @@ Mobs.exists = function(id) {
     return id in Mobs.Ids;
 
 };
+
+Mobs.idHasCombatPlugin = function(id) {
+    if(id in Mobs.Ids)
+        if (Mobs.Ids[id].combatPlugin in Mobs.Plugins)
+            return true;
+    return false;
+};
+
+Mobs.combatPluginNew = function(id) {
+    if (id in Mobs.Ids)
+        if (Mobs.Ids[id].combatPlugin in Mobs.Plugins)
+            return Mobs.Plugins[Mobs.Ids[id].combatPlugin];
+};
+
 
 module.exports = Mobs;

@@ -1,15 +1,13 @@
-var Combat = require('../combat'),
-    Utils = require('../../../../../util/utils'),
-    Messages = require('../../../../../network/messages'),
-    Modules = require('../../../../../util/modules');
+var Combat = require('../../js/game/entity/character/combat/combat'),
+    Utils = require('../../js/util/utils'),
+    Messages = require('../../js/network/messages'),
+    Modules = require('../../js/util/modules');
 
 module.exports = PirateCaptain = Combat.extend({
 
     init: function(character) {
         var self = this;
-
         self._super(character);
-
         self.character = character;
 
         /**
@@ -44,7 +42,6 @@ module.exports = PirateCaptain = Combat.extend({
 
     hit: function(character, target, hitInfo) {
         var self = this;
-
         if (self.canTeleport())
             self.teleport();
         else
@@ -99,6 +96,6 @@ module.exports = PirateCaptain = Combat.extend({
     getHealthPercentage: function() {
         //Floor it to avoid random floats
         return Math.floor((this.character.hitPoints / self.character.maxHitPoints) * 100);
-    }
+    },
 
 });

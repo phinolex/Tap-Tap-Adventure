@@ -1706,8 +1706,8 @@
     "aggressive": true,
     "attackRate": 900,
     "movementSpeed": 400,
-    "spawnDelay": 50000
-
+    "spawnDelay": 50000,
+    "combatPlugin":"skeletonking"
   },
 
   "OgreLord": {
@@ -1724,7 +1724,8 @@
     "aggressive": true,
     "attackRate": 1100,
     "movementSpeed": 600,
-    "spawnDelay": 75000
+    "spawnDelay": 75000,
+    "combatPlugin":"ogrelord"
   },
 
   "WindGuardian": {
@@ -1933,7 +1934,8 @@
     "projectileName": "projectile-iceball",
     "attackRate": 1500,
     "movementSpeed": 600,
-    "spawnDelay": 115000
+    "spawnDelay": 115000,
+    "combatPlugin":"piratecaptain"
   },
 
   "PirateKing": {
@@ -1973,7 +1975,8 @@
     "attackRate": 1500,
     "movementSpeed": 600,
     "projectileName": "projectile-terror",
-    "spawnDelay": 95000
+    "spawnDelay": 95000,
+    "combatPlugin":"queenant"
   },
 
   "QueenSpider": {
