@@ -21,6 +21,8 @@ var cls = require('../lib/class'),
     Modules = require('../util/modules'),
     Minigames = require('../controllers/minigames');
 
+//var PluginItems = require('./entity/objects/pluginItems')();
+
 module.exports = World = cls.Class.extend({
 
     init: function(id, socket, database) {
@@ -533,12 +535,11 @@ module.exports = World = cls.Class.extend({
                 self.addNPC(new NPC(info.id, instance, position.x, position.y));
 
             if (isItem) {
-                var item = new Item(info.id, instance, position.x, position.y);
-
+                var item = self.createItem(info.id, instance, position.x, position.y);
                 item.static = true;
-
                 self.addItem(item);
             }
+
 
             entities++;
         });
@@ -608,16 +609,31 @@ module.exports = World = cls.Class.extend({
         return chest;
     },
 
+
+    createItem: function(id, instance, x, y) {
+        var self = this;
+
+        var item;
+
+        if (Items.idHasPlugin(id))
+            item = new (Items.idPluginNew(id))(id,instance,x,y);
+        else
+            item = new Item(id, instance, x, y);
+
+
+        return item;
+    },
+
     dropItem: function(id, count, x, y) {
         var self = this,
-            instance = Utils.generateInstance(4, id + (Object.keys(self.entities)).length, x, y),
-            item = new Item(id, instance, x, y);
+            instance = Utils.generateInstance(4, id + (Object.keys(self.entities)).length, x, y);
+
+        var item = self.createItem(id, instance, x, y);
 
         item.count = count;
         item.dropped = true;
 
         self.addItem(item);
-
         item.despawn();
 
         item.onBlink(function() {

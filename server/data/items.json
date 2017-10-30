@@ -1325,8 +1325,9 @@
     "price": 150,
     "stackable": 1,
     "edible": 1,
-    "healsHealth": 100,
-    "maxStackSize": 5
+    "maxStackSize": 20,
+    "plugin":"healthFlask",
+    "customData": {"healAmount": 100}
   },
 
   "ManaFlask": {
@@ -1337,8 +1338,10 @@
     "price": 200,
     "stackable": 1,
     "edible": 1,
-    "healsMana": 35,
-    "maxStackSize": 5
+    "maxStackSize": 20,
+    "plugin":"healthFlask",
+    "customData": {"manaAmount": 35}
+
   },
 
   "Burger": {
@@ -1349,7 +1352,10 @@
     "price": 350,
     "stackable": 1,
     "edible": 1,
-    "healsHealth": 200
+    "maxStackSize": 5,
+    "plugin":"healthFlask",
+    "customData": {"healAmount": 200}
+
   },
 
   "BigFlask": {
@@ -1360,7 +1366,10 @@
     "price": 600,
     "stackable": 1,
     "edible": 1,
-    "healsHealth": 350
+    "maxStackSize": 10,
+    "plugin":"healthFlask",
+    "customData": {"healAmount": 350}
+
   },
   
   "Chest": {
