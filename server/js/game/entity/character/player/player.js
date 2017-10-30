@@ -241,30 +241,12 @@ module.exports = Player = Character.extend({
         }));
     },
 
-    eat: function(id) {
+
+    healHitPoints: function(amount) {
         var self = this,
-            type, amount;
-
-        if (Items.healsHealth(id)) {
             type = 'health';
-            amount = Items.getHealingFactor(id);
 
-            self.hitPoints.heal(amount);
-
-        } else if (Items.healsMana(id)) {
-            type = 'mana';
-            amount = Items.getManaFactor(id);
-
-            self.mana.heal(amount);
-        }
-
-        if (!type || !amount)
-            return;
-
-        /**
-         * Send the new points data, then signal
-         * the client to show healing.
-         */
+        self.hitPoints.heal(amount);
 
         self.sync();
 
@@ -274,6 +256,38 @@ module.exports = Player = Character.extend({
             amount: amount
         }));
     },
+
+    healManaPoints: function(amount) {
+        var self = this,
+            type = 'mana';
+
+        self.mana.heal(amount);
+
+        self.sync();
+
+        self.world.pushBroadcast(new Messages.Heal({
+            id: self.instance,
+            type: type,
+            amount: amount
+        }));
+    },
+
+
+    eat: function(id) {
+        var self = this,
+            type, amount;
+
+        if (Items.idHasPlugin(id)) {
+            var tempItem = new (Items.idPluginNew(id))(id,-1, self.x,self.y);
+            tempItem.onUse(self);
+            // plugins are responsible for sync and messages to player,
+            // or calling player methods that handle that
+
+        }
+
+    },
+
+
 
     equip: function(string, count, ability, abilityLevel) {
         var self = this,

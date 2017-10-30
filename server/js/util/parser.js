@@ -102,13 +102,19 @@ module.exports = Parser = cls.Class.extend({
                 edible: value.edible ? value.edible : 0,
                 healsHealth: value.healsHealth ? value.healsHealth : 0,
                 healsMana: value.healsMana ? value.healsMana : 0,
-                maxStackSize: value.maxStackSize ? value.maxStackSize : -1
+                maxStackSize: value.maxStackSize ? value.maxStackSize : -1,
+                plugin: value.plugin ? value.plugin : null,
+                customData: value.customData ? value.customData : null
             };
 
             Items.Ids[value.id] = Items.Data[key];
 
             itemCounter++;
         });
+
+        Items.Plugins = require ('../game/entity/objects/pluginItems')();
+
+
 
         log.info('Finished loading ' + itemCounter + ' items.');
     },

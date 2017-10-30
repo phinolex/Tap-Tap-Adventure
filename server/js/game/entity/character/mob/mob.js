@@ -60,6 +60,7 @@ module.exports = Mob = Character.extend({
             percent = 0,
             random = Utils.randomInt(0, 1000);
 
+
         for (var drop in self.drops)
             if (self.drops.hasOwnProperty(drop)) {
                 var chance = self.drops[drop];

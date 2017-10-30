@@ -2,12 +2,30 @@ var Items = {};
 
 Items.Data = {};
 Items.Ids = {};
+Items.onCreate = {};
+
+Items.Plugins = {};
 
 Items.getData = function(name) {
     if (name in Items.Data)
         return Items.Data[name];
 
     return 'null';
+};
+
+Items.idHasPlugin = function(id) {
+    if(id in Items.Ids)
+        if (Items.Ids[id].plugin in Items.Plugins)
+            return true;
+    return false;
+};
+
+Items.idPluginNew = function(id) {
+    if (id in Items.Ids) {
+        if (Items.Ids[id].plugin in Items.Plugins)
+            return Items.Plugins[Items.Ids[id].plugin];
+        return;
+    }
 };
 
 Items.idToString = function(id) {
@@ -110,6 +128,12 @@ Items.isEdible = function(id) {
 
     return false;
 };
+
+Items.getCustomData = function(id) {
+    if (id in Items.Ids)
+        return Items.Ids[id].customData
+    return null;
+}
 
 Items.maxStackSize = function(id) {
     if (id in Items.Ids)

@@ -379,9 +379,9 @@ module.exports = Combat = cls.Class.extend({
             self.world.pushBroadcast(new Messages.Combat(Packets.CombatOpcode.Hit, character.instance, target.instance, hitInfo));
             self.world.handleDamage(character, target, hitInfo.damage);
 
-            if (hitInfo.damage > 0 && character.type === 'player')
-                if (Formulas.getWeaponBreak(character, target))
-                    character.breakWeapon();
+            // if (hitInfo.damage > 0 && character.type === 'player')
+            //     if (Formulas.getWeaponBreak(character, target))
+            //         character.breakWeapon();
 
         }
 
