@@ -33,14 +33,14 @@ Mobs.exists = function(id) {
 
 };
 
-Mobs.idHasCombatPlugin = function(id) {
+Mobs.hasCombatPlugin = function(id) {
     if(id in Mobs.Ids)
         if (Mobs.Ids[id].combatPlugin in Mobs.Plugins)
             return true;
     return false;
 };
 
-Mobs.combatPluginNew = function(id) {
+Mobs.isNewCombatPlugin = function(id) {
     if (id in Mobs.Ids)
         if (Mobs.Ids[id].combatPlugin in Mobs.Plugins)
             return Mobs.Plugins[Mobs.Ids[id].combatPlugin];

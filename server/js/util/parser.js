@@ -51,7 +51,7 @@ module.exports = Parser = cls.Class.extend({
                 movementSpeed: value.movementSpeed ? value.movementSpeed : 200,
                 projectileName: value.projectileName ? value.projectileName : null,
                 spawnDelay: value.spawnDelay ? value.spawnDelay : 60000,
-                combatPlugin: value.combatPlugin ? value.combatPlugin : null,
+                combatPlugin: value.combatPlugin ? value.combatPlugin : null
             };
 
             Mobs.Ids[value.id] = Mobs.Properties[key];
@@ -60,9 +60,9 @@ module.exports = Parser = cls.Class.extend({
         });
 
         Mobs.Plugins = require ('../util/plugins')(__dirname + '/../../data/combat/');
-        log.info("Loaded Mob plugins: " + Object.keys(Mobs.Plugins))
 
         log.info('Finished loading ' + mobCounter + ' mobs.');
+        log.info('Loaded ' + Object.keys(Mobs.Plugins).length + ' mob plugins.');
     },
 
     loadNPCData: function() {
@@ -118,10 +118,9 @@ module.exports = Parser = cls.Class.extend({
 
 
         Items.Plugins = require ('../util/plugins')(__dirname + '/../../data/items/');
-        log.info("Loaded Item plugins: " + Object.keys(Items.Plugins))
-
 
         log.info('Finished loading ' + itemCounter + ' items.');
+        log.info('Loaded ' + Object.keys(Items.Plugins).length + ' item plugins.');
     },
 
     loadAbilityData: function() {

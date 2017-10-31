@@ -114,7 +114,10 @@ module.exports = World = cls.Class.extend({
             self.spawnChests();
             self.spawnEntities();
 
+            log.info('The map has been successfully loaded!');
+
             self.loaded();
+
             onWorldLoad();
         });
     },
@@ -615,8 +618,8 @@ module.exports = World = cls.Class.extend({
 
         var item;
 
-        if (Items.idHasPlugin(id))
-            item = new (Items.idPluginNew(id))(id,instance,x,y);
+        if (Items.hasPlugin(id))
+            item = new (Items.isNewPlugin(id))(id, instance, x, y);
         else
             item = new Item(id, instance, x, y);
 

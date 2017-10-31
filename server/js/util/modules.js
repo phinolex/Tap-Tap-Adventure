@@ -82,8 +82,14 @@ var Modules = {
         Introduction: 0
     },
 
-    Checkpoints: {
-        Home: 0
+    Languages: {
+        English: 0,
+        Romanian: 1,
+        French: 2,
+        Spanish: 3,
+        German: 4,
+        Japanese: 5,
+        Chinese: 6
     }
 
 };

@@ -155,13 +155,14 @@ function Main() {
         }
 
     });
+    
 
 }
 
 
 function onWorldLoad() {
     worldsCreated++;
-    if (worldsCreated == worlds.length)
+    if (worldsCreated === worlds.length)
         allWorldsCreated();
 }
 
@@ -169,8 +170,8 @@ function allWorldsCreated() {
     log.notice('Finished creating ' + worlds.length + ' world' + (worlds.length > 1 ? 's' : '') + '!');
     allowConnections = true;
 
-    var host = config.host == '0.0.0.0' ? 'localhost' : config.host;
-    log.notice('Connect locally via http://' + host + ":" + config.port);
+    var host = config.host === '0.0.0.0' ? 'localhost' : config.host;
+    log.notice('Connect locally via http://' + host + ':' + config.port);
 }
 
 function loadParser() {

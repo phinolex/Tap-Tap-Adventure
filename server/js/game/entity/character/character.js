@@ -43,8 +43,8 @@ module.exports = Character = Entity.extend({
     loadCombat: function() {
         var self = this;
 
-        if (Mobs.idHasCombatPlugin(self.id))
-            self.combat = new (Mobs.combatPluginNew(self.id))(self);
+        if (Mobs.hasCombatPlugin(self.id))
+            self.combat = new (Mobs.isNewCombatPlugin(self.id))(self);
         else
             self.combat = new Combat(self);
     },

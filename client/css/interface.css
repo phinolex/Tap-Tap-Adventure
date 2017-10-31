@@ -429,6 +429,10 @@
     left: 95%;
 }
 
+.warpButton {
+    position: absolute;
+}
+
 @media only screen and (min-width: 1501px) {
 
     #buttons {
@@ -1418,6 +1422,10 @@
         width: 540px;
         height: 360px;
         background: url('../img/2/mapframe.png');;
+    }
+
+    .mapButton {
+        
     }
 
 }

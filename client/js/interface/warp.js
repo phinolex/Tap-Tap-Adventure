@@ -1,3 +1,5 @@
+/* global _, Modules */
+
 define(['jquery'], function($) {
 
     return Class.extend({
@@ -23,6 +25,16 @@ define(['jquery'], function($) {
 
             self.close.click(function() {
                 self.hide();
+            });
+
+            log.info(Modules.Warps);
+
+            _.each(Modules.Warps, function(index, value) {
+                var warpButton = $('<div id="warp' + index + '" class="warpButton"></div>');
+
+
+                log.info(key);
+                log.info(value);
             });
 
         },

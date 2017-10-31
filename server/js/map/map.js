@@ -166,8 +166,6 @@ module.exports = Map = cls.Class.extend({
             } else {
                 self.grid = require('../../data/map/collisions.json');
 
-                log.info('[Map] Successfully loaded the collision grid!');
-
                 self.done();
             }
         });

@@ -277,8 +277,8 @@ module.exports = Player = Character.extend({
         var self = this,
             type, amount;
 
-        if (Items.idHasPlugin(id)) {
-            var tempItem = new (Items.idPluginNew(id))(id,-1, self.x,self.y);
+        if (Items.hasPlugin(id)) {
+            var tempItem = new (Items.isNewPlugin(id))(id, -1, self.x,self.y);
             tempItem.onUse(self);
             // plugins are responsible for sync and messages to player,
             // or calling player methods that handle that
