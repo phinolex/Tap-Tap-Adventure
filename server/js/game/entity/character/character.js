@@ -4,9 +4,7 @@ var Entity = require('../entity'),
     _ = require('underscore'),
     Combat = require('./combat/combat'),
     Modules = require('../../../util/modules'),
-    SkeletonKing = require('./combat/impl/skeletonking'),
-    OgreLord = require('./combat/impl/ogrelord'),
-    PirateCaptain = require('./combat/impl/piratecaptain');
+    Mobs = require('../../../util/mobs');
 
 module.exports = Character = Entity.extend({
 
@@ -45,35 +43,10 @@ module.exports = Character = Entity.extend({
     loadCombat: function() {
         var self = this;
 
-        /**
-         * Gotta figure out to dehardcode this...
-         */
-
-        switch (self.id) {
-            case 99:
-
-                self.combat = new SkeletonKing(self);
-
-                break;
-
-            case 100:
-
-                self.combat = new OgreLord(self);
-
-                break;
-
-            case 120:
-
-                self.combat = new PirateCaptain(self);
-
-                break;
-
-            default:
-
-                self.combat = new Combat(self);
-
-                break;
-        }
+        if (Mobs.idHasCombatPlugin(self.id))
+            self.combat = new (Mobs.combatPluginNew(self.id))(self);
+        else
+            self.combat = new Combat(self);
     },
 
     hit: function(attacker) {

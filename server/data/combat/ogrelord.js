@@ -1,8 +1,8 @@
-var Combat = require('../combat'),
-    Messages = require('../../../../../network/messages'),
-    Packets = require('../../../../../network/packets'),
-    Modules = require('../../../../../util/modules'),
-    Utils = require('../../../../../util/utils'),
+var Combat = require('../../js/game/entity/character/combat/combat'),
+    Messages = require('../../js/network/messages'),
+    Packets = require('../../js/network/packets'),
+    Modules = require('../../js/util/modules'),
+    Utils = require('../../js/util/utils'),
     _ = require('underscore');
 
 module.exports = OgreLord = Combat.extend({

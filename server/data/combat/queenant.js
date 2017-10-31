@@ -1,6 +1,6 @@
-var Combat = require('../combat'),
-    Packets = require('../../../../../network/packets'),
-    Messages = require('../../../../../network/messages');
+var Combat = require('../../js/game/entity/character/combat/combat'),
+    Packets = require('../../js/network/packets'),
+    Messages = require('../../js/network/messages');
 
 module.exports = QueenAnt = Combat.extend({
 
@@ -28,12 +28,12 @@ module.exports = QueenAnt = Combat.extend({
 
         self.frozen = false;
 
-        self.onDeath(function() {
+/*        self.onDeath(function() {
 
-            /**
+            /!**
              * This is to prevent the boss from dealing
              * any powerful AoE attack after dying.
-             */
+             *!/
 
             self.lastSpawn = 0;
 
@@ -47,7 +47,7 @@ module.exports = QueenAnt = Combat.extend({
             for (var i = 0; i < listCopy.length; i++)
                 self.world.kill(listCopy[i]);
 
-        });
+        });*/
     },
 
     hit: function(attacker, target, hitInfo) {

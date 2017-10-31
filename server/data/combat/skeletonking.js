@@ -1,4 +1,4 @@
-var Combat = require('../combat'),
+var Combat = require('../../js/game/entity/character/combat/combat'),
     _ = require('underscore');
 
 module.exports = SkeletonKing = Combat.extend({
