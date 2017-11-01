@@ -1,4 +1,5 @@
 var Combat = require('../../js/game/entity/character/combat/combat'),
+    Utils = require('../../js/util/utils'),
     _ = require('underscore');
 
 module.exports = SkeletonKing = Combat.extend({
@@ -15,7 +16,7 @@ module.exports = SkeletonKing = Combat.extend({
 
         self._super(character);
 
-        character.spawnDistance = 12;
+        character.spawnDistance = 20;
 
         self.lastSpawn = 0;
 
@@ -34,6 +35,9 @@ module.exports = SkeletonKing = Combat.extend({
 
     hit: function(character, target, hitInfo) {
         var self = this;
+
+        if (self.isAttacked())
+            self.beginMinionAttack();
 
         if (!self.canSpawn())
             self._super(character, target, hitInfo);
@@ -68,9 +72,41 @@ module.exports = SkeletonKing = Combat.extend({
                 self.minions.splice(self.minions.indexOf(minion), 1);
             });
 
-            if (self.character.hasTarget())
-                minion.combat.begin(self.character.target);
+            if (self.isAttacked())
+                self.beginMinionAttack();
         });
+    },
+
+    beginMinionAttack: function() {
+        var self = this;
+
+        if (!self.hasMinions())
+            return;
+
+        _.each(self.minions, function(minion) {
+            var randomTarget = self.getRandomTarget();
+
+            if (!minion.hasTarget() && randomTarget)
+                minion.combat.begin(randomTarget);
+
+        });
+    },
+
+    getRandomTarget: function() {
+        var self = this;
+
+        if (self.isAttacked()) {
+            var keys = Object.keys(self.attackers),
+                randomAttacker = self.attackers[keys[Utils.randomInt(0, keys.length)]];
+
+            if (randomAttacker)
+                return randomAttacker;
+        }
+
+        if (self.character.hasTarget())
+            return self.character.target;
+
+        return null;
     },
 
     hasMinions: function() {
@@ -82,7 +118,7 @@ module.exports = SkeletonKing = Combat.extend({
     },
 
     canSpawn: function() {
-        return (new Date().getTime() - this.lastSpawn > 25000) && !this.hasMinions();
+        return (new Date().getTime() - this.lastSpawn > 25000) && !this.hasMinions() && this.isAttacked();
     }
 
 });

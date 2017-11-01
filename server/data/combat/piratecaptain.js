@@ -7,13 +7,9 @@ module.exports = PirateCaptain = Combat.extend({
 
     init: function(character) {
         var self = this;
+
         self._super(character);
         self.character = character;
-
-        /**
-         * What exactly are we gonna make him do..
-         * Teleports around the room.
-         */
 
         character.spawnDistance = 20;
 
@@ -96,6 +92,6 @@ module.exports = PirateCaptain = Combat.extend({
     getHealthPercentage: function() {
         //Floor it to avoid random floats
         return Math.floor((this.character.hitPoints / self.character.maxHitPoints) * 100);
-    },
+    }
 
 });

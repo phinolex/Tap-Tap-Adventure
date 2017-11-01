@@ -1,6 +1,8 @@
 var Combat = require('../../js/game/entity/character/combat/combat'),
     Packets = require('../../js/network/packets'),
-    Messages = require('../../js/network/messages');
+    Messages = require('../../js/network/messages'),
+    Utils = require('../../js/util/utils'),
+    _ = require('underscore');
 
 module.exports = QueenAnt = Combat.extend({
 
@@ -16,6 +18,8 @@ module.exports = QueenAnt = Combat.extend({
 
         self.character = character;
 
+        character.spawnDistance = 14;
+
         self.aoeTimeout = null;
 
         self.lastAoE = 0;
@@ -23,17 +27,24 @@ module.exports = QueenAnt = Combat.extend({
 
         self.lastSpawn = 0;
         self.minions = [];
+        self.minionCount = 3;
 
         self.character.spawnDistance = 8;
 
         self.frozen = false;
 
-/*        self.onDeath(function() {
+        self.onNoAttackers(function() {
 
-            /!**
+            self.resetAoE();
+
+        });
+
+        self.character.onDeath(function() {
+
+            /**
              * This is to prevent the boss from dealing
              * any powerful AoE attack after dying.
-             *!/
+             */
 
             self.lastSpawn = 0;
 
@@ -47,7 +58,16 @@ module.exports = QueenAnt = Combat.extend({
             for (var i = 0; i < listCopy.length; i++)
                 self.world.kill(listCopy[i]);
 
-        });*/
+        });
+
+    },
+
+    begin: function(attacker) {
+        var self = this;
+
+        self.resetAoE();
+
+        self._super(attacker);
     },
 
     hit: function(attacker, target, hitInfo) {
@@ -55,6 +75,9 @@ module.exports = QueenAnt = Combat.extend({
 
         if (self.frozen)
             return;
+
+        if (self.isAttacked())
+            self.beginMinionAttack();
 
         if (self.canCastAoE()) {
             self.dealAoE();
@@ -67,14 +90,20 @@ module.exports = QueenAnt = Combat.extend({
     dealAoE: function() {
         var self = this;
 
-        if (self.world)
-            self.pushToGroup(self.character.group, new Messages.Movement(Packets.MovementOpcode.Freeze, [self.character.instance, true]))
+        self.pushFreeze(true);
 
         self.stop();
 
         self.aoeTimeout = setTimeout(function() {
 
             self._super(self.aoeRadius, true);
+
+            self.resetAoE();
+
+            self.pushFreeze(false);
+
+            if (self.character.hasTarget())
+                self.begin(self.character.target);
 
         }, 5000);
 
@@ -85,11 +114,84 @@ module.exports = QueenAnt = Combat.extend({
 
         self.lastMinions = new Date().getTime();
 
+        for (var i = 0; i < self.minionCount; i++)
+            self.minions.push(self.world.spawnMob(13, self.character.x, self.character.y));
 
+        _.each(self.minions, function(minion) {
+            minion.onDeath(function() {
+
+                if (self.isLast())
+                    self.lastSpawn = new Date().getTime();
+
+                self.minions.splice(self.minions.indexOf(minion), 1);
+
+            });
+
+            if (self.isAttacked())
+                self.beginMinionAttack();
+
+        });
+    },
+
+    beginMinionAttack: function() {
+        var self = this;
+
+        if (!self.hasMinions())
+            return;
+
+        _.each(self.minions, function(minion) {
+            var randomTarget = self.getRandomTarget();
+
+            if (!minion.hasTarget() && randomTarget)
+                minion.combat.begin(randomTarget);
+
+        });
+    },
+
+    resetAoE: function() {
+        this.lastAoE = new Date().getTime();
+    },
+
+    getRandomTarget: function() {
+        var self = this;
+
+        if (self.isAttacked()) {
+            var keys = Object.keys(self.attackers),
+                randomAttacker = self.attackers[keys[Utils.randomInt(0, keys.length)]];
+
+            if (randomAttacker)
+                return randomAttacker;
+        }
+
+        if (self.character.hasTarget())
+            return self.character.target;
+
+        return null;
+    },
+
+    pushFreeze: function(state) {
+        var self = this;
+
+        self.character.frozen = state;
+        self.character.stunned = state;
+
+        self.world.pushToAdjacentGroups(self.character.group, new Messages.Movement(Packets.MovementOpcode, [self.character.instance, state]));
+    },
+
+    isLast: function() {
+        return this.minions.length === 1;
+    },
+
+    hasMinions: function() {
+        return this.minions.length > 0;
     },
 
     canCastAoE: function() {
         return new Date().getTime() - this.lastAoE > 30000;
+    },
+
+    canSpawn: function() {
+        return new Date().getTime() - this.lastMinions > 45000 && !this.hasMinions() && this.isAttacked();
     }
 
 });

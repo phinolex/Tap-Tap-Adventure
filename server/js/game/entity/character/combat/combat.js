@@ -111,7 +111,7 @@ module.exports = Combat = cls.Class.extend({
     parseAttack: function() {
         var self = this;
 
-        if (!self.world || !self.queue)
+        if (!self.world || !self.queue || self.character.stunned)
             return;
 
         if (self.character.hasTarget() && self.inProximity()) {
@@ -130,6 +130,9 @@ module.exports = Combat = cls.Class.extend({
 
     parseFollow: function() {
         var self = this;
+
+        if (self.character.frozen)
+            return;
 
         if (self.isMob()) {
             if (!self.character.isRanged())
@@ -257,7 +260,13 @@ module.exports = Combat = cls.Class.extend({
         if (self.hasAttacker(character))
             delete self.attackers[character.instance];
 
-        self.sendToSpawn();
+        if (!self.isAttacked()) {
+            self.sendToSpawn();
+
+            if (self.noAttackersCallback)
+                self.noAttackersCallback();
+
+        }
     },
 
     sendToSpawn: function() {
@@ -411,6 +420,10 @@ module.exports = Combat = cls.Class.extend({
         _.each(this.attackers, function(attacker) {
             callback(attacker);
         });
+    },
+
+    onNoAttackers: function(callback) {
+        this.noAttackersCallback = callback;
     },
     
     getTime: function() {

@@ -67,6 +67,9 @@ module.exports = OgreLord = Combat.extend({
     hit: function(character, target, hitInfo) {
         var self = this;
 
+        if (self.isAttacked())
+            self.beginMinionAttack();
+
         if (!character.isNonDiagonal(target)) {
             var distance = character.getDistance(target);
 
@@ -123,13 +126,45 @@ module.exports = OgreLord = Combat.extend({
 
             });
 
-            if (self.character.hasTarget())
-                minion.combat.begin(self.character.target);
+            if (self.isAttacked())
+                self.beginMinionAttack();
 
         });
 
         if (!self.loaded)
             self.load();
+    },
+
+    beginMinionAttack: function() {
+        var self = this;
+
+        if (!self.hasMinions())
+            return;
+
+        _.each(self.minions, function(minion) {
+            var randomTarget = self.getRandomTarget();
+
+            if (!minion.hasTarget() && randomTarget)
+                minion.combat.begin(randomTarget);
+
+        });
+    },
+
+    getRandomTarget: function() {
+        var self = this;
+
+        if (self.isAttacked()) {
+            var keys = Object.keys(self.attackers),
+                randomAttacker = self.attackers[keys[Utils.randomInt(0, keys.length)]];
+
+            if (randomAttacker)
+                return randomAttacker;
+        }
+
+        if (self.character.hasTarget())
+            return self.character.target;
+
+        return null;
     },
 
     hasMinions: function() {
@@ -141,7 +176,7 @@ module.exports = OgreLord = Combat.extend({
     },
 
     canSpawn: function() {
-        return (new Date().getTime() - this.lastSpawn > 50000) && !this.hasMinions() && this.character.hasTarget();
+        return (new Date().getTime() - this.lastSpawn > 50000) && !this.hasMinions() && this.isAttacked();
     }
 
 });

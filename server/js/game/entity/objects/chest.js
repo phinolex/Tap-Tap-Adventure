@@ -1,4 +1,4 @@
-var Entity = require('../Entity'),
+var Entity = require('../entity'),
     Utils = require('../../../util/utils');
 
 module.exports = Chest = Entity.extend({
