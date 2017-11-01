@@ -40,6 +40,7 @@ define(['jquery'], function($) {
             self.registerFields = [];
 
             self.game = null;
+            self.zoomFactor = 1;
 
             self.parchmentAnimating = false;
             self.loggingIn = false;
@@ -194,8 +195,16 @@ define(['jquery'], function($) {
         },
 
         zoom: function() {
-            var self = this,
-                zoomFactor = self.window.width() / self.container.width();
+            var self = this;
+
+            var containerWidth = self.container.width(),
+                containerHeight = self.container.height(),
+                windowWidth = self.window.width(),
+                windowHeight = self.window.height(),
+                zoomFactor = windowWidth / containerWidth;
+
+            if (containerHeight + 50 >= windowHeight)
+                zoomFactor = windowHeight / containerHeight;
 
             if (self.getScaleFactor() === 3)
                 zoomFactor -= 0.1;
