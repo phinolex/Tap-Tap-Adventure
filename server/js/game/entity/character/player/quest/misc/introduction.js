@@ -19,6 +19,15 @@ module.exports = Introduction = Quest.extend({
     load: function(stage) {
         var self = this;
 
+        if (!self.player.inTutorial()) {
+            log.info(self.player.x);
+            log.info(self.player.y);
+            log.info('this guy is not in tutorial wtf');
+            self.setStage(9999);
+            self.update();
+            return;
+        }
+
         if (!stage)
             self.update();
         else
@@ -122,6 +131,10 @@ module.exports = Introduction = Quest.extend({
             stage: self.stage,
             isQuest: true
         }));
+    },
+
+    isFinished: function() {
+        return this._super() || !this.player.inTutorial();
     },
 
     toggleChat: function() {

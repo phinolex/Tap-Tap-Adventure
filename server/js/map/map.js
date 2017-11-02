@@ -227,6 +227,17 @@ module.exports = Map = cls.Class.extend({
         return pos;
     },
 
+    inArea: function(posX, posY, x, y, width, height) {
+        return posX >= x && posY >= y && posX <= width + x && posY <= height + y;
+    },
+
+    inTutorialArea: function(entity) {
+        if (entity.x === -1 || entity.y === -1)
+            return true;
+
+        return this.inArea(entity.x, entity.y, 13, 553, 7, 7) || this.inArea(entity.x, entity.y, 15, 13, 11, 12);
+    },
+
     done: function() {
         if (this.readyCallback)
             this.readyCallback();

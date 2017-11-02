@@ -821,6 +821,10 @@ module.exports = Player = Character.extend({
         self.mysql.creator.save(self);
     },
 
+    inTutorial: function() {
+        return this.world.map.inTutorialArea(this);
+    },
+
     onGroup: function(callback) {
         this.groupCallback = callback;
     },
