@@ -13,11 +13,14 @@ define(['jquery'], function($) {
             self.warp = $('#warpButton');
             self.close = $('#closeMapFrame');
 
+            self.warpCount = 0;
+
             self.load();
         },
 
         load: function() {
-            var self = this;
+            var self = this,
+                scale = self.getScale();
 
             self.warp.click(function() {
                 self.toggle();
@@ -27,12 +30,12 @@ define(['jquery'], function($) {
                 self.hide();
             });
 
-            log.info(Modules.Warps);
+            for (var i = 1; i < 7; i++) {
+                var warp = self.mapFrame.find('#warp' + i);
 
-            _.each(Modules.Warps, function(index, value) {
-                var warpButton = $('<div id="warp' + index + '" class="warpButton"></div>');
-
-            });
+                if (warp)
+                    warp.click(function(event) { log.info('I clicked'); self.game.socket.send(Packets.Warp, [event.currentTarget.id.substring(4)]) })
+            }
 
         },
 
@@ -47,6 +50,10 @@ define(['jquery'], function($) {
                 self.hide();
             else
                 self.display();
+        },
+
+        getScale: function() {
+            return this.game.getScaleFactor();
         },
 
         isVisible: function() {

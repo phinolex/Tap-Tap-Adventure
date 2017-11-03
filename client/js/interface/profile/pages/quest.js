@@ -129,7 +129,6 @@ define(['jquery', '../page'], function($, Page) {
         },
 
 
-
         /**
          * Might as well properly organize them based
          * on their type of item and id (index).

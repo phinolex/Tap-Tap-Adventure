@@ -38,7 +38,8 @@ Packets = {
     Guild: 36,
     Pointer: 37,
     PVP: 38,
-    Click: 39
+    Click: 39,
+    Warp: 40
 };
 
 Packets.IntroOpcode = {

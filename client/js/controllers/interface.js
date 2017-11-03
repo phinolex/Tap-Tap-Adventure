@@ -46,6 +46,7 @@ define(['jquery', '../interface/inventory',
 
             if (self.enchant)
                 self.enchant.resize();
+
         },
 
         loadInventory: function(size, data) {

@@ -35,7 +35,6 @@ define(['jquery'], function($) {
             var self = this,
                 image = self.getSlot(index).find('#inventoryImage' + index);
 
-
             switch (type) {
                 case 'item':
 

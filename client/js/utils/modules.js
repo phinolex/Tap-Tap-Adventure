@@ -115,10 +115,6 @@ Modules = {
         Entity: 0,
         Position: 1,
         Relative: 2
-    },
-
-    Warps: {
-        0: ['Mudwich', 50, 50]
     }
 
 };

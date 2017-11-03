@@ -421,7 +421,14 @@
     top: 15%;
     left: 22%;
     background-repeat: no-repeat;
+    pointer-events: auto;
     display: none;
+}
+
+.mapButton {
+    position: absolute;
+    background-position-y: 0;
+    -ms-background-position-y: 0;
 }
 
 #closeMapFrame {
@@ -892,6 +899,57 @@
         width: 810px;
         height: 540px;
         background: url('../img/3/mapframe.png');;
+    }
+
+    .mapButton {
+        width: 45px;
+        height: 48px;
+    }
+
+    #warp1 {
+        top: 120px;
+        left: 360px;
+        background: url('../img/3/mapicons.png') 0 0;
+    }
+
+    #warp2 {
+        top: 165px;
+        left: 75px;
+        background: url('../img/3/mapicons.png') 51px 0;
+    }
+
+    #warp3 {
+        top: 210px;
+        left: 525px;
+        background: url('../img/3/mapicons.png') 96px 0;
+    }
+
+    #warp4 {
+        top: 360px;
+        left: 405px;
+        background: url('../img/3/mapicons.png') 141px 0;
+    }
+
+    #warp5 {
+        top: 360px;
+        left: 225px;
+        background: url('../img/3/mapicons.png') 186px 0;
+    }
+
+    #warp6 {
+        top: 240px;
+        left: 270px;
+        background: url('../img/3/mapicons.png') 231px 0;
+    }
+
+    #warp1:hover, #warp2:hover, #warp3:hover, #warp4:hover, #warp5:hover, #warp6:hover {
+        background-position-y: -60px;
+        -ms-background-position-y: -60px;
+    }
+
+    #warp1.active, #warp2.active, #warp3.active, #warp4.active, #warp5.active, #warp6.active {
+        background-position-y: -120px;
+        -ms-background-position-y: -120px;
     }
 
 }
@@ -1425,7 +1483,56 @@
     }
 
     .mapButton {
-        
+        width: 30px;
+        height: 32px;
+    }
+
+    #warp1 {
+        top: 80px;
+        left: 240px;
+        background: url('../img/2/mapicons.png') 0 0;
+    }
+
+    #warp2 {
+        top: 110px;
+        left: 50px;
+        background: url('../img/2/mapicons.png') 34px 0;
+    }
+
+    #warp3 {
+        top: 140px;
+        left: 350px;
+        background: url('../img/2/mapicons.png') 64px 0;
+    }
+
+    #warp4 {
+        top: 240px;
+        left: 270px;
+
+
+        background: url('../img/2/mapicons.png') 94px 0;
+    }
+
+    #warp5 {
+        top: 240px;
+        left: 150px;
+        background: url('../img/2/mapicons.png') 124px 0;
+    }
+
+    #warp6 {
+        top: 160px;
+        left: 180px;
+        background: url('../img/2/mapicons.png') 154px 0;
+    }
+
+    #warp1:hover, #warp2:hover, #warp3:hover, #warp4:hover, #warp5:hover, #warp6:hover {
+        background-position-y: -40px;
+        -ms-background-position-y: -40px;
+    }
+
+    #warp1.active, #warp2.active, #warp3.active, #warp4.active, #warp5.active, #warp6.active {
+        background-position-y: -80px;
+        -ms-background-position-y: -80px;
     }
 
 }
@@ -1436,7 +1543,7 @@
         width: 140px;
         height: 30px;
         transform: scale(0.80);
-        margin-left: 380px;
+        margin-left: 350px;
         margin-top: 229px;
     }
 
@@ -1898,6 +2005,10 @@
         background-position: -48px -166px;
     }
 
+    .close:hover {
+        background-position: -64px -166px;
+    }
+
     #message {
         width: 120px;
         height: 23px;
@@ -1931,6 +2042,57 @@
         width: 270px;
         height: 180px;
         background: url('../img/1/mapframe.png');;
+    }
+
+    .mapButton {
+        width: 15px;
+        height: 16px;
+    }
+
+    #warp1 {
+        top: 40px;
+        left: 120px;
+        background: url('../img/1/mapicons.png') 0 0;
+    }
+
+    #warp2 {
+        top: 55px;
+        left: 25px;
+        background: url('../img/1/mapicons.png') 17px 0;
+    }
+
+    #warp3 {
+        top: 70px;
+        left: 175px;
+        background: url('../img/1/mapicons.png') 32px 0;
+    }
+
+    #warp4 {
+        top: 120px;
+        left: 135px;
+        background: url('../img/1/mapicons.png') 47px 0;
+    }
+
+    #warp5 {
+        top: 120px;
+        left: 75px;
+        background: url('../img/1/mapicons.png') 62px 0;
+    }
+
+    #warp6 {
+        top: 80px;
+        left: 90px;
+        background: url('../img/1/mapicons.png') 77px 0;
+    }
+
+    #warp1:hover, #warp2:hover, #warp3:hover, #warp4:hover, #warp5:hover, #warp6:hover {
+        background-position-y: -20px;
+        -ms-background-position-y: -20px;
+    }
+
+    #warp1.active, #warp2.active, #warp3.active, #warp4.active, #warp5.active, #warp6.active {
+        background-position-y: -40px;
+        -ms-background-position-y: -40px;
     }
 
 }

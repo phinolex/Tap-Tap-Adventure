@@ -90,6 +90,15 @@ var Modules = {
         German: 4,
         Japanese: 5,
         Chinese: 6
+    },
+
+    Warps: {
+        Mudwich: 0,
+        Northton: 1,
+        Lakesworld: 2,
+        Aynor: 3,
+        Crullfeld: 4,
+        Patsow: 5
     }
 
 };

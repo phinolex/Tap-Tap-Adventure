@@ -20,9 +20,6 @@ module.exports = Introduction = Quest.extend({
         var self = this;
 
         if (!self.player.inTutorial()) {
-            log.info(self.player.x);
-            log.info(self.player.y);
-            log.info('this guy is not in tutorial wtf');
             self.setStage(9999);
             self.update();
             return;

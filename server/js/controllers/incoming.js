@@ -98,6 +98,10 @@ module.exports = Incoming = cls.Class.extend({
                     self.handleClick(message);
                     break;
 
+                case Packets.Warp:
+                    self.handleWarp(message);
+                    break;
+
             }
 
         });
@@ -764,6 +768,38 @@ module.exports = Incoming = cls.Class.extend({
 
                 if (self.player.profileToggleCallback)
                     self.player.profileToggleCallback(isOpen);
+
+                break;
+        }
+    },
+
+    handleWarp: function(message) {
+        var self = this,
+            id = parseInt(message.shift()) + 1;
+
+        switch (id) {
+            case Modules.Warps.Mudwich:
+
+                break;
+
+            case Modules.Warps.Northton:
+
+                break;
+
+            case Modules.Warps.Lakesworld:
+
+                break;
+
+
+            case Modules.Warps.Aynor:
+
+                break;
+
+            case Modules.Warps.Crullfeld:
+
+                break;
+
+            case Modules.Warps.Patsow:
 
                 break;
         }
