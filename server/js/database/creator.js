@@ -57,10 +57,11 @@ module.exports = Creator = cls.Class.extend({
                 'pvpDeaths int,' +
                 'rank int,' +
                 'ban int(64),' +
-                'mute int(64),' +
-                'membership int(64),' +
-                'lastLogin int(64),' +
+                'mute varchar(64),' +
+                'membership varchar(64),' +
+                'lastLogin varchar(64),' +
                 'guild varchar(64),' +
+                'lastWarp varchar(64),' +
                 'PRIMARY KEY(username))', handleError('player_data'));
         });
 
@@ -172,7 +173,8 @@ module.exports = Creator = cls.Class.extend({
                     mute: data.mute,
                     membership: data.membership,
                     lastLogin: data.lastLogin,
-                    guild: data.guild
+                    guild: data.guild,
+                    lastWarp: data.lastWarp
                 };
                 break;
 
@@ -213,6 +215,7 @@ module.exports = Creator = cls.Class.extend({
             guild: player.guild ? player.guild : '',
             pvpKills: player.pvpKills ? player.pvpKills : 0,
             pvpDeaths: player.pvpDeaths ? player.pvpDeaths : 0,
+            lastWarp: player.warp.lastWarp ? player.warp.lastWarp : 0,
             armour: [player.armour ? player.armour.getId() : 114, player.armour ? player.armour.getCount() : 0, player.armour ? player.armour.getAbility() : 0, player.armour ? player.armour.getAbilityLevel() : 0],
             weapon: [player.weapon ? player.weapon.getId() : -1, player.weapon ? player.weapon.getCount() : 0, player.weapon ? player.weapon.getAbility() : 0, player.weapon ? player.weapon.getAbilityLevel() : 0],
             pendant: [player.pendant ? player.pendant.getId() : -1, player.pendant ? player.pendant.getCount() : 0, player.pendant ? player.pendant.getAbility() : 0, player.pendant ? player.pendant.getAbilityLevel() : 0],

@@ -775,34 +775,10 @@ module.exports = Incoming = cls.Class.extend({
 
     handleWarp: function(message) {
         var self = this,
-            id = parseInt(message.shift()) + 1;
+            id = parseInt(message.shift()) - 1;
 
-        switch (id) {
-            case Modules.Warps.Mudwich:
-
-                break;
-
-            case Modules.Warps.Northton:
-
-                break;
-
-            case Modules.Warps.Lakesworld:
-
-                break;
-
-
-            case Modules.Warps.Aynor:
-
-                break;
-
-            case Modules.Warps.Crullfeld:
-
-                break;
-
-            case Modules.Warps.Patsow:
-
-                break;
-        }
+        if (self.player.warp)
+            self.player.warp.warp(id);
     },
 
     canAttack: function(attacker, target) {

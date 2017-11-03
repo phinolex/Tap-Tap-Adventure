@@ -24,7 +24,8 @@ var Character = require('../character'),
     Guild = require('./guild'),
     Utils = require('../../../../util/utils'),
     Hit = require('../combat/hit'),
-    Trade = require('./trade');
+    Trade = require('./trade'),
+    Warp = require('./warp');
 
 module.exports = Player = Character.extend({
 
@@ -59,6 +60,7 @@ module.exports = Player = Character.extend({
         self.abilities = new Abilities(self);
         self.enchant = new Enchant(self);
         self.trade = new Trade(self);
+        self.warp = new Warp(self);
 
         self.introduced = false;
         self.currentSong = null;
@@ -86,6 +88,8 @@ module.exports = Player = Character.extend({
         self.lastLogin = data.lastLogin;
         self.pvpKills = data.pvpKills;
         self.pvpDeaths = data.pvpDeaths;
+
+        self.warp.setLastWarp(data.lastWarp);
 
         self.level = Formulas.expToLevel(self.experience);
         self.hitPoints = new Hitpoints(data.hitPoints, Formulas.getMaxHitPoints(self.level));
@@ -368,7 +372,7 @@ module.exports = Player = Character.extend({
         self.send(new Messages.Death(self.instance));
     },
 
-    teleport: function(x, y, isDoor) {
+    teleport: function(x, y, isDoor, animate) {
         var self = this;
 
         if (isDoor && !self.finishedTutorial()) {
@@ -378,7 +382,7 @@ module.exports = Player = Character.extend({
             return;
         }
 
-        self.world.pushToAdjacentGroups(self.group, new Messages.Teleport(self.instance, x, y));
+        self.world.pushToAdjacentGroups(self.group, new Messages.Teleport(self.instance, x, y, animate));
 
         self.setPosition(x, y);
         self.checkGroups();

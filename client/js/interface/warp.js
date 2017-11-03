@@ -34,7 +34,13 @@ define(['jquery'], function($) {
                 var warp = self.mapFrame.find('#warp' + i);
 
                 if (warp)
-                    warp.click(function(event) { log.info('I clicked'); self.game.socket.send(Packets.Warp, [event.currentTarget.id.substring(4)]) })
+                    warp.click(function(event) {
+
+                        self.hide();
+
+                        self.game.socket.send(Packets.Warp, [event.currentTarget.id.substring(4)]);
+
+                    })
             }
 
         },
