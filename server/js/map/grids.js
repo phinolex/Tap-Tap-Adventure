@@ -63,7 +63,6 @@ module.exports = Grids = cls.Class.extend({
         if (!self.checkBounds(entity.x, entity.y, radius))
             return;
 
-
         for (var i = -radius; i < radius + 1; i++) {
 
             for (var j = -radius; j < radius + 1; j++) {

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c48d7ea8-5c56-4f6b-afdb-8c04901f739b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/warp.js" />
+    <list default="true" id="c48d7ea8-5c56-4f6b-afdb-8c04901f739b" name="Default" comment="Warping and map changes">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/vars.css" afterPath="$PROJECT_DIR$/client/css/vars.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/data/maps/world_client.js" afterPath="$PROJECT_DIR$/client/data/maps/world_client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/data/maps/world_client.json" afterPath="$PROJECT_DIR$/client/data/maps/world_client.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/interface/warp.js" afterPath="$PROJECT_DIR$/client/js/interface/warp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/map/world_server.json" afterPath="$PROJECT_DIR$/server/data/map/world_server.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/controllers/incoming.js" afterPath="$PROJECT_DIR$/server/js/controllers/incoming.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/database/creator.js" afterPath="$PROJECT_DIR$/server/js/database/creator.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/util/modules.js" afterPath="$PROJECT_DIR$/server/js/util/modules.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/map/data/map.json" afterPath="$PROJECT_DIR$/tools/map/data/map.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/entity.js" afterPath="$PROJECT_DIR$/client/js/entity/entity.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/game.js" afterPath="$PROJECT_DIR$/client/js/game.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/network/packets.js" afterPath="$PROJECT_DIR$/client/js/network/packets.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/renderer/renderer.js" afterPath="$PROJECT_DIR$/client/js/renderer/renderer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/combat/queenant.js" afterPath="$PROJECT_DIR$/server/data/combat/queenant.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/quests.json" afterPath="$PROJECT_DIR$/server/data/quests.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/character.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/character.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/mob/mob.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/mob/mob.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/world.js" afterPath="$PROJECT_DIR$/server/js/game/world.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/map/grids.js" afterPath="$PROJECT_DIR$/server/js/map/grids.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/network/packets.js" afterPath="$PROJECT_DIR$/server/js/network/packets.js" />
     </list>
     <ignored path="Tap-Tap-Adventure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,21 +34,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="interface.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/css/interface.css">
+      <file leaf-file-name="quests.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/data/quests.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="930" column="5" lean-forward="false" selection-start-line="930" selection-start-column="5" selection-end-line="930" selection-end-column="5" />
+            <state relative-caret-position="350">
+              <caret line="25" column="10" lean-forward="false" selection-start-line="25" selection-start-column="10" selection-end-line="25" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="incoming.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/js/controllers/incoming.js">
+      <file leaf-file-name="vars.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/css/vars.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3">
-              <caret line="753" column="0" lean-forward="true" selection-start-line="753" selection-start-column="0" selection-end-line="753" selection-end-column="0" />
+            <state relative-caret-position="6384">
+              <caret line="456" column="5" lean-forward="false" selection-start-line="456" selection-start-column="5" selection-end-line="456" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="queenant.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/data/combat/queenant.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1064">
+              <caret line="76" column="10" lean-forward="false" selection-start-line="76" selection-start-column="10" selection-end-line="76" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="combat.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3010">
+              <caret line="215" column="50" lean-forward="false" selection-start-line="215" selection-start-column="50" selection-end-line="215" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grids.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/js/map/grids.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="382">
+              <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="world.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="9478">
+              <caret line="677" column="41" lean-forward="false" selection-start-line="677" selection-start-column="41" selection-end-line="677" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="character.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/character.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2562">
+              <caret line="183" column="39" lean-forward="false" selection-start-line="183" selection-start-column="39" selection-end-line="183" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="renderer.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/js/renderer/renderer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7028">
+              <caret line="502" column="37" lean-forward="true" selection-start-line="502" selection-start-column="37" selection-end-line="502" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="entity.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/js/entity/entity.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2240">
+              <caret line="160" column="28" lean-forward="true" selection-start-line="160" selection-start-column="28" selection-end-line="160" selection-end-column="28" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -54,41 +126,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mysql.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/js/database/mysql.js">
+      <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="197" column="10" lean-forward="true" selection-start-line="197" selection-start-column="10" selection-end-line="197" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/js/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="143" column="0" lean-forward="true" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="player.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="creator.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/server/js/database/creator.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+            <state relative-caret-position="7602">
+              <caret line="543" column="46" lean-forward="false" selection-start-line="543" selection-start-column="46" selection-end-line="543" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -105,17 +147,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>490</find>
-      <find>self.zoomFact</find>
-      <find>frame</find>
-      <find>container {</find>
-      <find>isFinished</find>
-      <find>inTutorial</find>
-      <find>background-po</find>
-      <find>.mapButton</find>
-      <find>mapButton</find>
-      <find>mapframe</find>
-      <find>warp3 {</find>
       <find>warp3</find>
       <find>mapFrame</find>
       <find>pointer-even</find>
@@ -126,7 +157,6 @@
       <find>map</find>
       <find>warp5</find>
       <find>Teleport</find>
-      <find>stroke</find>
       <find>teleport:</find>
       <find>bow</find>
       <find>save:</find>
@@ -135,6 +165,18 @@
       <find>getPlayerData</find>
       <find>parse</find>
       <find>warp</find>
+      <find>stroke</find>
+      <find>addAtta</find>
+      <find>add</find>
+      <find>drawName</find>
+      <find>onNPC</find>
+      <find>stop:</find>
+      <find>countdown</find>
+      <find>return:</find>
+      <find>target</find>
+      <find>terror</find>
+      <find>resetAoE</find>
+      <find>updateEntityPosition</find>
     </findStrings>
     <replaceStrings>
       <replace>fpsCheck</replace>
@@ -148,13 +190,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/js/entity/entityhandler.js" />
-        <option value="$PROJECT_DIR$/server/js/util/chests.js" />
-        <option value="$PROJECT_DIR$/server/data/items.json" />
         <option value="$PROJECT_DIR$/server/js/game/entity/npc/npc.js" />
         <option value="$PROJECT_DIR$/client/js/controllers/entities.js" />
         <option value="$PROJECT_DIR$/client/js/renderer/updater.js" />
-        <option value="$PROJECT_DIR$/client/js/entity/entity.js" />
         <option value="$PROJECT_DIR$/client/js/entity/objects/chest.js" />
         <option value="$PROJECT_DIR$/server/js/map/areas/musicareas.js" />
         <option value="$PROJECT_DIR$/server/js/game/formulas.js" />
@@ -162,43 +200,47 @@
         <option value="$PROJECT_DIR$/server/js/map/areas/chestareas.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/objects/projectile.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/combat/impl/piratecaptain.js" />
-        <option value="$PROJECT_DIR$/server/js/game/entity/character/mob/mob.js" />
         <option value="$PROJECT_DIR$/client/js/controllers/input.js" />
         <option value="$PROJECT_DIR$/server/js/util/items.js" />
         <option value="$PROJECT_DIR$/server/js/util/mobs.js" />
-        <option value="$PROJECT_DIR$/server/js/game/world.js" />
         <option value="$PROJECT_DIR$/server/js/util/parser.js" />
         <option value="$PROJECT_DIR$/server/js/main.js" />
-        <option value="$PROJECT_DIR$/client/js/game.js" />
         <option value="$PROJECT_DIR$/server/data/combat/piratecaptain.js" />
-        <option value="$PROJECT_DIR$/server/js/game/entity/character/character.js" />
-        <option value="$PROJECT_DIR$/server/data/combat/queenant.js" />
         <option value="$PROJECT_DIR$/server/data/combat/ogrelord.js" />
         <option value="$PROJECT_DIR$/server/data/combat/skeletonking.js" />
-        <option value="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/objects/chest.js" />
         <option value="$PROJECT_DIR$/client/css/main.css" />
         <option value="$PROJECT_DIR$/client/js/app.js" />
         <option value="$PROJECT_DIR$/server/js/map/areas/specialareas.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/quest/quest.js" />
-        <option value="$PROJECT_DIR$/client/data/config.json" />
         <option value="$PROJECT_DIR$/server/js/map/map.js" />
         <option value="$PROJECT_DIR$/client/js/controllers/interface.js" />
-        <option value="$PROJECT_DIR$/client/js/network/packets.js" />
-        <option value="$PROJECT_DIR$/server/js/network/packets.js" />
         <option value="$PROJECT_DIR$/client/js/interface/profile/pages/quest.js" />
         <option value="$PROJECT_DIR$/client/js/interface/enchant.js" />
         <option value="$PROJECT_DIR$/client/index.html" />
         <option value="$PROJECT_DIR$/client/css/interface.css" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/quest/misc/introduction.js" />
         <option value="$PROJECT_DIR$/client/js/utils/modules.js" />
-        <option value="$PROJECT_DIR$/client/css/vars.css" />
         <option value="$PROJECT_DIR$/server/js/util/modules.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
         <option value="$PROJECT_DIR$/client/js/interface/warp.js" />
         <option value="$PROJECT_DIR$/server/js/controllers/incoming.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/warp.js" />
         <option value="$PROJECT_DIR$/server/js/database/creator.js" />
+        <option value="$PROJECT_DIR$/client/data/config.json" />
+        <option value="$PROJECT_DIR$/server/data/quests.json" />
+        <option value="$PROJECT_DIR$/client/css/vars.css" />
+        <option value="$PROJECT_DIR$/server/js/game/world.js" />
+        <option value="$PROJECT_DIR$/server/js/game/entity/character/mob/mob.js" />
+        <option value="$PROJECT_DIR$/server/js/network/packets.js" />
+        <option value="$PROJECT_DIR$/client/js/network/packets.js" />
+        <option value="$PROJECT_DIR$/client/js/entity/entity.js" />
+        <option value="$PROJECT_DIR$/client/js/renderer/renderer.js" />
+        <option value="$PROJECT_DIR$/server/js/game/entity/character/character.js" />
+        <option value="$PROJECT_DIR$/server/data/combat/queenant.js" />
+        <option value="$PROJECT_DIR$/client/js/game.js" />
+        <option value="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
+        <option value="$PROJECT_DIR$/server/js/map/grids.js" />
       </list>
     </option>
   </component>
@@ -221,9 +263,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="356" />
     <option name="y" value="22" />
-    <option name="width" value="924" />
+    <option name="width" value="1280" />
     <option name="height" value="774" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -263,6 +304,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -279,33 +322,7 @@
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
               <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="maps" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -321,62 +338,6 @@
               <item name="js" type="462c0819:PsiDirectoryNode" />
               <item name="entity" type="462c0819:PsiDirectoryNode" />
               <item name="character" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="character" type="462c0819:PsiDirectoryNode" />
-              <item name="mob" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="character" type="462c0819:PsiDirectoryNode" />
-              <item name="player" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="interface" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="interface" type="462c0819:PsiDirectoryNode" />
-              <item name="profile" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="interface" type="462c0819:PsiDirectoryNode" />
-              <item name="profile" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="map" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="network" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -388,13 +349,6 @@
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
               <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -402,6 +356,13 @@
               <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="combat" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -421,13 +382,6 @@
               <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
               <item name="game" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -455,7 +409,7 @@
               <item name="game" type="462c0819:PsiDirectoryNode" />
               <item name="entity" type="462c0819:PsiDirectoryNode" />
               <item name="character" type="462c0819:PsiDirectoryNode" />
-              <item name="player" type="462c0819:PsiDirectoryNode" />
+              <item name="combat" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -465,8 +419,7 @@
               <item name="game" type="462c0819:PsiDirectoryNode" />
               <item name="entity" type="462c0819:PsiDirectoryNode" />
               <item name="character" type="462c0819:PsiDirectoryNode" />
-              <item name="player" type="462c0819:PsiDirectoryNode" />
-              <item name="quest" type="462c0819:PsiDirectoryNode" />
+              <item name="mob" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -475,10 +428,16 @@
               <item name="js" type="462c0819:PsiDirectoryNode" />
               <item name="game" type="462c0819:PsiDirectoryNode" />
               <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="character" type="462c0819:PsiDirectoryNode" />
-              <item name="player" type="462c0819:PsiDirectoryNode" />
-              <item name="quest" type="462c0819:PsiDirectoryNode" />
-              <item name="misc" type="462c0819:PsiDirectoryNode" />
+              <item name="npc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+              <item name="objects" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -486,6 +445,13 @@
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
               <item name="map" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tap-Tap-Adventure" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="minigames" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tap-Tap-Adventure" type="b2602c69:ProjectViewProjectNode" />
@@ -522,8 +488,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -531,7 +495,7 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="SearchEverywhereHistoryKey" value="idHasPlugin&#9;null&#9;null&#10;onDeath&#9;null&#9;null&#10;distanceToSpawn&#9;null&#9;null&#10;/*&#9;FILE&#9;file:///Users/flavius/Desktop/Tap-Tap-Adventure/client/img/3/.tilesheet.png.icloud&#10;development&#9;null&#9;null&#10;kaetram&#9;null&#9;null" />
@@ -807,7 +771,12 @@
       <workItem from="1509557776254" duration="2520000" />
       <workItem from="1509591240136" duration="2632000" />
       <workItem from="1509672698318" duration="7557000" />
-      <workItem from="1509723849136" duration="5578000" />
+      <workItem from="1509723849136" duration="6216000" />
+      <workItem from="1509834068985" duration="8000" />
+      <workItem from="1509858269781" duration="531000" />
+      <workItem from="1509918835095" duration="333000" />
+      <workItem from="1509920182537" duration="6473000" />
+      <workItem from="1509950693500" duration="6000" />
     </task>
     <task id="LOCAL-00001" summary="Client refactoring began - Fixing interfaces">
       <created>1488093277468</created>
@@ -1145,17 +1114,24 @@
       <option name="project" value="LOCAL" />
       <updated>1509686752915</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Warping and map changes">
+      <created>1509729813344</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1509729813344</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="591909000" />
+    <option name="totallyTimeSpent" value="599898000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="356" y="22" width="924" height="774" extended-state="0" />
+    <frame x="0" y="22" width="1280" height="774" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18939394" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13671875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1193,7 +1169,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Overriding auth" />
     <MESSAGE value="PvP Combat System implementation" />
     <MESSAGE value="AoE Damage &amp; Entity Grids" />
     <MESSAGE value="Convention Fix &amp; Start on Shops" />
@@ -1218,7 +1193,8 @@
     <MESSAGE value="Zooming fix (accounts for width and height)" />
     <MESSAGE value="Tutorial Failsafe" />
     <MESSAGE value="Warping interface ready - Server side code is left to do" />
-    <option name="LAST_COMMIT_MESSAGE" value="Warping interface ready - Server side code is left to do" />
+    <MESSAGE value="Warping and map changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Warping and map changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1227,70 +1203,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/js/util/parser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-500">
-          <caret line="53" column="76" lean-forward="true" selection-start-line="53" selection-start-column="76" selection-end-line="53" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/util/items.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/util/mobs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="42" column="22" lean-forward="false" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="543" column="46" lean-forward="true" selection-start-line="543" selection-start-column="46" selection-end-line="543" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/data/mobs.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3164">
-          <caret line="226" column="12" lean-forward="false" selection-start-line="226" selection-start-column="10" selection-end-line="226" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/data/combat/piratecaptain.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="95" column="0" lean-forward="true" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/mob/mob.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1778">
-          <caret line="127" column="13" lean-forward="false" selection-start-line="127" selection-start-column="4" selection-end-line="127" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/data/combat/queenant.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="169" column="6" lean-forward="false" selection-start-line="154" selection-start-column="4" selection-end-line="169" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/data/combat/skeletonking.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1148">
-          <caret line="82" column="31" lean-forward="false" selection-start-line="82" selection-start-column="31" selection-end-line="82" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/entity/character/mob/mob.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1305,41 +1217,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/objects/chest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="11" column="28" lean-forward="false" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/character.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/data/combat/ogrelord.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="167" column="6" lean-forward="false" selection-start-line="167" selection-start-column="6" selection-end-line="167" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/js/map/groups.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-190">
@@ -1351,9 +1228,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1423">
           <caret line="188" column="0" lean-forward="true" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1372,13 +1246,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/data/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="2" column="15" lean-forward="false" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/quest/quest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -1386,38 +1253,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/renderer/renderer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/network/packets.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="53" column="12" lean-forward="false" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/network/packets.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="41" column="12" lean-forward="false" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/interface/profile/pages/settings.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3614">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1446,7 +1285,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="672">
           <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1454,7 +1292,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="19" column="24" lean-forward="true" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1469,9 +1306,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-338">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1479,7 +1313,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="89" column="17" lean-forward="false" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1487,7 +1320,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
           <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1495,7 +1327,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="56">
           <caret line="4" column="19" lean-forward="false" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1503,15 +1334,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="501">
           <caret line="103" column="7" lean-forward="false" selection-start-line="103" selection-start-column="7" selection-end-line="103" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/vars.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="437" column="11" lean-forward="true" selection-start-line="437" selection-start-column="11" selection-end-line="437" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1519,7 +1341,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="14">
           <caret line="262" column="50" lean-forward="false" selection-start-line="262" selection-start-column="50" selection-end-line="262" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1527,7 +1348,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5168">
           <caret line="218" column="10" lean-forward="false" selection-start-line="218" selection-start-column="7" selection-end-line="218" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1535,15 +1355,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="94" column="12" lean-forward="false" selection-start-line="94" selection-start-column="12" selection-end-line="94" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/interface.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="930" column="5" lean-forward="false" selection-start-line="930" selection-start-column="5" selection-end-line="930" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1551,7 +1362,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="154" column="56" lean-forward="false" selection-start-line="154" selection-start-column="24" selection-end-line="154" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1559,56 +1369,199 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="431">
           <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/database/creator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2520">
+          <caret line="180" column="29" lean-forward="true" selection-start-line="180" selection-start-column="29" selection-end-line="180" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/database/mysql.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="14">
+          <caret line="168" column="74" lean-forward="false" selection-start-line="168" selection-start-column="74" selection-end-line="168" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/warp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1008">
+          <caret line="72" column="5" lean-forward="false" selection-start-line="72" selection-start-column="5" selection-end-line="72" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/interface.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="14">
+          <caret line="930" column="5" lean-forward="false" selection-start-line="930" selection-start-column="5" selection-end-line="930" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/data/config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="4" column="1" lean-forward="false" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data/quests.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="25" column="10" lean-forward="false" selection-start-line="25" selection-start-column="10" selection-end-line="25" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="143" column="0" lean-forward="true" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="249">
+          <caret line="111" column="26" lean-forward="true" selection-start-line="111" selection-start-column="26" selection-end-line="111" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/database/mysql.js">
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/entity.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="197" column="10" lean-forward="true" selection-start-line="197" selection-start-column="10" selection-end-line="197" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="-1362">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6">
+          <caret line="753" column="38" lean-forward="false" selection-start-line="753" selection-start-column="38" selection-end-line="753" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/objects/chest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6">
+          <caret line="11" column="28" lean-forward="false" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/controllers/incoming.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3">
-          <caret line="753" column="0" lean-forward="true" selection-start-line="753" selection-start-column="0" selection-end-line="753" selection-end-column="0" />
+        <state relative-caret-position="419">
+          <caret line="525" column="42" lean-forward="false" selection-start-line="525" selection-start-column="42" selection-end-line="525" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data/combat/piratecaptain.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1330">
+          <caret line="95" column="0" lean-forward="true" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data/combat/skeletonking.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1148">
+          <caret line="82" column="31" lean-forward="false" selection-start-line="82" selection-start-column="31" selection-end-line="82" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/network/packets.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="135" column="16" lean-forward="false" selection-start-line="135" selection-start-column="16" selection-end-line="135" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/network/packets.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="123" column="16" lean-forward="false" selection-start-line="123" selection-start-column="16" selection-end-line="123" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data/combat/ogrelord.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2338">
+          <caret line="167" column="6" lean-forward="false" selection-start-line="167" selection-start-column="6" selection-end-line="167" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/entity/entity.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2240">
+          <caret line="160" column="28" lean-forward="true" selection-start-line="160" selection-start-column="28" selection-end-line="160" selection-end-column="28" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/warp.js">
+    <entry file="file://$PROJECT_DIR$/client/js/renderer/renderer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="72" column="5" lean-forward="false" selection-start-line="72" selection-start-column="5" selection-end-line="72" selection-end-column="5" />
+        <state relative-caret-position="7028">
+          <caret line="502" column="37" lean-forward="true" selection-start-line="502" selection-start-column="37" selection-end-line="502" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/mob/mob.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+        <state relative-caret-position="415">
+          <caret line="112" column="24" lean-forward="false" selection-start-line="112" selection-start-column="24" selection-end-line="112" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/vars.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6384">
+          <caret line="456" column="5" lean-forward="false" selection-start-line="456" selection-start-column="5" selection-end-line="456" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/database/creator.js">
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/character.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+        <state relative-caret-position="2562">
+          <caret line="183" column="39" lean-forward="false" selection-start-line="183" selection-start-column="39" selection-end-line="183" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7602">
+          <caret line="543" column="46" lean-forward="false" selection-start-line="543" selection-start-column="46" selection-end-line="543" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data/combat/queenant.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1064">
+          <caret line="76" column="10" lean-forward="false" selection-start-line="76" selection-start-column="10" selection-end-line="76" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3010">
+          <caret line="215" column="50" lean-forward="false" selection-start-line="215" selection-start-column="50" selection-end-line="215" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9478">
+          <caret line="677" column="41" lean-forward="false" selection-start-line="677" selection-start-column="41" selection-end-line="677" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/map/grids.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding />
         </state>
       </provider>

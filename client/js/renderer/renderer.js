@@ -473,6 +473,7 @@ define(['jquery', './camera', './tile',
 
             if (entity.rights > 0)
                 colour = '#999999';
+
             else if (entity.rights > 1)
                 colour = '#cccc00';
 
@@ -483,14 +484,32 @@ define(['jquery', './camera', './tile',
             self.setCameraView(self.textContext);
             self.textContext.font = '14px AdvoCut';
 
-            if (self.drawNames && entity !== 'player')
-                self.drawText(entity.username, (entity.x + 8) * factor, (entity.y - (self.drawLevels ? 20 : 10)) * factor, true, colour);
+            if (!entity.hasCounter) {
 
-            if (self.drawLevels && (entity.type === 'mob' || entity.type === 'player'))
-                self.drawText('Level ' + entity.level, (entity.x + 8) * factor, (entity.y - 10) * factor, true, colour);
+                if (self.drawNames && entity !== 'player')
+                    self.drawText(entity.username, (entity.x + 8) * factor, (entity.y - (self.drawLevels ? 20 : 10)) * factor, true, colour);
 
-            if (entity.type === 'item' && entity.count > 1)
-                self.drawText(entity.count, (entity.x + 8) * factor, (entity.y - 10) * factor, true, colour);
+                if (self.drawLevels && (entity.type === 'mob' || entity.type === 'player'))
+                    self.drawText('Level ' + entity.level, (entity.x + 8) * factor, (entity.y - 10) * factor, true, colour);
+
+                if (entity.type === 'item' && entity.count > 1)
+                    self.drawText(entity.count, (entity.x + 8) * factor, (entity.y - 10) * factor, true, colour);
+
+            } else {
+
+                if (self.game.time - entity.countdownTime > 1000) {
+
+                    entity.countdownTime = self.game.time;
+                    entity.counter--;
+
+                }
+
+                if (entity.counter <= 0)
+                    entity.hasCounter = false;
+
+                self.drawText(entity.counter, (entity.x + 8) * factor, (entity.y - 10) * factor, true, colour);
+            }
+
 
             self.textContext.restore();
         },

@@ -40,6 +40,10 @@ define(['./entityhandler'], function(EntityHandler) {
             self.terror = false;
 
             self.nonPathable = false;
+            self.hasCounter = false;
+
+            self.countdownTime = 0;
+            self.counter = 0;
 
             self.renderingData = {
                 scale: -1,
@@ -151,6 +155,17 @@ define(['./entityhandler'], function(EntityHandler) {
             self.currentAnimation.setCount(count ? count : 0, onEndCount || function() {
                 self.idle();
             });
+        },
+
+        setCountdown: function(count) {
+            var self = this;
+
+            self.counter = count;
+
+            self.countdownTime = new Date().getTime();
+
+            self.hasCounter = true;
+
         },
 
         setVisible: function(visible) {

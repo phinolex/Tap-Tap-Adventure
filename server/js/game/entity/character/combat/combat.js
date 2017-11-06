@@ -40,7 +40,13 @@ module.exports = Combat = cls.Class.extend({
         self.lastAction = -1;
         self.lastHit = -1;
 
+        self.lastActionThreshold = 5000;
+
         self.cleanTimeout = null;
+
+        self.character.onSubAoE(function(radius, hasTerror) {
+            self.dealAoE(radius, hasTerror);
+        });
     },
 
     begin: function(attacker) {
@@ -68,7 +74,7 @@ module.exports = Combat = cls.Class.extend({
         self.checkLoop = setInterval(function() {
             var time = new Date();
 
-            if (time - self.lastAction > 5000)
+            if (time - self.lastAction > self.lastActionThreshold)
                 self.stop();
 
         }, 1000);
@@ -202,10 +208,14 @@ module.exports = Combat = cls.Class.extend({
          * TODO - Find a way to implement special effects without hardcoding them.
          */
 
+        log.info('Dealing AoE damage...');
+
         if (!self.world)
             return;
 
         var entities = self.world.getGrids().getSurroundingEntities(self.character, radius);
+
+        log.info(Object.keys(entities));
 
         for (var i in entities) {
             if (entities.hasOwnProperty(i)) {

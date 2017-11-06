@@ -120,7 +120,8 @@ Packets.NPCOpcode = {
     Talk: 0,
     Store: 1,
     Bank: 2,
-    Enchant: 3
+    Enchant: 3,
+    Countdown: 4
 };
 
 Packets.TradeOpcode = {

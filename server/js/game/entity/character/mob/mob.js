@@ -176,6 +176,10 @@ module.exports = Mob = Character.extend({
         this.moveCallback = callback;
     },
 
+    onReturn: function(callback) {
+        this.returnCallback = callback;
+    },
+
     onRefresh: function(callback) {
         this.refreshCallback = callback;
     },

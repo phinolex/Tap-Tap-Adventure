@@ -934,6 +934,16 @@ define(['./renderer/renderer', './utils/storage',
                     case Packets.NPCOpcode.Enchant:
                         self.interface.enchant.display();
                         break;
+
+                    case Packets.NPCOpcode.Countdown:
+
+                        var cEntity = self.entities.get(info.id),
+                            countdown = info.countdown;
+
+                        if (cEntity)
+                            cEntity.setCountdown(countdown);
+
+                        break;
                 }
 
             });

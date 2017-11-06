@@ -16,14 +16,18 @@ module.exports = QueenAnt = Combat.extend({
     init: function(character) {
         var self = this;
 
+        self._super(character);
+        self.lastActionThreshold = 8000; //Due to the nature of the AoE attack
+
         self.character = character;
 
-        character.spawnDistance = 14;
+        character.spawnDistance = 18;
 
         self.aoeTimeout = null;
 
         self.lastAoE = 0;
         self.aoeRadius = 2;
+        self.aoeCountdown = 5;
 
         self.lastSpawn = 0;
         self.minions = [];
@@ -60,12 +64,17 @@ module.exports = QueenAnt = Combat.extend({
 
         });
 
+        self.character.onReturn(function() {
+            clearTimeout(self.aoeTimeout);
+            self.aoeTimeout = null;
+        });
+
     },
 
     begin: function(attacker) {
         var self = this;
 
-        self.resetAoE();
+        //self.resetAoE();
 
         self._super(attacker);
     },
@@ -80,30 +89,33 @@ module.exports = QueenAnt = Combat.extend({
             self.beginMinionAttack();
 
         if (self.canCastAoE()) {
-            self.dealAoE();
+            self.doAoE();
             return;
         }
 
         self._super(attacker, target, hitInfo);
     },
 
-    dealAoE: function() {
+    doAoE: function() {
         var self = this;
+
+        /**
+         * The reason this function does not use its superclass
+         * representation is because of the setTimeout function
+         * which does not allow us to call _super().
+         */
 
         self.pushFreeze(true);
 
-        self.stop();
+        self.pushCountdown(self.aoeCountdown);
 
         self.aoeTimeout = setTimeout(function() {
 
-            self._super(self.aoeRadius, true);
+            self.dealAoE(self.aoeRadius, true);
 
             self.resetAoE();
 
             self.pushFreeze(false);
-
-            if (self.character.hasTarget())
-                self.begin(self.character.target);
 
         }, 5000);
 
@@ -175,7 +187,18 @@ module.exports = QueenAnt = Combat.extend({
         self.character.frozen = state;
         self.character.stunned = state;
 
-        self.world.pushToAdjacentGroups(self.character.group, new Messages.Movement(Packets.MovementOpcode, [self.character.instance, state]));
+        self.world.pushToAdjacentGroups(self.character.group, new Messages.Movement(Packets.MovementOpcode.Freeze, [self.character.instance, state]));
+    },
+
+    pushCountdown: function(count) {
+        var self = this;
+
+        log.info('pushing countdown...');
+
+        self.world.pushToAdjacentGroups(self.character.group, new Messages.NPC(Packets.NPCOpcode.Countdown, {
+            id: self.character.instance,
+            countdown: count
+        }));
     },
 
     isLast: function() {

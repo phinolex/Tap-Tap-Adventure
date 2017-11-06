@@ -235,14 +235,6 @@ module.exports = World = cls.Class.extend({
 
                 self.pushToAdjacentGroups(target.group, new Messages.Combat(Packets.CombatOpcode.Finish, [attacker.instance, target.instance]));
 
-                /**
-                 * Why do we check here for entity type?
-                 *
-                 * It is well built to implement special abilities in the future
-                 * such as when a player dies - all the nearby attackers have a
-                 * wanted level on them or have some inflicted damage.
-                 */
-
                 if (target.type === 'mob')
                     attacker.addExperience(Mobs.getXp(target.id));
 

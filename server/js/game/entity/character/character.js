@@ -178,6 +178,10 @@ module.exports = Character = Entity.extend({
 
     onHealthChange: function(callback) {
         this.hitPointsCallback = callback;
+    },
+
+    onSubAoE: function(callback) {
+        this.subAoECallback = callback;
     }
 
 });

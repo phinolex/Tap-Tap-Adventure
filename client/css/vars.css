@@ -446,7 +446,7 @@ html [type="button"],
     }
 
     .stroke {
-        text-shadow: 4px 4px 0 #373737, 4px -4px 0 #373737, 0 4px 0 #373737, 4px 0 0 #373737, -3px 3px 0 #373737, -3px -3px 0 #373737, 0 -3px 0 #373737, 0 3px 0 #373737, -3px 0 0 #373737;
+        text-shadow: 2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;
     }
 
     #login, #newCharacter, #continue, #cancelButton, #play {
