@@ -68,18 +68,14 @@ module.exports = Grids = cls.Class.extend({
             for (var j = -radius; j < radius + 1; j++) {
                 var pos = self.entityGrid[entity.y + i][entity.x + j];
 
-                if (_.size(pos) > 0)
-                    entities.push.apply(entities, self.getList(pos));
+                if (_.size(pos) > 0) {
+                    _.each(pos, function (pEntity) {
 
-            }
-        }
+                        if (!include && pEntity.instance !== entity.instance)
+                            entities.push(pEntity);
+                    });
+                }
 
-        if (!include) {
-            for (var id = 0; id < entities.length; id++) {
-                var nEntity = entities[id];
-
-                if (nEntity.instance === entity.instance)
-                    entities.splice(id, 1);
             }
         }
 
@@ -88,16 +84,6 @@ module.exports = Grids = cls.Class.extend({
 
     checkBounds: function(x, y, radius) {
         return x + radius < this.map.width && x - radius > 0 && y + radius < this.map.height && y - radius > 0;
-    },
-
-    getList: function(entities) {
-        var list = [];
-
-        for (var i in entities)
-            if (entities.hasOwnProperty(i))
-                list.push(entities[i]);
-
-        return list;
     }
 
 });

@@ -65,16 +65,15 @@ module.exports = Combat = cls.Class.extend({
         if (self.started)
             return;
 
-        self.lastAction = new Date();
+        self.lastAction = new Date().getTime();
 
         self.attackLoop = setInterval(function() { self.parseAttack(); }, self.character.attackRate);
 
         self.followLoop = setInterval(function() { self.parseFollow(); }, 400);
 
         self.checkLoop = setInterval(function() {
-            var time = new Date();
 
-            if (time - self.lastAction > self.lastActionThreshold)
+            if (self.getTime() - self.lastAction > self.lastActionThreshold)
                 self.stop();
 
         }, 1000);
@@ -102,15 +101,19 @@ module.exports = Combat = cls.Class.extend({
 
         self.started = false;
 
-        self.cleanTimeout = setTimeout(function() {
+        self.cleanLoop = setInterval(function() {
+
             if (self.getTime() - self.lastHit > 7000 && self.isMob()) {
+
                 self.forget();
                 self.character.removeTarget();
                 self.sendToSpawn();
 
-                clearTimeout(self.cleanTimeout);
-                self.cleanTimeout = null;
+                clearInterval(self.cleanLoop);
+                self.cleanLoop = null;
+
             }
+
         }, 1000);
     },
 
@@ -128,7 +131,7 @@ module.exports = Combat = cls.Class.extend({
             if (self.character.target && !self.character.target.isDead())
                 self.attack(self.character.target);
 
-            self.lastAction = new Date();
+            self.lastAction = new Date().getTime();
 
         } else
             self.queue.clear();
@@ -208,31 +211,22 @@ module.exports = Combat = cls.Class.extend({
          * TODO - Find a way to implement special effects without hardcoding them.
          */
 
-        log.info('Dealing AoE damage...');
-
         if (!self.world)
             return;
 
         var entities = self.world.getGrids().getSurroundingEntities(self.character, radius);
 
-        log.info(Object.keys(entities));
+        _.each(entities, function(entity) {
 
-        for (var i in entities) {
-            if (entities.hasOwnProperty(i)) {
-                var entity = entities[i];
+            var hitData = new Hit(Modules.Hits.Damage, Formulas.getAoEDamage(self.character, entity)).getData();
 
-                if (entity.type !== 'mob')
-                    continue;
+            hitData.isAoE = true;
+            hitData.hasTerror = hasTerror;
 
-                var hit = new Hit(Modules.Hits.Damage, Formulas.getAoEDamage(self.character, entity)),
-                    hitData = hit.getData();
+            self.hit(self.character, entity, hitData);
 
-                hitData.isAoE = true;
-                hitData.hasTerror = hasTerror;
+        });
 
-                self.hit(self.character, entity, hitData);
-            }
-        }
     },
 
     forceAttack: function() {
@@ -282,10 +276,11 @@ module.exports = Combat = cls.Class.extend({
     sendToSpawn: function() {
         var self = this;
 
-        if (self.isMob() && Object.keys(self.attackers).length === 0) {
+        log.info('Sending to spawn.');
+
+        if (self.isMob() && Object.keys(self.attackers).length === 0)
             self.character.return();
-            self.move(self.character, self.character.spawnLocation[0], self.character.spawnLocation[1]);
-        }
+
     },
 
     hasAttacker: function(character) {
@@ -377,7 +372,16 @@ module.exports = Combat = cls.Class.extend({
     },
 
     move: function(character, x, y) {
-        this.world.pushBroadcast(new Messages.Movement(Packets.MovementOpcode.Move, [character.instance, x, y, false, false]));
+        var self = this;
+
+        /**
+         * The server and mob types can parse the mob movement
+         */
+
+        if (character.type !== 'mob')
+            return;
+
+        character.move(x, y);
     },
 
     hit: function(character, target, hitInfo) {
@@ -454,6 +458,10 @@ module.exports = Combat = cls.Class.extend({
 
     isTargetMob: function() {
         return this.character.target.type === 'mob';
+    },
+
+    canAttackAoE: function(target) {
+        return this.isMob() || target.type === 'mob' || (this.isPlayer() && target.type === 'player' && target.pvp && this.character.pvp);
     }
 
 });

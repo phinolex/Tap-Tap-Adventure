@@ -364,12 +364,14 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
             if (!force)
                 self.interrupted = true;
             else if (self.hasPath()) {
+
                 self.path = null;
                 self.newDestination = null;
                 self.movement = new Transition();
                 self.performAction(self.orientation, Modules.Actions.Idle);
                 self.nextGridX = self.gridX;
                 self.nextGridY = self.gridY;
+
             }
         },
 

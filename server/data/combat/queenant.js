@@ -17,7 +17,7 @@ module.exports = QueenAnt = Combat.extend({
         var self = this;
 
         self._super(character);
-        self.lastActionThreshold = 8000; //Due to the nature of the AoE attack
+        self.lastActionThreshold = 10000; //Due to the nature of the AoE attack
 
         self.character = character;
 
@@ -85,13 +85,13 @@ module.exports = QueenAnt = Combat.extend({
         if (self.frozen)
             return;
 
-        if (self.isAttacked())
-            self.beginMinionAttack();
-
         if (self.canCastAoE()) {
             self.doAoE();
             return;
         }
+
+        if (self.isAttacked())
+            self.beginMinionAttack();
 
         self._super(attacker, target, hitInfo);
     },
@@ -105,6 +105,10 @@ module.exports = QueenAnt = Combat.extend({
          * which does not allow us to call _super().
          */
 
+        self.resetAoE();
+
+        self.lastHit = self.getTime();
+
         self.pushFreeze(true);
 
         self.pushCountdown(self.aoeCountdown);
@@ -112,8 +116,6 @@ module.exports = QueenAnt = Combat.extend({
         self.aoeTimeout = setTimeout(function() {
 
             self.dealAoE(self.aoeRadius, true);
-
-            self.resetAoE();
 
             self.pushFreeze(false);
 
@@ -186,14 +188,10 @@ module.exports = QueenAnt = Combat.extend({
 
         self.character.frozen = state;
         self.character.stunned = state;
-
-        self.world.pushToAdjacentGroups(self.character.group, new Messages.Movement(Packets.MovementOpcode.Freeze, [self.character.instance, state]));
     },
 
     pushCountdown: function(count) {
         var self = this;
-
-        log.info('pushing countdown...');
 
         self.world.pushToAdjacentGroups(self.character.group, new Messages.NPC(Packets.NPCOpcode.Countdown, {
             id: self.character.instance,
