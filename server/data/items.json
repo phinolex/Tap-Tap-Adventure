@@ -1369,13 +1369,12 @@
     "maxStackSize": 10,
     "plugin":"healthFlask",
     "customData": {"healAmount": 350}
-
   },
-  
+
   "Chest": {
-    "id":194,
-    "type":"chest",
-    "name":"Chest"
+    "id": 194,
+    "type": "object",
+    "name": "Chest"
   },
   
   "FirePotion": {
@@ -1814,10 +1813,10 @@
     "name": "Ghost"
   },
 
-  "Chest": {
+  "Pickle": {
     "id": 259,
-    "type": "object",
-    "name": "Chest"
+    "type": "armor",
+    "name": "Pickle Armour"
   }
 
 }

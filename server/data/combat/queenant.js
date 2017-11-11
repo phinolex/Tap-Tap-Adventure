@@ -16,24 +16,23 @@ module.exports = QueenAnt = Combat.extend({
     init: function(character) {
         var self = this;
 
+        character.spawnDistance = 18;
+
         self._super(character);
+
         self.lastActionThreshold = 10000; //Due to the nature of the AoE attack
 
         self.character = character;
 
-        character.spawnDistance = 18;
-
         self.aoeTimeout = null;
 
-        self.lastAoE = 0;
-        self.aoeRadius = 2;
         self.aoeCountdown = 5;
+        self.aoeRadius = 2;
+        self.lastAoE = 0;
 
+        self.minionCount = 10;
         self.lastSpawn = 0;
         self.minions = [];
-        self.minionCount = 3;
-
-        self.character.spawnDistance = 8;
 
         self.frozen = false;
 

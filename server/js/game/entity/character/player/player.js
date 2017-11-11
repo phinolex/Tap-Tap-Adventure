@@ -477,6 +477,7 @@ module.exports = Player = Character.extend({
         var self = this;
 
         self.setWeapon(-1,0,0,0);
+
         self.sendEquipment();
     },
 
@@ -560,6 +561,10 @@ module.exports = Player = Character.extend({
 
     hasWeapon: function() {
         return this.weapon && this.weapon.name !== 'null' && this.weapon.id !== -1;
+    },
+
+    hasBreakableWeapon: function() {
+        return this.weapon && this.weapon.breakable;
     },
 
     hasPendant: function() {
@@ -837,8 +842,8 @@ module.exports = Player = Character.extend({
         this.attackCallback = callback;
     },
 
-    onHit: function(callback) {
-        this.hitCallback = callback;
+    onDamage: function(callback) {
+        this.damageCallback = callback;
     },
 
     onKill: function(callback) {

@@ -2038,5 +2038,22 @@
     "attackRate": 1100,
     "movementSpeed": 400,
     "spawnDelay": 35000
+  },
+
+  "Pickle": {
+    "name": "Pickle Brick",
+    "id": 130,
+    "drops": {"pickle": 1, "gold": 100},
+    "hitPoints": 5000,
+    "armour": 3,
+    "weapon": 25,
+    "xp": 200,
+    "level": 60,
+    "aggroRange": 1,
+    "attackRange": 1,
+    "aggressive": false,
+    "attackRate": 1300,
+    "movementSpeed": 1000,
+    "spawnDelay": 65000
   }
 }

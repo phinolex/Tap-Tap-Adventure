@@ -101,20 +101,6 @@ module.exports = Combat = cls.Class.extend({
 
         self.started = false;
 
-        self.cleanLoop = setInterval(function() {
-
-            if (self.getTime() - self.lastHit > 7000 && self.isMob()) {
-
-                self.forget();
-                self.character.removeTarget();
-                self.sendToSpawn();
-
-                clearInterval(self.cleanLoop);
-                self.cleanLoop = null;
-
-            }
-
-        }, 1000);
     },
 
     parseAttack: function() {
@@ -276,6 +262,8 @@ module.exports = Combat = cls.Class.extend({
     sendToSpawn: function() {
         var self = this;
 
+        //fix this
+
         log.info('Sending to spawn.');
 
         if (self.isMob() && Object.keys(self.attackers).length === 0)
@@ -368,7 +356,10 @@ module.exports = Combat = cls.Class.extend({
     },
 
     forget: function() {
-        this.attackers = {};
+        var self = this;
+
+        self.attackers = {};
+        self.character.removeTarget();
     },
 
     move: function(character, x, y) {
@@ -402,11 +393,10 @@ module.exports = Combat = cls.Class.extend({
             self.world.pushBroadcast(new Messages.Combat(Packets.CombatOpcode.Hit, character.instance, target.instance, hitInfo));
             self.world.handleDamage(character, target, hitInfo.damage);
 
-            // if (hitInfo.damage > 0 && character.type === 'player')
-            //     if (Formulas.getWeaponBreak(character, target))
-            //         character.breakWeapon();
-
         }
+
+        if (character.damageCallback)
+            character.damageCallback(hitInfo);
 
         self.lastHit = self.getTime();
     },

@@ -4,7 +4,8 @@ var cls = require('../../../../lib/class'),
     _ = require('underscore'),
     Messages = require('../../../../network/messages'),
     Packets = require('../../../../network/packets'),
-    Npcs = require('../../../../util/npcs');
+    Npcs = require('../../../../util/npcs'),
+    Formulas = require('../../../formulas');
 
 module.exports = Handler = cls.Class.extend({
 
@@ -27,9 +28,21 @@ module.exports = Handler = cls.Class.extend({
             self.detectAggro();
             self.detectPVP(x, y);
             self.detectMusic(x, y);
+
         });
 
         self.player.onDeath(function() {
+
+        });
+
+        self.player.onDamage(function(target, hitInfo) {
+
+            /**
+             *  Verifies stuff on each hit callback
+             */
+            
+            if (self.player.hasBreakableWeapon() && Formulas.getWeaponBreak(self.player, target))
+                self.player.breakWeapon();
 
         });
 

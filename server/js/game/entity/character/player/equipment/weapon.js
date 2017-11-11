@@ -10,6 +10,7 @@ module.exports = Weapon = Equipment.extend({
 
         self.level = Items.getWeaponLevel(name);
         self.ranged = Items.isArcherWeapon(name);
+        self.breakable = false;
     },
 
     hasCritical: function() {
