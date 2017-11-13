@@ -3,7 +3,8 @@
     "id":1,
     "type":"weapon",
     "attack":2,
-    "name":"Heavy Sword"
+    "name":"Heavy Sword",
+    "requirement": 2
   },
   
   "Axe": {
@@ -1741,11 +1742,11 @@
   },
 
   "Sword1": {
-    "id":248,
-    "type":"weapon",
-    "attack":0,
-    "name":"Sword"
-
+    "id": 248,
+    "type": "weapon",
+    "attack": 0,
+    "name": "Sword",
+    "requirement": 1
   },
 
   "Banana": {

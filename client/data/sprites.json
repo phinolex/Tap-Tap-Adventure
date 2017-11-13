@@ -16689,8 +16689,8 @@
         "row": 0
       }
     },
-    "offsetX": -17,
-    "offsetY": -16
+    "offsetX": -15,
+    "offsetY": -38
   },
   {
     "id": "suicideghost",
@@ -18588,8 +18588,8 @@
         "row": 0
       }
     },
-    "offsetX": -24,
-    "offsetY": -24
+    "offsetX": -17,
+    "offsetY": -16
   },
   {
     "id": "explosion-heal",

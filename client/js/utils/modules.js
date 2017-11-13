@@ -27,7 +27,10 @@ Modules = {
         Heal: 2,
         Mana: 3,
         Experience: 4,
-        LevelUp: 5
+        LevelUp: 5,
+        Critical: 6,
+        Stun: 7,
+        Explosive: 8
     },
 
     Equipment: {

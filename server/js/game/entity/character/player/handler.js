@@ -5,7 +5,8 @@ var cls = require('../../../../lib/class'),
     Messages = require('../../../../network/messages'),
     Packets = require('../../../../network/packets'),
     Npcs = require('../../../../util/npcs'),
-    Formulas = require('../../../formulas');
+    Formulas = require('../../../formulas'),
+    Modules = require('../../../../util/modules');
 
 module.exports = Handler = cls.Class.extend({
 
@@ -36,14 +37,41 @@ module.exports = Handler = cls.Class.extend({
 
         });
 
+        self.player.onHit(function(attacker, damage) {
+
+            /**
+             * Handles actions whenever the player
+             * instance is hit by 'damage' amount
+             */
+
+            if (self.player.combat.isRetaliating())
+                self.player.combat.begin(attacker);
+
+        });
+
         self.player.onDamage(function(target, hitInfo) {
 
             /**
-             *  Verifies stuff on each hit callback
+             *  Verifies certain things every time the
+             *  player instance hits a target.
              */
 
             if (self.player.hasBreakableWeapon() && Formulas.getWeaponBreak(self.player, target))
                 self.player.breakWeapon();
+
+            if (hitInfo.type === Modules.Hits.Stun) {
+
+                target.setStun(true);
+
+                if (target.stunTimeout)
+                    clearTimeout(target.stunTimeout);
+
+                target.stunTimeout = setTimeout(function() {
+
+                    target.setStun(false);
+
+                }, 3000);
+            }
 
         });
 

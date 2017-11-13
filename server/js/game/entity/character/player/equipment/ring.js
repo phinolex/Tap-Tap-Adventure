@@ -1,4 +1,5 @@
-var Equipment = require('./equipment');
+var Equipment = require('./equipment'),
+    Items = require('../../../../../util/items');
 
 module.exports = Ring = Equipment.extend({
 
@@ -6,6 +7,8 @@ module.exports = Ring = Equipment.extend({
         var self = this;
 
         self._super(name, id, count, ability, abilityLevel);
+
+        self.ringLevel = Items.getRingLevel(name);
     }
 
 });

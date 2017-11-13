@@ -37,6 +37,8 @@ module.exports = Character = Entity.extend({
         self.target = null;
         self.potentialTarget = null;
 
+        self.stunTimeout = null;
+
         self.projectile = Modules.Projectiles.Arrow;
         self.projectileName = 'projectile-pinearrow';
 
@@ -50,6 +52,15 @@ module.exports = Character = Entity.extend({
             self.combat = new (Mobs.isNewCombatPlugin(self.id))(self);
         else
             self.combat = new Combat(self);
+    },
+
+    setStun: function(stun) {
+        var self = this;
+
+        self.stunned = stun;
+
+        if (self.stunCallback)
+            self.stunCallback(stun);
     },
 
     hit: function(attacker) {
@@ -178,6 +189,10 @@ module.exports = Character = Entity.extend({
 
     onHealthChange: function(callback) {
         this.hitPointsCallback = callback;
+    },
+
+    onStunned: function(callback) {
+        this.stunCallback = callback;
     },
 
     onSubAoE: function(callback) {

@@ -79,9 +79,11 @@ Formulas.getMaxDamage = function(attacker, target, special) {
         damage = 0;
 
     return damage;
+
 };
 
 Formulas.getCritical = function(attacker, target) {
+
     if (!attacker || !target)
         return;
 

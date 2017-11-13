@@ -15,7 +15,8 @@ module.exports = Projectile = Entity.extend({
         self.target = null;
 
         self.damage = -1;
-        self.special = -1;
+
+        self.hitType = null;
 
         self.owner = null;
     },
@@ -63,6 +64,7 @@ module.exports = Projectile = Entity.extend({
             targetId: self.target.instance,
             damage: self.damage,
             special: self.special,
+            hitType: self.hitType,
             type: self.type
         }
     }

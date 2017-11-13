@@ -29,8 +29,10 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
             self.attacking = false;
             self.interrupted = false;
 
+            self.critical = false;
             self.frozen = false;
             self.stunned = false;
+            self.explosion = false;
 
             self.path = null;
             self.target = null;
@@ -74,6 +76,17 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
 
             self.stunAnimation = new Animation('atk_down', 6, 0, 48, 48);
             self.stunAnimation.setSpeed(30);
+
+            self.explosionAnimation = new Animation('explosion', 8, 0, 64, 64);
+            self.explosionAnimation.setSpeed(50);
+
+            self.explosionAnimation.setCount(1, function() {
+                self.explosion = false;
+
+                self.explosionAnimation.reset();
+                self.explosionAnimation.count = 1;
+            });
+
         },
 
         animate: function(animation, speed, count, onEndCount) {
@@ -375,6 +388,38 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
                 self.nextGridY = self.gridY;
 
             }
+        },
+
+        getEffectAnimation: function() {
+            var self = this;
+
+            if (self.critical)
+                return self.criticalAnimation;
+
+            if (self.stunned)
+                return self.stunAnimation;
+
+            if (self.terror)
+                return self.terrorAnimation;
+
+            if (self.explosion)
+                return self.explosionAnimation;
+        },
+
+        getActiveEffect: function() {
+            var self = this;
+
+            if (self.critical)
+                return 'criticaleffect';
+
+            if (self.stunned)
+                return 'stuneffect';
+
+            if (self.terror)
+                return 'explosion-terror';
+
+            if (self.explosion)
+                return 'explosion-fireball';
         },
 
         /**

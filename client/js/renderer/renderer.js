@@ -356,8 +356,6 @@ define(['jquery', './camera', './tile',
 
             self.context.drawImage(sprite.image, x, y, data.width, data.height, data.ox, data.oy, data.width, data.height);
 
-            self.drawEntityFore(entity);
-
             if (entity instanceof Character && !entity.dead && entity.hasWeapon()) {
                 var weapon = self.entities.getSprite(entity.weapon.getString());
 
@@ -396,6 +394,8 @@ define(['jquery', './camera', './tile',
                     0, 0, data.sparksWidth, data.sparksHeight);
             }
 
+            self.drawEntityFore(entity);
+
             self.context.restore();
 
             self.drawHealth(entity);
@@ -420,40 +420,23 @@ define(['jquery', './camera', './tile',
              * having rendererd the entity
              */
 
-            if (entity.terror) {
-                var terrorSprite = self.entities.getSprite('explosion-terror');
+            if (entity.terror || entity.stunned || entity.critical || entity.explosion) {
+                var sprite = self.entities.getSprite(entity.getActiveEffect());
 
-                if (!terrorSprite.loaded)
-                    terrorSprite.load();
+                if (!sprite.loaded)
+                    sprite.load();
 
-                if (terrorSprite) {
-                    var tImage = entity.terrorAnimation.currentFrame.index,
-                        terrorX = terrorSprite.width * tImage * self.drawingScale,
-                        terrorY = terrorSprite.height * entity.criticalAnimation.row * self.drawingScale,
-                        terrorWidth = terrorSprite.width * self.drawingScale,
-                        terrorHeight = terrorSprite.height * self.drawingScale;
+                if (sprite) {
+                    var animation = entity.getEffectAnimation(),
+                        index = animation.currentFrame.index,
+                        x = sprite.width * index * self.drawingScale,
+                        y = sprite.height * animation.row * self.drawingScale,
+                        width = sprite.width * self.drawingScale,
+                        height = sprite.height * self.drawingScale,
+                        offsetX = sprite.offsetX * self.drawingScale,
+                        offsetY = sprite.offsetY * self.drawingScale;
 
-                    self.context.drawImage(terrorSprite.image, terrorX, terrorY, terrorWidth, terrorHeight,
-                        terrorSprite.offsetX * self.drawingScale, terrorSprite.offsetY * self.drawingScale, terrorWidth, terrorHeight);
-                }
-
-            }
-
-            if (entity.stunned) {
-                var stunSprite = self.entities.getSprite('stuneffect');
-
-                if (!stunSprite.loaded)
-                    stunSprite.load();
-
-                if (stunSprite) {
-                    var sIndex = entity.stunAnimation.currentFrame.index,
-                        stunX = stunSprite.width * sIndex * self.drawingScale,
-                        stunY = stunSprite.height * entity.stunAnimation.row * self.drawingScale,
-                        stunWidth = stunSprite.width * self.drawingScale,
-                        stunHeight = stunSprite.height * self.drawingScale;
-
-                    self.context.drawImage(stunSprite.image, stunX, stunY, stunWidth, stunHeight,
-                            stunSprite.offsetX * self.drawingScale, stunSprite.offsetY * self.drawingScale, stunWidth, stunHeight);
+                    self.context.drawImage(sprite.image, x, y, width, height, offsetX, offsetY, width, height);
                 }
             }
 

@@ -198,6 +198,13 @@ module.exports = QueenAnt = Combat.extend({
         }));
     },
 
+    getMinions: function() {
+        var self = this,
+            grids = self.world.getGrids();
+
+
+    },
+
     isLast: function() {
         return this.minions.length === 1;
     },

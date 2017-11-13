@@ -104,7 +104,9 @@ define(function() {
                     self.checkBounds();
 
                 self.player.forEachAttacker(function(attacker) {
-                    attacker.follow(self.player);
+                    
+                    if (!attacker.stunned)
+                        attacker.follow(self.player);
                 });
 
                 self.socket.send(Packets.Movement, [Packets.MovementOpcode.Step, self.player.gridX, self.player.gridY]);

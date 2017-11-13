@@ -34,7 +34,7 @@ define(['./character/character'], function(Character) {
                     self.entities.registerDuality(self.entity);
 
                     self.entity.forEachAttacker(function(attacker) {
-                        if (attacker.hasTarget() && attacker.target.id === self.entity.id)
+                        if (attacker.hasTarget() && attacker.target.id === self.entity.id && !attacker.stunned)
                             attacker.follow(self.entity);
                     });
 

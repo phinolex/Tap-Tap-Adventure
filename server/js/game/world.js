@@ -219,6 +219,9 @@ module.exports = World = cls.Class.extend({
         if (!attacker || !target || isNaN(damage))
             return;
 
+        if (target.type === 'player' && target.hitCallback)
+            target.hitCallback(attacker, damage);
+
         //Stop screwing with this - it's so the target retaliates.
 
         target.hit(attacker);
@@ -287,18 +290,23 @@ module.exports = World = cls.Class.extend({
 
         var startX = attacker.x,
             startY = attacker.y,
-            type = attacker.getProjectile();
+            type = attacker.getProjectile(),
+            hit = null;
 
         var projectile = new Projectile(type, Utils.generateInstance(5, type, startX + startY));
 
         projectile.setStart(startX, startY);
         projectile.setTarget(target);
 
-        projectile.damage = Formulas.getDamage(attacker, target, true);
-        projectile.owner = attacker;
+        if (attacker.type === 'player')
+            hit = attacker.getHit(target);
 
-        if (hitInfo.type !== Modules.Hits.Damage)
-            projectile.special = hitInfo.type;
+        log.info(hit);
+
+        projectile.damage = hit ? hit.damage : Formulas.getDamage(attacker, target, true);
+        projectile.hitType = hit ? hit.type : Modules.Hits.Damage;
+
+        projectile.owner = attacker;
 
         self.addProjectile(projectile);
 
@@ -679,8 +687,16 @@ module.exports = World = cls.Class.extend({
             self.getGrids().updateEntityPosition(entity);
         });
 
-        if (entity instanceof Character)
+        if (entity instanceof Character) {
+
             entity.getCombat().setWorld(self);
+
+            entity.onStunned(function(stun) {
+
+                self.pushToAdjacentGroups(entity.group, new Messages.Movement(Packets.MovementOpcode.Stunned, [entity.instance, stun]));
+
+            });
+        }
 
     },
 

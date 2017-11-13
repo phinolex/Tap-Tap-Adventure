@@ -1,4 +1,5 @@
-var Equipment = require('./equipment');
+var Equipment = require('./equipment'),
+    Items = require('../../../../../util/items');
 
 module.exports = Pendant = Equipment.extend({
 
@@ -7,7 +8,7 @@ module.exports = Pendant = Equipment.extend({
 
         self._super(name, id, count, ability, abilityLevel);
 
-        self.pendantLevel = 0;
+        self.pendantLevel = Items.getPendantLevel(name);
     },
 
     getBaseAmplifier: function() {

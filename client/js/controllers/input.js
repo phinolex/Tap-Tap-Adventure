@@ -119,7 +119,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
 
                         case Modules.Keys.One:
 
-                            self.game.interface.warp.display();
+                            self.getPlayer().explosion = true;
 
                             break;
                             

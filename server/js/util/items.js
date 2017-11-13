@@ -51,6 +51,27 @@ Items.stringToId = function(name) {
     return 'null';
 };
 
+Items.getLevelRequirement = function(name) {
+    var level = 1,
+        item = Items.Data[name];
+
+    if (item && item.requirement)
+        return item.requirement;
+
+    if (Items.isWeapon(name))
+        level = Items.Data[name].attack;
+    else if (Items.isArmour(name))
+        level = Items.Data[name].defense;
+    else if (Items.isPendant(name))
+        level = Items.Data[name].pLevel;
+    else if (Items.isRing(name))
+        level = Items.Data[name].rLevel;
+    else if (Items.isBoots(name))
+        level = Items.Data[name].bLevel;
+
+    return level * 2;
+};
+
 Items.getWeaponLevel = function(weaponName) {
     if (Items.isWeapon(weaponName))
         return Items.Data[weaponName].attack;
@@ -61,6 +82,27 @@ Items.getWeaponLevel = function(weaponName) {
 Items.getArmourLevel = function(armourName) {
     if (Items.isArmour(armourName))
         return Items.Data[armourName].defense;
+
+    return -1;
+};
+
+Items.getPendantLevel = function(pendantName) {
+    if (Items.isPendant(pendantName))
+        return Items.Data[pendantName].pLevel;
+
+    return -1;
+};
+
+Items.getRingLevel = function(ringName) {
+    if (Items.isRing(ringName))
+        return Items.Data[ringName].rLevel;
+
+    return -1;
+};
+
+Items.getBootsLevel = function(bootsName) {
+    if (Items.isBoots(bootsName))
+        return Items.Data[bootsName].bLevel;
 
     return -1;
 };

@@ -396,7 +396,7 @@ define(['./renderer/renderer', './utils/storage',
                         if (opcode === Packets.MovementOpcode.Stunned)
                             pEntity.stunned = state;
                         else if (opcode === Packets.MovementOpcode.Freeze)
-                            pEntity.frozen = true;
+                            pEntity.frozen = state;
 
                         break;
                 }
@@ -549,15 +549,17 @@ define(['./renderer/renderer', './utils/storage',
                                 target.terror = true;
 
                         switch (hit.type) {
-                            case Modules.Hits.Damage:
-                            case Modules.Hits.Stun:
 
-                                if (attacker.id === self.player.id && hit.damage > 0)
-                                    self.audio.play(Modules.AudioTypes.SFX, 'hit' + Math.floor(Math.random() * 2 + 1));
+                            case Modules.Hits.Critical:
+
+                                target.critical = true;
 
                                 break;
 
-                            case Modules.Hits.Critical:
+                            default:
+
+                                if (attacker.id === self.player.id && hit.damage > 0)
+                                    self.audio.play(Modules.AudioTypes.SFX, 'hit' + Math.floor(Math.random() * 2 + 1));
 
                                 break;
                         }

@@ -121,7 +121,6 @@ define(['../renderer/grids', '../entity/objects/chest',
 
                         projectile.angled = true;
                         projectile.type = info.type;
-                        projectile.special = info.special;
 
                         /**
                          * Move this into the external overall function
@@ -135,6 +134,9 @@ define(['../renderer/grids', '../entity/objects/chest',
 
                             if (self.isPlayer(projectile.owner.id) || self.isPlayer(target.id))
                                 self.game.socket.send(Packets.Projectile, [Packets.ProjectileOpcode.Impact, info.id, target.id]);
+
+                            if (info.hitType === Modules.Hits.Explosive)
+                                target.explosion = true;
 
                             self.game.info.create(Modules.Hits.Damage, [info.damage, self.isPlayer(target.id)], target.x, target.y);
 

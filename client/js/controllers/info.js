@@ -18,6 +18,8 @@ define(['../utils/queue', '../renderer/infos/splat'], function(Queue, Splat) {
 
             switch (type) {
                 case Modules.Hits.Damage:
+                case Modules.Hits.Stun:
+                case Modules.Hits.Critical:
                     var damage = data.shift(),
                         isTarget = data.shift(),
                         dId = self.generateId(self.game.time, damage, x, y);

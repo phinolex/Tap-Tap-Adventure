@@ -409,6 +409,7 @@ module.exports = Incoming = cls.Class.extend({
                     self.player.setPosition(posX, posY);
 
                 self.player.moving = false;
+                self.player.lastMovement = new Date().getTime();
 
                 break;
 
@@ -637,6 +638,9 @@ module.exports = Incoming = cls.Class.extend({
                 id = Items.stringToId(slot.string);
 
                 if (slot.equippable) {
+
+                    if (!self.player.canEquip(string))
+                        return;
 
                     self.player.inventory.remove(id, slot.count, slot.index);
 

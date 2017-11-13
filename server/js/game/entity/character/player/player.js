@@ -66,6 +66,7 @@ module.exports = Player = Character.extend({
         self.currentSong = null;
         self.acceptedTrade = false;
         self.invincible = false;
+        self.noDamage = false;
 
         self.isGuest = false;
 
@@ -291,8 +292,6 @@ module.exports = Player = Character.extend({
 
     },
 
-
-
     equip: function(string, count, ability, abilityLevel) {
         var self = this,
             data = Items.getData(string),
@@ -359,6 +358,18 @@ module.exports = Player = Character.extend({
         self.send(new Messages.Equipment(Packets.EquipmentOpcode.Equip, [type, Items.idToName(id), string, count, ability, abilityLevel]));
 
         self.sync();
+    },
+
+    canEquip: function(string) {
+        var self = this,
+            requirement = Items.getLevelRequirement(string);
+
+        if (requirement > self.level) {
+            self.notify('You must be at least level ' + requirement + ' to equip this.');
+            return false;
+        }
+
+        return true;
     },
 
     die: function() {
@@ -642,11 +653,11 @@ module.exports = Player = Character.extend({
         return position;
     },
 
-    getHitType: function(target) {
+    getHit: function(target) {
         var self = this;
 
-        var isSpecial = Utils.randomInt(0, 100) < self.weapon.abilityLevel / 100,
-            defaultDamage = Formulas.getDamage(self, target);
+        var defaultDamage = Formulas.getDamage(self, target),
+            isSpecial = 100 - self.weapon.abilityLevel < Utils.randomInt(0, 100);
 
         if (!self.hasSpecialAttack() || !isSpecial)
             return new Hit(Modules.Hits.Damage, defaultDamage);
@@ -842,6 +853,10 @@ module.exports = Player = Character.extend({
 
     onAttack: function(callback) {
         this.attackCallback = callback;
+    },
+
+    onHit: function(callback) {
+        this.hitCallback = callback;
     },
 
     onDamage: function(callback) {

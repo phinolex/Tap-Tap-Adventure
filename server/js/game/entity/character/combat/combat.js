@@ -40,7 +40,7 @@ module.exports = Combat = cls.Class.extend({
         self.lastAction = -1;
         self.lastHit = -1;
 
-        self.lastActionThreshold = 5000;
+        self.lastActionThreshold = 7000;
 
         self.cleanTimeout = null;
 
@@ -126,10 +126,11 @@ module.exports = Combat = cls.Class.extend({
     parseFollow: function() {
         var self = this;
 
-        if (self.character.frozen)
+        if (self.character.frozen || self.character.stunned)
             return;
 
         if (self.isMob()) {
+
             if (!self.character.isRanged())
                 self.sendFollow();
 
@@ -180,7 +181,7 @@ module.exports = Combat = cls.Class.extend({
             hit;
 
         if (self.isPlayer())
-            hit = self.character.getHitType(target);
+            hit = self.character.getHit(target);
         else
             hit = new Hit(Modules.Hits.Damage, Formulas.getDamage(self.character, target));
 
@@ -311,7 +312,7 @@ module.exports = Combat = cls.Class.extend({
     },
 
     isRetaliating: function() {
-        return Object.keys(this.attackers).length === 0 && this.retaliate;
+        return this.isPlayer() && !this.character.hasTarget() && this.retaliate && !this.character.moving && new Date().getTime() - this.character.lastMovement > 1500;
     },
 
     inProximity: function() {
@@ -392,7 +393,7 @@ module.exports = Combat = cls.Class.extend({
         }
 
         if (character.damageCallback)
-            character.damageCallback(hitInfo);
+            character.damageCallback(target, hitInfo);
 
         self.lastHit = self.getTime();
     },
