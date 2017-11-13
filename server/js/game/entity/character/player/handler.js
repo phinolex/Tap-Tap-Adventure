@@ -33,6 +33,7 @@ module.exports = Handler = cls.Class.extend({
 
         self.player.onDeath(function() {
 
+
         });
 
         self.player.onDamage(function(target, hitInfo) {
@@ -40,7 +41,7 @@ module.exports = Handler = cls.Class.extend({
             /**
              *  Verifies stuff on each hit callback
              */
-            
+
             if (self.player.hasBreakableWeapon() && Formulas.getWeaponBreak(self.player, target))
                 self.player.breakWeapon();
 

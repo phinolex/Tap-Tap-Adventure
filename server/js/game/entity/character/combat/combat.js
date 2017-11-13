@@ -262,10 +262,6 @@ module.exports = Combat = cls.Class.extend({
     sendToSpawn: function() {
         var self = this;
 
-        //fix this
-
-        log.info('Sending to spawn.');
-
         if (self.isMob() && Object.keys(self.attackers).length === 0)
             self.character.return();
 

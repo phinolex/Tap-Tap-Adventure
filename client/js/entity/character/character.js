@@ -28,7 +28,9 @@ define(['../entity', '../../utils/transition', '../animation'], function(Entity,
             self.following = false;
             self.attacking = false;
             self.interrupted = false;
+
             self.frozen = false;
+            self.stunned = false;
 
             self.path = null;
             self.target = null;

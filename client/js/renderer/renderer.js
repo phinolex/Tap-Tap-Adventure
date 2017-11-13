@@ -427,8 +427,8 @@ define(['jquery', './camera', './tile',
                     terrorSprite.load();
 
                 if (terrorSprite) {
-                    var index = entity.terrorAnimation.currentFrame.index,
-                        terrorX = terrorSprite.width * index * self.drawingScale,
+                    var tImage = entity.terrorAnimation.currentFrame.index,
+                        terrorX = terrorSprite.width * tImage * self.drawingScale,
                         terrorY = terrorSprite.height * entity.criticalAnimation.row * self.drawingScale,
                         terrorWidth = terrorSprite.width * self.drawingScale,
                         terrorHeight = terrorSprite.height * self.drawingScale;
@@ -437,6 +437,24 @@ define(['jquery', './camera', './tile',
                         terrorSprite.offsetX * self.drawingScale, terrorSprite.offsetY * self.drawingScale, terrorWidth, terrorHeight);
                 }
 
+            }
+
+            if (entity.stunned) {
+                var stunSprite = self.entities.getSprite('stuneffect');
+
+                if (!stunSprite.loaded)
+                    stunSprite.load();
+
+                if (stunSprite) {
+                    var sIndex = entity.stunAnimation.currentFrame.index,
+                        stunX = stunSprite.width * sIndex * self.drawingScale,
+                        stunY = stunSprite.height * entity.stunAnimation.row * self.drawingScale,
+                        stunWidth = stunSprite.width * self.drawingScale,
+                        stunHeight = stunSprite.height * self.drawingScale;
+
+                    self.context.drawImage(stunSprite.image, stunX, stunY, stunWidth, stunHeight,
+                            stunSprite.offsetX * self.drawingScale, stunSprite.offsetY * self.drawingScale, stunWidth, stunHeight);
+                }
             }
 
         },

@@ -380,19 +380,23 @@ define(['./renderer/renderer', './utils/storage',
 
                         break;
 
+
                     case Packets.MovementOpcode.Freeze:
+                    case Packets.MovementOpcode.Stunned:
 
-                        var fEntity = self.entities.get(info.shift()),
-                            frozen = info.shift();
+                        var pEntity = self.entities.get(info.shift()),
+                            state = info.shift();
 
-                        if (!fEntity)
+                        if (!pEntity)
                             return;
 
-                        if (frozen) {
-                            fEntity.stop(true);
-                            fEntity.frozen = true;
-                        } else
-                            fEntity.frozen = false;
+                        if (state)
+                            pEntity.stop(true);
+
+                        if (opcode === Packets.MovementOpcode.Stunned)
+                            pEntity.stunned = state;
+                        else if (opcode === Packets.MovementOpcode.Freeze)
+                            pEntity.frozen = true;
 
                         break;
                 }

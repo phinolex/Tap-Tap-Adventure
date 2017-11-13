@@ -73,7 +73,7 @@ module.exports = QueenAnt = Combat.extend({
     begin: function(attacker) {
         var self = this;
 
-        //self.resetAoE();
+        self.resetAoE();
 
         self._super(attacker);
     },

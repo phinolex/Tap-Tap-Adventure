@@ -476,6 +476,8 @@ module.exports = Player = Character.extend({
     breakWeapon: function() {
         var self = this;
 
+        self.notify('Your weapon has been broken.');
+
         self.setWeapon(-1,0,0,0);
 
         self.sendEquipment();

@@ -6,62 +6,74 @@ Formulas.LevelExp = [];
 module.exports = Formulas;
 
 Formulas.getDamage = function(attacker, target, special) {
+
+    var maxDamage = Formulas.getMaxDamage(attacker, target, special),
+        accuracy = Utils.randomInt(0, attacker.level);
+
+    return Utils.randomInt(accuracy, maxDamage);
+};
+
+Formulas.getMaxDamage = function(attacker, target, special) {
+
     if (!attacker || !target)
         return;
 
-    var damage, damageAbsorbed,
-        weaponLevel = attacker.weapon ? attacker.weapon.getLevel() : attacker.weaponLevel,
-        attackerArmourLevel = attacker.armour ? attacker.armour.getDefense() : attacker.armourLevel,
-        targetArmourLevel = target.armour ? target.armour.getDefense() : target.armourLevel,
+    var damageDealt, damageAbsorbed, damageAmplifier = 1, absorptionAmplifier = 1,
         usingRange = attacker.weapon ? attacker.weapon.isRanged() : attacker.isRanged(),
-        isPlayer = attacker.type === 'player',
-        attackerPendant = attacker.pendant ? attacker.pendant : null,
-        attackerRing = attacker.ring ? attacker.ring : null,
-        attackerBoots = attacker.boots ? attacker.boots : null,
-        targetPendant = target.pendant ?  target.pendant : null,
+        weaponLevel = attacker.weapon ? attacker.weapon.getLevel() : attacker.weaponLevel,
+        armourLevel = attacker.armour ? attacker.armour.getDefense() : attacker.armourLevel,
+        pendant = attacker.pendant ? attacker.pendant : null,
+        ring = attacker.ring ? attacker.ring : null,
+        boots = attacker.boots ? attacker.boots : null,
+        targetArmour = target.armour ? target.armour.getDefense() : target.armourLevel,
+        targetPendant = target.pendant ? target.pendant : null,
         targetRing = target.ring ? target.ring : null,
-        targetBoots = target.boots ? target.boots : null;
+        targetBoots = target.boots ? target.boots : null,
+        isPlayer = attacker.type === 'player';
+
+    damageDealt = (isPlayer ? 10 : 0) + attacker.level + ((attacker.level * weaponLevel) / 4) + ((attacker.level + weaponLevel * armourLevel) / 8);
 
     /**
-     * Set the baseline damage
+     * Apply ranged damage deficit
      */
 
-    damage = attacker.level * Utils.randomRange(0.45, 2.1875) + (isPlayer ? Utils.randomInt(0, 9) : Utils.randomInt(-5, 2));
+    if (usingRange)
+        damageDealt /= 1.275;
 
     /**
-     * Take in consideration weapon level & armour
+     * Apply special amulets
      */
 
-    damage += (weaponLevel * (2.125 + (Utils.randomRange(0.1, 1.25))) * (usingRange ? Utils.randomRange(0.75, 1.15) : 2.15 + Utils.randomRange(2.1, 4.2)));
-    damage += (attackerArmourLevel * (Utils.randomRange(0.15, 0.35)));
+    if (pendant)
+        damageAmplifier *= pendant.getBaseAmplifier();
 
-    if (special)
-        damage *= Utils.randomRange(1.00, 3.10);
+    if (ring)
+        damageAmplifier *= ring.getBaseAmplifier();
 
-    if (attackerPendant)
-        damage *= attackerPendant.getBaseAmplifier();
+    if (boots)
+        damageAmplifier *= boots.getBaseAmplifier();
 
-    if (attackerRing)
-        damage *= attackerRing.getBaseAmplifier();
+    if (damageAmplifier > 1.25)
+        damageAmplifier = 1.25;
 
-    if (attackerBoots)
-        damage *= attackerBoots.getBaseAmplifier();
+    damageDealt *= damageAmplifier;
 
-    damageAbsorbed = target.level + Utils.randomRange(0, targetArmourLevel) * (1.15 + Utils.randomRange(-0.35, 0.05));
+    damageAbsorbed = target.level + (targetArmour / 2);
 
     if (targetPendant)
-        damageAbsorbed *= targetPendant.getBaseAmplifier();
+        absorptionAmplifier *= targetPendant.getBaseAmplifier();
 
     if (targetRing)
-        damageAbsorbed *= targetRing.getBaseAmplifier();
+        absorptionAmplifier *= targetRing.getBaseAmplifier();
 
     if (targetBoots)
-        damageAbsorbed *= targetBoots.getBaseAmplifier();
+        absorptionAmplifier *= targetBoots.getBaseAmplifier();
 
-    damage = Math.round(damage);
-    damageAbsorbed = Math.round(damageAbsorbed);
+    damageAbsorbed *= absorptionAmplifier;
 
-    damage -= damageAbsorbed;
+    var damage = damageDealt - damageAbsorbed;
+
+    damage = Math.ceil(damage);
 
     if (isNaN(damage) || !damage || damage < 0 || target.invincible)
         damage = 0;
@@ -84,8 +96,11 @@ Formulas.getCritical = function(attacker, target) {
 };
 
 Formulas.getWeaponBreak = function(attacker, target) {
+
     if (!attacker || !target)
         return;
+
+    var targetArmour = target.getArmourLevel();
 
     /**
      * The chance a weapon will break ....
