@@ -580,8 +580,8 @@ module.exports = World = cls.Class.extend({
     spawnChest: function(items, x, y, staticChest) {
         var self = this,
             chestCount = Object.keys(self.chests).length,
-            instance = Utils.generateInstance(5, 259, chestCount, x, y),
-            chest = new Chest(259, instance, x, y);
+            instance = Utils.generateInstance(5, 194, chestCount, x, y),
+            chest = new Chest(194, instance, x, y);
 
         chest.items = items;
 

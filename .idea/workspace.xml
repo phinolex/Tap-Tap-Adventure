@@ -3,32 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c48d7ea8-5c56-4f6b-afdb-8c04901f739b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/data/sprites.json" afterPath="$PROJECT_DIR$/client/data/sprites.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/controllers/entities.js" afterPath="$PROJECT_DIR$/client/js/controllers/entities.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/controllers/info.js" afterPath="$PROJECT_DIR$/client/js/controllers/info.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/controllers/input.js" afterPath="$PROJECT_DIR$/client/js/controllers/input.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/character/character.js" afterPath="$PROJECT_DIR$/client/js/entity/character/character.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/character/player/playerhandler.js" afterPath="$PROJECT_DIR$/client/js/entity/character/player/playerhandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/entity/entityhandler.js" afterPath="$PROJECT_DIR$/client/js/entity/entityhandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/game.js" afterPath="$PROJECT_DIR$/client/js/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/renderer/renderer.js" afterPath="$PROJECT_DIR$/client/js/renderer/renderer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/renderer/updater.js" afterPath="$PROJECT_DIR$/client/js/renderer/updater.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/utils/modules.js" afterPath="$PROJECT_DIR$/client/js/utils/modules.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/combat/queenant.js" afterPath="$PROJECT_DIR$/server/data/combat/queenant.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data/items.json" afterPath="$PROJECT_DIR$/server/data/items.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/controllers/incoming.js" afterPath="$PROJECT_DIR$/server/js/controllers/incoming.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/character.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/character.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/boots.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/boots.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/pendant.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/pendant.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/ring.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/ring.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/handler.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/handler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" afterPath="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/entity/objects/projectile.js" afterPath="$PROJECT_DIR$/server/js/game/entity/objects/projectile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/formulas.js" afterPath="$PROJECT_DIR$/server/js/game/formulas.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/game/world.js" afterPath="$PROJECT_DIR$/server/js/game/world.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/js/util/items.js" afterPath="$PROJECT_DIR$/server/js/util/items.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/map/data/map.json" afterPath="$PROJECT_DIR$/tools/map/data/map.json" />
     </list>
     <ignored path="Tap-Tap-Adventure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,11 +22,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="player.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="player.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="448">
               <caret line="369" column="9" lean-forward="true" selection-start-line="369" selection-start-column="9" selection-end-line="369" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="input.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/js/controllers/input.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="487">
+              <caret line="124" column="28" lean-forward="true" selection-start-line="124" selection-start-column="28" selection-end-line="124" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -67,21 +52,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="items.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/js/util/items.js">
+      <file leaf-file-name="items.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/data/items.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="57" column="32" lean-forward="false" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="32" />
+            <state relative-caret-position="-5767">
+              <caret line="1373" column="0" lean-forward="true" selection-start-line="1373" selection-start-column="0" selection-end-line="1373" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="items.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/data/items.json">
+      <file leaf-file-name="world.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="1754" column="20" lean-forward="true" selection-start-line="1754" selection-start-column="20" selection-end-line="1754" selection-end-column="20" />
+            <state relative-caret-position="196">
+              <caret line="581" column="35" lean-forward="false" selection-start-line="581" selection-start-column="35" selection-end-line="581" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="formulas.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/js/game/formulas.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="33" column="15" lean-forward="false" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -98,9 +93,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>instanceof Chara</find>
-      <find>setStun</find>
-      <find>stunned</find>
       <find>Movement</find>
       <find>follow</find>
       <find>stun</find>
@@ -126,8 +118,11 @@
       <find>rLevel</find>
       <find>sword1</find>
       <find>equipment</find>
+      <find>c</find>
       <find>equip:</find>
       <find>equip(</find>
+      <find>pickle</find>
+      <find>chest</find>
     </findStrings>
     <replaceStrings>
       <replace>fpsCheck</replace>
@@ -180,7 +175,6 @@
         <option value="$PROJECT_DIR$/client/js/game.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/combat/combat.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/objects/projectile.js" />
-        <option value="$PROJECT_DIR$/server/js/game/world.js" />
         <option value="$PROJECT_DIR$/client/js/utils/modules.js" />
         <option value="$PROJECT_DIR$/client/js/controllers/entities.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/equipment/weapon.js" />
@@ -192,6 +186,7 @@
         <option value="$PROJECT_DIR$/server/data/items.json" />
         <option value="$PROJECT_DIR$/server/js/controllers/incoming.js" />
         <option value="$PROJECT_DIR$/server/js/game/entity/character/player/player.js" />
+        <option value="$PROJECT_DIR$/server/js/game/world.js" />
       </list>
     </option>
   </component>
@@ -825,14 +820,7 @@
       <workItem from="1510454257761" duration="307000" />
       <workItem from="1510555068717" duration="4443000" />
       <workItem from="1510595819779" duration="552000" />
-      <workItem from="1510599061927" duration="8587000" />
-    </task>
-    <task id="LOCAL-00005" summary="Special Attacks, Enchantments and Terminal Command Console">
-      <created>1505493924277</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1505493924277</updated>
+      <workItem from="1510599061927" duration="9905000" />
     </task>
     <task id="LOCAL-00006" summary="getHitType() Fix">
       <created>1505541912278</created>
@@ -1170,11 +1158,18 @@
       <option name="project" value="LOCAL" />
       <updated>1510560221473</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="New armour, de-hardcoded `drawEntityFore`, adds special attacks, stunning animations, weapon requirements, new handlers,">
+      <created>1510608198726</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1510608198727</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="621580000" />
+    <option name="totallyTimeSpent" value="622898000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1126" height="778" extended-state="0" />
@@ -1182,7 +1177,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1660746" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286119" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1218,7 +1213,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Population change updater..." />
     <MESSAGE value="Combat Target bug fix" />
     <MESSAGE value="Botting System &amp; Combat Refinement" />
     <MESSAGE value="Target fix" />
@@ -1243,7 +1237,8 @@
     <MESSAGE value="AoE Fixes &amp; Queen Ant functional" />
     <MESSAGE value="Hit Callback for Players" />
     <MESSAGE value="Combat Formula" />
-    <option name="LAST_COMMIT_MESSAGE" value="Combat Formula" />
+    <MESSAGE value="New armour, de-hardcoded `drawEntityFore`, adds special attacks, stunning animations, weapon requirements, new handlers," />
+    <option name="LAST_COMMIT_MESSAGE" value="New armour, de-hardcoded `drawEntityFore`, adds special attacks, stunning animations, weapon requirements, new handlers," />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1452,16 +1447,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/controllers/input.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="124" column="28" lean-forward="true" selection-start-line="124" selection-start-column="28" selection-end-line="124" selection-end-column="28" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/js/renderer/renderer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
@@ -1538,14 +1523,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="320" column="10" lean-forward="false" selection-start-line="320" selection-start-column="10" selection-end-line="320" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/js/game/entity/objects/projectile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
@@ -1558,14 +1535,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5460">
           <caret line="416" column="0" lean-forward="true" selection-start-line="416" selection-start-column="0" selection-end-line="416" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/formulas.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="40" column="29" lean-forward="false" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1626,18 +1595,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/data/items.json">
+    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="1754" column="20" lean-forward="true" selection-start-line="1754" selection-start-column="20" selection-end-line="1754" selection-end-column="20" />
+        <state relative-caret-position="448">
+          <caret line="369" column="9" lean-forward="true" selection-start-line="369" selection-start-column="9" selection-end-line="369" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/controllers/input.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="487">
+          <caret line="124" column="28" lean-forward="true" selection-start-line="124" selection-start-column="28" selection-end-line="124" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/formulas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="33" column="15" lean-forward="false" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/js/util/items.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="57" column="32" lean-forward="false" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="32" />
+        <state relative-caret-position="210">
+          <caret line="61" column="38" lean-forward="false" selection-start-line="61" selection-start-column="37" selection-end-line="61" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1650,10 +1635,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/js/game/entity/character/player/player.js">
+    <entry file="file://$PROJECT_DIR$/server/data/items.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="369" column="9" lean-forward="true" selection-start-line="369" selection-start-column="9" selection-end-line="369" selection-end-column="9" />
+        <state relative-caret-position="-5767">
+          <caret line="1373" column="0" lean-forward="true" selection-start-line="1373" selection-start-column="0" selection-end-line="1373" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/js/game/world.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="581" column="35" lean-forward="false" selection-start-line="581" selection-start-column="35" selection-end-line="581" selection-end-column="35" />
           <folding />
         </state>
       </provider>
