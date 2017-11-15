@@ -17,6 +17,13 @@ Utils.randomInt = function(min, max) {
     return min + Math.floor(Math.random() * (max - min + 1));
 };
 
+Utils.getDistance = function(startX, startY, toX, toY) {
+    var x = Math.abs(startX - toX),
+        y = Math.abs(startY - toY);
+
+    return x > y ? x : y;
+};
+
 /**
  * There is seriously no way two clients can end up with the same ID
  */

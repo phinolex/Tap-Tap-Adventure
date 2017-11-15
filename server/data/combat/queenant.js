@@ -30,7 +30,7 @@ module.exports = QueenAnt = Combat.extend({
         self.aoeRadius = 2;
         self.lastAoE = 0;
 
-        self.minionCount = 10;
+        self.minionCount = 7;
         self.lastSpawn = 0;
         self.minions = [];
 
@@ -89,6 +89,9 @@ module.exports = QueenAnt = Combat.extend({
             return;
         }
 
+        if (self.canSpawn())
+            self.spawnMinions();
+
         if (self.isAttacked())
             self.beginMinionAttack();
 
@@ -125,12 +128,16 @@ module.exports = QueenAnt = Combat.extend({
     spawnMinions: function() {
         var self = this;
 
-        self.lastMinions = new Date().getTime();
+        self.lastSpawn = new Date().getTime();
 
         for (var i = 0; i < self.minionCount; i++)
             self.minions.push(self.world.spawnMob(13, self.character.x, self.character.y));
 
         _.each(self.minions, function(minion) {
+
+            minion.aggressive = true;
+            minion.spawnDistance = 12;
+
             minion.onDeath(function() {
 
                 if (self.isLast())
@@ -153,6 +160,7 @@ module.exports = QueenAnt = Combat.extend({
             return;
 
         _.each(self.minions, function(minion) {
+
             var randomTarget = self.getRandomTarget();
 
             if (!minion.hasTarget() && randomTarget)
@@ -218,7 +226,7 @@ module.exports = QueenAnt = Combat.extend({
     },
 
     canSpawn: function() {
-        return new Date().getTime() - this.lastMinions > 45000 && !this.hasMinions() && this.isAttacked();
+        return new Date().getTime() - this.lastSpawn > 45000 && !this.hasMinions() && this.isAttacked();
     }
 
 });

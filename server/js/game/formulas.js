@@ -75,7 +75,7 @@ Formulas.getMaxDamage = function(attacker, target, special) {
 
     damage = Math.ceil(damage);
 
-    if (isNaN(damage) || !damage || damage < 0 || target.invincible)
+    if (isNaN(damage) || !damage || damage < 0)
         damage = 0;
 
     return damage;

@@ -216,6 +216,8 @@ module.exports = Commands = cls.Class.extend({
 
             case 'nohit':
 
+                log.info('invincinil');
+
                 self.player.invincible = !self.player.invincible;
 
                 break;

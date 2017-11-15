@@ -150,13 +150,20 @@
 
 #profileDialog, #settingsPage {
     top: 11%;
-    left: 72%;
 
     display: none;
     position: absolute;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
+}
+
+#profileDialog {
+    left: 69%;
+}
+
+#settingsPage {
+    left: 72%;
 }
 
 #navigator {
@@ -1727,8 +1734,13 @@
         position: absolute;
     }
 
-    #profileDialog, #settingsPage {
-        left: 343px;
+    #settingsPage {
+        left: 356px;
+        top: 24px;
+    }
+
+    #profileDialog {
+        left: 316px;
         top: 24px;
     }
 

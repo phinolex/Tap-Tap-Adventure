@@ -356,7 +356,7 @@ define(['jquery', './camera', './tile',
 
             self.context.drawImage(sprite.image, x, y, data.width, data.height, data.ox, data.oy, data.width, data.height);
 
-            if (entity instanceof Character && !entity.dead && entity.hasWeapon()) {
+            if (entity instanceof Character && !entity.dead && !entity.teleporting && entity.hasWeapon()) {
                 var weapon = self.entities.getSprite(entity.weapon.getString());
 
                 if (weapon) {

@@ -453,6 +453,8 @@ define(['./renderer/renderer', './utils/storage',
 
                     var originalSprite = entity.sprite;
 
+                    entity.teleporting = true;
+
                     entity.setSprite(self.getSprite('death'));
 
                     entity.animate('death', 240, 1, function() {
@@ -462,6 +464,8 @@ define(['./renderer/renderer', './utils/storage',
 
                         entity.setSprite(originalSprite);
                         entity.idle();
+
+                        entity.teleporting = false;
 
                     });
 

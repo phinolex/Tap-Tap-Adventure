@@ -117,10 +117,11 @@ module.exports = Combat = cls.Class.extend({
             if (self.character.target && !self.character.target.isDead())
                 self.attack(self.character.target);
 
-            self.lastAction = new Date().getTime();
+            self.lastAction = self.getTime();
 
         } else
             self.queue.clear();
+
     },
 
     parseFollow: function() {
@@ -134,9 +135,14 @@ module.exports = Combat = cls.Class.extend({
             if (!self.character.isRanged())
                 self.sendFollow();
 
-            if (!self.character.isAtSpawn() && !self.isAttacked()) {
-                self.character.return();
-                self.move(self.character, self.character.x, self.character.y);
+            if (!self.character.isAtSpawn()) {
+
+                if (self.isAttacked() || self.character.hasTarget())
+                    self.lastAction = self.getTime();
+                else {
+                    self.character.return();
+                    self.move(self.character, self.character.x, self.character.y);
+                }
             }
 
             if (self.onSameTile()) {
@@ -152,6 +158,8 @@ module.exports = Combat = cls.Class.extend({
                     self.follow(self.character, attacker);
 
             }
+
+
         }
 
     },
@@ -425,6 +433,18 @@ module.exports = Combat = cls.Class.extend({
 
     onNoAttackers: function(callback) {
         this.noAttackersCallback = callback;
+    },
+
+    targetOutOfBounds: function() {
+        var self = this;
+
+        if (!self.character.hasTarget() || !self.isMob())
+            return;
+
+        var spawnPoint = self.character.spawnLocation,
+            target = self.character.target;
+
+        return Utils.getDistance(spawnPoint[0], spawnPoint[1], target.x, target.y) > self.character.spawnDistance;
     },
     
     getTime: function() {

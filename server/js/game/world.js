@@ -216,7 +216,7 @@ module.exports = World = cls.Class.extend({
     handleDamage: function(attacker, target, damage) {
         var self = this;
 
-        if (!attacker || !target || isNaN(damage))
+        if (!attacker || !target || isNaN(damage) || target.invincible)
             return;
 
         if (target.type === 'player' && target.hitCallback)
@@ -238,11 +238,15 @@ module.exports = World = cls.Class.extend({
 
                 self.pushToAdjacentGroups(target.group, new Messages.Combat(Packets.CombatOpcode.Finish, [attacker.instance, target.instance]));
 
-                if (target.type === 'mob')
-                    attacker.addExperience(Mobs.getXp(target.id));
+                if (attacker.type === 'player' || target.type === 'player') {
 
-                if (attacker.type === 'player')
-                    attacker.killCharacter(target);
+                    if (target.type === 'mob')
+                        attacker.addExperience(Mobs.getXp(target.id));
+
+                    if (attacker.type === 'player')
+                        attacker.killCharacter(target);
+
+                }
 
             });
 
@@ -300,8 +304,6 @@ module.exports = World = cls.Class.extend({
 
         if (attacker.type === 'player')
             hit = attacker.getHit(target);
-
-        log.info(hit);
 
         projectile.damage = hit ? hit.damage : Formulas.getDamage(attacker, target, true);
         projectile.hitType = hit ? hit.type : Modules.Hits.Damage;

@@ -672,7 +672,7 @@ module.exports = Incoming = cls.Class.extend({
                     var bankSlot = self.player.bank.slots[index];
 
                     //Infinite stacks move all at onces, otherwise move one by one.
-                    var moveAmount = Items.maxStackSize(bankSlot.id) == -1 ? bankSlot.count : 1;
+                    var moveAmount = Items.maxStackSize(bankSlot.id) === -1 ? bankSlot.count : 1;
                     
                     if (self.player.inventory.add(bankSlot,moveAmount))
                         self.player.bank.remove(bankSlot.id, moveAmount, index);
@@ -716,7 +716,6 @@ module.exports = Incoming = cls.Class.extend({
 
         switch (opcode) {
             case Packets.TradeOpcode.Request:
-
 
 
                 break;
