@@ -634,7 +634,7 @@ define(['./renderer/renderer', './utils/storage',
                     entity.setHitPoints(hitPoints);
 
                     if (self.player.hasTarget() && self.player.target.id === entity.id && self.input.overlay.updateCallback)
-                        self.input.overlay.updateCallback(hitPoints);
+                        self.input.overlay.updateCallback(entity.id, hitPoints);
                 }
 
                 if (mana)

@@ -51,8 +51,10 @@ define(['jquery'], function($) {
 
             }
 
-            self.onUpdate(function(hitPoints) {
-                if (self.hovering && self.hovering.type !== 'npc' && self.hovering.type !== 'item') {
+            self.onUpdate(function(entityId, hitPoints) {
+
+
+                if (self.hovering && self.hovering.id === entityId && self.hovering.type !== 'npc' && self.hovering.type !== 'item') {
                     if (hitPoints < 1)
                         self.hide();
                     else {
