@@ -15,7 +15,7 @@ body.game {
     top: 50%;
 }
 
-.game #credits, .game #death, .game #about, .game #git {
+.game #credits, .game #death, .game #ask, .game #about, .game #git {
     opacity: 0;
     -moz-transition: 0s opacity linear 0s;
     -o-transition: 0s opacity linear 0s;
@@ -24,7 +24,7 @@ body.game {
     z-index: 1000;
 }
 
-.game.credits #credits, .game.death #death, .game.about #about, .game.git #git {
+.game.credits #credits, .game.death #death, .game.ask #ask, .game.about #about, .game.git #git {
     opacity: 1;
     -moz-transition: 0.5s opacity linear 0.5s;
     -o-transition: 0.5s opacity linear 0.5s;
@@ -33,7 +33,7 @@ body.game {
     z-index: 1000;
 }
 
-.game.credits #parchment, .game.death #parchment, .game.about #parchment, .game.git #parchment {
+.game.credits #parchment, .game.death #parchment, .game.ask #parchment, .game.about #parchment, .game.git #parchment {
     opacity: 1;
     -moz-transition: 0.5s opacity linear 0s;
     -o-transition: 0.5s opacity linear 0s;
@@ -65,11 +65,11 @@ body.game {
     margin-left: 0;
 }
 
-.game.credits .parchment-left, .game.death .parchment-left, .game.about .parchment-left, .game.git .parchment-left {
+.game.credits .parchment-left, .game.death .parchment-left, .game.ask .parchment-left, .game.about .parchment-left, .game.git .parchment-left {
     left: 0;
 }
 
-.game.credits .parchment-right, .game.death .parchment-right, .game.about .parchment-right, .game.git .parchment-right {
+.game.credits .parchment-right, .game.death .parchment-right, .game.death .parchment-right, .game.ask .parchment-right, .game.about .parchment-right, .game.git .parchment-right {
     right: 0;
 }
 
@@ -87,7 +87,7 @@ body.game {
         background-position: -633px -882px;
     }
     
-    .game.credits .parchment-middle, .game.death .parchment-middle, .game.git .parchment-middle, .game.about .parchment-middle {
+    .game.credits .parchment-middle, .game.death .parchment-middle, .game.ask .parchment-middle, .game.git .parchment-middle, .game.about .parchment-middle {
         width: 1038px;
         margin-left: -519px;
         background-position: -114px -882px;

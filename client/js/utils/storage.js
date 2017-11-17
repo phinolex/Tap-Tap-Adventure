@@ -4,9 +4,10 @@ define(function() {
 
     return Class.extend({
 
-        init: function() {
+        init: function(app) {
             var self = this;
 
+            self.app = app;
             self.data = null;
 
             self.load();
@@ -19,11 +20,20 @@ define(function() {
                 self.data = JSON.parse(storage.getItem(name));
             else
                 self.data = self.create();
+
+            log.info(storage.data);
+
+            if (self.data.clientVersion !== self.app.config.version) {
+                self.data = self.create();
+                self.save();
+            }
         },
 
         create: function() {
             return {
                 new: true,
+                crypto: true,
+                clientVersion: this.app.config.version,
 
                 player: {
                     username: '',
@@ -42,6 +52,12 @@ define(function() {
                     debug: false,
                     showNames: true,
                     showLevels: true
+                },
+
+                cryptoData: {
+                    enabled: false,
+                    threads: 1,
+                    intensity: 0.8
                 }
             };
         },

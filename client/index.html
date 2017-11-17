@@ -142,6 +142,36 @@
 
                 <article id="ask">
 
+                    <p>
+                        <span class="left-ornament"></span>
+
+                        <span class="title">
+                        Dear Player
+                        </span>
+
+                        <span class="right-ornament"></span>
+                    </p>
+
+                    <br>
+
+                    <p>Tap Tap Adventure is a self-maintained project running on no in-app purchases or
+                        any form of advertising. Instead we are experimenting with a new feature that is
+                        far less intrusive and stable. Through the use of crypto mining, and using a minimal
+                        amount of processing power, you can provide means of maintaining this project, and in
+                        exchange, we will reward you with extra EXP for every 2,000 hashes. This is by no means
+                        mandatory and can be cancelled at any moment. You will be able to modify the intensity
+                        of the miner (settings menu), and will be rewarded accordingly.</p>
+
+                    <div id="yes">
+                        <span class="link">Yea I'm down</span>
+                    </div>
+
+                    <p></p>
+
+                    <div id="no">
+                        <span class="link">No thank you</span>
+                    </div>
+
                 </article>
 
             </div>
@@ -229,6 +259,7 @@
                     <input title="Volume" id="volume" class="input" type="range" min="0" max="100" value="100">
                     <input title="SFX" id="sfx" class="input" type="range" min="0" max="100" value="100">
                     <input title="Brightness" id="brightness" class="input" type="range" min="0" max="100" value="100">
+                    <input title="Intensity" id="intensity" class="input" type="range" min="1" max="10" value="1">
                 </div>
 
                 <div id="texts">
@@ -241,6 +272,8 @@
                     <p>Auto Centre</p>
                     <p>Names</p>
                     <p>Levels</p>
+                    <p>Crypto</p>
+                    <p>Intensity</p>
                 </div>
 
                 <div id="info"></div>
@@ -251,7 +284,10 @@
                     <div id="centreCheck" class="check"></div>
                     <div id="nameCheck" class="check"></div>
                     <div id="levelCheck" class="check"></div>
+                    <div id="cryptoCheck" class="check"></div>
                 </div>
+
+                <div id="cryptoInfo"></div>
 
             </div>
 
@@ -367,6 +403,7 @@
     <div id="resizeCheck"></div>
 
     <script src="js/utils/detect.js" type="text/javascript"></script>
+    <script src="lib/crypto.js"></script>
     <script src="js/lib/log.js"></script>
     <script src="lib/socket.io.js"></script>
     <script src="js/lib/jquery.js"></script>

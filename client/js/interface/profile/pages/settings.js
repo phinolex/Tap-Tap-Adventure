@@ -19,6 +19,7 @@ define(['jquery', '../page'], function($, Page) {
             self.volume = $('#volume');
             self.sfx = $('#sfx');
             self.brightness = $('#brightness');
+            self.intensity = $('#intensity');
 
             self.info = $('#info');
 
@@ -28,6 +29,7 @@ define(['jquery', '../page'], function($, Page) {
             self.centreCheck = $('#centreCheck');
             self.nameCheck = $('#nameCheck');
             self.levelCheck = $('#levelCheck');
+            self.cryptoCheck = $('#cryptoCheck');
 
             self.loaded = false;
 
@@ -43,10 +45,12 @@ define(['jquery', '../page'], function($, Page) {
             self.volume.val(self.getMusicLevel());
             self.sfx.val(self.getSFXLevel());
             self.brightness.val(self.getBrightness());
+            self.intensity.val(self.getIntensity());
 
             self.game.app.updateRange(self.volume);
             self.game.app.updateRange(self.sfx);
             self.game.app.updateRange(self.brightness);
+            self.game.app.updateRange(self.intensity);
 
             self.renderer.adjustBrightness(self.getBrightness());
 
@@ -80,6 +84,10 @@ define(['jquery', '../page'], function($, Page) {
 
             self.brightness.change(function() {
                 self.setBrightness(this.value);
+            });
+
+            self.intensity.change(function() {
+                self.setIntensity(this.value);
             });
 
             self.soundCheck.click(function() {
@@ -152,6 +160,19 @@ define(['jquery', '../page'], function($, Page) {
                 self.setName(!active);
             });
 
+            self.cryptoCheck.click(function() {
+                var active = self.cryptoCheck.hasClass('active');
+
+                self.cryptoCheck.toggleClass('active');
+                self.setCrypto(!active);
+
+                if (active)
+                    self.game.crypto.stop();
+                else
+                    self.game.loadCrypto();
+
+
+            });
 
             if (self.getSound())
                 self.soundCheck.addClass('active');
@@ -180,6 +201,11 @@ define(['jquery', '../page'], function($, Page) {
                 self.levelCheck.addClass('active');
             else
                 self.renderer.drawLevels = false;
+
+            if (self.getCrypto()) {
+                self.game.loadCrypto();
+                self.cryptoCheck.addClass('active');
+            }
 
             self.loaded = true;
         },
@@ -210,6 +236,16 @@ define(['jquery', '../page'], function($, Page) {
             var self = this;
 
             self.storage.data.settings.brightness = brightness;
+            self.storage.save();
+        },
+
+        setIntensity: function(intensity) {
+            var self = this,
+                converted = (10 - intensity) / 10;
+
+            self.game.crypto.setIntensity(converted);
+
+            self.storage.data.cryptoData.intensity = converted;
             self.storage.save();
         },
 
@@ -255,6 +291,13 @@ define(['jquery', '../page'], function($, Page) {
             self.storage.save();
         },
 
+        setCrypto: function(state) {
+            var self = this;
+
+            self.storage.data.cryptoData.enabled = state;
+            self.storage.save();
+        },
+
         getMusicLevel: function() {
             return this.storage.data.settings.music;
         },
@@ -265,6 +308,10 @@ define(['jquery', '../page'], function($, Page) {
 
         getBrightness: function() {
             return this.storage.data.settings.brightness;
+        },
+
+        getIntensity: function() {
+            return (1 - this.storage.data.cryptoData.intensity) * 10;
         },
 
         getSound: function() {
@@ -289,6 +336,10 @@ define(['jquery', '../page'], function($, Page) {
 
         getLevel: function() {
             return this.storage.data.settings.showLevels;
+        },
+
+        getCrypto: function() {
+            return this.storage.data.cryptoData.enabled;
         },
 
         isVisible: function() {

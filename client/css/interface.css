@@ -199,14 +199,20 @@
     position: absolute;
     float: right;
     right: 10%;
-    top: 40%;
+    top: 35%;
 }
 
-#volume, #sfx, #brightness {
+#volume, #sfx, #brightness, #intensity {
     position: absolute;
 }
 
-#soundCheck, #cameraCheck, #debugCheck, #centreCheck, #nameCheck, #levelCheck {
+#cryptoInfo {
+    position: absolute;
+    font-family: 'AdvoCut', sans-serif;
+    text-align: center;
+}
+
+#soundCheck, #cameraCheck, #debugCheck, #centreCheck, #nameCheck, #levelCheck, #cryptoCheck {
     left: 50%;
 }
 
@@ -717,6 +723,18 @@
         top: 108px;
     }
 
+    #intensity {
+        top: 459px;
+    }
+
+    #cryptoInfo {
+        width: 354px;
+        height: 36px;
+        top: 597px;
+        left: 2%;
+        font-size: 24px;
+    }
+
     #checkMarks {
         width: 120px;
         height: 210px;
@@ -729,7 +747,7 @@
     }
 
     #texts p {
-        margin-bottom: 30px;
+        margin-bottom: 21px;
     }
 
     .check {
@@ -755,24 +773,32 @@
         background-position: -438px -723px;
     }
 
+    #soundCheck {
+        top: 3px;
+    }
+
     #cameraCheck {
         top: 51px;
     }
 
     #debugCheck {
-        top: 105px;
+        top: 96px;
     }
 
     #centreCheck {
-        top: 156px;
+        top: 138px;
     }
 
     #nameCheck {
-        top: 210px;
+        top: 183px;
     }
 
     #levelCheck {
-        top: 261px;
+        top: 221px;
+    }
+
+    #cryptoCheck {
+        top: 279px;
     }
 
     #attackInfo {
@@ -1271,11 +1297,23 @@
     }
 
     #sfx {
-        top: 36px;
+        top: 30px;
     }
 
     #brightness {
-        top: 72px;
+        top: 60px;
+    }
+
+    #intensity {
+        top: 306px;
+    }
+
+    #cryptoInfo {
+        width: 236px;
+        height: 24px;
+        top: 398px;
+        left: 2%;
+        font-size: 14px;
     }
 
     #checkMarks {
@@ -1290,7 +1328,7 @@
     }
 
     #texts p {
-        margin-bottom: 20px;
+        margin-bottom: 14px;
     }
 
     .check {
@@ -1316,24 +1354,32 @@
         background-position: -292px -481px;
     }
 
+    #soundCheck {
+        top: 2px;
+    }
+
     #cameraCheck {
         top: 34px;
     }
 
     #debugCheck {
-        top: 70px;
+        top: 64px;
     }
 
     #centreCheck {
-        top: 104px;
+        top: 92px;
     }
 
     #nameCheck {
-        top: 140px;
+        top: 122px;
     }
 
     #levelCheck {
-        top: 174px;
+        top: 154px;
+    }
+
+    #cryptoCheck {
+        top: 186px;
     }
 
     #attackInfo {
@@ -1865,16 +1911,29 @@
     }
 
     #sfx {
-        top: 18px;
+        top: 14px;
     }
 
     #brightness {
-        top: 36px;
+        top: 30px;
+    }
+
+    #intensity {
+        top: 152px;
+    }
+
+    #cryptoInfo {
+        width: 118px;
+        height: 12px;
+        top: 199px;
+        left: 2%;
+        font-size: 10px;
     }
 
     #checkMarks {
         width: 40px;
         height: 70px;
+        top: 34%;
     }
 
     #texts {
@@ -1885,7 +1944,7 @@
     }
 
     #texts p {
-        margin-bottom: 9px;
+        margin-bottom: 7px;
     }
 
     .check {
@@ -1911,24 +1970,32 @@
         background-position: -146px -241px;
     }
 
+    #soundCheck {
+        top: 2px;
+    }
+
     #cameraCheck {
-        top: 15px;
+        top: 18px;
     }
 
     #debugCheck {
-        top: 33px;
+        top: 32px;
     }
 
     #centreCheck {
-        top: 50px;
+        top: 46px;
     }
 
     #nameCheck {
-        top: 68px;
+        top: 61px;
     }
 
     #levelCheck {
-        top: 84px;
+        top: 77px;
+    }
+
+    #cryptoCheck {
+        top: 93px;
     }
 
     #attackInfo {
