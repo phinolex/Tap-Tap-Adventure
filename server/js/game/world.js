@@ -229,9 +229,6 @@ module.exports = World = cls.Class.extend({
 
         target.hit(attacker);
 
-        log.info('Applying damage: ' + damage + ' to ' + target.instance);
-        log.info('Target Hitpoints: ' + target.getHitPoints());
-
         target.applyDamage(damage);
 
         self.pushToAdjacentGroups(target.group, new Messages.Points(target.instance, target.getHitPoints(), null));
@@ -277,7 +274,11 @@ module.exports = World = cls.Class.extend({
 
             self.removeEntity(character);
 
+            character.dead = true;
+
             character.destroy();
+
+            character.combat.stop();
 
             if (!ignoreDrops) {
                 var drop = character.getDrop();
@@ -704,6 +705,7 @@ module.exports = World = cls.Class.extend({
                 self.pushToAdjacentGroups(entity.group, new Messages.Movement(Packets.MovementOpcode.Stunned, [entity.instance, stun]));
 
             });
+
         }
 
     },
@@ -750,6 +752,8 @@ module.exports = World = cls.Class.extend({
 
             mob.combat.begin(attacker);
         });
+
+
     },
 
     addItem: function(item) {

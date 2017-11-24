@@ -12,7 +12,7 @@ module.exports = Pendant = Equipment.extend({
     },
 
     getBaseAmplifier: function() {
-        return 1.00 + this.pendantLevel / 100;
+        return 1.00 + (this.pendantLevel / 100);
     }
 
 });

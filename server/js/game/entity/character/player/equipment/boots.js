@@ -9,6 +9,10 @@ module.exports = Boots = Equipment.extend({
         self._super(name, id, count, ability, abilityLevel);
 
         self.bootsLevel = Items.getBootsLevel(name);
+    },
+
+    getBaseAmplifier: function() {
+        return 1.00 + (this.bootsLevel / 200);
     }
 
 });

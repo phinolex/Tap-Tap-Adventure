@@ -199,7 +199,7 @@ module.exports = Player = Character.extend({
             self.sendToSpawn();
 
         if (self.hitPoints.getHitPoints() < 0)
-            self.hitPoints.setHitPoints(self.hitPoints.getMaxHitPoints());
+            self.hitPoints.setHitPoints(self.getMaxHitPoints());
 
         if (self.mana.getMana() < 0)
             self.mana.setMana(self.mana.getMaxMana());
@@ -251,6 +251,18 @@ module.exports = Player = Character.extend({
         }));
     },
 
+    heal: function(amount) {
+        var self = this;
+
+        /**
+         * Passed from the superclass...
+         */
+
+        self.hitPoints.heal(amount);
+        self.mana.heal(amount);
+
+        self.sync();
+    },
 
     healHitPoints: function(amount) {
         var self = this,
@@ -260,7 +272,7 @@ module.exports = Player = Character.extend({
 
         self.sync();
 
-        self.world.pushBroadcast(new Messages.Heal({
+        self.world.pushToAdjacentGroups(self.group, new Messages.Heal({
             id: self.instance,
             type: type,
             amount: amount
@@ -275,7 +287,7 @@ module.exports = Player = Character.extend({
 
         self.sync();
 
-        self.world.pushBroadcast(new Messages.Heal({
+        self.world.pushToAdjacentGroups(self.group, new Messages.Heal({
             id: self.instance,
             type: type,
             amount: amount
@@ -288,8 +300,11 @@ module.exports = Player = Character.extend({
             type, amount;
 
         if (Items.hasPlugin(id)) {
+
             var tempItem = new (Items.isNewPlugin(id))(id, -1, self.x,self.y);
+
             tempItem.onUse(self);
+
             // plugins are responsible for sync and messages to player,
             // or calling player methods that handle that
 
@@ -617,7 +632,7 @@ module.exports = Player = Character.extend({
     },
 
     hasMaxHitPoints: function() {
-        return this.hitPoints.getHitPoints() >= this.hitPoints.getMaxHitPoints();
+        return this.getHitPoints() >= this.hitPoints.getMaxHitPoints();
     },
 
     hasMaxMana: function() {
@@ -722,7 +737,7 @@ module.exports = Player = Character.extend({
     },
 
     isDead: function() {
-        return this.hitPoints.getHitPoints() < 1 || this.dead;
+        return this.getHitPoints() < 1 || this.dead;
     },
 
     /**
@@ -766,8 +781,8 @@ module.exports = Player = Character.extend({
 
         var info = {
             id: self.instance,
-            hitPoints: self.hitPoints.getHitPoints(),
-            maxHitPoints: self.hitPoints.getMaxHitPoints(),
+            hitPoints: self.getHitPoints(),
+            maxHitPoints: self.getMaxHitPoints(),
             mana: self.mana.getMana(),
             maxMana: self.mana.getMaxMana(),
             experience: self.experience,

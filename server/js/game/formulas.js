@@ -10,6 +10,8 @@ Formulas.getDamage = function(attacker, target, special) {
     var maxDamage = Formulas.getMaxDamage(attacker, target, special),
         accuracy = Utils.randomInt(0, attacker.level);
 
+    log.info(attacker.instance + ' ' + maxDamage);
+
     return Utils.randomInt(accuracy, maxDamage);
 };
 
@@ -44,17 +46,23 @@ Formulas.getMaxDamage = function(attacker, target, special) {
      * Apply special amulets
      */
 
-    if (pendant)
+    if (pendant && pendant.pendantLevel > 0)
         damageAmplifier *= pendant.getBaseAmplifier();
 
-    if (ring)
+    if (ring && ring.ringLevel > 0)
         damageAmplifier *= ring.getBaseAmplifier();
 
-    if (boots)
+    if (boots && boots.bootsLevel > 0)
         damageAmplifier *= boots.getBaseAmplifier();
 
-    if (damageAmplifier > 1.25)
-        damageAmplifier = 1.25;
+    log.info(damageAmplifier);
+
+    /**
+     * Just so amplifiers don't get out of hand.
+     */
+
+    if (damageAmplifier > 1.60)
+        damageAmplifier = 1.60;
 
     damageDealt *= damageAmplifier;
 

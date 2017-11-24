@@ -9,6 +9,10 @@ module.exports = Ring = Equipment.extend({
         self._super(name, id, count, ability, abilityLevel);
 
         self.ringLevel = Items.getRingLevel(name);
+    },
+
+    getBaseAmplifier: function() {
+        return 1.00 + (this.ringLevel / 150);
     }
 
 });

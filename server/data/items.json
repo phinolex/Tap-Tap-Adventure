@@ -346,70 +346,70 @@
   "Pendant1": {
     "id":50,
     "type":"pendant",
-    "pLevel": 5,
+    "pendantLevel": 5,
     "name": "Emerald Pendant"
   },
 
   "GreenPendant": {
     "id":51,
     "type":"pendant",
-    "pLevel": 10,
+    "pendantLevel": 10,
     "name": "Jade Pendant"
   },
 
   "PearlPendant": {
     "id":52,
     "type":"pendant",
-    "pLevel": 15,
+    "pendantLevel": 15,
     "name": "Pearl Pendant"
   },
 
   "MarblePendant": {
     "id":53,
     "type":"pendant",
-    "pLevel": 25,
+    "pendantLevel": 25,
     "name": "Diamond Pendant"
   },
 
   "Ring1": {
     "id":54,
     "type":"ring",
-    "rLevel": 5,
+    "ringLevel": 5,
     "name": "Emerald Ring"
   },
 
   "SproutRing": {
     "id":55,
     "type":"ring",
-    "rLevel": 10,
+    "ringLevel": 10,
     "name": "Sprout Ring"
   },
 
   "PearlRing": {
     "id":56,
     "type":"ring",
-    "rLevel": 15,
+    "ringLevel": 15,
     "name": "Pearl Ring"
   },
 
   "TopazRing": {
     "id": 57,
     "type": "ring",
-    "rLevel": 20,
+    "ringLevel": 20,
     "name": "Topaz Ring"
   },
 
   "SpiritRing": {
     "id":58,
     "type":"ring",
-    "rLevel": 25,
+    "ringLevel": 25,
     "name": "Spirit Ring"
   },
 
   "EssentialRage": {
     "id":59,
     "type": "ring",
-    "rLevel": 35,
+    "ringLevel": 35,
     "name": "Essential Rage"
   },
 

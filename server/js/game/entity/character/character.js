@@ -43,9 +43,10 @@ module.exports = Character = Entity.extend({
         self.projectile = Modules.Projectiles.Arrow;
         self.projectileName = 'projectile-pinearrow';
 
-        self.healingTimeout = null;
+        self.healingInterval = null;
 
         self.loadCombat();
+        self.startHealing();
     },
 
     loadCombat: function() {
@@ -68,6 +69,20 @@ module.exports = Character = Entity.extend({
 
     startHealing: function() {
         var self = this;
+
+        self.healingInterval = setInterval(function() {
+
+            if (!self.hasTarget() && !self.combat.isAttacked() && !self.dead)
+                self.heal(1);
+
+        }, 5000);
+    },
+
+    stopHealing: function() {
+        var self = this;
+
+        clearInterval(self.healingInterval);
+        self.healingInterval = null;
     },
 
     hit: function(attacker) {

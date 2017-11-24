@@ -53,9 +53,12 @@ module.exports = Combat = cls.Class.extend({
         var self = this;
 
         self.start();
-        self.character.setTarget(attacker);
 
+        self.character.setTarget(attacker);
         self.addAttacker(attacker);
+
+        attacker.combat.addAttacker(self.character); //For mobs attacking players..
+
         self.attack(attacker);
     },
 
@@ -73,8 +76,13 @@ module.exports = Combat = cls.Class.extend({
 
         self.checkLoop = setInterval(function() {
 
-            if (self.getTime() - self.lastAction > self.lastActionThreshold)
+            if (self.getTime() - self.lastAction > self.lastActionThreshold) {
+
                 self.stop();
+
+                self.forget();
+
+            }
 
         }, 1000);
 
@@ -96,7 +104,6 @@ module.exports = Combat = cls.Class.extend({
         self.checkLoop = null;
 
         self.started = false;
-
     },
 
     parseAttack: function() {
@@ -214,7 +221,7 @@ module.exports = Combat = cls.Class.extend({
         var self = this;
 
         for (var i = 0; i < count; i++)
-            self.attack(new Hit(Modules.Hits.Damage, Formulas.getDamage(self.character, target)));
+            self.attack(target);
     },
 
     addAttacker: function(character) {

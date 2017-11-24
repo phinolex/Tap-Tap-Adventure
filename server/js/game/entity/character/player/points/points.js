@@ -10,7 +10,12 @@ module.exports = Points = cls.Class.extend({
     },
 
     heal: function(amount) {
-        this.setPoints(this.points + amount);
+        var self = this;
+
+        self.setPoints(self.points + amount);
+
+        if (self.healCallback)
+            self.healCallback();
     },
 
     increment: function(amount) {
@@ -36,6 +41,11 @@ module.exports = Points = cls.Class.extend({
 
     getData: function() {
         return [this.points, this.maxPoints];
+    },
+
+    onHeal: function(callback) {
+        this.healCallback = callback;
     }
+
 
 });

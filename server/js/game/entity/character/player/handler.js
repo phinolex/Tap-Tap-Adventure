@@ -91,6 +91,8 @@ module.exports = Handler = cls.Class.extend({
         });
 
         self.player.connection.onClose(function() {
+            self.player.stopHealing();
+
             self.world.removePlayer(self.player);
         });
 

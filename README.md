@@ -30,21 +30,24 @@ Let us start out with this small list:
 - Map Loading: The client-sided map has been brought down to the bare minimum, it is only responsible for its fair share of collisions (checked both client and server sided) and determining tiles and what gets drawn where. While the server-side map loading ensures the location of objects, NPCs, areas and so on. The client receives information depending on the actions taken by the player (i.e. a player walks into a new zone and must receive new music)
 - Combat System: Completely rewritten and much more controlled, the combat system accounts for both single, multi, ranged or melee combat. It can easily be expanded to include special mobs (e.g. bosses). It is all done in the server-side, greatly reducing the chance of any exploit.
 - Controllers: Both the client and the server side contain a folder named `controllers`. The name is pretty self explanatory, this controls important functions of the game.
-- Quest System: The system for quests and achievements has been laid out already, all that must be done now is finish the interface (CSS mainly) and add new quests.
+- Quest System: The quest controller encompasses both achievements and quests, both have been created in a plugin format and allow for manipulation of server events. Achievements are far more simplistic in nature, consisting of minor tasks and small rewards.
 - Plugin System: Expands upon the controllers and combat and allows direct control over individual items.
 - Crypto: Allows the player to choose whether or not they would like to contribute, in the event they do, they will be rewarded EXP. This is not to say that AFK'ing will be allowed.
 
 
+
 Still, there are a couple things that have to be done:
 
-- Implementation of Quests and Achievements
-- Add Guilds, Abilities, and Trading
-- Minor tweaks to perfect the interface
+- Add Guilds and Parties
+- Implement trading amongst player
+- Abilities
+- Finalize all bosses
+- More quests and achievements
 
 
 ## Running Tap Tap Adventure
 
-Running the server is as easy as 1, 2, 3. Mostly. I'm not kidding.
+Running the server is fairly straightforward, for the most part. If you encounter any issues, make sure you use the alternative solution.
 
 First, you must `clone` the repository. There's really no way around it, you kinda need the source to run it, y'know?
 
@@ -52,24 +55,31 @@ First, you must `clone` the repository. There's really no way around it, you kin
 
 `sudo npm install -d`
 
-- Install MySQL
-- Create Schema
-- Create TTA user and grant permissions on Schema
-- Run tools/database.sql
 
+###### Step 2 - Installing the utilities
 
-Copy `config.json-dist` and save as `config.json`
+Now you must convert the configuration for local usage, go in both `server` folder and `client/data` folder and rename `config.json-dist` to `config.json`.
 
-Update mysqlUser and mysqlPassword
+Afer this step, you can either choose to install MySQL for full distribution, or simply enable `offlineMode` in the server configuration.
+
+If you choose to use MySQL, install `mysql-server` for the operating system you're using, and update the configuration to contain your details.
 
 
 ###### Step 2 - Run the server
 
 `node server/js/main.js`
 
+In most cases, the server was programmed to automatically generate the MySQL data in the database given, in the event this does not occur, there are two solutions you can attempt:
+
+1) Grant the MySQL user FULL permissions
+2) Run or query the `.sql` file in the `tools` folder.
+
 ###### Step 3 - Connect to the server
 
 `http://127.0.0.1:1800`
+
+
+That's it, as easy as 1, 2, 3, with many sub-procedures to follow :l
 
 ### For Developers
 
