@@ -8,7 +8,8 @@ var fs = require('fs'),
     ShutdownHook = require('shutdown-hook'),
     Log = require('log'),
     worlds = [], database,
-    Bot = require('../../tools/bot/bot');
+    Bot = require('../../tools/bot/bot'),
+    Utils = require('./util/utils');
 
 var worldsCreated = 0;
 
@@ -150,6 +151,12 @@ function Main() {
                     count = 1;
 
                 new Bot(worlds[0], count);
+
+                break;
+
+            case 'test':
+
+                Utils.test();
 
                 break;
         }

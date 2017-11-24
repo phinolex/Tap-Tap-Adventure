@@ -171,7 +171,6 @@ define(['jquery', '../page'], function($, Page) {
                 else
                     self.game.loadCrypto();
 
-
             });
 
             if (self.getSound())

@@ -18,6 +18,7 @@ module.exports = Character = Entity.extend({
         self.movementSpeed = 150;
         self.attackRange = 1;
         self.attackRate = 1000;
+        self.healingRate = 7000;
 
         self.spawnDistance = 7;
 
@@ -42,6 +43,8 @@ module.exports = Character = Entity.extend({
         self.projectile = Modules.Projectiles.Arrow;
         self.projectileName = 'projectile-pinearrow';
 
+        self.healingTimeout = null;
+
         self.loadCombat();
     },
 
@@ -61,6 +64,10 @@ module.exports = Character = Entity.extend({
 
         if (self.stunCallback)
             self.stunCallback(stun);
+    },
+
+    startHealing: function() {
+        var self = this;
     },
 
     hit: function(attacker) {

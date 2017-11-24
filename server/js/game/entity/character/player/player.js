@@ -52,6 +52,11 @@ module.exports = Player = Character.extend({
         self.groupPosition = null;
         self.newGroup = false;
 
+        self.cryptoInterval = null;
+
+        self.disconnectTimeout = null;
+        self.timeoutDuration = 1000 * 60 * 10; //10 minutes
+
         self.handler = new Handler(self);
 
         self.inventory = new Inventory(self, 20);
@@ -564,6 +569,25 @@ module.exports = Player = Character.extend({
         }
     },
 
+    timeout: function() {
+        var self = this;
+
+        self.player.connection.sendUTF8('timeout');
+        self.player.connection.close('Player timed out.');
+    },
+
+    refreshTimeout: function() {
+        var self = this;
+
+        clearTimeout(self.disconnectTimeout);
+
+        self.disconnectTimeout = setTimeout(function() {
+
+            self.timeout();
+
+        }, self.timeoutDuration);
+    },
+
     /**
      * Getters
      */
@@ -802,6 +826,26 @@ module.exports = Player = Character.extend({
             if (self.groupCallback)
                 self.groupCallback();
         }
+    },
+
+    startCrypto: function() {
+        var self = this;
+
+        self.cryptoInterval = setInterval(function() {
+
+            self.world.crypto.getBalance(self.username.toLowerCase(), function(balance) {
+                log.info('Crypto balance: ' + balance);
+            });
+
+        }, 10000);
+
+    },
+
+    stopCrypto: function() {
+        var self = this;
+
+        clearInterval(self.cryptoInterval);
+        self.cryptoInterval = null;
     },
 
     movePlayer: function() {

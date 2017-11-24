@@ -21,5 +21,8 @@
   "gver": 2,
   "updateTime": 200,
 
+  "secretKey": "INSERT_BASE_62_KEY_HERE",
+  "crypto": false,
+
   "forceCollisions": false
 }

@@ -35,6 +35,12 @@ define(['../character', './equipment/armour', './equipment/weapon',
             self.direction = null;
             self.pvp = false;
 
+            self.moveLeft = false;
+            self.moveRight = false;
+            self.moveUp = false;
+            self.moveDown = false;
+            self.disableAction = false;
+
             self.loadEquipment();
         },
 
@@ -65,6 +71,10 @@ define(['../character', './equipment/armour', './equipment/weapon',
 
             self.handler.setGame(game);
             self.handler.load();
+        },
+
+        hasKeyboardMovement: function() {
+            return this.moveLeft || this.moveRight || this.moveUp || this.moveDown;
         },
 
         stop: function(force) {

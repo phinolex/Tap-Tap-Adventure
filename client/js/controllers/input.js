@@ -26,6 +26,8 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
             self.newTargetColour = null;
             self.mobileTargetColour = 'rgba(51, 255, 0)';
 
+            self.previousKey = {};
+
             self.cursors = {};
 
             self.hovering = null;
@@ -86,28 +88,28 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                         case Modules.Keys.Up:
                         case Modules.Keys.W:
 
-                            self.game.setPlayerMovement('up');
+                            self.getPlayer().moveUp = true;
 
                             break;
 
                         case Modules.Keys.A:
                         case Modules.Keys.Left:
 
-                            self.game.setPlayerMovement('left');
+                            self.getPlayer().moveLeft = true;
 
                             break;
 
                         case Modules.Keys.S:
                         case Modules.Keys.Down:
 
-                            self.game.setPlayerMovement('down');
+                            self.getPlayer().moveDown = true;
 
                             break;
 
                         case Modules.Keys.D:
                         case Modules.Keys.Right:
 
-                            self.game.setPlayerMovement('right');
+                            self.getPlayer().moveRight = true;
 
                             break;
 
@@ -131,32 +133,49 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
         },
 
         keyUp: function(key) {
-            var self = this;
+            var self = this,
+                player = self.getPlayer();
 
             switch(key) {
                 case Modules.Keys.W:
-                case Modules.Keys.A:
-                case Modules.Keys.S:
-                case Modules.Keys.D:
                 case Modules.Keys.Up:
-                case Modules.Keys.Down:
+                    player.moveUp = false;
+                    break;
+
+                case Modules.Keys.A:
                 case Modules.Keys.Left:
+                    player.moveLeft = false;
+                    break;
+
+                case Modules.Keys.S:
+                case Modules.Keys.Down:
+                    player.moveDown = false;
+                    break;
+
+                case Modules.Keys.D:
                 case Modules.Keys.Right:
-                    self.getPlayer().direction = null;
+                    player.moveRight = false;
                     break;
             }
+
+            player.disableAction = false;
         },
 
         keyMove: function(position) {
-            var self = this;
+            var self = this,
+                player = self.getPlayer();
 
-            if (!self.getPlayer().hasPath())
+            log.info('Key moveee')
+
+            if (!player.hasPath())
                 self.click(position);
         },
 
         click: function(position) {
             var self = this,
                 player = self.getPlayer();
+
+            log.info('Click!!');
 
             self.setPassiveTarget();
 
@@ -173,7 +192,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
 
             var entity = self.game.getEntityAt(position.x, position.y, (position.x === player.gridX && position.y === player.gridY));
 
-            if (entity) {
+            if (entity && !player.disableAction) {
                 self.setAttackTarget();
 
                 if (self.isTargetable(entity))
@@ -197,6 +216,8 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
                     player.follow(entity);
                     return;
                 }
+
+                player.disableAction = true;
             } else
                 player.removeTarget();
 

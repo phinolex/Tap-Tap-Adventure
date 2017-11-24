@@ -2020,7 +2020,8 @@
     "aggressive": true,
     "attackRate": 1100,
     "movementSpeed": 600,
-    "spawnDelay": 95000
+    "spawnDelay": 95000,
+    "combatPlugin": "greatsquid"
   },
 
   "BrownMouse": {

@@ -1,6 +1,7 @@
 /* global module */
 
-var Utils = {};
+var Utils = {},
+    Packets = require('../network/packets');
 
 module.exports = Utils;
 
@@ -38,4 +39,15 @@ Utils.generateInstance = function(randomizer, id, modulo, posY) {
 
 Utils.generateRandomId = function() {
     return '' + 1 + Utils.random(0, 200) + Utils.random(0, 20) + 2
+};
+
+Utils.validPacket = function(packet) {
+    var keys = Object.keys(Packets),
+        filtered = [];
+
+    for (var i = 0; i < keys.length; i++)
+        if (!keys[i].endsWith('Opcode'))
+            filtered.push(keys[i]);
+
+    return packet > -1 && packet < Packets[filtered[filtered.length - 1]] + 1;
 };

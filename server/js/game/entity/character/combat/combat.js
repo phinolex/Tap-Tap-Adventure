@@ -78,10 +78,6 @@ module.exports = Combat = cls.Class.extend({
 
         }, 1000);
 
-        self.healLoop = setInterval(function() {
-            self.parseHealing();
-        }, 1000);
-
         self.started = true;
     },
 
@@ -158,30 +154,7 @@ module.exports = Combat = cls.Class.extend({
                     self.follow(self.character, attacker);
 
             }
-
-
         }
-
-    },
-
-    parseHealing: function() {
-        var self = this;
-
-        if (self.character.isDead() || self.character.hasMaxHitPoints() || self.character.hasTarget() || self.isAttacked())
-            return;
-
-        if (self.isPlayer()) {
-            self.character.hitPoints.heal(1);
-            self.character.mana.heal(1);
-        } else
-            self.character.heal(1);
-
-        self.world.pushBroadcast(new Messages.Sync({
-            hitPoints: self.character.getHitPoints(),
-            maxHitPoints: self.character.getMaxHitPoints(),
-            mana: self.isPlayer() ? self.character.mana.getMana() : null,
-            maxMana: self.isPlayer() ? self.character.mana.getMaxMana() : null
-        }));
     },
 
     attack: function(target) {

@@ -101,7 +101,7 @@ define(['jquery'], function($) {
                     return;
 
                 self.game.storage.data.cryptoData.enabled = true;
-                self.game.storage.data.save();
+                self.game.storage.save();
 
                 self.game.loadCrypto();
 
@@ -163,6 +163,8 @@ define(['jquery'], function($) {
 
                 if (!self.game)
                     return;
+
+                self.body.focus();
 
                 if (key === Modules.Keys.Enter && !self.game.started) {
                     self.login();

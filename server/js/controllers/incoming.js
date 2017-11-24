@@ -28,6 +28,16 @@ module.exports = Incoming = cls.Class.extend({
             var packet = data.shift(),
                 message = data[0];
 
+            if (!Utils.validPacket(packet)) {
+
+                log.error('Non-existent packet received: ' + packet + ' data: ');
+                log.error(message);
+
+                return;
+            }
+
+            self.player.refreshTimeout();
+
             switch(packet) {
 
                 case Packets.Intro:
@@ -102,6 +112,10 @@ module.exports = Incoming = cls.Class.extend({
                     self.handleWarp(message);
                     break;
 
+                case Packets.Crypto:
+                    self.handleCrypto(message);
+                    break
+
             }
 
         });
@@ -154,7 +168,7 @@ module.exports = Incoming = cls.Class.extend({
                 uri: 'https://taptapadventure.com/api/register.php?a=' + '9a4c5ddb-5ce6-4a01-a14f-3ae49d8c6507' + '&u=' + self.player.username + '&p=' + self.player.password + '&e=' + self.player.email
             };
 
-            Request(registerOptions, function(error, reponse, body) {
+            Request(registerOptions, function(error, response, body) {
                 try {
                     var data = JSON.parse(JSON.parse(body).data);
 
@@ -784,11 +798,25 @@ module.exports = Incoming = cls.Class.extend({
             self.player.warp.warp(id);
     },
 
+    handleCrypto: function(message) {
+        var self = this,
+            instance = message.shift(),
+            enabled = message.shift();
+
+        if (instance !== self.player.instance)
+            return;
+
+        if (enabled)
+            self.player.startCrypto();
+        else
+            self.player.stopCrypto();
+    },
+
     canAttack: function(attacker, target) {
 
         /**
          * Used to prevent client-sided manipulation. The client will send the packet to start combat
-         * but if it was modified by a presumed hacker, it will simply cease when it arrives to this condition
+         * but if it was modified by a presumed hacker, it will simply cease when it arrives to this condition.
          */
 
         if (attacker.type === 'mob' || target.type === 'mob')

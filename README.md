@@ -8,9 +8,10 @@ The Plan:
 
 - TTA is expected to remain completely open-source, allowing its community to collaborate and aid in the perfection of the game.
 - The players will be able to vote on what content gets added into the game, while the coders will aid in the creation and perfection of those features
-- There will be no purchases in game - the game will remain completely free
+- There will be no advertisements or microtransactions in-game. There will be random merchendise in the future.
 - Anyone is free to create their own derivative of TTA, with no strings attached. We will even provide toplists.
 - Compatibility is, and will continue to be our number one priority.
+- Cryptocurrency and direct donations will be a way for players to contribute to the game.
 
 Currently, TTA is available on the three major platforms: iOS, Android & PC. Though compatibility is questionable on older devices, there are still features implemented to ensure maximum performance is achieved.
 If you are interested in researching previous versions of the rewritten source, be sure to check out [Kaetram](https://github.com/udeva/Kaetram)
@@ -30,6 +31,9 @@ Let us start out with this small list:
 - Combat System: Completely rewritten and much more controlled, the combat system accounts for both single, multi, ranged or melee combat. It can easily be expanded to include special mobs (e.g. bosses). It is all done in the server-side, greatly reducing the chance of any exploit.
 - Controllers: Both the client and the server side contain a folder named `controllers`. The name is pretty self explanatory, this controls important functions of the game.
 - Quest System: The system for quests and achievements has been laid out already, all that must be done now is finish the interface (CSS mainly) and add new quests.
+- Plugin System: Expands upon the controllers and combat and allows direct control over individual items.
+- Crypto: Allows the player to choose whether or not they would like to contribute, in the event they do, they will be rewarded EXP. This is not to say that AFK'ing will be allowed.
+
 
 Still, there are a couple things that have to be done:
 

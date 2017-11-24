@@ -19,7 +19,8 @@ var cls = require('../lib/class'),
     Packets = require('../network/packets'),
     Formulas = require('./formulas'),
     Modules = require('../util/modules'),
-    Minigames = require('../controllers/minigames');
+    Minigames = require('../controllers/minigames'),
+    Crypto = require('../util/crypto');
 
 //var PluginItems = require('./entity/objects/pluginItems')();
 
@@ -69,7 +70,7 @@ module.exports = World = cls.Class.extend({
                 diff = new Date().getTime() - self.socket.ips[connection.socket.conn.remoteAddress];
 
             if (diff < 4000) {
-                connection.sendUTF8('malformed');
+                connection.sendUTF8('toofast');
                 connection.close('Logging in too rapidly');
 
                 return;
@@ -133,6 +134,8 @@ module.exports = World = cls.Class.extend({
 
         if (!config.offlineMode)
             self.dataParser();
+
+        self.crypto = new Crypto(self);
 
         self.ready = true;
 
@@ -225,6 +228,9 @@ module.exports = World = cls.Class.extend({
         //Stop screwing with this - it's so the target retaliates.
 
         target.hit(attacker);
+
+        log.info('Applying damage: ' + damage + ' to ' + target.instance);
+        log.info('Target Hitpoints: ' + target.getHitPoints());
 
         target.applyDamage(damage);
 

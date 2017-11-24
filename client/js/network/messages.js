@@ -83,7 +83,7 @@ define(function() {
             switch (message) {
 
                 case 'updated':
-                    self.app.sendError(null, 'The client has been updated, please refresh using CTRL!');
+                    self.app.sendError(null, 'The client has been updated!');
                     break;
 
                 case 'full':
@@ -122,10 +122,21 @@ define(function() {
                     self.app.sendError(null, 'You have entered the wrong username or password.');
                     break;
 
-                case 'malform':
-                    self.app.game.handleDisconnection(true);
+                case 'toofast':
+                    self.app.sendError(null, 'You are trying to log in too fast from the same connection.');
+                    break;
 
+                case 'malform':
+
+                    self.app.game.handleDisconnection(true);
                     self.app.sendError(null, 'Client has experienced a malfunction.');
+
+                    break;
+
+                case 'timeout':
+
+                    self.app.sendError(null, 'You have been disconnected for being inactive for too long.');
+
                     break;
 
                 default:

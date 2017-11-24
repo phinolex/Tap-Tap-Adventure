@@ -506,15 +506,17 @@ define(['./renderer/renderer', './utils/storage',
                         return;
                 }
 
+                if (self.player.hasTarget() && self.player.target.id === entity.id)
+                    self.player.removeTarget();
+
+                self.entities.grids.removeFromPathingGrid(entity.gridX, entity.gridY);
+
                 if (entity.id !== self.player.id && self.player.getDistance(entity) < 5)
                     self.audio.play(Modules.AudioTypes.SFX, 'kill' + Math.floor(Math.random() * 2 + 1));
 
                 entity.hitPoints = 0;
 
                 entity.setSprite(self.getSprite('death'));
-
-                if (self.player.hasTarget() && self.player.target.id === entity.id)
-                    self.player.removeTarget();
 
                 entity.animate('death', 120, 1, function() {
                     self.entities.unregisterPosition(entity);
@@ -1108,7 +1110,7 @@ define(['./renderer/renderer', './utils/storage',
                 self.storage.save();
             }
 
-            if (self.storage.data.crypto) {
+            if (self.storage.data.crypto && !self.renderer.mobile) {
                 self.storage.data.crypto = false;
                 self.storage.save();
 
@@ -1127,6 +1129,11 @@ define(['./renderer/renderer', './utils/storage',
                 self.setCrypto(new Crypto(self));
 
             self.crypto.start();
+
+            self.socket.send(Packets.Crypto, [self.player.id, true]);
+
+            if (self.renderer.mobile)
+                self.input.chatHandler.add('WORLD', 'Warning - Crypto mining is an extreme battery drain on mobile devices.');
         },
 
         implementStorage: function() {

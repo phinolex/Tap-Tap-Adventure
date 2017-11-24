@@ -202,16 +202,16 @@ define(['../entity/character/character'], function(Character) {
             if (player.frozen)
                 return;
 
-            if (player.direction === 'up')
+            if (player.moveUp)
                 position.y--;
-            else if (player.direction === 'down')
+            else if (player.moveDown)
                 position.y++;
-            else if (player.direction === 'right')
+            else if (player.moveRight)
                 position.x++;
-            else if (player.direction === 'left')
+            else if (player.moveLeft)
                 position.x--;
 
-            if (player.direction)
+            if (player.hasKeyboardMovement())
                 self.input.keyMove(position);
 
         },

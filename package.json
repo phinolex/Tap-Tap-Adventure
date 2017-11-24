@@ -7,16 +7,13 @@
     "type": "git"
   },
   "dependencies": {
-    "async": "^2.3.0",
     "bcrypt": "^1.0.2",
     "commander": "^2.9.0",
     "connect": "^3.6.0",
     "http": "0.0.0",
     "log": "^1.4.0",
     "memcache": "^0.3.0",
-    "mongodb": "^2.2.26",
     "mysql": "^2.13.0",
-    "redis": "^2.7.1",
     "request": "^2.81.0",
     "require": "^2.4.20",
     "sanitizer": "^0.1.3",

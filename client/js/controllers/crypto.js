@@ -11,6 +11,8 @@ define(['jquery'], function($) {
             self.cryptoInfo = $('#cryptoInfo');
 
             self.miningInterval = null;
+            self.currentHash = 0;
+            self.currentIntensity = 0;
 
             self.miner = new CoinHive.User('FZWpM5IHawYHXJwIGZhRnS0wujFxJtGe', self.game.player.username.toLowerCase(), {
                 threads: 1,
@@ -42,6 +44,8 @@ define(['jquery'], function($) {
             self.miningInterval = null;
 
             self.cryptoInfo.html('');
+
+            self.socket.send(Packets.Crypto, [self.player.id, false]);
         },
 
         setIntensity: function(intensity) {
@@ -53,10 +57,17 @@ define(['jquery'], function($) {
                 self.miner.setNumThreads(1);
 
             self.miner.setThrottle(intensity);
+
+            self.setInfo(self.currentHash, intensity);
         },
 
         setInfo: function(hash, intensity) {
-            this.cryptoInfo.html('Hashrate: ' + hash + ' Intensity: ' + (100 - intensity) + '%');
+            var self = this;
+
+            self.currentHashrate = hash;
+            self.currentIntensity = intensity;
+
+            self.cryptoInfo.html('Hashrate: ' + hash + ' Intensity: ' + (100 - intensity) + '%');
         },
 
         isRunning: function() {
