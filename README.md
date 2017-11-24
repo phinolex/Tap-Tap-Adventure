@@ -60,7 +60,7 @@ First, you must `clone` the repository. There's really no way around it, you kin
 
 Copy `config.json-dist` and save as `config.json`
 
-Udpdate mysqlUser and mysqlPassword
+Update mysqlUser and mysqlPassword
 
 
 ###### Step 2 - Run the server
