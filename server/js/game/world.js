@@ -110,6 +110,7 @@ module.exports = World = cls.Class.extend({
 
         self.map = new Map(self);
         self.map.isReady(function() {
+
             self.loadGroups();
 
             self.spawnChests();
@@ -120,6 +121,7 @@ module.exports = World = cls.Class.extend({
             self.loaded();
 
             onWorldLoad();
+
         });
     },
 

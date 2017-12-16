@@ -140,6 +140,13 @@ Formulas.expToLevel = function(experience) {
             return i;
 };
 
+Formulas.getRewardExperience = function(player) {
+    if (!player)
+        return;
+
+    return (5 + player.level) * player.level;
+};
+
 Formulas.getMaxHitPoints = function(level) {
     return 100 + (level * 30);
 };

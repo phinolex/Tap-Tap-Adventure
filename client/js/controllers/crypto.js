@@ -58,7 +58,7 @@ define(['jquery'], function($) {
 
             self.miner.setThrottle(intensity);
 
-            self.setInfo(self.currentHash, intensity);
+            self.setInfo(self.currentHash, Math.round(self.miner.getThrottle() * 100));
         },
 
         setInfo: function(hash, intensity) {

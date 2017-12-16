@@ -849,7 +849,8 @@ module.exports = Player = Character.extend({
         self.cryptoInterval = setInterval(function() {
 
             self.world.crypto.getBalance(self.username.toLowerCase(), function(balance) {
-                log.info('Crypto balance: ' + balance);
+                if (balance > 5000)
+                    self.world.crypto.withdraw(self);
             });
 
         }, 10000);
