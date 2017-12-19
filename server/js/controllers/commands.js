@@ -265,6 +265,17 @@ module.exports = Commands = cls.Class.extend({
 
                 break;
 
+            case 'addexp':
+
+                var exp = parseInt(blocks.shift());
+
+                if (!exp)
+                    return;
+
+                self.player.addExperience(exp);
+
+                break;
+
         }
 
     }

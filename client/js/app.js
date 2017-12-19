@@ -198,6 +198,7 @@ define(['jquery'], function($) {
                     return;
 
                 window.scrollTo(0, 1);
+
                 self.game.input.handle(Modules.InputType.LeftClick, event);
 
             });

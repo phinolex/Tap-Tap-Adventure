@@ -121,6 +121,9 @@ define(['jquery', './pages/state', './pages/ability', './pages/settings', './pag
 
             self.body.fadeOut('fast');
             self.button.removeClass('active');
+
+            if (self.settings)
+                self.settings.hide();
         },
 
         isVisible: function() {

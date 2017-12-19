@@ -5,6 +5,8 @@ module.exports = GreatSquid = Combat.extend({
     init: function(character) {
         var self = this;
 
+        character.spawnDistance = 15;
+
         self._super(character);
 
         self.character = character;

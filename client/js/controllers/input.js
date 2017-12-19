@@ -125,6 +125,7 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
 
                     case Modules.InputType.LeftClick:
 
+                        self.getPlayer().disableAction = false;
                         self.setCoords(data);
                         self.click(self.getCoords());
 
@@ -165,8 +166,6 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
             var self = this,
                 player = self.getPlayer();
 
-            log.info('Key moveee')
-
             if (!player.hasPath())
                 self.click(position);
         },
@@ -174,8 +173,6 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
         click: function(position) {
             var self = this,
                 player = self.getPlayer();
-
-            log.info('Click!!');
 
             self.setPassiveTarget();
 

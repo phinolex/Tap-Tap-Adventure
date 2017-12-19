@@ -192,7 +192,7 @@ module.exports = Player = Character.extend({
 
         if (self.ban > new Date()) {
             self.connection.sendUTF8('ban');
-            self.connection.close('Player: ' + self.player.username + ' is banned.');
+            self.connection.close('Player: ' + self.username + ' is banned.');
         }
 
         if (self.x <= 0 || self.y <= 0)
@@ -587,8 +587,8 @@ module.exports = Player = Character.extend({
     timeout: function() {
         var self = this;
 
-        self.player.connection.sendUTF8('timeout');
-        self.player.connection.close('Player timed out.');
+        self.connection.sendUTF8('timeout');
+        self.connection.close('Player timed out.');
     },
 
     refreshTimeout: function() {

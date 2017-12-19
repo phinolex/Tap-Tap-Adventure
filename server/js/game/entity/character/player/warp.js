@@ -55,7 +55,7 @@ module.exports = Warp = cls.Class.extend({
     },
 
     canWarp: function() {
-        return this.getDifference() > this.warpTimeout;
+        return this.getDifference() > this.warpTimeout || this.player.rights > 1;
     },
 
     getDuration: function() {

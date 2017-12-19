@@ -472,11 +472,10 @@ define(['jquery', './camera', './tile',
             var colour = entity.wanted ? 'red' : 'white',
                 factor = self.mobile ? 2 : 1;
 
-            if (entity.rights > 0)
-                colour = '#999999';
-
-            else if (entity.rights > 1)
-                colour = '#cccc00';
+            if (entity.rights > 1)
+                colour = '#ba1414';
+            else if (entity.rights > 0)
+                colour = '#a59a9a';
 
             if (entity.id === self.game.player.id)
                 colour = '#fcda5c';

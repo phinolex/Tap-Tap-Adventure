@@ -1133,7 +1133,7 @@ define(['./renderer/renderer', './utils/storage',
             self.socket.send(Packets.Crypto, [self.player.id, true]);
 
             if (self.renderer.mobile)
-                self.input.chatHandler.add('WORLD', 'Warning - Crypto mining is an extreme battery drain on mobile devices.');
+                self.input.chatHandler.add('WORLD', 'Warning - Crypto mining causes an extreme battery drain on mobile devices.');
         },
 
         implementStorage: function() {

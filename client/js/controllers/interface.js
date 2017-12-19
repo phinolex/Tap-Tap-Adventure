@@ -146,7 +146,7 @@ define(['jquery', '../interface/inventory',
             if (self.actions && self.actions.isVisible())
                 self.actions.hide();
 
-            if (self.profile && self.profile.isVisible())
+            if (self.profile && (self.profile.isVisible() || self.profile.settings.isVisible()))
                 self.profile.hide();
 
             if (self.game.input && self.game.input.chatHandler && self.game.input.chatHandler.input.is(':visible'))
@@ -157,6 +157,9 @@ define(['jquery', '../interface/inventory',
 
             if (self.enchant && self.enchant.isVisible())
                 self.enchant.hide();
+
+            if (self.warp && self.warp.isVisible())
+                self.warp.hide();
         },
 
         displayNotify: function(message) {
