@@ -174,6 +174,9 @@ define(['jquery', '../entity/animation', './chat', './overlay'], function($, Ani
             var self = this,
                 player = self.getPlayer();
 
+            if (player.stunned)
+                return;
+
             self.setPassiveTarget();
 
             /**

@@ -45,7 +45,29 @@ module.exports = Combat = cls.Class.extend({
         self.cleanTimeout = null;
 
         self.character.onSubAoE(function(radius, hasTerror) {
+
             self.dealAoE(radius, hasTerror);
+
+        });
+
+        self.character.onDamage(function(target, hitInfo) {
+
+            if (self.isPlayer() && self.character.hasBreakableWeapon() && Formulas.getWeaponBreak(self.character, target))
+                self.character.breakWeapon();
+
+            if (hitInfo.type === Modules.Hits.Stun) {
+
+                target.setStun(true);
+
+                if (target.stunTimeout)
+                    clearTimeout(target.stunTimeout);
+
+                target.stunTimeout = setTimeout(function() {
+
+                    target.setStun(false);
+
+                }, 3000);
+            }
         });
     },
 

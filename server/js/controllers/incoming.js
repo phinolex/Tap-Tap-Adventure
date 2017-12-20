@@ -389,7 +389,7 @@ module.exports = Incoming = cls.Class.extend({
                     pX = message.shift(),
                     pY = message.shift();
 
-                if (pX !== self.player.x || pY !== self.player.y)
+                if (pX !== self.player.x || pY !== self.player.y || self.player.stunned)
                     return;
 
                 self.player.moving = true;
@@ -399,6 +399,9 @@ module.exports = Incoming = cls.Class.extend({
             case Packets.MovementOpcode.Step:
                 var x = message.shift(),
                     y = message.shift();
+
+                if (self.player.stunned)
+                    return;
 
                 self.player.setPosition(x, y);
 

@@ -394,7 +394,7 @@ define(['./renderer/renderer', './utils/storage',
                             return;
 
                         if (state)
-                            pEntity.stop(true);
+                            pEntity.stop(false);
 
                         if (opcode === Packets.MovementOpcode.Stunned)
                             pEntity.stunned = state;

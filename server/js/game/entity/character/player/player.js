@@ -919,10 +919,6 @@ module.exports = Player = Character.extend({
         this.hitCallback = callback;
     },
 
-    onDamage: function(callback) {
-        this.damageCallback = callback;
-    },
-
     onKill: function(callback) {
         this.killCallback = callback;
     },

@@ -10,8 +10,6 @@ Formulas.getDamage = function(attacker, target, special) {
     var maxDamage = Formulas.getMaxDamage(attacker, target, special),
         accuracy = Utils.randomInt(0, attacker.level);
 
-    log.info(attacker.instance + ' ' + maxDamage);
-
     return Utils.randomInt(accuracy, maxDamage);
 };
 

@@ -49,32 +49,6 @@ module.exports = Handler = cls.Class.extend({
 
         });
 
-        self.player.onDamage(function(target, hitInfo) {
-
-            /**
-             *  Verifies certain things every time the
-             *  player instance hits a target.
-             */
-
-            if (self.player.hasBreakableWeapon() && Formulas.getWeaponBreak(self.player, target))
-                self.player.breakWeapon();
-
-            if (hitInfo.type === Modules.Hits.Stun) {
-
-                target.setStun(true);
-
-                if (target.stunTimeout)
-                    clearTimeout(target.stunTimeout);
-
-                target.stunTimeout = setTimeout(function() {
-
-                    target.setStun(false);
-
-                }, 3000);
-            }
-
-        });
-
         self.player.onKill(function(character) {
 
             if (self.player.quests.isAchievementMob(character)) {

@@ -213,6 +213,10 @@ module.exports = Character = Entity.extend({
         this.hitPointsCallback = callback;
     },
 
+    onDamage: function(callback) {
+        this.damageCallback = callback;
+    },
+
     onStunned: function(callback) {
         this.stunCallback = callback;
     },
