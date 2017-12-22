@@ -30,21 +30,15 @@ Mobs.getXp = function(id) {
 Mobs.exists = function(id) {
 
     return id in Mobs.Ids;
-
 };
 
 Mobs.hasCombatPlugin = function(id) {
-    if(id in Mobs.Ids)
-        if (Mobs.Ids[id].combatPlugin in Mobs.Plugins)
-            return true;
-    return false;
+    return id in Mobs.Ids && Mobs.Ids[id].combatPlugin in Mobs.Plugins
 };
 
 Mobs.isNewCombatPlugin = function(id) {
-    if (id in Mobs.Ids)
-        if (Mobs.Ids[id].combatPlugin in Mobs.Plugins)
-            return Mobs.Plugins[Mobs.Ids[id].combatPlugin];
+    if (id in Mobs.Ids && Mobs.Ids[id].combatPlugin in Mobs.Plugins)
+        return Mobs.Plugins[Mobs.Ids[id].combatPlugin];
 };
-
 
 module.exports = Mobs;

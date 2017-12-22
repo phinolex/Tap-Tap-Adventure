@@ -36,12 +36,6 @@ module.exports = QueenAnt = Combat.extend({
 
         self.frozen = false;
 
-        self.onNoAttackers(function() {
-
-            self.resetAoE();
-
-        });
-
         self.character.onDeath(function() {
 
             /**

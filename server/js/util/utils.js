@@ -25,6 +25,13 @@ Utils.getDistance = function(startX, startY, toX, toY) {
     return x > y ? x : y;
 };
 
+Utils.positionOffset = function(radius) {
+    return {
+        x: Utils.randomInt(0, radius),
+        y: Utils.randomInt(0, radius)
+    }
+};
+
 /**
  * There is seriously no way two clients can end up with the same ID
  */

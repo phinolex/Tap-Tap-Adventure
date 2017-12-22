@@ -695,7 +695,22 @@ module.exports = World = cls.Class.extend({
             self.getGrids().addToEntityGrid(entity, entity.x, entity.y);
 
         entity.onSetPosition(function() {
+
             self.getGrids().updateEntityPosition(entity);
+
+            if (entity.isMob() && entity.isOutsideSpawn()) {
+
+                entity.removeTarget();
+                entity.combat.forget();
+                entity.combat.stop();
+
+                entity.return();
+
+                self.pushBroadcast(new Messages.Combat(Packets.CombatOpcode.Finish, null, entity.instance));
+                self.pushBroadcast(new Messages.Movement(Packets.MovementOpcode.Move, [entity.instance, entity.x, entity.y, false, false]));
+
+            }
+
         });
 
         if (entity instanceof Character) {

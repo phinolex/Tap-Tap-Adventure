@@ -16,21 +16,27 @@ module.exports = SkeletonKing = Combat.extend({
 
         self._super(character);
 
-        character.spawnDistance = 20;
+        character.spawnDistance = 10;
 
         self.lastSpawn = 0;
 
         self.minions = [];
 
         character.onDeath(function() {
-
-            self.lastSpawn = 0;
-
-            var listCopy = self.minions.slice();
-
-            for (var i = 0; i < listCopy.length; i++)
-                self.world.kill(listCopy[i]);
+            self.reset();
         });
+
+    },
+
+    reset: function() {
+        var self = this;
+
+        self.lastSpawn = 0;
+
+        var listCopy = self.minions.slice();
+
+        for (var i = 0; i < listCopy.length; i++)
+            self.world.kill(listCopy[i]);
     },
 
     hit: function(character, target, hitInfo) {
@@ -39,10 +45,10 @@ module.exports = SkeletonKing = Combat.extend({
         if (self.isAttacked())
             self.beginMinionAttack();
 
-        if (!self.canSpawn())
-            self._super(character, target, hitInfo);
-        else
+        if (self.canSpawn())
             self.spawnMinions();
+
+        self._super(character, target, hitInfo);
     },
 
     spawnMinions: function() {

@@ -1781,12 +1781,26 @@
     "aggressive": true,
     "attackRate": 1500,
     "movementSpeed": 600,
-    "spawnDelay": 95000
+    "spawnDelay": 95000,
+    "combatPlugin": "tenebris"
   },
 
   "DarkRegionIllusion": {
-    "name": "Tenebris Illusion",
-    "id": 105
+    "name": "Tenebris",
+    "id": 105,
+    "drops": null,
+    "hitPoints": 500,
+    "armour": 4,
+    "weapon": 5,
+    "xp": 10,
+    "level": 79,
+    "aggroRange": 8,
+    "attackRange": 1,
+    "aggressive": true,
+    "attackRate": 1300,
+    "movementSpeed": 800,
+    "spawnDelay": -1,
+    "combatPlugin": "tenebris"
   },
 
   "MiniSeaDragon": {

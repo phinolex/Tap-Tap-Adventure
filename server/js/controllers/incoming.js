@@ -442,19 +442,6 @@ module.exports = Incoming = cls.Class.extend({
 
                 oEntity.setPosition(entityX, entityY);
 
-                if (oEntity.type === 'mob' && oEntity.distanceToSpawn() > oEntity.spawnDistance) {
-
-                    oEntity.removeTarget();
-                    oEntity.combat.forget();
-
-                    oEntity.return();
-
-                    oEntity.combat.stop();
-
-                    self.world.pushBroadcast(new Messages.Movement(Packets.MovementOpcode.Move, [instance, oEntity.spawnLocation[0], oEntity.spawnLocation[1], false, false]));
-                    self.world.pushBroadcast(new Messages.Combat(Packets.CombatOpcode.Finish, null, oEntity.instance));
-                }
-
                 if (oEntity.hasTarget())
                     oEntity.combat.forceAttack();
 

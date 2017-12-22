@@ -129,6 +129,10 @@ module.exports = Mob = Character.extend({
         return this.x === this.spawnLocation[0] && this.y === this.spawnLocation[1];
     },
 
+    isOutsideSpawn: function() {
+        return this.distanceToSpawn() > this.spawnDistance;
+    },
+
     addToChestArea: function(chestAreas) {
         var self = this,
             area = _.find(chestAreas, function(area) { return area.contains(self.x, self.y); });
@@ -140,7 +144,13 @@ module.exports = Mob = Character.extend({
     respawn: function() {
         var self = this;
 
-        if (!self.static)
+        /**
+         * Some entities are static (only spawned once during an event)
+         * Meanwhile, other entities act as an illusion to another entity,
+         * so the resawning script is handled elsewhere.
+         */
+
+        if (!self.static || self.respawnDelay === -1)
             return;
 
         setTimeout(function() {

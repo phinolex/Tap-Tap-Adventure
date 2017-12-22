@@ -1,24 +1,22 @@
-var fs = require('fs');
-
-var FILTER = /^([^\.].*)\.js$/;
-
-module.exports = function requireItems(dir) {
-
-    var files = fs.readdirSync(dir);
-    var modules = {};
-    var resolve = identity;
-
-
-    files.forEach(function (file) {
-        var match =  file.match(FILTER);
-        if (match) {
-            modules[match[1]] = resolve(require(dir + file));
-        }
-    });
-    return modules;
-};
+var fs = require('fs'),
+    Filter = /^([^\.].*)\.js$/;
 
 function identity(val) {
     return val;
 }
 
+module.exports = function requireItems(directory) {
+    var files = fs.readdirSync(directory),
+        modules = {},
+        resolve = identity;
+
+    files.forEach(function(file) {
+        var match = file.match(Filter);
+
+        if (match)
+            modules[match[1]] = resolve(require(directory + file));
+
+    });
+
+    return modules;
+};

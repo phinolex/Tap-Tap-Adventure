@@ -160,15 +160,8 @@ module.exports = Combat = cls.Class.extend({
             if (!self.character.isRanged())
                 self.sendFollow();
 
-            if (!self.character.isAtSpawn()) {
-
-                if (self.isAttacked() || self.character.hasTarget())
-                    self.lastAction = self.getTime();
-                else {
-                    self.character.return();
-                    self.move(self.character, self.character.x, self.character.y);
-                }
-            }
+            if (self.isAttacked() || self.character.hasTarget())
+                self.lastAction = self.getTime();
 
             if (self.onSameTile()) {
                 var newPosition = self.getNewPosition();
@@ -261,20 +254,19 @@ module.exports = Combat = cls.Class.extend({
         if (self.hasAttacker(character))
             delete self.attackers[character.instance];
 
-        if (!self.isAttacked()) {
+        if (!self.isAttacked())
             self.sendToSpawn();
-
-            if (self.noAttackersCallback)
-                self.noAttackersCallback();
-
-        }
     },
 
     sendToSpawn: function() {
         var self = this;
 
-        if (self.isMob() && Object.keys(self.attackers).length === 0)
-            self.character.return();
+        if (!self.isMob())
+            return;
+
+        self.character.return();
+
+        self.world.pushBroadcast(new Messages.Movement(Packets.MovementOpcode.Move, [self.character.instance, self.character.x, self.character.y, false, false]));
 
     },
 
@@ -367,6 +359,9 @@ module.exports = Combat = cls.Class.extend({
 
         self.attackers = {};
         self.character.removeTarget();
+
+        if (self.forgetCallback)
+            self.forgetCallback();
     },
 
     move: function(character, x, y) {
@@ -433,8 +428,8 @@ module.exports = Combat = cls.Class.extend({
         });
     },
 
-    onNoAttackers: function(callback) {
-        this.noAttackersCallback = callback;
+    onForget: function(callback) {
+        this.forgetCallback = callback;
     },
 
     targetOutOfBounds: function() {

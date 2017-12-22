@@ -26,23 +26,9 @@ module.exports = OgreLord = Combat.extend({
         character.projectileName = 'projectile-boulder';
 
         character.onDeath(function() {
-
-            self.lastSpawn = 0;
-
-            var listCopy = self.minions.slice();
-
-            for (var i = 0; i < listCopy.length; i++)
-                self.world.kill(listCopy[i]);
-
-            clearInterval(self.talkingInterval);
-            clearInterval(self.updateInterval);
-
-            self.talkingInterval = null;
-            self.updateInterval = null;
-
-            self.loaded = false;
-
+            self.reset();
         });
+
     },
 
     load: function() {
@@ -81,8 +67,8 @@ module.exports = OgreLord = Combat.extend({
 
         if (self.canSpawn())
             self.spawnMinions();
-        else
-            self._super(character, target, hitInfo);
+
+        self._super(character, target, hitInfo);
     },
 
     forceTalk: function(message) {
@@ -148,6 +134,25 @@ module.exports = OgreLord = Combat.extend({
                 minion.combat.begin(randomTarget);
 
         });
+    },
+
+    reset: function() {
+        var self = this;
+
+        self.lastSpawn = 0;
+
+        var listCopy = self.minions.slice();
+
+        for (var i = 0; i < listCopy.length; i++)
+            self.world.kill(listCopy[i]);
+
+        clearInterval(self.talkingInterval);
+        clearInterval(self.updateInterval);
+
+        self.talkingInterval = null;
+        self.updateInterval = null;
+
+        self.loaded = false;
     },
 
     getRandomTarget: function() {

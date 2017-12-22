@@ -53,8 +53,6 @@ Formulas.getMaxDamage = function(attacker, target, special) {
     if (boots && boots.bootsLevel > 0)
         damageAmplifier *= boots.getBaseAmplifier();
 
-    log.info(damageAmplifier);
-
     /**
      * Just so amplifiers don't get out of hand.
      */
