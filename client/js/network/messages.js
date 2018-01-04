@@ -56,6 +56,7 @@ define(function() {
             self.messages[Packets.Guild] = self.receiveGuild;
             self.messages[Packets.Pointer] = self.receivePointer;
             self.messages[Packets.PVP] = self.receivePVP;
+            self.messages[Packets.Shop] = self.receiveShop;
 
         },
 
@@ -419,6 +420,15 @@ define(function() {
                 self.pvpCallback(id, pvp);
         },
 
+        receiveShop: function(data) {
+            var self = this,
+                opcode = data.shift(),
+                info = data.shift();
+
+            if (self.shopCallback)
+                self.shopCallback(opcode, info);
+        },
+
         /**
          * Universal Callbacks
          */
@@ -553,6 +563,10 @@ define(function() {
 
         onPVP: function(callback) {
             this.pvpCallback = callback;
+        },
+
+        onShop: function(callback) {
+            this.shopCallback = callback;
         }
 
     });

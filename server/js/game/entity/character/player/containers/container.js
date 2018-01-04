@@ -53,73 +53,76 @@ module.exports = Container = cls.Class.extend({
 
         self.load(data, data, data, data);
     },
-    
+
     add: function(id, count, ability, abilityLevel) {
         var self = this;
         
         //log.info('Trying to pickup ' + count + ' x ' + id);
-        var maxStackSize = Items.maxStackSize(id)  == -1 ? Constants.MAX_STACK : Items.maxStackSize(id);
-
+        var maxStackSize = Items.maxStackSize(id)  === -1 ? Constants.MAX_STACK : Items.maxStackSize(id);
             
-        //log.info('Max stack size=' + maxStackSize);
+        //log.info('Max stack size = ' + maxStackSize);
             
         if (!id || count < 0 || count > maxStackSize )
             return null;
-        
+
         if (!Items.isStackable(id)) {
             if (self.hasSpace()) {
-                var slot = self.slots[self.getEmptySlot()];
-                slot.load(id, count, ability, abilityLevel);
-                return slot;
-            } else {
-                return;
+                var nsSlot = self.slots[self.getEmptySlot()]; //non-stackable slot
+
+                nsSlot.load(id, count, ability, abilityLevel);
+
+                return nsSlot;
             }
         } else {
-            if (maxStackSize == -1 || self.type == 'Bank') {
-                // This is bank or an infinite stack.  Add all items to existing slot, or find new slot.
+            if (maxStackSize === -1 || self.type === 'Bank') {
                 var sSlot = self.getSlot(id);
+
                 if (sSlot) {
                     sSlot.increment(count);
                     return sSlot;
                 } else {
                     if (self.hasSpace()) {
                         var slot = self.slots[self.getEmptySlot()];
+
                         slot.load(id, count, ability, abilityLevel);
+
                         return slot;
+
                     }
                 }
-                return;
             } else {
-                // Iterate over all stacks dropping items on the stacks until we are out of items.
+
                 var remainingItems = count;
+
                 for (var i = 0; i < self.slots.length; i++) {
                     if (self.slots[i].id === id) {
-                        sSlot = self.slots[i];
-                        var available = maxStackSize - sSlot.count;
-                        //log.info('Found slot[' + i + '] with ' + available + ' spaces');
+                        var rSlot = self.slots[i];
+
+                        var available = maxStackSize - rSlot.count;
+
                         if (available >= remainingItems) {
-                            //log.info("Found slot with enough available");
-                            sSlot.increment(remainingItems);
-                            return sSlot; //last item dropped off
+
+                            rSlot.increment(remainingItems);
+
+                            return rSlot;
                         } else if (available > 0) {
-                            //log.info("Found slot with some available");
-                            sSlot.increment(available);
+
+                            rSlot.increment(available);
                             remainingItems -= available;
-                        } else {
-                            //log.info("Found matching slot with no available");
+
                         }
+
                     }
                 }
-                //log.info('Iterated over all slots, still need space (' + remainingItems + ')');
-                if (remainingItems > 0 && self.hasSpace()) {
-                    //log.info('Creating needed slots');
-                    // All stacks full, creating new stack.
-                    var slot = self.slots[self.getEmptySlot()];
-                    slot.load(id, remainingItems, ability, abilityLevel);
-                    return slot;
-                } 
-                return; //failed to drop off items.  Shouldn't reach here as canHold is called first.
 
+                if (remainingItems > 0 && self.hasSpace()) {
+                    var rrSlot = self.slots[self.getEmptySlot()];
+
+
+                    rrSlot.load(id, remainingItems, ability, abilityLevel);
+
+                    return rrSlot;
+                }
             }
         }
     },
@@ -127,38 +130,27 @@ module.exports = Container = cls.Class.extend({
     canHold: function(id, count) {
         var self = this;
 
-        // find slot with space for count of item type ID
-        // to do pick up partial stacks
-        //log.info('Checking to see if we can hold ' + count + ' x ' + id);
-        if (!Items.isStackable(id)) {
-            // Non-stackable items require an entire open slot
+        if (!Items.isStackable(id))
             return self.hasSpace();
-        } else {
-            // If it is stackable and there is an open slot then we can hold it
-            if (self.hasSpace())
-                return true;
 
+        if (self.hasSpace())
+            return true;
 
-            var maxStackSize = Items.maxStackSize(id);
+        var maxStackSize = Items.maxStackSize(id);
 
-            // if it can be an inifite stack (or we are a bank), and we have a stack, then we can hold it
-            if ( (self.type == 'Bank' || maxStackSize == -1) && self.contains(id) )
-                return true;
+        if ((self.type === 'Bank' || maxStackSize === -1) && self.contains(id))
+            return true;
 
-            // if its not infinite and the count is larger than max, we can't hold it.
-            if (maxStackSize != -1 && count > maxStackSize)
-                return false;
+        if (maxStackSize !== -1 && count > maxStackSize)
+            return false;
 
-            // Otherwise iterate over remaining slots, if there the total space left in slots is less than the count we can hold it
-            var remainingSpace = 0;
-            for (var i = 0; i < self.slots.length; i++) {
-                if (self.slots[i].id == id)
-                    remainingSpace += (maxStackSize - self.slots[i].count);
-            }
+        var remainingSpace = 0;
 
-            //log.info('We can hold ' + remainingSpace + ' out of ' + count);
-            return remainingSpace >= count;
-        }
+        for (var i = 0; i < self.slots.length; i++)
+            if (self.slots[i].id === id)
+                remainingSpace += (maxStackSize - self.slots[i].count);
+
+        return remainingSpace >= count;
     },
 
     remove: function(index, id, count) {

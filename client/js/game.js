@@ -1070,6 +1070,30 @@ define(['./renderer/renderer', './utils/storage',
 
             });
 
+            self.messages.onShop(function(opcode, info) {
+
+                switch (opcode) {
+                    case Packets.ShopOpcode.Open:
+
+                        break;
+
+                    case Packets.ShopOpcode.Buy:
+
+                        break;
+
+                    case Packets.ShopOpcode.Sell:
+
+                        break;
+
+                    case Packets.ShopOpcode.Refresh:
+
+
+
+                        break;
+                }
+
+            });
+
         },
 
         postLoad: function() {

@@ -25,6 +25,7 @@ module.exports = Parser = cls.Class.extend({
         self.loadAbilityData();
         self.loadShops();
         self.loadLevels();
+
     },
 
     loadMobData: function() {
@@ -156,17 +157,19 @@ module.exports = Parser = cls.Class.extend({
 
             Shops.Data[key] = {
                 key: key,
-                id: value.id,
+                id: value.npcId,
                 items: value.items,
-                count: value.count
+                count: value.count,
+                prices: value.prices
             };
 
-            Shops.Ids[value.id] = Shops.Data[key];
+            Shops.Ids[value.npcId] = Shops.Data[key];
 
             shopCounter++;
         });
 
-        log.info('Finished loading ' + shopCounter + ' shops.')
+        log.info('Finished loading ' + shopCounter + ' shops.');
+
     },
 
     loadLevels: function() {

@@ -40,7 +40,8 @@ var Packets = {
     PVP: 38,
     Click: 39,
     Warp: 40,
-    Crypto: 41
+    Crypto: 41,
+    Shop: 42
 };
 
 Packets.IntroOpcode = {
@@ -152,6 +153,13 @@ Packets.PointerOpcode = {
     NPC: 1,
     Relative: 2,
     Remove: 3
+};
+
+Packets.ShopOpcode = {
+    Open: 0,
+    Buy: 1,
+    Sell: 2,
+    Refresh: 3
 };
 
 module.exports = Packets;

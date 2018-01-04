@@ -412,3 +412,16 @@ Messages.PVP = Message.extend({
     }
 
 });
+
+Messages.Shop = Message.extend({
+
+    init: function(opcode, info) {
+        this.opcode = opcode;
+        this.info = info;
+    },
+
+    serialize: function() {
+        return [Packets.Shop, this.opcode, this.info];
+    }
+
+});

@@ -35,6 +35,4 @@ NPCs.getType = function(id) {
     return null;
 };
 
-
-
 module.exports = NPCs;

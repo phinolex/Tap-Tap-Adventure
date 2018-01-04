@@ -1,8 +1,9 @@
 {
   "1": {
-    "npc": 44,
+    "npcId": 44,
     "items": [1, 4],
     "count": 100,
+    "prices": [10, 20],
     "currency": 202
   }
 }

@@ -20,9 +20,8 @@ var cls = require('../lib/class'),
     Formulas = require('./formulas'),
     Modules = require('../util/modules'),
     Minigames = require('../controllers/minigames'),
-    Crypto = require('../util/crypto');
-
-//var PluginItems = require('./entity/objects/pluginItems')();
+    Crypto = require('../util/crypto'),
+    Shops = require('../controllers/shops');
 
 module.exports = World = cls.Class.extend({
 
