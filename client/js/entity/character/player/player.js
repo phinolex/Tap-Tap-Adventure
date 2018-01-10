@@ -1,5 +1,10 @@
 /* global Modules, log, _ */
 
+/**
+ * Player
+ * @class
+ * @return {Character}
+ */
 define(['../character', './equipment/armour', './equipment/weapon',
         './equipment/pendant', './equipment/boots', './equipment/ring'],
         function(Character, Armour, Weapon, Pendant, Boots, Ring) {

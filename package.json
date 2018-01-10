@@ -1,10 +1,13 @@
 {
-  "name": "Tap-Tap-Adventure",
+  "name": "WTF-Adventure",
   "version": "1.0.5",
   "description": "A modern HTML5 multiplayer adventure!",
   "license": "MPL-2.0",
   "repository": {
     "type": "git"
+  },
+  "scripts": {
+    
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
@@ -23,9 +26,4 @@
     "shutdown-hook": "*",
     "url": "^0.11.0"
   },
-  "devDependencies": {
-    "grunt": "^1.0.1",
-    "gulp-uglify": "^2.1.2",
-    "morgan": "^1.8.1"
-  }
 }

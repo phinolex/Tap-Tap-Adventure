@@ -1,9 +1,14 @@
 /* global Modules, log, _ */
 
 define(['./entityhandler'], function(EntityHandler) {
-
     return Class.extend({
 
+        /**
+         * Entity.init()
+         * @class
+         * @param {Number} id
+         * @param {String} kind
+         */
         init: function(id, kind) {
             var self = this;
 
@@ -54,14 +59,15 @@ define(['./entityhandler'], function(EntityHandler) {
         },
         
         /**
+         * Entity.isPositionAdjacent()
          * Checks to see if the x,y coordinate is adjacent to the
          * entity's current position
          *
-         * @param x int
-         * @param y int
-         * @param ignoreDiagonals if true, will ignore diagonal directions (optional)
-         * @return boolean
-         **/
+         * @param {Number} x
+         * @param {Number}  int
+         * @param {Boolean} ignoreDiagonals if true, will ignore diagonal directions (optional)
+         * @return {Boolean}
+         */
         isPositionAdjacent: function(x, y, ignoreDiagonals = false) {
             var self = this;
             
@@ -291,5 +297,4 @@ define(['./entityhandler'], function(EntityHandler) {
         }
 
     });
-
 });
