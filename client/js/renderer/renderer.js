@@ -260,7 +260,7 @@ define(['jquery', './camera', './tile',
                 var factor = self.mobile ? 2 : 1;
 
                 self.textContext.save();
-                self.textContext.font = '24px AdvoCut';
+                self.textContext.font = '24px sans serif';
                 self.setCameraView(self.textContext);
                 self.textContext.globalAlpha = info.opacity;
                 self.drawText('' + info.text, Math.floor((info.x + 8) * factor), Math.floor(info.y * factor), true, info.fill, info.stroke);
@@ -483,7 +483,7 @@ define(['jquery', './camera', './tile',
 
             self.textContext.save();
             self.setCameraView(self.textContext);
-            self.textContext.font = '14px AdvoCut';
+            self.textContext.font = '14px sans serif';
 
             if (!entity.hasCounter) {
 

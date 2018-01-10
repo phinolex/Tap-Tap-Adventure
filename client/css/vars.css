@@ -44,7 +44,7 @@ footer, header, menu, nav, section {
 }
 
 .gp {
-    font-family: 'AdvoCut', sans-serif;
+    font-family: sans-serif;
 }
 
 html, body {
@@ -176,7 +176,7 @@ body {
 	color: white;
     background-color: rgba(0, 0, 0, 0.75);
     border-radius: 4px;
-    font-family: 'AdvoCut', sans-serif;
+    font-family: sans-serif;
 }
 
 #abilityShortcut {
@@ -191,7 +191,7 @@ body {
 }
 
 #chat p {
-    font-family: 'AdvoCut', sans-serif;
+    font-family: sans-serif;
 }
 
 #chatLog {
@@ -434,7 +434,7 @@ html [type="button"],
         overflow: hidden;
         z-index: 5;
         position: absolute;
-        font-family: 'AdvoCut', sans-serif;
+        font-family: sans-serif;
     }
 
     #chat {
@@ -669,7 +669,7 @@ html [type="button"],
         overflow: hidden;
         z-index: 5;
         position: absolute;
-        font-family: 'AdvoCut', sans-serif;
+        font-family: sans-serif;
     }
 
     #chat {
@@ -903,7 +903,7 @@ html [type="button"],
         overflow: hidden;
         z-index: 5;
         position: absolute;
-        font-family: 'AdvoCut', sans-serif;
+        font-family: sans-serif;
     }
 
     #chat {

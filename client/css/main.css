@@ -40,7 +40,7 @@ canvas {
 }
 
 footer {
-    font-family: 'AdvoCut', sans-serif;
+    font-family: 'sans-serif;
     position: absolute;
     bottom: 5%;
     left: 0;
@@ -112,7 +112,7 @@ footer div {
 }
 
 #parchment, #parchment input, #parchment select {
-    font-family: 'AdvoCut', sans-serif;
+    font-family: sans-serif;
 }
 
 #parchment input {
@@ -162,7 +162,7 @@ footer div {
     background: #d83939;
     color: #eee;
     font-size: 20px;
-    font-family: 'AdvoCut', arial, sans-serif;
+    font-family: sans-serif;
     text-align: center;
     line-height: 50px;
     border-bottom: 1px solid #000;
@@ -194,7 +194,8 @@ footer div {
 }
 
 #parchment p {
-    font-family: 'AdvoCut', sans-serif;
+    font-family: sans-serif;
+    line-height: 1.2em;
 }
 
 #credits, #git, #about, #loadCharacter, #createCharacter, #death, #welcomeMessage, #error {
@@ -210,7 +211,7 @@ footer div {
     position: absolute;
     left: 50%;
     text-align: center;
-    font-family: 'AdvoCut', sans-serif;
+    font-family: sans-serif;
     z-index: 1000;
 }
 
