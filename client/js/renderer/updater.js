@@ -220,8 +220,10 @@ define(['../entity/character/character'], function(Character) {
             var self = this,
                 target = self.input.targetAnimation;
 
-            if (target && self.input.selectedCellVisible && !self.renderer.mobile)
+            // stops animation from updating on targetAnimation
+            if (target && self.input.selectedCellVisible && !self.renderer.mobile) {
                 target.update(self.game.time);
+            }
 
             if (!self.sprites)
                 return;

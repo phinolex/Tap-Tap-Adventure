@@ -587,17 +587,10 @@ define(['jquery', './camera', './tile',
             var posX = self.input.selectedX,
                 posY = self.input.selectedY;
 
-            if (self.mobile)
+            // only draw the highlight cell if they are not adjacent
+            // from character's current position
+            if (!self.game.player.isPositionAdjacent(posX, posY)) {
                 self.drawCellHighlight(posX, posY, self.input.mobileTargetColour);
-            else {
-                var tD = self.input.getTargetData();
-
-                if (tD) {
-                    self.context.save();
-                    self.context.translate(tD.dx, tD.dy);
-                    self.context.drawImage(tD.sprite.image, tD.x, tD.y, tD.width, tD.height, 0, 0, tD.dw, tD.dh);
-                    self.context.restore();
-                }
             }
         },
 
@@ -769,8 +762,9 @@ define(['jquery', './camera', './tile',
 
             var location = self.input.getCoords();
 
-            if (!(location.x === self.input.selectedX && location.y === self.input.selectedY))
+            if (!(location.x === self.input.selectedX && location.y === self.input.selectedY)) {
                 self.drawCellHighlight(location.x, location.y, self.input.targetColour);
+            }
         },
 
         /**

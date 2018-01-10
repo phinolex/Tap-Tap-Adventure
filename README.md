@@ -59,6 +59,7 @@ First, you must `clone` the repository. There's really no way around it, you kin
 ###### Step 2 - Installing the utilities
 
 Now you must convert the configuration for local usage, go in both `server` folder and `client/data` folder and rename `config.json-dist` to `config.json`.
+Use port number 8081 and localhost as 127.0.0.1
 
 Afer this step, you can either choose to install MySQL for full distribution, or simply enable `offlineMode` in the server configuration.
 
@@ -76,8 +77,7 @@ In most cases, the server was programmed to automatically generate the MySQL dat
 
 ###### Step 3 - Connect to the server
 
-`http://127.0.0.1:1800`
-
+https://taptapgame-design1online.c9users.io:8081/
 
 That's it, as easy as 1, 2, 3, with many sub-procedures to follow :l
 

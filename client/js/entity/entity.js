@@ -52,6 +52,61 @@ define(['./entityhandler'], function(EntityHandler) {
 
             self.loadDirty();
         },
+        
+        /**
+         * Checks to see if the x,y coordinate is adjacent to the
+         * entity's current position
+         *
+         * @param x int
+         * @param y int
+         * @param ignoreDiagonals if true, will ignore diagonal directions (optional)
+         * @return boolean
+         **/
+        isPositionAdjacent: function(x, y, ignoreDiagonals = false) {
+            var self = this;
+            
+            // north west - diagonal
+            if (!ignoreDiagonals && x-1 === self.gridX && y+1 === self.gridY) {
+                return true;
+            }
+            
+            // north
+            if (x === self.gridX && y+1 === self.gridY) {
+                return true;
+            }
+            
+            // north east - diagonal
+            if (!ignoreDiagonals && x+1 === self.gridX && y+1 === self.gridY) {
+                return true;
+            }
+            
+            // west
+            if (x-1 === self.gridX && y === self.gridY) {
+                return true;
+            }
+            
+            // east
+            if (x+1 === self.gridX && y === self.gridY) {
+                return true;
+            }
+            
+            // south west - diagonal
+            if (!ignoreDiagonals && x-1 === self.gridX && y-1 === self.gridY) {
+                return true;
+            }
+            
+            // south
+            if (x === self.gridX && y-1 === self.gridY) {
+                return true;
+            }
+            
+            // south west - diagonal
+            if (!ignoreDiagonals && x-1 === self.gridX && y-1 === self.gridY) {
+                return true;
+            }
+            
+            return false;
+        },
 
         /**
          * This is important for when the client is
