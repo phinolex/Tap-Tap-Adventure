@@ -94,26 +94,21 @@ define(['jquery'], function($) {
             self.git.click(function() {
                 self.displayScroll('git');
             });
-
-            self.yes.click(function() {
-
-                if (!self.game || !self.game.storage)
-                    return;
-
-                self.game.storage.data.cryptoData.enabled = true;
-                self.game.storage.save();
-
-                self.game.loadCrypto();
-
-                self.body.removeClass('ask');
-            });
-
-            self.no.click(function() {
+            
+            // dismissing the welcome screen
+            var welcomeContinue = function() {
                 if (!self.game)
                     return;
+                    
+                // hide the welcome screen so it doesn't appear again
+                self.game.storage.data.welcome = false;
+                self.game.storage.save();
 
-                self.body.removeClass('ask');
-            });
+                self.body.removeClass('welcomeMessage');
+            }
+
+            self.yes.click(welcomeContinue);
+            self.no.click(welcomeContinue);
 
             self.rememberMe.click(function() {
                 if (!self.game || !self.game.storage)

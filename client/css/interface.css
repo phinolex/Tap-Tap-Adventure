@@ -206,13 +206,7 @@
     position: absolute;
 }
 
-#cryptoInfo {
-    position: absolute;
-    font-family: 'AdvoCut', sans-serif;
-    text-align: center;
-}
-
-#soundCheck, #cameraCheck, #debugCheck, #centreCheck, #nameCheck, #levelCheck, #cryptoCheck {
+#soundCheck, #cameraCheck, #debugCheck, #centreCheck, #nameCheck, #levelCheck {
     left: 50%;
 }
 
@@ -727,14 +721,6 @@
         top: 459px;
     }
 
-    #cryptoInfo {
-        width: 354px;
-        height: 36px;
-        top: 597px;
-        left: 2%;
-        font-size: 24px;
-    }
-
     #checkMarks {
         width: 120px;
         height: 210px;
@@ -795,10 +781,6 @@
 
     #levelCheck {
         top: 221px;
-    }
-
-    #cryptoCheck {
-        top: 279px;
     }
 
     #attackInfo {
@@ -1308,14 +1290,6 @@
         top: 306px;
     }
 
-    #cryptoInfo {
-        width: 236px;
-        height: 24px;
-        top: 398px;
-        left: 2%;
-        font-size: 14px;
-    }
-
     #checkMarks {
         width: 80px;
         height: 140px;
@@ -1376,10 +1350,6 @@
 
     #levelCheck {
         top: 154px;
-    }
-
-    #cryptoCheck {
-        top: 186px;
     }
 
     #attackInfo {
@@ -1922,14 +1892,6 @@
         top: 152px;
     }
 
-    #cryptoInfo {
-        width: 118px;
-        height: 12px;
-        top: 199px;
-        left: 2%;
-        font-size: 10px;
-    }
-
     #checkMarks {
         width: 40px;
         height: 70px;
@@ -1992,10 +1954,6 @@
 
     #levelCheck {
         top: 77px;
-    }
-
-    #cryptoCheck {
-        top: 93px;
     }
 
     #attackInfo {

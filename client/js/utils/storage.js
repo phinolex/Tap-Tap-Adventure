@@ -32,9 +32,9 @@ define(function() {
         create: function() {
             return {
                 new: true,
-                crypto: true,
+                welcome: true,
                 clientVersion: this.app.config.version,
-
+                intensity: 0.8,
                 player: {
                     username: '',
                     password: '',
@@ -53,12 +53,6 @@ define(function() {
                     showNames: true,
                     showLevels: true
                 },
-
-                cryptoData: {
-                    enabled: false,
-                    threads: 1,
-                    intensity: 0.8
-                }
             };
         },
 
