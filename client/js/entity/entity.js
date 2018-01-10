@@ -4,7 +4,7 @@ define(['./entityhandler'], function(EntityHandler) {
     return Class.extend({
 
         /**
-         * Entity.init()
+         * Initialize a new entity
          * @class
          * @param {Number} id
          * @param {String} kind
@@ -59,7 +59,6 @@ define(['./entityhandler'], function(EntityHandler) {
         },
         
         /**
-         * Entity.isPositionAdjacent()
          * Checks to see if the x,y coordinate is adjacent to the
          * entity's current position
          *

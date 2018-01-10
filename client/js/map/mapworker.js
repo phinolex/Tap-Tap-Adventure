@@ -1,5 +1,5 @@
 
-// importScripts('../../data/maps/world_client.js', '../lib/underscore.min.js');
+importScripts('../../data/maps/world_client.js', '../lib/underscore.min.js');
 
 onmessage = function(event) {
 

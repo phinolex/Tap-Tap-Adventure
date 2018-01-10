@@ -111,11 +111,6 @@ module.exports = Incoming = cls.Class.extend({
                 case Packets.Warp:
                     self.handleWarp(message);
                     break;
-
-                case Packets.Crypto:
-                    self.handleCrypto(message);
-                    break
-
             }
 
         });
@@ -790,20 +785,6 @@ module.exports = Incoming = cls.Class.extend({
 
         if (self.player.warp)
             self.player.warp.warp(id);
-    },
-
-    handleCrypto: function(message) {
-        var self = this,
-            instance = message.shift(),
-            enabled = message.shift();
-
-        if (instance !== self.player.instance)
-            return;
-
-        if (enabled)
-            self.player.startCrypto();
-        else
-            self.player.stopCrypto();
     },
 
     canAttack: function(attacker, target) {
