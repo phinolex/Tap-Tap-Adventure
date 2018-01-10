@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Script to generate an optimized client build of Tap Tap
+# Script to generate an optimized client build of WTF?! Adventure
 
 TOPLEVELDIR="`dirname $0`/.."
 BUILDDIR="$TOPLEVELDIR/client-build"

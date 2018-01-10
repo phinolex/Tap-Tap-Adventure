@@ -1,24 +1,12 @@
-# Tap Tap Adventure
+# WTF?! Adventure
 
-Tap Tap Adventure (TTA) is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ).
+WTF?! Adventure is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ) and a subsequent fork called Tap Tap Adventure. 
+WTF?! Adventure is completely open-source, allowing its community to collaborate and aid in the perfection of the game. Anyone is free to create their own derivative of WTF?! Adventure, with no strings attached.
 
-The entirety of the source has been rewritten from the ground up, this includes rendering, networking, sprite parsing, map loading, etc. The code remains true to its coding conventions and follows it thoroughly. Although, compared to its predecessor, the code is far more comprehensive and adaptable, it is, as all other repositories on this website, a work in progress. If your capabilities include following onset conventions, you are welcome to contribute!
-
-The Plan:
-
-- TTA is expected to remain completely open-source, allowing its community to collaborate and aid in the perfection of the game.
-- The players will be able to vote on what content gets added into the game, while the coders will aid in the creation and perfection of those features
-- There will be no advertisements or microtransactions in-game. There will be random merchendise in the future.
-- Anyone is free to create their own derivative of TTA, with no strings attached. We will even provide toplists.
-- Compatibility is, and will continue to be our number one priority.
-- Cryptocurrency and direct donations will be a way for players to contribute to the game.
-
-Currently, TTA is available on the three major platforms: iOS, Android & PC. Though compatibility is questionable on older devices, there are still features implemented to ensure maximum performance is achieved.
+Currently it is available on the three major platforms: iOS, Android & PC. Though compatibility is questionable on older devices, there are still features implemented to ensure maximum performance is achieved.
 If you are interested in researching previous versions of the rewritten source, be sure to check out [Kaetram](https://github.com/udeva/Kaetram)
 
-### So what exactly is new in this version?
-
-Let us start out with this small list:
+### Things added from the Tap Tap Adventure fork
 
 - Rendering: Has been completely redone to only draw frames whenever necessary. This in turns boosts the performance on browsers such as Safari & Firefox.
 - Networking & Packets: Previously, everything regarding networking was crammed into a singular class, now it has all been laid out properly with every class pertaining necessary functions.
@@ -32,20 +20,24 @@ Let us start out with this small list:
 - Controllers: Both the client and the server side contain a folder named `controllers`. The name is pretty self explanatory, this controls important functions of the game.
 - Quest System: The quest controller encompasses both achievements and quests, both have been created in a plugin format and allow for manipulation of server events. Achievements are far more simplistic in nature, consisting of minor tasks and small rewards.
 - Plugin System: Expands upon the controllers and combat and allows direct control over individual items.
-- Crypto: Allows the player to choose whether or not they would like to contribute, in the event they do, they will be rewarded EXP. This is not to say that AFK'ing will be allowed.
 
+## Things we've added, removed or modified
 
+- Removed crypto
+- Removed weird AdvoCut font
+- Updated movement cursors
+- Bug fixes
 
-Still, there are a couple things that have to be done:
+## ToDo List
 
-- Add Guilds and Parties
-- Implement trading amongst player
-- Abilities
-- Finalize all bosses
-- More quests and achievements
+- Documenting codebase and adding Document.js
+- Better tutorial
+- Advertisements
+- Private Messages
+- Passive Companions
+- Active Companions
 
-
-## Running Tap Tap Adventure
+## Running WTF?! Adventure
 
 Running the server is fairly straightforward, for the most part. If you encounter any issues, make sure you use the alternative solution.
 
@@ -77,6 +69,9 @@ In most cases, the server was programmed to automatically generate the MySQL dat
 
 ###### Step 3 - Connect to the server
 
+http://127.0.0.1:8081/
+
+For C9.io
 https://taptapgame-design1online.c9users.io:8081/
 
 That's it, as easy as 1, 2, 3, with many sub-procedures to follow :l
