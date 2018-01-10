@@ -18724,5 +18724,42 @@
     },
     "offsetX": -5,
     "offsetY": -13
+  },
+  {
+    "id": "dog",
+    "width": 32,
+    "height": 32,
+    "animations": {
+      "walk_down": {
+        "length": 4,
+        "row": 0
+      },
+      "walk_right": {
+        "length": 4,
+        "row": 1
+      },
+      "walk_up": {
+        "length": 4,
+        "row": 2
+      },
+      "walk_left": {
+        "length": 4,
+        "row": 3
+      },
+      "idle_right": {
+        "length": 4,
+        "row": 5
+      },
+      "idle_left": {
+        "length": 4,
+        "row": 6
+      },
+      "idle_down": {
+        "length": 7,
+        "row": 2
+      },
+    },
+    "offsetX": -5,
+    "offsetY": -13
   }
 ]
