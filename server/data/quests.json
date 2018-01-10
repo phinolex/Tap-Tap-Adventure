@@ -1,28 +1,35 @@
 {
   "The Knack Of": {
     "id": 0,
-    "name": "A Great Start",
-    "description": "Teaching you the basics about Tap Tap Adventure!",
+    "name": "Creeper",
+    "description": "Teaching you the basics about WTF?! Adventur!",
     "npcs": [17, 8],
     "stages": 5,
     "conversations": {
       "17": {
-        "0": ["Hello there!", "Welcome to Maearth.",
-              "I do not wish to keep you for too long",
-              "So let us proceed with a quick tutorial."],
-        "1": ["See that spooky arrow? You should click it.", "Trust me.. It's really the only way to progress...",
-              "Come on man.. Just do it please..", "I don't have a lot of time and there are other newbies here."],
+        "0": ["Well that's unfortunate...",
+              "You being here I mean.",
+              "Didn't your mother teach you not to talk to strangers?",
+              "Well, I guess she failed."],
+        "1": ["Where are your manners?",
+              "Stop bothering me!",
+              "Seriously, WTF is wrong with you?! I'm working here.",
+              "Go try clicking on something else you looser."],
 
-        "2": ["Alright perfect, clearly you are capable of clicking things.", "This is the character menu.",
-              "It is pretty self explanatory so I do not want to drag this tutorial.",
-              "Please go to the next instructor to finish your quick tutorial."],
+        "2": ["Ahh yes, apparently you have a short attention span.",
+              "Please direct your attention to the character menu.",
+              "See those big red buttons?",
+              "I made them so even a simple-minded child could work them.",
+              "But I'm sure you won't be able to figure it out.",
+              "Now leave me alone, I have lots of work left to do."],
 
-        "3": ["Farewell Adventurer!"]
+        "3": ["WTF?!? LEAVE ME ALONE!"]
       },
 
       "8": {
         "4": ["Oh, another one. Here, take this sword and get outta here.",
-          "I would bother teaching you but", "It is more fun to let newbies figure it out."
+          "I would bother teaching you but",
+          "It is more fun to let newbies figure it out."
         ],
 
         "5": ["Go through the portal there to get to the main land."]
