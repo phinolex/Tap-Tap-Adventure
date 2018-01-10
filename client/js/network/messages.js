@@ -104,7 +104,7 @@ define(function() {
                     break;
 
                 case 'maintenance':
-                    self.app.sendError(null, 'Tap Tap Adventure is currently under construction.');
+                    self.app.sendError(null, 'WTF?! Adventure is currently under construction.');
                     break;
 
                 case 'userexists':
