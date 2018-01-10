@@ -192,7 +192,8 @@ define(['jquery', './camera', './tile',
 
             self.drawAnimatedTiles();
 
-            self.drawTargetCell();
+            // the annoying square under the cursor
+            //self.drawTargetCell();
 
             self.drawSelectedCell();
 
