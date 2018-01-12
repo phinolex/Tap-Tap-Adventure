@@ -1,5 +1,6 @@
 {
   "ip": "127.0.0.1",
   "port": 8081,
-  "version": 2
+  "version": 3,
+  "ssl": false
 }

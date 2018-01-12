@@ -41,130 +41,121 @@
         <!-- <h1 id="logo"></h1> -->
 
         <section id="parchment" class="loadCharacter">
+            <article id="loadCharacter">
+                <h1>WTF?! Adventure</h1>
 
-            <div class="parchment-left"></div>
-            <div class="parchment-middle">
-                <article id="loadCharacter">
-                    <h1>
-                        <span class="left-ornament"></span>
-                        WTF?! Adventure
-                        <span class="right-ornament"></span>
-                    </h1>
+                <form method="get" accept-charset="utf-8">
+                    <input type="text" id="loginNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off" readonly autofocus>
+                    <input type="password" id="loginPasswordInput" name="player-password" placeholder="Password" maxlength="64" readonly autocomplete="off">
+                </form>
 
-                    <form method="get" accept-charset="utf-8">
-                        <input type="text" id="loginNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off" readonly autofocus>
-                        <input type="password" id="loginPasswordInput" name="player-password" placeholder="Password" maxlength="64" readonly autocomplete="off">
-                    </form>
+                <div id="guest" class="check"></div>
+                <div id="guestText">Play as a guest</div>
 
-                    <div id="guest" class="check"></div>
-                    <div id="guestText">Play as a guest</div>
+                <div id="rememberMe" class="check"></div>
+                <div id="rememberMeText">Remember Me</div>
 
-                    <div id="rememberMe" class="check"></div>
-                    <div id="rememberMeText">Remember Me</div>
+                <div id="login"></div>
+                <div id="newCharacter"></div>
 
-                    <div id="login"></div>
-                    <div id="newCharacter"></div>
+                <div class="validation-summary"></div>
 
-                    <div class="validation-summary"></div>
+            </article>
 
-                </article>
-
-                <article id="createCharacter">
-                    <h1>
-                        <span class="left-ornament"></span>
-                        New Character
-                        <span class="right-ornament"></span>
-                    </h1>
+            <article id="createCharacter">
+                <h1>
+                    <span class="left-ornament"></span>
+                    New Character
+                    <span class="right-ornament"></span>
+                </h1>
 
 
-                    <form method="get" accept-charset="utf-8">
-                        <input type="text" id="registerNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off">
-                        <input type="password" id="registerPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
-                        <input type="password" id="registerPasswordConfirmationInput" name="player-password2" placeholder="Confirm Password" maxlength="64" autocomplete="off">
-                        <input type="email" id="registerEmailInput" name="player-email" placeholder="Email Address" maxlength="64" autocomplete="off">
-                    </form>
+                <form method="get" accept-charset="utf-8">
+                    <input type="text" id="registerNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off">
+                    <input type="password" id="registerPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
+                    <input type="password" id="registerPasswordConfirmationInput" name="player-password2" placeholder="Confirm Password" maxlength="64" autocomplete="off">
+                    <input type="email" id="registerEmailInput" name="player-email" placeholder="Email Address" maxlength="64" autocomplete="off">
+                </form>
 
-                    <div id="play"></div>
+                <div id="play"></div>
 
-                    <p></p>
+                <p></p>
 
-                    <div id="cancelButton"></div>
+                <div id="cancelButton"></div>
 
-                    <div class="validation-summary"></div>
+                <div class="validation-summary"></div>
 
-                </article>
+            </article>
 
-                <article id="credits">
+            <article id="credits">
 
-                    <h1>
-                        <span class="left-ornament"></span>
+                <h1>
+                    <span class="left-ornament"></span>
 
-                        <span class="title">Credits</span>
+                    <span class="title">Credits</span>
 
-                        <span class="right-ornament"></span>
+                    <span class="right-ornament"></span>
 
-                    </h1>
+                </h1>
 
-                    <p id="cDescription">A special thanks goes to my fellow artists for improvements!</p>
+                <p id="cDescription">A special thanks goes to my fellow artists for improvements!</p>
 
-                </article>
+            </article>
 
-                <article id="about">
-                    <h1>
-                        <span class="left-ornament"></span>
+            <article id="about">
+                <h1>
+                    <span class="left-ornament"></span>
 
-                        <span class="title">
-                        About
-                        </span>
+                    <span class="title">
+                    About
+                    </span>
 
-                        <span class="right-ornament"></span>
-                    </h1>
+                    <span class="right-ornament"></span>
+                </h1>
 
-                    <p id="aDescription">
-                        WTF?! Adventure is a cross-platform browser-based MMORPG!
-                    </p>
+                <p id="aDescription">
+                    WTF?! Adventure is a cross-platform browser-based MMORPG!
+                </p>
 
 
-                    <div id="close-about">
-                        <span>-- Click anywhere to close --</span>
-                    </div>
+                <div id="close-about">
+                    <span>-- Click anywhere to close --</span>
+                </div>
 
-                </article>
+            </article>
 
-                <article id="git">
-                    Structure this later
-                </article>
+            <article id="git">
+                Structure this later
+            </article>
 
-                <article id="death">
-                    <p>You have died...</p>
-                    <div id="respawn" class="button"></div>
-                </article>
+            <article id="death">
+                <p>You have died...</p>
+                <div id="respawn" class="button"></div>
+            </article>
 
-                <article id="welcomeMessage">
-                    <p>
-                        <span class="left-ornament"></span>
-                        <span class="title">
-                        <strong>Am I Dreaming?</strong>
-                        </span>
-                        <span class="right-ornament"></span>
-                    </p>
-                    <br>
-                    <p>Last night you were feeling a bit exhausted from a long day at school. You could hardly keep your eyes 
-                    open as you munched away at dinner. When you finally dragged yourself up to bed you fell asleep as soon as 
-                    your head hit the pillow. It was nearly noon when you woke up and jumped out of bed because your alarm hadn't 
-                    gone off... only you're not quite sure where you are. To make matters worse, a creepy guy with a computer is 
-                    sitting in the corner of your room and you're still in your pajamas. Yikes!</p>
-                    <p>&nbsp;</p>
-                    <p><em>Use the arrow or W A S D keys to move.</em></p>
-                    <div id="yes">
-                        <span class="link">He's cute, maybe I should go talk to him...</span>
-                    </div>
-                    <div id="no">
-                        <span class="link">WTF?!?! Kick him where it hurts!</span>
-                    </div>
-                </article>
-            </div>
-            <div class="parchment-right"></div>
+            <article id="welcomeMessage">
+                <p>
+                    <span class="left-ornament"></span>
+                    <span class="title">
+                    <strong>Am I Dreaming?</strong>
+                    </span>
+                    <span class="right-ornament"></span>
+                </p>
+                <br>
+                <p>Last night you were feeling a bit exhausted from a long day at school. You could hardly keep your eyes 
+                open as you munched away at dinner. When you finally dragged yourself up to bed you fell asleep as soon as 
+                your head hit the pillow. It was nearly noon when you woke up and jumped out of bed because your alarm hadn't 
+                gone off... only you're not quite sure where you are. To make matters worse, a creepy guy with a computer is 
+                sitting in the corner of your room and you're still in your pajamas. Yikes!</p>
+                <p>&nbsp;</p>
+                <p><em>Use the arrow or W A S D keys to move.</em></p>
+                <div id="yes">
+                    <span class="link">He's cute, maybe I should go talk to him...</span>
+                </div>
+                <div id="no">
+                    <span class="link">WTF?!?! Kick him where it hurts!</span>
+                </div>
+            </article>
             <div class="loader" hidden>
                 Connecting<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span></div>
 
@@ -375,11 +366,6 @@
         <div id="git-link" class="clickable">
             <span class="dash">&ndash;</span>
             <span id="toggle-git">GitHub</span>
-        </div>
-
-        <div id="forums-link" class="clickable">
-            <span class="dash">&ndash;</span>
-            <a target="_blank" class="sub-forum-link" style="text-decoration: none" href="https://forum.taptapadventure.com">Forums</a>
         </div>
 
     </footer>
