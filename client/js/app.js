@@ -12,7 +12,7 @@ define(['jquery'], function($) {
             self.config = null;
 
             self.body = $('body');
-            self.parchment = $('#parchment');
+            self.parchment = $('#login');
             self.container = $('#container');
             self.window = $(window);
             self.canvas = $('#canvas');
@@ -20,7 +20,7 @@ define(['jquery'], function($) {
 
             self.intro = $('#intro');
 
-            self.loginButton = $('#login');
+            self.loginButton = $('#loginButton');
             self.createButton = $('#play');
             self.registerButton = $('#newCharacter');
             self.helpButton = $('#helpButton');
@@ -44,7 +44,6 @@ define(['jquery'], function($) {
             self.game = null;
             self.zoomFactor = 1;
 
-            self.parchmentAnimating = false;
             self.loggingIn = false;
 
             self.sendStatus('Initializing the main app');
@@ -270,24 +269,7 @@ define(['jquery'], function($) {
                 return;
 
             self.cleanErrors();
-
-            if (!self.isMobile()) {
-                if (self.parchmentAnimating)
-                    return;
-
-                self.parchmentAnimating = true;
-
-                self.parchment.toggleClass('animate').removeClass(origin);
-
-                setTimeout(function() {
-
-                    self.parchment.toggleClass('animate').addClass(destination);
-                    self.parchmentAnimating = false;
-
-                }, self.isTablet() ? 0 : 1000);
-
-            } else
-                self.parchment.removeClass(origin).addClass(destination);
+            self.parchment.removeClass(origin).addClass(destination);
         },
 
         displayScroll: function(content) {
