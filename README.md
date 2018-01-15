@@ -4,7 +4,7 @@ WTF?! Adventure is a massively multi-player online open-source project based on 
 WTF?! Adventure is completely open-source, allowing its community to collaborate and aid in the perfection of the game. Anyone is free to create their own derivative of WTF?! Adventure, with no strings attached.
 
 Currently it is available on the three major platforms: iOS, Android & PC. Though compatibility is questionable on older devices, there are still features implemented to ensure maximum performance is achieved.
-If you are interested in researching previous versions of the rewritten source, be sure to check out [Kaetram](https://github.com/udeva/Kaetram)
+If you are interested in researching previous versions of the rewritten source, be sure to check out [Kaetram](https://github.com/udeva/Kaetram).
 
 ### Things added from the Tap Tap Adventure fork
 
@@ -48,45 +48,48 @@ First, you must `clone` the repository. There's really no way around it, you kin
 1) Click the GitHub Clone or Download button
 2) [Clone a copy of our c9.io workspace](https://ide.c9.io/design1online/taptapgame)
 
+### Using c9.io
 
-###### Step 1 - Install the dependencies
+In your terminal run the following commands:
+
+1) `sudo npm install`
+2) `npm run mysql-start`
+3) `npm start`
+
+Now navigate to `https://{project}-{username}.c9users.io:8081/`
+
+Where `{project}` is the name of your c9.io clone of WTF Adventure,
+`{username}` is your c9.io username.
+
+### Without c9.io
+
+
+##### Step 1 - Install the dependencies
 
 In the command line run: `sudo npm install`
 
 
-###### Step 2 - Installing the utilities
+##### Step 2 - Installing the utilities
 
 Convert the configuration for local usage, go in both `server` folder and `client/data` folder and rename `config.json-dist` to `config.json`.
 
-*If you're using c9.io:*
-If you're using c9.io you must use port number 808, localhost as 127.0.0.1 and set the ssl flag to true.
-
-*If you're not using c9.io:*
 You can either choose to install MySQL for full distribution, or simply enable `offlineMode` in the server configuration.
 
 If you choose to use MySQL, install `mysql-server` for the operating system you're using, and update the configuration to contain your details.
 
 
-###### Step 2 - Run the server
+##### Step 2 - Run the server
 
-*If you're using c9.io:*
-1) Make sure MySQL is running entering this in the command line: `npm run mysql-start`
-2) Now start the node server by entering: `npm start`
-
-*If you're not using c9.io:*
 Make sure MySQL is running and then start WTF adventure by entering this in the command line run: `npm start`
 
-###### Step 3 - Connect to the server
+##### Step 3 - Connect to the server
 
-*If you're using c9.io:*
-https://{project}-{username}.c9users.io:8081/
+Now open your browser and navigate to `http://127.0.0.1:{port}/`
 
-Replace `{project}` with the name of your clone from WTF Adventure and `{username}` with your c9.io username.
+Where `{port}` is whatever port number you've configured in your config.json files.
 
-*If you're not using c9.io:*
-http://127.0.0.1:8081/
 
-###### Trouble Shooting
+#### Troubleshooting
 
 Usually you get errors if you forgot to install the server dependancies before you try to run WTF Adventure. In that
 case you can install them by typing `sudo npm install` and then trying to run WTF Adventure again.
@@ -95,6 +98,7 @@ In most cases, the server was programmed to automatically generate the MySQL dat
 
 1) Grant the MySQL user FULL permissions
 2) Run or query the `.sql` file in the `tools` folder.
+
 
 ### For Developers
 
