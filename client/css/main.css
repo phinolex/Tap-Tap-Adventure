@@ -104,15 +104,15 @@ footer div {
 
 #login input {
     width: 50%;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(54, 42, 59, 0.9);
     text-align: center;
     color: #000;
 }
 
 #login input:focus {
-    border-color: rgba(0, 255, 0, 0.8);
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
+    border-color: #000;
+    background: rgba(54, 42, 59, 0.7);
+    color: #fff;
 }
 
 #login input.field-error {
@@ -216,7 +216,7 @@ footer div {
 }
 
 #login-footer {
-    height: 100px;
+    height: 160px;
     width: 100%;
     color: #fff;
     background-image: url("../img/common/hud-modal.png");
@@ -282,7 +282,7 @@ footer div {
     }
 
     #login input {
-        margin-top: 30px;
+        margin-top: 10px;
         height: 60px;
     }
 
@@ -327,7 +327,7 @@ footer div {
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
     
     #login-footer {
-        height: 80px;
+        height: 100px;
     }
 
     #credits, #about, #death, #git {
@@ -420,7 +420,7 @@ footer div {
 @media only screen and (max-width: 1000px) {
     
     #login-footer {
-        height: 40px;
+        height: 60px;
     }
 
     #credits, #about, #death, #git {
