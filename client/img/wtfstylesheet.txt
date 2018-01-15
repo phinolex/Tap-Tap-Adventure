@@ -1,0 +1,935 @@
+.sprite {
+    background-image: url(spritesheet.png);
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.sprite-add {
+    width: 60px;
+    height: 62px;
+    background-position: 0 0;
+}
+
+.sprite-arrow-back {
+    width: 67px;
+    height: 67px;
+    background-position: -60px 0;
+}
+
+.sprite-arrow-down {
+    width: 56px;
+    height: 67px;
+    background-position: -127px 0;
+}
+
+.sprite-arrow-left {
+    width: 62px;
+    height: 60px;
+    background-position: -183px 0;
+}
+
+.sprite-arrow-move {
+    width: 65px;
+    height: 71px;
+    background-position: -245px 0;
+}
+
+.sprite-arrow-right {
+    width: 62px;
+    height: 60px;
+    background-position: -310px 0;
+}
+
+.sprite-arrow-up {
+    width: 56px;
+    height: 67px;
+    background-position: -372px 0;
+}
+
+.sprite-bag {
+    width: 66px;
+    height: 59px;
+    background-position: -428px 0;
+}
+
+.sprite-battery {
+    width: 55px;
+    height: 65px;
+    background-position: -494px 0;
+}
+
+.sprite-bomb {
+    width: 61px;
+    height: 61px;
+    background-position: -549px 0;
+}
+
+.sprite-book {
+    width: 68px;
+    height: 66px;
+    background-position: -610px 0;
+}
+
+.sprite-box {
+    width: 70px;
+    height: 59px;
+    background-position: -678px 0;
+}
+
+.sprite-calendar {
+    width: 61px;
+    height: 71px;
+    background-position: -748px 0;
+}
+
+.sprite-cash {
+    width: 61px;
+    height: 54px;
+    background-position: -809px 0;
+}
+
+.sprite-cash-register {
+    width: 70px;
+    height: 69px;
+    background-position: -870px 0;
+}
+
+.sprite-chat {
+    width: 70px;
+    height: 64px;
+    background-position: -940px 0;
+}
+
+.sprite-check {
+    width: 65px;
+    height: 52px;
+    background-position: -1010px 0;
+}
+
+.sprite-coin {
+    width: 50px;
+    height: 52px;
+    background-position: -1075px 0;
+}
+
+.sprite-coins {
+    width: 59px;
+    height: 50px;
+    background-position: -1125px 0;
+}
+
+.sprite-coins-stack {
+    width: 71px;
+    height: 59px;
+    background-position: -1184px 0;
+}
+
+.sprite-cone {
+    width: 61px;
+    height: 70px;
+    background-position: -1255px 0;
+}
+
+.sprite-crown {
+    width: 71px;
+    height: 60px;
+    background-position: -1316px 0;
+}
+
+.sprite-crystal {
+    width: 66px;
+    height: 70px;
+    background-position: -1387px 0;
+}
+
+.sprite-delete {
+    width: 52px;
+    height: 54px;
+    background-position: -1453px 0;
+}
+
+.sprite-download {
+    width: 70px;
+    height: 74px;
+    background-position: -1505px 0;
+}
+
+.sprite-eye {
+    width: 60px;
+    height: 62px;
+    background-position: -1575px 0;
+}
+
+.sprite-female-avatar-1 {
+    width: 47px;
+    height: 70px;
+    background-position: -1635px 0;
+}
+
+.sprite-female-avatar-2 {
+    width: 52px;
+    height: 70px;
+    background-position: -1682px 0;
+}
+
+.sprite-friends-1 {
+    width: 59px;
+    height: 71px;
+    background-position: -1734px 0;
+}
+
+.sprite-friends-2 {
+    width: 62px;
+    height: 70px;
+    background-position: -1793px 0;
+}
+
+.sprite-gem-blue {
+    width: 62px;
+    height: 59px;
+    background-position: -1855px 0;
+}
+
+.sprite-gem-red {
+    width: 59px;
+    height: 58px;
+    background-position: -428px -59px;
+}
+
+.sprite-gift {
+    width: 61px;
+    height: 71px;
+    background-position: -678px -59px;
+}
+
+.sprite-globe {
+    width: 64px;
+    height: 62px;
+    background-position: -1010px -59px;
+}
+
+.sprite-hammer {
+    width: 58px;
+    height: 59px;
+    background-position: -809px -59px;
+}
+
+.sprite-hand-grap {
+    width: 53px;
+    height: 62px;
+    background-position: -1074px -59px;
+}
+
+.sprite-hand-open {
+    width: 55px;
+    height: 59px;
+    background-position: -1127px -59px;
+}
+
+.sprite-hand-pointer {
+    width: 52px;
+    height: 58px;
+    background-position: -1182px -59px;
+}
+
+.sprite-heart {
+    width: 53px;
+    height: 53px;
+    background-position: -1855px -59px;
+}
+
+.sprite-helmet {
+    width: 70px;
+    height: 62px;
+    background-position: 0 -112px;
+}
+
+.sprite-help {
+    width: 44px;
+    height: 61px;
+    background-position: -1453px -59px;
+}
+
+.sprite-home {
+    width: 68px;
+    height: 68px;
+    background-position: -70px -112px;
+}
+
+.sprite-hud-active {
+    width: 46px;
+    height: 62px;
+    background-position: -1908px -59px;
+}
+
+.sprite-hud-active-box {
+    width: 62px;
+    height: 81px;
+    background-position: -138px -121px;
+}
+
+.sprite-hud-banner {
+    width: 485px;
+    height: 228px;
+    background-position: -1127px -120px;
+}
+
+.sprite-hud-banner-green {
+    width: 290px;
+    height: 111px;
+    background-position: -1612px -112px;
+}
+
+.sprite-hud-banner-purple {
+    width: 332px;
+    height: 130px;
+    background-position: 0 -223px;
+}
+
+.sprite-hud-banner-red {
+    width: 290px;
+    height: 111px;
+    background-position: -332px -223px;
+}
+
+.sprite-hud-banner-vines {
+    width: 481px;
+    height: 232px;
+    background-position: -332px -348px;
+}
+
+.sprite-hud-bar {
+    width: 1251px;
+    height: 170px;
+    background-position: 0 -580px;
+}
+
+.sprite-hud-beam-green {
+    width: 56px;
+    height: 63px;
+    background-position: -200px -121px;
+}
+
+.sprite-hud-beam-purple {
+    width: 56px;
+    height: 63px;
+    background-position: -256px -121px;
+}
+
+.sprite-hud-beam-red {
+    width: 56px;
+    height: 63px;
+    background-position: -312px -121px;
+}
+
+.sprite-hud-box {
+    width: 109px;
+    height: 110px;
+    background-position: -487px -112px;
+}
+
+.sprite-hud-box-item {
+    width: 89px;
+    height: 98px;
+    background-position: -368px -121px;
+}
+
+.sprite-hud-box-status {
+    width: 102px;
+    height: 96px;
+    background-position: -867px -112px;
+}
+
+.sprite-hud-box-vine {
+    width: 140px;
+    height: 183px;
+    background-position: -813px -223px;
+}
+
+.sprite-hud-box-vine2 {
+    width: 202px;
+    height: 238px;
+    background-position: -1612px -223px;
+}
+
+.sprite-hud-button-green {
+    width: 272px;
+    height: 110px;
+    background-position: 0 -461px;
+}
+
+.sprite-hud-button-purple {
+    width: 272px;
+    height: 110px;
+    background-position: -813px -461px;
+}
+
+.sprite-hud-button-red {
+    width: 272px;
+    height: 110px;
+    background-position: -1085px -461px;
+}
+
+.sprite-hud-chain {
+    width: 20px;
+    height: 125px;
+    background-position: -622px -121px;
+}
+
+.sprite-hud-chain-link {
+    width: 83px;
+    height: 55px;
+    background-position: -642px -223px;
+}
+
+.sprite-hud-checkbox-checked {
+    width: 87px;
+    height: 89px;
+    background-position: -739px -121px;
+}
+
+.sprite-hud-checkbox-checked-2 {
+    width: 189px;
+    height: 507px;
+    background-position: -1357px -461px;
+}
+
+.sprite-hud-checkbox-empty {
+    width: 87px;
+    height: 89px;
+    background-position: -969px -121px;
+}
+
+.sprite-hud-level-marker-shadow {
+    width: 66px;
+    height: 52px;
+    background-position: -725px -223px;
+}
+
+.sprite-hud-map-position {
+    width: 24px;
+    height: 21px;
+    background-position: -1917px 0;
+}
+
+.sprite-hud-modal {
+    width: 1160px;
+    height: 772px;
+    background-position: 0 -968px;
+}
+
+.sprite-hud-modal-chain {
+    width: 42px;
+    height: 146px;
+    background-position: -1056px -121px;
+}
+
+.sprite-hud-modal-chain-right {
+    width: 42px;
+    height: 146px;
+    background-position: -1902px -121px;
+}
+
+.sprite-hud-modal-highlighted {
+    width: 1160px;
+    height: 772px;
+    background-position: -1954px 0;
+}
+
+.sprite-hud-modal-side {
+    width: 237px;
+    height: 550px;
+    background-position: -1546px -772px;
+}
+
+.sprite-hud-mouse-pointer {
+    width: 24px;
+    height: 31px;
+    background-position: 0 -772px;
+}
+
+.sprite-hud-parchment {
+    width: 407px;
+    height: 567px;
+    background-position: -1783px -772px;
+}
+
+.sprite-hud-parchment-chain {
+    width: 44px;
+    height: 59px;
+    background-position: -24px -772px;
+}
+
+.sprite-hud-parchment-left-stick {
+    width: 459px;
+    height: 52px;
+    background-position: -68px -772px;
+}
+
+.sprite-hud-parchment-right-stick {
+    width: 463px;
+    height: 52px;
+    background-position: -527px -772px;
+}
+
+.sprite-hud-quest-green {
+    width: 188px;
+    height: 61px;
+    background-position: -990px -772px;
+}
+
+.sprite-hud-quest-purple {
+    width: 188px;
+    height: 61px;
+    background-position: -2190px -772px;
+}
+
+.sprite-hud-quest-red {
+    width: 188px;
+    height: 61px;
+    background-position: -2378px -772px;
+}
+
+.sprite-hud-ribbon-green {
+    width: 35px;
+    height: 39px;
+    background-position: -1178px -772px;
+}
+
+.sprite-hud-ribbon-purple {
+    width: 35px;
+    height: 39px;
+    background-position: -1213px -772px;
+}
+
+.sprite-hud-ribbon-red {
+    width: 35px;
+    height: 39px;
+    background-position: -1248px -772px;
+}
+
+.sprite-hud-scroll {
+    width: 106px;
+    height: 32px;
+    background-position: -2566px -772px;
+}
+
+.sprite-hud-scrollbar {
+    width: 18px;
+    height: 64px;
+    background-position: -1283px -772px;
+}
+
+.sprite-hud-skull {
+    width: 138px;
+    height: 93px;
+    background-position: -2672px -772px;
+}
+
+.sprite-hud-skull-crown {
+    width: 74px;
+    height: 63px;
+    background-position: -2810px -772px;
+}
+
+.sprite-hud-speach-bubble {
+    width: 223px;
+    height: 98px;
+    background-position: -2884px -772px;
+}
+
+.sprite-hud-status-banner-purple {
+    width: 123px;
+    height: 90px;
+    background-position: 0 -870px;
+}
+
+.sprite-hud-status-bar {
+    width: 126px;
+    height: 52px;
+    background-position: -123px -870px;
+}
+
+.sprite-hud-status-green {
+    width: 119px;
+    height: 30px;
+    background-position: -249px -870px;
+}
+
+.sprite-hud-status-red {
+    width: 49px;
+    height: 27px;
+    background-position: -1301px -772px;
+}
+
+.sprite-hud-stick {
+    width: 160px;
+    height: 18px;
+    background-position: -368px -870px;
+}
+
+.sprite-hud-stick-cap {
+    width: 40px;
+    height: 31px;
+    background-position: -528px -870px;
+}
+
+.sprite-hud-switch-green {
+    width: 89px;
+    height: 90px;
+    background-position: -568px -870px;
+}
+
+.sprite-hud-switch-red {
+    width: 88px;
+    height: 90px;
+    background-position: -657px -870px;
+}
+
+.sprite-hud-toggle-off {
+    width: 130px;
+    height: 79px;
+    background-position: -745px -870px;
+}
+
+.sprite-hud-toggle-on {
+    width: 131px;
+    height: 79px;
+    background-position: -875px -870px;
+}
+
+.sprite-hud-vines {
+    width: 511px;
+    height: 128px;
+    background-position: -2190px -865px;
+}
+
+.sprite-hud-wing-left {
+    width: 128px;
+    height: 75px;
+    background-position: -1006px -870px;
+}
+
+.sprite-hud-wing-right {
+    width: 128px;
+    height: 75px;
+    background-position: -1134px -870px;
+}
+
+.sprite-hud-wings {
+    width: 312px;
+    height: 58px;
+    background-position: -2701px -870px;
+}
+
+.sprite-hyperlink {
+    width: 70px;
+    height: 72px;
+    background-position: -1262px -870px;
+}
+
+.sprite-key {
+    width: 67px;
+    height: 48px;
+    background-position: -3013px -870px;
+}
+
+.sprite-laural-green {
+    width: 70px;
+    height: 57px;
+    background-position: -3013px -918px;
+}
+
+.sprite-laural-yellow {
+    width: 71px;
+    height: 57px;
+    background-position: -1160px -975px;
+}
+
+.sprite-leaf {
+    width: 52px;
+    height: 68px;
+    background-position: -1231px -975px;
+}
+
+.sprite-light-off {
+    width: 55px;
+    height: 68px;
+    background-position: -1283px -975px;
+}
+
+.sprite-light-on {
+    width: 51px;
+    height: 69px;
+    background-position: -1338px -975px;
+}
+
+.sprite-lightning {
+    width: 51px;
+    height: 70px;
+    background-position: -1389px -975px;
+}
+
+.sprite-lock {
+    width: 62px;
+    height: 71px;
+    background-position: -1440px -975px;
+}
+
+.sprite-lock2 {
+    width: 55px;
+    height: 70px;
+    background-position: -2701px -975px;
+}
+
+.sprite-magnet {
+    width: 70px;
+    height: 62px;
+    background-position: -2756px -975px;
+}
+
+.sprite-mailbox-empty {
+    width: 74px;
+    height: 69px;
+    background-position: -2826px -975px;
+}
+
+.sprite-mailbox-full {
+    width: 73px;
+    height: 68px;
+    background-position: -2900px -975px;
+}
+
+.sprite-male-avatar-1 {
+    width: 46px;
+    height: 73px;
+    background-position: -2973px -975px;
+}
+
+.sprite-male-avatar-2 {
+    width: 47px;
+    height: 70px;
+    background-position: -3019px -975px;
+}
+
+.sprite-paintbrush {
+    width: 57px;
+    height: 71px;
+    background-position: -1160px -1045px;
+}
+
+.sprite-pencil {
+    width: 57px;
+    height: 60px;
+    background-position: -1217px -1045px;
+}
+
+.sprite-photo {
+    width: 70px;
+    height: 59px;
+    background-position: -1274px -1045px;
+}
+
+.sprite-plant-pot {
+    width: 58px;
+    height: 71px;
+    background-position: -1344px -1045px;
+}
+
+.sprite-potion {
+    width: 49px;
+    height: 73px;
+    background-position: -3066px -975px;
+}
+
+.sprite-red-award {
+    width: 51px;
+    height: 70px;
+    background-position: -2190px -1045px;
+}
+
+.sprite-red-award-rosette {
+    width: 49px;
+    height: 69px;
+    background-position: -1402px -1048px;
+}
+
+.sprite-red-award-star {
+    width: 51px;
+    height: 66px;
+    background-position: -2241px -1045px;
+}
+
+.sprite-rock {
+    width: 66px;
+    height: 55px;
+    background-position: -2292px -1045px;
+}
+
+.sprite-search {
+    width: 69px;
+    height: 65px;
+    background-position: -2358px -1045px;
+}
+
+.sprite-settings {
+    width: 53px;
+    height: 55px;
+    background-position: -2427px -1045px;
+}
+
+.sprite-shield {
+    width: 64px;
+    height: 68px;
+    background-position: -2480px -1045px;
+}
+
+.sprite-shoe {
+    width: 58px;
+    height: 65px;
+    background-position: -2544px -1045px;
+}
+
+.sprite-shopping-bag {
+    width: 62px;
+    height: 72px;
+    background-position: -2602px -1045px;
+}
+
+.sprite-shopping-basket {
+    width: 72px;
+    height: 74px;
+    background-position: -2664px -1045px;
+}
+
+.sprite-shovel {
+    width: 63px;
+    height: 65px;
+    background-position: -2736px -1045px;
+}
+
+.sprite-skull {
+    width: 59px;
+    height: 68px;
+    background-position: -2799px -1045px;
+}
+
+.sprite-smile {
+    width: 59px;
+    height: 61px;
+    background-position: -2858px -1045px;
+}
+
+.sprite-soap {
+    width: 71px;
+    height: 64px;
+    background-position: -1451px -1048px;
+}
+
+.sprite-social {
+    width: 181px;
+    height: 171px;
+    background-position: -2917px -1048px;
+}
+
+.sprite-sound {
+    width: 50px;
+    height: 55px;
+    background-position: -1160px -1219px;
+}
+
+.sprite-speaker {
+    width: 70px;
+    height: 51px;
+    background-position: -1210px -1219px;
+}
+
+.sprite-star {
+    width: 60px;
+    height: 60px;
+    background-position: -1280px -1219px;
+}
+
+.sprite-sword {
+    width: 66px;
+    height: 67px;
+    background-position: -1340px -1219px;
+}
+
+.sprite-task {
+    width: 64px;
+    height: 64px;
+    background-position: -1406px -1219px;
+}
+
+.sprite-timer {
+    width: 55px;
+    height: 70px;
+    background-position: -1470px -1219px;
+}
+
+.sprite-trash-empty {
+    width: 70px;
+    height: 63px;
+    background-position: -2190px -1219px;
+}
+
+.sprite-trash-full {
+    width: 70px;
+    height: 76px;
+    background-position: -2260px -1219px;
+}
+
+.sprite-tree {
+    width: 40px;
+    height: 71px;
+    background-position: -1502px -975px;
+}
+
+.sprite-trophy {
+    width: 69px;
+    height: 63px;
+    background-position: -2330px -1219px;
+}
+
+.sprite-wand {
+    width: 68px;
+    height: 70px;
+    background-position: -2399px -1219px;
+}
+
+.sprite-wing-left {
+    width: 130px;
+    height: 76px;
+    background-position: -2467px -1219px;
+}
+
+.sprite-wing-right {
+    width: 130px;
+    height: 76px;
+    background-position: -2597px -1219px;
+}
+
+.sprite-world {
+    width: 65px;
+    height: 63px;
+    background-position: -2727px -1219px;
+}
+
+.sprite-wrench-small {
+    width: 33px;
+    height: 34px;
+    background-position: -3080px -870px;
+}
+
+.sprite-wtflogo {
+    width: 395px;
+    height: 183px;
+    background-position: -2195px -1300px;
+}
+
+.sprite-xp {
+    width: 71px;
+    height: 52px;
+    background-position: -249px -904px;
+}
