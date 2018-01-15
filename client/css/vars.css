@@ -213,7 +213,7 @@ body {
     border: 0;
 }
 
-#login, #newCharacter {
+#loginButton, #newCharacter {
     top: 65%;
 }
 
@@ -234,7 +234,7 @@ body {
     top: 70%;
 }
 
-#login {
+#loginButton {
     left: 15%;
 }
 
@@ -328,7 +328,7 @@ html [type="button"],
 
 @media only screen and (min-width: 1501px) {
 
-    #parchment h1, #loadCharacter h1, #about h1 {
+    #login h1, #loadCharacter h1, #about h1 {
         margin-top: 30px;
         font-size: 30px;
     }
@@ -338,7 +338,7 @@ html [type="button"],
         font-size: 30px;
     }
 
-    #parchment h2, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #login h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-left: 30px;
     }
 
@@ -462,26 +462,26 @@ html [type="button"],
         text-shadow: 2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;
     }
 
-    #login, #newCharacter, #continue, #cancelButton, #play {
+    #loginButton, #newCharacter, #continue, #cancelButton, #play {
         position: absolute;
         width: 306px;
         height: 81px;
         background: url('../img/3/buttons.png');
     }
 
-    #login {
+    #loginButton {
         background-position: -309px 0;
     }
 
-    #login:hover {
+    #loginButton:hover {
         background-position: -312px -87px;
     }
 
-    #login:active {
+    #loginButton:active {
         background-position: -312px -174px;
     }
 
-    #login.disabled {
+    #loginButton.disabled {
         background-position: -312px -261px;
     }
 
@@ -575,11 +575,11 @@ html [type="button"],
 
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
 
-    #parchment h1, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #login h1, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 40px;
     }
 
-    #parchment h2, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #login h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 20px;
     }
 
@@ -697,26 +697,26 @@ html [type="button"],
         text-shadow:2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;
     }
 
-    #login, #newCharacter, #continue, #cancelButton, #play {
+    #loginButton, #newCharacter, #continue, #cancelButton, #play {
         position: absolute;
         width: 204px;
         height: 54px;
         background: url('../img/2/buttons.png');
     }
 
-    #login {
+    #loginButton {
         background-position: -205px 0;
     }
 
-    #login:hover {
+    #loginButton:hover {
         background-position: -207px -58px;
     }
     
-    #login:active {
+    #loginButton:active {
         background-position: -205px -116px;
     }
     
-    #login.disabled {
+    #loginButton.disabled {
         background-position: -205px -174px;
     }
 
@@ -814,11 +814,11 @@ html [type="button"],
 
 @media only screen and (max-width: 1000px) {
 
-    #parchment h1, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #login h1, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 20px;
     }
 
-    #parchment h2, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #login h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 10px;
     }
 
@@ -931,26 +931,26 @@ html [type="button"],
         text-shadow:1px 1px 0 #373737, 1px -1px 0 #373737, 0 1px 0 #373737, 1px 0 0 #373737, -1px 1px 0 #373737, -1px -1px 0 #373737, 0 -1px 0 #373737, 0 1px 0 #373737, -1px 0 0 #373737;
     }
 
-    #login, #newCharacter, #continue, #cancelButton, #play {
+    #loginButton, #newCharacter, #continue, #cancelButton, #play {
         position: absolute;
         width: 102px;
         height: 27px;
         background: url('../img/1/buttons.png');
     }
 
-    #login {
+    #loginButton {
         background-position: -103px 0;
     }
 
-    #login:hover {
+    #loginButton:hover {
         background-position: -104px -29px;
     }
 
-    #login:active {
+    #loginButton:active {
         background-position: -103px -58px;
     }
 
-    #login.disabled {
+    #loginButton.disabled {
         background-position: -103px -87px;
     }
 

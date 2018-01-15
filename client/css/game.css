@@ -6,7 +6,7 @@ body.game {
     display: none;
 }
 
-.game #parchment {
+.game #login {
     z-index: 0;
     -moz-transition: 0.5s opacity linear 0.5s, z-index 0s linear 1s;
     -o-transition: 0.5s opacity linear 0.5s, z-index 0s linear 1s;
@@ -33,7 +33,7 @@ body.game {
     z-index: 1000;
 }
 
-.game.credits #parchment, .game.death #parchment, .game.welcomeMessage #parchment, .game.about #parchment, .game.git #parchment {
+.game.credits #login, .game.death #login, .game.welcomeMessage #login, .game.about #login, .game.git #login {
     opacity: 1;
     -moz-transition: 0.5s opacity linear 0s;
     -o-transition: 0.5s opacity linear 0s;

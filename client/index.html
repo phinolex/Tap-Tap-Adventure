@@ -29,21 +29,16 @@
 <body class="intro">
 
     <noscript>
-
         <div class="alert">
             You must enable JavaScript to play WTF?! Adventure.
         </div>
-
     </noscript>
 
     <div id="intro">
-
-        <!-- <h1 id="logo"></h1> -->
-
-        <section id="parchment" class="loadCharacter">
+        <section id="login" class="loadCharacter">
             <article id="loadCharacter">
-                <h1>WTF?! Adventure</h1>
-
+                <img src="img/wtfheader.png" alt="WTF Adventure" title="WTF Adventure" id="wtf" />
+                <img src="img/adventure.png" id="adventure" />
                 <form method="get" accept-charset="utf-8">
                     <input type="text" id="loginNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off" readonly autofocus>
                     <input type="password" id="loginPasswordInput" name="player-password" placeholder="Password" maxlength="64" readonly autocomplete="off">
@@ -55,7 +50,7 @@
                 <div id="rememberMe" class="check"></div>
                 <div id="rememberMeText">Remember Me</div>
 
-                <div id="login"></div>
+                <div id="loginButton"></div>
                 <div id="newCharacter"></div>
 
                 <div class="validation-summary"></div>
@@ -159,8 +154,8 @@
             <div class="loader" hidden>
                 Connecting<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span></div>
 
+            <section id="login-footer">Footer</section>
         </section>
-
     </div>
 
     <div id="container">
@@ -354,19 +349,7 @@
     </div>
 
     <footer>
-        <div id="about-link" class="clickable">
-            <span id="toggle-about">About</span>
-        </div>
-
-        <div id="credits-link" class="clickable">
-            <span class="dash">&ndash;</span>
-            <span id="toggle-credits">Credits</span>
-        </div>
-
-        <div id="git-link" class="clickable">
-            <span class="dash">&ndash;</span>
-            <span id="toggle-git">GitHub</span>
-        </div>
+        Games by Design1Online.com, LLC
 
     </footer>
 
