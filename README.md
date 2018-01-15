@@ -1,6 +1,5 @@
 ![WTF?! Adventure](https://github.com/design1online/WTF-Adventure/blob/master/client/img/wtfadventure.png?raw=true "WTF?! Adventure")
 
-
 WTF?! Adventure is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ) and a subsequent fork called Tap Tap Adventure. 
 WTF?! Adventure is completely open-source, allowing its community to collaborate and aid in the perfection of the game. Anyone is free to create their own derivative of WTF?! Adventure, with no strings attached.
 
@@ -26,6 +25,7 @@ If you are interested in researching previous versions of the rewritten source, 
 
 - Removed crypto
 - Removed weird AdvoCut font
+- Updated graphics
 - Updated movement cursors
 - Bug fixes
 
@@ -38,45 +38,65 @@ If you are interested in researching previous versions of the rewritten source, 
 - Passive Companions
 - Active Companions
 
+
 ## Running WTF?! Adventure
 
 Running the server is fairly straightforward, for the most part. If you encounter any issues, make sure you use the alternative solution.
 
-First, you must `clone` the repository. There's really no way around it, you kinda need the source to run it, y'know?
+First, you must `clone` the repository. There's really no way around it, you kinda need the source to run it, y'know? You have two options:
+
+1) Click the GitHub Clone or Download button
+2) [Clone a copy of our c9.io workspace](https://ide.c9.io/design1online/taptapgame)
+
 
 ###### Step 1 - Install the dependencies
 
-`sudo npm install -d`
+In the command line run: `sudo npm install`
 
 
 ###### Step 2 - Installing the utilities
 
-Now you must convert the configuration for local usage, go in both `server` folder and `client/data` folder and rename `config.json-dist` to `config.json`.
-Use port number 8081 and localhost as 127.0.0.1 and if you are using ssl you'll also need to set the ssl flag to true to use a secure web socket.
+Convert the configuration for local usage, go in both `server` folder and `client/data` folder and rename `config.json-dist` to `config.json`.
 
-Afer this step, you can either choose to install MySQL for full distribution, or simply enable `offlineMode` in the server configuration.
+*If you're using c9.io:*
+If you're using c9.io you must use port number 808, localhost as 127.0.0.1 and set the ssl flag to true.
+
+*If you're not using c9.io:*
+You can either choose to install MySQL for full distribution, or simply enable `offlineMode` in the server configuration.
 
 If you choose to use MySQL, install `mysql-server` for the operating system you're using, and update the configuration to contain your details.
 
 
 ###### Step 2 - Run the server
 
-`node server/js/main.js`
+*If you're using c9.io:*
+1) Make sure MySQL is running entering this in the command line: `npm run mysql-start`
+2) Now start the node server by entering: `npm start`
+
+*If you're not using c9.io:*
+Make sure MySQL is running and then start WTF adventure by entering this in the command line run: `npm start`
+
+###### Step 3 - Connect to the server
+
+*If you're using c9.io:*
+https://{project}-{username}.c9users.io:8081/
+
+Replace `{project}` with the name of your clone from WTF Adventure and `{username}` with your c9.io username.
+
+*If you're not using c9.io:*
+http://127.0.0.1:8081/
+
+###### Trouble Shooting
+
+Usually you get errors if you forgot to install the server dependancies before you try to run WTF Adventure. In that
+case you can install them by typing `sudo npm install` and then trying to run WTF Adventure again.
 
 In most cases, the server was programmed to automatically generate the MySQL data in the database given, in the event this does not occur, there are two solutions you can attempt:
 
 1) Grant the MySQL user FULL permissions
 2) Run or query the `.sql` file in the `tools` folder.
 
-###### Step 3 - Connect to the server
-
-http://127.0.0.1:8081/
-
-For C9.io
-https://taptapgame-design1online.c9users.io:8081/
-
-That's it, as easy as 1, 2, 3, with many sub-procedures to follow :l
-
 ### For Developers
 
-If you are planning on aiding with development, I highly suggest installing `nodemon` as a npm dependency, it automatically restarts the server and saves you the hassle.
+If you install `nodemon` as a npm dependency, it will automatically restarts the server and saves you the hassle
+of having to do it yourself.
