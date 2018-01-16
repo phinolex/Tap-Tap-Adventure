@@ -1,0 +1,136 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+    display: block;
+}
+
+body {
+    background: url('../img/background.png') no-repeat center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-position: 0 0;
+}
+
+canvas {
+    position: absolute;
+    image-rendering: optimizeSpeed;
+}
+
+#wrapper header {
+    height: 225px;
+    color: #fff;
+    margin-top: -1px;
+    background-image: url("../img/common/hud-modal.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    text-align: center;
+}
+
+#wrapper header img {
+    margin-top: -75px;
+    max-width: 60%;
+}
+
+#wrapper footer {
+    height: 100px;
+    width: 100%;
+    color: #fff;
+    margin-top: -1px;
+    background-image: url("../img/common/hud-modal.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#modal {
+    margin: auto;
+    min-width: 70%;
+    max-width: 80%;
+    top: 150px;
+    position: relative;
+}
+
+#modal #content {
+    background-image: url(../img/common/hud-modal-bg.png);
+    background-repeat: repeat-y;
+    background-size: 100%;
+}
+
+#modal input {
+    background-color: #322838;
+    padding: 10px;
+    color: #fff;
+    border: 0px;
+    border-radius: 5px;
+    width: 25%;
+    margin-top: 10px;
+}
+
+#container {
+    display: none;
+}
+
+#createCharacter, #death, #message, #loader {
+    display: none;
+}
+
+.halfscreen {
+    width: 49%;
+    display: inline-block;
+}
+
+.center {
+    text-align: center;
+    margin: auto;
+}
+
+.right {
+    text-align: right;
+    margin-right: auto;
+}
+
+.left {
+    text-align: left;
+    margin-left: auto;
+}
+
+.form-field {
+    display: block;
+}
+
+#modal input {
+    width: 75%;
+    padding-left: 60px;
+}
+
+.form-field img {
+    height: inherit;
+    max-width: 50px;
+    vertical-align: middle;
+    margin-bottom: -55px;
+    position: relative;
+    z-index: 3;
+}

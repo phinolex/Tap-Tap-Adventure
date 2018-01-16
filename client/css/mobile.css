@@ -1,0 +1,26 @@
+@media only screen and (max-width: 1000px) {
+    
+    #wrapper-footer {
+        height: 80px;
+    }
+    
+    #wrapper header {
+        max-height: 130px;
+    }
+    
+    #modal #content {
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #wrapper header {
+        max-height: 30px;
+    }
+    
+    #modal #content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

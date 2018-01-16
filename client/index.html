@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta property="og:title" content="WTF?! Adventure">
     <meta property="og:type" content="game">
@@ -14,147 +12,116 @@
     <meta property="og:description" content="The ultimate HTML5 experience!">
 
     <link rel="icon" type="image/png" href="img/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="css/animations.css">
-    <link rel="stylesheet" type="text/css" href="css/game.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/vars.css">
-    <link rel="stylesheet" type="text/css" href="css/interface.css">
+    <link rel="stylesheet" type="text/css" href="css/desktop.css">
+    <link rel="stylesheet" type="text/css" href="css/tablet.css">
+    <link rel="stylesheet" type="text/css" href="css/mobile.css">
 
     <script src="js/lib/modernizr.js" type="text/javascript"></script>
 
     <title>WTF?! Adventure</title>
 
 </head>
-<body class="intro">
-
+<body>
     <noscript>
         <div class="alert">
             You must enable JavaScript to play WTF?! Adventure.
         </div>
     </noscript>
-
-    <div id="intro">
-        <section id="login" class="loadCharacter">
-            <article id="loadCharacter">
-                <img src="img/wtfheader.png" alt="WTF Adventure" title="WTF Adventure" id="wtf" />
-                <img src="img/adventure.png" id="adventure" />
-                <form method="get" accept-charset="utf-8">
-                    <input type="text" id="loginNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off" readonly autofocus>
-                    <input type="password" id="loginPasswordInput" name="player-password" placeholder="Password" maxlength="64" readonly autocomplete="off">
-                </form>
-
-                <div id="guest" class="check"></div>
-                <div id="guestText">Play as a guest</div>
-
-                <div id="rememberMe" class="check"></div>
-                <div id="rememberMeText">Remember Me</div>
-
-                <div id="loginButton"></div>
-                <div id="newCharacter"></div>
-
-                <div class="validation-summary"></div>
-
-            </article>
-
-            <article id="createCharacter">
-                <h1>
-                    <span class="left-ornament"></span>
-                    New Character
-                    <span class="right-ornament"></span>
-                </h1>
-
-
-                <form method="get" accept-charset="utf-8">
-                    <input type="text" id="registerNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off">
-                    <input type="password" id="registerPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
-                    <input type="password" id="registerPasswordConfirmationInput" name="player-password2" placeholder="Confirm Password" maxlength="64" autocomplete="off">
-                    <input type="email" id="registerEmailInput" name="player-email" placeholder="Email Address" maxlength="64" autocomplete="off">
-                </form>
-
-                <div id="play"></div>
-
-                <p></p>
-
-                <div id="cancelButton"></div>
-
-                <div class="validation-summary"></div>
-
-            </article>
-
-            <article id="credits">
-
-                <h1>
-                    <span class="left-ornament"></span>
-
-                    <span class="title">Credits</span>
-
-                    <span class="right-ornament"></span>
-
-                </h1>
-
-                <p id="cDescription">A special thanks goes to my fellow artists for improvements!</p>
-
-            </article>
-
-            <article id="about">
-                <h1>
-                    <span class="left-ornament"></span>
-
-                    <span class="title">
-                    About
+    <div id="modal">
+        <section id="wrapper">
+            <header>
+                <img src="img/common/wtfintro.png" alt="WTF Adventure" title="WTF Adventure" id="wtf" />
+            </header>
+            <section id="content" class="loadCharacter">
+                <article id="loadCharacter" class="inline">
+                    <span class="halfscreen">
+                        <form method="get" accept-charset="utf-8">
+                            <div class="form-field">
+                                <img src="img/common/friends-2.png" />
+                                <input type="text" id="loginNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off" autofocus>
+                            </div>
+                            <div class="form-field">
+                                <img src="img/common/lock.png" />
+                                <input type="password" id="loginPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
+                            </div>
+            
+                            <div id="rememberMe" class="check"></div>
+                            <div id="rememberMeText">Remember Me</div>
+            
+                            <div id="loginButton"></div>
+                        </form>
                     </span>
-
-                    <span class="right-ornament"></span>
-                </h1>
-
-                <p id="aDescription">
-                    WTF?! Adventure is a cross-platform browser-based MMORPG!
-                </p>
-
-
-                <div id="close-about">
-                    <span>-- Click anywhere to close --</span>
-                </div>
-
-            </article>
-
-            <article id="git">
-                Structure this later
-            </article>
-
-            <article id="death">
-                <p>You have died...</p>
-                <div id="respawn" class="button"></div>
-            </article>
-
-            <article id="welcomeMessage">
-                <p>
-                    <span class="left-ornament"></span>
-                    <span class="title">
-                    <strong>Am I Dreaming?</strong>
+                    <span class="halfscreen center">
+                        <img src="img/common/achievement-friends.png" />
+                        <img src="img/common/achievement-shield.png" />
+                        <div id="guest" class="check"></div>
+                        <div id="guestText">Play as a guest</div>
+                        
+                        <div id="newCharacter">Sign Up</div>
                     </span>
-                    <span class="right-ornament"></span>
-                </p>
-                <br>
-                <p>Last night you were feeling a bit exhausted from a long day at school. You could hardly keep your eyes 
-                open as you munched away at dinner. When you finally dragged yourself up to bed you fell asleep as soon as 
-                your head hit the pillow. It was nearly noon when you woke up and jumped out of bed because your alarm hadn't 
-                gone off... only you're not quite sure where you are. To make matters worse, a creepy guy with a computer is 
-                sitting in the corner of your room and you're still in your pajamas. Yikes!</p>
-                <p>&nbsp;</p>
-                <p><em>Use the arrow or W A S D keys to move.</em></p>
-                <div id="yes">
-                    <span class="link">He's cute, maybe I should go talk to him...</span>
-                </div>
-                <div id="no">
-                    <span class="link">WTF?!?! Kick him where it hurts!</span>
-                </div>
-            </article>
-            <div class="loader" hidden>
-                Connecting<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span></div>
-
-            <section id="login-footer">Footer</section>
+    
+                    <div class="validation-summary"></div>
+    
+                </article>
+    
+                <article id="createCharacter">
+                    <h1>
+                        <span class="left-ornament"></span>
+                        New Character
+                        <span class="right-ornament"></span>
+                    </h1>
+    
+    
+                    <form method="get" accept-charset="utf-8">
+                        <input type="text" id="registerNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off">
+                        <input type="password" id="registerPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
+                        <input type="password" id="registerPasswordConfirmationInput" name="player-password2" placeholder="Confirm Password" maxlength="64" autocomplete="off">
+                        <input type="email" id="registerEmailInput" name="player-email" placeholder="Email Address" maxlength="64" autocomplete="off">
+                    </form>
+    
+                    <div id="play"></div>
+    
+                    <p></p>
+    
+                    <div id="cancelButton"></div>
+    
+                    <div class="validation-summary"></div>
+    
+                </article>
+    
+                <article id="death">
+                    <p>You have died...</p>
+                    <div id="respawn" class="button"></div>
+                </article>
+    
+                <article id="message">
+                    <p>
+                        <span class="left-ornament"></span>
+                        <span class="title">
+                        <strong>Am I Dreaming?</strong>
+                        </span>
+                        <span class="right-ornament"></span>
+                    </p>
+                    <br>
+                    <p>Last night you were feeling a bit exhausted from a long day at school. You could hardly keep your eyes 
+                    open as you munched away at dinner. When you finally dragged yourself up to bed you fell asleep as soon as 
+                    your head hit the pillow. It was nearly noon when you woke up and jumped out of bed because your alarm hadn't 
+                    gone off... only you're not quite sure where you are. To make matters worse, a creepy guy with a computer is 
+                    sitting in the corner of your room and you're still in your pajamas. Yikes!</p>
+                    <p>&nbsp;</p>
+                    <p><em>Use the arrow or W A S D keys to move.</em></p>
+                    <div id="yes">
+                        <span class="link">He's cute, maybe I should go talk to him...</span>
+                    </div>
+                    <div id="no">
+                        <span class="link">WTF?!?! Kick him where it hurts!</span>
+                    </div>
+                </article>
+                
+                <div class="loader">
+                    Connecting<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span></div>
+            </section>
+            <footer>Games by Design1Online.com, LLC</footer>
         </section>
     </div>
 
@@ -348,13 +315,8 @@
         </div>
     </div>
 
-    <footer>
-        Games by Design1Online.com, LLC
-
-    </footer>
-
     <div id="resizeCheck"></div>
-
+    
     <script src="js/utils/detect.js" type="text/javascript"></script>
     <script src="js/lib/log.js"></script>
     <script src="lib/socket.io.js"></script>

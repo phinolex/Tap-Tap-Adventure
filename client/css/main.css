@@ -30,6 +30,11 @@ canvas {
     padding: 0;
 }
 
+#wrapper, #createCharacter, #loadCharacter, #error {
+    width: 90%;
+    height: 40%;
+}
+
 #container {
     z-index: 100;
     background: rgba(0, 0, 0, 0.2);
@@ -64,10 +69,6 @@ footer {
     color: #fcda5c;
 }
 
-.intro footer, footer:hover {
-    opacity: 1;
-}
-
 .game footer {
     opacity: 0;
 }
@@ -98,29 +99,29 @@ footer div {
     margin-top: 5%;
 }
 
-#login, #login input, #login select {
+#wrapper, #wrapper input, #wrapper select {
     font-family: sans-serif;
 }
 
-#login input {
+#wrapper input {
     width: 50%;
     background: rgba(54, 42, 59, 0.9);
     text-align: center;
     color: #000;
 }
 
-#login input:focus {
+#wrapper input:focus {
     border-color: #000;
     background: rgba(54, 42, 59, 0.7);
     color: #fff;
 }
 
-#login input.field-error {
+#wrapper input.field-error {
     background: rgba(255, 0, 0, 0.1);
     border-color: #f84444;
 }
 
-#login select {
+#wrapper select {
     width: 25%;
     background: rgba(0, 0, 0, 0.05);
     text-align: center;
@@ -139,26 +140,17 @@ footer div {
     border-bottom: 1px solid #000;
 }
 
-.intro footer {
-    opacity: 1;
-}
-
-.intro #container {
-    opacity: 0;
-    pointer-events: none;
-}
-
-#login p {
+#wrapper p {
     font-family: sans-serif;
     line-height: 1.2em;
 }
 
-#credits, #git, #about, #loadCharacter, #createCharacter, #death, #welcomeMessage, #error {
+#credits, #git, #about, #loadCharacter, #createCharacter, #death, #welcome, #error {
     opacity: 0;
     pointer-events: none;
 }
 
-#credits, #about, #git, #death, #welcomeMessage, #error, #loadCharacter, #createCharacter {
+#credits, #about, #git, #death, #welcome, #error, #loadCharacter, #createCharacter {
     position: absolute;
     left: 50%;
     text-align: center;
@@ -166,12 +158,12 @@ footer div {
     z-index: 1000;
 }
 
-.credits #credits, .about #about, .git #git, .death #death, .welcomeMessage #welcomeMessage, .error #error, .createCharacter #createCharacter, .loadCharacter #loadCharacter {
+.credits #credits, .about #about, .git #git, .death #death, .welcomeMessage #welcome, .error #error, .createCharacter #createCharacter, .loadCharacter #loadCharacter {
     opacity: 1;
     pointer-events: auto;
 }
 
-#credits, #about, #death, #welcomeMessage, #git {
+#credits, #about, #death, #welcome, #git {
     top: 50%;
 }
 
@@ -209,13 +201,13 @@ footer div {
     left: 50%;
 }
 
-#login, #respawn {
+#wrapper, #respawn {
     background-image: url("../img/common/hud-modal.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-#login-footer {
+#wrapper-footer {
     height: 160px;
     width: 100%;
     color: #fff;
@@ -230,11 +222,7 @@ footer div {
 
 @media only screen and (min-width: 1501px) {
 
-    .intro footer {
-        font-size: 28px;
-    }
-
-    #credits, #about, #death, #welcomeMessage, #git {
+    #credits, #about, #death, #welcome, #git {
         width: 1266px;
         height: 546px;
         margin-left: -633px;
@@ -261,11 +249,9 @@ footer div {
         position: absolute;
     }
 
-    #login, #createCharacter, #loadCharacter, #error {
-        width: 1266px;
-        height: 546px;
+    #loginButton, #createCharacter, #loadCharacter, #error {
         position: absolute;
-        top: 55%;
+        top: 48%;
         left: 50%;
         margin-left: -633px;
         margin-top: -273px;
@@ -274,25 +260,25 @@ footer div {
         z-index: 1000;
     }
 
-    #login input, #login select {
+    #wrapper input, #wrapper select {
         padding: 0 15px;
         border: 3px solid #000;
         font-size: 30px;
         border-radius: 9px;
     }
 
-    #login input {
+    #wrapper input {
         margin-top: 10px;
         height: 60px;
     }
 
-    #login select {
+    #wrapper select {
         margin-top: 24px;
         height: 48px;
         width: 23%;
     }
 
-    #login.createCharacter input {
+    #wrapper.createCharacter input {
         margin-top: 24px;
         height: 45px;
     }
@@ -326,7 +312,7 @@ footer div {
 
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
     
-    #login-footer {
+    #wrapper-footer {
         height: 100px;
     }
 
@@ -338,7 +324,7 @@ footer div {
         font-size: 20px;
     }
 
-    #welcomeMessage {
+    #welcome {
         width: 644px;
         height: 364px;
         margin-left: -322px;
@@ -365,11 +351,9 @@ footer div {
         position: absolute;
     }
 
-    #login, #createCharacter, #loadCharacter, #error {
-        width: 844px;
-        height: 364px;
+    #wrapper, #createCharacter, #loadCharacter, #error {
         position: absolute;
-        top: 55%;
+        top: 48%;
         left: 50%;
         margin-left: -422px;
         margin-top: -182px;
@@ -378,25 +362,25 @@ footer div {
         z-index: 2;
     }
 
-    #login input, #login select {
+    #wrapper input, #wrapper select {
         padding: 0 10px;
         border: 2px solid #000;
         font-size: 20px;
         border-radius: 6px;
     }
 
-    #login input {
+    #wrapper input {
         margin-top: 20px;
         height: 41px;
     }
 
-    #login select {
+    #wrapper select {
         margin-top: 16px;
         height: 32px;
         width: 23%;
     }
 
-    #login.createCharacter input {
+    #wrapper.createCharacter input {
         margin-top: 15px;
         height: 30px;
     }
@@ -419,7 +403,7 @@ footer div {
 
 @media only screen and (max-width: 1000px) {
     
-    #login-footer {
+    #wrapper-footer {
         height: 60px;
     }
 
@@ -431,7 +415,7 @@ footer div {
         font-size: 10px;
     }
 
-    #welcomeMessage {
+    #welcome {
         width: 322px;
         height: 182px;
         margin-left: -161px;
@@ -458,11 +442,9 @@ footer div {
         position: absolute;
     }
 
-    #login, #createCharacter, #loadCharacter, #error {
-        width: 422px;
-        height: 182px;
+    #wrapper, #createCharacter, #loadCharacter, #error {
         position: absolute;
-        top: 55%;
+        top: 48%;
         left: 50%;
         margin-left: -211px;
         margin-top: -91px;
@@ -471,25 +453,25 @@ footer div {
         z-index: 2;
     }
 
-    #login input, #login select {
+    #wrapper input, #wrapper select {
         padding: 0 5px;
         border: 1px solid #000;
         font-size: 10px;
         border-radius: 3px;
     }
 
-    #login input {
+    #wrapper input {
         margin-top: 10px;
         height: 20px;
     }
 
-    #login select {
+    #wrapper select {
         margin-top: 8px;
         height: 16px;
         width: 23%;
     }
 
-    #login.createCharacter input {
+    #wrapper.createCharacter input {
         margin-top: 8px;
         height: 15px;
     }

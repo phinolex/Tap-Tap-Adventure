@@ -12,13 +12,13 @@ define(['jquery'], function($) {
             self.config = null;
 
             self.body = $('body');
-            self.parchment = $('#login');
+            self.wrapper = $('#content');
             self.container = $('#container');
             self.window = $(window);
-            self.canvas = $('#canvas');
+            self.canvas = $('#canvasLayers');
             self.border = $('#border');
 
-            self.intro = $('#intro');
+            self.intro = $('#modal');
 
             self.loginButton = $('#loginButton');
             self.createButton = $('#play');
@@ -73,10 +73,11 @@ define(['jquery'], function($) {
                 self.openScroll('createCharacter', 'loadCharacter');
             });
 
-            self.parchment.click(function() {
-                if (self.parchment.hasClass('about') || self.parchment.hasClass('credits') || self.parchment.hasClass('git')) {
+            self.wrapper.click(function() {
+                console.log('clicking wrapper');
+                if (self.wrapper.hasClass('about') || self.wrapper.hasClass('credits') || self.wrapper.hasClass('git')) {
 
-                    self.parchment.removeClass('about credits git');
+                    self.wrapper.removeClass('about credits git');
                     self.displayScroll('loadCharacter');
 
                 }
@@ -204,6 +205,7 @@ define(['jquery'], function($) {
         },
 
         login: function() {
+            console.log('login');
             var self = this;
 
             if (self.loggingIn || !self.game || !self.game.loaded || self.statusMessage || !self.verifyForm())
@@ -222,16 +224,16 @@ define(['jquery'], function($) {
                 windowHeight = self.window.height(),
                 zoomFactor = windowWidth / containerWidth;
 
-            if (containerHeight + 50 >= windowHeight)
+            if (containerHeight + 50 >= windowHeight) 
                 zoomFactor = windowHeight / containerHeight;
 
             if (self.getScaleFactor() === 3)
                 zoomFactor -= 0.1;
 
-            self.body.css({
-                'zoom': zoomFactor,
-                '-moz-transform': 'scale(' + zoomFactor + ')'
-            });
+            // self.body.css({
+            //     'zoom': zoomFactor,
+            //     '-moz-transform': 'scale(' + zoomFactor + ')'
+            // });
 
             self.border.css('top', 0);
 
@@ -269,16 +271,16 @@ define(['jquery'], function($) {
                 return;
 
             self.cleanErrors();
-            self.parchment.removeClass(origin).addClass(destination);
+            self.wrapper.removeClass(origin).addClass(destination);
         },
 
         displayScroll: function(content) {
             var self = this,
-                state = self.parchment.attr('class');
+                state = self.wrapper.attr('class');
 
             if (self.game.started) {
 
-                self.parchment.removeClass().addClass(content);
+                self.wrapper.removeClass().addClass(content);
 
                 self.body.removeClass('credits legal about').toggleClass(content);
 
@@ -297,8 +299,9 @@ define(['jquery'], function($) {
             var self = this,
                 activeForm = self.getActiveForm();
 
-            if (activeForm === 'null')
+            if (activeForm === 'null') {
                 return;
+            }
 
             switch (activeForm) {
 
@@ -414,7 +417,7 @@ define(['jquery'], function($) {
         },
 
         getActiveForm: function() {
-            return this.parchment[0].className;
+            return this.wrapper[0].className;
         },
 
         isRegistering: function() {
@@ -470,6 +473,7 @@ define(['jquery'], function($) {
         },
 
         toggleLogin: function(toggle) {
+            console.log('toggling login', toggle);
             var self = this;
 
             self.revertLoader();

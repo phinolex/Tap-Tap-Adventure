@@ -1140,8 +1140,8 @@ define(['./renderer/renderer', './utils/storage',
 
         implementStorage: function() {
             var self = this,
-                loginName = $('#loginNameInput'),
-                loginPassword = $('#loginPasswordInput');
+                loginName = $('#wrapperNameInput'),
+                loginPassword = $('#wrapperPasswordInput');
 
             loginName.prop('readonly', false);
             loginPassword.prop('readonly', false);

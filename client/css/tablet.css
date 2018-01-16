@@ -1,0 +1,18 @@
+@media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
+    
+    #modal {
+        margin: auto;
+        max-width: 60%;
+        top: 150px;
+        position: relative;
+    }
+    
+    #modal header {
+        max-height: 150px;
+    }
+    
+    #modal #content {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}

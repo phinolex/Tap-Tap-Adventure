@@ -32,17 +32,6 @@ footer, header, menu, nav, section {
     display: block;
 }
 
-@font-face {
-    font-family: 'AdvoCut';
-    src: url('../fonts/advocut/advocut-webfont.eot');
-    src: url('../fonts/advocut/advocut-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/advocut/advocut-webfont.woff') format('woff'),
-    url('../fonts/advocut/advocut-webfont.ttf') format('truetype'),
-    url('../fonts/advocut/advocut-webfont.svg#AndinaRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
 .gp {
     font-family: sans-serif;
 }
@@ -78,21 +67,6 @@ body {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-}
-
-.left-ornament, .right-ornament {
-    background: url('../img/1/spritesheet.png');
-    image-rendering: -moz-crisp-edges;
-}
-
-.left-ornament {
-    position: relative;
-    top: 0;
-}
-
-.right-ornament {
-    position: relative;
-    top: 0;
 }
 
 .link:hover {
@@ -328,7 +302,7 @@ html [type="button"],
 
 @media only screen and (min-width: 1501px) {
 
-    #login h1, #loadCharacter h1, #about h1 {
+    #wrapper h1, #loadCharacter h1, #about h1 {
         margin-top: 30px;
         font-size: 30px;
     }
@@ -338,34 +312,8 @@ html [type="button"],
         font-size: 30px;
     }
 
-    #login h2, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-left: 30px;
-    }
-
-    .left-ornament, .right-ornament {
-        background: url('../img/3/spritesheet.png');
-        image-rendering: -moz-crisp-edges;
-    }
-
-    .left-ornament, .right-ornament {
-        background-size: 1266px auto;
-    }
-
-    .left-ornament {
-        background-position: -1062px 0;
-    }
-
-    .right-ornament {
-        background-position: -1155px 0;
-    }
-
-    .left-ornament, .right-ornament {
-        width: 93px;
-        height: 36px;
-        display: inline-block;
-        margin: 0 20px;
-        top: 12px;
-        position: relative;
     }
 
     #createCharacter .login {
@@ -456,10 +404,6 @@ html [type="button"],
     #talk .input {
         font-size: 15px;
         padding: 6px 0;
-    }
-
-    .stroke {
-        text-shadow: 2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;
     }
 
     #loginButton, #newCharacter, #continue, #cancelButton, #play {
@@ -575,38 +519,12 @@ html [type="button"],
 
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
 
-    #login h1, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h1, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 40px;
     }
 
-    #login h2, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 20px;
-    }
-
-    .left-ornament, .right-ornament {
-        background: url('../img/2/spritesheet.png');
-        image-rendering: -moz-crisp-edges;
-    }
-
-    .left-ornament, .right-ornament {
-        background-size: 844px auto;
-    }
-
-    .left-ornament {
-        background-position: -708px 0;
-    }
-
-    .right-ornament {
-        background-position: -770px 0;
-    }
-
-    .left-ornament, .right-ornament {
-        width: 62px;
-        height: 24px;
-        position: relative;
-        display: inline-block;
-        margin: 0 15px;
-        top: 6px;
     }
 
     #createCharacter .login {
@@ -691,10 +609,6 @@ html [type="button"],
     #talk .input {
         font-size: 10px;
         padding: 4px 0;
-    }
-
-    .stroke {
-        text-shadow:2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;
     }
 
     #loginButton, #newCharacter, #continue, #cancelButton, #play {
@@ -814,33 +728,12 @@ html [type="button"],
 
 @media only screen and (max-width: 1000px) {
 
-    #login h1, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h1, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 20px;
     }
 
-    #login h2, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 10px;
-    }
-
-    .left-ornament, .right-ornament {
-        background-size: 422px auto;
-    }
-    
-    .left-ornament {
-        background-position: -354px 0;
-    }
-
-    .right-ornament {
-        background-position: -385px 0;
-    }
-    
-    .left-ornament, .right-ornament {
-        width: 31px;
-        height: 12px;
-        display: inline-block;
-        margin: 0 10px;
-        top: 3px;
-        position: relative;
     }
 
     #createCharacter .login {
@@ -925,10 +818,6 @@ html [type="button"],
     #talk .input {
         font-size: 5px;
         padding: 2px 0;
-    }
-
-    .stroke {
-        text-shadow:1px 1px 0 #373737, 1px -1px 0 #373737, 0 1px 0 #373737, 1px 0 0 #373737, -1px 1px 0 #373737, -1px -1px 0 #373737, 0 -1px 0 #373737, 0 1px 0 #373737, -1px 0 0 #373737;
     }
 
     #loginButton, #newCharacter, #continue, #cancelButton, #play {
@@ -1048,5 +937,4 @@ html [type="button"],
         height: 8px;
         width: 5px;
     }
-
 }

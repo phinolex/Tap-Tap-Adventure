@@ -133,6 +133,7 @@ define(['jquery', './camera', './tile',
         },
 
         resize: function() {
+            console.log('resizing');
             var self = this;
 
             self.stopRendering = true;
