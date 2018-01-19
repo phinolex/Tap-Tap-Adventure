@@ -7,14 +7,15 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta property="og:title" content="WTF?! Adventure">
     <meta property="og:type" content="game">
-    <meta property="og:url" content="https://taptapadventure.com">
+    <meta property="og:url" content="https://design1online.com">
     <meta property="og:site_name" content="WTF?! Adventure">
     <meta property="og:description" content="The ultimate HTML5 experience!">
 
-    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="icon" type="image/png" href="img/favicon.png?v=2.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/desktop.css">
-    <link rel="stylesheet" type="text/css" href="css/tablet.css">
-    <link rel="stylesheet" type="text/css" href="css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="css/game.css">
+    <link rel="stylesheet" type="text/css" href="css/interface.css">
 
     <script src="js/lib/modernizr.js" type="text/javascript"></script>
 
@@ -27,14 +28,18 @@
             You must enable JavaScript to play WTF?! Adventure.
         </div>
     </noscript>
-    <div id="modal">
+    <div id="modal" class="container-fluid col-sm-10">
         <section id="wrapper">
             <header>
                 <img src="img/common/wtfintro.png" alt="WTF Adventure" title="WTF Adventure" id="wtf" />
             </header>
-            <section id="content" class="loadCharacter">
-                <article id="loadCharacter" class="inline">
-                    <span class="halfscreen">
+            <section id="content" class="loadCharacter col-sm-11">
+                <div class="loader col-sm-12 text-center">
+                    <img src="img/coin.gif" />
+                    <p class="message">Connecting to server...</p>
+                </div>
+                <article id="loadCharacter" class="row text-center">
+                    <section class="col-sm-12 col-md-7">
                         <form method="get" accept-charset="utf-8">
                             <div class="form-field">
                                 <img src="img/common/friends-2.png" />
@@ -45,23 +50,22 @@
                                 <input type="password" id="loginPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
                             </div>
             
-                            <div id="rememberMe" class="check"></div>
-                            <div id="rememberMeText">Remember Me</div>
+                            <span>
+                                <div id="rememberMe" class="check"></div>
+                                Remember Me
+                            </span>
             
                             <div id="loginButton"></div>
                         </form>
-                    </span>
-                    <span class="halfscreen center">
+                    </section>
+                    <section class="col-sm-12 col-md-5">
                         <img src="img/common/achievement-friends.png" />
                         <img src="img/common/achievement-shield.png" />
                         <div id="guest" class="check"></div>
                         <div id="guestText">Play as a guest</div>
                         
                         <div id="newCharacter">Sign Up</div>
-                    </span>
-    
-                    <div class="validation-summary"></div>
-    
+                    </section>
                 </article>
     
                 <article id="createCharacter">
@@ -117,9 +121,6 @@
                         <span class="link">WTF?!?! Kick him where it hurts!</span>
                     </div>
                 </article>
-                
-                <div class="loader">
-                    Connecting<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span></div>
             </section>
             <footer>Games by Design1Online.com, LLC</footer>
         </section>
@@ -127,7 +128,7 @@
 
     <div id="container">
         <div id="border">
-            <div id="canvas">
+            <div id="canvasLayers">
                 <canvas id="background"></canvas>
                 <canvas id="entities"></canvas>
                 <canvas id="foreground"></canvas>
@@ -316,12 +317,12 @@
     </div>
 
     <div id="resizeCheck"></div>
-    
     <script src="js/utils/detect.js" type="text/javascript"></script>
     <script src="js/lib/log.js"></script>
     <script src="lib/socket.io.js"></script>
-    <script src="js/lib/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script data-main="js/lib/home" src="js/lib/require.js"></script>
-
 </body>
 </html>

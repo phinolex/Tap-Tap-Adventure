@@ -120,7 +120,7 @@ define(['./renderer/renderer', './utils/storage',
                 entities = document.getElementById('entities'),
                 cursor = document.getElementById('cursor');
 
-            self.app.sendStatus('Initializing render engine');
+            self.app.sendStatus('Loading render engine...');
 
             self.setRenderer(new Renderer(background, entities, foreground, textCanvas, cursor, self));
         },
@@ -129,22 +129,22 @@ define(['./renderer/renderer', './utils/storage',
             var self = this,
                 hasWorker = self.app.hasWorker();
 
-            self.app.sendStatus(hasWorker ? 'Loading maps - asynchronous' : null);
+            self.app.sendStatus(hasWorker ? 'Loading maps...' : null);
 
             if (hasWorker)
                 self.loadMap();
 
-            self.app.sendStatus('Loading local storage');
+            self.app.sendStatus('Loading game data...');
 
             self.setStorage(new LocalStorage(self.app));
 
-            self.app.sendStatus('Initializing network socket');
+            self.app.sendStatus('Initializing sockets...');
 
             self.setSocket(new Socket(self));
             self.setMessages(self.socket.messages);
             self.setInput(new Input(self));
 
-            self.app.sendStatus('Loading controllers');
+            self.app.sendStatus('Loading controllers...');
 
             self.setEntityController(new Entities(self));
 
@@ -173,14 +173,14 @@ define(['./renderer/renderer', './utils/storage',
 
             self.map.onReady(function() {
 
-                self.app.sendStatus('Loading the pathfinder');
+                self.app.sendStatus('Loading pathfinders...');
 
                 self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
 
                 self.renderer.setMap(self.map);
                 self.renderer.loadCamera();
 
-                self.app.sendStatus('Loading updater');
+                self.app.sendStatus('Loading updater...');
 
                 self.setUpdater(new Updater(self));
 
@@ -216,7 +216,7 @@ define(['./renderer/renderer', './utils/storage',
                 if (!self.map)
                     self.loadMap();
 
-                self.app.updateLoader('Logging in');
+                self.app.updateLoader('Logging in...');
 
                 if (self.app.isRegistering()) {
                     var registerInfo = self.app.registerFields,

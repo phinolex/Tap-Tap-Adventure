@@ -44,7 +44,7 @@ define(['./packets', './messages'], function(Packets, Messages) {
             self.connection.on('connect', function() {
                 self.listening = true;
 
-                self.game.app.updateLoader('Preparing Handshake');
+                self.game.app.updateLoader('Preparing handshake...');
                 self.connection.emit('client', {
                     gVer: self.config.version,
                     cType: 'HTML5'

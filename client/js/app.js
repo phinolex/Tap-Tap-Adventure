@@ -42,11 +42,12 @@ define(['jquery'], function($) {
             self.registerFields = [];
 
             self.game = null;
+            self.guestLogin = false;
             self.zoomFactor = 1;
 
             self.loggingIn = false;
 
-            self.sendStatus('Initializing the main app');
+            self.sendStatus('Initializing app...');
 
             self.zoom();
             self.updateOrientation();
@@ -125,7 +126,8 @@ define(['jquery'], function($) {
                 if (!self.game)
                     return;
 
-                self.guest.toggleClass('active');
+                self.guestLogin = true;
+                self.login();
             });
 
             self.respawn.click(function() {
@@ -230,10 +232,10 @@ define(['jquery'], function($) {
             if (self.getScaleFactor() === 3)
                 zoomFactor -= 0.1;
 
-            // self.body.css({
-            //     'zoom': zoomFactor,
-            //     '-moz-transform': 'scale(' + zoomFactor + ')'
-            // });
+            self.body.css({
+                'zoom': zoomFactor,
+                '-moz-transform': 'scale(' + zoomFactor + ')'
+            });
 
             self.border.css('top', 0);
 
@@ -372,25 +374,21 @@ define(['jquery'], function($) {
 
             self.statusMessage = message;
 
-            if (!message)
+            if (!message) {
+                $('.loader .message').html('');
+                $('.loader').hide();
                 return;
+            }
 
-            $('<span></span>', {
-                'class': 'status blink',
-                text: message
-            }).appendTo('.validation-summary');
-
-            $('.status').append('<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span>');
+            $('.loader').show();
+            $('.loader .message').html(message);
         },
 
         sendError: function(field, error) {
             this.cleanErrors();
 
-            $('<span></span>', {
-                'class': 'validation-error blink',
-                text: error
-            }).appendTo('.validation-summary');
-
+            $('.loader .message').html(error);
+  
             if (!field)
                 return;
 
@@ -425,7 +423,7 @@ define(['jquery'], function($) {
         },
 
         isGuest: function() {
-            return this.guest.hasClass('active');
+            return this.guestLogin;
         },
 
         resize: function() {
@@ -457,19 +455,20 @@ define(['jquery'], function($) {
         },
 
         revertLoader: function() {
-            this.updateLoader('Connecting');
+            this.updateLoader('Connecting to server...');
         },
 
         updateLoader: function(message) {
             var self = this;
 
             if (!message) {
+                self.loading.hide();
                 self.loading.html('');
                 return;
             }
-
-            var dots = '<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span>';
-            self.loading.html(message + dots);
+    
+            self.loading.show();
+            $('.loader .message').html(message);
         },
 
         toggleLogin: function(toggle) {

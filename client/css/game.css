@@ -2,7 +2,7 @@ body.game {
     background: #000;
 }
 
-.game #loadCharacter, .game #createCharacter, .game #error {
+.game #loadCharacter, .game #createCharacter, .game #error, .game #modal {
     display: none;
 }
 
