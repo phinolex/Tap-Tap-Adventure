@@ -70,10 +70,6 @@ canvas {
     margin-top: 10px;
 }
 
-#container {
-    display: none;
-}
-
 #createCharacter, #death, #message, #loader {
     display: none;
 }
@@ -107,6 +103,7 @@ canvas {
     background-size: cover;
     width: 35px;
     height: 35px;
+    cursor: pointer;
 }
 
 .check.active {
@@ -117,6 +114,7 @@ canvas {
 #rememberMe {
     display: inline-block;
     vertical-align: middle;
+    padding-top: 3px;
 }
 
 .loader {
@@ -125,22 +123,40 @@ canvas {
     z-index: 101;
     position: absolute;
     top: 0;
+    left: 0;
     bottom: 100%;
     background-color: #594858;
-    left: 0;
+    padding-top: 10px;
+}
+
+.button {
+    padding: 5px 10px 10px 10px;
+    cursor: pointer;
+    text-align: center;
 }
 
 .button.green {
     background: url('../img/common/hud-button-green.png');
-    background-size: cover;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .button.red {
     background: url('../img/common/hud-button-red.png');
-    background-size: cover;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .button.purple {
     background: url('../img/common/hud-button-purple.png');
-    background-size: cover;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.hud-img-button {
+    width: 100px;
+    height: 100px;
 }

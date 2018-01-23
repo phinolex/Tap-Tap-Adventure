@@ -49,22 +49,28 @@
                                 <img src="img/common/lock.png" />
                                 <input type="password" id="loginPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
                             </div>
-            
-                            <span>
-                                <div id="rememberMe" class="check"></div>
-                                Remember Me
-                            </span>
-            
-                            <div id="loginButton"></div>
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <div id="rememberMe" class="check"></div>
+                                    Remember Me
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="button green" id="loginButton">Login</div>
+                                </div>
+                            </div>
                         </form>
                     </section>
                     <section class="col-sm-12 col-md-5">
-                        <img src="img/common/achievement-friends.png" />
-                        <img src="img/common/achievement-shield.png" />
-                        <div id="guest" class="check"></div>
-                        <div id="guestText">Play as a guest</div>
-                        
-                        <div id="newCharacter">Sign Up</div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6">
+                                <img src="img/common/hud-join.png" class="hud-img-button" />
+                                <div class="button red" id="newCharacter">Join</div>
+                            </div>
+                            <div class="col-6 col-sm-6">
+                                <img src="img/common/hud-guest.png" class="hud-img-button" />
+                                <div class="button purple" id="guest">Guest Login</div>
+                            </div>
+                        </div>
                     </section>
                 </article>
     
