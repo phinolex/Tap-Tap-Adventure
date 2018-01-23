@@ -232,10 +232,10 @@ define(['jquery'], function($) {
             if (self.getScaleFactor() === 3)
                 zoomFactor -= 0.1;
 
-            // self.body.css({
-            //     'zoom': zoomFactor,
-            //     '-moz-transform': 'scale(' + zoomFactor + ')'
-            // });
+            self.body.css({
+                'zoom': zoomFactor,
+                '-moz-transform': 'scale(' + zoomFactor + ')'
+            });
 
             self.border.css('top', 0);
 

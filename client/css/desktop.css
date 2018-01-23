@@ -75,7 +75,7 @@ canvas {
     margin-top: 10px;
 }
 
-#createCharacter, #death, #message, #loader {
+#createCharacter, #death, #message, #loader, #cursor {
     display: none;
 }
 
