@@ -47,7 +47,7 @@ define(['jquery'], function($) {
 
             self.loggingIn = false;
 
-            self.sendStatus('Initializing app...');
+            self.sendStatus('Initializing the main app');
 
             self.zoom();
             self.updateOrientation();
@@ -232,10 +232,10 @@ define(['jquery'], function($) {
             if (self.getScaleFactor() === 3)
                 zoomFactor -= 0.1;
 
-            self.body.css({
-                'zoom': zoomFactor,
-                '-moz-transform': 'scale(' + zoomFactor + ')'
-            });
+            // self.body.css({
+            //     'zoom': zoomFactor,
+            //     '-moz-transform': 'scale(' + zoomFactor + ')'
+            // });
 
             self.border.css('top', 0);
 
@@ -466,9 +466,6 @@ define(['jquery'], function($) {
                 self.loading.html('');
                 return;
             }
-    
-            self.loading.show();
-            $('.loader .message').html(message);
         },
 
         toggleLogin: function(toggle) {

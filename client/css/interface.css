@@ -736,29 +736,6 @@
         margin-bottom: 21px;
     }
 
-    .check {
-        position: absolute;
-        width: 24px;
-        height: 24px;
-        background: url('../img/3/characterdialogsheet.png') -330px -723px;
-    }
-
-    .check:hover {
-        background-position: -357px -723px;
-    }
-
-    .check:active {
-        background-position: -384px -723px;
-    }
-
-    .check.active {
-        background-position: -411px -723px;
-    }
-
-    .check.active:hover {
-        background-position: -438px -723px;
-    }
-
     #soundCheck {
         top: 3px;
     }
@@ -1303,29 +1280,6 @@
 
     #texts p {
         margin-bottom: 14px;
-    }
-
-    .check {
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        background: url('../img/2/characterdialogsheet.png') -220px -481px;
-    }
-
-    .check:hover {
-        background-position: -238px -481px;
-    }
-
-    .check:active {
-        background-position: -256px -481px;
-    }
-
-    .check.active {
-        background-position: -274px -481px;
-    }
-
-    .check.active:hover {
-        background-position: -292px -481px;
     }
 
     #soundCheck {
@@ -1907,29 +1861,6 @@
 
     #texts p {
         margin-bottom: 7px;
-    }
-
-    .check {
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        background: url('../img/1/characterdialogsheet.png') -110px -241px;
-    }
-
-    .check:hover {
-        background-position: -119px -241px;
-    }
-
-    .check:active {
-        background-position: -128px -241px;
-    }
-
-    .check.active {
-        background-position: -137px -241px;
-    }
-
-    .check.active:hover {
-        background-position: -146px -241px;
     }
 
     #soundCheck {

@@ -58,10 +58,6 @@ canvas {
     background-image: url("../img/common/hud-modal.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    z-index: 101;
-    
-    /** debugging **/
-    /*display: none;*/
 }
 
 #modal input {
@@ -72,6 +68,10 @@ canvas {
     border-radius: 5px;
     width: 25%;
     margin-top: 10px;
+}
+
+#container {
+    display: none;
 }
 
 #createCharacter, #death, #message, #loader {
@@ -120,73 +120,27 @@ canvas {
 }
 
 .loader {
-    top: 0px;
-    bottom: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    z-index: 999;
-    background: #594858;
-    width: calc(100% - 20px);
-}
-
-.loader img {
-    padding-right: 5px;
-}
-
-.validation-summary {
-    display: block;
-    flex: 1;
-}
-
-#container {
-    top: 0;
-    bottom: 0;
     width: 100%;
     height: 100%;
-    margin: auto;
+    z-index: 101;
     position: absolute;
-    z-index: 100;
-    background-color: #000;
-    
-    /** debugging **/
-    opacity: 0;
-}
-
-#canvas, #foreground, #background, #textCanvas, #container, #border, #footer, #cursor {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
-
-#foreground, #background, #entities, #cursor {
-    -webkit-transform: translatez(0);
-    -moz-transform: translatez(0);
-    -ms-transform: translatez(0);
-    -o-transform: translatez(0);
-    transform: translatez(0);
-}
-
-#border {
-    position: absolute;
-    width: 100%;
-    height: 100%;
     top: 0;
-    bottom: 0;
-    border: 0;
-    background-image: url("../img/2/border.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-}
-
-#resizeCheck {
-    top: 0;
-    height: 0;
+    bottom: 100%;
+    background-color: #594858;
     left: 0;
-    position: absolute;
-    -moz-transition: 0.001s height ease-in-out;
-    -webkit-transition: 0.001s height ease-in-out;
-    -o-transition: 0.001s height ease-in-out;
-    transition: 0.001s height ease-in-out;
+}
+
+.button.green {
+    background: url('../img/common/hud-button-green.png');
+    background-size: cover;
+}
+
+.button.red {
+    background: url('../img/common/hud-button-red.png');
+    background-size: cover;
+}
+
+.button.purple {
+    background: url('../img/common/hud-button-purple.png');
+    background-size: cover;
 }
