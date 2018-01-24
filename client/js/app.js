@@ -47,7 +47,7 @@ define(['jquery'], function($) {
 
             self.loggingIn = false;
 
-            self.sendStatus('Initializing the main app');
+            self.sendStatus('You should turn back now...');
 
             self.zoom();
             self.updateOrientation();
@@ -466,10 +466,14 @@ define(['jquery'], function($) {
                 self.loading.html('');
                 return;
             }
+            
+            self.loading.show();
+            $('.loader .message').html(message);
         },
 
         toggleLogin: function(toggle) {
-            console.log('toggling login', toggle);
+            log.info('Logging in: ' + toggle);
+            
             var self = this;
 
             self.revertLoader();

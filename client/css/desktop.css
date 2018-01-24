@@ -122,6 +122,14 @@ canvas {
     padding-top: 3px;
 }
 
+#rememberMe .check {
+    margin-right: 10px;
+}
+
+#rememberMeWrapper {
+    padding-top: 3px;
+}
+
 .loader {
     width: 100%;
     height: 100%;

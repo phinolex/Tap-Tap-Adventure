@@ -24,7 +24,7 @@ define(['../renderer/grids', '../entity/objects/chest',
             load: function() {
                 var self = this;
 
-                self.game.app.sendStatus('Loading sprites...');
+                self.game.app.sendStatus('Lots of monsters ahead...');
 
                 if (!self.sprites) {
                     self.sprites = new Sprites(self.game.renderer);
@@ -34,7 +34,7 @@ define(['../renderer/grids', '../entity/objects/chest',
                     });
                 }
 
-                self.game.app.sendStatus('Loading grids...');
+                self.game.app.sendStatus('Yes, you are also a monster...');
 
                 if (!self.grids)
                     self.grids = new Grids(self.game.map);
