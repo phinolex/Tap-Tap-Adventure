@@ -12,15 +12,15 @@ define(['jquery'], function($) {
             self.config = null;
 
             self.body = $('body');
-            self.parchment = $('#parchment');
+            self.wrapper = $('#content');
             self.container = $('#container');
             self.window = $(window);
-            self.canvas = $('#canvas');
+            self.canvas = $('#canvasLayers');
             self.border = $('#border');
 
-            self.intro = $('#intro');
+            self.intro = $('#modal');
 
-            self.loginButton = $('#login');
+            self.loginButton = $('#loginButton');
             self.createButton = $('#play');
             self.registerButton = $('#newCharacter');
             self.helpButton = $('#helpButton');
@@ -42,12 +42,12 @@ define(['jquery'], function($) {
             self.registerFields = [];
 
             self.game = null;
+            self.guestLogin = false;
             self.zoomFactor = 1;
 
-            self.parchmentAnimating = false;
             self.loggingIn = false;
 
-            self.sendStatus('Initializing the main app');
+            self.sendStatus('You should turn back now...');
 
             self.zoom();
             self.updateOrientation();
@@ -74,10 +74,11 @@ define(['jquery'], function($) {
                 self.openScroll('createCharacter', 'loadCharacter');
             });
 
-            self.parchment.click(function() {
-                if (self.parchment.hasClass('about') || self.parchment.hasClass('credits') || self.parchment.hasClass('git')) {
+            self.wrapper.click(function() {
+                console.log('clicking wrapper');
+                if (self.wrapper.hasClass('about') || self.wrapper.hasClass('credits') || self.wrapper.hasClass('git')) {
 
-                    self.parchment.removeClass('about credits git');
+                    self.wrapper.removeClass('about credits git');
                     self.displayScroll('loadCharacter');
 
                 }
@@ -125,7 +126,8 @@ define(['jquery'], function($) {
                 if (!self.game)
                     return;
 
-                self.guest.toggleClass('active');
+                self.guestLogin = true;
+                self.login();
             });
 
             self.respawn.click(function() {
@@ -205,6 +207,7 @@ define(['jquery'], function($) {
         },
 
         login: function() {
+            console.log('login');
             var self = this;
 
             if (self.loggingIn || !self.game || !self.game.loaded || self.statusMessage || !self.verifyForm())
@@ -223,9 +226,12 @@ define(['jquery'], function($) {
                 windowHeight = self.window.height(),
                 zoomFactor = windowWidth / containerWidth;
 
-            if (containerHeight + 50 >= windowHeight)
-                zoomFactor = windowHeight / containerHeight;
-
+            console.log('zoom factor', containerHeight, windowHeight);
+            if (containerHeight + 50 >= windowHeight) {
+                zoomFactor = windowHeight / (containerHeight+50);
+                console.log('updating zoom', zoomFactor);
+            }
+            
             if (self.getScaleFactor() === 3)
                 zoomFactor -= 0.1;
 
@@ -270,33 +276,16 @@ define(['jquery'], function($) {
                 return;
 
             self.cleanErrors();
-
-            if (!self.isMobile()) {
-                if (self.parchmentAnimating)
-                    return;
-
-                self.parchmentAnimating = true;
-
-                self.parchment.toggleClass('animate').removeClass(origin);
-
-                setTimeout(function() {
-
-                    self.parchment.toggleClass('animate').addClass(destination);
-                    self.parchmentAnimating = false;
-
-                }, self.isTablet() ? 0 : 1000);
-
-            } else
-                self.parchment.removeClass(origin).addClass(destination);
+            self.wrapper.removeClass(origin).addClass(destination);
         },
 
         displayScroll: function(content) {
             var self = this,
-                state = self.parchment.attr('class');
+                state = self.wrapper.attr('class');
 
             if (self.game.started) {
 
-                self.parchment.removeClass().addClass(content);
+                self.wrapper.removeClass().addClass(content);
 
                 self.body.removeClass('credits legal about').toggleClass(content);
 
@@ -315,8 +304,9 @@ define(['jquery'], function($) {
             var self = this,
                 activeForm = self.getActiveForm();
 
-            if (activeForm === 'null')
+            if (activeForm === 'null') {
                 return;
+            }
 
             switch (activeForm) {
 
@@ -387,25 +377,21 @@ define(['jquery'], function($) {
 
             self.statusMessage = message;
 
-            if (!message)
+            if (!message) {
+                $('.loader .message').html('');
+                $('.loader').hide();
                 return;
+            }
 
-            $('<span></span>', {
-                'class': 'status blink',
-                text: message
-            }).appendTo('.validation-summary');
-
-            $('.status').append('<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span>');
+            $('.loader').show();
+            $('.loader .message').html(message);
         },
 
         sendError: function(field, error) {
             this.cleanErrors();
 
-            $('<span></span>', {
-                'class': 'validation-error blink',
-                text: error
-            }).appendTo('.validation-summary');
-
+            $('.loader .message').html(error);
+  
             if (!field)
                 return;
 
@@ -432,7 +418,7 @@ define(['jquery'], function($) {
         },
 
         getActiveForm: function() {
-            return this.parchment[0].className;
+            return this.wrapper[0].className;
         },
 
         isRegistering: function() {
@@ -440,7 +426,7 @@ define(['jquery'], function($) {
         },
 
         isGuest: function() {
-            return this.guest.hasClass('active');
+            return this.guestLogin;
         },
 
         resize: function() {
@@ -472,22 +458,25 @@ define(['jquery'], function($) {
         },
 
         revertLoader: function() {
-            this.updateLoader('Connecting');
+            this.updateLoader('Connecting to server...');
         },
 
         updateLoader: function(message) {
             var self = this;
 
             if (!message) {
+                self.loading.hide();
                 self.loading.html('');
                 return;
             }
-
-            var dots = '<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span>';
-            self.loading.html(message + dots);
+            
+            self.loading.show();
+            $('.loader .message').html(message);
         },
 
         toggleLogin: function(toggle) {
+            log.info('Logging in: ' + toggle);
+            
             var self = this;
 
             self.revertLoader();

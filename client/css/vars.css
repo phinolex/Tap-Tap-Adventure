@@ -32,17 +32,6 @@ footer, header, menu, nav, section {
     display: block;
 }
 
-@font-face {
-    font-family: 'AdvoCut';
-    src: url('../fonts/advocut/advocut-webfont.eot');
-    src: url('../fonts/advocut/advocut-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/advocut/advocut-webfont.woff') format('woff'),
-    url('../fonts/advocut/advocut-webfont.ttf') format('truetype'),
-    url('../fonts/advocut/advocut-webfont.svg#AndinaRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
 .gp {
     font-family: sans-serif;
 }
@@ -78,21 +67,6 @@ body {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-}
-
-.left-ornament, .right-ornament {
-    background: url('../img/1/spritesheet.png');
-    image-rendering: -moz-crisp-edges;
-}
-
-.left-ornament {
-    position: relative;
-    top: 0;
-}
-
-.right-ornament {
-    position: relative;
-    top: 0;
 }
 
 .link:hover {
@@ -213,10 +187,6 @@ body {
     border: 0;
 }
 
-#login, #newCharacter {
-    top: 65%;
-}
-
 #yes, #no {
     position: absolute;
     width: 200px;
@@ -234,44 +204,12 @@ body {
     top: 70%;
 }
 
-#login {
-    left: 15%;
-}
-
 #cancelButton {
     left: 10%;
 }
 
-#newCharacter, #no {
+#no {
     left: 60%;
-}
-
-#play {
-    left: 65%;
-}
-
-#rememberMe {
-    top: 57%;
-    left: 20%;
-}
-
-#rememberMeText {
-    position: absolute;
-    top: 57%;
-    left: 22%;
-}
-
-#guest, #guestText {
-    position: absolute;
-    top: 57%;
-}
-
-#guest {
-    left: 70%;
-}
-
-#guestText {
-    left: 72%;
 }
 
 input[type="range"] {
@@ -328,7 +266,7 @@ html [type="button"],
 
 @media only screen and (min-width: 1501px) {
 
-    #parchment h1, #loadCharacter h1, #about h1 {
+    #wrapper h1, #loadCharacter h1, #about h1 {
         margin-top: 30px;
         font-size: 30px;
     }
@@ -338,82 +276,8 @@ html [type="button"],
         font-size: 30px;
     }
 
-    #parchment h2, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-left: 30px;
-    }
-
-    .left-ornament, .right-ornament {
-        background: url('../img/3/spritesheet.png');
-        image-rendering: -moz-crisp-edges;
-    }
-
-    .left-ornament, .right-ornament {
-        background-size: 1266px auto;
-    }
-
-    .left-ornament {
-        background-position: -1062px 0;
-    }
-
-    .right-ornament {
-        background-position: -1155px 0;
-    }
-
-    .left-ornament, .right-ornament {
-        width: 93px;
-        height: 36px;
-        display: inline-block;
-        margin: 0 20px;
-        top: 12px;
-        position: relative;
-    }
-
-    #createCharacter .login {
-        margin: 12px auto 12px auto;
-    }
-
-    .login, .login div, .createNew, .createNew div {
-        margin: 105px 240px 105px 240px;
-        -webkit-tap-highlight-color: transparent;
-        display: inline-block;
-    }
-
-    .login, .login div, .createNew, .createNew div {
-        -webkit-tap-highlight-color: transparent;
-        display: inline-block;
-        background-size: auto 30px;
-    }
-
-    .login div {
-        width: 375px;
-        height: 153px;
-        background-position: -687px 0;
-    }
-
-    .login div:active {
-        background-position: -687px -459px;
-    }
-
-    .login.loading div {
-        background-position: -681px -2178px;
-    }
-
-    .login.loading img {
-        width: 24px;
-        height: 24px;
-    }
-
-    .login img {
-        display: none;
-    }
-
-    .login.loading span:hover {
-        color: inherit;
-        cursor: default;
-    }
-
-    .login.loading img {
-        display: inline;
     }
 
     #resizeCheck {
@@ -457,50 +321,7 @@ html [type="button"],
         font-size: 15px;
         padding: 6px 0;
     }
-
-    .stroke {
-        text-shadow: 2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;
-    }
-
-    #login, #newCharacter, #continue, #cancelButton, #play {
-        position: absolute;
-        width: 306px;
-        height: 81px;
-        background: url('../img/3/buttons.png');
-    }
-
-    #login {
-        background-position: -309px 0;
-    }
-
-    #login:hover {
-        background-position: -312px -87px;
-    }
-
-    #login:active {
-        background-position: -312px -174px;
-    }
-
-    #login.disabled {
-        background-position: -312px -261px;
-    }
-
-    #newCharacter {
-        background-position: -618px 0;
-    }
-
-    #newCharacter:hover {
-        background-position: -621px -87px;
-    }
-
-    #newCharacter:active {
-        background-position: -618px -174px;
-    }
-
-    #newCharacter.disabled {
-        background-position: -618px -261px;
-    }
-
+    
     #continue {
         background-position: -1242px 0;
     }
@@ -549,12 +370,6 @@ html [type="button"],
         background-position: 0 -261px;
     }
 
-    #rememberMeText, #guestText {
-        width: 165px;
-        height: 24px;
-        font-size: 20px;
-    }
-
     .validation-summary {
         width: 366px;
     }
@@ -575,80 +390,12 @@ html [type="button"],
 
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
 
-    #parchment h1, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h1, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 40px;
     }
 
-    #parchment h2, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 20px;
-    }
-
-    .left-ornament, .right-ornament {
-        background: url('../img/2/spritesheet.png');
-        image-rendering: -moz-crisp-edges;
-    }
-
-    .left-ornament, .right-ornament {
-        background-size: 844px auto;
-    }
-
-    .left-ornament {
-        background-position: -708px 0;
-    }
-
-    .right-ornament {
-        background-position: -770px 0;
-    }
-
-    .left-ornament, .right-ornament {
-        width: 62px;
-        height: 24px;
-        position: relative;
-        display: inline-block;
-        margin: 0 15px;
-        top: 6px;
-    }
-
-    #createCharacter .login {
-        margin: 8px auto 8px auto;
-    }
-
-    .login, .login div, .createNew, .createNew div {
-        margin: 70px 160px 70px 160px;
-        -webkit-tap-highlight-color: transparent;
-        display: inline-block;
-    }
-
-    .login div {
-        width: 250px;
-        height: 102px;
-        background-position: -458px 0;
-    }
-
-    .login div:active {
-        background-position: -458px -306px;
-    }
-
-    .login.loading div {
-        background-position: -454px -1452px;
-    }
-
-    .login.loading img {
-        width: 16px;
-        height: 16px;
-    }
-
-    .login img {
-        display: none;
-    }
-
-    .login.loading span:hover {
-        color: inherit;
-        cursor: default;
-    }
-
-    .login.loading img {
-        display: inline;
     }
 
     #resizeCheck {
@@ -691,49 +438,6 @@ html [type="button"],
     #talk .input {
         font-size: 10px;
         padding: 4px 0;
-    }
-
-    .stroke {
-        text-shadow:2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;
-    }
-
-    #login, #newCharacter, #continue, #cancelButton, #play {
-        position: absolute;
-        width: 204px;
-        height: 54px;
-        background: url('../img/2/buttons.png');
-    }
-
-    #login {
-        background-position: -205px 0;
-    }
-
-    #login:hover {
-        background-position: -207px -58px;
-    }
-    
-    #login:active {
-        background-position: -205px -116px;
-    }
-    
-    #login.disabled {
-        background-position: -205px -174px;
-    }
-
-    #newCharacter {
-        background-position: -412px 0;
-    }
-
-    #newCharacter:hover {
-        background-position: -414px -58px;
-    }
-
-    #newCharacter:active {
-        background-position: -412px -116px;
-    }
-
-    #newCharacter.disabled {
-        background-position: -412px -174px;
     }
 
     #continue {
@@ -784,12 +488,6 @@ html [type="button"],
         background-position: 0 -174px;
     }
 
-    #rememberMeText, #guestText {
-        width: 110px;
-        height: 15px;
-        font-size: 15px;
-    }
-
     .validation-summary {
         width: 256px;
     }
@@ -814,75 +512,12 @@ html [type="button"],
 
 @media only screen and (max-width: 1000px) {
 
-    #parchment h1, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h1, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 20px;
     }
 
-    #parchment h2, #loadCharacter h1, #createCharacter h1, #about h1 {
+    #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 10px;
-    }
-
-    .left-ornament, .right-ornament {
-        background-size: 422px auto;
-    }
-    
-    .left-ornament {
-        background-position: -354px 0;
-    }
-
-    .right-ornament {
-        background-position: -385px 0;
-    }
-    
-    .left-ornament, .right-ornament {
-        width: 31px;
-        height: 12px;
-        display: inline-block;
-        margin: 0 10px;
-        top: 3px;
-        position: relative;
-    }
-
-    #createCharacter .login {
-        margin: 4px auto 4px auto;
-    }
-
-    .login, .login div, .createNew, .createNew div {
-        margin: 35px 80px 35px 80px;
-        -webkit-tap-highlight-color: transparent;
-        display: inline-block;
-    }
-
-    .login div {
-        width: 125px;
-        height: 51px;
-        background-position: -229px 0;
-    }
-
-    .login div:active {
-        background-position: -229px -153px;
-    }
-
-    .login.loading div {
-        background-position: -227px -726px;
-    }
-
-    .login.loading img {
-        width: 8px;
-        height: 8px;
-    }
-
-    .login img {
-        display: none;
-    }
-
-    .login.loading span:hover {
-        color: inherit;
-        cursor: default;
-    }
-
-    .login.loading img {
-        display: inline;
     }
 
     #resizeCheck {
@@ -925,49 +560,6 @@ html [type="button"],
     #talk .input {
         font-size: 5px;
         padding: 2px 0;
-    }
-
-    .stroke {
-        text-shadow:1px 1px 0 #373737, 1px -1px 0 #373737, 0 1px 0 #373737, 1px 0 0 #373737, -1px 1px 0 #373737, -1px -1px 0 #373737, 0 -1px 0 #373737, 0 1px 0 #373737, -1px 0 0 #373737;
-    }
-
-    #login, #newCharacter, #continue, #cancelButton, #play {
-        position: absolute;
-        width: 102px;
-        height: 27px;
-        background: url('../img/1/buttons.png');
-    }
-
-    #login {
-        background-position: -103px 0;
-    }
-
-    #login:hover {
-        background-position: -104px -29px;
-    }
-
-    #login:active {
-        background-position: -103px -58px;
-    }
-
-    #login.disabled {
-        background-position: -103px -87px;
-    }
-
-    #newCharacter {
-        background-position: -206px 0;
-    }
-
-    #newCharacter:hover {
-        background-position: -207px -29px;
-    }
-
-    #newCharacter:active {
-        background-position: -206px -58px;
-    }
-
-    #newCharacter.disabled {
-        background-position: -206px -87px;
     }
 
     #continue {
@@ -1018,12 +610,6 @@ html [type="button"],
         background-position: 0 -87px;
     }
 
-    #rememberMeText, #guestText {
-        width: 55px;
-        height: 8px;
-        font-size: 8px;
-    }
-
     .validation-summary {
         width: 128px;
     }
@@ -1048,5 +634,4 @@ html [type="button"],
         height: 8px;
         width: 5px;
     }
-
 }

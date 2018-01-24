@@ -30,13 +30,14 @@ canvas {
     padding: 0;
 }
 
+#wrapper, #createCharacter, #loadCharacter, #error {
+    width: 90%;
+    height: 40%;
+}
+
 #container {
     z-index: 100;
     background: rgba(0, 0, 0, 0.2);
-    -moz-transition: 1s opacity linear 0.5s;
-    -webkit-transition: 1s opacity linear 0.5s;
-    -o-transition: 1s opacity linear 0.5s;
-    transition: 1s opacity linear 0.5s;
 }
 
 footer {
@@ -47,10 +48,6 @@ footer {
     text-align: center;
     width: 100%;
     color: #ffffff;
-    -moz-transition: 0.2s opacity linear;
-    -webkit-transition: 0.2s opacity linear;
-    -o-transition: 0.2s opacity linear;
-    transition: 0.2s opacity linear;
     font-size: 16px;
 }
 
@@ -70,10 +67,6 @@ footer {
 
 .game footer {
     color: #fcda5c;
-}
-
-.intro footer, footer:hover {
-    opacity: 1;
 }
 
 .game footer {
@@ -98,12 +91,6 @@ footer div {
     transform: translatez(0);
 }
 
-#parchment, #respawn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    border-radius: 15px;
-}
-
 #death p {
     margin-top: 10%;
 }
@@ -112,45 +99,33 @@ footer div {
     margin-top: 5%;
 }
 
-#parchment, #parchment input, #parchment select {
+#wrapper, #wrapper input, #wrapper select {
     font-family: sans-serif;
 }
 
-#parchment input {
+#wrapper input {
     width: 50%;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(54, 42, 59, 0.9);
     text-align: center;
-    color: #eee;
+    color: #000;
 }
 
-#parchment input:focus {
-    border-color: rgba(255, 255, 0, 0.8);
-    background: rgba(255, 255, 255, 0.9);
+#wrapper input:focus {
+    border-color: #000;
+    background: rgba(54, 42, 59, 0.7);
     color: #fff;
-
-    -moz-animation: none;
-    -webkit-animation: none;
-    -o-animation: none;
-    animation: none;
 }
 
-#parchment input.field-error {
+#wrapper input.field-error {
     background: rgba(255, 0, 0, 0.1);
     border-color: #f84444;
 }
 
-#parchment select {
+#wrapper select {
     width: 25%;
     background: rgba(0, 0, 0, 0.05);
     text-align: center;
     color: black;
-}
-
-#intro {
-    -moz-transition: 0.4s opacity linear;
-    -webkit-transition: 0.4s opacity linear;
-    -o-transition: 0.4s opacity linear;
-    transition: 0.4s opacity linear;
 }
 
 #alert {
@@ -165,46 +140,17 @@ footer div {
     border-bottom: 1px solid #000;
 }
 
-.intro footer {
-    opacity: 1;
-}
-
-#intro {
-    -moz-transition: 0.4s opacity linear;
-    -webkit-transition: 0.4s opacity linear;
-    -o-transition: 0.4s opacity linear;
-    transition: 0.4s opacity linear;
-}
-
-#parchment {
-    opacity: 0;
-
-}
-
-.intro #logo, .intro #parchment {
-    opacity: 1;
-}
-
-.intro #container {
-    opacity: 0;
-    pointer-events: none;
-}
-
-#parchment p {
+#wrapper p {
     font-family: sans-serif;
     line-height: 1.2em;
 }
 
-#credits, #git, #about, #loadCharacter, #createCharacter, #death, #welcomeMessage, #error {
+#credits, #git, #about, #loadCharacter, #createCharacter, #death, #welcome, #error {
     opacity: 0;
     pointer-events: none;
-    -moz-transition: none;
-    -webkit-transition: none;
-    -o-transition: none;
-    transition: none;
 }
 
-#credits, #about, #git, #death, #welcomeMessage, #error, #loadCharacter, #createCharacter {
+#credits, #about, #git, #death, #welcome, #error, #loadCharacter, #createCharacter {
     position: absolute;
     left: 50%;
     text-align: center;
@@ -212,36 +158,33 @@ footer div {
     z-index: 1000;
 }
 
-.credits #credits, .about #about, .git #git, .death #death, .welcomeMessage #welcomeMessage, .error #error, .createCharacter #createCharacter, .loadCharacter #loadCharacter {
+.credits #credits, .about #about, .git #git, .death #death, .welcomeMessage #welcome, .error #error, .createCharacter #createCharacter, .loadCharacter #loadCharacter {
     opacity: 1;
     pointer-events: auto;
-    -moz-transition: 0.5s opacity linear;
-    -webkit-transition: 0.5s opacity linear;
-    -o-transition: 0.5s opacity linear;
-    transition: 0.5s opacity linear;
 }
 
-#credits, #about, #death, #welcomeMessage, #git {
+#credits, #about, #death, #welcome, #git {
     top: 50%;
 }
 
-
-.parchment-left {
-    position: absolute;
-    top: 0;
-    left: 0;
+#wtf {
+    margin-right: auto;
+    margin-left: auto;
+    width: 40%;
+    margin-top: -12%;
+    z-index: 100;
+    position: relative;
+    display: block;
 }
 
-.parchment-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.parchment-middle {
-    position: absolute;
-    left: 50%;
-    top: 0;
+#adventure {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 40%;
+    margin-top: -1%;
+    z-index: 1;
+    position: relative;
 }
 
 #createCharacter form {
@@ -258,14 +201,28 @@ footer div {
     left: 50%;
 }
 
+#wrapper, #respawn {
+    background-image: url("../img/common/hud-modal.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#wrapper-footer {
+    height: 160px;
+    width: 100%;
+    color: #fff;
+    background-image: url("../img/common/hud-modal.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    top: 100%;
+    position: relative;
+}
+
 
 @media only screen and (min-width: 1501px) {
 
-    .intro footer {
-        font-size: 28px;
-    }
-
-    #credits, #about, #death, #welcomeMessage, #git {
+    #credits, #about, #death, #welcome, #git {
         width: 1266px;
         height: 546px;
         margin-left: -633px;
@@ -292,34 +249,9 @@ footer div {
         position: absolute;
     }
 
-    .parchment-left, .parchment-middle, .parchment-right {
-        background-size: 1266px;
-    }
-
-    .parchment-left {
-        width: 114px;
-        height: 546px;
-        background-position: 0 -882px;
-    }
-
-    .parchment-middle {
-        width: 1038px;
-        height: 546px;
-        background-position: -114px -882px;
-        margin-left: -519px;
-    }
-
-    .parchment-right {
-        width: 114px;
-        height: 546px;
-        background-position: -1152px -882px;
-    }
-
-    #parchment, #createCharacter, #loadCharacter, #error {
-        width: 1266px;
-        height: 546px;
+    #loginButton, #createCharacter, #loadCharacter, #error {
         position: absolute;
-        top: 55%;
+        top: 48%;
         left: 50%;
         margin-left: -633px;
         margin-top: -273px;
@@ -328,34 +260,34 @@ footer div {
         z-index: 1000;
     }
 
-    #parchment input, #parchment select {
+    #wrapper input, #wrapper select {
         padding: 0 15px;
         border: 3px solid #000;
         font-size: 30px;
         border-radius: 9px;
     }
 
-    #parchment input {
-        margin-top: 30px;
+    #wrapper input {
+        margin-top: 10px;
         height: 60px;
     }
 
-    #parchment select {
+    #wrapper select {
         margin-top: 24px;
         height: 48px;
         width: 23%;
     }
 
-    #parchment.createCharacter input {
+    #wrapper.createCharacter input {
         margin-top: 24px;
         height: 45px;
     }
 
-    .parchment-left, .parchment-middle, .parchment-right, #respawn {
+    #respawn {
         background-size: 1266px auto;
     }
 
-    .game.death .parchment-middle, .game.welcomeMessage .parchment-middle {
+    .game.death {
         width: 1038px;
         margin-left: -519px;
         background-position: -114px -882px;
@@ -379,6 +311,10 @@ footer div {
 }
 
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
+    
+    #wrapper-footer {
+        height: 100px;
+    }
 
     #credits, #about, #death, #git {
         width: 844px;
@@ -388,7 +324,7 @@ footer div {
         font-size: 20px;
     }
 
-    #welcomeMessage {
+    #welcome {
         width: 644px;
         height: 364px;
         margin-left: -322px;
@@ -415,34 +351,9 @@ footer div {
         position: absolute;
     }
 
-    .parchment-left, .parchment-middle, .parchment-right {
-        background-size: 844px;
-    }
-
-    .parchment-left {
-        width: 76px;
-        height: 364px;
-        background-position: 0 -588px;
-    }
-
-    .parchment-middle {
-        width: 692px;
-        height: 364px;
-        background-position: -76px -588px;
-        margin-left: -346px;
-    }
-
-    .parchment-right {
-        width: 76px;
-        height: 364px;
-        background-position: -768px -588px;
-    }
-
-    #parchment, #createCharacter, #loadCharacter, #error {
-        width: 844px;
-        height: 364px;
+    #wrapper, #createCharacter, #loadCharacter, #error {
         position: absolute;
-        top: 55%;
+        top: 48%;
         left: 50%;
         margin-left: -422px;
         margin-top: -182px;
@@ -451,37 +362,31 @@ footer div {
         z-index: 2;
     }
 
-    #parchment input, #parchment select {
+    #wrapper input, #wrapper select {
         padding: 0 10px;
         border: 2px solid #000;
         font-size: 20px;
         border-radius: 6px;
     }
 
-    #parchment input {
+    #wrapper input {
         margin-top: 20px;
         height: 41px;
     }
 
-    #parchment select {
+    #wrapper select {
         margin-top: 16px;
         height: 32px;
         width: 23%;
     }
 
-    #parchment.createCharacter input {
+    #wrapper.createCharacter input {
         margin-top: 15px;
         height: 30px;
     }
 
-    .parchment-left, .parchment-middle, .parchment-right, #respawn {
+    #respawn {
         background-size: 844px auto;
-    }
-
-    .game.death .parchment-middle, .game.welcomeMessage .parchment-middle {
-        width: 692px;
-        margin-left: -346px;
-        background-position: -76px -588px;
     }
 
     #respawn {
@@ -497,6 +402,10 @@ footer div {
 }
 
 @media only screen and (max-width: 1000px) {
+    
+    #wrapper-footer {
+        height: 60px;
+    }
 
     #credits, #about, #death, #git {
         width: 422px;
@@ -506,7 +415,7 @@ footer div {
         font-size: 10px;
     }
 
-    #welcomeMessage {
+    #welcome {
         width: 322px;
         height: 182px;
         margin-left: -161px;
@@ -533,34 +442,9 @@ footer div {
         position: absolute;
     }
 
-    .parchment-left, .parchment-middle, .parchment-right {
-        background-size: 422px;
-    }
-
-    .parchment-left {
-        width: 38px;
-        height: 182px;
-        background-position: 0 -294px;
-    }
-
-    .parchment-middle {
-        width: 346px;
-        height: 182px;
-        background-position: -38px -294px;
-        margin-left: -173px;
-    }
-
-    .parchment-right {
-        width: 38px;
-        height: 182px;
-        background-position: -384px -294px;
-    }
-
-    #parchment, #createCharacter, #loadCharacter, #error {
-        width: 422px;
-        height: 182px;
+    #wrapper, #createCharacter, #loadCharacter, #error {
         position: absolute;
-        top: 55%;
+        top: 48%;
         left: 50%;
         margin-left: -211px;
         margin-top: -91px;
@@ -569,37 +453,31 @@ footer div {
         z-index: 2;
     }
 
-    #parchment input, #parchment select {
+    #wrapper input, #wrapper select {
         padding: 0 5px;
         border: 1px solid #000;
         font-size: 10px;
         border-radius: 3px;
     }
 
-    #parchment input {
+    #wrapper input {
         margin-top: 10px;
         height: 20px;
     }
 
-    #parchment select {
+    #wrapper select {
         margin-top: 8px;
         height: 16px;
         width: 23%;
     }
 
-    #parchment.createCharacter input {
+    #wrapper.createCharacter input {
         margin-top: 8px;
         height: 15px;
     }
 
-    .parchment-left, .parchment-middle, .parchment-right, #respawn {
+    #respawn {
         background-size: 422px auto;
-    }
-
-    .game.death .parchment-middle, .game.welcomeMessage .parchment-middle {
-        width: 346px;
-        margin-left: -173px;
-        background-position: -38px -294px;
     }
 
     #respawn {

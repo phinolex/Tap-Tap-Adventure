@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node server/js/main.js",
-    "mysql-start": "mysql-ctl start"
+    "mysql-start": "mysql-ctl start",
+    "wtf": "npm run mysql-start && npm start"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
