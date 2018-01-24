@@ -187,10 +187,6 @@ body {
     border: 0;
 }
 
-#loginButton, #newCharacter {
-    top: 75%;
-}
-
 #yes, #no {
     position: absolute;
     width: 200px;
@@ -208,44 +204,12 @@ body {
     top: 70%;
 }
 
-#loginButton {
-    left: 15%;
-}
-
 #cancelButton {
     left: 10%;
 }
 
-#newCharacter, #no {
+#no {
     left: 60%;
-}
-
-#play {
-    left: 65%;
-}
-
-#rememberMe {
-    top: 57%;
-    left: 20%;
-}
-
-#rememberMeText {
-    position: absolute;
-    top: 57%;
-    left: 22%;
-}
-
-#guest, #guestText {
-    position: absolute;
-    top: 57%;
-}
-
-#guest {
-    left: 70%;
-}
-
-#guestText {
-    left: 72%;
 }
 
 input[type="range"] {
@@ -316,54 +280,6 @@ html [type="button"],
         margin-left: 30px;
     }
 
-    #createCharacter .login {
-        margin: 12px auto 12px auto;
-    }
-
-    .login, .login div, .createNew, .createNew div {
-        margin: 105px 240px 105px 240px;
-        -webkit-tap-highlight-color: transparent;
-        display: inline-block;
-    }
-
-    .login, .login div, .createNew, .createNew div {
-        -webkit-tap-highlight-color: transparent;
-        display: inline-block;
-        background-size: auto 30px;
-    }
-
-    .login div {
-        width: 375px;
-        height: 153px;
-        background-position: -687px 0;
-    }
-
-    .login div:active {
-        background-position: -687px -459px;
-    }
-
-    .login.loading div {
-        background-position: -681px -2178px;
-    }
-
-    .login.loading img {
-        width: 24px;
-        height: 24px;
-    }
-
-    .login img {
-        display: none;
-    }
-
-    .login.loading span:hover {
-        color: inherit;
-        cursor: default;
-    }
-
-    .login.loading img {
-        display: inline;
-    }
-
     #resizeCheck {
         height: 3px;
     }
@@ -405,46 +321,7 @@ html [type="button"],
         font-size: 15px;
         padding: 6px 0;
     }
-
-    #loginButton, #newCharacter, #continue, #cancelButton, #play {
-        position: absolute;
-        width: 306px;
-        height: 81px;
-        background: url('../img/3/buttons.png');
-    }
-
-    #loginButton {
-        background-position: -309px 0;
-    }
-
-    #loginButton:hover {
-        background-position: -312px -87px;
-    }
-
-    #loginButton:active {
-        background-position: -312px -174px;
-    }
-
-    #loginButton.disabled {
-        background-position: -312px -261px;
-    }
-
-    #newCharacter {
-        background-position: -618px 0;
-    }
-
-    #newCharacter:hover {
-        background-position: -621px -87px;
-    }
-
-    #newCharacter:active {
-        background-position: -618px -174px;
-    }
-
-    #newCharacter.disabled {
-        background-position: -618px -261px;
-    }
-
+    
     #continue {
         background-position: -1242px 0;
     }
@@ -493,12 +370,6 @@ html [type="button"],
         background-position: 0 -261px;
     }
 
-    #rememberMeText, #guestText {
-        width: 165px;
-        height: 24px;
-        font-size: 20px;
-    }
-
     .validation-summary {
         width: 366px;
     }
@@ -525,48 +396,6 @@ html [type="button"],
 
     #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 20px;
-    }
-
-    #createCharacter .login {
-        margin: 8px auto 8px auto;
-    }
-
-    .login, .login div, .createNew, .createNew div {
-        margin: 70px 160px 70px 160px;
-        -webkit-tap-highlight-color: transparent;
-        display: inline-block;
-    }
-
-    .login div {
-        width: 250px;
-        height: 102px;
-        background-position: -458px 0;
-    }
-
-    .login div:active {
-        background-position: -458px -306px;
-    }
-
-    .login.loading div {
-        background-position: -454px -1452px;
-    }
-
-    .login.loading img {
-        width: 16px;
-        height: 16px;
-    }
-
-    .login img {
-        display: none;
-    }
-
-    .login.loading span:hover {
-        color: inherit;
-        cursor: default;
-    }
-
-    .login.loading img {
-        display: inline;
     }
 
     #resizeCheck {
@@ -609,45 +438,6 @@ html [type="button"],
     #talk .input {
         font-size: 10px;
         padding: 4px 0;
-    }
-
-    #loginButton, #newCharacter, #continue, #cancelButton, #play {
-        position: absolute;
-        width: 204px;
-        height: 54px;
-        background: url('../img/2/buttons.png');
-    }
-
-    #loginButton {
-        background-position: -205px 0;
-    }
-
-    #loginButton:hover {
-        background-position: -207px -58px;
-    }
-    
-    #loginButton:active {
-        background-position: -205px -116px;
-    }
-    
-    #loginButton.disabled {
-        background-position: -205px -174px;
-    }
-
-    #newCharacter {
-        background-position: -412px 0;
-    }
-
-    #newCharacter:hover {
-        background-position: -414px -58px;
-    }
-
-    #newCharacter:active {
-        background-position: -412px -116px;
-    }
-
-    #newCharacter.disabled {
-        background-position: -412px -174px;
     }
 
     #continue {
@@ -698,12 +488,6 @@ html [type="button"],
         background-position: 0 -174px;
     }
 
-    #rememberMeText, #guestText {
-        width: 110px;
-        height: 15px;
-        font-size: 15px;
-    }
-
     .validation-summary {
         width: 256px;
     }
@@ -734,48 +518,6 @@ html [type="button"],
 
     #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
         margin-top: 10px;
-    }
-
-    #createCharacter .login {
-        margin: 4px auto 4px auto;
-    }
-
-    .login, .login div, .createNew, .createNew div {
-        margin: 35px 80px 35px 80px;
-        -webkit-tap-highlight-color: transparent;
-        display: inline-block;
-    }
-
-    .login div {
-        width: 125px;
-        height: 51px;
-        background-position: -229px 0;
-    }
-
-    .login div:active {
-        background-position: -229px -153px;
-    }
-
-    .login.loading div {
-        background-position: -227px -726px;
-    }
-
-    .login.loading img {
-        width: 8px;
-        height: 8px;
-    }
-
-    .login img {
-        display: none;
-    }
-
-    .login.loading span:hover {
-        color: inherit;
-        cursor: default;
-    }
-
-    .login.loading img {
-        display: inline;
     }
 
     #resizeCheck {
@@ -818,45 +560,6 @@ html [type="button"],
     #talk .input {
         font-size: 5px;
         padding: 2px 0;
-    }
-
-    #loginButton, #newCharacter, #continue, #cancelButton, #play {
-        position: absolute;
-        width: 102px;
-        height: 27px;
-        background: url('../img/1/buttons.png');
-    }
-
-    #loginButton {
-        background-position: -103px 0;
-    }
-
-    #loginButton:hover {
-        background-position: -104px -29px;
-    }
-
-    #loginButton:active {
-        background-position: -103px -58px;
-    }
-
-    #loginButton.disabled {
-        background-position: -103px -87px;
-    }
-
-    #newCharacter {
-        background-position: -206px 0;
-    }
-
-    #newCharacter:hover {
-        background-position: -207px -29px;
-    }
-
-    #newCharacter:active {
-        background-position: -206px -58px;
-    }
-
-    #newCharacter.disabled {
-        background-position: -206px -87px;
     }
 
     #continue {
@@ -905,12 +608,6 @@ html [type="button"],
     
     #play.disabled {
         background-position: 0 -87px;
-    }
-
-    #rememberMeText, #guestText {
-        width: 55px;
-        height: 8px;
-        font-size: 8px;
     }
 
     .validation-summary {

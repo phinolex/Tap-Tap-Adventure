@@ -76,8 +76,6 @@ define(['jquery', './camera', './tile',
             self.camera = null;
             self.input = null;
             self.stopRendering = true;
-            
-            console.log('canvas context', context.canvas);
 
             self.forEachContext(function(context) {
                 context.fillStyle = '#12100D';
@@ -108,6 +106,10 @@ define(['jquery', './camera', './tile',
 
             self.screenWidth = self.camera.gridWidth * self.tileSize;
             self.screenHeight = self.camera.gridHeight * self.tileSize;
+            
+            console.log("tile size:", self.tileSize);
+            console.log("camera:", self.camera.gridWidth, self.camera.gridHeight);
+            console.log("screen:", self.screenWidth, self.screenHeight);
 
             var width = self.screenWidth * self.drawingScale,
                 height = self.screenHeight * self.drawingScale;

@@ -178,14 +178,99 @@ canvas {
     height: 100px;
 }
 
+
+/****************/
+
 #container {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    z-index: 99;
-    width: 100%;
-    height: 100%;
-    background: #000;
+    z-index: 98;
+    background: rgba(0, 0, 0, 0.2);
+    top: 48%;
+    left: 50%;
     opacity: 0;
+}
+
+#border {
+    z-index: 99;
+    opacity: 0;
+}
+
+@media only screen and (min-width: 1501px) {
+    
+    #modal {
+        top: 48%;
+    }
+
+    #border {
+        position: absolute;
+        width: 1470px;
+        height: 780px;
+        left: 50%;
+        top: 0;
+        margin-left: -735px;
+        border: 0;
+        padding: 15px;
+        background: url('../img/3/border.png') no-repeat 0 0;
+        background-size: 100% 100%;
+    }
+
+    #container {
+        width: 1470px;
+        height: 798px;
+        margin: -378px auto auto -735px;
+        position: absolute;
+    }
+}
+
+@media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
+
+    #modal {
+        top: 35%;
+    }
+    
+    #border {
+        position: absolute;
+        width: 980px;
+        height: 520px;
+        left: 50%;
+        top: 0;
+        margin-left: -490px;
+        border: 0;
+        padding: 10px;
+        background: url('../img/2/border.png') no-repeat 0 0;
+        background-size: 100% 100%;
+    }
+
+    #container {
+        width: 980px;
+        height: 532px;
+        margin: -252px auto auto -490px;
+        position: absolute;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #modal {
+        top: 20%;
+    }
+    
+    #border {
+        position: absolute;
+        width: 490px;
+        height: 260px;
+        left: 50%;
+        top: 0;
+        margin-left: -245px;
+        border: 0;
+        padding: 5px;
+        background: url('../img/1/border.png') no-repeat 0 0;
+        background-size: 100% 100%;
+    }
+
+    #container {
+        width: 490px;
+        height: 266px;
+        margin: -126px auto auto -245px;
+        position: absolute;
+    }
 }

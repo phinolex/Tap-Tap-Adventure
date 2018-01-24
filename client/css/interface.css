@@ -1,6 +1,6 @@
 #buttons {
     top: calc(100% - 30px);
-    left: calc(100% - 150px);
+    right: 0;
     overflow-x: hidden;
     overflow-y: hidden;
     position: absolute;

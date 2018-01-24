@@ -226,9 +226,12 @@ define(['jquery'], function($) {
                 windowHeight = self.window.height(),
                 zoomFactor = windowWidth / containerWidth;
 
-            if (containerHeight + 50 >= windowHeight) 
-                zoomFactor = windowHeight / containerHeight;
-
+            console.log('zoom factor', containerHeight, windowHeight);
+            if (containerHeight + 50 >= windowHeight) {
+                zoomFactor = windowHeight / (containerHeight+50);
+                console.log('updating zoom', zoomFactor);
+            }
+            
             if (self.getScaleFactor() === 3)
                 zoomFactor -= 0.1;
 
