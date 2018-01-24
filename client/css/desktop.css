@@ -191,7 +191,6 @@ canvas {
 
 #border {
     z-index: 99;
-    opacity: 0;
 }
 
 @media only screen and (min-width: 1501px) {
