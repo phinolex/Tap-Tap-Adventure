@@ -76,6 +76,8 @@ define(['jquery', './camera', './tile',
             self.camera = null;
             self.input = null;
             self.stopRendering = true;
+            
+            console.log('canvas context', context.canvas);
 
             self.forEachContext(function(context) {
                 context.fillStyle = '#12100D';

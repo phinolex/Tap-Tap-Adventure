@@ -32,6 +32,7 @@ define(['jquery'], function($) {
                 self.display();
 
             self.hovering = entity;
+            console.log('hovering', entity);
 
             self.name.html(entity.type === 'player' ? entity.username : entity.name);
 
