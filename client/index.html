@@ -23,7 +23,7 @@
     <title>WTF?! Adventure</title>
 
 </head>
-<body class="game">
+<body>
     <noscript>
         <div class="alert">
             You must enable JavaScript to play WTF?! Adventure.
@@ -146,7 +146,13 @@
                 <div id="hud-bar">
                     <div id="hud-bar-right">Right</div>
                     <div id="hud-bar-center">Center</div>
-                    <div id="hud-bar-left">Left</div>
+                    <div id="hud-bar-left">
+                        <div id="attackInfo">
+                            <div class="name"></div>
+                            <div class="details"></div>
+                            <div class="health"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="buttons">
@@ -243,11 +249,6 @@
                 </div>
             </div>
 
-            <div id="attackInfo">
-                <div class="name"></div>
-                <div class="details"></div>
-                <div class="health"></div>
-            </div>
             <div id="mapFrame">
                 <div id="warp1" class="mapButton"></div>
                 <div id="warp2" class="mapButton"></div>

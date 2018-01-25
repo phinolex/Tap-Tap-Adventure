@@ -4,6 +4,7 @@
     overflow-x: hidden;
     overflow-y: hidden;
     position: absolute;
+    z-index: 97;
 }
 
 #buttons ul {
@@ -212,29 +213,6 @@
 
 #attackInfo {
     display: none;
-    position: absolute;
-    left: 40%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-#attackInfo .name, #attackInfo .health {
-    position: absolute;
-    text-align: center;
-    font-family: sans-serif;
-    color: white;
-}
-
-#attackInfo .name {
-    width: 100%;
-    overflow: hidden;
-}
-
-#attackInfo .details {
-    overflow: hidden;
-    text-align: center;
-    font-family: sans-serif;
-    color: white;
-    width: 100%;
 }
 
 #attackInfo .health {
@@ -758,19 +736,6 @@
 
     #levelCheck {
         top: 221px;
-    }
-
-    #attackInfo {
-        width: 300px;
-        height: 75px;
-        top: 12px;
-        border-bottom-left-radius: 24px;
-        border-bottom-right-radius: 24px;
-        border: 6px solid #373737;
-    }
-
-    #attackInfo .details {
-        margin-top: 27px;
     }
 
     #attackInfo .health {
@@ -1304,19 +1269,6 @@
 
     #levelCheck {
         top: 154px;
-    }
-
-    #attackInfo {
-        width: 200px;
-        height: 50px;
-        top: 8px;
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-        border: 4px solid #373737;
-    }
-
-    #attackInfo .details {
-        margin-top: 18px;
     }
 
     #attackInfo .health {
@@ -1885,19 +1837,6 @@
 
     #levelCheck {
         top: 77px;
-    }
-
-    #attackInfo {
-        width: 100px;
-        height: 25px;
-        top: 4px;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        border: 2px solid #373737;
-    }
-
-    #attackInfo .details {
-        margin-top: 9px;
     }
 
     #attackInfo .health {

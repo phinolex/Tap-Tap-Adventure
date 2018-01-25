@@ -198,7 +198,7 @@ canvas {
 }
 
 #hud {
-    margin-top: 43%;
+    margin-top: 43.1%;
     height: 100%;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -331,7 +331,7 @@ canvas {
     
     #hud-bar {
         height: 40px;
-        font-size: 12px;
+        font-size: 10px;
     }
     
     #hud-bar-right {
