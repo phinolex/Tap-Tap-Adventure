@@ -76,25 +76,33 @@
                 </article>
     
                 <article id="createCharacter">
-                    <h1>
-                        <span class="left-ornament"></span>
-                        New Character
-                        <span class="right-ornament"></span>
-                    </h1>
-    
-    
-                    <form method="get" accept-charset="utf-8">
-                        <input type="text" id="registerNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off">
-                        <input type="password" id="registerPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
-                        <input type="password" id="registerPasswordConfirmationInput" name="player-password2" placeholder="Confirm Password" maxlength="64" autocomplete="off">
-                        <input type="email" id="registerEmailInput" name="player-email" placeholder="Email Address" maxlength="64" autocomplete="off">
-                    </form>
-    
-                    <div id="play"></div>
-    
-                    <p></p>
-    
-                    <div id="cancelButton"></div>
+                    <h1>Create An Account</h1>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-7">
+                            <form method="get" accept-charset="utf-8">
+                                <input type="text" id="registerNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off">
+                                <input type="password" id="registerPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
+                                <input type="password" id="registerPasswordConfirmationInput" name="player-password2" placeholder="Confirm Password" maxlength="64" autocomplete="off">
+                                <input type="email" id="registerEmailInput" name="player-email" placeholder="Email Address" maxlength="64" autocomplete="off">
+                            </form>
+                        </div>
+                        <div class="col-md-12 col-lg-3">
+                            <div id="arrowLeft"></div>
+                            <div id="character">Img</div>
+                            <div id="arrowRight"></div>
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-4">
+                            <div class="button green" id="play">Play</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="button red" id="cancel">Cancel</div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
     
                     <div class="validation-summary"></div>
     

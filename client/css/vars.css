@@ -200,7 +200,7 @@ body {
     left: 10%;
 }
 
-#continue, #cancelButton, #play {
+#continue, #cancelButton {
     top: 70%;
 }
 
@@ -265,20 +265,6 @@ html [type="button"],
 }
 
 @media only screen and (min-width: 1501px) {
-
-    #wrapper h1, #loadCharacter h1, #about h1 {
-        margin-top: 30px;
-        font-size: 30px;
-    }
-
-    #createCharacter h1 {
-        margin-top: 10px;
-        font-size: 30px;
-    }
-
-    #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
-        margin-left: 30px;
-    }
 
     #resizeCheck {
         height: 3px;
@@ -354,22 +340,6 @@ html [type="button"],
         background-position: -933px -261px;
     }
 
-    #play {
-        background-position: 0 0;
-    }
-
-    #play:hover {
-        background-position: 0 -87px;
-    }
-
-    #play:active {
-        background-position: 0 -174px;
-    }
-
-    #play.disabled {
-        background-position: 0 -261px;
-    }
-
     .validation-summary {
         width: 366px;
     }
@@ -389,14 +359,6 @@ html [type="button"],
 }
 
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
-
-    #wrapper h1, #loadCharacter h1, #createCharacter h1, #about h1 {
-        margin-top: 40px;
-    }
-
-    #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
-        margin-top: 20px;
-    }
 
     #resizeCheck {
         height: 2px;
@@ -472,22 +434,6 @@ html [type="button"],
         background-position: -622px -174px;
     }
 
-    #play {
-        background-position: 0 0;
-    }
-
-    #play:hover {
-        background-position: 0 -58px;
-    }
-
-    #play:active {
-        background-position: 0 -116px;
-    }
-
-    #play.disabled {
-        background-position: 0 -174px;
-    }
-
     .validation-summary {
         width: 256px;
     }
@@ -504,21 +450,9 @@ html [type="button"],
         height: 15px;
         width: 10px;
     }
-
-    #about h1 {
-        font-size: 26px;
-    }
 }
 
 @media only screen and (max-width: 1000px) {
-
-    #wrapper h1, #loadCharacter h1, #createCharacter h1, #about h1 {
-        margin-top: 20px;
-    }
-
-    #wrapper h2, #loadCharacter h1, #createCharacter h1, #about h1 {
-        margin-top: 10px;
-    }
 
     #resizeCheck {
         height: 1px;
@@ -592,22 +526,6 @@ html [type="button"],
     
     #cancelButton.disabled {
         background-position: -311px -87px;
-    }
-    
-    #play {
-        background-position: 0 0;
-    }
-    
-    #play:hover {
-        background-position: 0 -29px;
-    }
-    
-    #play:active {
-        background-position: 0 -58px;
-    }
-    
-    #play.disabled {
-        background-position: 0 -87px;
     }
 
     .validation-summary {

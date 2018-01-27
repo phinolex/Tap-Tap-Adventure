@@ -37,12 +37,6 @@
     top: 70%;
 }
 
-#cancel {
-    position: absolute;
-    left: 70%;
-    top: 70%;
-}
-
 #inventory {
     background-color: rgba(0, 0, 0, 0.3);
     position: absolute;
@@ -1031,16 +1025,6 @@
         background: url('../img/2/containers.png') -642px -94px;
     }
 
-    #cancel {
-        width: 40px;
-        height: 14px;
-        background: url('../img/2/containers.png') -601px -108px;
-    }
-
-    #cancel:hover {
-        background: url('../img/2/containers.png') -601px -94px;
-    }
-
     #inventory {
         width: 192px;
         height: 202px;
@@ -1591,22 +1575,10 @@
         background: url('../img/1/containers.png') -387px -65px;
     }
 
-    #cancel {
-        left: 75%;
-        top: 55%;
-        width: 14px;
-        height: 14px;
-        background: url('../img/1/containers.png') -371px -79px;
-    }
-
-    #cancel:hover {
-        background: url('../img/1/containers.png') -371px -65px;
-    }
-
     #inventory {
         width: 96px;
         height: 101px;
-        border: 1px solid #373737
+        border: 1px solid #373737;
     }
 
     .itemSlot {

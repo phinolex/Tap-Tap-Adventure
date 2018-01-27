@@ -75,9 +75,7 @@ define(['jquery'], function($) {
             });
 
             self.wrapper.click(function() {
-                console.log('clicking wrapper');
                 if (self.wrapper.hasClass('about') || self.wrapper.hasClass('credits') || self.wrapper.hasClass('git')) {
-
                     self.wrapper.removeClass('about credits git');
                     self.displayScroll('loadCharacter');
 
@@ -207,7 +205,6 @@ define(['jquery'], function($) {
         },
 
         login: function() {
-            console.log('login');
             var self = this;
 
             if (self.loggingIn || !self.game || !self.game.loaded || self.statusMessage || !self.verifyForm())
@@ -226,10 +223,8 @@ define(['jquery'], function($) {
                 windowHeight = self.window.height(),
                 zoomFactor = windowWidth / containerWidth;
 
-            console.log('zoom factor', containerHeight, windowHeight);
             if (containerHeight + 50 >= windowHeight) {
                 zoomFactor = windowHeight / (containerHeight+50);
-                console.log('updating zoom', zoomFactor);
             }
             
             if (self.getScaleFactor() === 3)
@@ -271,12 +266,16 @@ define(['jquery'], function($) {
 
         openScroll: function(origin, destination) {
             var self = this;
+            
+            console.log('open scroll', origin, destination);
 
             if (!destination || self.loggingIn)
                 return;
 
             self.cleanErrors();
-            self.wrapper.removeClass(origin).addClass(destination);
+            // self.wrapper.removeClass(origin).addClass(destination);
+            $("#" + origin).css('display', 'none');
+            $("#" + destination).css('display', 'block');
         },
 
         displayScroll: function(content) {

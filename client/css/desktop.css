@@ -81,7 +81,6 @@ canvas {
     display: none;
 }
 
-
 .form-field {
     display: block;
 }
@@ -103,6 +102,11 @@ canvas {
 #content {
     margin: auto;
     color: #c3bbb9;
+}
+
+#content h1 {
+    text-align: center;
+    margin-top: -20px;
 }
 
 .check {

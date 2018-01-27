@@ -106,10 +106,6 @@ define(['jquery', './camera', './tile',
 
             self.screenWidth = self.camera.gridWidth * self.tileSize;
             self.screenHeight = self.camera.gridHeight * self.tileSize;
-            
-            console.log("tile size:", self.tileSize);
-            console.log("camera:", self.camera.gridWidth, self.camera.gridHeight);
-            console.log("screen:", self.screenWidth, self.screenHeight);
 
             var width = self.screenWidth * self.drawingScale,
                 height = self.screenHeight * self.drawingScale;
@@ -137,7 +133,6 @@ define(['jquery', './camera', './tile',
         },
 
         resize: function() {
-            console.log('resizing');
             var self = this;
 
             self.stopRendering = true;
