@@ -11,7 +11,7 @@ define(['jquery'], function($) {
 
             self.chat = $('#chat');
             self.log = $('#chatLog');
-            self.input = $('#chatInput');
+            self.input = $('#hud-chat-input');
             self.button = $('#hud-chat');
 
             self.visible = false;

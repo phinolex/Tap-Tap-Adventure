@@ -144,15 +144,6 @@ body {
     position: relative;
 }
 
-.chatInputData {
-    width: 100%;
-    height: 100%;
-	color: white;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-radius: 4px;
-    font-family: sans-serif;
-}
-
 #abilityShortcut {
     left: 38%;
     position: absolute;
@@ -307,7 +298,7 @@ html [type="button"],
         font-size: 15px;
         padding: 6px 0;
     }
-    
+
     #continue {
         background-position: -1242px 0;
     }
@@ -499,15 +490,15 @@ html [type="button"],
     #continue {
         background-position: -414px 0;
     }
-    
+
     #continue:hover {
         background-position: -414px -29px;
     }
-    
+
     #continue:active {
         background-position: -414px -58px;
     }
-    
+
     #continue.disabled {
         background-position: -414px -87px;
     }
@@ -515,7 +506,7 @@ html [type="button"],
     #cancelButton {
         background-position: -311px 0;
     }
-    
+
     #cancelButton:hover {
         background-position: -311px -29px;;
     }
@@ -523,7 +514,7 @@ html [type="button"],
     #cancelButton:active {
         background-position: -311px -58px;
     }
-    
+
     #cancelButton.disabled {
         background-position: -311px -87px;
     }
