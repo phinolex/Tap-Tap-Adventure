@@ -10,7 +10,7 @@ define(['jquery'], function($) {
             self.game = game;
 
             self.mapFrame = $('#mapFrame');
-            self.warp = $('#warpButton');
+            self.warp = $('#hud-world');
             self.close = $('#closeMapFrame');
 
             self.warpCount = 0;

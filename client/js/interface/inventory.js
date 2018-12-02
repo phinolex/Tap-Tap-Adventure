@@ -11,7 +11,7 @@ define(['jquery', './container/container'], function($, Container) {
             self.actions = game.interface.actions;
 
             self.body = $('#inventory');
-            self.button = $('#inventoryButton');
+            self.button = $('#hud-inventory');
             self.action = $('#actionContainer');
 
             self.container = new Container(size);

@@ -228,6 +228,7 @@ define(['./renderer/renderer', './utils/storage',
                 } else if (self.app.isGuest()) {
                     self.socket.send(Packets.Intro, [Packets.IntroOpcode.Guest, 'n', 'n', 'n'])
                 } else {
+                    console.log(self.app);
                     var loginInfo = self.app.loginFields,
                         name = loginInfo[0].val(),
                         pass = loginInfo[1].val();
@@ -1188,7 +1189,7 @@ define(['./renderer/renderer', './utils/storage',
 
             if (ignores)
                 self.pathfinder.clearIgnores();
-            
+
             return path;
         },
 

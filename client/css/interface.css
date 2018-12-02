@@ -415,45 +415,11 @@
     left: 95%;
 }
 
-.warpButton {
-    position: absolute;
-}
-
 @media only screen and (min-width: 1501px) {
-    
+
     #buttons {
         width: 210px;
         height: 45px;
-    }
-
-    #chatButton {
-        position: relative;
-        width: 42px;
-        height: 45px;
-        background: url('../img/3/maintwo.png') no-repeat -588px -942px;
-    }
-
-    #chatButton:hover {
-        background: url('../img/3/maintwo.png') no-repeat -630px -942px;
-    }
-
-    #chatButton.active {
-        background: url('../img/3/maintwo.png') no-repeat -672px -942px;
-    }
-
-    #inventoryButton {
-        position: relative;
-        width: 42px;
-        height: 45px;
-        background: url('../img/3/main.png') no-repeat -588px -942px;
-    }
-
-    #inventoryButton:hover {
-        background: url('../img/3/main.png') no-repeat -630px -942px;
-    }
-
-    #inventoryButton.active {
-        background: url('../img/3/main.png') no-repeat -672px -942px;
     }
 
     #profileButton {
@@ -484,21 +450,6 @@
 
     #settingsButton.active {
         background: url('../img/3/main.png') no-repeat -1302px -942px;
-    }
-
-    #warpButton {
-        position: relative;
-        width: 42px;
-        height: 45px;
-        background: url('../img/3/main.png') no-repeat -966px -942px;
-    }
-
-    #warpButton:hover {
-        background: url('../img/3/main.png') no-repeat -1008px -942px;
-    }
-
-    #warpButton.active {
-        background: url('../img/3/main.png') no-repeat -1050px -942px;
     }
 
     #abilityShortcut {
@@ -833,7 +784,7 @@
         width: 48px;
         height: 48px;
     }
-    
+
     .questName {
         -webkit-border-radius: 12px;
         -moz-border-radius: 12px;
@@ -906,40 +857,10 @@
 }
 
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
-    
+
     #buttons {
         width: 140px;
         height: 30px;
-    }
-
-    #chatButton {
-        position: relative;
-        width: 28px;
-        height: 30px;
-        background: url('../img/2/maintwo.png') no-repeat -392px -628px;
-    }
-
-    #chatButton:hover {
-        background: url('../img/2/maintwo.png') no-repeat -420px -628px;
-    }
-
-    #chatButton.active {
-        background: url('../img/2/maintwo.png') no-repeat -448px -628px;
-    }
-
-    #inventoryButton {
-        position: relative;
-        width: 28px;
-        height: 30px;
-        background: url('../img/2/main.png') no-repeat -392px -628px;
-    }
-
-    #inventoryButton:hover {
-        background: url('../img/2/main.png') no-repeat -420px -628px;
-    }
-
-    #inventoryButton.active {
-        background: url('../img/2/main.png') no-repeat -448px -628px;
     }
 
     #profileButton {
@@ -970,21 +891,6 @@
 
     #settingsButton.active {
         background: url('../img/2/main.png') no-repeat -868px -628px;
-    }
-
-    #warpButton {
-        position: relative;
-        width: 28px;
-        height: 30px;
-        background: url('../img/2/main.png') no-repeat -644px -628px;
-    }
-
-    #warpButton:hover {
-        background: url('../img/2/main.png') no-repeat -672px -628px;
-    }
-
-    #warpButton.active {
-        background: url('../img/2/main.png') no-repeat -700px -628px;
     }
 
     #abilityShortcut {
@@ -1451,43 +1357,13 @@
 }
 
 @media only screen and (max-width: 1000px) {
-    
+
     #buttons {
         width: 140px;
         height: 30px;
         transform: scale(0.80);
         margin-left: 350px;
         margin-top: 229px;
-    }
-
-    #chatButton {
-        position: relative;
-        width: 28px;
-        height: 30px;
-        background: url('../img/2/maintwo.png') no-repeat -392px -628px;
-    }
-
-    #chatButton:hover {
-        background: url('../img/2/maintwo.png') no-repeat -420px -628px;
-    }
-
-    #chatButton.active {
-        background: url('../img/2/maintwo.png') no-repeat -448px -628px;
-    }
-
-    #inventoryButton {
-        position: relative;
-        width: 28px;
-        height: 30px;
-        background: url('../img/2/main.png') no-repeat -392px -628px;
-    }
-
-    #inventoryButton:hover {
-        background: url('../img/2/main.png') no-repeat -420px -628px;
-    }
-
-    #inventoryButton.active {
-        background: url('../img/2/main.png') no-repeat -448px -628px;
     }
 
     #profileButton {
@@ -1518,21 +1394,6 @@
 
     #settingsButton.active {
         background: url('../img/2/main.png') no-repeat -868px -628px;
-    }
-
-    #warpButton {
-        position: relative;
-        width: 28px;
-        height: 30px;
-        background: url('../img/2/main.png') no-repeat -644px -628px;
-    }
-
-    #warpButton:hover {
-        background: url('../img/2/main.png') no-repeat -672px -628px;
-    }
-
-    #warpButton.active {
-        background: url('../img/2/main.png') no-repeat -700px -628px;
     }
 
     #abilityShortcut {

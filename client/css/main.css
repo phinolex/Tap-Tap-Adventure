@@ -311,7 +311,7 @@ footer div {
 }
 
 @media only screen and (max-width: 1500px), only screen and (max-height: 870px) {
-    
+
     #wrapper-footer {
         height: 100px;
     }
@@ -402,7 +402,7 @@ footer div {
 }
 
 @media only screen and (max-width: 1000px) {
-    
+
     #wrapper-footer {
         height: 60px;
     }
@@ -490,4 +490,8 @@ footer div {
     #respawn:active {
         background-position: -125px -476px;
     }
+}
+
+.align-center {
+  margin: auto;
 }

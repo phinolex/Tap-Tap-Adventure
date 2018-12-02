@@ -158,6 +158,7 @@ canvas {
     padding: 5px 10px 10px 10px;
     cursor: pointer;
     text-align: center;
+    max-width: 160px;
 }
 
 .button.green {
@@ -181,9 +182,15 @@ canvas {
     background-size: 100% 100%;
 }
 
-.hud-img-button {
+.hud-img {
     width: 100px;
     height: 100px;
+    max-height: 40px;
+    max-width: 40px;
+}
+
+.padding-top {
+  padding-top: 10px;
 }
 
 
@@ -199,6 +206,44 @@ canvas {
 
 #border {
     z-index: 99;
+}
+
+#chat-bar,
+#world-bar {
+    margin-top: 25%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: absolute;
+    color: white;
+    cursor: none;
+}
+
+#chat-bar {
+  right: 0;
+}
+
+#world-bar {
+  left: 5px;
+}
+
+#hud-chat,
+#hud-inventory,
+#hud-world,
+#hud-achievements {
+  cursor: pointer;
+}
+
+#hud-chat {
+  margin-bottom: 43px;
+}
+
+#hud-world {
+  margin-top: 14px;
+}
+
+#hud-achievements {
+  margin-bottom: 13px;
 }
 
 #hud {
@@ -249,7 +294,7 @@ canvas {
 }
 
 @media only screen and (min-width: 1501px) {
-    
+
     #modal {
         top: 48%;
     }
@@ -266,7 +311,7 @@ canvas {
         background: url('../img/3/border.png') no-repeat 0 0;
         background-size: 100% 100%;
     }
-    
+
     #hud {
        width: 1450px;
     }
@@ -284,7 +329,7 @@ canvas {
     #modal {
         top: 35%;
     }
-    
+
     #border {
         position: absolute;
         width: 980px;
@@ -297,7 +342,7 @@ canvas {
         background: url('../img/2/border.png') no-repeat 0 0;
         background-size: 100% 100%;
     }
-    
+
     #hud {
        width: 960px;
     }
@@ -315,7 +360,7 @@ canvas {
     #modal {
         top: 20%;
     }
-    
+
     #border {
         position: absolute;
         width: 490px;
@@ -328,24 +373,24 @@ canvas {
         background: url('../img/1/border.png') no-repeat 0 0;
         background-size: 100% 100%;
     }
-    
+
     #hud {
        width: 482px;
     }
-    
+
     #hud-bar {
         height: 40px;
         font-size: 10px;
     }
-    
+
     #hud-bar-right {
         padding: 2px 2px 0 2px;
     }
-    
+
     #hud-bar-left {
         padding: 2px 2px 0 2px;
     }
-    
+
     #hud-bar-center {
         padding-right: 120px;
         padding-left: 120px;
@@ -357,4 +402,8 @@ canvas {
         margin: -126px auto auto -245px;
         position: absolute;
     }
+}
+
+.align-center {
+  margin: auto;
 }

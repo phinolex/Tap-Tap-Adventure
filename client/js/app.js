@@ -38,7 +38,11 @@ define(['jquery'], function($) {
             self.credits = $('#toggle-credits');
             self.git = $('#toggle-git');
 
-            self.loginFields = [];
+            self.loginFields = [
+              $('#loginNameInput'),
+              $('#loginPasswordInput')
+            ];
+
             self.registerFields = [];
 
             self.game = null;
@@ -93,12 +97,12 @@ define(['jquery'], function($) {
             self.git.click(function() {
                 self.displayScroll('git');
             });
-            
+
             // dismissing the welcome screen
             var welcomeContinue = function() {
                 if (!self.game)
                     return;
-                    
+
                 // hide the welcome screen so it doesn't appear again
                 self.game.storage.data.welcome = false;
                 self.game.storage.save();
@@ -226,7 +230,7 @@ define(['jquery'], function($) {
             if (containerHeight + 50 >= windowHeight) {
                 zoomFactor = windowHeight / (containerHeight+50);
             }
-            
+
             if (self.getScaleFactor() === 3)
                 zoomFactor -= 0.1;
 
@@ -266,7 +270,7 @@ define(['jquery'], function($) {
 
         openScroll: function(origin, destination) {
             var self = this;
-            
+
             console.log('open scroll', origin, destination);
 
             if (!destination || self.loggingIn)
@@ -390,7 +394,7 @@ define(['jquery'], function($) {
             this.cleanErrors();
 
             $('.loader .message').html(error);
-  
+
             if (!field)
                 return;
 
@@ -468,14 +472,14 @@ define(['jquery'], function($) {
                 self.loading.html('');
                 return;
             }
-            
+
             self.loading.show();
             $('.loader .message').html(message);
         },
 
         toggleLogin: function(toggle) {
             log.info('Logging in: ' + toggle);
-            
+
             var self = this;
 
             self.revertLoader();

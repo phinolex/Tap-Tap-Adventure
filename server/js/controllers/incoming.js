@@ -126,9 +126,11 @@ module.exports = Incoming = cls.Class.extend({
             email = isRegistering ? message.shift() : '',
             formattedUsername = username ? username.charAt(0).toUpperCase() + username.slice(1) : '';
 
+        log.info(message);
+
         self.player.username = formattedUsername.substr(0, 32).trim();
-        self.player.password = password.substr(0, 32);
-        self.player.email = email.substr(0, 128);
+        self.player.password = password.substr(0, 32).trim();
+        self.player.email = email.substr(0, 128).trim();
 
         if (self.introduced)
             return;
@@ -676,7 +678,7 @@ module.exports = Incoming = cls.Class.extend({
 
                     //Infinite stacks move all at onces, otherwise move one by one.
                     var moveAmount = Items.maxStackSize(bankSlot.id) === -1 ? bankSlot.count : 1;
-                    
+
                     if (self.player.inventory.add(bankSlot,moveAmount))
                         self.player.bank.remove(bankSlot.id, moveAmount, index);
 
