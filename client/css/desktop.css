@@ -182,7 +182,7 @@ canvas {
     background-size: 100% 100%;
 }
 
-.col-md-12 > .hud-img {
+.col-md-12 .hud-img {
     width: 100px;
     height: 100px;
     max-height: 40px;
