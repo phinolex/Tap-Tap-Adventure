@@ -122,7 +122,7 @@ module.exports = MySQL = cls.Class.extend({
           // self.register(player);
           log.info('Mysql.login(player) failed for ' + player.username);
           player.notify('Username or password not found!');
-          self.connection.sendUTF8('notfound');
+          //self.connection.sendUTF8('notfound');
         }
       });
   },

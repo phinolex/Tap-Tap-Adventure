@@ -381,19 +381,20 @@ define(['jquery'], function($) {
             self.statusMessage = message;
 
             if (!message) {
-                $('.loader .message').html('');
-                $('.loader').hide();
+                self.loading.html('');
+                self.loading.hide();
                 return;
             }
 
-            $('.loader').show();
-            $('.loader .message').html(message);
+            self.loading.show();
+            self.loading.html(message);
         },
 
         sendError: function(field, error) {
             this.cleanErrors();
 
-            $('.loader .message').html(error);
+            this.loading.html(error);
+            this.loading.show();
 
             if (!field)
                 return;
@@ -474,7 +475,7 @@ define(['jquery'], function($) {
             }
 
             self.loading.show();
-            $('.loader .message').html(message);
+            self.loading.html(message);
         },
 
         toggleLogin: function(toggle) {
@@ -489,13 +490,13 @@ define(['jquery'], function($) {
             self.loggingIn = toggle;
 
             if (toggle) {
-                self.loading.removeAttr('hidden');
+                self.loading.hide();
 
                 self.loginButton.addClass('disabled');
                 self.registerButton.addClass('disabled');
 
             } else {
-                self.loading.attr('hidden', true);
+                self.loading.hide();
 
                 self.loginButton.removeClass('disabled');
                 self.registerButton.removeClass('disabled');

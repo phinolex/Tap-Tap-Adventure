@@ -212,8 +212,8 @@ module.exports = Incoming = cls.Class.extend({
             self.mysql.login(self.player);
 
         } else {
-            console.log('API is logging in');
-            self.connection.sendUTF8('api logging in');
+            console.log('validating login');
+            self.connection.sendUTF8('validatingLogin');
             self.mysql.login(self.player);
         }
     },

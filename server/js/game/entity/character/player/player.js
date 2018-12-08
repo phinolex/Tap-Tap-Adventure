@@ -582,9 +582,8 @@ module.exports = Player = Character.extend({
 
     timeout: function() {
         var self = this;
-
         self.connection.sendUTF8('timeout');
-        self.connection.close('Player timed out.');
+        self.connection.close(self.username + ' timed out.');
     },
 
     refreshTimeout: function() {

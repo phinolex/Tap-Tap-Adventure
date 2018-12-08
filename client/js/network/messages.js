@@ -128,20 +128,19 @@ define(function() {
                     break;
 
                 case 'malform':
-
                     self.app.game.handleDisconnection(true);
                     self.app.sendError(null, 'Client has experienced a malfunction.');
-
                     break;
 
                 case 'timeout':
-
                     self.app.sendError(null, 'You have been disconnected for being inactive for too long.');
-
                     break;
 
+                case 'validatingLogin':
+                    self.app.sendError(null, 'Validating login...');
+                    break;
                 default:
-                    self.app.sendError(null, 'An unknown error has occurred, please refer to the forums.');
+                    self.app.sendError(null, 'An unknown error has occurred: ' + message);
                     break;
             }
         },
