@@ -31,9 +31,11 @@ define(['jquery'], function($) {
             });
         },
 
-        add: function(source, text, colour) {
+        add: function(source, text, labelColor, textColor) {
+            styleLabel = labelColor ? labelColor : 'white';
+            styleText = textColor ? textColor : 'white';
             var self = this,
-                element = $('<p>' + source + ': ' + text + '</p>');
+                element = $('<p><span style="color:' + styleLabel + '">' + source + ':</span><span style="color: ' + styleText + '"> ' + text + '</span></p>');
 
             self.showChat();
 
@@ -41,8 +43,6 @@ define(['jquery'], function($) {
                 self.hideInput();
 
             self.hideChat();
-
-            element.css('color', colour ? colour : 'white');
 
             self.log.append(element);
             self.log.scrollTop(99999);

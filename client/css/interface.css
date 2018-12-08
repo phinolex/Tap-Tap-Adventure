@@ -38,11 +38,14 @@
 }
 
 #inventory {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: #000;
+    padding: 5px;
     position: absolute;
-    top: 50%;
+    top: 6%;
     left: 76%;
     display: none;
+    /* text-align: center; */
+    /* margin: auto; */
 }
 
 #inventory ul {
@@ -50,6 +53,8 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
+    text-align: center;
+    margin: auto;
 }
 
 #inventory ul li {
@@ -66,11 +71,11 @@
 }
 
 #actionContainer {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #000;
     position: absolute;
     display: none;
-    left: 20%;
-    top: 83%;
+    left: 78%;
+    top: 45%;
     cursor: hand;
 }
 
@@ -932,9 +937,9 @@
     }
 
     #inventory {
-        width: 192px;
-        height: 202px;
-        border: 2px solid #373737
+        width: 187px;
+        height: 195px;
+        border: 2px solid #373737;
     }
 
     .itemSlot {
@@ -967,7 +972,7 @@
     }
 
     #actionContainer {
-        width: 128px;
+        width: 200px;
         height: 64px;
     }
 
@@ -1357,6 +1362,11 @@
 }
 
 @media only screen and (max-width: 1000px) {
+
+    #hud-chat-input {
+      margin-top: -20px;
+      font-size: 10px;
+    }
 
     #buttons {
         width: 140px;

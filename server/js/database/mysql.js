@@ -118,16 +118,27 @@ module.exports = MySQL = cls.Class.extend({
           }
         });
 
-        if (!found)
-          self.register(player);
+        if (!found) {
+          // self.register(player);
+          log.info('Mysql.login(player) failed for ' + player.username);
+          player.notify('Username or password not found!');
+          self.connection.sendUTF8('notfound');
+        }
       });
   },
 
   register: function(player) {
     var self = this;
 
-    self.connection.query('SELECT * FROM `player_data` WHERE `player_data`.`username`= ?', [player.username], function(error, rows, fields) {
+    self.connection.query('SELECT * FROM `player_data` WHERE `player_data`.`username`= ?',
+    [player.username],
+    function(error, rows, fields) {
       var exists;
+
+      if (error) {
+        log.error(error);
+        throw error;
+      }
 
       _.each(rows, function(row) {
         if (row.name === player.username)
@@ -135,7 +146,7 @@ module.exports = MySQL = cls.Class.extend({
       });
 
       if (!exists) {
-        log.info('No player data found. Creating new player data for: ' + player.username);
+        log.info('No player data found for: ' + player.username);
 
         player.isNew = true;
         player.load(self.creator.getPlayerData(player));
@@ -144,6 +155,9 @@ module.exports = MySQL = cls.Class.extend({
 
         player.isNew = false;
         player.intro();
+      } else {
+        log.info('MySQL.register(player) Error: Username already exists.');
+        player.notify('This username is already taken!');
       }
     });
   },

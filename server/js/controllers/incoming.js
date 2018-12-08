@@ -117,6 +117,8 @@ module.exports = Incoming = cls.Class.extend({
     },
 
     handleIntro: function(message) {
+      log.info('incoming message:' + message.toString());
+
         var self = this,
             loginType = message.shift(),
             username = message.shift().toLowerCase(),
@@ -125,8 +127,6 @@ module.exports = Incoming = cls.Class.extend({
             isGuest = loginType === Packets.IntroOpcode.Guest,
             email = isRegistering ? message.shift() : '',
             formattedUsername = username ? username.charAt(0).toUpperCase() + username.slice(1) : '';
-
-        log.info(message);
 
         self.player.username = formattedUsername.substr(0, 32).trim();
         self.player.password = password.substr(0, 32).trim();
@@ -160,6 +160,7 @@ module.exports = Incoming = cls.Class.extend({
         self.introduced = true;
 
         if (isRegistering) {
+            info.log('is registering');
             var registerOptions = {
                 method: 'GET',
                 uri: 'https://taptapadventure.com/api/register.php?a=' + '9a4c5ddb-5ce6-4a01-a14f-3ae49d8c6507' + '&u=' + self.player.username + '&p=' + self.player.password + '&e=' + self.player.email
@@ -211,44 +212,9 @@ module.exports = Incoming = cls.Class.extend({
             self.mysql.login(self.player);
 
         } else {
-            var loginOptions = {
-                method: 'POST',
-                uri: 'https://forum.taptapadventure.com/api/ns/login',
-                form: {
-                    'username': self.player.username.toLowerCase(),
-                    'password': self.player.password
-                }
-            };
-
-            Request(loginOptions, function(error, response, body) {
-                var data;
-
-                /**
-                 * The website may respond with HTML message if
-                 * the forums are down. In this case we catch any
-                 * exception and ensure it does not proceed any
-                 * further. We tell players that the server doesn't
-                 * allow connections.
-                 */
-
-                try {
-                    data = JSON.parse(body);
-
-                } catch (e) {
-                    log.info('Could not decipher API message');
-
-                    self.connection.sendUTF8('disallowed');
-                    self.connection.close('API response is malformed!');
-                }
-
-                if (data && data.message) {
-
-                    self.connection.sendUTF8('invalidlogin');
-                    self.connection.close('Wrong password entered for: ' + self.player.username);
-                } else
-                    self.mysql.login(self.player);
-
-            });
+            console.log('API is logging in');
+            self.connection.sendUTF8('api logging in');
+            self.mysql.login(self.player);
         }
     },
 

@@ -157,13 +157,18 @@ body {
 
 #chat p {
     font-family: sans-serif;
+    line-height: 20px;
 }
 
 #chatLog {
     width: 100%;
-    height: 100%;
-    margin-top: -44%;
-    overflow-y: hidden;
+    max-height: 200px;
+    margin-top: -90%;
+    overflow-y: scroll;
+    background: rgba(0,0,0,.5);
+    padding: 10px;
+    border-radius: 10px;
+    line-height: 15px;
 }
 
 #talk {
@@ -473,7 +478,7 @@ html [type="button"],
         left: 125px;
     }
 
-    #chatLog {
+    p {
         font-size: 10px;
     }
 

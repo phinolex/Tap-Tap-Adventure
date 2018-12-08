@@ -228,12 +228,12 @@ define(['./renderer/renderer', './utils/storage',
                 } else if (self.app.isGuest()) {
                     self.socket.send(Packets.Intro, [Packets.IntroOpcode.Guest, 'n', 'n', 'n'])
                 } else {
-                    console.log(self.app);
+                    console.log('logging in');
                     var loginInfo = self.app.loginFields,
                         name = loginInfo[0].val(),
                         pass = loginInfo[1].val();
 
-                    self.socket.send(Packets.Intro, [Packets.IntroOpcode.Login, name, pass]);
+                    self.socket.send(Packets.Intro, [Packets.IntroOpcode.Login, name, pass, 'n']);
 
                     if (self.hasRemember()) {
                         self.storage.data.player.username = name;
@@ -800,7 +800,7 @@ define(['./renderer/renderer', './utils/storage',
 
                     case Packets.NotificationOpcode.Text:
 
-                        self.input.chatHandler.add('WORLD', message);
+                        self.input.chatHandler.add('WORLD', message, 'red');
 
                         break;
                 }

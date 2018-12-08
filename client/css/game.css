@@ -1,5 +1,5 @@
 body.game {
-    background: #000;
+  
 }
 
 .game #loadCharacter, .game #createCharacter, .game #error, .game #modal {
@@ -44,4 +44,5 @@ body.game {
 
 .game #container {
     opacity: 1;
+    /* background: #000; */
 }

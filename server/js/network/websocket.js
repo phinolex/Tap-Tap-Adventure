@@ -41,12 +41,14 @@ WebSocket.Server = Socket.extend({
             var client = new WebSocket.Connection(self.createId(), socket, self);
 
             socket.on('client', function(data) {
-                // if (data.gVer !== self.version) {
-                //     client.sendUTF8('updated');
-                //     log.notice(data);
-                //     log.notice(self);
-                //     client.close('Client version is out of sync with the server.');
-                // }
+
+                // check the client version of socket.io matches the server version
+                if (data.gVer !== self.version) {
+                    client.sendUTF8('updated');
+                    log.notice(data.gVer);
+                    log.notice(self.version);
+                    client.close('Client version is out of sync with the server.');
+                }
 
                 if (self.connectionCallback) {
                     self.connectionCallback(client);

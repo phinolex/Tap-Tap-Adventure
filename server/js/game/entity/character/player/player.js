@@ -83,6 +83,7 @@ module.exports = Player = Character.extend({
     load: function(data) {
         var self = this;
 
+        self.loaded = true;
         self.kind = data.kind;
         self.rights = data.rights;
         self.experience = data.experience;
@@ -251,20 +252,15 @@ module.exports = Player = Character.extend({
 
     heal: function(amount) {
         var self = this;
-
-        /**
-         * Passed from the superclass...
-         */
-
-        self.hitPoints.heal(amount);
-        self.mana.heal(amount);
-
-        self.sync();
+        self.hitPoints = self.healHitPoints(amount);
+        self.mana = self.healManaPoints(amount);
     },
 
     healHitPoints: function(amount) {
         var self = this,
             type = 'health';
+
+        console.log(self.hitPoints);
 
         self.hitPoints.heal(amount);
 
@@ -280,6 +276,8 @@ module.exports = Player = Character.extend({
     healManaPoints: function(amount) {
         var self = this,
             type = 'mana';
+
+        console.log(self.mana);
 
         self.mana.heal(amount);
 

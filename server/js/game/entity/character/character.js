@@ -14,6 +14,7 @@ module.exports = Character = Entity.extend({
         self._super(id, type, instance, x, y);
 
         self.level = -1;
+        self.loaded = false;
 
         self.movementSpeed = 150;
         self.attackRange = 1;
@@ -71,9 +72,9 @@ module.exports = Character = Entity.extend({
         var self = this;
 
         self.healingInterval = setInterval(function() {
-
-            if (!self.hasTarget() && !self.combat.isAttacked() && !self.dead)
-                self.heal(1);
+            if (!self.hasTarget() && !self.combat.isAttacked() && !self.dead && self.loaded) {
+              self.heal(1);
+            }
 
         }, 5000);
     },
