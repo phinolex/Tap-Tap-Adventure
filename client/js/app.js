@@ -28,6 +28,8 @@ define(['jquery'], function($) {
             self.yes = $('#yes');
             self.no = $('#no');
             self.loading = $('.loader');
+            self.loadingMsg = $('.loader.message');
+            self.errorMsg = $('.error.message');
 
             self.respawn = $('#respawn');
 
@@ -381,20 +383,21 @@ define(['jquery'], function($) {
             self.statusMessage = message;
 
             if (!message) {
-                self.loading.html('');
+                self.loadingMsg.html('');
                 self.loading.hide();
                 return;
             }
 
             self.loading.show();
-            self.loading.html(message);
+            self.loadingMsg.html(message);
         },
 
         sendError: function(field, error) {
             this.cleanErrors();
+            console.log('Error: ' + error);
 
-            this.loading.html(error);
-            this.loading.show();
+            this.errorMsg.html(error);
+            this.errorMsg.show();
 
             if (!field)
                 return;
@@ -470,12 +473,12 @@ define(['jquery'], function($) {
 
             if (!message) {
                 self.loading.hide();
-                self.loading.html('');
+                self.loadingMsg.html('');
                 return;
             }
 
             self.loading.show();
-            self.loading.html(message);
+            self.loadingMsg.html(message);
         },
 
         toggleLogin: function(toggle) {

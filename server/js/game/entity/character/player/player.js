@@ -586,6 +586,12 @@ module.exports = Player = Character.extend({
         self.connection.close(self.username + ' timed out.');
     },
 
+    invalidLogin: function() {
+        var self = this;
+        self.connection.sendUTF8('invalidlogin');
+        self.connection.close(self.username + ' invalid login.');
+    },
+
     refreshTimeout: function() {
         var self = this;
 
