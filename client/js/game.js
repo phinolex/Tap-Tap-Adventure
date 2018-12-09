@@ -146,17 +146,23 @@ define(['./renderer/renderer', './utils/storage',
 
             self.app.sendStatus('Stop! Before it\'s too late...');
 
-            self.setEntityController(new Entities(self));
+            var entity = new Entities(self);
+            self.setEntityController(entity);
 
-            self.setInfo(new Info(self));
+            var info = new Info(self);
+            self.setInfo(info);
 
-            self.setBubble(new Bubble(self));
+            var bubble = new Bubble(self);
+            self.setBubble(bubble);
 
-            self.setPointer(new Pointer(self));
+            var pointer = new Pointer(self);
+            self.setPointer(pointer);
 
-            self.setAudio(new Audio(self));
+            var audio = new Audio(self);
+            self.setAudio(audio);
 
-            self.setInterface(new Interface(self));
+            var interface = new Interface(self);
+            self.setInterface(interface);
 
             self.implementStorage();
 

@@ -194,21 +194,22 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
       }
 
       return null;
+    },
 
-      updateScale: function() {
-          this.scale = this.getDrawingScale();
-        },
+    updateScale: function() {
+      this.scale = this.getDrawingScale();
+    },
 
-        updateCamera: function() {
-          this.camera = this.game.renderer.camera;
-        },
+    updateCamera: function() {
+      this.camera = this.game.renderer.camera;
+    },
 
-        getScale: function() {
-          return this.game.getScaleFactor();
-        },
+    getScale: function() {
+      return this.game.getScaleFactor();
+    },
 
-        getDrawingScale: function() {
-          return this.game.renderer.getDrawingScale();
-        }
-    });
+    getDrawingScale: function() {
+      return this.game.renderer.getDrawingScale();
+    }
+  });
 });
