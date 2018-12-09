@@ -260,34 +260,34 @@ module.exports = Player = Character.extend({
         var self = this,
             type = 'health';
 
-        console.log(self.hitPoints);
+        if (self.hitPoints && self.hitPoints.points < self.hitPoints.maxPoints) {
+          self.hitPoints.heal(amount);
 
-        self.hitPoints.heal(amount);
+          self.sync();
 
-        self.sync();
-
-        self.world.pushToAdjacentGroups(self.group, new Messages.Heal({
-            id: self.instance,
-            type: type,
-            amount: amount
-        }));
+          self.world.pushToAdjacentGroups(self.group, new Messages.Heal({
+              id: self.instance,
+              type: type,
+              amount: amount
+          }));
+        }
     },
 
     healManaPoints: function(amount) {
         var self = this,
             type = 'mana';
 
-        console.log(self.mana);
+        if (self.mana && self.mana.points < self.mana.maxPoints) {
+          self.mana.heal(amount);
 
-        self.mana.heal(amount);
+          self.sync();
 
-        self.sync();
-
-        self.world.pushToAdjacentGroups(self.group, new Messages.Heal({
-            id: self.instance,
-            type: type,
-            amount: amount
-        }));
+          self.world.pushToAdjacentGroups(self.group, new Messages.Heal({
+              id: self.instance,
+              type: type,
+              amount: amount
+          }));
+        }
     },
 
 

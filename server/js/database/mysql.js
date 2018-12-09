@@ -86,7 +86,7 @@ module.exports = MySQL = cls.Class.extend({
     self.creator = new Creator(self);
   },
 
-  login: function(player) {
+  login: function(player, guest) {
     var self = this,
       found;
 
@@ -118,8 +118,10 @@ module.exports = MySQL = cls.Class.extend({
           }
         });
 
-        if (!found) {
-          // self.register(player);
+        if (player.isGuest) {
+          // register the guest account
+          self.register(player);
+        } else if (!found) {
           log.info('Mysql.login(player) failed for ' + player.username);
           player.invalidLogin();
         }
