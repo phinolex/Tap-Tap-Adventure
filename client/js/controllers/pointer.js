@@ -1,5 +1,5 @@
 define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
-return Class.extend({
+  return Class.extend({
 
     init: function(game) {
       var self = this;
