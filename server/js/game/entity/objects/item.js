@@ -1,107 +1,97 @@
-var Entity = require('../entity');
+var Entity = require("../entity");
 
 module.exports = Item = Entity.extend({
+  init: function(id, instance, x, y) {
+    var self = this;
 
-    init: function(id, instance, x, y) {
-        var self = this;
+    self._super(id, "item", instance, x, y);
 
-        self._super(id, 'item', instance, x, y);
+    self.static = false;
+    self.dropped = false;
+    self.shard = false;
 
-        self.static = false;
-        self.dropped = false;
-        self.shard = false;
+    self.count = 1;
+    self.ability = 0;
+    self.abilityLevel = 0;
+    self.tier = 1;
 
-        self.count = 1;
-        self.ability = 0;
-        self.abilityLevel = 0;
-        self.tier = 1;
+    self.respawnTime = 30000;
+    self.despawnDuration = 4000;
+    self.blinkDelay = 20000;
+    self.despawnDelay = 1000;
 
-        self.respawnTime = 30000;
-        self.despawnDuration = 4000;
-        self.blinkDelay = 20000;
-        self.despawnDelay = 1000;
+    self.blinkTimeout = null;
+    self.despawnTimeout = null;
+  },
 
-        self.blinkTimeout = null;
-        self.despawnTimeout = null;
-    },
+  destroy: function() {
+    var self = this;
 
-    destroy: function() {
-        var self = this;
+    if (self.blinkTimeout) clearTimeout(self.blinkTimeout);
 
-        if (self.blinkTimeout)
-            clearTimeout(self.blinkTimeout);
+    if (self.despawnTimeout) clearTimeout(self.despawnTimeout);
 
-        if (self.despawnTimeout)
-            clearTimeout(self.despawnTimeout);
+    if (self.static) self.respawn();
+  },
 
-        if (self.static)
-            self.respawn();
-    },
+  despawn: function() {
+    var self = this;
 
-    despawn: function() {
-        var self = this;
+    self.blinkTimeout = setTimeout(function() {
+      if (self.blinkCallback) self.blinkCallback();
 
-        self.blinkTimeout = setTimeout(function() {
-            if (self.blinkCallback)
-                self.blinkCallback();
+      self.despawnTimeout = setTimeout(function() {
+        if (self.despawnCallback) self.despawnCallback();
+      }, self.despawnDuration);
+    }, self.blinkDelay);
+  },
 
-            self.despawnTimeout = setTimeout(function() {
-                if (self.despawnCallback)
-                    self.despawnCallback();
+  respawn: function() {
+    var self = this;
 
-            }, self.despawnDuration);
+    setTimeout(function() {
+      if (self.respawnCallback) self.respawnCallback();
+    }, self.respawnTime);
+  },
 
-        }, self.blinkDelay);
-    },
+  getData: function() {
+    var self = this;
 
-    respawn: function() {
-        var self = this;
+    return [self.id, self.count, self.ability, self.abilityLevel];
+  },
 
-        setTimeout(function() {
-            if (self.respawnCallback)
-                self.respawnCallback();
-        }, self.respawnTime);
-    },
+  getState: function() {
+    var self = this,
+      state = self._super();
 
-    getData: function() {
-        var self = this;
+    state.count = self.count;
+    state.ability = self.ability;
+    state.abilityLevel = self.abilityLevel;
 
-        return [self.id, self.count, self.ability, self.abilityLevel];
-    },
+    return state;
+  },
 
-    getState: function() {
-        var self = this,
-            state = self._super();
+  setCount: function(count) {
+    this.count = count;
+  },
 
-        state.count = self.count;
-        state.ability = self.ability;
-        state.abilityLevel = self.abilityLevel;
+  setAbility: function(ability) {
+    this.ability = ability;
+  },
 
-        return state;
-    },
+  setAbilityLevel: function(abilityLevel) {
+    this.abilityLevel = abilityLevel;
+  },
 
-    setCount: function(count) {
-        this.count = count;
-    },
+  onRespawn: function(callback) {
+    this.respawnCallback = callback;
+  },
 
-    setAbility: function(ability) {
-        this.ability = ability;
-    },
+  onBlink: function(callback) {
+    this.blinkCallback = callback;
+  },
 
-    setAbilityLevel: function(abilityLevel) {
-        this.abilityLevel = abilityLevel;
-    },
-
-    onRespawn: function(callback) {
-        this.respawnCallback = callback;
-    },
-
-    onBlink: function(callback) {
-        this.blinkCallback = callback;
-    },
-
-    onDespawn: function(callback) {
-        this.despawnCallback = callback;
-    }
-
+  onDespawn: function(callback) {
+    this.despawnCallback = callback;
+  }
 });

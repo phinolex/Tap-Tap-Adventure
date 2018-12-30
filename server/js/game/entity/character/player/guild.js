@@ -1,39 +1,32 @@
-var cls = require('../../../../lib/class'),
-    fs = require('fs'),
-    Guilds = require('../../../../../data/guilds.json');
+var cls = require("../../../../lib/class"),
+  fs = require("fs"),
+  Guilds = require("../../../../../data/guilds.json");
 
 module.exports = Guild = cls.Class.extend({
+  init: function(name, leader) {
+    var self = this;
 
-    init: function(name, leader) {
-        var self = this;
+    self.name = name;
+    self.leader = leader;
 
-        self.name = name;
-        self.leader = leader;
+    self.members = [];
 
-        self.members = [];
+    self.connected = false;
+  },
 
-        self.connected = false;
-    },
+  create: function() {},
 
-    create: function() {
+  add: function(player) {
+    var self = this;
 
-    },
+    self.members.push(player);
 
-    add: function(player) {
-        var self = this;
+    self.save();
+  },
 
-        self.members.push(player);
+  save: function() {
+    var self = this;
 
-        self.save();
-    },
-
-    save: function() {
-        var self = this;
-
-        log.info(Guilds[self.leader.username]);
-
-
-    }
-
-
+    log.info(Guilds[self.leader.username]);
+  }
 });

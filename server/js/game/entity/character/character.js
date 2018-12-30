@@ -1,228 +1,223 @@
 /* global module */
 
-var Entity = require('../entity'),
-    _ = require('underscore'),
-    Combat = require('./combat/combat'),
-    Modules = require('../../../util/modules'),
-    Mobs = require('../../../util/mobs');
+var Entity = require("../entity"),
+  _ = require("underscore"),
+  Combat = require("./combat/combat"),
+  Modules = require("../../../util/modules"),
+  Mobs = require("../../../util/mobs");
 
 module.exports = Character = Entity.extend({
+  init: function(id, type, instance, x, y) {
+    var self = this;
 
-    init: function(id, type, instance, x, y) {
-        var self = this;
+    self._super(id, type, instance, x, y);
 
-        self._super(id, type, instance, x, y);
+    self.level = -1;
+    self.loaded = false;
 
-        self.level = -1;
+    self.movementSpeed = 150;
+    self.attackRange = 1;
+    self.attackRate = 1000;
+    self.healingRate = 7000;
 
-        self.movementSpeed = 150;
-        self.attackRange = 1;
-        self.attackRate = 1000;
-        self.healingRate = 7000;
+    self.spawnDistance = 7;
 
-        self.spawnDistance = 7;
+    self.previousX = -1;
+    self.previousY = -1;
 
-        self.previousX = -1;
-        self.previousY = -1;
+    self.hitPoints = -1;
+    self.maxHitPoints = -1;
 
-        self.hitPoints = -1;
-        self.maxHitPoints = -1;
+    self.dead = false;
+    self.aggressive = false;
+    self.aggroRange = 2;
 
-        self.dead = false;
-        self.aggressive = false;
-        self.aggroRange = 2;
+    self.frozen = false;
+    self.stunned = false;
 
-        self.frozen = false;
-        self.stunned = false;
+    self.target = null;
+    self.potentialTarget = null;
 
-        self.target = null;
-        self.potentialTarget = null;
+    self.stunTimeout = null;
 
-        self.stunTimeout = null;
+    self.projectile = Modules.Projectiles.Arrow;
+    self.projectileName = "projectile-pinearrow";
 
-        self.projectile = Modules.Projectiles.Arrow;
-        self.projectileName = 'projectile-pinearrow';
+    self.healingInterval = null;
 
-        self.healingInterval = null;
+    self.loadCombat();
+    self.startHealing();
+  },
 
-        self.loadCombat();
-        self.startHealing();
-    },
+  loadCombat: function() {
+    var self = this;
 
-    loadCombat: function() {
-        var self = this;
+    if (Mobs.hasCombatPlugin(self.id))
+      self.combat = new (Mobs.isNewCombatPlugin(self.id))(self);
+    else self.combat = new Combat(self);
+  },
 
-        if (Mobs.hasCombatPlugin(self.id))
-            self.combat = new (Mobs.isNewCombatPlugin(self.id))(self);
-        else
-            self.combat = new Combat(self);
-    },
+  setStun: function(stun) {
+    var self = this;
 
-    setStun: function(stun) {
-        var self = this;
+    self.stunned = stun;
 
-        self.stunned = stun;
+    if (self.stunCallback) self.stunCallback(stun);
+  },
 
-        if (self.stunCallback)
-            self.stunCallback(stun);
-    },
+  startHealing: function() {
+    var self = this;
 
-    startHealing: function() {
-        var self = this;
+    self.healingInterval = setInterval(function() {
+      if (
+        !self.hasTarget() &&
+        !self.combat.isAttacked() &&
+        !self.dead &&
+        self.loaded
+      ) {
+        self.heal(1);
+      }
+    }, 5000);
+  },
 
-        self.healingInterval = setInterval(function() {
+  stopHealing: function() {
+    var self = this;
 
-            if (!self.hasTarget() && !self.combat.isAttacked() && !self.dead)
-                self.heal(1);
+    clearInterval(self.healingInterval);
+    self.healingInterval = null;
+  },
 
-        }, 5000);
-    },
+  hit: function(attacker) {
+    var self = this;
 
-    stopHealing: function() {
-        var self = this;
+    if (self.hitCallback) self.hitCallback(attacker);
+  },
 
-        clearInterval(self.healingInterval);
-        self.healingInterval = null;
-    },
+  heal: function(amount) {
+    var self = this;
 
-    hit: function(attacker) {
-        var self = this;
+    self.setHitPoints(self.hitPoints + amount);
 
-        if (self.hitCallback)
-            self.hitCallback(attacker);
-    },
+    if (self.hitPoints > self.maxHitPoints) self.hitPoints = self.maxHitPoints;
+  },
 
-    heal: function(amount) {
-        var self = this;
+  isRanged: function() {
+    return this.attackRange > 1;
+  },
 
-        self.setHitPoints(self.hitPoints + amount);
+  applyDamage: function(damage) {
+    this.hitPoints -= damage;
+  },
 
-        if (self.hitPoints > self.maxHitPoints)
-            self.hitPoints = self.maxHitPoints;
-    },
+  isDead: function() {
+    return this.hitPoints < 1 || this.dead;
+  },
 
-    isRanged: function() {
-        return this.attackRange > 1;
-    },
+  getCombat: function() {
+    return this.combat;
+  },
 
-    applyDamage: function(damage) {
-        this.hitPoints -= damage;
-    },
+  getHitPoints: function() {
+    return this.hitPoints;
+  },
 
-    isDead: function() {
-        return this.hitPoints < 1 || this.dead;
-    },
+  getMaxHitPoints: function() {
+    return this.maxHitPoints;
+  },
 
-    getCombat: function() {
-        return this.combat;
-    },
+  setPosition: function(x, y) {
+    var self = this;
 
-    getHitPoints: function() {
-        return this.hitPoints;
-    },
+    self._super(x, y);
 
-    getMaxHitPoints: function() {
-        return this.maxHitPoints;
-    },
+    if (self.movementCallback) self.movementCallback(x, y);
+  },
 
-    setPosition: function(x, y) {
-        var self = this;
+  setTarget: function(target) {
+    var self = this;
 
-        self._super(x, y);
+    self.target = target;
 
-        if (self.movementCallback)
-            self.movementCallback(x, y);
-    },
+    if (self.targetCallback) self.targetCallback(target);
+  },
 
-    setTarget: function(target) {
-        var self = this;
+  setPotentialTarget: function(potentialTarget) {
+    this.potentialTarget = potentialTarget;
+  },
 
-        self.target = target;
+  setHitPoints: function(hitPoints) {
+    var self = this;
 
-        if (self.targetCallback)
-            self.targetCallback(target);
-    },
+    self.hitPoints = hitPoints;
 
-    setPotentialTarget: function(potentialTarget) {
-        this.potentialTarget = potentialTarget;
-    },
+    if (self.hitPointsCallback) self.hitPointsCallback();
+  },
 
-    setHitPoints: function(hitPoints) {
-        var self = this;
+  getProjectile: function() {
+    return this.projectile;
+  },
 
-        self.hitPoints = hitPoints;
+  getProjectileName: function() {
+    return this.projectileName;
+  },
 
-        if (self.hitPointsCallback)
-            self.hitPointsCallback();
-    },
+  getDrop: function() {
+    return null;
+  },
 
-    getProjectile: function() {
-        return this.projectile;
-    },
+  hasMaxHitPoints: function() {
+    return this.hitPoints >= this.maxHitPoints;
+  },
 
-    getProjectileName: function() {
-        return this.projectileName;
-    },
+  removeTarget: function() {
+    var self = this;
 
-    getDrop: function() {
-        return null;
-    },
+    if (self.removeTargetCallback) self.removeTargetCallback();
 
-    hasMaxHitPoints: function() {
-        return this.hitPoints >= this.maxHitPoints;
-    },
+    self.target = null;
+  },
 
-    removeTarget: function() {
-        var self = this;
+  hasTarget: function() {
+    return !(this.target === null);
+  },
 
-        if (self.removeTargetCallback)
-            self.removeTargetCallback();
+  hasPotentialTarget: function(potentialTarget) {
+    return this.potentialTarget === potentialTarget;
+  },
 
-        self.target = null;
-    },
+  clearTarget: function() {
+    this.target = null;
+  },
 
-    hasTarget: function() {
-        return !(this.target === null);
-    },
+  onTarget: function(callback) {
+    this.targetCallback = callback;
+  },
 
-    hasPotentialTarget: function(potentialTarget) {
-        return this.potentialTarget === potentialTarget;
-    },
+  onRemoveTarget: function(callback) {
+    this.removeTargetCallback = callback;
+  },
 
-    clearTarget: function() {
-        this.target = null;
-    },
+  onMovement: function(callback) {
+    this.movementCallback = callback;
+  },
 
-    onTarget: function(callback) {
-        this.targetCallback = callback;
-    },
+  onHit: function(callback) {
+    this.hitCallback = callback;
+  },
 
-    onRemoveTarget: function(callback) {
-        this.removeTargetCallback = callback;
-    },
+  onHealthChange: function(callback) {
+    this.hitPointsCallback = callback;
+  },
 
-    onMovement: function(callback) {
-        this.movementCallback = callback;
-    },
+  onDamage: function(callback) {
+    this.damageCallback = callback;
+  },
 
-    onHit: function(callback) {
-        this.hitCallback = callback;
-    },
+  onStunned: function(callback) {
+    this.stunCallback = callback;
+  },
 
-    onHealthChange: function(callback) {
-        this.hitPointsCallback = callback;
-    },
-
-    onDamage: function(callback) {
-        this.damageCallback = callback;
-    },
-
-    onStunned: function(callback) {
-        this.stunCallback = callback;
-    },
-
-    onSubAoE: function(callback) {
-        this.subAoECallback = callback;
-    }
-
+  onSubAoE: function(callback) {
+    this.subAoECallback = callback;
+  }
 });

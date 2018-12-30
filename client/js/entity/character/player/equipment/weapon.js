@@ -1,45 +1,41 @@
-define(['./equipment'], function(Equipment) {
+define(["./equipment"], function(Equipment) {
+  return Equipment.extend({
+    init: function(name, string, count, ability, abilityLevel) {
+      var self = this;
 
-    return Equipment.extend({
+      self._super(name, string, count, ability, abilityLevel);
 
-        init: function(name, string, count, ability, abilityLevel) {
-            var self = this;
+      self.level = -1;
+      self.damage = -1;
+      self.ranged = false;
+    },
 
-            self._super(name, string, count, ability, abilityLevel);
+    exists: function() {
+      return this._super();
+    },
 
-            self.level = -1;
-            self.damage = -1;
-            self.ranged = false;
-        },
+    setDamage: function(damage) {
+      this.damage = damage;
+    },
 
-        exists: function() {
-            return this._super();
-        },
+    setLevel: function(level) {
+      this.level = level;
+    },
 
-        setDamage: function(damage) {
-            this.damage = damage;
-        },
+    getDamage: function() {
+      return this.damage;
+    },
 
-        setLevel: function(level) {
-            this.level = level;
-        },
+    getLevel: function() {
+      return this.level;
+    },
 
-        getDamage: function() {
-            return this.damage;
-        },
+    getString: function() {
+      return this._super();
+    },
 
-        getLevel: function() {
-            return this.level;
-        },
-
-        getString: function() {
-            return this._super();
-        },
-
-        update: function(name, string, count, ability, abilityLevel) {
-            this._super(name, string, count, ability, abilityLevel);
-        }
-
-    });
-
+    update: function(name, string, count, ability, abilityLevel) {
+      this._super(name, string, count, ability, abilityLevel);
+    }
+  });
 });

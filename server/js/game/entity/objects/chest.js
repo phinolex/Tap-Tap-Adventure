@@ -1,54 +1,47 @@
-var Entity = require('../entity'),
-    Utils = require('../../../util/utils');
+var Entity = require("../entity"),
+  Utils = require("../../../util/utils");
 
 module.exports = Chest = Entity.extend({
+  init: function(id, instance, x, y) {
+    var self = this;
 
-    init: function(id, instance, x, y) {
-        var self = this;
+    self._super(id, "chest", instance, x, y);
 
-        self._super(id, 'chest', instance, x, y);
+    self.respawnDuration = 25000; //Every 25 seconds
+    self.static = false;
 
-        self.respawnDuration = 25000; //Every 25 seconds
-        self.static = false;
+    self.items = [];
+  },
 
-        self.items = [];
-    },
+  openChest: function() {
+    var self = this;
 
-    openChest: function() {
-        var self = this;
+    if (self.openCallback) self.openCallback();
+  },
 
-        if (self.openCallback)
-            self.openCallback();
-    },
+  respawn: function() {
+    var self = this;
 
-    respawn: function() {
-        var self = this;
+    setTimeout(function() {
+      if (self.respawnCallback) self.respawnCallback();
+    }, self.respawnDuration);
+  },
 
-        setTimeout(function() {
+  getItem: function() {
+    var self = this,
+      random = Utils.randomInt(0, self.items.length - 1),
+      item = self.items[random];
 
-            if (self.respawnCallback)
-                self.respawnCallback();
+    if (!item) return;
 
-        }, self.respawnDuration);
-    },
+    return item;
+  },
 
-    getItem: function() {
-        var self = this,
-            random = Utils.randomInt(0, self.items.length - 1),
-            item = self.items[random];
+  onOpen: function(callback) {
+    this.openCallback = callback;
+  },
 
-        if (!item)
-            return;
-
-        return item;
-    },
-
-    onOpen: function(callback) {
-        this.openCallback = callback;
-    },
-
-    onRespawn: function(callback) {
-        this.respawnCallback = callback
-    }
-
+  onRespawn: function(callback) {
+    this.respawnCallback = callback;
+  }
 });

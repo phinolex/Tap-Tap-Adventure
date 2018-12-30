@@ -1,4 +1,4 @@
-var cls = require('../../../../lib/class');
+var cls = require("../../../../lib/class");
 
 /**
  * Author: Tachyon
@@ -6,34 +6,31 @@ var cls = require('../../../../lib/class');
  */
 
 module.exports = CombatQueue = cls.Class.extend({
+  init: function() {
+    var self = this;
 
-    init: function() {
-        var self = this;
+    self.hitQueue = [];
+  },
 
-        self.hitQueue = [];
-    },
+  add: function(hit) {
+    this.hitQueue.push(hit);
+  },
 
-    add: function(hit) {
-        this.hitQueue.push(hit);
-    },
+  hasQueue: function() {
+    return this.hitQueue.length > 0;
+  },
 
-    hasQueue: function() {
-        return this.hitQueue.length > 0;
-    },
+  clear: function() {
+    this.hitQueue = [];
+  },
 
-    clear: function() {
-        this.hitQueue = [];
-    },
+  getHit: function() {
+    var self = this;
 
-    getHit: function() {
-        var self = this;
+    if (self.hitQueue.length < 1) return;
 
-        if (self.hitQueue.length < 1)
-            return;
+    var hit = self.hitQueue.shift();
 
-        var hit = self.hitQueue.shift();
-
-        return hit.getData();
-    }
-
+    return hit.getData();
+  }
 });

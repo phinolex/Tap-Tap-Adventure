@@ -1,66 +1,56 @@
 /* global log, Detect */
 
-define(['jquery', './app', './game'], function($, App, Game) {
+define(["jquery", "./app", "./game"], function($, App, Game) {
+  var app, body, chatInput, game;
 
-    var app, body, chatInput, game;
+  var load = function() {
+    $(document).ready(function() {
+      app = new App();
+      body = $("body");
+      chatInput = $("#chatInput");
 
-    var load = function() {
+      addClasses();
+      initGame();
+      addListeners();
+    });
+  };
 
-        $(document).ready(function() {
-            app = new App();
-            body = $('body');
-            chatInput = $('#chatInput');
+  var addClasses = function() {
+    var self = this;
 
-            addClasses();
-            initGame();
-            addListeners();
-        });
+    if (Detect.isWindows()) body.addClass("windows");
 
-    };
+    if (Detect.isOpera()) body.addClass("opera");
 
-    var addClasses = function() {
-        var self = this;
+    if (Detect.isFirefoxAndroid()) chatInput.removeAttr("placeholder");
+  };
 
-        if (Detect.isWindows())
-            body.addClass('windows');
+  var addListeners = function() {
+    var self = this,
+      resizeCheck = $("#resizeCheck");
 
-        if (Detect.isOpera())
-            body.addClass('opera');
+    document.addEventListener("touchstart", function() {}, false);
+    document.addEventListener("touchmove", function(e) {
+      e.preventDefault();
+    });
 
-        if (Detect.isFirefoxAndroid())
-            chatInput.removeAttr('placeholder');
+    resizeCheck.bind("transitionend", app.resize.bind(app));
+    resizeCheck.bind("webkitTransitionEnd", app.resize.bind(app));
+    resizeCheck.bind("oTransitionEnd", app.resize.bind(app));
 
-    };
+    $(window).on("orientationchange", function(event) {
+      app.updateOrientation();
+    });
+  };
 
-    var addListeners = function() {
-        var self = this,
-            resizeCheck = $('#resizeCheck');
+  var initGame = function() {
+    app.onReady(function() {
+      app.sendStatus("Welcome, welcome...");
 
-        document.addEventListener('touchstart', function() {}, false);
-        document.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-        });
+      game = new Game(app);
+      app.setGame(game);
+    });
+  };
 
-        resizeCheck.bind('transitionend', app.resize.bind(app));
-        resizeCheck.bind('webkitTransitionEnd', app.resize.bind(app));
-        resizeCheck.bind('oTransitionEnd', app.resize.bind(app));
-
-        $(window).on('orientationchange', function(event) {
-            app.updateOrientation();
-        });
-    };
-
-    var initGame = function() {
-
-        app.onReady(function() {
-            app.sendStatus('Welcome, welcome...');
-
-            game = new Game(app);
-            app.setGame(game);
-        });
-
-    };
-
-
-    load();
+  load();
 });

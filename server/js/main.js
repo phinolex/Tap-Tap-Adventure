@@ -1,225 +1,236 @@
-var fs = require('fs'),
-    config = require('../config.json'),
-    MySQL = require('./database/mysql'),
-    WebSocket = require('./network/websocket'),
-    _ = require('underscore'),
-    allowConnections = false,
-    Parser = require('./util/parser'),
-    ShutdownHook = require('shutdown-hook'),
-    Log = require('log'),
-    worlds = [], database,
-    Bot = require('../../tools/bot/bot'),
-    Utils = require('./util/utils');
+var fs = require("fs"),
+  config = require("../config.json"),
+  MySQL = require("./database/mysql"),
+  WebSocket = require("./network/websocket"),
+  _ = require("underscore"),
+  allowConnections = false,
+  Parser = require("./util/parser"),
+  ShutdownHook = require("shutdown-hook"),
+  Log = require("log"),
+  worlds = [],
+  database,
+  Bot = require("../../tools/bot/bot"),
+  Utils = require("./util/utils");
 
 var worldsCreated = 0;
 
-log = new Log(config.worlds > 1 ? 'notice' : config.debugLevel, config.localDebug ? fs.createWriteStream('runtime.log') : null);
+log = new Log(
+  config.worlds > 1 ? "notice" : config.debugLevel,
+  config.localDebug ? fs.createWriteStream("runtime.log") : null
+);
 
 function Main() {
+  log.notice("Initializing " + config.name + " game engine...");
 
-    log.notice('Initializing ' + config.name + ' game engine...');
+  var shutdownHook = new ShutdownHook(),
+    stdin = process.openStdin(),
+    World = require("./game/world"),
+    webSocket = new WebSocket.Server(config.host, config.port, config.gver);
 
-    var shutdownHook = new ShutdownHook(),
-        stdin = process.openStdin(),
-        World = require('./game/world'),
-        webSocket = new WebSocket.Server(config.host, config.port, config.gver);
+  if (!config.offlineMode) {
+    database = new MySQL(
+      config.mysqlHost,
+      config.mysqlPort,
+      config.mysqlUser,
+      config.mysqlPassword,
+      config.mysqlDatabase
+    );
+  }
 
-    if (!config.offlineMode)
-        database = new MySQL(config.mysqlHost, config.mysqlPort, config.mysqlUser, config.mysqlPassword, config.mysqlDatabase);
+  webSocket.onConnect(function(connection) {
+    if (!allowConnections) {
+      connection.sendUTF8("disallowed");
+      connection.close();
+    }
 
-    webSocket.onConnect(function(connection) {
-        if (!allowConnections) {
-            connection.sendUTF8('disallowed');
-            connection.close();
-        }
+    var world;
 
-        var world;
+    for (var i = 0; i < worlds.length; i++) {
+      if (worlds[i].playerCount < worlds[i].maxPlayers) {
+        world = worlds[i];
+        break;
+      }
+    }
 
-        for (var i = 0; i < worlds.length; i++) {
-            if (worlds[i].playerCount < worlds[i].maxPlayers) {
-                world = worlds[i];
-                break;
-            }
-        }
+    if (world) world.playerConnectCallback(connection);
+    else {
+      log.info("Worlds are currently full, closing...");
 
-        if (world)
-            world.playerConnectCallback(connection);
-        else {
-            log.info('Worlds are currently full, closing...');
+      connection.sendUTF8("full");
+      connection.close();
+    }
+  });
 
-            connection.sendUTF8('full');
-            connection.close();
-        }
+  setTimeout(function() {
+    for (var i = 0; i < config.worlds; i++) {
+      worlds.push(new World(i + 1, webSocket, database));
+    }
 
-    });
+    loadParser();
+    initializeWorlds();
+  }, 200);
 
-    setTimeout(function() {
-        for (var i = 0; i < config.worlds; i++)
-            worlds.push(new World(i + 1, webSocket, database));
+  webSocket.onRequestStatus(function() {
+    return JSON.stringify(getPopulations());
+  });
 
-        loadParser();
-        initializeWorlds();
+  webSocket.onError(function() {
+    log.notice("Web Socket has encountered an error.");
+  });
 
-    }, 200);
+  /**
+   * We want to generate worlds after the socket
+   * has finished initializing.
+   */
 
-    webSocket.onRequestStatus(function() {
-        return JSON.stringify(getPopulations());
-    });
+  process.on("SIGINT", function() {
+    shutdownHook.register();
+  });
 
-    webSocket.onError(function() {
-        log.notice('Web Socket has encountered an error.');
-    });
+  process.on("SIGQUIT", function() {
+    shutdownHook.register();
+  });
 
+  shutdownHook.on("ShutdownStarted", function(e) {
+    saveAll();
+  });
+
+  stdin.addListener("data", function(data) {
     /**
-     * We want to generate worlds after the socket
-     * has finished initializing.
+     * We have to cleanse the raw message because of the \n
      */
 
-    process.on('SIGINT', function() {
-        shutdownHook.register();
-    });
+    var message = data.toString().replace(/(\r\n|\n|\r)/gm, ""),
+      type = message.charAt(0);
 
-    process.on('SIGQUIT', function() {
-        shutdownHook.register();
-    });
+    if (type !== "/") return;
 
-    shutdownHook.on('ShutdownStarted', function(e) {
+    var blocks = message.substring(1).split(" "),
+      command = blocks.shift();
+
+    if (!command) return;
+
+    switch (command) {
+      case "stop":
+        log.info("Safely shutting down the server...");
+
         saveAll();
-    });
 
-    stdin.addListener('data', function(data) {
-        /**
-         * We have to cleanse the raw message because of the \n
-         */
+        process.exit();
 
-        var message = data.toString().replace(/(\r\n|\n|\r)/gm, ''),
-            type = message.charAt(0);
+        break;
 
-        if (type !== '/')
-            return;
+      case "saveall":
+        saveAll();
 
-        var blocks = message.substring(1).split(' '),
-            command = blocks.shift();
+        break;
 
-        if (!command)
-            return;
-
-        switch (command) {
-
-            case 'stop':
-
-                log.info('Safely shutting down the server...');
-
-                saveAll();
-
-                process.exit();
-
-                break;
-
-            case 'saveall':
-
-                saveAll();
-
-                break;
-
-            case 'alter':
-
-                if (blocks.length !== 3) {
-                    log.error('Invalid command format. /alter [database] [table] [type]');
-                    return;
-                }
-
-                if (!database) {
-                    log.error('The database server is not available for this instance of ' + config.name + '.');
-                    log.error('Ensure that the database is enabled in the server configuration.');
-                    return;
-                }
-
-                var db = blocks.shift(),
-                    table = blocks.shift(),
-                    dType = blocks.shift();
-
-                database.alter(db, table, dType);
-
-                break;
-
-            case 'bot':
-
-                var count = parseInt(blocks.shift());
-
-                if (!count)
-                    count = 1;
-
-                new Bot(worlds[0], count);
-
-                break;
-
-            case 'test':
-
-                Utils.test();
-
-                break;
+      case "alter":
+        if (blocks.length !== 3) {
+          log.error("Invalid command format. /alter [database] [table] [type]");
+          return;
         }
 
-    });
+        if (!database) {
+          log.error(
+            "The database server is not available for this instance of " +
+              config.name +
+              "."
+          );
+          log.error(
+            "Ensure that the database is enabled in the server configuration."
+          );
+          return;
+        }
 
+        var db = blocks.shift(),
+          table = blocks.shift(),
+          dType = blocks.shift();
+
+        database.alter(db, table, dType);
+
+        break;
+
+      case "bot":
+        var count = parseInt(blocks.shift());
+
+        if (!count) count = 1;
+
+        new Bot(worlds[0], count);
+
+        break;
+
+      case "test":
+        Utils.test();
+
+        break;
+    }
+  });
 }
 
-
 function onWorldLoad() {
-    worldsCreated++;
-    if (worldsCreated === worlds.length)
-        allWorldsCreated();
+  worldsCreated++;
+  if (worldsCreated === worlds.length) allWorldsCreated();
 }
 
 function allWorldsCreated() {
-    log.notice('Finished creating ' + worlds.length + ' world' + (worlds.length > 1 ? 's' : '') + '!');
-    allowConnections = true;
+  log.notice(
+    "Finished creating " +
+      worlds.length +
+      " world" +
+      (worlds.length > 1 ? "s" : "") +
+      "!"
+  );
+  allowConnections = true;
 
-    var host = config.host === '0.0.0.0' ? 'localhost' : config.host;
-    log.notice('Connect locally via http://' + host + ':' + config.port);
+  var host = config.host === "0.0.0.0" ? "localhost" : config.host;
+  log.notice("Connect locally via http://" + host + ":" + config.port);
 }
 
 function loadParser() {
-    new Parser();
+  new Parser();
 }
 
 function initializeWorlds() {
-    for (var worldId in worlds)
-        if (worlds.hasOwnProperty(worldId))
-            worlds[worldId].load(onWorldLoad);
+  for (var worldId in worlds)
+    if (worlds.hasOwnProperty(worldId)) worlds[worldId].load(onWorldLoad);
 }
 
 function getPopulations() {
-    var counts = [];
+  var counts = [];
 
-    for (var index in worlds)
-        if (worlds.hasOwnProperty(index))
-            counts.push(worlds[index].getPopulation());
+  for (var index in worlds)
+    if (worlds.hasOwnProperty(index))
+      counts.push(worlds[index].getPopulation());
 
-    return counts;
+  return counts;
 }
 
 function saveAll() {
-    _.each(worlds, function(world) {
-        world.saveAll();
-    });
+  _.each(worlds, function(world) {
+    world.saveAll();
+  });
 
-    var plural = worlds.length > 1;
+  var plural = worlds.length > 1;
 
-    log.notice('Saved players for ' + worlds.length + ' world' + (plural ? 's' : '') + '.');
+  log.notice(
+    "Saved players for " + worlds.length + " world" + (plural ? "s" : "") + "."
+  );
 }
 
-if ( typeof String.prototype.startsWith !== 'function' ) {
-    String.prototype.startsWith = function( str ) {
-        return str.length > 0 && this.substring( 0, str.length ) === str;
-    };
+if (typeof String.prototype.startsWith !== "function") {
+  String.prototype.startsWith = function(str) {
+    return str.length > 0 && this.substring(0, str.length) === str;
+  };
 }
 
-if ( typeof String.prototype.endsWith !== 'function' ) {
-    String.prototype.endsWith = function( str ) {
-        return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
-    };
+if (typeof String.prototype.endsWith !== "function") {
+  String.prototype.endsWith = function(str) {
+    return (
+      str.length > 0 &&
+      this.substring(this.length - str.length, this.length) === str
+    );
+  };
 }
 
 new Main();

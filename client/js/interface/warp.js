@@ -1,79 +1,72 @@
 /* global _, Modules */
 
-define(['jquery'], function($) {
+define(["jquery"], function($) {
+  return Class.extend({
+    init: function(game) {
+      var self = this;
 
-    return Class.extend({
+      self.game = game;
 
-        init: function(game) {
-            var self = this;
+      self.mapFrame = $("#mapFrame");
+      self.warp = $("#hud-world");
+      self.close = $("#closeMapFrame");
 
-            self.game = game;
+      self.warpCount = 0;
 
-            self.mapFrame = $('#mapFrame');
-            self.warp = $('#warpButton');
-            self.close = $('#closeMapFrame');
+      self.load();
+    },
 
-            self.warpCount = 0;
+    load: function() {
+      var self = this,
+        scale = self.getScale();
 
-            self.load();
-        },
+      self.warp.click(function() {
+        self.toggle();
+      });
 
-        load: function() {
-            var self = this,
-                scale = self.getScale();
+      self.close.click(function() {
+        self.hide();
+      });
 
-            self.warp.click(function() {
-                self.toggle();
-            });
+      for (var i = 1; i < 7; i++) {
+        var warp = self.mapFrame.find("#warp" + i);
 
-            self.close.click(function() {
-                self.hide();
-            });
+        if (warp)
+          warp.click(function(event) {
+            self.hide();
 
-            for (var i = 1; i < 7; i++) {
-                var warp = self.mapFrame.find('#warp' + i);
+            self.game.socket.send(Packets.Warp, [
+              event.currentTarget.id.substring(4)
+            ]);
+          });
+      }
+    },
 
-                if (warp)
-                    warp.click(function(event) {
+    toggle: function() {
+      var self = this;
 
-                        self.hide();
+      /**
+       * Just so it fades out nicely.
+       */
 
-                        self.game.socket.send(Packets.Warp, [event.currentTarget.id.substring(4)]);
+      if (self.isVisible()) self.hide();
+      else self.display();
+    },
 
-                    })
-            }
+    getScale: function() {
+      return this.game.getScaleFactor();
+    },
 
-        },
+    isVisible: function() {
+      return this.mapFrame.css("display") === "block";
+    },
 
-        toggle: function() {
-            var self = this;
+    display: function() {
+      this.mapFrame.fadeIn("slow");
+    },
 
-            /**
-             * Just so it fades out nicely.
-             */
-
-            if (self.isVisible())
-                self.hide();
-            else
-                self.display();
-        },
-
-        getScale: function() {
-            return this.game.getScaleFactor();
-        },
-
-        isVisible: function() {
-            return this.mapFrame.css('display') === 'block';
-        },
-
-        display: function() {
-            this.mapFrame.fadeIn('slow');
-        },
-
-        hide: function() {
-            this.mapFrame.fadeOut('fast');
-        }
-
-    });
-
+    hide: function() {
+      this.mapFrame.fadeOut("fast");
+    }
+  });
 });

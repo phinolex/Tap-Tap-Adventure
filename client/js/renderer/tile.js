@@ -1,51 +1,48 @@
 define(function() {
+  return Class.extend({
+    init: function(id, index, length, speed) {
+      var self = this;
 
-    return Class.extend({
+      self.initialId = id;
 
-        init: function(id, index, length, speed) {
-            var self = this;
+      self.id = id;
+      self.index = index;
+      self.length = length;
+      self.speed = speed;
 
-            self.initialId = id;
+      self.lastTime = 0;
 
-            self.id = id;
-            self.index = index;
-            self.length = length;
-            self.speed = speed;
+      self.loaded = false;
+    },
 
-            self.lastTime = 0;
+    setPosition: function(position) {
+      this.x = position.x;
+      this.y = position.y;
+    },
 
-            self.loaded = false;
-        },
+    tick: function() {
+      this.id =
+        this.id - this.initialId < this.length - 1
+          ? this.id + 1
+          : this.initialId;
+    },
 
-        setPosition: function(position) {
-            this.x = position.x;
-            this.y = position.y;
-        },
+    animate: function(time) {
+      var self = this;
 
-        tick: function() {
-            this.id = ((this.id - this.initialId) < this.length - 1) ? this.id + 1 : this.initialId;
-        },
+      if (time - self.lastTime > self.speed) {
+        self.tick();
+        self.lastTime = time;
+        return true;
+      } else return false;
+    },
 
-        animate: function(time) {
-            var self = this;
+    getPosition: function() {
+      var self = this;
 
-            if ((time - self.lastTime) > self.speed) {
-                self.tick();
-                self.lastTime = time;
-                return true;
-            } else
-                return false;
-        },
+      if (self.x && self.y) return [self.x, self.y];
 
-        getPosition: function() {
-            var self = this;
-
-            if (self.x && self.y)
-                return [self.x, self.y];
-
-            return [-1, -1];
-        }
-
-    });
-
+      return [-1, -1];
+    }
+  });
 });

@@ -1,33 +1,31 @@
 /* global log */
 
-var cls = require('../lib/class');
+var cls = require("../lib/class");
 
 module.exports = Connection = cls.Class.extend({
+  init: function(id, connection, server) {
+    var self = this;
 
-    init: function(id, connection, server) {
-        var self = this;
+    self.id = id;
+    self.socket = connection;
+    self._server = server;
+  },
 
-        self.id = id;
-        self.socket = connection;
-        self._server = server;
-    },
+  broadcast: function(message) {
+    throw "Invalid initialization.";
+  },
 
-    broadcast: function(message) {
-        throw 'Invalid initialization.'
-    },
+  send: function(message) {
+    throw "Invalid initialization.";
+  },
 
-    send: function(message) {
-        throw 'Invalid initialization.'
-    },
+  sendUTF8: function(data) {
+    throw "Invalid initialization.";
+  },
 
-    sendUTF8: function(data) {
-        throw 'Invalid initialization.'
-    },
+  close: function(reason) {
+    if (reason) log.info(reason);
 
-    close: function(reason) {
-        if (reason)
-            log.info(reason);
-
-        this.socket.conn.close();
-    }
+    this.socket.conn.close();
+  }
 });

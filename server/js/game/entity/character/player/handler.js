@@ -1,145 +1,136 @@
 /* global log */
 
-var cls = require('../../../../lib/class'),
-    _ = require('underscore'),
-    Messages = require('../../../../network/messages'),
-    Packets = require('../../../../network/packets'),
-    Npcs = require('../../../../util/npcs'),
-    Formulas = require('../../../formulas'),
-    Modules = require('../../../../util/modules');
+var cls = require("../../../../lib/class"),
+  _ = require("underscore"),
+  Messages = require("../../../../network/messages"),
+  Packets = require("../../../../network/packets"),
+  Npcs = require("../../../../util/npcs"),
+  Formulas = require("../../../formulas"),
+  Modules = require("../../../../util/modules");
 
 module.exports = Handler = cls.Class.extend({
+  init: function(player) {
+    var self = this;
 
-    init: function(player) {
-        var self = this;
+    self.player = player;
+    self.world = player.world;
 
-        self.player = player;
-        self.world = player.world;
+    self.load();
+  },
 
-        self.load();
-    },
+  load: function() {
+    var self = this;
 
-    load: function() {
-        var self = this;
+    self.player.onMovement(function(x, y) {
+      self.player.checkGroups();
 
-        self.player.onMovement(function(x, y) {
+      self.detectAggro();
+      self.detectPVP(x, y);
+      self.detectMusic(x, y);
+    });
 
-            self.player.checkGroups();
+    self.player.onDeath(function() {});
 
-            self.detectAggro();
-            self.detectPVP(x, y);
-            self.detectMusic(x, y);
+    self.player.onHit(function(attacker, damage) {
+      /**
+       * Handles actions whenever the player
+       * instance is hit by 'damage' amount
+       */
 
-        });
+      if (self.player.combat.isRetaliating())
+        self.player.combat.begin(attacker);
+    });
 
-        self.player.onDeath(function() {
+    self.player.onKill(function(character) {
+      if (self.player.quests.isAchievementMob(character)) {
+        var achievement = self.player.quests.getAchievementByMob(character);
 
+        if (achievement && achievement.isStarted())
+          self.player.quests.getAchievementByMob(character).step();
+      }
+    });
 
-        });
+    self.player.onGroup(function() {
+      self.world.handleEntityGroup(self.player);
+      self.world.pushEntities(self.player);
+    });
 
-        self.player.onHit(function(attacker, damage) {
+    self.player.connection.onClose(function() {
+      self.player.stopHealing();
 
-            /**
-             * Handles actions whenever the player
-             * instance is hit by 'damage' amount
-             */
+      self.world.removePlayer(self.player);
+    });
 
-            if (self.player.combat.isRetaliating())
-                self.player.combat.begin(attacker);
+    self.player.onTalkToNPC(function(npc) {
+      if (self.player.quests.isQuestNPC(npc)) {
+        self.player.quests.getQuestByNPC(npc).triggerTalk(npc);
 
-        });
+        return;
+      }
 
-        self.player.onKill(function(character) {
+      if (self.player.quests.isAchievementNPC(npc)) {
+        self.player.quests.getAchievementByNPC(npc).converse(npc);
 
-            if (self.player.quests.isAchievementMob(character)) {
-                var achievement = self.player.quests.getAchievementByMob(character);
+        return;
+      }
 
-                if (achievement && achievement.isStarted())
-                    self.player.quests.getAchievementByMob(character).step();
-            }
-        });
+      switch (Npcs.getType(npc.id)) {
+        case "banker":
+          self.player.send(new Messages.NPC(Packets.NPCOpcode.Bank, {}));
+          return;
 
-        self.player.onGroup(function() {
-            self.world.handleEntityGroup(self.player);
-            self.world.pushEntities(self.player);
-        });
+        case "echanter":
+          self.player.send(new Messages.NPC(Packets.NPCOpcode.Enchant, {}));
+          break;
+      }
 
-        self.player.connection.onClose(function() {
-            self.player.stopHealing();
+      var text = Npcs.getText(npc.id);
 
-            self.world.removePlayer(self.player);
-        });
+      if (!text) return;
 
-        self.player.onTalkToNPC(function(npc) {
+      npc.talk(text);
 
-            if (self.player.quests.isQuestNPC(npc)) {
-                self.player.quests.getQuestByNPC(npc).triggerTalk(npc);
+      self.player.send(
+        new Messages.NPC(Packets.NPCOpcode.Talk, {
+          id: npc.instance,
+          text: text
+        })
+      );
+    });
+  },
 
-                return;
-            }
+  detectAggro: function() {
+    var self = this,
+      group = self.world.groups[self.player.group];
 
-            if (self.player.quests.isAchievementNPC(npc)) {
-                self.player.quests.getAchievementByNPC(npc).converse(npc);
+    if (!group) return;
 
-                return;
-            }
+    _.each(group.entities, function(entity) {
+      if (entity && entity.type === "mob") {
+        var aggro = entity.canAggro(self.player);
 
-            switch(Npcs.getType(npc.id)) {
-                case 'banker':
-                    self.player.send(new Messages.NPC(Packets.NPCOpcode.Bank, {}));
-                    return;
+        if (aggro) entity.combat.begin(self.player);
+      }
+    });
+  },
 
-                case 'echanter':
-                    self.player.send(new Messages.NPC(Packets.NPCOpcode.Enchant, {}));
-                    break;
-            }
+  detectMusic: function(x, y) {
+    var self = this,
+      musicArea = _.find(self.world.getMusicAreas(), function(area) {
+        return area.contains(x, y);
+      }),
+      a2;
 
-            var text = Npcs.getText(npc.id);
+    if (musicArea && self.player.currentSong !== musicArea.id)
+      self.player.updateMusic(musicArea.id);
+  },
 
-            if (!text)
-                return;
+  detectPVP: function(x, y) {
+    var self = this,
+      pvpArea = _.find(self.world.getPVPAreas(), function(area) {
+        return area.contains(x, y);
+      });
 
-            npc.talk(text);
-
-            self.player.send(new Messages.NPC(Packets.NPCOpcode.Talk, {
-                id: npc.instance,
-                text: text
-            }));
-
-        });
-    },
-
-    detectAggro: function() {
-        var self = this,
-            group = self.world.groups[self.player.group];
-
-        if (!group)
-            return;
-
-        _.each(group.entities, function(entity) {
-            if (entity && entity.type === 'mob') {
-                var aggro = entity.canAggro(self.player);
-
-                if (aggro)
-                    entity.combat.begin(self.player);
-            }
-        });
-    },
-
-    detectMusic: function(x, y) {
-        var self = this,
-            musicArea = _.find(self.world.getMusicAreas(), function(area) { return area.contains(x, y); }),
-            a2;
-
-        if (musicArea && self.player.currentSong !== musicArea.id)
-            self.player.updateMusic(musicArea.id);
-    },
-
-    detectPVP: function(x, y) {
-        var self = this,
-            pvpArea = _.find(self.world.getPVPAreas(), function(area) { return area.contains(x, y); });
-
-        self.player.updatePVP(!!pvpArea);
-    }
-
+    self.player.updatePVP(!!pvpArea);
+  }
 });

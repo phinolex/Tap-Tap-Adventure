@@ -1,130 +1,122 @@
-var Combat = require('../../js/game/entity/character/combat/combat'),
-    Utils = require('../../js/util/utils'),
-    _ = require('underscore');
+var Combat = require("../../js/game/entity/character/combat/combat"),
+  Utils = require("../../js/util/utils"),
+  _ = require("underscore");
 
 module.exports = SkeletonKing = Combat.extend({
+  /**
+   * First of its kind, the Skeleton King will spawn 4 minions.
+   * Two sorcerers on (x + 1, y + 1) & (x - 1, y + 1)
+   *
+   * And two death knights on (x + 1, y - 1) & (x - 1, y - 1)
+   */
 
-    /**
-     * First of its kind, the Skeleton King will spawn 4 minions.
-     * Two sorcerers on (x + 1, y + 1) & (x - 1, y + 1)
-     *
-     * And two death knights on (x + 1, y - 1) & (x - 1, y - 1)
-     */
+  init: function(character) {
+    var self = this;
 
-    init: function(character) {
-        var self = this;
+    self._super(character);
 
-        self._super(character);
+    character.spawnDistance = 10;
 
-        character.spawnDistance = 10;
+    self.lastSpawn = 0;
 
-        self.lastSpawn = 0;
+    self.minions = [];
 
-        self.minions = [];
+    character.onDeath(function() {
+      self.reset();
+    });
+  },
 
-        character.onDeath(function() {
-            self.reset();
-        });
+  reset: function() {
+    var self = this;
 
-    },
+    self.lastSpawn = 0;
 
-    reset: function() {
-        var self = this;
+    var listCopy = self.minions.slice();
 
-        self.lastSpawn = 0;
+    for (var i = 0; i < listCopy.length; i++) self.world.kill(listCopy[i]);
+  },
 
-        var listCopy = self.minions.slice();
+  hit: function(character, target, hitInfo) {
+    var self = this;
 
-        for (var i = 0; i < listCopy.length; i++)
-            self.world.kill(listCopy[i]);
-    },
+    if (self.isAttacked()) self.beginMinionAttack();
 
-    hit: function(character, target, hitInfo) {
-        var self = this;
+    if (self.canSpawn()) self.spawnMinions();
 
-        if (self.isAttacked())
-            self.beginMinionAttack();
+    self._super(character, target, hitInfo);
+  },
 
-        if (self.canSpawn())
-            self.spawnMinions();
+  spawnMinions: function() {
+    var self = this,
+      x = self.character.x,
+      y = self.character.y;
 
-        self._super(character, target, hitInfo);
-    },
+    self.lastSpawn = new Date().getTime();
 
-    spawnMinions: function() {
-        var self = this,
-            x = self.character.x,
-            y = self.character.y;
+    if (!self.colliding(x + 2, y - 2))
+      self.minions.push(self.world.spawnMob(17, x + 2, y + 2));
 
-        self.lastSpawn = new Date().getTime();
+    if (!self.colliding(x - 2, y - 2))
+      self.minions.push(self.world.spawnMob(17, x - 2, y + 2));
 
-        if (!self.colliding(x + 2, y - 2))
-            self.minions.push(self.world.spawnMob(17, x + 2, y + 2));
+    if (!self.colliding(x + 1, y + 1))
+      self.minions.push(self.world.spawnMob(11, x + 1, y - 1));
 
-        if (!self.colliding(x - 2, y - 2))
-            self.minions.push(self.world.spawnMob(17, x - 2, y + 2));
+    if (!self.colliding(x - 1, y + 1))
+      self.minions.push(self.world.spawnMob(11, x - 1, y - 1));
 
-        if (!self.colliding(x + 1, y + 1))
-            self.minions.push(self.world.spawnMob(11, x + 1, y - 1));
+    _.each(self.minions, function(minion) {
+      minion.onDeath(function() {
+        if (self.isLast()) self.lastSpawn = new Date().getTime();
 
-        if (!self.colliding(x - 1, y + 1))
-            self.minions.push(self.world.spawnMob(11, x - 1, y - 1));
+        self.minions.splice(self.minions.indexOf(minion), 1);
+      });
 
-        _.each(self.minions, function(minion) {
-            minion.onDeath(function() {
-                if (self.isLast())
-                    self.lastSpawn = new Date().getTime();
+      if (self.isAttacked()) self.beginMinionAttack();
+    });
+  },
 
-                self.minions.splice(self.minions.indexOf(minion), 1);
-            });
+  beginMinionAttack: function() {
+    var self = this;
 
-            if (self.isAttacked())
-                self.beginMinionAttack();
-        });
-    },
+    if (!self.hasMinions()) return;
 
-    beginMinionAttack: function() {
-        var self = this;
+    _.each(self.minions, function(minion) {
+      var randomTarget = self.getRandomTarget();
 
-        if (!self.hasMinions())
-            return;
+      if (!minion.hasTarget() && randomTarget)
+        minion.combat.begin(randomTarget);
+    });
+  },
 
-        _.each(self.minions, function(minion) {
-            var randomTarget = self.getRandomTarget();
+  getRandomTarget: function() {
+    var self = this;
 
-            if (!minion.hasTarget() && randomTarget)
-                minion.combat.begin(randomTarget);
+    if (self.isAttacked()) {
+      var keys = Object.keys(self.attackers),
+        randomAttacker = self.attackers[keys[Utils.randomInt(0, keys.length)]];
 
-        });
-    },
-
-    getRandomTarget: function() {
-        var self = this;
-
-        if (self.isAttacked()) {
-            var keys = Object.keys(self.attackers),
-                randomAttacker = self.attackers[keys[Utils.randomInt(0, keys.length)]];
-
-            if (randomAttacker)
-                return randomAttacker;
-        }
-
-        if (self.character.hasTarget())
-            return self.character.target;
-
-        return null;
-    },
-
-    hasMinions: function() {
-        return this.minions.length > 0;
-    },
-
-    isLast: function() {
-        return this.minions.length === 1;
-    },
-
-    canSpawn: function() {
-        return (new Date().getTime() - this.lastSpawn > 25000) && !this.hasMinions() && this.isAttacked();
+      if (randomAttacker) return randomAttacker;
     }
 
+    if (self.character.hasTarget()) return self.character.target;
+
+    return null;
+  },
+
+  hasMinions: function() {
+    return this.minions.length > 0;
+  },
+
+  isLast: function() {
+    return this.minions.length === 1;
+  },
+
+  canSpawn: function() {
+    return (
+      new Date().getTime() - this.lastSpawn > 25000 &&
+      !this.hasMinions() &&
+      this.isAttacked()
+    );
+  }
 });

@@ -23,9 +23,12 @@
     "require": "^2.4.20",
     "sanitizer": "^0.1.3",
     "serve-static": "*",
-    "socket.io": "^2.0.3",
-    "underscore": "^1.8.3",
     "shutdown-hook": "*",
+    "socket.io": "^2.2.0",
+    "underscore": "^1.8.3",
     "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "mysql-cli": "0.0.3"
   }
 }

@@ -1,25 +1,23 @@
-var cls = require('../lib/class'),
-    TeamWar = require('../minigames/impl/teamwar');
+var cls = require("../lib/class"),
+  TeamWar = require("../minigames/impl/teamwar");
 
 module.exports = Minigames = cls.Class.extend({
+  init: function(world) {
+    var self = this;
 
-    init: function(world) {
-        var self = this;
+    self.world = world;
+    self.minigames = {};
 
-        self.world = world;
-        self.minigames = {};
+    self.load();
+  },
 
-        self.load();
-    },
+  load: function() {
+    var self = this;
 
-    load: function() {
-        var self = this;
+    self.minigames["TeamWar"] = new TeamWar();
+  },
 
-        self.minigames['TeamWar'] = new TeamWar();
-    },
-
-    getTeamWar: function() {
-        return this.minigames['TeamWar'];
-    }
-
+  getTeamWar: function() {
+    return this.minigames["TeamWar"];
+  }
 });

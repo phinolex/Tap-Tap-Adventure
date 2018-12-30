@@ -7,34 +7,40 @@
     "stages": 5,
     "conversations": {
       "17": {
-        "0": ["Well that's unfortunate...",
-              "You being here I mean.",
-              "Didn't your mother teach you not to talk to strangers?",
-              "Well, I guess she failed."],
-        "1": ["Where are your manners?",
-              "Stop bothering me!",
-              "Seriously, WTF is wrong with you?! I'm working here.",
-              "Go try clicking on something else you looser."],
+        "0": [
+          "Well that's unfortunate...",
+          "You being here I mean.",
+          "Didn't your mother teach you not to talk to strangers?",
+          "Well, I guess she failed."
+        ],
+        "1": [
+          "Where are your manners?",
+          "Stop bothering me!",
+          "Seriously, WTF is wrong with you?! I'm working here.",
+          "Go try clicking on something else you looser."
+        ],
 
-        "2": ["Ahh yes, apparently you have a short attention span.",
-              "Please direct your attention to the character menu.",
-              "See those big red buttons?",
-              "I made them so even a simple-minded child could work them.",
-              "But I'm sure you won't be able to figure it out.",
-              "Now leave me alone, I have lots of work left to do."],
+        "2": [
+          "Ahh yes, apparently you have a short attention span.",
+          "Please direct your attention to the character menu.",
+          "See those big red buttons?",
+          "I made them so even a simple-minded child could work them.",
+          "But I'm sure you won't be able to figure it out.",
+          "Now leave me alone, I have lots of work left to do."
+        ],
 
         "3": ["WTF?!? LEAVE ME ALONE!"]
       },
 
       "8": {
-        "4": ["Oh, another one. Here, take this sword and get outta here.",
+        "4": [
+          "Oh, another one. Here, take this sword and get outta here.",
           "I would bother teaching you but",
           "It is more fun to let newbies figure it out."
         ],
 
         "5": ["Go through the portal there to get to the main land."]
       }
-
     },
 
     "pointers": {
@@ -77,14 +83,22 @@
     "stages": 4,
     "conversations": {
       "2": {
-        "0": ["Hoho! Heii", "Adventr, i ned hlp. Yu se.", "i lost me armur.",
-            "i wil giv u 200 gold if u find.", "its aboot ze siz of me body",
-            "and it made lether of."],
+        "0": [
+          "Hoho! Heii",
+          "Adventr, i ned hlp. Yu se.",
+          "i lost me armur.",
+          "i wil giv u 200 gold if u find.",
+          "its aboot ze siz of me body",
+          "and it made lether of."
+        ],
 
         "1": ["Plz, how progrs goin'?", "I ned lethr armur."],
 
-        "2": ["Hono, tht iz rong armur. But i take anyway.", "i ment tu sey chain meil, but srry.",
-              "plz, find armr mde of chein"],
+        "2": [
+          "Hono, tht iz rong armur. But i take anyway.",
+          "i ment tu sey chain meil, but srry.",
+          "plz, find armr mde of chein"
+        ],
 
         "3": ["Plz, i weight. I weight fur me chein meil armr.", "Pls bring."],
 
@@ -99,7 +113,6 @@
       "3": "item",
       "4": "talk"
     }
-
   },
 
   "TheLie": {
@@ -108,17 +121,23 @@
     "description": "Keep going, and do not ever look back.",
     "npcs": [1],
     "questReq": [0, 1, 3, 4, 5, 6],
-    "itemReq": {
-
-    },
+    "itemReq": {},
     "stages": 50,
     "conversations": {
       "1": {
-        "0": ["Ah, so you would like to know how it all began..", "Perhaps it is a story that is best left untold.",
-              "I'll spare you the details for the most part.", "But one must understand the very core of his pain."],
+        "0": [
+          "Ah, so you would like to know how it all began..",
+          "Perhaps it is a story that is best left untold.",
+          "I'll spare you the details for the most part.",
+          "But one must understand the very core of his pain."
+        ],
 
-        "1": ["It mustn't make much sense at this point.", "It's alright though. I ask this of you.", "Find me a potato.",
-              "It's pretty important for this."]
+        "1": [
+          "It mustn't make much sense at this point.",
+          "It's alright though. I ask this of you.",
+          "Find me a potato.",
+          "It's pretty important for this."
+        ]
       }
     }
   },
@@ -127,7 +146,7 @@
     "id": 3,
     "name": "Too Spooky",
     "description": "Help the pirate girl recover her lost pendant.",
-    "npcs" : [28],
+    "npcs": [28],
     "stages": 3
   }
 }

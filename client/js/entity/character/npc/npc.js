@@ -1,49 +1,43 @@
-define(['../character'], function(Character) {
+define(["../character"], function(Character) {
+  return Character.extend({
+    init: function(id, kind) {
+      var self = this;
 
-    return Character.extend({
+      self._super(id, kind);
 
-        init: function(id, kind) {
-            var self = this;
+      self.index = 0;
 
-            self._super(id, kind);
+      self.type = "npc";
+    },
 
-            self.index = 0;
+    talk: function(messages) {
+      var self = this,
+        count = messages.length,
+        message;
 
-            self.type = 'npc';
-        },
+      if (self.index > count) self.index = 0;
 
-        talk: function(messages) {
-            var self = this,
-                count = messages.length,
-                message;
+      if (self.index < count) message = messages[self.index];
 
-            if (self.index > count)
-                self.index = 0;
+      self.index++;
 
-            if (self.index < count)
-                message = messages[self.index];
+      return message;
+    },
 
-            self.index++;
+    idle: function() {
+      this._super();
+    },
 
-            return message;
-        },
+    setSprite: function(sprite) {
+      this._super(sprite);
+    },
 
-        idle: function() {
-            this._super();
-        },
+    setName: function(name) {
+      this._super(name);
+    },
 
-        setSprite: function(sprite) {
-            this._super(sprite);
-        },
-
-        setName: function(name) {
-            this._super(name);
-        },
-
-        setGridPosition: function(x, y) {
-            this._super(x, y);
-        }
-
-    });
-
+    setGridPosition: function(x, y) {
+      this._super(x, y);
+    }
+  });
 });

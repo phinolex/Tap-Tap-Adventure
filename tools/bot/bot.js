@@ -1,49 +1,45 @@
-var cls = require('../../server/js/lib/class'),
-    Player = require('../../server/js/game/entity/character/player/player'),
-    Creator = require('../../server/js/database/creator'),
-    Utils = require('../../server/js/util/utils'),
-    _ = require('underscore');
+var cls = require("../../server/js/lib/class"),
+  Player = require("../../server/js/game/entity/character/player/player"),
+  Creator = require("../../server/js/database/creator"),
+  Utils = require("../../server/js/util/utils"),
+  _ = require("underscore");
 
 module.exports = Bot = cls.Class.extend({
+  init: function(world, count) {
+    var self = this;
 
-    init: function(world, count) {
-        var self = this;
+    self.world = world;
+    self.count = count;
 
-        self.world = world;
-        self.count = count;
+    self.creator = new Creator(null);
 
-        self.creator = new Creator(null);
+    self.players = [];
 
-        self.players = [];
+    self.load();
+  },
 
-        self.load();
-    },
+  load: function() {
+    var self = this;
 
-    load: function() {
-        var self = this;
+    for (var i = 0; i < self.count; i++) {
+      var connection = {
+          id: i,
+          listen: function() {},
+          onClose: function() {}
+        },
+        player = new Player(self.world, self.world.database, connection, -1);
 
-        for (var i = 0; i < self.count; i++) {
-            var connection = {
-                id: i,
-                listen: function() {},
-                onClose: function() {}
-            },
-            player = new Player(self.world, self.world.database, connection, -1);
+      self.world.addPlayer(player);
 
-            self.world.addPlayer(player);
+      player.username = "Bot" + i;
 
-            player.username = 'Bot' + i;
+      player.load(self.creator.getPlayerData(player));
 
-            player.load(self.creator.getPlayerData(player));
+      player.intro();
 
-            player.intro();
+      player.walkRandomly();
 
-            player.walkRandomly();
-
-            self.players.push(player);
-
-        }
+      self.players.push(player);
     }
-
-
+  }
 });

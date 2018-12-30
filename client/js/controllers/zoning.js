@@ -1,44 +1,40 @@
 /* global Modules */
 
 define(function() {
+  return Class.extend({
+    init: function(game) {
+      var self = this;
 
-    return Class.extend({
+      self.game = game;
+      self.renderer = game.renderer;
+      self.camera = game.camera;
+      self.input = game.input;
 
-        init: function(game) {
-            var self = this;
+      self.direction = null;
+    },
 
-            self.game = game;
-            self.renderer = game.renderer;
-            self.camera = game.camera;
-            self.input = game.input;
+    reset: function() {
+      this.direction = null;
+    },
 
-            self.direction = null;
-        },
+    setUp: function() {
+      this.direction = Modules.Orientation.Up;
+    },
 
-        reset: function() {
-            this.direction = null;
-        },
+    setDown: function() {
+      this.direction = Modules.Orientation.Down;
+    },
 
-        setUp: function() {
-            this.direction = Modules.Orientation.Up;
-        },
+    setRight: function() {
+      this.direction = Modules.Orientation.Right;
+    },
 
-        setDown: function() {
-            this.direction = Modules.Orientation.Down;
-        },
+    setLeft: function() {
+      this.direction = Modules.Orientation.Left;
+    },
 
-        setRight: function() {
-            this.direction = Modules.Orientation.Right;
-        },
-
-        setLeft: function() {
-            this.direction = Modules.Orientation.Left;
-        },
-
-        getDirection: function() {
-            return this.direction;
-        }
-
-    });
-
+    getDirection: function() {
+      return this.direction;
+    }
+  });
 });

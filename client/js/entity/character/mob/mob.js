@@ -1,48 +1,44 @@
-define(['../character'], function(Character) {
+define(["../character"], function(Character) {
+  return Character.extend({
+    init: function(id, kind) {
+      var self = this;
 
-    return Character.extend({
+      self._super(id, kind);
 
-        init: function(id, kind) {
-            var self = this;
+      self.name = name;
 
-            self._super(id, kind);
+      self.hitPoints = -1;
+      self.maxHitPoints = -1;
 
-            self.name = name;
+      self.type = "mob";
+    },
 
-            self.hitPoints = -1;
-            self.maxHitPoints = -1;
+    setHitPoints: function(hitPoints) {
+      this._super(hitPoints);
+    },
 
-            self.type = 'mob';
-        },
+    setMaxHitPoints: function(maxHitPoints) {
+      this._super(maxHitPoints);
+    },
 
-        setHitPoints: function(hitPoints) {
-            this._super(hitPoints);
-        },
+    idle: function() {
+      this._super();
+    },
 
-        setMaxHitPoints: function(maxHitPoints) {
-            this._super(maxHitPoints);
-        },
+    performAction: function(orientation, action) {
+      this._super(orientation, action);
+    },
 
-        idle: function() {
-            this._super();
-        },
+    setSprite: function(sprite) {
+      this._super(sprite);
+    },
 
-        performAction: function(orientation, action) {
-            this._super(orientation, action);
-        },
+    setName: function(name) {
+      this.name = name;
+    },
 
-        setSprite: function(sprite) {
-            this._super(sprite);
-        },
-
-        setName: function(name) {
-            this.name = name;
-        },
-
-        setGridPosition: function(x, y) {
-            this._super(x, y);
-        }
-
-    });
-
+    setGridPosition: function(x, y) {
+      this._super(x, y);
+    }
+  });
 });

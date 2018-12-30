@@ -1,177 +1,186 @@
-define(['jquery'], function($) {
+define(["jquery"], function($) {
+  return Class.extend({
+    init: function(game, intrface) {
+      var self = this;
 
-    return Class.extend({
+      self.game = game;
+      self.interface = intrface;
 
-        init: function(game, intrface) {
-            var self = this;
+      self.body = $("#enchant");
+      self.container = $("#enchantContainer");
+      self.enchantSlots = $("#enchantInventorySlots");
 
-            self.game = game;
-            self.interface = intrface;
+      self.selectedItem = $("#enchantSelectedItem");
+      self.selectedShards = $("#enchantShards");
+      self.confirm = $("#confirmEnchant");
+      self.shardsCount = $("#shardsCount");
 
-            self.body = $('#enchant');
-            self.container = $('#enchantContainer');
-            self.enchantSlots = $('#enchantInventorySlots');
+      self.confirm.css({
+        left: "70%",
+        top: "80%"
+      });
 
-            self.selectedItem = $('#enchantSelectedItem');
-            self.selectedShards = $('#enchantShards');
-            self.confirm = $('#confirmEnchant');
-            self.shardsCount = $('#shardsCount');
+      $("#closeEnchant").click(function() {
+        self.hide();
+      });
 
-            self.confirm.css({
-                'left': '70%',
-                'top': '80%'
-            });
+      self.confirm.click(function() {
+        self.enchant();
+      });
+    },
 
-            $('#closeEnchant').click(function() {
-                self.hide();
-            });
+    add: function(type, index) {
+      var self = this,
+        image = self.getSlot(index).find("#inventoryImage" + index);
 
-            self.confirm.click(function() {
-                self.enchant();
-            });
-        },
+      switch (type) {
+        case "item":
+          self.selectedItem.css(
+            "background-image",
+            image.css("background-image")
+          );
 
-        add: function(type, index) {
-            var self = this,
-                image = self.getSlot(index).find('#inventoryImage' + index);
+          break;
 
-            switch (type) {
-                case 'item':
+        case "shards":
+          self.selectedShards.css(
+            "background-image",
+            image.css("background-image")
+          );
 
-                    self.selectedItem.css('background-image', image.css('background-image'));
+          var count = self.getItemSlot(index).count;
 
-                    break;
+          if (count > 1) self.shardsCount.text(count);
 
-                case 'shards':
+          break;
+      }
 
-                    self.selectedShards.css('background-image', image.css('background-image'));
+      image.css("background-image", "");
 
-                    var count = self.getItemSlot(index).count;
+      self
+        .getSlot(index)
+        .find("#inventoryItemCount" + index)
+        .text("");
+    },
 
-                    if (count > 1)
-                        self.shardsCount.text(count);
+    moveBack: function(type, index) {
+      var self = this,
+        image = self.getSlot(index).find("#inventoryImage" + index),
+        itemCount = self.getSlot(index).find("#inventoryItemCount" + index),
+        count = self.getItemSlot(index).count;
 
-                    break;
-            }
+      switch (type) {
+        case "item":
+          image.css(
+            "background-image",
+            self.selectedItem.css("background-image")
+          );
 
-            image.css('background-image', '');
+          if (count > 1) itemCount.text(count);
 
-            self.getSlot(index).find('#inventoryItemCount' + index).text('');
-        },
+          self.selectedItem.css("background-image", "");
 
-        moveBack: function(type, index) {
-            var self = this,
-                image = self.getSlot(index).find('#inventoryImage'+ index),
-                itemCount = self.getSlot(index).find('#inventoryItemCount' + index),
-                count = self.getItemSlot(index).count;
+          break;
 
-            switch (type) {
-                case 'item':
+        case "shards":
+          image.css(
+            "background-image",
+            self.selectedShards.css("background-image")
+          );
 
-                    image.css('background-image', self.selectedItem.css('background-image'));
+          if (count > 1) itemCount.text(count);
 
-                    if (count > 1)
-                        itemCount.text(count);
+          self.selectedShards.css("background-image", "");
 
-                    self.selectedItem.css('background-image', '');
+          self.shardsCount.text("");
 
-                    break;
+          break;
+      }
+    },
 
-                case 'shards':
+    load: function() {
+      var self = this,
+        list = self.getSlots(),
+        inventoryList = self.interface.bank.getInventoryList();
 
-                    image.css('background-image', self.selectedShards.css('background-image'));
+      list.empty();
 
-                    if (count > 1)
-                        itemCount.text(count);
+      for (var i = 0; i < self.getInventorySize(); i++) {
+        var item = $(inventoryList[i]).clone(),
+          slot = item.find("#bankInventorySlot" + i);
 
-                    self.selectedShards.css('background-image', '');
+        slot.click(function(event) {
+          self.select(event);
+        });
 
-                    self.shardsCount.text('');
+        list.append(item);
+      }
 
-                    break;
-            }
-        },
+      self.selectedItem.click(function() {
+        self.remove("item");
+      });
 
-        load: function() {
-            var self = this,
-                list = self.getSlots(),
-                inventoryList = self.interface.bank.getInventoryList();
+      self.selectedShards.click(function() {
+        self.remove("shards");
+      });
+    },
 
-            list.empty();
+    enchant: function() {
+      this.game.socket.send(Packets.Enchant, [Packets.EnchantOpcode.Enchant]);
+    },
 
-            for (var i = 0; i < self.getInventorySize(); i++) {
-                var item = $(inventoryList[i]).clone(),
-                    slot = item.find('#bankInventorySlot' + i);
+    select: function(event) {
+      this.game.socket.send(Packets.Enchant, [
+        Packets.EnchantOpcode.Select,
+        event.currentTarget.id.substring(17)
+      ]);
+    },
 
-                slot.click(function(event) {
-                    self.select(event);
-                });
+    remove: function(type) {
+      this.game.socket.send(Packets.Enchant, [
+        Packets.EnchantOpcode.Remove,
+        type
+      ]);
+    },
 
-                list.append(item);
-            }
+    getInventorySize: function() {
+      return this.interface.inventory.getSize();
+    },
 
-            self.selectedItem.click(function() {
-                self.remove('item');
-            });
+    getItemSlot: function(index) {
+      return this.interface.inventory.container.slots[index];
+    },
 
-            self.selectedShards.click(function() {
-                self.remove('shards');
-            });
+    display: function() {
+      var self = this;
 
-        },
+      self.body.fadeIn("fast");
+      self.load();
+    },
 
-        enchant: function() {
-            this.game.socket.send(Packets.Enchant, [Packets.EnchantOpcode.Enchant]);
-        },
+    hide: function() {
+      var self = this;
 
-        select: function(event) {
-            this.game.socket.send(Packets.Enchant, [Packets.EnchantOpcode.Select, event.currentTarget.id.substring(17)]);
-        },
+      self.selectedItem.css("background-image", "");
+      self.selectedShards.css("background-image", "");
 
-        remove: function(type) {
-            this.game.socket.send(Packets.Enchant, [Packets.EnchantOpcode.Remove, type]);
-        },
+      self.body.fadeOut("fast");
+    },
 
-        getInventorySize: function() {
-            return this.interface.inventory.getSize();
-        },
+    hasImage: function(image) {
+      return image.css("background-image") !== "none";
+    },
 
-        getItemSlot: function(index) {
-            return this.interface.inventory.container.slots[index];
-        },
+    getSlot: function(index) {
+      return $(this.getSlots().find("li")[index]);
+    },
 
-        display: function() {
-            var self = this;
+    getSlots: function() {
+      return this.enchantSlots.find("ul");
+    },
 
-            self.body.fadeIn('fast');
-            self.load();
-        },
-
-        hide: function() {
-            var self = this;
-
-            self.selectedItem.css('background-image', '');
-            self.selectedShards.css('background-image', '');
-
-            self.body.fadeOut('fast');
-        },
-
-        hasImage: function(image) {
-            return image.css('background-image') !== 'none';
-        },
-
-        getSlot: function(index) {
-            return $(this.getSlots().find('li')[index]);
-        },
-
-        getSlots: function() {
-            return this.enchantSlots.find('ul');
-        },
-
-        isVisible: function() {
-            return this.body.css('display') === 'block'
-        }
-
-    });
-
+    isVisible: function() {
+      return this.body.css("display") === "block";
+    }
+  });
 });

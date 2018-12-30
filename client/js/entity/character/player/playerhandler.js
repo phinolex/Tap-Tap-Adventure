@@ -1,171 +1,177 @@
 /* global log, Packets, Modules */
 
 define(function() {
+  /**
+   * This is a player handler, responsible for all the callbacks
+   * without having to clutter up the entire game file.
+   */
 
-    /**
-     * This is a player handler, responsible for all the callbacks
-     * without having to clutter up the entire game file.
-     */
+  return Class.extend({
+    init: function(game, player) {
+      var self = this;
 
-    return Class.extend({
+      self.game = game;
+      self.camera = game.getCamera();
+      self.input = game.input;
+      self.player = player;
+      self.entities = game.entities;
+      self.socket = game.socket;
+      self.renderer = game.renderer;
 
-        init: function(game, player) {
-            var self = this;
+      self.load();
+    },
 
-            self.game = game;
-            self.camera = game.getCamera();
-            self.input = game.input;
-            self.player = player;
-            self.entities = game.entities;
-            self.socket = game.socket;
-            self.renderer = game.renderer;
+    load: function() {
+      var self = this;
 
-            self.load();
-        },
+      self.player.onRequestPath(function(x, y) {
+        if (self.player.dead) return null;
 
-        load: function() {
-            var self = this;
+        var ignores = [self.player];
 
-            self.player.onRequestPath(function(x, y) {
-                if (self.player.dead)
-                    return null;
+        if (self.player.hasTarget()) ignores.push(self.player.target);
 
-                var ignores = [self.player];
+        self.socket.send(Packets.Movement, [
+          Packets.MovementOpcode.Request,
+          x,
+          y,
+          self.player.gridX,
+          self.player.gridY
+        ]);
 
-                if (self.player.hasTarget())
-                    ignores.push(self.player.target);
+        return self.game.findPath(self.player, x, y, ignores);
+      });
 
-                self.socket.send(Packets.Movement, [Packets.MovementOpcode.Request, x, y, self.player.gridX, self.player.gridY]);
+      self.player.onStartPathing(function(path) {
+        var i = path.length - 1;
 
-                return self.game.findPath(self.player, x, y, ignores);
-            });
+        self.input.selectedX = path[i][0];
+        self.input.selectedY = path[i][1];
+        self.input.selectedCellVisible = true;
 
-            self.player.onStartPathing(function(path) {
-                var i = path.length - 1;
+        if (!self.game.getEntityAt(self.input.selectedX, self.input.selectedY))
+          self.socket.send(Packets.Target, [Packets.TargetOpcode.None]);
 
-                self.input.selectedX = path[i][0];
-                self.input.selectedY = path[i][1];
-                self.input.selectedCellVisible = true;
+        self.socket.send(Packets.Movement, [
+          Packets.MovementOpcode.Started,
+          self.input.selectedX,
+          self.input.selectedY,
+          self.player.gridX,
+          self.player.gridY
+        ]);
+      });
 
-                if (!self.game.getEntityAt(self.input.selectedX, self.input.selectedY))
-                    self.socket.send(Packets.Target, [Packets.TargetOpcode.None]);
+      self.player.onStopPathing(function(x, y) {
+        self.entities.unregisterPosition(self.player);
+        self.entities.registerPosition(self.player);
 
-                self.socket.send(Packets.Movement, [Packets.MovementOpcode.Started, self.input.selectedX, self.input.selectedY, self.player.gridX, self.player.gridY]);
-            });
+        self.input.selectedCellVisible = false;
 
-            self.player.onStopPathing(function(x, y) {
-                self.entities.unregisterPosition(self.player);
-                self.entities.registerPosition(self.player);
+        self.camera.clip();
 
-                self.input.selectedCellVisible = false;
+        var id = null,
+          entity = self.game.getEntityAt(x, y, true);
 
-                self.camera.clip();
+        if (entity) id = entity.id;
 
-                var id = null,
-                    entity = self.game.getEntityAt(x, y, true);
+        var hasTarget = self.player.hasTarget();
 
-                if (entity)
-                    id = entity.id;
+        self.socket.send(Packets.Movement, [
+          Packets.MovementOpcode.Stop,
+          x,
+          y,
+          id,
+          hasTarget
+        ]);
 
-                var hasTarget = self.player.hasTarget();
+        if (hasTarget) {
+          self.socket.send(Packets.Target, [
+            self.isAttackable()
+              ? Packets.TargetOpcode.Attack
+              : Packets.TargetOpcode.Talk,
+            self.player.target.id
+          ]);
 
-                self.socket.send(Packets.Movement, [Packets.MovementOpcode.Stop, x, y, id, hasTarget]);
-
-                if (hasTarget) {
-                    self.socket.send(Packets.Target, [self.isAttackable() ? Packets.TargetOpcode.Attack : Packets.TargetOpcode.Talk, self.player.target.id]);
-
-                    self.player.lookAt(self.player.target);
-                }
-
-                self.input.setPassiveTarget();
-
-            });
-
-            self.player.onBeforeStep(function() {
-                self.entities.unregisterPosition(self.player);
-
-                if (!self.isAttackable())
-                    return;
-
-                if (self.player.isRanged()) {
-                    if (self.player.getDistance(self.player.target) < 7)
-                        self.player.stop();
-                } else {
-                    self.input.selectedX = self.player.target.gridX;
-                    self.input.selectedY = self.player.target.gridY;
-                }
-            });
-
-            self.player.onStep(function() {
-                if (self.player.hasNextStep())
-                    self.entities.registerDuality(self.player);
-
-                if (!self.camera.centered)
-                    self.checkBounds();
-
-                self.player.forEachAttacker(function(attacker) {
-                    
-                    if (!attacker.stunned)
-                        attacker.follow(self.player);
-                });
-
-                self.socket.send(Packets.Movement, [Packets.MovementOpcode.Step, self.player.gridX, self.player.gridY]);
-            });
-
-            self.player.onSecondStep(function() {
-                self.renderer.updateAnimatedTiles();
-            });
-
-            self.player.onMove(function() {
-                /**
-                 * This is a callback representing the absolute exact position of the player.
-                 */
-
-                if (self.camera.centered)
-                    self.camera.centreOn(self.player);
-
-                if (self.player.hasTarget())
-                    self.player.follow(self.player.target);
-
-            });
-
-            self.player.onUpdateArmour(function(armourName) {
-                self.player.setSprite(self.game.getSprite(armourName));
-            });
-        },
-
-        isAttackable: function() {
-            var self = this,
-                target = self.player.target;
-
-            if (!target)
-                return;
-
-            return target.type === 'mob' || (target.type === 'player' && target.pvp);
-        },
-
-        checkBounds: function() {
-            var self = this,
-                x = self.player.gridX - self.camera.gridX,
-                y = self.player.gridY - self.camera.gridY,
-                isBorder = false;
-
-            if (x === 0)
-                self.game.zoning.setLeft();
-            else if (y === 0)
-                self.game.zoning.setUp();
-            else if (x === self.camera.gridWidth - 1)
-                self.game.zoning.setRight();
-            else if (y === self.camera.gridHeight - 1)
-                self.game.zoning.setDown();
-
-            if (self.game.zoning.direction !== null) {
-                self.camera.zone(self.game.zoning.getDirection());
-                self.game.zoning.reset();
-            }
-
+          self.player.lookAt(self.player.target);
         }
 
-    });
+        self.input.setPassiveTarget();
+      });
 
+      self.player.onBeforeStep(function() {
+        self.entities.unregisterPosition(self.player);
+
+        if (!self.isAttackable()) return;
+
+        if (self.player.isRanged()) {
+          if (self.player.getDistance(self.player.target) < 7)
+            self.player.stop();
+        } else {
+          self.input.selectedX = self.player.target.gridX;
+          self.input.selectedY = self.player.target.gridY;
+        }
+      });
+
+      self.player.onStep(function() {
+        if (self.player.hasNextStep())
+          self.entities.registerDuality(self.player);
+
+        if (!self.camera.centered) self.checkBounds();
+
+        self.player.forEachAttacker(function(attacker) {
+          if (!attacker.stunned) attacker.follow(self.player);
+        });
+
+        self.socket.send(Packets.Movement, [
+          Packets.MovementOpcode.Step,
+          self.player.gridX,
+          self.player.gridY
+        ]);
+      });
+
+      self.player.onSecondStep(function() {
+        self.renderer.updateAnimatedTiles();
+      });
+
+      self.player.onMove(function() {
+        /**
+         * This is a callback representing the absolute exact position of the player.
+         */
+
+        if (self.camera.centered) self.camera.centreOn(self.player);
+
+        if (self.player.hasTarget()) self.player.follow(self.player.target);
+      });
+
+      self.player.onUpdateArmour(function(armourName) {
+        self.player.setSprite(self.game.getSprite(armourName));
+      });
+    },
+
+    isAttackable: function() {
+      var self = this,
+        target = self.player.target;
+
+      if (!target) return;
+
+      return target.type === "mob" || (target.type === "player" && target.pvp);
+    },
+
+    checkBounds: function() {
+      var self = this,
+        x = self.player.gridX - self.camera.gridX,
+        y = self.player.gridY - self.camera.gridY,
+        isBorder = false;
+
+      if (x === 0) self.game.zoning.setLeft();
+      else if (y === 0) self.game.zoning.setUp();
+      else if (x === self.camera.gridWidth - 1) self.game.zoning.setRight();
+      else if (y === self.camera.gridHeight - 1) self.game.zoning.setDown();
+
+      if (self.game.zoning.direction !== null) {
+        self.camera.zone(self.game.zoning.getDirection());
+        self.game.zoning.reset();
+      }
+    }
+  });
 });

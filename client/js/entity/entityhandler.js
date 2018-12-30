@@ -1,81 +1,94 @@
 /* global log, Packets */
 
-define(['./character/character'], function(Character) {
+define(["./character/character"], function(Character) {
+  return Class.extend({
+    init: function(entity) {
+      var self = this;
 
-    return Class.extend({
+      self.entity = entity;
+      self.game = null;
+      self.entities = null;
+    },
 
-        init: function(entity) {
-            var self = this;
+    load: function() {
+      var self = this;
 
-            self.entity = entity;
-            self.game = null;
-            self.entities = null;
-        },
+      if (!self.entity || !self.game) return;
 
-        load: function() {
-            var self = this;
+      if (self.isCharacter()) {
+        self.entity.onRequestPath(function(x, y) {
+          var ignored = [self.entity];
 
-            if (!self.entity || !self.game)
-                return;
+          return self.game.findPath(self.entity, x, y, ignored);
+        });
 
-            if (self.isCharacter()) {
+        self.entity.onBeforeStep(function() {
+          self.entities.unregisterPosition(self.entity);
+        });
 
-                self.entity.onRequestPath(function(x, y) {
-                    var ignored = [self.entity];
+        self.entity.onStep(function() {
+          self.entities.registerDuality(self.entity);
 
-                    return self.game.findPath(self.entity, x, y, ignored)
-                });
+          self.entity.forEachAttacker(function(attacker) {
+            if (
+              attacker.hasTarget() &&
+              attacker.target.id === self.entity.id &&
+              !attacker.stunned
+            )
+              attacker.follow(self.entity);
+          });
 
-                self.entity.onBeforeStep(function() {
-                    self.entities.unregisterPosition(self.entity);
-                });
+          if (self.entity.type === "mob")
+            self.game.socket.send(Packets.Movement, [
+              Packets.MovementOpcode.Entity,
+              self.entity.id,
+              self.entity.gridX,
+              self.entity.gridY
+            ]);
 
-                self.entity.onStep(function() {
-                    self.entities.registerDuality(self.entity);
+          if (
+            self.entity.attackRange > 1 &&
+            self.entity.hasTarget() &&
+            self.entity.getDistance(self.entity.target) <=
+              self.entity.attackRange
+          )
+            self.entity.stop(false);
+        });
 
-                    self.entity.forEachAttacker(function(attacker) {
-                        if (attacker.hasTarget() && attacker.target.id === self.entity.id && !attacker.stunned)
-                            attacker.follow(self.entity);
-                    });
+        self.entity.onStopPathing(function() {
+          self.entities.grids.addToRenderingGrid(
+            self.entity,
+            self.entity.gridX,
+            self.entity.gridY
+          );
 
-                    if (self.entity.type === 'mob')
-                        self.game.socket.send(Packets.Movement, [Packets.MovementOpcode.Entity, self.entity.id, self.entity.gridX, self.entity.gridY]);
+          self.entities.unregisterPosition(self.entity);
+          self.entities.registerPosition(self.entity);
+        });
+      }
+    },
 
-                    if (self.entity.attackRange > 1 && self.entity.hasTarget() && self.entity.getDistance(self.entity.target) <= self.entity.attackRange)
-                        self.entity.stop(false);
+    isCharacter: function() {
+      return (
+        this.entity.type &&
+        (this.entity.type === "player" ||
+          this.entity.type === "mob" ||
+          this.entity.type === "npc")
+      );
+    },
 
-                });
+    setGame: function(game) {
+      var self = this;
 
-                self.entity.onStopPathing(function() {
-                    self.entities.grids.addToRenderingGrid(self.entity, self.entity.gridX, self.entity.gridY);
+      if (!self.game) self.game = game;
 
-                    self.entities.unregisterPosition(self.entity);
-                    self.entities.registerPosition(self.entity);
+      self.setEntities(self.game.entities);
+    },
 
-                });
-            }
-        },
+    setEntities: function(entities) {
+      var self = this;
 
-        isCharacter: function() {
-            return this.entity.type && (this.entity.type === 'player' || this.entity.type === 'mob' || this.entity.type === 'npc');
-        },
-
-        setGame: function(game) {
-            var self = this;
-
-            if (!self.game)
-                self.game = game;
-
-            self.setEntities(self.game.entities);
-        },
-
-        setEntities: function(entities) {
-            var self = this;
-
-            if (!self.entities)
-                self.entities = entities;
-        }
-
-    });
-
+      if (!self.entities) self.entities = entities;
+    }
+  });
 });

@@ -1,92 +1,82 @@
 /* global log */
 
-define(['./packets', './messages'], function(Packets, Messages) {
+define(["./packets", "./messages"], function(Packets, Messages) {
+  return Class.extend({
+    init: function(game) {
+      var self = this;
 
-    return Class.extend({
+      self.game = game;
+      self.config = self.game.app.config;
+      self.connection = null;
 
-        init: function(game) {
-            var self = this;
+      self.listening = false;
 
-            self.game = game;
-            self.config = self.game.app.config;
-            self.connection = null;
+      self.disconnected = false;
 
-            self.listening = false;
+      self.messages = new Messages(self.game.app);
+    },
 
-            self.disconnected = false;
+    connect: function() {
+      var self = this,
+        protocol = self.config.ssl ? "wss" : "ws",
+        url = protocol + "://" + self.config.ip + ":" + self.config.port;
 
-            self.messages = new Messages(self.game.app);
-        },
+      log.info("Opening WebSocket: " + url);
 
-        connect: function() {
-            var self = this,
-                protocol = self.config.ssl ? 'wss' : 'ws',
-                url = protocol + '://' + self.config.ip + ':' + self.config.port;
-                
-            log.info('Opening WebSocket: ' + url);
+      self.connection = null;
 
-            self.connection = null;
+      self.connection = io(url, {
+        forceNew: true,
+        reconnection: false
+      });
 
-            self.connection = io(url, {
-                forceNew: true,
-                reconnection: false
-            });
+      self.connection.on("connect_error", function() {
+        log.info("Failed to connect to: " + self.config.ip);
 
-            self.connection.on('connect_error', function() {
-                log.info('Failed to connect to: ' + self.config.ip);
+        self.listening = false;
 
-                self.listening = false;
+        self.game.app.toggleLogin(false);
+        self.game.app.sendError(null, "Could not connect to the game server.");
+      });
 
-                self.game.app.toggleLogin(false);
-                self.game.app.sendError(null, 'Could not connect to the game server.');
-            });
+      self.connection.on("connect", function() {
+        self.listening = true;
 
-            self.connection.on('connect', function() {
-                self.listening = true;
+        self.game.app.updateLoader("Preparing handshake...");
+        self.connection.emit("client", {
+          gVer: self.config.version,
+          cType: "HTML5"
+        });
+      });
 
-                self.game.app.updateLoader('Preparing handshake...');
-                self.connection.emit('client', {
-                    gVer: self.config.version,
-                    cType: 'HTML5'
-                });
-            });
+      self.connection.on("message", function(message) {
+        self.receive(message);
+      });
 
-            self.connection.on('message', function(message) {
-                self.receive(message);
-            });
+      self.connection.on("disconnect", function() {
+        self.game.handleDisconnection();
+      });
+    },
 
-            self.connection.on('disconnect', function() {
-                self.game.handleDisconnection();
-            });
-        },
+    receive: function(message) {
+      var self = this;
 
-        receive: function(message) {
-            var self = this;
+      if (!self.listening) return;
 
-            if (!self.listening)
-                return;
+      if (message.startsWith("[")) {
+        var data = JSON.parse(message);
 
-            if (message.startsWith('[')) {
-                var data = JSON.parse(message);
+        if (data.length > 1) self.messages.handleBulkData(data);
+        else self.messages.handleData(JSON.parse(message).shift());
+      } else self.messages.handleUTF8(message);
+    },
 
-                if (data.length > 1)
-                    self.messages.handleBulkData(data);
-                else
-                    self.messages.handleData(JSON.parse(message).shift());
+    send: function(packet, data) {
+      var self = this,
+        json = JSON.stringify([packet, data]);
 
-            } else
-                self.messages.handleUTF8(message);
-
-        },
-
-        send: function(packet, data) {
-            var self = this,
-                json = JSON.stringify([packet, data]);
-
-            if (self.connection && self.connection.connected)
-                self.connection.send(json);
-        }
-
-    });
-
+      if (self.connection && self.connection.connected)
+        self.connection.send(json);
+    }
+  });
 });

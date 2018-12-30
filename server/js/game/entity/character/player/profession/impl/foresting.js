@@ -1,11 +1,7 @@
-var cls = require('../../../../../../lib/class');
+var cls = require("../../../../../../lib/class");
 
 module.exports = Foresting = cls.Class.extend({
-
-    init: function() {
-        var self = this;
-
-
-    }
-
+  init: function() {
+    var self = this;
+  }
 });

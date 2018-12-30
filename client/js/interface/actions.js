@@ -1,168 +1,158 @@
 /* global _, log */
 
-define(['jquery'], function($) {
+define(["jquery"], function($) {
+  return Class.extend({
+    init: function(intrfce) {
+      var self = this;
 
-    return Class.extend({
+      self.interface = intrfce;
 
-        init: function(intrfce) {
-            var self = this;
+      self.body = $("#actionContainer");
+      self.drop = $("#dropDialog");
+      self.dropInput = $("#dropCount");
 
-            self.interface = intrfce;
+      self.pBody = $("#pActions");
+      self.follow = $("#follow");
+      self.trade = $("#tradeAction");
 
-            self.body = $('#actionContainer');
-            self.drop = $('#dropDialog');
-            self.dropInput = $('#dropCount');
+      self.activeClass = null;
 
-            self.pBody = $('#pActions');
-            self.follow = $('#follow');
-            self.trade = $('#tradeAction');
+      self.miscButton = null;
 
-            self.activeClass = null;
+      self.load();
+    },
 
-            self.miscButton = null;
+    load: function() {
+      var self = this,
+        dropAccept = $("#dropAccept"),
+        dropCancel = $("#dropcancel");
 
-            self.load();
-        },
+      dropAccept.click(function(event) {
+        if (self.activeClass === "inventory")
+          self.interface.inventory.clickAction(event);
+      });
 
-        load: function() {
-            var self = this,
-                dropAccept = $('#dropAccept'),
-                dropCancel = $('#dropcancel');
+      dropCancel.click(function(event) {
+        if (self.activeClass === "inventory")
+          self.interface.inventory.clickAction(event);
+      });
+    },
 
-            dropAccept.click(function(event) {
+    loadDefaults: function(activeClass) {
+      var self = this;
 
-                if (self.activeClass === 'inventory')
-                    self.interface.inventory.clickAction(event);
-            });
+      self.activeClass = activeClass;
 
-            dropCancel.click(function(event) {
-                if (self.activeClass === 'inventory')
-                    self.interface.inventory.clickAction(event);
-            });
-        },
+      switch (self.activeClass) {
+        case "inventory":
+          var dropButton = $('<div id="drop" class="actionButton">Drop</div>');
 
-        loadDefaults: function(activeClass) {
-            var self = this;
+          self.add(dropButton);
 
-            self.activeClass = activeClass;
+          break;
 
-            switch (self.activeClass) {
-                case 'inventory':
-                    var dropButton = $('<div id="drop" class="actionButton">Drop</div>');
+        case "profile":
+          break;
+      }
+    },
 
-                    self.add(dropButton);
+    add: function(button, misc) {
+      var self = this;
 
-                    break;
+      self.body.find("ul").prepend($("<li></li>").append(button));
 
-                case 'profile':
+      button.click(function(event) {
+        if (self.activeClass === "inventory")
+          self.interface.inventory.clickAction(event);
+      });
 
-                    break;
-            }
-        },
+      if (misc) self.miscButton = button;
+    },
 
-        add: function(button, misc) {
-            var self = this;
+    removeMisc: function() {
+      var self = this;
 
-            self.body.find('ul').prepend($('<li></li>').append(button));
+      self.miscButton.remove();
+      self.miscButton = null;
+    },
 
-            button.click(function(event) {
-                if (self.activeClass === 'inventory')
-                    self.interface.inventory.clickAction(event);
+    reset: function() {
+      var self = this,
+        buttons = self.getButtons();
 
-            });
+      for (var i = 0; i < buttons.length; i++) $(buttons[i]).remove();
+    },
 
-            if (misc)
-                self.miscButton = button;
-        },
+    show: function() {
+      this.body.fadeIn("fast");
+    },
 
-        removeMisc: function() {
-            var self = this;
+    showPlayerActions: function(player, mouseX, mouseY) {
+      var self = this;
 
-            self.miscButton.remove();
-            self.miscButton = null;
-        },
+      if (!player) return;
 
-        reset: function() {
-            var self = this,
-                buttons = self.getButtons();
+      self.pBody.fadeIn("fast");
+      self.pBody.css({
+        left: mouseX - self.pBody.width() / 2 + "px",
+        top: mouseY + self.pBody.height() / 2 + "px"
+      });
 
-            for (var i = 0; i < buttons.length; i++)
-                $(buttons[i]).remove();
-        },
+      self.follow.click(function() {
+        self.getPlayer().follow(player);
 
-        show: function() {
-            this.body.fadeIn('fast');
-        },
+        self.hidePlayerActions();
+      });
 
-        showPlayerActions: function(player, mouseX, mouseY) {
-            var self = this;
+      self.trade.click(function() {
+        self.getGame().tradeWith(player);
 
-            if (!player)
-                return;
+        self.hidePlayerActions();
+      });
+    },
 
-            self.pBody.fadeIn('fast');
-            self.pBody.css({
-                'left': mouseX - (self.pBody.width() / 2) + 'px',
-                'top': mouseY + (self.pBody.height() / 2) + 'px'
-            });
+    hide: function() {
+      this.body.fadeOut("slow");
+    },
 
-            self.follow.click(function() {
-                self.getPlayer().follow(player);
+    hidePlayerActions: function() {
+      this.pBody.fadeOut("fast");
+    },
 
-                self.hidePlayerActions();
-            });
+    displayDrop: function(activeClass) {
+      var self = this;
 
-            self.trade.click(function() {
-                self.getGame().tradeWith(player);
+      self.activeClass = activeClass;
 
-                self.hidePlayerActions();
-            });
-        },
+      self.drop.fadeIn("fast");
 
-        hide: function() {
-            this.body.fadeOut('slow');
-        },
+      self.dropInput.focus();
+      self.dropInput.select();
+    },
 
-        hidePlayerActions: function() {
-            this.pBody.fadeOut('fast');
-        },
+    hideDrop: function() {
+      var self = this;
 
-        displayDrop: function(activeClass) {
-            var self = this;
+      self.drop.fadeOut("slow");
 
-            self.activeClass = activeClass;
+      self.dropInput.blur();
+      self.dropInput.val("");
+    },
 
-            self.drop.fadeIn('fast');
+    getButtons: function() {
+      return this.body.find("ul").find("li");
+    },
 
-            self.dropInput.focus();
-            self.dropInput.select();
-        },
+    getGame: function() {
+      return this.interface.game;
+    },
 
-        hideDrop: function() {
-            var self = this;
+    getPlayer: function() {
+      return this.interface.game.player;
+    },
 
-            self.drop.fadeOut('slow');
-
-            self.dropInput.blur();
-            self.dropInput.val('');
-        },
-
-        getButtons: function() {
-            return this.body.find('ul').find('li');
-        },
-
-        getGame: function() {
-            return this.interface.game;
-        },
-
-        getPlayer: function() {
-            return this.interface.game.player;
-        },
-
-        isVisible: function() {
-            return this.body.css('display') === 'block';
-        }
-
-    });
-
+    isVisible: function() {
+      return this.body.css("display") === "block";
+    }
+  });
 });

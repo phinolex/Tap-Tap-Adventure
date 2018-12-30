@@ -1,46 +1,42 @@
-define(['../entity'], function(Entity) {
+define(["../entity"], function(Entity) {
+  return Entity.extend({
+    init: function(id, kind, count, ability, abilityLevel) {
+      var self = this;
 
-    return Entity.extend({
+      self._super(id, kind);
 
-        init: function(id, kind, count, ability, abilityLevel) {
-            var self = this;
+      self.count = count;
+      self.ability = ability;
+      self.abilityLevel = abilityLevel;
 
-            self._super(id, kind);
+      self.dropped = false;
+      self.stackable = false;
 
-            self.count = count;
-            self.ability = ability;
-            self.abilityLevel = abilityLevel;
+      self.type = "item";
+    },
 
-            self.dropped = false;
-            self.stackable = false;
+    idle: function() {
+      this.setAnimation("idle", 150);
+    },
 
-            self.type = 'item';
-        },
+    setName: function(name) {
+      this._super(name);
+    },
 
-        idle: function() {
-            this.setAnimation('idle', 150);
-        },
+    setAnimation: function(name, speed, count) {
+      this._super(name, speed, count);
+    },
 
-        setName: function(name) {
-            this._super(name);
-        },
+    setGridPosition: function(x, y) {
+      this._super(x, y);
+    },
 
-        setAnimation: function(name, speed, count) {
-            this._super(name, speed, count);
-        },
+    setSprite: function(sprite) {
+      this._super(sprite);
+    },
 
-        setGridPosition: function(x, y) {
-            this._super(x, y);
-        },
-
-        setSprite: function(sprite) {
-            this._super(sprite);
-        },
-
-        hasShadow: function() {
-            return true;
-        }
-
-    });
-
+    hasShadow: function() {
+      return true;
+    }
+  });
 });
