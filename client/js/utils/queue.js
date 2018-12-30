@@ -1,39 +1,35 @@
 /* global _ */
 
 define(function() {
+  /**
+   * Very useful file used for queuing various objects,
+   * most notably used in the info controller to queue
+   * objects to delete
+   */
 
-    /**
-     * Very useful file used for queuing various objects,
-     * most notably used in the info controller to queue
-     * objects to delete
-     */
+  return Class.extend({
+    init: function() {
+      var self = this;
 
-    return Class.extend({
+      self.queue = [];
+    },
 
-        init: function() {
-            var self = this;
+    reset: function() {
+      this.queue = [];
+    },
 
-            self.queue = [];
-        },
+    add: function(object) {
+      this.queue.push(object);
+    },
 
-        reset: function() {
-            this.queue = [];
-        },
+    getQueue: function() {
+      return this.queue;
+    },
 
-        add: function(object) {
-            this.queue.push(object);
-        },
-
-        getQueue: function() {
-            return this.queue;
-        },
-
-        forEachQueue: function(callback) {
-            _.each(this.queue, function(object) {
-                callback(object);
-            });
-        }
-
-    });
-
+    forEachQueue: function(callback) {
+      _.each(this.queue, function(object) {
+        callback(object);
+      });
+    }
+  });
 });

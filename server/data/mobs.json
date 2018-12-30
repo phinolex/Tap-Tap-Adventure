@@ -19,7 +19,7 @@
   "Bat": {
     "name": "Batterfly",
     "id": 1,
-    "drops": {"flask": 500},
+    "drops": { "flask": 500 },
     "hitPoints": 20,
     "armour": 0,
     "weapon": 0,
@@ -36,7 +36,7 @@
   "Crab": {
     "name": "Crab",
     "id": 2,
-    "drops": {"flask": 500},
+    "drops": { "flask": 500 },
     "hitPoints": 35,
     "armour": 0,
     "weapon": 0,
@@ -53,7 +53,12 @@
   "Wizard": {
     "name": "Wizard",
     "id": 3,
-    "drops": {"axe": 200, "morningstar": 100, "woodenbow": 300, "sword2": 400},
+    "drops": {
+      "axe": 200,
+      "morningstar": 100,
+      "woodenbow": 300,
+      "sword2": 400
+    },
     "hitPoints": 45,
     "armour": 4,
     "weapon": 2,
@@ -71,7 +76,13 @@
   "Goblin": {
     "name": "Goblin",
     "id": 4,
-    "drops": {"leatherarmor": 100, "plasticbow": 100, "gold": 400, "leatherarcherarmor": 100, "sword2": 300},
+    "drops": {
+      "leatherarmor": 100,
+      "plasticbow": 100,
+      "gold": 400,
+      "leatherarcherarmor": 100,
+      "sword2": 300
+    },
     "hitPoints": 30,
     "armour": 1,
     "weapon": 2,
@@ -105,7 +116,14 @@
   "Ogre": {
     "name": "Ogre",
     "id": 6,
-    "drops": {"axe": 300, "gold": 150, "bluesword": 50, "mailarmor": 175, "ironbow": 150, "mailarcherarmor": 175},
+    "drops": {
+      "axe": 300,
+      "gold": 150,
+      "bluesword": 50,
+      "mailarmor": 175,
+      "ironbow": 150,
+      "mailarcherarmor": 175
+    },
     "hitPoints": 60,
     "armour": 3,
     "weapon": 2,
@@ -122,7 +140,12 @@
   "Skeleton2": {
     "name": "Scary Skeleton",
     "id": 7,
-    "drops": {"axe": 500, "morningstar": 200, "platearmor": 150, "platearcherarmor": 150},
+    "drops": {
+      "axe": 500,
+      "morningstar": 200,
+      "platearmor": 150,
+      "platearcherarmor": 150
+    },
     "hitPoints": 120,
     "armour": 5,
     "weapon": 2,
@@ -139,7 +162,7 @@
   "Snek": {
     "name": "Snek",
     "id": 8,
-    "drops": {"gold": 900, "morningstar": 50, "platearmor": 50},
+    "drops": { "gold": 900, "morningstar": 50, "platearmor": 50 },
     "hitPoints": 55,
     "armour": 4,
     "weapon": 2,
@@ -156,7 +179,7 @@
   "Spectre": {
     "name": "Spectre",
     "id": 9,
-    "drops": {"redarmor": 50, "axe": 750, "bluesword": 200},
+    "drops": { "redarmor": 50, "axe": 750, "bluesword": 200 },
     "hitPoints": 170,
     "armour": 6,
     "weapon": 2,
@@ -173,7 +196,7 @@
   "Eye": {
     "name": "Eye",
     "id": 10,
-    "drops": {"redarcherarmor": 50, "gold": 900, "bluesword": 50},
+    "drops": { "redarcherarmor": 50, "gold": 900, "bluesword": 50 },
     "hitPoints": 160,
     "armour": 3,
     "weapon": 4,
@@ -190,7 +213,7 @@
   "Deathknight": {
     "name": "Death Knight",
     "id": 11,
-    "drops": {"redsword": 600, "redarmor": 200, "morningstar": 200},
+    "drops": { "redsword": 600, "redarmor": 200, "morningstar": 200 },
     "hitPoints": 105,
     "armour": 8,
     "weapon": 3,
@@ -207,7 +230,13 @@
   "Adherer": {
     "name": "Dark Mage",
     "id": 12,
-    "drops": {"rose": 50, "redlightbow": 10, "redmetalsword": 10, "adhererarcherarmor": 10, "adhererrobe": 10},
+    "drops": {
+      "rose": 50,
+      "redlightbow": 10,
+      "redmetalsword": 10,
+      "adhererarcherarmor": 10,
+      "adhererrobe": 10
+    },
     "hitPoints": 200,
     "armour": 5,
     "weapon": 1,
@@ -225,7 +254,7 @@
   "Ant": {
     "name": "Worker Ant",
     "id": 13,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 650,
     "armour": 8,
     "weapon": 1,
@@ -242,7 +271,7 @@
   "BabySpider": {
     "name": "Baby Spooder",
     "id": 14,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 400,
     "armour": 3,
     "weapon": 7,
@@ -254,13 +283,12 @@
     "attackRate": 900,
     "movementSpeed": 400,
     "spawnDelay": 35000
-
   },
 
   "Beetle": {
     "name": "Beetle",
     "id": 15,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 600,
     "armour": 5,
     "weapon": 10,
@@ -277,7 +305,7 @@
   "BlackPirateSkeleton": {
     "name": "Pirate Skeleton",
     "id": 16,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 435,
     "armour": 10,
     "weapon": 3,
@@ -294,7 +322,7 @@
   "GreenPirateSkeleton": {
     "name": "Pirate Skeleton",
     "id": 16,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 400,
     "armour": 8,
     "weapon": 3,
@@ -311,7 +339,12 @@
   "BlackWizard": {
     "name": "Dark Wizard",
     "id": 17,
-    "drops": {"bastardsword": 300, "wizardrobe": 300, "redlightbow": 375, "topazring": 25},
+    "drops": {
+      "bastardsword": 300,
+      "wizardrobe": 300,
+      "redlightbow": 375,
+      "topazring": 25
+    },
     "hitPoints": 700,
     "armour": 4,
     "weapon": 10,
@@ -329,7 +362,7 @@
   "BlazeSpider": {
     "name": "Blaze Spooder",
     "id": 18,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 915,
     "armour": 0,
     "weapon": 3,
@@ -346,7 +379,7 @@
   "BlueCockroach": {
     "name": "Blue Cockroach",
     "id": 19,
-    "drops": {"cockroachsuit": 400, "gayarcherarmor": 200, "sickle": 400},
+    "drops": { "cockroachsuit": 400, "gayarcherarmor": 200, "sickle": 400 },
     "hitPoints": 785,
     "armour": 5,
     "weapon": 0,
@@ -363,7 +396,12 @@
   "BluePreta": {
     "name": "Blue Preta",
     "id": 20,
-    "drops": {"bluescimitar": 200, "bluewingarcherarmor": 200, "bluewingarmor": 200, "gold": 400},
+    "drops": {
+      "bluescimitar": 200,
+      "bluewingarcherarmor": 200,
+      "bluewingarmor": 200,
+      "gold": 400
+    },
     "hitPoints": 600,
     "armour": 5,
     "weapon": 8,
@@ -380,7 +418,7 @@
   "Cactus": {
     "name": "Cactus",
     "id": 21,
-    "drops": {"gold": 600, "cactusaxe": 400},
+    "drops": { "gold": 600, "cactusaxe": 400 },
     "hitPoints": 45,
     "armour": 4,
     "weapon": 1,
@@ -397,7 +435,7 @@
   "Cat": {
     "name": "Cat",
     "id": 22,
-    "drops": {"catarmor": 1000},
+    "drops": { "catarmor": 1000 },
     "hitPoints": 600,
     "armour": 1,
     "weapon": 4,
@@ -414,7 +452,7 @@
   "Clam": {
     "name": "Clam",
     "id": 23,
-    "drops": {"coins": 500, "spear": 500},
+    "drops": { "coins": 500, "spear": 500 },
     "hitPoints": 200,
     "armour": 6,
     "weapon": 1,
@@ -431,7 +469,7 @@
   "Cobra": {
     "name": "Cobra",
     "id": 24,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1150,
     "armour": 3,
     "weapon": 10,
@@ -448,7 +486,7 @@
   "CrystalScolpion": {
     "name": "Crystal Scorpion",
     "id": 25,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1450,
     "armour": 15,
     "weapon": 5,
@@ -465,7 +503,7 @@
   "CursedHahoeMask": {
     "name": "Cursed Hahoe Mask",
     "id": 26,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 2100,
     "armour": 25,
     "weapon": 5,
@@ -482,7 +520,7 @@
   "CursedDjangseung": {
     "name": "Cursed Djangseung",
     "id": 27,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1900,
     "armour": 25,
     "weapon": 10,
@@ -499,7 +537,7 @@
   "DarkOgre": {
     "name": "Dark Ogre",
     "id": 28,
-    "drops": {"ring1": 50, "skylightbow": 400, "gold": 550},
+    "drops": { "ring1": 50, "skylightbow": 400, "gold": 550 },
     "hitPoints": 130,
     "armour": 5,
     "weapon": 1,
@@ -516,7 +554,7 @@
   "DarkScolpion": {
     "name": "Dark Scorpion",
     "id": 29,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1450,
     "armour": 10,
     "weapon": 15,
@@ -533,7 +571,7 @@
   "DarkSkeleton": {
     "name": "Dark Skeleton",
     "id": 30,
-    "drops": {"sproutring": 25, "hammer": 250, "hunterbow": 450, "gold": 275},
+    "drops": { "sproutring": 25, "hammer": 250, "hunterbow": 450, "gold": 275 },
     "hitPoints": 300,
     "armour": 5,
     "weapon": 2,
@@ -550,7 +588,7 @@
   "DesertScolpion": {
     "name": "Desert Scorpion",
     "id": 31,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1300,
     "armour": 10,
     "weapon": 15,
@@ -567,7 +605,7 @@
   "DevilKazya": {
     "name": "Devil Blox",
     "id": 32,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 2300,
     "armour": 30,
     "weapon": 25,
@@ -584,7 +622,7 @@
   "EarthWorm": {
     "name": "Earth Worm",
     "id": 33,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 970,
     "armour": 5,
     "weapon": 5,
@@ -601,7 +639,7 @@
   "FireSpider": {
     "name": "Fire Spooder",
     "id": 34,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1150,
     "armour": 3,
     "weapon": 4,
@@ -618,7 +656,7 @@
   "FlareDanceKnight": {
     "name": "Cursed Knight",
     "id": 35,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1000,
     "armour": 15,
     "weapon": 10,
@@ -635,7 +673,7 @@
   "Frog": {
     "name": "Frog",
     "id": 36,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1850,
     "armour": 10,
     "weapon": 15,
@@ -652,7 +690,7 @@
   "GhostRider": {
     "name": "Skeleton Knight",
     "id": 37,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 700,
     "armour": 30,
     "weapon": 15,
@@ -669,7 +707,7 @@
   "GoldGolem": {
     "name": "Golden Golem",
     "id": 38,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1150,
     "armour": 10,
     "weapon": 15,
@@ -686,7 +724,7 @@
   "Golem": {
     "name": "Golem",
     "id": 39,
-    "drops": {"deathbow": 100, "bluesword": 200, "gold": 700},
+    "drops": { "deathbow": 100, "bluesword": 200, "gold": 700 },
     "hitPoints": 200,
     "armour": 10,
     "weapon": 1,
@@ -703,7 +741,12 @@
   "GreenFish": {
     "name": "Green Fesh",
     "id": 40,
-    "drops": {"spear": 125, "pendant1": 25, "greenarcherarmor": 150, "gold": 700},
+    "drops": {
+      "spear": 125,
+      "pendant1": 25,
+      "greenarcherarmor": 150,
+      "gold": 700
+    },
     "hitPoints": 200,
     "armour": 1,
     "weapon": 1,
@@ -720,7 +763,7 @@
   "HellSpider": {
     "name": "Hell Spooder",
     "id": 41,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 2000,
     "armour": 10,
     "weapon": 15,
@@ -737,7 +780,12 @@
   "HermitCrab": {
     "name": "Hermit Crab",
     "id": 42,
-    "drops": {"whitearcherarmor": 200, "sidesword": 400, "whitearmor": 200, "gold": 200},
+    "drops": {
+      "whitearcherarmor": 200,
+      "sidesword": 400,
+      "whitearmor": 200,
+      "gold": 200
+    },
     "hitPoints": 300,
     "armour": 10,
     "weapon": 10,
@@ -754,7 +802,12 @@
   "Hobgoblin": {
     "name": "Hobgoblin",
     "id": 43,
-    "drops": {"mailarmor": 200, "platearmor": 400, "platearcherarmor": 200, "mailarcherarmor": 200},
+    "drops": {
+      "mailarmor": 200,
+      "platearmor": 400,
+      "platearcherarmor": 200,
+      "mailarcherarmor": 200
+    },
     "hitPoints": 130,
     "armour": 6,
     "weapon": 4,
@@ -771,7 +824,7 @@
   "HongCheol": {
     "name": "Hong Chul",
     "id": 44,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1550,
     "armour": 15,
     "weapon": 15,
@@ -788,7 +841,12 @@
   "IceGolem": {
     "name": "Ice Golem",
     "id": 45,
-    "drops": {"bluesword": 450, "crystalarmor": 20, "crystalarcherarmor": 20, "gold": 500},
+    "drops": {
+      "bluesword": 450,
+      "crystalarmor": 20,
+      "crystalarcherarmor": 20,
+      "gold": 500
+    },
     "hitPoints": 700,
     "armour": 9,
     "weapon": 5,
@@ -805,7 +863,7 @@
   "IceKnight": {
     "name": "Ice Knight",
     "id": 46,
-    "drops": {"gold": 700, "icerose": 300},
+    "drops": { "gold": 700, "icerose": 300 },
     "hitPoints": 1000,
     "armour": 30,
     "weapon": 15,
@@ -822,7 +880,7 @@
   "IceVulture": {
     "name": "Ice Vulture",
     "id": 47,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 300,
     "armour": 1,
     "weapon": 3,
@@ -839,7 +897,7 @@
   "InfectedGuard": {
     "name": "Infected Guard",
     "id": 48,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 2000,
     "armour": 8,
     "weapon": 4,
@@ -856,7 +914,7 @@
   "IronOgre": {
     "name": "Iron Ogre",
     "id": 49,
-    "drops": {"bluescimitar": 400, "gold": 600},
+    "drops": { "bluescimitar": 400, "gold": 600 },
     "hitPoints": 300,
     "armour": 5,
     "weapon": 4,
@@ -873,7 +931,13 @@
   "LivingArmor": {
     "name": "Living armor",
     "id": 50,
-    "drops": {"whip": 10, "dovakinarcherarmor": 100, "dovakinarmor": 100, "skylightbow": 100, "gold": 690},
+    "drops": {
+      "whip": 10,
+      "dovakinarcherarmor": 100,
+      "dovakinarmor": 100,
+      "skylightbow": 100,
+      "gold": 690
+    },
     "hitPoints": 340,
     "armour": 4,
     "weapon": 1,
@@ -890,7 +954,7 @@
   "Mantis": {
     "name": "Praying Mantis",
     "id": 51,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 2400,
     "armour": 15,
     "weapon": 10,
@@ -907,7 +971,7 @@
   "Mermaid": {
     "name": "Mermaid",
     "id": 52,
-    "drops": {"gold": 600, "trident": 200, "mermaidbow": 200},
+    "drops": { "gold": 600, "trident": 200, "mermaidbow": 200 },
     "hitPoints": 150,
     "armour": 3,
     "weapon": 1,
@@ -924,7 +988,7 @@
   "Mimic": {
     "name": "Mimic",
     "id": 53,
-    "drops": {"gold": 600, "bluescimitar": 400},
+    "drops": { "gold": 600, "bluescimitar": 400 },
     "hitPoints": 200,
     "armour": 2,
     "weapon": 1,
@@ -941,7 +1005,7 @@
   "MiniIceKnight": {
     "name": "Mini Ice Knight",
     "id": 54,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1950,
     "armour": 5,
     "weapon": 7,
@@ -958,7 +1022,7 @@
   "MiniKnight": {
     "name": "Mini Knight",
     "id": 55,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1450,
     "armour": 3,
     "weapon": 5,
@@ -975,7 +1039,7 @@
   "OldOgre": {
     "name": "Old Ogre",
     "id": 56,
-    "drops": {"pendant1": 25, "skylightbow": 475, "gold": 500},
+    "drops": { "pendant1": 25, "skylightbow": 475, "gold": 500 },
     "hitPoints": 256,
     "armour": 5,
     "weapon": 1,
@@ -992,7 +1056,7 @@
   "Orc": {
     "name": "Orc",
     "id": 57,
-    "drops": {"redsword": 300, "violetbow": 300, "redarcherarmor": 400},
+    "drops": { "redsword": 300, "violetbow": 300, "redarcherarmor": 400 },
     "hitPoints": 75,
     "armour": 5,
     "weapon": 4,
@@ -1009,7 +1073,7 @@
   "Pain": {
     "name": "Infected Villager",
     "id": 58,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1550,
     "armour": 5,
     "weapon": 1,
@@ -1026,7 +1090,13 @@
   "Penguin": {
     "name": "Penguin",
     "id": 59,
-    "drops": {"bluewingarcherarmor": 200, "bluewingarmor": 200, "icerose": 200, "marinebow": 200, "gold": 200},
+    "drops": {
+      "bluewingarcherarmor": 200,
+      "bluewingarmor": 200,
+      "icerose": 200,
+      "marinebow": 200,
+      "gold": 200
+    },
     "hitPoints": 526,
     "armour": 4,
     "weapon": 1,
@@ -1043,7 +1113,7 @@
   "Pierrot": {
     "name": "Clown",
     "id": 60,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 150,
     "armour": 30,
     "weapon": 15,
@@ -1060,7 +1130,7 @@
   "PinkElf": {
     "name": "Pink Elf",
     "id": 61,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1600,
     "armour": 4,
     "weapon": 4,
@@ -1077,7 +1147,7 @@
   "PoisonSpider": {
     "name": "Red Spider",
     "id": 62,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 990,
     "armour": 30,
     "weapon": 15,
@@ -1095,7 +1165,12 @@
   "Preta": {
     "name": "Preta",
     "id": 63,
-    "drops": {"greenpendant": 40, "bluewingarcherarmor": 200, "bluewingarmor": 360, "gold": 400},
+    "drops": {
+      "greenpendant": 40,
+      "bluewingarcherarmor": 200,
+      "bluewingarmor": 360,
+      "gold": 400
+    },
     "hitPoints": 495,
     "armour": 1,
     "weapon": 7,
@@ -1112,7 +1187,12 @@
   "PurplePreta": {
     "name": "Preta",
     "id": 64,
-    "drops": {"bluescimitar": 200, "bluewingarcherarmor": 200, "bluewingarmor": 200, "gold": 400},
+    "drops": {
+      "bluescimitar": 200,
+      "bluewingarcherarmor": 200,
+      "bluewingarmor": 200,
+      "gold": 400
+    },
     "hitPoints": 431,
     "armour": 1,
     "weapon": 6,
@@ -1129,7 +1209,7 @@
   "RedCockroach": {
     "name": "Red Cockroach",
     "id": 65,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1200,
     "armour": 2,
     "weapon": 4,
@@ -1146,7 +1226,7 @@
   "RedElf": {
     "name": "Red Elf",
     "id": 66,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1750,
     "armour": 5,
     "weapon": 5,
@@ -1163,7 +1243,7 @@
   "RedFish": {
     "name": "Red Fesh",
     "id": 67,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 100,
     "armour": 1,
     "weapon": 1,
@@ -1180,7 +1260,13 @@
   "RedGuard": {
     "name": "Red Guard",
     "id": 68,
-    "drops": {"redguardarmor": 300, "redguardarcherarmor": 325, "ring1": 25, "scimitar": 150, "watermelonbow": 200},
+    "drops": {
+      "redguardarmor": 300,
+      "redguardarcherarmor": 325,
+      "ring1": 25,
+      "scimitar": 150,
+      "watermelonbow": 200
+    },
     "hitPoints": 135,
     "armour": 1,
     "weapon": 1,
@@ -1197,7 +1283,7 @@
   "RedMouse": {
     "name": "Red Mouse",
     "id": 69,
-    "drops": {"ratarcherarmor": 300, "ratarmor": 300, "gold": 400},
+    "drops": { "ratarcherarmor": 300, "ratarmor": 300, "gold": 400 },
     "hitPoints": 160,
     "armour": 1,
     "weapon": 1,
@@ -1214,7 +1300,7 @@
   "RedPirateSkeleton": {
     "name": "Pirate Skeleton",
     "id": 70,
-    "drops": {"piratearcherarmor": 300, "bluepiratearmor": 400, "gold": 300},
+    "drops": { "piratearcherarmor": 300, "bluepiratearmor": 400, "gold": 300 },
     "hitPoints": 650,
     "armour": 1,
     "weapon": 1,
@@ -1231,7 +1317,7 @@
   "Rhaphidophoridae": {
     "name": "Cricket",
     "id": 71,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 3500,
     "armour": 5,
     "weapon": 10,
@@ -1248,7 +1334,7 @@
   "Rudolf": {
     "name": "Raindeer",
     "id": 72,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 5550,
     "armour": 10,
     "weapon": 15,
@@ -1265,7 +1351,7 @@
   "SantaElf": {
     "name": "Santa's Elf",
     "id": 73,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 6100,
     "armour": 10,
     "weapon": 15,
@@ -1282,7 +1368,7 @@
   "Scorpion": {
     "name": "Scorpion",
     "id": 74,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 2700,
     "armour": 10,
     "weapon": 15,
@@ -1299,7 +1385,7 @@
   "SkyElf": {
     "name": "Sky Elf",
     "id": 75,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 2100,
     "armour": 6,
     "weapon": 6,
@@ -1316,7 +1402,7 @@
   "Slime": {
     "name": "Slime",
     "id": 76,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 3055,
     "armour": 5,
     "weapon": 5,
@@ -1333,7 +1419,7 @@
   "SmallDevil": {
     "name": "Corrupted Bat",
     "id": 77,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 100,
     "armour": 3,
     "weapon": 5,
@@ -1350,7 +1436,7 @@
   "SnowElf": {
     "name": "Snow Elf",
     "id": 78,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 3400,
     "armour": 10,
     "weapon": 15,
@@ -1367,7 +1453,7 @@
   "Snowman": {
     "name": "Snowman",
     "id": 79,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 750,
     "armour": 3,
     "weapon": 3,
@@ -1384,7 +1470,7 @@
   "SnowRabbit": {
     "name": "Snow Rabbit",
     "id": 80,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 295,
     "armour": 4,
     "weapon": 1,
@@ -1401,7 +1487,7 @@
   "SnowWolf": {
     "name": "Snow Wolf",
     "id": 81,
-    "drops": {"gold": 850, "icerose": 50, "wolfarmor": 100},
+    "drops": { "gold": 850, "icerose": 50, "wolfarmor": 100 },
     "hitPoints": 1185,
     "armour": 8,
     "weapon": 3,
@@ -1418,7 +1504,7 @@
   "IceGoblin": {
     "name": "Frost Goblin",
     "id": 82,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 450,
     "armour": 2,
     "weapon": 6,
@@ -1435,7 +1521,7 @@
   "SoldierAnt": {
     "name": "Soldier Ant",
     "id": 83,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 890,
     "armour": 6,
     "weapon": 1,
@@ -1452,7 +1538,7 @@
   "SoyBeanBug": {
     "name": "Soy Bean Bug",
     "id": 84,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 3500,
     "armour": 30,
     "weapon": 15,
@@ -1469,7 +1555,7 @@
   "Spider": {
     "name": "Spooder",
     "id": 85,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 2900,
     "armour": 45,
     "weapon": 1,
@@ -1486,7 +1572,7 @@
   "Squirrel": {
     "name": "Squirrel",
     "id": 86,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 150,
     "armour": 3,
     "weapon": 7,
@@ -1503,7 +1589,7 @@
   "SuicideGhost": {
     "name": "Ghost",
     "id": 87,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 750,
     "armour": 1,
     "weapon": 5,
@@ -1520,7 +1606,7 @@
   "Vulture": {
     "name": "Vulture",
     "id": 88,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 100,
     "armour": 5,
     "weapon": 1,
@@ -1537,7 +1623,7 @@
   "WhiteBear": {
     "name": "Molar Bear",
     "id": 89,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1300,
     "armour": 7,
     "weapon": 10,
@@ -1554,7 +1640,7 @@
   "WhiteMouse": {
     "name": "Mouse",
     "id": 90,
-    "drops": {"ratarcherarmor": 300, "ratarmor": 300, "gold": 400},
+    "drops": { "ratarcherarmor": 300, "ratarmor": 300, "gold": 400 },
     "hitPoints": 950,
     "armour": 10,
     "weapon": 3,
@@ -1571,7 +1657,7 @@
   "WhiteTiger": {
     "name": "Tiger",
     "id": 91,
-    "drops": {"tigerarmor": 500, "gold": 500},
+    "drops": { "tigerarmor": 500, "gold": 500 },
     "hitPoints": 3350,
     "armour": 1,
     "weapon": 15,
@@ -1588,7 +1674,7 @@
   "Wolf": {
     "name": "Wolf",
     "id": 92,
-    "drops": {"wolfarmor": 100, "wolfarcherarmor": 200, "gold": 700},
+    "drops": { "wolfarmor": 100, "wolfarcherarmor": 200, "gold": 700 },
     "hitPoints": 650,
     "armour": 15,
     "weapon": 10,
@@ -1605,7 +1691,7 @@
   "YellowBat": {
     "name": "Mutated Bat",
     "id": 93,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 350,
     "armour": 30,
     "weapon": 15,
@@ -1622,7 +1708,7 @@
   "YellowFish": {
     "name": "Yellow Fesh",
     "id": 94,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 135,
     "armour": 3,
     "weapon": 1,
@@ -1639,7 +1725,7 @@
   "YellowMouse": {
     "name": "Yellow Mouse",
     "id": 95,
-    "drops": {"ratarcherarmor": 300, "ratarmor": 300, "gold": 400},
+    "drops": { "ratarcherarmor": 300, "ratarmor": 300, "gold": 400 },
     "hitPoints": 750,
     "armour": 3,
     "weapon": 1,
@@ -1656,7 +1742,12 @@
   "YellowPreta": {
     "name": "Preta",
     "id": 96,
-    "drops": {"bluescimitar": 200, "bluewingarcherarmor": 200, "bluewingarmor": 200, "gold": 400},
+    "drops": {
+      "bluescimitar": 200,
+      "bluewingarcherarmor": 200,
+      "bluewingarmor": 200,
+      "gold": 400
+    },
     "hitPoints": 526,
     "armour": 4,
     "weapon": 4,
@@ -1673,7 +1764,7 @@
   "Zombie": {
     "name": "Zombie",
     "id": 97,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 1250,
     "armour": 1,
     "weapon": 1,
@@ -1695,7 +1786,13 @@
   "Skeletonking": {
     "name": "Skeleton King",
     "id": 99,
-    "drops": {"goldensword": 400, "bigflask": 100, "goldenbow": 400, "pearlpendant": 50, "pearlring": 50},
+    "drops": {
+      "goldensword": 400,
+      "bigflask": 100,
+      "goldenbow": 400,
+      "pearlpendant": 50,
+      "pearlring": 50
+    },
     "hitPoints": 2650,
     "armour": 15,
     "weapon": 16,
@@ -1707,13 +1804,19 @@
     "attackRate": 900,
     "movementSpeed": 400,
     "spawnDelay": 50000,
-    "combatPlugin":"skeletonking"
+    "combatPlugin": "skeletonking"
   },
 
   "OgreLord": {
     "name": "Ogre Lord",
     "id": 100,
-    "drops": {"sidesword": 300, "bigflask": 100, "goldensword": 500, "pearlpendant": 50, "pearlring": 50},
+    "drops": {
+      "sidesword": 300,
+      "bigflask": 100,
+      "goldensword": 500,
+      "pearlpendant": 50,
+      "pearlring": 50
+    },
     "hitPoints": 2850,
     "armour": 50,
     "weapon": 23,
@@ -1725,13 +1828,13 @@
     "attackRate": 1100,
     "movementSpeed": 600,
     "spawnDelay": 75000,
-    "combatPlugin":"ogrelord"
+    "combatPlugin": "ogrelord"
   },
 
   "WindGuardian": {
     "name": "Wind Guardian",
     "id": 101,
-    "drops": {"gold": 1000},
+    "drops": { "gold": 1000 },
     "hitPoints": 15000,
     "armour": 40,
     "weapon": 35,
@@ -1748,7 +1851,13 @@
   "LightningGuardian": {
     "name": "Lightning Guardian",
     "id": 102,
-    "drops": {"magicspear": 25, "essentialrage": 50, "marblependant": 25, "bridalmask": 50, "gold": 850},
+    "drops": {
+      "magicspear": 25,
+      "essentialrage": 50,
+      "marblependant": 25,
+      "bridalmask": 50,
+      "gold": 850
+    },
     "hitPoints": 4500,
     "armour": 25,
     "weapon": 35,
@@ -1770,7 +1879,12 @@
   "DarkRegion": {
     "name": "Tenebris",
     "id": 104,
-    "drops": {"spiritring": 25, "regionarmor": 25, "paewoldo": 25, "gold": 925},
+    "drops": {
+      "spiritring": 25,
+      "regionarmor": 25,
+      "paewoldo": 25,
+      "gold": 925
+    },
     "hitPoints": 4000,
     "armour": 20,
     "weapon": 40,
@@ -1806,7 +1920,7 @@
   "MiniSeaDragon": {
     "name": "Mini Sea Dragon",
     "id": 106,
-    "drops": {"miniseadragonarmor": 300, "daywalker": 300, "gold": 400},
+    "drops": { "miniseadragonarmor": 300, "daywalker": 300, "gold": 400 },
     "hitPoints": 100,
     "armour": 5,
     "weapon": 10,
@@ -1848,7 +1962,13 @@
   "ForestDragon": {
     "name": "Gragon",
     "id": 112,
-    "drops": {"dragonarmor": 25, "bamboospear": 25, "gold": 900, "marblependant": 25, "essentialrage": 25},
+    "drops": {
+      "dragonarmor": 25,
+      "bamboospear": 25,
+      "gold": 900,
+      "marblependant": 25,
+      "essentialrage": 25
+    },
     "hitPoints": 25000,
     "armour": 300,
     "weapon": 120,
@@ -1870,7 +1990,13 @@
   "Enel": {
     "name": "Lucendi",
     "id": 114,
-    "drops": {"redenelbow": 25, "enelarmor": 25, "eneltrident": 50, "marblependant": 100, "gold": 800},
+    "drops": {
+      "redenelbow": 25,
+      "enelarmor": 25,
+      "eneltrident": 50,
+      "marblependant": 100,
+      "gold": 800
+    },
     "hitPoints": 25000,
     "armour": 150,
     "weapon": 120,
@@ -1887,7 +2013,7 @@
   "SeaDragon": {
     "name": "Sea Dragon",
     "id": 115,
-    "drops": {"seadragonarmor": 100, "seahorsebow": 300, "gold": 400},
+    "drops": { "seadragonarmor": 100, "seahorsebow": 300, "gold": 400 },
     "hitPoints": 100,
     "armour": 5,
     "weapon": 10,
@@ -1904,7 +2030,7 @@
   "MiniDragon": {
     "name": "Mini Dragon",
     "id": 116,
-    "drops": {"dragonarmor": 300, "spiritring": 200, "gold": 400},
+    "drops": { "dragonarmor": 300, "spiritring": 200, "gold": 400 },
     "hitPoints": 100,
     "armour": 5,
     "weapon": 10,
@@ -1936,7 +2062,13 @@
   "PirateCaptain": {
     "name": "Pirate Captain",
     "id": 120,
-    "drops": {"scimitar": 100, "piratearcherarmor": 100, "bluepiratearmor": 100, "marblependant": 200, "gold": 500},
+    "drops": {
+      "scimitar": 100,
+      "piratearcherarmor": 100,
+      "bluepiratearmor": 100,
+      "marblependant": 200,
+      "gold": 500
+    },
     "hitPoints": 1500,
     "armour": 5,
     "weapon": 10,
@@ -1949,7 +2081,7 @@
     "attackRate": 1500,
     "movementSpeed": 600,
     "spawnDelay": 115000,
-    "combatPlugin":"piratecaptain"
+    "combatPlugin": "piratecaptain"
   },
 
   "PirateKing": {
@@ -1960,7 +2092,7 @@
   "PirateSkeleton": {
     "name": "Pirate Skeleton",
     "id": 122,
-    "drops": {"morningstar": 300, "redbow": 300, "gold": 400},
+    "drops": { "morningstar": 300, "redbow": 300, "gold": 400 },
     "hitPoints": 150,
     "armour": 5,
     "weapon": 10,
@@ -1977,7 +2109,12 @@
   "QueenAnt": {
     "name": "Ziana",
     "id": 123,
-    "drops": {"ironknightarmor": 25, "justicebow": 25, "whip": 25, "gold": 925},
+    "drops": {
+      "ironknightarmor": 25,
+      "justicebow": 25,
+      "whip": 25,
+      "gold": 925
+    },
     "hitPoints": 2000,
     "armour": 50,
     "weapon": 100,
@@ -1990,7 +2127,7 @@
     "movementSpeed": 600,
     "projectileName": "projectile-terror",
     "spawnDelay": 95000,
-    "combatPlugin":"queenant"
+    "combatPlugin": "queenant"
   },
 
   "QueenSpider": {
@@ -2006,7 +2143,7 @@
   "SkyDinosaur": {
     "name": "Fulgur",
     "id": 126,
-    "drops": {"conferencecall": 25, "essentialrage": 100, "gold": 875},
+    "drops": { "conferencecall": 25, "essentialrage": 100, "gold": 875 },
     "hitPoints": 50000,
     "armour": 400,
     "weapon": 200,
@@ -2023,7 +2160,12 @@
   "Squid": {
     "name": "Great Squid",
     "id": 127,
-    "drops": {"searage": 10, "frostarmor": 25, "bluewingarcherarmor": 25, "gold": 940},
+    "drops": {
+      "searage": 10,
+      "frostarmor": 25,
+      "bluewingarcherarmor": 25,
+      "gold": 940
+    },
     "hitPoints": 2800,
     "armour": 45,
     "weapon": 30,
@@ -2042,7 +2184,7 @@
   "BrownMouse": {
     "name": "Brown Mouse",
     "id": 129,
-    "drops": {"ratarcherarmor": 300, "ratarmor": 300, "gold": 400},
+    "drops": { "ratarcherarmor": 300, "ratarmor": 300, "gold": 400 },
     "hitPoints": 140,
     "armour": 1,
     "weapon": 1,
@@ -2059,7 +2201,7 @@
   "Pickle": {
     "name": "Pickle Brick",
     "id": 130,
-    "drops": {"pickle": 1, "gold": 100},
+    "drops": { "pickle": 1, "gold": 100 },
     "hitPoints": 5000,
     "armour": 3,
     "weapon": 25,

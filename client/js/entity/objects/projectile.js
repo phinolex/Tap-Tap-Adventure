@@ -1,118 +1,113 @@
-define(['../entity'], function(Entity) {
+define(["../entity"], function(Entity) {
+  return Entity.extend({
+    init: function(id, kind, owner) {
+      var self = this;
 
-    return Entity.extend({
+      self._super(id, kind);
 
-        init: function(id, kind, owner) {
-            var self = this;
+      self.owner = owner;
 
-            self._super(id, kind);
+      self.name = "";
 
-            self.owner = owner;
+      self.startX = -1;
+      self.startY = -1;
 
-            self.name = '';
+      self.destX = -1;
+      self.destY = -1;
 
-            self.startX = -1;
-            self.startY = -1;
+      self.special = -1;
 
-            self.destX = -1;
-            self.destY = -1;
+      self.static = false;
+      self.dynamic = false;
 
-            self.special = -1;
+      self.speed = 200;
 
-            self.static = false;
-            self.dynamic = false;
+      self.angle = 0;
+    },
 
-            self.speed = 200;
+    getId: function() {
+      return this.id;
+    },
 
-            self.angle = 0;
-        },
+    impact: function() {
+      if (this.impactCallback) this.impactCallback();
+    },
 
-        getId: function() {
-            return this.id;
-        },
+    setSprite: function(sprite) {
+      this._super(sprite);
+    },
 
-        impact: function() {
-            if (this.impactCallback)
-                this.impactCallback();
-        },
+    setAnimation: function(name, speed, count, onEndCount) {
+      this._super(name, speed, count, onEndCount);
+    },
 
-        setSprite: function(sprite) {
-            this._super(sprite);
-        },
+    setStart: function(x, y) {
+      var self = this;
 
-        setAnimation: function(name, speed, count, onEndCount) {
-            this._super(name, speed, count, onEndCount);
-        },
+      self.setGridPosition(Math.floor(x / 16), Math.floor(y / 16));
 
-        setStart: function(x, y) {
-            var self = this;
+      self.startX = x;
+      self.startY = y;
+    },
 
-            self.setGridPosition(Math.floor(x / 16), Math.floor(y / 16));
+    setDestination: function(x, y) {
+      var self = this;
 
-            self.startX = x;
-            self.startY = y;
-        },
+      self.static = true;
 
-        setDestination: function(x, y) {
-            var self = this;
+      self.destX = x;
+      self.destY = y;
 
-            self.static = true;
+      self.updateAngle();
+    },
 
-            self.destX = x;
-            self.destY = y;
+    setTarget: function(target) {
+      var self = this;
 
-            self.updateAngle();
-        },
+      if (!target) return;
 
-        setTarget: function(target) {
-            var self = this;
+      self.dynamic = true;
 
-            if (!target)
-                return;
+      self.destX = target.x;
+      self.destY = target.y;
 
-            self.dynamic = true;
+      self.updateAngle();
 
-            self.destX = target.x;
-            self.destY = target.y;
+      if (target.type !== "mob") return;
 
-            self.updateAngle();
+      target.onMove(function() {
+        self.destX = target.x;
+        self.destY = target.y;
 
-            if (target.type !== 'mob')
-                return;
+        self.updateAngle();
+      });
+    },
 
-            target.onMove(function() {
-                self.destX = target.x;
-                self.destY = target.y;
+    getSpeed: function() {
+      var self = this;
 
-                self.updateAngle();
-            });
-        },
+      return 1;
+    },
 
-        getSpeed: function() {
-            var self = this;
+    updateTarget: function(x, y) {
+      var self = this;
 
-            return 1;
-        },
+      self.destX = x;
+      self.destY = y;
+    },
 
-        updateTarget: function(x, y) {
-            var self = this;
+    hasPath: function() {
+      return false;
+    },
 
-            self.destX = x;
-            self.destY = y;
-        },
+    updateAngle: function() {
+      this.angle =
+        Math.atan2(this.destY - this.y, this.destX - this.x) * (180 / Math.PI) -
+        90;
+    },
 
-        hasPath: function() {
-            return false;
-        },
-
-        updateAngle: function() {
-            this.angle = Math.atan2(this.destY - this.y, this.destX - this.x) * (180 / Math.PI) - 90;
-        },
-
-        onImpact: function(callback) {
-            this.impactCallback = callback;
-        }
-
-    });
-
+    onImpact: function(callback) {
+      this.impactCallback = callback;
+    }
+  });
 });

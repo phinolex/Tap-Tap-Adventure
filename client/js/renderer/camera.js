@@ -1,188 +1,183 @@
 /* global Modules, log */
 
 define(function() {
+  return Class.extend({
+    init: function(renderer) {
+      var self = this;
 
-    return Class.extend({
+      self.renderer = renderer;
 
-        init: function(renderer) {
-            var self = this;
+      self.offset = 0.5;
+      self.x = 0;
+      self.y = 0;
 
-            self.renderer = renderer;
+      self.dX = 0;
+      self.dY = 0;
 
-            self.offset = 0.5;
-            self.x = 0;
-            self.y = 0;
+      self.gridX = 0;
+      self.gridY = 0;
 
-            self.dX = 0;
-            self.dY = 0;
+      self.prevGridX = 0;
+      self.prevGridY = 0;
 
-            self.gridX = 0;
-            self.gridY = 0;
+      self.speed = 1;
+      self.panning = false;
+      self.centered = true;
+      self.player = null;
 
-            self.prevGridX = 0;
-            self.prevGridY = 0;
+      self.update();
+    },
 
-            self.speed = 1;
-            self.panning = false;
-            self.centered = true;
-            self.player = null;
+    update: function() {
+      var self = this,
+        factor = self.renderer.getUpscale();
 
-            self.update();
-        },
+      self.gridWidth = 15 * factor;
+      self.gridHeight = 8 * factor;
+    },
 
-        update: function() {
-            var self = this,
-                factor = self.renderer.getUpscale();
+    setPosition: function(x, y) {
+      var self = this;
 
-            self.gridWidth = 15 * factor;
-            self.gridHeight = 8 * factor;
-        },
+      self.x = x;
+      self.y = y;
 
-        setPosition: function(x, y) {
-            var self = this;
+      self.prevGridX = self.gridX;
+      self.prevGridY = self.gridY;
 
-            self.x = x;
-            self.y = y;
+      self.gridX = Math.floor(x / 16);
+      self.gridY = Math.floor(y / 16);
+    },
 
-            self.prevGridX = self.gridX;
-            self.prevGridY = self.gridY;
+    clip: function() {
+      this.setGridPosition(Math.round(this.x / 16), Math.round(this.y / 16));
+    },
 
-            self.gridX = Math.floor(x / 16);
-            self.gridY = Math.floor(y / 16);
-        },
+    center: function() {
+      var self = this;
 
-        clip: function() {
-            this.setGridPosition(Math.round(this.x / 16), Math.round(this.y / 16));
-        },
+      if (self.centered) return;
 
-        center: function() {
-            var self = this;
+      self.centered = true;
+      self.centreOn(self.player);
 
-            if (self.centered)
-                return;
+      self.renderer.verifyCentration();
+    },
 
-            self.centered = true;
-            self.centreOn(self.player);
+    decenter: function() {
+      var self = this;
 
-            self.renderer.verifyCentration();
-        },
+      if (!self.centered) return;
 
-        decenter: function() {
-            var self = this;
+      self.clip();
+      self.centered = false;
 
-            if (!self.centered)
-                return;
+      self.renderer.verifyCentration();
+    },
 
-            self.clip();
-            self.centered = false;
+    setGridPosition: function(x, y) {
+      var self = this;
 
-            self.renderer.verifyCentration();
-        },
+      self.prevGridX = self.gridX;
+      self.prevGridY = self.gridY;
 
-        setGridPosition: function(x, y) {
-            var self = this;
+      self.gridX = x;
+      self.gridY = y;
 
-            self.prevGridX = self.gridX;
-            self.prevGridY = self.gridY;
+      self.x = self.gridX * 16;
+      self.y = self.gridY * 16;
+    },
 
-            self.gridX = x;
-            self.gridY = y;
+    setPlayer: function(player) {
+      var self = this;
 
-            self.x = self.gridX * 16;
-            self.y = self.gridY * 16;
-        },
+      self.player = player;
 
-        setPlayer: function(player) {
-            var self = this;
+      self.centreOn(self.player);
+    },
 
-            self.player = player;
+    handlePanning: function(direction) {
+      var self = this;
 
-            self.centreOn(self.player);
-        },
+      if (!self.panning) return;
 
-        handlePanning: function(direction) {
-            var self = this;
+      switch (direction) {
+        case Modules.Keys.Up:
+          self.setPosition(self.x, self.y - 1);
+          break;
 
-            if (!self.panning)
-                return;
+        case Modules.Keys.Down:
+          self.setPosition(self.x, self.y + 1);
+          break;
 
-            switch (direction) {
-                case Modules.Keys.Up:
-                    self.setPosition(self.x, self.y - 1);
-                    break;
+        case Modules.Keys.Left:
+          self.setPosition(self.x - 1, self.y);
+          break;
 
-                case Modules.Keys.Down:
-                    self.setPosition(self.x, self.y + 1);
-                    break;
+        case Modules.Keys.Right:
+          self.setPosition(self.x + 1, self.y);
+          break;
+      }
+    },
 
-                case Modules.Keys.Left:
-                    self.setPosition(self.x - 1, self.y);
-                    break;
+    centreOn: function(entity) {
+      var self = this;
 
-                case Modules.Keys.Right:
-                    self.setPosition(self.x + 1, self.y);
-                    break;
-            }
-        },
+      if (!entity) return;
 
-        centreOn: function(entity) {
-            var self = this;
+      var width = Math.floor(self.gridWidth / 2),
+        height = Math.floor(self.gridHeight / 2);
 
-            if (!entity)
-                return;
+      self.x = entity.x - width * self.renderer.tileSize;
+      self.y = entity.y - height * self.renderer.tileSize;
 
-            var width = Math.floor(self.gridWidth / 2),
-                height = Math.floor(self.gridHeight / 2);
+      self.gridX = Math.round(entity.x / 16) - width;
+      self.gridY = Math.round(entity.y / 16) - height;
+    },
 
-            self.x = entity.x - (width * self.renderer.tileSize);
-            self.y = entity.y - (height * self.renderer.tileSize);
+    zone: function(direction) {
+      var self = this;
 
-            self.gridX = Math.round(entity.x / 16) - width;
-            self.gridY = Math.round(entity.y / 16) - height;
-        },
+      switch (direction) {
+        case Modules.Orientation.Up:
+          self.setGridPosition(self.gridX, self.gridY - self.gridHeight + 2);
 
-        zone: function(direction) {
-            var self = this;
+          break;
 
-            switch (direction) {
-                case Modules.Orientation.Up:
+        case Modules.Orientation.Down:
+          self.setGridPosition(self.gridX, self.gridY + self.gridHeight - 2);
 
-                    self.setGridPosition(self.gridX, self.gridY - self.gridHeight + 2);
+          break;
 
-                    break;
+        case Modules.Orientation.Right:
+          self.setGridPosition(self.gridX + self.gridWidth - 2, self.gridY);
 
-                case Modules.Orientation.Down:
+          break;
 
-                    self.setGridPosition(self.gridX, self.gridY + self.gridHeight - 2);
+        case Modules.Orientation.Left:
+          self.setGridPosition(self.gridX - self.gridWidth + 2, self.gridY);
 
-                    break;
+          break;
+      }
+    },
 
-                case Modules.Orientation.Right:
+    forEachVisiblePosition: function(callback, offset) {
+      var self = this;
 
-                    self.setGridPosition(self.gridX + self.gridWidth - 2, self.gridY);
+      if (!offset) offset = 1;
 
-                    break;
-
-                case Modules.Orientation.Left:
-
-                    self.setGridPosition(self.gridX - self.gridWidth + 2, self.gridY);
-
-                    break;
-            }
-        },
-
-        forEachVisiblePosition: function(callback, offset) {
-            var self = this;
-
-            if (!offset)
-                offset = 1;
-
-            for(var y = self.gridY - offset, maxY = y + self.gridHeight + (offset * 2); y < maxY; y++) {
-                for(var x = self.gridX - offset, maxX = x + self.gridWidth + (offset * 2); x < maxX; x++)
-                    callback(x, y);
-            }
-        }
-
-    });
-
+      for (
+        var y = self.gridY - offset, maxY = y + self.gridHeight + offset * 2;
+        y < maxY;
+        y++
+      ) {
+        for (
+          var x = self.gridX - offset, maxX = x + self.gridWidth + offset * 2;
+          x < maxX;
+          x++
+        )
+          callback(x, y);
+      }
+    }
+  });
 });

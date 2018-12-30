@@ -1,140 +1,145 @@
 /* global module */
 
-var cls = require('../../lib/class'),
-    Messages = require('../../network/messages'),
-    Mobs = require('../../util/mobs'),
-    NPCs = require('../../util/npcs'),
-    Items = require('../../util/items');
+var cls = require("../../lib/class"),
+  Messages = require("../../network/messages"),
+  Mobs = require("../../util/mobs"),
+  NPCs = require("../../util/npcs"),
+  Items = require("../../util/items");
 
 module.exports = Entity = cls.Class.extend({
+  init: function(id, type, instance, x, y) {
+    var self = this;
 
-    init: function(id, type, instance, x, y) {
-        var self = this;
+    self.id = id;
+    self.type = type;
+    self.instance = instance;
 
-        self.id = id;
-        self.type = type;
-        self.instance = instance;
+    self.oldX = x;
+    self.oldY = y;
+    self.x = x;
+    self.y = y;
 
-        self.oldX = x;
-        self.oldY = y;
-        self.x = x;
-        self.y = y;
+    self.combat = null;
 
-        self.combat = null;
+    self.dead = false;
 
-        self.dead = false;
+    self.recentGroups = [];
+  },
 
-        self.recentGroups = [];
-    },
+  getCombat: function() {
+    return null;
+  },
 
-    getCombat: function() {
-        return null;
-    },
+  getDistance: function(entity) {
+    var self = this,
+      x = Math.abs(self.x - entity.x),
+      y = Math.abs(self.y - entity.y);
 
-    getDistance: function(entity) {
-        var self = this,
-            x = Math.abs(self.x - entity.x),
-            y = Math.abs(self.y - entity.y);
+    return x > y ? x : y;
+  },
 
-        return x > y ? x : y;
-    },
+  getCoordDistance: function(toX, toY) {
+    var self = this,
+      x = Math.abs(self.x - toX),
+      y = Math.abs(self.y - toY);
 
-    getCoordDistance: function(toX, toY) {
-        var self = this,
-            x = Math.abs(self.x - toX),
-            y = Math.abs(self.y - toY);
+    return x > y ? x : y;
+  },
 
-        return x > y ? x : y;
-    },
+  isAdjacent: function(entity) {
+    var self = this;
 
-    isAdjacent: function(entity) {
-        var self = this;
+    if (!entity) return false;
 
-        if (!entity)
-            return false;
+    return self.getDistance(entity) <= 1;
+  },
 
-        return self.getDistance(entity) <= 1;
-    },
+  isNonDiagonal: function(entity) {
+    return (
+      this.isAdjacent(entity) && !(entity.x !== this.x && entity.y !== this.y)
+    );
+  },
 
-    isNonDiagonal: function(entity) {
-        return this.isAdjacent(entity) && !(entity.x !== this.x && entity.y !== this.y);
-    },
+  isNear: function(entity, distance) {
+    var self = this,
+      near = false;
 
-    isNear: function(entity, distance) {
-        var self = this,
-            near = false;
+    var dx = Math.abs(self.x - entity.x),
+      dy = Math.abs(self.y - entity.y);
 
-        var dx = Math.abs(self.x - entity.x),
-            dy = Math.abs(self.y - entity.y);
+    if (dx <= distance && dy <= distance) near = true;
 
-        if (dx <= distance && dy <= distance)
-            near = true;
+    return near;
+  },
 
-        return near;
-    },
+  talk: function() {
+    log.info("Who is screwing around with the client?");
+  },
 
-    talk: function() {
-        log.info('Who is screwing around with the client?')
-    },
+  drop: function(item) {
+    return new Messages.Drop(this, item);
+  },
 
-    drop: function(item) {
-        return new Messages.Drop(this, item);
-    },
+  isPlayer: function() {
+    return this.type === "player";
+  },
 
-    isPlayer: function() {
-        return this.type === 'player';
-    },
+  isMob: function() {
+    return this.type === "mob";
+  },
 
-    isMob: function() {
-        return this.type === 'mob';
-    },
+  isNPC: function() {
+    return this.type === "npc";
+  },
 
-    isNPC: function() {
-        return this.type === 'npc';
-    },
+  isItem: function() {
+    return this.type === "item";
+  },
 
-    isItem: function() {
-        return this.type === 'item';
-    },
+  setPosition: function(x, y) {
+    var self = this;
 
-    setPosition: function(x, y) {
-        var self = this;
+    self.x = x;
+    self.y = y;
 
-        self.x = x;
-        self.y = y;
+    if (self.setPositionCallback) self.setPositionCallback();
+  },
 
-        if (self.setPositionCallback)
-            self.setPositionCallback();
-    },
+  hasSpecialAttack: function() {
+    return false;
+  },
 
-    hasSpecialAttack: function() {
-        return false;
-    },
+  updatePosition: function() {
+    var self = this;
 
-    updatePosition: function() {
-        var self = this;
+    self.oldX = self.x;
+    self.oldY = self.y;
+  },
 
-        self.oldX = self.x;
-        self.oldY = self.y;
-    },
+  onSetPosition: function(callback) {
+    this.setPositionCallback = callback;
+  },
 
-    onSetPosition: function(callback) {
-        this.setPositionCallback = callback;
-    },
+  getState: function() {
+    var self = this,
+      string = self.isMob()
+        ? Mobs.idToString(self.id)
+        : self.isNPC()
+        ? NPCs.idToString(self.id)
+        : Items.idToString(self.id),
+      name = self.isMob()
+        ? Mobs.idToName(self.id)
+        : self.isNPC()
+        ? NPCs.idToName(self.id)
+        : Items.idToName(self.id);
 
-    getState: function() {
-        var self = this,
-            string = self.isMob() ? Mobs.idToString(self.id) : (self.isNPC() ? NPCs.idToString(self.id) : Items.idToString(self.id)),
-            name = self.isMob() ? Mobs.idToName(self.id) : (self.isNPC() ? NPCs.idToName(self.id) : Items.idToName(self.id));
-
-        return {
-            type: self.type,
-            id: self.instance,
-            string: string,
-            name: name,
-            x: self.x,
-            y: self.y
-        }
-    }
-
+    return {
+      type: self.type,
+      id: self.instance,
+      string: string,
+      name: name,
+      x: self.x,
+      y: self.y
+    };
+  }
 });

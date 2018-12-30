@@ -1,149 +1,152 @@
 /* global log, _ */
 
-define(['./animation'], function(Animation) {
+define(["./animation"], function(Animation) {
+  return Class.extend({
+    init: function(sprite, scale) {
+      var self = this;
 
-    return Class.extend({
+      self.sprite = sprite;
+      self.scale = scale;
 
-        init: function(sprite, scale) {
-            var self = this;
+      self.id = sprite.id;
 
-            self.sprite = sprite;
-            self.scale = scale;
+      self.loaded = false;
 
-            self.id = sprite.id;
+      self.offsetX = 0;
+      self.offsetY = 0;
+      self.offsetAngle = 0;
 
-            self.loaded = false;
+      self.whiteSprite = {
+        loaded: false
+      };
 
-            self.offsetX = 0;
-            self.offsetY = 0;
-            self.offsetAngle = 0;
+      self.loadSprite();
+    },
 
-            self.whiteSprite = {
-                loaded: false
-            };
+    load: function() {
+      var self = this;
 
-            self.loadSprite();
-        },
+      self.image = new Image();
+      self.image.crossOrigin = "Anonymous";
+      self.image.src = self.filepath;
 
-        load: function() {
-            var self = this;
+      self.image.onload = function() {
+        self.loaded = true;
 
-            self.image = new Image();
-            self.image.crossOrigin = 'Anonymous';
-            self.image.src = self.filepath;
+        if (self.onLoadCallback) self.onLoadCallback();
+      };
+    },
 
-            self.image.onload = function() {
-                self.loaded = true;
+    loadSprite: function() {
+      var self = this,
+        sprite = self.sprite;
 
-                if (self.onLoadCallback)
-                    self.onLoadCallback();
-            };
-        },
+      self.filepath = "img/" + self.scale + "/" + self.id + ".png";
+      self.animationData = sprite.animations;
 
-        loadSprite: function() {
-            var self = this,
-                sprite = self.sprite;
+      self.width = sprite.width;
+      self.height = sprite.height;
 
-            self.filepath = 'img/' + self.scale + '/' + self.id + '.png';
-            self.animationData = sprite.animations;
+      self.offsetX = sprite.offsetX !== undefined ? sprite.offsetX : -16;
+      self.offsetY = sprite.offsetY !== undefined ? sprite.offsetY : -16;
+      self.offfsetAngle =
+        sprite.offsetAngle !== undefined ? sprite.offsetAngle : 0;
+    },
 
-            self.width = sprite.width;
-            self.height = sprite.height;
+    update: function(newScale) {
+      var self = this;
 
-            self.offsetX = sprite.offsetX !== undefined ? sprite.offsetX : -16;
-            self.offsetY = sprite.offsetY !== undefined ? sprite.offsetY : -16;
-            self.offfsetAngle = sprite.offsetAngle !== undefined ? sprite.offsetAngle : 0;
-        },
+      self.scale = newScale;
 
-        update: function(newScale) {
-            var self = this;
+      self.loadSprite();
+      self.load();
+    },
 
-            self.scale = newScale;
+    createAnimations: function() {
+      var self = this,
+        animations = {};
 
-            self.loadSprite();
-            self.load();
-        },
+      for (var name in self.animationData) {
+        if (self.animationData.hasOwnProperty(name)) {
+          var a = self.animationData[name];
 
-        createAnimations: function() {
-            var self = this,
-                animations = {};
+          animations[name] = new Animation(
+            name,
+            a.length,
+            a.row,
+            self.width,
+            self.height
+          );
+        }
+      }
 
-            for (var name in self.animationData) {
-                if (self.animationData.hasOwnProperty(name)) {
-                    var a = self.animationData[name];
+      return animations;
+    },
 
-                    animations[name] = new Animation(name, a.length, a.row, self.width, self.height);
-                }
-            }
+    /**
+     * This is when an entity gets hit, they turn red then white.
+     */
 
-            return animations;
-        },
+    createHurtSprite: function() {
+      var self = this;
 
-        /**
-         * This is when an entity gets hit, they turn red then white.
-         */
+      if (!self.loaded) self.load();
 
-        createHurtSprite: function() {
-            var self = this;
+      if (self.whiteSprite.loaded) return;
 
-            if (!self.loaded)
-                self.load();
+      var canvas = document.createElement("canvas"),
+        context = canvas.getContext("2d"),
+        spriteData,
+        data;
 
-            if (self.whiteSprite.loaded)
-                return;
+      canvas.width = self.image.width;
+      canvas.height = self.image.height;
 
-            var canvas = document.createElement('canvas'),
-                context = canvas.getContext('2d'),
-                spriteData, data;
+      context.drawImage(self.image, 0, 0, self.image.width, self.image.height);
 
-            canvas.width = self.image.width;
-            canvas.height = self.image.height;
+      try {
+        spriteData = context.getImageData(
+          0,
+          0,
+          self.image.width,
+          self.image.height
+        );
+        data = spriteData.data;
 
-            context.drawImage(self.image, 0, 0, self.image.width, self.image.height);
-
-            try {
-
-                spriteData = context.getImageData(0, 0, self.image.width, self.image.height);
-                data = spriteData.data;
-
-                for (var i = 0; i < data.length; i+= 4) {
-                    data[i] = 255;
-                    data[i + 1] = data[i + 2] = 75;
-                }
-
-                spriteData.data = data;
-
-                context.putImageData(spriteData, 0, 0);
-
-                self.whiteSprite = {
-                    image: canvas,
-                    loaded: true,
-                    offsetX: self.offsetX,
-                    offsetY: self.offsetY,
-                    width: self.width,
-                    height: self.height
-                }
-
-            } catch (e) {}
-        },
-
-        getHurtSprite: function() {
-            var self = this;
-
-            try {
-                if (!self.loaded)
-                    self.load();
-
-                self.createHurtSprite();
-
-                return self.whiteSprite;
-            } catch (e) {}
-        },
-
-        onLoad: function(callback) {
-            this.onLoadCallback = callback;
+        for (var i = 0; i < data.length; i += 4) {
+          data[i] = 255;
+          data[i + 1] = data[i + 2] = 75;
         }
 
-    });
+        spriteData.data = data;
 
+        context.putImageData(spriteData, 0, 0);
+
+        self.whiteSprite = {
+          image: canvas,
+          loaded: true,
+          offsetX: self.offsetX,
+          offsetY: self.offsetY,
+          width: self.width,
+          height: self.height
+        };
+      } catch (e) {}
+    },
+
+    getHurtSprite: function() {
+      var self = this;
+
+      try {
+        if (!self.loaded) self.load();
+
+        self.createHurtSprite();
+
+        return self.whiteSprite;
+      } catch (e) {}
+    },
+
+    onLoad: function(callback) {
+      this.onLoadCallback = callback;
+    }
+  });
 });

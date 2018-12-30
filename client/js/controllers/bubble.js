@@ -1,102 +1,104 @@
 /* global _ */
 
-define(['jquery', '../renderer/bubbles/blob'], function($, Blob) {
+define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
+  return Class.extend({
+    init: function(game) {
+      var self = this;
 
-    return Class.extend({
+      self.game = game;
+      self.bubbles = {};
 
-        init: function(game) {
-            var self = this;
+      self.container = $("#bubbles");
+    },
 
-            self.game = game;
-            self.bubbles = {};
+    create: function(id, message, time, duration) {
+      var self = this;
 
-            self.container = $('#bubbles');
-        },
+      if (self.bubbles[id]) {
+        self.bubbles[id].reset(time);
+        $("#" + id + " p").html(message);
+      } else {
+        var element = $(
+          "<div id='" +
+            id +
+            "' class='bubble'><p>" +
+            message +
+            "</p><div class='bubbleTip'></div></div>"
+        );
 
-        create: function(id, message, time, duration) {
-            var self = this;
+        $(element).appendTo(self.container);
 
-            if (self.bubbles[id]) {
-                self.bubbles[id].reset(time);
-                $('#' + id + ' p').html(message);
-            } else {
-                var element = $('<div id=\''+id+'\' class=\'bubble\'><p>'+message+'</p><div class=\'bubbleTip\'></div></div>');
+        self.bubbles[id] = new Blob(id, time, element, duration);
 
-                $(element).appendTo(self.container);
+        return self.bubbles[id];
+      }
+    },
 
-                self.bubbles[id] = new Blob(id, time, element, duration);
+    setTo: function(entity) {
+      var self = this;
 
-                return self.bubbles[id];
-            }
-        },
+      var bubble = self.get(entity.id);
 
-        setTo: function(entity) {
-            var self = this;
+      if (!bubble || !entity) return;
 
-            var bubble = self.get(entity.id);
+      var scale = self.game.renderer.getDrawingScale(),
+        tileSize = 16 * scale,
+        x = (entity.x - self.game.getCamera().x) * scale,
+        width = parseInt(bubble.element.css("width")) + 24,
+        offset = width / 2 - tileSize / 2,
+        offsetY = 10,
+        y;
 
-            if (!bubble || !entity)
-                return;
+      y = (entity.y - self.game.getCamera().y) * scale - tileSize * 2 - offsetY;
 
-            var scale = self.game.renderer.getDrawingScale(),
-                tileSize = 16 * scale,
-                x = (entity.x - self.game.getCamera().x) * scale,
-                width = parseInt(bubble.element.css('width')) + 24,
-                offset = (width / 2) - (tileSize / 2),
-                offsetY = 10, y;
+      bubble.element.css(
+        "left",
+        x - offset + (2 + self.game.renderer.scale) + "px"
+      );
+      bubble.element.css("top", y + "px");
+    },
 
-            y = ((entity.y - self.game.getCamera().y) * scale) - (tileSize * 2) - offsetY;
+    update: function(time) {
+      var self = this;
 
-            bubble.element.css('left', x - offset + (2 + self.game.renderer.scale) + 'px');
-            bubble.element.css('top', y + 'px');
-        },
+      _.each(self.bubbles, function(bubble) {
+        var entity = self.game.entities.get(bubble.id);
 
-        update: function(time) {
-            var self = this;
+        if (entity) self.setTo(entity);
 
-            _.each(self.bubbles, function(bubble) {
-                var entity = self.game.entities.get(bubble.id);
-
-                if (entity)
-                    self.setTo(entity);
-
-                if (bubble.isOver(time)) {
-                    bubble.destroy();
-                    delete self.bubbles[bubble.id];
-                }
-            });
-        },
-
-        get: function(id) {
-            var self = this;
-
-            if (id in self.bubbles)
-                return self.bubbles[id];
-
-            return null;
-        },
-
-        clean: function() {
-            var self = this;
-
-            _.each(self.bubbles, function(bubble) {
-                bubble.destroy();
-            });
-
-            self.bubbles = {};
-        },
-
-        destroy: function(id) {
-            var self = this,
-                bubble = self.get(id);
-
-            if (!bubble)
-                return;
-
-            bubble.destroy();
-            delete self.bubbles[id];
+        if (bubble.isOver(time)) {
+          bubble.destroy();
+          delete self.bubbles[bubble.id];
         }
+      });
+    },
 
-    });
+    get: function(id) {
+      var self = this;
 
+      if (id in self.bubbles) return self.bubbles[id];
+
+      return null;
+    },
+
+    clean: function() {
+      var self = this;
+
+      _.each(self.bubbles, function(bubble) {
+        bubble.destroy();
+      });
+
+      self.bubbles = {};
+    },
+
+    destroy: function(id) {
+      var self = this,
+        bubble = self.get(id);
+
+      if (!bubble) return;
+
+      bubble.destroy();
+      delete self.bubbles[id];
+    }
+  });
 });

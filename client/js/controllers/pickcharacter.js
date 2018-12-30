@@ -1,204 +1,206 @@
 /* global log, _, Modules, Packets */
 
-define(['../renderer/grids',
-        '../entity/character/character',
-        '../entity/character/player/player',
-        './sprites'],
-    function(Grids, Character, Player, Sprites) {
+define([
+  "../renderer/grids",
+  "../entity/character/character",
+  "../entity/character/player/player",
+  "./sprites"
+], function(Grids, Character, Player, Sprites) {
+  return Class.extend({
+    init: function(game) {
+      var self = this;
 
-        return Class.extend({
+      self.game = game;
+      self.renderer = game.renderer;
 
-            init: function(game) {
-                var self = this;
+      self.grids = null;
+      self.sprites = null;
 
-                self.game = game;
-                self.renderer = game.renderer;
+      self.entities = {};
+      self.decrepit = {};
+    },
 
-                self.grids = null;
-                self.sprites = null;
+    load: function() {
+      var self = this;
 
-                self.entities = {};
-                self.decrepit = {};
-            },
+      self.game.app.sendStatus("Inviting craziness...");
 
-            load: function() {
-                var self = this;
+      if (!self.sprites) {
+        self.sprites = new Sprites(self.game.renderer);
+      }
 
-                self.game.app.sendStatus('Inviting craziness...');
+      self.game.app.sendStatus("Lots of spooky monsters...");
+    },
 
-                if (!self.sprites) {
-                    self.sprites = new Sprites(self.game.renderer);
-                }
+    update: function() {
+      var self = this;
 
-                self.game.app.sendStatus('Lots of spooky monsters...');
-            },
+      if (self.sprites) self.sprites.updateSprites();
+    },
 
-            update: function() {
-                var self = this;
+    create: function(info) {
+      var self = this,
+        entity = new Player();
 
-                if (self.sprites)
-                    self.sprites.updateSprites();
-            },
+      entity.setGridPosition(0, 0);
 
-            create: function(info) {
-                var self = this,
-                    entity = new Player();
+      // set the default character sprite
+      entity.setSprite(self.getSprite("clotharmor"));
+      entity.idle();
 
-                entity.setGridPosition(0, 0);
+      entity.loadHandler(self.game);
 
-                // set the default character sprite
-                entity.setSprite(self.getSprite('clotharmor'));
-                entity.idle();
+      self.addEntity(entity);
 
-                entity.loadHandler(self.game);
+      entity.setGridPosition(0, 0);
 
-                self.addEntity(entity);
+      entity.idle();
 
-                entity.setGridPosition(0, 0);
+      self.addEntity(entity);
 
-                entity.idle();
+      if (entity.handler) {
+        entity.handler.setGame(self.game);
+        entity.handler.load();
+      }
 
-                self.addEntity(entity);
+      /**
+       * Get ready for errors!
+       */
+    },
 
-                if (entity.handler) {
-                    entity.handler.setGame(self.game);
-                    entity.handler.load();
-                }
+    get: function(id) {
+      var self = this;
 
-                /**
-                 * Get ready for errors!
-                 */
+      if (id in self.entities) return self.entities[id];
 
-            },
-            
-            get: function(id) {
-                var self = this;
+      return null;
+    },
 
-                if (id in self.entities)
-                    return self.entities[id];
+    exists: function(id) {
+      return id in this.entities;
+    },
 
-                return null;
-            },
+    clearPlayers: function(exception) {
+      var self = this;
 
-            exists: function(id) {
-                return id in this.entities;
-            },
+      _.each(self.entities, function(entity) {
+        if (entity.id !== exception.id && entity.type === "player") {
+          self.grids.removeFromRenderingGrid(
+            entity,
+            entity.gridX,
+            entity.gridY
+          );
+          self.grids.removeFromPathingGrid(entity.gridX, entity.gridY);
 
-            clearPlayers: function(exception) {
-                var self = this;
+          delete self.entities[entity.id];
+        }
+      });
 
-                _.each(self.entities, function(entity) {
-                    if (entity.id !== exception.id && entity.type === 'player') {
-                        self.grids.removeFromRenderingGrid(entity, entity.gridX, entity.gridY);
-                        self.grids.removeFromPathingGrid(entity.gridX, entity.gridY);
+      self.grids.resetPathingGrid();
+    },
 
-                        delete self.entities[entity.id];
-                    }
-                });
+    addEntity: function(entity) {
+      var self = this;
 
-                self.grids.resetPathingGrid();
-            },
+      if (self.entities[entity.id]) return;
 
-            addEntity: function(entity) {
-                var self = this;
+      self.entities[entity.id] = entity;
+      self.registerPosition(entity);
 
-                if (self.entities[entity.id])
-                    return;
+      if (
+        !(entity instanceof Item && entity.dropped) &&
+        !self.renderer.isPortableDevice()
+      )
+        entity.fadeIn(self.game.time);
+    },
 
-                self.entities[entity.id] = entity;
-                self.registerPosition(entity);
+    removeItem: function(item) {
+      var self = this;
 
-                if (!(entity instanceof Item && entity.dropped) && !self.renderer.isPortableDevice())
-                    entity.fadeIn(self.game.time);
+      if (!item) return;
 
-            },
+      self.grids.removeFromItemGrid(item, item.gridX, item.gridY);
+      self.grids.removeFromRenderingGrid(item, item.gridX, item.gridY);
 
-            removeItem: function(item) {
-                var self = this;
+      delete self.entities[item.id];
+    },
 
-                if (!item)
-                    return;
+    registerPosition: function(entity) {
+      var self = this;
 
-                self.grids.removeFromItemGrid(item, item.gridX, item.gridY);
-                self.grids.removeFromRenderingGrid(item, item.gridX, item.gridY);
+      if (!entity) return;
 
-                delete self.entities[item.id];
-            },
+      if (
+        entity.type === "player" ||
+        entity.type === "mob" ||
+        entity.type === "npc" ||
+        entity.type === "chest"
+      ) {
+        self.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);
 
-            registerPosition: function(entity) {
-                var self = this;
+        if (entity.type !== "player" || entity.nonPathable)
+          self.grids.addToPathingGrid(entity.gridX, entity.gridY);
+      }
 
-                if (!entity)
-                    return;
+      if (entity.type === "item")
+        self.grids.addToItemGrid(entity, entity.gridX, entity.gridY);
 
-                if (entity.type === 'player' || entity.type === 'mob' || entity.type === 'npc' || entity.type === 'chest') {
+      self.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
+    },
 
-                    self.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);
+    registerDuality: function(entity) {
+      var self = this;
 
-                    if (entity.type !== 'player' || entity.nonPathable)
-                        self.grids.addToPathingGrid(entity.gridX, entity.gridY);
-                }
+      if (!entity) return;
 
-                if (entity.type === 'item')
-                    self.grids.addToItemGrid(entity, entity.gridX, entity.gridY);
+      self.grids.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;
 
-                self.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
-            },
+      self.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
 
-            registerDuality: function(entity) {
-                var self = this;
+      if (entity.nextGridX > -1 && entity.nextGridY > -1) {
+        self.grids.entityGrid[entity.nextGridY][entity.nextGridX][
+          entity.id
+        ] = entity;
 
-                if (!entity)
-                    return;
+        if (!(entity instanceof Player))
+          self.grids.pathingGrid[entity.nextGridY][entity.nextGridX] = 1;
+      }
+    },
 
-                self.grids.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;
+    unregisterPosition: function(entity) {
+      var self = this;
 
-                self.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
+      if (!entity) return;
 
-                if (entity.nextGridX > -1 && entity.nextGridY > -1) {
-                    self.grids.entityGrid[entity.nextGridY][entity.nextGridX][entity.id] = entity;
+      self.grids.removeEntity(entity);
+    },
 
-                    if (!(entity instanceof Player))
-                        self.grids.pathingGrid[entity.nextGridY][entity.nextGridX] = 1;
-                }
-            },
+    getSprite: function(name) {
+      return this.sprites.sprites[name];
+    },
 
-            unregisterPosition: function(entity) {
-                var self = this;
+    getAll: function() {
+      return this.entities;
+    },
 
-                if (!entity)
-                    return;
+    forEachEntity: function(callback) {
+      _.each(this.entities, function(entity) {
+        callback(entity);
+      });
+    },
 
-                self.grids.removeEntity(entity);
-            },
+    forEachEntityAround: function(x, y, radius, callback) {
+      var self = this;
 
-            getSprite: function(name) {
-                return this.sprites.sprites[name];
-            },
+      for (var i = x - radius, max_i = x + radius; i <= max_i; i++) {
+        for (var j = y - radius, max_j = y + radius; j <= max_j; j++) {
+          if (self.map.isOutOfBounds(i, j)) continue;
 
-            getAll: function() {
-                return this.entities;
-            },
-
-            forEachEntity: function(callback) {
-                _.each(this.entities, function(entity) { callback(entity) }) ;
-            },
-
-            forEachEntityAround: function(x, y, radius, callback) {
-                var self = this;
-
-                for (var i = x - radius, max_i = x + radius; i <= max_i; i++) {
-                    for (var j = y - radius, max_j = y + radius; j <= max_j; j++) {
-                        if (self.map.isOutOfBounds(i, j))
-                            continue;
-
-                        _.each(self.grids.renderingGrid[j][i], function(entity) {
-                            callback(entity);
-                        })
-                    }
-                }
-            }
-
-        });
-
-    });
+          _.each(self.grids.renderingGrid[j][i], function(entity) {
+            callback(entity);
+          });
+        }
+      }
+    }
+  });
+});

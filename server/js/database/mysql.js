@@ -1,13 +1,12 @@
 /* global log */
-var cls = require('../lib/class'),
-  mysql = require('mysql'),
-  Creator = require('./creator'),
-  _ = require('underscore'),
-  Loader = require('./loader'),
-  Config = require('../../config.json');
+var cls = require("../lib/class"),
+  mysql = require("mysql"),
+  Creator = require("./creator"),
+  _ = require("underscore"),
+  Loader = require("./loader"),
+  Config = require("../../config.json");
 
 module.exports = MySQL = cls.Class.extend({
-
   init: function(host, port, user, pass, database) {
     var self = this;
 
@@ -23,11 +22,13 @@ module.exports = MySQL = cls.Class.extend({
 
     self.loader = null;
 
-    self.connect(true, false);
+    self.connect(
+      true,
+      false
+    );
 
     self.loadCreator();
     self.loadCallbacks();
-
   },
 
   connect: function(usingDB, forceCallbacks) {
@@ -46,8 +47,7 @@ module.exports = MySQL = cls.Class.extend({
       database: usingDB ? self.database : null
     });
 
-    if (forceCallbacks)
-      self.loadCallbacks();
+    if (forceCallbacks) self.loadCallbacks();
   },
 
   loadCallbacks: function() {
@@ -55,21 +55,27 @@ module.exports = MySQL = cls.Class.extend({
 
     self.connection.connect(function(err) {
       if (err) {
-        log.info('[MySQL] No database found...');
-        self.connect(false, false);
+        log.info("[MySQL] No database found...");
+        self.connect(
+          false,
+          false
+        );
         self.loadDatabases();
         return;
       }
 
       self.creator.createTables();
-      log.info('Successfully established connection to the MySQL database!');
+      log.info("Successfully established connection to the MySQL database!");
       self.loader = new Loader(self);
     });
 
-    self.connection.on('error', function(error) {
-      log.error('MySQL database disconnected.');
+    self.connection.on("error", function(error) {
+      log.error("MySQL database disconnected.");
 
-      self.connect(true, true);
+      self.connect(
+        true,
+        true
+      );
     });
 
     self.onSelected(function() {
@@ -80,8 +86,7 @@ module.exports = MySQL = cls.Class.extend({
   loadCreator: function() {
     var self = this;
 
-    if (self.creator)
-      return;
+    if (self.creator) return;
 
     self.creator = new Creator(self);
   },
@@ -90,10 +95,10 @@ module.exports = MySQL = cls.Class.extend({
     var self = this,
       found;
 
-    log.info('Initiating login for: ' + player.username);
+    log.info("Initiating login for: " + player.username);
 
     self.connection.query(
-      'SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? AND `player_data`.`password`= ?',
+      "SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? AND `player_data`.`password`= ?",
       [player.username, player.password],
       function(error, rows, fields) {
         if (error) {
@@ -107,11 +112,11 @@ module.exports = MySQL = cls.Class.extend({
 
             var data = row;
 
-            data.armour = data.armour.split(',').map(Number);
-            data.weapon = data.weapon.split(',').map(Number);
-            data.pendant = data.pendant.split(',').map(Number);
-            data.ring = data.ring.split(',').map(Number);
-            data.boots = data.boots.split(',').map(Number);
+            data.armour = data.armour.split(",").map(Number);
+            data.weapon = data.weapon.split(",").map(Number);
+            data.pendant = data.pendant.split(",").map(Number);
+            data.ring = data.ring.split(",").map(Number);
+            data.boots = data.boots.split(",").map(Number);
 
             player.load(data);
             player.intro();
@@ -122,99 +127,121 @@ module.exports = MySQL = cls.Class.extend({
           // register the guest account
           self.register(player);
         } else if (!found) {
-          log.info('Mysql.login(player) failed for ' + player.username);
+          log.info("Mysql.login(player) failed for " + player.username);
           player.invalidLogin();
         }
-      });
+      }
+    );
   },
 
   register: function(player) {
     var self = this;
 
-    self.connection.query('SELECT * FROM `player_data` WHERE `player_data`.`username`= ?',
-    [player.username],
-    function(error, rows, fields) {
-      var exists;
+    self.connection.query(
+      "SELECT * FROM `player_data` WHERE `player_data`.`username`= ?",
+      [player.username],
+      function(error, rows, fields) {
+        var exists;
 
-      if (error) {
-        log.error(error);
-        throw error;
+        if (error) {
+          log.error(error);
+          throw error;
+        }
+
+        _.each(rows, function(row) {
+          if (row.name === player.username) exists = true;
+        });
+
+        if (!exists) {
+          log.info("No player data found for: " + player.username);
+
+          player.isNew = true;
+          player.load(self.creator.getPlayerData(player));
+
+          self.creator.save(player);
+
+          player.isNew = false;
+          player.intro();
+        } else {
+          log.info("MySQL.register(player) Error: Username already exists.");
+          player.notify("This username is already taken!");
+        }
       }
-
-      _.each(rows, function(row) {
-        if (row.name === player.username)
-          exists = true;
-      });
-
-      if (!exists) {
-        log.info('No player data found for: ' + player.username);
-
-        player.isNew = true;
-        player.load(self.creator.getPlayerData(player));
-
-        self.creator.save(player);
-
-        player.isNew = false;
-        player.intro();
-      } else {
-        log.info('MySQL.register(player) Error: Username already exists.');
-        player.notify('This username is already taken!');
-      }
-    });
+    );
   },
 
   delete: function(player) {
     var self = this,
-      tables = ['player_data', 'player_equipment', 'player_inventory', 'player_abilities', 'player_bank', 'player_quests', 'player_achievements'];
+      tables = [
+        "player_data",
+        "player_equipment",
+        "player_inventory",
+        "player_abilities",
+        "player_bank",
+        "player_quests",
+        "player_achievements"
+      ];
 
     _.each(tables, function(table) {
-      self.connection.query('DELETE FROM `' + table + '` WHERE `' + table + '`.`' + 'username`=?', [player.username], function(error) {
-        if (error)
-          log.error('Error while deleting user: ' + player.username);
-      });
+      self.connection.query(
+        "DELETE FROM `" + table + "` WHERE `" + table + "`.`" + "username`=?",
+        [player.username],
+        function(error) {
+          if (error) log.error("Error while deleting user: " + player.username);
+        }
+      );
     });
   },
 
   loadDatabases: function() {
     var self = this;
 
-    log.info('[MySQL] Creating database....');
+    log.info("[MySQL] Creating database....");
 
-    self.connection.query('CREATE DATABASE IF NOT EXISTS ' + Config.mysqlDatabase, function(error, results, fields) {
-      if (error)
-        throw error;
+    self.connection.query(
+      "CREATE DATABASE IF NOT EXISTS " + Config.mysqlDatabase,
+      function(error, results, fields) {
+        if (error) throw error;
 
-      log.info('[MySQL] Successfully created database.');
+        log.info("[MySQL] Successfully created database.");
 
-      self.connection.query('USE ' + Config.mysqlDatabase, function(error, results, fields) {
-        if (self.selectDatabase_callback)
-          self.selectDatabase_callback();
-      });
-    });
+        self.connection.query("USE " + Config.mysqlDatabase, function(
+          error,
+          results,
+          fields
+        ) {
+          if (self.selectDatabase_callback) self.selectDatabase_callback();
+        });
+      }
+    );
   },
 
   queryData: function(type, database, data) {
     var self = this;
 
-    self.connection.query(type + ' ' + database + ' SET ?', data, function(error) {
-      if (error)
-        throw error;
+    self.connection.query(type + " " + database + " SET ?", data, function(
+      error
+    ) {
+      if (error) throw error;
 
-      log.info('Successfully updated ' + database);
+      log.info("Successfully updated " + database);
     });
   },
 
   alter: function(database, column, type) {
     var self = this;
 
-    self.connection.query('ALTER TABLE ' + database + ' ADD ' + column + ' ' + type, function(error, results, fields) {
-      if (error) {
-        log.error('Malformation in the database type and/or type.');
-        return;
-      }
+    self.connection.query(
+      "ALTER TABLE " + database + " ADD " + column + " " + type,
+      function(error, results, fields) {
+        if (error) {
+          log.error("Malformation in the database type and/or type.");
+          return;
+        }
 
-      log.info('Database ' + database + ' has been successfully altered.');
-    });
+        log.info("Database " + database + " has been successfully altered.");
+      }
+    );
   },
 
   onSelected: function(callback) {

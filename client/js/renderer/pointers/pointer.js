@@ -1,58 +1,52 @@
 define(function() {
+  return Class.extend({
+    init: function(id, element, type) {
+      var self = this;
 
-    return Class.extend({
+      self.id = id;
+      self.element = element;
+      self.type = type;
 
-        init: function(id, element, type) {
-            var self = this;
+      self.blinkInterval = null;
+      self.visible = true;
 
-            self.id = id;
-            self.element = element;
-            self.type = type;
+      self.x = -1;
+      self.y = -1;
 
-            self.blinkInterval = null;
-            self.visible = true;
+      self.load();
+    },
 
-            self.x = -1;
-            self.y = -1;
+    load: function() {
+      var self = this;
 
-            self.load();
-        },
+      self.blinkInterval = setInterval(function() {
+        if (self.visible) self.hide();
+        else self.show();
 
-        load: function() {
-            var self = this;
+        self.visible = !self.visible;
+      }, 600);
+    },
 
-            self.blinkInterval = setInterval(function() {
-                if (self.visible)
-                    self.hide();
-                else
-                    self.show();
+    destroy: function() {
+      var self = this;
 
-                self.visible = !self.visible;
-            }, 600);
-        },
+      clearInterval(self.blinkInterval);
+      self.element.remove();
+    },
 
-        destroy: function() {
-            var self = this;
+    setPosition: function(x, y) {
+      var self = this;
 
-            clearInterval(self.blinkInterval);
-            self.element.remove();
-        },
+      self.x = x;
+      self.y = y;
+    },
 
-        setPosition: function(x, y) {
-            var self = this;
+    show: function() {
+      this.element.css("display", "block");
+    },
 
-            self.x = x;
-            self.y = y;
-        },
-
-        show: function() {
-            this.element.css('display', 'block');
-        },
-
-        hide: function() {
-            this.element.css('display', 'none');
-        }
-
-    });
-
+    hide: function() {
+      this.element.css("display", "none");
+    }
+  });
 });

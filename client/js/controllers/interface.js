@@ -1,214 +1,204 @@
 /* global log */
 
-define(['jquery', '../interface/inventory',
-        '../interface/profile/profile', '../interface/actions',
-        '../interface/bank', '../interface/enchant', '../interface/warp'],
-    function($, Inventory, Profile, Actions, Bank, Enchant, Warp) {
+define([
+  "jquery",
+  "../interface/inventory",
+  "../interface/profile/profile",
+  "../interface/actions",
+  "../interface/bank",
+  "../interface/enchant",
+  "../interface/warp"
+], function($, Inventory, Profile, Actions, Bank, Enchant, Warp) {
+  return Class.extend({
+    init: function(game) {
+      var self = this;
 
-    return Class.extend({
+      self.game = game;
 
-        init: function(game) {
-            var self = this;
+      self.notify = $("#notify");
+      self.confirm = $("#confirm");
+      self.message = $("#message");
+      self.fade = $("#notifFade");
+      self.done = $("#notifyDone");
 
-            self.game = game;
+      self.inventory = null;
+      self.profile = null;
+      self.actions = null;
+      self.enchant = null;
 
-            self.notify = $('#notify');
-            self.confirm = $('#confirm');
-            self.message = $('#message');
-            self.fade = $('#notifFade');
-            self.done = $('#notifyDone');
+      self.loadNotifications();
+      self.loadActions();
+      self.loadWarp();
 
-            self.inventory = null;
-            self.profile = null;
-            self.actions = null;
-            self.enchant = null;
+      self.done.click(function() {
+        self.hideNotify();
+      });
+    },
 
-            self.loadNotifications();
-            self.loadActions();
-            self.loadWarp();
+    resize: function() {
+      var self = this;
 
-            self.done.click(function() {
-                self.hideNotify();
-            });
-        },
+      if (self.inventory) self.inventory.resize();
 
-        resize: function() {
-            var self = this;
+      if (self.profile) self.profile.resize();
 
-            if (self.inventory)
-                self.inventory.resize();
+      if (self.bank) self.bank.resize();
 
-            if (self.profile)
-                self.profile.resize();
+      if (self.enchant) self.enchant.resize();
+    },
 
-            if (self.bank)
-                self.bank.resize();
+    loadInventory: function(size, data) {
+      var self = this;
 
-            if (self.enchant)
-                self.enchant.resize();
+      /**
+       * This can be called multiple times and can be used
+       * to completely refresh the inventory.
+       */
 
-        },
+      self.inventory = new Inventory(self.game, size);
 
-        loadInventory: function(size, data) {
-            var self = this;
+      self.inventory.load(data);
+    },
 
-            /**
-             * This can be called multiple times and can be used
-             * to completely refresh the inventory.
-             */
+    loadBank: function(size, data) {
+      var self = this;
 
-            self.inventory = new Inventory(self.game, size);
+      /**
+       * Similar structure as the inventory, just that it
+       * has two containers. The bank and the inventory.
+       */
 
-            self.inventory.load(data);
-        },
+      self.bank = new Bank(self.game, self.inventory.container, size);
 
-        loadBank: function(size, data) {
-            var self = this;
+      self.bank.load(data);
 
-            /**
-             * Similar structure as the inventory, just that it
-             * has two containers. The bank and the inventory.
-             */
+      self.loadEnchant();
+    },
 
-            self.bank = new Bank(self.game, self.inventory.container, size);
+    loadProfile: function() {
+      var self = this;
 
-            self.bank.load(data);
+      if (!self.profile) self.profile = new Profile(self.game);
+    },
 
-            self.loadEnchant();
-        },
+    loadActions: function() {
+      var self = this;
 
-        loadProfile: function() {
-            var self = this;
+      if (!self.actions) self.actions = new Actions(self);
+    },
 
-            if (!self.profile)
-                self.profile = new Profile(self.game);
-        },
+    loadEnchant: function() {
+      var self = this;
 
-        loadActions: function() {
-            var self = this;
+      if (!self.enchant) self.enchant = new Enchant(self.game, self);
+    },
 
-            if (!self.actions)
-                self.actions = new Actions(self);
-        },
+    loadWarp: function() {
+      var self = this;
 
-        loadEnchant: function() {
-            var self = this;
+      if (!self.warp) self.warp = new Warp(self.game, self);
+    },
 
-            if (!self.enchant)
-                self.enchant = new Enchant(self.game, self);
-        },
+    loadNotifications: function() {
+      var self = this,
+        ok = $("#ok"),
+        cancel = $("#cancel"),
+        done = $("#done");
 
-        loadWarp: function() {
-            var self = this;
+      /**
+       * Simple warning dialogue
+       */
 
-            if (!self.warp)
-                self.warp = new Warp(self.game, self);
-        },
+      ok.click(function() {
+        self.hideNotify();
+      });
 
-        loadNotifications: function() {
-            var self = this,
-                ok = $('#ok'),
-                cancel = $('#cancel'),
-                done = $('#done');
+      /**
+       * Callbacks responsible for
+       * Confirmation dialogues
+       */
 
-            /**
-             * Simple warning dialogue
-             */
+      cancel.click(function() {
+        self.hideConfirm();
+      });
 
-            ok.click(function() {
+      done.click(function() {
+        log.info(self.confirm.className);
 
-                self.hideNotify();
-            });
+        self.hideConfirm();
+      });
+    },
 
-            /**
-             * Callbacks responsible for
-             * Confirmation dialogues
-             */
+    hideAll: function() {
+      var self = this;
 
-            cancel.click(function() {
+      if (self.inventory && self.inventory.isVisible()) self.inventory.hide();
 
-                self.hideConfirm();
-            });
+      if (self.actions && self.actions.isVisible()) self.actions.hide();
 
-            done.click(function() {
-                log.info(self.confirm.className);
+      if (
+        self.profile &&
+        (self.profile.isVisible() || self.profile.settings.isVisible())
+      )
+        self.profile.hide();
 
-                self.hideConfirm();
-            });
-        },
+      if (
+        self.game.input &&
+        self.game.input.chatHandler &&
+        self.game.input.chatHandler.input.is(":visible")
+      )
+        self.game.input.chatHandler.hideInput();
 
-        hideAll: function() {
-            var self = this;
+      if (self.bank && self.bank.isVisible()) self.bank.hide();
 
-            if (self.inventory && self.inventory.isVisible())
-                self.inventory.hide();
+      if (self.enchant && self.enchant.isVisible()) self.enchant.hide();
 
-            if (self.actions && self.actions.isVisible())
-                self.actions.hide();
+      if (self.warp && self.warp.isVisible()) self.warp.hide();
+    },
 
-            if (self.profile && (self.profile.isVisible() || self.profile.settings.isVisible()))
-                self.profile.hide();
+    displayNotify: function(message) {
+      var self = this;
 
-            if (self.game.input && self.game.input.chatHandler && self.game.input.chatHandler.input.is(':visible'))
-                self.game.input.chatHandler.hideInput();
+      if (self.isNotifyVisible()) return;
 
-            if (self.bank && self.bank.isVisible())
-                self.bank.hide();
+      self.notify.css("display", "block");
+      self.fade.css("display", "block");
+      self.message.css("display", "block");
 
-            if (self.enchant && self.enchant.isVisible())
-                self.enchant.hide();
+      self.message.text(message);
+    },
 
-            if (self.warp && self.warp.isVisible())
-                self.warp.hide();
-        },
+    displayConfirm: function(message) {
+      var self = this;
 
-        displayNotify: function(message) {
-            var self = this;
+      if (self.isConfirmVisible()) return;
 
-            if (self.isNotifyVisible())
-                return;
+      self.confirm.css("display", "block");
+      self.confirm.text(message);
+    },
 
-            self.notify.css('display', 'block');
-            self.fade.css('display', 'block');
-            self.message.css('display', 'block');
+    hideNotify: function() {
+      var self = this;
 
-            self.message.text(message);
-        },
+      self.fade.css("display", "none");
+      self.notify.css("display", "none");
+      self.message.css("display", "none");
+    },
 
-        displayConfirm: function(message) {
-            var self = this;
+    hideConfirm: function() {
+      this.confirm.css("display", "none");
+    },
 
-            if (self.isConfirmVisible())
-                return;
+    getQuestPage: function() {
+      return this.profile.quests;
+    },
 
-            self.confirm.css('display', 'block');
-            self.confirm.text(message);
-        },
+    isNotifyVisible: function() {
+      return this.notify.css("display") === "block";
+    },
 
-        hideNotify: function() {
-            var self = this;
-
-            self.fade.css('display', 'none');
-            self.notify.css('display', 'none');
-            self.message.css('display', 'none');
-        },
-
-        hideConfirm: function() {
-            this.confirm.css('display', 'none');
-        },
-
-        getQuestPage: function() {
-            return this.profile.quests;
-        },
-
-        isNotifyVisible: function() {
-            return this.notify.css('display') === 'block';
-        },
-
-        isConfirmVisible: function() {
-            return this.confirm.css('display') === 'block';
-        }
-
-    });
-
+    isConfirmVisible: function() {
+      return this.confirm.css("display") === "block";
+    }
+  });
 });

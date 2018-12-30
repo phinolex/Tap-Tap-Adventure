@@ -1,27 +1,23 @@
-define(['./equipment'], function(Equipment) {
+define(["./equipment"], function(Equipment) {
+  return Equipment.extend({
+    init: function(name, string, count, ability, abilityLevel) {
+      var self = this;
 
-    return Equipment.extend({
+      self._super(name, string, count, ability, abilityLevel);
 
-        init: function(name, string, count, ability, abilityLevel) {
-            var self = this;
+      self.defence = -1;
+    },
 
-            self._super(name, string, count, ability, abilityLevel);
+    setDefence: function(defence) {
+      this.defence = defence;
+    },
 
-            self.defence = -1;
-        },
+    getDefence: function() {
+      return this.defence;
+    },
 
-        setDefence: function(defence) {
-            this.defence = defence;
-        },
-
-        getDefence: function() {
-            return this.defence;
-        },
-
-        update: function(name, string, count, ability, abilityLevel) {
-            this._super(name, string, count, ability, abilityLevel);
-        }
-
-    });
-
+    update: function(name, string, count, ability, abilityLevel) {
+      this._super(name, string, count, ability, abilityLevel);
+    }
+  });
 });

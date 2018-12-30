@@ -1,18 +1,15 @@
-define(['jquery'], function($) {
+define(["jquery"], function($) {
+  return Class.extend({
+    init: function(game) {
+      var self = this;
 
-    return Class.extend({
+      self.game = game;
 
-        init: function(game) {
-            var self = this;
+      self.shortcuts = $("#abilityShortcut");
+    },
 
-            self.game = game;
-
-            self.shortcuts = $('#abilityShortcut');
-        },
-
-        getList: function() {
-            return this.shortcuts.find('ul');
-        }
-    });
-
+    getList: function() {
+      return this.shortcuts.find("ul");
+    }
+  });
 });

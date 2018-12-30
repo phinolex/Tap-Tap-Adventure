@@ -1,68 +1,61 @@
 /* global Modules */
 
 define(function() {
+  return Class.extend({
+    init: function(id, type, text, x, y, statique) {
+      var self = this;
 
-    return Class.extend({
+      self.id = id;
+      self.type = type;
+      self.text = text;
+      self.x = x;
+      self.y = y;
 
-        init: function(id, type, text, x, y, statique) {
-            var self = this;
+      self.statique = statique;
 
-            self.id = id;
-            self.type = type;
-            self.text = text;
-            self.x = x;
-            self.y = y;
+      self.opacity = 1.0;
+      self.lastTime = 0;
+      self.speed = 100;
 
-            self.statique = statique;
+      self.duration = 1000;
+    },
 
-            self.opacity = 1.0;
-            self.lastTime = 0;
-            self.speed = 100;
+    setColours: function(fill, stroke) {
+      this.fill = fill;
+      this.stroke = stroke;
+    },
 
-            self.duration = 1000;
-        },
+    setDuration: function(duration) {
+      this.duration = duration;
+    },
 
-        setColours: function(fill, stroke) {
-            this.fill = fill;
-            this.stroke = stroke;
-        },
+    tick: function() {
+      var self = this;
 
-        setDuration: function(duration) {
-            this.duration = duration;
-        },
+      if (!self.statique) self.y -= 1;
 
-        tick: function() {
-            var self = this;
+      self.opacity -= 70 / self.duration;
 
-            if (!self.statique)
-                self.y -= 1;
+      if (self.opacity < 0) self.destroy();
+    },
 
-            self.opacity -= 70 / self.duration;
+    update: function(time) {
+      var self = this;
 
-            if (self.opacity < 0)
-                self.destroy();
-        },
+      if (time - self.lastTime > self.speed) {
+        self.lastTime = time;
+        self.tick();
+      }
+    },
 
-        update: function(time) {
-            var self = this;
+    destroy: function() {
+      var self = this;
 
-            if (time - self.lastTime > self.speed) {
-                self.lastTime = time;
-                self.tick();
-            }
-        },
+      if (self.destroyCallback) self.destroyCallback(self.id);
+    },
 
-        destroy: function() {
-            var self = this;
-
-            if (self.destroyCallback)
-                self.destroyCallback(self.id);
-        },
-
-        onDestroy: function(callback) {
-            this.destroyCallback = callback;
-        }
-
-    });
-
+    onDestroy: function(callback) {
+      this.destroyCallback = callback;
+    }
+  });
 });

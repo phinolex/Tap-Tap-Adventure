@@ -1,106 +1,138 @@
 /* global log, _ */
 
-define(['jquery', '../page'], function($, Page) {
+define(["jquery", "../page"], function($, Page) {
+  return Page.extend({
+    init: function(game) {
+      var self = this;
 
-    return Page.extend({
+      self._super("#statePage");
 
-        init: function(game) {
-            var self = this;
+      self.game = game;
+      self.player = game.player;
 
-            self._super('#statePage');
+      self.name = $("#profileName");
+      self.level = $("#profileLevel");
+      self.experience = $("#profileExperience");
 
-            self.game = game;
-            self.player = game.player;
+      self.weaponSlot = $("#weaponSlot");
+      self.armourSlot = $("#armourSlot");
+      self.pendantSlot = $("#pendantSlot");
+      self.ringSlot = $("#ringSlot");
+      self.bootsSlot = $("#bootsSlot");
 
-            self.name = $('#profileName');
-            self.level = $('#profileLevel');
-            self.experience = $('#profileExperience');
+      self.slots = [
+        self.weaponSlot,
+        self.armourSlot,
+        self.pendantSlot,
+        self.ringSlot,
+        self.bootsSlot
+      ];
 
-            self.weaponSlot = $('#weaponSlot');
-            self.armourSlot = $('#armourSlot');
-            self.pendantSlot = $('#pendantSlot');
-            self.ringSlot = $('#ringSlot');
-            self.bootsSlot = $('#bootsSlot');
+      self.loaded = false;
 
-            self.slots = [self.weaponSlot, self.armourSlot, self.pendantSlot, self.ringSlot, self.bootsSlot];
+      self.load();
+    },
 
-            self.loaded = false;
+    resize: function() {
+      this.loadSlots();
+    },
 
-            self.load();
-        },
+    load: function() {
+      var self = this;
 
-        resize: function() {
-            this.loadSlots();
-        },
+      if (!self.game.player.armour) return;
 
-        load: function() {
-            var self = this;
+      self.name.text(self.player.username);
+      self.level.text(self.player.level);
+      self.experience.text(self.player.experience);
 
-            if (!self.game.player.armour)
-                return;
+      self.loadSlots();
 
-            self.name.text(self.player.username);
-            self.level.text(self.player.level);
-            self.experience.text(self.player.experience);
+      self.loaded = true;
 
-            self.loadSlots();
+      self.weaponSlot.click(function() {
+        self.game.socket.send(Packets.Equipment, [
+          Packets.EquipmentOpcode.Unequip,
+          "weapon"
+        ]);
+      });
 
-            self.loaded = true;
+      self.armourSlot.click(function() {
+        self.game.socket.send(Packets.Equipment, [
+          Packets.EquipmentOpcode.Unequip,
+          "armour"
+        ]);
+      });
 
-            self.weaponSlot.click(function() {
-                self.game.socket.send(Packets.Equipment, [Packets.EquipmentOpcode.Unequip, 'weapon']);
-            });
+      self.pendantSlot.click(function() {
+        self.game.socket.send(Packets.Equipment, [
+          Packets.EquipmentOpcode.Unequip,
+          "pendant"
+        ]);
+      });
 
-            self.armourSlot.click(function() {
-                self.game.socket.send(Packets.Equipment, [Packets.EquipmentOpcode.Unequip, 'armour']);
-            });
+      self.ringSlot.click(function() {
+        self.game.socket.send(Packets.Equipment, [
+          Packets.EquipmentOpcode.Unequip,
+          "ring"
+        ]);
+      });
 
-            self.pendantSlot.click(function() {
-                self.game.socket.send(Packets.Equipment, [Packets.EquipmentOpcode.Unequip, 'pendant']);
-            });
+      self.bootsSlot.click(function() {
+        self.game.socket.send(Packets.Equipment, [
+          Packets.EquipmentOpcode.Unequip,
+          "boots"
+        ]);
+      });
+    },
 
-            self.ringSlot.click(function() {
-                self.game.socket.send(Packets.Equipment, [Packets.EquipmentOpcode.Unequip, 'ring']);
-            });
+    loadSlots: function() {
+      var self = this;
 
-            self.bootsSlot.click(function() {
-                self.game.socket.send(Packets.Equipment, [Packets.EquipmentOpcode.Unequip, 'boots']);
-            });
+      self.weaponSlot.css(
+        "background-image",
+        self.getImageFormat(self.getScale(), self.player.weapon.string)
+      );
+      self.armourSlot.css(
+        "background-image",
+        self.getImageFormat(self.getScale(), self.player.armour.string)
+      );
+      self.pendantSlot.css(
+        "background-image",
+        self.getImageFormat(self.getScale(), self.player.pendant.string)
+      );
+      self.ringSlot.css(
+        "background-image",
+        self.getImageFormat(self.getScale(), self.player.ring.string)
+      );
+      self.bootsSlot.css(
+        "background-image",
+        self.getImageFormat(self.getScale(), self.player.boots.string)
+      );
 
-        },
+      if (self.game.getScaleFactor() === 1)
+        self.forEachSlot(function(slot) {
+          slot.css("background-size", "600%");
+        });
+    },
 
-        loadSlots: function() {
-            var self = this;
+    update: function() {
+      var self = this;
 
-            self.weaponSlot.css('background-image', self.getImageFormat(self.getScale(), self.player.weapon.string));
-            self.armourSlot.css('background-image', self.getImageFormat(self.getScale(), self.player.armour.string));
-            self.pendantSlot.css('background-image', self.getImageFormat(self.getScale(), self.player.pendant.string));
-            self.ringSlot.css('background-image', self.getImageFormat(self.getScale(), self.player.ring.string));
-            self.bootsSlot.css('background-image', self.getImageFormat(self.getScale(), self.player.boots.string));
+      self.level.text(self.player.level);
+      self.experience.text(self.player.experience);
 
-            if (self.game.getScaleFactor() === 1)
-                self.forEachSlot(function(slot) { slot.css('background-size', '600%'); });
-        },
+      self.loadSlots();
+    },
 
-        update: function() {
-            var self = this;
+    forEachSlot: function(callback) {
+      _.each(this.slots, function(slot) {
+        callback(slot);
+      });
+    },
 
-            self.level.text(self.player.level);
-            self.experience.text(self.player.experience);
-
-            self.loadSlots();
-        },
-
-        forEachSlot: function(callback) {
-            _.each(this.slots, function(slot) {
-                callback(slot);
-            });
-        },
-
-        getScale: function() {
-            return this.game.renderer.getDrawingScale();
-        }
-
-    });
-
+    getScale: function() {
+      return this.game.renderer.getDrawingScale();
+    }
+  });
 });

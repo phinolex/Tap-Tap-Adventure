@@ -1,73 +1,74 @@
-var cls = require('../../lib/class'),
-    Area = require('../area'),
-    map = require('../../../data/map/world_server.json'),
-    _ = require('underscore');
+var cls = require("../../lib/class"),
+  Area = require("../area"),
+  map = require("../../../data/map/world_server.json"),
+  _ = require("underscore");
 
 module.exports = ChestAreas = cls.Class.extend({
+  init: function(world) {
+    var self = this;
 
-    init: function(world) {
-        var self = this;
+    self.world = world;
 
-        self.world = world;
+    self.chestAreas = [];
 
-        self.chestAreas = [];
+    self.load();
+  },
 
-        self.load();
-    },
+  load: function() {
+    var self = this;
 
-    load: function() {
-        var self = this;
+    _.each(map.chestAreas, function(m) {
+      var chestArea = new Area(m.id, m.x, m.y, m.width, m.height);
 
-        _.each(map.chestAreas, function(m) {
-            var chestArea = new Area(m.id, m.x, m.y, m.width, m.height);
+      chestArea.maxEntities = m.entities;
+      chestArea.items = m.i;
+      chestArea.cX = m.tx;
+      chestArea.cY = m.ty;
 
-            chestArea.maxEntities = m.entities;
-            chestArea.items = m.i;
-            chestArea.cX = m.tx;
-            chestArea.cY = m.ty;
+      self.chestAreas.push(chestArea);
 
-            self.chestAreas.push(chestArea);
+      chestArea.onEmpty(function() {
+        self.spawnChest(this);
+      });
 
-            chestArea.onEmpty(function() {
-                self.spawnChest(this);
-            });
+      chestArea.onSpawn(function() {
+        self.removeChest(this);
+      });
+    });
 
-            chestArea.onSpawn(function() {
-                self.removeChest(this);
-            });
+    log.info("Loaded " + self.chestAreas.length + " chest areas.");
+  },
 
-        });
+  standardize: function() {
+    var self = this;
 
-        log.info('Loaded ' + self.chestAreas.length + ' chest areas.');
-    },
+    _.each(self.chestAreas, function(chestArea) {
+      chestArea.setMaxEntities(chestArea.entities.length);
+    });
+  },
 
-    standardize: function() {
-        var self = this;
+  spawnChest: function(chestArea) {
+    var self = this;
 
-        _.each(self.chestAreas, function(chestArea) {
-            chestArea.setMaxEntities(chestArea.entities.length);
-        });
-    },
+    /**
+     * Works beautifully :)
+     */
 
-    spawnChest: function(chestArea) {
-        var self = this;
+    chestArea.chest = self.world.spawnChest(
+      chestArea.items,
+      chestArea.cX,
+      chestArea.cY,
+      false
+    );
+  },
 
-        /**
-         * Works beautifully :)
-         */
+  removeChest: function(chestArea) {
+    var self = this;
 
-        chestArea.chest = self.world.spawnChest(chestArea.items, chestArea.cX, chestArea.cY, false);
-    },
+    if (!chestArea.chest) return;
 
-    removeChest: function(chestArea) {
-        var self = this;
+    self.world.removeChest(chestArea.chest);
 
-        if (!chestArea.chest)
-            return;
-
-        self.world.removeChest(chestArea.chest);
-
-        chestArea.chest = null;
-    }
-
+    chestArea.chest = null;
+  }
 });

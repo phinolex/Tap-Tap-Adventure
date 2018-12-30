@@ -1,44 +1,44 @@
-define(['./slot'], function(Slot) {
+define(["./slot"], function(Slot) {
+  return Class.extend({
+    init: function(size) {
+      var self = this;
 
-    return Class.extend({
+      self.size = size;
 
-        init: function(size) {
-            var self = this;
+      self.slots = [];
 
-            self.size = size;
+      for (var i = 0; i < self.size; i++) self.slots.push(new Slot(i));
+    },
 
-            self.slots = [];
+    setSlot: function(index, info) {
+      var self = this;
 
-            for (var i = 0; i < self.size; i++)
-                self.slots.push(new Slot(i));
-        },
+      /**
+       * We receive information from the server here,
+       * so we mustn't do any calculations. Instead,
+       * we just modify the container directly.
+       */
 
-        setSlot: function(index, info) {
-            var self = this;
+      self.slots[index].load(
+        info.string,
+        info.count,
+        info.ability,
+        info.abilityLevel,
+        info.edible,
+        info.equippable
+      );
+    },
 
-            /**
-             * We receive information from the server here,
-             * so we mustn't do any calculations. Instead,
-             * we just modify the container directly.
-             */
+    getEmptySlot: function() {
+      var self = this;
 
-            self.slots[index].load(info.string, info.count, info.ability, info.abilityLevel, info.edible, info.equippable);
-        },
+      for (var i = 0; i < self.slots; i++) if (!self.slots[i].string) return i;
 
-        getEmptySlot: function() {
-            var self = this;
+      return -1;
+    },
 
-            for (var i = 0; i < self.slots; i++)
-                if (!self.slots[i].string)
-                    return i;
-
-            return -1;
-        },
-
-        getImageFormat: function(scale, name) {
-            return 'url("img/' + scale + '/item-' + name + '.png")';
-        }
-
-    });
-
+    getImageFormat: function(scale, name) {
+      return 'url("img/' + scale + "/item-" + name + '.png")';
+    }
+  });
 });

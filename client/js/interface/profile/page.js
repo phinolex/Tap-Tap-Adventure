@@ -1,48 +1,43 @@
 /* global log */
 
-define(['jquery'], function($) {
+define(["jquery"], function($) {
+  return Class.extend({
+    init: function(element) {
+      var self = this;
 
-    return Class.extend({
+      self.body = $(element);
 
-        init: function(element) {
-            var self = this;
+      self.loaded = false;
+    },
 
-            self.body = $(element);
+    show: function() {
+      this.body.fadeIn("slow");
+    },
 
-            self.loaded = false;
-        },
+    hide: function() {
+      this.body.fadeOut("slow");
+    },
 
-        show: function() {
-            this.body.fadeIn('slow');
-        },
+    isVisible: function() {
+      return this.body.css("display") === "block";
+    },
 
-        hide: function() {
-            this.body.fadeOut('slow');
-        },
+    load: function() {
+      log.info("Uninitialized.");
+    },
 
-        isVisible: function() {
-            return this.body.css('display') === 'block';
-        },
+    resize: function() {
+      log.info("Uninitialized.");
+    },
 
-        load: function() {
-            log.info('Uninitialized.');
-        },
+    update: function() {
+      log.info("Uninitialized.");
+    },
 
-        resize: function() {
-            log.info('Uninitialized.');
-        },
+    getImageFormat: function(scale, name) {
+      if (!name || name === "null") return "";
 
-        update: function() {
-            log.info('Uninitialized.');
-        },
-
-        getImageFormat: function(scale, name) {
-            if (!name || name === 'null')
-                return '';
-
-            return 'url("img/' + scale + '/item-' + name + '.png")';
-        }
-
-    });
-
+      return 'url("img/' + scale + "/item-" + name + '.png")';
+    }
+  });
 });

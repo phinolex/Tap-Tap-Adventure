@@ -113,6 +113,8 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
       if (!pointer)
         return;
 
+      console.log('set to entity', entity);
+
       self.set(pointer, entity.x, entity.y);
     },
 
@@ -171,18 +173,14 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
             } else {
               self.destroy(pointer);
             }
-
             break;
 
           case Modules.Pointers.Position:
-
             if (pointer.x !== -1 && pointer.y !== -1) {
               self.set(pointer, pointer.x, pointer.y);
             }
-
             break;
         }
-
       });
     },
 

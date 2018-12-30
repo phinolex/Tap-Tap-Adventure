@@ -1,34 +1,30 @@
-define(['../../utils/timer'], function(Timer) {
+define(["../../utils/timer"], function(Timer) {
+  return Class.extend({
+    init: function(id, time, element, duration) {
+      var self = this;
 
-    return Class.extend({
+      self.id = id;
+      self.time = time;
+      self.element = element;
+      self.duration = duration || 5000;
 
-        init: function(id, time, element, duration) {
-            var self = this;
+      self.timer = new Timer(self.time, self.duration);
+    },
 
-            self.id = id;
-            self.time = time;
-            self.element = element;
-            self.duration = duration || 5000;
+    setClickable: function() {
+      this.element.css("pointer-events", "auto");
+    },
 
-            self.timer = new Timer(self.time, self.duration);
-        },
+    isOver: function(time) {
+      return this.timer.isOver(time);
+    },
 
-        setClickable: function() {
-            this.element.css('pointer-events', 'auto');
-        },
+    reset: function(time) {
+      this.timer.time = time;
+    },
 
-        isOver: function(time) {
-            return this.timer.isOver(time);
-        },
-
-        reset: function(time) {
-            this.timer.time = time;
-        },
-
-        destroy: function() {
-            $(this.element).remove();
-        }
-
-    });
-
+    destroy: function() {
+      $(this.element).remove();
+    }
+  });
 });

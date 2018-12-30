@@ -1,299 +1,303 @@
 /* global Modules, log, _ */
 
-define(['./entityhandler'], function(EntityHandler) {
-    return Class.extend({
-
-        /**
-         * Initialize a new entity
-         * @class
-         * @param {Number} id
-         * @param {String} kind
-         */
-        init: function(id, kind) {
-            var self = this;
-
-            self.id = id;
-            self.kind = kind;
-
-            self.x = 0;
-            self.y = 0;
-            self.gridX = 0;
-            self.gridY = 0;
-
-            self.name = '';
-
-            self.sprite = null;
-            self.spriteFlipX = false;
-            self.spriteFlipY = false;
-
-            self.animations = null;
-            self.currentAnimation = null;
-
-            self.shadowOffsetY = 0;
-            self.hidden = false;
-
-            self.spriteLoaded = false;
-            self.visible = true;
-            self.fading = false;
-            self.handler = new EntityHandler(self);
-
-            self.angled = false;
-            self.angle = 0;
-
-            self.critical = false;
-            self.stunned = false;
-            self.terror = false;
-
-            self.nonPathable = false;
-            self.hasCounter = false;
-
-            self.countdownTime = 0;
-            self.counter = 0;
-
-            self.renderingData = {
-                scale: -1,
-                angle: 0
-            };
-
-            self.loadDirty();
-        },
-        
-        /**
-         * Checks to see if the x,y coordinate is adjacent to the
-         * entity's current position
-         *
-         * @param {Number} x
-         * @param {Number}  int
-         * @param {Boolean} ignoreDiagonals if true, will ignore diagonal directions (optional)
-         * @return {Boolean}
-         */
-        isPositionAdjacent: function(x, y, ignoreDiagonals = false) {
-            var self = this;
-            
-            // north west - diagonal
-            if (!ignoreDiagonals && x-1 === self.gridX && y+1 === self.gridY) {
-                return true;
-            }
-            
-            // north
-            if (x === self.gridX && y+1 === self.gridY) {
-                return true;
-            }
-            
-            // north east - diagonal
-            if (!ignoreDiagonals && x+1 === self.gridX && y+1 === self.gridY) {
-                return true;
-            }
-            
-            // west
-            if (x-1 === self.gridX && y === self.gridY) {
-                return true;
-            }
-            
-            // east
-            if (x+1 === self.gridX && y === self.gridY) {
-                return true;
-            }
-            
-            // south west - diagonal
-            if (!ignoreDiagonals && x-1 === self.gridX && y-1 === self.gridY) {
-                return true;
-            }
-            
-            // south
-            if (x === self.gridX && y-1 === self.gridY) {
-                return true;
-            }
-            
-            // south west - diagonal
-            if (!ignoreDiagonals && x-1 === self.gridX && y-1 === self.gridY) {
-                return true;
-            }
-            
-            return false;
-        },
+define(["./entityhandler"], function(EntityHandler) {
+  return Class.extend({
+    /**
+     * Initialize a new entity
+     * @class
+     * @param {Number} id
+     * @param {String} kind
+     */
+    init: function(id, kind) {
+      var self = this;
+
+      self.id = id;
+      self.kind = kind;
+
+      self.x = 0;
+      self.y = 0;
+      self.gridX = 0;
+      self.gridY = 0;
+
+      self.name = "";
+
+      self.sprite = null;
+      self.spriteFlipX = false;
+      self.spriteFlipY = false;
+
+      self.animations = null;
+      self.currentAnimation = null;
+
+      self.shadowOffsetY = 0;
+      self.hidden = false;
+
+      self.spriteLoaded = false;
+      self.visible = true;
+      self.fading = false;
+      self.handler = new EntityHandler(self);
+
+      self.angled = false;
+      self.angle = 0;
+
+      self.critical = false;
+      self.stunned = false;
+      self.terror = false;
+
+      self.nonPathable = false;
+      self.hasCounter = false;
+
+      self.countdownTime = 0;
+      self.counter = 0;
+
+      self.renderingData = {
+        scale: -1,
+        angle: 0
+      };
+
+      self.loadDirty();
+    },
+
+    /**
+     * Checks to see if the x,y coordinate is adjacent to the
+     * entity's current position
+     *
+     * @param {Number} x
+     * @param {Number}  int
+     * @param {Boolean} ignoreDiagonals if true, will ignore diagonal directions (optional)
+     * @return {Boolean}
+     */
+    isPositionAdjacent: function(x, y, ignoreDiagonals = false) {
+      var self = this;
+
+      // north west - diagonal
+      if (!ignoreDiagonals && x - 1 === self.gridX && y + 1 === self.gridY) {
+        return true;
+      }
+
+      // north
+      if (x === self.gridX && y + 1 === self.gridY) {
+        return true;
+      }
+
+      // north east - diagonal
+      if (!ignoreDiagonals && x + 1 === self.gridX && y + 1 === self.gridY) {
+        return true;
+      }
 
-        /**
-         * This is important for when the client is
-         * on a mobile screen. So the sprite has to be
-         * handled differently.
-         */
+      // west
+      if (x - 1 === self.gridX && y === self.gridY) {
+        return true;
+      }
 
-        loadDirty: function() {
-            var self = this;
+      // east
+      if (x + 1 === self.gridX && y === self.gridY) {
+        return true;
+      }
 
-            self.dirty = true;
+      // south west - diagonal
+      if (!ignoreDiagonals && x - 1 === self.gridX && y - 1 === self.gridY) {
+        return true;
+      }
 
-            if (self.dirtyCallback)
-                self.dirtyCallback();
-        },
+      // south
+      if (x === self.gridX && y - 1 === self.gridY) {
+        return true;
+      }
 
-        fadeIn: function(time) {
-            var self = this;
+      // south west - diagonal
+      if (!ignoreDiagonals && x - 1 === self.gridX && y - 1 === self.gridY) {
+        return true;
+      }
 
-            self.fading = true;
-            self.fadingTime = time;
-        },
+      return false;
+    },
 
-        blink: function(speed) {
-            var self = this;
+    /**
+     * This is important for when the client is
+     * on a mobile screen. So the sprite has to be
+     * handled differently.
+     */
 
-            self.blinking = setInterval(function() {
-                self.toggleVisibility();
-            }, speed);
-        },
+    loadDirty: function() {
+      var self = this;
 
-        stopBlinking: function() {
-            var self = this;
+      self.dirty = true;
 
-            if (self.blinking)
-                clearInterval(self.blinking);
+      if (self.dirtyCallback) self.dirtyCallback();
+    },
 
-            self.setVisible(true);
-        },
+    fadeIn: function(time) {
+      var self = this;
 
-        setName: function(name) {
-            this.name = name;
-        },
+      self.fading = true;
+      self.fadingTime = time;
+    },
 
-        setSprite: function(sprite) {
-            var self = this;
+    blink: function(speed) {
+      var self = this;
 
-            if (!sprite || (self.sprite && self.sprite.name === sprite.name))
-                return;
+      self.blinking = setInterval(function() {
+        self.toggleVisibility();
+      }, speed);
+    },
 
-            if (!sprite.loaded)
-                sprite.load();
+    stopBlinking: function() {
+      var self = this;
 
-            sprite.name = sprite.id;
+      if (self.blinking) clearInterval(self.blinking);
 
-            self.sprite = sprite;
+      self.setVisible(true);
+    },
 
-            self.normalSprite = self.sprite;
-            self.hurtSprite = sprite.getHurtSprite();
-            self.animations = sprite.createAnimations();
-            self.spriteLoaded = true;
+    setName: function(name) {
+      this.name = name;
+    },
 
-            if (self.readyCallback)
-                self.readyCallback();
-        },
+    setSprite: function(sprite) {
+      var self = this;
 
-        setPosition: function(x, y) {
-            var self = this;
+      if (!sprite || (self.sprite && self.sprite.name === sprite.name)) return;
 
-            self.x = x;
-            self.y = y;
-        },
+      if (!sprite.loaded) sprite.load();
 
-        setGridPosition: function(x, y) {
-            var self = this;
+      sprite.name = sprite.id;
 
-            self.gridX = x;
-            self.gridY = y;
+      self.sprite = sprite;
 
-            self.setPosition(x * 16, y * 16);
-        },
+      self.normalSprite = self.sprite;
+      self.hurtSprite = sprite.getHurtSprite();
+      self.animations = sprite.createAnimations();
+      self.spriteLoaded = true;
 
-        setAnimation: function(name, speed, count, onEndCount) {
-            var self = this;
+      if (self.readyCallback) self.readyCallback();
+    },
 
-            if (!self.spriteLoaded || (self.currentAnimation && self.currentAnimation.name === name))
-                return;
+    setPosition: function(x, y) {
+      var self = this;
 
-            var anim = self.getAnimationByName(name);
+      self.x = x;
+      self.y = y;
+    },
 
-            if (!anim)
-                return;
+    setGridPosition: function(x, y) {
+      var self = this;
 
-            self.currentAnimation = anim;
+      self.gridX = x;
+      self.gridY = y;
 
-            if (name.substr(0, 3) === 'atk')
-                self.currentAnimation.reset();
+      self.setPosition(x * 16, y * 16);
+    },
 
-            self.currentAnimation.setSpeed(speed);
+    setAnimation: function(name, speed, count, onEndCount) {
+      var self = this;
 
-            self.currentAnimation.setCount(count ? count : 0, onEndCount || function() {
-                self.idle();
-            });
-        },
+      if (
+        !self.spriteLoaded ||
+        (self.currentAnimation && self.currentAnimation.name === name)
+      )
+        return;
 
-        setCountdown: function(count) {
-            var self = this;
+      var anim = self.getAnimationByName(name);
 
-            self.counter = count;
+      if (!anim) return;
 
-            self.countdownTime = new Date().getTime();
+      self.currentAnimation = anim;
 
-            self.hasCounter = true;
+      if (name.substr(0, 3) === "atk") self.currentAnimation.reset();
 
-        },
+      self.currentAnimation.setSpeed(speed);
 
-        setVisible: function(visible) {
-            this.visible = visible
-        },
+      self.currentAnimation.setCount(
+        count ? count : 0,
+        onEndCount ||
+          function() {
+            self.idle();
+          }
+      );
+    },
 
-        hasWeapon: function() {
-            return false;
-        },
+    setCountdown: function(count) {
+      var self = this;
 
-        getDistance: function(entity) {
-            var self = this,
-                x = Math.abs(self.gridX - entity.gridX),
-                y = Math.abs(self.gridY - entity.gridY);
+      self.counter = count;
 
-            return x > y ? x : y;
-        },
+      self.countdownTime = new Date().getTime();
 
-        getCoordDistance: function(toX, toY) {
-            var self = this,
-                x = Math.abs(self.gridX - toX),
-                y = Math.abs(self.gridY - toY);
+      self.hasCounter = true;
+    },
 
-            return x > y ? x : y;
-        },
+    setVisible: function(visible) {
+      this.visible = visible;
+    },
 
-        inAttackRadius: function(entity) {
-            return entity && this.getDistance(entity) < 2 && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY);
-        },
+    hasWeapon: function() {
+      return false;
+    },
 
-        inExtraAttackRadius: function(entity) {
-            return entity && this.getDistance(entity) < 3 && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY);
-        },
+    getDistance: function(entity) {
+      var self = this,
+        x = Math.abs(self.gridX - entity.gridX),
+        y = Math.abs(self.gridY - entity.gridY);
 
-        getAnimationByName: function(name) {
-            if (name in this.animations)
-                return this.animations[name];
+      return x > y ? x : y;
+    },
 
-            return null;
-        },
+    getCoordDistance: function(toX, toY) {
+      var self = this,
+        x = Math.abs(self.gridX - toX),
+        y = Math.abs(self.gridY - toY);
 
-        getSprite: function() {
-            return this.sprite.name;
-        },
+      return x > y ? x : y;
+    },
 
-        toggleVisibility: function() {
-            this.setVisible(!this.visible);
-        },
+    inAttackRadius: function(entity) {
+      return (
+        entity &&
+        this.getDistance(entity) < 2 &&
+        !(this.gridX !== entity.gridX && this.gridY !== entity.gridY)
+      );
+    },
 
-        isVisible: function() {
-            return this.visible;
-        },
+    inExtraAttackRadius: function(entity) {
+      return (
+        entity &&
+        this.getDistance(entity) < 3 &&
+        !(this.gridX !== entity.gridX && this.gridY !== entity.gridY)
+      );
+    },
 
-        hasShadow: function() {
-            return false;
-        },
+    getAnimationByName: function(name) {
+      if (name in this.animations) return this.animations[name];
 
-        hasPath: function() {
-            return false;
-        },
+      return null;
+    },
 
-        onReady: function(callback) {
-            this.readyCallback = callback;
-        },
+    getSprite: function() {
+      return this.sprite.name;
+    },
 
-        onDirty: function(callback) {
-            this.dirtyCallback = callback;
-        }
+    toggleVisibility: function() {
+      this.setVisible(!this.visible);
+    },
 
-    });
+    isVisible: function() {
+      return this.visible;
+    },
+
+    hasShadow: function() {
+      return false;
+    },
+
+    hasPath: function() {
+      return false;
+    },
+
+    onReady: function(callback) {
+      this.readyCallback = callback;
+    },
+
+    onDirty: function(callback) {
+      this.dirtyCallback = callback;
+    }
+  });
 });

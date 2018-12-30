@@ -1,37 +1,45 @@
-var fs = require('fs'),
-  config = require('../config.json'),
-  MySQL = require('./database/mysql'),
-  WebSocket = require('./network/websocket'),
-  _ = require('underscore'),
+var fs = require("fs"),
+  config = require("../config.json"),
+  MySQL = require("./database/mysql"),
+  WebSocket = require("./network/websocket"),
+  _ = require("underscore"),
   allowConnections = false,
-  Parser = require('./util/parser'),
-  ShutdownHook = require('shutdown-hook'),
-  Log = require('log'),
+  Parser = require("./util/parser"),
+  ShutdownHook = require("shutdown-hook"),
+  Log = require("log"),
   worlds = [],
   database,
-  Bot = require('../../tools/bot/bot'),
-  Utils = require('./util/utils');
+  Bot = require("../../tools/bot/bot"),
+  Utils = require("./util/utils");
 
 var worldsCreated = 0;
 
-log = new Log(config.worlds > 1 ? 'notice' : config.debugLevel, config.localDebug ? fs.createWriteStream('runtime.log') : null);
+log = new Log(
+  config.worlds > 1 ? "notice" : config.debugLevel,
+  config.localDebug ? fs.createWriteStream("runtime.log") : null
+);
 
 function Main() {
-
-  log.notice('Initializing ' + config.name + ' game engine...');
+  log.notice("Initializing " + config.name + " game engine...");
 
   var shutdownHook = new ShutdownHook(),
     stdin = process.openStdin(),
-    World = require('./game/world'),
+    World = require("./game/world"),
     webSocket = new WebSocket.Server(config.host, config.port, config.gver);
 
   if (!config.offlineMode) {
-    database = new MySQL(config.mysqlHost, config.mysqlPort, config.mysqlUser, config.mysqlPassword, config.mysqlDatabase);
+    database = new MySQL(
+      config.mysqlHost,
+      config.mysqlPort,
+      config.mysqlUser,
+      config.mysqlPassword,
+      config.mysqlDatabase
+    );
   }
 
   webSocket.onConnect(function(connection) {
     if (!allowConnections) {
-      connection.sendUTF8('disallowed');
+      connection.sendUTF8("disallowed");
       connection.close();
     }
 
@@ -44,15 +52,13 @@ function Main() {
       }
     }
 
-    if (world)
-      world.playerConnectCallback(connection);
+    if (world) world.playerConnectCallback(connection);
     else {
-      log.info('Worlds are currently full, closing...');
+      log.info("Worlds are currently full, closing...");
 
-      connection.sendUTF8('full');
+      connection.sendUTF8("full");
       connection.close();
     }
-
   });
 
   setTimeout(function() {
@@ -62,7 +68,6 @@ function Main() {
 
     loadParser();
     initializeWorlds();
-
   }, 200);
 
   webSocket.onRequestStatus(function() {
@@ -70,7 +75,7 @@ function Main() {
   });
 
   webSocket.onError(function() {
-    log.notice('Web Socket has encountered an error.');
+    log.notice("Web Socket has encountered an error.");
   });
 
   /**
@@ -78,40 +83,36 @@ function Main() {
    * has finished initializing.
    */
 
-  process.on('SIGINT', function() {
+  process.on("SIGINT", function() {
     shutdownHook.register();
   });
 
-  process.on('SIGQUIT', function() {
+  process.on("SIGQUIT", function() {
     shutdownHook.register();
   });
 
-  shutdownHook.on('ShutdownStarted', function(e) {
+  shutdownHook.on("ShutdownStarted", function(e) {
     saveAll();
   });
 
-  stdin.addListener('data', function(data) {
+  stdin.addListener("data", function(data) {
     /**
      * We have to cleanse the raw message because of the \n
      */
 
-    var message = data.toString().replace(/(\r\n|\n|\r)/gm, ''),
+    var message = data.toString().replace(/(\r\n|\n|\r)/gm, ""),
       type = message.charAt(0);
 
-    if (type !== '/')
-      return;
+    if (type !== "/") return;
 
-    var blocks = message.substring(1).split(' '),
+    var blocks = message.substring(1).split(" "),
       command = blocks.shift();
 
-    if (!command)
-      return;
+    if (!command) return;
 
     switch (command) {
-
-      case 'stop':
-
-        log.info('Safely shutting down the server...');
+      case "stop":
+        log.info("Safely shutting down the server...");
 
         saveAll();
 
@@ -119,22 +120,26 @@ function Main() {
 
         break;
 
-      case 'saveall':
-
+      case "saveall":
         saveAll();
 
         break;
 
-      case 'alter':
-
+      case "alter":
         if (blocks.length !== 3) {
-          log.error('Invalid command format. /alter [database] [table] [type]');
+          log.error("Invalid command format. /alter [database] [table] [type]");
           return;
         }
 
         if (!database) {
-          log.error('The database server is not available for this instance of ' + config.name + '.');
-          log.error('Ensure that the database is enabled in the server configuration.');
+          log.error(
+            "The database server is not available for this instance of " +
+              config.name +
+              "."
+          );
+          log.error(
+            "Ensure that the database is enabled in the server configuration."
+          );
           return;
         }
 
@@ -146,41 +151,40 @@ function Main() {
 
         break;
 
-      case 'bot':
-
+      case "bot":
         var count = parseInt(blocks.shift());
 
-        if (!count)
-          count = 1;
+        if (!count) count = 1;
 
         new Bot(worlds[0], count);
 
         break;
 
-      case 'test':
-
+      case "test":
         Utils.test();
 
         break;
     }
-
   });
-
 }
-
 
 function onWorldLoad() {
   worldsCreated++;
-  if (worldsCreated === worlds.length)
-    allWorldsCreated();
+  if (worldsCreated === worlds.length) allWorldsCreated();
 }
 
 function allWorldsCreated() {
-  log.notice('Finished creating ' + worlds.length + ' world' + (worlds.length > 1 ? 's' : '') + '!');
+  log.notice(
+    "Finished creating " +
+      worlds.length +
+      " world" +
+      (worlds.length > 1 ? "s" : "") +
+      "!"
+  );
   allowConnections = true;
 
-  var host = config.host === '0.0.0.0' ? 'localhost' : config.host;
-  log.notice('Connect locally via http://' + host + ':' + config.port);
+  var host = config.host === "0.0.0.0" ? "localhost" : config.host;
+  log.notice("Connect locally via http://" + host + ":" + config.port);
 }
 
 function loadParser() {
@@ -189,8 +193,7 @@ function loadParser() {
 
 function initializeWorlds() {
   for (var worldId in worlds)
-    if (worlds.hasOwnProperty(worldId))
-      worlds[worldId].load(onWorldLoad);
+    if (worlds.hasOwnProperty(worldId)) worlds[worldId].load(onWorldLoad);
 }
 
 function getPopulations() {
@@ -210,18 +213,23 @@ function saveAll() {
 
   var plural = worlds.length > 1;
 
-  log.notice('Saved players for ' + worlds.length + ' world' + (plural ? 's' : '') + '.');
+  log.notice(
+    "Saved players for " + worlds.length + " world" + (plural ? "s" : "") + "."
+  );
 }
 
-if (typeof String.prototype.startsWith !== 'function') {
+if (typeof String.prototype.startsWith !== "function") {
   String.prototype.startsWith = function(str) {
     return str.length > 0 && this.substring(0, str.length) === str;
   };
 }
 
-if (typeof String.prototype.endsWith !== 'function') {
+if (typeof String.prototype.endsWith !== "function") {
   String.prototype.endsWith = function(str) {
-    return str.length > 0 && this.substring(this.length - str.length, this.length) === str;
+    return (
+      str.length > 0 &&
+      this.substring(this.length - str.length, this.length) === str
+    );
   };
 }
 

@@ -1,280 +1,293 @@
 /* global log, Detect, Packets */
 
-define(['jquery', './container/container'], function($, Container) {
+define(["jquery", "./container/container"], function($, Container) {
+  return Class.extend({
+    init: function(game, size) {
+      var self = this;
 
-    return Class.extend({
+      self.game = game;
+      self.actions = game.interface.actions;
 
-        init: function(game, size) {
-            var self = this;
+      self.body = $("#inventory");
+      self.button = $("#hud-inventory");
+      self.action = $("#actionContainer");
 
-            self.game = game;
-            self.actions = game.interface.actions;
+      self.container = new Container(size);
 
-            self.body = $('#inventory');
-            self.button = $('#hud-inventory');
-            self.action = $('#actionContainer');
+      self.activeClass = "inventory";
 
-            self.container = new Container(size);
+      self.selectedSlot = null;
+      self.selectedItem = null;
+    },
 
-            self.activeClass = 'inventory';
+    load: function(data) {
+      var self = this,
+        list = $("#inventory").find("ul");
 
-            self.selectedSlot = null;
-            self.selectedItem = null;
-        },
+      for (var i = 0; i < data.length; i++) {
+        var item = data[i];
 
-        load: function(data) {
-            var self = this,
-                list = $('#inventory').find('ul');
+        self.container.setSlot(i, item);
 
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
+        var itemSlot = $('<div id="slot' + i + '" class="itemSlot"></div>');
 
-                self.container.setSlot(i, item);
+        if (item.string !== "null")
+          itemSlot.css(
+            "background-image",
+            self.container.getImageFormat(self.getScale(), item.string)
+          );
 
-                var itemSlot = $('<div id="slot' + i + '" class="itemSlot"></div>');
+        if (self.game.app.isMobile()) itemSlot.css("background-size", "600%");
 
-                if (item.string !== 'null')
-                    itemSlot.css('background-image', self.container.getImageFormat(self.getScale(), item.string));
+        itemSlot.dblclick(function(event) {
+          self.clickDouble(event);
+        });
 
-                if (self.game.app.isMobile())
-                    itemSlot.css('background-size', '600%');
+        itemSlot.click(function(event) {
+          self.click(event);
+        });
 
-                itemSlot.dblclick(function(event) {
-                    self.clickDouble(event);
-                });
+        var itemSlotList = $("<li></li>");
 
-                itemSlot.click(function(event) {
-                    self.click(event);
-                });
+        itemSlotList.append(itemSlot);
+        itemSlotList.append(
+          '<div id="itemCount' +
+            i +
+            '" class="itemCount">' +
+            (item.count > 1 ? item.count : "") +
+            "</div>"
+        );
 
-                var itemSlotList = $('<li></li>');
+        list.append(itemSlotList);
+      }
 
-                itemSlotList.append(itemSlot);
-                itemSlotList.append('<div id="itemCount' + i + '" class="itemCount">' + (item.count > 1 ? item.count : '') + '</div>');
+      self.button.click(function(event) {
+        self.game.interface.hideAll();
 
-                list.append(itemSlotList);
-            }
+        if (self.isVisible()) self.hide();
+        else self.display();
+      });
+    },
 
-            self.button.click(function(event) {
-                self.game.interface.hideAll();
+    click: function(event) {
+      var self = this,
+        index = event.currentTarget.id.substring(4),
+        slot = self.container.slots[index],
+        item = $(self.getList()[index]);
 
-                if (self.isVisible())
-                    self.hide();
-                else
-                    self.display();
-            });
-        },
+      self.clearSelection();
 
-        click: function(event) {
-            var self = this,
-                index = event.currentTarget.id.substring(4),
-                slot = self.container.slots[index],
-                item = $(self.getList()[index]);
+      if (slot.string === null || slot.count === -1) return;
 
+      self.actions.reset();
+      self.actions.loadDefaults("inventory");
+
+      if (slot.edible)
+        self.actions.add($('<div id="eat" class="actionButton">Eat</div>'));
+      else if (slot.equippable)
+        self.actions.add($('<div id="wield" class="actionButton">Wield</div>'));
+
+      if (!self.actions.isVisible()) self.actions.show();
+
+      var sSlot = item.find("#slot" + index);
+
+      sSlot.addClass("select");
+
+      self.selectedSlot = sSlot;
+      self.selectedItem = slot;
+
+      self.actions.hideDrop();
+    },
+
+    clickDouble: function(event) {
+      var self = this,
+        index = event.currentTarget.id.substring(4),
+        slot = self.container.slots[index];
+
+      if (!slot.edible && !slot.equippable) return;
+
+      var item = $(self.getList()[index]),
+        sSlot = item.find("#slot" + index);
+
+      self.clearSelection();
+
+      self.selectedSlot = sSlot;
+      self.selectedItem = slot;
+
+      self.clickAction(slot.edible ? "eat" : "wield");
+
+      self.actions.hideDrop();
+    },
+
+    clickAction: function(event, dAction) {
+      var self = this,
+        action = event.currentTarget ? event.currentTarget.id : event;
+
+      if (!self.selectedSlot || !self.selectedItem) return;
+
+      switch (action) {
+        case "eat":
+        case "wield":
+          self.game.socket.send(Packets.Inventory, [
+            Packets.InventoryOpcode.Select,
+            self.selectedItem.index
+          ]);
+          self.clearSelection();
+
+          break;
+
+        case "drop":
+          var item = self.selectedItem;
+
+          if (item.count > 1) self.actions.displayDrop("inventory");
+          else {
+            self.game.socket.send(Packets.Inventory, [
+              Packets.InventoryOpcode.Remove,
+              item
+            ]);
             self.clearSelection();
+          }
 
-            if (slot.string === null || slot.count === -1)
-                return;
+          break;
 
-            self.actions.reset();
-            self.actions.loadDefaults('inventory');
+        case "dropAccept":
+          var count = $("#dropCount").val();
 
-            if (slot.edible)
-                self.actions.add($('<div id="eat" class="actionButton">Eat</div>'));
-            else if (slot.equippable)
-                self.actions.add($('<div id="wield" class="actionButton">Wield</div>'));
+          if (isNaN(count) || count < 1) return;
 
-            if (!self.actions.isVisible())
-                self.actions.show();
+          self.game.socket.send(Packets.Inventory, [
+            Packets.InventoryOpcode.Remove,
+            self.selectedItem,
+            count
+          ]);
+          self.actions.hideDrop();
+          self.clearSelection();
 
-            var sSlot = item.find('#slot' + index);
+          break;
 
-            sSlot.addClass('select');
+        case "dropCancel":
+          self.actions.hideDrop();
+          self.clearSelection();
 
-            self.selectedSlot = sSlot;
-            self.selectedItem = slot;
+          break;
+      }
 
-            self.actions.hideDrop();
-        },
+      self.actions.hide();
+    },
 
-        clickDouble: function(event) {
-            var self = this,
-                index = event.currentTarget.id.substring(4),
-                slot = self.container.slots[index];
+    add: function(info) {
+      var self = this,
+        item = $(self.getList()[info.index]),
+        slot = self.container.slots[info.index];
 
-            if (!slot.edible && !slot.equippable)
-                return;
+      if (!item || !slot) return;
 
-            var item = $(self.getList()[index]),
-                sSlot = item.find('#slot' + index);
+      if (slot.isEmpty())
+        slot.load(
+          info.string,
+          info.count,
+          info.ability,
+          info.abilityLevel,
+          info.edible,
+          info.equippable
+        );
 
-            self.clearSelection();
+      slot.setCount(info.count);
 
-            self.selectedSlot = sSlot;
-            self.selectedItem = slot;
+      var cssSlot = item.find("#slot" + info.index);
 
-            self.clickAction(slot.edible ? 'eat' : 'wield');
+      cssSlot.css(
+        "background-image",
+        self.container.getImageFormat(self.getScale(), slot.string)
+      );
 
-            self.actions.hideDrop();
-        },
+      if (self.game.app.isMobile()) cssSlot.css("background-size", "600%");
 
-        clickAction: function(event, dAction) {
-            var self = this,
-                action = event.currentTarget ? event.currentTarget.id : event;
+      item
+        .find("#itemCount" + info.index)
+        .text(slot.count > 1 ? slot.count : "");
+    },
 
-            if (!self.selectedSlot || !self.selectedItem)
-                return;
+    remove: function(info) {
+      var self = this,
+        item = $(self.getList()[info.index]),
+        slot = self.container.slots[info.index];
 
-            switch(action) {
-                case 'eat':
-                case 'wield':
+      if (!item || !slot) return;
 
-                    self.game.socket.send(Packets.Inventory, [Packets.InventoryOpcode.Select, self.selectedItem.index]);
-                    self.clearSelection();
+      slot.count -= info.count;
 
-                    break;
+      item.find("#itemCount" + info.index).text(slot.count);
 
-                case 'drop':
-                    var item = self.selectedItem;
+      if (slot.count < 1) {
+        item.find("#slot" + info.index).css("background-image", "");
+        item.find("#itemCount" + info.index).text("");
+        slot.empty();
+      }
+    },
 
-                    if (item.count > 1)
-                        self.actions.displayDrop('inventory');
-                    else {
-                        self.game.socket.send(Packets.Inventory, [Packets.InventoryOpcode.Remove, item]);
-                        self.clearSelection();
-                    }
+    resize: function() {
+      var self = this,
+        list = self.getList();
 
-                    break;
+      for (var i = 0; i < list.length; i++) {
+        var item = $(list[i]).find("#slot" + i),
+          slot = self.container.slots[i];
 
-                case 'dropAccept':
+        if (!slot) continue;
 
-                    var count = $('#dropCount').val();
+        if (self.game.app.isMobile()) item.css("background-size", "600%");
+        else
+          item.css(
+            "background-image",
+            self.container.getImageFormat(self.getScale(), slot.string)
+          );
+      }
+    },
 
-                    if (isNaN(count) || count < 1)
-                        return;
+    clearSelection: function() {
+      var self = this;
 
-                    self.game.socket.send(Packets.Inventory, [Packets.InventoryOpcode.Remove, self.selectedItem, count]);
-                    self.actions.hideDrop();
-                    self.clearSelection();
+      if (!self.selectedSlot) return;
 
-                    break;
+      self.selectedSlot.removeClass("select");
+      self.selectedSlot = null;
+      self.selectedItem = null;
+    },
 
-                case 'dropCancel':
+    display: function() {
+      var self = this;
 
-                    self.actions.hideDrop();
-                    self.clearSelection();
+      self.body.fadeIn("fast");
+      self.button.addClass("active");
+    },
 
-                    break;
-            }
+    hide: function() {
+      var self = this;
 
-            self.actions.hide();
-        },
+      self.button.removeClass("active");
 
-        add: function(info) {
-            var self = this,
-                item = $(self.getList()[info.index]),
-                slot = self.container.slots[info.index];
+      self.body.fadeOut("slow");
+      self.button.removeClass("active");
+      self.clearSelection();
+    },
 
-            if (!item || !slot)
-                return;
+    getScale: function() {
+      return this.game.renderer.getDrawingScale();
+    },
 
-            if (slot.isEmpty())
-                slot.load(info.string, info.count, info.ability, info.abilityLevel, info.edible, info.equippable);
+    getSize: function() {
+      return this.container.size;
+    },
 
-            slot.setCount(info.count);
+    getList: function() {
+      return $("#inventory")
+        .find("ul")
+        .find("li");
+    },
 
-            var cssSlot = item.find('#slot' + info.index);
-
-            cssSlot.css('background-image', self.container.getImageFormat(self.getScale(), slot.string));
-
-            if (self.game.app.isMobile())
-                cssSlot.css('background-size', '600%');
-
-            item.find('#itemCount' + info.index).text(slot.count > 1 ? slot.count : '');
-        },
-
-        remove: function(info) {
-            var self = this,
-                item = $(self.getList()[info.index]),
-                slot = self.container.slots[info.index];
-
-            if (!item || !slot)
-                return;
-
-            slot.count -= info.count;
-
-            item.find('#itemCount' + info.index).text(slot.count);
-
-            if (slot.count < 1) {
-                item.find('#slot' + info.index).css('background-image', '');
-                item.find('#itemCount' + info.index).text('');
-                slot.empty();
-            }
-        },
-
-        resize: function() {
-            var self = this,
-                list = self.getList();
-
-            for (var i = 0; i < list.length; i++) {
-                var item = $(list[i]).find('#slot' + i),
-                    slot = self.container.slots[i];
-
-                if (!slot)
-                    continue;
-
-                if (self.game.app.isMobile())
-                    item.css('background-size', '600%');
-                else
-                    item.css('background-image', self.container.getImageFormat(self.getScale(), slot.string));
-            }
-
-        },
-
-        clearSelection: function() {
-            var self = this;
-
-            if (!self.selectedSlot)
-                return;
-
-            self.selectedSlot.removeClass('select');
-            self.selectedSlot = null;
-            self.selectedItem = null;
-        },
-
-        display: function() {
-            var self = this;
-
-            self.body.fadeIn('fast');
-            self.button.addClass('active');
-        },
-
-        hide: function() {
-            var self = this;
-
-            self.button.removeClass('active');
-
-            self.body.fadeOut('slow');
-            self.button.removeClass('active');
-            self.clearSelection();
-        },
-
-        getScale: function() {
-            return this.game.renderer.getDrawingScale();
-        },
-
-        getSize: function() {
-            return this.container.size;
-        },
-
-        getList: function() {
-            return $('#inventory').find('ul').find('li');
-        },
-
-        isVisible: function() {
-            return this.body.css('display') === 'block';
-        }
-
-    });
-
+    isVisible: function() {
+      return this.body.css("display") === "block";
+    }
+  });
 });

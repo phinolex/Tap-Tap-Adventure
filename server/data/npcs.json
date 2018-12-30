@@ -7,21 +7,31 @@
   "VillageGirl": {
     "name": "Azaria",
     "id": 1,
-    "text": ["Eventually, fire turns to ash.", "And all that remains is but that.",
-            "The ability to reignite...", "Though it never will."]
+    "text": [
+      "Eventually, fire turns to ash.",
+      "And all that remains is but that.",
+      "The ability to reignite...",
+      "Though it never will."
+    ]
   },
 
   "Villager": {
     "id": 2,
     "name": "Bulk Bogan",
-    "text": ["Thank you kindly for the help, dear adventurer.", "I will ensure to contact you in the",
-          "nearby future regarding further adventures."]
+    "text": [
+      "Thank you kindly for the help, dear adventurer.",
+      "I will ensure to contact you in the",
+      "nearby future regarding further adventures."
+    ]
   },
 
   "BeachNpc": {
     "id": 3,
     "name": "Bubba",
-    "text": ["Well, thanks for the help.", "Not really doing much but thanks regardless."]
+    "text": [
+      "Well, thanks for the help.",
+      "Not really doing much but thanks regardless."
+    ]
   },
 
   "Agent": {
@@ -86,10 +96,12 @@
   "Coder": {
     "id": 17,
     "name": "Creeper",
-    "text": ["Oh.. This is awkward...",
-            "You may be wondering why I'm here as well.",
-            "It's because I'm stalking you.",
-            "There I said it, now leave me alone so I can continue to follow you."]
+    "text": [
+      "Oh.. This is awkward...",
+      "You may be wondering why I'm here as well.",
+      "It's because I'm stalking you.",
+      "There I said it, now leave me alone so I can continue to follow you."
+    ]
   },
 
   "ForestNpc": {
@@ -99,10 +111,12 @@
   "Octocat": {
     "id": 19,
     "name": "Octocat",
-    "text": ["Hey there!",
-          "I am the Octocat, the programmer and I",
-          "are very well acquainted.",
-          "Nonetheless, make sure that you <a target=\"_blank\" href=\"https://github.com/design1online/WTF-Adventure\">check out the source on GitHub!</a>"]
+    "text": [
+      "Hey there!",
+      "I am the Octocat, the programmer and I",
+      "are very well acquainted.",
+      "Nonetheless, make sure that you <a target=\"_blank\" href=\"https://github.com/design1online/WTF-Adventure\">check out the source on GitHub!</a>"
+    ]
   },
 
   "Soldier": {

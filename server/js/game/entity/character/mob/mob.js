@@ -1,210 +1,208 @@
-var Character = require('../character'),
-    Mobs = require('../../../../util/mobs'),
-    _ = require('underscore'),
-    Utils = require('../../../../util/utils'),
-    Items = require('../../../../util/items');
+var Character = require("../character"),
+  Mobs = require("../../../../util/mobs"),
+  _ = require("underscore"),
+  Utils = require("../../../../util/utils"),
+  Items = require("../../../../util/items");
 
 module.exports = Mob = Character.extend({
+  init: function(id, instance, x, y) {
+    var self = this;
 
-    init: function(id, instance, x, y) {
-        var self = this;
+    self._super(id, "mob", instance, x, y);
 
-        self._super(id, 'mob', instance, x, y);
+    if (!Mobs.exists(id)) return;
 
-        if (!Mobs.exists(id))
-            return;
+    self.data = Mobs.Ids[self.id];
+    self.hitPoints = self.data.hitPoints;
+    self.maxHitPoints = self.data.hitPoints;
+    self.drops = self.data.drops;
 
-        self.data = Mobs.Ids[self.id];
-        self.hitPoints = self.data.hitPoints;
-        self.maxHitPoints = self.data.hitPoints;
-        self.drops = self.data.drops;
+    self.respawnDelay = self.data.spawnDelay;
 
-        self.respawnDelay = self.data.spawnDelay;
+    self.level = self.data.level;
 
-        self.level = self.data.level;
+    self.armourLevel = self.data.armour;
+    self.weaponLevel = self.data.weapon;
+    self.attackRange = self.data.attackRange;
+    self.aggroRange = self.data.aggroRange;
+    self.aggressive = self.data.aggressive;
 
-        self.armourLevel = self.data.armour;
-        self.weaponLevel = self.data.weapon;
-        self.attackRange = self.data.attackRange;
-        self.aggroRange = self.data.aggroRange;
-        self.aggressive = self.data.aggressive;
+    self.spawnLocation = [x, y];
 
-        self.spawnLocation = [x, y];
+    self.dead = false;
+    self.boss = false;
+    self.static = false;
 
-        self.dead = false;
-        self.boss = false;
-        self.static = false;
+    self.projectileName = self.getProjectileName();
+  },
 
-        self.projectileName = self.getProjectileName();
-        
-    },
+  refresh: function() {
+    var self = this;
 
-    refresh: function() {
-        var self = this;
+    self.hitPoints = self.data.hitPoints;
+    self.maxHitPoints = self.data.hitPoints;
 
-        self.hitPoints = self.data.hitPoints;
-        self.maxHitPoints = self.data.hitPoints;
+    if (self.refreshCallback) self.refreshCallback();
+  },
 
-        if (self.refreshCallback)
-            self.refreshCallback();
+  getDrop: function() {
+    var self = this;
 
-    },
+    if (!self.drops) return null;
 
-    getDrop: function() {
-        var self = this;
+    var min = 0,
+      percent = 0,
+      random = Utils.randomInt(0, 1000);
 
-        if (!self.drops)
-            return null;
+    for (var drop in self.drops)
+      if (self.drops.hasOwnProperty(drop)) {
+        var chance = self.drops[drop];
 
-        var min = 0,
-            percent = 0,
-            random = Utils.randomInt(0, 1000);
+        min = percent;
+        percent += chance;
 
+        if (random >= min && random < percent) {
+          var count = 1;
 
-        for (var drop in self.drops)
-            if (self.drops.hasOwnProperty(drop)) {
-                var chance = self.drops[drop];
+          if (drop === "gold")
+            count = Utils.randomInt(
+              1,
+              self.level *
+                Math.floor(Math.pow(2, self.level / 7) / (self.level / 4))
+            );
 
-                min = percent;
-                percent += chance;
+          return {
+            id: Items.stringToId(drop),
+            count: count
+          };
+        }
+      }
 
-                if (random >= min && random < percent) {
-                    var count = 1;
+    return null;
+  },
 
-                    if (drop === 'gold')
-                        count = Utils.randomInt(1, self.level * (Math.floor(Math.pow(2, self.level / 7) / (self.level / 4))));
+  getProjectileName: function() {
+    return this.data.projectileName
+      ? this.data.projectileName
+      : "projectile-pinearrow";
+  },
 
-                    return {
-                        id: Items.stringToId(drop),
-                        count: count
-                    }
-                }
-            }
+  canAggro: function(player) {
+    var self = this;
 
-        return null;
-    },
+    if (
+      self.hasTarget() ||
+      !self.aggressive ||
+      Math.floor(self.level * 1.5) < player.level
+    )
+      return false;
 
-    getProjectileName: function() {
-        return this.data.projectileName ? this.data.projectileName : 'projectile-pinearrow';
-    },
+    return self.isNear(player, self.aggroRange);
+  },
 
-    canAggro: function(player) {
-        var self = this;
+  destroy: function() {
+    var self = this;
 
-        if (self.hasTarget() || !self.aggressive || Math.floor(self.level * 1.5) < player.level)
-            return false;
+    self.dead = true;
+    self.clearTarget();
+    self.resetPosition();
+    self.respawn();
 
-        return self.isNear(player, self.aggroRange);
-    },
+    if (self.area) self.area.removeEntity(self);
+  },
 
-    destroy: function() {
-        var self = this;
+  return: function() {
+    var self = this;
 
-        self.dead = true;
-        self.clearTarget();
-        self.resetPosition();
-        self.respawn();
+    self.clearTarget();
+    self.resetPosition();
+    self.move(self.x, self.y);
+  },
 
-        if (self.area)
-            self.area.removeEntity(self);
-    },
+  isRanged: function() {
+    return this.attackRange > 1;
+  },
 
-    return: function() {
-        var self = this;
+  distanceToSpawn: function() {
+    return this.getCoordDistance(this.spawnLocation[0], this.spawnLocation[1]);
+  },
 
-        self.clearTarget();
-        self.resetPosition();
-        self.move(self.x, self.y);
-    },
+  isAtSpawn: function() {
+    return this.x === this.spawnLocation[0] && this.y === this.spawnLocation[1];
+  },
 
-    isRanged: function() {
-        return this.attackRange > 1;
-    },
+  isOutsideSpawn: function() {
+    return this.distanceToSpawn() > this.spawnDistance;
+  },
 
-    distanceToSpawn: function() {
-        return this.getCoordDistance(this.spawnLocation[0], this.spawnLocation[1]);
-    },
+  addToChestArea: function(chestAreas) {
+    var self = this,
+      area = _.find(chestAreas, function(area) {
+        return area.contains(self.x, self.y);
+      });
 
-    isAtSpawn: function() {
-        return this.x === this.spawnLocation[0] && this.y === this.spawnLocation[1];
-    },
+    if (area) area.addEntity(self);
+  },
 
-    isOutsideSpawn: function() {
-        return this.distanceToSpawn() > this.spawnDistance;
-    },
+  respawn: function() {
+    var self = this;
 
-    addToChestArea: function(chestAreas) {
-        var self = this,
-            area = _.find(chestAreas, function(area) { return area.contains(self.x, self.y); });
+    /**
+     * Some entities are static (only spawned once during an event)
+     * Meanwhile, other entities act as an illusion to another entity,
+     * so the resawning script is handled elsewhere.
+     */
 
-        if (area)
-            area.addEntity(self);
-    },
+    if (!self.static || self.respawnDelay === -1) return;
 
-    respawn: function() {
-        var self = this;
+    setTimeout(function() {
+      if (self.respawnCallback) self.respawnCallback();
+    }, self.respawnDelay);
+  },
 
-        /**
-         * Some entities are static (only spawned once during an event)
-         * Meanwhile, other entities act as an illusion to another entity,
-         * so the resawning script is handled elsewhere.
-         */
+  getState: function() {
+    var self = this,
+      base = self._super();
 
-        if (!self.static || self.respawnDelay === -1)
-            return;
+    base.hitPoints = self.hitPoints;
+    base.maxHitPoints = self.maxHitPoints;
+    base.attackRange = self.attackRange;
+    base.level = self.level;
 
-        setTimeout(function() {
-            if (self.respawnCallback)
-                self.respawnCallback();
+    return base;
+  },
 
-        }, self.respawnDelay);
-    },
+  resetPosition: function() {
+    var self = this;
 
-    getState: function() {
-        var self = this,
-            base = self._super();
+    self.setPosition(self.spawnLocation[0], self.spawnLocation[1]);
+  },
 
-        base.hitPoints = self.hitPoints;
-        base.maxHitPoints = self.maxHitPoints;
-        base.attackRange = self.attackRange;
-        base.level = self.level;
+  onRespawn: function(callback) {
+    this.respawnCallback = callback;
+  },
 
-        return base;
-    },
+  onMove: function(callback) {
+    this.moveCallback = callback;
+  },
 
-    resetPosition: function() {
-        var self = this;
+  onReturn: function(callback) {
+    this.returnCallback = callback;
+  },
 
-        self.setPosition(self.spawnLocation[0], self.spawnLocation[1]);
-    },
+  onRefresh: function(callback) {
+    this.refreshCallback = callback;
+  },
 
-    onRespawn: function(callback) {
-        this.respawnCallback = callback;
-    },
+  onDeath: function(callback) {
+    this.deathCallback = callback;
+  },
 
-    onMove: function(callback) {
-        this.moveCallback = callback;
-    },
+  move: function(x, y) {
+    var self = this;
 
-    onReturn: function(callback) {
-        this.returnCallback = callback;
-    },
+    self.setPosition(x, y);
 
-    onRefresh: function(callback) {
-        this.refreshCallback = callback;
-    },
-
-    onDeath: function(callback) {
-        this.deathCallback = callback;
-    },
-
-    move: function(x, y) {
-        var self = this;
-
-        self.setPosition(x, y);
-
-        if (self.moveCallback)
-            self.moveCallback(self);
-    }
-
+    if (self.moveCallback) self.moveCallback(self);
+  }
 });

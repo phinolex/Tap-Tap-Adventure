@@ -1,45 +1,41 @@
-var Points = require('./points');
+var Points = require("./points");
 
 module.exports = HitPoints = Points.extend({
+  init: function(hitPoints, maxHitPoints) {
+    var self = this;
 
-    init: function(hitPoints, maxHitPoints) {
-        var self = this;
+    self._super(hitPoints, maxHitPoints);
+  },
 
-        self._super(hitPoints, maxHitPoints);
-    },
+  setHitPoints: function(hitPoints) {
+    var self = this;
 
-    setHitPoints: function(hitPoints) {
-        var self = this;
+    self.setPoints(hitPoints);
 
-        self.setPoints(hitPoints);
+    if (self.hitPointsCallback) self.hitPointsCallback();
+  },
 
-        if (self.hitPointsCallback)
-            self.hitPointsCallback();
-    },
+  setMaxHitPoints: function(maxHitPoints) {
+    var self = this;
 
-    setMaxHitPoints: function(maxHitPoints) {
-        var self = this;
+    self.setMaxPoints(maxHitPoints);
 
-        self.setMaxPoints(maxHitPoints);
+    if (self.maxHitPointsCallback) self.maxHitPointsCallback();
+  },
 
-        if (self.maxHitPointsCallback)
-            self.maxHitPointsCallback();
-    },
+  getHitPoints: function() {
+    return this.points;
+  },
 
-    getHitPoints: function() {
-        return this.points;
-    },
+  getMaxHitPoints: function() {
+    return this.maxPoints;
+  },
 
-    getMaxHitPoints: function() {
-        return this.maxPoints;
-    },
+  onHitPoints: function(callback) {
+    this.hitPointsCallback = callback;
+  },
 
-    onHitPoints: function(callback) {
-        this.hitPointsCallback = callback;
-    },
-
-    onMaxHitPoints: function(callback) {
-        this.maxHitPointsCallback = callback;
-    }
-
+  onMaxHitPoints: function(callback) {
+    this.maxHitPointsCallback = callback;
+  }
 });

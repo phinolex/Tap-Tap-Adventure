@@ -1,47 +1,106 @@
 0 info it worked if it ends with ok
 1 verbose cli [ '/usr/local/Cellar/node/6.8.1/bin/node',
 1 verbose cli   '/usr/local/bin/npm',
-1 verbose cli   'start' ]
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'sqlformat' ]
 2 info using npm@3.10.8
 3 info using node@v6.8.1
-4 verbose run-script [ 'prestart', 'start', 'poststart' ]
-5 info lifecycle WTF-Adventure@1.0.5~prestart: WTF-Adventure@1.0.5
-6 silly lifecycle WTF-Adventure@1.0.5~prestart: no script for prestart, continuing
-7 info lifecycle WTF-Adventure@1.0.5~start: WTF-Adventure@1.0.5
-8 verbose lifecycle WTF-Adventure@1.0.5~start: unsafe-perm in lifecycle true
-9 verbose lifecycle WTF-Adventure@1.0.5~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Applications/MAMP/htdocs/WTF-Adventure/node_modules/.bin:/usr/local/Cellar/node/6.8.1/bin:/Users/greta/pear/bin:/Applications/MAMP/bin/php/php5.6.25/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/greta/pear/bin:/Applications/MAMP/bin/php/php5.6.25/bin
-10 verbose lifecycle WTF-Adventure@1.0.5~start: CWD: /Applications/MAMP/htdocs/WTF-Adventure
-11 silly lifecycle WTF-Adventure@1.0.5~start: Args: [ '-c', 'node server/js/main.js' ]
-12 silly lifecycle WTF-Adventure@1.0.5~start: Returned: code: 1  signal: null
-13 info lifecycle WTF-Adventure@1.0.5~start: Failed to exec start script
-14 verbose stack Error: WTF-Adventure@1.0.5 start: `node server/js/main.js`
-14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
-14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
-14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at ChildProcess.emit (events.js:191:7)
-14 verbose stack     at maybeClose (internal/child_process.js:877:16)
-14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-15 verbose pkgid WTF-Adventure@1.0.5
-16 verbose cwd /Applications/MAMP/htdocs/WTF-Adventure
-17 error Darwin 15.6.0
-18 error argv "/usr/local/Cellar/node/6.8.1/bin/node" "/usr/local/bin/npm" "start"
-19 error node v6.8.1
-20 error npm  v3.10.8
-21 error code ELIFECYCLE
-22 error WTF-Adventure@1.0.5 start: `node server/js/main.js`
-22 error Exit status 1
-23 error Failed at the WTF-Adventure@1.0.5 start script 'node server/js/main.js'.
-23 error Make sure you have the latest version of node.js and npm installed.
-23 error If you do, this is most likely a problem with the WTF-Adventure package,
-23 error not with npm itself.
-23 error Tell the author that this fails on your system:
-23 error     node server/js/main.js
-23 error You can get information on how to open an issue for this project with:
-23 error     npm bugs WTF-Adventure
-23 error Or if that isn't available, you can get their info via:
-23 error     npm owner ls WTF-Adventure
-23 error There is likely additional logging output above.
-24 verbose exit [ 1, true ]
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readGlobalPackageData
+7 silly fetchPackageMetaData sqlformat
+8 silly fetchNamedPackageData sqlformat
+9 silly mapToRegistry name sqlformat
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'sqlformat',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   escapedName: 'sqlformat',
+12 silly mapToRegistry   name: 'sqlformat',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri https://registry.npmjs.org/sqlformat
+14 verbose request uri https://registry.npmjs.org/sqlformat
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 2:16:49 PM
+17 verbose request id 95f4dbd5a1ebb29b
+18 http request GET https://registry.npmjs.org/sqlformat
+19 http 404 https://registry.npmjs.org/sqlformat
+20 verbose headers { date: 'Sun, 30 Dec 2018 19:16:49 GMT',
+20 verbose headers   'content-type': 'application/json',
+20 verbose headers   'content-length': '21',
+20 verbose headers   connection: 'keep-alive',
+20 verbose headers   'set-cookie': [ '__cfduid=dcca9197a97966cb43a08f505dcc9bef01546197409; expires=Mon, 30-Dec-19 19:16:49 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+20 verbose headers   'cf-cache-status': 'MISS',
+20 verbose headers   'cache-control': 'max-age=300',
+20 verbose headers   'cf-ray': '4916d7d01c07c172-IAD',
+20 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+20 verbose headers   vary: 'accept-encoding, accept',
+20 verbose headers   server: 'cloudflare' }
+21 silly get cb [ 404,
+21 silly get   { date: 'Sun, 30 Dec 2018 19:16:49 GMT',
+21 silly get     'content-type': 'application/json',
+21 silly get     'content-length': '21',
+21 silly get     connection: 'keep-alive',
+21 silly get     'set-cookie': [ '__cfduid=dcca9197a97966cb43a08f505dcc9bef01546197409; expires=Mon, 30-Dec-19 19:16:49 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+21 silly get     'cf-cache-status': 'MISS',
+21 silly get     'cache-control': 'max-age=300',
+21 silly get     'cf-ray': '4916d7d01c07c172-IAD',
+21 silly get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+21 silly get     vary: 'accept-encoding, accept',
+21 silly get     server: 'cloudflare' } ]
+22 silly fetchPackageMetaData Error: Not found : sqlformat
+22 silly fetchPackageMetaData     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+22 silly fetchPackageMetaData     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+22 silly fetchPackageMetaData     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+22 silly fetchPackageMetaData     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:187:22)
+22 silly fetchPackageMetaData     at emitTwo (events.js:106:13)
+22 silly fetchPackageMetaData     at Request.emit (events.js:191:7)
+22 silly fetchPackageMetaData     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1044:10)
+22 silly fetchPackageMetaData     at emitOne (events.js:96:13)
+22 silly fetchPackageMetaData     at Request.emit (events.js:188:7)
+22 silly fetchPackageMetaData     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:965:12)
+22 silly fetchPackageMetaData  error for sqlformat { Error: Not found : sqlformat
+22 silly fetchPackageMetaData     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+22 silly fetchPackageMetaData     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+22 silly fetchPackageMetaData     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+22 silly fetchPackageMetaData     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:187:22)
+22 silly fetchPackageMetaData     at emitTwo (events.js:106:13)
+22 silly fetchPackageMetaData     at Request.emit (events.js:191:7)
+22 silly fetchPackageMetaData     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1044:10)
+22 silly fetchPackageMetaData     at emitOne (events.js:96:13)
+22 silly fetchPackageMetaData     at Request.emit (events.js:188:7)
+22 silly fetchPackageMetaData     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:965:12) pkgid: 'sqlformat', statusCode: 404, code: 'E404' }
+23 silly rollbackFailedOptional Starting
+24 silly rollbackFailedOptional Finishing
+25 silly runTopLevelLifecycles Finishing
+26 silly install printInstalled
+27 verbose stack Error: Not found : sqlformat
+27 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+27 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+27 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+27 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:187:22)
+27 verbose stack     at emitTwo (events.js:106:13)
+27 verbose stack     at Request.emit (events.js:191:7)
+27 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1044:10)
+27 verbose stack     at emitOne (events.js:96:13)
+27 verbose stack     at Request.emit (events.js:188:7)
+27 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:965:12)
+28 verbose statusCode 404
+29 verbose pkgid sqlformat
+30 verbose cwd /Applications/MAMP/htdocs/WTF-Adventure
+31 error Darwin 15.6.0
+32 error argv "/usr/local/Cellar/node/6.8.1/bin/node" "/usr/local/bin/npm" "install" "-g" "sqlformat"
+33 error node v6.8.1
+34 error npm  v3.10.8
+35 error code E404
+36 error 404 Not found : sqlformat
+37 error 404
+38 error 404 'sqlformat' is not in the npm registry.
+39 error 404 You should bug the author to publish it (or use the name yourself!)
+40 error 404 Note that you can also install from a
+41 error 404 tarball, folder, http url, or git url.
+42 verbose exit [ 1, true ]

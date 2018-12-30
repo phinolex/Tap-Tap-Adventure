@@ -1,35 +1,31 @@
-define(['../entity'], function(Entity) {
+define(["../entity"], function(Entity) {
+  return Entity.extend({
+    init: function(id, kind) {
+      var self = this;
 
-    return Entity.extend({
+      self._super(id, kind);
 
-        init: function(id, kind) {
-            var self = this;
+      self.type = "chest";
+    },
 
-            self._super(id, kind);
+    idle: function() {
+      this.setAnimation("idle_down", 150);
+    },
 
-            self.type = 'chest';
-        },
+    setName: function(name) {
+      this._super(name);
+    },
 
-        idle: function() {
-            this.setAnimation('idle_down', 150);
-        },
+    setAnimation: function(name, speed, count, onEndCount) {
+      this._super(name, speed, count, onEndCount);
+    },
 
-        setName: function(name) {
-            this._super(name);
-        },
+    setGridPosition: function(x, y) {
+      this._super(x, y);
+    },
 
-        setAnimation: function(name, speed, count, onEndCount) {
-            this._super(name, speed, count, onEndCount);
-        },
-
-        setGridPosition: function(x, y) {
-            this._super(x, y);
-        },
-
-        setSprite: function(sprite) {
-            this._super(sprite);
-        }
-
-    });
-
+    setSprite: function(sprite) {
+      this._super(sprite);
+    }
+  });
 });
