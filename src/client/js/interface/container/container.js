@@ -1,6 +1,6 @@
 define(["./slot"], function(Slot) {
   return Class.extend({
-    init: function(size) {
+    init(size) {
       var self = this;
 
       self.size = size;
@@ -10,7 +10,7 @@ define(["./slot"], function(Slot) {
       for (var i = 0; i < self.size; i++) self.slots.push(new Slot(i));
     },
 
-    setSlot: function(index, info) {
+    setSlot(index, info) {
       var self = this;
 
       /**
@@ -29,7 +29,7 @@ define(["./slot"], function(Slot) {
       );
     },
 
-    getEmptySlot: function() {
+    getEmptySlot() {
       var self = this;
 
       for (var i = 0; i < self.slots; i++) if (!self.slots[i].string) return i;
@@ -37,7 +37,7 @@ define(["./slot"], function(Slot) {
       return -1;
     },
 
-    getImageFormat: function(scale, name) {
+    getImageFormat(scale, name) {
       return 'url("img/' + scale + "/item-" + name + '.png")';
     }
   });

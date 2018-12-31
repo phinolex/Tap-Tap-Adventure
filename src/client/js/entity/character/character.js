@@ -6,7 +6,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
   Animation
 ) {
   return Entity.extend({
-    init: function(id, kind) {
+    init(id, kind) {
       var self = this;
 
       self._super(id, kind);
@@ -53,7 +53,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.loadGlobals();
     },
 
-    loadGlobals: function() {
+    loadGlobals() {
       var self = this;
 
       self.criticalAnimation = new Animation("atk_down", 10, 0, 48, 48);
@@ -90,7 +90,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       });
     },
 
-    animate: function(animation, speed, count, onEndCount) {
+    animate(animation, speed, count, onEndCount) {
       var self = this,
         o = ["atk", "walk", "idle"],
         orientation = self.orientation;
@@ -113,7 +113,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.setAnimation(animation, speed, count, onEndCount);
     },
 
-    lookAt: function(character) {
+    lookAt(character) {
       var self = this;
 
       if (character.gridX > self.gridX)
@@ -128,7 +128,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.idle();
     },
 
-    follow: function(character) {
+    follow(character) {
       var self = this;
 
       self.following = true;
@@ -137,7 +137,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.move(character.gridX, character.gridY);
     },
 
-    attack: function(attacker, character) {
+    attack(attacker, character) {
       var self = this;
 
       self.attacking = true;
@@ -145,7 +145,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.follow(character);
     },
 
-    backOff: function() {
+    backOff() {
       var self = this;
 
       self.attacking = false;
@@ -154,7 +154,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.removeTarget();
     },
 
-    addAttacker: function(character) {
+    addAttacker(character) {
       var self = this;
 
       if (self.hasAttacker(character)) return;
@@ -162,13 +162,13 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.attackers[character.instance] = character;
     },
 
-    removeAttacker: function(character) {
+    removeAttacker(character) {
       var self = this;
 
       if (self.hasAttacker(character)) delete self.attackers[character.id];
     },
 
-    hasAttacker: function(character) {
+    hasAttacker(character) {
       var self = this;
 
       if (self.attackers.size === 0) return false;
@@ -176,7 +176,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       return character.instance in self.attackers;
     },
 
-    performAction: function(orientation, action) {
+    performAction(orientation, action) {
       var self = this;
 
       self.setOrientation(orientation);
@@ -196,14 +196,14 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       }
     },
 
-    idle: function(o) {
+    idle(o) {
       var self = this,
         orientation = o ? o : self.orientation;
 
       self.performAction(orientation, Modules.Actions.Idle);
     },
 
-    orientationToString: function(o) {
+    orientationToString(o) {
       var oM = Modules.Orientation;
 
       switch (o) {
@@ -221,7 +221,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       }
     },
 
-    go: function(x, y, forced) {
+    go(x, y, forced) {
       var self = this;
 
       if (self.frozen) return;
@@ -234,7 +234,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.move(x, y, forced);
     },
 
-    proceed: function(x, y) {
+    proceed(x, y) {
       this.newDestination = {
         x: x,
         y: y
@@ -250,7 +250,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
      * hacks previously present in BQ.
      */
 
-    nextStep: function() {
+    nextStep() {
       var self = this,
         stop = false,
         x,
@@ -309,7 +309,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       }
     },
 
-    updateMovement: function() {
+    updateMovement() {
       var self = this,
         step = self.step;
 
@@ -326,7 +326,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
         self.performAction(Modules.Orientation.Down, Modules.Actions.Walk);
     },
 
-    followPath: function(path) {
+    followPath(path) {
       var self = this;
 
       /**
@@ -347,7 +347,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.nextStep();
     },
 
-    move: function(x, y, forced) {
+    move(x, y, forced) {
       var self = this;
 
       self.destination = {
@@ -361,7 +361,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       else self.followPath(self.requestPathfinding(x, y));
     },
 
-    stop: function(force) {
+    stop(force) {
       var self = this;
 
       if (!force) self.interrupted = true;
@@ -375,7 +375,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       }
     },
 
-    getEffectAnimation: function() {
+    getEffectAnimation() {
       var self = this;
 
       if (self.critical) return self.criticalAnimation;
@@ -387,7 +387,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       if (self.explosion) return self.explosionAnimation;
     },
 
-    getActiveEffect: function() {
+    getActiveEffect() {
       var self = this;
 
       if (self.critical) return "criticaleffect";
@@ -403,7 +403,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
      * TRIGGERED!!!!
      */
 
-    triggerHealthBar: function() {
+    triggerHealthBar() {
       var self = this;
 
       self.healthBarVisible = true;
@@ -415,7 +415,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       }, 7000);
     },
 
-    clearHealthBar: function() {
+    clearHealthBar() {
       var self = this;
 
       self.healthBarVisible = false;
@@ -423,26 +423,26 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.healthBarTimeout = null;
     },
 
-    requestPathfinding: function(x, y) {
+    requestPathfinding(x, y) {
       var self = this;
 
       if (self.requestPathCallback) return self.requestPathCallback(x, y);
     },
 
-    updateGridPosition: function() {
+    updateGridPosition() {
       var self = this;
 
       self.setGridPosition(self.path[self.step][0], self.path[self.step][1]);
     },
 
-    isMoving: function() {
+    isMoving() {
       return (
         this.currentAnimation.name === "walk" &&
         (this.x % 2 !== 0 || this.y % 2 !== 0)
       );
     },
 
-    forEachAttacker: function(callback) {
+    forEachAttacker(callback) {
       var self = this;
 
       _.each(self.attackers, function(attacker) {
@@ -450,35 +450,35 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       });
     },
 
-    isAttacked: function() {
+    isAttacked() {
       return Object.keys(this.attackers).length > 0;
     },
 
-    hasWeapon: function() {
+    hasWeapon() {
       return false;
     },
 
-    hasShadow: function() {
+    hasShadow() {
       return true;
     },
 
-    hasTarget: function() {
+    hasTarget() {
       return !(this.target === null);
     },
 
-    hasPath: function() {
+    hasPath() {
       return this.path !== null;
     },
 
-    hasNextStep: function() {
+    hasNextStep() {
       return this.path.length - 1 > this.step;
     },
 
-    changedPath: function() {
+    changedPath() {
       return !!this.newDestination;
     },
 
-    removeTarget: function() {
+    removeTarget() {
       var self = this;
 
       if (!self.target) return;
@@ -486,11 +486,11 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.target = null;
     },
 
-    forget: function() {
+    forget() {
       this.attackers = {};
     },
 
-    moved: function() {
+    moved() {
       var self = this;
 
       self.loadDirty();
@@ -498,19 +498,19 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       if (self.moveCallback) self.moveCallback();
     },
 
-    getDistance: function(entity) {
+    getDistance(entity) {
       return this._super(entity);
     },
 
-    setName: function(name) {
+    setName(name) {
       this._super(name);
     },
 
-    setSprite: function(sprite) {
+    setSprite(sprite) {
       this._super(sprite);
     },
 
-    setTarget: function(target) {
+    setTarget(target) {
       var self = this;
 
       if (target === null) {
@@ -525,7 +525,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       self.target = target;
     },
 
-    setHitPoints: function(hitPoints) {
+    setHitPoints(hitPoints) {
       var self = this;
 
       self.hitPoints = hitPoints;
@@ -533,47 +533,47 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       if (self.hitPointsCallback) self.hitPointsCallback(self.hitPoints);
     },
 
-    setMaxHitPoints: function(maxHitPoints) {
+    setMaxHitPoints(maxHitPoints) {
       this.maxHitPoints = maxHitPoints;
     },
 
-    setOrientation: function(orientation) {
+    setOrientation(orientation) {
       this.orientation = orientation;
     },
 
-    setGridPosition: function(x, y) {
+    setGridPosition(x, y) {
       this._super(x, y);
     },
 
-    onRequestPath: function(callback) {
+    onRequestPath(callback) {
       this.requestPathCallback = callback;
     },
 
-    onStartPathing: function(callback) {
+    onStartPathing(callback) {
       this.startPathingCallback = callback;
     },
 
-    onStopPathing: function(callback) {
+    onStopPathing(callback) {
       this.stopPathingCallback = callback;
     },
 
-    onBeforeStep: function(callback) {
+    onBeforeStep(callback) {
       this.beforeStepCallback = callback;
     },
 
-    onStep: function(callback) {
+    onStep(callback) {
       this.stepCallback = callback;
     },
 
-    onSecondStep: function(callback) {
+    onSecondStep(callback) {
       this.secondStepCallback = callback;
     },
 
-    onMove: function(callback) {
+    onMove(callback) {
       this.moveCallback = callback;
     },
 
-    onHitPoints: function(callback) {
+    onHitPoints(callback) {
       this.hitPointsCallback = callback;
     }
   });

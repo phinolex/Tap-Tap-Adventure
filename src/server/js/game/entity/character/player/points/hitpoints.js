@@ -1,13 +1,13 @@
 var Points = require("./points");
 
 module.exports = HitPoints = Points.extend({
-  init: function(hitPoints, maxHitPoints) {
+  init(hitPoints, maxHitPoints) {
     var self = this;
 
     self._super(hitPoints, maxHitPoints);
   },
 
-  setHitPoints: function(hitPoints) {
+  setHitPoints(hitPoints) {
     var self = this;
 
     self.setPoints(hitPoints);
@@ -15,7 +15,7 @@ module.exports = HitPoints = Points.extend({
     if (self.hitPointsCallback) self.hitPointsCallback();
   },
 
-  setMaxHitPoints: function(maxHitPoints) {
+  setMaxHitPoints(maxHitPoints) {
     var self = this;
 
     self.setMaxPoints(maxHitPoints);
@@ -23,19 +23,19 @@ module.exports = HitPoints = Points.extend({
     if (self.maxHitPointsCallback) self.maxHitPointsCallback();
   },
 
-  getHitPoints: function() {
+  getHitPoints() {
     return this.points;
   },
 
-  getMaxHitPoints: function() {
+  getMaxHitPoints() {
     return this.maxPoints;
   },
 
-  onHitPoints: function(callback) {
+  onHitPoints(callback) {
     this.hitPointsCallback = callback;
   },
 
-  onMaxHitPoints: function(callback) {
+  onMaxHitPoints(callback) {
     this.maxHitPointsCallback = callback;
   }
 });

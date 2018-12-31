@@ -7,7 +7,7 @@ var Entity = require("../entity"),
   Mobs = require("../../../util/mobs");
 
 module.exports = Character = Entity.extend({
-  init: function(id, type, instance, x, y) {
+  init(id, type, instance, x, y) {
     var self = this;
 
     self._super(id, type, instance, x, y);
@@ -49,7 +49,7 @@ module.exports = Character = Entity.extend({
     self.startHealing();
   },
 
-  loadCombat: function() {
+  loadCombat() {
     var self = this;
 
     if (Mobs.hasCombatPlugin(self.id))
@@ -57,7 +57,7 @@ module.exports = Character = Entity.extend({
     else self.combat = new Combat(self);
   },
 
-  setStun: function(stun) {
+  setStun(stun) {
     var self = this;
 
     self.stunned = stun;
@@ -65,7 +65,7 @@ module.exports = Character = Entity.extend({
     if (self.stunCallback) self.stunCallback(stun);
   },
 
-  startHealing: function() {
+  startHealing() {
     var self = this;
 
     self.healingInterval = setInterval(function() {
@@ -80,20 +80,20 @@ module.exports = Character = Entity.extend({
     }, 5000);
   },
 
-  stopHealing: function() {
+  stopHealing() {
     var self = this;
 
     clearInterval(self.healingInterval);
     self.healingInterval = null;
   },
 
-  hit: function(attacker) {
+  hit(attacker) {
     var self = this;
 
     if (self.hitCallback) self.hitCallback(attacker);
   },
 
-  heal: function(amount) {
+  heal(amount) {
     var self = this;
 
     self.setHitPoints(self.hitPoints + amount);
@@ -101,31 +101,31 @@ module.exports = Character = Entity.extend({
     if (self.hitPoints > self.maxHitPoints) self.hitPoints = self.maxHitPoints;
   },
 
-  isRanged: function() {
+  isRanged() {
     return this.attackRange > 1;
   },
 
-  applyDamage: function(damage) {
+  applyDamage(damage) {
     this.hitPoints -= damage;
   },
 
-  isDead: function() {
+  isDead() {
     return this.hitPoints < 1 || this.dead;
   },
 
-  getCombat: function() {
+  getCombat() {
     return this.combat;
   },
 
-  getHitPoints: function() {
+  getHitPoints() {
     return this.hitPoints;
   },
 
-  getMaxHitPoints: function() {
+  getMaxHitPoints() {
     return this.maxHitPoints;
   },
 
-  setPosition: function(x, y) {
+  setPosition(x, y) {
     var self = this;
 
     self._super(x, y);
@@ -133,7 +133,7 @@ module.exports = Character = Entity.extend({
     if (self.movementCallback) self.movementCallback(x, y);
   },
 
-  setTarget: function(target) {
+  setTarget(target) {
     var self = this;
 
     self.target = target;
@@ -141,11 +141,11 @@ module.exports = Character = Entity.extend({
     if (self.targetCallback) self.targetCallback(target);
   },
 
-  setPotentialTarget: function(potentialTarget) {
+  setPotentialTarget(potentialTarget) {
     this.potentialTarget = potentialTarget;
   },
 
-  setHitPoints: function(hitPoints) {
+  setHitPoints(hitPoints) {
     var self = this;
 
     self.hitPoints = hitPoints;
@@ -153,23 +153,23 @@ module.exports = Character = Entity.extend({
     if (self.hitPointsCallback) self.hitPointsCallback();
   },
 
-  getProjectile: function() {
+  getProjectile() {
     return this.projectile;
   },
 
-  getProjectileName: function() {
+  getProjectileName() {
     return this.projectileName;
   },
 
-  getDrop: function() {
+  getDrop() {
     return null;
   },
 
-  hasMaxHitPoints: function() {
+  hasMaxHitPoints() {
     return this.hitPoints >= this.maxHitPoints;
   },
 
-  removeTarget: function() {
+  removeTarget() {
     var self = this;
 
     if (self.removeTargetCallback) self.removeTargetCallback();
@@ -177,47 +177,47 @@ module.exports = Character = Entity.extend({
     self.target = null;
   },
 
-  hasTarget: function() {
+  hasTarget() {
     return !(this.target === null);
   },
 
-  hasPotentialTarget: function(potentialTarget) {
+  hasPotentialTarget(potentialTarget) {
     return this.potentialTarget === potentialTarget;
   },
 
-  clearTarget: function() {
+  clearTarget() {
     this.target = null;
   },
 
-  onTarget: function(callback) {
+  onTarget(callback) {
     this.targetCallback = callback;
   },
 
-  onRemoveTarget: function(callback) {
+  onRemoveTarget(callback) {
     this.removeTargetCallback = callback;
   },
 
-  onMovement: function(callback) {
+  onMovement(callback) {
     this.movementCallback = callback;
   },
 
-  onHit: function(callback) {
+  onHit(callback) {
     this.hitCallback = callback;
   },
 
-  onHealthChange: function(callback) {
+  onHealthChange(callback) {
     this.hitPointsCallback = callback;
   },
 
-  onDamage: function(callback) {
+  onDamage(callback) {
     this.damageCallback = callback;
   },
 
-  onStunned: function(callback) {
+  onStunned(callback) {
     this.stunCallback = callback;
   },
 
-  onSubAoE: function(callback) {
+  onSubAoE(callback) {
     this.subAoECallback = callback;
   }
 });

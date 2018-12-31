@@ -7,7 +7,7 @@ var cls = require("../lib/class"),
   Config = require("../../config.json");
 
 module.exports = MySQL = cls.Class.extend({
-  init: function(host, port, user, pass, database) {
+  init(host, port, user, pass, database) {
     var self = this;
 
     /**
@@ -31,7 +31,7 @@ module.exports = MySQL = cls.Class.extend({
     self.loadCallbacks();
   },
 
-  connect: function(usingDB, forceCallbacks) {
+  connect(usingDB, forceCallbacks) {
     var self = this;
 
     if (self.connection) {
@@ -50,7 +50,7 @@ module.exports = MySQL = cls.Class.extend({
     if (forceCallbacks) self.loadCallbacks();
   },
 
-  loadCallbacks: function() {
+  loadCallbacks() {
     var self = this;
 
     self.connection.connect(function(err) {
@@ -83,7 +83,7 @@ module.exports = MySQL = cls.Class.extend({
     });
   },
 
-  loadCreator: function() {
+  loadCreator() {
     var self = this;
 
     if (self.creator) return;
@@ -91,7 +91,7 @@ module.exports = MySQL = cls.Class.extend({
     self.creator = new Creator(self);
   },
 
-  login: function(player, guest) {
+  login(player, guest) {
     var self = this,
       found;
 
@@ -134,7 +134,7 @@ module.exports = MySQL = cls.Class.extend({
     );
   },
 
-  register: function(player) {
+  register(player) {
     var self = this;
 
     self.connection.query(
@@ -170,7 +170,7 @@ module.exports = MySQL = cls.Class.extend({
     );
   },
 
-  delete: function(player) {
+  delete(player) {
     var self = this,
       tables = [
         "player_data",
@@ -193,7 +193,7 @@ module.exports = MySQL = cls.Class.extend({
     });
   },
 
-  loadDatabases: function() {
+  loadDatabases() {
     var self = this;
 
     log.info("[MySQL] Creating database....");
@@ -216,7 +216,7 @@ module.exports = MySQL = cls.Class.extend({
     );
   },
 
-  queryData: function(type, database, data) {
+  queryData(type, database, data) {
     var self = this;
 
     self.connection.query(type + " " + database + " SET ?", data, function(
@@ -228,7 +228,7 @@ module.exports = MySQL = cls.Class.extend({
     });
   },
 
-  alter: function(database, column, type) {
+  alter(database, column, type) {
     var self = this;
 
     self.connection.query(
@@ -244,7 +244,7 @@ module.exports = MySQL = cls.Class.extend({
     );
   },
 
-  onSelected: function(callback) {
+  onSelected(callback) {
     this.selectDatabase_callback = callback;
   }
 });

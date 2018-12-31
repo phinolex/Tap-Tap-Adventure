@@ -7,7 +7,7 @@ var cls = require("../lib/class"),
   _ = require("underscore");
 
 module.exports = Quests = cls.Class.extend({
-  init: function(player) {
+  init(player) {
     var self = this;
 
     self.player = player;
@@ -17,7 +17,7 @@ module.exports = Quests = cls.Class.extend({
     self.load();
   },
 
-  load: function() {
+  load() {
     var self = this,
       questCount = 0;
 
@@ -38,7 +38,7 @@ module.exports = Quests = cls.Class.extend({
     });
   },
 
-  updateQuests: function(ids, stages) {
+  updateQuests(ids, stages) {
     var self = this;
 
     for (var id = 0; id < ids.length; id++)
@@ -46,7 +46,7 @@ module.exports = Quests = cls.Class.extend({
         self.quests[id].load(stages[id]);
   },
 
-  updateAchievements: function(ids, progress) {
+  updateAchievements(ids, progress) {
     var self = this;
 
     for (var id = 0; id < ids.length; id++)
@@ -56,7 +56,7 @@ module.exports = Quests = cls.Class.extend({
     if (self.readyCallback) self.readyCallback();
   },
 
-  getQuest: function(id) {
+  getQuest(id) {
     var self = this;
 
     if (id in self.quests) return self.quests[id];
@@ -64,7 +64,7 @@ module.exports = Quests = cls.Class.extend({
     return null;
   },
 
-  getQuests: function() {
+  getQuests() {
     var self = this,
       ids = "",
       stages = "";
@@ -81,7 +81,7 @@ module.exports = Quests = cls.Class.extend({
     };
   },
 
-  getAchievements: function() {
+  getAchievements() {
     var self = this,
       ids = "",
       progress = "";
@@ -98,7 +98,7 @@ module.exports = Quests = cls.Class.extend({
     };
   },
 
-  getData: function() {
+  getData() {
     var self = this,
       quests = [],
       achievements = [];
@@ -117,19 +117,19 @@ module.exports = Quests = cls.Class.extend({
     };
   },
 
-  forEachQuest: function(callback) {
+  forEachQuest(callback) {
     _.each(this.quests, function(quest) {
       callback(quest);
     });
   },
 
-  forEachAchievement: function(callback) {
+  forEachAchievement(callback) {
     _.each(this.achievements, function(achievement) {
       callback(achievement);
     });
   },
 
-  getQuestsCompleted: function() {
+  getQuestsCompleted() {
     var self = this,
       count = 0;
 
@@ -140,7 +140,7 @@ module.exports = Quests = cls.Class.extend({
     return count;
   },
 
-  getAchievementsCompleted: function() {
+  getAchievementsCompleted() {
     var self = this,
       count = 0;
 
@@ -151,15 +151,15 @@ module.exports = Quests = cls.Class.extend({
     return count;
   },
 
-  getQuestSize: function() {
+  getQuestSize() {
     return Object.keys(this.quests).length;
   },
 
-  getAchievementSize: function() {
+  getAchievementSize() {
     return Object.keys(this.achievements).length;
   },
 
-  getQuestByNPC: function(npc) {
+  getQuestByNPC(npc) {
     var self = this;
 
     /**
@@ -179,7 +179,7 @@ module.exports = Quests = cls.Class.extend({
     return null;
   },
 
-  getAchievementByNPC: function(npc) {
+  getAchievementByNPC(npc) {
     var self = this;
 
     for (var id in self.achievements)
@@ -193,7 +193,7 @@ module.exports = Quests = cls.Class.extend({
     return null;
   },
 
-  getAchievementByMob: function(mob) {
+  getAchievementByMob(mob) {
     var self = this;
 
     for (var id in self.achievements)
@@ -204,7 +204,7 @@ module.exports = Quests = cls.Class.extend({
     return null;
   },
 
-  isQuestMob: function(mob) {
+  isQuestMob(mob) {
     var self = this;
 
     for (var id in self.quests) {
@@ -216,7 +216,7 @@ module.exports = Quests = cls.Class.extend({
     }
   },
 
-  isAchievementMob: function(mob) {
+  isAchievementMob(mob) {
     var self = this;
 
     for (var id in self.achievements)
@@ -230,7 +230,7 @@ module.exports = Quests = cls.Class.extend({
     return false;
   },
 
-  isQuestNPC: function(npc) {
+  isQuestNPC(npc) {
     var self = this;
 
     for (var id in self.quests) {
@@ -242,7 +242,7 @@ module.exports = Quests = cls.Class.extend({
     }
   },
 
-  isAchievementNPC: function(npc) {
+  isAchievementNPC(npc) {
     var self = this;
 
     for (var id in self.achievements)
@@ -256,7 +256,7 @@ module.exports = Quests = cls.Class.extend({
     return false;
   },
 
-  onReady: function(callback) {
+  onReady(callback) {
     this.readyCallback = callback;
   }
 });

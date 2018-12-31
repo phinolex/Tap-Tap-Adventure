@@ -7,7 +7,7 @@ var cls = require("../../lib/class"),
   Items = require("../../util/items");
 
 module.exports = Entity = cls.Class.extend({
-  init: function(id, type, instance, x, y) {
+  init(id, type, instance, x, y) {
     var self = this;
 
     self.id = id;
@@ -26,11 +26,11 @@ module.exports = Entity = cls.Class.extend({
     self.recentGroups = [];
   },
 
-  getCombat: function() {
+  getCombat() {
     return null;
   },
 
-  getDistance: function(entity) {
+  getDistance(entity) {
     var self = this,
       x = Math.abs(self.x - entity.x),
       y = Math.abs(self.y - entity.y);
@@ -38,7 +38,7 @@ module.exports = Entity = cls.Class.extend({
     return x > y ? x : y;
   },
 
-  getCoordDistance: function(toX, toY) {
+  getCoordDistance(toX, toY) {
     var self = this,
       x = Math.abs(self.x - toX),
       y = Math.abs(self.y - toY);
@@ -46,7 +46,7 @@ module.exports = Entity = cls.Class.extend({
     return x > y ? x : y;
   },
 
-  isAdjacent: function(entity) {
+  isAdjacent(entity) {
     var self = this;
 
     if (!entity) return false;
@@ -54,13 +54,13 @@ module.exports = Entity = cls.Class.extend({
     return self.getDistance(entity) <= 1;
   },
 
-  isNonDiagonal: function(entity) {
+  isNonDiagonal(entity) {
     return (
       this.isAdjacent(entity) && !(entity.x !== this.x && entity.y !== this.y)
     );
   },
 
-  isNear: function(entity, distance) {
+  isNear(entity, distance) {
     var self = this,
       near = false;
 
@@ -72,31 +72,31 @@ module.exports = Entity = cls.Class.extend({
     return near;
   },
 
-  talk: function() {
+  talk() {
     log.info("Who is screwing around with the client?");
   },
 
-  drop: function(item) {
+  drop(item) {
     return new Messages.Drop(this, item);
   },
 
-  isPlayer: function() {
+  isPlayer() {
     return this.type === "player";
   },
 
-  isMob: function() {
+  isMob() {
     return this.type === "mob";
   },
 
-  isNPC: function() {
+  isNPC() {
     return this.type === "npc";
   },
 
-  isItem: function() {
+  isItem() {
     return this.type === "item";
   },
 
-  setPosition: function(x, y) {
+  setPosition(x, y) {
     var self = this;
 
     self.x = x;
@@ -105,22 +105,22 @@ module.exports = Entity = cls.Class.extend({
     if (self.setPositionCallback) self.setPositionCallback();
   },
 
-  hasSpecialAttack: function() {
+  hasSpecialAttack() {
     return false;
   },
 
-  updatePosition: function() {
+  updatePosition() {
     var self = this;
 
     self.oldX = self.x;
     self.oldY = self.y;
   },
 
-  onSetPosition: function(callback) {
+  onSetPosition(callback) {
     this.setPositionCallback = callback;
   },
 
-  getState: function() {
+  getState() {
     var self = this,
       string = self.isMob()
         ? Mobs.idToString(self.id)

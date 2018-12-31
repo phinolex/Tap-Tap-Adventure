@@ -2,7 +2,7 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init: function(intrfce) {
+    init(intrfce) {
       var self = this;
 
       self.interface = intrfce;
@@ -22,7 +22,7 @@ define(["jquery"], function($) {
       self.load();
     },
 
-    load: function() {
+    load() {
       var self = this,
         dropAccept = $("#dropAccept"),
         dropCancel = $("#dropcancel");
@@ -38,7 +38,7 @@ define(["jquery"], function($) {
       });
     },
 
-    loadDefaults: function(activeClass) {
+    loadDefaults(activeClass) {
       var self = this;
 
       self.activeClass = activeClass;
@@ -56,7 +56,7 @@ define(["jquery"], function($) {
       }
     },
 
-    add: function(button, misc) {
+    add(button, misc) {
       var self = this;
 
       self.body.find("ul").prepend($("<li></li>").append(button));
@@ -69,25 +69,25 @@ define(["jquery"], function($) {
       if (misc) self.miscButton = button;
     },
 
-    removeMisc: function() {
+    removeMisc() {
       var self = this;
 
       self.miscButton.remove();
       self.miscButton = null;
     },
 
-    reset: function() {
+    reset() {
       var self = this,
         buttons = self.getButtons();
 
       for (var i = 0; i < buttons.length; i++) $(buttons[i]).remove();
     },
 
-    show: function() {
+    show() {
       this.body.fadeIn("fast");
     },
 
-    showPlayerActions: function(player, mouseX, mouseY) {
+    showPlayerActions(player, mouseX, mouseY) {
       var self = this;
 
       if (!player) return;
@@ -111,15 +111,15 @@ define(["jquery"], function($) {
       });
     },
 
-    hide: function() {
+    hide() {
       this.body.fadeOut("slow");
     },
 
-    hidePlayerActions: function() {
+    hidePlayerActions() {
       this.pBody.fadeOut("fast");
     },
 
-    displayDrop: function(activeClass) {
+    displayDrop(activeClass) {
       var self = this;
 
       self.activeClass = activeClass;
@@ -130,7 +130,7 @@ define(["jquery"], function($) {
       self.dropInput.select();
     },
 
-    hideDrop: function() {
+    hideDrop() {
       var self = this;
 
       self.drop.fadeOut("slow");
@@ -139,19 +139,19 @@ define(["jquery"], function($) {
       self.dropInput.val("");
     },
 
-    getButtons: function() {
+    getButtons() {
       return this.body.find("ul").find("li");
     },
 
-    getGame: function() {
+    getGame() {
       return this.interface.game;
     },
 
-    getPlayer: function() {
+    getPlayer() {
       return this.interface.game.player;
     },
 
-    isVisible: function() {
+    isVisible() {
       return this.body.css("display") === "block";
     }
   });

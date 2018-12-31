@@ -1,6 +1,6 @@
 define(["jquery"], function($) {
   return Class.extend({
-    init: function(game, intrface) {
+    init(game, intrface) {
       var self = this;
 
       self.game = game;
@@ -29,7 +29,7 @@ define(["jquery"], function($) {
       });
     },
 
-    add: function(type, index) {
+    add(type, index) {
       var self = this,
         image = self.getSlot(index).find("#inventoryImage" + index);
 
@@ -63,7 +63,7 @@ define(["jquery"], function($) {
         .text("");
     },
 
-    moveBack: function(type, index) {
+    moveBack(type, index) {
       var self = this,
         image = self.getSlot(index).find("#inventoryImage" + index),
         itemCount = self.getSlot(index).find("#inventoryItemCount" + index),
@@ -98,7 +98,7 @@ define(["jquery"], function($) {
       }
     },
 
-    load: function() {
+    load() {
       var self = this,
         list = self.getSlots(),
         inventoryList = self.interface.bank.getInventoryList();
@@ -125,40 +125,40 @@ define(["jquery"], function($) {
       });
     },
 
-    enchant: function() {
+    enchant() {
       this.game.socket.send(Packets.Enchant, [Packets.EnchantOpcode.Enchant]);
     },
 
-    select: function(event) {
+    select(event) {
       this.game.socket.send(Packets.Enchant, [
         Packets.EnchantOpcode.Select,
         event.currentTarget.id.substring(17)
       ]);
     },
 
-    remove: function(type) {
+    remove(type) {
       this.game.socket.send(Packets.Enchant, [
         Packets.EnchantOpcode.Remove,
         type
       ]);
     },
 
-    getInventorySize: function() {
+    getInventorySize() {
       return this.interface.inventory.getSize();
     },
 
-    getItemSlot: function(index) {
+    getItemSlot(index) {
       return this.interface.inventory.container.slots[index];
     },
 
-    display: function() {
+    display() {
       var self = this;
 
       self.body.fadeIn("fast");
       self.load();
     },
 
-    hide: function() {
+    hide() {
       var self = this;
 
       self.selectedItem.css("background-image", "");
@@ -167,19 +167,19 @@ define(["jquery"], function($) {
       self.body.fadeOut("fast");
     },
 
-    hasImage: function(image) {
+    hasImage(image) {
       return image.css("background-image") !== "none";
     },
 
-    getSlot: function(index) {
+    getSlot(index) {
       return $(this.getSlots().find("li")[index]);
     },
 
-    getSlots: function() {
+    getSlots() {
       return this.enchantSlots.find("ul");
     },
 
-    isVisible: function() {
+    isVisible() {
       return this.body.css("display") === "block";
     }
   });

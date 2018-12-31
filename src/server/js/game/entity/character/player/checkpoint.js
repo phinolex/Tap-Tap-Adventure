@@ -1,7 +1,7 @@
 var cls = require("../../../../lib/class");
 
 module.exports = Checkpoint = cls.Class.extend({
-  init: function(id, player) {
+  init(id, player) {
     var self = this;
 
     self.id = id;

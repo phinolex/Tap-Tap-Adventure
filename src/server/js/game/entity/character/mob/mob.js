@@ -5,7 +5,7 @@ var Character = require("../character"),
   Items = require("../../../../util/items");
 
 module.exports = Mob = Character.extend({
-  init: function(id, instance, x, y) {
+  init(id, instance, x, y) {
     var self = this;
 
     self._super(id, "mob", instance, x, y);
@@ -36,7 +36,7 @@ module.exports = Mob = Character.extend({
     self.projectileName = self.getProjectileName();
   },
 
-  refresh: function() {
+  refresh() {
     var self = this;
 
     self.hitPoints = self.data.hitPoints;
@@ -45,7 +45,7 @@ module.exports = Mob = Character.extend({
     if (self.refreshCallback) self.refreshCallback();
   },
 
-  getDrop: function() {
+  getDrop() {
     var self = this;
 
     if (!self.drops) return null;
@@ -81,13 +81,13 @@ module.exports = Mob = Character.extend({
     return null;
   },
 
-  getProjectileName: function() {
+  getProjectileName() {
     return this.data.projectileName
       ? this.data.projectileName
       : "projectile-pinearrow";
   },
 
-  canAggro: function(player) {
+  canAggro(player) {
     var self = this;
 
     if (
@@ -100,7 +100,7 @@ module.exports = Mob = Character.extend({
     return self.isNear(player, self.aggroRange);
   },
 
-  destroy: function() {
+  destroy() {
     var self = this;
 
     self.dead = true;
@@ -111,7 +111,7 @@ module.exports = Mob = Character.extend({
     if (self.area) self.area.removeEntity(self);
   },
 
-  return: function() {
+  return() {
     var self = this;
 
     self.clearTarget();
@@ -119,23 +119,23 @@ module.exports = Mob = Character.extend({
     self.move(self.x, self.y);
   },
 
-  isRanged: function() {
+  isRanged() {
     return this.attackRange > 1;
   },
 
-  distanceToSpawn: function() {
+  distanceToSpawn() {
     return this.getCoordDistance(this.spawnLocation[0], this.spawnLocation[1]);
   },
 
-  isAtSpawn: function() {
+  isAtSpawn() {
     return this.x === this.spawnLocation[0] && this.y === this.spawnLocation[1];
   },
 
-  isOutsideSpawn: function() {
+  isOutsideSpawn() {
     return this.distanceToSpawn() > this.spawnDistance;
   },
 
-  addToChestArea: function(chestAreas) {
+  addToChestArea(chestAreas) {
     var self = this,
       area = _.find(chestAreas, function(area) {
         return area.contains(self.x, self.y);
@@ -144,7 +144,7 @@ module.exports = Mob = Character.extend({
     if (area) area.addEntity(self);
   },
 
-  respawn: function() {
+  respawn() {
     var self = this;
 
     /**
@@ -160,7 +160,7 @@ module.exports = Mob = Character.extend({
     }, self.respawnDelay);
   },
 
-  getState: function() {
+  getState() {
     var self = this,
       base = self._super();
 
@@ -172,33 +172,33 @@ module.exports = Mob = Character.extend({
     return base;
   },
 
-  resetPosition: function() {
+  resetPosition() {
     var self = this;
 
     self.setPosition(self.spawnLocation[0], self.spawnLocation[1]);
   },
 
-  onRespawn: function(callback) {
+  onRespawn(callback) {
     this.respawnCallback = callback;
   },
 
-  onMove: function(callback) {
+  onMove(callback) {
     this.moveCallback = callback;
   },
 
-  onReturn: function(callback) {
+  onReturn(callback) {
     this.returnCallback = callback;
   },
 
-  onRefresh: function(callback) {
+  onRefresh(callback) {
     this.refreshCallback = callback;
   },
 
-  onDeath: function(callback) {
+  onDeath(callback) {
     this.deathCallback = callback;
   },
 
-  move: function(x, y) {
+  move(x, y) {
     var self = this;
 
     self.setPosition(x, y);

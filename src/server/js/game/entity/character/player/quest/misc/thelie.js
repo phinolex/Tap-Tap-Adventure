@@ -4,7 +4,7 @@ var Quest = require("../quest"),
   Utils = require("../../../../../../util/utils");
 
 module.exports = TheLie = Quest.extend({
-  init: function(player, data) {
+  init(player, data) {
     var self = this;
 
     self.player = player;
@@ -13,14 +13,14 @@ module.exports = TheLie = Quest.extend({
     self._super(data.id, data.name, data.description);
   },
 
-  load: function(stage) {
+  load(stage) {
     var self = this;
 
     if (stage) self.update();
     else self.stage = stage;
   },
 
-  update: function() {
+  update() {
     this.player.save();
   }
 });

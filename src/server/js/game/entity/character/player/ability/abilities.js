@@ -3,7 +3,7 @@ var cls = require("../../../../../lib/class"),
   _ = require("underscore");
 
 module.exports = Abilities = cls.Class.extend({
-  init: function(player) {
+  init(player) {
     var self = this;
 
     self.player = player;
@@ -14,11 +14,11 @@ module.exports = Abilities = cls.Class.extend({
     self.shortcutSize = 5;
   },
 
-  addAbility: function(ability) {
+  addAbility(ability) {
     this.abilities[ability.name] = ability;
   },
 
-  addShortcut: function(ability) {
+  addShortcut(ability) {
     var self = this;
 
     if (self.shortcutSize >= 5) return;
@@ -26,7 +26,7 @@ module.exports = Abilities = cls.Class.extend({
     self.shortcuts.push(ability.name);
   },
 
-  removeAbility: function(ability) {
+  removeAbility(ability) {
     var self = this;
 
     if (self.isShortcut(ability))
@@ -35,11 +35,11 @@ module.exports = Abilities = cls.Class.extend({
     delete self.abilities[ability.name];
   },
 
-  removeShortcut: function(index) {
+  removeShortcut(index) {
     if (index > -1) this.shortcuts.splice(index, 1);
   },
 
-  hasAbility: function(ability) {
+  hasAbility(ability) {
     _.each(this.abilities, function(uAbility) {
       if (uAbility.name === ability.name) return true;
     });
@@ -47,11 +47,11 @@ module.exports = Abilities = cls.Class.extend({
     return false;
   },
 
-  isShortcut: function(ability) {
+  isShortcut(ability) {
     return this.shortcuts.indexOf(ability.name) > -1;
   },
 
-  getArray: function() {
+  getArray() {
     var self = this,
       abilities = "",
       abilityLevels = "",

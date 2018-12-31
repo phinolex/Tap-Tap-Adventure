@@ -1,6 +1,6 @@
 define(["../entity"], function(Entity) {
   return Entity.extend({
-    init: function(id, kind, owner) {
+    init(id, kind, owner) {
       var self = this;
 
       self._super(id, kind);
@@ -25,23 +25,23 @@ define(["../entity"], function(Entity) {
       self.angle = 0;
     },
 
-    getId: function() {
+    getId() {
       return this.id;
     },
 
-    impact: function() {
+    impact() {
       if (this.impactCallback) this.impactCallback();
     },
 
-    setSprite: function(sprite) {
+    setSprite(sprite) {
       this._super(sprite);
     },
 
-    setAnimation: function(name, speed, count, onEndCount) {
+    setAnimation(name, speed, count, onEndCount) {
       this._super(name, speed, count, onEndCount);
     },
 
-    setStart: function(x, y) {
+    setStart(x, y) {
       var self = this;
 
       self.setGridPosition(Math.floor(x / 16), Math.floor(y / 16));
@@ -50,7 +50,7 @@ define(["../entity"], function(Entity) {
       self.startY = y;
     },
 
-    setDestination: function(x, y) {
+    setDestination(x, y) {
       var self = this;
 
       self.static = true;
@@ -61,7 +61,7 @@ define(["../entity"], function(Entity) {
       self.updateAngle();
     },
 
-    setTarget: function(target) {
+    setTarget(target) {
       var self = this;
 
       if (!target) return;
@@ -83,30 +83,30 @@ define(["../entity"], function(Entity) {
       });
     },
 
-    getSpeed: function() {
+    getSpeed() {
       var self = this;
 
       return 1;
     },
 
-    updateTarget: function(x, y) {
+    updateTarget(x, y) {
       var self = this;
 
       self.destX = x;
       self.destY = y;
     },
 
-    hasPath: function() {
+    hasPath() {
       return false;
     },
 
-    updateAngle: function() {
+    updateAngle() {
       this.angle =
         Math.atan2(this.destY - this.y, this.destX - this.x) * (180 / Math.PI) -
         90;
     },
 
-    onImpact: function(callback) {
+    onImpact(callback) {
       this.impactCallback = callback;
     }
   });

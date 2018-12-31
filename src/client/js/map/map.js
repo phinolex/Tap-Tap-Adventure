@@ -2,7 +2,7 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -22,7 +22,7 @@ define(["jquery"], function($) {
       self.ready();
     },
 
-    ready: function() {
+    ready() {
       var self = this,
         rC = function() {
           if (self.readyCallback) self.readyCallback();
@@ -35,7 +35,7 @@ define(["jquery"], function($) {
         }, 50);
     },
 
-    load: function() {
+    load() {
       var self = this;
 
       if (self.supportsWorker) {
@@ -66,7 +66,7 @@ define(["jquery"], function($) {
       }
     },
 
-    loadTilesets: function() {
+    loadTilesets() {
       var self = this,
         scale = self.renderer.getScale(),
         isBigScale = scale === 3;
@@ -87,7 +87,7 @@ define(["jquery"], function($) {
       self.tilesetsLoaded = true;
     },
 
-    updateTileset: function() {
+    updateTileset() {
       var self = this,
         scale = self.renderer.getDrawingScale();
 
@@ -97,7 +97,7 @@ define(["jquery"], function($) {
       self.renderer.setTileset(self.tilesets[scale - 2]);
     },
 
-    loadTileset: function(path) {
+    loadTileset(path) {
       var self = this,
         tileset = new Image();
 
@@ -114,7 +114,7 @@ define(["jquery"], function($) {
       return tileset;
     },
 
-    parseMap: function(map) {
+    parseMap(map) {
       var self = this;
 
       self.width = map.width;
@@ -127,7 +127,7 @@ define(["jquery"], function($) {
       self.animated = map.animated;
     },
 
-    loadCollisions: function() {
+    loadCollisions() {
       var self = this;
 
       self.grid = [];
@@ -149,7 +149,7 @@ define(["jquery"], function($) {
       });
     },
 
-    indexToGridPosition: function(index) {
+    indexToGridPosition(index) {
       var self = this;
 
       index -= 1;
@@ -163,11 +163,11 @@ define(["jquery"], function($) {
       };
     },
 
-    gridPositionToIndex: function(x, y) {
+    gridPositionToIndex(x, y) {
       return y * this.width + x + 1;
     },
 
-    isColliding: function(x, y) {
+    isColliding(x, y) {
       var self = this;
 
       if (self.isOutOfBounds(x, y) || !self.grid) return false;
@@ -175,15 +175,15 @@ define(["jquery"], function($) {
       return self.grid[y][x] === 1;
     },
 
-    isHighTile: function(id) {
+    isHighTile(id) {
       return this.high.indexOf(id + 1) >= 0;
     },
 
-    isAnimatedTile: function(id) {
+    isAnimatedTile(id) {
       return id + 1 in this.animated;
     },
 
-    isOutOfBounds: function(x, y) {
+    isOutOfBounds(x, y) {
       return (
         isInt(x) &&
         isInt(y) &&
@@ -191,23 +191,23 @@ define(["jquery"], function($) {
       );
     },
 
-    getX: function(index, width) {
+    getX(index, width) {
       if (index === 0) return 0;
 
       return index % width === 0 ? width - 1 : (index % width) - 1;
     },
 
-    getTileAnimationLength: function(id) {
+    getTileAnimationLength(id) {
       return this.animated[id + 1].l;
     },
 
-    getTileAnimationDelay: function(id) {
+    getTileAnimationDelay(id) {
       var properties = this.animated[id + 1];
 
       return properties.d ? properties.d : 150;
     },
 
-    onReady: function(callback) {
+    onReady(callback) {
       this.readyCallback = callback;
     }
   });

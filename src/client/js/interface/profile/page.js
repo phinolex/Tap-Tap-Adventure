@@ -2,7 +2,7 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init: function(element) {
+    init(element) {
       var self = this;
 
       self.body = $(element);
@@ -10,31 +10,31 @@ define(["jquery"], function($) {
       self.loaded = false;
     },
 
-    show: function() {
+    show() {
       this.body.fadeIn("slow");
     },
 
-    hide: function() {
+    hide() {
       this.body.fadeOut("slow");
     },
 
-    isVisible: function() {
+    isVisible() {
       return this.body.css("display") === "block";
     },
 
-    load: function() {
+    load() {
       log.info("Uninitialized.");
     },
 
-    resize: function() {
+    resize() {
       log.info("Uninitialized.");
     },
 
-    update: function() {
+    update() {
       log.info("Uninitialized.");
     },
 
-    getImageFormat: function(scale, name) {
+    getImageFormat(scale, name) {
       if (!name || name === "null") return "";
 
       return 'url("img/' + scale + "/item-" + name + '.png")';

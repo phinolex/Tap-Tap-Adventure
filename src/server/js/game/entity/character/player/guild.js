@@ -3,7 +3,7 @@ var cls = require("../../../../lib/class"),
   Guilds = require("../../../../../data/guilds.json");
 
 module.exports = Guild = cls.Class.extend({
-  init: function(name, leader) {
+  init(name, leader) {
     var self = this;
 
     self.name = name;
@@ -14,9 +14,9 @@ module.exports = Guild = cls.Class.extend({
     self.connected = false;
   },
 
-  create: function() {},
+  create() {},
 
-  add: function(player) {
+  add(player) {
     var self = this;
 
     self.members.push(player);
@@ -24,7 +24,7 @@ module.exports = Guild = cls.Class.extend({
     self.save();
   },
 
-  save: function() {
+  save() {
     var self = this;
 
     log.info(Guilds[self.leader.username]);

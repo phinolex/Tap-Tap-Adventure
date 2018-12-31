@@ -2,7 +2,7 @@
 
 define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -11,7 +11,7 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
       self.destroyQueue = new Queue();
     },
 
-    create: function(type, data, x, y) {
+    create(type, data, x, y) {
       var self = this;
 
       switch (type) {
@@ -74,11 +74,11 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
       }
     },
 
-    getCount: function() {
+    getCount() {
       return Object.keys(this.infos).length;
     },
 
-    addInfo: function(info) {
+    addInfo(info) {
       var self = this;
 
       self.infos[info.id] = info;
@@ -88,7 +88,7 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
       });
     },
 
-    update: function(time) {
+    update(time) {
       var self = this;
 
       self.forEachInfo(function(info) {
@@ -102,13 +102,13 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
       self.destroyQueue.reset();
     },
 
-    forEachInfo: function(callback) {
+    forEachInfo(callback) {
       _.each(this.infos, function(info) {
         callback(info);
       });
     },
 
-    generateId: function(time, info, x, y) {
+    generateId(time, info, x, y) {
       return time + "" + Math.abs(info) + "" + x + "" + y;
     }
   });

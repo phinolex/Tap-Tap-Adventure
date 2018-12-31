@@ -1,6 +1,6 @@
 define(["../character"], function(Character) {
   return Character.extend({
-    init: function(id, kind) {
+    init(id, kind) {
       var self = this;
 
       self._super(id, kind);
@@ -10,7 +10,7 @@ define(["../character"], function(Character) {
       self.type = "npc";
     },
 
-    talk: function(messages) {
+    talk(messages) {
       var self = this,
         count = messages.length,
         message;
@@ -24,19 +24,19 @@ define(["../character"], function(Character) {
       return message;
     },
 
-    idle: function() {
+    idle() {
       this._super();
     },
 
-    setSprite: function(sprite) {
+    setSprite(sprite) {
       this._super(sprite);
     },
 
-    setName: function(name) {
+    setName(name) {
       this._super(name);
     },
 
-    setGridPosition: function(x, y) {
+    setGridPosition(x, y) {
       this._super(x, y);
     }
   });

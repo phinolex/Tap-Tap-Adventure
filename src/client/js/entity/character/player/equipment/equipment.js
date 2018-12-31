@@ -7,7 +7,7 @@ define(function() {
    */
 
   return Class.extend({
-    init: function(name, string, count, ability, abilityLevel) {
+    init(name, string, count, ability, abilityLevel) {
       var self = this;
 
       self.name = name;
@@ -17,31 +17,31 @@ define(function() {
       self.abilityLevel = abilityLevel;
     },
 
-    exists: function() {
+    exists() {
       return this.name !== null && this.name !== "null";
     },
 
-    getName: function() {
+    getName() {
       return this.name;
     },
 
-    getString: function() {
+    getString() {
       return this.string;
     },
 
-    getCount: function() {
+    getCount() {
       return this.count;
     },
 
-    getAbility: function() {
+    getAbility() {
       return this.ability;
     },
 
-    getAbilityLevel: function() {
+    getAbilityLevel() {
       return this.abilityLevel;
     },
 
-    update: function(name, string, count, ability, abilityLevel) {
+    update(name, string, count, ability, abilityLevel) {
       var self = this;
 
       self.name = name;

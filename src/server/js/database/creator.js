@@ -3,13 +3,13 @@
 var cls = require("../lib/class");
 
 module.exports = Creator = cls.Class.extend({
-  init: function(mysql) {
+  init(mysql) {
     var self = this;
 
     self.mysql = mysql;
   },
 
-  tableNotExists: function(tableName, ifNotExists) {
+  tableNotExists(tableName, ifNotExists) {
     var self = this,
       exists = 0;
 
@@ -29,7 +29,7 @@ module.exports = Creator = cls.Class.extend({
     );
   },
 
-  createTables: function() {
+  createTables() {
     var self = this;
 
     function handleError(tableName) {
@@ -156,7 +156,7 @@ module.exports = Creator = cls.Class.extend({
     });
   },
 
-  save: function(player) {
+  save(player) {
     var self = this,
       queryKey = player.isNew ? "INSERT INTO" : "UPDATE IGNORE",
       playerData = self.formatData(self.getPlayerData(player), "data"),
@@ -203,7 +203,7 @@ module.exports = Creator = cls.Class.extend({
     );
   },
 
-  formatData: function(data, type) {
+  formatData(data, type) {
     var formattedData;
 
     switch (type) {
@@ -247,7 +247,7 @@ module.exports = Creator = cls.Class.extend({
     return formattedData;
   },
 
-  getPlayerData: function(player) {
+  getPlayerData(player) {
     return {
       username: player.username,
       email: player.email ? player.email : "null",

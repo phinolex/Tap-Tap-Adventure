@@ -4,13 +4,13 @@ var cls = require("../lib/class"),
   Packets = require("../network/packets");
 
 module.exports = Shops = cls.Class.extend({
-  init: function(world) {
+  init(world) {
     var self = this;
 
     self.world = world;
   },
 
-  open: function(player, shopId) {
+  open(player, shopId) {
     var self = this;
 
     player.send(
@@ -22,18 +22,18 @@ module.exports = Shops = cls.Class.extend({
     );
   },
 
-  buy: function(player, shopId, itemId, count) {
+  buy(player, shopId, itemId, count) {
     var self = this,
       cost = Shops.getCost(shopId, itemId, count);
 
     self.refresh();
   },
 
-  refresh: function() {
+  refresh() {
     var self = this;
   },
 
-  getShopData: function(id) {
+  getShopData(id) {
     var self = this;
 
     if (!Shops.isShopNPC(id)) return;

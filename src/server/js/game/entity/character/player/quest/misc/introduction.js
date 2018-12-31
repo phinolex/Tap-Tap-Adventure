@@ -4,7 +4,7 @@ var Quest = require("../quest"),
   Utils = require("../../../../../../util/utils");
 
 module.exports = Introduction = Quest.extend({
-  init: function(player, data) {
+  init(player, data) {
     var self = this;
 
     self.player = player;
@@ -15,7 +15,7 @@ module.exports = Introduction = Quest.extend({
     self._super(player, data);
   },
 
-  load: function(stage) {
+  load(stage) {
     var self = this;
 
     if (!self.player.inTutorial()) {
@@ -30,7 +30,7 @@ module.exports = Introduction = Quest.extend({
     self.loadCallbacks();
   },
 
-  loadCallbacks: function() {
+  loadCallbacks() {
     var self = this;
 
     if (self.stage >= 9999) return;
@@ -78,7 +78,7 @@ module.exports = Introduction = Quest.extend({
     });
   },
 
-  progress: function(type) {
+  progress(type) {
     var self = this,
       task = self.data.task[self.stage];
 
@@ -118,15 +118,15 @@ module.exports = Introduction = Quest.extend({
     );
   },
 
-  isFinished: function() {
+  isFinished() {
     return this._super() || !this.player.inTutorial();
   },
 
-  toggleChat: function() {
+  toggleChat() {
     this.player.canTalk = !this.player.canTalk;
   },
 
-  setStage: function(stage) {
+  setStage(stage) {
     var self = this;
 
     self._super(stage);
@@ -134,14 +134,14 @@ module.exports = Introduction = Quest.extend({
     self.clearPointers();
   },
 
-  finish: function() {
+  finish() {
     var self = this;
 
     self.toggleChat();
     self._super();
   },
 
-  verifyDoor: function(destX, destY) {
+  verifyDoor(destX, destY) {
     var self = this,
       doorData = self.data.doors[self.stage];
 
@@ -150,7 +150,7 @@ module.exports = Introduction = Quest.extend({
     return doorData[0] === destX && doorData[1] === destY;
   },
 
-  onFinishedLoading: function(callback) {
+  onFinishedLoading(callback) {
     this.finishedCallback = callback;
   }
 });

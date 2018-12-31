@@ -2,7 +2,7 @@ var Entity = require("../entity"),
   Utils = require("../../../util/utils");
 
 module.exports = Chest = Entity.extend({
-  init: function(id, instance, x, y) {
+  init(id, instance, x, y) {
     var self = this;
 
     self._super(id, "chest", instance, x, y);
@@ -13,13 +13,13 @@ module.exports = Chest = Entity.extend({
     self.items = [];
   },
 
-  openChest: function() {
+  openChest() {
     var self = this;
 
     if (self.openCallback) self.openCallback();
   },
 
-  respawn: function() {
+  respawn() {
     var self = this;
 
     setTimeout(function() {
@@ -27,7 +27,7 @@ module.exports = Chest = Entity.extend({
     }, self.respawnDuration);
   },
 
-  getItem: function() {
+  getItem() {
     var self = this,
       random = Utils.randomInt(0, self.items.length - 1),
       item = self.items[random];
@@ -37,11 +37,11 @@ module.exports = Chest = Entity.extend({
     return item;
   },
 
-  onOpen: function(callback) {
+  onOpen(callback) {
     this.openCallback = callback;
   },
 
-  onRespawn: function(callback) {
+  onRespawn(callback) {
     this.respawnCallback = callback;
   }
 });

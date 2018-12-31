@@ -9,7 +9,7 @@ module.exports = Achievement = cls.Class.extend({
    * TODO: Change the conditionals to use Modules to clarify what is done where.
    */
 
-  init: function(id, player) {
+  init(id, player) {
     var self = this;
 
     self.id = id;
@@ -25,7 +25,7 @@ module.exports = Achievement = cls.Class.extend({
     self.discovered = false;
   },
 
-  step: function() {
+  step() {
     var self = this;
 
     if (self.isThreshold()) return;
@@ -45,7 +45,7 @@ module.exports = Achievement = cls.Class.extend({
     );
   },
 
-  converse: function(npc) {
+  converse(npc) {
     var self = this;
 
     if (self.isThreshold() || self.hasItem()) self.finish(npc);
@@ -64,7 +64,7 @@ module.exports = Achievement = cls.Class.extend({
     }
   },
 
-  finish: function(npc) {
+  finish(npc) {
     var self = this,
       rewardType = self.data.rewardType;
 
@@ -104,15 +104,15 @@ module.exports = Achievement = cls.Class.extend({
     if (npc && self.player.npcTalkCallback) self.player.npcTalkCallback(npc);
   },
 
-  update: function() {
+  update() {
     this.player.save();
   },
 
-  isThreshold: function() {
+  isThreshold() {
     return this.progress >= this.data.count;
   },
 
-  hasItem: function() {
+  hasItem() {
     var self = this;
 
     if (
@@ -127,19 +127,19 @@ module.exports = Achievement = cls.Class.extend({
     return false;
   },
 
-  setProgress: function(progress) {
+  setProgress(progress) {
     this.progress = progress;
   },
 
-  isStarted: function() {
+  isStarted() {
     return this.progress > 0;
   },
 
-  isFinished: function() {
+  isFinished() {
     return this.progress > 9998;
   },
 
-  getInfo: function() {
+  getInfo() {
     return {
       id: this.id,
       name: this.name,

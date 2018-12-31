@@ -1,6 +1,6 @@
 define(["jquery"], function($) {
   return Class.extend({
-    init: function(input) {
+    init(input) {
       var self = this;
 
       self.input = input;
@@ -14,7 +14,7 @@ define(["jquery"], function($) {
       self.health = self.attackInfo.find(".health");
     },
 
-    update: function(entity) {
+    update(entity) {
       var self = this;
 
       if (!self.validEntity(entity)) {
@@ -65,7 +65,7 @@ define(["jquery"], function($) {
       });
     },
 
-    validEntity: function(entity) {
+    validEntity(entity) {
       return (
         entity &&
         entity.id !== this.input.getPlayer().id &&
@@ -73,34 +73,34 @@ define(["jquery"], function($) {
       );
     },
 
-    clean: function() {
+    clean() {
       var self = this;
 
       self.details.html("");
       self.hovering = null;
     },
 
-    hasHealth: function() {
+    hasHealth() {
       return this.hovering.type === "mob" || this.hovering.type === "player";
     },
 
-    display: function() {
+    display() {
       this.attackInfo.fadeIn("fast");
     },
 
-    hide: function() {
+    hide() {
       this.attackInfo.fadeOut("fast");
     },
 
-    isVisible: function() {
+    isVisible() {
       return this.attackInfo.css("display") === "block";
     },
 
-    getGame: function() {
+    getGame() {
       return this.input.game;
     },
 
-    onUpdate: function(callback) {
+    onUpdate(callback) {
       this.updateCallback = callback;
     }
   });

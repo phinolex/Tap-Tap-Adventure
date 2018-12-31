@@ -3,13 +3,13 @@
 var cls = require("../lib/class");
 
 module.exports = Loader = cls.Class.extend({
-  init: function(mysql) {
+  init(mysql) {
     var self = this;
 
     self.mysql = mysql;
   },
 
-  getInventory: function(player, callback) {
+  getInventory(player, callback) {
     var self = this;
 
     self.mysql.connection.query(
@@ -33,7 +33,7 @@ module.exports = Loader = cls.Class.extend({
     );
   },
 
-  getBank: function(player, callback) {
+  getBank(player, callback) {
     var self = this;
 
     self.mysql.connection.query(
@@ -57,7 +57,7 @@ module.exports = Loader = cls.Class.extend({
     );
   },
 
-  getQuests: function(player, callback) {
+  getQuests(player, callback) {
     var self = this;
 
     self.mysql.connection.query(
@@ -76,7 +76,7 @@ module.exports = Loader = cls.Class.extend({
     );
   },
 
-  getAchievements: function(player, callback) {
+  getAchievements(player, callback) {
     var self = this;
 
     self.mysql.connection.query(

@@ -1,7 +1,7 @@
 var Entity = require("../entity");
 
 module.exports = NPC = Entity.extend({
-  init: function(id, instance, x, y) {
+  init(id, instance, x, y) {
     var self = this;
 
     self._super(id, "npc", instance, x, y);
@@ -9,7 +9,7 @@ module.exports = NPC = Entity.extend({
     self.talkIndex = 0;
   },
 
-  talk: function(messages) {
+  talk(messages) {
     var self = this;
 
     if (self.talkIndex > messages.length) self.talkIndex = 0;

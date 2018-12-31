@@ -7,7 +7,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
   Overlay
 ) {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -43,7 +43,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       self.load();
     },
 
-    load: function() {
+    load() {
       var self = this;
 
       /**
@@ -58,7 +58,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       self.overlay = new Overlay(self);
     },
 
-    loadCursors: function() {
+    loadCursors() {
       var self = this;
 
       self.cursors["hand"] = self.game.getSprite("hand");
@@ -76,7 +76,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       log.info("Loaded Cursors!");
     },
 
-    handle: function(inputType, data) {
+    handle(inputType, data) {
       var self = this;
 
       switch (inputType) {
@@ -128,7 +128,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       }
     },
 
-    keyUp: function(key) {
+    keyUp(key) {
       var self = this,
         player = self.getPlayer();
 
@@ -157,14 +157,14 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       player.disableAction = false;
     },
 
-    keyMove: function(position) {
+    keyMove(position) {
       var self = this,
         player = self.getPlayer();
 
       if (!player.hasPath()) self.click(position);
     },
 
-    click: function(position) {
+    click(position) {
       var self = this,
         player = self.getPlayer();
 
@@ -238,7 +238,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       if (!self.game.audio.song && Detect.isSafari()) self.game.audio.update();
     },
 
-    updateCursor: function() {
+    updateCursor() {
       var self = this;
 
       if (!self.cursorVisible) return;
@@ -249,7 +249,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
         self.targetColour = self.newTargetColour;
     },
 
-    moveCursor: function() {
+    moveCursor() {
       var self = this;
 
       if (!self.renderer || self.renderer.mobile || !self.renderer.camera)
@@ -298,14 +298,14 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       }
     },
 
-    setPosition: function(x, y) {
+    setPosition(x, y) {
       var self = this;
 
       self.selectedX = x;
       self.selectedY = y;
     },
 
-    setCoords: function(event) {
+    setCoords(event) {
       var self = this,
         offset = self.app.canvas.offset(),
         width = self.renderer.background.width,
@@ -325,32 +325,32 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       else if (self.mouse.y <= 0) self.mouse.y = 0;
     },
 
-    setCursor: function(cursor) {
+    setCursor(cursor) {
       var self = this;
 
       if (cursor) self.newCursor = cursor;
       else log.error("Cursor: " + cursor + " could not be found.");
     },
 
-    setAttackTarget: function() {
+    setAttackTarget() {
       var self = this;
 
       self.targetAnimation.setRow(1);
       self.mobileTargetColour = "rgb(255, 51, 0)";
     },
 
-    setPassiveTarget: function() {
+    setPassiveTarget() {
       var self = this;
 
       self.targetAnimation.setRow(0);
       self.mobileTargetColour = "rgb(51, 255, 0)";
     },
 
-    getAttackCursor: function() {
+    getAttackCursor() {
       return this.cursors[this.getPlayer().isRanged() ? "bow" : "sword"];
     },
 
-    getCoords: function() {
+    getCoords() {
       var self = this;
 
       if (!self.renderer || !self.renderer.camera) return;
@@ -367,7 +367,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       };
     },
 
-    getTargetData: function() {
+    getTargetData() {
       var self = this,
         frame = self.targetAnimation.currentFrame,
         scale = self.renderer.getDrawingScale(),
@@ -388,7 +388,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       });
     },
 
-    isTargetable: function(entity) {
+    isTargetable(entity) {
       return (
         this.isAttackable(entity) ||
         entity.type === "npc" ||
@@ -396,18 +396,18 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
       );
     },
 
-    isAttackable: function(entity) {
+    isAttackable(entity) {
       return (
         entity.type === "mob" ||
         (entity.type === "player" && entity.pvp && this.game.pvp)
       );
     },
 
-    getPlayer: function() {
+    getPlayer() {
       return this.game.player;
     },
 
-    getActions: function() {
+    getActions() {
       return this.game.interface.actions;
     }
   });

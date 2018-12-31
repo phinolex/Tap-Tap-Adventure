@@ -4,7 +4,7 @@ var cls = require("../../lib/class"),
   _ = require("underscore");
 
 module.exports = ChestAreas = cls.Class.extend({
-  init: function(world) {
+  init(world) {
     var self = this;
 
     self.world = world;
@@ -14,7 +14,7 @@ module.exports = ChestAreas = cls.Class.extend({
     self.load();
   },
 
-  load: function() {
+  load() {
     var self = this;
 
     _.each(map.chestAreas, function(m) {
@@ -39,7 +39,7 @@ module.exports = ChestAreas = cls.Class.extend({
     log.info("Loaded " + self.chestAreas.length + " chest areas.");
   },
 
-  standardize: function() {
+  standardize() {
     var self = this;
 
     _.each(self.chestAreas, function(chestArea) {
@@ -47,7 +47,7 @@ module.exports = ChestAreas = cls.Class.extend({
     });
   },
 
-  spawnChest: function(chestArea) {
+  spawnChest(chestArea) {
     var self = this;
 
     /**
@@ -62,7 +62,7 @@ module.exports = ChestAreas = cls.Class.extend({
     );
   },
 
-  removeChest: function(chestArea) {
+  removeChest(chestArea) {
     var self = this;
 
     if (!chestArea.chest) return;

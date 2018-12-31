@@ -6,7 +6,7 @@ var cls = require("../../lib/class"),
   map = require("../../../data/map/world_server.json");
 
 module.exports = PVPAreas = cls.Class.extend({
-  init: function() {
+  constructor() {
     var self = this;
 
     self.pvpAreas = [];
@@ -14,7 +14,7 @@ module.exports = PVPAreas = cls.Class.extend({
     self.load();
   },
 
-  load: function() {
+  load() {
     var self = this,
       list = map.pvpAreas;
 

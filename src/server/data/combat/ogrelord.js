@@ -6,7 +6,7 @@ var Combat = require("../../js/game/entity/character/combat/combat"),
   _ = require("underscore");
 
 module.exports = OgreLord = Combat.extend({
-  init: function(character) {
+  init(character) {
     var self = this;
 
     self._super(character);
@@ -33,7 +33,7 @@ module.exports = OgreLord = Combat.extend({
     });
   },
 
-  load: function() {
+  load() {
     var self = this;
 
     self.talkingInterval = setInterval(function() {
@@ -47,7 +47,7 @@ module.exports = OgreLord = Combat.extend({
     self.loaded = true;
   },
 
-  hit: function(character, target, hitInfo) {
+  hit(character, target, hitInfo) {
     var self = this;
 
     if (self.isAttacked()) self.beginMinionAttack();
@@ -66,7 +66,7 @@ module.exports = OgreLord = Combat.extend({
     self._super(character, target, hitInfo);
   },
 
-  forceTalk: function(message) {
+  forceTalk(message) {
     var self = this;
 
     if (!self.world) return;
@@ -81,11 +81,11 @@ module.exports = OgreLord = Combat.extend({
     );
   },
 
-  getMessage: function() {
+  getMessage() {
     return this.dialogues[Utils.randomInt(0, this.dialogues.length - 1)];
   },
 
-  spawnMinions: function() {
+  spawnMinions() {
     var self = this,
       xs = [414, 430, 415, 420, 429],
       ys = [172, 173, 183, 185, 180];
@@ -110,7 +110,7 @@ module.exports = OgreLord = Combat.extend({
     if (!self.loaded) self.load();
   },
 
-  beginMinionAttack: function() {
+  beginMinionAttack() {
     var self = this;
 
     if (!self.hasMinions()) return;
@@ -123,7 +123,7 @@ module.exports = OgreLord = Combat.extend({
     });
   },
 
-  reset: function() {
+  reset() {
     var self = this;
 
     self.lastSpawn = 0;
@@ -141,7 +141,7 @@ module.exports = OgreLord = Combat.extend({
     self.loaded = false;
   },
 
-  getRandomTarget: function() {
+  getRandomTarget() {
     var self = this;
 
     if (self.isAttacked()) {
@@ -156,15 +156,15 @@ module.exports = OgreLord = Combat.extend({
     return null;
   },
 
-  hasMinions: function() {
+  hasMinions() {
     return this.minions.length > 0;
   },
 
-  isLast: function() {
+  isLast() {
     return this.minions.length === 1;
   },
 
-  canSpawn: function() {
+  canSpawn() {
     return (
       new Date().getTime() - this.lastSpawn > 50000 &&
       !this.hasMinions() &&

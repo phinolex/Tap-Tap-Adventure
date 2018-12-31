@@ -1,6 +1,6 @@
 define(["../../utils/timer"], function(Timer) {
   return Class.extend({
-    init: function(id, time, element, duration) {
+    init(id, time, element, duration) {
       var self = this;
 
       self.id = id;
@@ -11,19 +11,19 @@ define(["../../utils/timer"], function(Timer) {
       self.timer = new Timer(self.time, self.duration);
     },
 
-    setClickable: function() {
+    setClickable() {
       this.element.css("pointer-events", "auto");
     },
 
-    isOver: function(time) {
+    isOver(time) {
       return this.timer.isOver(time);
     },
 
-    reset: function(time) {
+    reset(time) {
       this.timer.time = time;
     },
 
-    destroy: function() {
+    destroy() {
       $(this.element).remove();
     }
   });

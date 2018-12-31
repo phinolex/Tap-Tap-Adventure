@@ -28,7 +28,7 @@ var Character = require("../character"),
   Warp = require("./warp");
 
 module.exports = Player = Character.extend({
-  init: function(world, database, connection, clientId) {
+  init(world, database, connection, clientId) {
     var self = this;
 
     self._super(-1, "player", connection.id, -1, -1);
@@ -79,7 +79,7 @@ module.exports = Player = Character.extend({
     self.profileDialogOpen = false;
   },
 
-  load: function(data) {
+  load(data) {
     var self = this;
 
     self.loaded = true;
@@ -118,7 +118,7 @@ module.exports = Player = Character.extend({
     self.guild = new Guild(data.guild, self);
   },
 
-  loadInventory: function() {
+  loadInventory() {
     var self = this;
 
     if (config.offlineMode) {
@@ -139,7 +139,7 @@ module.exports = Player = Character.extend({
     });
   },
 
-  loadBank: function() {
+  loadBank() {
     var self = this;
 
     if (config.offlineMode) {
@@ -155,7 +155,7 @@ module.exports = Player = Character.extend({
     });
   },
 
-  loadQuests: function() {
+  loadQuests() {
     var self = this;
 
     if (config.offlineMode) return;
@@ -192,7 +192,7 @@ module.exports = Player = Character.extend({
     });
   },
 
-  intro: function() {
+  intro() {
     var self = this;
 
     if (self.ban > new Date()) {
@@ -234,7 +234,7 @@ module.exports = Player = Character.extend({
     self.send(new Messages.Welcome(info));
   },
 
-  addExperience: function(exp) {
+  addExperience(exp) {
     var self = this;
 
     self.experience += exp;
@@ -257,13 +257,13 @@ module.exports = Player = Character.extend({
     );
   },
 
-  heal: function(amount) {
+  heal(amount) {
     var self = this;
     self.hitPoints = self.healHitPoints(amount);
     self.mana = self.healManaPoints(amount);
   },
 
-  healHitPoints: function(amount) {
+  healHitPoints(amount) {
     var self = this,
       type = "health";
 
@@ -283,7 +283,7 @@ module.exports = Player = Character.extend({
     }
   },
 
-  healManaPoints: function(amount) {
+  healManaPoints(amount) {
     var self = this,
       type = "mana";
 
@@ -303,7 +303,7 @@ module.exports = Player = Character.extend({
     }
   },
 
-  eat: function(id) {
+  eat(id) {
     var self = this,
       type,
       amount;
@@ -318,7 +318,7 @@ module.exports = Player = Character.extend({
     }
   },
 
-  equip: function(string, count, ability, abilityLevel) {
+  equip(string, count, ability, abilityLevel) {
     var self = this,
       data = Items.getData(string),
       type,
@@ -381,7 +381,7 @@ module.exports = Player = Character.extend({
     self.sync();
   },
 
-  canEquip: function(string) {
+  canEquip(string) {
     var self = this,
       requirement = Items.getLevelRequirement(string);
 
@@ -395,7 +395,7 @@ module.exports = Player = Character.extend({
     return true;
   },
 
-  die: function() {
+  die() {
     var self = this;
 
     self.dead = true;
@@ -405,7 +405,7 @@ module.exports = Player = Character.extend({
     self.send(new Messages.Death(self.instance));
   },
 
-  teleport: function(x, y, isDoor, animate) {
+  teleport(x, y, isDoor, animate) {
     var self = this;
 
     if (isDoor && !self.finishedTutorial()) {
@@ -426,7 +426,7 @@ module.exports = Player = Character.extend({
     self.world.cleanCombat(self);
   },
 
-  updatePVP: function(pvp) {
+  updatePVP(pvp) {
     var self = this;
 
     /**
@@ -443,7 +443,7 @@ module.exports = Player = Character.extend({
     self.sendToGroup(new Messages.PVP(self.instance, self.pvp));
   },
 
-  updateMusic: function(song) {
+  updateMusic(song) {
     var self = this;
 
     self.currentSong = song;
@@ -451,7 +451,7 @@ module.exports = Player = Character.extend({
     self.send(new Messages.Audio(song));
   },
 
-  revertPoints: function() {
+  revertPoints() {
     var self = this;
 
     self.hitPoints.setHitPoints(self.hitPoints.getMaxHitPoints());
@@ -460,11 +460,11 @@ module.exports = Player = Character.extend({
     self.sync();
   },
 
-  applyDamage: function(damage) {
+  applyDamage(damage) {
     this.hitPoints.decrement(damage);
   },
 
-  toggleProfile: function(state) {
+  toggleProfile(state) {
     var self = this;
 
     self.profileDialogOpen = state;
@@ -472,23 +472,23 @@ module.exports = Player = Character.extend({
     if (self.profileToggleCallback) self.profileToggleCallback();
   },
 
-  getMana: function() {
+  getMana() {
     return this.mana.getMana();
   },
 
-  getMaxMana: function() {
+  getMaxMana() {
     return this.mana.getMaxMana();
   },
 
-  getHitPoints: function() {
+  getHitPoints() {
     return this.hitPoints.getHitPoints();
   },
 
-  getMaxHitPoints: function() {
+  getMaxHitPoints() {
     return this.hitPoints.getMaxHitPoints();
   },
 
-  getTutorial: function() {
+  getTutorial() {
     return this.quests.getQuest(Modules.Quests.Introduction);
   },
 
@@ -496,7 +496,7 @@ module.exports = Player = Character.extend({
    * Setters
    */
 
-  setArmour: function(id, count, ability, abilityLevel) {
+  setArmour(id, count, ability, abilityLevel) {
     var self = this;
 
     if (!id) return;
@@ -510,7 +510,7 @@ module.exports = Player = Character.extend({
     );
   },
 
-  breakWeapon: function() {
+  breakWeapon() {
     var self = this;
 
     self.notify("Your weapon has been broken.");
@@ -520,7 +520,7 @@ module.exports = Player = Character.extend({
     self.sendEquipment();
   },
 
-  setWeapon: function(id, count, ability, abilityLevel) {
+  setWeapon(id, count, ability, abilityLevel) {
     var self = this;
 
     if (!id) return;
@@ -536,7 +536,7 @@ module.exports = Player = Character.extend({
     if (self.weapon.ranged) self.attackRange = 7;
   },
 
-  setPendant: function(id, count, ability, abilityLevel) {
+  setPendant(id, count, ability, abilityLevel) {
     var self = this;
 
     if (!id) return;
@@ -550,7 +550,7 @@ module.exports = Player = Character.extend({
     );
   },
 
-  setRing: function(id, count, ability, abilityLevel) {
+  setRing(id, count, ability, abilityLevel) {
     var self = this;
 
     if (!id) return;
@@ -564,7 +564,7 @@ module.exports = Player = Character.extend({
     );
   },
 
-  setBoots: function(id, count, ability, abilityLevel) {
+  setBoots(id, count, ability, abilityLevel) {
     var self = this;
 
     if (!id) return;
@@ -578,14 +578,14 @@ module.exports = Player = Character.extend({
     );
   },
 
-  guessPosition: function(x, y) {
+  guessPosition(x, y) {
     this.potentialPosition = {
       x: x,
       y: y
     };
   },
 
-  setPosition: function(x, y) {
+  setPosition(x, y) {
     var self = this;
 
     if (self.dead) return;
@@ -605,7 +605,7 @@ module.exports = Player = Character.extend({
     );
   },
 
-  setFuturePosition: function(x, y) {
+  setFuturePosition(x, y) {
     /**
      * Most likely will be used for anti-cheating methods
      * of calculating the actual time and duration for the
@@ -618,19 +618,19 @@ module.exports = Player = Character.extend({
     };
   },
 
-  timeout: function() {
+  timeout() {
     var self = this;
     self.connection.sendUTF8("timeout");
     self.connection.close(self.username + " timed out.");
   },
 
-  invalidLogin: function() {
+  invalidLogin() {
     var self = this;
     self.connection.sendUTF8("invalidlogin");
     self.connection.close(self.username + " invalid login.");
   },
 
-  refreshTimeout: function() {
+  refreshTimeout() {
     var self = this;
 
     clearTimeout(self.disconnectTimeout);
@@ -644,41 +644,41 @@ module.exports = Player = Character.extend({
    * Getters
    */
 
-  hasArmour: function() {
+  hasArmour() {
     return this.armour && this.armour.name !== "null" && this.armour.id !== -1;
   },
 
-  hasWeapon: function() {
+  hasWeapon() {
     return this.weapon && this.weapon.name !== "null" && this.weapon.id !== -1;
   },
 
-  hasBreakableWeapon: function() {
+  hasBreakableWeapon() {
     return this.weapon && this.weapon.breakable;
   },
 
-  hasPendant: function() {
+  hasPendant() {
     return (
       this.pendant && this.pendant.name !== "null" && this.pendant.id !== -1
     );
   },
 
-  hasRing: function() {
+  hasRing() {
     return this.ring && this.ring.name !== "null" && this.ring.id !== -1;
   },
 
-  hasBoots: function() {
+  hasBoots() {
     return this.boots && this.boots.name !== "null" && this.boots.id !== -1;
   },
 
-  hasMaxHitPoints: function() {
+  hasMaxHitPoints() {
     return this.getHitPoints() >= this.hitPoints.getMaxHitPoints();
   },
 
-  hasMaxMana: function() {
+  hasMaxMana() {
     return this.mana.getMana() >= this.mana.getMaxMana();
   },
 
-  hasSpecialAttack: function() {
+  hasSpecialAttack() {
     return (
       this.weapon &&
       (this.weapon.hasCritical() ||
@@ -687,11 +687,11 @@ module.exports = Player = Character.extend({
     );
   },
 
-  canBeStunned: function() {
+  canBeStunned() {
     return true;
   },
 
-  getState: function() {
+  getState() {
     var self = this;
 
     return {
@@ -715,11 +715,11 @@ module.exports = Player = Character.extend({
     };
   },
 
-  getRemoteAddress: function() {
+  getRemoteAddress() {
     return this.connection.socket.conn.remoteAddress;
   },
 
-  getSpawn: function() {
+  getSpawn() {
     var self = this,
       position;
 
@@ -742,7 +742,7 @@ module.exports = Player = Character.extend({
     return position;
   },
 
-  getHit: function(target) {
+  getHit(target) {
     var self = this;
 
     var defaultDamage = Formulas.getDamage(self, target),
@@ -772,18 +772,18 @@ module.exports = Player = Character.extend({
     }
   },
 
-  isMuted: function() {
+  isMuted() {
     var self = this,
       time = new Date().getTime();
 
     return self.mute - time > 0;
   },
 
-  isRanged: function() {
+  isRanged() {
     return this.weapon && this.weapon.isRanged();
   },
 
-  isDead: function() {
+  isDead() {
     return this.getHitPoints() < 1 || this.dead;
   },
 
@@ -791,15 +791,15 @@ module.exports = Player = Character.extend({
    * Miscellaneous
    */
 
-  send: function(message) {
+  send(message) {
     this.world.pushToPlayer(this, message);
   },
 
-  sendToGroup: function(message) {
+  sendToGroup(message) {
     this.world.pushToGroup(this.group, message);
   },
 
-  sendEquipment: function() {
+  sendEquipment() {
     var self = this,
       info = [
         self.armour.getData(),
@@ -812,7 +812,7 @@ module.exports = Player = Character.extend({
     self.send(new Messages.Equipment(Packets.EquipmentOpcode.Batch, info));
   },
 
-  sendToSpawn: function() {
+  sendToSpawn() {
     var self = this,
       position = self.getSpawn();
 
@@ -820,7 +820,7 @@ module.exports = Player = Character.extend({
     self.y = position.y;
   },
 
-  sync: function(all) {
+  sync(all) {
     var self = this;
 
     /**
@@ -851,7 +851,7 @@ module.exports = Player = Character.extend({
     self.save();
   },
 
-  notify: function(message) {
+  notify(message) {
     var self = this;
 
     if (!message) return;
@@ -861,7 +861,7 @@ module.exports = Player = Character.extend({
     );
   },
 
-  stopMovement: function(force) {
+  stopMovement(force) {
     /**
      * Forcefully stopping the player will simply hault
      * them in between tiles. Should only be used if they are
@@ -873,7 +873,7 @@ module.exports = Player = Character.extend({
     self.send(new Messages.Movement(Packets.MovementOpcode.Stop, force));
   },
 
-  finishedTutorial: function() {
+  finishedTutorial() {
     var self = this;
 
     if (!self.quests) return true;
@@ -881,7 +881,7 @@ module.exports = Player = Character.extend({
     return self.getTutorial().isFinished();
   },
 
-  checkGroups: function() {
+  checkGroups() {
     var self = this;
 
     if (!self.groupPosition) return;
@@ -896,7 +896,7 @@ module.exports = Player = Character.extend({
     }
   },
 
-  movePlayer: function() {
+  movePlayer() {
     var self = this;
 
     /**
@@ -910,7 +910,7 @@ module.exports = Player = Character.extend({
     self.send(new Messages.Movement(Packets.MovementOpcode.Started));
   },
 
-  walkRandomly: function() {
+  walkRandomly() {
     var self = this;
 
     setInterval(function() {
@@ -921,13 +921,13 @@ module.exports = Player = Character.extend({
     }, 2000);
   },
 
-  killCharacter: function(character) {
+  killCharacter(character) {
     var self = this;
 
     if (self.killCallback) self.killCallback(character);
   },
 
-  save: function() {
+  save() {
     var self = this;
 
     if (config.offlineMode || self.isGuest) return;
@@ -935,43 +935,43 @@ module.exports = Player = Character.extend({
     self.mysql.creator.save(self);
   },
 
-  inTutorial: function() {
+  inTutorial() {
     return this.world.map.inTutorialArea(this);
   },
 
-  onGroup: function(callback) {
+  onGroup(callback) {
     this.groupCallback = callback;
   },
 
-  onAttack: function(callback) {
+  onAttack(callback) {
     this.attackCallback = callback;
   },
 
-  onHit: function(callback) {
+  onHit(callback) {
     this.hitCallback = callback;
   },
 
-  onKill: function(callback) {
+  onKill(callback) {
     this.killCallback = callback;
   },
 
-  onDeath: function(callback) {
+  onDeath(callback) {
     this.deathCallback = callback;
   },
 
-  onTalkToNPC: function(callback) {
+  onTalkToNPC(callback) {
     this.npcTalkCallback = callback;
   },
 
-  onDoor: function(callback) {
+  onDoor(callback) {
     this.doorCallback = callback;
   },
 
-  onProfile: function(callback) {
+  onProfile(callback) {
     this.profileToggleCallback = callback;
   },
 
-  onReady: function(callback) {
+  onReady(callback) {
     this.readyCallback = callback;
   }
 });

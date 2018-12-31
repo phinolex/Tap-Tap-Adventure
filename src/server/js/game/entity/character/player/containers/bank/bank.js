@@ -5,7 +5,7 @@ var Container = require("../container"),
   Items = require("../../../../../../util/items");
 
 module.exports = Slot = Container.extend({
-  init: function(owner, size) {
+  init(owner, size) {
     var self = this;
 
     self.open = false;
@@ -13,7 +13,7 @@ module.exports = Slot = Container.extend({
     self._super("Bank", owner, size);
   },
 
-  load: function(ids, counts, abilities, abilityLevels) {
+  load(ids, counts, abilities, abilityLevels) {
     var self = this;
 
     self._super(ids, counts, abilities, abilityLevels);
@@ -23,7 +23,7 @@ module.exports = Slot = Container.extend({
     );
   },
 
-  add: function(id, count, ability, abilityLevel) {
+  add(id, count, ability, abilityLevel) {
     var self = this;
 
     if (!self.canHold(id, count)) {
@@ -44,7 +44,7 @@ module.exports = Slot = Container.extend({
     return true;
   },
 
-  remove: function(id, count, index) {
+  remove(id, count, index) {
     var self = this;
 
     if (!self._super(index, id, count)) return;

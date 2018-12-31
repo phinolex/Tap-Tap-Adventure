@@ -3,7 +3,7 @@ var Quest = require("../quest"),
   Packets = require("../../../../../../network/packets");
 
 module.exports = BulkySituation = Quest.extend({
-  init: function(player, data) {
+  init(player, data) {
     var self = this;
 
     self.player = player;
@@ -14,7 +14,7 @@ module.exports = BulkySituation = Quest.extend({
     self._super(player, data);
   },
 
-  load: function(stage) {
+  load(stage) {
     var self = this;
 
     if (!stage) self.update();
@@ -23,7 +23,7 @@ module.exports = BulkySituation = Quest.extend({
     self.loadCallbacks();
   },
 
-  loadCallbacks: function() {
+  loadCallbacks() {
     var self = this;
 
     if (self.stage > 9999) return;
@@ -51,7 +51,7 @@ module.exports = BulkySituation = Quest.extend({
     });
   },
 
-  progress: function(type) {
+  progress(type) {
     var self = this,
       task = self.data.task[self.stage];
 
@@ -82,11 +82,11 @@ module.exports = BulkySituation = Quest.extend({
     );
   },
 
-  finish: function() {
+  finish() {
     this._super();
   },
 
-  hasRequirement: function() {
+  hasRequirement() {
     return (
       this.getTask() === "item" &&
       this.player.inventory.contains(this.getItem())

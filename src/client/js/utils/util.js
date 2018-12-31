@@ -81,7 +81,7 @@ if (!Array.isArray) {
 
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, "includes", {
-    value: function(searchElement, fromIndex) {
+    value(searchElement, fromIndex) {
       // 1. Let O be ? ToObject(this value).
       if (this == null) {
         throw new TypeError('"this" is null or not defined');

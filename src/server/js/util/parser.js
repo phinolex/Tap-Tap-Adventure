@@ -15,7 +15,7 @@ var cls = require("../lib/class"),
   Formulas = require("../game/formulas");
 
 module.exports = Parser = cls.Class.extend({
-  init: function() {
+  constructor() {
     var self = this;
 
     self.loadMobData();
@@ -26,7 +26,7 @@ module.exports = Parser = cls.Class.extend({
     self.loadLevels();
   },
 
-  loadMobData: function() {
+  loadMobData() {
     var mobCounter = 0;
 
     _.each(MobData, function(value, key) {
@@ -66,7 +66,7 @@ module.exports = Parser = cls.Class.extend({
     log.info("Loaded " + Object.keys(Mobs.Plugins).length + " mob plugins.");
   },
 
-  loadNPCData: function() {
+  loadNPCData() {
     var npcCounter = 0;
 
     _.each(NPCData, function(value, key) {
@@ -88,7 +88,7 @@ module.exports = Parser = cls.Class.extend({
     log.info("Finished loading " + npcCounter + " NPCs.");
   },
 
-  loadItemData: function() {
+  loadItemData() {
     var itemCounter = 0;
 
     _.each(ItemData, function(value, key) {
@@ -128,7 +128,7 @@ module.exports = Parser = cls.Class.extend({
     log.info("Loaded " + Object.keys(Items.Plugins).length + " item plugins.");
   },
 
-  loadAbilityData: function() {
+  loadAbilityData() {
     var skillCounter = 0;
 
     _.each(AbilityData, function(value, key) {
@@ -150,7 +150,7 @@ module.exports = Parser = cls.Class.extend({
     log.info("Finished loading " + skillCounter + " skills.");
   },
 
-  loadShops: function() {
+  loadShops() {
     var shopCounter = 0;
 
     _.each(ShopsData, function(value, key) {
@@ -172,7 +172,7 @@ module.exports = Parser = cls.Class.extend({
     log.info("Finished loading " + shopCounter + " shops.");
   },
 
-  loadLevels: function() {
+  loadLevels() {
     Formulas.LevelExp[0] = 0;
 
     for (var i = 1; i < 130; i++) {

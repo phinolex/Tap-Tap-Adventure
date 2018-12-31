@@ -6,25 +6,25 @@ var cls = require("../../../../lib/class");
  */
 
 module.exports = CombatQueue = cls.Class.extend({
-  init: function() {
+  constructor() {
     var self = this;
 
     self.hitQueue = [];
   },
 
-  add: function(hit) {
+  add(hit) {
     this.hitQueue.push(hit);
   },
 
-  hasQueue: function() {
+  hasQueue() {
     return this.hitQueue.length > 0;
   },
 
-  clear: function() {
+  clear() {
     this.hitQueue = [];
   },
 
-  getHit: function() {
+  getHit() {
     var self = this;
 
     if (self.hitQueue.length < 1) return;

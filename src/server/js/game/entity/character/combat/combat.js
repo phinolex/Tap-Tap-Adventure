@@ -16,7 +16,7 @@ var cls = require("../../../../lib/class"),
  */
 
 module.exports = Combat = cls.Class.extend({
-  init: function(character) {
+  init(character) {
     var self = this;
 
     self.character = character;
@@ -67,7 +67,7 @@ module.exports = Combat = cls.Class.extend({
     });
   },
 
-  begin: function(attacker) {
+  begin(attacker) {
     var self = this;
 
     self.start();
@@ -80,7 +80,7 @@ module.exports = Combat = cls.Class.extend({
     self.attack(attacker);
   },
 
-  start: function() {
+  start() {
     var self = this;
 
     if (self.started) return;
@@ -106,7 +106,7 @@ module.exports = Combat = cls.Class.extend({
     self.started = true;
   },
 
-  stop: function() {
+  stop() {
     var self = this;
 
     if (!self.started) return;
@@ -122,7 +122,7 @@ module.exports = Combat = cls.Class.extend({
     self.started = false;
   },
 
-  parseAttack: function() {
+  parseAttack() {
     var self = this;
 
     if (!self.world || !self.queue || self.character.stunned) return;
@@ -138,7 +138,7 @@ module.exports = Combat = cls.Class.extend({
     } else self.queue.clear();
   },
 
-  parseFollow: function() {
+  parseFollow() {
     var self = this;
 
     if (self.character.frozen || self.character.stunned) return;
@@ -163,7 +163,7 @@ module.exports = Combat = cls.Class.extend({
     }
   },
 
-  attack: function(target) {
+  attack(target) {
     var self = this,
       hit;
 
@@ -179,7 +179,7 @@ module.exports = Combat = cls.Class.extend({
     self.queue.add(hit);
   },
 
-  dealAoE: function(radius, hasTerror) {
+  dealAoE(radius, hasTerror) {
     var self = this;
 
     /**
@@ -205,7 +205,7 @@ module.exports = Combat = cls.Class.extend({
     });
   },
 
-  forceAttack: function() {
+  forceAttack() {
     var self = this;
 
     if (!self.character.target || !self.inProximity()) return;
@@ -217,13 +217,13 @@ module.exports = Combat = cls.Class.extend({
     self.hit(self.character, self.character.target, self.queue.getHit());
   },
 
-  attackCount: function(count, target) {
+  attackCount(count, target) {
     var self = this;
 
     for (var i = 0; i < count; i++) self.attack(target);
   },
 
-  addAttacker: function(character) {
+  addAttacker(character) {
     var self = this;
 
     if (self.hasAttacker(character)) return;
@@ -231,7 +231,7 @@ module.exports = Combat = cls.Class.extend({
     self.attackers[character.instance] = character;
   },
 
-  removeAttacker: function(character) {
+  removeAttacker(character) {
     var self = this;
 
     if (self.hasAttacker(character)) delete self.attackers[character.instance];
@@ -239,7 +239,7 @@ module.exports = Combat = cls.Class.extend({
     if (!self.isAttacked()) self.sendToSpawn();
   },
 
-  sendToSpawn: function() {
+  sendToSpawn() {
     var self = this;
 
     if (!self.isMob()) return;
@@ -257,7 +257,7 @@ module.exports = Combat = cls.Class.extend({
     );
   },
 
-  hasAttacker: function(character) {
+  hasAttacker(character) {
     var self = this;
 
     if (!self.isAttacked()) return;
@@ -265,7 +265,7 @@ module.exports = Combat = cls.Class.extend({
     return character.instance in self.attackers;
   },
 
-  onSameTile: function() {
+  onSameTile() {
     var self = this;
 
     if (!self.character.target || self.character.type !== "mob") return;
@@ -276,11 +276,11 @@ module.exports = Combat = cls.Class.extend({
     );
   },
 
-  isAttacked: function() {
+  isAttacked() {
     return this.attackers && Object.keys(this.attackers).length > 0;
   },
 
-  getNewPosition: function() {
+  getNewPosition() {
     var self = this,
       position = {
         x: self.character.x,
@@ -297,7 +297,7 @@ module.exports = Combat = cls.Class.extend({
     return position;
   },
 
-  isRetaliating: function() {
+  isRetaliating() {
     return (
       this.isPlayer() &&
       !this.character.hasTarget() &&
@@ -307,7 +307,7 @@ module.exports = Combat = cls.Class.extend({
     );
   },
 
-  inProximity: function() {
+  inProximity() {
     var self = this;
 
     if (!self.character.target) return;
@@ -320,7 +320,7 @@ module.exports = Combat = cls.Class.extend({
     return self.character.isNonDiagonal(self.character.target);
   },
 
-  getClosestAttacker: function() {
+  getClosestAttacker() {
     var self = this,
       closest = null,
       lowestDistance = 100;
@@ -334,13 +334,13 @@ module.exports = Combat = cls.Class.extend({
     return closest;
   },
 
-  setWorld: function(world) {
+  setWorld(world) {
     var self = this;
 
     if (!self.world) self.world = world;
   },
 
-  forget: function() {
+  forget() {
     var self = this;
 
     self.attackers = {};
@@ -349,7 +349,7 @@ module.exports = Combat = cls.Class.extend({
     if (self.forgetCallback) self.forgetCallback();
   },
 
-  move: function(character, x, y) {
+  move(character, x, y) {
     var self = this;
 
     /**
@@ -361,7 +361,7 @@ module.exports = Combat = cls.Class.extend({
     character.move(x, y);
   },
 
-  hit: function(character, target, hitInfo) {
+  hit(character, target, hitInfo) {
     var self = this,
       time = self.getTime();
 
@@ -398,7 +398,7 @@ module.exports = Combat = cls.Class.extend({
     self.lastHit = self.getTime();
   },
 
-  follow: function(character, target) {
+  follow(character, target) {
     this.world.pushBroadcast(
       new Messages.Movement(Packets.MovementOpcode.Follow, [
         character.instance,
@@ -409,7 +409,7 @@ module.exports = Combat = cls.Class.extend({
     );
   },
 
-  end: function() {
+  end() {
     this.world.pushBroadcast(
       new Messages.Combat(
         Packets.CombatOpcode.Finish,
@@ -419,7 +419,7 @@ module.exports = Combat = cls.Class.extend({
     );
   },
 
-  sendFollow: function() {
+  sendFollow() {
     var self = this;
 
     if (!self.character.hasTarget() || self.character.target.isDead()) return;
@@ -435,17 +435,17 @@ module.exports = Combat = cls.Class.extend({
     );
   },
 
-  forEachAttacker: function(callback) {
+  forEachAttacker(callback) {
     _.each(this.attackers, function(attacker) {
       callback(attacker);
     });
   },
 
-  onForget: function(callback) {
+  onForget(callback) {
     this.forgetCallback = callback;
   },
 
-  targetOutOfBounds: function() {
+  targetOutOfBounds() {
     var self = this;
 
     if (!self.character.hasTarget() || !self.isMob()) return;
@@ -459,27 +459,27 @@ module.exports = Combat = cls.Class.extend({
     );
   },
 
-  getTime: function() {
+  getTime() {
     return new Date().getTime();
   },
 
-  colliding: function(x, y) {
+  colliding(x, y) {
     return this.world.map.isColliding(x, y);
   },
 
-  isPlayer: function() {
+  isPlayer() {
     return this.character.type === "player";
   },
 
-  isMob: function() {
+  isMob() {
     return this.character.type === "mob";
   },
 
-  isTargetMob: function() {
+  isTargetMob() {
     return this.character.target.type === "mob";
   },
 
-  canAttackAoE: function(target) {
+  canAttackAoE(target) {
     return (
       this.isMob() ||
       target.type === "mob" ||

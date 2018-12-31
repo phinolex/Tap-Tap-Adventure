@@ -9,7 +9,7 @@ define(["../entity/sprite", "../entity/animation"], function(
    */
 
   return Class.extend({
-    init: function(renderer) {
+    init(renderer) {
       var self = this;
 
       self.renderer = renderer;
@@ -25,7 +25,7 @@ define(["../entity/sprite", "../entity/animation"], function(
       self.loadAnimations();
     },
 
-    load: function(spriteData) {
+    load(spriteData) {
       var self = this;
 
       _.each(spriteData, function(sprite) {
@@ -40,14 +40,14 @@ define(["../entity/sprite", "../entity/animation"], function(
       if (self.loadedSpritesCallback) self.loadedSpritesCallback();
     },
 
-    loadAnimations: function() {
+    loadAnimations() {
       var self = this;
 
       self.sparksAnimation = new Animation("idle_down", 6, 0, 16, 16);
       self.sparksAnimation.setSpeed(120);
     },
 
-    updateSprites: function() {
+    updateSprites() {
       var self = this;
 
       _.each(self.sprites, function(sprite) {
@@ -57,7 +57,7 @@ define(["../entity/sprite", "../entity/animation"], function(
       log.info("Updated sprites to: " + self.renderer.getDrawingScale());
     },
 
-    onLoadedSprites: function(callback) {
+    onLoadedSprites(callback) {
       this.loadedSpritesCallback = callback;
     }
   });

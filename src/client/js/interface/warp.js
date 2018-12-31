@@ -2,7 +2,7 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -16,7 +16,7 @@ define(["jquery"], function($) {
       self.load();
     },
 
-    load: function() {
+    load() {
       var self = this,
         scale = self.getScale();
 
@@ -42,7 +42,7 @@ define(["jquery"], function($) {
       }
     },
 
-    toggle: function() {
+    toggle() {
       var self = this;
 
       /**
@@ -53,19 +53,19 @@ define(["jquery"], function($) {
       else self.display();
     },
 
-    getScale: function() {
+    getScale() {
       return this.game.getScaleFactor();
     },
 
-    isVisible: function() {
+    isVisible() {
       return this.mapFrame.css("display") === "block";
     },
 
-    display: function() {
+    display() {
       this.mapFrame.fadeIn("slow");
     },
 
-    hide: function() {
+    hide() {
       this.mapFrame.fadeOut("fast");
     }
   });

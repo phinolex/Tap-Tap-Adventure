@@ -1,6 +1,6 @@
 define(["../character"], function(Character) {
   return Character.extend({
-    init: function(id, kind) {
+    init(id, kind) {
       var self = this;
 
       self._super(id, kind);
@@ -13,31 +13,31 @@ define(["../character"], function(Character) {
       self.type = "mob";
     },
 
-    setHitPoints: function(hitPoints) {
+    setHitPoints(hitPoints) {
       this._super(hitPoints);
     },
 
-    setMaxHitPoints: function(maxHitPoints) {
+    setMaxHitPoints(maxHitPoints) {
       this._super(maxHitPoints);
     },
 
-    idle: function() {
+    idle() {
       this._super();
     },
 
-    performAction: function(orientation, action) {
+    performAction(orientation, action) {
       this._super(orientation, action);
     },
 
-    setSprite: function(sprite) {
+    setSprite(sprite) {
       this._super(sprite);
     },
 
-    setName: function(name) {
+    setName(name) {
       this.name = name;
     },
 
-    setGridPosition: function(x, y) {
+    setGridPosition(x, y) {
       this._super(x, y);
     }
   });

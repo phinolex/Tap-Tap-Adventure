@@ -1,6 +1,6 @@
 define(["../entity"], function(Entity) {
   return Entity.extend({
-    init: function(id, kind, count, ability, abilityLevel) {
+    init(id, kind, count, ability, abilityLevel) {
       var self = this;
 
       self._super(id, kind);
@@ -15,27 +15,27 @@ define(["../entity"], function(Entity) {
       self.type = "item";
     },
 
-    idle: function() {
+    idle() {
       this.setAnimation("idle", 150);
     },
 
-    setName: function(name) {
+    setName(name) {
       this._super(name);
     },
 
-    setAnimation: function(name, speed, count) {
+    setAnimation(name, speed, count) {
       this._super(name, speed, count);
     },
 
-    setGridPosition: function(x, y) {
+    setGridPosition(x, y) {
       this._super(x, y);
     },
 
-    setSprite: function(sprite) {
+    setSprite(sprite) {
       this._super(sprite);
     },
 
-    hasShadow: function() {
+    hasShadow() {
       return true;
     }
   });

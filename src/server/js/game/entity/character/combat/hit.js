@@ -6,7 +6,7 @@ var cls = require("../../../../lib/class");
  */
 
 module.exports = Hit = cls.Class.extend({
-  init: function(type, damage) {
+  init(type, damage) {
     var self = this;
 
     self.type = type;
@@ -17,19 +17,19 @@ module.exports = Hit = cls.Class.extend({
     self.terror = false;
   },
 
-  isRanged: function() {
+  isRanged() {
     return this.ranged;
   },
 
-  isAoE: function() {
+  isAoE() {
     return this.aoe;
   },
 
-  getDamage: function() {
+  getDamage() {
     return this.damage;
   },
 
-  getData: function() {
+  getData() {
     return {
       type: this.type,
       damage: this.damage,

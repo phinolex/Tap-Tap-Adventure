@@ -1,7 +1,7 @@
 var Entity = require("../entity");
 
 module.exports = Projectile = Entity.extend({
-  init: function(id, instance) {
+  init(id, instance) {
     var self = this;
 
     self._super(id, "projectile", instance);
@@ -20,14 +20,14 @@ module.exports = Projectile = Entity.extend({
     self.owner = null;
   },
 
-  setStart: function(x, y) {
+  setStart(x, y) {
     var self = this;
 
     self.x = x;
     self.y = y;
   },
 
-  setTarget: function(target) {
+  setTarget(target) {
     var self = this;
 
     self.target = target;
@@ -36,7 +36,7 @@ module.exports = Projectile = Entity.extend({
     self.destY = target.y;
   },
 
-  setStaticTarget: function(x, y) {
+  setStaticTarget(x, y) {
     var self = this;
 
     self.static = true;
@@ -45,7 +45,7 @@ module.exports = Projectile = Entity.extend({
     self.destY = y;
   },
 
-  getData: function() {
+  getData() {
     var self = this;
 
     /**

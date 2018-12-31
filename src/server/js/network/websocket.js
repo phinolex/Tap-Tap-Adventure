@@ -15,7 +15,7 @@ WebSocket.Server = Socket.extend({
   _connections: {},
   _counter: 0,
 
-  init: function(host, port, version) {
+  init(host, port, version) {
     var self = this;
 
     self._super(port);
@@ -66,27 +66,27 @@ WebSocket.Server = Socket.extend({
     });
   },
 
-  createId: function() {
+  createId() {
     return "1" + Utils.random(99) + "" + this._counter++;
   },
 
-  broadcast: function(message) {
+  broadcast(message) {
     this.forEachConnection(function(connection) {
       connection.send(message);
     });
   },
 
-  onConnect: function(callback) {
+  onConnect(callback) {
     this.connectionCallback = callback;
   },
 
-  onRequestStatus: function(callback) {
+  onRequestStatus(callback) {
     this.statusCallback = callback;
   }
 });
 
 WebSocket.Connection = Connection.extend({
-  init: function(id, socket, server) {
+  init(id, socket, server) {
     var self = this;
 
     self._super(id, socket, server);
@@ -104,19 +104,19 @@ WebSocket.Connection = Connection.extend({
     });
   },
 
-  listen: function(callback) {
+  listen(callback) {
     this.listenCallback = callback;
   },
 
-  onClose: function(callback) {
+  onClose(callback) {
     this.closeCallback = callback;
   },
 
-  send: function(message) {
+  send(message) {
     this.sendUTF8(JSON.stringify(message));
   },
 
-  sendUTF8: function(data) {
+  sendUTF8(data) {
     this.socket.send(data);
   }
 });

@@ -2,7 +2,7 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -25,7 +25,7 @@ define(["jquery"], function($) {
       });
     },
 
-    add: function(source, text, labelColor, textColor) {
+    add(source, text, labelColor, textColor) {
       styleLabel = labelColor ? labelColor : "white";
       styleText = textColor ? textColor : "white";
       var self = this,
@@ -51,7 +51,7 @@ define(["jquery"], function($) {
       self.log.scrollTop(99999);
     },
 
-    key: function(data) {
+    key(data) {
       var self = this;
 
       switch (data) {
@@ -63,14 +63,14 @@ define(["jquery"], function($) {
       }
     },
 
-    send: function() {
+    send() {
       var self = this;
 
       self.game.socket.send(Packets.Chat, [self.input.val()]);
       self.toggle();
     },
 
-    toggle: function() {
+    toggle() {
       var self = this;
 
       self.clean();
@@ -85,7 +85,7 @@ define(["jquery"], function($) {
       }
     },
 
-    showChat: function() {
+    showChat() {
       var self = this;
 
       self.chat.fadeIn("fast");
@@ -93,7 +93,7 @@ define(["jquery"], function($) {
       self.visible = true;
     },
 
-    showInput: function() {
+    showInput() {
       var self = this;
 
       self.button.addClass("active");
@@ -105,7 +105,7 @@ define(["jquery"], function($) {
       self.clean();
     },
 
-    hideChat: function() {
+    hideChat() {
       var self = this;
 
       if (self.fadingTimeout) {
@@ -122,7 +122,7 @@ define(["jquery"], function($) {
       }, self.fadingDuration);
     },
 
-    hideInput: function() {
+    hideInput() {
       var self = this;
 
       self.button.removeClass("active");
@@ -134,14 +134,14 @@ define(["jquery"], function($) {
       self.hideChat();
     },
 
-    clean: function() {
+    clean() {
       var self = this;
 
       clearTimeout(self.fadingTimeout);
       self.fadingTimeout = null;
     },
 
-    isActive: function() {
+    isActive() {
       return this.input.is(":focus");
     }
   });

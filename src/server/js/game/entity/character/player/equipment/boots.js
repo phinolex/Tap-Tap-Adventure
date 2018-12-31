@@ -2,7 +2,7 @@ var Equipment = require("./equipment"),
   Items = require("../../../../../util/items");
 
 module.exports = Boots = Equipment.extend({
-  init: function(name, id, count, ability, abilityLevel) {
+  init(name, id, count, ability, abilityLevel) {
     var self = this;
 
     self._super(name, id, count, ability, abilityLevel);
@@ -10,7 +10,7 @@ module.exports = Boots = Equipment.extend({
     self.bootsLevel = Items.getBootsLevel(name);
   },
 
-  getBaseAmplifier: function() {
+  getBaseAmplifier() {
     return 1.0 + this.bootsLevel / 200;
   }
 });

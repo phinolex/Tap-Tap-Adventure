@@ -9,7 +9,7 @@ define([
   "../entity/objects/item"
 ], function($, Camera, Tile, Player, Character, Item) {
   return Class.extend({
-    init: function(background, entities, foreground, textCanvas, cursor, game) {
+    init(background, entities, foreground, textCanvas, cursor, game) {
       var self = this;
 
       self.background = background;
@@ -79,7 +79,7 @@ define([
       self.load();
     },
 
-    stop: function() {
+    stop() {
       var self = this;
 
       self.camera = null;
@@ -92,7 +92,7 @@ define([
       });
     },
 
-    load: function() {
+    load() {
       var self = this;
 
       self.scale = self.getScale();
@@ -107,7 +107,7 @@ define([
       });
     },
 
-    loadSizes: function() {
+    loadSizes() {
       var self = this;
 
       if (!self.camera) return;
@@ -124,7 +124,7 @@ define([
       });
     },
 
-    loadCamera: function() {
+    loadCamera() {
       var self = this,
         storage = self.game.storage;
 
@@ -146,7 +146,7 @@ define([
       }
     },
 
-    resize: function() {
+    resize() {
       var self = this;
 
       self.stopRendering = true;
@@ -181,7 +181,7 @@ define([
         }, 500);
     },
 
-    render: function() {
+    render() {
       var self = this;
 
       if (self.stopRendering) return;
@@ -219,7 +219,7 @@ define([
      * Context Drawing
      */
 
-    draw: function() {
+    draw() {
       var self = this;
 
       if (self.hasRenderedFrame()) return;
@@ -245,7 +245,7 @@ define([
       self.saveFrame();
     },
 
-    drawAnimatedTiles: function() {
+    drawAnimatedTiles() {
       var self = this;
 
       self.setCameraView(self.context);
@@ -265,7 +265,7 @@ define([
       });
     },
 
-    drawInfos: function() {
+    drawInfos() {
       var self = this;
 
       if (self.game.info.getCount() === 0) return;
@@ -289,7 +289,7 @@ define([
       });
     },
 
-    drawDebugging: function() {
+    drawDebugging() {
       var self = this;
 
       if (!self.debugging) return;
@@ -302,7 +302,7 @@ define([
       }
     },
 
-    drawEntities: function() {
+    drawEntities() {
       var self = this;
 
       self.forEachVisibleEntity(function(entity) {
@@ -310,7 +310,7 @@ define([
       });
     },
 
-    drawEntity: function(entity) {
+    drawEntity(entity) {
       var self = this,
         sprite = entity.sprite,
         animation = entity.currentAnimation,
@@ -457,7 +457,7 @@ define([
       self.drawName(entity);
     },
 
-    drawEntityBack: function(entity) {
+    drawEntityBack(entity) {
       var self = this;
 
       /**
@@ -466,7 +466,7 @@ define([
        */
     },
 
-    drawEntityFore: function(entity) {
+    drawEntityFore(entity) {
       var self = this;
 
       /**
@@ -509,7 +509,7 @@ define([
       }
     },
 
-    drawHealth: function(entity) {
+    drawHealth(entity) {
       var self = this;
 
       if (!entity.hitPoints || entity.hitPoints < 0 || !entity.healthBarVisible)
@@ -539,7 +539,7 @@ define([
       self.context.restore();
     },
 
-    drawName: function(entity) {
+    drawName(entity) {
       var self = this;
 
       if (entity.hidden || (!self.drawNames && !self.drawLevels)) return;
@@ -606,7 +606,7 @@ define([
       self.textContext.restore();
     },
 
-    drawCursor: function() {
+    drawCursor() {
       var self = this;
 
       if (self.tablet || self.mobile) return;
@@ -636,7 +636,7 @@ define([
       self.cursorContext.restore();
     },
 
-    drawFPS: function() {
+    drawFPS() {
       var self = this,
         currentTime = new Date(),
         timeDiff = currentTime - self.time;
@@ -653,7 +653,7 @@ define([
       self.drawText("FPS: " + self.realFPS, 10, 11, false, "white");
     },
 
-    drawPosition: function() {
+    drawPosition() {
       var self = this,
         player = self.game.player;
 
@@ -666,7 +666,7 @@ define([
       );
     },
 
-    drawPathing: function() {
+    drawPathing() {
       var self = this,
         pathingGrid = self.entities.grids.pathingGrid;
 
@@ -680,7 +680,7 @@ define([
       });
     },
 
-    drawSelectedCell: function() {
+    drawSelectedCell() {
       var self = this;
 
       if (!self.input.selectedCellVisible) return;
@@ -699,7 +699,7 @@ define([
      * Primitive drawing functions
      */
 
-    drawTile: function(context, tileId, tileset, setWidth, gridWidth, cellId) {
+    drawTile(context, tileId, tileset, setWidth, gridWidth, cellId) {
       var self = this;
 
       if (tileId === -1) return;
@@ -716,7 +716,7 @@ define([
       );
     },
 
-    clearTile: function(context, gridWidth, cellId) {
+    clearTile(context, gridWidth, cellId) {
       var self = this,
         x =
           self.getX(cellId + 1, gridWidth) * self.tileSize * self.drawingScale,
@@ -726,7 +726,7 @@ define([
       context.clearRect(x, y, w, w);
     },
 
-    drawText: function(text, x, y, centered, colour, strokeColour) {
+    drawText(text, x, y, centered, colour, strokeColour) {
       var self = this,
         strokeSize = 1,
         context = self.textContext;
@@ -748,7 +748,7 @@ define([
       }
     },
 
-    drawScaledImage: function(context, image, x, y, width, height, dx, dy) {
+    drawScaledImage(context, image, x, y, width, height, dx, dy) {
       var self = this;
 
       if (!context) return;
@@ -766,7 +766,7 @@ define([
       );
     },
 
-    updateAnimatedTiles: function() {
+    updateAnimatedTiles() {
       var self = this;
 
       if (!self.animateTiles) return;
@@ -809,7 +809,7 @@ define([
       self.animatedTiles = newTiles;
     },
 
-    checkDirty: function(rectOne, source, x, y) {
+    checkDirty(rectOne, source, x, y) {
       var self = this;
 
       self.entities.forEachEntityAround(x, y, 2, function(entityTwo) {
@@ -837,7 +837,7 @@ define([
       }
     },
 
-    drawCellRect: function(x, y, colour) {
+    drawCellRect(x, y, colour) {
       var self = this,
         multiplier = self.tileSize * self.drawingScale;
 
@@ -853,7 +853,7 @@ define([
       self.context.restore();
     },
 
-    drawCellHighlight: function(x, y, colour) {
+    drawCellHighlight(x, y, colour) {
       var self = this;
 
       self.drawCellRect(
@@ -863,7 +863,7 @@ define([
       );
     },
 
-    drawTargetCell: function() {
+    drawTargetCell() {
       var self = this;
 
       if (
@@ -891,7 +891,7 @@ define([
      * Primordial Rendering functions
      */
 
-    forEachVisibleIndex: function(callback, offset) {
+    forEachVisibleIndex(callback, offset) {
       var self = this;
 
       self.camera.forEachVisiblePosition(function(x, y) {
@@ -900,7 +900,7 @@ define([
       }, offset);
     },
 
-    forEachVisibleTile: function(callback, offset) {
+    forEachVisibleTile(callback, offset) {
       var self = this;
 
       if (!self.map || !self.map.mapLoaded) return;
@@ -915,13 +915,13 @@ define([
       }, offset);
     },
 
-    forEachAnimatedTile: function(callback) {
+    forEachAnimatedTile(callback) {
       _.each(this.animatedTiles, function(tile) {
         callback(tile);
       });
     },
 
-    forEachVisibleEntity: function(callback) {
+    forEachVisibleEntity(callback) {
       var self = this;
 
       if (!self.entities || !self.camera) return;
@@ -936,7 +936,7 @@ define([
       });
     },
 
-    isVisiblePosition: function(x, y) {
+    isVisiblePosition(x, y) {
       return (
         y >= this.camera.gridY &&
         y < this.camera.gridY + this.camera.gridHeight &&
@@ -945,11 +945,11 @@ define([
       );
     },
 
-    getScale: function() {
+    getScale() {
       return this.game.getScaleFactor();
     },
 
-    getDrawingScale: function() {
+    getDrawingScale() {
       var self = this,
         scale = self.getScale();
 
@@ -958,7 +958,7 @@ define([
       return scale;
     },
 
-    getUpscale: function() {
+    getUpscale() {
       var self = this,
         scale = self.getScale();
 
@@ -967,7 +967,7 @@ define([
       return scale;
     },
 
-    clearContext: function() {
+    clearContext() {
       this.context.clearRect(
         0,
         0,
@@ -976,7 +976,7 @@ define([
       );
     },
 
-    clearText: function() {
+    clearText() {
       this.textContext.clearRect(
         0,
         0,
@@ -985,13 +985,13 @@ define([
       );
     },
 
-    restore: function() {
+    restore() {
       this.forEachContext(function(context) {
         context.restore();
       });
     },
 
-    clearAll: function() {
+    clearAll() {
       var self = this;
 
       self.forEachContext(function(context) {
@@ -999,7 +999,7 @@ define([
       });
     },
 
-    clearDrawing: function() {
+    clearDrawing() {
       var self = this;
 
       self.forEachDrawingContext(function(context) {
@@ -1007,7 +1007,7 @@ define([
       });
     },
 
-    saveAll: function() {
+    saveAll() {
       var self = this;
 
       self.forEachContext(function(context) {
@@ -1015,7 +1015,7 @@ define([
       });
     },
 
-    restoreAll: function() {
+    restoreAll() {
       var self = this;
 
       self.forEachContext(function(context) {
@@ -1023,7 +1023,7 @@ define([
       });
     },
 
-    isIntersecting: function(rectOne, rectTwo) {
+    isIntersecting(rectOne, rectTwo) {
       return (
         rectTwo.left > rectOne.right ||
         rectTwo.right < rectOne.left ||
@@ -1032,7 +1032,7 @@ define([
       );
     },
 
-    focus: function() {
+    focus() {
       var self = this;
 
       self.forEachContext(function(context) {
@@ -1044,7 +1044,7 @@ define([
      * Rendering Functions
      */
 
-    updateView: function() {
+    updateView() {
       var self = this;
 
       self.forEachContext(function(context) {
@@ -1052,7 +1052,7 @@ define([
       });
     },
 
-    updateDrawingView: function() {
+    updateDrawingView() {
       var self = this;
 
       self.forEachDrawingContext(function(context) {
@@ -1060,7 +1060,7 @@ define([
       });
     },
 
-    setCameraView: function(context) {
+    setCameraView(context) {
       var self = this;
 
       if (!self.camera || self.stopRendering) return;
@@ -1071,7 +1071,7 @@ define([
       );
     },
 
-    clearScreen: function(context) {
+    clearScreen(context) {
       context.clearRect(
         0,
         0,
@@ -1080,7 +1080,7 @@ define([
       );
     },
 
-    hasRenderedFrame: function() {
+    hasRenderedFrame() {
       var self = this;
 
       if (self.forceRendering) return false;
@@ -1093,7 +1093,7 @@ define([
       );
     },
 
-    saveFrame: function() {
+    saveFrame() {
       var self = this;
 
       if (!self.hasRenderedFrame()) {
@@ -1102,7 +1102,7 @@ define([
       }
     },
 
-    adjustBrightness: function(level) {
+    adjustBrightness(level) {
       var self = this;
 
       if (level < 0 || level > 100) return;
@@ -1113,7 +1113,7 @@ define([
       );
     },
 
-    loadStaticSprites: function() {
+    loadStaticSprites() {
       var self = this;
 
       self.shadowSprite = self.entities.getSprite("shadow16");
@@ -1129,31 +1129,31 @@ define([
      * Miscellaneous functions
      */
 
-    forEachContext: function(callback) {
+    forEachContext(callback) {
       _.each(this.contexts, function(context) {
         callback(context);
       });
     },
 
-    forEachDrawingContext: function(callback) {
+    forEachDrawingContext(callback) {
       _.each(this.contexts, function(context) {
         if (context.canvas.id !== "entities") callback(context);
       });
     },
 
-    forEachCanvas: function(callback) {
+    forEachCanvas(callback) {
       _.each(this.canvases, function(canvas) {
         callback(canvas);
       });
     },
 
-    getX: function(index, width) {
+    getX(index, width) {
       if (index === 0) return 0;
 
       return index % width === 0 ? width - 1 : (index % width) - 1;
     },
 
-    checkDevice: function() {
+    checkDevice() {
       var self = this;
 
       self.mobile = self.game.app.isMobile();
@@ -1161,12 +1161,12 @@ define([
       self.firefox = Detect.isFirefox();
     },
 
-    verifyCentration: function() {
+    verifyCentration() {
       this.forceRendering =
         (this.mobile || this.tablet) && this.camera.centered;
     },
 
-    isPortableDevice: function() {
+    isPortableDevice() {
       return this.mobile || this.tablet;
     },
 
@@ -1174,19 +1174,19 @@ define([
      * Setters
      */
 
-    setTileset: function(tileset) {
+    setTileset(tileset) {
       this.tileset = tileset;
     },
 
-    setMap: function(map) {
+    setMap(map) {
       this.map = map;
     },
 
-    setEntities: function(entities) {
+    setEntities(entities) {
       this.entities = entities;
     },
 
-    setInput: function(input) {
+    setInput(input) {
       this.input = input;
     },
 
@@ -1194,7 +1194,7 @@ define([
      * Getters
      */
 
-    getTileBounds: function(tile) {
+    getTileBounds(tile) {
       var self = this,
         bounds = {},
         cellId = tile.index;
@@ -1216,7 +1216,7 @@ define([
       return bounds;
     },
 
-    getEntityBounds: function(entity) {
+    getEntityBounds(entity) {
       var self = this,
         bounds = {},
         sprite = entity.sprite;
@@ -1240,7 +1240,7 @@ define([
       return bounds;
     },
 
-    getTargetBounds: function(x, y) {
+    getTargetBounds(x, y) {
       var self = this,
         bounds = {},
         tx = x || self.input.selectedX,
@@ -1258,7 +1258,7 @@ define([
       return bounds;
     },
 
-    getTileset: function() {
+    getTileset() {
       return this.tileset;
     }
   });

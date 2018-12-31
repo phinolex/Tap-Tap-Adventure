@@ -12,7 +12,7 @@ module.exports = QueenAnt = Combat.extend({
    * explosion sprite is drawn above them.
    */
 
-  init: function(character) {
+  init(character) {
     var self = this;
 
     character.spawnDistance = 18;
@@ -59,7 +59,7 @@ module.exports = QueenAnt = Combat.extend({
     });
   },
 
-  begin: function(attacker) {
+  begin(attacker) {
     var self = this;
 
     self.resetAoE();
@@ -67,7 +67,7 @@ module.exports = QueenAnt = Combat.extend({
     self._super(attacker);
   },
 
-  hit: function(attacker, target, hitInfo) {
+  hit(attacker, target, hitInfo) {
     var self = this;
 
     if (self.frozen) return;
@@ -84,7 +84,7 @@ module.exports = QueenAnt = Combat.extend({
     self._super(attacker, target, hitInfo);
   },
 
-  doAoE: function() {
+  doAoE() {
     var self = this;
 
     /**
@@ -108,7 +108,7 @@ module.exports = QueenAnt = Combat.extend({
     }, 5000);
   },
 
-  spawnMinions: function() {
+  spawnMinions() {
     var self = this;
 
     self.lastSpawn = new Date().getTime();
@@ -132,7 +132,7 @@ module.exports = QueenAnt = Combat.extend({
     });
   },
 
-  beginMinionAttack: function() {
+  beginMinionAttack() {
     var self = this;
 
     if (!self.hasMinions()) return;
@@ -145,11 +145,11 @@ module.exports = QueenAnt = Combat.extend({
     });
   },
 
-  resetAoE: function() {
+  resetAoE() {
     this.lastAoE = new Date().getTime();
   },
 
-  getRandomTarget: function() {
+  getRandomTarget() {
     var self = this;
 
     if (self.isAttacked()) {
@@ -164,14 +164,14 @@ module.exports = QueenAnt = Combat.extend({
     return null;
   },
 
-  pushFreeze: function(state) {
+  pushFreeze(state) {
     var self = this;
 
     self.character.frozen = state;
     self.character.stunned = state;
   },
 
-  pushCountdown: function(count) {
+  pushCountdown(count) {
     var self = this;
 
     self.world.pushToAdjacentGroups(
@@ -183,24 +183,24 @@ module.exports = QueenAnt = Combat.extend({
     );
   },
 
-  getMinions: function() {
+  getMinions() {
     var self = this,
       grids = self.world.getGrids();
   },
 
-  isLast: function() {
+  isLast() {
     return this.minions.length === 1;
   },
 
-  hasMinions: function() {
+  hasMinions() {
     return this.minions.length > 0;
   },
 
-  canCastAoE: function() {
+  canCastAoE() {
     return new Date().getTime() - this.lastAoE > 30000;
   },
 
-  canSpawn: function() {
+  canSpawn() {
     return (
       new Date().getTime() - this.lastSpawn > 45000 &&
       !this.hasMinions() &&

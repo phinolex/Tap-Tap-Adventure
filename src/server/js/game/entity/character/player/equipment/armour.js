@@ -2,7 +2,7 @@ var Equipment = require("./equipment"),
   Items = require("../../../../../util/items");
 
 module.exports = Armour = Equipment.extend({
-  init: function(name, id, count, ability, abilityLevel) {
+  init(name, id, count, ability, abilityLevel) {
     var self = this;
 
     self._super(name, id, count, ability, abilityLevel);
@@ -10,15 +10,15 @@ module.exports = Armour = Equipment.extend({
     self.defense = Items.getArmourLevel(name);
   },
 
-  hasAntiStun: function() {
+  hasAntiStun() {
     return this.ability === 6;
   },
 
-  setDefense: function(defense) {
+  setDefense(defense) {
     this.defense = defense;
   },
 
-  getDefense: function() {
+  getDefense() {
     return this.defense;
   }
 });

@@ -1,556 +1,550 @@
 /* global log, Class, Detect, Modules */
+import $ from "jquery";
 
-define(["jquery"], function($) {
-  return Class.extend({
-    init: function() {
-      var self = this;
+export default class App {
+  constructor() {
+    var self = this;
 
-      log.info("Loading the main application...");
+    log.info("Loading the main application...");
 
-      self.config = null;
+    self.config = null;
 
-      self.body = $("body");
-      self.wrapper = $("#content");
-      self.container = $("#container");
-      self.window = $(window);
-      self.canvas = $("#canvasLayers");
-      self.border = $("#border");
+    self.body = $("body");
+    self.wrapper = $("#content");
+    self.container = $("#container");
+    self.window = $(window);
+    self.canvas = $("#canvasLayers");
+    self.border = $("#border");
 
-      self.intro = $("#modal");
+    self.intro = $("#modal");
 
-      self.loginButton = $("#loginButton");
-      self.createButton = $("#play");
-      self.registerButton = $("#newCharacter");
-      self.helpButton = $("#helpButton");
-      self.cancelButton = $("#cancelButton");
-      self.yes = $("#yes");
-      self.no = $("#no");
-      self.loading = $(".loader");
-      self.loadingMsg = $(".loader.message");
-      self.errorMsg = $(".error.message");
+    self.loginButton = $("#loginButton");
+    self.createButton = $("#play");
+    self.registerButton = $("#newCharacter");
+    self.helpButton = $("#helpButton");
+    self.cancelButton = $("#cancelButton");
+    self.yes = $("#yes");
+    self.no = $("#no");
+    self.loading = $(".loader");
+    self.loadingMsg = $(".loader.message");
+    self.errorMsg = $(".error.message");
 
-      self.respawn = $("#respawn");
+    self.respawn = $("#respawn");
 
-      self.rememberMe = $("#rememberMe");
-      self.guest = $("#guest");
+    self.rememberMe = $("#rememberMe");
+    self.guest = $("#guest");
 
-      self.about = $("#toggle-about");
-      self.credits = $("#toggle-credits");
-      self.git = $("#toggle-git");
+    self.about = $("#toggle-about");
+    self.credits = $("#toggle-credits");
+    self.git = $("#toggle-git");
 
-      self.loginFields = [$("#loginNameInput"), $("#loginPasswordInput")];
+    self.loginFields = [$("#loginNameInput"), $("#loginPasswordInput")];
 
-      self.registerFields = [];
+    self.registerFields = [];
 
-      self.game = null;
-      self.guestLogin = false;
-      self.zoomFactor = 1;
+    self.game = null;
+    self.guestLogin = false;
+    self.zoomFactor = 1;
 
-      self.loggingIn = false;
+    self.loggingIn = false;
 
-      self.sendStatus("You should turn back now...");
+    self.sendStatus("You should turn back now...");
 
+    self.zoom();
+    self.updateOrientation();
+    self.load();
+  }
+
+  load() {
+    var self = this;
+
+    self.loginButton.click(function() {
+      self.login();
+    });
+
+    self.createButton.click(function() {
+      self.login();
+    });
+
+    self.registerButton.click(function() {
+      self.openScroll("loadCharacter", "createCharacter");
+    });
+
+    self.cancelButton.click(function() {
+      self.openScroll("createCharacter", "loadCharacter");
+    });
+
+    self.wrapper.click(function() {
+      if (
+        self.wrapper.hasClass("about") ||
+        self.wrapper.hasClass("credits") ||
+        self.wrapper.hasClass("git")
+      ) {
+        self.wrapper.removeClass("about credits git");
+        self.displayScroll("loadCharacter");
+      }
+    });
+
+    self.about.click(function() {
+      self.displayScroll("about");
+    });
+
+    self.credits.click(function() {
+      self.displayScroll("credits");
+    });
+
+    self.git.click(function() {
+      self.displayScroll("git");
+    });
+
+    // dismissing the welcome screen
+    var welcomeContinue = function() {
+      if (!self.game) return;
+
+      // hide the welcome screen so it doesn't appear again
+      self.game.storage.data.welcome = false;
+      self.game.storage.save();
+
+      self.body.removeClass("welcomeMessage");
+    };
+
+    self.yes.click(welcomeContinue);
+    self.no.click(welcomeContinue);
+
+    self.rememberMe.click(function() {
+      if (!self.game || !self.game.storage) return;
+
+      var active = self.rememberMe.hasClass("active");
+
+      self.rememberMe.toggleClass("active");
+
+      self.game.storage.toggleRemember(!active);
+    });
+
+    self.guest.click(function() {
+      if (!self.game) return;
+
+      self.guestLogin = true;
+      self.login();
+    });
+
+    self.respawn.click(function() {
+      if (!self.game || !self.game.player || !self.game.player.dead) return;
+
+      self.game.respawn();
+    });
+
+    window.scrollTo(0, 1);
+
+    self.window.resize(function() {
       self.zoom();
-      self.updateOrientation();
-      self.load();
-    },
+    });
 
-    load: function() {
-      var self = this;
+    $.getJSON("data/config.json", function(json) {
+      self.config = json;
 
-      self.loginButton.click(function() {
+      if (self.readyCallback) self.readyCallback();
+    });
+
+    $(document).bind("keydown", function(e) {
+      if (e.which === Modules.Keys.Enter) return false;
+    });
+
+    $(document).keydown(function(e) {
+      var key = e.which;
+
+      if (!self.game) return;
+
+      self.body.focus();
+
+      if (key === Modules.Keys.Enter && !self.game.started) {
         self.login();
-      });
+        return;
+      }
 
-      self.createButton.click(function() {
-        self.login();
-      });
+      if (self.game.started) self.game.onInput(Modules.InputType.Key, key);
+    });
 
-      self.registerButton.click(function() {
-        self.openScroll("loadCharacter", "createCharacter");
-      });
+    $(document).keyup(function(e) {
+      var key = e.which;
 
-      self.cancelButton.click(function() {
-        self.openScroll("createCharacter", "loadCharacter");
-      });
+      if (!self.game || !self.game.started) return;
 
-      self.wrapper.click(function() {
-        if (
-          self.wrapper.hasClass("about") ||
-          self.wrapper.hasClass("credits") ||
-          self.wrapper.hasClass("git")
-        ) {
-          self.wrapper.removeClass("about credits git");
-          self.displayScroll("loadCharacter");
-        }
-      });
+      self.game.input.keyUp(key);
+    });
 
-      self.about.click(function() {
-        self.displayScroll("about");
-      });
+    $(document).mousemove(function(event) {
+      if (!self.game || !self.game.input || !self.game.started) return;
 
-      self.credits.click(function() {
-        self.displayScroll("credits");
-      });
+      self.game.input.setCoords(event);
+      self.game.input.moveCursor();
+    });
 
-      self.git.click(function() {
-        self.displayScroll("git");
-      });
-
-      // dismissing the welcome screen
-      var welcomeContinue = function() {
-        if (!self.game) return;
-
-        // hide the welcome screen so it doesn't appear again
-        self.game.storage.data.welcome = false;
-        self.game.storage.save();
-
-        self.body.removeClass("welcomeMessage");
-      };
-
-      self.yes.click(welcomeContinue);
-      self.no.click(welcomeContinue);
-
-      self.rememberMe.click(function() {
-        if (!self.game || !self.game.storage) return;
-
-        var active = self.rememberMe.hasClass("active");
-
-        self.rememberMe.toggleClass("active");
-
-        self.game.storage.toggleRemember(!active);
-      });
-
-      self.guest.click(function() {
-        if (!self.game) return;
-
-        self.guestLogin = true;
-        self.login();
-      });
-
-      self.respawn.click(function() {
-        if (!self.game || !self.game.player || !self.game.player.dead) return;
-
-        self.game.respawn();
-      });
+    self.canvas.click(function(event) {
+      if (!self.game || !self.game.started || event.button !== 0) return;
 
       window.scrollTo(0, 1);
 
-      self.window.resize(function() {
-        self.zoom();
-      });
+      self.game.input.handle(Modules.InputType.LeftClick, event);
+    });
 
-      $.getJSON("data/config.json", function(json) {
-        self.config = json;
+    $('input[type="range"]').on("input", function() {
+      self.updateRange($(this));
+    });
+  }
 
-        if (self.readyCallback) self.readyCallback();
-      });
+  login() {
+    var self = this;
 
-      $(document).bind("keydown", function(e) {
-        if (e.which === Modules.Keys.Enter) return false;
-      });
+    if (
+      self.loggingIn ||
+      !self.game ||
+      !self.game.loaded ||
+      self.statusMessage ||
+      !self.verifyForm()
+    )
+      return;
 
-      $(document).keydown(function(e) {
-        var key = e.which;
+    self.toggleLogin(true);
+    self.game.connect();
+  }
 
-        if (!self.game) return;
+  zoom() {
+    var self = this;
 
-        self.body.focus();
+    var containerWidth = self.container.width(),
+      containerHeight = self.container.height(),
+      windowWidth = self.window.width(),
+      windowHeight = self.window.height(),
+      zoomFactor = windowWidth / containerWidth;
 
-        if (key === Modules.Keys.Enter && !self.game.started) {
-          self.login();
-          return;
+    if (containerHeight + 50 >= windowHeight) {
+      zoomFactor = windowHeight / (containerHeight + 50);
+    }
+
+    if (self.getScaleFactor() === 3) zoomFactor -= 0.1;
+
+    self.body.css({
+      zoom: zoomFactor,
+      "-moz-transform": "scale(" + zoomFactor + ")"
+    });
+
+    self.border.css("top", 0);
+
+    self.zoomFactor = zoomFactor;
+  }
+
+  fadeMenu() {
+    var self = this;
+
+    self.updateLoader(null);
+
+    setTimeout(() => {
+      self.body.addClass("game");
+      self.body.addClass("started");
+      self.body.removeClass("intro");
+    }, 500);
+  }
+
+  showMenu() {
+    var self = this;
+
+    self.body.removeClass("game");
+    self.body.removeClass("started");
+    self.body.addClass("intro");
+  }
+
+  showDeath() {}
+
+  openScroll(origin, destination) {
+    var self = this;
+
+    console.log("open scroll", origin, destination);
+
+    if (!destination || self.loggingIn) return;
+
+    self.cleanErrors();
+    // self.wrapper.removeClass(origin).addClass(destination);
+    $("#" + origin).css("display", "none");
+    $("#" + destination).css("display", "block");
+  }
+
+  displayScroll(content) {
+    var self = this,
+      state = self.wrapper.attr("class");
+
+    if (self.game.started) {
+      self.wrapper.removeClass().addClass(content);
+
+      self.body.removeClass("credits legal about").toggleClass(content);
+
+      if (self.game.player) self.body.toggleClass("death");
+
+      if (content !== "about") self.helpButton.removeClass("active");
+    } else if (state !== "animate")
+      self.openScroll(state, state === content ? "loadCharacter" : content);
+  }
+
+  verifyForm() {
+    var self = this,
+      activeForm = self.getActiveForm();
+
+    if (activeForm === "null") {
+      return;
+    }
+
+    switch (activeForm) {
+      case "loadCharacter":
+        var nameInput = $("#loginNameInput"),
+          passwordInput = $("#loginPasswordInput");
+
+        if (self.loginFields.length === 0)
+          self.loginFields = [nameInput, passwordInput];
+
+        if (!nameInput.val() && !self.isGuest()) {
+          self.sendError(nameInput, "Please enter a username.");
+          return false;
         }
 
-        if (self.game.started) self.game.onInput(Modules.InputType.Key, key);
-      });
+        if (!passwordInput.val() && !self.isGuest()) {
+          self.sendError(passwordInput, "Please enter a password.");
+          return false;
+        }
 
-      $(document).keyup(function(e) {
-        var key = e.which;
+        break;
 
-        if (!self.game || !self.game.started) return;
+      case "createCharacter":
+        var characterName = $("#registerNameInput"),
+          registerPassword = $("#registerPasswordInput"),
+          registerPasswordConfirmation = $(
+            "#registerPasswordConfirmationInput"
+          ),
+          email = $("#registerEmailInput");
 
-        self.game.input.keyUp(key);
-      });
+        if (self.registerFields.length === 0)
+          self.registerFields = [
+            characterName,
+            registerPassword,
+            registerPasswordConfirmation,
+            email
+          ];
 
-      $(document).mousemove(function(event) {
-        if (!self.game || !self.game.input || !self.game.started) return;
+        if (!characterName.val()) {
+          self.sendError(characterName, "A username is necessary you silly.");
+          return false;
+        }
 
-        self.game.input.setCoords(event);
-        self.game.input.moveCursor();
-      });
+        if (!registerPassword.val()) {
+          self.sendError(registerPassword, "You must enter a password.");
+          return false;
+        }
 
-      self.canvas.click(function(event) {
-        if (!self.game || !self.game.started || event.button !== 0) return;
+        if (registerPasswordConfirmation.val() !== registerPassword.val()) {
+          self.sendError(
+            registerPasswordConfirmation,
+            "The passwords do not match!"
+          );
+          return false;
+        }
 
-        window.scrollTo(0, 1);
+        if (!email.val() || !self.verifyEmail(email.val())) {
+          self.sendError(email, "An email is required!");
+          return false;
+        }
 
-        self.game.input.handle(Modules.InputType.LeftClick, event);
-      });
+        break;
+    }
 
-      $('input[type="range"]').on("input", function() {
-        self.updateRange($(this));
-      });
-    },
+    return true;
+  }
 
-    login: function() {
-      var self = this;
+  verifyEmail(email) {
+    return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      email
+    );
+  }
 
-      if (
-        self.loggingIn ||
-        !self.game ||
-        !self.game.loaded ||
-        self.statusMessage ||
-        !self.verifyForm()
-      )
-        return;
+  sendStatus(message) {
+    var self = this;
 
-      self.toggleLogin(true);
-      self.game.connect();
-    },
+    self.cleanErrors();
 
-    zoom: function() {
-      var self = this;
+    self.statusMessage = message;
 
-      var containerWidth = self.container.width(),
-        containerHeight = self.container.height(),
-        windowWidth = self.window.width(),
-        windowHeight = self.window.height(),
-        zoomFactor = windowWidth / containerWidth;
+    if (!message) {
+      self.loadingMsg.html("");
+      self.loading.hide();
+      return;
+    }
 
-      if (containerHeight + 50 >= windowHeight) {
-        zoomFactor = windowHeight / (containerHeight + 50);
-      }
+    self.loading.show();
+    self.loadingMsg.html(message);
+  }
 
-      if (self.getScaleFactor() === 3) zoomFactor -= 0.1;
+  sendError(field, error) {
+    this.cleanErrors();
+    console.log("Error: " + error);
 
-      self.body.css({
-        zoom: zoomFactor,
-        "-moz-transform": "scale(" + zoomFactor + ")"
-      });
+    this.errorMsg.html(error);
+    this.errorMsg.show();
 
-      self.border.css("top", 0);
+    if (!field) return;
 
-      self.zoomFactor = zoomFactor;
-    },
-
-    fadeMenu: function() {
-      var self = this;
-
-      self.updateLoader(null);
-
-      setTimeout(function() {
-        self.body.addClass("game");
-        self.body.addClass("started");
-        self.body.removeClass("intro");
-      }, 500);
-    },
-
-    showMenu: function() {
-      var self = this;
-
-      self.body.removeClass("game");
-      self.body.removeClass("started");
-      self.body.addClass("intro");
-    },
-
-    showDeath: function() {},
-
-    openScroll: function(origin, destination) {
-      var self = this;
-
-      console.log("open scroll", origin, destination);
-
-      if (!destination || self.loggingIn) return;
-
-      self.cleanErrors();
-      // self.wrapper.removeClass(origin).addClass(destination);
-      $("#" + origin).css("display", "none");
-      $("#" + destination).css("display", "block");
-    },
-
-    displayScroll: function(content) {
-      var self = this,
-        state = self.wrapper.attr("class");
-
-      if (self.game.started) {
-        self.wrapper.removeClass().addClass(content);
-
-        self.body.removeClass("credits legal about").toggleClass(content);
-
-        if (self.game.player) self.body.toggleClass("death");
-
-        if (content !== "about") self.helpButton.removeClass("active");
-      } else if (state !== "animate")
-        self.openScroll(state, state === content ? "loadCharacter" : content);
-    },
-
-    verifyForm: function() {
-      var self = this,
-        activeForm = self.getActiveForm();
-
-      if (activeForm === "null") {
-        return;
-      }
-
-      switch (activeForm) {
-        case "loadCharacter":
-          var nameInput = $("#loginNameInput"),
-            passwordInput = $("#loginPasswordInput");
-
-          if (self.loginFields.length === 0)
-            self.loginFields = [nameInput, passwordInput];
-
-          if (!nameInput.val() && !self.isGuest()) {
-            self.sendError(nameInput, "Please enter a username.");
-            return false;
-          }
-
-          if (!passwordInput.val() && !self.isGuest()) {
-            self.sendError(passwordInput, "Please enter a password.");
-            return false;
-          }
-
-          break;
-
-        case "createCharacter":
-          var characterName = $("#registerNameInput"),
-            registerPassword = $("#registerPasswordInput"),
-            registerPasswordConfirmation = $(
-              "#registerPasswordConfirmationInput"
-            ),
-            email = $("#registerEmailInput");
-
-          if (self.registerFields.length === 0)
-            self.registerFields = [
-              characterName,
-              registerPassword,
-              registerPasswordConfirmation,
-              email
-            ];
-
-          if (!characterName.val()) {
-            self.sendError(characterName, "A username is necessary you silly.");
-            return false;
-          }
-
-          if (!registerPassword.val()) {
-            self.sendError(registerPassword, "You must enter a password.");
-            return false;
-          }
-
-          if (registerPasswordConfirmation.val() !== registerPassword.val()) {
-            self.sendError(
-              registerPasswordConfirmation,
-              "The passwords do not match!"
-            );
-            return false;
-          }
-
-          if (!email.val() || !self.verifyEmail(email.val())) {
-            self.sendError(email, "An email is required!");
-            return false;
-          }
-
-          break;
-      }
-
-      return true;
-    },
-
-    verifyEmail: function(email) {
-      return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email
-      );
-    },
-
-    sendStatus: function(message) {
-      var self = this;
-
-      self.cleanErrors();
-
-      self.statusMessage = message;
-
-      if (!message) {
-        self.loadingMsg.html("");
-        self.loading.hide();
-        return;
-      }
-
-      self.loading.show();
-      self.loadingMsg.html(message);
-    },
-
-    sendError: function(field, error) {
-      this.cleanErrors();
-      console.log("Error: " + error);
-
-      this.errorMsg.html(error);
-      this.errorMsg.show();
-
-      if (!field) return;
-
-      field.addClass("field-error").select();
-      field.bind("keypress", function(event) {
-        field.removeClass("field-error");
-
-        $(".validation-error").remove();
-
-        $(this).unbind(event);
-      });
-    },
-
-    cleanErrors: function() {
-      var self = this,
-        activeForm = self.getActiveForm(),
-        fields =
-          activeForm === "loadCharacter"
-            ? self.loginFields
-            : self.registerFields;
-
-      for (var i = 0; i < fields.length; i++)
-        fields[i].removeClass("field-error");
+    field.addClass("field-error").select();
+    field.bind("keypress", function(event) {
+      field.removeClass("field-error");
 
       $(".validation-error").remove();
-      $(".status").remove();
-    },
 
-    getActiveForm: function() {
-      return this.wrapper[0].className;
-    },
+      $(this).unbind(event);
+    });
+  }
 
-    isRegistering: function() {
-      return this.getActiveForm() === "createCharacter";
-    },
+  cleanErrors() {
+    var self = this,
+      activeForm = self.getActiveForm(),
+      fields =
+        activeForm === "loadCharacter" ? self.loginFields : self.registerFields;
 
-    isGuest: function() {
-      return this.guestLogin;
-    },
+    for (var i = 0; i < fields.length; i++)
+      fields[i].removeClass("field-error");
 
-    resize: function() {
-      var self = this;
+    $(".validation-error").remove();
+    $(".status").remove();
+  }
 
-      if (self.game) self.game.resize();
-    },
+  getActiveForm() {
+    return this.wrapper[0].className;
+  }
 
-    setGame: function(game) {
-      this.game = game;
-    },
+  isRegistering() {
+    return this.getActiveForm() === "createCharacter";
+  }
 
-    hasWorker: function() {
-      return !!window.Worker;
-    },
+  isGuest() {
+    return this.guestLogin;
+  }
 
-    getScaleFactor: function() {
-      var width = window.innerWidth,
-        height = window.innerHeight;
+  resize() {
+    var self = this;
 
-      /**
-       * These are raw scales, we can adjust
-       * for up-scaled rendering in the actual
-       * rendering file.
-       */
+    if (self.game) self.game.resize();
+  }
 
-      return width <= 1000 ? 1 : width <= 1500 || height <= 870 ? 2 : 3;
-    },
+  setGame(game) {
+    this.game = game;
+  }
 
-    revertLoader: function() {
-      this.updateLoader("Connecting to server...");
-    },
+  hasWorker() {
+    return !!window.Worker;
+  }
 
-    updateLoader: function(message) {
-      var self = this;
+  getScaleFactor() {
+    var width = window.innerWidth,
+      height = window.innerHeight;
 
-      if (!message) {
-        self.loading.hide();
-        self.loadingMsg.html("");
-        return;
-      }
+    /**
+     * These are raw scales, we can adjust
+     * for up-scaled rendering in the actual
+     * rendering file.
+     */
 
-      self.loading.show();
-      self.loadingMsg.html(message);
-    },
+    return width <= 1000 ? 1 : width <= 1500 || height <= 870 ? 2 : 3;
+  }
 
-    toggleLogin: function(toggle) {
-      log.info("Logging in: " + toggle);
+  revertLoader() {
+    this.updateLoader("Connecting to server...");
+  }
 
-      var self = this;
+  updateLoader(message) {
+    var self = this;
 
-      self.revertLoader();
-
-      self.toggleTyping(toggle);
-
-      self.loggingIn = toggle;
-
-      if (toggle) {
-        self.loading.hide();
-
-        self.loginButton.addClass("disabled");
-        self.registerButton.addClass("disabled");
-      } else {
-        self.loading.hide();
-
-        self.loginButton.removeClass("disabled");
-        self.registerButton.removeClass("disabled");
-      }
-    },
-
-    toggleTyping: function(state) {
-      var self = this;
-
-      if (self.loginFields)
-        _.each(self.loginFields, function(field) {
-          field.prop("readonly", state);
-        });
-
-      if (self.registerFields)
-        _.each(self.registerFields, function(field) {
-          field.prop("readOnly", state);
-        });
-    },
-
-    updateRange: function(obj) {
-      var self = this,
-        val =
-          (obj.val() - obj.attr("min")) / (obj.attr("max") - obj.attr("min"));
-
-      obj.css(
-        "background-image",
-        "-webkit-gradient(linear, left top, right top, " +
-          "color-stop(" +
-          val +
-          ", #4d4d4d), " +
-          "color-stop(" +
-          val +
-          ", #C5C5C5)" +
-          ")"
-      );
-    },
-
-    updateOrientation: function() {
-      this.orientation = this.getOrientation();
-    },
-
-    getOrientation: function() {
-      return window.innerHeight > window.innerWidth ? "portrait" : "landscape";
-    },
-
-    getZoom: function() {
-      return this.zoomFactor;
-    },
-
-    onReady: function(callback) {
-      this.readyCallback = callback;
-    },
-
-    isMobile: function() {
-      return this.getScaleFactor() < 2;
-    },
-
-    isTablet: function() {
-      return (
-        Detect.isIpad() || (Detect.isAndroid() && this.getScaleFactor() > 1)
-      );
+    if (!message) {
+      self.loading.hide();
+      self.loadingMsg.html("");
+      return;
     }
-  });
-});
+
+    self.loading.show();
+    self.loadingMsg.html(message);
+  }
+
+  toggleLogin(toggle) {
+    log.info("Logging in: " + toggle);
+
+    var self = this;
+
+    self.revertLoader();
+
+    self.toggleTyping(toggle);
+
+    self.loggingIn = toggle;
+
+    if (toggle) {
+      self.loading.hide();
+
+      self.loginButton.addClass("disabled");
+      self.registerButton.addClass("disabled");
+    } else {
+      self.loading.hide();
+
+      self.loginButton.removeClass("disabled");
+      self.registerButton.removeClass("disabled");
+    }
+  }
+
+  toggleTyping(state) {
+    var self = this;
+
+    if (self.loginFields)
+      _.each(self.loginFields, function(field) {
+        field.prop("readonly", state);
+      });
+
+    if (self.registerFields)
+      _.each(self.registerFields, function(field) {
+        field.prop("readOnly", state);
+      });
+  }
+
+  updateRange(obj) {
+    var self = this,
+      val = (obj.val() - obj.attr("min")) / (obj.attr("max") - obj.attr("min"));
+
+    obj.css(
+      "background-image",
+      "-webkit-gradient(linear, left top, right top, " +
+        "color-stop(" +
+        val +
+        ", #4d4d4d), " +
+        "color-stop(" +
+        val +
+        ", #C5C5C5)" +
+        ")"
+    );
+  }
+
+  updateOrientation() {
+    this.orientation = this.getOrientation();
+  }
+
+  getOrientation() {
+    return window.innerHeight > window.innerWidth ? "portrait" : "landscape";
+  }
+
+  getZoom() {
+    return this.zoomFactor;
+  }
+
+  onReady(callback) {
+    this.readyCallback = callback;
+  }
+
+  isMobile() {
+    return this.getScaleFactor() < 2;
+  }
+
+  isTablet() {
+    return Detect.isIpad() || (Detect.isAndroid() && this.getScaleFactor() > 1);
+  }
+}

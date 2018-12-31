@@ -8,25 +8,25 @@ define(function() {
    */
 
   return Class.extend({
-    init: function() {
+    constructor() {
       var self = this;
 
       self.queue = [];
     },
 
-    reset: function() {
+    reset() {
       this.queue = [];
     },
 
-    add: function(object) {
+    add(object) {
       this.queue.push(object);
     },
 
-    getQueue: function() {
+    getQueue() {
       return this.queue;
     },
 
-    forEachQueue: function(callback) {
+    forEachQueue(callback) {
       _.each(this.queue, function(object) {
         callback(object);
       });

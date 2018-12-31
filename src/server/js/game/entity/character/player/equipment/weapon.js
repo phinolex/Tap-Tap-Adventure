@@ -2,7 +2,7 @@ var Equipment = require("./equipment"),
   Items = require("../../../../../util/items");
 
 module.exports = Weapon = Equipment.extend({
-  init: function(name, id, count, ability, abilityLevel) {
+  init(name, id, count, ability, abilityLevel) {
     var self = this;
 
     self._super(name, id, count, ability, abilityLevel);
@@ -12,27 +12,27 @@ module.exports = Weapon = Equipment.extend({
     self.breakable = false;
   },
 
-  hasCritical: function() {
+  hasCritical() {
     return this.ability === 1;
   },
 
-  hasExplosive: function() {
+  hasExplosive() {
     return this.ability === 4;
   },
 
-  hasStun: function() {
+  hasStun() {
     return this.ability === 5;
   },
 
-  isRanged: function() {
+  isRanged() {
     return this.ranged;
   },
 
-  setLevel: function(level) {
+  setLevel(level) {
     this.level = level;
   },
 
-  getLevel: function() {
+  getLevel() {
     return this.level;
   }
 });

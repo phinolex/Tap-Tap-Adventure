@@ -1,7 +1,7 @@
 var Entity = require("../entity");
 
 module.exports = Item = Entity.extend({
-  init: function(id, instance, x, y) {
+  init(id, instance, x, y) {
     var self = this;
 
     self._super(id, "item", instance, x, y);
@@ -24,7 +24,7 @@ module.exports = Item = Entity.extend({
     self.despawnTimeout = null;
   },
 
-  destroy: function() {
+  destroy() {
     var self = this;
 
     if (self.blinkTimeout) clearTimeout(self.blinkTimeout);
@@ -34,7 +34,7 @@ module.exports = Item = Entity.extend({
     if (self.static) self.respawn();
   },
 
-  despawn: function() {
+  despawn() {
     var self = this;
 
     self.blinkTimeout = setTimeout(function() {
@@ -46,7 +46,7 @@ module.exports = Item = Entity.extend({
     }, self.blinkDelay);
   },
 
-  respawn: function() {
+  respawn() {
     var self = this;
 
     setTimeout(function() {
@@ -54,13 +54,13 @@ module.exports = Item = Entity.extend({
     }, self.respawnTime);
   },
 
-  getData: function() {
+  getData() {
     var self = this;
 
     return [self.id, self.count, self.ability, self.abilityLevel];
   },
 
-  getState: function() {
+  getState() {
     var self = this,
       state = self._super();
 
@@ -71,27 +71,27 @@ module.exports = Item = Entity.extend({
     return state;
   },
 
-  setCount: function(count) {
+  setCount(count) {
     this.count = count;
   },
 
-  setAbility: function(ability) {
+  setAbility(ability) {
     this.ability = ability;
   },
 
-  setAbilityLevel: function(abilityLevel) {
+  setAbilityLevel(abilityLevel) {
     this.abilityLevel = abilityLevel;
   },
 
-  onRespawn: function(callback) {
+  onRespawn(callback) {
     this.respawnCallback = callback;
   },
 
-  onBlink: function(callback) {
+  onBlink(callback) {
     this.blinkCallback = callback;
   },
 
-  onDespawn: function(callback) {
+  onDespawn(callback) {
     this.despawnCallback = callback;
   }
 });

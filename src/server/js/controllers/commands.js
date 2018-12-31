@@ -6,14 +6,14 @@ var cls = require("../lib/class"),
   _ = require("underscore");
 
 module.exports = Commands = cls.Class.extend({
-  init: function(player) {
+  init(player) {
     var self = this;
 
     self.world = player.world;
     self.player = player;
   },
 
-  parse: function(rawText) {
+  parse(rawText) {
     var self = this,
       blocks = rawText.substring(1).split(" ");
 
@@ -28,7 +28,7 @@ module.exports = Commands = cls.Class.extend({
     if (self.player.rights > 1) self.handleAdminCommands(command, blocks);
   },
 
-  handlePlayerCommands: function(command, blocks) {
+  handlePlayerCommands(command, blocks) {
     var self = this;
 
     switch (command) {
@@ -84,7 +84,7 @@ module.exports = Commands = cls.Class.extend({
     }
   },
 
-  handleModeratorCommands: function(command, blocks) {
+  handleModeratorCommands(command, blocks) {
     var self = this;
 
     switch (command) {
@@ -127,7 +127,7 @@ module.exports = Commands = cls.Class.extend({
     }
   },
 
-  handleAdminCommands: function(command, blocks) {
+  handleAdminCommands(command, blocks) {
     var self = this;
 
     switch (command) {

@@ -9,7 +9,7 @@ var cls = require("../../../../lib/class"),
   Modules = require("../../../../util/modules");
 
 module.exports = Handler = cls.Class.extend({
-  init: function(player) {
+  init(player) {
     var self = this;
 
     self.player = player;
@@ -18,7 +18,7 @@ module.exports = Handler = cls.Class.extend({
     self.load();
   },
 
-  load: function() {
+  load() {
     var self = this;
 
     self.player.onMovement(function(x, y) {
@@ -99,7 +99,7 @@ module.exports = Handler = cls.Class.extend({
     });
   },
 
-  detectAggro: function() {
+  detectAggro() {
     var self = this,
       group = self.world.groups[self.player.group];
 
@@ -114,7 +114,7 @@ module.exports = Handler = cls.Class.extend({
     });
   },
 
-  detectMusic: function(x, y) {
+  detectMusic(x, y) {
     var self = this,
       musicArea = _.find(self.world.getMusicAreas(), function(area) {
         return area.contains(x, y);
@@ -125,7 +125,7 @@ module.exports = Handler = cls.Class.extend({
       self.player.updateMusic(musicArea.id);
   },
 
-  detectPVP: function(x, y) {
+  detectPVP(x, y) {
     var self = this,
       pvpArea = _.find(self.world.getPVPAreas(), function(area) {
         return area.contains(x, y);

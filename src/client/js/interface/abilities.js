@@ -1,6 +1,6 @@
 define(["jquery"], function($) {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -8,7 +8,7 @@ define(["jquery"], function($) {
       self.shortcuts = $("#abilityShortcut");
     },
 
-    getList: function() {
+    getList() {
       return this.shortcuts.find("ul");
     }
   });

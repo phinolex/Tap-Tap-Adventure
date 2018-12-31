@@ -2,7 +2,7 @@
 
 define(function() {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -13,27 +13,27 @@ define(function() {
       self.direction = null;
     },
 
-    reset: function() {
+    reset() {
       this.direction = null;
     },
 
-    setUp: function() {
+    setUp() {
       this.direction = Modules.Orientation.Up;
     },
 
-    setDown: function() {
+    setDown() {
       this.direction = Modules.Orientation.Down;
     },
 
-    setRight: function() {
+    setRight() {
       this.direction = Modules.Orientation.Right;
     },
 
-    setLeft: function() {
+    setLeft() {
       this.direction = Modules.Orientation.Left;
     },
 
-    getDirection: function() {
+    getDirection() {
       return this.direction;
     }
   });

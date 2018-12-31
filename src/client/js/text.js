@@ -56,7 +56,7 @@
         });
     return (e = {
       version: "0.26.0",
-      strip: function(a) {
+      strip(a) {
         if (a) {
           var a = a.replace(l, ""),
             b = a.match(m);
@@ -64,7 +64,7 @@
         } else a = "";
         return a;
       },
-      jsEscape: function(a) {
+      jsEscape(a) {
         return a
           .replace(/(['\\])/g, "\\$1")
           .replace(/[\f]/g, "\\f")
@@ -73,7 +73,7 @@
           .replace(/[\t]/g, "\\t")
           .replace(/[\r]/g, "\\r");
       },
-      createXhr: function() {
+      createXhr() {
         var a, b, c;
         if (typeof XMLHttpRequest !== "undefined") return new XMLHttpRequest();
         else
@@ -91,7 +91,7 @@
         return a;
       },
       get: h,
-      parseName: function(a) {
+      parseName(a) {
         var b = !1,
           c = a.indexOf("."),
           e = a.substring(0, c),
@@ -104,7 +104,7 @@
         return {moduleName: e, ext: a, strip: b};
       },
       xdRegExp: /^((\w+)\:)?\/\/([^\/\\]+)/,
-      canUseXhr: function(a, b, c, g) {
+      canUseXhr(a, b, c, g) {
         var d = e.xdRegExp.exec(a),
           f;
         if (!d) return !0;
@@ -115,12 +115,12 @@
         d = d[0];
         return (!a || a === b) && (!d || d === c) && ((!f && !d) || f === g);
       },
-      finishLoad: function(a, b, c, g, d) {
+      finishLoad(a, b, c, g, d) {
         c = b ? e.strip(c) : c;
         d.isBuild && d.inlineText && (i[a] = c);
         g(c);
       },
-      load: function(a, b, c, g) {
+      load(a, b, c, g) {
         var d = e.parseName(a),
           f = d.moduleName + "." + d.ext,
           h = b.toUrl(f);
@@ -132,7 +132,7 @@
               e.finishLoad(d.moduleName + "." + d.ext, d.strip, a, c, g);
             });
       },
-      write: function(a, b, c) {
+      write(a, b, c) {
         if (b in i) {
           var g = e.jsEscape(i[b]);
           c(
@@ -146,7 +146,7 @@
           );
         }
       },
-      writeFile: function(a, b, c, g, d) {
+      writeFile(a, b, c, g, d) {
         var b = e.parseName(b),
           f = b.moduleName + "." + b.ext,
           h = c.toUrl(b.moduleName + "." + b.ext) + ".js";

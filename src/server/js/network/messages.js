@@ -6,121 +6,121 @@ var cls = require("../lib/class"),
 module.exports = Messages;
 
 Messages.Handshake = Message.extend({
-  init: function(clientId, devClient) {
+  init(clientId, devClient) {
     this.clientId = clientId;
     this.devClient = devClient;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Handshake, [this.clientId, this.devClient]];
   }
 });
 
 Messages.Welcome = Message.extend({
-  init: function(data) {
+  init(data) {
     this.data = data; //array of info
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Welcome, this.data];
   }
 });
 
 Messages.Spawn = Message.extend({
-  init: function(entity) {
+  init(entity) {
     this.entity = entity;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Spawn, this.entity.getState()];
   }
 });
 
 Messages.List = Message.extend({
-  init: function(list) {
+  init(list) {
     this.list = list;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.List, this.list];
   }
 });
 
 Messages.Sync = Message.extend({
-  init: function(data) {
+  init(data) {
     this.data = data;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Sync, this.data];
   }
 });
 
 Messages.Equipment = Message.extend({
-  init: function(opcode, equipmentData) {
+  init(opcode, equipmentData) {
     this.opcode = opcode;
     this.equipmentData = equipmentData;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Equipment, this.opcode, this.equipmentData];
   }
 });
 
 Messages.Movement = Message.extend({
-  init: function(opcode, data) {
+  init(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Movement, [this.opcode, this.data]];
   }
 });
 
 Messages.Teleport = Message.extend({
-  init: function(id, x, y, withAnimation) {
+  init(id, x, y, withAnimation) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.withAnimation = withAnimation;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Teleport, [this.id, this.x, this.y, this.withAnimation]];
   }
 });
 
 Messages.Despawn = Message.extend({
-  init: function(id) {
+  init(id) {
     this.id = id;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Despawn, this.id];
   }
 });
 
 Messages.Animation = Message.extend({
-  init: function(id, data) {
+  init(id, data) {
     this.id = id;
     this.data = data;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Animation, this.id, this.data];
   }
 });
 
 Messages.Combat = Message.extend({
-  init: function(opcode, attackerId, targetId, hitData) {
+  init(opcode, attackerId, targetId, hitData) {
     this.opcode = opcode;
     this.attackerId = attackerId;
     this.targetId = targetId;
     this.hitData = hitData;
   },
 
-  serialize: function() {
+  serialize() {
     return [
       Packets.Combat,
       [this.opcode, this.attackerId, this.targetId, this.hitData]
@@ -129,54 +129,54 @@ Messages.Combat = Message.extend({
 });
 
 Messages.Projectile = Message.extend({
-  init: function(opcode, data) {
+  init(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Projectile, this.opcode, this.data];
   }
 });
 
 Messages.Population = Message.extend({
-  init: function(playerCount) {
+  init(playerCount) {
     this.playerCount = playerCount;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Population, this.playerCount];
   }
 });
 
 Messages.Points = Message.extend({
-  init: function(id, hitPoints, mana) {
+  init(id, hitPoints, mana) {
     this.id = id;
     this.hitPoints = hitPoints;
     this.mana = mana;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Points, [this.id, this.hitPoints, this.mana]];
   }
 });
 
 Messages.Network = Message.extend({
-  init: function(opcode) {
+  init(opcode) {
     this.opcode = opcode;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Network, this.opcode];
   }
 });
 
 Messages.Chat = Message.extend({
-  init: function(data) {
+  init(data) {
     this.data = data;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Chat, this.data];
   }
 });
@@ -187,184 +187,184 @@ Messages.Chat = Message.extend({
  */
 
 Messages.Inventory = Message.extend({
-  init: function(opcode, data) {
+  init(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Inventory, this.opcode, this.data];
   }
 });
 
 Messages.Bank = Message.extend({
-  init: function(opcode, data) {
+  init(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Bank, this.opcode, this.data];
   }
 });
 
 Messages.Ability = Message.extend({
-  init: function(opcode, data) {
+  init(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Ability, this.opcode, this.data];
   }
 });
 
 Messages.Quest = Message.extend({
-  init: function(opcode, data) {
+  init(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Quest, this.opcode, this.data];
   }
 });
 
 Messages.Notification = Message.extend({
-  init: function(opcode, message) {
+  init(opcode, message) {
     this.opcode = opcode;
     this.message = message;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Notification, this.opcode, this.message];
   }
 });
 
 Messages.Blink = Message.extend({
-  init: function(instance) {
+  init(instance) {
     this.instance = instance;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Blink, this.instance];
   }
 });
 
 Messages.Heal = Message.extend({
-  init: function(info) {
+  init(info) {
     this.info = info;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Heal, this.info];
   }
 });
 
 Messages.Experience = Message.extend({
-  init: function(info) {
+  init(info) {
     this.info = info;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Experience, this.info];
   }
 });
 
 Messages.Death = Message.extend({
-  init: function(id) {
+  init(id) {
     this.id = id;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Death, this.id];
   }
 });
 
 Messages.Audio = Message.extend({
-  init: function(song) {
+  init(song) {
     this.song = song;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Audio, this.song];
   }
 });
 
 Messages.NPC = Message.extend({
-  init: function(opcode, info) {
+  init(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.NPC, this.opcode, this.info];
   }
 });
 
 Messages.Respawn = Message.extend({
-  init: function(instance, x, y) {
+  init(instance, x, y) {
     this.instance = instance;
     this.x = x;
     this.y = y;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Respawn, this.instance, this.x, this.y];
   }
 });
 
 Messages.Enchant = Message.extend({
-  init: function(opcode, info) {
+  init(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Enchant, this.opcode, this.info];
   }
 });
 
 Messages.Guild = Message.extend({
-  init: function(opcode, info) {
+  init(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Enchant, this.opcode, this.info];
   }
 });
 
 Messages.Pointer = Message.extend({
-  init: function(opcode, info) {
+  init(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Pointer, this.opcode, this.info];
   }
 });
 
 Messages.PVP = Message.extend({
-  init: function(id, pvp) {
+  init(id, pvp) {
     this.id = id;
     this.pvp = pvp;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.PVP, this.id, this.pvp];
   }
 });
 
 Messages.Shop = Message.extend({
-  init: function(opcode, info) {
+  init(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },
 
-  serialize: function() {
+  serialize() {
     return [Packets.Shop, this.opcode, this.info];
   }
 });

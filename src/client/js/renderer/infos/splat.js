@@ -2,7 +2,7 @@
 
 define(function() {
   return Class.extend({
-    init: function(id, type, text, x, y, statique) {
+    init(id, type, text, x, y, statique) {
       var self = this;
 
       self.id = id;
@@ -20,16 +20,16 @@ define(function() {
       self.duration = 1000;
     },
 
-    setColours: function(fill, stroke) {
+    setColours(fill, stroke) {
       this.fill = fill;
       this.stroke = stroke;
     },
 
-    setDuration: function(duration) {
+    setDuration(duration) {
       this.duration = duration;
     },
 
-    tick: function() {
+    tick() {
       var self = this;
 
       if (!self.statique) self.y -= 1;
@@ -39,7 +39,7 @@ define(function() {
       if (self.opacity < 0) self.destroy();
     },
 
-    update: function(time) {
+    update(time) {
       var self = this;
 
       if (time - self.lastTime > self.speed) {
@@ -48,13 +48,13 @@ define(function() {
       }
     },
 
-    destroy: function() {
+    destroy() {
       var self = this;
 
       if (self.destroyCallback) self.destroyCallback(self.id);
     },
 
-    onDestroy: function(callback) {
+    onDestroy(callback) {
       this.destroyCallback = callback;
     }
   });

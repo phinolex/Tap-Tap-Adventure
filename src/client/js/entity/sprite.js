@@ -2,7 +2,7 @@
 
 define(["./animation"], function(Animation) {
   return Class.extend({
-    init: function(sprite, scale) {
+    init(sprite, scale) {
       var self = this;
 
       self.sprite = sprite;
@@ -23,7 +23,7 @@ define(["./animation"], function(Animation) {
       self.loadSprite();
     },
 
-    load: function() {
+    load() {
       var self = this;
 
       self.image = new Image();
@@ -37,7 +37,7 @@ define(["./animation"], function(Animation) {
       };
     },
 
-    loadSprite: function() {
+    loadSprite() {
       var self = this,
         sprite = self.sprite;
 
@@ -53,7 +53,7 @@ define(["./animation"], function(Animation) {
         sprite.offsetAngle !== undefined ? sprite.offsetAngle : 0;
     },
 
-    update: function(newScale) {
+    update(newScale) {
       var self = this;
 
       self.scale = newScale;
@@ -62,7 +62,7 @@ define(["./animation"], function(Animation) {
       self.load();
     },
 
-    createAnimations: function() {
+    createAnimations() {
       var self = this,
         animations = {};
 
@@ -87,7 +87,7 @@ define(["./animation"], function(Animation) {
      * This is when an entity gets hit, they turn red then white.
      */
 
-    createHurtSprite: function() {
+    createHurtSprite() {
       var self = this;
 
       if (!self.loaded) self.load();
@@ -133,7 +133,7 @@ define(["./animation"], function(Animation) {
       } catch (e) {}
     },
 
-    getHurtSprite: function() {
+    getHurtSprite() {
       var self = this;
 
       try {
@@ -145,7 +145,7 @@ define(["./animation"], function(Animation) {
       } catch (e) {}
     },
 
-    onLoad: function(callback) {
+    onLoad(callback) {
       this.onLoadCallback = callback;
     }
   });

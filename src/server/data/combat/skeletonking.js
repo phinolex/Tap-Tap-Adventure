@@ -10,7 +10,7 @@ module.exports = SkeletonKing = Combat.extend({
    * And two death knights on (x + 1, y - 1) & (x - 1, y - 1)
    */
 
-  init: function(character) {
+  init(character) {
     var self = this;
 
     self._super(character);
@@ -26,7 +26,7 @@ module.exports = SkeletonKing = Combat.extend({
     });
   },
 
-  reset: function() {
+  reset() {
     var self = this;
 
     self.lastSpawn = 0;
@@ -36,7 +36,7 @@ module.exports = SkeletonKing = Combat.extend({
     for (var i = 0; i < listCopy.length; i++) self.world.kill(listCopy[i]);
   },
 
-  hit: function(character, target, hitInfo) {
+  hit(character, target, hitInfo) {
     var self = this;
 
     if (self.isAttacked()) self.beginMinionAttack();
@@ -46,7 +46,7 @@ module.exports = SkeletonKing = Combat.extend({
     self._super(character, target, hitInfo);
   },
 
-  spawnMinions: function() {
+  spawnMinions() {
     var self = this,
       x = self.character.x,
       y = self.character.y;
@@ -76,7 +76,7 @@ module.exports = SkeletonKing = Combat.extend({
     });
   },
 
-  beginMinionAttack: function() {
+  beginMinionAttack() {
     var self = this;
 
     if (!self.hasMinions()) return;
@@ -89,7 +89,7 @@ module.exports = SkeletonKing = Combat.extend({
     });
   },
 
-  getRandomTarget: function() {
+  getRandomTarget() {
     var self = this;
 
     if (self.isAttacked()) {
@@ -104,15 +104,15 @@ module.exports = SkeletonKing = Combat.extend({
     return null;
   },
 
-  hasMinions: function() {
+  hasMinions() {
     return this.minions.length > 0;
   },
 
-  isLast: function() {
+  isLast() {
     return this.minions.length === 1;
   },
 
-  canSpawn: function() {
+  canSpawn() {
     return (
       new Date().getTime() - this.lastSpawn > 25000 &&
       !this.hasMinions() &&

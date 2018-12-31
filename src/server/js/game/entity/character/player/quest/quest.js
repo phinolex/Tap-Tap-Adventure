@@ -4,7 +4,7 @@ var cls = require("../../../../../lib/class"),
   Utils = require("../../../../../util/utils");
 
 module.exports = Quest = cls.Class.extend({
-  init: function(player, data) {
+  init(player, data) {
     var self = this;
 
     self.player = player;
@@ -17,7 +17,7 @@ module.exports = Quest = cls.Class.extend({
     self.stage = 0;
   },
 
-  finish: function() {
+  finish() {
     var self = this;
 
     if (self.hasItemReward()) {
@@ -45,40 +45,40 @@ module.exports = Quest = cls.Class.extend({
     );
   },
 
-  isFinished: function() {
+  isFinished() {
     return this.stage >= 9999;
   },
 
-  setStage: function(stage) {
+  setStage(stage) {
     var self = this;
 
     self.stage = stage;
     self.update();
   },
 
-  hasMob: function() {
+  hasMob() {
     return false;
   },
 
-  triggerTalk: function(npc) {
+  triggerTalk(npc) {
     var self = this;
 
     if (self.npcTalkCallback) self.npcTalkCallback(npc);
   },
 
-  onNPCTalk: function(callback) {
+  onNPCTalk(callback) {
     this.npcTalkCallback = callback;
   },
 
-  hasNPC: function(id) {
+  hasNPC(id) {
     return this.data.npcs.indexOf(id) > -1;
   },
 
-  update: function() {
+  update() {
     this.player.save();
   },
 
-  updatePointers: function() {
+  updatePointers() {
     var self = this;
 
     if (!self.data.pointers) return;
@@ -100,7 +100,7 @@ module.exports = Quest = cls.Class.extend({
     );
   },
 
-  forceTalk: function(npc, message) {
+  forceTalk(npc, message) {
     var self = this;
 
     if (!npc) return;
@@ -115,7 +115,7 @@ module.exports = Quest = cls.Class.extend({
     );
   },
 
-  resetTalkIndex: function(npc) {
+  resetTalkIndex(npc) {
     var self = this;
 
     /**
@@ -135,11 +135,11 @@ module.exports = Quest = cls.Class.extend({
     );
   },
 
-  clearPointers: function() {
+  clearPointers() {
     this.player.send(new Messages.Pointer(Packets.PointerOpcode.Remove, {}));
   },
 
-  getConversation: function(id) {
+  getConversation(id) {
     var self = this,
       conversation = self.data.conversations[id];
 
@@ -148,43 +148,43 @@ module.exports = Quest = cls.Class.extend({
     return conversation[self.stage];
   },
 
-  hasItemReward: function() {
+  hasItemReward() {
     return !!this.data.itemReward;
   },
 
-  getTask: function() {
+  getTask() {
     return this.data.task[this.stage];
   },
 
-  getId: function() {
+  getId() {
     return this.id;
   },
 
-  getName: function() {
+  getName() {
     return this.name;
   },
 
-  getDescription: function() {
+  getDescription() {
     return this.description;
   },
 
-  getStage: function() {
+  getStage() {
     return this.stage;
   },
 
-  getItem: function() {
+  getItem() {
     return this.data.itemReq ? this.data.itemReq[this.stage] : null;
   },
 
-  getItemReward: function() {
+  getItemReward() {
     return this.hasItemReward() ? this.data.itemReward : null;
   },
 
-  hasInventorySpace: function(id, count) {
+  hasInventorySpace(id, count) {
     return this.player.inventory.canHold(id, count);
   },
 
-  getInfo: function() {
+  getInfo() {
     return {
       id: this.getId(),
       name: this.getName(),

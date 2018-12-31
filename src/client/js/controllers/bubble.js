@@ -2,7 +2,7 @@
 
 define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -11,7 +11,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
       self.container = $("#bubbles");
     },
 
-    create: function(id, message, time, duration) {
+    create(id, message, time, duration) {
       var self = this;
 
       if (self.bubbles[id]) {
@@ -34,7 +34,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
       }
     },
 
-    setTo: function(entity) {
+    setTo(entity) {
       var self = this;
 
       var bubble = self.get(entity.id);
@@ -58,7 +58,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
       bubble.element.css("top", y + "px");
     },
 
-    update: function(time) {
+    update(time) {
       var self = this;
 
       _.each(self.bubbles, function(bubble) {
@@ -73,7 +73,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
       });
     },
 
-    get: function(id) {
+    get(id) {
       var self = this;
 
       if (id in self.bubbles) return self.bubbles[id];
@@ -81,7 +81,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
       return null;
     },
 
-    clean: function() {
+    clean() {
       var self = this;
 
       _.each(self.bubbles, function(bubble) {
@@ -91,7 +91,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
       self.bubbles = {};
     },
 
-    destroy: function(id) {
+    destroy(id) {
       var self = this,
         bubble = self.get(id);
 

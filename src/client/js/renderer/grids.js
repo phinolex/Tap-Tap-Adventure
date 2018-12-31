@@ -2,7 +2,7 @@
 
 define(function() {
   return Class.extend({
-    init: function(map) {
+    init(map) {
       var self = this;
 
       self.map = map;
@@ -15,7 +15,7 @@ define(function() {
       self.load();
     },
 
-    load: function() {
+    load() {
       var self = this;
 
       for (var i = 0; i < self.map.height; i++) {
@@ -35,7 +35,7 @@ define(function() {
       log.info("Finished loading preliminary grids.");
     },
 
-    checkPathingGrid: function(player, xRadius, yRadius) {
+    checkPathingGrid(player, xRadius, yRadius) {
       var self = this;
 
       //mobile 1 = 15 * 8
@@ -50,7 +50,7 @@ define(function() {
             self.removeFromPathingGrid(x, y);
     },
 
-    resetPathingGrid: function() {
+    resetPathingGrid() {
       var self = this;
 
       self.pathingGrid = [];
@@ -63,31 +63,31 @@ define(function() {
       }
     },
 
-    addToRenderingGrid: function(entity, x, y) {
+    addToRenderingGrid(entity, x, y) {
       var self = this;
 
       if (!self.map.isOutOfBounds(x, y))
         self.renderingGrid[y][x][entity.id] = entity;
     },
 
-    addToPathingGrid: function(x, y) {
+    addToPathingGrid(x, y) {
       this.pathingGrid[y][x] = 1;
     },
 
-    addToEntityGrid: function(entity, x, y) {
+    addToEntityGrid(entity, x, y) {
       var self = this;
 
       if (entity && self.entityGrid[y][x])
         self.entityGrid[y][x][entity.id] = entity;
     },
 
-    addToItemGrid: function(item, x, y) {
+    addToItemGrid(item, x, y) {
       var self = this;
 
       if (item && self.itemGrid[y][x]) self.itemGrid[y][x][item.id] = item;
     },
 
-    removeFromRenderingGrid: function(entity, x, y) {
+    removeFromRenderingGrid(entity, x, y) {
       var self = this;
 
       if (
@@ -98,25 +98,25 @@ define(function() {
         delete self.renderingGrid[y][x][entity.id];
     },
 
-    removeFromPathingGrid: function(x, y) {
+    removeFromPathingGrid(x, y) {
       this.pathingGrid[y][x] = 0;
     },
 
-    removeFromEntityGrid: function(entity, x, y) {
+    removeFromEntityGrid(entity, x, y) {
       var self = this;
 
       if (entity && self.entityGrid[y][x] && entity.id in self.entityGrid[y][x])
         delete self.entityGrid[y][x][entity.id];
     },
 
-    removeFromItemGrid: function(item, x, y) {
+    removeFromItemGrid(item, x, y) {
       var self = this;
 
       if (item && self.itemGrid[y][x][item.id])
         delete self.itemGrid[y][x][item.id];
     },
 
-    removeEntity: function(entity) {
+    removeEntity(entity) {
       var self = this;
 
       if (entity) {

@@ -5,7 +5,7 @@ var cls = require("../lib/class"),
   _ = require("underscore");
 
 module.exports = Groups = cls.Class.extend({
-  init: function(map) {
+  init(map) {
     var self = this;
 
     self.map = map;
@@ -24,7 +24,7 @@ module.exports = Groups = cls.Class.extend({
     self.loadDoors();
   },
 
-  loadDoors: function() {
+  loadDoors() {
     var self = this,
       doors = map.doors;
 
@@ -39,7 +39,7 @@ module.exports = Groups = cls.Class.extend({
     });
   },
 
-  getAdjacentGroups: function(id) {
+  getAdjacentGroups(id) {
     var self = this,
       position = self.groupIdToPosition(id),
       x = position.x,
@@ -69,14 +69,14 @@ module.exports = Groups = cls.Class.extend({
     });
   },
 
-  forEachGroup: function(callback) {
+  forEachGroup(callback) {
     var self = this;
 
     for (var x = 0; x < self.groupWidth; x++)
       for (var y = 0; y < self.groupHeight; y++) callback(x + "-" + y);
   },
 
-  forEachAdjacentGroup: function(groupId, callback) {
+  forEachAdjacentGroup(groupId, callback) {
     var self = this;
 
     if (!groupId) return;
@@ -86,13 +86,13 @@ module.exports = Groups = cls.Class.extend({
     });
   },
 
-  groupIdFromPosition: function(x, y) {
+  groupIdFromPosition(x, y) {
     return (
       Math.floor(x / this.zoneWidth) + "-" + Math.floor(y / this.zoneHeight)
     );
   },
 
-  groupIdToPosition: function(id) {
+  groupIdToPosition(id) {
     var position = id.split("-");
 
     return {

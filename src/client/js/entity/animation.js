@@ -4,7 +4,7 @@ define(function() {
      * Ripped from BrowserQuest's client
      */
 
-    init: function(name, length, row, width, height) {
+    init(name, length, row, width, height) {
       var self = this;
 
       self.name = name;
@@ -16,7 +16,7 @@ define(function() {
       self.reset();
     },
 
-    tick: function() {
+    tick() {
       var self = this,
         i = self.currentFrame.index;
 
@@ -38,7 +38,7 @@ define(function() {
       self.currentFrame.index = i;
     },
 
-    update: function(time) {
+    update(time) {
       var self = this;
 
       if (self.lastTime === 0 && self.name.substr(0, 3) === "atk")
@@ -52,26 +52,26 @@ define(function() {
       } else return false;
     },
 
-    setCount: function(count, onEndCount) {
+    setCount(count, onEndCount) {
       var self = this;
 
       self.count = count;
       self.endCountCallback = onEndCount;
     },
 
-    setSpeed: function(speed) {
+    setSpeed(speed) {
       this.speed = speed;
     },
 
-    setRow: function(row) {
+    setRow(row) {
       this.row = row;
     },
 
-    readyToAnimate: function(time) {
+    readyToAnimate(time) {
       return time - this.lastTime > this.speed;
     },
 
-    reset: function() {
+    reset() {
       var self = this;
 
       self.lastTime = 0;

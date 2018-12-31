@@ -1,6 +1,6 @@
 define(function() {
   return Class.extend({
-    init: function(id, index, length, speed) {
+    init(id, index, length, speed) {
       var self = this;
 
       self.initialId = id;
@@ -15,19 +15,19 @@ define(function() {
       self.loaded = false;
     },
 
-    setPosition: function(position) {
+    setPosition(position) {
       this.x = position.x;
       this.y = position.y;
     },
 
-    tick: function() {
+    tick() {
       this.id =
         this.id - this.initialId < this.length - 1
           ? this.id + 1
           : this.initialId;
     },
 
-    animate: function(time) {
+    animate(time) {
       var self = this;
 
       if (time - self.lastTime > self.speed) {
@@ -37,7 +37,7 @@ define(function() {
       } else return false;
     },
 
-    getPosition: function() {
+    getPosition() {
       var self = this;
 
       if (self.x && self.y) return [self.x, self.y];

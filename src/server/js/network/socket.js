@@ -8,39 +8,39 @@ var cls = require("../lib/class"),
  */
 
 module.exports = Socket = cls.Class.extend({
-  init: function(port) {
+  init(port) {
     this.port = port;
   },
 
-  broadcast: function(message) {
+  broadcast(message) {
     throw "Invalid initialization.";
   },
 
-  forEachConnection: function(callback) {
+  forEachConnection(callback) {
     _.each(this._connections, callback);
   },
 
-  addConnection: function(connection) {
+  addConnection(connection) {
     this._connections[connection.id] = connection;
   },
 
-  removeConnection: function(id) {
+  removeConnection(id) {
     delete this._connections[id];
   },
 
-  getConnection: function(id) {
+  getConnection(id) {
     return this._connections[id];
   },
 
-  onConnect: function(callback) {
+  onConnect(callback) {
     this.connectionCallback = callback;
   },
 
-  onError: function(callback) {
+  onError(callback) {
     this.errorCallback = callback;
   },
 
-  onConnectionType: function(callback) {
+  onConnectionType(callback) {
     this.connectionTypeCallback = callback;
   }
 });

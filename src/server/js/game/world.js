@@ -23,7 +23,7 @@ var cls = require("../lib/class"),
   Shops = require("../controllers/shops");
 
 module.exports = World = cls.Class.extend({
-  init: function(id, socket, database) {
+  init(id, socket, database) {
     var self = this;
 
     self.id = id;
@@ -98,7 +98,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  load: function(onWorldLoad) {
+  load(onWorldLoad) {
     var self = this;
 
     log.info("************ World " + self.id + " ***********");
@@ -125,7 +125,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  loaded: function() {
+  loaded() {
     var self = this;
     /**
      * Similar to TTA engine here, but it's loaded upon initialization
@@ -141,7 +141,7 @@ module.exports = World = cls.Class.extend({
     log.info("********************************");
   },
 
-  tick: function() {
+  tick() {
     var self = this;
 
     setInterval(function() {
@@ -150,7 +150,7 @@ module.exports = World = cls.Class.extend({
     }, 1000 / self.updateTime);
   },
 
-  dataParser: function() {
+  dataParser() {
     var self = this;
 
     setInterval(function() {
@@ -158,7 +158,7 @@ module.exports = World = cls.Class.extend({
     }, 30000);
   },
 
-  parsePackets: function() {
+  parsePackets() {
     var self = this;
 
     /**
@@ -178,7 +178,7 @@ module.exports = World = cls.Class.extend({
     }
   },
 
-  parseGroups: function() {
+  parseGroups() {
     var self = this;
 
     if (!self.loadedGroups) return;
@@ -196,7 +196,7 @@ module.exports = World = cls.Class.extend({
    * Entity related functions
    */
 
-  kill: function(entity) {
+  kill(entity) {
     var self = this;
 
     entity.applyDamage(entity.hitPoints);
@@ -213,7 +213,7 @@ module.exports = World = cls.Class.extend({
     self.handleDeath(entity, true);
   },
 
-  handleDamage: function(attacker, target, damage) {
+  handleDamage(attacker, target, damage) {
     var self = this;
 
     if (!attacker || !target || isNaN(damage) || target.invincible) return;
@@ -260,7 +260,7 @@ module.exports = World = cls.Class.extend({
     }
   },
 
-  handleDeath: function(character, ignoreDrops) {
+  handleDeath(character, ignoreDrops) {
     var self = this;
 
     if (!character) return;
@@ -287,7 +287,7 @@ module.exports = World = cls.Class.extend({
     } else if (character.type === "player") character.die();
   },
 
-  createProjectile: function(info, hitInfo) {
+  createProjectile(info, hitInfo) {
     var self = this,
       attacker = info.shift(),
       target = info.shift();
@@ -326,7 +326,7 @@ module.exports = World = cls.Class.extend({
    * @param {{instance: int}} groupId
    */
 
-  sendSpawns: function(groupId) {
+  sendSpawns(groupId) {
     var self = this;
 
     if (!groupId) return;
@@ -342,7 +342,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  loadGroups: function() {
+  loadGroups() {
     var self = this;
 
     self.map.groups.forEachGroup(function(groupId) {
@@ -356,7 +356,7 @@ module.exports = World = cls.Class.extend({
     self.loadedGroups = true;
   },
 
-  getEntityByInstance: function(instance) {
+  getEntityByInstance(instance) {
     if (instance in this.entities) return this.entities[instance];
   },
 
@@ -365,7 +365,7 @@ module.exports = World = cls.Class.extend({
    * messages to the player(s)
    */
 
-  pushBroadcast: function(message) {
+  pushBroadcast(message) {
     var self = this;
 
     _.each(self.packets, function(packet) {
@@ -373,7 +373,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  pushSelectively: function(message, ignores) {
+  pushSelectively(message, ignores) {
     var self = this;
 
     _.each(self.packets, function(packet) {
@@ -381,12 +381,12 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  pushToPlayer: function(player, message) {
+  pushToPlayer(player, message) {
     if (player && player.instance in this.packets)
       this.packets[player.instance].push(message.serialize());
   },
 
-  pushToGroup: function(id, message, ignoreId) {
+  pushToGroup(id, message, ignoreId) {
     var self = this,
       group = self.groups[id];
 
@@ -398,7 +398,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  pushToAdjacentGroups: function(groupId, message, ignoreId) {
+  pushToAdjacentGroups(groupId, message, ignoreId) {
     var self = this;
 
     self.map.groups.forEachAdjacentGroup(groupId, function(id) {
@@ -406,7 +406,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  pushToOldGroups: function(player, message) {
+  pushToOldGroups(player, message) {
     var self = this;
 
     _.each(player.recentGroups, function(id) {
@@ -416,7 +416,7 @@ module.exports = World = cls.Class.extend({
     player.recentGroups = [];
   },
 
-  addToGroup: function(entity, groupId) {
+  addToGroup(entity, groupId) {
     var self = this,
       newGroups = [];
 
@@ -439,7 +439,7 @@ module.exports = World = cls.Class.extend({
     return newGroups;
   },
 
-  removeFromGroups: function(entity) {
+  removeFromGroups(entity) {
     var self = this,
       oldGroups = [];
 
@@ -464,7 +464,7 @@ module.exports = World = cls.Class.extend({
     return oldGroups;
   },
 
-  incomingToGroup: function(entity, groupId) {
+  incomingToGroup(entity, groupId) {
     var self = this;
 
     if (!entity || !groupId) return;
@@ -477,7 +477,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  handleEntityGroup: function(entity) {
+  handleEntityGroup(entity) {
     var self = this,
       groupsChanged = false;
 
@@ -500,7 +500,7 @@ module.exports = World = cls.Class.extend({
     return groupsChanged;
   },
 
-  spawnEntities: function() {
+  spawnEntities() {
     var self = this,
       entities = 0;
 
@@ -566,7 +566,7 @@ module.exports = World = cls.Class.extend({
     log.info("Spawned " + Object.keys(self.entities).length + " entities!");
   },
 
-  spawnChests: function() {
+  spawnChests() {
     var self = this,
       chests = 0;
 
@@ -579,7 +579,7 @@ module.exports = World = cls.Class.extend({
     log.info("Spawned " + Object.keys(self.chests).length + " static chests");
   },
 
-  spawnMob: function(id, x, y) {
+  spawnMob(id, x, y) {
     var self = this,
       instance = Utils.generateInstance(2, id, x + id, y),
       mob = new Mob(id, instance, x, y);
@@ -591,7 +591,7 @@ module.exports = World = cls.Class.extend({
     return mob;
   },
 
-  spawnChest: function(items, x, y, staticChest) {
+  spawnChest(items, x, y, staticChest) {
     var self = this,
       chestCount = Object.keys(self.chests).length,
       instance = Utils.generateInstance(5, 194, chestCount, x, y),
@@ -622,7 +622,7 @@ module.exports = World = cls.Class.extend({
     return chest;
   },
 
-  createItem: function(id, instance, x, y) {
+  createItem(id, instance, x, y) {
     var self = this;
 
     var item;
@@ -634,7 +634,7 @@ module.exports = World = cls.Class.extend({
     return item;
   },
 
-  dropItem: function(id, count, x, y) {
+  dropItem(id, count, x, y) {
     var self = this,
       instance = Utils.generateInstance(
         4,
@@ -660,7 +660,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  pushEntities: function(player) {
+  pushEntities(player) {
     var self = this,
       entities;
 
@@ -679,7 +679,7 @@ module.exports = World = cls.Class.extend({
     if (entities) player.send(new Messages.List(entities));
   },
 
-  addEntity: function(entity) {
+  addEntity(entity) {
     var self = this;
 
     if (entity.instance in self.entities)
@@ -736,7 +736,7 @@ module.exports = World = cls.Class.extend({
     }
   },
 
-  addPlayer: function(player) {
+  addPlayer(player) {
     var self = this;
 
     self.addEntity(player);
@@ -745,20 +745,20 @@ module.exports = World = cls.Class.extend({
     if (self.populationCallback) self.populationCallback();
   },
 
-  addToPackets: function(player) {
+  addToPackets(player) {
     var self = this;
 
     self.packets[player.instance] = [];
   },
 
-  addNPC: function(npc) {
+  addNPC(npc) {
     var self = this;
 
     self.addEntity(npc);
     self.npcs[npc.instance] = npc;
   },
 
-  addMob: function(mob) {
+  addMob(mob) {
     var self = this;
 
     if (!Mobs.exists(mob.id)) {
@@ -778,7 +778,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  addItem: function(item) {
+  addItem(item) {
     var self = this;
 
     if (item.static) item.onRespawn(self.addItem.bind(self, item));
@@ -787,21 +787,21 @@ module.exports = World = cls.Class.extend({
     self.items[item.instance] = item;
   },
 
-  addProjectile: function(projectile) {
+  addProjectile(projectile) {
     var self = this;
 
     self.addEntity(projectile);
     self.projectiles[projectile.instance] = projectile;
   },
 
-  addChest: function(chest) {
+  addChest(chest) {
     var self = this;
 
     self.addEntity(chest);
     self.chests[chest.instance] = chest;
   },
 
-  removeEntity: function(entity) {
+  removeEntity(entity) {
     var self = this;
 
     if (entity.instance in self.entities) delete self.entities[entity.instance];
@@ -815,7 +815,7 @@ module.exports = World = cls.Class.extend({
     self.removeFromGroups(entity);
   },
 
-  cleanCombat: function(entity) {
+  cleanCombat(entity) {
     entity.combat.stop();
 
     _.each(this.entities, function(oEntity) {
@@ -824,7 +824,7 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  removeItem: function(item) {
+  removeItem(item) {
     var self = this;
 
     self.removeEntity(item);
@@ -833,7 +833,7 @@ module.exports = World = cls.Class.extend({
     if (item.static) item.respawn();
   },
 
-  removePlayer: function(player) {
+  removePlayer(player) {
     var self = this;
 
     self.pushToAdjacentGroups(
@@ -855,7 +855,7 @@ module.exports = World = cls.Class.extend({
     delete self.packets[player.instance];
   },
 
-  removeProjectile: function(projectile) {
+  removeProjectile(projectile) {
     var self = this;
 
     self.removeEntity(projectile);
@@ -863,7 +863,7 @@ module.exports = World = cls.Class.extend({
     delete self.projectiles[projectile.instance];
   },
 
-  removeChest: function(chest) {
+  removeChest(chest) {
     var self = this;
 
     self.removeEntity(chest);
@@ -873,7 +873,7 @@ module.exports = World = cls.Class.extend({
     else delete self.chests[chest.instance];
   },
 
-  playerInWorld: function(username) {
+  playerInWorld(username) {
     var self = this;
 
     for (var id in self.players)
@@ -883,7 +883,7 @@ module.exports = World = cls.Class.extend({
     return false;
   },
 
-  getPlayerByName: function(username) {
+  getPlayerByName(username) {
     var self = this;
 
     for (var id in self.players)
@@ -894,7 +894,7 @@ module.exports = World = cls.Class.extend({
     return null;
   },
 
-  saveAll: function() {
+  saveAll() {
     var self = this;
 
     _.each(self.players, function(player) {
@@ -902,31 +902,31 @@ module.exports = World = cls.Class.extend({
     });
   },
 
-  getPVPAreas: function() {
+  getPVPAreas() {
     return this.map.areas["PVP"].pvpAreas;
   },
 
-  getMusicAreas: function() {
+  getMusicAreas() {
     return this.map.areas["Music"].musicAreas;
   },
 
-  getChestAreas: function() {
+  getChestAreas() {
     return this.map.areas["Chests"].chestAreas;
   },
 
-  getGrids: function() {
+  getGrids() {
     return this.map.grids;
   },
 
-  getPopulation: function() {
+  getPopulation() {
     return _.size(this.players);
   },
 
-  onPlayerConnection: function(callback) {
+  onPlayerConnection(callback) {
     this.playerConnectCallback = callback;
   },
 
-  onPopulationChange: function(callback) {
+  onPopulationChange(callback) {
     this.populationCallback = callback;
   }
 });

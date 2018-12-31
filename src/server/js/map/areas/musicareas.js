@@ -6,7 +6,7 @@ var cls = require("../../lib/class"),
   Area = require("../area");
 
 module.exports = MusicAreas = cls.Class.extend({
-  init: function() {
+  constructor() {
     var self = this;
 
     self.musicAreas = [];
@@ -14,7 +14,7 @@ module.exports = MusicAreas = cls.Class.extend({
     self.load();
   },
 
-  load: function() {
+  load() {
     var self = this;
 
     _.each(map.musicAreas, function(m) {

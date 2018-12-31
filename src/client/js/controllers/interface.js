@@ -10,7 +10,7 @@ define([
   "../interface/warp"
 ], function($, Inventory, Profile, Actions, Bank, Enchant, Warp) {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -35,7 +35,7 @@ define([
       });
     },
 
-    resize: function() {
+    resize() {
       var self = this;
 
       if (self.inventory) self.inventory.resize();
@@ -47,7 +47,7 @@ define([
       if (self.enchant) self.enchant.resize();
     },
 
-    loadInventory: function(size, data) {
+    loadInventory(size, data) {
       var self = this;
 
       /**
@@ -60,7 +60,7 @@ define([
       self.inventory.load(data);
     },
 
-    loadBank: function(size, data) {
+    loadBank(size, data) {
       var self = this;
 
       /**
@@ -75,31 +75,31 @@ define([
       self.loadEnchant();
     },
 
-    loadProfile: function() {
+    loadProfile() {
       var self = this;
 
       if (!self.profile) self.profile = new Profile(self.game);
     },
 
-    loadActions: function() {
+    loadActions() {
       var self = this;
 
       if (!self.actions) self.actions = new Actions(self);
     },
 
-    loadEnchant: function() {
+    loadEnchant() {
       var self = this;
 
       if (!self.enchant) self.enchant = new Enchant(self.game, self);
     },
 
-    loadWarp: function() {
+    loadWarp() {
       var self = this;
 
       if (!self.warp) self.warp = new Warp(self.game, self);
     },
 
-    loadNotifications: function() {
+    loadNotifications() {
       var self = this,
         ok = $("#ok"),
         cancel = $("#cancel"),
@@ -129,7 +129,7 @@ define([
       });
     },
 
-    hideAll: function() {
+    hideAll() {
       var self = this;
 
       if (self.inventory && self.inventory.isVisible()) self.inventory.hide();
@@ -156,7 +156,7 @@ define([
       if (self.warp && self.warp.isVisible()) self.warp.hide();
     },
 
-    displayNotify: function(message) {
+    displayNotify(message) {
       var self = this;
 
       if (self.isNotifyVisible()) return;
@@ -168,7 +168,7 @@ define([
       self.message.text(message);
     },
 
-    displayConfirm: function(message) {
+    displayConfirm(message) {
       var self = this;
 
       if (self.isConfirmVisible()) return;
@@ -177,7 +177,7 @@ define([
       self.confirm.text(message);
     },
 
-    hideNotify: function() {
+    hideNotify() {
       var self = this;
 
       self.fade.css("display", "none");
@@ -185,19 +185,19 @@ define([
       self.message.css("display", "none");
     },
 
-    hideConfirm: function() {
+    hideConfirm() {
       this.confirm.css("display", "none");
     },
 
-    getQuestPage: function() {
+    getQuestPage() {
       return this.profile.quests;
     },
 
-    isNotifyVisible: function() {
+    isNotifyVisible() {
       return this.notify.css("display") === "block";
     },
 
-    isConfirmVisible: function() {
+    isConfirmVisible() {
       return this.confirm.css("display") === "block";
     }
   });

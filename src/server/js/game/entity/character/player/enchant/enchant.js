@@ -13,7 +13,7 @@ module.exports = Enchant = cls.Class.extend({
    * Tier 5 - Damage boost (1-40% & 25% for special ability or special ability level up)
    */
 
-  init: function(player) {
+  init(player) {
     var self = this;
 
     self.player = player;
@@ -22,7 +22,7 @@ module.exports = Enchant = cls.Class.extend({
     self.selectedShards = null;
   },
 
-  convert: function(shard) {
+  convert(shard) {
     var self = this;
 
     if (!Items.isShard(shard.id) || !self.player.inventory.hasSpace()) return;
@@ -43,7 +43,7 @@ module.exports = Enchant = cls.Class.extend({
     }
   },
 
-  enchant: function() {
+  enchant() {
     var self = this;
 
     if (!self.selectedItem) {
@@ -89,7 +89,7 @@ module.exports = Enchant = cls.Class.extend({
     self.player.sync();
   },
 
-  generateAbility: function() {
+  generateAbility() {
     var self = this,
       type = Items.getType(self.selectedItem.id),
       probability = Utils.randomInt(0, 100);
@@ -124,14 +124,14 @@ module.exports = Enchant = cls.Class.extend({
     }
   },
 
-  verify: function() {
+  verify() {
     return (
       Items.isEnchantable(this.selectedItem.id) &&
       Items.isShard(this.selectedShards.id)
     );
   },
 
-  add: function(type, item) {
+  add(type, item) {
     var self = this,
       isItem = item === "item";
 
@@ -155,7 +155,7 @@ module.exports = Enchant = cls.Class.extend({
     );
   },
 
-  remove: function(type) {
+  remove(type) {
     var self = this,
       index;
 
@@ -177,7 +177,7 @@ module.exports = Enchant = cls.Class.extend({
     );
   },
 
-  hasAbility: function(item) {
+  hasAbility(item) {
     return item.ability !== -1;
   }
 });

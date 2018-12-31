@@ -8,7 +8,7 @@ module.exports = Grids = cls.Class.extend({
    * of all the entities in the world.
    */
 
-  init: function(map) {
+  init(map) {
     var self = this;
 
     self.map = map;
@@ -18,7 +18,7 @@ module.exports = Grids = cls.Class.extend({
     self.load();
   },
 
-  load: function() {
+  load() {
     var self = this;
 
     for (var i = 0; i < self.map.height; i++) {
@@ -28,7 +28,7 @@ module.exports = Grids = cls.Class.extend({
     }
   },
 
-  updateEntityPosition: function(entity) {
+  updateEntityPosition(entity) {
     var self = this;
 
     if (entity && entity.oldX === entity.x && entity.oldY === entity.y) return;
@@ -39,7 +39,7 @@ module.exports = Grids = cls.Class.extend({
     entity.updatePosition();
   },
 
-  addToEntityGrid: function(entity, x, y) {
+  addToEntityGrid(entity, x, y) {
     var self = this;
 
     if (
@@ -53,7 +53,7 @@ module.exports = Grids = cls.Class.extend({
       self.entityGrid[y][x][entity.instance] = entity;
   },
 
-  removeFromEntityGrid: function(entity, x, y) {
+  removeFromEntityGrid(entity, x, y) {
     var self = this;
 
     if (
@@ -68,7 +68,7 @@ module.exports = Grids = cls.Class.extend({
       delete self.entityGrid[y][x][entity.instance];
   },
 
-  getSurroundingEntities: function(entity, radius, include) {
+  getSurroundingEntities(entity, radius, include) {
     var self = this,
       entities = [];
 
@@ -90,7 +90,7 @@ module.exports = Grids = cls.Class.extend({
     return entities;
   },
 
-  checkBounds: function(x, y, radius) {
+  checkBounds(x, y, radius) {
     return (
       x + radius < this.map.width &&
       x - radius > 0 &&

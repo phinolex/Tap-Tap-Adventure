@@ -2,7 +2,7 @@
 
 define(["./character/character"], function(Character) {
   return Class.extend({
-    init: function(entity) {
+    init(entity) {
       var self = this;
 
       self.entity = entity;
@@ -10,7 +10,7 @@ define(["./character/character"], function(Character) {
       self.entities = null;
     },
 
-    load: function() {
+    load() {
       var self = this;
 
       if (!self.entity || !self.game) return;
@@ -68,7 +68,7 @@ define(["./character/character"], function(Character) {
       }
     },
 
-    isCharacter: function() {
+    isCharacter() {
       return (
         this.entity.type &&
         (this.entity.type === "player" ||
@@ -77,7 +77,7 @@ define(["./character/character"], function(Character) {
       );
     },
 
-    setGame: function(game) {
+    setGame(game) {
       var self = this;
 
       if (!self.game) self.game = game;
@@ -85,7 +85,7 @@ define(["./character/character"], function(Character) {
       self.setEntities(self.game.entities);
     },
 
-    setEntities: function(entities) {
+    setEntities(entities) {
       var self = this;
 
       if (!self.entities) self.entities = entities;

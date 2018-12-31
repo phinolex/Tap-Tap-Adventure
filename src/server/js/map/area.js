@@ -9,7 +9,7 @@ module.exports = Area = cls.Class.extend({
    * entities in it.
    */
 
-  init: function(id, x, y, width, height) {
+  init(id, x, y, width, height) {
     var self = this;
 
     self.id = id;
@@ -27,7 +27,7 @@ module.exports = Area = cls.Class.extend({
     self.maxEntities = 0;
   },
 
-  contains: function(x, y) {
+  contains(x, y) {
     return (
       x >= this.x &&
       y >= this.y &&
@@ -36,7 +36,7 @@ module.exports = Area = cls.Class.extend({
     );
   },
 
-  addEntity: function(entity) {
+  addEntity(entity) {
     var self = this;
 
     if (self.entities.indexOf(entity) > 0) return;
@@ -47,7 +47,7 @@ module.exports = Area = cls.Class.extend({
     if (self.spawnCallback) self.spawnCallback();
   },
 
-  removeEntity: function(entity) {
+  removeEntity(entity) {
     var self = this,
       index = self.entities.indexOf(entity);
 
@@ -56,19 +56,19 @@ module.exports = Area = cls.Class.extend({
     if (self.entities.length === 0 && self.emptyCallback) self.emptyCallback();
   },
 
-  isFull: function() {
+  isFull() {
     return this.entities.length >= this.maxEntities;
   },
 
-  setMaxEntities: function(maxEntities) {
+  setMaxEntities(maxEntities) {
     this.maxEntities = maxEntities;
   },
 
-  onEmpty: function(callback) {
+  onEmpty(callback) {
     this.emptyCallback = callback;
   },
 
-  onSpawn: function(callback) {
+  onSpawn(callback) {
     this.spawnCallback = callback;
   }
 });

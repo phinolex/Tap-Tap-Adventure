@@ -14,7 +14,7 @@ var cls = require("../lib/class"),
   Grids = require("./grids");
 
 module.exports = Map = cls.Class.extend({
-  init: function(world) {
+  init(world) {
     var self = this;
 
     self.world = world;
@@ -25,7 +25,7 @@ module.exports = Map = cls.Class.extend({
     self.grids = new Grids(self);
   },
 
-  load: function() {
+  load() {
     var self = this;
 
     self.width = map.width;
@@ -52,7 +52,7 @@ module.exports = Map = cls.Class.extend({
     self.ready = true;
   },
 
-  loadAreas: function() {
+  loadAreas() {
     var self = this;
 
     /**
@@ -76,7 +76,7 @@ module.exports = Map = cls.Class.extend({
     self.areas["Chests"] = new ChestAreas(self.world);
   },
 
-  loadDoors: function() {
+  loadDoors() {
     var self = this;
 
     self.doors = {};
@@ -114,15 +114,15 @@ module.exports = Map = cls.Class.extend({
     });
   },
 
-  isDoor: function(x, y) {
+  isDoor(x, y) {
     return !!this.doors[this.gridPositionToIndex(x, y)];
   },
 
-  getDoorDestination: function(x, y) {
+  getDoorDestination(x, y) {
     return this.doors[this.gridPositionToIndex(x, y)];
   },
 
-  loadCollisions: function() {
+  loadCollisions() {
     var self = this,
       location = "./server/data/map/collisions.json";
 
@@ -164,7 +164,7 @@ module.exports = Map = cls.Class.extend({
     });
   },
 
-  isValidPosition: function(x, y) {
+  isValidPosition(x, y) {
     return (
       isInt(x) &&
       isInt(y) &&
@@ -173,11 +173,11 @@ module.exports = Map = cls.Class.extend({
     );
   },
 
-  isOutOfBounds: function(x, y) {
+  isOutOfBounds(x, y) {
     return x < 0 || x >= this.width || y < 0 || y >= this.height;
   },
 
-  isColliding: function(x, y) {
+  isColliding(x, y) {
     var self = this;
 
     if (self.isOutOfBounds(x, y)) return false;
@@ -185,7 +185,7 @@ module.exports = Map = cls.Class.extend({
     return self.grid[y][x] === 1;
   },
 
-  indexToGridPosition: function(tileIndex) {
+  indexToGridPosition(tileIndex) {
     var self = this;
 
     tileIndex -= 1;
@@ -199,17 +199,17 @@ module.exports = Map = cls.Class.extend({
     };
   },
 
-  gridPositionToIndex: function(x, y) {
+  gridPositionToIndex(x, y) {
     return y * this.width + x + 1;
   },
 
-  getX: function(index, width) {
+  getX(index, width) {
     if (index === 0) return 0;
 
     return index % width === 0 ? width - 1 : (index % width) - 1;
   },
 
-  getRandomPosition: function(area) {
+  getRandomPosition(area) {
     var self = this,
       pos = {},
       valid = false;
@@ -223,11 +223,11 @@ module.exports = Map = cls.Class.extend({
     return pos;
   },
 
-  inArea: function(posX, posY, x, y, width, height) {
+  inArea(posX, posY, x, y, width, height) {
     return posX >= x && posY >= y && posX <= width + x && posY <= height + y;
   },
 
-  inTutorialArea: function(entity) {
+  inTutorialArea(entity) {
     if (entity.x === -1 || entity.y === -1) return true;
 
     return (
@@ -236,11 +236,11 @@ module.exports = Map = cls.Class.extend({
     );
   },
 
-  done: function() {
+  done() {
     if (this.readyCallback) this.readyCallback();
   },
 
-  isReady: function(callback) {
+  isReady(callback) {
     this.readyCallback = callback;
   }
 });

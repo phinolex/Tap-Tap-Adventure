@@ -8,7 +8,7 @@ module.exports = Trade = cls.Class.extend({
    * started and/or requested.
    */
 
-  init: function(player) {
+  init(player) {
     var self = this;
 
     self.player = player;
@@ -23,14 +23,14 @@ module.exports = Trade = cls.Class.extend({
     self.oPlayerItems = [];
   },
 
-  start: function() {
+  start() {
     var self = this;
 
     self.oPlayer = self.requestee;
     self.state = Modules.Trade.Started;
   },
 
-  stop: function() {
+  stop() {
     var self = this;
 
     self.oPlayer = null;
@@ -42,7 +42,7 @@ module.exports = Trade = cls.Class.extend({
     self.oPlayerItems = [];
   },
 
-  finalize: function() {
+  finalize() {
     var self = this;
 
     if (!self.player.inventory.containsSpaces(self.oPlayerItems.length)) return;
@@ -57,7 +57,7 @@ module.exports = Trade = cls.Class.extend({
     }
   },
 
-  select: function(slot) {
+  select(slot) {
     var self = this,
       item = self.player.inventory.slots[slot];
 
@@ -66,7 +66,7 @@ module.exports = Trade = cls.Class.extend({
     self.playerItems.push(item);
   },
 
-  request: function(oPlayer) {
+  request(oPlayer) {
     var self = this;
 
     self.requestee = oPlayer;
@@ -74,7 +74,7 @@ module.exports = Trade = cls.Class.extend({
     if (oPlayer.trade.getRequestee() === self.player.instance) self.start();
   },
 
-  accept: function() {
+  accept() {
     var self = this;
 
     self.subState = Modules.Trade.Accepted;
@@ -85,7 +85,7 @@ module.exports = Trade = cls.Class.extend({
     }
   },
 
-  getRequestee: function() {
+  getRequestee() {
     var self = this;
 
     if (!self.requestee) return null;
@@ -93,11 +93,11 @@ module.exports = Trade = cls.Class.extend({
     return self.requestee.instance;
   },
 
-  decline: function() {
+  decline() {
     this.stop();
   },
 
-  isStarted: function() {
+  isStarted() {
     return this.state !== null;
   }
 });

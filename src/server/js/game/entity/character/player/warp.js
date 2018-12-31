@@ -3,7 +3,7 @@ var cls = require("../../../../lib/class"),
   Utils = require("../../../../util/utils");
 
 module.exports = Warp = cls.Class.extend({
-  init: function(player) {
+  init(player) {
     var self = this;
 
     self.player = player;
@@ -12,7 +12,7 @@ module.exports = Warp = cls.Class.extend({
     self.warpTimeout = 300000;
   },
 
-  warp: function(id) {
+  warp(id) {
     var self = this;
 
     if (!self.canWarp()) {
@@ -45,7 +45,7 @@ module.exports = Warp = cls.Class.extend({
     self.lastWarp = new Date().getTime();
   },
 
-  setLastWarp: function(lastWarp) {
+  setLastWarp(lastWarp) {
     var self = this;
 
     if (isNaN(lastWarp)) {
@@ -54,11 +54,11 @@ module.exports = Warp = cls.Class.extend({
     } else self.lastWarp = lastWarp;
   },
 
-  canWarp: function() {
+  canWarp() {
     return this.getDifference() > this.warpTimeout || this.player.rights > 1;
   },
 
-  getDuration: function() {
+  getDuration() {
     var self = this,
       difference = this.warpTimeout - self.getDifference();
 
@@ -69,7 +69,7 @@ module.exports = Warp = cls.Class.extend({
       : Math.floor(difference / 1000) + " seconds";
   },
 
-  getDifference: function() {
+  getDifference() {
     return new Date().getTime() - this.lastWarp;
   }
 });

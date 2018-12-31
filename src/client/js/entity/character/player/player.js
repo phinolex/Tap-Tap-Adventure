@@ -14,7 +14,7 @@ define([
   "./equipment/ring"
 ], function(Character, Armour, Weapon, Pendant, Boots, Ring) {
   return Character.extend({
-    init: function() {
+    constructor() {
       var self = this;
 
       self._super(-1, Modules.Types.Player);
@@ -52,7 +52,7 @@ define([
       self.loadEquipment();
     },
 
-    load: function(data) {
+    load(data) {
       var self = this;
 
       self.setId(data.instance);
@@ -70,7 +70,7 @@ define([
       self.type = "player";
     },
 
-    loadHandler: function(game) {
+    loadHandler(game) {
       var self = this;
 
       /**
@@ -81,23 +81,23 @@ define([
       self.handler.load();
     },
 
-    hasKeyboardMovement: function() {
+    hasKeyboardMovement() {
       return this.moveLeft || this.moveRight || this.moveUp || this.moveDown;
     },
 
-    stop: function(force) {
+    stop(force) {
       this._super(force);
     },
 
-    setId: function(id) {
+    setId(id) {
       this.id = id;
     },
 
-    idle: function() {
+    idle() {
       this._super();
     },
 
-    loadEquipment: function() {
+    loadEquipment() {
       var self = this;
 
       self.armour = null;
@@ -107,74 +107,74 @@ define([
       self.boots = null;
     },
 
-    isRanged: function() {
+    isRanged() {
       return this.weapon && this.weapon.ranged;
     },
 
-    follow: function(character) {
+    follow(character) {
       this._super(character);
     },
 
-    go: function(x, y, forced) {
+    go(x, y, forced) {
       this._super(x, y, forced);
     },
 
-    hasWeapon: function() {
+    hasWeapon() {
       return this.weapon ? this.weapon.exists() : false;
     },
 
-    performAction: function(orientation, action) {
+    performAction(orientation, action) {
       this._super(orientation, action);
     },
 
-    setName: function(name) {
+    setName(name) {
       var self = this;
 
       self.username = name;
       self.name = name;
     },
 
-    setSprite: function(sprite) {
+    setSprite(sprite) {
       this._super(sprite);
     },
 
-    getSpriteName: function() {
+    getSpriteName() {
       return this.armour ? this.armour.string : "clotharmor";
     },
 
-    setGridPosition: function(x, y) {
+    setGridPosition(x, y) {
       this._super(x, y);
     },
 
-    setHitPoints: function(hitPoints) {
+    setHitPoints(hitPoints) {
       this._super(hitPoints);
     },
 
-    setMaxHitPoints: function(maxHitPoints) {
+    setMaxHitPoints(maxHitPoints) {
       this._super(maxHitPoints);
     },
 
-    setMana: function(mana) {
+    setMana(mana) {
       this.mana = mana;
     },
 
-    setMaxMana: function(maxMana) {
+    setMaxMana(maxMana) {
       this.maxMana = maxMana;
     },
 
-    clearHealthBar: function() {
+    clearHealthBar() {
       this._super();
     },
 
-    getX: function() {
+    getX() {
       return this.gridX;
     },
 
-    getY: function() {
+    getY() {
       return this.gridY;
     },
 
-    setPointsData: function(hitPointsData, manaData) {
+    setPointsData(hitPointsData, manaData) {
       var self = this,
         hitPoints = hitPointsData.shift(),
         maxHitPoints = hitPointsData.shift(),
@@ -188,7 +188,7 @@ define([
       self.setMaxMana(maxMana);
     },
 
-    setEquipment: function(type, info) {
+    setEquipment(type, info) {
       var self = this,
         name = info.shift(),
         string = info.shift(),
@@ -256,7 +256,7 @@ define([
       }
     },
 
-    unequip: function(type) {
+    unequip(type) {
       var self = this;
 
       switch (type) {
@@ -282,7 +282,7 @@ define([
       }
     },
 
-    tempBlink: function() {
+    tempBlink() {
       var self = this;
 
       self.blink(90);
@@ -293,11 +293,11 @@ define([
         }, 500);
     },
 
-    getDistance: function(entity) {
+    getDistance(entity) {
       return this._super(entity);
     },
 
-    onUpdateArmour: function(callback) {
+    onUpdateArmour(callback) {
       this.updateArmourCallback = callback;
     }
   });

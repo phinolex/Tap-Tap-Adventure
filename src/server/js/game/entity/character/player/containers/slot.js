@@ -2,7 +2,7 @@ var cls = require("../../../../../lib/class"),
   Items = require("../../../../../util/items");
 
 module.exports = Slot = cls.Class.extend({
-  init: function(index) {
+  init(index) {
     var self = this;
 
     self.index = index;
@@ -15,7 +15,7 @@ module.exports = Slot = cls.Class.extend({
     self.string = null;
   },
 
-  load: function(id, count, ability, abilityLevel) {
+  load(id, count, ability, abilityLevel) {
     var self = this;
 
     self.id = parseInt(id);
@@ -30,7 +30,7 @@ module.exports = Slot = cls.Class.extend({
     self.verify();
   },
 
-  empty: function() {
+  empty() {
     var self = this;
 
     self.id = -1;
@@ -41,7 +41,7 @@ module.exports = Slot = cls.Class.extend({
     self.string = null;
   },
 
-  increment: function(amount) {
+  increment(amount) {
     var self = this;
 
     self.count += parseInt(amount);
@@ -49,7 +49,7 @@ module.exports = Slot = cls.Class.extend({
     self.verify();
   },
 
-  decrement: function(amount) {
+  decrement(amount) {
     var self = this;
 
     self.count -= parseInt(amount);
@@ -57,13 +57,13 @@ module.exports = Slot = cls.Class.extend({
     self.verify();
   },
 
-  verify: function() {
+  verify() {
     var self = this;
 
     if (isNaN(self.count)) self.count = 1;
   },
 
-  getData: function() {
+  getData() {
     return {
       index: this.index,
       string: this.string,

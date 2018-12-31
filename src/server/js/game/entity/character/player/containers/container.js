@@ -11,7 +11,7 @@ module.exports = Container = cls.Class.extend({
    * TODO: Add a limit of 2^31 - 1 for stackable items.
    */
 
-  init: function(type, owner, size) {
+  init(type, owner, size) {
     var self = this;
 
     self.type = type;
@@ -23,7 +23,7 @@ module.exports = Container = cls.Class.extend({
     for (var i = 0; i < self.size; i++) self.slots.push(new Slot(i));
   },
 
-  load: function(ids, counts, abilities, abilityLevels) {
+  load(ids, counts, abilities, abilityLevels) {
     var self = this;
 
     /**
@@ -37,7 +37,7 @@ module.exports = Container = cls.Class.extend({
       self.slots[i].load(ids[i], counts[i], abilities[i], abilityLevels[i]);
   },
 
-  loadEmpty: function() {
+  loadEmpty() {
     var self = this,
       data = [];
 
@@ -50,7 +50,7 @@ module.exports = Container = cls.Class.extend({
     self.load(data, data, data, data);
   },
 
-  add: function(id, count, ability, abilityLevel) {
+  add(id, count, ability, abilityLevel) {
     var self = this;
 
     //log.info('Trying to pickup ' + count + ' x ' + id);
@@ -118,7 +118,7 @@ module.exports = Container = cls.Class.extend({
     }
   },
 
-  canHold: function(id, count) {
+  canHold(id, count) {
     var self = this;
 
     if (!Items.isStackable(id)) return self.hasSpace();
@@ -141,7 +141,7 @@ module.exports = Container = cls.Class.extend({
     return remainingSpace >= count;
   },
 
-  remove: function(index, id, count) {
+  remove(index, id, count) {
     var self = this;
 
     if (
@@ -164,7 +164,7 @@ module.exports = Container = cls.Class.extend({
     return true;
   },
 
-  getSlot: function(id) {
+  getSlot(id) {
     var self = this;
 
     for (var i = 0; i < self.slots.length; i++)
@@ -173,7 +173,7 @@ module.exports = Container = cls.Class.extend({
     return null;
   },
 
-  contains: function(id) {
+  contains(id) {
     var self = this;
 
     for (var i = 0; i < self.slots.length; i++)
@@ -182,7 +182,7 @@ module.exports = Container = cls.Class.extend({
     return false;
   },
 
-  containsSpaces: function(count) {
+  containsSpaces(count) {
     var self = this,
       emptySpaces = [];
 
@@ -192,11 +192,11 @@ module.exports = Container = cls.Class.extend({
     return emptySpaces.length === count;
   },
 
-  hasSpace: function() {
+  hasSpace() {
     return this.getEmptySlot() > -1;
   },
 
-  getEmptySlot: function() {
+  getEmptySlot() {
     var self = this;
 
     for (var i = 0; i < self.slots.length; i++)
@@ -205,7 +205,7 @@ module.exports = Container = cls.Class.extend({
     return -1;
   },
 
-  getIndex: function(id) {
+  getIndex(id) {
     var self = this;
 
     /**
@@ -219,7 +219,7 @@ module.exports = Container = cls.Class.extend({
     return -1;
   },
 
-  check: function() {
+  check() {
     var self = this;
 
     _.each(self.slots, function(slot) {
@@ -227,7 +227,7 @@ module.exports = Container = cls.Class.extend({
     });
   },
 
-  getArray: function() {
+  getArray() {
     var self = this,
       ids = "",
       counts = "",

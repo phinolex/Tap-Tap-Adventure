@@ -1,18 +1,18 @@
 var cls = require("../lib/class");
 
 module.exports = Minigame = cls.Class.extend({
-  init: function(id, name) {
+  init(id, name) {
     var self = this;
 
     self.id = id;
     self.name = name;
   },
 
-  getId: function() {
+  getId() {
     return this.id;
   },
 
-  getName: function() {
+  getName() {
     return this.name;
   }
 });

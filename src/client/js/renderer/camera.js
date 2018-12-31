@@ -2,7 +2,7 @@
 
 define(function() {
   return Class.extend({
-    init: function(renderer) {
+    init(renderer) {
       var self = this;
 
       self.renderer = renderer;
@@ -28,7 +28,7 @@ define(function() {
       self.update();
     },
 
-    update: function() {
+    update() {
       var self = this,
         factor = self.renderer.getUpscale();
 
@@ -36,7 +36,7 @@ define(function() {
       self.gridHeight = 8 * factor;
     },
 
-    setPosition: function(x, y) {
+    setPosition(x, y) {
       var self = this;
 
       self.x = x;
@@ -49,11 +49,11 @@ define(function() {
       self.gridY = Math.floor(y / 16);
     },
 
-    clip: function() {
+    clip() {
       this.setGridPosition(Math.round(this.x / 16), Math.round(this.y / 16));
     },
 
-    center: function() {
+    center() {
       var self = this;
 
       if (self.centered) return;
@@ -64,7 +64,7 @@ define(function() {
       self.renderer.verifyCentration();
     },
 
-    decenter: function() {
+    decenter() {
       var self = this;
 
       if (!self.centered) return;
@@ -75,7 +75,7 @@ define(function() {
       self.renderer.verifyCentration();
     },
 
-    setGridPosition: function(x, y) {
+    setGridPosition(x, y) {
       var self = this;
 
       self.prevGridX = self.gridX;
@@ -88,7 +88,7 @@ define(function() {
       self.y = self.gridY * 16;
     },
 
-    setPlayer: function(player) {
+    setPlayer(player) {
       var self = this;
 
       self.player = player;
@@ -96,7 +96,7 @@ define(function() {
       self.centreOn(self.player);
     },
 
-    handlePanning: function(direction) {
+    handlePanning(direction) {
       var self = this;
 
       if (!self.panning) return;
@@ -120,7 +120,7 @@ define(function() {
       }
     },
 
-    centreOn: function(entity) {
+    centreOn(entity) {
       var self = this;
 
       if (!entity) return;
@@ -135,7 +135,7 @@ define(function() {
       self.gridY = Math.round(entity.y / 16) - height;
     },
 
-    zone: function(direction) {
+    zone(direction) {
       var self = this;
 
       switch (direction) {
@@ -161,7 +161,7 @@ define(function() {
       }
     },
 
-    forEachVisiblePosition: function(callback, offset) {
+    forEachVisiblePosition(callback, offset) {
       var self = this;
 
       if (!offset) offset = 1;

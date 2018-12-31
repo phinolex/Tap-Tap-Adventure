@@ -8,7 +8,7 @@ define([
   "./pages/quest"
 ], function($, State, Ability, Settings, Quest) {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -26,7 +26,7 @@ define([
       self.load();
     },
 
-    load: function() {
+    load() {
       var self = this;
 
       self.button.click(function() {
@@ -73,7 +73,7 @@ define([
         self.next.addClass("enabled");
     },
 
-    update: function() {
+    update() {
       var self = this;
 
       _.each(self.pages, function(page) {
@@ -81,7 +81,7 @@ define([
       });
     },
 
-    resize: function() {
+    resize() {
       var self = this;
 
       _.each(self.pages, function(page) {
@@ -89,7 +89,7 @@ define([
       });
     },
 
-    setPage: function(index) {
+    setPage(index) {
       var self = this,
         page = self.pages[index];
 
@@ -111,14 +111,14 @@ define([
       page.show();
     },
 
-    show: function() {
+    show() {
       var self = this;
 
       self.body.fadeIn("slow");
       self.button.addClass("active");
     },
 
-    hide: function() {
+    hide() {
       var self = this;
 
       self.body.fadeOut("fast");
@@ -127,17 +127,17 @@ define([
       if (self.settings) self.settings.hide();
     },
 
-    isVisible: function() {
+    isVisible() {
       return this.body.css("display") === "block";
     },
 
-    clear: function() {
+    clear() {
       var self = this;
 
       if (self.activePage) self.activePage.hide();
     },
 
-    getScale: function() {
+    getScale() {
       return this.game.getScaleFactor();
     }
   });

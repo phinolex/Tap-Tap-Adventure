@@ -62,7 +62,7 @@ function printStackTrace(options) {
 printStackTrace.implementation = function() {};
 
 printStackTrace.implementation.prototype = {
-  run: function(ex) {
+  run(ex) {
     // Use either the stored mode, or resolve it
     var mode = this._mode || this.mode();
     if (mode === "other") {
@@ -84,7 +84,7 @@ printStackTrace.implementation.prototype = {
   /**
    * @return {String} mode of operation for the environment in question.
    */
-  mode: function() {
+  mode() {
     try {
       var _err = __undef__ << 1;
     } catch (e) {
@@ -110,7 +110,7 @@ printStackTrace.implementation.prototype = {
    * @param {String} functionName to instrument
    * @param {Function} function to call with a stack trace on invocation
    */
-  instrumentFunction: function(context, functionName, callback) {
+  instrumentFunction(context, functionName, callback) {
     context = context || window;
     context["_old" + functionName] = context[functionName];
     context[functionName] = function() {
@@ -128,7 +128,7 @@ printStackTrace.implementation.prototype = {
    * @param {Object} context of execution (e.g. window)
    * @param {String} functionName to de-instrument
    */
-  deinstrumentFunction: function(context, functionName) {
+  deinstrumentFunction(context, functionName) {
     if (
       context[functionName].constructor === Function &&
       context[functionName]._instrumented &&
@@ -144,7 +144,7 @@ printStackTrace.implementation.prototype = {
    * @param e - Error object to inspect
    * @return Array<String> of function calls, files and line numbers
    */
-  chrome: function(e) {
+  chrome(e) {
     return e.stack
       .replace(/^[^\n]*\n/, "")
       .replace(/^[^\n]*\n/, "")
@@ -160,7 +160,7 @@ printStackTrace.implementation.prototype = {
    * @param e - Error object to inspect
    * @return Array<String> of function calls, files and line numbers
    */
-  firefox: function(e) {
+  firefox(e) {
     return e.stack
       .replace(/^[^\n]*\n/, "")
       .replace(/(?:\n@:0)?\s+$/m, "")
@@ -174,7 +174,7 @@ printStackTrace.implementation.prototype = {
    * @param e - Error object to inspect
    * @return Array<String> of function calls, files and line numbers
    */
-  opera10: function(e) {
+  opera10(e) {
     var stack = e.stacktrace;
     var lines = stack.split("\n"),
       ANON = "{anonymous}",
@@ -196,7 +196,7 @@ printStackTrace.implementation.prototype = {
   },
 
   // Opera 7.x-9.x only!
-  opera: function(e) {
+  opera(e) {
     var lines = e.message.split("\n"),
       ANON = "{anonymous}",
       lineRE = /Line\s+(\d+).*script\s+(http\S+)(?:.*in\s+function\s+(\S+))?/i,
@@ -221,7 +221,7 @@ printStackTrace.implementation.prototype = {
   },
 
   // Safari, IE, and others
-  other: function(curr) {
+  other(curr) {
     var ANON = "{anonymous}",
       fnRE = /function\s*([\w\-$]+)?\s*\(/i,
       stack = [],
@@ -245,7 +245,7 @@ printStackTrace.implementation.prototype = {
    * @param {Arguments} object
    * @return {Array} of Strings with stringified arguments
    */
-  stringifyArguments: function(args) {
+  stringifyArguments(args) {
     for (var i = 0; i < args.length; ++i) {
       var arg = args[i];
       if (arg === undefined) {
@@ -281,7 +281,7 @@ printStackTrace.implementation.prototype = {
   /**
    * @return the text from a given URL.
    */
-  ajax: function(url) {
+  ajax(url) {
     var req = this.createXMLHTTPObject();
     if (!req) {
       return;
@@ -297,7 +297,7 @@ printStackTrace.implementation.prototype = {
    *
    * @return <Function> XHR function or equivalent
    */
-  createXMLHTTPObject: function() {
+  createXMLHTTPObject() {
     var xmlhttp,
       XMLHttpFactories = [
         function() {
@@ -330,7 +330,7 @@ printStackTrace.implementation.prototype = {
    * @param url <String> source url
    * @return False if we need a cross-domain request
    */
-  isSameDomain: function(url) {
+  isSameDomain(url) {
     return url.indexOf(location.hostname) !== -1;
   },
 
@@ -340,14 +340,14 @@ printStackTrace.implementation.prototype = {
    * @param url <String> JS source URL
    * @return <String> Source code
    */
-  getSource: function(url) {
+  getSource(url) {
     if (!(url in this.sourceCache)) {
       this.sourceCache[url] = this.ajax(url).split("\n");
     }
     return this.sourceCache[url];
   },
 
-  guessFunctions: function(stack) {
+  guessFunctions(stack) {
     for (var i = 0; i < stack.length; ++i) {
       var reStack = /\{anonymous\}\(.*\)@(\w+:\/\/([\-\w\.]+)+(:\d+)?[^:]+):(\d+):?(\d+)?/;
       var frame = stack[i],
@@ -364,7 +364,7 @@ printStackTrace.implementation.prototype = {
     return stack;
   },
 
-  guessFunctionName: function(url, lineNo) {
+  guessFunctionName(url, lineNo) {
     try {
       return this.guessFunctionNameFromLines(lineNo, this.getSource(url));
     } catch (e) {
@@ -374,7 +374,7 @@ printStackTrace.implementation.prototype = {
     }
   },
 
-  guessFunctionNameFromLines: function(lineNo, source) {
+  guessFunctionNameFromLines(lineNo, source) {
     var reFunctionArgNames = /function ([^(]*)\(([^)]*)\)/;
     var reGuessFunction = /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*(function|eval|new Function)/;
     // Walk backwards from the first line in the function until we find the line which

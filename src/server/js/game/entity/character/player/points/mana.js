@@ -1,21 +1,21 @@
 var Points = require("./points");
 
 module.exports = Mana = Points.extend({
-  init: function(mana, maxMana) {
+  init(mana, maxMana) {
     var self = this;
 
     self._super(mana, maxMana);
   },
 
-  getMana: function() {
+  getMana() {
     return this.points;
   },
 
-  getMaxMana: function() {
+  getMaxMana() {
     return this.maxPoints;
   },
 
-  setMana: function(mana) {
+  setMana(mana) {
     var self = this;
 
     self.points = mana;
@@ -23,7 +23,7 @@ module.exports = Mana = Points.extend({
     if (self.manaCallback) self.manaCallback();
   },
 
-  setMaxMana: function(maxMana) {
+  setMaxMana(maxMana) {
     var self = this;
 
     self.maxPoints = maxMana;
@@ -31,11 +31,11 @@ module.exports = Mana = Points.extend({
     if (self.maxManaCallback) self.maxManaCallback();
   },
 
-  onMana: function(callback) {
+  onMana(callback) {
     this.manaCallback = callback;
   },
 
-  onMaxMana: function(callback) {
+  onMaxMana(callback) {
     this.maxManaCallback = callback;
   }
 });

@@ -5,7 +5,7 @@ var cls = require("../../server/js/lib/class"),
   _ = require("underscore");
 
 module.exports = Bot = cls.Class.extend({
-  init: function(world, count) {
+  init(world, count) {
     var self = this;
 
     self.world = world;
@@ -18,14 +18,14 @@ module.exports = Bot = cls.Class.extend({
     self.load();
   },
 
-  load: function() {
+  load() {
     var self = this;
 
     for (var i = 0; i < self.count; i++) {
       var connection = {
           id: i,
-          listen: function() {},
-          onClose: function() {}
+          listen() {},
+          onClose() {}
         },
         player = new Player(self.world, self.world.database, connection, -1);
 

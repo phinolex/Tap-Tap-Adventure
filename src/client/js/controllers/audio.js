@@ -2,7 +2,7 @@
 
 define(function() {
   return Class.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self.game = game;
@@ -18,7 +18,7 @@ define(function() {
       self.load();
     },
 
-    load: function() {
+    load() {
       var self = this;
 
       self.music = {
@@ -51,7 +51,7 @@ define(function() {
       };
     },
 
-    parse: function(path, name, channels, callback) {
+    parse(path, name, channels, callback) {
       var self = this,
         fullPath = path + name + "." + self.format,
         sound = document.createElement("audio");
@@ -96,7 +96,7 @@ define(function() {
       else if (name in self.sounds) self.sounds[name] = true;
     },
 
-    play: function(type, name) {
+    play(type, name) {
       var self = this;
 
       if (!self.isEnabled() || !self.fileExists(name)) return;
@@ -136,7 +136,7 @@ define(function() {
       }
     },
 
-    update: function() {
+    update() {
       var self = this;
 
       if (!self.isEnabled()) return;
@@ -171,7 +171,7 @@ define(function() {
       }
     },
 
-    fadeIn: function(song) {
+    fadeIn(song) {
       var self = this;
 
       if (!song || song.fadingIn) return;
@@ -188,7 +188,7 @@ define(function() {
       }, 100);
     },
 
-    fadeOut: function(song, callback) {
+    fadeOut(song, callback) {
       var self = this;
 
       if (!song || song.fadingOut) return;
@@ -210,7 +210,7 @@ define(function() {
       }, 100);
     },
 
-    fadeSongOut: function() {
+    fadeSongOut() {
       var self = this;
 
       if (!self.song) return;
@@ -222,28 +222,28 @@ define(function() {
       self.song = null;
     },
 
-    clearFadeIn: function(song) {
+    clearFadeIn(song) {
       if (song.fadingIn) {
         clearInterval(song.fadingIn);
         song.fadingIn = null;
       }
     },
 
-    clearFadeOut: function(song) {
+    clearFadeOut(song) {
       if (song.fadingOut) {
         clearInterval(song.fadingOut);
         song.fadingOut = null;
       }
     },
 
-    reset: function(song) {
+    reset(song) {
       if (!song || !song.readyState > 0) return;
 
       song.pause();
       song.currentTime = 0;
     },
 
-    stop: function() {
+    stop() {
       var self = this;
 
       if (!self.song) return;
@@ -254,11 +254,11 @@ define(function() {
       });
     },
 
-    fileExists: function(name) {
+    fileExists(name) {
       return name in this.music || name in this.sounds;
     },
 
-    get: function(name) {
+    get(name) {
       var self = this;
 
       if (!self.audibles[name]) return null;
@@ -273,26 +273,26 @@ define(function() {
       return audible;
     },
 
-    getMusic: function(name) {
+    getMusic(name) {
       return {
         sound: this.get(name),
         name: name
       };
     },
 
-    setSongVolume: function(volume) {
+    setSongVolume(volume) {
       this.song.volume = volume;
     },
 
-    getSFXVolume: function() {
+    getSFXVolume() {
       return this.game.storage.data.settings.sfx / 100;
     },
 
-    getMusicVolume: function() {
+    getMusicVolume() {
       return this.game.storage.data.settings.music / 100;
     },
 
-    isEnabled: function() {
+    isEnabled() {
       return this.game.storage.data.settings.soundEnabled && this.enabled;
     }
   });

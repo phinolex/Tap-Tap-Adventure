@@ -4,7 +4,7 @@ var Combat = require("../../js/game/entity/character/combat/combat"),
   Utils = require("../../js/util/utils");
 
 module.exports = Tenebris = Combat.extend({
-  init: function(character) {
+  init(character) {
     var self = this;
 
     self._super(character);
@@ -30,7 +30,7 @@ module.exports = Tenebris = Combat.extend({
     if (!self.isIllusion()) self.forceTalk("Who dares summon Tenebris!");
   },
 
-  reset: function() {
+  reset() {
     var self = this;
 
     self.illusions = [];
@@ -43,7 +43,7 @@ module.exports = Tenebris = Combat.extend({
     }, self.respawnDelay);
   },
 
-  hit: function(attacker, target, hitInfo) {
+  hit(attacker, target, hitInfo) {
     var self = this;
 
     if (self.isAttacked()) self.beginIllusionAttack();
@@ -53,13 +53,13 @@ module.exports = Tenebris = Combat.extend({
     self._super(attacker, target, hitInfo);
   },
 
-  spawnTenbris: function() {
+  spawnTenbris() {
     var self = this;
 
     self.world.spawnMob(104, self.character.x, self.character.y);
   },
 
-  spawnIllusions: function() {
+  spawnIllusions() {
     var self = this;
 
     self.illusions.push(
@@ -91,7 +91,7 @@ module.exports = Tenebris = Combat.extend({
     );
   },
 
-  removeIllusions: function() {
+  removeIllusions() {
     var self = this;
 
     self.lastIllusion = 0;
@@ -101,7 +101,7 @@ module.exports = Tenebris = Combat.extend({
     for (var i = 0; i < listCopy.length; i++) self.world.kill(listCopy[i]);
   },
 
-  beginIllusionAttack: function() {
+  beginIllusionAttack() {
     var self = this;
 
     if (!self.hasIllusions()) return;
@@ -113,7 +113,7 @@ module.exports = Tenebris = Combat.extend({
     });
   },
 
-  getRandomTarget: function() {
+  getRandomTarget() {
     var self = this;
 
     if (self.isAttacked()) {
@@ -128,7 +128,7 @@ module.exports = Tenebris = Combat.extend({
     return null;
   },
 
-  forceTalk: function(instance, message) {
+  forceTalk(instance, message) {
     var self = this;
 
     if (!self.world) return;
@@ -143,11 +143,11 @@ module.exports = Tenebris = Combat.extend({
     );
   },
 
-  isLast: function() {
+  isLast() {
     return this.illusions.length === 1;
   },
 
-  canSpawn: function() {
+  canSpawn() {
     return (
       !this.isIllusion() &&
       !this.hasIllusions &&
@@ -156,11 +156,11 @@ module.exports = Tenebris = Combat.extend({
     );
   },
 
-  isIllusion: function() {
+  isIllusion() {
     return this.character.id === 105;
   },
 
-  hasIllusions: function() {
+  hasIllusions() {
     return this.illusions.length > 0;
   }
 });

@@ -3,7 +3,7 @@
 var cls = require("../lib/class");
 
 module.exports = Connection = cls.Class.extend({
-  init: function(id, connection, server) {
+  init(id, connection, server) {
     var self = this;
 
     self.id = id;
@@ -11,19 +11,19 @@ module.exports = Connection = cls.Class.extend({
     self._server = server;
   },
 
-  broadcast: function(message) {
+  broadcast(message) {
     throw "Invalid initialization.";
   },
 
-  send: function(message) {
+  send(message) {
     throw "Invalid initialization.";
   },
 
-  sendUTF8: function(data) {
+  sendUTF8(data) {
     throw "Invalid initialization.";
   },
 
-  close: function(reason) {
+  close(reason) {
     if (reason) log.info(reason);
 
     this.socket.conn.close();

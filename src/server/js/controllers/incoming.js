@@ -13,7 +13,7 @@ var cls = require("../lib/class"),
   Utils = require("../util/utils");
 
 module.exports = Incoming = cls.Class.extend({
-  init: function(player) {
+  init(player) {
     var self = this;
 
     self.player = player;
@@ -111,7 +111,7 @@ module.exports = Incoming = cls.Class.extend({
     });
   },
 
-  handleIntro: function(message) {
+  handleIntro(message) {
     log.info("incoming message:" + message.toString());
 
     var self = this,
@@ -215,7 +215,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleReady: function(message) {
+  handleReady(message) {
     var self = this,
       isReady = message.shift();
 
@@ -236,7 +236,7 @@ module.exports = Incoming = cls.Class.extend({
     if (self.player.readyCallback) self.player.readyCallback();
   },
 
-  handleWho: function(message) {
+  handleWho(message) {
     var self = this;
 
     _.each(message.shift(), function(id) {
@@ -246,7 +246,7 @@ module.exports = Incoming = cls.Class.extend({
     });
   },
 
-  handleEquipment: function(message) {
+  handleEquipment(message) {
     var self = this,
       opcode = message.shift();
 
@@ -316,7 +316,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleMovement: function(message) {
+  handleMovement(message) {
     var self = this,
       opcode = message.shift();
 
@@ -396,7 +396,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleRequest: function(message) {
+  handleRequest(message) {
     var self = this,
       id = message.shift();
 
@@ -405,7 +405,7 @@ module.exports = Incoming = cls.Class.extend({
     self.world.pushEntities(self.player);
   },
 
-  handleTarget: function(message) {
+  handleTarget(message) {
     var self = this,
       opcode = message.shift(),
       instance = message.shift();
@@ -454,7 +454,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleCombat: function(message) {
+  handleCombat(message) {
     var self = this,
       opcode = message.shift();
 
@@ -487,7 +487,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleProjectile: function(message) {
+  handleProjectile(message) {
     var self = this,
       type = message.shift();
 
@@ -510,7 +510,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleNetwork: function(message) {
+  handleNetwork(message) {
     var self = this,
       opcode = message.shift();
 
@@ -521,7 +521,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleChat: function(message) {
+  handleChat(message) {
     var self = this,
       text = sanitizer.escape(sanitizer.sanitize(message.shift()));
 
@@ -563,7 +563,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleInventory: function(message) {
+  handleInventory(message) {
     var self = this,
       opcode = message.shift();
 
@@ -619,7 +619,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleBank: function(message) {
+  handleBank(message) {
     var self = this,
       opcode = message.shift();
 
@@ -660,7 +660,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleRespawn: function(message) {
+  handleRespawn(message) {
     var self = this,
       instance = message.shift();
 
@@ -683,7 +683,7 @@ module.exports = Incoming = cls.Class.extend({
     self.player.revertPoints();
   },
 
-  handleTrade: function(message) {
+  handleTrade(message) {
     var self = this,
       opcode = message.shift(),
       oPlayer = self.world.getEntityByInstance(message.shift());
@@ -702,7 +702,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleEnchant: function(message) {
+  handleEnchant(message) {
     var self = this,
       opcode = message.shift();
 
@@ -730,7 +730,7 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleClick: function(message) {
+  handleClick(message) {
     var self = this,
       type = message.shift(),
       isOpen = message.shift();
@@ -744,14 +744,14 @@ module.exports = Incoming = cls.Class.extend({
     }
   },
 
-  handleWarp: function(message) {
+  handleWarp(message) {
     var self = this,
       id = parseInt(message.shift()) - 1;
 
     if (self.player.warp) self.player.warp.warp(id);
   },
 
-  canAttack: function(attacker, target) {
+  canAttack(attacker, target) {
     /**
      * Used to prevent client-sided manipulation. The client will send the packet to start combat
      * but if it was modified by a presumed hacker, it will simply cease when it arrives to this condition.

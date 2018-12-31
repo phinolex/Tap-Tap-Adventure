@@ -2,7 +2,7 @@
 
 define(["jquery", "../page"], function($, Page) {
   return Page.extend({
-    init: function(game) {
+    init(game) {
       var self = this;
 
       self._super("#statePage");
@@ -33,11 +33,11 @@ define(["jquery", "../page"], function($, Page) {
       self.load();
     },
 
-    resize: function() {
+    resize() {
       this.loadSlots();
     },
 
-    load: function() {
+    load() {
       var self = this;
 
       if (!self.game.player.armour) return;
@@ -86,7 +86,7 @@ define(["jquery", "../page"], function($, Page) {
       });
     },
 
-    loadSlots: function() {
+    loadSlots() {
       var self = this;
 
       self.weaponSlot.css(
@@ -116,7 +116,7 @@ define(["jquery", "../page"], function($, Page) {
         });
     },
 
-    update: function() {
+    update() {
       var self = this;
 
       self.level.text(self.player.level);
@@ -125,13 +125,13 @@ define(["jquery", "../page"], function($, Page) {
       self.loadSlots();
     },
 
-    forEachSlot: function(callback) {
+    forEachSlot(callback) {
       _.each(this.slots, function(slot) {
         callback(slot);
       });
     },
 
-    getScale: function() {
+    getScale() {
       return this.game.renderer.getDrawingScale();
     }
   });
