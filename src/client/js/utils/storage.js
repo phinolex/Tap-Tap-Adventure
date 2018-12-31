@@ -1,98 +1,100 @@
-define(function() {
-  var storage = window.localStorage,
-    name = "data";
+/* global window */
+import log from '../lib/log';
 
-  return Class.extend({
-    init(app) {
-      var self = this;
+const storage = window.localStorage;
+const name = 'data';
 
-      self.app = app;
-      self.data = null;
+export default class Storage {
+  constructor(app) {
+    this.app = app;
+    this.data = null;
 
-      self.load();
-    },
+    this.load();
+  }
 
-    load() {
-      var self = this;
-
-      if (storage.data) self.data = JSON.parse(storage.getItem(name));
-      else self.data = self.create();
-
-      log.info(storage.data);
-
-      if (self.data.clientVersion !== self.app.config.version) {
-        self.data = self.create();
-        self.save();
-      }
-    },
-
-    create() {
-      return {
-        new: true,
-        welcome: true,
-        clientVersion: this.app.config.version,
-        intensity: 0.8,
-        player: {
-          username: "",
-          password: "",
-          autoLogin: false,
-          rememberMe: false
-        },
-
-        settings: {
-          music: 100,
-          sfx: 100,
-          brightness: 100,
-          soundEnabled: true,
-          FPSCap: true,
-          centerCamera: true,
-          debug: false,
-          showNames: true,
-          showLevels: true
-        }
-      };
-    },
-
-    save() {
-      if (this.data) storage.setItem(name, JSON.stringify(this.data));
-    },
-
-    clear() {
-      storage.removeItem(name);
+  load() {
+    if (storage.data) {
+      this.data = JSON.parse(storage.getItem(name));
+    } else {
       this.data = this.create();
-    },
-
-    toggleRemember(toggle) {
-      var self = this;
-
-      self.data.player.rememberMe = toggle;
-      self.save();
-    },
-
-    setPlayer(option, value) {
-      var self = this,
-        pData = self.getPlayer();
-
-      if (pData.hasOwnProperty(option)) pData[option] = value;
-
-      self.save();
-    },
-
-    setSettings(option, value) {
-      var self = this,
-        sData = self.getSettings();
-
-      if (sData.hasOwnProperty(option)) sData[option] = value;
-
-      self.save();
-    },
-
-    getPlayer() {
-      return this.data.player;
-    },
-
-    getSettings() {
-      return this.data ? this.data.settings : null;
     }
-  });
-});
+
+    log.info(storage.data);
+
+    if (this.data.clientVersion !== this.app.config.version) {
+      this.data = this.create();
+      this.save();
+    }
+  }
+
+  create() {
+    return {
+      new: true,
+      welcome: true,
+      clientVersion: this.app.config.version,
+      intensity: 0.8,
+      player: {
+        username: '',
+        password: '',
+        autoLogin: false,
+        rememberMe: false,
+      },
+
+      settings: {
+        music: 100,
+        sfx: 100,
+        brightness: 100,
+        soundEnabled: true,
+        FPSCap: true,
+        centerCamera: true,
+        debug: false,
+        showNames: true,
+        showLevels: true,
+      },
+    };
+  }
+
+  save() {
+    if (this.data) {
+      storage.setItem(name, JSON.stringify(this.data));
+    }
+  }
+
+  clear() {
+    storage.removeItem(name);
+    this.data = this.create();
+  }
+
+  toggleRemember(toggle) {
+    this.data.player.rememberMe = toggle;
+    this.save();
+  }
+
+  setPlayer(option, value) {
+    const pData = this.getPlayer();
+
+    if (pData.hasOwnProperty(option)) { // eslint-disable-line
+      pData[option] = value;
+    }
+
+    this.save();
+  }
+
+  setSettings(option, value) {
+    const sData = this.getSettings();
+
+    if (sData.hasOwnProperty(option)) { // eslint-disable-line
+      sData[option] = value;
+    }
+
+    this.save();
+  }
+
+  getPlayer() {
+    return this.data.player;
+  }
+
+  getSettings() {
+    return this.data ? this.data.settings : null;
+  }
+}
