@@ -1,79 +1,74 @@
-/**
- * There isn't much to optimize here
- * This file has been ripped from TTA
- */
+export default class Transition {
+  constructor() {
+    this.startValue = 0;
+    this.endValue = 0;
+    this.duration = 0;
+    this.inProgress = false;
+  }
 
-define(function() {
-  return Class.extend({
-    constructor() {
-      var self = this;
+  start(
+    currentTime,
+    updateFunction,
+    stopFunction,
+    startValue,
+    endValue,
+    duration,
+  ) {
+    this.startTime = currentTime;
+    this.updateFunction = updateFunction;
+    this.stopFunction = stopFunction;
+    this.startValue = startValue;
+    this.endValue = endValue;
+    this.duration = duration;
 
-      self.startValue = 0;
-      self.endValue = 0;
-      self.duration = 0;
-      self.inProgress = false;
-    },
+    this.inProgress = true;
+    this.count = 0;
+  }
 
-    start(
+  step(currentTime) {
+    if (!this.inProgress) {
+      return;
+    }
+
+    if (this.count > 0) {
+      this.count -= 1;
+    } else {
+      let elapsed = currentTime - this.startTime;
+
+      if (elapsed > this.duration) {
+        elapsed = this.duration;
+      }
+
+      const diff = this.endValue - this.startValue;
+
+      const interval = Math.round(
+        this.startValue + (diff / this.duration) * elapsed,
+      );
+
+      if (elapsed === this.duration || interval === this.endValue) {
+        this.stop();
+        if (this.stopFunction) {
+          this.stopFunction();
+        }
+      } else if (this.updateFunction) {
+        this.updateFunction(interval);
+      }
+    }
+  }
+
+  restart(currentTime, startValue, endValue) {
+    this.start(
       currentTime,
-      updateFunction,
-      stopFunction,
+      this.updateFunction,
+      this.stopFunction,
       startValue,
       endValue,
-      duration
-    ) {
-      var self = this;
+      this.duration,
+    );
+    this.step(currentTime);
+  }
 
-      self.startTime = currentTime;
-      self.updateFunction = updateFunction;
-      self.stopFunction = stopFunction;
-      self.startValue = startValue;
-      self.endValue = endValue;
-      self.duration = duration;
-
-      self.inProgress = true;
-      self.count = 0;
-    },
-
-    step(currentTime) {
-      var self = this;
-
-      if (!self.inProgress) return;
-
-      if (self.count > 0) self.count--;
-      else {
-        var elapsed = currentTime - self.startTime;
-
-        if (elapsed > self.duration) elapsed = self.duration;
-
-        var diff = self.endValue - self.startValue,
-          interval = Math.round(
-            self.startValue + (diff / self.duration) * elapsed
-          );
-
-        if (elapsed === self.duration || interval === self.endValue) {
-          self.stop();
-          if (self.stopFunction) self.stopFunction();
-        } else if (self.updateFunction) self.updateFunction(interval);
-      }
-    },
-
-    restart(currentTime, startValue, endValue) {
-      var self = this;
-
-      self.start(
-        currentTime,
-        self.updateFunction,
-        self.stopFunction,
-        startValue,
-        endValue,
-        self.duration
-      );
-      self.step(currentTime);
-    },
-
-    stop() {
-      this.inProgress = false;
-    }
-  });
-});
+  stop() {
+    this.inProgress = false;
+  }
+}
