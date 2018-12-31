@@ -4,11 +4,12 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var ModernizrWebpackPlugin = require("modernizr-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
     app: ["babel-polyfill", path.resolve(__dirname, "./src/client/js/main.js")],
-    styles: path.resolve(__dirname, "./src/css/main.css"),
+    styles: path.resolve(__dirname, "./css/main.css"),
     vendor: [
       "socket.io-client",
       "jquery",
@@ -45,6 +46,12 @@ module.exports = {
       },
       hash: false
     }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }),
     new BrowserSyncPlugin({
       host: process.env.IP || "localhost",
       port: process.env.PORT || 3000,
@@ -67,17 +74,52 @@ module.exports = {
         use: ["babel-loader"],
         include: path.join(__dirname, "src")
       },
+      // raw files
       {
         test: [/\.vert$/, /\.frag$/],
         use: "raw-loader"
       },
+      // css
       {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
+      },
+      // images
+      {
+        test: /.(jpg|png|gif)(\?[a-z0-9]+)?$/,
         use: [
-          {loader: "style-loader", options: {sourceMap: true}},
-          {loader: "css-loader", options: {sourceMap: true}},
-          {loader: "postcss-loader", options: {sourceMap: true}},
-          {loader: "sass-loader", options: {sourceMap: true}}
+          {
+            loader: "file-loader",
+            options: {
+              name: "[path][name].[ext]"
+            }
+          }
+        ]
+      },
+      // audio
+      {
+        test: /.(mp3)(\?[a-z0-9]+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[path][name].[ext]"
+            }
+          }
+        ]
+      },
+      // fonts
+      {
+        test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "./fonts/",
+              publicPath: "../fonts"
+            }
+          }
         ]
       }
     ]
