@@ -1,10 +1,9 @@
-client-build
+build
 node_modules
 cordova
 .idea
 .DS_Store
 dump.rdb
-client/less
 server/config.json
-client/data/config.json
+data/config.json
 npm-debug.log
