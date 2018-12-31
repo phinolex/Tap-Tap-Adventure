@@ -12,8 +12,7 @@
   <meta property="og:site_name" content="WTF?! Adventure">
   <meta property="og:description" content="The ultimate HTML5 experience!">
 
-  <link rel="icon" type="image/png" href="./assets/img/favicon.png?v=2.0">
-  <script async src="modernizr-bundle.js"></script>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png?v=2.0">
   <title>WTF?! Adventure</title>
 
 </head>
@@ -27,11 +26,11 @@
   <div id="modal" class="container-fluid col-sm-10">
     <section id="wrapper">
       <header>
-        <img src="./assets/img/common/wtfintro.png" alt="WTF Adventure" title="WTF Adventure" id="wtf" />
+        <img src="assets/img/common/wtfintro.png" alt="WTF Adventure" title="WTF Adventure" id="wtf" />
       </header>
       <section id="content" class="loadCharacter col-sm-11">
         <div class="loader col-sm-12 text-center">
-          <img src="./assets/img/coin.gif" />
+          <img src="assets/img/coin.gif" />
           <p class="message">WTF?! is happening...</p>
         </div>
         <article id="loadCharacter" class="row text-center">
@@ -39,11 +38,11 @@
             <form method="get" accept-charset="utf-8">
               <span class="error message"></span>
               <div class="form-field">
-                <img src="./assets/img/common/friends-2.png" class="hud-img" />
+                <img src="assets/img/common/friends-2.png" class="hud-img" />
                 <input type="text" id="loginNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off" autofocus>
               </div>
               <div class="form-field">
-                <img src="./assets/img/common/lock.png" class="hud-img" />
+                <img src="assets/img/common/lock.png" class="hud-img" />
                 <input type="password" id="loginPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
               </div>
               <div class="row padding-top">
@@ -60,11 +59,11 @@
           <section class="col-md-12 col-lg-5">
             <div class="row" id="join_guest">
               <div class="col-6 col-sm-6">
-                <img src="./assets/img/common/hud-join.png" class="hud-img" />
+                <img src="assets/img/common/hud-join.png" class="hud-img" />
                 <div class="button red align-center" id="newCharacter">Join</div>
               </div>
               <div class="col-6 col-sm-6">
-                <img src="./assets/img/common/hud-guest.png" class="hud-img" />
+                <img src="assets/img/common/hud-guest.png" class="hud-img" />
                 <div class="button purple align-center" id="guest">Guest Login</div>
               </div>
             </div>
@@ -145,12 +144,12 @@
         <canvas id="textCanvas"></canvas>
       </div>
       <div id="world-bar">
-        <img src="./assets/img/world.png" id="hud-world" />
-        <img src="./assets/img/achievements.png" id="hud-achievements" />
+        <img src="assets/img/world.png" id="hud-world" />
+        <img src="assets/img/achievements.png" id="hud-achievements" />
       </div>
       <div id="chat-bar">
-        <img src="./assets/img/chat.png" id="hud-chat" />
-        <img src="./assets/img/inventory.png" id="hud-inventory" />
+        <img src="assets/img/chat.png" id="hud-chat" />
+        <img src="assets/img/inventory.png" id="hud-inventory" />
       </div>
       <div id="hud">
         <div id="hud-bar">
@@ -357,6 +356,7 @@
   </div>
 
   <div id="resizeCheck"></div>
+  <script src="modernizr-bundle.js"></script>
 </body>
 
 </html>

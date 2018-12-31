@@ -1,5 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
+var glob = require("glob");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -9,7 +10,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   entry: {
     app: ["babel-polyfill", path.resolve(__dirname, "./src/client/js/main.js")],
-    styles: path.resolve(__dirname, "./css/main.css"),
+    styles: [
+      // stylesheets
+      path.resolve(__dirname, "./css/main.scss")
+    ],
     vendor: [
       "socket.io-client",
       "jquery",
@@ -91,7 +95,8 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "[path][name].[ext]"
+              name: "[path][name].[ext]",
+              publicPath: "[path]"
             }
           }
         ]
@@ -115,9 +120,7 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "[name].[ext]",
-              outputPath: "./fonts/",
-              publicPath: "../fonts"
+              name: "[path][name].[ext]"
             }
           }
         ]

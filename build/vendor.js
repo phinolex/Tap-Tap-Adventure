@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -8875,7 +8875,7 @@ var debug = __webpack_require__(/*! debug */ "./node_modules/engine.io-client/no
 var BrowserWebSocket, NodeWebSocket;
 if (typeof self === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(/*! ws */ 2);
+    NodeWebSocket = __webpack_require__(/*! ws */ 3);
   } catch (e) { }
 } else {
   BrowserWebSocket = self.WebSocket || self.MozWebSocket;
@@ -28822,7 +28822,7 @@ module.exports = yeast;
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!********************************************************************!*\
   !*** multi socket.io-client jquery bootstrap popper.js underscore ***!
   \********************************************************************/
@@ -28838,7 +28838,7 @@ module.exports = __webpack_require__(/*! underscore */"./node_modules/underscore
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!********************!*\
   !*** ws (ignored) ***!
   \********************/
