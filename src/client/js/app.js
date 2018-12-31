@@ -1,9 +1,11 @@
-/* global log, Class, Detect, Modules */
 import $ from "jquery";
+import Modules from "./utils/modules";
+import log from "./lib/log";
+import Detect from "./utils/detect";
 
 export default class App {
   constructor() {
-    var self = this;
+    const self = this;
 
     log.info("Loading the main application...");
 
@@ -56,7 +58,7 @@ export default class App {
   }
 
   load() {
-    var self = this;
+    const self = this;
 
     self.loginButton.click(function() {
       self.login();
@@ -98,7 +100,7 @@ export default class App {
     });
 
     // dismissing the welcome screen
-    var welcomeContinue = function() {
+    const welcomeContinue = function() {
       if (!self.game) return;
 
       // hide the welcome screen so it doesn't appear again
@@ -114,7 +116,7 @@ export default class App {
     self.rememberMe.click(function() {
       if (!self.game || !self.game.storage) return;
 
-      var active = self.rememberMe.hasClass("active");
+      const active = self.rememberMe.hasClass("active");
 
       self.rememberMe.toggleClass("active");
 
@@ -151,7 +153,7 @@ export default class App {
     });
 
     $(document).keydown(function(e) {
-      var key = e.which;
+      const key = e.which;
 
       if (!self.game) return;
 
@@ -166,7 +168,7 @@ export default class App {
     });
 
     $(document).keyup(function(e) {
-      var key = e.which;
+      const key = e.which;
 
       if (!self.game || !self.game.started) return;
 
@@ -194,7 +196,7 @@ export default class App {
   }
 
   login() {
-    var self = this;
+    const self = this;
 
     if (
       self.loggingIn ||
@@ -210,9 +212,9 @@ export default class App {
   }
 
   zoom() {
-    var self = this;
+    const self = this;
 
-    var containerWidth = self.container.width(),
+    const containerWidth = self.container.width(),
       containerHeight = self.container.height(),
       windowWidth = self.window.width(),
       windowHeight = self.window.height(),
@@ -235,7 +237,7 @@ export default class App {
   }
 
   fadeMenu() {
-    var self = this;
+    const self = this;
 
     self.updateLoader(null);
 
@@ -247,7 +249,7 @@ export default class App {
   }
 
   showMenu() {
-    var self = this;
+    const self = this;
 
     self.body.removeClass("game");
     self.body.removeClass("started");
@@ -257,7 +259,7 @@ export default class App {
   showDeath() {}
 
   openScroll(origin, destination) {
-    var self = this;
+    const self = this;
 
     console.log("open scroll", origin, destination);
 
@@ -270,7 +272,7 @@ export default class App {
   }
 
   displayScroll(content) {
-    var self = this,
+    const self = this,
       state = self.wrapper.attr("class");
 
     if (self.game.started) {
@@ -286,7 +288,7 @@ export default class App {
   }
 
   verifyForm() {
-    var self = this,
+    const self = this,
       activeForm = self.getActiveForm();
 
     if (activeForm === "null") {
@@ -295,7 +297,7 @@ export default class App {
 
     switch (activeForm) {
       case "loadCharacter":
-        var nameInput = $("#loginNameInput"),
+        const nameInput = $("#loginNameInput"),
           passwordInput = $("#loginPasswordInput");
 
         if (self.loginFields.length === 0)
@@ -314,7 +316,7 @@ export default class App {
         break;
 
       case "createCharacter":
-        var characterName = $("#registerNameInput"),
+        const characterName = $("#registerNameInput"),
           registerPassword = $("#registerPasswordInput"),
           registerPasswordConfirmation = $(
             "#registerPasswordConfirmationInput"
@@ -365,7 +367,7 @@ export default class App {
   }
 
   sendStatus(message) {
-    var self = this;
+    const self = this;
 
     self.cleanErrors();
 
@@ -401,12 +403,12 @@ export default class App {
   }
 
   cleanErrors() {
-    var self = this,
+    const self = this,
       activeForm = self.getActiveForm(),
       fields =
         activeForm === "loadCharacter" ? self.loginFields : self.registerFields;
 
-    for (var i = 0; i < fields.length; i++)
+    for (let i = 0; i < fields.length; i++)
       fields[i].removeClass("field-error");
 
     $(".validation-error").remove();
@@ -426,7 +428,7 @@ export default class App {
   }
 
   resize() {
-    var self = this;
+    const self = this;
 
     if (self.game) self.game.resize();
   }
@@ -440,7 +442,7 @@ export default class App {
   }
 
   getScaleFactor() {
-    var width = window.innerWidth,
+    const width = window.innerWidth,
       height = window.innerHeight;
 
     /**
@@ -457,7 +459,7 @@ export default class App {
   }
 
   updateLoader(message) {
-    var self = this;
+    const self = this;
 
     if (!message) {
       self.loading.hide();
@@ -472,7 +474,7 @@ export default class App {
   toggleLogin(toggle) {
     log.info("Logging in: " + toggle);
 
-    var self = this;
+    const self = this;
 
     self.revertLoader();
 
@@ -494,7 +496,7 @@ export default class App {
   }
 
   toggleTyping(state) {
-    var self = this;
+    const self = this;
 
     if (self.loginFields)
       _.each(self.loginFields, function(field) {
@@ -508,7 +510,7 @@ export default class App {
   }
 
   updateRange(obj) {
-    var self = this,
+    const self = this,
       val = (obj.val() - obj.attr("min")) / (obj.attr("max") - obj.attr("min"));
 
     obj.css(

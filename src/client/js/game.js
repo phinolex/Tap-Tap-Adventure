@@ -20,7 +20,7 @@ import Packets from "./network/packets";
 
 export default class Game {
   constructor(app) {
-    var self = this;
+    const self = this;
 
     self.app = app;
     self.id = -1;
@@ -54,7 +54,7 @@ export default class Game {
   }
 
   start() {
-    var self = this;
+    const self = this;
 
     if (self.started) {
       return;
@@ -67,7 +67,7 @@ export default class Game {
   }
 
   stop() {
-    var self = this;
+    const self = this;
 
     self.stopped = false;
     self.started = false;
@@ -75,7 +75,7 @@ export default class Game {
   }
 
   tick() {
-    var self = this;
+    const self = this;
 
     if (self.ready) {
       self.time = new Date().getTime();
@@ -90,7 +90,7 @@ export default class Game {
   }
 
   unload() {
-    var self = this;
+    const self = this;
     self.socket = null;
     self.messages = null;
     self.renderer = null;
@@ -109,7 +109,7 @@ export default class Game {
   }
 
   loadRenderer() {
-    var self = this,
+    const self = this,
       background = document.getElementById("background"),
       foreground = document.getElementById("foreground"),
       textCanvas = document.getElementById("textCanvas"),
@@ -124,7 +124,7 @@ export default class Game {
   }
 
   loadControllers() {
-    var self = this,
+    const self = this,
       hasWorker = self.app.hasWorker();
 
     self.app.sendStatus(hasWorker ? "I tried to tell you..." : null);
@@ -143,22 +143,22 @@ export default class Game {
 
     self.app.sendStatus("Stop! Before it's too late...");
 
-    var entity = new Entities(self);
+    const entity = new Entities(self);
     self.setEntityController(entity);
 
-    var info = new Info(self);
+    const info = new Info(self);
     self.setInfo(info);
 
-    var bubble = new Bubble(self);
+    const bubble = new Bubble(self);
     self.setBubble(bubble);
 
-    var pointer = new Pointer(self);
+    const pointer = new Pointer(self);
     self.setPointer(pointer);
 
-    var audio = new Audio(self);
+    const audio = new Audio(self);
     self.setAudio(audio);
 
-    var gameInterface = new Interface(self);
+    const gameInterface = new Interface(self);
     self.setInterface(gameInterface);
 
     self.implementStorage();
@@ -170,7 +170,7 @@ export default class Game {
   }
 
   loadMap() {
-    var self = this;
+    const self = this;
 
     self.map = new Map(self);
 
@@ -197,7 +197,7 @@ export default class Game {
   }
 
   connect() {
-    var self = this;
+    const self = this;
 
     self.app.cleanErrors();
 
@@ -218,7 +218,7 @@ export default class Game {
       self.app.updateLoader("Logging in...");
 
       if (self.app.isRegistering()) {
-        var registerInfo = self.app.registerFields,
+        const registerInfo = self.app.registerFields,
           username = registerInfo[0].val(),
           password = registerInfo[1].val(),
           email = registerInfo[3].val();
@@ -238,7 +238,7 @@ export default class Game {
         ]);
       } else {
         console.log("logging in");
-        var loginInfo = self.app.loginFields,
+        const loginInfo = self.app.loginFields,
           name = loginInfo[0].val(),
           pass = loginInfo[1].val();
 
@@ -273,7 +273,7 @@ export default class Game {
     self.messages.onEquipment(function(opcode, info) {
       switch (opcode) {
         case Packets.EquipmentOpcode.Batch:
-          for (var i = 0; i < info.length; i++)
+          for (let i = 0; i < info.length; i++)
             self.player.setEquipment(i, info[i]);
 
           self.interface.loadProfile();
@@ -281,7 +281,7 @@ export default class Game {
           break;
 
         case Packets.EquipmentOpcode.Equip:
-          var equipmentType = info.shift(),
+          const equipmentType = info.shift(),
             name = info.shift(),
             string = info.shift(),
             count = info.shift(),
@@ -301,7 +301,7 @@ export default class Game {
           break;
 
         case Packets.EquipmentOpcode.Unequip:
-          var type = info.shift();
+          const type = info.shift();
 
           self.player.unequip(type);
 
@@ -319,7 +319,7 @@ export default class Game {
     });
 
     self.messages.onEntityList(function(data) {
-      var ids = _.pluck(self.entities.getAll(), "id"),
+      const ids = _.pluck(self.entities.getAll(), "id"),
         known = _.intersection(ids, data),
         newIds = _.difference(data, known);
 
@@ -335,7 +335,7 @@ export default class Game {
     });
 
     self.messages.onSync(function(data) {
-      var entity = self.entities.get(data.id);
+      const entity = self.entities.get(data.id);
 
       if (!entity || entity.type !== "player") return;
 
@@ -363,12 +363,12 @@ export default class Game {
     });
 
     self.messages.onMovement(function(data) {
-      var opcode = data.shift(),
+      const opcode = data.shift(),
         info = data.shift();
 
       switch (opcode) {
         case Packets.MovementOpcode.Move:
-          var id = info.shift(),
+          const id = info.shift(),
             x = info.shift(),
             y = info.shift(),
             forced = info.shift(),
@@ -384,7 +384,7 @@ export default class Game {
           break;
 
         case Packets.MovementOpcode.Follow:
-          var follower = self.entities.get(info.shift()),
+          const follower = self.entities.get(info.shift()),
             followee = self.entities.get(info.shift());
 
           if (!followee || !follower) return;
@@ -395,7 +395,7 @@ export default class Game {
 
         case Packets.MovementOpcode.Freeze:
         case Packets.MovementOpcode.Stunned:
-          var pEntity = self.entities.get(info.shift()),
+          const pEntity = self.entities.get(info.shift()),
             state = info.shift();
 
           if (!pEntity) return;
@@ -412,7 +412,7 @@ export default class Game {
     });
 
     self.messages.onTeleport(function(data) {
-      var id = data.shift(),
+      const id = data.shift(),
         x = data.shift(),
         y = data.shift(),
         withAnimation = data.shift(),
@@ -429,7 +429,7 @@ export default class Game {
        * hitbox. Make sure you keep an eye out for this.
        */
 
-      var doTeleport = function() {
+      const doTeleport = () => {
         self.entities.unregisterPosition(entity);
         entity.setGridPosition(x, y);
 
@@ -453,7 +453,7 @@ export default class Game {
       };
 
       if (withAnimation) {
-        var originalSprite = entity.sprite;
+        const originalSprite = entity.sprite;
 
         entity.teleporting = true;
 
@@ -473,7 +473,7 @@ export default class Game {
     });
 
     self.messages.onDespawn(function(id) {
-      var entity = self.entities.get(id);
+      const entity = self.entities.get(id);
 
       if (!entity) return;
 
@@ -520,7 +520,7 @@ export default class Game {
     });
 
     self.messages.onCombat(function(data) {
-      var opcode = data.shift(),
+      const opcode = data.shift(),
         attacker = self.entities.get(data.shift()),
         target = self.entities.get(data.shift());
 
@@ -542,7 +542,7 @@ export default class Game {
           break;
 
         case Packets.CombatOpcode.Hit:
-          var hit = data.shift(),
+          const hit = data.shift(),
             isPlayer = target.id === self.player.id;
 
           if (!hit.isAoE) {
@@ -597,7 +597,7 @@ export default class Game {
     });
 
     self.messages.onAnimation(function(id, info) {
-      var entity = self.entities.get(id),
+      const entity = self.entities.get(id),
         animation = info.shift(),
         speed = info.shift(),
         count = info.shift();
@@ -621,7 +621,7 @@ export default class Game {
     });
 
     self.messages.onPoints(function(data) {
-      var id = data.shift(),
+      const id = data.shift(),
         hitPoints = data.shift(),
         mana = data.shift(),
         entity = self.entities.get(id);
@@ -650,7 +650,7 @@ export default class Game {
       if (!info.duration) info.duration = 5000;
 
       if (info.withBubble) {
-        var entity = self.entities.get(info.id);
+        const entity = self.entities.get(info.id);
 
         if (entity) {
           self.bubble.create(info.id, info.text, self.time, info.duration);
@@ -676,7 +676,7 @@ export default class Game {
     self.messages.onInventory(function(opcode, info) {
       switch (opcode) {
         case Packets.InventoryOpcode.Batch:
-          var inventorySize = info.shift(),
+          const inventorySize = info.shift(),
             data = info.shift();
 
           self.interface.loadInventory(inventorySize, data);
@@ -710,7 +710,7 @@ export default class Game {
     self.messages.onBank(function(opcode, info) {
       switch (opcode) {
         case Packets.BankOpcode.Batch:
-          var bankSize = info.shift(),
+          const bankSize = info.shift(),
             data = info.shift();
 
           self.interface.loadBank(bankSize, data);
@@ -772,7 +772,7 @@ export default class Game {
     });
 
     self.messages.onBlink(function(instance) {
-      var item = self.entities.get(instance);
+      const item = self.entities.get(instance);
 
       if (!item) return;
 
@@ -780,7 +780,7 @@ export default class Game {
     });
 
     self.messages.onHeal(function(info) {
-      var entity = self.entities.get(info.id);
+      const entity = self.entities.get(info.id);
 
       if (!entity) return;
 
@@ -814,7 +814,7 @@ export default class Game {
     });
 
     self.messages.onExperience(function(info) {
-      var entity = self.entities.get(info.id);
+      const entity = self.entities.get(info.id);
 
       if (!entity || entity.type !== "player") return;
 
@@ -829,7 +829,7 @@ export default class Game {
     });
 
     self.messages.onDeath(function(id) {
-      var entity = self.entities.get(id);
+      const entity = self.entities.get(id);
 
       if (!entity || id !== self.player.id) return;
 
@@ -853,10 +853,10 @@ export default class Game {
     self.messages.onNPC(function(opcode, info) {
       switch (opcode) {
         case Packets.NPCOpcode.Talk:
-          var entity = self.entities.get(info.id),
+          const entity = self.entities.get(info.id),
             messages = info.text,
             isNPC = !info.nonNPC,
-            message;
+            message = null;
 
           if (!entity) return;
 
@@ -868,7 +868,7 @@ export default class Game {
           message = isNPC ? entity.talk(messages) : messages;
 
           if (isNPC) {
-            var bubble = self.bubble.create(info.id, message, self.time, 5000);
+            const bubble = self.bubble.create(info.id, message, self.time, 5000);
 
             self.bubble.setTo(entity);
 
@@ -879,7 +879,7 @@ export default class Game {
               bubble.setClickable();
 
               bubble.element.click(function() {
-                var entity = self.entities.get(bubble.id);
+                const entity = self.entities.get(bubble.id);
 
                 if (entity)
                   self.input.click({
@@ -893,7 +893,7 @@ export default class Game {
             self.bubble.setTo(entity);
           }
 
-          var sound = "npc";
+          const sound = "npc";
 
           if (!message && isNPC) {
             sound = "npc-end";
@@ -913,7 +913,7 @@ export default class Game {
           break;
 
         case Packets.NPCOpcode.Countdown:
-          var cEntity = self.entities.get(info.id),
+          const cEntity = self.entities.get(info.id),
             countdown = info.countdown;
 
           if (cEntity) {
@@ -946,7 +946,7 @@ export default class Game {
     });
 
     self.messages.onEnchant(function(opcode, info) {
-      var type = info.type,
+      const type = info.type,
         index = info.index;
 
       switch (opcode) {
@@ -971,7 +971,7 @@ export default class Game {
     self.messages.onPointer(function(opcode, info) {
       switch (opcode) {
         case Packets.PointerOpcode.NPC:
-          var entity = self.entities.get(info.id);
+          const entity = self.entities.get(info.id);
           console.log("pointer NPC", info, entity);
 
           if (!entity) {
@@ -1006,7 +1006,7 @@ export default class Game {
     self.messages.onPVP(function(id, pvp) {
       if (self.player.id === id) self.pvp = pvp;
       else {
-        var entity = self.entities.get(id);
+        const entity = self.entities.get(id);
 
         if (entity) entity.pvp = pvp;
       }
@@ -1030,7 +1030,7 @@ export default class Game {
   }
 
   postLoad() {
-    var self = this;
+    const self = this;
 
     /**
      * Call this after the player has been welcomed
@@ -1045,7 +1045,7 @@ export default class Game {
 
     self.entities.addEntity(self.player);
 
-    var defaultSprite = self.getSprite(self.player.getSpriteName());
+    const defaultSprite = self.getSprite(self.player.getSpriteName());
 
     self.player.setSprite(defaultSprite);
     self.player.idle();
@@ -1073,7 +1073,7 @@ export default class Game {
   }
 
   implementStorage() {
-    var self = this,
+    const self = this,
       loginName = $("#wrapperNameInput"),
       loginPassword = $("#wrapperPasswordInput");
 
@@ -1106,7 +1106,7 @@ export default class Game {
   }
 
   findPath(character, x, y, ignores) {
-    var self = this,
+    const self = this,
       grid = self.entities.grids.pathingGrid,
       path = [];
 
@@ -1130,7 +1130,7 @@ export default class Game {
   }
 
   handleDisconnection(noError) {
-    var self = this;
+    const self = this;
 
     /**
      * This function is responsible for handling sudden
@@ -1160,7 +1160,7 @@ export default class Game {
   }
 
   respawn() {
-    var self = this;
+    const self = this;
 
     self.audio.play(Modules.AudioTypes.SFX, "revive");
     self.app.body.removeClass("death");
@@ -1169,7 +1169,7 @@ export default class Game {
   }
 
   tradeWith(player) {
-    var self = this;
+    const self = this;
 
     if (!player || player.id === self.player.id) return;
 
@@ -1177,7 +1177,7 @@ export default class Game {
   }
 
   resize() {
-    var self = this;
+    const self = this;
 
     self.renderer.resize();
 
@@ -1205,13 +1205,13 @@ export default class Game {
   }
 
   getEntityAt(x, y, ignoreSelf) {
-    var self = this,
+    const self = this,
       entities = self.entities.grids.renderingGrid[y][x];
 
     if (_.size(entities) > 0)
       return entities[_.keys(entities)[ignoreSelf ? 1 : 0]];
 
-    var items = self.entities.grids.itemGrid[y][x];
+    const items = self.entities.grids.itemGrid[y][x];
 
     if (_.size(items) > 0) {
       _.each(items, function(item) {
@@ -1259,7 +1259,7 @@ export default class Game {
   }
 
   setInput(input) {
-    var self = this;
+    const self = this;
 
     if (!self.input) {
       self.input = input;

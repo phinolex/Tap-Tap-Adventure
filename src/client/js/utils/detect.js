@@ -1,110 +1,95 @@
-Detect = {};
+/* global navigator, window, userAgentContains */
+export default {
+  isIpad: () => /ipad/i.test(navigator.userAgent.toLowerCase()),
+  isAndroid: () => /Android/i.test(navigator.userAgent),
+  isWindows: () => userAgentContains('Windows'),
+  isChromeOnWindows: () => (
+    userAgentContains('Chrome') && userAgentContains('Windows')
+  ),
+  isCanaryOnWindows: () => (
+    userAgentContains('Chrome/52') && userAgentContains('Windows')
+  ),
+  isEdgeOnWindows: () => (
+    userAgentContains('Edge') && userAgentContains('Windows')
+  ),
+  isFirefox: () => userAgentContains('Firefox'),
+  isSafari: () => (
+    userAgentContains('Safari') && !userAgentContains('Chrome')
+  ),
 
-Detect.isIpad = function() {
-  return /ipad/i.test(navigator.userAgent.toLowerCase());
-};
+  isOpera: () => userAgentContains('Opera'),
 
-Detect.isAndroid = function() {
-  return /Android/i.test(navigator.userAgent);
-};
+  isFirefoxAndroid: () => (
+    userAgentContains('Android') && userAgentContains('Firefox')
+  ),
 
-Detect.isWindows = function() {
-  return Detect.userAgentContains("Windows");
-};
+  userAgentContains: string => navigator.userAgent.indexOf(string) !== -1,
 
-Detect.isChromeOnWindows = function() {
-  return (
-    Detect.userAgentContains("Chrome") && Detect.userAgentContains("Windows")
-  );
-};
+  isTablet: (screenWidth) => {
+    const userAgent = navigator.userAgent.toLowerCase();
 
-Detect.isCanaryOnWindows = function() {
-  return (
-    Detect.userAgentContains("Chrome/52") && Detect.userAgentContains("Windows")
-  );
-};
 
-Detect.isEdgeOnWindows = function() {
-  return (
-    Detect.userAgentContains("Edge") && Detect.userAgentContains("Windows")
-  );
-};
+    const isAppleTablet = /ipad/i.test(userAgent);
 
-Detect.isFirefox = function() {
-  return Detect.userAgentContains("Firefox");
-};
 
-Detect.isSafari = function() {
-  return (
-    Detect.userAgentContains("Safari") && !Detect.userAgentContains("Chrome")
-  );
-};
+    const isAndroidTablet = /android/i.test(userAgent);
 
-Detect.isOpera = function() {
-  return Detect.userAgentContains("Opera");
-};
+    return (isAppleTablet || isAndroidTablet) && screenWidth >= 640;
+  },
 
-Detect.isFirefoxAndroid = function() {
-  return (
-    Detect.userAgentContains("Android") && Detect.userAgentContains("Firefox")
-  );
-};
+  iOSVersion: () => {
+    if (window.MSStream) {
+      // There is some iOS in Windows Phone...
+      // https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
+      return '';
+    }
+    const match = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
 
-Detect.userAgentContains = function(string) {
-  return navigator.userAgent.indexOf(string) !== -1;
-};
 
-Detect.isTablet = function(screenWidth) {
-  var userAgent = navigator.userAgent.toLowerCase(),
-    isAppleTablet = /ipad/i.test(userAgent),
-    isAndroidTablet = /android/i.test(userAgent);
+    let version;
 
-  return (isAppleTablet || isAndroidTablet) && screenWidth >= 640;
-};
+    if (match !== undefined && match !== null) {
+      version = [
+        parseInt(match[1], 10),
+        parseInt(match[2], 10),
+        parseInt(match[3] || 0, 10),
+      ];
+      return parseFloat(version.join('.'));
+    }
 
-Detect.iOSVersion = function() {
-  if (window.MSStream) {
-    // There is some iOS in Windows Phone...
-    // https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
-    return "";
-  }
-  var match = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/),
-    version;
+    return '';
+  },
 
-  if (match !== undefined && match !== null) {
-    version = [
-      parseInt(match[1], 10),
-      parseInt(match[2], 10),
-      parseInt(match[3] || 0, 10)
+  androidVersion: () => {
+    const userAgent = navigator.userAgent.split('Android');
+    let version;
+
+    if (userAgent.length > 1) {
+      version = userAgent[1].split(';')[0]; // eslint-disable-line 
+    }
+
+    return version;
+  },
+
+  isAppleDevice: () => {
+    const devices = [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod',
     ];
-    return parseFloat(version.join("."));
-  }
 
-  return "";
-};
+    if (navigator.platform) {
+      while (devices.length) {
+        navigator.platform = devices.pop();
+        if (navigator.platform) {
+          return true;
+        }
+      }
+    }
 
-Detect.androidVersion = function() {
-  var userAgent = navigator.userAgent.split("Android"),
-    version;
-
-  if (userAgent.length > 1) version = userAgent[1].split(";")[0];
-
-  return version;
-};
-
-Detect.isAppleDevice = function() {
-  var devices = [
-    "iPad Simulator",
-    "iPhone Simulator",
-    "iPod Simulator",
-    "iPad",
-    "iPhone",
-    "iPod"
-  ];
-
-  if (!!navigator.platform)
-    while (devices.length)
-      if ((navigator.platform = devices.pop())) return true;
-
-  return false;
+    return false;
+  },
 };

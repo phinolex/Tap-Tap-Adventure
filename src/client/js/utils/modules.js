@@ -1,24 +1,24 @@
-Modules = {
+export default {
   Orientation: {
     Up: 0,
     Down: 1,
     Left: 2,
-    Right: 3
+    Right: 3,
   },
 
   Types: {
-    Player: 0
+    Player: 0,
   },
 
   InputType: {
     Key: 0,
-    LeftClick: 1
+    LeftClick: 1,
   },
 
   Actions: {
     Idle: 0,
     Attack: 1,
-    Walk: 2
+    Walk: 2,
   },
 
   Hits: {
@@ -30,7 +30,7 @@ Modules = {
     LevelUp: 5,
     Critical: 6,
     Stun: 7,
-    Explosive: 8
+    Explosive: 8,
   },
 
   Equipment: {
@@ -38,7 +38,7 @@ Modules = {
     Weapon: 1,
     Pendant: 2,
     Ring: 3,
-    Boots: 4
+    Boots: 4,
   },
 
   Hovering: {
@@ -47,7 +47,7 @@ Modules = {
     Player: 2,
     Item: 3,
     NPC: 4,
-    Chest: 5
+    Chest: 5,
   },
 
   Keys: {
@@ -69,54 +69,54 @@ Modules = {
     U: 85,
     J: 74,
     Enter: 13,
-    T: 84
+    T: 84,
   },
 
   AudioTypes: {
     Music: 0,
-    SFX: 1
+    SFX: 1,
   },
 
   DamageColours: {
     received: {
-      fill: "rgb(255, 50, 50)",
-      stroke: "rgb(255, 180, 180)"
+      fill: 'rgb(255, 50, 50)',
+      stroke: 'rgb(255, 180, 180)',
     },
 
     inflicted: {
-      fill: "white",
-      stroke: "#373737"
+      fill: 'white',
+      stroke: '#373737',
     },
 
     healed: {
-      fill: "rgb(80, 255, 80)",
-      stroke: "rgb(50, 120, 50)"
+      fill: 'rgb(80, 255, 80)',
+      stroke: 'rgb(50, 120, 50)',
     },
 
     mana: {
-      fill: "rgb(73, 94, 228)",
-      stroke: "rgb(56, 63, 133)"
+      fill: 'rgb(73, 94, 228)',
+      stroke: 'rgb(56, 63, 133)',
     },
 
     health: {
-      fill: "white",
-      stroke: "#373737"
+      fill: 'white',
+      stroke: '#373737',
     },
 
     exp: {
-      fill: "rgb(80, 180, 255)",
-      stroke: "rgb(50, 180, 255)"
+      fill: 'rgb(80, 180, 255)',
+      stroke: 'rgb(50, 180, 255)',
     },
 
     poison: {
-      fill: "rgb(66, 183, 77)",
-      stroke: "rgb(50, 120 , 50)"
-    }
+      fill: 'rgb(66, 183, 77)',
+      stroke: 'rgb(50, 120 , 50)',
+    },
   },
 
   Pointers: {
     Entity: 0,
     Position: 1,
-    Relative: 2
-  }
+    Relative: 2,
+  },
 };

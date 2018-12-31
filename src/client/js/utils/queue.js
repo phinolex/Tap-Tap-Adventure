@@ -1,35 +1,32 @@
-/* global _ */
+import _ from 'underscore';
 
-define(function() {
-  /**
-   * Very useful file used for queuing various objects,
-   * most notably used in the info controller to queue
-   * objects to delete
-   */
+/**
+ * Very useful file used for queuing various objects,
+ * most notably used in the info controller to queue
+ * objects to delete
+ */
+export default class Queue {
+  constructor() {
+    const self = this;
 
-  return Class.extend({
-    constructor() {
-      var self = this;
+    self.queue = [];
+  }
 
-      self.queue = [];
-    },
+  reset() {
+    this.queue = [];
+  }
 
-    reset() {
-      this.queue = [];
-    },
+  add(object) {
+    this.queue.push(object);
+  }
 
-    add(object) {
-      this.queue.push(object);
-    },
+  getQueue() {
+    return this.queue;
+  }
 
-    getQueue() {
-      return this.queue;
-    },
-
-    forEachQueue(callback) {
-      _.each(this.queue, function(object) {
-        callback(object);
-      });
-    }
-  });
-});
+  forEachQueue(callback) {
+    _.each(this.queue, (object) => {
+      callback(object);
+    });
+  }
+}
