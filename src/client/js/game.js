@@ -176,8 +176,8 @@ define([
       var audio = new Audio(self);
       self.setAudio(audio);
 
-      var interface = new Interface(self);
-      self.setInterface(interface);
+      var gameInterface = new Interface(self);
+      self.setInterface(gameInterface);
 
       self.implementStorage();
 

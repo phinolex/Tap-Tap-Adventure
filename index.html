@@ -5,40 +5,37 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+  <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport">
   <meta property="og:title" content="WTF?! Adventure">
   <meta property="og:type" content="game">
   <meta property="og:url" content="https://design1online.com">
   <meta property="og:site_name" content="WTF?! Adventure">
   <meta property="og:description" content="The ultimate HTML5 experience!">
 
-  <link rel="icon" type="image/png" href="img/favicon.png?v=2.0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png?v=2.0">
   <link rel="stylesheet" type="text/css" href="css/desktop.css">
   <link rel="stylesheet" type="text/css" href="css/game.css">
   <link rel="stylesheet" type="text/css" href="css/interface.css">
   <link rel="stylesheet" type="text/css" href="css/vars.css">
-
-  <script src="js/lib/modernizr.js" type="text/javascript"></script>
-
+  <script async src="modernizr-bundle.js"></script>
   <title>WTF?! Adventure</title>
 
 </head>
 
 <body>
   <noscript>
-    <div class="alert">
+    </noscript><div class="alert">
       You must enable JavaScript to play WTF?! Adventure.
     </div>
-  </noscript>
+  
   <div id="modal" class="container-fluid col-sm-10">
     <section id="wrapper">
       <header>
-        <img src="img/common/wtfintro.png" alt="WTF Adventure" title="WTF Adventure" id="wtf" />
+        <img src="./assets/img/common/wtfintro.png" alt="WTF Adventure" title="WTF Adventure" id="wtf">
       </header>
       <section id="content" class="loadCharacter col-sm-11">
         <div class="loader col-sm-12 text-center">
-          <img src="img/coin.gif" />
+          <img src="./assets/img/coin.gif">
           <p class="message">WTF?! is happening...</p>
         </div>
         <article id="loadCharacter" class="row text-center">
@@ -46,11 +43,11 @@
             <form method="get" accept-charset="utf-8">
               <span class="error message"></span>
               <div class="form-field">
-                <img src="img/common/friends-2.png" class="hud-img" />
+                <img src="./assets/img/common/friends-2.png" class="hud-img">
                 <input type="text" id="loginNameInput" name="player-name" placeholder="Username" maxlength="32" autocomplete="off" autofocus>
               </div>
               <div class="form-field">
-                <img src="img/common/lock.png" class="hud-img" />
+                <img src="./assets/img/common/lock.png" class="hud-img">
                 <input type="password" id="loginPasswordInput" name="player-password" placeholder="Password" maxlength="64" autocomplete="off">
               </div>
               <div class="row padding-top">
@@ -67,11 +64,11 @@
           <section class="col-md-12 col-lg-5">
             <div class="row" id="join_guest">
               <div class="col-6 col-sm-6">
-                <img src="img/common/hud-join.png" class="hud-img" />
+                <img src="./assets/img/common/hud-join.png" class="hud-img">
                 <div class="button red align-center" id="newCharacter">Join</div>
               </div>
               <div class="col-6 col-sm-6">
-                <img src="img/common/hud-guest.png" class="hud-img" />
+                <img src="./assets/img/common/hud-guest.png" class="hud-img">
                 <div class="button purple align-center" id="guest">Guest Login</div>
               </div>
             </div>
@@ -152,12 +149,12 @@
         <canvas id="textCanvas"></canvas>
       </div>
       <div id="world-bar">
-        <img src="img/world.png" id="hud-world" />
-        <img src="img/achievements.png" id="hud-achievements" />
+        <img src="./assets/img/world.png" id="hud-world">
+        <img src="./assets/img/achievements.png" id="hud-achievements">
       </div>
       <div id="chat-bar">
-        <img src="img/chat.png" id="hud-chat" />
-        <img src="img/inventory.png" id="hud-inventory" />
+        <img src="./assets/img/chat.png" id="hud-chat">
+        <img src="./assets/img/inventory.png" id="hud-inventory">
       </div>
       <div id="hud">
         <div id="hud-bar">
@@ -364,13 +361,6 @@
   </div>
 
   <div id="resizeCheck"></div>
-  <script src="js/utils/detect.js" type="text/javascript"></script>
-  <script src="js/lib/log.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script data-main="js/lib/home" src="js/lib/require.js"></script>
-</body>
+<script type="text/javascript" src="./vendor.js"></script><script type="text/javascript" src="./app.js"></script></body>
 
 </html>

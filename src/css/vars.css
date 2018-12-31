@@ -72,7 +72,7 @@ body {
 }
 
 body {
-  background: url("../img/background.png") no-repeat center center;
+  background: url("../assets/img/background.png") no-repeat center center;
   background-size: cover;
 
   -webkit-background-size: cover;
@@ -149,7 +149,7 @@ body {
   width: 11px;
   height: 10px;
   top: 10px;
-  background: url("../img/thingy.png");
+  background: url("../assets/img/thingy.png");
   margin: 0 auto;
   position: relative;
 }

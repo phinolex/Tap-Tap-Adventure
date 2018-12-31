@@ -87,7 +87,7 @@ body {
 }
 
 html {
-  background: url("../img/background.png") no-repeat center center fixed;
+  background: url("../assets/img/background.png") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -123,7 +123,7 @@ canvas {
   margin: auto;
   top: 100px;
   position: relative;
-  background-image: url("../img/common/hud-modal.png");
+  background-image: url("../assets/img/common/hud-modal.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 100;
@@ -175,7 +175,7 @@ canvas {
 }
 
 .check {
-  background: url("../img/common/hud-checkbox-empty.png");
+  background: url("../assets/img/common/hud-checkbox-empty.png");
   background-size: cover;
   width: 30px;
   height: 30px;
@@ -183,7 +183,7 @@ canvas {
 }
 
 .check.active {
-  background: url("../img/common/hud-checkbox-checked.png");
+  background: url("../assets/img/common/hud-checkbox-checked.png");
   background-size: cover;
 }
 
@@ -227,21 +227,21 @@ canvas {
 }
 
 .button.green {
-  background: url("../img/common/hud-button-green.png");
+  background: url("../assets/img/common/hud-button-green.png");
   position: relative;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
 .button.red {
-  background: url("../img/common/hud-button-red.png");
+  background: url("../assets/img/common/hud-button-red.png");
   position: relative;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
 .button.purple {
-  background: url("../img/common/hud-button-purple.png");
+  background: url("../assets/img/common/hud-button-purple.png");
   position: relative;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -335,7 +335,7 @@ canvas {
 }
 
 #hud-bar {
-  background: url("../img/hud-bar-2.png");
+  background: url("../assets/img/hud-bar-2.png");
   background-size: 100% 100%;
   height: 90px;
   color: #fff;
@@ -392,7 +392,7 @@ canvas {
     margin-left: -735px;
     border: 0;
     padding: 15px;
-    background: url("../img/3/border.png") no-repeat 0 0;
+    background: url("../assets/img/3/border.png") no-repeat 0 0;
     background-size: 100% 100%;
   }
 
@@ -424,7 +424,7 @@ canvas {
     margin-left: -490px;
     border: 0;
     padding: 10px;
-    background: url("../img/2/border.png") no-repeat 0 0;
+    background: url("../assets/img/2/border.png") no-repeat 0 0;
     background-size: 100% 100%;
   }
 
@@ -460,7 +460,7 @@ canvas {
     margin-left: -245px;
     border: 0;
     padding: 5px;
-    background: url("../img/1/border.png") no-repeat 0 0;
+    background: url("../assets/img/1/border.png") no-repeat 0 0;
     background-size: 100% 100%;
   }
 

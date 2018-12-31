@@ -1,0 +1,85 @@
+var path = require("path");
+var webpack = require("webpack");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
+var ModernizrWebpackPlugin = require("modernizr-webpack-plugin");
+
+module.exports = {
+  entry: {
+    app: ["babel-polyfill", path.resolve(__dirname, "./src/client/js/main.js")],
+    styles: path.resolve(__dirname, "./src/css/main.css"),
+    vendor: [
+      "socket.io-client",
+      "jquery",
+      "bootstrap",
+      "popper.js",
+      "underscore"
+    ]
+  },
+  devtool: "cheap-source-map",
+  output: {
+    pathinfo: true,
+    path: path.resolve(__dirname, "build"),
+    publicPath: "./",
+    library: "[name]",
+    libraryTarget: "umd",
+    filename: "[name].js"
+  },
+  watch: true,
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "../index.html",
+      template: "./src/client/index.html",
+      chunks: ["vendor", "app", "styles"],
+      chunksSortMode: "manual",
+      minify: {
+        removeAttributeQuotes: false,
+        collapseWhitespace: false,
+        html5: false,
+        minifyCSS: false,
+        minifyJS: false,
+        minifyURLs: false,
+        removeComments: false,
+        removeEmptyAttributes: false
+      },
+      hash: false
+    }),
+    new BrowserSyncPlugin({
+      host: process.env.IP || "localhost",
+      port: process.env.PORT || 3000,
+      server: {
+        baseDir: ["./", "./build"]
+      }
+    }),
+    new ModernizrWebpackPlugin({
+      "feature-detects": ["input", "canvas", "css/resize"],
+      output: {
+        comments: true,
+        beautify: true
+      }
+    })
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: ["babel-loader"],
+        include: path.join(__dirname, "src")
+      },
+      {
+        test: [/\.vert$/, /\.frag$/],
+        use: "raw-loader"
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {loader: "style-loader", options: {sourceMap: true}},
+          {loader: "css-loader", options: {sourceMap: true}},
+          {loader: "postcss-loader", options: {sourceMap: true}},
+          {loader: "sass-loader", options: {sourceMap: true}}
+        ]
+      }
+    ]
+  }
+};
