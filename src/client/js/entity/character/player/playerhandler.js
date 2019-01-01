@@ -18,7 +18,7 @@ export default class PlayerHandler {
   }
 
   load() {
-    this.player.onRequestPath(function (x, y) {
+    this.player.onRequestPath((x, y) => {
       if (this.player.dead) return null;
 
       const ignores = [this.player];
@@ -36,14 +36,16 @@ export default class PlayerHandler {
       return this.game.findPath(this.player, x, y, ignores);
     });
 
-    this.player.onStartPathing(function (path) {
+    this.player.onStartPathing((path) => {
       const i = path.length - 1;
 
-      this.input.selectedX = path[i][0];
-      this.input.selectedY = path[i][1];
+      this.input.selectedX = path[i][0]; // eslint-disable-line
+      this.input.selectedY = path[i][1]; // eslint-disable-line
       this.input.selectedCellVisible = true;
 
-      if (!this.game.getEntityAt(this.input.selectedX, this.input.selectedY)) this.socket.send(Packets.Target, [Packets.TargetOpcode.None]);
+      if (!this.game.getEntityAt(this.input.selectedX, this.input.selectedY)) {
+        this.socket.send(Packets.Target, [Packets.TargetOpcode.None]);
+      }
 
       this.socket.send(Packets.Movement, [
         Packets.MovementOpcode.Started,
@@ -54,7 +56,7 @@ export default class PlayerHandler {
       ]);
     });
 
-    this.player.onStopPathing(function (x, y) {
+    this.player.onStopPathing((x, y) => {
       this.entities.unregisterPosition(this.player);
       this.entities.registerPosition(this.player);
 
@@ -62,14 +64,13 @@ export default class PlayerHandler {
 
       this.camera.clip();
 
-      let id = null;
-
-
       const entity = this.game.getEntityAt(x, y, true);
 
-      if (entity) id = entity.id;
-
       const hasTarget = this.player.hasTarget();
+
+      const {
+        id,
+      } = entity;
 
       this.socket.send(Packets.Movement, [
         Packets.MovementOpcode.Stop,
@@ -93,7 +94,7 @@ export default class PlayerHandler {
       this.input.setPassiveTarget();
     });
 
-    this.player.onBeforeStep(function () {
+    this.player.onBeforeStep(() => {
       this.entities.unregisterPosition(this.player);
 
       if (!this.isAttackable()) return;
@@ -106,12 +107,12 @@ export default class PlayerHandler {
       }
     });
 
-    this.player.onStep(function () {
+    this.player.onStep(() => {
       if (this.player.hasNextStep()) this.entities.registerDuality(this.player);
 
       if (!this.camera.centered) this.checkBounds();
 
-      this.player.forEachAttacker(function (attacker) {
+      this.player.forEachAttacker((attacker) => {
         if (!attacker.stunned) attacker.follow(this.player);
       });
 
@@ -122,11 +123,11 @@ export default class PlayerHandler {
       ]);
     });
 
-    this.player.onSecondStep(function () {
+    this.player.onSecondStep(() => {
       this.renderer.updateAnimatedTiles();
     });
 
-    this.player.onMove(function () {
+    this.player.onMove(() => {
       /**
        * This is a callback representing the absolute exact position of the player.
        */
@@ -136,15 +137,19 @@ export default class PlayerHandler {
       if (this.player.hasTarget()) this.player.follow(this.player.target);
     });
 
-    this.player.onUpdateArmour(function (armourName) {
+    this.player.onUpdateArmour((armourName) => {
       this.player.setSprite(this.game.getSprite(armourName));
     });
   }
 
   isAttackable() {
-    const target = this.player.target;
+    const {
+      target,
+    } = this.player;
 
-    if (!target) return;
+    if (!target) {
+      return false;
+    }
 
     return target.type === 'mob' || (target.type === 'player' && target.pvp);
   }
@@ -154,9 +159,6 @@ export default class PlayerHandler {
 
 
     const y = this.player.gridY - this.camera.gridY;
-
-
-    const isBorder = false;
 
     if (x === 0) this.game.zoning.setLeft();
     else if (y === 0) this.game.zoning.setUp();
