@@ -3,16 +3,16 @@ define(["../entity"], function(Entity) {
     init(id, kind, count, ability, abilityLevel) {
       var self = this;
 
-      self._super(id, kind);
+      this._super(id, kind);
 
-      self.count = count;
-      self.ability = ability;
-      self.abilityLevel = abilityLevel;
+      this.count = count;
+      this.ability = ability;
+      this.abilityLevel = abilityLevel;
 
-      self.dropped = false;
-      self.stackable = false;
+      this.dropped = false;
+      this.stackable = false;
 
-      self.type = "item";
+      this.type = "item";
     },
 
     idle() {

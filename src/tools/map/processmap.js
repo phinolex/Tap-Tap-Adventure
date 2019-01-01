@@ -14,10 +14,10 @@ var collisions = {},
 module.exports = function parse(json, options) {
   var self = this;
 
-  self.json = json;
-  self.options = options;
+  this.json = json;
+  this.options = options;
 
-  mode = self.options.mode;
+  mode = this.options.mode;
 
   map = {
     width: 0,
@@ -49,10 +49,10 @@ module.exports = function parse(json, options) {
       break;
   }
 
-  map.width = self.json.width;
-  map.height = self.json.height;
+  map.width = this.json.width;
+  map.height = this.json.height;
 
-  map.tilesize = self.json.tilewidth;
+  map.tilesize = this.json.tilewidth;
 
   var handleProperty = function(property, value, id) {
     if (property === "c") collisions[id] = true;
@@ -74,8 +74,8 @@ module.exports = function parse(json, options) {
     }
   };
 
-  if (self.json.tilesets instanceof Array) {
-    _.each(self.json.tilesets, function(tileset) {
+  if (this.json.tilesets instanceof Array) {
+    _.each(this.json.tilesets, function(tileset) {
       var name = tileset.name.toLowerCase();
 
       if (name === "tilesheet") {
@@ -102,7 +102,7 @@ module.exports = function parse(json, options) {
     });
   }
 
-  _.each(self.json.layers, function(layer) {
+  _.each(this.json.layers, function(layer) {
     var name = layer.name.toLowerCase(),
       type = layer.type;
 
@@ -249,8 +249,8 @@ module.exports = function parse(json, options) {
       }
   });
 
-  for (var l = self.json.layers.length - 1; l > 0; l--)
-    parseLayer(self.json.layers[l]);
+  for (var l = this.json.layers.length - 1; l > 0; l--)
+    parseLayer(this.json.layers[l]);
 
   if (mode === "client")
     for (var i = 0, max = map.data.length; i < max; i++)

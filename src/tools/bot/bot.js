@@ -8,38 +8,38 @@ module.exports = Bot = cls.Class.extend({
   init(world, count) {
     var self = this;
 
-    self.world = world;
-    self.count = count;
+    this.world = world;
+    this.count = count;
 
-    self.creator = new Creator(null);
+    this.creator = new Creator(null);
 
-    self.players = [];
+    this.players = [];
 
-    self.load();
+    this.load();
   },
 
   load() {
     var self = this;
 
-    for (var i = 0; i < self.count; i++) {
+    for (var i = 0; i < this.count; i++) {
       var connection = {
           id: i,
           listen() {},
           onClose() {}
         },
-        player = new Player(self.world, self.world.database, connection, -1);
+        player = new Player(this.world, this.world.database, connection, -1);
 
-      self.world.addPlayer(player);
+      this.world.addPlayer(player);
 
       player.username = "Bot" + i;
 
-      player.load(self.creator.getPlayerData(player));
+      player.load(this.creator.getPlayerData(player));
 
       player.intro();
 
       player.walkRandomly();
 
-      self.players.push(player);
+      this.players.push(player);
     }
   }
 });

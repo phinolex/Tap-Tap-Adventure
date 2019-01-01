@@ -31,76 +31,76 @@ module.exports = Player = Character.extend({
   init(world, database, connection, clientId) {
     var self = this;
 
-    self._super(-1, "player", connection.id, -1, -1);
+    this._super(-1, "player", connection.id, -1, -1);
 
-    self.world = world;
-    self.mysql = database;
-    self.connection = connection;
+    this.world = world;
+    this.mysql = database;
+    this.connection = connection;
 
-    self.clientId = clientId;
+    this.clientId = clientId;
 
-    self.incoming = new Incoming(self);
+    this.incoming = new Incoming(self);
 
-    self.isNew = false;
-    self.ready = false;
+    this.isNew = false;
+    this.ready = false;
 
-    self.moving = false;
-    self.potentialPosition = null;
-    self.futurePosition = null;
+    this.moving = false;
+    this.potentialPosition = null;
+    this.futurePosition = null;
 
-    self.groupPosition = null;
-    self.newGroup = false;
+    this.groupPosition = null;
+    this.newGroup = false;
 
-    self.disconnectTimeout = null;
-    self.timeoutDuration = 1000 * 60 * 10; //10 minutes
+    this.disconnectTimeout = null;
+    this.timeoutDuration = 1000 * 60 * 10; //10 minutes
 
-    self.handler = new Handler(self);
+    this.handler = new Handler(self);
 
-    self.inventory = new Inventory(self, 20);
-    self.bank = new Bank(self, 56);
-    self.quests = new Quests(self);
-    self.abilities = new Abilities(self);
-    self.enchant = new Enchant(self);
-    self.trade = new Trade(self);
-    self.warp = new Warp(self);
+    this.inventory = new Inventory(self, 20);
+    this.bank = new Bank(self, 56);
+    this.quests = new Quests(self);
+    this.abilities = new Abilities(self);
+    this.enchant = new Enchant(self);
+    this.trade = new Trade(self);
+    this.warp = new Warp(self);
 
-    self.introduced = false;
-    self.currentSong = null;
-    self.acceptedTrade = false;
-    self.invincible = false;
-    self.noDamage = false;
+    this.introduced = false;
+    this.currentSong = null;
+    this.acceptedTrade = false;
+    this.invincible = false;
+    this.noDamage = false;
 
-    self.isGuest = false;
+    this.isGuest = false;
 
-    self.pvp = false;
+    this.pvp = false;
 
-    self.canTalk = true;
+    this.canTalk = true;
 
-    self.profileDialogOpen = false;
+    this.profileDialogOpen = false;
   },
 
   load(data) {
     var self = this;
 
-    self.loaded = true;
-    self.kind = data.kind;
-    self.rights = data.rights;
-    self.experience = data.experience;
-    self.ban = data.ban;
-    self.mute = data.mute;
-    self.membership = data.membership;
-    self.lastLogin = data.lastLogin;
-    self.pvpKills = data.pvpKills;
-    self.pvpDeaths = data.pvpDeaths;
+    this.loaded = true;
+    this.kind = data.kind;
+    this.rights = data.rights;
+    this.experience = data.experience;
+    this.ban = data.ban;
+    this.mute = data.mute;
+    this.membership = data.membership;
+    this.lastLogin = data.lastLogin;
+    this.pvpKills = data.pvpKills;
+    this.pvpDeaths = data.pvpDeaths;
 
-    self.warp.setLastWarp(data.lastWarp);
+    this.warp.setLastWarp(data.lastWarp);
 
-    self.level = Formulas.expToLevel(self.experience);
-    self.hitPoints = new Hitpoints(
+    this.level = Formulas.expToLevel(this.experience);
+    this.hitPoints = new Hitpoints(
       data.hitPoints,
-      Formulas.getMaxHitPoints(self.level)
+      Formulas.getMaxHitPoints(this.level)
     );
-    self.mana = new Mana(data.mana, Formulas.getMaxMana(self.level));
+    this.mana = new Mana(data.mana, Formulas.getMaxMana(this.level));
 
     var armour = data.armour,
       weapon = data.weapon,
@@ -108,34 +108,34 @@ module.exports = Player = Character.extend({
       ring = data.ring,
       boots = data.boots;
 
-    self.setPosition(data.x, data.y);
-    self.setArmour(armour[0], armour[1], armour[2], armour[3]);
-    self.setWeapon(weapon[0], weapon[1], weapon[2], weapon[3]);
-    self.setPendant(pendant[0], pendant[1], pendant[2], pendant[3]);
-    self.setRing(ring[0], ring[1], ring[2], ring[3]);
-    self.setBoots(boots[0], boots[1], boots[2], boots[3]);
+    this.setPosition(data.x, data.y);
+    this.setArmour(armour[0], armour[1], armour[2], armour[3]);
+    this.setWeapon(weapon[0], weapon[1], weapon[2], weapon[3]);
+    this.setPendant(pendant[0], pendant[1], pendant[2], pendant[3]);
+    this.setRing(ring[0], ring[1], ring[2], ring[3]);
+    this.setBoots(boots[0], boots[1], boots[2], boots[3]);
 
-    self.guild = new Guild(data.guild, self);
+    this.guild = new Guild(data.guild, self);
   },
 
   loadInventory() {
     var self = this;
 
     if (config.offlineMode) {
-      self.inventory.loadEmpty();
+      this.inventory.loadEmpty();
       return;
     }
 
-    self.mysql.loader.getInventory(self, function(
+    this.mysql.loader.getInventory(self, function(
       ids,
       counts,
       skills,
       skillLevels
     ) {
-      if (ids.length !== self.inventory.size) self.save();
+      if (ids.length !== this.inventory.size) this.save();
 
-      self.inventory.load(ids, counts, skills, skillLevels);
-      self.inventory.check();
+      this.inventory.load(ids, counts, skills, skillLevels);
+      this.inventory.check();
     });
   },
 
@@ -143,15 +143,15 @@ module.exports = Player = Character.extend({
     var self = this;
 
     if (config.offlineMode) {
-      self.bank.loadEmpty();
+      this.bank.loadEmpty();
       return;
     }
 
-    self.mysql.loader.getBank(self, function(ids, counts, skills, skillLevels) {
-      if (ids.length !== self.bank.size) self.save();
+    this.mysql.loader.getBank(self, function(ids, counts, skills, skillLevels) {
+      if (ids.length !== this.bank.size) this.save();
 
-      self.bank.load(ids, counts, skills, skillLevels);
-      self.bank.check();
+      this.bank.load(ids, counts, skills, skillLevels);
+      this.bank.check();
     });
   },
 
@@ -160,34 +160,34 @@ module.exports = Player = Character.extend({
 
     if (config.offlineMode) return;
 
-    self.mysql.loader.getQuests(self, function(ids, stages) {
+    this.mysql.loader.getQuests(self, function(ids, stages) {
       ids.pop();
       stages.pop();
 
-      if (self.quests.getQuestSize() !== ids.length) {
+      if (this.quests.getQuestSize() !== ids.length) {
         log.info("Mismatch in quest data.");
-        self.save();
+        this.save();
       }
 
-      self.quests.updateQuests(ids, stages);
+      this.quests.updateQuests(ids, stages);
     });
 
-    self.mysql.loader.getAchievements(self, function(ids, progress) {
+    this.mysql.loader.getAchievements(self, function(ids, progress) {
       ids.pop();
       progress.pop();
 
-      if (self.quests.getAchievementSize() !== ids.length) {
+      if (this.quests.getAchievementSize() !== ids.length) {
         log.info("Mismatch in achievements data.");
 
-        self.save();
+        this.save();
       }
 
-      self.quests.updateAchievements(ids, progress);
+      this.quests.updateAchievements(ids, progress);
     });
 
-    self.quests.onReady(function() {
-      self.send(
-        new Messages.Quest(Packets.QuestOpcode.Batch, self.quests.getData())
+    this.quests.onReady(function() {
+      this.send(
+        new Messages.Quest(Packets.QuestOpcode.Batch, this.quests.getData())
       );
     });
   },
@@ -195,87 +195,87 @@ module.exports = Player = Character.extend({
   intro() {
     var self = this;
 
-    if (self.ban > new Date()) {
-      self.connection.sendUTF8("ban");
-      self.connection.close("Player: " + self.username + " is banned.");
+    if (this.ban > new Date()) {
+      this.connection.sendUTF8("ban");
+      this.connection.close("Player: " + this.username + " is banned.");
     }
 
-    if (self.x <= 0 || self.y <= 0) self.sendToSpawn();
+    if (this.x <= 0 || this.y <= 0) this.sendToSpawn();
 
-    if (self.hitPoints.getHitPoints() < 0)
-      self.hitPoints.setHitPoints(self.getMaxHitPoints());
+    if (this.hitPoints.getHitPoints() < 0)
+      this.hitPoints.setHitPoints(this.getMaxHitPoints());
 
-    if (self.mana.getMana() < 0) self.mana.setMana(self.mana.getMaxMana());
+    if (this.mana.getMana() < 0) this.mana.setMana(this.mana.getMaxMana());
 
     var info = {
-      instance: self.instance,
-      username: self.username,
-      x: self.x,
-      y: self.y,
-      kind: self.kind,
-      rights: self.rights,
-      hitPoints: self.hitPoints.getData(),
-      mana: self.mana.getData(),
-      experience: self.experience,
-      level: self.level,
-      lastLogin: self.lastLogin,
-      pvpKills: self.pvpKills,
-      pvpDeaths: self.pvpDeaths
+      instance: this.instance,
+      username: this.username,
+      x: this.x,
+      y: this.y,
+      kind: this.kind,
+      rights: this.rights,
+      hitPoints: this.hitPoints.getData(),
+      mana: this.mana.getData(),
+      experience: this.experience,
+      level: this.level,
+      lastLogin: this.lastLogin,
+      pvpKills: this.pvpKills,
+      pvpDeaths: this.pvpDeaths
     };
 
-    self.groupPosition = [self.x, self.y];
+    this.groupPosition = [this.x, this.y];
 
     /**
      * Send player data to client here
      */
 
-    self.world.addPlayer(self);
+    this.world.addPlayer(self);
 
-    self.send(new Messages.Welcome(info));
+    this.send(new Messages.Welcome(info));
   },
 
   addExperience(exp) {
     var self = this;
 
-    self.experience += exp;
+    this.experience += exp;
 
-    var oldLevel = self.level;
+    var oldLevel = this.level;
 
-    self.level = Formulas.expToLevel(self.experience);
+    this.level = Formulas.expToLevel(this.experience);
 
-    if (oldLevel !== self.level)
-      self.hitPoints.setMaxHitPoints(Formulas.getMaxHitPoints(self.level));
+    if (oldLevel !== this.level)
+      this.hitPoints.setMaxHitPoints(Formulas.getMaxHitPoints(this.level));
 
-    self.world.pushToAdjacentGroups(
-      self.group,
+    this.world.pushToAdjacentGroups(
+      this.group,
       new Messages.Experience({
-        id: self.instance,
+        id: this.instance,
         amount: exp,
-        experience: self.experience,
-        level: self.level
+        experience: this.experience,
+        level: this.level
       })
     );
   },
 
   heal(amount) {
     var self = this;
-    self.hitPoints = self.healHitPoints(amount);
-    self.mana = self.healManaPoints(amount);
+    this.hitPoints = this.healHitPoints(amount);
+    this.mana = this.healManaPoints(amount);
   },
 
   healHitPoints(amount) {
     var self = this,
       type = "health";
 
-    if (self.hitPoints && self.hitPoints.points < self.hitPoints.maxPoints) {
-      self.hitPoints.heal(amount);
+    if (this.hitPoints && this.hitPoints.points < this.hitPoints.maxPoints) {
+      this.hitPoints.heal(amount);
 
-      self.sync();
+      this.sync();
 
-      self.world.pushToAdjacentGroups(
-        self.group,
+      this.world.pushToAdjacentGroups(
+        this.group,
         new Messages.Heal({
-          id: self.instance,
+          id: this.instance,
           type: type,
           amount: amount
         })
@@ -287,15 +287,15 @@ module.exports = Player = Character.extend({
     var self = this,
       type = "mana";
 
-    if (self.mana && self.mana.points < self.mana.maxPoints) {
-      self.mana.heal(amount);
+    if (this.mana && this.mana.points < this.mana.maxPoints) {
+      this.mana.heal(amount);
 
-      self.sync();
+      this.sync();
 
-      self.world.pushToAdjacentGroups(
-        self.group,
+      this.world.pushToAdjacentGroups(
+        this.group,
         new Messages.Heal({
-          id: self.instance,
+          id: this.instance,
           type: type,
           amount: amount
         })
@@ -309,7 +309,7 @@ module.exports = Player = Character.extend({
       amount;
 
     if (Items.hasPlugin(id)) {
-      var tempItem = new (Items.isNewPlugin(id))(id, -1, self.x, self.y);
+      var tempItem = new (Items.isNewPlugin(id))(id, -1, this.x, this.y);
 
       tempItem.onUse(self);
 
@@ -336,38 +336,38 @@ module.exports = Player = Character.extend({
 
     switch (type) {
       case Modules.Equipment.Armour:
-        if (self.hasArmour() && self.armour.id !== 114)
-          self.inventory.add(self.armour.getItem());
+        if (this.hasArmour() && this.armour.id !== 114)
+          this.inventory.add(this.armour.getItem());
 
-        self.setArmour(id, count, ability, abilityLevel);
+        this.setArmour(id, count, ability, abilityLevel);
         break;
 
       case Modules.Equipment.Weapon:
-        if (self.hasWeapon()) self.inventory.add(self.weapon.getItem());
+        if (this.hasWeapon()) this.inventory.add(this.weapon.getItem());
 
-        self.setWeapon(id, count, ability, abilityLevel);
+        this.setWeapon(id, count, ability, abilityLevel);
         break;
 
       case Modules.Equipment.Pendant:
-        if (self.hasPendant()) self.inventory.add(self.pendant.getItem());
+        if (this.hasPendant()) this.inventory.add(this.pendant.getItem());
 
-        self.setPendant(id, count, ability, abilityLevel);
+        this.setPendant(id, count, ability, abilityLevel);
         break;
 
       case Modules.Equipment.Ring:
-        if (self.hasRing()) self.inventory.add(self.ring.getItem());
+        if (this.hasRing()) this.inventory.add(this.ring.getItem());
 
-        self.setRing(id, count, ability, abilityLevel);
+        this.setRing(id, count, ability, abilityLevel);
         break;
 
       case Modules.Equipment.Boots:
-        if (self.hasBoots()) self.inventory.add(self.boots.getItem());
+        if (this.hasBoots()) this.inventory.add(this.boots.getItem());
 
-        self.setBoots(id, count, ability, abilityLevel);
+        this.setBoots(id, count, ability, abilityLevel);
         break;
     }
 
-    self.send(
+    this.send(
       new Messages.Equipment(Packets.EquipmentOpcode.Equip, [
         type,
         Items.idToName(id),
@@ -378,15 +378,15 @@ module.exports = Player = Character.extend({
       ])
     );
 
-    self.sync();
+    this.sync();
   },
 
   canEquip(string) {
     var self = this,
       requirement = Items.getLevelRequirement(string);
 
-    if (requirement > self.level) {
-      self.notify(
+    if (requirement > this.level) {
+      this.notify(
         "You must be at least level " + requirement + " to equip this."
       );
       return false;
@@ -398,32 +398,32 @@ module.exports = Player = Character.extend({
   die() {
     var self = this;
 
-    self.dead = true;
+    this.dead = true;
 
-    if (self.deathCallback) self.deathCallback();
+    if (this.deathCallback) this.deathCallback();
 
-    self.send(new Messages.Death(self.instance));
+    this.send(new Messages.Death(this.instance));
   },
 
   teleport(x, y, isDoor, animate) {
     var self = this;
 
-    if (isDoor && !self.finishedTutorial()) {
-      if (self.doorCallback) {
-        self.doorCallback(x, y);
+    if (isDoor && !this.finishedTutorial()) {
+      if (this.doorCallback) {
+        this.doorCallback(x, y);
       }
       return;
     }
 
-    self.world.pushToAdjacentGroups(
-      self.group,
-      new Messages.Teleport(self.instance, x, y, animate)
+    this.world.pushToAdjacentGroups(
+      this.group,
+      new Messages.Teleport(this.instance, x, y, animate)
     );
 
-    self.setPosition(x, y);
-    self.checkGroups();
+    this.setPosition(x, y);
+    this.checkGroups();
 
-    self.world.cleanCombat(self);
+    this.world.cleanCombat(self);
   },
 
   updatePVP(pvp) {
@@ -433,31 +433,31 @@ module.exports = Player = Character.extend({
      * No need to update if the state is the same
      */
 
-    if (self.pvp === pvp) return;
+    if (this.pvp === pvp) return;
 
-    if (self.pvp && !pvp) self.notify("You are no longer in a PvP zone!");
-    else self.notify("You have entered a PvP zone!");
+    if (this.pvp && !pvp) this.notify("You are no longer in a PvP zone!");
+    else this.notify("You have entered a PvP zone!");
 
-    self.pvp = pvp;
+    this.pvp = pvp;
 
-    self.sendToGroup(new Messages.PVP(self.instance, self.pvp));
+    this.sendToGroup(new Messages.PVP(this.instance, this.pvp));
   },
 
   updateMusic(song) {
     var self = this;
 
-    self.currentSong = song;
+    this.currentSong = song;
 
-    self.send(new Messages.Audio(song));
+    this.send(new Messages.Audio(song));
   },
 
   revertPoints() {
     var self = this;
 
-    self.hitPoints.setHitPoints(self.hitPoints.getMaxHitPoints());
-    self.mana.setMana(self.mana.getMaxMana());
+    this.hitPoints.setHitPoints(this.hitPoints.getMaxHitPoints());
+    this.mana.setMana(this.mana.getMaxMana());
 
-    self.sync();
+    this.sync();
   },
 
   applyDamage(damage) {
@@ -467,9 +467,9 @@ module.exports = Player = Character.extend({
   toggleProfile(state) {
     var self = this;
 
-    self.profileDialogOpen = state;
+    this.profileDialogOpen = state;
 
-    if (self.profileToggleCallback) self.profileToggleCallback();
+    if (this.profileToggleCallback) this.profileToggleCallback();
   },
 
   getMana() {
@@ -501,7 +501,7 @@ module.exports = Player = Character.extend({
 
     if (!id) return;
 
-    self.armour = new Armour(
+    this.armour = new Armour(
       Items.idToString(id),
       id,
       count,
@@ -513,11 +513,11 @@ module.exports = Player = Character.extend({
   breakWeapon() {
     var self = this;
 
-    self.notify("Your weapon has been broken.");
+    this.notify("Your weapon has been broken.");
 
-    self.setWeapon(-1, 0, 0, 0);
+    this.setWeapon(-1, 0, 0, 0);
 
-    self.sendEquipment();
+    this.sendEquipment();
   },
 
   setWeapon(id, count, ability, abilityLevel) {
@@ -525,7 +525,7 @@ module.exports = Player = Character.extend({
 
     if (!id) return;
 
-    self.weapon = new Weapon(
+    this.weapon = new Weapon(
       Items.idToString(id),
       id,
       count,
@@ -533,7 +533,7 @@ module.exports = Player = Character.extend({
       abilityLevel
     );
 
-    if (self.weapon.ranged) self.attackRange = 7;
+    if (this.weapon.ranged) this.attackRange = 7;
   },
 
   setPendant(id, count, ability, abilityLevel) {
@@ -541,7 +541,7 @@ module.exports = Player = Character.extend({
 
     if (!id) return;
 
-    self.pendant = new Pendant(
+    this.pendant = new Pendant(
       Items.idToString(id),
       id,
       count,
@@ -555,7 +555,7 @@ module.exports = Player = Character.extend({
 
     if (!id) return;
 
-    self.ring = new Ring(
+    this.ring = new Ring(
       Items.idToString(id),
       id,
       count,
@@ -569,7 +569,7 @@ module.exports = Player = Character.extend({
 
     if (!id) return;
 
-    self.boots = new Boots(
+    this.boots = new Boots(
       Items.idToString(id),
       id,
       count,
@@ -588,20 +588,20 @@ module.exports = Player = Character.extend({
   setPosition(x, y) {
     var self = this;
 
-    if (self.dead) return;
+    if (this.dead) return;
 
-    self._super(x, y);
+    this._super(x, y);
 
-    self.world.pushToAdjacentGroups(
-      self.group,
+    this.world.pushToAdjacentGroups(
+      this.group,
       new Messages.Movement(Packets.MovementOpcode.Move, [
-        self.instance,
+        this.instance,
         x,
         y,
         false,
         false
       ]),
-      self.instance
+      this.instance
     );
   },
 
@@ -620,24 +620,24 @@ module.exports = Player = Character.extend({
 
   timeout() {
     var self = this;
-    self.connection.sendUTF8("timeout");
-    self.connection.close(self.username + " timed out.");
+    this.connection.sendUTF8("timeout");
+    this.connection.close(this.username + " timed out.");
   },
 
   invalidLogin() {
     var self = this;
-    self.connection.sendUTF8("invalidlogin");
-    self.connection.close(self.username + " invalid login.");
+    this.connection.sendUTF8("invalidlogin");
+    this.connection.close(this.username + " invalid login.");
   },
 
   refreshTimeout() {
     var self = this;
 
-    clearTimeout(self.disconnectTimeout);
+    clearTimeout(this.disconnectTimeout);
 
-    self.disconnectTimeout = setTimeout(function() {
-      self.timeout();
-    }, self.timeoutDuration);
+    this.disconnectTimeout = setTimeout(function() {
+      this.timeout();
+    }, this.timeoutDuration);
   },
 
   /**
@@ -695,23 +695,23 @@ module.exports = Player = Character.extend({
     var self = this;
 
     return {
-      type: self.type,
-      id: self.instance,
-      name: self.username,
-      x: self.x,
-      y: self.y,
-      rights: self.rights,
-      level: self.level,
-      pvp: self.pvp,
-      pvpKills: self.pvpKills,
-      pvpDeaths: self.pvpDeaths,
-      hitPoints: self.hitPoints.getData(),
-      mana: self.mana.getData(),
-      armour: self.armour.getData(),
-      weapon: self.weapon.getData(),
-      pendant: self.pendant.getData(),
-      ring: self.ring.getData(),
-      boots: self.boots.getData()
+      type: this.type,
+      id: this.instance,
+      name: this.username,
+      x: this.x,
+      y: this.y,
+      rights: this.rights,
+      level: this.level,
+      pvp: this.pvp,
+      pvpKills: this.pvpKills,
+      pvpDeaths: this.pvpDeaths,
+      hitPoints: this.hitPoints.getData(),
+      mana: this.mana.getData(),
+      armour: this.armour.getData(),
+      weapon: this.weapon.getData(),
+      pendant: this.pendant.getData(),
+      ring: this.ring.getData(),
+      boots: this.boots.getData()
     };
   },
 
@@ -728,7 +728,7 @@ module.exports = Player = Character.extend({
      * other special events and determine a spawn point.
      */
 
-    if (self.getTutorial().isFinished())
+    if (this.getTutorial().isFinished())
       position = {
         x: 325,
         y: 86
@@ -746,12 +746,12 @@ module.exports = Player = Character.extend({
     var self = this;
 
     var defaultDamage = Formulas.getDamage(self, target),
-      isSpecial = 100 - self.weapon.abilityLevel < Utils.randomInt(0, 100);
+      isSpecial = 100 - this.weapon.abilityLevel < Utils.randomInt(0, 100);
 
-    if (!self.hasSpecialAttack() || !isSpecial)
+    if (!this.hasSpecialAttack() || !isSpecial)
       return new Hit(Modules.Hits.Damage, defaultDamage);
 
-    switch (self.weapon.ability) {
+    switch (this.weapon.ability) {
       case Modules.Enchantment.Critical:
         /**
          * Still experimental, not sure how likely it is that you're
@@ -759,7 +759,7 @@ module.exports = Player = Character.extend({
          * out of hand, it's easier to buff than to nerf..
          */
 
-        var multiplier = 1.0 + self.weapon.abilityLevel,
+        var multiplier = 1.0 + this.weapon.abilityLevel,
           damage = defaultDamage * multiplier;
 
         return new Hit(Modules.Hits.Critical, damage);
@@ -776,7 +776,7 @@ module.exports = Player = Character.extend({
     var self = this,
       time = new Date().getTime();
 
-    return self.mute - time > 0;
+    return this.mute - time > 0;
   },
 
   isRanged() {
@@ -802,22 +802,22 @@ module.exports = Player = Character.extend({
   sendEquipment() {
     var self = this,
       info = [
-        self.armour.getData(),
-        self.weapon.getData(),
-        self.pendant.getData(),
-        self.ring.getData(),
-        self.boots.getData()
+        this.armour.getData(),
+        this.weapon.getData(),
+        this.pendant.getData(),
+        this.ring.getData(),
+        this.boots.getData()
       ];
 
-    self.send(new Messages.Equipment(Packets.EquipmentOpcode.Batch, info));
+    this.send(new Messages.Equipment(Packets.EquipmentOpcode.Batch, info));
   },
 
   sendToSpawn() {
     var self = this,
-      position = self.getSpawn();
+      position = this.getSpawn();
 
-    self.x = position.x;
-    self.y = position.y;
+    this.x = position.x;
+    this.y = position.y;
   },
 
   sync(all) {
@@ -828,27 +828,27 @@ module.exports = Player = Character.extend({
      * mana, exp, and other variables
      */
 
-    if (!self.hitPoints || !self.mana) return;
+    if (!this.hitPoints || !this.mana) return;
 
     var info = {
-      id: self.instance,
-      hitPoints: self.getHitPoints(),
-      maxHitPoints: self.getMaxHitPoints(),
-      mana: self.mana.getMana(),
-      maxMana: self.mana.getMaxMana(),
-      experience: self.experience,
-      level: self.level,
-      armour: self.armour.getString(),
-      weapon: self.weapon.getData()
+      id: this.instance,
+      hitPoints: this.getHitPoints(),
+      maxHitPoints: this.getMaxHitPoints(),
+      mana: this.mana.getMana(),
+      maxMana: this.mana.getMaxMana(),
+      experience: this.experience,
+      level: this.level,
+      armour: this.armour.getString(),
+      weapon: this.weapon.getData()
     };
 
-    self.world.pushToAdjacentGroups(
-      self.group,
+    this.world.pushToAdjacentGroups(
+      this.group,
       new Messages.Sync(info),
-      all ? null : self.instance
+      all ? null : this.instance
     );
 
-    self.save();
+    this.save();
   },
 
   notify(message) {
@@ -856,7 +856,7 @@ module.exports = Player = Character.extend({
 
     if (!message) return;
 
-    self.send(
+    this.send(
       new Messages.Notification(Packets.NotificationOpcode.Text, message)
     );
   },
@@ -870,29 +870,29 @@ module.exports = Player = Character.extend({
 
     var self = this;
 
-    self.send(new Messages.Movement(Packets.MovementOpcode.Stop, force));
+    this.send(new Messages.Movement(Packets.MovementOpcode.Stop, force));
   },
 
   finishedTutorial() {
     var self = this;
 
-    if (!self.quests) return true;
+    if (!this.quests) return true;
 
-    return self.getTutorial().isFinished();
+    return this.getTutorial().isFinished();
   },
 
   checkGroups() {
     var self = this;
 
-    if (!self.groupPosition) return;
+    if (!this.groupPosition) return;
 
-    var diffX = Math.abs(self.groupPosition[0] - self.x),
-      diffY = Math.abs(self.groupPosition[1] - self.y);
+    var diffX = Math.abs(this.groupPosition[0] - this.x),
+      diffY = Math.abs(this.groupPosition[1] - this.y);
 
     if (diffX >= 10 || diffY >= 10) {
-      self.groupPosition = [self.x, self.y];
+      this.groupPosition = [this.x, this.y];
 
-      if (self.groupCallback) self.groupCallback();
+      if (this.groupCallback) this.groupCallback();
     }
   },
 
@@ -907,16 +907,16 @@ module.exports = Player = Character.extend({
      * If they are not within the bounds, apply the according punishment.
      */
 
-    self.send(new Messages.Movement(Packets.MovementOpcode.Started));
+    this.send(new Messages.Movement(Packets.MovementOpcode.Started));
   },
 
   walkRandomly() {
     var self = this;
 
     setInterval(function() {
-      self.setPosition(
-        self.x + Utils.randomInt(-5, 5),
-        self.y + Utils.randomInt(-5, 5)
+      this.setPosition(
+        this.x + Utils.randomInt(-5, 5),
+        this.y + Utils.randomInt(-5, 5)
       );
     }, 2000);
   },
@@ -924,15 +924,15 @@ module.exports = Player = Character.extend({
   killCharacter(character) {
     var self = this;
 
-    if (self.killCallback) self.killCallback(character);
+    if (this.killCallback) this.killCallback(character);
   },
 
   save() {
     var self = this;
 
-    if (config.offlineMode || self.isGuest) return;
+    if (config.offlineMode || this.isGuest) return;
 
-    self.mysql.creator.save(self);
+    this.mysql.creator.save(self);
   },
 
   inTutorial() {

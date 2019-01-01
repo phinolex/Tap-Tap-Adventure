@@ -5,17 +5,17 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
     init(game) {
       var self = this;
 
-      self.game = game;
-      self.bubbles = {};
+      this.game = game;
+      this.bubbles = {};
 
-      self.container = $("#bubbles");
+      this.container = $("#bubbles");
     },
 
     create(id, message, time, duration) {
       var self = this;
 
-      if (self.bubbles[id]) {
-        self.bubbles[id].reset(time);
+      if (this.bubbles[id]) {
+        this.bubbles[id].reset(time);
         $("#" + id + " p").html(message);
       } else {
         var element = $(
@@ -26,34 +26,34 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
             "</p><div class='bubbleTip'></div></div>"
         );
 
-        $(element).appendTo(self.container);
+        $(element).appendTo(this.container);
 
-        self.bubbles[id] = new Blob(id, time, element, duration);
+        this.bubbles[id] = new Blob(id, time, element, duration);
 
-        return self.bubbles[id];
+        return this.bubbles[id];
       }
     },
 
     setTo(entity) {
       var self = this;
 
-      var bubble = self.get(entity.id);
+      var bubble = this.get(entity.id);
 
       if (!bubble || !entity) return;
 
-      var scale = self.game.renderer.getDrawingScale(),
+      var scale = this.game.renderer.getDrawingScale(),
         tileSize = 16 * scale,
-        x = (entity.x - self.game.getCamera().x) * scale,
+        x = (entity.x - this.game.getCamera().x) * scale,
         width = parseInt(bubble.element.css("width")) + 24,
         offset = width / 2 - tileSize / 2,
         offsetY = 10,
         y;
 
-      y = (entity.y - self.game.getCamera().y) * scale - tileSize * 2 - offsetY;
+      y = (entity.y - this.game.getCamera().y) * scale - tileSize * 2 - offsetY;
 
       bubble.element.css(
         "left",
-        x - offset + (2 + self.game.renderer.scale) + "px"
+        x - offset + (2 + this.game.renderer.scale) + "px"
       );
       bubble.element.css("top", y + "px");
     },
@@ -61,14 +61,14 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
     update(time) {
       var self = this;
 
-      _.each(self.bubbles, function(bubble) {
-        var entity = self.game.entities.get(bubble.id);
+      _.each(this.bubbles, function(bubble) {
+        var entity = this.game.entities.get(bubble.id);
 
-        if (entity) self.setTo(entity);
+        if (entity) this.setTo(entity);
 
         if (bubble.isOver(time)) {
           bubble.destroy();
-          delete self.bubbles[bubble.id];
+          delete this.bubbles[bubble.id];
         }
       });
     },
@@ -76,7 +76,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
     get(id) {
       var self = this;
 
-      if (id in self.bubbles) return self.bubbles[id];
+      if (id in this.bubbles) return this.bubbles[id];
 
       return null;
     },
@@ -84,21 +84,21 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
     clean() {
       var self = this;
 
-      _.each(self.bubbles, function(bubble) {
+      _.each(this.bubbles, function(bubble) {
         bubble.destroy();
       });
 
-      self.bubbles = {};
+      this.bubbles = {};
     },
 
     destroy(id) {
       var self = this,
-        bubble = self.get(id);
+        bubble = this.get(id);
 
       if (!bubble) return;
 
       bubble.destroy();
-      delete self.bubbles[id];
+      delete this.bubbles[id];
     }
   });
 });

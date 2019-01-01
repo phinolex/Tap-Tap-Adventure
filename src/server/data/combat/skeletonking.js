@@ -13,76 +13,76 @@ module.exports = SkeletonKing = Combat.extend({
   init(character) {
     var self = this;
 
-    self._super(character);
+    this._super(character);
 
     character.spawnDistance = 10;
 
-    self.lastSpawn = 0;
+    this.lastSpawn = 0;
 
-    self.minions = [];
+    this.minions = [];
 
     character.onDeath(function() {
-      self.reset();
+      this.reset();
     });
   },
 
   reset() {
     var self = this;
 
-    self.lastSpawn = 0;
+    this.lastSpawn = 0;
 
-    var listCopy = self.minions.slice();
+    var listCopy = this.minions.slice();
 
-    for (var i = 0; i < listCopy.length; i++) self.world.kill(listCopy[i]);
+    for (var i = 0; i < listCopy.length; i++) this.world.kill(listCopy[i]);
   },
 
   hit(character, target, hitInfo) {
     var self = this;
 
-    if (self.isAttacked()) self.beginMinionAttack();
+    if (this.isAttacked()) this.beginMinionAttack();
 
-    if (self.canSpawn()) self.spawnMinions();
+    if (this.canSpawn()) this.spawnMinions();
 
-    self._super(character, target, hitInfo);
+    this._super(character, target, hitInfo);
   },
 
   spawnMinions() {
     var self = this,
-      x = self.character.x,
-      y = self.character.y;
+      x = this.character.x,
+      y = this.character.y;
 
-    self.lastSpawn = new Date().getTime();
+    this.lastSpawn = new Date().getTime();
 
-    if (!self.colliding(x + 2, y - 2))
-      self.minions.push(self.world.spawnMob(17, x + 2, y + 2));
+    if (!this.colliding(x + 2, y - 2))
+      this.minions.push(this.world.spawnMob(17, x + 2, y + 2));
 
-    if (!self.colliding(x - 2, y - 2))
-      self.minions.push(self.world.spawnMob(17, x - 2, y + 2));
+    if (!this.colliding(x - 2, y - 2))
+      this.minions.push(this.world.spawnMob(17, x - 2, y + 2));
 
-    if (!self.colliding(x + 1, y + 1))
-      self.minions.push(self.world.spawnMob(11, x + 1, y - 1));
+    if (!this.colliding(x + 1, y + 1))
+      this.minions.push(this.world.spawnMob(11, x + 1, y - 1));
 
-    if (!self.colliding(x - 1, y + 1))
-      self.minions.push(self.world.spawnMob(11, x - 1, y - 1));
+    if (!this.colliding(x - 1, y + 1))
+      this.minions.push(this.world.spawnMob(11, x - 1, y - 1));
 
-    _.each(self.minions, function(minion) {
+    _.each(this.minions, function(minion) {
       minion.onDeath(function() {
-        if (self.isLast()) self.lastSpawn = new Date().getTime();
+        if (this.isLast()) this.lastSpawn = new Date().getTime();
 
-        self.minions.splice(self.minions.indexOf(minion), 1);
+        this.minions.splice(this.minions.indexOf(minion), 1);
       });
 
-      if (self.isAttacked()) self.beginMinionAttack();
+      if (this.isAttacked()) this.beginMinionAttack();
     });
   },
 
   beginMinionAttack() {
     var self = this;
 
-    if (!self.hasMinions()) return;
+    if (!this.hasMinions()) return;
 
-    _.each(self.minions, function(minion) {
-      var randomTarget = self.getRandomTarget();
+    _.each(this.minions, function(minion) {
+      var randomTarget = this.getRandomTarget();
 
       if (!minion.hasTarget() && randomTarget)
         minion.combat.begin(randomTarget);
@@ -92,14 +92,14 @@ module.exports = SkeletonKing = Combat.extend({
   getRandomTarget() {
     var self = this;
 
-    if (self.isAttacked()) {
-      var keys = Object.keys(self.attackers),
-        randomAttacker = self.attackers[keys[Utils.randomInt(0, keys.length)]];
+    if (this.isAttacked()) {
+      var keys = Object.keys(this.attackers),
+        randomAttacker = this.attackers[keys[Utils.randomInt(0, keys.length)]];
 
       if (randomAttacker) return randomAttacker;
     }
 
-    if (self.character.hasTarget()) return self.character.target;
+    if (this.character.hasTarget()) return this.character.target;
 
     return null;
   },

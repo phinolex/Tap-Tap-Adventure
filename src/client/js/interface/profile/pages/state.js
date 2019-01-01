@@ -5,32 +5,32 @@ define(["jquery", "../page"], function($, Page) {
     init(game) {
       var self = this;
 
-      self._super("#statePage");
+      this._super("#statePage");
 
-      self.game = game;
-      self.player = game.player;
+      this.game = game;
+      this.player = game.player;
 
-      self.name = $("#profileName");
-      self.level = $("#profileLevel");
-      self.experience = $("#profileExperience");
+      this.name = $("#profileName");
+      this.level = $("#profileLevel");
+      this.experience = $("#profileExperience");
 
-      self.weaponSlot = $("#weaponSlot");
-      self.armourSlot = $("#armourSlot");
-      self.pendantSlot = $("#pendantSlot");
-      self.ringSlot = $("#ringSlot");
-      self.bootsSlot = $("#bootsSlot");
+      this.weaponSlot = $("#weaponSlot");
+      this.armourSlot = $("#armourSlot");
+      this.pendantSlot = $("#pendantSlot");
+      this.ringSlot = $("#ringSlot");
+      this.bootsSlot = $("#bootsSlot");
 
-      self.slots = [
-        self.weaponSlot,
-        self.armourSlot,
-        self.pendantSlot,
-        self.ringSlot,
-        self.bootsSlot
+      this.slots = [
+        this.weaponSlot,
+        this.armourSlot,
+        this.pendantSlot,
+        this.ringSlot,
+        this.bootsSlot
       ];
 
-      self.loaded = false;
+      this.loaded = false;
 
-      self.load();
+      this.load();
     },
 
     resize() {
@@ -40,46 +40,46 @@ define(["jquery", "../page"], function($, Page) {
     load() {
       var self = this;
 
-      if (!self.game.player.armour) return;
+      if (!this.game.player.armour) return;
 
-      self.name.text(self.player.username);
-      self.level.text(self.player.level);
-      self.experience.text(self.player.experience);
+      this.name.text(this.player.username);
+      this.level.text(this.player.level);
+      this.experience.text(this.player.experience);
 
-      self.loadSlots();
+      this.loadSlots();
 
-      self.loaded = true;
+      this.loaded = true;
 
-      self.weaponSlot.click(function() {
-        self.game.socket.send(Packets.Equipment, [
+      this.weaponSlot.click(function() {
+        this.game.socket.send(Packets.Equipment, [
           Packets.EquipmentOpcode.Unequip,
           "weapon"
         ]);
       });
 
-      self.armourSlot.click(function() {
-        self.game.socket.send(Packets.Equipment, [
+      this.armourSlot.click(function() {
+        this.game.socket.send(Packets.Equipment, [
           Packets.EquipmentOpcode.Unequip,
           "armour"
         ]);
       });
 
-      self.pendantSlot.click(function() {
-        self.game.socket.send(Packets.Equipment, [
+      this.pendantSlot.click(function() {
+        this.game.socket.send(Packets.Equipment, [
           Packets.EquipmentOpcode.Unequip,
           "pendant"
         ]);
       });
 
-      self.ringSlot.click(function() {
-        self.game.socket.send(Packets.Equipment, [
+      this.ringSlot.click(function() {
+        this.game.socket.send(Packets.Equipment, [
           Packets.EquipmentOpcode.Unequip,
           "ring"
         ]);
       });
 
-      self.bootsSlot.click(function() {
-        self.game.socket.send(Packets.Equipment, [
+      this.bootsSlot.click(function() {
+        this.game.socket.send(Packets.Equipment, [
           Packets.EquipmentOpcode.Unequip,
           "boots"
         ]);
@@ -89,29 +89,29 @@ define(["jquery", "../page"], function($, Page) {
     loadSlots() {
       var self = this;
 
-      self.weaponSlot.css(
+      this.weaponSlot.css(
         "background-image",
-        self.getImageFormat(self.getScale(), self.player.weapon.string)
+        this.getImageFormat(this.getScale(), this.player.weapon.string)
       );
-      self.armourSlot.css(
+      this.armourSlot.css(
         "background-image",
-        self.getImageFormat(self.getScale(), self.player.armour.string)
+        this.getImageFormat(this.getScale(), this.player.armour.string)
       );
-      self.pendantSlot.css(
+      this.pendantSlot.css(
         "background-image",
-        self.getImageFormat(self.getScale(), self.player.pendant.string)
+        this.getImageFormat(this.getScale(), this.player.pendant.string)
       );
-      self.ringSlot.css(
+      this.ringSlot.css(
         "background-image",
-        self.getImageFormat(self.getScale(), self.player.ring.string)
+        this.getImageFormat(this.getScale(), this.player.ring.string)
       );
-      self.bootsSlot.css(
+      this.bootsSlot.css(
         "background-image",
-        self.getImageFormat(self.getScale(), self.player.boots.string)
+        this.getImageFormat(this.getScale(), this.player.boots.string)
       );
 
-      if (self.game.getScaleFactor() === 1)
-        self.forEachSlot(function(slot) {
+      if (this.game.getScaleFactor() === 1)
+        this.forEachSlot(function(slot) {
           slot.css("background-size", "600%");
         });
     },
@@ -119,10 +119,10 @@ define(["jquery", "../page"], function($, Page) {
     update() {
       var self = this;
 
-      self.level.text(self.player.level);
-      self.experience.text(self.player.experience);
+      this.level.text(this.player.level);
+      this.experience.text(this.player.experience);
 
-      self.loadSlots();
+      this.loadSlots();
     },
 
     forEachSlot(callback) {

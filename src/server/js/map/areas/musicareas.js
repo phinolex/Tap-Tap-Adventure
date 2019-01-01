@@ -9,9 +9,9 @@ module.exports = MusicAreas = cls.Class.extend({
   constructor() {
     var self = this;
 
-    self.musicAreas = [];
+    this.musicAreas = [];
 
-    self.load();
+    this.load();
   },
 
   load() {
@@ -20,9 +20,9 @@ module.exports = MusicAreas = cls.Class.extend({
     _.each(map.musicAreas, function(m) {
       var musicArea = new Area(m.id, m.x, m.y, m.width, m.height);
 
-      self.musicAreas.push(musicArea);
+      this.musicAreas.push(musicArea);
     });
 
-    log.info("Loaded " + self.musicAreas.length + " music areas.");
+    log.info("Loaded " + this.musicAreas.length + " music areas.");
   }
 });

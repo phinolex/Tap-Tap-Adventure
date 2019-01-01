@@ -4,6 +4,6 @@ module.exports = Run = Ability.extend({
   init(name, type) {
     var self = this;
 
-    self._super(name, type);
+    this._super(name, type);
   }
 });

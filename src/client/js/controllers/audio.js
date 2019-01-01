@@ -5,23 +5,23 @@ define(function() {
     init(game) {
       var self = this;
 
-      self.game = game;
+      this.game = game;
 
-      self.audibles = {};
-      self.format = "mp3";
+      this.audibles = {};
+      this.format = "mp3";
 
-      self.song = null;
-      self.songName = null;
+      this.song = null;
+      this.songName = null;
 
-      self.enabled = true;
+      this.enabled = true;
 
-      self.load();
+      this.load();
     },
 
     load() {
       var self = this;
 
-      self.music = {
+      this.music = {
         codingroom: false,
         smalltown: false,
         village: false,
@@ -30,7 +30,7 @@ define(function() {
         meadowofthepast: false
       };
 
-      self.sounds = {
+      this.sounds = {
         loot: false,
         hit1: false,
         hit2: false,
@@ -53,7 +53,7 @@ define(function() {
 
     parse(path, name, channels, callback) {
       var self = this,
-        fullPath = path + name + "." + self.format,
+        fullPath = path + name + "." + this.format,
         sound = document.createElement("audio");
 
       sound.addEventListener(
@@ -75,7 +75,7 @@ define(function() {
               " could not be loaded - unsupported extension?"
           );
 
-          self.audibles[name] = null;
+          this.audibles[name] = null;
         },
         false
       );
@@ -86,28 +86,28 @@ define(function() {
 
       sound.load();
 
-      self.audibles[name] = [sound];
+      this.audibles[name] = [sound];
 
       _.times(channels - 1, function() {
-        self.audibles[name].push(sound.cloneNode(true));
+        this.audibles[name].push(sound.cloneNode(true));
       });
 
-      if (name in self.music) self.music[name] = true;
-      else if (name in self.sounds) self.sounds[name] = true;
+      if (name in this.music) this.music[name] = true;
+      else if (name in this.sounds) this.sounds[name] = true;
     },
 
     play(type, name) {
       var self = this;
 
-      if (!self.isEnabled() || !self.fileExists(name)) return;
+      if (!this.isEnabled() || !this.fileExists(name)) return;
 
       switch (type) {
         case Modules.AudioTypes.Music:
-          self.fadeOut(self.song, function() {
-            self.reset(self.song);
+          this.fadeOut(this.song, function() {
+            this.reset(this.song);
           });
 
-          var song = self.get(name);
+          var song = this.get(name);
 
           if (!song) return;
 
@@ -115,20 +115,20 @@ define(function() {
 
           song.play();
 
-          self.fadeIn(song);
+          this.fadeIn(song);
 
-          self.song = song;
+          this.song = song;
 
           break;
 
         case Modules.AudioTypes.SFX:
-          if (!self.sounds[name]) self.parse("audio/sounds/", name, 4);
+          if (!this.sounds[name]) this.parse("audio/sounds/", name, 4);
 
-          var sound = self.get(name);
+          var sound = this.get(name);
 
           if (!sound) return;
 
-          sound.volume = self.getSFXVolume();
+          sound.volume = this.getSFXVolume();
 
           sound.play();
 
@@ -139,20 +139,20 @@ define(function() {
     update() {
       var self = this;
 
-      if (!self.isEnabled()) return;
+      if (!this.isEnabled()) return;
 
-      log.info(self.songName);
+      log.info(this.songName);
 
-      var song = self.getMusic(self.songName);
+      var song = this.getMusic(this.songName);
 
-      if (song && !(self.song && self.song.name === song.name)) {
-        if (self.game.renderer.mobile) self.reset(self.song);
-        else self.fadeSongOut();
+      if (song && !(this.song && this.song.name === song.name)) {
+        if (this.game.renderer.mobile) this.reset(this.song);
+        else this.fadeSongOut();
 
-        if (song.name in self.music && !self.music[song.name]) {
-          self.parse("audio/music/", song.name, 1);
+        if (song.name in this.music && !this.music[song.name]) {
+          this.parse("audio/music/", song.name, 1);
 
-          var music = self.audibles[song.name][0];
+          var music = this.audibles[song.name][0];
 
           music.loop = true;
           music.addEventListener(
@@ -164,10 +164,10 @@ define(function() {
           );
         }
 
-        self.play(Modules.AudioTypes.Music, song.name);
+        this.play(Modules.AudioTypes.Music, song.name);
       } else {
-        if (self.game.renderer.mobile) self.reset(self.song);
-        else self.fadeSongOut();
+        if (this.game.renderer.mobile) this.reset(this.song);
+        else this.fadeSongOut();
       }
     },
 
@@ -176,14 +176,14 @@ define(function() {
 
       if (!song || song.fadingIn) return;
 
-      self.clearFadeOut(song);
+      this.clearFadeOut(song);
 
       song.fadingIn = setInterval(function() {
         song.volume += 0.02;
 
-        if (song.volume >= self.getMusicVolume() - 0.02) {
-          song.volume = self.getMusicVolume();
-          self.clearFadeIn(song);
+        if (song.volume >= this.getMusicVolume() - 0.02) {
+          song.volume = this.getMusicVolume();
+          this.clearFadeIn(song);
         }
       }, 100);
     },
@@ -193,7 +193,7 @@ define(function() {
 
       if (!song || song.fadingOut) return;
 
-      self.clearFadeIn(song);
+      this.clearFadeIn(song);
 
       song.fadingOut = setInterval(function() {
         if (song.volume) {
@@ -213,13 +213,13 @@ define(function() {
     fadeSongOut() {
       var self = this;
 
-      if (!self.song) return;
+      if (!this.song) return;
 
-      self.fadeOut(self.song, function(song) {
-        self.reset(song);
+      this.fadeOut(this.song, function(song) {
+        this.reset(song);
       });
 
-      self.song = null;
+      this.song = null;
     },
 
     clearFadeIn(song) {
@@ -246,11 +246,11 @@ define(function() {
     stop() {
       var self = this;
 
-      if (!self.song) return;
+      if (!this.song) return;
 
-      self.fadeOut(self.song, function() {
-        self.reset(self.song);
-        self.song = null;
+      this.fadeOut(this.song, function() {
+        this.reset(this.song);
+        this.song = null;
       });
     },
 
@@ -261,14 +261,14 @@ define(function() {
     get(name) {
       var self = this;
 
-      if (!self.audibles[name]) return null;
+      if (!this.audibles[name]) return null;
 
-      var audible = _.detect(self.audibles[name], function(audible) {
+      var audible = _.detect(this.audibles[name], function(audible) {
         return audible.ended || audible.paused;
       });
 
       if (audible && audible.ended) audible.currentTime = 0;
-      else audible = self.audibles[name][0];
+      else audible = this.audibles[name][0];
 
       return audible;
     },

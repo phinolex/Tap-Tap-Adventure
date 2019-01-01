@@ -14,81 +14,81 @@ module.exports = MySQL = cls.Class.extend({
      * Main file for MySQL, it splits into Creator and Loader.
      * Responsible for creating and loading data, respectively.
      */
-    self.host = host;
-    self.port = port;
-    self.user = user;
-    self.password = pass;
-    self.database = database;
+    this.host = host;
+    this.port = port;
+    this.user = user;
+    this.password = pass;
+    this.database = database;
 
-    self.loader = null;
+    this.loader = null;
 
-    self.connect(
+    this.connect(
       true,
       false
     );
 
-    self.loadCreator();
-    self.loadCallbacks();
+    this.loadCreator();
+    this.loadCallbacks();
   },
 
   connect(usingDB, forceCallbacks) {
     var self = this;
 
-    if (self.connection) {
-      self.connection.destroy();
-      self.connection = null;
+    if (this.connection) {
+      this.connection.destroy();
+      this.connection = null;
     }
 
-    self.connection = mysql.createConnection({
-      host: self.host,
-      port: self.port,
-      user: self.user,
-      password: self.password,
-      database: usingDB ? self.database : null
+    this.connection = mysql.createConnection({
+      host: this.host,
+      port: this.port,
+      user: this.user,
+      password: this.password,
+      database: usingDB ? this.database : null
     });
 
-    if (forceCallbacks) self.loadCallbacks();
+    if (forceCallbacks) this.loadCallbacks();
   },
 
   loadCallbacks() {
     var self = this;
 
-    self.connection.connect(function(err) {
+    this.connection.connect(function(err) {
       if (err) {
         log.info("[MySQL] No database found...");
-        self.connect(
+        this.connect(
           false,
           false
         );
-        self.loadDatabases();
+        this.loadDatabases();
         return;
       }
 
-      self.creator.createTables();
+      this.creator.createTables();
       log.info("Successfully established connection to the MySQL database!");
-      self.loader = new Loader(self);
+      this.loader = new Loader(self);
     });
 
-    self.connection.on("error", function(error) {
+    this.connection.on("error", function(error) {
       log.error("MySQL database disconnected.");
 
-      self.connect(
+      this.connect(
         true,
         true
       );
     });
 
-    self.onSelected(function() {
-      self.creator.createTables();
+    this.onSelected(function() {
+      this.creator.createTables();
     });
   },
 
   loadCreator() {
     var self = this;
 
-    if (self.creator) return;
+    if (this.creator) return;
 
-    self.creator = new Creator(self);
+    this.creator = new Creator(self);
   },
 
   login(player, guest) {
@@ -97,7 +97,7 @@ module.exports = MySQL = cls.Class.extend({
 
     log.info("Initiating login for: " + player.username);
 
-    self.connection.query(
+    this.connection.query(
       "SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? AND `player_data`.`password`= ?",
       [player.username, player.password],
       function(error, rows, fields) {
@@ -125,7 +125,7 @@ module.exports = MySQL = cls.Class.extend({
 
         if (player.isGuest) {
           // register the guest account
-          self.register(player);
+          this.register(player);
         } else if (!found) {
           log.info("Mysql.login(player) failed for " + player.username);
           player.invalidLogin();
@@ -137,7 +137,7 @@ module.exports = MySQL = cls.Class.extend({
   register(player) {
     var self = this;
 
-    self.connection.query(
+    this.connection.query(
       "SELECT * FROM `player_data` WHERE `player_data`.`username`= ?",
       [player.username],
       function(error, rows, fields) {
@@ -156,9 +156,9 @@ module.exports = MySQL = cls.Class.extend({
           log.info("No player data found for: " + player.username);
 
           player.isNew = true;
-          player.load(self.creator.getPlayerData(player));
+          player.load(this.creator.getPlayerData(player));
 
-          self.creator.save(player);
+          this.creator.save(player);
 
           player.isNew = false;
           player.intro();
@@ -183,7 +183,7 @@ module.exports = MySQL = cls.Class.extend({
       ];
 
     _.each(tables, function(table) {
-      self.connection.query(
+      this.connection.query(
         "DELETE FROM `" + table + "` WHERE `" + table + "`.`" + "username`=?",
         [player.username],
         function(error) {
@@ -198,19 +198,19 @@ module.exports = MySQL = cls.Class.extend({
 
     log.info("[MySQL] Creating database....");
 
-    self.connection.query(
+    this.connection.query(
       "CREATE DATABASE IF NOT EXISTS " + Config.mysqlDatabase,
       function(error, results, fields) {
         if (error) throw error;
 
         log.info("[MySQL] Successfully created database.");
 
-        self.connection.query("USE " + Config.mysqlDatabase, function(
+        this.connection.query("USE " + Config.mysqlDatabase, function(
           error,
           results,
           fields
         ) {
-          if (self.selectDatabase_callback) self.selectDatabase_callback();
+          if (this.selectDatabase_callback) this.selectDatabase_callback();
         });
       }
     );
@@ -219,7 +219,7 @@ module.exports = MySQL = cls.Class.extend({
   queryData(type, database, data) {
     var self = this;
 
-    self.connection.query(type + " " + database + " SET ?", data, function(
+    this.connection.query(type + " " + database + " SET ?", data, function(
       error
     ) {
       if (error) throw error;
@@ -231,7 +231,7 @@ module.exports = MySQL = cls.Class.extend({
   alter(database, column, type) {
     var self = this;
 
-    self.connection.query(
+    this.connection.query(
       "ALTER TABLE " + database + " ADD " + column + " " + type,
       function(error, results, fields) {
         if (error) {

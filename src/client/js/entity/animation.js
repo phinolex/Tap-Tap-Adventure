@@ -7,46 +7,46 @@ define(function() {
     init(name, length, row, width, height) {
       var self = this;
 
-      self.name = name;
-      self.length = length;
-      self.row = row;
-      self.width = width;
-      self.height = height;
+      this.name = name;
+      this.length = length;
+      this.row = row;
+      this.width = width;
+      this.height = height;
 
-      self.reset();
+      this.reset();
     },
 
     tick() {
       var self = this,
-        i = self.currentFrame.index;
+        i = this.currentFrame.index;
 
-      i = i < self.length - 1 ? i + 1 : 0;
+      i = i < this.length - 1 ? i + 1 : 0;
 
-      if (self.count > 0 && i === 0) {
-        self.count -= 1;
+      if (this.count > 0 && i === 0) {
+        this.count -= 1;
 
-        if (self.count === 0) {
-          self.currentFrame.index = 0;
-          self.endCountCallback();
+        if (this.count === 0) {
+          this.currentFrame.index = 0;
+          this.endCountCallback();
           return;
         }
       }
 
-      self.currentFrame.x = self.width * i;
-      self.currentFrame.y = self.height * self.row;
+      this.currentFrame.x = this.width * i;
+      this.currentFrame.y = this.height * this.row;
 
-      self.currentFrame.index = i;
+      this.currentFrame.index = i;
     },
 
     update(time) {
       var self = this;
 
-      if (self.lastTime === 0 && self.name.substr(0, 3) === "atk")
-        self.lastTime = time;
+      if (this.lastTime === 0 && this.name.substr(0, 3) === "atk")
+        this.lastTime = time;
 
-      if (self.readyToAnimate(time)) {
-        self.lastTime = time;
-        self.tick();
+      if (this.readyToAnimate(time)) {
+        this.lastTime = time;
+        this.tick();
 
         return true;
       } else return false;
@@ -55,8 +55,8 @@ define(function() {
     setCount(count, onEndCount) {
       var self = this;
 
-      self.count = count;
-      self.endCountCallback = onEndCount;
+      this.count = count;
+      this.endCountCallback = onEndCount;
     },
 
     setSpeed(speed) {
@@ -74,11 +74,11 @@ define(function() {
     reset() {
       var self = this;
 
-      self.lastTime = 0;
-      self.currentFrame = {
+      this.lastTime = 0;
+      this.currentFrame = {
         index: 0,
         x: 0,
-        y: self.row * self.height
+        y: this.row * this.height
       };
     }
   });

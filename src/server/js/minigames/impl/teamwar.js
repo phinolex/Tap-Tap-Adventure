@@ -5,10 +5,10 @@ module.exports = TeamWar = Minigame.extend({
   init(world) {
     var self = this;
 
-    self.world = world;
+    this.world = world;
 
-    self.data = Data["TeamWar"];
+    this.data = Data["TeamWar"];
 
-    self._super(self.data.id, self.data.name);
+    this._super(this.data.id, this.data.name);
   }
 });

@@ -5,11 +5,11 @@ module.exports = Weapon = Equipment.extend({
   init(name, id, count, ability, abilityLevel) {
     var self = this;
 
-    self._super(name, id, count, ability, abilityLevel);
+    this._super(name, id, count, ability, abilityLevel);
 
-    self.level = Items.getWeaponLevel(name);
-    self.ranged = Items.isArcherWeapon(name);
-    self.breakable = false;
+    this.level = Items.getWeaponLevel(name);
+    this.ranged = Items.isArcherWeapon(name);
+    this.breakable = false;
   },
 
   hasCritical() {

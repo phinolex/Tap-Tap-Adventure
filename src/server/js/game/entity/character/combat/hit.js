@@ -9,12 +9,12 @@ module.exports = Hit = cls.Class.extend({
   init(type, damage) {
     var self = this;
 
-    self.type = type;
-    self.damage = damage;
+    this.type = type;
+    this.damage = damage;
 
-    self.ranged = false;
-    self.aoe = false;
-    self.terror = false;
+    this.ranged = false;
+    this.aoe = false;
+    this.terror = false;
   },
 
   isRanged() {

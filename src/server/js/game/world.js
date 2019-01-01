@@ -26,33 +26,33 @@ module.exports = World = cls.Class.extend({
   init(id, socket, database) {
     var self = this;
 
-    self.id = id;
-    self.socket = socket;
-    self.database = database;
+    this.id = id;
+    this.socket = socket;
+    this.database = database;
 
-    self.playerCount = 0;
-    self.maxPlayers = config.maxPlayers;
-    self.updateTime = config.updateTime;
-    self.debug = false;
+    this.playerCount = 0;
+    this.maxPlayers = config.maxPlayers;
+    this.updateTime = config.updateTime;
+    this.debug = false;
 
-    self.players = {};
-    self.entities = {};
-    self.items = {};
-    self.chests = {};
-    self.mobs = {};
-    self.npcs = {};
-    self.projectiles = {};
+    this.players = {};
+    this.entities = {};
+    this.items = {};
+    this.chests = {};
+    this.mobs = {};
+    this.npcs = {};
+    this.projectiles = {};
 
-    self.packets = {};
-    self.groups = {};
+    this.packets = {};
+    this.groups = {};
 
-    self.loadedGroups = false;
+    this.loadedGroups = false;
 
-    self.ready = false;
+    this.ready = false;
 
-    self.malformTimeout = null;
+    this.malformTimeout = null;
 
-    self.onPlayerConnection(function(connection) {
+    this.onPlayerConnection(function(connection) {
       var remoteAddress = connection.socket.conn.remoteAddress;
 
       if (config.development) {
@@ -63,10 +63,10 @@ module.exports = World = cls.Class.extend({
       }
 
       var clientId = Utils.generateClientId(),
-        player = new Player(self, self.database, connection, clientId),
+        player = new Player(self, this.database, connection, clientId),
         diff =
           new Date().getTime() -
-          self.socket.ips[connection.socket.conn.remoteAddress];
+          this.socket.ips[connection.socket.conn.remoteAddress];
 
       if (diff < 4000) {
         connection.sendUTF8("toofast");
@@ -75,33 +75,33 @@ module.exports = World = cls.Class.extend({
         return;
       }
 
-      self.socket.ips[
+      this.socket.ips[
         connection.socket.conn.remoteAddress
       ] = new Date().getTime();
 
-      self.addToPackets(player);
+      this.addToPackets(player);
 
-      self.pushToPlayer(
+      this.pushToPlayer(
         player,
         new Messages.Handshake(clientId, config.devClient)
       );
     });
 
-    self.onPopulationChange(function() {
+    this.onPopulationChange(function() {
       /**
        * Grab the exact number of players from
        * the array of packets instead of adding
        * and subtracting and risking uncertainties.
        */
 
-      self.pushBroadcast(new Messages.Population(self.getPopulation()));
+      this.pushBroadcast(new Messages.Population(this.getPopulation()));
     });
   },
 
   load(onWorldLoad) {
     var self = this;
 
-    log.info("************ World " + self.id + " ***********");
+    log.info("************ World " + this.id + " ***********");
 
     /**
      * The reason maps are loaded per each world is because
@@ -110,16 +110,16 @@ module.exports = World = cls.Class.extend({
      * whatever new map we have created server sided. Cleaner and nicer.
      */
 
-    self.map = new Map(self);
-    self.map.isReady(function() {
-      self.loadGroups();
+    this.map = new Map(self);
+    this.map.isReady(function() {
+      this.loadGroups();
 
-      self.spawnChests();
-      self.spawnEntities();
+      this.spawnChests();
+      this.spawnEntities();
 
       log.info("The map has been successfully loaded!");
 
-      self.loaded();
+      this.loaded();
 
       onWorldLoad();
     });
@@ -132,11 +132,11 @@ module.exports = World = cls.Class.extend({
      * rather than being called from elsewhere.
      */
 
-    self.tick();
+    this.tick();
 
-    if (!config.offlineMode) self.dataParser();
+    if (!config.offlineMode) this.dataParser();
 
-    self.ready = true;
+    this.ready = true;
 
     log.info("********************************");
   },
@@ -145,16 +145,16 @@ module.exports = World = cls.Class.extend({
     var self = this;
 
     setInterval(function() {
-      self.parsePackets();
-      self.parseGroups();
-    }, 1000 / self.updateTime);
+      this.parsePackets();
+      this.parseGroups();
+    }, 1000 / this.updateTime);
   },
 
   dataParser() {
     var self = this;
 
     setInterval(function() {
-      self.saveAll();
+      this.saveAll();
     }, 30000);
   },
 
@@ -165,15 +165,15 @@ module.exports = World = cls.Class.extend({
      * This parses through the packet pool and sends them
      */
 
-    for (var id in self.packets) {
-      if (self.packets[id].length > 0 && self.packets.hasOwnProperty(id)) {
-        var conn = self.socket.getConnection(id);
+    for (var id in this.packets) {
+      if (this.packets[id].length > 0 && this.packets.hasOwnProperty(id)) {
+        var conn = this.socket.getConnection(id);
 
         if (conn) {
-          conn.send(self.packets[id]);
-          self.packets[id] = [];
-          self.packets[id].id = id;
-        } else delete self.socket.getConnection(id);
+          conn.send(this.packets[id]);
+          this.packets[id] = [];
+          this.packets[id].id = id;
+        } else delete this.socket.getConnection(id);
       }
     }
   },
@@ -181,14 +181,14 @@ module.exports = World = cls.Class.extend({
   parseGroups() {
     var self = this;
 
-    if (!self.loadedGroups) return;
+    if (!this.loadedGroups) return;
 
-    self.map.groups.forEachGroup(function(groupId) {
-      if (self.groups[groupId].incoming.length < 1) return;
+    this.map.groups.forEachGroup(function(groupId) {
+      if (this.groups[groupId].incoming.length < 1) return;
 
-      self.sendSpawns(groupId);
+      this.sendSpawns(groupId);
 
-      self.groups[groupId].incoming = [];
+      this.groups[groupId].incoming = [];
     });
   },
 
@@ -201,16 +201,16 @@ module.exports = World = cls.Class.extend({
 
     entity.applyDamage(entity.hitPoints);
 
-    self.pushToAdjacentGroups(
+    this.pushToAdjacentGroups(
       entity.group,
       new Messages.Points(entity.instance, entity.getHitPoints(), null)
     );
-    self.pushToAdjacentGroups(
+    this.pushToAdjacentGroups(
       entity.group,
       new Messages.Despawn(entity.instance)
     );
 
-    self.handleDeath(entity, true);
+    this.handleDeath(entity, true);
   },
 
   handleDamage(attacker, target, damage) {
@@ -227,7 +227,7 @@ module.exports = World = cls.Class.extend({
 
     target.applyDamage(damage);
 
-    self.pushToAdjacentGroups(
+    this.pushToAdjacentGroups(
       target.group,
       new Messages.Points(target.instance, target.getHitPoints(), null)
     );
@@ -236,7 +236,7 @@ module.exports = World = cls.Class.extend({
       target.combat.forEachAttacker(function(attacker) {
         attacker.removeTarget();
 
-        self.pushToAdjacentGroups(
+        this.pushToAdjacentGroups(
           target.group,
           new Messages.Combat(Packets.CombatOpcode.Finish, [
             attacker.instance,
@@ -252,11 +252,11 @@ module.exports = World = cls.Class.extend({
         }
       });
 
-      self.pushToAdjacentGroups(
+      this.pushToAdjacentGroups(
         target.group,
         new Messages.Despawn(target.instance)
       );
-      self.handleDeath(target);
+      this.handleDeath(target);
     }
   },
 
@@ -271,7 +271,7 @@ module.exports = World = cls.Class.extend({
 
       if (character.deathCallback) character.deathCallback();
 
-      self.removeEntity(character);
+      this.removeEntity(character);
 
       character.dead = true;
 
@@ -282,7 +282,7 @@ module.exports = World = cls.Class.extend({
       if (!ignoreDrops) {
         var drop = character.getDrop();
 
-        if (drop) self.dropItem(drop.id, drop.count, deathX, deathY);
+        if (drop) this.dropItem(drop.id, drop.count, deathX, deathY);
       }
     } else if (character.type === "player") character.die();
   },
@@ -316,7 +316,7 @@ module.exports = World = cls.Class.extend({
 
     projectile.owner = attacker;
 
-    self.addProjectile(projectile);
+    this.addProjectile(projectile);
 
     return projectile;
   },
@@ -331,10 +331,10 @@ module.exports = World = cls.Class.extend({
 
     if (!groupId) return;
 
-    _.each(self.groups[groupId].incoming, function(entity) {
+    _.each(this.groups[groupId].incoming, function(entity) {
       if (entity.instance === null) return;
 
-      self.pushToGroup(
+      this.pushToGroup(
         groupId,
         new Messages.Spawn(entity),
         entity.isPlayer() ? entity.instance : null
@@ -345,15 +345,15 @@ module.exports = World = cls.Class.extend({
   loadGroups() {
     var self = this;
 
-    self.map.groups.forEachGroup(function(groupId) {
-      self.groups[groupId] = {
+    this.map.groups.forEachGroup(function(groupId) {
+      this.groups[groupId] = {
         entities: {},
         players: [],
         incoming: []
       };
     });
 
-    self.loadedGroups = true;
+    this.loadedGroups = true;
   },
 
   getEntityByInstance(instance) {
@@ -368,7 +368,7 @@ module.exports = World = cls.Class.extend({
   pushBroadcast(message) {
     var self = this;
 
-    _.each(self.packets, function(packet) {
+    _.each(this.packets, function(packet) {
       packet.push(message.serialize());
     });
   },
@@ -376,7 +376,7 @@ module.exports = World = cls.Class.extend({
   pushSelectively(message, ignores) {
     var self = this;
 
-    _.each(self.packets, function(packet) {
+    _.each(this.packets, function(packet) {
       if (ignores.indexOf(packet.id) < 0) packet.push(message.serialize());
     });
   },
@@ -388,21 +388,21 @@ module.exports = World = cls.Class.extend({
 
   pushToGroup(id, message, ignoreId) {
     var self = this,
-      group = self.groups[id];
+      group = this.groups[id];
 
     if (!group) return;
 
     _.each(group.players, function(playerId) {
       if (playerId !== ignoreId)
-        self.pushToPlayer(self.getEntityByInstance(playerId), message);
+        this.pushToPlayer(this.getEntityByInstance(playerId), message);
     });
   },
 
   pushToAdjacentGroups(groupId, message, ignoreId) {
     var self = this;
 
-    self.map.groups.forEachAdjacentGroup(groupId, function(id) {
-      self.pushToGroup(id, message, ignoreId);
+    this.map.groups.forEachAdjacentGroup(groupId, function(id) {
+      this.pushToGroup(id, message, ignoreId);
     });
   },
 
@@ -410,7 +410,7 @@ module.exports = World = cls.Class.extend({
     var self = this;
 
     _.each(player.recentGroups, function(id) {
-      self.pushToGroup(id, message);
+      this.pushToGroup(id, message);
     });
 
     player.recentGroups = [];
@@ -420,9 +420,9 @@ module.exports = World = cls.Class.extend({
     var self = this,
       newGroups = [];
 
-    if (entity && groupId && groupId in self.groups) {
-      self.map.groups.forEachAdjacentGroup(groupId, function(id) {
-        var group = self.groups[id];
+    if (entity && groupId && groupId in this.groups) {
+      this.map.groups.forEachAdjacentGroup(groupId, function(id) {
+        var group = this.groups[id];
 
         if (group && group.entities) {
           group.entities[entity.instance] = entity;
@@ -433,7 +433,7 @@ module.exports = World = cls.Class.extend({
       entity.group = groupId;
 
       if (entity instanceof Player)
-        self.groups[groupId].players.push(entity.instance);
+        this.groups[groupId].players.push(entity.instance);
     }
 
     return newGroups;
@@ -444,16 +444,16 @@ module.exports = World = cls.Class.extend({
       oldGroups = [];
 
     if (entity && entity.group) {
-      var group = self.groups[entity.group];
+      var group = this.groups[entity.group];
 
       if (entity instanceof Player)
         group.players = _.reject(group.players, function(id) {
           return id === entity.instance;
         });
 
-      self.map.groups.forEachAdjacentGroup(entity.group, function(id) {
-        if (self.groups[id] && entity.instance in self.groups[id].entities) {
-          delete self.groups[id].entities[entity.instance];
+      this.map.groups.forEachAdjacentGroup(entity.group, function(id) {
+        if (this.groups[id] && entity.instance in this.groups[id].entities) {
+          delete this.groups[id].entities[entity.instance];
           oldGroups.push(id);
         }
       });
@@ -469,8 +469,8 @@ module.exports = World = cls.Class.extend({
 
     if (!entity || !groupId) return;
 
-    self.map.groups.forEachAdjacentGroup(groupId, function(id) {
-      var group = self.groups[id];
+    this.map.groups.forEachAdjacentGroup(groupId, function(id) {
+      var group = this.groups[id];
 
       if (group && !_.include(group.entities, entity.instance))
         group.incoming.push(entity);
@@ -483,15 +483,15 @@ module.exports = World = cls.Class.extend({
 
     if (!entity) return groupsChanged;
 
-    var groupId = self.map.groups.groupIdFromPosition(entity.x, entity.y);
+    var groupId = this.map.groups.groupIdFromPosition(entity.x, entity.y);
 
     if (!entity.group || (entity.group && entity.group !== groupId)) {
       groupsChanged = true;
 
-      self.incomingToGroup(entity, groupId);
+      this.incomingToGroup(entity, groupId);
 
-      var oldGroups = self.removeFromGroups(entity),
-        newGroups = self.addToGroup(entity, groupId);
+      var oldGroups = this.removeFromGroups(entity),
+        newGroups = this.addToGroup(entity, groupId);
 
       if (_.size(oldGroups) > 0)
         entity.recentGroups = _.difference(oldGroups, newGroups);
@@ -504,7 +504,7 @@ module.exports = World = cls.Class.extend({
     var self = this,
       entities = 0;
 
-    _.each(self.map.staticEntities, function(key, tileIndex) {
+    _.each(this.map.staticEntities, function(key, tileIndex) {
       var isMob = !!Mobs.Properties[key],
         isNpc = !!NPCs.Properties[key],
         isItem = !!Items.Data[key],
@@ -515,12 +515,12 @@ module.exports = World = cls.Class.extend({
           : isItem
           ? Items.getData(key)
           : null,
-        position = self.map.indexToGridPosition(tileIndex);
+        position = this.map.indexToGridPosition(tileIndex);
 
       position.x++;
 
       if (!info || info === "null") {
-        if (self.debug)
+        if (this.debug)
           log.info(
             "Unknown object spawned at: " + position.x + " " + position.y
           );
@@ -545,38 +545,38 @@ module.exports = World = cls.Class.extend({
 
           mob.refresh();
 
-          self.addMob(mob);
+          this.addMob(mob);
         });
 
-        self.addMob(mob);
+        this.addMob(mob);
       }
 
       if (isNpc)
-        self.addNPC(new NPC(info.id, instance, position.x, position.y));
+        this.addNPC(new NPC(info.id, instance, position.x, position.y));
 
       if (isItem) {
-        var item = self.createItem(info.id, instance, position.x, position.y);
+        var item = this.createItem(info.id, instance, position.x, position.y);
         item.static = true;
-        self.addItem(item);
+        this.addItem(item);
       }
 
       entities++;
     });
 
-    log.info("Spawned " + Object.keys(self.entities).length + " entities!");
+    log.info("Spawned " + Object.keys(this.entities).length + " entities!");
   },
 
   spawnChests() {
     var self = this,
       chests = 0;
 
-    _.each(self.map.chests, function(info) {
-      self.spawnChest(info.i, info.x, info.y, true);
+    _.each(this.map.chests, function(info) {
+      this.spawnChest(info.i, info.x, info.y, true);
 
       chests++;
     });
 
-    log.info("Spawned " + Object.keys(self.chests).length + " static chests");
+    log.info("Spawned " + Object.keys(this.chests).length + " static chests");
   },
 
   spawnMob(id, x, y) {
@@ -586,14 +586,14 @@ module.exports = World = cls.Class.extend({
 
     if (!Mobs.exists(id)) return;
 
-    self.addMob(mob);
+    this.addMob(mob);
 
     return mob;
   },
 
   spawnChest(items, x, y, staticChest) {
     var self = this,
-      chestCount = Object.keys(self.chests).length,
+      chestCount = Object.keys(this.chests).length,
       instance = Utils.generateInstance(5, 194, chestCount, x, y),
       chest = new Chest(194, instance, x, y);
 
@@ -602,7 +602,7 @@ module.exports = World = cls.Class.extend({
     if (staticChest) {
       chest.static = staticChest;
 
-      chest.onRespawn(self.addChest.bind(self, chest));
+      chest.onRespawn(this.addChest.bind(self, chest));
     }
 
     chest.onOpen(function() {
@@ -612,12 +612,12 @@ module.exports = World = cls.Class.extend({
        * cooldown prior to respawning and voila.
        */
 
-      self.removeChest(chest);
+      this.removeChest(chest);
 
-      self.dropItem(Items.stringToId(chest.getItem()), 1, chest.x, chest.y);
+      this.dropItem(Items.stringToId(chest.getItem()), 1, chest.x, chest.y);
     });
 
-    self.addChest(chest);
+    this.addChest(chest);
 
     return chest;
   },
@@ -638,25 +638,25 @@ module.exports = World = cls.Class.extend({
     var self = this,
       instance = Utils.generateInstance(
         4,
-        id + Object.keys(self.entities).length,
+        id + Object.keys(this.entities).length,
         x,
         y
       );
 
-    var item = self.createItem(id, instance, x, y);
+    var item = this.createItem(id, instance, x, y);
 
     item.count = count;
     item.dropped = true;
 
-    self.addItem(item);
+    this.addItem(item);
     item.despawn();
 
     item.onBlink(function() {
-      self.pushBroadcast(new Messages.Blink(item.instance));
+      this.pushBroadcast(new Messages.Blink(item.instance));
     });
 
     item.onDespawn(function() {
-      self.removeItem(item);
+      this.removeItem(item);
     });
   },
 
@@ -664,9 +664,9 @@ module.exports = World = cls.Class.extend({
     var self = this,
       entities;
 
-    if (!player || !(player.group in self.groups)) return;
+    if (!player || !(player.group in this.groups)) return;
 
-    entities = _.keys(self.groups[player.group].entities);
+    entities = _.keys(this.groups[player.group].entities);
 
     entities = _.reject(entities, function(instance) {
       return instance === player.instance;
@@ -682,18 +682,18 @@ module.exports = World = cls.Class.extend({
   addEntity(entity) {
     var self = this;
 
-    if (entity.instance in self.entities)
+    if (entity.instance in this.entities)
       log.info("Entity " + entity.instance + " already exists.");
 
-    self.entities[entity.instance] = entity;
+    this.entities[entity.instance] = entity;
 
-    if (entity.type !== "projectile") self.handleEntityGroup(entity);
+    if (entity.type !== "projectile") this.handleEntityGroup(entity);
 
     if (entity.x > 0 && entity.y > 0)
-      self.getGrids().addToEntityGrid(entity, entity.x, entity.y);
+      this.getGrids().addToEntityGrid(entity, entity.x, entity.y);
 
     entity.onSetPosition(function() {
-      self.getGrids().updateEntityPosition(entity);
+      this.getGrids().updateEntityPosition(entity);
 
       if (entity.isMob() && entity.isOutsideSpawn()) {
         entity.removeTarget();
@@ -702,14 +702,14 @@ module.exports = World = cls.Class.extend({
 
         entity.return();
 
-        self.pushBroadcast(
+        this.pushBroadcast(
           new Messages.Combat(
             Packets.CombatOpcode.Finish,
             null,
             entity.instance
           )
         );
-        self.pushBroadcast(
+        this.pushBroadcast(
           new Messages.Movement(Packets.MovementOpcode.Move, [
             entity.instance,
             entity.x,
@@ -725,7 +725,7 @@ module.exports = World = cls.Class.extend({
       entity.getCombat().setWorld(self);
 
       entity.onStunned(function(stun) {
-        self.pushToAdjacentGroups(
+        this.pushToAdjacentGroups(
           entity.group,
           new Messages.Movement(Packets.MovementOpcode.Stunned, [
             entity.instance,
@@ -739,23 +739,23 @@ module.exports = World = cls.Class.extend({
   addPlayer(player) {
     var self = this;
 
-    self.addEntity(player);
-    self.players[player.instance] = player;
+    this.addEntity(player);
+    this.players[player.instance] = player;
 
-    if (self.populationCallback) self.populationCallback();
+    if (this.populationCallback) this.populationCallback();
   },
 
   addToPackets(player) {
     var self = this;
 
-    self.packets[player.instance] = [];
+    this.packets[player.instance] = [];
   },
 
   addNPC(npc) {
     var self = this;
 
-    self.addEntity(npc);
-    self.npcs[npc.instance] = npc;
+    this.addEntity(npc);
+    this.npcs[npc.instance] = npc;
   },
 
   addMob(mob) {
@@ -766,10 +766,10 @@ module.exports = World = cls.Class.extend({
       return;
     }
 
-    self.addEntity(mob);
-    self.mobs[mob.instance] = mob;
+    this.addEntity(mob);
+    this.mobs[mob.instance] = mob;
 
-    mob.addToChestArea(self.getChestAreas());
+    mob.addToChestArea(this.getChestAreas());
 
     mob.onHit(function(attacker) {
       if (mob.isDead() || mob.combat.started) return;
@@ -781,38 +781,38 @@ module.exports = World = cls.Class.extend({
   addItem(item) {
     var self = this;
 
-    if (item.static) item.onRespawn(self.addItem.bind(self, item));
+    if (item.static) item.onRespawn(this.addItem.bind(self, item));
 
-    self.addEntity(item);
-    self.items[item.instance] = item;
+    this.addEntity(item);
+    this.items[item.instance] = item;
   },
 
   addProjectile(projectile) {
     var self = this;
 
-    self.addEntity(projectile);
-    self.projectiles[projectile.instance] = projectile;
+    this.addEntity(projectile);
+    this.projectiles[projectile.instance] = projectile;
   },
 
   addChest(chest) {
     var self = this;
 
-    self.addEntity(chest);
-    self.chests[chest.instance] = chest;
+    this.addEntity(chest);
+    this.chests[chest.instance] = chest;
   },
 
   removeEntity(entity) {
     var self = this;
 
-    if (entity.instance in self.entities) delete self.entities[entity.instance];
+    if (entity.instance in this.entities) delete this.entities[entity.instance];
 
-    if (entity.instance in self.mobs) delete self.mobs[entity.instance];
+    if (entity.instance in this.mobs) delete this.mobs[entity.instance];
 
-    if (entity.instance in self.items) delete self.items[entity.instance];
+    if (entity.instance in this.items) delete this.items[entity.instance];
 
-    self.getGrids().removeFromEntityGrid(entity, entity.x, entity.y);
+    this.getGrids().removeFromEntityGrid(entity, entity.x, entity.y);
 
-    self.removeFromGroups(entity);
+    this.removeFromGroups(entity);
   },
 
   cleanCombat(entity) {
@@ -827,8 +827,8 @@ module.exports = World = cls.Class.extend({
   removeItem(item) {
     var self = this;
 
-    self.removeEntity(item);
-    self.pushBroadcast(new Messages.Despawn(item.instance));
+    this.removeEntity(item);
+    this.pushBroadcast(new Messages.Despawn(item.instance));
 
     if (item.static) item.respawn();
   },
@@ -836,49 +836,49 @@ module.exports = World = cls.Class.extend({
   removePlayer(player) {
     var self = this;
 
-    self.pushToAdjacentGroups(
+    this.pushToAdjacentGroups(
       player.group,
       new Messages.Despawn(player.instance)
     );
 
     if (player.ready) player.save();
 
-    if (self.populationCallback) self.populationCallback();
+    if (this.populationCallback) this.populationCallback();
 
-    self.removeEntity(player);
+    this.removeEntity(player);
 
-    self.cleanCombat(player);
+    this.cleanCombat(player);
 
-    if (player.isGuest) self.database.delete(player);
+    if (player.isGuest) this.database.delete(player);
 
-    delete self.players[player.instance];
-    delete self.packets[player.instance];
+    delete this.players[player.instance];
+    delete this.packets[player.instance];
   },
 
   removeProjectile(projectile) {
     var self = this;
 
-    self.removeEntity(projectile);
+    this.removeEntity(projectile);
 
-    delete self.projectiles[projectile.instance];
+    delete this.projectiles[projectile.instance];
   },
 
   removeChest(chest) {
     var self = this;
 
-    self.removeEntity(chest);
-    self.pushBroadcast(new Messages.Despawn(chest.instance));
+    this.removeEntity(chest);
+    this.pushBroadcast(new Messages.Despawn(chest.instance));
 
     if (chest.static) chest.respawn();
-    else delete self.chests[chest.instance];
+    else delete this.chests[chest.instance];
   },
 
   playerInWorld(username) {
     var self = this;
 
-    for (var id in self.players)
-      if (self.players.hasOwnProperty(id))
-        if (self.players[id].username === username) return true;
+    for (var id in this.players)
+      if (this.players.hasOwnProperty(id))
+        if (this.players[id].username === username) return true;
 
     return false;
   },
@@ -886,10 +886,10 @@ module.exports = World = cls.Class.extend({
   getPlayerByName(username) {
     var self = this;
 
-    for (var id in self.players)
-      if (self.players.hasOwnProperty(id))
-        if (self.players[id].username.toLowerCase() === username.toLowerCase())
-          return self.players[id];
+    for (var id in this.players)
+      if (this.players.hasOwnProperty(id))
+        if (this.players[id].username.toLowerCase() === username.toLowerCase())
+          return this.players[id];
 
     return null;
   },
@@ -897,7 +897,7 @@ module.exports = World = cls.Class.extend({
   saveAll() {
     var self = this;
 
-    _.each(self.players, function(player) {
+    _.each(this.players, function(player) {
       player.save();
     });
   },

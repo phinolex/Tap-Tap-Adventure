@@ -3,11 +3,11 @@ define(["./slot"], function(Slot) {
     init(size) {
       var self = this;
 
-      self.size = size;
+      this.size = size;
 
-      self.slots = [];
+      this.slots = [];
 
-      for (var i = 0; i < self.size; i++) self.slots.push(new Slot(i));
+      for (var i = 0; i < this.size; i++) this.slots.push(new Slot(i));
     },
 
     setSlot(index, info) {
@@ -19,7 +19,7 @@ define(["./slot"], function(Slot) {
        * we just modify the container directly.
        */
 
-      self.slots[index].load(
+      this.slots[index].load(
         info.string,
         info.count,
         info.ability,
@@ -32,7 +32,7 @@ define(["./slot"], function(Slot) {
     getEmptySlot() {
       var self = this;
 
-      for (var i = 0; i < self.slots; i++) if (!self.slots[i].string) return i;
+      for (var i = 0; i < this.slots; i++) if (!this.slots[i].string) return i;
 
       return -1;
     },

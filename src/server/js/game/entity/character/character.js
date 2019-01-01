@@ -10,72 +10,72 @@ module.exports = Character = Entity.extend({
   init(id, type, instance, x, y) {
     var self = this;
 
-    self._super(id, type, instance, x, y);
+    this._super(id, type, instance, x, y);
 
-    self.level = -1;
-    self.loaded = false;
+    this.level = -1;
+    this.loaded = false;
 
-    self.movementSpeed = 150;
-    self.attackRange = 1;
-    self.attackRate = 1000;
-    self.healingRate = 7000;
+    this.movementSpeed = 150;
+    this.attackRange = 1;
+    this.attackRate = 1000;
+    this.healingRate = 7000;
 
-    self.spawnDistance = 7;
+    this.spawnDistance = 7;
 
-    self.previousX = -1;
-    self.previousY = -1;
+    this.previousX = -1;
+    this.previousY = -1;
 
-    self.hitPoints = -1;
-    self.maxHitPoints = -1;
+    this.hitPoints = -1;
+    this.maxHitPoints = -1;
 
-    self.dead = false;
-    self.aggressive = false;
-    self.aggroRange = 2;
+    this.dead = false;
+    this.aggressive = false;
+    this.aggroRange = 2;
 
-    self.frozen = false;
-    self.stunned = false;
+    this.frozen = false;
+    this.stunned = false;
 
-    self.target = null;
-    self.potentialTarget = null;
+    this.target = null;
+    this.potentialTarget = null;
 
-    self.stunTimeout = null;
+    this.stunTimeout = null;
 
-    self.projectile = Modules.Projectiles.Arrow;
-    self.projectileName = "projectile-pinearrow";
+    this.projectile = Modules.Projectiles.Arrow;
+    this.projectileName = "projectile-pinearrow";
 
-    self.healingInterval = null;
+    this.healingInterval = null;
 
-    self.loadCombat();
-    self.startHealing();
+    this.loadCombat();
+    this.startHealing();
   },
 
   loadCombat() {
     var self = this;
 
-    if (Mobs.hasCombatPlugin(self.id))
-      self.combat = new (Mobs.isNewCombatPlugin(self.id))(self);
-    else self.combat = new Combat(self);
+    if (Mobs.hasCombatPlugin(this.id))
+      this.combat = new (Mobs.isNewCombatPlugin(this.id))(self);
+    else this.combat = new Combat(self);
   },
 
   setStun(stun) {
     var self = this;
 
-    self.stunned = stun;
+    this.stunned = stun;
 
-    if (self.stunCallback) self.stunCallback(stun);
+    if (this.stunCallback) this.stunCallback(stun);
   },
 
   startHealing() {
     var self = this;
 
-    self.healingInterval = setInterval(function() {
+    this.healingInterval = setInterval(function() {
       if (
-        !self.hasTarget() &&
-        !self.combat.isAttacked() &&
-        !self.dead &&
-        self.loaded
+        !this.hasTarget() &&
+        !this.combat.isAttacked() &&
+        !this.dead &&
+        this.loaded
       ) {
-        self.heal(1);
+        this.heal(1);
       }
     }, 5000);
   },
@@ -83,22 +83,22 @@ module.exports = Character = Entity.extend({
   stopHealing() {
     var self = this;
 
-    clearInterval(self.healingInterval);
-    self.healingInterval = null;
+    clearInterval(this.healingInterval);
+    this.healingInterval = null;
   },
 
   hit(attacker) {
     var self = this;
 
-    if (self.hitCallback) self.hitCallback(attacker);
+    if (this.hitCallback) this.hitCallback(attacker);
   },
 
   heal(amount) {
     var self = this;
 
-    self.setHitPoints(self.hitPoints + amount);
+    this.setHitPoints(this.hitPoints + amount);
 
-    if (self.hitPoints > self.maxHitPoints) self.hitPoints = self.maxHitPoints;
+    if (this.hitPoints > this.maxHitPoints) this.hitPoints = this.maxHitPoints;
   },
 
   isRanged() {
@@ -128,17 +128,17 @@ module.exports = Character = Entity.extend({
   setPosition(x, y) {
     var self = this;
 
-    self._super(x, y);
+    this._super(x, y);
 
-    if (self.movementCallback) self.movementCallback(x, y);
+    if (this.movementCallback) this.movementCallback(x, y);
   },
 
   setTarget(target) {
     var self = this;
 
-    self.target = target;
+    this.target = target;
 
-    if (self.targetCallback) self.targetCallback(target);
+    if (this.targetCallback) this.targetCallback(target);
   },
 
   setPotentialTarget(potentialTarget) {
@@ -148,9 +148,9 @@ module.exports = Character = Entity.extend({
   setHitPoints(hitPoints) {
     var self = this;
 
-    self.hitPoints = hitPoints;
+    this.hitPoints = hitPoints;
 
-    if (self.hitPointsCallback) self.hitPointsCallback();
+    if (this.hitPointsCallback) this.hitPointsCallback();
   },
 
   getProjectile() {
@@ -172,9 +172,9 @@ module.exports = Character = Entity.extend({
   removeTarget() {
     var self = this;
 
-    if (self.removeTargetCallback) self.removeTargetCallback();
+    if (this.removeTargetCallback) this.removeTargetCallback();
 
-    self.target = null;
+    this.target = null;
   },
 
   hasTarget() {

@@ -7,92 +7,92 @@ module.exports = Introduction = Quest.extend({
   init(player, data) {
     var self = this;
 
-    self.player = player;
-    self.data = data;
+    this.player = player;
+    this.data = data;
 
-    self.lastNPC = null;
+    this.lastNPC = null;
 
-    self._super(player, data);
+    this._super(player, data);
   },
 
   load(stage) {
     var self = this;
 
-    if (!self.player.inTutorial()) {
-      self.setStage(9999);
-      self.update();
+    if (!this.player.inTutorial()) {
+      this.setStage(9999);
+      this.update();
       return;
     }
 
-    if (!stage) self.update();
-    else self.stage = stage;
+    if (!stage) this.update();
+    else this.stage = stage;
 
-    self.loadCallbacks();
+    this.loadCallbacks();
   },
 
   loadCallbacks() {
     var self = this;
 
-    if (self.stage >= 9999) return;
+    if (this.stage >= 9999) return;
 
-    self.updatePointers();
-    self.toggleChat();
+    this.updatePointers();
+    this.toggleChat();
 
-    self.onNPCTalk(function(npc) {
-      var conversation = self.getConversation(npc.id);
+    this.onNPCTalk(function(npc) {
+      var conversation = this.getConversation(npc.id);
 
-      self.lastNPC = npc;
+      this.lastNPC = npc;
 
       npc.talk(conversation);
 
-      self.player.send(
+      this.player.send(
         new Messages.NPC(Packets.NPCOpcode.Talk, {
           id: npc.instance,
           text: conversation
         })
       );
 
-      if (npc.talkIndex > conversation.length) self.progress("talk");
+      if (npc.talkIndex > conversation.length) this.progress("talk");
     });
 
-    self.player.onReady(function() {
-      self.updatePointers();
+    this.player.onReady(function() {
+      this.updatePointers();
     });
 
-    self.player.onDoor(function(destX, destY) {
-      if (self.getTask() !== "door") {
-        self.player.notify("You cannot go through this door yet.");
+    this.player.onDoor(function(destX, destY) {
+      if (this.getTask() !== "door") {
+        this.player.notify("You cannot go through this door yet.");
         return;
       }
 
-      if (!self.verifyDoor(self.player.x, self.player.y))
-        self.player.notify("You are not supposed to go through here.");
+      if (!this.verifyDoor(this.player.x, this.player.y))
+        this.player.notify("You are not supposed to go through here.");
       else {
-        self.progress("door");
-        self.player.teleport(destX, destY, false);
+        this.progress("door");
+        this.player.teleport(destX, destY, false);
       }
     });
 
-    self.player.onProfile(function(isOpen) {
-      if (isOpen) self.progress("click");
+    this.player.onProfile(function(isOpen) {
+      if (isOpen) this.progress("click");
     });
   },
 
   progress(type) {
     var self = this,
-      task = self.data.task[self.stage];
+      task = this.data.task[this.stage];
 
     if (!task || task !== type) return;
 
-    if (self.stage === self.data.stages) {
-      self.finish();
+    if (this.stage === this.data.stages) {
+      this.finish();
       return;
     }
 
     switch (type) {
       case "talk":
-        if (self.stage === 4)
-          self.player.inventory.add({
+        if (this.stage === 4)
+          this.player.inventory.add({
             id: 248,
             count: 1,
             ability: -1,
@@ -102,17 +102,17 @@ module.exports = Introduction = Quest.extend({
         break;
     }
 
-    self.stage++;
-    self.clearPointers();
-    self.resetTalkIndex(self.lastNPC);
+    this.stage++;
+    this.clearPointers();
+    this.resetTalkIndex(this.lastNPC);
 
-    self.update();
-    self.updatePointers();
+    this.update();
+    this.updatePointers();
 
-    self.player.send(
+    this.player.send(
       new Messages.Quest(Packets.QuestOpcode.Progress, {
-        id: self.id,
-        stage: self.stage,
+        id: this.id,
+        stage: this.stage,
         isQuest: true
       })
     );
@@ -129,21 +129,21 @@ module.exports = Introduction = Quest.extend({
   setStage(stage) {
     var self = this;
 
-    self._super(stage);
+    this._super(stage);
 
-    self.clearPointers();
+    this.clearPointers();
   },
 
   finish() {
     var self = this;
 
-    self.toggleChat();
-    self._super();
+    this.toggleChat();
+    this._super();
   },
 
   verifyDoor(destX, destY) {
     var self = this,
-      doorData = self.data.doors[self.stage];
+      doorData = this.data.doors[this.stage];
 
     if (!doorData) return;
 

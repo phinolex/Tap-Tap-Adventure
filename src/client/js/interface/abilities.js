@@ -3,9 +3,9 @@ define(["jquery"], function($) {
     init(game) {
       var self = this;
 
-      self.game = game;
+      this.game = game;
 
-      self.shortcuts = $("#abilityShortcut");
+      this.shortcuts = $("#abilityShortcut");
     },
 
     getList() {

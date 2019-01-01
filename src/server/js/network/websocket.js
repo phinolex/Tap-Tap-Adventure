@@ -18,44 +18,44 @@ WebSocket.Server = Socket.extend({
   init(host, port, version) {
     var self = this;
 
-    self._super(port);
+    this._super(port);
 
-    self.host = host;
-    self.version = version;
+    this.host = host;
+    this.version = version;
 
-    self.ips = {};
+    this.ips = {};
 
     //Serve statically for faster development
 
     var app = connect();
     app.use(serve("client", {index: ["index.html"]}), null);
 
-    self.httpServer = http
+    this.httpServer = http
       .createServer(app)
       .listen(port, host, function serverEverythingListening() {
         log.notice("Server is now listening on: " + port);
       });
 
-    self.io = new SocketIO(self.httpServer);
-    self.io.on("connection", function webSocketListener(socket) {
+    this.io = new SocketIO(this.httpServer);
+    this.io.on("connection", function webSocketListener(socket) {
       log.notice("Received connection from: " + socket.conn.remoteAddress);
 
-      var client = new WebSocket.Connection(self.createId(), socket, self);
+      var client = new WebSocket.Connection(this.createId(), socket, self);
 
       socket.on("client", function(data) {
         // check the client version of socket.io matches the server version
-        if (data.gVer !== self.version) {
+        if (data.gVer !== this.version) {
           client.sendUTF8("updated");
           log.notice(data.gVer);
-          log.notice(self.version);
+          log.notice(this.version);
           client.close("Client version is out of sync with the server.");
         }
 
-        if (self.connectionCallback) {
-          self.connectionCallback(client);
+        if (this.connectionCallback) {
+          this.connectionCallback(client);
         }
 
-        self.addConnection(client);
+        this.addConnection(client);
       });
 
       socket.on("u_message", function(message) {
@@ -89,18 +89,18 @@ WebSocket.Connection = Connection.extend({
   init(id, socket, server) {
     var self = this;
 
-    self._super(id, socket, server);
+    this._super(id, socket, server);
 
-    self.socket.on("message", function(message) {
-      if (self.listenCallback) self.listenCallback(JSON.parse(message));
+    this.socket.on("message", function(message) {
+      if (this.listenCallback) this.listenCallback(JSON.parse(message));
     });
 
-    self.socket.on("disconnect", function() {
-      log.notice("Closed socket: " + self.socket.conn.remoteAddress);
+    this.socket.on("disconnect", function() {
+      log.notice("Closed socket: " + this.socket.conn.remoteAddress);
 
-      if (self.closeCallback) self.closeCallback();
+      if (this.closeCallback) this.closeCallback();
 
-      delete self._server.removeConnection(self.id);
+      delete this._server.removeConnection(this.id);
     });
   },
 

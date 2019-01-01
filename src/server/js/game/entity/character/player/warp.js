@@ -6,18 +6,18 @@ module.exports = Warp = cls.Class.extend({
   init(player) {
     var self = this;
 
-    self.player = player;
+    this.player = player;
 
-    self.lastWarp = 0;
-    self.warpTimeout = 300000;
+    this.lastWarp = 0;
+    this.warpTimeout = 300000;
   },
 
   warp(id) {
     var self = this;
 
-    if (!self.canWarp()) {
-      self.player.notify(
-        "You must wait another " + self.getDuration() + " to warp."
+    if (!this.canWarp()) {
+      this.player.notify(
+        "You must wait another " + this.getDuration() + " to warp."
       );
       return;
     }
@@ -31,27 +31,27 @@ module.exports = Warp = cls.Class.extend({
       y = data[3] ? data[2] + Utils.randomInt(0, 1) : data[2],
       levelRequirement = data[4];
 
-    if (self.player.level < levelRequirement) {
-      self.player.notify(
+    if (this.player.level < levelRequirement) {
+      this.player.notify(
         "You must be at least level " + levelRequirement + " to warp here!"
       );
       return;
     }
 
-    self.player.teleport(x, y, false, true);
+    this.player.teleport(x, y, false, true);
 
-    self.player.notify("You have been warped to " + name);
+    this.player.notify("You have been warped to " + name);
 
-    self.lastWarp = new Date().getTime();
+    this.lastWarp = new Date().getTime();
   },
 
   setLastWarp(lastWarp) {
     var self = this;
 
     if (isNaN(lastWarp)) {
-      self.lastWarp = 0;
-      self.player.save();
-    } else self.lastWarp = lastWarp;
+      this.lastWarp = 0;
+      this.player.save();
+    } else this.lastWarp = lastWarp;
   },
 
   canWarp() {
@@ -60,7 +60,7 @@ module.exports = Warp = cls.Class.extend({
 
   getDuration() {
     var self = this,
-      difference = this.warpTimeout - self.getDifference();
+      difference = this.warpTimeout - this.getDifference();
 
     if (!difference) return "5 minutes";
 

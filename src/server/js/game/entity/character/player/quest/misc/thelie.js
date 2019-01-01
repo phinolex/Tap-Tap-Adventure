@@ -7,17 +7,17 @@ module.exports = TheLie = Quest.extend({
   init(player, data) {
     var self = this;
 
-    self.player = player;
-    self.data = data;
+    this.player = player;
+    this.data = data;
 
-    self._super(data.id, data.name, data.description);
+    this._super(data.id, data.name, data.description);
   },
 
   load(stage) {
     var self = this;
 
-    if (stage) self.update();
-    else self.stage = stage;
+    if (stage) this.update();
+    else this.stage = stage;
   },
 
   update() {

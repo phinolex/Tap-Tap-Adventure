@@ -6,16 +6,16 @@ module.exports = Creator = cls.Class.extend({
   init(mysql) {
     var self = this;
 
-    self.mysql = mysql;
+    this.mysql = mysql;
   },
 
   tableNotExists(tableName, ifNotExists) {
     var self = this,
       exists = 0;
 
-    self.mysql.connection.query(
+    this.mysql.connection.query(
       "SELECT count(*) as count FROM information_schema.TABLES WHERE (TABLE_SCHEMA = ?) AND (TABLE_NAME = ?)",
-      [self.mysql.database, tableName],
+      [this.mysql.database, tableName],
       function(err, rows) {
         if (err) {
           log.error(err);
@@ -43,8 +43,8 @@ module.exports = Creator = cls.Class.extend({
       };
     }
 
-    self.tableNotExists("player_data", function() {
-      self.mysql.connection.query(
+    this.tableNotExists("player_data", function() {
+      this.mysql.connection.query(
         "CREATE TABLE player_data (" +
           "username varchar(64)," +
           "password varchar(64)," +
@@ -71,8 +71,8 @@ module.exports = Creator = cls.Class.extend({
       );
     });
 
-    self.tableNotExists("player_equipment", function() {
-      self.mysql.connection.query(
+    this.tableNotExists("player_equipment", function() {
+      this.mysql.connection.query(
         "CREATE TABLE player_equipment (" +
           "username varchar(64)," +
           "armour varchar(64)," +
@@ -85,8 +85,8 @@ module.exports = Creator = cls.Class.extend({
       );
     });
 
-    self.tableNotExists("player_quests", function() {
-      self.mysql.connection.query(
+    this.tableNotExists("player_quests", function() {
+      this.mysql.connection.query(
         "CREATE TABLE player_quests (" +
           "username varchar(64)," +
           "ids text COLLATE utf8_unicode_ci NOT NULL," +
@@ -96,8 +96,8 @@ module.exports = Creator = cls.Class.extend({
       );
     });
 
-    self.tableNotExists("player_achievements", function() {
-      self.mysql.connection.query(
+    this.tableNotExists("player_achievements", function() {
+      this.mysql.connection.query(
         "CREATE TABLE player_achievements (" +
           "username varchar(64)," +
           "ids text COLLATE utf8_unicode_ci NOT NULL," +
@@ -107,8 +107,8 @@ module.exports = Creator = cls.Class.extend({
       );
     });
 
-    self.tableNotExists("player_bank", function() {
-      self.mysql.connection.query(
+    this.tableNotExists("player_bank", function() {
+      this.mysql.connection.query(
         "CREATE TABLE player_bank (" +
           "username varchar(64)," +
           "ids text COLLATE utf8_unicode_ci NOT NULL," +
@@ -120,8 +120,8 @@ module.exports = Creator = cls.Class.extend({
       );
     });
 
-    self.tableNotExists("player_abilities", function() {
-      self.mysql.connection.query(
+    this.tableNotExists("player_abilities", function() {
+      this.mysql.connection.query(
         "CREATE TABLE player_abilities (" +
           "username varchar(64)," +
           "abilities text COLLATE utf8_unicode_ci NOT NULL," +
@@ -132,8 +132,8 @@ module.exports = Creator = cls.Class.extend({
       );
     });
 
-    self.tableNotExists("player_inventory", function() {
-      self.mysql.connection.query(
+    this.tableNotExists("player_inventory", function() {
+      this.mysql.connection.query(
         "CREATE TABLE player_inventory (" +
           "username varchar(64)," +
           "ids text COLLATE utf8_unicode_ci NOT NULL," +
@@ -145,8 +145,8 @@ module.exports = Creator = cls.Class.extend({
       );
     });
 
-    self.tableNotExists("ipbans", function() {
-      self.mysql.connection.query(
+    this.tableNotExists("ipbans", function() {
+      this.mysql.connection.query(
         "CREATE TABLE IF NOT EXISTS ipbans (" +
           "ip varchar(64)," +
           "ipban int(64)," +
@@ -159,44 +159,44 @@ module.exports = Creator = cls.Class.extend({
   save(player) {
     var self = this,
       queryKey = player.isNew ? "INSERT INTO" : "UPDATE IGNORE",
-      playerData = self.formatData(self.getPlayerData(player), "data"),
-      equipmentData = self.formatData(self.getPlayerData(player), "equipment");
+      playerData = this.formatData(this.getPlayerData(player), "data"),
+      equipmentData = this.formatData(this.getPlayerData(player), "equipment");
 
     var handleError = function(error) {
       if (error) log.error(error);
     };
 
-    self.mysql.connection.query(
+    this.mysql.connection.query(
       queryKey + " `player_data` SET ?",
       playerData,
       handleError
     );
-    self.mysql.connection.query(
+    this.mysql.connection.query(
       queryKey + " `player_equipment` SET ?",
       equipmentData,
       handleError
     );
-    self.mysql.connection.query(
+    this.mysql.connection.query(
       queryKey + " `player_inventory` SET ?",
       player.inventory.getArray(),
       handleError
     );
-    self.mysql.connection.query(
+    this.mysql.connection.query(
       queryKey + " `player_abilities` SET ?",
       player.abilities.getArray(),
       handleError
     );
-    self.mysql.connection.query(
+    this.mysql.connection.query(
       queryKey + " `player_bank` SET ?",
       player.bank.getArray(),
       handleError
     );
-    self.mysql.connection.query(
+    this.mysql.connection.query(
       queryKey + " `player_quests` SET ?",
       player.quests.getQuests(),
       handleError
     );
-    self.mysql.connection.query(
+    this.mysql.connection.query(
       queryKey + " `player_achievements` SET ?",
       player.quests.getAchievements(),
       handleError

@@ -3,11 +3,11 @@ define(["./equipment"], function(Equipment) {
     init(name, string, count, ability, abilityLevel) {
       var self = this;
 
-      self._super(name, string, count, ability, abilityLevel);
+      this._super(name, string, count, ability, abilityLevel);
 
-      self.level = -1;
-      self.damage = -1;
-      self.ranged = false;
+      this.level = -1;
+      this.damage = -1;
+      this.ranged = false;
     },
 
     exists() {

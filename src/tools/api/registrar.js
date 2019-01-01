@@ -12,11 +12,11 @@ module.exports = Registrar = cls.Class.extend({
   constructor() {
     var self = this;
 
-    self.client = redis.createClient("127.0.0.1", 6379, {
+    this.client = redis.createClient("127.0.0.1", 6379, {
       socket_nodelay: true
     });
 
-    self.readyCallback();
+    this.readyCallback();
   },
 
   onReady(callback) {

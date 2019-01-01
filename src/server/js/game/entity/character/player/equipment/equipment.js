@@ -10,11 +10,11 @@ module.exports = Equipment = cls.Class.extend({
   init(name, id, count, ability, abilityLevel) {
     var self = this;
 
-    self.name = name;
-    self.id = id;
-    self.count = count ? count : 0;
-    self.ability = ability ? ability : 0;
-    self.abilityLevel = abilityLevel ? abilityLevel : 0;
+    this.name = name;
+    this.id = id;
+    this.count = count ? count : 0;
+    this.ability = ability ? ability : 0;
+    this.abilityLevel = abilityLevel ? abilityLevel : 0;
   },
 
   getName() {

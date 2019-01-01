@@ -12,49 +12,49 @@ define(["../entity/sprite", "../entity/animation"], function(
     init(renderer) {
       var self = this;
 
-      self.renderer = renderer;
+      this.renderer = renderer;
 
-      self.sprites = {};
+      this.sprites = {};
 
-      self.sparksAnimation = null;
+      this.sparksAnimation = null;
 
       $.getJSON("data/sprites.json", function(json) {
-        self.load(json);
+        this.load(json);
       });
 
-      self.loadAnimations();
+      this.loadAnimations();
     },
 
     load(spriteData) {
       var self = this;
 
       _.each(spriteData, function(sprite) {
-        self.sprites[sprite.id] = new Sprite(
+        this.sprites[sprite.id] = new Sprite(
           sprite,
-          self.renderer.drawingScale
+          this.renderer.drawingScale
         );
       });
 
       log.info("Finished loading sprite data...");
 
-      if (self.loadedSpritesCallback) self.loadedSpritesCallback();
+      if (this.loadedSpritesCallback) this.loadedSpritesCallback();
     },
 
     loadAnimations() {
       var self = this;
 
-      self.sparksAnimation = new Animation("idle_down", 6, 0, 16, 16);
-      self.sparksAnimation.setSpeed(120);
+      this.sparksAnimation = new Animation("idle_down", 6, 0, 16, 16);
+      this.sparksAnimation.setSpeed(120);
     },
 
     updateSprites() {
       var self = this;
 
-      _.each(self.sprites, function(sprite) {
-        sprite.update(self.renderer.getDrawingScale());
+      _.each(this.sprites, function(sprite) {
+        sprite.update(this.renderer.getDrawingScale());
       });
 
-      log.info("Updated sprites to: " + self.renderer.getDrawingScale());
+      log.info("Updated sprites to: " + this.renderer.getDrawingScale());
     },
 
     onLoadedSprites(callback) {

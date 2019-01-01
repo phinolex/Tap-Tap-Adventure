@@ -7,11 +7,11 @@ module.exports = ChestAreas = cls.Class.extend({
   init(world) {
     var self = this;
 
-    self.world = world;
+    this.world = world;
 
-    self.chestAreas = [];
+    this.chestAreas = [];
 
-    self.load();
+    this.load();
   },
 
   load() {
@@ -25,24 +25,24 @@ module.exports = ChestAreas = cls.Class.extend({
       chestArea.cX = m.tx;
       chestArea.cY = m.ty;
 
-      self.chestAreas.push(chestArea);
+      this.chestAreas.push(chestArea);
 
       chestArea.onEmpty(function() {
-        self.spawnChest(this);
+        this.spawnChest(this);
       });
 
       chestArea.onSpawn(function() {
-        self.removeChest(this);
+        this.removeChest(this);
       });
     });
 
-    log.info("Loaded " + self.chestAreas.length + " chest areas.");
+    log.info("Loaded " + this.chestAreas.length + " chest areas.");
   },
 
   standardize() {
     var self = this;
 
-    _.each(self.chestAreas, function(chestArea) {
+    _.each(this.chestAreas, function(chestArea) {
       chestArea.setMaxEntities(chestArea.entities.length);
     });
   },
@@ -54,7 +54,7 @@ module.exports = ChestAreas = cls.Class.extend({
      * Works beautifully :)
      */
 
-    chestArea.chest = self.world.spawnChest(
+    chestArea.chest = this.world.spawnChest(
       chestArea.items,
       chestArea.cX,
       chestArea.cY,
@@ -67,7 +67,7 @@ module.exports = ChestAreas = cls.Class.extend({
 
     if (!chestArea.chest) return;
 
-    self.world.removeChest(chestArea.chest);
+    this.world.removeChest(chestArea.chest);
 
     chestArea.chest = null;
   }

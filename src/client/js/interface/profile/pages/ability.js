@@ -3,9 +3,9 @@ define(["jquery", "../page"], function($, Page) {
     init(game) {
       var self = this;
 
-      self._super("#skillPage");
+      this._super("#skillPage");
 
-      self.game = game;
+      this.game = game;
     }
   });
 });

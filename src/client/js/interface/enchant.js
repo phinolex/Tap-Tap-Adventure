@@ -3,39 +3,39 @@ define(["jquery"], function($) {
     init(game, intrface) {
       var self = this;
 
-      self.game = game;
-      self.interface = intrface;
+      this.game = game;
+      this.interface = intrface;
 
-      self.body = $("#enchant");
-      self.container = $("#enchantContainer");
-      self.enchantSlots = $("#enchantInventorySlots");
+      this.body = $("#enchant");
+      this.container = $("#enchantContainer");
+      this.enchantSlots = $("#enchantInventorySlots");
 
-      self.selectedItem = $("#enchantSelectedItem");
-      self.selectedShards = $("#enchantShards");
-      self.confirm = $("#confirmEnchant");
-      self.shardsCount = $("#shardsCount");
+      this.selectedItem = $("#enchantSelectedItem");
+      this.selectedShards = $("#enchantShards");
+      this.confirm = $("#confirmEnchant");
+      this.shardsCount = $("#shardsCount");
 
-      self.confirm.css({
+      this.confirm.css({
         left: "70%",
         top: "80%"
       });
 
       $("#closeEnchant").click(function() {
-        self.hide();
+        this.hide();
       });
 
-      self.confirm.click(function() {
-        self.enchant();
+      this.confirm.click(function() {
+        this.enchant();
       });
     },
 
     add(type, index) {
       var self = this,
-        image = self.getSlot(index).find("#inventoryImage" + index);
+        image = this.getSlot(index).find("#inventoryImage" + index);
 
       switch (type) {
         case "item":
-          self.selectedItem.css(
+          this.selectedItem.css(
             "background-image",
             image.css("background-image")
           );
@@ -43,14 +43,14 @@ define(["jquery"], function($) {
           break;
 
         case "shards":
-          self.selectedShards.css(
+          this.selectedShards.css(
             "background-image",
             image.css("background-image")
           );
 
-          var count = self.getItemSlot(index).count;
+          var count = this.getItemSlot(index).count;
 
-          if (count > 1) self.shardsCount.text(count);
+          if (count > 1) this.shardsCount.text(count);
 
           break;
       }
@@ -65,34 +65,34 @@ define(["jquery"], function($) {
 
     moveBack(type, index) {
       var self = this,
-        image = self.getSlot(index).find("#inventoryImage" + index),
-        itemCount = self.getSlot(index).find("#inventoryItemCount" + index),
-        count = self.getItemSlot(index).count;
+        image = this.getSlot(index).find("#inventoryImage" + index),
+        itemCount = this.getSlot(index).find("#inventoryItemCount" + index),
+        count = this.getItemSlot(index).count;
 
       switch (type) {
         case "item":
           image.css(
             "background-image",
-            self.selectedItem.css("background-image")
+            this.selectedItem.css("background-image")
           );
 
           if (count > 1) itemCount.text(count);
 
-          self.selectedItem.css("background-image", "");
+          this.selectedItem.css("background-image", "");
 
           break;
 
         case "shards":
           image.css(
             "background-image",
-            self.selectedShards.css("background-image")
+            this.selectedShards.css("background-image")
           );
 
           if (count > 1) itemCount.text(count);
 
-          self.selectedShards.css("background-image", "");
+          this.selectedShards.css("background-image", "");
 
-          self.shardsCount.text("");
+          this.shardsCount.text("");
 
           break;
       }
@@ -100,28 +100,28 @@ define(["jquery"], function($) {
 
     load() {
       var self = this,
-        list = self.getSlots(),
-        inventoryList = self.interface.bank.getInventoryList();
+        list = this.getSlots(),
+        inventoryList = this.interface.bank.getInventoryList();
 
       list.empty();
 
-      for (var i = 0; i < self.getInventorySize(); i++) {
+      for (var i = 0; i < this.getInventorySize(); i++) {
         var item = $(inventoryList[i]).clone(),
           slot = item.find("#bankInventorySlot" + i);
 
         slot.click(function(event) {
-          self.select(event);
+          this.select(event);
         });
 
         list.append(item);
       }
 
-      self.selectedItem.click(function() {
-        self.remove("item");
+      this.selectedItem.click(function() {
+        this.remove("item");
       });
 
-      self.selectedShards.click(function() {
-        self.remove("shards");
+      this.selectedShards.click(function() {
+        this.remove("shards");
       });
     },
 
@@ -154,17 +154,17 @@ define(["jquery"], function($) {
     display() {
       var self = this;
 
-      self.body.fadeIn("fast");
-      self.load();
+      this.body.fadeIn("fast");
+      this.load();
     },
 
     hide() {
       var self = this;
 
-      self.selectedItem.css("background-image", "");
-      self.selectedShards.css("background-image", "");
+      this.selectedItem.css("background-image", "");
+      this.selectedShards.css("background-image", "");
 
-      self.body.fadeOut("fast");
+      this.body.fadeOut("fast");
     },
 
     hasImage(image) {

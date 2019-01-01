@@ -3,16 +3,16 @@ define(["jquery", "../page"], function($, Page) {
     constructor() {
       var self = this;
 
-      self._super("#questPage");
+      this._super("#questPage");
 
-      self.achievements = $("#achievementList");
-      self.quests = $("#questList");
+      this.achievements = $("#achievementList");
+      this.quests = $("#questList");
 
-      self.achievementsCount = $("#achievementCount");
-      self.questCount = $("#questCount");
+      this.achievementsCount = $("#achievementCount");
+      this.questCount = $("#questCount");
 
-      self.achievementsList = self.achievements.find("ul");
-      self.questList = self.quests.find("ul");
+      this.achievementsList = this.achievements.find("ul");
+      this.questList = this.quests.find("ul");
     },
 
     load(quests, achievements) {
@@ -21,8 +21,8 @@ define(["jquery", "../page"], function($, Page) {
         finishedQuests = 0;
 
       _.each(achievements, function(achievement) {
-        var item = self.getItem(false, achievement.id),
-          name = self.getName(false, achievement.id);
+        var item = this.getItem(false, achievement.id),
+          name = this.getName(false, achievement.id);
 
         name.text("????????");
 
@@ -53,12 +53,12 @@ define(["jquery", "../page"], function($, Page) {
 
         listItem.append(item);
 
-        self.achievementsList.append(listItem);
+        this.achievementsList.append(listItem);
       });
 
       _.each(quests, function(quest) {
-        var item = self.getItem(true, quest.id),
-          name = self.getName(true, quest.id);
+        var item = this.getItem(true, quest.id),
+          name = this.getName(true, quest.id);
 
         name.text(quest.name);
 
@@ -77,20 +77,20 @@ define(["jquery", "../page"], function($, Page) {
 
         listItem.append(item);
 
-        self.questList.append(listItem);
+        this.questList.append(listItem);
       });
 
-      self.achievementsCount.html(
+      this.achievementsCount.html(
         finishedAchievements + "/" + achievements.length
       );
-      self.questCount.html(finishedQuests + "/" + quests.length);
+      this.questCount.html(finishedQuests + "/" + quests.length);
     },
 
     progress(info) {
       var self = this,
         item = info.isQuest
-          ? self.getQuest(info.id)
-          : self.getAchievement(info.id);
+          ? this.getQuest(info.id)
+          : this.getAchievement(info.id);
 
       if (!item) return;
 
@@ -109,8 +109,8 @@ define(["jquery", "../page"], function($, Page) {
     finish(info) {
       var self = this,
         item = info.isQuest
-          ? self.getQuest(info.id)
-          : self.getAchievement(info.id);
+          ? this.getQuest(info.id)
+          : this.getAchievement(info.id);
 
       if (!item) return;
 

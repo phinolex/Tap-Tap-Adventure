@@ -3,7 +3,7 @@ define(["./equipment"], function(Equipment) {
     init(name, string, count, ability, abilityLevel) {
       var self = this;
 
-      self._super(name, string, count, ability, abilityLevel);
+      this._super(name, string, count, ability, abilityLevel);
     },
 
     update(name, string, count, ability, abilityLevel) {

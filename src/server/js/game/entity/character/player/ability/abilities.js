@@ -6,12 +6,12 @@ module.exports = Abilities = cls.Class.extend({
   init(player) {
     var self = this;
 
-    self.player = player;
+    this.player = player;
 
-    self.abilities = {};
-    self.shortcuts = [];
+    this.abilities = {};
+    this.shortcuts = [];
 
-    self.shortcutSize = 5;
+    this.shortcutSize = 5;
   },
 
   addAbility(ability) {
@@ -21,18 +21,18 @@ module.exports = Abilities = cls.Class.extend({
   addShortcut(ability) {
     var self = this;
 
-    if (self.shortcutSize >= 5) return;
+    if (this.shortcutSize >= 5) return;
 
-    self.shortcuts.push(ability.name);
+    this.shortcuts.push(ability.name);
   },
 
   removeAbility(ability) {
     var self = this;
 
-    if (self.isShortcut(ability))
-      self.removeShortcut(self.shortcuts.indexOf(ability.name));
+    if (this.isShortcut(ability))
+      this.removeShortcut(this.shortcuts.indexOf(ability.name));
 
-    delete self.abilities[ability.name];
+    delete this.abilities[ability.name];
   },
 
   removeShortcut(index) {
@@ -55,15 +55,15 @@ module.exports = Abilities = cls.Class.extend({
     var self = this,
       abilities = "",
       abilityLevels = "",
-      shortcuts = self.shortcuts.toString();
+      shortcuts = this.shortcuts.toString();
 
-    _.each(self.abilities, function(ability) {
+    _.each(this.abilities, function(ability) {
       abilities += ability.name;
       abilityLevels += ability.level;
     });
 
     return {
-      username: self.player.username,
+      username: this.player.username,
       abilities: abilities,
       abilityLevels: abilityLevels,
       shortcuts: shortcuts

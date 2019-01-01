@@ -3,12 +3,12 @@ define(["../../utils/timer"], function(Timer) {
     init(id, time, element, duration) {
       var self = this;
 
-      self.id = id;
-      self.time = time;
-      self.element = element;
-      self.duration = duration || 5000;
+      this.id = id;
+      this.time = time;
+      this.element = element;
+      this.duration = duration || 5000;
 
-      self.timer = new Timer(self.time, self.duration);
+      this.timer = new Timer(this.time, this.duration);
     },
 
     setClickable() {

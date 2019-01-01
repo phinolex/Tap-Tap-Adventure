@@ -3,11 +3,11 @@ define(["../character"], function(Character) {
     init(id, kind) {
       var self = this;
 
-      self._super(id, kind);
+      this._super(id, kind);
 
-      self.index = 0;
+      this.index = 0;
 
-      self.type = "npc";
+      this.type = "npc";
     },
 
     talk(messages) {
@@ -15,11 +15,11 @@ define(["../character"], function(Character) {
         count = messages.length,
         message;
 
-      if (self.index > count) self.index = 0;
+      if (this.index > count) this.index = 0;
 
-      if (self.index < count) message = messages[self.index];
+      if (this.index < count) message = messages[this.index];
 
-      self.index++;
+      this.index++;
 
       return message;
     },

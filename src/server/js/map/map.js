@@ -17,48 +17,48 @@ module.exports = Map = cls.Class.extend({
   init(world) {
     var self = this;
 
-    self.world = world;
-    self.ready = false;
+    this.world = world;
+    this.ready = false;
 
-    self.load();
-    self.groups = new Groups(self);
-    self.grids = new Grids(self);
+    this.load();
+    this.groups = new Groups(self);
+    this.grids = new Grids(self);
   },
 
   load() {
     var self = this;
 
-    self.width = map.width;
-    self.height = map.height;
-    self.collisions = map.collisions;
-    self.bossAreas = map.bossAreas;
-    self.roamingAreas = map.roamingAreas;
-    self.chestAreas = map.chestAreas;
-    self.chests = map.chests;
-    self.staticEntities = map.staticEntities;
+    this.width = map.width;
+    this.height = map.height;
+    this.collisions = map.collisions;
+    this.bossAreas = map.bossAreas;
+    this.roamingAreas = map.roamingAreas;
+    this.chestAreas = map.chestAreas;
+    this.chests = map.chests;
+    this.staticEntities = map.staticEntities;
 
-    self.zoneWidth = 30;
-    self.zoneHeight = 15;
+    this.zoneWidth = 30;
+    this.zoneHeight = 15;
 
-    self.groupWidth = Math.floor(self.width / self.zoneWidth);
-    self.groupHeight = Math.floor(self.height / self.zoneHeight);
+    this.groupWidth = Math.floor(this.width / this.zoneWidth);
+    this.groupHeight = Math.floor(this.height / this.zoneHeight);
 
-    self.areas = {};
+    this.areas = {};
 
-    self.loadAreas();
-    self.loadCollisions();
-    self.loadDoors();
+    this.loadAreas();
+    this.loadCollisions();
+    this.loadDoors();
 
-    self.ready = true;
+    this.ready = true;
   },
 
   loadAreas() {
     var self = this;
 
     /**
-     * The structure for the new self.areas is as follows:
+     * The structure for the new this.areas is as follows:
      *
-     * self.areas = {
+     * this.areas = {
      *      pvpAreas = {
      *          allPvpAreas
      *      },
@@ -71,15 +71,15 @@ module.exports = Map = cls.Class.extend({
      * }
      */
 
-    self.areas["PVP"] = new PVPAreas();
-    self.areas["Music"] = new MusicAreas();
-    self.areas["Chests"] = new ChestAreas(self.world);
+    this.areas["PVP"] = new PVPAreas();
+    this.areas["Music"] = new MusicAreas();
+    this.areas["Chests"] = new ChestAreas(this.world);
   },
 
   loadDoors() {
     var self = this;
 
-    self.doors = {};
+    this.doors = {};
 
     _.each(map.doors, function(door) {
       var orientation;
@@ -102,7 +102,7 @@ module.exports = Map = cls.Class.extend({
           break;
       }
 
-      self.doors[self.gridPositionToIndex(door.x, door.y)] = {
+      this.doors[this.gridPositionToIndex(door.x, door.y)] = {
         x: door.tx,
         y: door.ty,
         orientation: orientation,
@@ -126,27 +126,27 @@ module.exports = Map = cls.Class.extend({
     var self = this,
       location = "./server/data/map/collisions.json";
 
-    self.grid = null;
+    this.grid = null;
 
     fs.exists(location, function(exists) {
       if (!exists || config.forceCollisions) {
         log.info("Generating the collision grid...");
 
-        self.grid = [];
+        this.grid = [];
 
         var tileIndex = 0;
 
-        for (var i = 0; i < self.height; i++) {
-          self.grid[i] = [];
-          for (var j = 0; j < self.width; j++) {
-            if (_.include(self.collisions, tileIndex)) self.grid[i][j] = 1;
-            else self.grid[i][j] = 0;
+        for (var i = 0; i < this.height; i++) {
+          this.grid[i] = [];
+          for (var j = 0; j < this.width; j++) {
+            if (_.include(this.collisions, tileIndex)) this.grid[i][j] = 1;
+            else this.grid[i][j] = 0;
 
             tileIndex += 1;
           }
         }
 
-        fs.writeFile(location, JSON.stringify(self.grid), function(err) {
+        fs.writeFile(location, JSON.stringify(this.grid), function(err) {
           if (err) {
             log.info("An error has occurred: " + err);
             return;
@@ -154,12 +154,12 @@ module.exports = Map = cls.Class.extend({
 
           log.info("The collision grid has been successfully generated!");
 
-          self.done();
+          this.done();
         });
       } else {
-        self.grid = require("../../data/map/collisions.json");
+        this.grid = require("../../data/map/collisions.json");
 
-        self.done();
+        this.done();
       }
     });
   },
@@ -180,9 +180,9 @@ module.exports = Map = cls.Class.extend({
   isColliding(x, y) {
     var self = this;
 
-    if (self.isOutOfBounds(x, y)) return false;
+    if (this.isOutOfBounds(x, y)) return false;
 
-    return self.grid[y][x] === 1;
+    return this.grid[y][x] === 1;
   },
 
   indexToGridPosition(tileIndex) {
@@ -190,8 +190,8 @@ module.exports = Map = cls.Class.extend({
 
     tileIndex -= 1;
 
-    var x = self.getX(tileIndex + 1, self.width),
-      y = Math.floor(tileIndex / self.width);
+    var x = this.getX(tileIndex + 1, this.width),
+      y = Math.floor(tileIndex / this.width);
 
     return {
       x: x,
@@ -217,7 +217,7 @@ module.exports = Map = cls.Class.extend({
     while (!valid) {
       pos.x = area.x + Utils.randomInt(0, area.width + 1);
       pos.y = area.y + Utils.randomInt(0, area.height + 1);
-      valid = self.isValidPosition(pos.x, pos.y);
+      valid = this.isValidPosition(pos.x, pos.y);
     }
 
     return pos;

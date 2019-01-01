@@ -4,7 +4,7 @@ module.exports = Mana = Points.extend({
   init(mana, maxMana) {
     var self = this;
 
-    self._super(mana, maxMana);
+    this._super(mana, maxMana);
   },
 
   getMana() {
@@ -18,17 +18,17 @@ module.exports = Mana = Points.extend({
   setMana(mana) {
     var self = this;
 
-    self.points = mana;
+    this.points = mana;
 
-    if (self.manaCallback) self.manaCallback();
+    if (this.manaCallback) this.manaCallback();
   },
 
   setMaxMana(maxMana) {
     var self = this;
 
-    self.maxPoints = maxMana;
+    this.maxPoints = maxMana;
 
-    if (self.maxManaCallback) self.maxManaCallback();
+    if (this.maxManaCallback) this.maxManaCallback();
   },
 
   onMana(callback) {

@@ -5,9 +5,9 @@ module.exports = Armour = Equipment.extend({
   init(name, id, count, ability, abilityLevel) {
     var self = this;
 
-    self._super(name, id, count, ability, abilityLevel);
+    this._super(name, id, count, ability, abilityLevel);
 
-    self.defense = Items.getArmourLevel(name);
+    this.defense = Items.getArmourLevel(name);
   },
 
   hasAntiStun() {

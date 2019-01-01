@@ -4,23 +4,23 @@ module.exports = HitPoints = Points.extend({
   init(hitPoints, maxHitPoints) {
     var self = this;
 
-    self._super(hitPoints, maxHitPoints);
+    this._super(hitPoints, maxHitPoints);
   },
 
   setHitPoints(hitPoints) {
     var self = this;
 
-    self.setPoints(hitPoints);
+    this.setPoints(hitPoints);
 
-    if (self.hitPointsCallback) self.hitPointsCallback();
+    if (this.hitPointsCallback) this.hitPointsCallback();
   },
 
   setMaxHitPoints(maxHitPoints) {
     var self = this;
 
-    self.setMaxPoints(maxHitPoints);
+    this.setMaxPoints(maxHitPoints);
 
-    if (self.maxHitPointsCallback) self.maxHitPointsCallback();
+    if (this.maxHitPointsCallback) this.maxHitPointsCallback();
   },
 
   getHitPoints() {

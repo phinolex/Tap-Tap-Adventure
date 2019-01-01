@@ -5,40 +5,40 @@ define(["jquery"], function($) {
     init(game) {
       var self = this;
 
-      self.game = game;
-      self.renderer = self.game.renderer;
-      self.supportsWorker = self.game.app.hasWorker();
+      this.game = game;
+      this.renderer = this.game.renderer;
+      this.supportsWorker = this.game.app.hasWorker();
 
-      self.data = [];
-      self.tilesets = [];
-      self.grid = null;
+      this.data = [];
+      this.tilesets = [];
+      this.grid = null;
 
-      self.tilesetsLoaded = false;
-      self.mapLoaded = false;
+      this.tilesetsLoaded = false;
+      this.mapLoaded = false;
 
-      self.load();
-      self.loadTilesets();
+      this.load();
+      this.loadTilesets();
 
-      self.ready();
+      this.ready();
     },
 
     ready() {
       var self = this,
         rC = function() {
-          if (self.readyCallback) self.readyCallback();
+          if (this.readyCallback) this.readyCallback();
         };
 
-      if (self.mapLoaded && self.tilesetsLoaded) rC();
+      if (this.mapLoaded && this.tilesetsLoaded) rC();
       else
         setTimeout(function() {
-          self.ready();
+          this.ready();
         }, 50);
     },
 
     load() {
       var self = this;
 
-      if (self.supportsWorker) {
+      if (this.supportsWorker) {
         log.info("Parsing map with Web Workers...");
 
         var worker = new Worker("./js/map/mapworker.js");
@@ -47,9 +47,9 @@ define(["jquery"], function($) {
         worker.onmessage = function(event) {
           var map = event.data;
 
-          self.parseMap(map);
-          self.grid = map.grid;
-          self.mapLoaded = true;
+          this.parseMap(map);
+          this.grid = map.grid;
+          this.mapLoaded = true;
         };
       } else {
         log.info("Parsing map with Ajax...");
@@ -57,9 +57,9 @@ define(["jquery"], function($) {
         $.get(
           "data/maps/world_client.json",
           function(data) {
-            self.parseMap(data);
-            self.loadCollisions();
-            self.mapLoaded = true;
+            this.parseMap(data);
+            this.loadCollisions();
+            this.mapLoaded = true;
           },
           "json"
         );
@@ -68,7 +68,7 @@ define(["jquery"], function($) {
 
     loadTilesets() {
       var self = this,
-        scale = self.renderer.getScale(),
+        scale = this.renderer.getScale(),
         isBigScale = scale === 3;
 
       /**
@@ -77,24 +77,24 @@ define(["jquery"], function($) {
        * that neither the entities would be necessary.
        */
 
-      self.tilesets.push(self.loadTileset("img/2/tilesheet.png"));
+      this.tilesets.push(this.loadTileset("img/2/tilesheet.png"));
 
       if (isBigScale)
-        self.tilesets.push(self.loadTileset("img/3/tilesheet.png"));
+        this.tilesets.push(this.loadTileset("img/3/tilesheet.png"));
 
-      self.renderer.setTileset(self.tilesets[isBigScale ? 1 : 0]);
+      this.renderer.setTileset(this.tilesets[isBigScale ? 1 : 0]);
 
-      self.tilesetsLoaded = true;
+      this.tilesetsLoaded = true;
     },
 
     updateTileset() {
       var self = this,
-        scale = self.renderer.getDrawingScale();
+        scale = this.renderer.getDrawingScale();
 
-      if (scale > 2 && !self.tilesets[1])
-        self.tilesets.push(self.loadTileset("img/3/tilesheet.png"));
+      if (scale > 2 && !this.tilesets[1])
+        this.tilesets.push(this.loadTileset("img/3/tilesheet.png"));
 
-      self.renderer.setTileset(self.tilesets[scale - 2]);
+      this.renderer.setTileset(this.tilesets[scale - 2]);
     },
 
     loadTileset(path) {
@@ -104,10 +104,10 @@ define(["jquery"], function($) {
       tileset.crossOrigin = "Anonymous";
       tileset.src = path;
       tileset.loaded = true;
-      tileset.scale = self.renderer.getDrawingScale();
+      tileset.scale = this.renderer.getDrawingScale();
 
       tileset.onload = function() {
-        if (tileset.width % self.tileSize > 0)
+        if (tileset.width % this.tileSize > 0)
           throw Error("The tile size is malformed in the tile set: " + path);
       };
 
@@ -117,35 +117,35 @@ define(["jquery"], function($) {
     parseMap(map) {
       var self = this;
 
-      self.width = map.width;
-      self.height = map.height;
-      self.tileSize = map.tilesize;
-      self.data = map.data;
-      self.blocking = map.blocking || [];
-      self.collisions = map.collisions;
-      self.high = map.high;
-      self.animated = map.animated;
+      this.width = map.width;
+      this.height = map.height;
+      this.tileSize = map.tilesize;
+      this.data = map.data;
+      this.blocking = map.blocking || [];
+      this.collisions = map.collisions;
+      this.high = map.high;
+      this.animated = map.animated;
     },
 
     loadCollisions() {
       var self = this;
 
-      self.grid = [];
+      this.grid = [];
 
-      for (var i = 0; i < self.height; i++) {
-        self.grid[i] = [];
-        for (var j = 0; j < self.width; j++) self.grid[i][j] = 0;
+      for (var i = 0; i < this.height; i++) {
+        this.grid[i] = [];
+        for (var j = 0; j < this.width; j++) this.grid[i][j] = 0;
       }
 
-      _.each(self.collisions, function(index) {
-        var position = self.indexToGridPosition(index + 1);
-        self.grid[position.y][position.x] = 1;
+      _.each(this.collisions, function(index) {
+        var position = this.indexToGridPosition(index + 1);
+        this.grid[position.y][position.x] = 1;
       });
 
-      _.each(self.blocking, function(index) {
-        var position = self.indexToGridPosition(index + 1);
+      _.each(this.blocking, function(index) {
+        var position = this.indexToGridPosition(index + 1);
 
-        if (self.grid[position.y]) self.grid[position.y][position.x] = 1;
+        if (this.grid[position.y]) this.grid[position.y][position.x] = 1;
       });
     },
 
@@ -154,8 +154,8 @@ define(["jquery"], function($) {
 
       index -= 1;
 
-      var x = self.getX(index + 1, self.width),
-        y = Math.floor(index / self.width);
+      var x = this.getX(index + 1, this.width),
+        y = Math.floor(index / this.width);
 
       return {
         x: x,
@@ -170,9 +170,9 @@ define(["jquery"], function($) {
     isColliding(x, y) {
       var self = this;
 
-      if (self.isOutOfBounds(x, y) || !self.grid) return false;
+      if (this.isOutOfBounds(x, y) || !this.grid) return false;
 
-      return self.grid[y][x] === 1;
+      return this.grid[y][x] === 1;
     },
 
     isHighTile(id) {

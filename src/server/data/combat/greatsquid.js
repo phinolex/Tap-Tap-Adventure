@@ -7,23 +7,23 @@ module.exports = GreatSquid = Combat.extend({
 
     character.spawnDistance = 15;
 
-    self._super(character);
+    this._super(character);
 
-    self.character = character;
+    this.character = character;
 
-    self.lastTerror = new Date().getTime();
+    this.lastTerror = new Date().getTime();
   },
 
   hit(character, target, hitInfo) {
     var self = this;
 
-    if (self.canUseTerror()) {
+    if (this.canUseTerror()) {
       hitInfo.type = Modules.Hits.Stun;
 
-      self.lastTerror = new Date().getTime();
+      this.lastTerror = new Date().getTime();
     }
 
-    self._super(character, target, hitInfo);
+    this._super(character, target, hitInfo);
   },
 
   canUseTerror() {

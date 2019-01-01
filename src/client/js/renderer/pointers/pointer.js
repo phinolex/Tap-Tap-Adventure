@@ -3,42 +3,42 @@ define(function() {
     init(id, element, type) {
       var self = this;
 
-      self.id = id;
-      self.element = element;
-      self.type = type;
+      this.id = id;
+      this.element = element;
+      this.type = type;
 
-      self.blinkInterval = null;
-      self.visible = true;
+      this.blinkInterval = null;
+      this.visible = true;
 
-      self.x = -1;
-      self.y = -1;
+      this.x = -1;
+      this.y = -1;
 
-      self.load();
+      this.load();
     },
 
     load() {
       var self = this;
 
-      self.blinkInterval = setInterval(function() {
-        if (self.visible) self.hide();
-        else self.show();
+      this.blinkInterval = setInterval(function() {
+        if (this.visible) this.hide();
+        else this.show();
 
-        self.visible = !self.visible;
+        this.visible = !this.visible;
       }, 600);
     },
 
     destroy() {
       var self = this;
 
-      clearInterval(self.blinkInterval);
-      self.element.remove();
+      clearInterval(this.blinkInterval);
+      this.element.remove();
     },
 
     setPosition(x, y) {
       var self = this;
 
-      self.x = x;
-      self.y = y;
+      this.x = x;
+      this.y = y;
     },
 
     show() {

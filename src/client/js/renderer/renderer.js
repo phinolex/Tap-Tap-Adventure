@@ -22,96 +22,90 @@ const getX = (index, width) => {
 
 export default class Renderer {
   constructor(background, entities, foreground, textCanvas, cursor, game) {
-    const self = this;
+    this.background = background;
+    this.entities = entities;
+    this.foreground = foreground;
+    this.textCanvas = textCanvas;
+    this.cursor = cursor;
 
-    self.background = background;
-    self.entities = entities;
-    self.foreground = foreground;
-    self.textCanvas = textCanvas;
-    self.cursor = cursor;
+    this.context = entities.getContext('2d');
+    this.backContext = background.getContext('2d');
+    this.foreContext = foreground.getContext('2d');
+    this.textContext = textCanvas.getContext('2d');
+    this.cursorContext = cursor.getContext('2d');
 
-    self.context = entities.getContext('2d');
-    self.backContext = background.getContext('2d');
-    self.foreContext = foreground.getContext('2d');
-    self.textContext = textCanvas.getContext('2d');
-    self.cursorContext = cursor.getContext('2d');
+    this.context.imageSmoothingEnabled = false;
+    this.backContext.imageSmoothingEnabled = false;
+    this.foreContext.imageSmoothingEnabled = false;
+    this.textContext.imageSmoothingEnabled = true;
+    this.cursorContext.imageSmoothingEnabled = false;
 
-    self.context.imageSmoothingEnabled = false;
-    self.backContext.imageSmoothingEnabled = false;
-    self.foreContext.imageSmoothingEnabled = false;
-    self.textContext.imageSmoothingEnabled = true;
-    self.cursorContext.imageSmoothingEnabled = false;
-
-    self.contexts = [self.backContext, self.foreContext, self.context];
-    self.canvases = [
-      self.background,
-      self.entities,
-      self.foreground,
-      self.textCanvas,
-      self.cursor,
+    this.contexts = [this.backContext, this.foreContext, this.context];
+    this.canvases = [
+      this.background,
+      this.entities,
+      this.foreground,
+      this.textCanvas,
+      this.cursor,
     ];
 
-    self.game = game;
-    self.camera = null;
-    self.entities = null;
-    self.input = null;
+    this.game = game;
+    this.camera = null;
+    this.entities = null;
+    this.input = null;
 
-    self.checkDevice();
+    this.checkDevice();
 
-    self.scale = 1;
-    self.tileSize = 16;
-    self.fontSize = 10;
+    this.scale = 1;
+    this.tileSize = 16;
+    this.fontSize = 10;
 
-    self.screenWidth = 0;
-    self.screenHeight = 0;
+    this.screenWidth = 0;
+    this.screenHeight = 0;
 
-    self.time = new Date();
+    this.time = new Date();
 
-    self.fps = 0;
-    self.frameCount = 0;
-    self.renderedFrame = [0, 0];
-    self.lastTarget = [0, 0];
+    this.fps = 0;
+    this.frameCount = 0;
+    this.renderedFrame = [0, 0];
+    this.lastTarget = [0, 0];
 
-    self.animatedTiles = [];
+    this.animatedTiles = [];
 
-    self.resizeTimeout = null;
-    self.autoCentre = false;
+    this.resizeTimeout = null;
+    this.autoCentre = false;
 
-    self.drawTarget = false;
-    self.selectedCellVisible = false;
+    this.drawTarget = false;
+    this.selectedCellVisible = false;
 
-    self.stopRendering = false;
-    self.animateTiles = true;
-    self.debugging = false;
-    self.brightness = 100;
-    self.drawNames = true;
-    self.drawLevels = true;
-    self.forceRendering = false;
+    this.stopRendering = false;
+    this.animateTiles = true;
+    this.debugging = false;
+    this.brightness = 100;
+    this.drawNames = true;
+    this.drawLevels = true;
+    this.forceRendering = false;
     this.textCanvas = $('#textCanvas');
 
-    self.load();
+    this.load();
   }
 
   stop() {
-    const self = this;
+    this.camera = null;
+    this.input = null;
+    this.stopRendering = true;
 
-    self.camera = null;
-    self.input = null;
-    self.stopRendering = true;
-
-    self.forEachContext((context) => {
+    this.forEachContext((context) => {
       context.fillStyle = '#12100D'; // eslint-disable-line
       context.fillRect(0, 0, context.canvas.width, context.canvas.height);
     });
   }
 
   load() {
-    const self = this;
+    this.scale = this.getScale();
+    this.drawingScale = this.getDrawingScale();
 
-    self.scale = self.getScale();
-    self.drawingScale = self.getDrawingScale();
-
-    self.forEachContext((context) => {
+    this.forEachContext((context) => {
       context.imageSmoothingEnabled = false; // eslint-disable-line
       context.webkitImageSmoothingEnabled = false; // eslint-disable-line
       context.mozImageSmoothingEnabled = false; // eslint-disable-line
@@ -121,42 +115,39 @@ export default class Renderer {
   }
 
   loadSizes() {
-    const self = this;
+    if (!this.camera) return;
 
-    if (!self.camera) return;
+    this.screenWidth = this.camera.gridWidth * this.tileSize;
+    this.screenHeight = this.camera.gridHeight * this.tileSize;
 
-    self.screenWidth = self.camera.gridWidth * self.tileSize;
-    self.screenHeight = self.camera.gridHeight * self.tileSize;
-
-    const width = self.screenWidth * self.drawingScale;
+    const width = this.screenWidth * this.drawingScale;
 
 
-    const height = self.screenHeight * self.drawingScale;
+    const height = this.screenHeight * this.drawingScale;
 
-    self.forEachCanvas((canvas) => {
+    this.forEachCanvas((canvas) => {
       canvas.width = width; // eslint-disable-line
       canvas.height = height; // eslint-disable-line
     });
   }
 
   loadCamera() {
-    const self = this;
     const {
       storage,
-    } = self.game;
+    } = this.game;
 
-    self.camera = new Camera(this);
+    this.camera = new Camera(this);
 
-    self.loadSizes();
+    this.loadSizes();
 
     if (
       storage.data.new
-      && (self.firefox
+      && (this.firefox
         || parseFloat(Detect.androidVersion()) < 6.0
         || parseFloat(Detect.iOSVersion() < 9.0)
         || Detect.isIpad())
     ) {
-      self.camera.centered = false;
+      this.camera.centered = false;
 
       storage.data.settings.centerCamera = false;
       storage.save();
@@ -164,73 +155,69 @@ export default class Renderer {
   }
 
   resize() {
-    const self = this;
+    this.stopRendering = true;
 
-    self.stopRendering = true;
+    this.clearAll();
 
-    self.clearAll();
+    this.checkDevice();
 
-    self.checkDevice();
+    if (!this.resizeTimeout) {
+      this.resizeTimeout = setTimeout(() => {
+        this.scale = this.getScale();
+        this.drawingScale = this.getDrawingScale();
 
-    if (!self.resizeTimeout) {
-      self.resizeTimeout = setTimeout(() => {
-        self.scale = self.getScale();
-        self.drawingScale = self.getDrawingScale();
+        if (this.camera) this.camera.update();
 
-        if (self.camera) self.camera.update();
+        this.updateAnimatedTiles();
 
-        self.updateAnimatedTiles();
+        this.loadSizes();
 
-        self.loadSizes();
+        if (this.entities) this.entities.update();
 
-        if (self.entities) self.entities.update();
+        if (this.map) this.map.updateTileset();
 
-        if (self.map) self.map.updateTileset();
+        if (this.camera) this.camera.centreOn(this.game.player);
 
-        if (self.camera) self.camera.centreOn(self.game.player);
+        if (this.game.interface) this.game.interface.resize();
 
-        if (self.game.interface) self.game.interface.resize();
+        this.renderedFrame[0] = -1;
 
-        self.renderedFrame[0] = -1;
-
-        self.stopRendering = false;
-        self.resizeTimeout = null;
+        this.stopRendering = false;
+        this.resizeTimeout = null;
       }, 500);
     }
   }
 
   render() {
-    const self = this;
+    if (this.stopRendering) return;
 
-    if (self.stopRendering) return;
+    this.clearScreen(this.context);
+    this.clearText();
 
-    self.clearScreen(self.context);
-    self.clearText();
-
-    self.saveAll();
+    this.saveAll();
 
     /**
      * Rendering related draws
      */
 
-    self.draw();
+    this.draw();
 
-    self.drawAnimatedTiles();
+    this.drawAnimatedTiles();
 
     // the annoying square under the cursor
-    // self.drawTargetCell();
+    // this.drawTargetCell();
 
-    self.drawSelectedCell();
+    this.drawSelectedCell();
 
-    self.drawEntities();
+    this.drawEntities();
 
-    self.drawInfos();
+    this.drawInfos();
 
-    self.drawDebugging();
+    this.drawDebugging();
 
-    self.restoreAll();
+    this.restoreAll();
 
-    self.drawCursor();
+    this.drawCursor();
   }
 
   /**
@@ -238,48 +225,44 @@ export default class Renderer {
    */
 
   draw() {
-    const self = this;
+    if (this.hasRenderedFrame()) return;
 
-    if (self.hasRenderedFrame()) return;
+    this.clearDrawing();
+    this.updateDrawingView();
 
-    self.clearDrawing();
-    self.updateDrawingView();
-
-    self.forEachVisibleTile((id, index) => {
-      const isHighTile = self.map.isHighTile(id);
+    this.forEachVisibleTile((id, index) => {
+      const isHighTile = this.map.isHighTile(id);
 
 
-      const context = isHighTile ? self.foreContext : self.backContext;
+      const context = isHighTile ? this.foreContext : this.backContext;
 
-      if (!self.map.isAnimatedTile(id) || !self.animateTiles) {
-        self.drawTile(
+      if (!this.map.isAnimatedTile(id) || !this.animateTiles) {
+        this.drawTile(
           context,
           id,
-          self.tileset,
-          self.tileset.width / self.tileSize,
-          self.map.width,
+          this.tileset,
+          this.tileset.width / this.tileSize,
+          this.map.width,
           index,
         );
       }
     });
 
-    self.saveFrame();
+    this.saveFrame();
   }
 
   drawAnimatedTiles() {
-    const self = this;
+    this.setCameraView(this.context);
 
-    self.setCameraView(self.context);
+    if (!this.animateTiles) return;
 
-    if (!self.animateTiles) return;
-
-    self.forEachAnimatedTile((tile) => {
-      self.drawTile(
-        self.context,
+    this.forEachAnimatedTile((tile) => {
+      this.drawTile(
+        this.context,
         tile.id,
-        self.tileset,
-        self.tileset.width / self.tileSize,
-        self.map.width,
+        this.tileset,
+        this.tileset.width / this.tileSize,
+        this.map.width,
         tile.index,
       );
       tile.loaded = true; // eslint-disable-line
@@ -287,18 +270,16 @@ export default class Renderer {
   }
 
   drawInfos() {
-    const self = this;
+    if (this.game.info.getCount() === 0) return;
 
-    if (self.game.info.getCount() === 0) return;
+    this.game.info.forEachInfo((info) => {
+      const factor = this.mobile ? 2 : 1;
 
-    self.game.info.forEachInfo((info) => {
-      const factor = self.mobile ? 2 : 1;
-
-      self.textContext.save();
-      self.textContext.font = '24px sans serif';
-      self.setCameraView(self.textContext);
-      self.textContext.globalAlpha = info.opacity;
-      self.drawText(
+      this.textContext.save();
+      this.textContext.font = '24px sans serif';
+      this.setCameraView(this.textContext);
+      this.textContext.globalAlpha = info.opacity;
+      this.drawText(
         `${info.text}`,
         Math.floor((info.x + 8) * factor),
         Math.floor(info.y * factor),
@@ -306,33 +287,28 @@ export default class Renderer {
         info.fill,
         info.stroke,
       );
-      self.textContext.restore();
+      this.textContext.restore();
     });
   }
 
   drawDebugging() {
-    const self = this;
+    if (!this.debugging) return;
 
-    if (!self.debugging) return;
+    this.drawFPS();
 
-    self.drawFPS();
-
-    if (!self.mobile) {
-      self.drawPosition();
-      self.drawPathing();
+    if (!this.mobile) {
+      this.drawPosition();
+      this.drawPathing();
     }
   }
 
   drawEntities() {
-    const self = this;
-
-    self.forEachVisibleEntity((entity) => {
-      if (entity.spriteLoaded) self.drawEntity(entity);
+    this.forEachVisibleEntity((entity) => {
+      if (entity.spriteLoaded) this.drawEntity(entity);
     });
   }
 
   drawEntity(entity) {
-    const self = this;
     const {
       sprite,
     } = entity;
@@ -344,60 +320,60 @@ export default class Renderer {
     const frame = animation.currentFrame;
 
 
-    const x = frame.x * self.drawingScale;
+    const x = frame.x * this.drawingScale;
 
 
-    const y = frame.y * self.drawingScale;
+    const y = frame.y * this.drawingScale;
 
 
-    const dx = entity.x * self.drawingScale;
+    const dx = entity.x * this.drawingScale;
 
 
-    const dy = entity.y * self.drawingScale;
+    const dy = entity.y * this.drawingScale;
 
 
-    const flipX = dx + self.tileSize * self.drawingScale;
+    const flipX = dx + this.tileSize * this.drawingScale;
 
 
     const flipY = dy + data.height;
 
-    self.context.save();
+    this.context.save();
 
-    if (data.scale !== self.scale || data.sprite !== sprite) {
-      data.scale = self.scale;
+    if (data.scale !== this.scale || data.sprite !== sprite) {
+      data.scale = this.scale;
 
       data.sprite = sprite;
 
-      data.width = sprite.width * self.drawingScale;
-      data.height = sprite.height * self.drawingScale;
-      data.ox = sprite.offsetX * self.drawingScale;
-      data.oy = sprite.offsetY * self.drawingScale;
+      data.width = sprite.width * this.drawingScale;
+      data.height = sprite.height * this.drawingScale;
+      data.ox = sprite.offsetX * this.drawingScale;
+      data.oy = sprite.offsetY * this.drawingScale;
 
       if (entity.angled) data.angle = (entity.angle * Math.PI) / 180;
 
       if (entity.hasShadow()) {
-        data.shadowWidth = self.shadowSprite.width * self.drawingScale;
-        data.shadowHeight = self.shadowSprite.height * self.drawingScale;
+        data.shadowWidth = this.shadowSprite.width * this.drawingScale;
+        data.shadowHeight = this.shadowSprite.height * this.drawingScale;
 
-        data.shadowOffsetY = entity.shadowOffsetY * self.drawingScale;
+        data.shadowOffsetY = entity.shadowOffsetY * this.drawingScale;
       }
     }
 
-    if (entity.fading) self.context.globalAlpha = entity.fadingAlpha;
+    if (entity.fading) this.context.globalAlpha = entity.fadingAlpha;
 
     if (entity.spriteFlipX) {
-      self.context.translate(flipX, dy);
-      self.context.scale(-1, 1);
+      this.context.translate(flipX, dy);
+      this.context.scale(-1, 1);
     } else if (entity.spriteFlipY) {
-      self.context.translate(dx, flipY);
-      self.context.scale(1, -1);
-    } else self.context.translate(dx, dy);
+      this.context.translate(dx, flipY);
+      this.context.scale(1, -1);
+    } else this.context.translate(dx, dy);
 
-    if (entity.angled) self.context.rotate(data.angle);
+    if (entity.angled) this.context.rotate(data.angle);
 
     if (entity.hasShadow()) {
-      self.context.drawImage(
-        self.shadowSprite.image,
+      this.context.drawImage(
+        this.shadowSprite.image,
         0,
         0,
         data.shadowWidth,
@@ -409,9 +385,9 @@ export default class Renderer {
       );
     }
 
-    self.drawEntityBack(entity);
+    this.drawEntityBack(entity);
 
-    self.context.drawImage(
+    this.context.drawImage(
       sprite.image,
       x,
       y,
@@ -429,7 +405,7 @@ export default class Renderer {
       && !entity.teleporting
       && entity.hasWeapon()
     ) {
-      const weapon = self.entities.getSprite(entity.weapon.getString());
+      const weapon = this.entities.getSprite(entity.weapon.getString());
 
       if (weapon) {
         if (!weapon.loaded) weapon.load();
@@ -442,25 +418,25 @@ export default class Renderer {
           : frame.index % weaponAnimationData.length;
 
 
-        const weaponX = weapon.width * index * self.drawingScale;
+        const weaponX = weapon.width * index * this.drawingScale;
 
 
-        const weaponY = weapon.height * animation.row * self.drawingScale;
+        const weaponY = weapon.height * animation.row * this.drawingScale;
 
 
-        const weaponWidth = weapon.width * self.drawingScale;
+        const weaponWidth = weapon.width * this.drawingScale;
 
 
-        const weaponHeight = weapon.height * self.drawingScale;
+        const weaponHeight = weapon.height * this.drawingScale;
 
-        self.context.drawImage(
+        this.context.drawImage(
           weapon.image,
           weaponX,
           weaponY,
           weaponWidth,
           weaponHeight,
-          weapon.offsetX * self.drawingScale,
-          weapon.offsetY * self.drawingScale,
+          weapon.offsetX * this.drawingScale,
+          weapon.offsetY * this.drawingScale,
           weaponWidth,
           weaponHeight,
         );
@@ -470,19 +446,19 @@ export default class Renderer {
     if (entity instanceof Item) {
       const {
         sparksAnimation,
-      } = self.entities.sprites;
+      } = this.entities.sprites;
       const sparksFrame = sparksAnimation.currentFrame;
 
-      if (data.scale !== self.scale) {
-        data.sparksX = self.sparksSprite.width * sparksFrame.index * self.drawingScale;
-        data.sparksY = self.sparksSprite.height * sparksAnimation.row * self.drawingScale;
+      if (data.scale !== this.scale) {
+        data.sparksX = this.sparksSprite.width * sparksFrame.index * this.drawingScale;
+        data.sparksY = this.sparksSprite.height * sparksAnimation.row * this.drawingScale;
 
-        data.sparksWidth = self.sparksSprite.width * self.drawingScale;
-        data.sparksHeight = self.sparksSprite.height * self.drawingScale;
+        data.sparksWidth = this.sparksSprite.width * this.drawingScale;
+        data.sparksHeight = this.sparksSprite.height * this.drawingScale;
       }
 
-      self.context.drawImage(
-        self.sparksSprite.image,
+      this.context.drawImage(
+        this.sparksSprite.image,
         data.sparksX,
         data.sparksY,
         data.sparksWidth,
@@ -494,17 +470,15 @@ export default class Renderer {
       );
     }
 
-    self.drawEntityFore(entity);
+    this.drawEntityFore(entity);
 
-    self.context.restore();
+    this.context.restore();
 
-    self.drawHealth(entity);
-    self.drawName(entity);
+    this.drawHealth(entity);
+    this.drawName(entity);
   }
 
   drawEntityFore(entity) {
-    const self = this;
-
     /**
      * Function used to draw special effects after
      * having rendererd the entity
@@ -516,7 +490,7 @@ export default class Renderer {
       || entity.critical
       || entity.explosion
     ) {
-      const sprite = self.entities.getSprite(entity.getActiveEffect());
+      const sprite = this.entities.getSprite(entity.getActiveEffect());
 
       if (!sprite.loaded) sprite.load();
 
@@ -525,14 +499,14 @@ export default class Renderer {
         const {
           index,
         } = animation.currentFrame;
-        const x = sprite.width * index * self.drawingScale;
-        const y = sprite.height * animation.row * self.drawingScale;
-        const width = sprite.width * self.drawingScale;
-        const height = sprite.height * self.drawingScale;
-        const offsetX = sprite.offsetX * self.drawingScale;
-        const offsetY = sprite.offsetY * self.drawingScale;
+        const x = sprite.width * index * this.drawingScale;
+        const y = sprite.height * animation.row * this.drawingScale;
+        const width = sprite.width * this.drawingScale;
+        const height = sprite.height * this.drawingScale;
+        const offsetX = sprite.offsetX * this.drawingScale;
+        const offsetY = sprite.offsetY * this.drawingScale;
 
-        self.context.drawImage(
+        this.context.drawImage(
           sprite.image,
           x,
           y,
@@ -548,77 +522,73 @@ export default class Renderer {
   }
 
   drawHealth(entity) {
-    const self = this;
-
     if (!entity.hitPoints || entity.hitPoints < 0 || !entity.healthBarVisible) return;
 
     const barLength = 16;
 
 
-    const healthX = entity.x * self.drawingScale - barLength / 2 + 8;
+    const healthX = entity.x * this.drawingScale - barLength / 2 + 8;
 
 
-    const healthY = (entity.y - 9) * self.drawingScale;
+    const healthY = (entity.y - 9) * this.drawingScale;
 
 
     const healthWidth = Math.round(
       (entity.hitPoints / entity.maxHitPoints)
       * barLength
-      * self.drawingScale,
+      * this.drawingScale,
     );
 
 
-    const healthHeight = 2 * self.drawingScale;
+    const healthHeight = 2 * this.drawingScale;
 
-    self.context.save();
-    self.context.strokeStyle = '#00000';
-    self.context.lineWidth = 1;
-    self.context.strokeRect(
+    this.context.save();
+    this.context.strokeStyle = '#00000';
+    this.context.lineWidth = 1;
+    this.context.strokeRect(
       healthX,
       healthY,
-      barLength * self.drawingScale,
+      barLength * this.drawingScale,
       healthHeight,
     );
-    self.context.fillStyle = '#FD0000';
-    self.context.fillRect(healthX, healthY, healthWidth, healthHeight);
-    self.context.restore();
+    this.context.fillStyle = '#FD0000';
+    this.context.fillRect(healthX, healthY, healthWidth, healthHeight);
+    this.context.restore();
   }
 
   drawName(entity) {
-    const self = this;
-
-    if (entity.hidden || (!self.drawNames && !self.drawLevels)) return;
+    if (entity.hidden || (!this.drawNames && !this.drawLevels)) return;
 
     let colour = entity.wanted ? 'red' : 'white';
 
 
-    const factor = self.mobile ? 2 : 1;
+    const factor = this.mobile ? 2 : 1;
 
     if (entity.rights > 1) colour = '#ba1414';
     else if (entity.rights > 0) colour = '#a59a9a';
 
-    if (entity.id === self.game.player.id) colour = '#fcda5c';
+    if (entity.id === this.game.player.id) colour = '#fcda5c';
 
-    self.textContext.save();
-    self.setCameraView(self.textContext);
-    self.textContext.font = '14px sans serif';
+    this.textContext.save();
+    this.setCameraView(this.textContext);
+    this.textContext.font = '14px sans serif';
 
     if (!entity.hasCounter) {
-      if (self.drawNames && entity !== 'player') {
-        self.drawText(
+      if (this.drawNames && entity !== 'player') {
+        this.drawText(
           entity.username,
           (entity.x + 8) * factor,
-          (entity.y - (self.drawLevels ? 20 : 10)) * factor,
+          (entity.y - (this.drawLevels ? 20 : 10)) * factor,
           true,
           colour,
         );
       }
 
       if (
-        self.drawLevels
+        this.drawLevels
         && (entity.type === 'mob' || entity.type === 'player')
       ) {
-        self.drawText(
+        this.drawText(
           `Level ${entity.level}`,
           (entity.x + 8) * factor,
           (entity.y - 10) * factor,
@@ -628,7 +598,7 @@ export default class Renderer {
       }
 
       if (entity.type === 'item' && entity.count > 1) {
-        self.drawText(
+        this.drawText(
           entity.count,
           (entity.x + 8) * factor,
           (entity.y - 10) * factor,
@@ -637,8 +607,8 @@ export default class Renderer {
         );
       }
     } else {
-      if (self.game.time - entity.countdownTime > 1000) {
-        entity.countdownTime = self.game.time; // eslint-disable-line
+      if (this.game.time - entity.countdownTime > 1000) {
+        entity.countdownTime = this.game.time; // eslint-disable-line
         entity.counter -= 1; // eslint-disable-line
       }
 
@@ -646,7 +616,7 @@ export default class Renderer {
         entity.hasCounter = false; // eslint-disable-line
       }
 
-      self.drawText(
+      this.drawText(
         entity.counter,
         (entity.x + 8) * factor,
         (entity.y - 10) * factor,
@@ -655,72 +625,66 @@ export default class Renderer {
       );
     }
 
-    self.textContext.restore();
+    this.textContext.restore();
   }
 
   drawCursor() {
-    const self = this;
-
-    if (self.tablet || self.mobile) {
+    if (this.tablet || this.mobile) {
       return;
     }
 
     const {
       cursor,
-    } = self.input;
+    } = this.input;
 
-    self.clearScreen(self.cursorContext);
-    self.cursorContext.save();
+    this.clearScreen(this.cursorContext);
+    this.cursorContext.save();
 
-    if (cursor && self.scale > 1) {
+    if (cursor && this.scale > 1) {
       if (!cursor.loaded) cursor.load();
 
       if (cursor.loaded) {
-        self.cursorContext.drawImage(
+        this.cursorContext.drawImage(
           cursor.image,
           0,
           0,
-          14 * self.drawingScale,
-          14 * self.drawingScale,
-          self.input.mouse.x,
-          self.input.mouse.y,
-          14 * self.drawingScale,
-          14 * self.drawingScale,
+          14 * this.drawingScale,
+          14 * this.drawingScale,
+          this.input.mouse.x,
+          this.input.mouse.y,
+          14 * this.drawingScale,
+          14 * this.drawingScale,
         );
       }
     }
 
-    self.cursorContext.restore();
+    this.cursorContext.restore();
   }
 
   drawFPS() {
-    const self = this;
-
-
     const currentTime = new Date();
 
 
-    const timeDiff = currentTime - self.time;
+    const timeDiff = currentTime - this.time;
 
     if (timeDiff >= 1000) {
-      self.realFPS = self.frameCount;
-      self.frameCount = 0;
-      self.time = currentTime;
-      self.fps = self.realFPS;
+      this.realFPS = this.frameCount;
+      this.frameCount = 0;
+      this.time = currentTime;
+      this.fps = this.realFPS;
     }
 
-    self.frameCount += 1;
+    this.frameCount += 1;
 
-    self.drawText(`FPS: ${self.realFPS}`, 10, 11, false, 'white');
+    this.drawText(`FPS: ${this.realFPS}`, 10, 11, false, 'white');
   }
 
   drawPosition() {
-    const self = this;
     const {
       player,
-    } = self.game;
+    } = this.game;
 
-    self.drawText(
+    this.drawText(
       `x: ${player.gridX} y: ${player.gridY}`,
       10,
       31,
@@ -730,38 +694,35 @@ export default class Renderer {
   }
 
   drawPathing() {
-    const self = this;
     const {
       pathingGrid,
-    } = self.entities.grids;
+    } = this.entities.grids;
 
     if (!pathingGrid) {
       return;
     }
 
-    self.camera.forEachVisiblePosition((x, y) => {
+    this.camera.forEachVisiblePosition((x, y) => {
       if (x < 0 || y < 0) return;
 
-      if (pathingGrid[y][x] !== 0) self.drawCellHighlight(x, y, 'rgba(50, 50, 255, 0.5)');
+      if (pathingGrid[y][x] !== 0) this.drawCellHighlight(x, y, 'rgba(50, 50, 255, 0.5)');
     });
   }
 
   drawSelectedCell() {
-    const self = this;
-
-    if (!self.input.selectedCellVisible) {
+    if (!this.input.selectedCellVisible) {
       return;
     }
 
-    const posX = self.input.selectedX;
+    const posX = this.input.selectedX;
 
 
-    const posY = self.input.selectedY;
+    const posY = this.input.selectedY;
 
     // only draw the highlight cell if they are not adjacent
     // from character's current position
-    if (!self.game.player.isPositionAdjacent(posX, posY)) {
-      self.drawCellHighlight(posX, posY, self.input.mobileTargetColour);
+    if (!this.game.player.isPositionAdjacent(posX, posY)) {
+      this.drawCellHighlight(posX, posY, this.input.mobileTargetColour);
     }
   }
 
@@ -770,47 +731,39 @@ export default class Renderer {
    */
 
   drawTile(context, tileId, tileset, setWidth, gridWidth, cellId) {
-    const self = this;
-
     if (tileId === -1) return;
 
-    self.drawScaledImage(
+    this.drawScaledImage(
       context,
       tileset,
-      getX(tileId + 1, setWidth / self.drawingScale) * self.tileSize,
-      Math.floor(tileId / (setWidth / self.drawingScale)) * self.tileSize,
-      self.tileSize,
-      self.tileSize,
-      getX(cellId + 1, gridWidth) * self.tileSize,
-      Math.floor(cellId / gridWidth) * self.tileSize,
+      getX(tileId + 1, setWidth / this.drawingScale) * this.tileSize,
+      Math.floor(tileId / (setWidth / this.drawingScale)) * this.tileSize,
+      this.tileSize,
+      this.tileSize,
+      getX(cellId + 1, gridWidth) * this.tileSize,
+      Math.floor(cellId / gridWidth) * this.tileSize,
     );
   }
 
   clearTile(context, gridWidth, cellId) {
-    const self = this;
+    const x = getX(cellId + 1, gridWidth) * this.tileSize * this.drawingScale;
 
 
-    const x = getX(cellId + 1, gridWidth) * self.tileSize * self.drawingScale;
+    const y = Math.floor(cellId / gridWidth) * this.tileSize * this.drawingScale;
 
 
-    const y = Math.floor(cellId / gridWidth) * self.tileSize * self.drawingScale;
-
-
-    const w = self.tileSize * self.scale;
+    const w = this.tileSize * this.scale;
 
     context.clearRect(x, y, w, w);
   }
 
   drawText(text, x, y, centered, colour, strokeColour) {
-    const self = this;
-
-
     let strokeSize = 1;
 
 
-    const context = self.textContext;
+    const context = this.textContext;
 
-    if (self.scale > 2) strokeSize = 3;
+    if (this.scale > 2) strokeSize = 3;
 
     if (text && x && y) {
       context.save();
@@ -819,154 +772,141 @@ export default class Renderer {
 
       context.strokeStyle = strokeColour || '#373737';
       context.lineWidth = strokeSize;
-      context.strokeText(text, x * self.scale, y * self.scale);
+      context.strokeText(text, x * this.scale, y * this.scale);
       context.fillStyle = colour || 'white';
-      context.fillText(text, x * self.scale, y * self.scale);
+      context.fillText(text, x * this.scale, y * this.scale);
 
       context.restore();
     }
   }
 
   drawScaledImage(context, image, x, y, width, height, dx, dy) {
-    const self = this;
-
     if (!context) return;
 
     context.drawImage(
       image,
-      x * self.drawingScale,
-      y * self.drawingScale,
-      width * self.drawingScale,
-      height * self.drawingScale,
-      dx * self.drawingScale,
-      dy * self.drawingScale,
-      width * self.drawingScale,
-      height * self.drawingScale,
+      x * this.drawingScale,
+      y * this.drawingScale,
+      width * this.drawingScale,
+      height * this.drawingScale,
+      dx * this.drawingScale,
+      dy * this.drawingScale,
+      width * this.drawingScale,
+      height * this.drawingScale,
     );
   }
 
   updateAnimatedTiles() {
-    const self = this;
-
-    if (!self.animateTiles) return;
+    if (!this.animateTiles) return;
 
     const newTiles = [];
 
-    self.forEachVisibleTile((id, index) => {
+    this.forEachVisibleTile((id, index) => {
       /**
        * We don't want to reinitialize animated tiles that already exist
        * and are within the visible camera proportions. This way we can parse
        * it every time the tile moves slightly.
        */
 
-      if (!self.map.isAnimatedTile(id)) return;
+      if (!this.map.isAnimatedTile(id)) return;
 
       /**
        * Push the pre-existing tiles.
        */
 
-      const tileIndex = self.animatedTiles.indexOf(id);
+      const tileIndex = this.animatedTiles.indexOf(id);
 
       if (tileIndex > -1) {
-        newTiles.push(self.animatedTiles[tileIndex]);
+        newTiles.push(this.animatedTiles[tileIndex]);
         return;
       }
 
       const tile = new Tile(
         id,
         index,
-        self.map.getTileAnimationLength(id),
-        self.map.getTileAnimationDelay(id),
+        this.map.getTileAnimationLength(id),
+        this.map.getTileAnimationDelay(id),
       );
 
 
-      const position = self.map.indexToGridPosition(tile.index);
+      const position = this.map.indexToGridPosition(tile.index);
 
       tile.setPosition(position);
 
       newTiles.push(tile);
     }, 2);
 
-    self.animatedTiles = newTiles;
+    this.animatedTiles = newTiles;
   }
 
   checkDirty(rectOne, source, x, y) {
-    const self = this;
-
-    self.entities.forEachEntityAround(x, y, 2, (entityTwo) => {
+    this.entities.forEachEntityAround(x, y, 2, (entityTwo) => {
       if (source && source.id && entityTwo.id === source.id) return;
 
-      if (!entityTwo.isDirty && isIntersecting(rectOne, self.getEntityBounds(entityTwo))) {
+      if (!entityTwo.isDirty && isIntersecting(rectOne, this.getEntityBounds(entityTwo))) {
         entityTwo.loadDirty();
       }
     });
 
     if (source && !source.hasOwnProperty('index')) { // eslint-disable-line
-      self.forEachAnimatedTile((tile) => {
-        if (!tile.isDirty && isIntersecting(rectOne, self.getTileBounds(tile))) {
+      this.forEachAnimatedTile((tile) => {
+        if (!tile.isDirty && isIntersecting(rectOne, this.getTileBounds(tile))) {
           tile.dirty = true; // eslint-disable-line
         }
       });
     }
 
-    if (!self.drawTarget && self.input.selectedCellVisible) {
-      const targetRect = self.getTargetBounds();
+    if (!this.drawTarget && this.input.selectedCellVisible) {
+      const targetRect = this.getTargetBounds();
 
       if (isIntersecting(rectOne, targetRect)) {
-        self.drawTarget = true;
-        self.targetRect = targetRect;
+        this.drawTarget = true;
+        this.targetRect = targetRect;
       }
     }
   }
 
   drawCellRect(x, y, colour) {
-    const self = this;
+    const multiplier = this.tileSize * this.drawingScale;
 
+    this.context.save();
 
-    const multiplier = self.tileSize * self.drawingScale;
+    this.context.lineWidth = 2 * this.drawingScale;
 
-    self.context.save();
+    this.context.translate(x + 2, y + 2);
 
-    self.context.lineWidth = 2 * self.drawingScale;
+    this.context.strokeStyle = colour;
+    this.context.strokeRect(0, 0, multiplier - 4, multiplier - 4);
 
-    self.context.translate(x + 2, y + 2);
-
-    self.context.strokeStyle = colour;
-    self.context.strokeRect(0, 0, multiplier - 4, multiplier - 4);
-
-    self.context.restore();
+    this.context.restore();
   }
 
   drawCellHighlight(x, y, colour) {
-    const self = this;
-
-    self.drawCellRect(
-      x * self.drawingScale * self.tileSize,
-      y * self.drawingScale * self.tileSize,
+    this.drawCellRect(
+      x * this.drawingScale * this.tileSize,
+      y * this.drawingScale * this.tileSize,
       colour,
     );
   }
 
   drawTargetCell() {
-    const self = this;
-
     if (
-      self.mobile
-      || self.tablet
-      || !self.input.targetVisible
-      || !self.input
-      || !self.camera
+      this.mobile
+      || this.tablet
+      || !this.input.targetVisible
+      || !this.input
+      || !this.camera
     ) return;
 
-    const location = self.input.getCoords();
+    const location = this.input.getCoords();
 
     if (
       !(
-        location.x === self.input.selectedX
-        && location.y === self.input.selectedY
+        location.x === this.input.selectedX
+        && location.y === this.input.selectedY
       )
     ) {
-      self.drawCellHighlight(location.x, location.y, self.input.targetColour);
+      this.drawCellHighlight(location.x, location.y, this.input.targetColour);
     }
   }
 
@@ -975,25 +915,21 @@ export default class Renderer {
    */
 
   forEachVisibleIndex(callback, offset) {
-    const self = this;
-
-    self.camera.forEachVisiblePosition((x, y) => {
-      if (!self.map.isOutOfBounds(x, y)) callback(self.map.gridPositionToIndex(x, y) - 1);
+    this.camera.forEachVisiblePosition((x, y) => {
+      if (!this.map.isOutOfBounds(x, y)) callback(this.map.gridPositionToIndex(x, y) - 1);
     }, offset);
   }
 
   forEachVisibleTile(callback, offset) {
-    const self = this;
+    if (!this.map || !this.map.mapLoaded) return;
 
-    if (!self.map || !self.map.mapLoaded) return;
-
-    self.forEachVisibleIndex((index) => {
-      if (_.isArray(self.map.data[index])) {
-        _.each(self.map.data[index], (id) => {
+    this.forEachVisibleIndex((index) => {
+      if (_.isArray(this.map.data[index])) {
+        _.each(this.map.data[index], (id) => {
           callback(id - 1, index);
         });
-      } else if (!isNaN(self.map.data[index] - 1)) { // eslint-disable-line
-        callback(self.map.data[index] - 1, index);
+      } else if (!isNaN(this.map.data[index] - 1)) { // eslint-disable-line
+        callback(this.map.data[index] - 1, index);
       }
     }, offset);
   }
@@ -1005,18 +941,16 @@ export default class Renderer {
   }
 
   forEachVisibleEntity(callback) {
-    const self = this;
-
-    if (!self.entities || !self.camera) {
+    if (!this.entities || !this.camera) {
       return;
     }
 
     const {
       grids,
-    } = self.entities;
+    } = this.entities;
 
-    self.camera.forEachVisiblePosition((x, y) => {
-      if (!self.map.isOutOfBounds(x, y) && grids.renderingGrid[y][x]) {
+    this.camera.forEachVisiblePosition((x, y) => {
+      if (!this.map.isOutOfBounds(x, y) && grids.renderingGrid[y][x]) {
         _.each(grids.renderingGrid[y][x], (entity) => {
           callback(entity);
         });
@@ -1038,21 +972,15 @@ export default class Renderer {
   }
 
   getDrawingScale() {
-    const self = this;
+    let scale = this.getScale();
 
-
-    let scale = self.getScale();
-
-    if (self.mobile) scale = 2;
+    if (this.mobile) scale = 2;
 
     return scale;
   }
 
   getUpscale() {
-    const self = this;
-
-
-    let scale = self.getScale();
+    let scale = this.getScale();
 
     if (scale > 2) scale = 2;
 
@@ -1084,41 +1012,31 @@ export default class Renderer {
   }
 
   clearAll() {
-    const self = this;
-
-    self.forEachContext((context) => {
+    this.forEachContext((context) => {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     });
   }
 
   clearDrawing() {
-    const self = this;
-
-    self.forEachDrawingContext((context) => {
+    this.forEachDrawingContext((context) => {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     });
   }
 
   saveAll() {
-    const self = this;
-
-    self.forEachContext((context) => {
+    this.forEachContext((context) => {
       context.save();
     });
   }
 
   restoreAll() {
-    const self = this;
-
-    self.forEachContext((context) => {
+    this.forEachContext((context) => {
       context.restore();
     });
   }
 
   focus() {
-    const self = this;
-
-    self.forEachContext((context) => {
+    this.forEachContext((context) => {
       context.focus();
     });
   }
@@ -1128,29 +1046,23 @@ export default class Renderer {
    */
 
   updateView() {
-    const self = this;
-
-    self.forEachContext((context) => {
-      self.setCameraView(context);
+    this.forEachContext((context) => {
+      this.setCameraView(context);
     });
   }
 
   updateDrawingView() {
-    const self = this;
-
-    self.forEachDrawingContext((context) => {
-      self.setCameraView(context);
+    this.forEachDrawingContext((context) => {
+      this.setCameraView(context);
     });
   }
 
   setCameraView(context) {
-    const self = this;
-
-    if (!self.camera || self.stopRendering) return;
+    if (!this.camera || this.stopRendering) return;
 
     context.translate(
-      -self.camera.x * self.drawingScale,
-      -self.camera.y * self.drawingScale,
+      -this.camera.x * this.drawingScale,
+      -this.camera.y * this.drawingScale,
     );
   }
 
@@ -1164,24 +1076,20 @@ export default class Renderer {
   }
 
   hasRenderedFrame() {
-    const self = this;
+    if (this.forceRendering) return false;
 
-    if (self.forceRendering) return false;
-
-    if (!self.camera || self.stopRendering || !self.input) return true;
+    if (!this.camera || this.stopRendering || !this.input) return true;
 
     return (
-      self.renderedFrame[0] === self.camera.x
-      && self.renderedFrame[1] === self.camera.y
+      this.renderedFrame[0] === this.camera.x
+      && this.renderedFrame[1] === this.camera.y
     );
   }
 
   saveFrame() {
-    const self = this;
-
-    if (!self.hasRenderedFrame()) {
-      self.renderedFrame[0] = self.camera.x;
-      self.renderedFrame[1] = self.camera.y;
+    if (!this.hasRenderedFrame()) {
+      this.renderedFrame[0] = this.camera.x;
+      this.renderedFrame[1] = this.camera.y;
     }
   }
 
@@ -1197,15 +1105,13 @@ export default class Renderer {
   }
 
   loadStaticSprites() {
-    const self = this;
+    this.shadowSprite = this.entities.getSprite('shadow16');
 
-    self.shadowSprite = self.entities.getSprite('shadow16');
+    if (!this.shadowSprite.loaded) this.shadowSprite.load();
 
-    if (!self.shadowSprite.loaded) self.shadowSprite.load();
+    this.sparksSprite = this.entities.getSprite('sparks');
 
-    self.sparksSprite = self.entities.getSprite('sparks');
-
-    if (!self.sparksSprite.loaded) self.sparksSprite.load();
+    if (!this.sparksSprite.loaded) this.sparksSprite.load();
   }
 
   /**
@@ -1231,11 +1137,9 @@ export default class Renderer {
   }
 
   checkDevice() {
-    const self = this;
-
-    self.mobile = self.game.app.isMobile();
-    self.tablet = self.game.app.isTablet();
-    self.firefox = Detect.isFirefox();
+    this.mobile = this.game.app.isMobile();
+    this.tablet = this.game.app.isTablet();
+    this.firefox = Detect.isFirefox();
   }
 
   verifyCentration() {
@@ -1271,21 +1175,18 @@ export default class Renderer {
    */
 
   getTileBounds(tile) {
-    const self = this;
-
-
     const bounds = {};
 
 
     const cellId = tile.index;
 
-    bounds.x = (getX(cellId + 1, self.map.width) * self.tileSize
-        - self.camera.x)
-      * self.drawingScale;
-    bounds.y = (Math.floor(cellId / self.map.width) * self.tileSize - self.camera.y)
-      * self.drawingScale;
-    bounds.width = self.tileSize * self.drawingScale;
-    bounds.height = self.tileSize * self.drawingScale;
+    bounds.x = (getX(cellId + 1, this.map.width) * this.tileSize
+        - this.camera.x)
+      * this.drawingScale;
+    bounds.y = (Math.floor(cellId / this.map.width) * this.tileSize - this.camera.y)
+      * this.drawingScale;
+    bounds.width = this.tileSize * this.drawingScale;
+    bounds.height = this.tileSize * this.drawingScale;
     bounds.left = bounds.x;
     bounds.right = bounds.x + bounds.width;
     bounds.top = bounds.y;
@@ -1295,7 +1196,6 @@ export default class Renderer {
   }
 
   getEntityBounds(entity) {
-    const self = this;
     const bounds = {};
     const {
       sprite,
@@ -1305,10 +1205,10 @@ export default class Renderer {
 
     if (!sprite) log.error(`Sprite malformation for: ${entity.name}`);
     else {
-      bounds.x = (entity.x + sprite.offsetX - self.camera.x) * self.drawingScale;
-      bounds.y = (entity.y + sprite.offsetY - self.camera.y) * self.drawingScale;
-      bounds.width = sprite.width * self.drawingScale;
-      bounds.height = sprite.height * self.drawingScale;
+      bounds.x = (entity.x + sprite.offsetX - this.camera.x) * this.drawingScale;
+      bounds.y = (entity.y + sprite.offsetY - this.camera.y) * this.drawingScale;
+      bounds.width = sprite.width * this.drawingScale;
+      bounds.height = sprite.height * this.drawingScale;
       bounds.left = bounds.x;
       bounds.right = bounds.x + bounds.width;
       bounds.top = bounds.y;
@@ -1319,21 +1219,18 @@ export default class Renderer {
   }
 
   getTargetBounds(x, y) {
-    const self = this;
-
-
     const bounds = {};
 
 
-    const tx = x || self.input.selectedX;
+    const tx = x || this.input.selectedX;
 
 
-    const ty = y || self.input.selectedY;
+    const ty = y || this.input.selectedY;
 
-    bounds.x = (tx * self.tileSize - self.camera.x) * self.drawingScale;
-    bounds.y = (ty * self.tileSize - self.camera.y) * self.drawingScale;
-    bounds.width = self.tileSize * self.drawingScale;
-    bounds.height = self.tileSize * self.drawingScale;
+    bounds.x = (tx * this.tileSize - this.camera.x) * this.drawingScale;
+    bounds.y = (ty * this.tileSize - this.camera.y) * this.drawingScale;
+    bounds.width = this.tileSize * this.drawingScale;
+    bounds.height = this.tileSize * this.drawingScale;
     bounds.left = bounds.x;
     bounds.right = bounds.x + bounds.width;
     bounds.top = bounds.y;

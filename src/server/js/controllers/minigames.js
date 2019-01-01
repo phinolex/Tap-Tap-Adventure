@@ -5,16 +5,16 @@ module.exports = Minigames = cls.Class.extend({
   init(world) {
     var self = this;
 
-    self.world = world;
-    self.minigames = {};
+    this.world = world;
+    this.minigames = {};
 
-    self.load();
+    this.load();
   },
 
   load() {
     var self = this;
 
-    self.minigames["TeamWar"] = new TeamWar();
+    this.minigames["TeamWar"] = new TeamWar();
   },
 
   getTeamWar() {

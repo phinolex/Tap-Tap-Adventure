@@ -10,11 +10,11 @@ define(function() {
     init(name, string, count, ability, abilityLevel) {
       var self = this;
 
-      self.name = name;
-      self.string = string;
-      self.count = count;
-      self.ability = ability;
-      self.abilityLevel = abilityLevel;
+      this.name = name;
+      this.string = string;
+      this.count = count;
+      this.ability = ability;
+      this.abilityLevel = abilityLevel;
     },
 
     exists() {
@@ -44,11 +44,11 @@ define(function() {
     update(name, string, count, ability, abilityLevel) {
       var self = this;
 
-      self.name = name;
-      self.string = string;
-      self.count = count;
-      self.ability = ability;
-      self.abilityLevel = abilityLevel;
+      this.name = name;
+      this.string = string;
+      this.count = count;
+      this.ability = ability;
+      this.abilityLevel = abilityLevel;
     }
   });
 });

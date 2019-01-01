@@ -5,37 +5,37 @@ define(["jquery"], function($) {
     init(game) {
       var self = this;
 
-      self.game = game;
+      this.game = game;
 
-      self.mapFrame = $("#mapFrame");
-      self.warp = $("#hud-world");
-      self.close = $("#closeMapFrame");
+      this.mapFrame = $("#mapFrame");
+      this.warp = $("#hud-world");
+      this.close = $("#closeMapFrame");
 
-      self.warpCount = 0;
+      this.warpCount = 0;
 
-      self.load();
+      this.load();
     },
 
     load() {
       var self = this,
-        scale = self.getScale();
+        scale = this.getScale();
 
-      self.warp.click(function() {
-        self.toggle();
+      this.warp.click(function() {
+        this.toggle();
       });
 
-      self.close.click(function() {
-        self.hide();
+      this.close.click(function() {
+        this.hide();
       });
 
       for (var i = 1; i < 7; i++) {
-        var warp = self.mapFrame.find("#warp" + i);
+        var warp = this.mapFrame.find("#warp" + i);
 
         if (warp)
           warp.click(function(event) {
-            self.hide();
+            this.hide();
 
-            self.game.socket.send(Packets.Warp, [
+            this.game.socket.send(Packets.Warp, [
               event.currentTarget.id.substring(4)
             ]);
           });
@@ -49,8 +49,8 @@ define(["jquery"], function($) {
        * Just so it fades out nicely.
        */
 
-      if (self.isVisible()) self.hide();
-      else self.display();
+      if (this.isVisible()) this.hide();
+      else this.display();
     },
 
     getScale() {

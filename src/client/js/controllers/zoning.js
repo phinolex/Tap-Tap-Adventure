@@ -5,12 +5,12 @@ define(function() {
     init(game) {
       var self = this;
 
-      self.game = game;
-      self.renderer = game.renderer;
-      self.camera = game.camera;
-      self.input = game.input;
+      this.game = game;
+      this.renderer = game.renderer;
+      this.camera = game.camera;
+      this.input = game.input;
 
-      self.direction = null;
+      this.direction = null;
     },
 
     reset() {

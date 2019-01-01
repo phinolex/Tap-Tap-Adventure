@@ -7,39 +7,39 @@ module.exports = Quest = cls.Class.extend({
   init(player, data) {
     var self = this;
 
-    self.player = player;
-    self.data = data;
+    this.player = player;
+    this.data = data;
 
-    self.id = data.id;
-    self.name = data.name;
-    self.description = data.description;
+    this.id = data.id;
+    this.name = data.name;
+    this.description = data.description;
 
-    self.stage = 0;
+    this.stage = 0;
   },
 
   finish() {
     var self = this;
 
-    if (self.hasItemReward()) {
-      var item = self.getItemReward();
+    if (this.hasItemReward()) {
+      var item = this.getItemReward();
 
       if (item) {
-        if (self.hasInventorySpace(item.id, item.count))
-          self.player.inventory.add(item.id, item.count);
+        if (this.hasInventorySpace(item.id, item.count))
+          this.player.inventory.add(item.id, item.count);
         else {
-          self.player.notify("You do not have enough space in your inventory.");
-          self.player.notify("Please make room prior to finishing the quest.");
+          this.player.notify("You do not have enough space in your inventory.");
+          this.player.notify("Please make room prior to finishing the quest.");
 
           return;
         }
       }
     }
 
-    self.setStage(9999);
+    this.setStage(9999);
 
-    self.player.send(
+    this.player.send(
       new Messages.Quest(Packets.QuestOpcode.Finish, {
-        id: self.id,
+        id: this.id,
         isQuest: true
       })
     );
@@ -52,8 +52,8 @@ module.exports = Quest = cls.Class.extend({
   setStage(stage) {
     var self = this;
 
-    self.stage = stage;
-    self.update();
+    this.stage = stage;
+    this.update();
   },
 
   hasMob() {
@@ -63,7 +63,7 @@ module.exports = Quest = cls.Class.extend({
   triggerTalk(npc) {
     var self = this;
 
-    if (self.npcTalkCallback) self.npcTalkCallback(npc);
+    if (this.npcTalkCallback) this.npcTalkCallback(npc);
   },
 
   onNPCTalk(callback) {
@@ -81,9 +81,9 @@ module.exports = Quest = cls.Class.extend({
   updatePointers() {
     var self = this;
 
-    if (!self.data.pointers) return;
+    if (!this.data.pointers) return;
 
-    var pointer = self.data.pointers[self.stage];
+    var pointer = this.data.pointers[this.stage];
 
     if (!pointer) return;
 
@@ -91,7 +91,7 @@ module.exports = Quest = cls.Class.extend({
       x = pointer[1],
       y = pointer[2];
 
-    self.player.send(
+    this.player.send(
       new Messages.Pointer(opcode, {
         id: Utils.generateRandomId(),
         x: x,
@@ -107,7 +107,7 @@ module.exports = Quest = cls.Class.extend({
 
     npc.talkIndex = 0;
 
-    self.player.send(
+    this.player.send(
       new Messages.NPC(Packets.NPCOpcode.Talk, {
         id: npc.instance,
         text: message
@@ -127,7 +127,7 @@ module.exports = Quest = cls.Class.extend({
 
     npc.talkIndex = 0;
 
-    self.player.send(
+    this.player.send(
       new Messages.NPC(Packets.NPCOpcode.Talk, {
         id: npc.instance,
         text: null
@@ -141,11 +141,11 @@ module.exports = Quest = cls.Class.extend({
 
   getConversation(id) {
     var self = this,
-      conversation = self.data.conversations[id];
+      conversation = this.data.conversations[id];
 
-    if (!conversation || !conversation[self.stage]) return [""];
+    if (!conversation || !conversation[this.stage]) return [""];
 
-    return conversation[self.stage];
+    return conversation[this.stage];
   },
 
   hasItemReward() {

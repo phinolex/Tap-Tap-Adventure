@@ -5,9 +5,9 @@ define(["jquery"], function($) {
     init(element) {
       var self = this;
 
-      self.body = $(element);
+      this.body = $(element);
 
-      self.loaded = false;
+      this.loaded = false;
     },
 
     show() {

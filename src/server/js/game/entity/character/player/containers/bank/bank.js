@@ -8,26 +8,26 @@ module.exports = Slot = Container.extend({
   init(owner, size) {
     var self = this;
 
-    self.open = false;
+    this.open = false;
 
-    self._super("Bank", owner, size);
+    this._super("Bank", owner, size);
   },
 
   load(ids, counts, abilities, abilityLevels) {
     var self = this;
 
-    self._super(ids, counts, abilities, abilityLevels);
+    this._super(ids, counts, abilities, abilityLevels);
 
-    self.owner.send(
-      new Messages.Bank(Packets.BankOpcode.Batch, [self.size, self.slots])
+    this.owner.send(
+      new Messages.Bank(Packets.BankOpcode.Batch, [this.size, this.slots])
     );
   },
 
   add(id, count, ability, abilityLevel) {
     var self = this;
 
-    if (!self.canHold(id, count)) {
-      self.owner.send(
+    if (!this.canHold(id, count)) {
+      this.owner.send(
         new Messages.Notification(
           Packets.NotificationOpcode.Text,
           "You do not have enough space in your bank."
@@ -36,26 +36,26 @@ module.exports = Slot = Container.extend({
       return false;
     }
 
-    var slot = self._super(id, parseInt(count), ability, abilityLevel);
+    var slot = this._super(id, parseInt(count), ability, abilityLevel);
 
-    self.owner.send(new Messages.Bank(Packets.BankOpcode.Add, slot));
+    this.owner.send(new Messages.Bank(Packets.BankOpcode.Add, slot));
 
-    self.owner.save();
+    this.owner.save();
     return true;
   },
 
   remove(id, count, index) {
     var self = this;
 
-    if (!self._super(index, id, count)) return;
+    if (!this._super(index, id, count)) return;
 
-    self.owner.send(
+    this.owner.send(
       new Messages.Bank(Packets.BankOpcode.Remove, {
         index: parseInt(index),
         count: count
       })
     );
 
-    self.owner.save();
+    this.owner.save();
   }
 });

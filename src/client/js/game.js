@@ -20,92 +20,92 @@ import Packets from "./network/packets";
 
 export default class Game {
   constructor(app) {
-    const self = this;
+    
 
-    self.app = app;
-    self.id = -1;
-    self.socket = null;
-    self.messages = null;
-    self.renderer = null;
-    self.updater = null;
-    self.storage = null;
-    self.entities = null;
-    self.input = null;
-    self.map = null;
-    self.playerHandler = null;
-    self.pathfinder = null;
-    self.zoning = null;
-    self.info = null;
-    self.interface = null;
-    self.audio = null;
-    self.welcome = null;
-    self.player = null;
-    self.stopped = false;
-    self.started = false;
-    self.ready = false;
-    self.loaded = false;
-    self.time = new Date();
-    self.pvp = false;
-    self.population = -1;
-    self.lastTime = new Date().getTime();
+    this.app = app;
+    this.id = -1;
+    this.socket = null;
+    this.messages = null;
+    this.renderer = null;
+    this.updater = null;
+    this.storage = null;
+    this.entities = null;
+    this.input = null;
+    this.map = null;
+    this.playerHandler = null;
+    this.pathfinder = null;
+    this.zoning = null;
+    this.info = null;
+    this.interface = null;
+    this.audio = null;
+    this.welcome = null;
+    this.player = null;
+    this.stopped = false;
+    this.started = false;
+    this.ready = false;
+    this.loaded = false;
+    this.time = new Date();
+    this.pvp = false;
+    this.population = -1;
+    this.lastTime = new Date().getTime();
 
-    self.loadRenderer();
-    self.loadControllers();
+    this.loadRenderer();
+    this.loadControllers();
   }
 
   start() {
-    const self = this;
+    
 
-    if (self.started) {
+    if (this.started) {
       return;
     }
 
-    self.app.fadeMenu();
-    self.tick();
+    this.app.fadeMenu();
+    this.tick();
 
-    self.started = true;
+    this.started = true;
   }
 
   stop() {
-    const self = this;
+    
 
-    self.stopped = false;
-    self.started = false;
-    self.ready = false;
+    this.stopped = false;
+    this.started = false;
+    this.ready = false;
   }
 
   tick() {
-    const self = this;
+    
 
-    if (self.ready) {
-      self.time = new Date().getTime();
+    if (this.ready) {
+      this.time = new Date().getTime();
 
-      self.renderer.render();
-      self.updater.update();
+      this.renderer.render();
+      this.updater.update();
 
-      if (!self.stopped) requestAnimFrame(self.tick.bind(self));
+      if (!this.stopped) requestAnimFrame(this.tick.bind(self));
 
-      //Could also use function() { self.tick(); }
+      //Could also use function() { this.tick(); }
     }
   }
 
   unload() {
-    const self = this;
-    self.socket = null;
-    self.messages = null;
-    self.renderer = null;
-    self.updater = null;
-    self.storage = null;
-    self.entities = null;
-    self.input = null;
-    self.map = null;
-    self.playerHandler = null;
-    self.pathfinder = null;
-    self.zoning = null;
-    self.info = null;
-    self.interface = null;
-    self.audio.stop();
-    self.audio = null;
+    
+    this.socket = null;
+    this.messages = null;
+    this.renderer = null;
+    this.updater = null;
+    this.storage = null;
+    this.entities = null;
+    this.input = null;
+    this.map = null;
+    this.playerHandler = null;
+    this.pathfinder = null;
+    this.zoning = null;
+    this.info = null;
+    this.interface = null;
+    this.audio.stop();
+    this.audio = null;
   }
 
   loadRenderer() {
@@ -116,121 +116,121 @@ export default class Game {
       entities = document.getElementById("entities"),
       cursor = document.getElementById("cursor");
 
-    self.app.sendStatus("Soul sucking monster...");
+    this.app.sendStatus("Soul sucking monster...");
 
-    self.setRenderer(
+    this.setRenderer(
       new Renderer(background, entities, foreground, textCanvas, cursor, self)
     );
   }
 
   loadControllers() {
     const self = this,
-      hasWorker = self.app.hasWorker();
+      hasWorker = this.app.hasWorker();
 
-    self.app.sendStatus(hasWorker ? "I tried to tell you..." : null);
+    this.app.sendStatus(hasWorker ? "I tried to tell you..." : null);
 
-    if (hasWorker) self.loadMap();
+    if (hasWorker) this.loadMap();
 
-    self.app.sendStatus("Too late now...");
+    this.app.sendStatus("Too late now...");
 
-    self.setStorage(new LocalStorage(self.app));
+    this.setStorage(new LocalStorage(this.app));
 
-    self.app.sendStatus("You're already doomed...");
+    this.app.sendStatus("You're already doomed...");
 
-    self.setSocket(new Socket(self));
-    self.setMessages(self.socket.messages);
-    self.setInput(new Input(self));
+    this.setSocket(new Socket(self));
+    this.setMessages(this.socket.messages);
+    this.setInput(new Input(self));
 
-    self.app.sendStatus("Stop! Before it's too late...");
+    this.app.sendStatus("Stop! Before it's too late...");
 
     const entity = new Entities(self);
-    self.setEntityController(entity);
+    this.setEntityController(entity);
 
     const info = new Info(self);
-    self.setInfo(info);
+    this.setInfo(info);
 
     const bubble = new Bubble(self);
-    self.setBubble(bubble);
+    this.setBubble(bubble);
 
     const pointer = new Pointer(self);
-    self.setPointer(pointer);
+    this.setPointer(pointer);
 
     const audio = new Audio(self);
-    self.setAudio(audio);
+    this.setAudio(audio);
 
     const gameInterface = new Interface(self);
-    self.setInterface(gameInterface);
+    this.setInterface(gameInterface);
 
-    self.implementStorage();
+    this.implementStorage();
 
     if (!hasWorker) {
-      self.app.sendStatus(null);
-      self.loaded = true;
+      this.app.sendStatus(null);
+      this.loaded = true;
     }
   }
 
   loadMap() {
-    const self = this;
+    
 
-    self.map = new Map(self);
+    this.map = new Map(self);
 
-    self.map.onReady(function() {
-      self.app.sendStatus("Okay I give up...");
+    this.map.onReady(function() {
+      this.app.sendStatus("Okay I give up...");
 
-      self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
+      this.setPathfinder(new Pathfinder(this.map.width, this.map.height));
 
-      self.renderer.setMap(self.map);
-      self.renderer.loadCamera();
+      this.renderer.setMap(this.map);
+      this.renderer.loadCamera();
 
-      self.app.sendStatus("You're beyond help at this point...");
+      this.app.sendStatus("You're beyond help at this point...");
 
-      self.setUpdater(new Updater(self));
+      this.setUpdater(new Updater(self));
 
-      self.entities.load();
+      this.entities.load();
 
-      self.renderer.setEntities(self.entities);
+      this.renderer.setEntities(this.entities);
 
-      self.app.sendStatus(null);
+      this.app.sendStatus(null);
 
-      self.loaded = true;
+      this.loaded = true;
     });
   }
 
   connect() {
-    const self = this;
+    
 
-    self.app.cleanErrors();
+    this.app.cleanErrors();
 
     setTimeout(function() {
-      self.socket.connect();
+      this.socket.connect();
     }, 1000);
 
-    self.messages.onHandshake(function(data) {
-      self.id = data.shift();
-      self.development = data.shift();
+    this.messages.onHandshake(function(data) {
+      this.id = data.shift();
+      this.development = data.shift();
 
-      self.ready = true;
+      this.ready = true;
 
-      if (!self.player) self.createPlayer();
+      if (!this.player) this.createPlayer();
 
-      if (!self.map) self.loadMap();
+      if (!this.map) this.loadMap();
 
-      self.app.updateLoader("Logging in...");
+      this.app.updateLoader("Logging in...");
 
-      if (self.app.isRegistering()) {
-        const registerInfo = self.app.registerFields,
+      if (this.app.isRegistering()) {
+        const registerInfo = this.app.registerFields,
           username = registerInfo[0].val(),
           password = registerInfo[1].val(),
           email = registerInfo[3].val();
 
-        self.socket.send(Packets.Intro, [
+        this.socket.send(Packets.Intro, [
           Packets.IntroOpcode.Register,
           username,
           password,
           email
         ]);
-      } else if (self.app.isGuest()) {
-        self.socket.send(Packets.Intro, [
+      } else if (this.app.isGuest()) {
+        this.socket.send(Packets.Intro, [
           Packets.IntroOpcode.Guest,
           "n",
           "n",
@@ -238,45 +238,45 @@ export default class Game {
         ]);
       } else {
         console.log("logging in");
-        const loginInfo = self.app.loginFields,
+        const loginInfo = this.app.loginFields,
           name = loginInfo[0].val(),
           pass = loginInfo[1].val();
 
-        self.socket.send(Packets.Intro, [
+        this.socket.send(Packets.Intro, [
           Packets.IntroOpcode.Login,
           name,
           pass,
           "n"
         ]);
 
-        if (self.hasRemember()) {
-          self.storage.data.player.username = name;
-          self.storage.data.player.password = pass;
+        if (this.hasRemember()) {
+          this.storage.data.player.username = name;
+          this.storage.data.player.password = pass;
         } else {
-          self.storage.data.player.username = "";
-          self.storage.data.player.password = "";
+          this.storage.data.player.username = "";
+          this.storage.data.player.password = "";
         }
 
-        self.storage.save();
+        this.storage.save();
       }
     });
 
-    self.messages.onWelcome(function(data) {
-      self.player.load(data);
+    this.messages.onWelcome(function(data) {
+      this.player.load(data);
 
-      self.input.setPosition(self.player.getX(), self.player.getY());
+      this.input.setPosition(this.player.getX(), this.player.getY());
 
-      self.start();
-      self.postLoad();
+      this.start();
+      this.postLoad();
     });
 
-    self.messages.onEquipment(function(opcode, info) {
+    this.messages.onEquipment(function(opcode, info) {
       switch (opcode) {
         case Packets.EquipmentOpcode.Batch:
           for (let i = 0; i < info.length; i++)
-            self.player.setEquipment(i, info[i]);
+            this.player.setEquipment(i, info[i]);
 
-          self.interface.loadProfile();
+          this.interface.loadProfile();
 
           break;
 
@@ -288,7 +288,7 @@ export default class Game {
             ability = info.shift(),
             abilityLevel = info.shift();
 
-          self.player.setEquipment(equipmentType, [
+          this.player.setEquipment(equipmentType, [
             name,
             string,
             count,
@@ -296,46 +296,46 @@ export default class Game {
             abilityLevel
           ]);
 
-          self.interface.profile.update();
+          this.interface.profile.update();
 
           break;
 
         case Packets.EquipmentOpcode.Unequip:
           const type = info.shift();
 
-          self.player.unequip(type);
+          this.player.unequip(type);
 
           if (type === "armour")
-            self.player.setSprite(self.getSprite(self.player.getSpriteName()));
+            this.player.setSprite(this.getSprite(this.player.getSpriteName()));
 
-          self.interface.profile.update();
+          this.interface.profile.update();
 
           break;
       }
     });
 
-    self.messages.onSpawn(function(data) {
-      self.entities.create(data.shift());
+    this.messages.onSpawn(function(data) {
+      this.entities.create(data.shift());
     });
 
-    self.messages.onEntityList(function(data) {
-      const ids = _.pluck(self.entities.getAll(), "id"),
+    this.messages.onEntityList(function(data) {
+      const ids = _.pluck(this.entities.getAll(), "id"),
         known = _.intersection(ids, data),
         newIds = _.difference(data, known);
 
-      self.entities.decrepit = _.reject(self.entities.getAll(), function(
+      this.entities.decrepit = _.reject(this.entities.getAll(), function(
         entity
       ) {
-        return _.include(known, entity.id) || entity.id === self.player.id;
+        return _.include(known, entity.id) || entity.id === this.player.id;
       });
 
-      self.entities.clean();
+      this.entities.clean();
 
-      self.socket.send(Packets.Who, newIds);
+      this.socket.send(Packets.Who, newIds);
     });
 
-    self.messages.onSync(function(data) {
-      const entity = self.entities.get(data.id);
+    this.messages.onSync(function(data) {
+      const entity = this.entities.get(data.id);
 
       if (!entity || entity.type !== "player") return;
 
@@ -354,15 +354,15 @@ export default class Game {
         entity.level = data.level;
       }
 
-      if (data.armour) entity.setSprite(self.getSprite(data.armour));
+      if (data.armour) entity.setSprite(this.getSprite(data.armour));
 
       if (data.weapon)
         entity.setEquipment(Modules.Equipment.Weapon, data.weapon);
 
-      self.interface.profile.update();
+      this.interface.profile.update();
     });
 
-    self.messages.onMovement(function(data) {
+    this.messages.onMovement(function(data) {
       const opcode = data.shift(),
         info = data.shift();
 
@@ -373,19 +373,19 @@ export default class Game {
             y = info.shift(),
             forced = info.shift(),
             teleport = info.shift(),
-            entity = self.entities.get(id);
+            entity = this.entities.get(id);
 
           if (!entity) return;
 
           if (forced) entity.stop(true);
 
-          self.moveCharacter(entity, x, y);
+          this.moveCharacter(entity, x, y);
 
           break;
 
         case Packets.MovementOpcode.Follow:
-          const follower = self.entities.get(info.shift()),
-            followee = self.entities.get(info.shift());
+          const follower = this.entities.get(info.shift()),
+            followee = this.entities.get(info.shift());
 
           if (!followee || !follower) return;
 
@@ -395,7 +395,7 @@ export default class Game {
 
         case Packets.MovementOpcode.Freeze:
         case Packets.MovementOpcode.Stunned:
-          const pEntity = self.entities.get(info.shift()),
+          const pEntity = this.entities.get(info.shift()),
             state = info.shift();
 
           if (!pEntity) return;
@@ -411,13 +411,13 @@ export default class Game {
       }
     });
 
-    self.messages.onTeleport(function(data) {
+    this.messages.onTeleport(function(data) {
       const id = data.shift(),
         x = data.shift(),
         y = data.shift(),
         withAnimation = data.shift(),
-        isPlayer = id === self.player.id,
-        entity = self.entities.get(id);
+        isPlayer = id === this.player.id,
+        entity = this.entities.get(id);
 
       if (!entity) return;
 
@@ -430,22 +430,22 @@ export default class Game {
        */
 
       const doTeleport = () => {
-        self.entities.unregisterPosition(entity);
+        this.entities.unregisterPosition(entity);
         entity.setGridPosition(x, y);
 
         if (isPlayer) {
-          self.entities.clearPlayers(self.player);
-          self.player.clearHealthBar();
-          self.renderer.camera.centreOn(entity);
-          self.renderer.updateAnimatedTiles();
+          this.entities.clearPlayers(this.player);
+          this.player.clearHealthBar();
+          this.renderer.camera.centreOn(entity);
+          this.renderer.updateAnimatedTiles();
         } else if (entity.type === "player") {
-          delete self.entities.entities[entity.id];
+          delete this.entities.entities[entity.id];
           return;
         }
 
-        self.socket.send(Packets.Request, [self.player.id]);
+        this.socket.send(Packets.Request, [this.player.id]);
 
-        self.entities.registerPosition(entity);
+        this.entities.registerPosition(entity);
 
         log.info("Registered..");
 
@@ -457,7 +457,7 @@ export default class Game {
 
         entity.teleporting = true;
 
-        entity.setSprite(self.getSprite("death"));
+        entity.setSprite(this.getSprite("death"));
 
         entity.animate("death", 240, 1, function() {
           doTeleport();
@@ -472,8 +472,8 @@ export default class Game {
       } else doTeleport();
     });
 
-    self.messages.onDespawn(function(id) {
-      const entity = self.entities.get(id);
+    this.messages.onDespawn(function(id) {
+      const entity = this.entities.get(id);
 
       if (!entity) return;
 
@@ -483,46 +483,46 @@ export default class Game {
 
       switch (entity.type) {
         case "item":
-          self.entities.removeItem(entity);
+          this.entities.removeItem(entity);
 
           return;
 
         case "chest":
-          entity.setSprite(self.getSprite("death"));
+          entity.setSprite(this.getSprite("death"));
 
           entity.setAnimation("death", 120, 1, function() {
-            self.entities.unregisterPosition(entity);
-            delete self.entities.entities[entity.id];
+            this.entities.unregisterPosition(entity);
+            delete this.entities.entities[entity.id];
           });
 
           return;
       }
 
-      if (self.player.hasTarget() && self.player.target.id === entity.id)
-        self.player.removeTarget();
+      if (this.player.hasTarget() && this.player.target.id === entity.id)
+        this.player.removeTarget();
 
-      self.entities.grids.removeFromPathingGrid(entity.gridX, entity.gridY);
+      this.entities.grids.removeFromPathingGrid(entity.gridX, entity.gridY);
 
-      if (entity.id !== self.player.id && self.player.getDistance(entity) < 5)
-        self.audio.play(
+      if (entity.id !== this.player.id && this.player.getDistance(entity) < 5)
+        this.audio.play(
           Modules.AudioTypes.SFX,
           "kill" + Math.floor(Math.random() * 2 + 1)
         );
 
       entity.hitPoints = 0;
 
-      entity.setSprite(self.getSprite("death"));
+      entity.setSprite(this.getSprite("death"));
 
       entity.animate("death", 120, 1, function() {
-        self.entities.unregisterPosition(entity);
-        delete self.entities.entities[entity.id];
+        this.entities.unregisterPosition(entity);
+        delete this.entities.entities[entity.id];
       });
     });
 
-    self.messages.onCombat(function(data) {
+    this.messages.onCombat(function(data) {
       const opcode = data.shift(),
-        attacker = self.entities.get(data.shift()),
-        target = self.entities.get(data.shift());
+        attacker = this.entities.get(data.shift()),
+        target = this.entities.get(data.shift());
 
       if (!target || !attacker) return;
 
@@ -532,8 +532,8 @@ export default class Game {
 
           target.addAttacker(attacker);
 
-          if (target.id === self.player.id || attacker.id === self.player.id)
-            self.socket.send(Packets.Combat, [
+          if (target.id === this.player.id || attacker.id === this.player.id)
+            this.socket.send(Packets.Combat, [
               Packets.CombatOpcode.Initiate,
               attacker.id,
               target.id
@@ -543,7 +543,7 @@ export default class Game {
 
         case Packets.CombatOpcode.Hit:
           const hit = data.shift(),
-            isPlayer = target.id === self.player.id;
+            isPlayer = target.id === this.player.id;
 
           if (!hit.isAoE) {
             attacker.lookAt(target);
@@ -560,8 +560,8 @@ export default class Game {
               break;
 
             default:
-              if (attacker.id === self.player.id && hit.damage > 0)
-                self.audio.play(
+              if (attacker.id === this.player.id && hit.damage > 0)
+                this.audio.play(
                   Modules.AudioTypes.SFX,
                   "hit" + Math.floor(Math.random() * 2 + 1)
                 );
@@ -569,7 +569,7 @@ export default class Game {
               break;
           }
 
-          self.info.create(
+          this.info.create(
             hit.type,
             [hit.damage, isPlayer],
             target.x,
@@ -580,7 +580,7 @@ export default class Game {
           target.triggerHealthBar();
 
           if (isPlayer && hit.damage > 0)
-            self.audio.play(Modules.AudioTypes.SFX, "hurt");
+            this.audio.play(Modules.AudioTypes.SFX, "hurt");
 
           break;
 
@@ -596,8 +596,8 @@ export default class Game {
       }
     });
 
-    self.messages.onAnimation(function(id, info) {
-      const entity = self.entities.get(id),
+    this.messages.onAnimation(function(id, info) {
+      const entity = this.entities.get(id),
         animation = info.shift(),
         speed = info.shift(),
         count = info.shift();
@@ -607,24 +607,24 @@ export default class Game {
       entity.animate(animation, speed, count);
     });
 
-    self.messages.onProjectile(function(opcode, info) {
+    this.messages.onProjectile(function(opcode, info) {
       switch (opcode) {
         case Packets.ProjectileOpcode.Create:
-          self.entities.create(info);
+          this.entities.create(info);
 
           break;
       }
     });
 
-    self.messages.onPopulation(function(population) {
-      self.population = population;
+    this.messages.onPopulation(function(population) {
+      this.population = population;
     });
 
-    self.messages.onPoints(function(data) {
+    this.messages.onPoints(function(data) {
       const id = data.shift(),
         hitPoints = data.shift(),
         mana = data.shift(),
-        entity = self.entities.get(id);
+        entity = this.entities.get(id);
 
       if (!entity) return;
 
@@ -632,40 +632,40 @@ export default class Game {
         entity.setHitPoints(hitPoints);
 
         if (
-          self.player.hasTarget() &&
-          self.player.target.id === entity.id &&
-          self.input.overlay.updateCallback
+          this.player.hasTarget() &&
+          this.player.target.id === entity.id &&
+          this.input.overlay.updateCallback
         )
-          self.input.overlay.updateCallback(entity.id, hitPoints);
+          this.input.overlay.updateCallback(entity.id, hitPoints);
       }
 
       if (mana) entity.setMana(mana);
     });
 
-    self.messages.onNetwork(function() {
-      self.socket.send(Packets.Network, [Packets.NetworkOpcode.Pong]);
+    this.messages.onNetwork(function() {
+      this.socket.send(Packets.Network, [Packets.NetworkOpcode.Pong]);
     });
 
-    self.messages.onChat(function(info) {
+    this.messages.onChat(function(info) {
       if (!info.duration) info.duration = 5000;
 
       if (info.withBubble) {
-        const entity = self.entities.get(info.id);
+        const entity = this.entities.get(info.id);
 
         if (entity) {
-          self.bubble.create(info.id, info.text, self.time, info.duration);
-          self.bubble.setTo(entity);
+          this.bubble.create(info.id, info.text, this.time, info.duration);
+          this.bubble.setTo(entity);
 
-          self.audio.play(Modules.AudioTypes.SFX, "npctalk");
+          this.audio.play(Modules.AudioTypes.SFX, "npctalk");
         }
       }
 
       if (info.isGlobal) info.name = "[Global] " + info.name;
 
-      self.input.chatHandler.add(info.name, info.text, info.colour);
+      this.input.chatHandler.add(info.name, info.text, info.colour);
     });
 
-    self.messages.onCommand(function(info) {
+    this.messages.onCommand(function(info) {
       /**
        * This is for random miscellaneous commands that require
        * a specific action done by the client as opposed to
@@ -673,120 +673,120 @@ export default class Game {
        */
     });
 
-    self.messages.onInventory(function(opcode, info) {
+    this.messages.onInventory(function(opcode, info) {
       switch (opcode) {
         case Packets.InventoryOpcode.Batch:
           const inventorySize = info.shift(),
             data = info.shift();
 
-          self.interface.loadInventory(inventorySize, data);
+          this.interface.loadInventory(inventorySize, data);
 
           break;
 
         case Packets.InventoryOpcode.Add:
-          if (!self.interface.inventory) return;
+          if (!this.interface.inventory) return;
 
-          self.interface.inventory.add(info);
+          this.interface.inventory.add(info);
 
-          if (!self.interface.bank) return;
+          if (!this.interface.bank) return;
 
-          self.interface.bank.addInventory(info);
+          this.interface.bank.addInventory(info);
 
           break;
 
         case Packets.InventoryOpcode.Remove:
-          if (!self.interface.inventory) return;
+          if (!this.interface.inventory) return;
 
-          self.interface.inventory.remove(info);
+          this.interface.inventory.remove(info);
 
-          if (!self.interface.bank) return;
+          if (!this.interface.bank) return;
 
-          self.interface.bank.removeInventory(info);
+          this.interface.bank.removeInventory(info);
 
           break;
       }
     });
 
-    self.messages.onBank(function(opcode, info) {
+    this.messages.onBank(function(opcode, info) {
       switch (opcode) {
         case Packets.BankOpcode.Batch:
           const bankSize = info.shift(),
             data = info.shift();
 
-          self.interface.loadBank(bankSize, data);
+          this.interface.loadBank(bankSize, data);
 
           break;
 
         case Packets.BankOpcode.Add:
-          if (!self.interface.bank) return;
+          if (!this.interface.bank) return;
 
-          self.interface.bank.add(info);
+          this.interface.bank.add(info);
 
           break;
 
         case Packets.BankOpcode.Remove:
-          self.interface.bank.remove(info);
+          this.interface.bank.remove(info);
 
           break;
       }
     });
 
-    self.messages.onAbility(function(opcode, info) {});
+    this.messages.onAbility(function(opcode, info) {});
 
-    self.messages.onQuest(function(opcode, info) {
+    this.messages.onQuest(function(opcode, info) {
       switch (opcode) {
         case Packets.QuestOpcode.Batch:
-          self.interface.getQuestPage().load(info.quests, info.achievements);
+          this.interface.getQuestPage().load(info.quests, info.achievements);
 
           break;
 
         case Packets.QuestOpcode.Progress:
-          self.interface.getQuestPage().progress(info);
+          this.interface.getQuestPage().progress(info);
 
           break;
 
         case Packets.QuestOpcode.Finish:
-          self.interface.getQuestPage().finish(info);
+          this.interface.getQuestPage().finish(info);
 
           break;
       }
     });
 
-    self.messages.onNotification(function(opcode, message) {
+    this.messages.onNotification(function(opcode, message) {
       switch (opcode) {
         case Packets.NotificationOpcode.Ok:
-          self.interface.displayNotify(message);
+          this.interface.displayNotify(message);
 
           break;
 
         case Packets.NotificationOpcode.YesNo:
-          self.interface.displayConfirm(message);
+          this.interface.displayConfirm(message);
 
           break;
 
         case Packets.NotificationOpcode.Text:
-          self.input.chatHandler.add("WORLD", message, "red");
+          this.input.chatHandler.add("WORLD", message, "red");
 
           break;
       }
     });
 
-    self.messages.onBlink(function(instance) {
-      const item = self.entities.get(instance);
+    this.messages.onBlink(function(instance) {
+      const item = this.entities.get(instance);
 
       if (!item) return;
 
       item.blink(150);
     });
 
-    self.messages.onHeal(function(info) {
-      const entity = self.entities.get(info.id);
+    this.messages.onHeal(function(info) {
+      const entity = this.entities.get(info.id);
 
       if (!entity) return;
 
       switch (info.type) {
         case "health":
-          self.info.create(
+          this.info.create(
             Modules.Hits.Heal,
             [info.amount],
             entity.x,
@@ -796,7 +796,7 @@ export default class Game {
           break;
 
         case "mana":
-          self.info.create(
+          this.info.create(
             Modules.Hits.Mana,
             [info.amount],
             entity.x,
@@ -813,8 +813,8 @@ export default class Game {
       entity.triggerHealthBar();
     });
 
-    self.messages.onExperience(function(info) {
-      const entity = self.entities.get(info.id);
+    this.messages.onExperience(function(info) {
+      const entity = this.entities.get(info.id);
 
       if (!entity || entity.type !== "player") return;
 
@@ -822,38 +822,38 @@ export default class Game {
 
       if (entity.level !== info.level) {
         entity.level = info.level;
-        self.info.create(Modules.Hits.LevelUp, null, entity.x, entity.y);
-      } else if (entity.id === self.player.id) self.info.create(Modules.Hits.Experience, [info.amount], entity.x, entity.y);
+        this.info.create(Modules.Hits.LevelUp, null, entity.x, entity.y);
+      } else if (entity.id === this.player.id) this.info.create(Modules.Hits.Experience, [info.amount], entity.x, entity.y);
 
-      self.interface.profile.update();
+      this.interface.profile.update();
     });
 
-    self.messages.onDeath(function(id) {
-      const entity = self.entities.get(id);
+    this.messages.onDeath(function(id) {
+      const entity = this.entities.get(id);
 
-      if (!entity || id !== self.player.id) return;
+      if (!entity || id !== this.player.id) return;
 
-      self.audio.play(Modules.AudioTypes.SFX, "death");
+      this.audio.play(Modules.AudioTypes.SFX, "death");
 
-      self.player.dead = true;
-      self.player.removeTarget();
-      self.player.orientation = Modules.Orientation.Down;
+      this.player.dead = true;
+      this.player.removeTarget();
+      this.player.orientation = Modules.Orientation.Down;
 
-      self.app.body.addClass("death");
+      this.app.body.addClass("death");
     });
 
-    self.messages.onAudio(function(song) {
-      self.audio.songName = song;
+    this.messages.onAudio(function(song) {
+      this.audio.songName = song;
 
-      if (Detect.isSafari() && !self.audio.song) return;
+      if (Detect.isSafari() && !this.audio.song) return;
 
-      self.audio.update();
+      this.audio.update();
     });
 
-    self.messages.onNPC(function(opcode, info) {
+    this.messages.onNPC(function(opcode, info) {
       switch (opcode) {
         case Packets.NPCOpcode.Talk:
-          const entity = self.entities.get(info.id),
+          const entity = this.entities.get(info.id),
             messages = info.text,
             isNPC = !info.nonNPC,
             message = null;
@@ -868,52 +868,52 @@ export default class Game {
           message = isNPC ? entity.talk(messages) : messages;
 
           if (isNPC) {
-            const bubble = self.bubble.create(info.id, message, self.time, 5000);
+            const bubble = this.bubble.create(info.id, message, this.time, 5000);
 
-            self.bubble.setTo(entity);
+            this.bubble.setTo(entity);
 
-            if (self.renderer.mobile && self.renderer.autoCentre)
-              self.renderer.camera.centreOn(self.player);
+            if (this.renderer.mobile && this.renderer.autoCentre)
+              this.renderer.camera.centreOn(this.player);
 
             if (bubble) {
               bubble.setClickable();
 
               bubble.element.click(function() {
-                const entity = self.entities.get(bubble.id);
+                const entity = this.entities.get(bubble.id);
 
                 if (entity)
-                  self.input.click({
+                  this.input.click({
                     x: entity.gridX,
                     y: entity.gridY
                   });
               });
             }
           } else {
-            self.bubble.create(info.id, message, self.time, 5000);
-            self.bubble.setTo(entity);
+            this.bubble.create(info.id, message, this.time, 5000);
+            this.bubble.setTo(entity);
           }
 
           const sound = "npc";
 
           if (!message && isNPC) {
             sound = "npc-end";
-            self.bubble.destroy(info.id);
+            this.bubble.destroy(info.id);
           }
 
-          self.audio.play(Modules.AudioTypes.SFX, sound);
+          this.audio.play(Modules.AudioTypes.SFX, sound);
 
           break;
 
         case Packets.NPCOpcode.Bank:
-          self.interface.bank.display();
+          this.interface.bank.display();
           break;
 
         case Packets.NPCOpcode.Enchant:
-          self.interface.enchant.display();
+          this.interface.enchant.display();
           break;
 
         case Packets.NPCOpcode.Countdown:
-          const cEntity = self.entities.get(info.id),
+          const cEntity = this.entities.get(info.id),
             countdown = info.countdown;
 
           if (cEntity) {
@@ -924,42 +924,42 @@ export default class Game {
       }
     });
 
-    self.messages.onRespawn(function(id, x, y) {
-      if (id !== self.player.id) {
+    this.messages.onRespawn(function(id, x, y) {
+      if (id !== this.player.id) {
         log.error("Player id mismatch.");
         return;
       }
 
-      self.player.setGridPosition(x, y);
+      this.player.setGridPosition(x, y);
 
-      self.entities.addEntity(self.player);
+      this.entities.addEntity(this.player);
 
-      self.renderer.camera.centreOn(self.player);
+      this.renderer.camera.centreOn(this.player);
 
-      self.player.currentAnimation = null;
+      this.player.currentAnimation = null;
 
-      self.player.setSprite(self.getSprite(self.player.getSpriteName()));
+      this.player.setSprite(this.getSprite(this.player.getSpriteName()));
 
-      self.player.idle();
+      this.player.idle();
 
-      self.player.dead = false;
+      this.player.dead = false;
     });
 
-    self.messages.onEnchant(function(opcode, info) {
+    this.messages.onEnchant(function(opcode, info) {
       const type = info.type,
         index = info.index;
 
       switch (opcode) {
         case Packets.EnchantOpcode.Select:
-          self.interface.enchant.add(type, index);
+          this.interface.enchant.add(type, index);
           break;
         case Packets.EnchantOpcode.Remove:
-          self.interface.enchant.moveBack(type, index);
+          this.interface.enchant.moveBack(type, index);
           break;
       }
     });
 
-    self.messages.onGuild(function(opcode, info) {
+    this.messages.onGuild(function(opcode, info) {
       switch (opcode) {
         case Packets.GuildOpcode.Create:
           break;
@@ -968,51 +968,51 @@ export default class Game {
       }
     });
 
-    self.messages.onPointer(function(opcode, info) {
+    this.messages.onPointer(function(opcode, info) {
       switch (opcode) {
         case Packets.PointerOpcode.NPC:
-          const entity = self.entities.get(info.id);
+          const entity = this.entities.get(info.id);
           console.log("pointer NPC", info, entity);
 
           if (!entity) {
             return;
           }
 
-          self.pointer.create(entity.id, Modules.Pointers.Entity);
-          self.pointer.setToEntity(entity);
+          this.pointer.create(entity.id, Modules.Pointers.Entity);
+          this.pointer.setToEntity(entity);
           break;
 
         case Packets.PointerOpcode.Location:
-          self.pointer.create(info.id, Modules.Pointers.Position);
-          self.pointer.setToPosition(info.id, info.x * 16, info.y * 16);
+          this.pointer.create(info.id, Modules.Pointers.Position);
+          this.pointer.setToPosition(info.id, info.x * 16, info.y * 16);
           console.log("pointer location", info);
           break;
 
         case Packets.PointerOpcode.Relative:
-          self.pointer.create(info.id, Modules.Pointers.Relative);
-          self.pointer.setRelative(info.id, info.x, info.y);
+          this.pointer.create(info.id, Modules.Pointers.Relative);
+          this.pointer.setRelative(info.id, info.x, info.y);
           console.log("pointer relative", info);
 
           break;
 
         case Packets.PointerOpcode.Remove:
-          self.pointer.clean();
+          this.pointer.clean();
           console.log("pointer remove", info);
 
           break;
       }
     });
 
-    self.messages.onPVP(function(id, pvp) {
-      if (self.player.id === id) self.pvp = pvp;
+    this.messages.onPVP(function(id, pvp) {
+      if (this.player.id === id) this.pvp = pvp;
       else {
-        const entity = self.entities.get(id);
+        const entity = this.entities.get(id);
 
         if (entity) entity.pvp = pvp;
       }
     });
 
-    self.messages.onShop(function(opcode, info) {
+    this.messages.onShop(function(opcode, info) {
       switch (opcode) {
         case Packets.ShopOpcode.Open:
           break;
@@ -1030,45 +1030,45 @@ export default class Game {
   }
 
   postLoad() {
-    const self = this;
+    
 
     /**
      * Call this after the player has been welcomed
      * by the server and the client received the connection.
      */
 
-    self.renderer.loadStaticSprites();
+    this.renderer.loadStaticSprites();
 
-    self.getCamera().setPlayer(self.player);
+    this.getCamera().setPlayer(this.player);
 
-    self.renderer.renderedFrame[0] = -1;
+    this.renderer.renderedFrame[0] = -1;
 
-    self.entities.addEntity(self.player);
+    this.entities.addEntity(this.player);
 
-    const defaultSprite = self.getSprite(self.player.getSpriteName());
+    const defaultSprite = this.getSprite(this.player.getSpriteName());
 
-    self.player.setSprite(defaultSprite);
-    self.player.idle();
+    this.player.setSprite(defaultSprite);
+    this.player.idle();
 
-    self.socket.send(Packets.Ready, [true]);
+    this.socket.send(Packets.Ready, [true]);
 
-    self.playerHandler = new PlayerHandler(self, self.player);
+    this.playerHandler = new PlayerHandler(self, this.player);
 
-    self.renderer.updateAnimatedTiles();
+    this.renderer.updateAnimatedTiles();
 
-    self.zoning = new Zoning(self);
+    this.zoning = new Zoning(self);
 
-    self.updater.setSprites(self.entities.sprites);
+    this.updater.setSprites(this.entities.sprites);
 
-    self.renderer.verifyCentration();
+    this.renderer.verifyCentration();
 
-    if (self.storage.data.new) {
-      self.storage.data.new = false;
-      self.storage.save();
+    if (this.storage.data.new) {
+      this.storage.data.new = false;
+      this.storage.save();
     }
 
-    if (self.storage.data.welcome !== false) {
-      self.app.body.addClass("welcomeMessage");
+    if (this.storage.data.welcome !== false) {
+      this.app.body.addClass("welcomeMessage");
     }
   }
 
@@ -1080,13 +1080,13 @@ export default class Game {
     loginName.prop("readonly", false);
     loginPassword.prop("readonly", false);
 
-    if (!self.hasRemember()) return;
+    if (!this.hasRemember()) return;
 
-    if (self.getStorageUsername() !== "")
-      loginName.val(self.getStorageUsername());
+    if (this.getStorageUsername() !== "")
+      loginName.val(this.getStorageUsername());
 
-    if (self.getStoragePassword() !== "")
-      loginPassword.val(self.getStoragePassword());
+    if (this.getStoragePassword() !== "")
+      loginPassword.val(this.getStoragePassword());
 
     $("#rememberMe").addClass("active");
   }
@@ -1107,20 +1107,20 @@ export default class Game {
 
   findPath(character, x, y, ignores) {
     const self = this,
-      grid = self.entities.grids.pathingGrid,
+      grid = this.entities.grids.pathingGrid,
       path = [];
 
-    if (self.map.isColliding(x, y) || !self.pathfinder || !character)
+    if (this.map.isColliding(x, y) || !this.pathfinder || !character)
       return path;
 
     if (ignores)
       _.each(ignores, function(entity) {
-        self.pathfinder.ignoreEntity(entity);
+        this.pathfinder.ignoreEntity(entity);
       });
 
-    path = self.pathfinder.find(grid, character, x, y, false);
+    path = this.pathfinder.find(grid, character, x, y, false);
 
-    if (ignores) self.pathfinder.clearIgnores();
+    if (ignores) this.pathfinder.clearIgnores();
 
     return path;
   }
@@ -1130,7 +1130,7 @@ export default class Game {
   }
 
   handleDisconnection(noError) {
-    const self = this;
+    
 
     /**
      * This function is responsible for handling sudden
@@ -1138,50 +1138,50 @@ export default class Game {
      * menu-based errors.
      */
 
-    if (!self.started) return;
+    if (!this.started) return;
 
-    self.stop();
-    self.renderer.stop();
+    this.stop();
+    this.renderer.stop();
 
-    self.unload();
+    this.unload();
 
-    self.app.showMenu();
+    this.app.showMenu();
 
     if (noError) {
-      self.app.sendError(null, "You have been disconnected from the server");
-      self.app.statusMessage = null;
+      this.app.sendError(null, "You have been disconnected from the server");
+      this.app.statusMessage = null;
     }
 
-    self.loadRenderer();
-    self.loadControllers();
+    this.loadRenderer();
+    this.loadControllers();
 
-    self.app.toggleLogin(false);
-    self.app.updateLoader("");
+    this.app.toggleLogin(false);
+    this.app.updateLoader("");
   }
 
   respawn() {
-    const self = this;
+    
 
-    self.audio.play(Modules.AudioTypes.SFX, "revive");
-    self.app.body.removeClass("death");
+    this.audio.play(Modules.AudioTypes.SFX, "revive");
+    this.app.body.removeClass("death");
 
-    self.socket.send(Packets.Respawn, [self.player.id]);
+    this.socket.send(Packets.Respawn, [this.player.id]);
   }
 
   tradeWith(player) {
-    const self = this;
+    
 
-    if (!player || player.id === self.player.id) return;
+    if (!player || player.id === this.player.id) return;
 
-    self.socket.send(Packets.Trade, [Packets.TradeOpcode.Request, player.id]);
+    this.socket.send(Packets.Trade, [Packets.TradeOpcode.Request, player.id]);
   }
 
   resize() {
-    const self = this;
+    
 
-    self.renderer.resize();
+    this.renderer.resize();
 
-    if (self.pointer) self.pointer.resize();
+    if (this.pointer) this.pointer.resize();
   }
 
   createPlayer() {
@@ -1206,12 +1206,12 @@ export default class Game {
 
   getEntityAt(x, y, ignoreSelf) {
     const self = this,
-      entities = self.entities.grids.renderingGrid[y][x];
+      entities = this.entities.grids.renderingGrid[y][x];
 
     if (_.size(entities) > 0)
       return entities[_.keys(entities)[ignoreSelf ? 1 : 0]];
 
-    const items = self.entities.grids.itemGrid[y][x];
+    const items = this.entities.grids.itemGrid[y][x];
 
     if (_.size(items) > 0) {
       _.each(items, function(item) {
@@ -1259,11 +1259,11 @@ export default class Game {
   }
 
   setInput(input) {
-    const self = this;
+    
 
-    if (!self.input) {
-      self.input = input;
-      self.renderer.setInput(self.input);
+    if (!this.input) {
+      this.input = input;
+      this.renderer.setInput(this.input);
     }
   }
 

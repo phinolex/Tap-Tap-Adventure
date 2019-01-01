@@ -10,11 +10,11 @@ module.exports = Quests = cls.Class.extend({
   init(player) {
     var self = this;
 
-    self.player = player;
-    self.quests = {};
-    self.achievements = {};
+    this.player = player;
+    this.quests = {};
+    this.achievements = {};
 
-    self.load();
+    this.load();
   },
 
   load() {
@@ -23,17 +23,17 @@ module.exports = Quests = cls.Class.extend({
 
     _.each(QuestData, function(quest) {
       if (questCount === 0)
-        self.quests[quest.id] = new Introduction(self.player, quest);
+        this.quests[quest.id] = new Introduction(this.player, quest);
       else if (questCount === 1)
-        self.quests[quest.id] = new BulkySituation(self.player, quest);
+        this.quests[quest.id] = new BulkySituation(this.player, quest);
 
       questCount++;
     });
 
     _.each(AchievementData, function(achievement) {
-      self.achievements[achievement.id] = new Achievement(
+      this.achievements[achievement.id] = new Achievement(
         achievement.id,
-        self.player
+        this.player
       );
     });
   },
@@ -42,24 +42,24 @@ module.exports = Quests = cls.Class.extend({
     var self = this;
 
     for (var id = 0; id < ids.length; id++)
-      if (!isNaN(parseInt(ids[id])) && self.quests[id])
-        self.quests[id].load(stages[id]);
+      if (!isNaN(parseInt(ids[id])) && this.quests[id])
+        this.quests[id].load(stages[id]);
   },
 
   updateAchievements(ids, progress) {
     var self = this;
 
     for (var id = 0; id < ids.length; id++)
-      if (!isNaN(parseInt(ids[id])) && self.achievements[id])
-        self.achievements[id].setProgress(progress[id]);
+      if (!isNaN(parseInt(ids[id])) && this.achievements[id])
+        this.achievements[id].setProgress(progress[id]);
 
-    if (self.readyCallback) self.readyCallback();
+    if (this.readyCallback) this.readyCallback();
   },
 
   getQuest(id) {
     var self = this;
 
-    if (id in self.quests) return self.quests[id];
+    if (id in this.quests) return this.quests[id];
 
     return null;
   },
@@ -69,13 +69,13 @@ module.exports = Quests = cls.Class.extend({
       ids = "",
       stages = "";
 
-    for (var id = 0; id < self.getQuestSize(); id++) {
+    for (var id = 0; id < this.getQuestSize(); id++) {
       ids += id + " ";
-      stages += self.quests[id].stage + " ";
+      stages += this.quests[id].stage + " ";
     }
 
     return {
-      username: self.player.username,
+      username: this.player.username,
       ids: ids,
       stages: stages
     };
@@ -86,13 +86,13 @@ module.exports = Quests = cls.Class.extend({
       ids = "",
       progress = "";
 
-    for (var id = 0; id < self.getAchievementSize(); id++) {
+    for (var id = 0; id < this.getAchievementSize(); id++) {
       ids += id + " ";
-      progress += self.achievements[id].progress + " ";
+      progress += this.achievements[id].progress + " ";
     }
 
     return {
-      username: self.player.username,
+      username: this.player.username,
       ids: ids,
       progress: progress
     };
@@ -103,11 +103,11 @@ module.exports = Quests = cls.Class.extend({
       quests = [],
       achievements = [];
 
-    self.forEachQuest(function(quest) {
+    this.forEachQuest(function(quest) {
       quests.push(quest.getInfo());
     });
 
-    self.forEachAchievement(function(achievement) {
+    this.forEachAchievement(function(achievement) {
       achievements.push(achievement.getInfo());
     });
 
@@ -133,9 +133,9 @@ module.exports = Quests = cls.Class.extend({
     var self = this,
       count = 0;
 
-    for (var id in self.quests)
-      if (self.quests.hasOwnProperty(id))
-        if (self.quests[id].isFinished()) count++;
+    for (var id in this.quests)
+      if (this.quests.hasOwnProperty(id))
+        if (this.quests[id].isFinished()) count++;
 
     return count;
   },
@@ -144,9 +144,9 @@ module.exports = Quests = cls.Class.extend({
     var self = this,
       count = 0;
 
-    for (var id in self.achievements)
-      if (self.achievements.hasOwnProperty(id))
-        if (self.achievements[id].isFinished()) count++;
+    for (var id in this.achievements)
+      if (this.achievements.hasOwnProperty(id))
+        if (this.achievements[id].isFinished()) count++;
 
     return count;
   },
@@ -168,9 +168,9 @@ module.exports = Quests = cls.Class.extend({
      * follow the proper order.
      */
 
-    for (var id in self.quests) {
-      if (self.quests.hasOwnProperty(id)) {
-        var quest = self.quests[id];
+    for (var id in this.quests) {
+      if (this.quests.hasOwnProperty(id)) {
+        var quest = this.quests[id];
 
         if (quest.hasNPC(npc.id)) return quest;
       }
@@ -182,13 +182,13 @@ module.exports = Quests = cls.Class.extend({
   getAchievementByNPC(npc) {
     var self = this;
 
-    for (var id in self.achievements)
-      if (self.achievements.hasOwnProperty(id))
+    for (var id in this.achievements)
+      if (this.achievements.hasOwnProperty(id))
         if (
-          self.achievements[id].data.npc === npc.id &&
-          !self.achievements[id].isFinished()
+          this.achievements[id].data.npc === npc.id &&
+          !this.achievements[id].isFinished()
         )
-          return self.achievements[id];
+          return this.achievements[id];
 
     return null;
   },
@@ -196,10 +196,10 @@ module.exports = Quests = cls.Class.extend({
   getAchievementByMob(mob) {
     var self = this;
 
-    for (var id in self.achievements)
-      if (self.achievements.hasOwnProperty(id))
-        if (self.achievements[id].data.mob === mob.id)
-          return self.achievements[id];
+    for (var id in this.achievements)
+      if (this.achievements.hasOwnProperty(id))
+        if (this.achievements[id].data.mob === mob.id)
+          return this.achievements[id];
 
     return null;
   },
@@ -207,9 +207,9 @@ module.exports = Quests = cls.Class.extend({
   isQuestMob(mob) {
     var self = this;
 
-    for (var id in self.quests) {
-      if (self.quests.hasOwnProperty(id)) {
-        var quest = self.quests[id];
+    for (var id in this.quests) {
+      if (this.quests.hasOwnProperty(id)) {
+        var quest = this.quests[id];
 
         if (!quest.isFinished() && quest.hasMob(mob.id)) return true;
       }
@@ -219,11 +219,11 @@ module.exports = Quests = cls.Class.extend({
   isAchievementMob(mob) {
     var self = this;
 
-    for (var id in self.achievements)
-      if (self.achievements.hasOwnProperty(id))
+    for (var id in this.achievements)
+      if (this.achievements.hasOwnProperty(id))
         if (
-          self.achievements[id].data.mob === mob.id &&
-          !self.achievements[id].isFinished()
+          this.achievements[id].data.mob === mob.id &&
+          !this.achievements[id].isFinished()
         )
           return true;
 
@@ -233,9 +233,9 @@ module.exports = Quests = cls.Class.extend({
   isQuestNPC(npc) {
     var self = this;
 
-    for (var id in self.quests) {
-      if (self.quests.hasOwnProperty(id)) {
-        var quest = self.quests[id];
+    for (var id in this.quests) {
+      if (this.quests.hasOwnProperty(id)) {
+        var quest = this.quests[id];
 
         if (!quest.isFinished() && quest.hasNPC(npc.id)) return true;
       }
@@ -245,11 +245,11 @@ module.exports = Quests = cls.Class.extend({
   isAchievementNPC(npc) {
     var self = this;
 
-    for (var id in self.achievements)
-      if (self.achievements.hasOwnProperty(id))
+    for (var id in this.achievements)
+      if (this.achievements.hasOwnProperty(id))
         if (
-          self.achievements[id].data.npc === npc.id &&
-          !self.achievements[id].isFinished()
+          this.achievements[id].data.npc === npc.id &&
+          !this.achievements[id].isFinished()
         )
           return true;
 

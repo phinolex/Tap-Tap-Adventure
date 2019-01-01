@@ -18,18 +18,18 @@ module.exports = Inventory = Container.extend({
   init(owner, size) {
     var self = this;
 
-    self._super("Inventory", owner, size);
+    this._super("Inventory", owner, size);
   },
 
   load(ids, counts, abilities, abilityLevels) {
     var self = this;
 
-    self._super(ids, counts, abilities, abilityLevels);
+    this._super(ids, counts, abilities, abilityLevels);
 
-    self.owner.send(
+    this.owner.send(
       new Messages.Inventory(Packets.InventoryOpcode.Batch, [
-        self.size,
-        self.slots
+        this.size,
+        this.slots
       ])
     );
   },
@@ -43,8 +43,8 @@ module.exports = Inventory = Container.extend({
       //default to moving whole stack
       count = parseInt(item.count);
 
-    if (!self.canHold(item.id, count)) {
-      self.owner.send(
+    if (!this.canHold(item.id, count)) {
+      this.owner.send(
         new Messages.Notification(
           Packets.NotificationOpcode.Text,
           Constants.InventoryFull
@@ -53,15 +53,15 @@ module.exports = Inventory = Container.extend({
       return false;
     }
 
-    var slot = self._super(item.id, count, item.ability, item.abilityLevel);
+    var slot = this._super(item.id, count, item.ability, item.abilityLevel);
 
     if (!slot) return false;
 
-    self.owner.send(new Messages.Inventory(Packets.InventoryOpcode.Add, slot));
+    this.owner.send(new Messages.Inventory(Packets.InventoryOpcode.Add, slot));
 
-    self.owner.save();
+    this.owner.save();
 
-    if (item.instance) self.owner.world.removeItem(item);
+    if (item.instance) this.owner.world.removeItem(item);
 
     return true;
   },
@@ -69,17 +69,17 @@ module.exports = Inventory = Container.extend({
   remove(id, count, index) {
     var self = this;
 
-    if (!index) index = self.getIndex(id);
+    if (!index) index = this.getIndex(id);
 
-    if (!self._super(index, id, count)) return;
+    if (!this._super(index, id, count)) return;
 
-    self.owner.send(
+    this.owner.send(
       new Messages.Inventory(Packets.InventoryOpcode.Remove, {
         index: parseInt(index),
         count: count
       })
     );
 
-    self.owner.save();
+    this.owner.save();
   }
 });

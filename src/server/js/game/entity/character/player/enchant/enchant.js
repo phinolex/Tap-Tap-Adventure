@@ -16,25 +16,25 @@ module.exports = Enchant = cls.Class.extend({
   init(player) {
     var self = this;
 
-    self.player = player;
+    this.player = player;
 
-    self.selectedItem = null;
-    self.selectedShards = null;
+    this.selectedItem = null;
+    this.selectedShards = null;
   },
 
   convert(shard) {
     var self = this;
 
-    if (!Items.isShard(shard.id) || !self.player.inventory.hasSpace()) return;
+    if (!Items.isShard(shard.id) || !this.player.inventory.hasSpace()) return;
 
     var tier = Items.getShardTier(shard.id);
 
     if (shard.count < 11 && tier > 5) return;
 
     for (var i = 0; i < shard.count; i += 10) {
-      self.player.inventory.remove(shard.id, 10, shard.index);
+      this.player.inventory.remove(shard.id, 10, shard.index);
 
-      self.player.inventory.add({
+      this.player.inventory.add({
         id: shard.id + 1,
         count: 1,
         ability: -1,
@@ -46,23 +46,23 @@ module.exports = Enchant = cls.Class.extend({
   enchant() {
     var self = this;
 
-    if (!self.selectedItem) {
-      self.player.notify("You have not selected an item to enchant.");
+    if (!this.selectedItem) {
+      this.player.notify("You have not selected an item to enchant.");
       return;
     }
 
-    if (!self.selectedShards) {
-      self.player.notify("You have to select shards to infuse.");
+    if (!this.selectedShards) {
+      this.player.notify("You have to select shards to infuse.");
       return;
     }
 
-    if (!self.verify()) {
-      self.player.notify("This item cannot be enchanted.");
+    if (!this.verify()) {
+      this.player.notify("This item cannot be enchanted.");
       return;
     }
 
-    if (self.selectedShards.count < 10) {
-      self.player.notify("You must have a minimum of 10 shards to enchant.");
+    if (this.selectedShards.count < 10) {
+      this.player.notify("You must have a minimum of 10 shards to enchant.");
       return;
     }
 
@@ -71,45 +71,45 @@ module.exports = Enchant = cls.Class.extend({
      * and reason them out.
      */
 
-    var tier = self.selectedItem.tier;
+    var tier = this.selectedItem.tier;
 
-    self.selectedItem.count = Utils.randomInt(1, tier === 5 ? 40 : 5 * tier);
+    this.selectedItem.count = Utils.randomInt(1, tier === 5 ? 40 : 5 * tier);
 
     if (tier < 2) return;
 
-    if (self.hasAbility(self.selectedItem))
-      if (self.selectedItem.abilityLevel < 5) self.selectedItem.abilityLevel++;
-      else self.generateAbility();
+    if (this.hasAbility(this.selectedItem))
+      if (this.selectedItem.abilityLevel < 5) this.selectedItem.abilityLevel++;
+      else this.generateAbility();
 
-    self.player.inventory.remove(
-      self.selectedShards.id,
+    this.player.inventory.remove(
+      this.selectedShards.id,
       10,
-      self.selectedShards.index
+      this.selectedShards.index
     );
-    self.player.sync();
+    this.player.sync();
   },
 
   generateAbility() {
     var self = this,
-      type = Items.getType(self.selectedItem.id),
+      type = Items.getType(this.selectedItem.id),
       probability = Utils.randomInt(0, 100);
 
-    if (probability > 5 + 5 * self.selectedShards.tier) return;
+    if (probability > 5 + 5 * this.selectedShards.tier) return;
 
     switch (type) {
       case "armor":
       case "armorarcher":
-        self.selectedItem.ability = Utils.randomInt(2, 3);
+        this.selectedItem.ability = Utils.randomInt(2, 3);
 
         break;
 
       case "weapon":
-        self.selectedItem.ability = Utils.randomInt(0, 1);
+        this.selectedItem.ability = Utils.randomInt(0, 1);
 
         break;
 
       case "weaponarcher":
-        self.selectedItem.ability = Utils.randomInt(4, 5);
+        this.selectedItem.ability = Utils.randomInt(4, 5);
 
         break;
 
@@ -138,16 +138,16 @@ module.exports = Enchant = cls.Class.extend({
     if (isItem && !Items.isEnchantable(item.id)) return;
 
     if (type === "item") {
-      if (self.selectedItem) self.remove("item");
+      if (this.selectedItem) this.remove("item");
 
-      self.selectedItem = item;
+      this.selectedItem = item;
     } else if (type === "shards") {
-      if (self.selectedShards) self.remove("shards");
+      if (this.selectedShards) this.remove("shards");
 
-      self.selectedShards = item;
+      this.selectedShards = item;
     }
 
-    self.player.send(
+    this.player.send(
       new Messages.Enchant(Packets.EnchantOpcode.Select, {
         type: type,
         index: item.index
@@ -159,17 +159,17 @@ module.exports = Enchant = cls.Class.extend({
     var self = this,
       index;
 
-    if (type === "item" && self.selectedItem) {
-      index = self.selectedItem.index;
+    if (type === "item" && this.selectedItem) {
+      index = this.selectedItem.index;
 
-      self.selectedItem = null;
-    } else if (type === "shards" && self.selectedShards) {
-      index = self.selectedShards.index;
+      this.selectedItem = null;
+    } else if (type === "shards" && this.selectedShards) {
+      index = this.selectedShards.index;
 
-      self.selectedShards = null;
+      this.selectedShards = null;
     }
 
-    self.player.send(
+    this.player.send(
       new Messages.Enchant(Packets.EnchantOpcode.Remove, {
         type: type,
         index: index

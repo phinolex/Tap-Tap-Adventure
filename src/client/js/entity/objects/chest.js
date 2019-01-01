@@ -3,9 +3,9 @@ define(["../entity"], function(Entity) {
     init(id, kind) {
       var self = this;
 
-      self._super(id, kind);
+      this._super(id, kind);
 
-      self.type = "chest";
+      this.type = "chest";
     },
 
     idle() {

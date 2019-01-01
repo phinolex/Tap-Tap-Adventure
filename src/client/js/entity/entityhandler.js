@@ -5,65 +5,65 @@ define(["./character/character"], function(Character) {
     init(entity) {
       var self = this;
 
-      self.entity = entity;
-      self.game = null;
-      self.entities = null;
+      this.entity = entity;
+      this.game = null;
+      this.entities = null;
     },
 
     load() {
       var self = this;
 
-      if (!self.entity || !self.game) return;
+      if (!this.entity || !this.game) return;
 
-      if (self.isCharacter()) {
-        self.entity.onRequestPath(function(x, y) {
-          var ignored = [self.entity];
+      if (this.isCharacter()) {
+        this.entity.onRequestPath(function(x, y) {
+          var ignored = [this.entity];
 
-          return self.game.findPath(self.entity, x, y, ignored);
+          return this.game.findPath(this.entity, x, y, ignored);
         });
 
-        self.entity.onBeforeStep(function() {
-          self.entities.unregisterPosition(self.entity);
+        this.entity.onBeforeStep(function() {
+          this.entities.unregisterPosition(this.entity);
         });
 
-        self.entity.onStep(function() {
-          self.entities.registerDuality(self.entity);
+        this.entity.onStep(function() {
+          this.entities.registerDuality(this.entity);
 
-          self.entity.forEachAttacker(function(attacker) {
+          this.entity.forEachAttacker(function(attacker) {
             if (
               attacker.hasTarget() &&
-              attacker.target.id === self.entity.id &&
+              attacker.target.id === this.entity.id &&
               !attacker.stunned
             )
-              attacker.follow(self.entity);
+              attacker.follow(this.entity);
           });
 
-          if (self.entity.type === "mob")
-            self.game.socket.send(Packets.Movement, [
+          if (this.entity.type === "mob")
+            this.game.socket.send(Packets.Movement, [
               Packets.MovementOpcode.Entity,
-              self.entity.id,
-              self.entity.gridX,
-              self.entity.gridY
+              this.entity.id,
+              this.entity.gridX,
+              this.entity.gridY
             ]);
 
           if (
-            self.entity.attackRange > 1 &&
-            self.entity.hasTarget() &&
-            self.entity.getDistance(self.entity.target) <=
-              self.entity.attackRange
+            this.entity.attackRange > 1 &&
+            this.entity.hasTarget() &&
+            this.entity.getDistance(this.entity.target) <=
+              this.entity.attackRange
           )
-            self.entity.stop(false);
+            this.entity.stop(false);
         });
 
-        self.entity.onStopPathing(function() {
-          self.entities.grids.addToRenderingGrid(
-            self.entity,
-            self.entity.gridX,
-            self.entity.gridY
+        this.entity.onStopPathing(function() {
+          this.entities.grids.addToRenderingGrid(
+            this.entity,
+            this.entity.gridX,
+            this.entity.gridY
           );
 
-          self.entities.unregisterPosition(self.entity);
-          self.entities.registerPosition(self.entity);
+          this.entities.unregisterPosition(this.entity);
+          this.entities.registerPosition(this.entity);
         });
       }
     },
@@ -80,15 +80,15 @@ define(["./character/character"], function(Character) {
     setGame(game) {
       var self = this;
 
-      if (!self.game) self.game = game;
+      if (!this.game) this.game = game;
 
-      self.setEntities(self.game.entities);
+      this.setEntities(this.game.entities);
     },
 
     setEntities(entities) {
       var self = this;
 
-      if (!self.entities) self.entities = entities;
+      if (!this.entities) this.entities = entities;
     }
   });
 });

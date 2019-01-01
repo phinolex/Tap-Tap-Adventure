@@ -17,71 +17,71 @@ module.exports = QueenAnt = Combat.extend({
 
     character.spawnDistance = 18;
 
-    self._super(character);
+    this._super(character);
 
-    self.lastActionThreshold = 10000; //Due to the nature of the AoE attack
+    this.lastActionThreshold = 10000; //Due to the nature of the AoE attack
 
-    self.character = character;
+    this.character = character;
 
-    self.aoeTimeout = null;
+    this.aoeTimeout = null;
 
-    self.aoeCountdown = 5;
-    self.aoeRadius = 2;
-    self.lastAoE = 0;
+    this.aoeCountdown = 5;
+    this.aoeRadius = 2;
+    this.lastAoE = 0;
 
-    self.minionCount = 7;
-    self.lastSpawn = 0;
-    self.minions = [];
+    this.minionCount = 7;
+    this.lastSpawn = 0;
+    this.minions = [];
 
-    self.frozen = false;
+    this.frozen = false;
 
-    self.character.onDeath(function() {
+    this.character.onDeath(function() {
       /**
        * This is to prevent the boss from dealing
        * any powerful AoE attack after dying.
        */
 
-      self.lastSpawn = 0;
+      this.lastSpawn = 0;
 
-      if (self.aoeTimeout) {
-        clearTimeout(self.aoeTimeout);
-        self.aoeTimeout = null;
+      if (this.aoeTimeout) {
+        clearTimeout(this.aoeTimeout);
+        this.aoeTimeout = null;
       }
 
-      var listCopy = self.minions.slice();
+      var listCopy = this.minions.slice();
 
-      for (var i = 0; i < listCopy.length; i++) self.world.kill(listCopy[i]);
+      for (var i = 0; i < listCopy.length; i++) this.world.kill(listCopy[i]);
     });
 
-    self.character.onReturn(function() {
-      clearTimeout(self.aoeTimeout);
-      self.aoeTimeout = null;
+    this.character.onReturn(function() {
+      clearTimeout(this.aoeTimeout);
+      this.aoeTimeout = null;
     });
   },
 
   begin(attacker) {
     var self = this;
 
-    self.resetAoE();
+    this.resetAoE();
 
-    self._super(attacker);
+    this._super(attacker);
   },
 
   hit(attacker, target, hitInfo) {
     var self = this;
 
-    if (self.frozen) return;
+    if (this.frozen) return;
 
-    if (self.canCastAoE()) {
-      self.doAoE();
+    if (this.canCastAoE()) {
+      this.doAoE();
       return;
     }
 
-    if (self.canSpawn()) self.spawnMinions();
+    if (this.canSpawn()) this.spawnMinions();
 
-    if (self.isAttacked()) self.beginMinionAttack();
+    if (this.isAttacked()) this.beginMinionAttack();
 
-    self._super(attacker, target, hitInfo);
+    this._super(attacker, target, hitInfo);
   },
 
   doAoE() {
@@ -93,52 +93,52 @@ module.exports = QueenAnt = Combat.extend({
      * which does not allow us to call _super().
      */
 
-    self.resetAoE();
+    this.resetAoE();
 
-    self.lastHit = self.getTime();
+    this.lastHit = this.getTime();
 
-    self.pushFreeze(true);
+    this.pushFreeze(true);
 
-    self.pushCountdown(self.aoeCountdown);
+    this.pushCountdown(this.aoeCountdown);
 
-    self.aoeTimeout = setTimeout(function() {
-      self.dealAoE(self.aoeRadius, true);
+    this.aoeTimeout = setTimeout(function() {
+      this.dealAoE(this.aoeRadius, true);
 
-      self.pushFreeze(false);
+      this.pushFreeze(false);
     }, 5000);
   },
 
   spawnMinions() {
     var self = this;
 
-    self.lastSpawn = new Date().getTime();
+    this.lastSpawn = new Date().getTime();
 
-    for (var i = 0; i < self.minionCount; i++)
-      self.minions.push(
-        self.world.spawnMob(13, self.character.x, self.character.y)
+    for (var i = 0; i < this.minionCount; i++)
+      this.minions.push(
+        this.world.spawnMob(13, this.character.x, this.character.y)
       );
 
-    _.each(self.minions, function(minion) {
+    _.each(this.minions, function(minion) {
       minion.aggressive = true;
       minion.spawnDistance = 12;
 
       minion.onDeath(function() {
-        if (self.isLast()) self.lastSpawn = new Date().getTime();
+        if (this.isLast()) this.lastSpawn = new Date().getTime();
 
-        self.minions.splice(self.minions.indexOf(minion), 1);
+        this.minions.splice(this.minions.indexOf(minion), 1);
       });
 
-      if (self.isAttacked()) self.beginMinionAttack();
+      if (this.isAttacked()) this.beginMinionAttack();
     });
   },
 
   beginMinionAttack() {
     var self = this;
 
-    if (!self.hasMinions()) return;
+    if (!this.hasMinions()) return;
 
-    _.each(self.minions, function(minion) {
-      var randomTarget = self.getRandomTarget();
+    _.each(this.minions, function(minion) {
+      var randomTarget = this.getRandomTarget();
 
       if (!minion.hasTarget() && randomTarget)
         minion.combat.begin(randomTarget);
@@ -152,14 +152,14 @@ module.exports = QueenAnt = Combat.extend({
   getRandomTarget() {
     var self = this;
 
-    if (self.isAttacked()) {
-      var keys = Object.keys(self.attackers),
-        randomAttacker = self.attackers[keys[Utils.randomInt(0, keys.length)]];
+    if (this.isAttacked()) {
+      var keys = Object.keys(this.attackers),
+        randomAttacker = this.attackers[keys[Utils.randomInt(0, keys.length)]];
 
       if (randomAttacker) return randomAttacker;
     }
 
-    if (self.character.hasTarget()) return self.character.target;
+    if (this.character.hasTarget()) return this.character.target;
 
     return null;
   },
@@ -167,17 +167,17 @@ module.exports = QueenAnt = Combat.extend({
   pushFreeze(state) {
     var self = this;
 
-    self.character.frozen = state;
-    self.character.stunned = state;
+    this.character.frozen = state;
+    this.character.stunned = state;
   },
 
   pushCountdown(count) {
     var self = this;
 
-    self.world.pushToAdjacentGroups(
-      self.character.group,
+    this.world.pushToAdjacentGroups(
+      this.character.group,
       new Messages.NPC(Packets.NPCOpcode.Countdown, {
-        id: self.character.instance,
+        id: this.character.instance,
         countdown: count
       })
     );
@@ -185,7 +185,7 @@ module.exports = QueenAnt = Combat.extend({
 
   getMinions() {
     var self = this,
-      grids = self.world.getGrids();
+      grids = this.world.getGrids();
   },
 
   isLast() {

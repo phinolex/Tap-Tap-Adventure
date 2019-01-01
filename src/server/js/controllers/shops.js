@@ -7,7 +7,7 @@ module.exports = Shops = cls.Class.extend({
   init(world) {
     var self = this;
 
-    self.world = world;
+    this.world = world;
   },
 
   open(player, shopId) {
@@ -17,7 +17,7 @@ module.exports = Shops = cls.Class.extend({
       new Messages.Shop(Packets.Shop, {
         instance: player.instance,
         npcId: shopId,
-        shopData: self.getShopData(shopId)
+        shopData: this.getShopData(shopId)
       })
     );
   },
@@ -26,7 +26,7 @@ module.exports = Shops = cls.Class.extend({
     var self = this,
       cost = Shops.getCost(shopId, itemId, count);
 
-    self.refresh();
+    this.refresh();
   },
 
   refresh() {

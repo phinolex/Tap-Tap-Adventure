@@ -4,16 +4,16 @@ module.exports = Points = cls.Class.extend({
   init(points, maxPoints) {
     var self = this;
 
-    self.points = points;
-    self.maxPoints = maxPoints;
+    this.points = points;
+    this.maxPoints = maxPoints;
   },
 
   heal(amount) {
     var self = this;
 
-    self.setPoints(self.points + amount);
+    this.setPoints(this.points + amount);
 
-    if (self.healCallback) self.healCallback();
+    if (this.healCallback) this.healCallback();
   },
 
   increment(amount) {
@@ -27,9 +27,9 @@ module.exports = Points = cls.Class.extend({
   setPoints(points) {
     var self = this;
 
-    self.points = points;
+    this.points = points;
 
-    if (self.points > self.maxPoints) self.points = self.maxPoints;
+    if (this.points > this.maxPoints) this.points = this.maxPoints;
   },
 
   setMaxPoints(maxPoints) {

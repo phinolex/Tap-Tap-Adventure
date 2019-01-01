@@ -10,37 +10,37 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     init(game) {
       var self = this;
 
-      self.game = game;
-      self.app = game.app;
-      self.renderer = game.renderer;
+      this.game = game;
+      this.app = game.app;
+      this.renderer = game.renderer;
 
-      self.selectedCellVisible = false;
-      self.previousClick = {};
-      self.cursorVisible = true;
-      self.targetVisible = true;
-      self.selectedX = -1;
-      self.selectedY = -1;
+      this.selectedCellVisible = false;
+      this.previousClick = {};
+      this.cursorVisible = true;
+      this.targetVisible = true;
+      this.selectedX = -1;
+      this.selectedY = -1;
 
-      self.cursor = null;
-      self.newCursor = null;
+      this.cursor = null;
+      this.newCursor = null;
 
-      self.targetData = null;
-      self.targetColour = null;
-      self.newTargetColour = null;
-      self.mobileTargetColour = "rgba(51, 255, 0)";
+      this.targetData = null;
+      this.targetColour = null;
+      this.newTargetColour = null;
+      this.mobileTargetColour = "rgba(51, 255, 0)";
 
-      self.previousKey = {};
+      this.previousKey = {};
 
-      self.cursors = {};
+      this.cursors = {};
 
-      self.hovering = null;
+      this.hovering = null;
 
-      self.mouse = {
+      this.mouse = {
         x: 0,
         y: 0
       };
 
-      self.load();
+      this.load();
     },
 
     load() {
@@ -51,27 +51,27 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
        * cell spinner sprite (only on desktop)
        */
 
-      self.targetAnimation = new Animation("move", 4, 0, 16, 16);
-      self.targetAnimation.setSpeed(50);
+      this.targetAnimation = new Animation("move", 4, 0, 16, 16);
+      this.targetAnimation.setSpeed(50);
 
-      self.chatHandler = new Chat(self.game);
-      self.overlay = new Overlay(self);
+      this.chatHandler = new Chat(this.game);
+      this.overlay = new Overlay(self);
     },
 
     loadCursors() {
       var self = this;
 
-      self.cursors["hand"] = self.game.getSprite("hand");
-      self.cursors["sword"] = self.game.getSprite("sword");
-      self.cursors["loot"] = self.game.getSprite("loot");
-      self.cursors["target"] = self.game.getSprite("target");
-      self.cursors["arrow"] = self.game.getSprite("arrow");
-      self.cursors["talk"] = self.game.getSprite("talk");
-      self.cursors["spell"] = self.game.getSprite("spell");
-      self.cursors["bow"] = self.game.getSprite("bow");
+      this.cursors["hand"] = this.game.getSprite("hand");
+      this.cursors["sword"] = this.game.getSprite("sword");
+      this.cursors["loot"] = this.game.getSprite("loot");
+      this.cursors["target"] = this.game.getSprite("target");
+      this.cursors["arrow"] = this.game.getSprite("arrow");
+      this.cursors["talk"] = this.game.getSprite("talk");
+      this.cursors["spell"] = this.game.getSprite("spell");
+      this.cursors["bow"] = this.game.getSprite("bow");
 
-      self.newCursor = self.cursors["hand"];
-      self.newTargetColour = "rgba(255, 255, 255, 0.5)";
+      this.newCursor = this.cursors["hand"];
+      this.newTargetColour = "rgba(255, 255, 255, 0.5)";
 
       log.info("Loaded Cursors!");
     },
@@ -81,38 +81,38 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
 
       switch (inputType) {
         case Modules.InputType.Key:
-          if (self.chatHandler.isActive()) {
-            self.chatHandler.key(data);
+          if (this.chatHandler.isActive()) {
+            this.chatHandler.key(data);
             return;
           }
 
           switch (data) {
             case Modules.Keys.Up:
             case Modules.Keys.W:
-              self.getPlayer().moveUp = true;
+              this.getPlayer().moveUp = true;
 
               break;
 
             case Modules.Keys.A:
             case Modules.Keys.Left:
-              self.getPlayer().moveLeft = true;
+              this.getPlayer().moveLeft = true;
 
               break;
 
             case Modules.Keys.S:
             case Modules.Keys.Down:
-              self.getPlayer().moveDown = true;
+              this.getPlayer().moveDown = true;
 
               break;
 
             case Modules.Keys.D:
             case Modules.Keys.Right:
-              self.getPlayer().moveRight = true;
+              this.getPlayer().moveRight = true;
 
               break;
 
             case Modules.Keys.Enter:
-              self.chatHandler.toggle();
+              this.chatHandler.toggle();
 
               break;
           }
@@ -120,9 +120,9 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
           break;
 
         case Modules.InputType.LeftClick:
-          self.getPlayer().disableAction = false;
-          self.setCoords(data);
-          self.click(self.getCoords());
+          this.getPlayer().disableAction = false;
+          this.setCoords(data);
+          this.click(this.getCoords());
 
           break;
       }
@@ -130,7 +130,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
 
     keyUp(key) {
       var self = this,
-        player = self.getPlayer();
+        player = this.getPlayer();
 
       switch (key) {
         case Modules.Keys.W:
@@ -159,18 +159,18 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
 
     keyMove(position) {
       var self = this,
-        player = self.getPlayer();
+        player = this.getPlayer();
 
-      if (!player.hasPath()) self.click(position);
+      if (!player.hasPath()) this.click(position);
     },
 
     click(position) {
       var self = this,
-        player = self.getPlayer();
+        player = this.getPlayer();
 
       if (player.stunned) return;
 
-      self.setPassiveTarget();
+      this.setPassiveTarget();
 
       /**
        * It can be really annoying having the chat open
@@ -178,31 +178,31 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
        */
 
       if (
-        self.renderer.mobile &&
-        self.chatHandler.input.is(":visible") &&
-        self.chatHandler.input.val() === ""
+        this.renderer.mobile &&
+        this.chatHandler.input.is(":visible") &&
+        this.chatHandler.input.val() === ""
       )
-        self.chatHandler.hideInput();
+        this.chatHandler.hideInput();
 
-      if (self.game.zoning && self.game.zoning.direction) return;
+      if (this.game.zoning && this.game.zoning.direction) return;
 
-      var entity = self.game.getEntityAt(
+      var entity = this.game.getEntityAt(
         position.x,
         position.y,
         position.x === player.gridX && position.y === player.gridY
       );
 
       if (entity && !player.disableAction) {
-        self.setAttackTarget();
+        this.setAttackTarget();
 
-        if (self.isTargetable(entity)) player.setTarget(entity);
+        if (this.isTargetable(entity)) player.setTarget(entity);
 
         if (
           player.getDistance(entity) < 7 &&
           player.isRanged() &&
-          self.isAttackable(entity)
+          this.isAttackable(entity)
         ) {
-          self.game.socket.send(Packets.Target, [
+          this.game.socket.send(Packets.Target, [
             Packets.TargetOpcode.Attack,
             entity.id
           ]);
@@ -211,17 +211,17 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
         }
 
         if (entity.gridX === player.gridX && entity.gridY === player.gridY)
-          self.game.socket.send(Packets.Target, [
+          this.game.socket.send(Packets.Target, [
             Packets.TargetOpcode.Attack,
             entity.id
           ]);
 
         /*if (entity.type === 'player') {
-                    self.getActions().showPlayerActions(entity, self.mouse.x, self.mouse.y);
+                    this.getActions().showPlayerActions(entity, this.mouse.x, this.mouse.y);
                     return;
                 }*/
 
-        if (self.isTargetable(entity)) {
+        if (this.isTargetable(entity)) {
           player.follow(entity);
           return;
         }
@@ -229,70 +229,70 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
         player.disableAction = true;
       } else player.removeTarget();
 
-      self.getActions().hidePlayerActions();
+      this.getActions().hidePlayerActions();
 
       player.go(position.x, position.y);
 
-      if (self.game.interface) self.game.interface.hideAll();
+      if (this.game.interface) this.game.interface.hideAll();
 
-      if (!self.game.audio.song && Detect.isSafari()) self.game.audio.update();
+      if (!this.game.audio.song && Detect.isSafari()) this.game.audio.update();
     },
 
     updateCursor() {
       var self = this;
 
-      if (!self.cursorVisible) return;
+      if (!this.cursorVisible) return;
 
-      if (self.newCursor !== self.cursor) self.cursor = self.newCursor;
+      if (this.newCursor !== this.cursor) this.cursor = this.newCursor;
 
-      if (self.newTargetColour !== self.targetColour)
-        self.targetColour = self.newTargetColour;
+      if (this.newTargetColour !== this.targetColour)
+        this.targetColour = this.newTargetColour;
     },
 
     moveCursor() {
       var self = this;
 
-      if (!self.renderer || self.renderer.mobile || !self.renderer.camera)
+      if (!this.renderer || this.renderer.mobile || !this.renderer.camera)
         return;
 
-      var position = self.getCoords(),
-        player = self.getPlayer(),
-        entity = self.game.getEntityAt(
+      var position = this.getCoords(),
+        player = this.getPlayer(),
+        entity = this.game.getEntityAt(
           position.x,
           position.y,
           player.gridX === position.x && player.gridY === position.y
         );
 
-      self.overlay.update(entity);
+      this.overlay.update(entity);
 
       if (!entity || entity.id === player.id) {
-        self.setCursor(self.cursors["hand"]);
-        self.hovering = null;
+        this.setCursor(this.cursors["hand"]);
+        this.hovering = null;
       } else {
         switch (entity.type) {
           case "item":
           case "chest":
-            self.setCursor(self.cursors["loot"]);
-            self.hovering = Modules.Hovering.Item;
+            this.setCursor(this.cursors["loot"]);
+            this.hovering = Modules.Hovering.Item;
             break;
 
           case "mob":
-            self.setCursor(self.getAttackCursor());
-            self.hovering = Modules.Hovering.Mob;
+            this.setCursor(this.getAttackCursor());
+            this.hovering = Modules.Hovering.Mob;
             break;
 
           case "player":
-            self.setCursor(
-              self.game.pvp && entity.pvp
-                ? self.getAttackCursor()
-                : self.cursors["hand"]
+            this.setCursor(
+              this.game.pvp && entity.pvp
+                ? this.getAttackCursor()
+                : this.cursors["hand"]
             );
-            self.hovering = Modules.Hovering.Player;
+            this.hovering = Modules.Hovering.Player;
             break;
 
           case "npc":
-            self.setCursor(self.cursors["talk"]);
-            self.hovering = Modules.Hovering.NPC;
+            this.setCursor(this.cursors["talk"]);
+            this.hovering = Modules.Hovering.NPC;
             break;
         }
       }
@@ -301,49 +301,49 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     setPosition(x, y) {
       var self = this;
 
-      self.selectedX = x;
-      self.selectedY = y;
+      this.selectedX = x;
+      this.selectedY = y;
     },
 
     setCoords(event) {
       var self = this,
-        offset = self.app.canvas.offset(),
-        width = self.renderer.background.width,
-        height = self.renderer.background.height;
+        offset = this.app.canvas.offset(),
+        width = this.renderer.background.width,
+        height = this.renderer.background.height;
 
-      self.mouse.x = Math.round(
-        (event.pageX - offset.left) / self.app.getZoom()
+      this.mouse.x = Math.round(
+        (event.pageX - offset.left) / this.app.getZoom()
       );
-      self.mouse.y = Math.round(
-        (event.pageY - offset.top) / self.app.getZoom()
+      this.mouse.y = Math.round(
+        (event.pageY - offset.top) / this.app.getZoom()
       );
 
-      if (self.mouse.x >= width) self.mouse.x = width - 1;
-      else if (self.mouse.x <= 0) self.mouse.x = 0;
+      if (this.mouse.x >= width) this.mouse.x = width - 1;
+      else if (this.mouse.x <= 0) this.mouse.x = 0;
 
-      if (self.mouse.y >= height) self.mouse.y = height - 1;
-      else if (self.mouse.y <= 0) self.mouse.y = 0;
+      if (this.mouse.y >= height) this.mouse.y = height - 1;
+      else if (this.mouse.y <= 0) this.mouse.y = 0;
     },
 
     setCursor(cursor) {
       var self = this;
 
-      if (cursor) self.newCursor = cursor;
+      if (cursor) this.newCursor = cursor;
       else log.error("Cursor: " + cursor + " could not be found.");
     },
 
     setAttackTarget() {
       var self = this;
 
-      self.targetAnimation.setRow(1);
-      self.mobileTargetColour = "rgb(255, 51, 0)";
+      this.targetAnimation.setRow(1);
+      this.mobileTargetColour = "rgb(255, 51, 0)";
     },
 
     setPassiveTarget() {
       var self = this;
 
-      self.targetAnimation.setRow(0);
-      self.mobileTargetColour = "rgb(51, 255, 0)";
+      this.targetAnimation.setRow(0);
+      this.mobileTargetColour = "rgb(51, 255, 0)";
     },
 
     getAttackCursor() {
@@ -353,13 +353,13 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     getCoords() {
       var self = this;
 
-      if (!self.renderer || !self.renderer.camera) return;
+      if (!this.renderer || !this.renderer.camera) return;
 
-      var tileScale = self.renderer.tileSize * self.renderer.getDrawingScale(),
-        offsetX = self.mouse.x % tileScale,
-        offsetY = self.mouse.y % tileScale,
-        x = (self.mouse.x - offsetX) / tileScale + self.game.getCamera().gridX,
-        y = (self.mouse.y - offsetY) / tileScale + self.game.getCamera().gridY;
+      var tileScale = this.renderer.tileSize * this.renderer.getDrawingScale(),
+        offsetX = this.mouse.x % tileScale,
+        offsetY = this.mouse.y % tileScale,
+        x = (this.mouse.x - offsetX) / tileScale + this.game.getCamera().gridX,
+        y = (this.mouse.y - offsetY) / tileScale + this.game.getCamera().gridY;
 
       return {
         x: x,
@@ -369,20 +369,20 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
 
     getTargetData() {
       var self = this,
-        frame = self.targetAnimation.currentFrame,
-        scale = self.renderer.getDrawingScale(),
-        sprite = self.game.getSprite("target");
+        frame = this.targetAnimation.currentFrame,
+        scale = this.renderer.getDrawingScale(),
+        sprite = this.game.getSprite("target");
 
       if (!sprite.loaded) sprite.load();
 
-      return (self.targetData = {
+      return (this.targetData = {
         sprite: sprite,
         x: frame.x * scale,
         y: frame.y * scale,
         width: sprite.width * scale,
         height: sprite.height * scale,
-        dx: self.selectedX * 16 * scale,
-        dy: self.selectedY * 16 * scale,
+        dx: this.selectedX * 16 * scale,
+        dy: this.selectedY * 16 * scale,
         dw: sprite.width * scale,
         dh: sprite.height * scale
       });

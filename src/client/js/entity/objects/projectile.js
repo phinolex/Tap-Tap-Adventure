@@ -3,26 +3,26 @@ define(["../entity"], function(Entity) {
     init(id, kind, owner) {
       var self = this;
 
-      self._super(id, kind);
+      this._super(id, kind);
 
-      self.owner = owner;
+      this.owner = owner;
 
-      self.name = "";
+      this.name = "";
 
-      self.startX = -1;
-      self.startY = -1;
+      this.startX = -1;
+      this.startY = -1;
 
-      self.destX = -1;
-      self.destY = -1;
+      this.destX = -1;
+      this.destY = -1;
 
-      self.special = -1;
+      this.special = -1;
 
-      self.static = false;
-      self.dynamic = false;
+      this.static = false;
+      this.dynamic = false;
 
-      self.speed = 200;
+      this.speed = 200;
 
-      self.angle = 0;
+      this.angle = 0;
     },
 
     getId() {
@@ -44,21 +44,21 @@ define(["../entity"], function(Entity) {
     setStart(x, y) {
       var self = this;
 
-      self.setGridPosition(Math.floor(x / 16), Math.floor(y / 16));
+      this.setGridPosition(Math.floor(x / 16), Math.floor(y / 16));
 
-      self.startX = x;
-      self.startY = y;
+      this.startX = x;
+      this.startY = y;
     },
 
     setDestination(x, y) {
       var self = this;
 
-      self.static = true;
+      this.static = true;
 
-      self.destX = x;
-      self.destY = y;
+      this.destX = x;
+      this.destY = y;
 
-      self.updateAngle();
+      this.updateAngle();
     },
 
     setTarget(target) {
@@ -66,20 +66,20 @@ define(["../entity"], function(Entity) {
 
       if (!target) return;
 
-      self.dynamic = true;
+      this.dynamic = true;
 
-      self.destX = target.x;
-      self.destY = target.y;
+      this.destX = target.x;
+      this.destY = target.y;
 
-      self.updateAngle();
+      this.updateAngle();
 
       if (target.type !== "mob") return;
 
       target.onMove(function() {
-        self.destX = target.x;
-        self.destY = target.y;
+        this.destX = target.x;
+        this.destY = target.y;
 
-        self.updateAngle();
+        this.updateAngle();
       });
     },
 
@@ -92,8 +92,8 @@ define(["../entity"], function(Entity) {
     updateTarget(x, y) {
       var self = this;
 
-      self.destX = x;
-      self.destY = y;
+      this.destX = x;
+      this.destY = y;
     },
 
     hasPath() {

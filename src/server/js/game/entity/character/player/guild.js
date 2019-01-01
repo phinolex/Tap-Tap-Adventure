@@ -6,12 +6,12 @@ module.exports = Guild = cls.Class.extend({
   init(name, leader) {
     var self = this;
 
-    self.name = name;
-    self.leader = leader;
+    this.name = name;
+    this.leader = leader;
 
-    self.members = [];
+    this.members = [];
 
-    self.connected = false;
+    this.connected = false;
   },
 
   create() {},
@@ -19,14 +19,14 @@ module.exports = Guild = cls.Class.extend({
   add(player) {
     var self = this;
 
-    self.members.push(player);
+    this.members.push(player);
 
-    self.save();
+    this.save();
   },
 
   save() {
     var self = this;
 
-    log.info(Guilds[self.leader.username]);
+    log.info(Guilds[this.leader.username]);
   }
 });

@@ -5,32 +5,32 @@ module.exports = Chest = Entity.extend({
   init(id, instance, x, y) {
     var self = this;
 
-    self._super(id, "chest", instance, x, y);
+    this._super(id, "chest", instance, x, y);
 
-    self.respawnDuration = 25000; //Every 25 seconds
-    self.static = false;
+    this.respawnDuration = 25000; //Every 25 seconds
+    this.static = false;
 
-    self.items = [];
+    this.items = [];
   },
 
   openChest() {
     var self = this;
 
-    if (self.openCallback) self.openCallback();
+    if (this.openCallback) this.openCallback();
   },
 
   respawn() {
     var self = this;
 
     setTimeout(function() {
-      if (self.respawnCallback) self.respawnCallback();
-    }, self.respawnDuration);
+      if (this.respawnCallback) this.respawnCallback();
+    }, this.respawnDuration);
   },
 
   getItem() {
     var self = this,
-      random = Utils.randomInt(0, self.items.length - 1),
-      item = self.items[random];
+      random = Utils.randomInt(0, this.items.length - 1),
+      item = this.items[random];
 
     if (!item) return;
 

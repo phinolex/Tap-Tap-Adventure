@@ -4,36 +4,36 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     init(game) {
       var self = this;
 
-      self.game = game;
-      self.pointers = {};
-      self.scale = self.getScale();
-      self.container = $('#bubbles');
+      this.game = game;
+      this.pointers = {};
+      this.scale = this.getScale();
+      this.container = $('#bubbles');
     },
 
     create(id, type) {
       var self = this;
 
-      if (id in self.pointers) {
+      if (id in this.pointers) {
         return;
       }
 
       var element = $('<div id="' + id + '" class="pointer"></div>');
 
-      self.setSize(element);
+      this.setSize(element);
 
-      self.container.append(element);
+      this.container.append(element);
 
-      self.pointers[id] = new Pointer(id, element, type);
+      this.pointers[id] = new Pointer(id, element, type);
     },
 
     resize() {
       var self = this;
 
-      _.each(self.pointers, function(pointer) {
+      _.each(this.pointers, function(pointer) {
 
         switch (pointer.type) {
           case Modules.Pointers.Relative:
-            var scale = self.getScale(),
+            var scale = this.getScale(),
               x = pointer.x,
               y = pointer.y,
               offsetX = 0,
@@ -57,15 +57,15 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
       var height = width + (width * .2);
       var image = 'url("img/common/hud-active.png")';
 
-      self.updateScale();
+      this.updateScale();
 
       element.css({
-        'width': (width * self.scale) + 'px',
-        'height': (height * self.scale) + 'px',
+        'width': (width * this.scale) + 'px',
+        'height': (height * this.scale) + 'px',
         'margin': 'inherit',
-        'margin-top': '-' + ((height / 2) * self.scale) + 'px',
+        'margin-top': '-' + ((height / 2) * this.scale) + 'px',
         'margin-left': '1px',
-        'top': (height * self.scale) + 'px',
+        'top': (height * this.scale) + 'px',
         'background': image,
         'background-size': '100% 100%',
       });
@@ -74,33 +74,33 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     clean() {
       var self = this;
 
-      _.each(self.pointers, function(pointer) {
+      _.each(this.pointers, function(pointer) {
         pointer.destroy();
       });
 
-      self.pointers = {};
+      this.pointers = {};
     },
 
     destroy(pointer) {
       var self = this;
 
-      delete self.pointers[pointer.id];
+      delete this.pointers[pointer.id];
       pointer.destroy();
     },
 
     set(pointer, posX, posY) {
       var self = this;
 
-      self.updateScale();
-      self.updateCamera();
+      this.updateScale();
+      this.updateCamera();
 
-      var tileSize = 16 * self.scale,
-        x = ((posX - self.camera.x) * self.scale),
+      var tileSize = 16 * this.scale,
+        x = ((posX - this.camera.x) * this.scale),
         width = parseInt(pointer.element.css('width') + 24),
         offset = (width / 2) - (tileSize / 2),
         y;
 
-      y = ((posY - self.camera.y) * self.scale) - tileSize;
+      y = ((posY - this.camera.y) * this.scale) - tileSize;
 
       pointer.element.css('left', (x - offset) + 'px');
       pointer.element.css('top', y + 'px');
@@ -108,19 +108,19 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
 
     setToEntity(entity) {
       var self = this,
-        pointer = self.get(entity.id);
+        pointer = this.get(entity.id);
 
       if (!pointer)
         return;
 
       console.log('set to entity', entity);
 
-      self.set(pointer, entity.x, entity.y);
+      this.set(pointer, entity.x, entity.y);
     },
 
     setToPosition(id, x, y) {
       var self = this,
-        pointer = self.get(id);
+        pointer = this.get(id);
 
       if (!pointer) {
         return;
@@ -128,18 +128,18 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
 
       pointer.setPosition(x, y);
 
-      self.set(pointer, x, y);
+      this.set(pointer, x, y);
     },
 
     setRelative(id, x, y) {
       var self = this,
-        pointer = self.get(id);
+        pointer = this.get(id);
 
       if (!pointer) {
         return;
       }
 
-      var scale = self.getScale(),
+      var scale = this.getScale(),
         offsetX = 0,
         offsetY = 0;
 
@@ -161,23 +161,23 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     update() {
       var self = this;
 
-      _.each(self.pointers, function(pointer) {
+      _.each(this.pointers, function(pointer) {
 
         switch (pointer.type) {
           case Modules.Pointers.Entity:
 
-            var entity = self.game.entities.get(pointer.id);
+            var entity = this.game.entities.get(pointer.id);
 
             if (entity) {
-              self.setToEntity(entity);
+              this.setToEntity(entity);
             } else {
-              self.destroy(pointer);
+              this.destroy(pointer);
             }
             break;
 
           case Modules.Pointers.Position:
             if (pointer.x !== -1 && pointer.y !== -1) {
-              self.set(pointer, pointer.x, pointer.y);
+              this.set(pointer, pointer.x, pointer.y);
             }
             break;
         }
@@ -187,8 +187,8 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     get(id) {
       var self = this;
 
-      if (id in self.pointers) {
-        return self.pointers[id];
+      if (id in this.pointers) {
+        return this.pointers[id];
       }
 
       return null;

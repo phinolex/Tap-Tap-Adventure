@@ -18,12 +18,12 @@ module.exports = Parser = cls.Class.extend({
   constructor() {
     var self = this;
 
-    self.loadMobData();
-    self.loadNPCData();
-    self.loadItemData();
-    self.loadAbilityData();
-    self.loadShops();
-    self.loadLevels();
+    this.loadMobData();
+    this.loadNPCData();
+    this.loadItemData();
+    this.loadAbilityData();
+    this.loadShops();
+    this.loadLevels();
   },
 
   loadMobData() {

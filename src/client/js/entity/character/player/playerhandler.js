@@ -10,73 +10,73 @@ define(function() {
     init(game, player) {
       var self = this;
 
-      self.game = game;
-      self.camera = game.getCamera();
-      self.input = game.input;
-      self.player = player;
-      self.entities = game.entities;
-      self.socket = game.socket;
-      self.renderer = game.renderer;
+      this.game = game;
+      this.camera = game.getCamera();
+      this.input = game.input;
+      this.player = player;
+      this.entities = game.entities;
+      this.socket = game.socket;
+      this.renderer = game.renderer;
 
-      self.load();
+      this.load();
     },
 
     load() {
       var self = this;
 
-      self.player.onRequestPath(function(x, y) {
-        if (self.player.dead) return null;
+      this.player.onRequestPath(function(x, y) {
+        if (this.player.dead) return null;
 
-        var ignores = [self.player];
+        var ignores = [this.player];
 
-        if (self.player.hasTarget()) ignores.push(self.player.target);
+        if (this.player.hasTarget()) ignores.push(this.player.target);
 
-        self.socket.send(Packets.Movement, [
+        this.socket.send(Packets.Movement, [
           Packets.MovementOpcode.Request,
           x,
           y,
-          self.player.gridX,
-          self.player.gridY
+          this.player.gridX,
+          this.player.gridY
         ]);
 
-        return self.game.findPath(self.player, x, y, ignores);
+        return this.game.findPath(this.player, x, y, ignores);
       });
 
-      self.player.onStartPathing(function(path) {
+      this.player.onStartPathing(function(path) {
         var i = path.length - 1;
 
-        self.input.selectedX = path[i][0];
-        self.input.selectedY = path[i][1];
-        self.input.selectedCellVisible = true;
+        this.input.selectedX = path[i][0];
+        this.input.selectedY = path[i][1];
+        this.input.selectedCellVisible = true;
 
-        if (!self.game.getEntityAt(self.input.selectedX, self.input.selectedY))
-          self.socket.send(Packets.Target, [Packets.TargetOpcode.None]);
+        if (!this.game.getEntityAt(this.input.selectedX, this.input.selectedY))
+          this.socket.send(Packets.Target, [Packets.TargetOpcode.None]);
 
-        self.socket.send(Packets.Movement, [
+        this.socket.send(Packets.Movement, [
           Packets.MovementOpcode.Started,
-          self.input.selectedX,
-          self.input.selectedY,
-          self.player.gridX,
-          self.player.gridY
+          this.input.selectedX,
+          this.input.selectedY,
+          this.player.gridX,
+          this.player.gridY
         ]);
       });
 
-      self.player.onStopPathing(function(x, y) {
-        self.entities.unregisterPosition(self.player);
-        self.entities.registerPosition(self.player);
+      this.player.onStopPathing(function(x, y) {
+        this.entities.unregisterPosition(this.player);
+        this.entities.registerPosition(this.player);
 
-        self.input.selectedCellVisible = false;
+        this.input.selectedCellVisible = false;
 
-        self.camera.clip();
+        this.camera.clip();
 
         var id = null,
-          entity = self.game.getEntityAt(x, y, true);
+          entity = this.game.getEntityAt(x, y, true);
 
         if (entity) id = entity.id;
 
-        var hasTarget = self.player.hasTarget();
+        var hasTarget = this.player.hasTarget();
 
-        self.socket.send(Packets.Movement, [
+        this.socket.send(Packets.Movement, [
           Packets.MovementOpcode.Stop,
           x,
           y,
@@ -85,72 +85,72 @@ define(function() {
         ]);
 
         if (hasTarget) {
-          self.socket.send(Packets.Target, [
-            self.isAttackable()
+          this.socket.send(Packets.Target, [
+            this.isAttackable()
               ? Packets.TargetOpcode.Attack
               : Packets.TargetOpcode.Talk,
-            self.player.target.id
+            this.player.target.id
           ]);
 
-          self.player.lookAt(self.player.target);
+          this.player.lookAt(this.player.target);
         }
 
-        self.input.setPassiveTarget();
+        this.input.setPassiveTarget();
       });
 
-      self.player.onBeforeStep(function() {
-        self.entities.unregisterPosition(self.player);
+      this.player.onBeforeStep(function() {
+        this.entities.unregisterPosition(this.player);
 
-        if (!self.isAttackable()) return;
+        if (!this.isAttackable()) return;
 
-        if (self.player.isRanged()) {
-          if (self.player.getDistance(self.player.target) < 7)
-            self.player.stop();
+        if (this.player.isRanged()) {
+          if (this.player.getDistance(this.player.target) < 7)
+            this.player.stop();
         } else {
-          self.input.selectedX = self.player.target.gridX;
-          self.input.selectedY = self.player.target.gridY;
+          this.input.selectedX = this.player.target.gridX;
+          this.input.selectedY = this.player.target.gridY;
         }
       });
 
-      self.player.onStep(function() {
-        if (self.player.hasNextStep())
-          self.entities.registerDuality(self.player);
+      this.player.onStep(function() {
+        if (this.player.hasNextStep())
+          this.entities.registerDuality(this.player);
 
-        if (!self.camera.centered) self.checkBounds();
+        if (!this.camera.centered) this.checkBounds();
 
-        self.player.forEachAttacker(function(attacker) {
-          if (!attacker.stunned) attacker.follow(self.player);
+        this.player.forEachAttacker(function(attacker) {
+          if (!attacker.stunned) attacker.follow(this.player);
         });
 
-        self.socket.send(Packets.Movement, [
+        this.socket.send(Packets.Movement, [
           Packets.MovementOpcode.Step,
-          self.player.gridX,
-          self.player.gridY
+          this.player.gridX,
+          this.player.gridY
         ]);
       });
 
-      self.player.onSecondStep(function() {
-        self.renderer.updateAnimatedTiles();
+      this.player.onSecondStep(function() {
+        this.renderer.updateAnimatedTiles();
       });
 
-      self.player.onMove(function() {
+      this.player.onMove(function() {
         /**
          * This is a callback representing the absolute exact position of the player.
          */
 
-        if (self.camera.centered) self.camera.centreOn(self.player);
+        if (this.camera.centered) this.camera.centreOn(this.player);
 
-        if (self.player.hasTarget()) self.player.follow(self.player.target);
+        if (this.player.hasTarget()) this.player.follow(this.player.target);
       });
 
-      self.player.onUpdateArmour(function(armourName) {
-        self.player.setSprite(self.game.getSprite(armourName));
+      this.player.onUpdateArmour(function(armourName) {
+        this.player.setSprite(this.game.getSprite(armourName));
       });
     },
 
     isAttackable() {
       var self = this,
-        target = self.player.target;
+        target = this.player.target;
 
       if (!target) return;
 
@@ -159,18 +159,18 @@ define(function() {
 
     checkBounds() {
       var self = this,
-        x = self.player.gridX - self.camera.gridX,
-        y = self.player.gridY - self.camera.gridY,
+        x = this.player.gridX - this.camera.gridX,
+        y = this.player.gridY - this.camera.gridY,
         isBorder = false;
 
-      if (x === 0) self.game.zoning.setLeft();
-      else if (y === 0) self.game.zoning.setUp();
-      else if (x === self.camera.gridWidth - 1) self.game.zoning.setRight();
-      else if (y === self.camera.gridHeight - 1) self.game.zoning.setDown();
+      if (x === 0) this.game.zoning.setLeft();
+      else if (y === 0) this.game.zoning.setUp();
+      else if (x === this.camera.gridWidth - 1) this.game.zoning.setRight();
+      else if (y === this.camera.gridHeight - 1) this.game.zoning.setDown();
 
-      if (self.game.zoning.direction !== null) {
-        self.camera.zone(self.game.zoning.getDirection());
-        self.game.zoning.reset();
+      if (this.game.zoning.direction !== null) {
+        this.camera.zone(this.game.zoning.getDirection());
+        this.game.zoning.reset();
       }
     }
   });

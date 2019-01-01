@@ -9,8 +9,8 @@ module.exports = Commands = cls.Class.extend({
   init(player) {
     var self = this;
 
-    self.world = player.world;
-    self.player = player;
+    this.world = player.world;
+    this.player = player;
   },
 
   parse(rawText) {
@@ -21,11 +21,11 @@ module.exports = Commands = cls.Class.extend({
 
     var command = blocks.shift();
 
-    self.handlePlayerCommands(command, blocks);
+    this.handlePlayerCommands(command, blocks);
 
-    if (self.player.rights > 0) self.handleModeratorCommands(command, blocks);
+    if (this.player.rights > 0) this.handleModeratorCommands(command, blocks);
 
-    if (self.player.rights > 1) self.handleAdminCommands(command, blocks);
+    if (this.player.rights > 1) this.handleAdminCommands(command, blocks);
   },
 
   handlePlayerCommands(command, blocks) {
@@ -33,34 +33,34 @@ module.exports = Commands = cls.Class.extend({
 
     switch (command) {
       case "players":
-        self.player.send(
+        this.player.send(
           new Messages.Notification(
             Packets.NotificationOpcode.Text,
-            "There are currently " + self.world.getPopulation() + " online."
+            "There are currently " + this.world.getPopulation() + " online."
           )
         );
 
         break;
 
       case "tutstage":
-        console.log("tutorial stage", self.player.getTutorial());
-        log.info(self.player.getTutorial().stage);
+        console.log("tutorial stage", this.player.getTutorial());
+        log.info(this.player.getTutorial().stage);
         break;
 
       case "coords":
-        self.player.send(
+        this.player.send(
           new Messages.Notification(
             Packets.NotificationOpcode.Text,
-            "x: " + self.player.x + " y: " + self.player.y
+            "x: " + this.player.x + " y: " + this.player.y
           )
         );
 
         break;
 
       case "progress":
-        var tutorialQuest = self.player.getTutorial();
+        var tutorialQuest = this.player.getTutorial();
 
-        self.player.send(
+        this.player.send(
           new Messages.Quest(Packets.QuestOpcode.Progress, {
             id: tutorialQuest.id,
             stage: tutorialQuest.stage
@@ -70,9 +70,9 @@ module.exports = Commands = cls.Class.extend({
         break;
 
       case "global":
-        self.world.pushBroadcast(
+        this.world.pushBroadcast(
           new Messages.Chat({
-            name: self.player.username,
+            name: this.player.username,
             text: blocks.join(" "),
             isGlobal: true,
             withBubble: false,
@@ -92,7 +92,7 @@ module.exports = Commands = cls.Class.extend({
       case "ban":
         var duration = blocks.shift(),
           targetName = blocks.join(" "),
-          user = self.world.getPlayerByName(targetName);
+          user = this.world.getPlayerByName(targetName);
 
         if (!user) return;
 
@@ -115,7 +115,7 @@ module.exports = Commands = cls.Class.extend({
 
       case "unmute":
         var uTargetName = blocks.join(" "),
-          uUser = self.world.getPlayerByName(uTargetName);
+          uUser = this.world.getPlayerByName(uTargetName);
 
         if (!uTargetName) return;
 
@@ -139,7 +139,7 @@ module.exports = Commands = cls.Class.extend({
 
         if (!spawnId || !count) return;
 
-        self.player.inventory.add({
+        this.player.inventory.add({
           id: spawnId,
           count: count,
           ability: ability ? ability : -1,
@@ -149,8 +149,8 @@ module.exports = Commands = cls.Class.extend({
         return;
 
       case "maxhealth":
-        self.player.notify(
-          "Max health is " + self.player.hitPoints.getMaxHitPoints()
+        this.player.notify(
+          "Max health is " + this.player.hitPoints.getMaxHitPoints()
         );
 
         break;
@@ -166,17 +166,17 @@ module.exports = Commands = cls.Class.extend({
 
         if (!dCount) dCount = 1;
 
-        self.world.dropItem(id, dCount, self.player.x, self.player.y);
+        this.world.dropItem(id, dCount, this.player.x, this.player.y);
 
         return;
 
       case "ghost":
-        self.player.equip("ghost", 1, -1, -1);
+        this.player.equip("ghost", 1, -1, -1);
 
         return;
 
       case "notify":
-        self.player.notify("Hello!!!");
+        this.player.notify("Hello!!!");
 
         break;
 
@@ -184,29 +184,29 @@ module.exports = Commands = cls.Class.extend({
         var x = parseInt(blocks.shift()),
           y = parseInt(blocks.shift());
 
-        if (x && y) self.player.teleport(x, y);
+        if (x && y) this.player.teleport(x, y);
 
         break;
 
       case "teletome":
         var username = blocks.join(" "),
-          player = self.world.getPlayerByName(username);
+          player = this.world.getPlayerByName(username);
 
-        if (player) player.teleport(self.player.x, self.player.y);
+        if (player) player.teleport(this.player.x, this.player.y);
 
         break;
 
       case "nohit":
         log.info("invincinil");
 
-        self.player.invincible = !self.player.invincible;
+        this.player.invincible = !this.player.invincible;
 
         break;
 
       case "mob":
         var npcId = parseInt(blocks.shift());
 
-        self.world.spawnMob(npcId, self.player.x, self.player.y);
+        this.world.spawnMob(npcId, this.player.x, this.player.y);
 
         break;
 
@@ -216,9 +216,9 @@ module.exports = Commands = cls.Class.extend({
 
         if (!posX || !posY) return;
 
-        self.player.send(
+        this.player.send(
           new Messages.Pointer(Packets.PointerOpcode.Location, {
-            id: self.player.instance,
+            id: this.player.instance,
             x: posX,
             y: posY
           })
@@ -227,8 +227,8 @@ module.exports = Commands = cls.Class.extend({
         break;
 
       case "teleall":
-        _.each(self.world.players, function(player) {
-          player.teleport(self.player.x, self.player.y);
+        _.each(this.world.players, function(player) {
+          player.teleport(this.player.x, this.player.y);
         });
 
         break;
@@ -238,7 +238,7 @@ module.exports = Commands = cls.Class.extend({
 
         if (!radius) radius = 1;
 
-        self.player.combat.dealAoE(radius);
+        this.player.combat.dealAoE(radius);
 
         break;
 
@@ -247,7 +247,7 @@ module.exports = Commands = cls.Class.extend({
 
         if (!exp) return;
 
-        self.player.addExperience(exp);
+        this.player.addExperience(exp);
 
         break;
     }

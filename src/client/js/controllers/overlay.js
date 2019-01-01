@@ -3,63 +3,63 @@ define(["jquery"], function($) {
     init(input) {
       var self = this;
 
-      self.input = input;
-      self.hovering = null;
+      this.input = input;
+      this.hovering = null;
 
-      self.attackInfo = $("#attackInfo");
+      this.attackInfo = $("#attackInfo");
 
-      self.image = self.attackInfo.find(".image div");
-      self.name = self.attackInfo.find(".name");
-      self.details = self.attackInfo.find(".details");
-      self.health = self.attackInfo.find(".health");
+      this.image = this.attackInfo.find(".image div");
+      this.name = this.attackInfo.find(".name");
+      this.details = this.attackInfo.find(".details");
+      this.health = this.attackInfo.find(".health");
     },
 
     update(entity) {
       var self = this;
 
-      if (!self.validEntity(entity)) {
-        self.hovering = null;
+      if (!this.validEntity(entity)) {
+        this.hovering = null;
 
-        if (self.isVisible()) self.hide();
+        if (this.isVisible()) this.hide();
 
         return;
       }
 
-      if (!self.isVisible()) self.display();
+      if (!this.isVisible()) this.display();
 
-      self.hovering = entity;
+      this.hovering = entity;
 
-      self.name.html(entity.type === "player" ? entity.username : entity.name);
+      this.name.html(entity.type === "player" ? entity.username : entity.name);
 
-      if (self.hasHealth()) {
-        self.health.css({
+      if (this.hasHealth()) {
+        this.health.css({
           display: "block",
           width:
             Math.ceil((entity.hitPoints / entity.maxHitPoints) * 100) - 10 + "%"
         });
 
-        self.details.html(entity.hitPoints + " / " + entity.maxHitPoints);
+        this.details.html(entity.hitPoints + " / " + entity.maxHitPoints);
       } else {
-        self.health.css("display", "none");
-        self.details.html("");
+        this.health.css("display", "none");
+        this.details.html("");
       }
 
-      self.onUpdate(function(entityId, hitPoints) {
+      this.onUpdate(function(entityId, hitPoints) {
         if (
-          self.hovering &&
-          self.hovering.id === entityId &&
-          self.hovering.type !== "npc" &&
-          self.hovering.type !== "item"
+          this.hovering &&
+          this.hovering.id === entityId &&
+          this.hovering.type !== "npc" &&
+          this.hovering.type !== "item"
         ) {
-          if (hitPoints < 1) self.hide();
+          if (hitPoints < 1) this.hide();
           else {
-            self.health.css(
+            this.health.css(
               "width",
-              Math.ceil((hitPoints / self.hovering.maxHitPoints) * 100) -
+              Math.ceil((hitPoints / this.hovering.maxHitPoints) * 100) -
                 10 +
                 "%"
             );
-            self.details.html(hitPoints + " / " + self.hovering.maxHitPoints);
+            this.details.html(hitPoints + " / " + this.hovering.maxHitPoints);
           }
         }
       });
@@ -76,8 +76,8 @@ define(["jquery"], function($) {
     clean() {
       var self = this;
 
-      self.details.html("");
-      self.hovering = null;
+      this.details.html("");
+      this.hovering = null;
     },
 
     hasHealth() {

@@ -5,21 +5,21 @@ define(["jquery"], function($) {
     init(intrfce) {
       var self = this;
 
-      self.interface = intrfce;
+      this.interface = intrfce;
 
-      self.body = $("#actionContainer");
-      self.drop = $("#dropDialog");
-      self.dropInput = $("#dropCount");
+      this.body = $("#actionContainer");
+      this.drop = $("#dropDialog");
+      this.dropInput = $("#dropCount");
 
-      self.pBody = $("#pActions");
-      self.follow = $("#follow");
-      self.trade = $("#tradeAction");
+      this.pBody = $("#pActions");
+      this.follow = $("#follow");
+      this.trade = $("#tradeAction");
 
-      self.activeClass = null;
+      this.activeClass = null;
 
-      self.miscButton = null;
+      this.miscButton = null;
 
-      self.load();
+      this.load();
     },
 
     load() {
@@ -28,26 +28,26 @@ define(["jquery"], function($) {
         dropCancel = $("#dropcancel");
 
       dropAccept.click(function(event) {
-        if (self.activeClass === "inventory")
-          self.interface.inventory.clickAction(event);
+        if (this.activeClass === "inventory")
+          this.interface.inventory.clickAction(event);
       });
 
       dropCancel.click(function(event) {
-        if (self.activeClass === "inventory")
-          self.interface.inventory.clickAction(event);
+        if (this.activeClass === "inventory")
+          this.interface.inventory.clickAction(event);
       });
     },
 
     loadDefaults(activeClass) {
       var self = this;
 
-      self.activeClass = activeClass;
+      this.activeClass = activeClass;
 
-      switch (self.activeClass) {
+      switch (this.activeClass) {
         case "inventory":
           var dropButton = $('<div id="drop" class="actionButton">Drop</div>');
 
-          self.add(dropButton);
+          this.add(dropButton);
 
           break;
 
@@ -59,26 +59,26 @@ define(["jquery"], function($) {
     add(button, misc) {
       var self = this;
 
-      self.body.find("ul").prepend($("<li></li>").append(button));
+      this.body.find("ul").prepend($("<li></li>").append(button));
 
       button.click(function(event) {
-        if (self.activeClass === "inventory")
-          self.interface.inventory.clickAction(event);
+        if (this.activeClass === "inventory")
+          this.interface.inventory.clickAction(event);
       });
 
-      if (misc) self.miscButton = button;
+      if (misc) this.miscButton = button;
     },
 
     removeMisc() {
       var self = this;
 
-      self.miscButton.remove();
-      self.miscButton = null;
+      this.miscButton.remove();
+      this.miscButton = null;
     },
 
     reset() {
       var self = this,
-        buttons = self.getButtons();
+        buttons = this.getButtons();
 
       for (var i = 0; i < buttons.length; i++) $(buttons[i]).remove();
     },
@@ -92,22 +92,22 @@ define(["jquery"], function($) {
 
       if (!player) return;
 
-      self.pBody.fadeIn("fast");
-      self.pBody.css({
-        left: mouseX - self.pBody.width() / 2 + "px",
-        top: mouseY + self.pBody.height() / 2 + "px"
+      this.pBody.fadeIn("fast");
+      this.pBody.css({
+        left: mouseX - this.pBody.width() / 2 + "px",
+        top: mouseY + this.pBody.height() / 2 + "px"
       });
 
-      self.follow.click(function() {
-        self.getPlayer().follow(player);
+      this.follow.click(function() {
+        this.getPlayer().follow(player);
 
-        self.hidePlayerActions();
+        this.hidePlayerActions();
       });
 
-      self.trade.click(function() {
-        self.getGame().tradeWith(player);
+      this.trade.click(function() {
+        this.getGame().tradeWith(player);
 
-        self.hidePlayerActions();
+        this.hidePlayerActions();
       });
     },
 
@@ -122,21 +122,21 @@ define(["jquery"], function($) {
     displayDrop(activeClass) {
       var self = this;
 
-      self.activeClass = activeClass;
+      this.activeClass = activeClass;
 
-      self.drop.fadeIn("fast");
+      this.drop.fadeIn("fast");
 
-      self.dropInput.focus();
-      self.dropInput.select();
+      this.dropInput.focus();
+      this.dropInput.select();
     },
 
     hideDrop() {
       var self = this;
 
-      self.drop.fadeOut("slow");
+      this.drop.fadeOut("slow");
 
-      self.dropInput.blur();
-      self.dropInput.val("");
+      this.dropInput.blur();
+      this.dropInput.val("");
     },
 
     getButtons() {

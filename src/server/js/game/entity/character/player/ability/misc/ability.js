@@ -5,10 +5,10 @@ module.exports = Ability = cls.Class.extend({
   init(name, type) {
     var self = this;
 
-    self.name = name;
-    self.type = type;
-    self.level = -1;
+    this.name = name;
+    this.type = type;
+    this.level = -1;
 
-    self.data = Abilities.Data[name];
+    this.data = Abilities.Data[name];
   }
 });

@@ -7,22 +7,22 @@ module.exports = PirateCaptain = Combat.extend({
   init(character) {
     var self = this;
 
-    self._super(character);
-    self.character = character;
+    this._super(character);
+    this.character = character;
 
     character.spawnDistance = 20;
 
-    self.teleportLocations = [];
+    this.teleportLocations = [];
 
-    self.lastTeleportIndex = 0;
-    self.lastTeleport = 0;
+    this.lastTeleportIndex = 0;
+    this.lastTeleport = 0;
 
-    self.location = {
-      x: self.character.x,
-      y: self.character.y
+    this.location = {
+      x: this.character.x,
+      y: this.character.y
     };
 
-    self.load();
+    this.load();
   },
 
   load() {
@@ -32,52 +32,52 @@ module.exports = PirateCaptain = Combat.extend({
       east = {x: 258, y: 568},
       north = {x: 251, y: 563};
 
-    self.teleportLocations.push(north, south, west, east);
+    this.teleportLocations.push(north, south, west, east);
   },
 
   hit(character, target, hitInfo) {
     var self = this;
-    if (self.canTeleport()) self.teleport();
-    else self._super(character, target, hitInfo);
+    if (this.canTeleport()) this.teleport();
+    else this._super(character, target, hitInfo);
   },
 
   teleport() {
     var self = this,
-      position = self.getRandomPosition();
+      position = this.getRandomPosition();
 
     if (!position) return;
 
-    self.stop();
+    this.stop();
 
-    self.lastTeleport = new Date().getTime();
-    self.lastTeleportIndex = position.index;
+    this.lastTeleport = new Date().getTime();
+    this.lastTeleportIndex = position.index;
 
-    self.character.setPosition(position.x, position.y);
+    this.character.setPosition(position.x, position.y);
 
-    if (self.world)
-      self.world.pushToGroup(
-        self.character.group,
+    if (this.world)
+      this.world.pushToGroup(
+        this.character.group,
         new Messages.Teleport(
-          self.character.instance,
-          self.character.x,
-          self.character.y,
+          this.character.instance,
+          this.character.x,
+          this.character.y,
           true
         )
       );
 
-    self.forEachAttacker(function(attacker) {
+    this.forEachAttacker(function(attacker) {
       attacker.removeTarget();
     });
 
-    if (self.character.hasTarget()) self.begin(self.character.target);
+    if (this.character.hasTarget()) this.begin(this.character.target);
   },
 
   getRandomPosition() {
     var self = this,
-      random = Utils.randomInt(0, self.teleportLocations.length - 1),
-      position = self.teleportLocations[random];
+      random = Utils.randomInt(0, this.teleportLocations.length - 1),
+      position = this.teleportLocations[random];
 
-    if (!position || random === self.lastTeleportIndex) return null;
+    if (!position || random === this.lastTeleportIndex) return null;
 
     return {
       x: position.x,
@@ -97,7 +97,7 @@ module.exports = PirateCaptain = Combat.extend({
   getHealthPercentage() {
     //Floor it to avoid random floats
     return Math.floor(
-      (this.character.hitPoints / self.character.maxHitPoints) * 100
+      (this.character.hitPoints / this.character.maxHitPoints) * 100
     );
   }
 });

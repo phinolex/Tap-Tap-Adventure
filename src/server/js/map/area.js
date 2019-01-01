@@ -12,19 +12,19 @@ module.exports = Area = cls.Class.extend({
   init(id, x, y, width, height) {
     var self = this;
 
-    self.id = id;
-    self.x = x;
-    self.y = y;
-    self.width = width;
-    self.height = height;
+    this.id = id;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
 
-    self.entities = [];
-    self.items = [];
+    this.entities = [];
+    this.items = [];
 
-    self.hasRespawned = true;
-    self.chest = null;
+    this.hasRespawned = true;
+    this.chest = null;
 
-    self.maxEntities = 0;
+    this.maxEntities = 0;
   },
 
   contains(x, y) {
@@ -39,21 +39,21 @@ module.exports = Area = cls.Class.extend({
   addEntity(entity) {
     var self = this;
 
-    if (self.entities.indexOf(entity) > 0) return;
+    if (this.entities.indexOf(entity) > 0) return;
 
-    self.entities.push(entity);
+    this.entities.push(entity);
     entity.area = self;
 
-    if (self.spawnCallback) self.spawnCallback();
+    if (this.spawnCallback) this.spawnCallback();
   },
 
   removeEntity(entity) {
     var self = this,
-      index = self.entities.indexOf(entity);
+      index = this.entities.indexOf(entity);
 
-    if (index > -1) self.entities.splice(index, 1);
+    if (index > -1) this.entities.splice(index, 1);
 
-    if (self.entities.length === 0 && self.emptyCallback) self.emptyCallback();
+    if (this.entities.length === 0 && this.emptyCallback) this.emptyCallback();
   },
 
   isFull() {

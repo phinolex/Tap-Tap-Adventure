@@ -7,9 +7,9 @@ import _ from 'underscore';
  */
 export default class Queue {
   constructor() {
-    const self = this;
+    
 
-    self.queue = [];
+    this.queue = [];
   }
 
   reset() {

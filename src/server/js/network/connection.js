@@ -6,9 +6,9 @@ module.exports = Connection = cls.Class.extend({
   init(id, connection, server) {
     var self = this;
 
-    self.id = id;
-    self.socket = connection;
-    self._server = server;
+    this.id = id;
+    this.socket = connection;
+    this._server = server;
   },
 
   broadcast(message) {

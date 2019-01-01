@@ -11,86 +11,86 @@ module.exports = Trade = cls.Class.extend({
   init(player) {
     var self = this;
 
-    self.player = player;
-    self.oPlayer = null;
+    this.player = player;
+    this.oPlayer = null;
 
-    self.requestee = null;
+    this.requestee = null;
 
-    self.state = null;
-    self.subState = null;
+    this.state = null;
+    this.subState = null;
 
-    self.playerItems = [];
-    self.oPlayerItems = [];
+    this.playerItems = [];
+    this.oPlayerItems = [];
   },
 
   start() {
     var self = this;
 
-    self.oPlayer = self.requestee;
-    self.state = Modules.Trade.Started;
+    this.oPlayer = this.requestee;
+    this.state = Modules.Trade.Started;
   },
 
   stop() {
     var self = this;
 
-    self.oPlayer = null;
-    self.state = null;
-    self.subState = null;
-    self.requestee = null;
+    this.oPlayer = null;
+    this.state = null;
+    this.subState = null;
+    this.requestee = null;
 
-    self.playerItems = [];
-    self.oPlayerItems = [];
+    this.playerItems = [];
+    this.oPlayerItems = [];
   },
 
   finalize() {
     var self = this;
 
-    if (!self.player.inventory.containsSpaces(self.oPlayerItems.length)) return;
+    if (!this.player.inventory.containsSpaces(this.oPlayerItems.length)) return;
 
-    for (var i in self.oPlayerItems) {
-      var item = self.oPlayerItems[i];
+    for (var i in this.oPlayerItems) {
+      var item = this.oPlayerItems[i];
 
       if (!item || item.id === -1) continue;
 
-      self.oPlayer.inventory.remove(item.id, item.count, item.index);
-      self.player.inventory.add(item);
+      this.oPlayer.inventory.remove(item.id, item.count, item.index);
+      this.player.inventory.add(item);
     }
   },
 
   select(slot) {
     var self = this,
-      item = self.player.inventory.slots[slot];
+      item = this.player.inventory.slots[slot];
 
-    if (!item || item.id === -1 || self.playerItems.indexOf(item) < 0) return;
+    if (!item || item.id === -1 || this.playerItems.indexOf(item) < 0) return;
 
-    self.playerItems.push(item);
+    this.playerItems.push(item);
   },
 
   request(oPlayer) {
     var self = this;
 
-    self.requestee = oPlayer;
+    this.requestee = oPlayer;
 
-    if (oPlayer.trade.getRequestee() === self.player.instance) self.start();
+    if (oPlayer.trade.getRequestee() === this.player.instance) this.start();
   },
 
   accept() {
     var self = this;
 
-    self.subState = Modules.Trade.Accepted;
+    this.subState = Modules.Trade.Accepted;
 
-    if (self.oPlayer.trade.subState === Modules.Trade.Accepted) {
-      self.finalize();
-      self.oPlayer.trade.finalize();
+    if (this.oPlayer.trade.subState === Modules.Trade.Accepted) {
+      this.finalize();
+      this.oPlayer.trade.finalize();
     }
   },
 
   getRequestee() {
     var self = this;
 
-    if (!self.requestee) return null;
+    if (!this.requestee) return null;
 
-    return self.requestee.instance;
+    return this.requestee.instance;
   },
 
   decline() {

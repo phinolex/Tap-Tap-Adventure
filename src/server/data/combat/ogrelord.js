@@ -9,48 +9,48 @@ module.exports = OgreLord = Combat.extend({
   init(character) {
     var self = this;
 
-    self._super(character);
+    this._super(character);
 
-    self.character = character;
+    this.character = character;
 
-    self.dialogues = [
+    this.dialogues = [
       "Get outta my swamp",
       "No, not the onion.",
       "My minions give me strength! You stand no chance!"
     ];
 
-    self.minions = [];
+    this.minions = [];
 
-    self.lastSpawn = 0;
+    this.lastSpawn = 0;
 
-    self.loaded = false;
+    this.loaded = false;
 
     character.projectile = Modules.Projectiles.Boulder;
     character.projectileName = "projectile-boulder";
 
     character.onDeath(function() {
-      self.reset();
+      this.reset();
     });
   },
 
   load() {
     var self = this;
 
-    self.talkingInterval = setInterval(function() {
-      if (self.character.hasTarget()) self.forceTalk(self.getMessage());
+    this.talkingInterval = setInterval(function() {
+      if (this.character.hasTarget()) this.forceTalk(this.getMessage());
     }, 9000);
 
-    self.updateInterval = setInterval(function() {
-      self.character.armourLevel = 50 + self.minions.length * 15;
+    this.updateInterval = setInterval(function() {
+      this.character.armourLevel = 50 + this.minions.length * 15;
     }, 2000);
 
-    self.loaded = true;
+    this.loaded = true;
   },
 
   hit(character, target, hitInfo) {
     var self = this;
 
-    if (self.isAttacked()) self.beginMinionAttack();
+    if (this.isAttacked()) this.beginMinionAttack();
 
     if (!character.isNonDiagonal(target)) {
       var distance = character.getDistance(target);
@@ -61,20 +61,20 @@ module.exports = OgreLord = Combat.extend({
       }
     }
 
-    if (self.canSpawn()) self.spawnMinions();
+    if (this.canSpawn()) this.spawnMinions();
 
-    self._super(character, target, hitInfo);
+    this._super(character, target, hitInfo);
   },
 
   forceTalk(message) {
     var self = this;
 
-    if (!self.world) return;
+    if (!this.world) return;
 
-    self.world.pushToAdjacentGroups(
-      self.character.target.group,
+    this.world.pushToAdjacentGroups(
+      this.character.target.group,
       new Messages.NPC(Packets.NPCOpcode.Talk, {
-        id: self.character.instance,
+        id: this.character.instance,
         text: message,
         nonNPC: true
       })
@@ -90,33 +90,33 @@ module.exports = OgreLord = Combat.extend({
       xs = [414, 430, 415, 420, 429],
       ys = [172, 173, 183, 185, 180];
 
-    self.lastSpawn = new Date().getTime();
+    this.lastSpawn = new Date().getTime();
 
-    self.forceTalk("Now you shall see my true power!");
+    this.forceTalk("Now you shall see my true power!");
 
     for (var i = 0; i < xs.length; i++)
-      self.minions.push(self.world.spawnMob(12, xs[i], ys[i]));
+      this.minions.push(this.world.spawnMob(12, xs[i], ys[i]));
 
-    _.each(self.minions, function(minion) {
+    _.each(this.minions, function(minion) {
       minion.onDeath(function() {
-        if (self.isLast()) self.lastSpawn = new Date().getTime();
+        if (this.isLast()) this.lastSpawn = new Date().getTime();
 
-        self.minions.splice(self.minions.indexOf(minion), 1);
+        this.minions.splice(this.minions.indexOf(minion), 1);
       });
 
-      if (self.isAttacked()) self.beginMinionAttack();
+      if (this.isAttacked()) this.beginMinionAttack();
     });
 
-    if (!self.loaded) self.load();
+    if (!this.loaded) this.load();
   },
 
   beginMinionAttack() {
     var self = this;
 
-    if (!self.hasMinions()) return;
+    if (!this.hasMinions()) return;
 
-    _.each(self.minions, function(minion) {
-      var randomTarget = self.getRandomTarget();
+    _.each(this.minions, function(minion) {
+      var randomTarget = this.getRandomTarget();
 
       if (!minion.hasTarget() && randomTarget)
         minion.combat.begin(randomTarget);
@@ -126,32 +126,32 @@ module.exports = OgreLord = Combat.extend({
   reset() {
     var self = this;
 
-    self.lastSpawn = 0;
+    this.lastSpawn = 0;
 
-    var listCopy = self.minions.slice();
+    var listCopy = this.minions.slice();
 
-    for (var i = 0; i < listCopy.length; i++) self.world.kill(listCopy[i]);
+    for (var i = 0; i < listCopy.length; i++) this.world.kill(listCopy[i]);
 
-    clearInterval(self.talkingInterval);
-    clearInterval(self.updateInterval);
+    clearInterval(this.talkingInterval);
+    clearInterval(this.updateInterval);
 
-    self.talkingInterval = null;
-    self.updateInterval = null;
+    this.talkingInterval = null;
+    this.updateInterval = null;
 
-    self.loaded = false;
+    this.loaded = false;
   },
 
   getRandomTarget() {
     var self = this;
 
-    if (self.isAttacked()) {
-      var keys = Object.keys(self.attackers),
-        randomAttacker = self.attackers[keys[Utils.randomInt(0, keys.length)]];
+    if (this.isAttacked()) {
+      var keys = Object.keys(this.attackers),
+        randomAttacker = this.attackers[keys[Utils.randomInt(0, keys.length)]];
 
       if (randomAttacker) return randomAttacker;
     }
 
-    if (self.character.hasTarget()) return self.character.target;
+    if (this.character.hasTarget()) return this.character.target;
 
     return null;
   },

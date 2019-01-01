@@ -16,150 +16,150 @@ define(function() {
     init(app) {
       var self = this;
 
-      self.app = app;
+      this.app = app;
 
-      self.messages = [];
+      this.messages = [];
 
-      self.messages[Packets.Handshake] = self.receiveHandshake;
-      self.messages[Packets.Welcome] = self.receiveWelcome;
-      self.messages[Packets.Spawn] = self.receiveSpawn;
-      self.messages[Packets.Equipment] = self.receiveEquipment;
-      self.messages[Packets.List] = self.receiveEntityList;
-      self.messages[Packets.Sync] = self.receiveSync;
-      self.messages[Packets.Movement] = self.receiveMovement;
-      self.messages[Packets.Teleport] = self.receiveTeleport;
-      self.messages[Packets.Despawn] = self.receiveDespawn;
-      self.messages[Packets.Combat] = self.receiveCombat;
-      self.messages[Packets.Animation] = self.receiveAnimation;
-      self.messages[Packets.Projectile] = self.receiveProjectile;
-      self.messages[Packets.Population] = self.receivePopulation;
-      self.messages[Packets.Points] = self.receivePoints;
-      self.messages[Packets.Network] = self.receiveNetwork;
-      self.messages[Packets.Chat] = self.receiveChat;
-      self.messages[Packets.Command] = self.receiveCommand;
-      self.messages[Packets.Inventory] = self.receiveInventory;
-      self.messages[Packets.Bank] = self.receiveBank;
-      self.messages[Packets.Ability] = self.receiveAbility;
-      self.messages[Packets.Quest] = self.receiveQuest;
-      self.messages[Packets.Notification] = self.receiveNotification;
-      self.messages[Packets.Blink] = self.receiveBlink;
-      self.messages[Packets.Heal] = self.receiveHeal;
-      self.messages[Packets.Experience] = self.receiveExperience;
-      self.messages[Packets.Death] = self.receiveDeath;
-      self.messages[Packets.Audio] = self.receiveAudio;
-      self.messages[Packets.NPC] = self.receiveNPC;
-      self.messages[Packets.Respawn] = self.receiveRespawn;
-      self.messages[Packets.Enchant] = self.receiveEnchant;
-      self.messages[Packets.Guild] = self.receiveGuild;
-      self.messages[Packets.Pointer] = self.receivePointer;
-      self.messages[Packets.PVP] = self.receivePVP;
-      self.messages[Packets.Shop] = self.receiveShop;
+      this.messages[Packets.Handshake] = this.receiveHandshake;
+      this.messages[Packets.Welcome] = this.receiveWelcome;
+      this.messages[Packets.Spawn] = this.receiveSpawn;
+      this.messages[Packets.Equipment] = this.receiveEquipment;
+      this.messages[Packets.List] = this.receiveEntityList;
+      this.messages[Packets.Sync] = this.receiveSync;
+      this.messages[Packets.Movement] = this.receiveMovement;
+      this.messages[Packets.Teleport] = this.receiveTeleport;
+      this.messages[Packets.Despawn] = this.receiveDespawn;
+      this.messages[Packets.Combat] = this.receiveCombat;
+      this.messages[Packets.Animation] = this.receiveAnimation;
+      this.messages[Packets.Projectile] = this.receiveProjectile;
+      this.messages[Packets.Population] = this.receivePopulation;
+      this.messages[Packets.Points] = this.receivePoints;
+      this.messages[Packets.Network] = this.receiveNetwork;
+      this.messages[Packets.Chat] = this.receiveChat;
+      this.messages[Packets.Command] = this.receiveCommand;
+      this.messages[Packets.Inventory] = this.receiveInventory;
+      this.messages[Packets.Bank] = this.receiveBank;
+      this.messages[Packets.Ability] = this.receiveAbility;
+      this.messages[Packets.Quest] = this.receiveQuest;
+      this.messages[Packets.Notification] = this.receiveNotification;
+      this.messages[Packets.Blink] = this.receiveBlink;
+      this.messages[Packets.Heal] = this.receiveHeal;
+      this.messages[Packets.Experience] = this.receiveExperience;
+      this.messages[Packets.Death] = this.receiveDeath;
+      this.messages[Packets.Audio] = this.receiveAudio;
+      this.messages[Packets.NPC] = this.receiveNPC;
+      this.messages[Packets.Respawn] = this.receiveRespawn;
+      this.messages[Packets.Enchant] = this.receiveEnchant;
+      this.messages[Packets.Guild] = this.receiveGuild;
+      this.messages[Packets.Pointer] = this.receivePointer;
+      this.messages[Packets.PVP] = this.receivePVP;
+      this.messages[Packets.Shop] = this.receiveShop;
     },
 
     handleData(data) {
       var self = this,
         packet = data.shift();
 
-      if (self.messages[packet] && _.isFunction(self.messages[packet]))
-        self.messages[packet].call(self, data);
+      if (this.messages[packet] && _.isFunction(this.messages[packet]))
+        this.messages[packet].call(self, data);
     },
 
     handleBulkData(data) {
       var self = this;
 
       _.each(data, function(message) {
-        self.handleData(message);
+        this.handleData(message);
       });
     },
 
     handleUTF8(message) {
       var self = this;
 
-      self.app.toggleLogin(false);
+      this.app.toggleLogin(false);
 
       switch (message) {
         case "updated":
-          self.app.sendError(null, "The client has been updated!");
+          this.app.sendError(null, "The client has been updated!");
           break;
 
         case "full":
-          self.app.sendError(null, "The servers are currently full!");
+          this.app.sendError(null, "The servers are currently full!");
           break;
 
         case "error":
-          self.app.sendError(null, "The server has responded with an error!");
+          this.app.sendError(null, "The server has responded with an error!");
           break;
 
         case "development":
-          self.app.sendError(
+          this.app.sendError(
             null,
             "The game is currently in development mode."
           );
           break;
 
         case "disallowed":
-          self.app.sendError(
+          this.app.sendError(
             null,
             "The server is currently not accepting connections!"
           );
           break;
 
         case "maintenance":
-          self.app.sendError(
+          this.app.sendError(
             null,
             "WTF?! Adventure is currently under construction."
           );
           break;
 
         case "userexists":
-          self.app.sendError(
+          this.app.sendError(
             null,
             "The username you have chosen already exists."
           );
           break;
 
         case "emailexists":
-          self.app.sendError(
+          this.app.sendError(
             null,
             "The email you have chosen is not available."
           );
           break;
 
         case "loggedin":
-          self.app.sendError(null, "The player is already logged in!");
+          this.app.sendError(null, "The player is already logged in!");
           break;
 
         case "invalidlogin":
-          self.app.sendError(
+          this.app.sendError(
             null,
             "You have entered the wrong username or password."
           );
           break;
 
         case "toofast":
-          self.app.sendError(
+          this.app.sendError(
             null,
             "You are trying to log in too fast from the same connection."
           );
           break;
 
         case "malform":
-          self.app.game.handleDisconnection(true);
-          self.app.sendError(null, "Client has experienced a malfunction.");
+          this.app.game.handleDisconnection(true);
+          this.app.sendError(null, "Client has experienced a malfunction.");
           break;
 
         case "timeout":
-          self.app.sendError(
+          this.app.sendError(
             null,
             "You have been disconnected for being inactive for too long."
           );
           break;
 
         case "validatingLogin":
-          self.app.sendError(null, "Validating login...");
+          this.app.sendError(null, "Validating login...");
           break;
         default:
-          self.app.sendError(null, "An unknown error has occurred: " + message);
+          this.app.sendError(null, "An unknown error has occurred: " + message);
           break;
       }
     },
@@ -171,20 +171,20 @@ define(function() {
     receiveHandshake(data) {
       var self = this;
 
-      if (self.handshakeCallback) self.handshakeCallback(data.shift());
+      if (this.handshakeCallback) this.handshakeCallback(data.shift());
     },
 
     receiveWelcome(data) {
       var self = this,
         playerData = data.shift();
 
-      if (self.welcomeCallback) self.welcomeCallback(playerData);
+      if (this.welcomeCallback) this.welcomeCallback(playerData);
     },
 
     receiveSpawn(data) {
       var self = this;
 
-      if (self.spawnCallback) self.spawnCallback(data);
+      if (this.spawnCallback) this.spawnCallback(data);
     },
 
     receiveEquipment(data) {
@@ -192,47 +192,47 @@ define(function() {
         equipType = data.shift(),
         equipInfo = data.shift();
 
-      if (self.equipmentCallback) self.equipmentCallback(equipType, equipInfo);
+      if (this.equipmentCallback) this.equipmentCallback(equipType, equipInfo);
     },
 
     receiveEntityList(data) {
       var self = this;
 
-      if (self.entityListCallback) self.entityListCallback(data);
+      if (this.entityListCallback) this.entityListCallback(data);
     },
 
     receiveSync(data) {
       var self = this;
 
-      if (self.syncCallback) self.syncCallback(data.shift());
+      if (this.syncCallback) this.syncCallback(data.shift());
     },
 
     receiveMovement(data) {
       var self = this,
         movementData = data.shift();
 
-      if (self.movementCallback) self.movementCallback(movementData);
+      if (this.movementCallback) this.movementCallback(movementData);
     },
 
     receiveTeleport(data) {
       var self = this,
         teleportData = data.shift();
 
-      if (self.teleportCallback) self.teleportCallback(teleportData);
+      if (this.teleportCallback) this.teleportCallback(teleportData);
     },
 
     receiveDespawn(data) {
       var self = this,
         id = data.shift();
 
-      if (self.despawnCallback) self.despawnCallback(id);
+      if (this.despawnCallback) this.despawnCallback(id);
     },
 
     receiveCombat(data) {
       var self = this,
         combatData = data.shift();
 
-      if (self.combatCallback) self.combatCallback(combatData);
+      if (this.combatCallback) this.combatCallback(combatData);
     },
 
     receiveAnimation(data) {
@@ -240,7 +240,7 @@ define(function() {
         id = data.shift(),
         info = data.shift();
 
-      if (self.animationCallback) self.animationCallback(id, info);
+      if (this.animationCallback) this.animationCallback(id, info);
     },
 
     receiveProjectile(data) {
@@ -248,41 +248,41 @@ define(function() {
         type = data.shift(),
         info = data.shift();
 
-      if (self.projectileCallback) self.projectileCallback(type, info);
+      if (this.projectileCallback) this.projectileCallback(type, info);
     },
 
     receivePopulation(data) {
       var self = this;
 
-      if (self.populationCallback) self.populationCallback(data.shift());
+      if (this.populationCallback) this.populationCallback(data.shift());
     },
 
     receivePoints(data) {
       var self = this,
         pointsData = data.shift();
 
-      if (self.pointsCallback) self.pointsCallback(pointsData);
+      if (this.pointsCallback) this.pointsCallback(pointsData);
     },
 
     receiveNetwork(data) {
       var self = this,
         opcode = data.shift();
 
-      if (self.networkCallback) self.networkCallback(opcode);
+      if (this.networkCallback) this.networkCallback(opcode);
     },
 
     receiveChat(data) {
       var self = this,
         info = data.shift();
 
-      if (self.chatCallback) self.chatCallback(info);
+      if (this.chatCallback) this.chatCallback(info);
     },
 
     receiveCommand(data) {
       var self = this,
         info = data.shift();
 
-      if (self.commandCallback) self.commandCallback(info);
+      if (this.commandCallback) this.commandCallback(info);
     },
 
     receiveInventory(data) {
@@ -290,7 +290,7 @@ define(function() {
         opcode = data.shift(),
         info = data.shift();
 
-      if (self.inventoryCallback) self.inventoryCallback(opcode, info);
+      if (this.inventoryCallback) this.inventoryCallback(opcode, info);
     },
 
     receiveBank(data) {
@@ -298,7 +298,7 @@ define(function() {
         opcode = data.shift(),
         info = data.shift();
 
-      if (self.bankCallback) self.bankCallback(opcode, info);
+      if (this.bankCallback) this.bankCallback(opcode, info);
     },
 
     receiveAbility(data) {
@@ -306,7 +306,7 @@ define(function() {
         opcode = data.shift(),
         info = data.shift();
 
-      if (self.abilityCallback) self.abilityCallback(opcode, info);
+      if (this.abilityCallback) this.abilityCallback(opcode, info);
     },
 
     receiveQuest(data) {
@@ -314,7 +314,7 @@ define(function() {
         opcode = data.shift(),
         info = data.shift();
 
-      if (self.questCallback) self.questCallback(opcode, info);
+      if (this.questCallback) this.questCallback(opcode, info);
     },
 
     receiveNotification(data) {
@@ -322,38 +322,38 @@ define(function() {
         opcode = data.shift(),
         message = data.shift();
 
-      if (self.notificationCallback) self.notificationCallback(opcode, message);
+      if (this.notificationCallback) this.notificationCallback(opcode, message);
     },
 
     receiveBlink(data) {
       var self = this,
         instance = data.shift();
 
-      if (self.blinkCallback) self.blinkCallback(instance);
+      if (this.blinkCallback) this.blinkCallback(instance);
     },
 
     receiveHeal(data) {
       var self = this;
 
-      if (self.healCallback) self.healCallback(data.shift());
+      if (this.healCallback) this.healCallback(data.shift());
     },
 
     receiveExperience(data) {
       var self = this;
 
-      if (self.experienceCallback) self.experienceCallback(data.shift());
+      if (this.experienceCallback) this.experienceCallback(data.shift());
     },
 
     receiveDeath(data) {
       var self = this;
 
-      if (self.deathCallback) self.deathCallback(data.shift());
+      if (this.deathCallback) this.deathCallback(data.shift());
     },
 
     receiveAudio(data) {
       var self = this;
 
-      if (self.audioCallback) self.audioCallback(data.shift());
+      if (this.audioCallback) this.audioCallback(data.shift());
     },
 
     receiveNPC(data) {
@@ -361,7 +361,7 @@ define(function() {
         opcode = data.shift(),
         info = data.shift();
 
-      if (self.npcCallback) self.npcCallback(opcode, info);
+      if (this.npcCallback) this.npcCallback(opcode, info);
     },
 
     receiveRespawn(data) {
@@ -370,7 +370,7 @@ define(function() {
         x = data.shift(),
         y = data.shift();
 
-      if (self.respawnCallback) self.respawnCallback(id, x, y);
+      if (this.respawnCallback) this.respawnCallback(id, x, y);
     },
 
     receiveEnchant(data) {
@@ -378,7 +378,7 @@ define(function() {
         opcode = data.shift(),
         info = data.shift();
 
-      if (self.enchantCallback) self.enchantCallback(opcode, info);
+      if (this.enchantCallback) this.enchantCallback(opcode, info);
     },
 
     receiveGuild(data) {
@@ -386,7 +386,7 @@ define(function() {
         opcode = data.shift(),
         info = data.shift();
 
-      if (self.guildCallback) self.guildCallback(opcode, info);
+      if (this.guildCallback) this.guildCallback(opcode, info);
     },
 
     receivePointer(data) {
@@ -394,7 +394,7 @@ define(function() {
         opcode = data.shift(),
         info = data.shift();
 
-      if (self.pointerCallback) self.pointerCallback(opcode, info);
+      if (this.pointerCallback) this.pointerCallback(opcode, info);
     },
 
     receivePVP(data) {
@@ -402,7 +402,7 @@ define(function() {
         id = data.shift(),
         pvp = data.shift();
 
-      if (self.pvpCallback) self.pvpCallback(id, pvp);
+      if (this.pvpCallback) this.pvpCallback(id, pvp);
     },
 
     receiveShop(data) {
@@ -410,7 +410,7 @@ define(function() {
         opcode = data.shift(),
         info = data.shift();
 
-      if (self.shopCallback) self.shopCallback(opcode, info);
+      if (this.shopCallback) this.shopCallback(opcode, info);
     },
 
     /**

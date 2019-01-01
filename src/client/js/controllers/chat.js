@@ -5,23 +5,23 @@ define(["jquery"], function($) {
     init(game) {
       var self = this;
 
-      self.game = game;
+      this.game = game;
 
-      self.chat = $("#chat");
-      self.log = $("#chatLog");
-      self.input = $("#hud-chat-input");
-      self.button = $("#hud-chat");
+      this.chat = $("#chat");
+      this.log = $("#chatLog");
+      this.input = $("#hud-chat-input");
+      this.button = $("#hud-chat");
 
-      self.visible = false;
+      this.visible = false;
 
-      self.fadingDuration = 5000;
-      self.fadingTimeout = null;
+      this.fadingDuration = 5000;
+      this.fadingTimeout = null;
 
-      self.button.click(function() {
-        self.button.blur();
+      this.button.click(function() {
+        this.button.blur();
 
-        if (self.input.is(":visible")) self.hideInput();
-        else self.toggle();
+        if (this.input.is(":visible")) this.hideInput();
+        else this.toggle();
       });
     },
 
@@ -41,14 +41,14 @@ define(["jquery"], function($) {
             "</span></p>"
         );
 
-      self.showChat();
+      this.showChat();
 
-      if (!self.isActive()) self.hideInput();
+      if (!this.isActive()) this.hideInput();
 
-      self.hideChat();
+      this.hideChat();
 
-      self.log.append(element);
-      self.log.scrollTop(99999);
+      this.log.append(element);
+      this.log.scrollTop(99999);
     },
 
     key(data) {
@@ -56,8 +56,8 @@ define(["jquery"], function($) {
 
       switch (data) {
         case Modules.Keys.Enter:
-          if (self.input.val() === "") self.toggle();
-          else self.send();
+          if (this.input.val() === "") this.toggle();
+          else this.send();
 
           break;
       }
@@ -66,79 +66,79 @@ define(["jquery"], function($) {
     send() {
       var self = this;
 
-      self.game.socket.send(Packets.Chat, [self.input.val()]);
-      self.toggle();
+      this.game.socket.send(Packets.Chat, [this.input.val()]);
+      this.toggle();
     },
 
     toggle() {
       var self = this;
 
-      self.clean();
+      this.clean();
 
-      if (self.visible && !self.isActive()) self.showInput();
-      else if (self.visible) {
-        self.hideInput();
-        self.hideChat();
+      if (this.visible && !this.isActive()) this.showInput();
+      else if (this.visible) {
+        this.hideInput();
+        this.hideChat();
       } else {
-        self.showChat();
-        self.showInput();
+        this.showChat();
+        this.showInput();
       }
     },
 
     showChat() {
       var self = this;
 
-      self.chat.fadeIn("fast");
+      this.chat.fadeIn("fast");
 
-      self.visible = true;
+      this.visible = true;
     },
 
     showInput() {
       var self = this;
 
-      self.button.addClass("active");
+      this.button.addClass("active");
 
-      self.input.fadeIn("fast");
-      self.input.val("");
-      self.input.focus();
+      this.input.fadeIn("fast");
+      this.input.val("");
+      this.input.focus();
 
-      self.clean();
+      this.clean();
     },
 
     hideChat() {
       var self = this;
 
-      if (self.fadingTimeout) {
-        clearTimeout(self.fadingTimeout);
-        self.fadingTimeout = null;
+      if (this.fadingTimeout) {
+        clearTimeout(this.fadingTimeout);
+        this.fadingTimeout = null;
       }
 
-      self.fadingTimeout = setTimeout(function() {
-        if (!self.isActive()) {
-          self.chat.fadeOut("slow");
+      this.fadingTimeout = setTimeout(function() {
+        if (!this.isActive()) {
+          this.chat.fadeOut("slow");
 
-          self.visible = false;
+          this.visible = false;
         }
-      }, self.fadingDuration);
+      }, this.fadingDuration);
     },
 
     hideInput() {
       var self = this;
 
-      self.button.removeClass("active");
+      this.button.removeClass("active");
 
-      self.input.val("");
-      self.input.fadeOut("fast");
-      self.input.blur();
+      this.input.val("");
+      this.input.fadeOut("fast");
+      this.input.blur();
 
-      self.hideChat();
+      this.hideChat();
     },
 
     clean() {
       var self = this;
 
-      clearTimeout(self.fadingTimeout);
-      self.fadingTimeout = null;
+      clearTimeout(this.fadingTimeout);
+      this.fadingTimeout = null;
     },
 
     isActive() {

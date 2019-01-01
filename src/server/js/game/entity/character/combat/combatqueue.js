@@ -9,7 +9,7 @@ module.exports = CombatQueue = cls.Class.extend({
   constructor() {
     var self = this;
 
-    self.hitQueue = [];
+    this.hitQueue = [];
   },
 
   add(hit) {
@@ -27,9 +27,9 @@ module.exports = CombatQueue = cls.Class.extend({
   getHit() {
     var self = this;
 
-    if (self.hitQueue.length < 1) return;
+    if (this.hitQueue.length < 1) return;
 
-    var hit = self.hitQueue.shift();
+    var hit = this.hitQueue.shift();
 
     return hit.getData();
   }

@@ -3,39 +3,39 @@ define(function() {
     init(index) {
       var self = this;
 
-      self.index = index;
+      this.index = index;
 
-      self.string = null;
-      self.count = -1;
-      self.ability = -1;
-      self.abilityLevel = -1;
+      this.string = null;
+      this.count = -1;
+      this.ability = -1;
+      this.abilityLevel = -1;
 
-      self.edible = false;
-      self.equippable = false;
+      this.edible = false;
+      this.equippable = false;
     },
 
     load(string, count, ability, abilityLevel, edible, equippable) {
       var self = this;
 
-      self.string = string;
-      self.count = count;
-      self.ability = ability;
-      self.abilityLevel = abilityLevel;
+      this.string = string;
+      this.count = count;
+      this.ability = ability;
+      this.abilityLevel = abilityLevel;
 
-      self.edible = edible;
-      self.equippable = equippable;
+      this.edible = edible;
+      this.equippable = equippable;
     },
 
     empty() {
       var self = this;
 
-      self.string = null;
-      self.count = -1;
-      self.ability = -1;
-      self.abilityLevel = -1;
+      this.string = null;
+      this.count = -1;
+      this.ability = -1;
+      this.abilityLevel = -1;
 
-      self.edible = false;
-      self.equippable = false;
+      this.edible = false;
+      this.equippable = false;
     },
 
     isEmpty() {

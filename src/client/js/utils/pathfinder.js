@@ -4,62 +4,62 @@ import AStar from '../lib/astar';
 
 export default class Pathfinder {
   constructor(width, height) {
-    const self = this;
+    
 
-    self.width = width;
-    self.height = height;
+    this.width = width;
+    this.height = height;
 
-    self.grid = null;
-    self.blankGrid = [];
-    self.ignores = [];
+    this.grid = null;
+    this.blankGrid = [];
+    this.ignores = [];
 
-    self.load();
+    this.load();
   }
 
   load() {
-    const self = this;
+    
 
-    for (let i = 0; i < self.height; i += 1) {
-      self.blankGrid[i] = [];
+    for (let i = 0; i < this.height; i += 1) {
+      this.blankGrid[i] = [];
 
-      for (let j = 0; j < self.width; j += 1) self.blankGrid[i][j] = 0;
+      for (let j = 0; j < this.width; j += 1) this.blankGrid[i][j] = 0;
     }
 
     log.info('Sucessfully loaded the pathfinder!');
   }
 
   find(grid, entity, x, y, incomplete) {
-    const self = this;
+    
     const start = [entity.gridX, entity.gridY];
     const end = [x, y];
     let path;
 
-    self.grid = grid;
-    self.applyIgnore(true);
+    this.grid = grid;
+    this.applyIgnore(true);
 
-    path = AStar(self.grid, start, end);
+    path = AStar(this.grid, start, end);
 
     if (path.length === 0 && incomplete) {
-      path = self.findIncomplete(start, end);
+      path = this.findIncomplete(start, end);
     }
 
     return path;
   }
 
   findIncomplete(start, end) {
-    const self = this;
+    
     let incomplete = [];
     let x;
     let y;
 
-    const perfect = AStar(self.blankGrid, start, end);
+    const perfect = AStar(this.blankGrid, start, end);
 
     for (let i = perfect.length - 1; i > 0; i -= 1) {
       x = perfect[i][0]; // eslint-disable-line
       y = perfect[i][1]; // eslint-disable-line
 
-      if (self.grid[y][x] === 0) {
-        incomplete = AStar(self.grid, start, [x.y]);
+      if (this.grid[y][x] === 0) {
+        incomplete = AStar(this.grid, start, [x.y]);
         break;
       }
     }
@@ -68,34 +68,34 @@ export default class Pathfinder {
   }
 
   applyIgnore(ignored) {
-    const self = this;
+    
     let x;
     let y;
 
-    _.each(self.ignores, (entity) => {
+    _.each(this.ignores, (entity) => {
       x = entity.hasPath() ? entity.nextGridX : entity.gridX;
       y = entity.hasPath() ? entity.nextGridY : entity.gridY;
 
       if (x >= 0 && y >= 0) {
-        self.grid[y][x] = ignored ? 0 : 1;
+        this.grid[y][x] = ignored ? 0 : 1;
       }
     });
   }
 
   ignoreEntity(entity) {
-    const self = this;
+    
 
     if (!entity) {
       return;
     }
 
-    self.ignores.push(entity);
+    this.ignores.push(entity);
   }
 
   clearIgnores() {
-    const self = this;
+    
 
-    self.applyIgnore(false);
-    self.ignores = [];
+    this.applyIgnore(false);
+    this.ignores = [];
   }
 }

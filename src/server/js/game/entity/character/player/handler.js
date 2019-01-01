@@ -12,75 +12,75 @@ module.exports = Handler = cls.Class.extend({
   init(player) {
     var self = this;
 
-    self.player = player;
-    self.world = player.world;
+    this.player = player;
+    this.world = player.world;
 
-    self.load();
+    this.load();
   },
 
   load() {
     var self = this;
 
-    self.player.onMovement(function(x, y) {
-      self.player.checkGroups();
+    this.player.onMovement(function(x, y) {
+      this.player.checkGroups();
 
-      self.detectAggro();
-      self.detectPVP(x, y);
-      self.detectMusic(x, y);
+      this.detectAggro();
+      this.detectPVP(x, y);
+      this.detectMusic(x, y);
     });
 
-    self.player.onDeath(function() {});
+    this.player.onDeath(function() {});
 
-    self.player.onHit(function(attacker, damage) {
+    this.player.onHit(function(attacker, damage) {
       /**
        * Handles actions whenever the player
        * instance is hit by 'damage' amount
        */
 
-      if (self.player.combat.isRetaliating())
-        self.player.combat.begin(attacker);
+      if (this.player.combat.isRetaliating())
+        this.player.combat.begin(attacker);
     });
 
-    self.player.onKill(function(character) {
-      if (self.player.quests.isAchievementMob(character)) {
-        var achievement = self.player.quests.getAchievementByMob(character);
+    this.player.onKill(function(character) {
+      if (this.player.quests.isAchievementMob(character)) {
+        var achievement = this.player.quests.getAchievementByMob(character);
 
         if (achievement && achievement.isStarted())
-          self.player.quests.getAchievementByMob(character).step();
+          this.player.quests.getAchievementByMob(character).step();
       }
     });
 
-    self.player.onGroup(function() {
-      self.world.handleEntityGroup(self.player);
-      self.world.pushEntities(self.player);
+    this.player.onGroup(function() {
+      this.world.handleEntityGroup(this.player);
+      this.world.pushEntities(this.player);
     });
 
-    self.player.connection.onClose(function() {
-      self.player.stopHealing();
+    this.player.connection.onClose(function() {
+      this.player.stopHealing();
 
-      self.world.removePlayer(self.player);
+      this.world.removePlayer(this.player);
     });
 
-    self.player.onTalkToNPC(function(npc) {
-      if (self.player.quests.isQuestNPC(npc)) {
-        self.player.quests.getQuestByNPC(npc).triggerTalk(npc);
+    this.player.onTalkToNPC(function(npc) {
+      if (this.player.quests.isQuestNPC(npc)) {
+        this.player.quests.getQuestByNPC(npc).triggerTalk(npc);
 
         return;
       }
 
-      if (self.player.quests.isAchievementNPC(npc)) {
-        self.player.quests.getAchievementByNPC(npc).converse(npc);
+      if (this.player.quests.isAchievementNPC(npc)) {
+        this.player.quests.getAchievementByNPC(npc).converse(npc);
 
         return;
       }
 
       switch (Npcs.getType(npc.id)) {
         case "banker":
-          self.player.send(new Messages.NPC(Packets.NPCOpcode.Bank, {}));
+          this.player.send(new Messages.NPC(Packets.NPCOpcode.Bank, {}));
           return;
 
         case "echanter":
-          self.player.send(new Messages.NPC(Packets.NPCOpcode.Enchant, {}));
+          this.player.send(new Messages.NPC(Packets.NPCOpcode.Enchant, {}));
           break;
       }
 
@@ -90,7 +90,7 @@ module.exports = Handler = cls.Class.extend({
 
       npc.talk(text);
 
-      self.player.send(
+      this.player.send(
         new Messages.NPC(Packets.NPCOpcode.Talk, {
           id: npc.instance,
           text: text
@@ -101,36 +101,36 @@ module.exports = Handler = cls.Class.extend({
 
   detectAggro() {
     var self = this,
-      group = self.world.groups[self.player.group];
+      group = this.world.groups[this.player.group];
 
     if (!group) return;
 
     _.each(group.entities, function(entity) {
       if (entity && entity.type === "mob") {
-        var aggro = entity.canAggro(self.player);
+        var aggro = entity.canAggro(this.player);
 
-        if (aggro) entity.combat.begin(self.player);
+        if (aggro) entity.combat.begin(this.player);
       }
     });
   },
 
   detectMusic(x, y) {
     var self = this,
-      musicArea = _.find(self.world.getMusicAreas(), function(area) {
+      musicArea = _.find(this.world.getMusicAreas(), function(area) {
         return area.contains(x, y);
       }),
       a2;
 
-    if (musicArea && self.player.currentSong !== musicArea.id)
-      self.player.updateMusic(musicArea.id);
+    if (musicArea && this.player.currentSong !== musicArea.id)
+      this.player.updateMusic(musicArea.id);
   },
 
   detectPVP(x, y) {
     var self = this,
-      pvpArea = _.find(self.world.getPVPAreas(), function(area) {
+      pvpArea = _.find(this.world.getPVPAreas(), function(area) {
         return area.contains(x, y);
       });
 
-    self.player.updatePVP(!!pvpArea);
+    this.player.updatePVP(!!pvpArea);
   }
 });

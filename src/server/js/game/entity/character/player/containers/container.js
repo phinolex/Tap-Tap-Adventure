@@ -14,13 +14,13 @@ module.exports = Container = cls.Class.extend({
   init(type, owner, size) {
     var self = this;
 
-    self.type = type;
-    self.owner = owner;
-    self.size = size;
+    this.type = type;
+    this.owner = owner;
+    this.size = size;
 
-    self.slots = [];
+    this.slots = [];
 
-    for (var i = 0; i < self.size; i++) self.slots.push(new Slot(i));
+    for (var i = 0; i < this.size; i++) this.slots.push(new Slot(i));
   },
 
   load(ids, counts, abilities, abilityLevels) {
@@ -30,11 +30,11 @@ module.exports = Container = cls.Class.extend({
      * Fill each slot with manual data or the database
      */
 
-    if (ids.length !== self.slots.length)
-      log.error("[" + self.type + "] Mismatch in container size.");
+    if (ids.length !== this.slots.length)
+      log.error("[" + this.type + "] Mismatch in container size.");
 
-    for (var i = 0; i < self.slots.length; i++)
-      self.slots[i].load(ids[i], counts[i], abilities[i], abilityLevels[i]);
+    for (var i = 0; i < this.slots.length; i++)
+      this.slots[i].load(ids[i], counts[i], abilities[i], abilityLevels[i]);
   },
 
   loadEmpty() {
@@ -45,9 +45,9 @@ module.exports = Container = cls.Class.extend({
      * Better to have it condensed into one.
      */
 
-    for (var i = 0; i < self.size; i++) data.push(-1);
+    for (var i = 0; i < this.size; i++) data.push(-1);
 
-    self.load(data, data, data, data);
+    this.load(data, data, data, data);
   },
 
   add(id, count, ability, abilityLevel) {
@@ -64,23 +64,23 @@ module.exports = Container = cls.Class.extend({
     if (!id || count < 0 || count > maxStackSize) return null;
 
     if (!Items.isStackable(id)) {
-      if (self.hasSpace()) {
-        var nsSlot = self.slots[self.getEmptySlot()]; //non-stackable slot
+      if (this.hasSpace()) {
+        var nsSlot = this.slots[this.getEmptySlot()]; //non-stackable slot
 
         nsSlot.load(id, count, ability, abilityLevel);
 
         return nsSlot;
       }
     } else {
-      if (maxStackSize === -1 || self.type === "Bank") {
-        var sSlot = self.getSlot(id);
+      if (maxStackSize === -1 || this.type === "Bank") {
+        var sSlot = this.getSlot(id);
 
         if (sSlot) {
           sSlot.increment(count);
           return sSlot;
         } else {
-          if (self.hasSpace()) {
-            var slot = self.slots[self.getEmptySlot()];
+          if (this.hasSpace()) {
+            var slot = this.slots[this.getEmptySlot()];
 
             slot.load(id, count, ability, abilityLevel);
 
@@ -90,9 +90,9 @@ module.exports = Container = cls.Class.extend({
       } else {
         var remainingItems = count;
 
-        for (var i = 0; i < self.slots.length; i++) {
-          if (self.slots[i].id === id) {
-            var rSlot = self.slots[i];
+        for (var i = 0; i < this.slots.length; i++) {
+          if (this.slots[i].id === id) {
+            var rSlot = this.slots[i];
 
             var available = maxStackSize - rSlot.count;
 
@@ -107,8 +107,8 @@ module.exports = Container = cls.Class.extend({
           }
         }
 
-        if (remainingItems > 0 && self.hasSpace()) {
-          var rrSlot = self.slots[self.getEmptySlot()];
+        if (remainingItems > 0 && this.hasSpace()) {
+          var rrSlot = this.slots[this.getEmptySlot()];
 
           rrSlot.load(id, remainingItems, ability, abilityLevel);
 
@@ -121,22 +121,22 @@ module.exports = Container = cls.Class.extend({
   canHold(id, count) {
     var self = this;
 
-    if (!Items.isStackable(id)) return self.hasSpace();
+    if (!Items.isStackable(id)) return this.hasSpace();
 
-    if (self.hasSpace()) return true;
+    if (this.hasSpace()) return true;
 
     var maxStackSize = Items.maxStackSize(id);
 
-    if ((self.type === "Bank" || maxStackSize === -1) && self.contains(id))
+    if ((this.type === "Bank" || maxStackSize === -1) && this.contains(id))
       return true;
 
     if (maxStackSize !== -1 && count > maxStackSize) return false;
 
     var remainingSpace = 0;
 
-    for (var i = 0; i < self.slots.length; i++)
-      if (self.slots[i].id === id)
-        remainingSpace += maxStackSize - self.slots[i].count;
+    for (var i = 0; i < this.slots.length; i++)
+      if (this.slots[i].id === id)
+        remainingSpace += maxStackSize - this.slots[i].count;
 
     return remainingSpace >= count;
   },
@@ -147,14 +147,14 @@ module.exports = Container = cls.Class.extend({
     if (
       !id ||
       count < 0 ||
-      !self.contains(id) ||
-      !self.slots[index] ||
-      self.slots[index].id === -1 ||
-      self.slots[index].id !== id
+      !this.contains(id) ||
+      !this.slots[index] ||
+      this.slots[index].id === -1 ||
+      this.slots[index].id !== id
     )
       return false;
 
-    var slot = self.slots[index];
+    var slot = this.slots[index];
 
     if (Items.isStackable(id)) {
       if (count >= slot.count) slot.empty();
@@ -167,8 +167,8 @@ module.exports = Container = cls.Class.extend({
   getSlot(id) {
     var self = this;
 
-    for (var i = 0; i < self.slots.length; i++)
-      if (self.slots[i].id === id) return self.slots[i];
+    for (var i = 0; i < this.slots.length; i++)
+      if (this.slots[i].id === id) return this.slots[i];
 
     return null;
   },
@@ -176,8 +176,8 @@ module.exports = Container = cls.Class.extend({
   contains(id) {
     var self = this;
 
-    for (var i = 0; i < self.slots.length; i++)
-      if (self.slots[i].id === id) return true;
+    for (var i = 0; i < this.slots.length; i++)
+      if (this.slots[i].id === id) return true;
 
     return false;
   },
@@ -186,8 +186,8 @@ module.exports = Container = cls.Class.extend({
     var self = this,
       emptySpaces = [];
 
-    for (var i = 0; i < self.slots.length; i++)
-      if (self.slots[i].id === -1) emptySpaces.push(self.slots[i]);
+    for (var i = 0; i < this.slots.length; i++)
+      if (this.slots[i].id === -1) emptySpaces.push(this.slots[i]);
 
     return emptySpaces.length === count;
   },
@@ -199,8 +199,8 @@ module.exports = Container = cls.Class.extend({
   getEmptySlot() {
     var self = this;
 
-    for (var i = 0; i < self.slots.length; i++)
-      if (self.slots[i].id === -1) return i;
+    for (var i = 0; i < this.slots.length; i++)
+      if (this.slots[i].id === -1) return i;
 
     return -1;
   },
@@ -213,8 +213,8 @@ module.exports = Container = cls.Class.extend({
      * returns the first item found based on the id.
      */
 
-    for (var i = 0; i < self.slots.length; i++)
-      if (self.slots[i].id === id) return i;
+    for (var i = 0; i < this.slots.length; i++)
+      if (this.slots[i].id === id) return i;
 
     return -1;
   },
@@ -222,7 +222,7 @@ module.exports = Container = cls.Class.extend({
   check() {
     var self = this;
 
-    _.each(self.slots, function(slot) {
+    _.each(this.slots, function(slot) {
       if (isNaN(slot.id)) slot.empty();
     });
   },
@@ -234,15 +234,15 @@ module.exports = Container = cls.Class.extend({
       abilities = "",
       abilityLevels = "";
 
-    for (var i = 0; i < self.slots.length; i++) {
-      ids += self.slots[i].id + " ";
-      counts += self.slots[i].count + " ";
-      abilities += self.slots[i].ability + " ";
-      abilityLevels += self.slots[i].abilityLevel + " ";
+    for (var i = 0; i < this.slots.length; i++) {
+      ids += this.slots[i].id + " ";
+      counts += this.slots[i].count + " ";
+      abilities += this.slots[i].ability + " ";
+      abilityLevels += this.slots[i].abilityLevel + " ";
     }
 
     return {
-      username: self.owner.username,
+      username: this.owner.username,
       ids: ids.slice(0, -1),
       counts: counts.slice(0, -1),
       abilities: abilities.slice(0, -1),

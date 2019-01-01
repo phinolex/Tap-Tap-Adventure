@@ -9,198 +9,198 @@ define(["../entity", "../../utils/transition", "../animation"], function(
     init(id, kind) {
       var self = this;
 
-      self._super(id, kind);
+      this._super(id, kind);
 
-      self.nextGridX = -1;
-      self.nextGridY = -1;
-      self.prevGridX = -1;
-      self.prevGridY = -1;
+      this.nextGridX = -1;
+      this.nextGridY = -1;
+      this.prevGridX = -1;
+      this.prevGridY = -1;
 
-      self.orientation = Modules.Orientation.Down;
+      this.orientation = Modules.Orientation.Down;
 
-      self.hitPoints = -1;
-      self.maxHitPoints = -1;
-      self.mana = -1;
-      self.maxMana = -1;
+      this.hitPoints = -1;
+      this.maxHitPoints = -1;
+      this.mana = -1;
+      this.maxMana = -1;
 
-      self.healthBarVisible = false;
-      self.healthBarTimeout = false;
+      this.healthBarVisible = false;
+      this.healthBarTimeout = false;
 
-      self.dead = false;
-      self.following = false;
-      self.attacking = false;
-      self.interrupted = false;
+      this.dead = false;
+      this.following = false;
+      this.attacking = false;
+      this.interrupted = false;
 
-      self.critical = false;
-      self.frozen = false;
-      self.stunned = false;
-      self.explosion = false;
+      this.critical = false;
+      this.frozen = false;
+      this.stunned = false;
+      this.explosion = false;
 
-      self.path = null;
-      self.target = null;
+      this.path = null;
+      this.target = null;
 
-      self.attackers = {};
+      this.attackers = {};
 
-      self.movement = new Transition();
+      this.movement = new Transition();
 
-      self.idleSpeed = 450;
-      self.attackAnimationSpeed = 50;
-      self.walkAnimationSpeed = 100;
-      self.movementSpeed = 250;
+      this.idleSpeed = 450;
+      this.attackAnimationSpeed = 50;
+      this.walkAnimationSpeed = 100;
+      this.movementSpeed = 250;
 
-      self.attackRange = 1;
+      this.attackRange = 1;
 
-      self.loadGlobals();
+      this.loadGlobals();
     },
 
     loadGlobals() {
       var self = this;
 
-      self.criticalAnimation = new Animation("atk_down", 10, 0, 48, 48);
-      self.criticalAnimation.setSpeed(30);
+      this.criticalAnimation = new Animation("atk_down", 10, 0, 48, 48);
+      this.criticalAnimation.setSpeed(30);
 
-      self.criticalAnimation.setCount(1, function() {
-        self.critical = false;
+      this.criticalAnimation.setCount(1, function() {
+        this.critical = false;
 
-        self.criticalAnimation.reset();
-        self.criticalAnimation.count = 1;
+        this.criticalAnimation.reset();
+        this.criticalAnimation.count = 1;
       });
 
-      self.terrorAnimation = new Animation("explosion", 8, 0, 64, 64);
-      self.terrorAnimation.setSpeed(50);
+      this.terrorAnimation = new Animation("explosion", 8, 0, 64, 64);
+      this.terrorAnimation.setSpeed(50);
 
-      self.terrorAnimation.setCount(1, function() {
-        self.terror = false;
+      this.terrorAnimation.setCount(1, function() {
+        this.terror = false;
 
-        self.terrorAnimation.reset();
-        self.terrorAnimation.count = 1;
+        this.terrorAnimation.reset();
+        this.terrorAnimation.count = 1;
       });
 
-      self.stunAnimation = new Animation("atk_down", 6, 0, 48, 48);
-      self.stunAnimation.setSpeed(30);
+      this.stunAnimation = new Animation("atk_down", 6, 0, 48, 48);
+      this.stunAnimation.setSpeed(30);
 
-      self.explosionAnimation = new Animation("explosion", 8, 0, 64, 64);
-      self.explosionAnimation.setSpeed(50);
+      this.explosionAnimation = new Animation("explosion", 8, 0, 64, 64);
+      this.explosionAnimation.setSpeed(50);
 
-      self.explosionAnimation.setCount(1, function() {
-        self.explosion = false;
+      this.explosionAnimation.setCount(1, function() {
+        this.explosion = false;
 
-        self.explosionAnimation.reset();
-        self.explosionAnimation.count = 1;
+        this.explosionAnimation.reset();
+        this.explosionAnimation.count = 1;
       });
     },
 
     animate(animation, speed, count, onEndCount) {
       var self = this,
         o = ["atk", "walk", "idle"],
-        orientation = self.orientation;
+        orientation = this.orientation;
 
-      if (self.currentAnimation && self.currentAnimation.name === "death")
+      if (this.currentAnimation && this.currentAnimation.name === "death")
         return;
 
-      self.spriteFlipX = false;
-      self.spriteFlipY = false;
+      this.spriteFlipX = false;
+      this.spriteFlipY = false;
 
       if (o.indexOf(animation) > -1) {
         animation +=
           "_" +
           (orientation === Modules.Orientation.Left
             ? "right"
-            : self.orientationToString(orientation));
-        self.spriteFlipX = self.orientation === Modules.Orientation.Left;
+            : this.orientationToString(orientation));
+        this.spriteFlipX = this.orientation === Modules.Orientation.Left;
       }
 
-      self.setAnimation(animation, speed, count, onEndCount);
+      this.setAnimation(animation, speed, count, onEndCount);
     },
 
     lookAt(character) {
       var self = this;
 
-      if (character.gridX > self.gridX)
-        self.setOrientation(Modules.Orientation.Right);
-      else if (character.gridX < self.gridX)
-        self.setOrientation(Modules.Orientation.Left);
-      else if (character.gridY > self.gridY)
-        self.setOrientation(Modules.Orientation.Down);
-      else if (character.gridY < self.gridY)
-        self.setOrientation(Modules.Orientation.Up);
+      if (character.gridX > this.gridX)
+        this.setOrientation(Modules.Orientation.Right);
+      else if (character.gridX < this.gridX)
+        this.setOrientation(Modules.Orientation.Left);
+      else if (character.gridY > this.gridY)
+        this.setOrientation(Modules.Orientation.Down);
+      else if (character.gridY < this.gridY)
+        this.setOrientation(Modules.Orientation.Up);
 
-      self.idle();
+      this.idle();
     },
 
     follow(character) {
       var self = this;
 
-      self.following = true;
+      this.following = true;
 
-      self.setTarget(character);
-      self.move(character.gridX, character.gridY);
+      this.setTarget(character);
+      this.move(character.gridX, character.gridY);
     },
 
     attack(attacker, character) {
       var self = this;
 
-      self.attacking = true;
+      this.attacking = true;
 
-      self.follow(character);
+      this.follow(character);
     },
 
     backOff() {
       var self = this;
 
-      self.attacking = false;
-      self.following = false;
+      this.attacking = false;
+      this.following = false;
 
-      self.removeTarget();
+      this.removeTarget();
     },
 
     addAttacker(character) {
       var self = this;
 
-      if (self.hasAttacker(character)) return;
+      if (this.hasAttacker(character)) return;
 
-      self.attackers[character.instance] = character;
+      this.attackers[character.instance] = character;
     },
 
     removeAttacker(character) {
       var self = this;
 
-      if (self.hasAttacker(character)) delete self.attackers[character.id];
+      if (this.hasAttacker(character)) delete this.attackers[character.id];
     },
 
     hasAttacker(character) {
       var self = this;
 
-      if (self.attackers.size === 0) return false;
+      if (this.attackers.size === 0) return false;
 
-      return character.instance in self.attackers;
+      return character.instance in this.attackers;
     },
 
     performAction(orientation, action) {
       var self = this;
 
-      self.setOrientation(orientation);
+      this.setOrientation(orientation);
 
       switch (action) {
         case Modules.Actions.Idle:
-          self.animate("idle", self.idleSpeed);
+          this.animate("idle", this.idleSpeed);
           break;
 
         case Modules.Actions.Attack:
-          self.animate("atk", self.attackAnimationSpeed, 1);
+          this.animate("atk", this.attackAnimationSpeed, 1);
           break;
 
         case Modules.Actions.Walk:
-          self.animate("walk", self.walkAnimationSpeed);
+          this.animate("walk", this.walkAnimationSpeed);
           break;
       }
     },
 
     idle(o) {
       var self = this,
-        orientation = o ? o : self.orientation;
+        orientation = o ? o : this.orientation;
 
-      self.performAction(orientation, Modules.Actions.Idle);
+      this.performAction(orientation, Modules.Actions.Idle);
     },
 
     orientationToString(o) {
@@ -224,14 +224,14 @@ define(["../entity", "../../utils/transition", "../animation"], function(
     go(x, y, forced) {
       var self = this;
 
-      if (self.frozen) return;
+      if (this.frozen) return;
 
-      if (self.following) {
-        self.following = false;
-        self.target = null;
+      if (this.following) {
+        this.following = false;
+        this.target = null;
       }
 
-      self.move(x, y, forced);
+      this.move(x, y, forced);
     },
 
     proceed(x, y) {
@@ -257,73 +257,73 @@ define(["../entity", "../../utils/transition", "../animation"], function(
         y,
         path;
 
-      if (self.step % 2 === 0 && self.secondStepCallback)
-        self.secondStepCallback();
+      if (this.step % 2 === 0 && this.secondStepCallback)
+        this.secondStepCallback();
 
-      self.prevGridX = self.gridX;
-      self.prevGridY = self.gridY;
+      this.prevGridX = this.gridX;
+      this.prevGridY = this.gridY;
 
-      if (!self.hasPath()) return;
+      if (!this.hasPath()) return;
 
-      if (self.beforeStepCallback) self.beforeStepCallback();
+      if (this.beforeStepCallback) this.beforeStepCallback();
 
-      self.updateGridPosition();
+      this.updateGridPosition();
 
-      if (!self.interrupted) {
-        if (self.hasNextStep()) {
-          self.nextGridX = self.path[self.step + 1][0];
-          self.nextGridY = self.path[self.step + 1][1];
+      if (!this.interrupted) {
+        if (this.hasNextStep()) {
+          this.nextGridX = this.path[this.step + 1][0];
+          this.nextGridY = this.path[this.step + 1][1];
         }
 
-        if (self.stepCallback) self.stepCallback();
+        if (this.stepCallback) this.stepCallback();
 
-        if (self.changedPath()) {
-          x = self.newDestination.x;
-          y = self.newDestination.y;
+        if (this.changedPath()) {
+          x = this.newDestination.x;
+          y = this.newDestination.y;
 
-          path = self.requestPathfinding(x, y);
+          path = this.requestPathfinding(x, y);
 
           if (!path) return;
 
-          self.newDestination = null;
+          this.newDestination = null;
 
           if (path.length < 2) stop = true;
-          else self.followPath(path);
-        } else if (self.hasNextStep()) {
-          self.step++;
-          self.updateMovement();
+          else this.followPath(path);
+        } else if (this.hasNextStep()) {
+          this.step++;
+          this.updateMovement();
         } else stop = true;
       } else {
         stop = true;
-        self.interrupted = false;
+        this.interrupted = false;
       }
 
       if (stop) {
-        self.path = null;
-        self.idle();
+        this.path = null;
+        this.idle();
 
-        if (self.stopPathingCallback)
-          self.stopPathingCallback(self.gridX, self.gridY, self.forced);
+        if (this.stopPathingCallback)
+          this.stopPathingCallback(this.gridX, this.gridY, this.forced);
 
-        if (self.forced) self.forced = false;
+        if (this.forced) this.forced = false;
       }
     },
 
     updateMovement() {
       var self = this,
-        step = self.step;
+        step = this.step;
 
-      if (self.path[step][0] < self.path[step - 1][0])
-        self.performAction(Modules.Orientation.Left, Modules.Actions.Walk);
+      if (this.path[step][0] < this.path[step - 1][0])
+        this.performAction(Modules.Orientation.Left, Modules.Actions.Walk);
 
-      if (self.path[step][0] > self.path[step - 1][0])
-        self.performAction(Modules.Orientation.Right, Modules.Actions.Walk);
+      if (this.path[step][0] > this.path[step - 1][0])
+        this.performAction(Modules.Orientation.Right, Modules.Actions.Walk);
 
-      if (self.path[step][1] < self.path[step - 1][1])
-        self.performAction(Modules.Orientation.Up, Modules.Actions.Walk);
+      if (this.path[step][1] < this.path[step - 1][1])
+        this.performAction(Modules.Orientation.Up, Modules.Actions.Walk);
 
-      if (self.path[step][1] > self.path[step - 1][1])
-        self.performAction(Modules.Orientation.Down, Modules.Actions.Walk);
+      if (this.path[step][1] > this.path[step - 1][1])
+        this.performAction(Modules.Orientation.Down, Modules.Actions.Walk);
     },
 
     followPath(path) {
@@ -337,66 +337,66 @@ define(["../entity", "../../utils/transition", "../animation"], function(
 
       if (!path || path.length < 2) return;
 
-      self.path = path;
-      self.step = 0;
+      this.path = path;
+      this.step = 0;
 
-      if (self.following) path.pop();
+      if (this.following) path.pop();
 
-      if (self.startPathingCallback) self.startPathingCallback(path);
+      if (this.startPathingCallback) this.startPathingCallback(path);
 
-      self.nextStep();
+      this.nextStep();
     },
 
     move(x, y, forced) {
       var self = this;
 
-      self.destination = {
+      this.destination = {
         gridX: x,
         gridY: y
       };
 
-      self.adjacentTiles = {};
+      this.adjacentTiles = {};
 
-      if (self.hasPath() && !forced) self.proceed(x, y);
-      else self.followPath(self.requestPathfinding(x, y));
+      if (this.hasPath() && !forced) this.proceed(x, y);
+      else this.followPath(this.requestPathfinding(x, y));
     },
 
     stop(force) {
       var self = this;
 
-      if (!force) self.interrupted = true;
-      else if (self.hasPath()) {
-        self.path = null;
-        self.newDestination = null;
-        self.movement = new Transition();
-        self.performAction(self.orientation, Modules.Actions.Idle);
-        self.nextGridX = self.gridX;
-        self.nextGridY = self.gridY;
+      if (!force) this.interrupted = true;
+      else if (this.hasPath()) {
+        this.path = null;
+        this.newDestination = null;
+        this.movement = new Transition();
+        this.performAction(this.orientation, Modules.Actions.Idle);
+        this.nextGridX = this.gridX;
+        this.nextGridY = this.gridY;
       }
     },
 
     getEffectAnimation() {
       var self = this;
 
-      if (self.critical) return self.criticalAnimation;
+      if (this.critical) return this.criticalAnimation;
 
-      if (self.stunned) return self.stunAnimation;
+      if (this.stunned) return this.stunAnimation;
 
-      if (self.terror) return self.terrorAnimation;
+      if (this.terror) return this.terrorAnimation;
 
-      if (self.explosion) return self.explosionAnimation;
+      if (this.explosion) return this.explosionAnimation;
     },
 
     getActiveEffect() {
       var self = this;
 
-      if (self.critical) return "criticaleffect";
+      if (this.critical) return "criticaleffect";
 
-      if (self.stunned) return "stuneffect";
+      if (this.stunned) return "stuneffect";
 
-      if (self.terror) return "explosion-terror";
+      if (this.terror) return "explosion-terror";
 
-      if (self.explosion) return "explosion-fireball";
+      if (this.explosion) return "explosion-fireball";
     },
 
     /**
@@ -406,33 +406,33 @@ define(["../entity", "../../utils/transition", "../animation"], function(
     triggerHealthBar() {
       var self = this;
 
-      self.healthBarVisible = true;
+      this.healthBarVisible = true;
 
-      if (self.healthBarTimeout) clearTimeout(self.healthBarTimeout);
+      if (this.healthBarTimeout) clearTimeout(this.healthBarTimeout);
 
-      self.healthBarTimeout = setTimeout(function() {
-        self.healthBarVisible = false;
+      this.healthBarTimeout = setTimeout(function() {
+        this.healthBarVisible = false;
       }, 7000);
     },
 
     clearHealthBar() {
       var self = this;
 
-      self.healthBarVisible = false;
-      clearTimeout(self.healthBarTimeout);
-      self.healthBarTimeout = null;
+      this.healthBarVisible = false;
+      clearTimeout(this.healthBarTimeout);
+      this.healthBarTimeout = null;
     },
 
     requestPathfinding(x, y) {
       var self = this;
 
-      if (self.requestPathCallback) return self.requestPathCallback(x, y);
+      if (this.requestPathCallback) return this.requestPathCallback(x, y);
     },
 
     updateGridPosition() {
       var self = this;
 
-      self.setGridPosition(self.path[self.step][0], self.path[self.step][1]);
+      this.setGridPosition(this.path[this.step][0], this.path[this.step][1]);
     },
 
     isMoving() {
@@ -445,7 +445,7 @@ define(["../entity", "../../utils/transition", "../animation"], function(
     forEachAttacker(callback) {
       var self = this;
 
-      _.each(self.attackers, function(attacker) {
+      _.each(this.attackers, function(attacker) {
         callback(attacker);
       });
     },
@@ -481,9 +481,9 @@ define(["../entity", "../../utils/transition", "../animation"], function(
     removeTarget() {
       var self = this;
 
-      if (!self.target) return;
+      if (!this.target) return;
 
-      self.target = null;
+      this.target = null;
     },
 
     forget() {
@@ -493,9 +493,9 @@ define(["../entity", "../../utils/transition", "../animation"], function(
     moved() {
       var self = this;
 
-      self.loadDirty();
+      this.loadDirty();
 
-      if (self.moveCallback) self.moveCallback();
+      if (this.moveCallback) this.moveCallback();
     },
 
     getDistance(entity) {
@@ -514,23 +514,23 @@ define(["../entity", "../../utils/transition", "../animation"], function(
       var self = this;
 
       if (target === null) {
-        self.removeTarget();
+        this.removeTarget();
         return;
       }
 
-      if (self.target && self.target.id === target.id) return;
+      if (this.target && this.target.id === target.id) return;
 
-      if (self.hasTarget()) self.removeTarget();
+      if (this.hasTarget()) this.removeTarget();
 
-      self.target = target;
+      this.target = target;
     },
 
     setHitPoints(hitPoints) {
       var self = this;
 
-      self.hitPoints = hitPoints;
+      this.hitPoints = hitPoints;
 
-      if (self.hitPointsCallback) self.hitPointsCallback(self.hitPoints);
+      if (this.hitPointsCallback) this.hitPointsCallback(this.hitPoints);
     },
 
     setMaxHitPoints(maxHitPoints) {

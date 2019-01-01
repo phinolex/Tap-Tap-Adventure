@@ -5,9 +5,9 @@ module.exports = Boots = Equipment.extend({
   init(name, id, count, ability, abilityLevel) {
     var self = this;
 
-    self._super(name, id, count, ability, abilityLevel);
+    this._super(name, id, count, ability, abilityLevel);
 
-    self.bootsLevel = Items.getBootsLevel(name);
+    this.bootsLevel = Items.getBootsLevel(name);
   },
 
   getBaseAmplifier() {

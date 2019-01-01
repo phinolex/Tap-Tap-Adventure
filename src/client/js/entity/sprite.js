@@ -5,77 +5,77 @@ define(["./animation"], function(Animation) {
     init(sprite, scale) {
       var self = this;
 
-      self.sprite = sprite;
-      self.scale = scale;
+      this.sprite = sprite;
+      this.scale = scale;
 
-      self.id = sprite.id;
+      this.id = sprite.id;
 
-      self.loaded = false;
+      this.loaded = false;
 
-      self.offsetX = 0;
-      self.offsetY = 0;
-      self.offsetAngle = 0;
+      this.offsetX = 0;
+      this.offsetY = 0;
+      this.offsetAngle = 0;
 
-      self.whiteSprite = {
+      this.whiteSprite = {
         loaded: false
       };
 
-      self.loadSprite();
+      this.loadSprite();
     },
 
     load() {
       var self = this;
 
-      self.image = new Image();
-      self.image.crossOrigin = "Anonymous";
-      self.image.src = self.filepath;
+      this.image = new Image();
+      this.image.crossOrigin = "Anonymous";
+      this.image.src = this.filepath;
 
-      self.image.onload = function() {
-        self.loaded = true;
+      this.image.onload = function() {
+        this.loaded = true;
 
-        if (self.onLoadCallback) self.onLoadCallback();
+        if (this.onLoadCallback) this.onLoadCallback();
       };
     },
 
     loadSprite() {
       var self = this,
-        sprite = self.sprite;
+        sprite = this.sprite;
 
-      self.filepath = "img/" + self.scale + "/" + self.id + ".png";
-      self.animationData = sprite.animations;
+      this.filepath = "img/" + this.scale + "/" + this.id + ".png";
+      this.animationData = sprite.animations;
 
-      self.width = sprite.width;
-      self.height = sprite.height;
+      this.width = sprite.width;
+      this.height = sprite.height;
 
-      self.offsetX = sprite.offsetX !== undefined ? sprite.offsetX : -16;
-      self.offsetY = sprite.offsetY !== undefined ? sprite.offsetY : -16;
-      self.offfsetAngle =
+      this.offsetX = sprite.offsetX !== undefined ? sprite.offsetX : -16;
+      this.offsetY = sprite.offsetY !== undefined ? sprite.offsetY : -16;
+      this.offfsetAngle =
         sprite.offsetAngle !== undefined ? sprite.offsetAngle : 0;
     },
 
     update(newScale) {
       var self = this;
 
-      self.scale = newScale;
+      this.scale = newScale;
 
-      self.loadSprite();
-      self.load();
+      this.loadSprite();
+      this.load();
     },
 
     createAnimations() {
       var self = this,
         animations = {};
 
-      for (var name in self.animationData) {
-        if (self.animationData.hasOwnProperty(name)) {
-          var a = self.animationData[name];
+      for (var name in this.animationData) {
+        if (this.animationData.hasOwnProperty(name)) {
+          var a = this.animationData[name];
 
           animations[name] = new Animation(
             name,
             a.length,
             a.row,
-            self.width,
-            self.height
+            this.width,
+            this.height
           );
         }
       }
@@ -90,26 +90,26 @@ define(["./animation"], function(Animation) {
     createHurtSprite() {
       var self = this;
 
-      if (!self.loaded) self.load();
+      if (!this.loaded) this.load();
 
-      if (self.whiteSprite.loaded) return;
+      if (this.whiteSprite.loaded) return;
 
       var canvas = document.createElement("canvas"),
         context = canvas.getContext("2d"),
         spriteData,
         data;
 
-      canvas.width = self.image.width;
-      canvas.height = self.image.height;
+      canvas.width = this.image.width;
+      canvas.height = this.image.height;
 
-      context.drawImage(self.image, 0, 0, self.image.width, self.image.height);
+      context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
 
       try {
         spriteData = context.getImageData(
           0,
           0,
-          self.image.width,
-          self.image.height
+          this.image.width,
+          this.image.height
         );
         data = spriteData.data;
 
@@ -122,13 +122,13 @@ define(["./animation"], function(Animation) {
 
         context.putImageData(spriteData, 0, 0);
 
-        self.whiteSprite = {
+        this.whiteSprite = {
           image: canvas,
           loaded: true,
-          offsetX: self.offsetX,
-          offsetY: self.offsetY,
-          width: self.width,
-          height: self.height
+          offsetX: this.offsetX,
+          offsetY: this.offsetY,
+          width: this.width,
+          height: this.height
         };
       } catch (e) {}
     },
@@ -137,11 +137,11 @@ define(["./animation"], function(Animation) {
       var self = this;
 
       try {
-        if (!self.loaded) self.load();
+        if (!this.loaded) this.load();
 
-        self.createHurtSprite();
+        this.createHurtSprite();
 
-        return self.whiteSprite;
+        return this.whiteSprite;
       } catch (e) {}
     },
 

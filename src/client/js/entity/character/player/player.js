@@ -17,57 +17,57 @@ define([
     constructor() {
       var self = this;
 
-      self._super(-1, Modules.Types.Player);
+      this._super(-1, Modules.Types.Player);
 
-      self.username = "";
-      self.password = "";
-      self.email = "";
+      this.username = "";
+      this.password = "";
+      this.email = "";
 
-      self.avatar = null;
+      this.avatar = null;
 
-      self.rights = 0;
-      self.wanted = false;
-      self.experience = -1;
-      self.level = -1;
-      self.pvpKills = -1;
-      self.pvpDeaths = -1;
+      this.rights = 0;
+      this.wanted = false;
+      this.experience = -1;
+      this.level = -1;
+      this.pvpKills = -1;
+      this.pvpDeaths = -1;
 
-      self.hitPoints = -1;
-      self.maxHitPoints = -1;
-      self.mana = -1;
-      self.maxMana = -1;
+      this.hitPoints = -1;
+      this.maxHitPoints = -1;
+      this.mana = -1;
+      this.maxMana = -1;
 
-      self.prevX = 0;
-      self.prevY = 0;
+      this.prevX = 0;
+      this.prevY = 0;
 
-      self.direction = null;
-      self.pvp = false;
+      this.direction = null;
+      this.pvp = false;
 
-      self.moveLeft = false;
-      self.moveRight = false;
-      self.moveUp = false;
-      self.moveDown = false;
-      self.disableAction = false;
+      this.moveLeft = false;
+      this.moveRight = false;
+      this.moveUp = false;
+      this.moveDown = false;
+      this.disableAction = false;
 
-      self.loadEquipment();
+      this.loadEquipment();
     },
 
     load(data) {
       var self = this;
 
-      self.setId(data.instance);
-      self.setGridPosition(data.x, data.y);
-      self.setPointsData(data.hitPoints, data.mana);
+      this.setId(data.instance);
+      this.setGridPosition(data.x, data.y);
+      this.setPointsData(data.hitPoints, data.mana);
 
-      self.username = data.username;
-      self.experience = data.experience;
-      self.level = data.level;
+      this.username = data.username;
+      this.experience = data.experience;
+      this.level = data.level;
 
-      self.lastLogin = data.lastLogin;
-      self.pvpKills = data.pvpKills;
-      self.pvpDeaths = data.pvpDeaths;
+      this.lastLogin = data.lastLogin;
+      this.pvpKills = data.pvpKills;
+      this.pvpDeaths = data.pvpDeaths;
 
-      self.type = "player";
+      this.type = "player";
     },
 
     loadHandler(game) {
@@ -77,8 +77,8 @@ define([
        * This is for other player characters
        */
 
-      self.handler.setGame(game);
-      self.handler.load();
+      this.handler.setGame(game);
+      this.handler.load();
     },
 
     hasKeyboardMovement() {
@@ -100,11 +100,11 @@ define([
     loadEquipment() {
       var self = this;
 
-      self.armour = null;
-      self.weapon = null;
-      self.pendant = null;
-      self.ring = null;
-      self.boots = null;
+      this.armour = null;
+      this.weapon = null;
+      this.pendant = null;
+      this.ring = null;
+      this.boots = null;
     },
 
     isRanged() {
@@ -130,8 +130,8 @@ define([
     setName(name) {
       var self = this;
 
-      self.username = name;
-      self.name = name;
+      this.username = name;
+      this.name = name;
     },
 
     setSprite(sprite) {
@@ -181,11 +181,11 @@ define([
         mana = manaData.shift(),
         maxMana = manaData.shift();
 
-      self.setHitPoints(hitPoints);
-      self.setMana(mana);
+      this.setHitPoints(hitPoints);
+      this.setMana(mana);
 
-      self.setMaxHitPoints(maxHitPoints);
-      self.setMaxMana(maxMana);
+      this.setMaxHitPoints(maxHitPoints);
+      this.setMaxMana(maxMana);
     },
 
     setEquipment(type, info) {
@@ -198,59 +198,59 @@ define([
 
       switch (type) {
         case Modules.Equipment.Armour:
-          if (!self.armour)
-            self.armour = new Armour(
+          if (!this.armour)
+            this.armour = new Armour(
               name,
               string,
               count,
               ability,
               abilityLevel
             );
-          else self.armour.update(name, string, count, ability, abilityLevel);
+          else this.armour.update(name, string, count, ability, abilityLevel);
 
-          if (self.updateArmourCallback) self.updateArmourCallback(string);
+          if (this.updateArmourCallback) this.updateArmourCallback(string);
 
           break;
 
         case Modules.Equipment.Weapon:
-          if (!self.weapon)
-            self.weapon = new Weapon(
+          if (!this.weapon)
+            this.weapon = new Weapon(
               name,
               string,
               count,
               ability,
               abilityLevel
             );
-          else self.weapon.update(name, string, count, ability, abilityLevel);
+          else this.weapon.update(name, string, count, ability, abilityLevel);
 
-          self.weapon.ranged = string.includes("bow");
+          this.weapon.ranged = string.includes("bow");
 
           break;
 
         case Modules.Equipment.Pendant:
-          if (!self.pendant)
-            self.pendant = new Pendant(
+          if (!this.pendant)
+            this.pendant = new Pendant(
               name,
               string,
               count,
               ability,
               abilityLevel
             );
-          else self.pendant.update(name, string, count, ability, abilityLevel);
+          else this.pendant.update(name, string, count, ability, abilityLevel);
 
           break;
 
         case Modules.Equipment.Ring:
-          if (!self.ring)
-            self.ring = new Ring(name, string, count, ability, abilityLevel);
-          else self.ring.update(name, string, count, ability, abilityLevel);
+          if (!this.ring)
+            this.ring = new Ring(name, string, count, ability, abilityLevel);
+          else this.ring.update(name, string, count, ability, abilityLevel);
 
           break;
 
         case Modules.Equipment.Boots:
-          if (!self.boots)
-            self.boots = new Boots(name, string, count, ability, abilityLevel);
-          else self.boots.update(name, string, count, ability, abilityLevel);
+          if (!this.boots)
+            this.boots = new Boots(name, string, count, ability, abilityLevel);
+          else this.boots.update(name, string, count, ability, abilityLevel);
 
           break;
       }
@@ -261,23 +261,23 @@ define([
 
       switch (type) {
         case "armour":
-          self.armour.update("Cloth Armour", "clotharmor", 1, -1, -1);
+          this.armour.update("Cloth Armour", "clotharmor", 1, -1, -1);
           break;
 
         case "weapon":
-          self.weapon.update(null, null, -1, -1, -1);
+          this.weapon.update(null, null, -1, -1, -1);
           break;
 
         case "pendant":
-          self.pendant.update(null, null, -1, -1, -1);
+          this.pendant.update(null, null, -1, -1, -1);
           break;
 
         case "ring":
-          self.ring.update(null, null, -1, -1, -1);
+          this.ring.update(null, null, -1, -1, -1);
           break;
 
         case "boots":
-          self.boots.update(null, null, -1, -1, -1);
+          this.boots.update(null, null, -1, -1, -1);
           break;
       }
     },
@@ -285,11 +285,11 @@ define([
     tempBlink() {
       var self = this;
 
-      self.blink(90);
+      this.blink(90);
 
-      if (!self.tempBlinkTimeout)
-        self.tempBlinkTimeout = setTimeout(function() {
-          self.stopBlinking();
+      if (!this.tempBlinkTimeout)
+        this.tempBlinkTimeout = setTimeout(function() {
+          this.stopBlinking();
         }, 500);
     },
 

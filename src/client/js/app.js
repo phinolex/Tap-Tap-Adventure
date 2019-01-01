@@ -5,147 +5,147 @@ import Detect from "./utils/detect";
 
 export default class App {
   constructor() {
-    const self = this;
+    
 
     log.info("Loading the main application...");
 
-    self.config = null;
+    this.config = null;
 
-    self.body = $("body");
-    self.wrapper = $("#content");
-    self.container = $("#container");
-    self.window = $(window);
-    self.canvas = $("#canvasLayers");
-    self.border = $("#border");
+    this.body = $("body");
+    this.wrapper = $("#content");
+    this.container = $("#container");
+    this.window = $(window);
+    this.canvas = $("#canvasLayers");
+    this.border = $("#border");
 
-    self.intro = $("#modal");
+    this.intro = $("#modal");
 
-    self.loginButton = $("#loginButton");
-    self.createButton = $("#play");
-    self.registerButton = $("#newCharacter");
-    self.helpButton = $("#helpButton");
-    self.cancelButton = $("#cancelButton");
-    self.yes = $("#yes");
-    self.no = $("#no");
-    self.loading = $(".loader");
-    self.loadingMsg = $(".loader.message");
-    self.errorMsg = $(".error.message");
+    this.loginButton = $("#loginButton");
+    this.createButton = $("#play");
+    this.registerButton = $("#newCharacter");
+    this.helpButton = $("#helpButton");
+    this.cancelButton = $("#cancelButton");
+    this.yes = $("#yes");
+    this.no = $("#no");
+    this.loading = $(".loader");
+    this.loadingMsg = $(".loader.message");
+    this.errorMsg = $(".error.message");
 
-    self.respawn = $("#respawn");
+    this.respawn = $("#respawn");
 
-    self.rememberMe = $("#rememberMe");
-    self.guest = $("#guest");
+    this.rememberMe = $("#rememberMe");
+    this.guest = $("#guest");
 
-    self.about = $("#toggle-about");
-    self.credits = $("#toggle-credits");
-    self.git = $("#toggle-git");
+    this.about = $("#toggle-about");
+    this.credits = $("#toggle-credits");
+    this.git = $("#toggle-git");
 
-    self.loginFields = [$("#loginNameInput"), $("#loginPasswordInput")];
+    this.loginFields = [$("#loginNameInput"), $("#loginPasswordInput")];
 
-    self.registerFields = [];
+    this.registerFields = [];
 
-    self.game = null;
-    self.guestLogin = false;
-    self.zoomFactor = 1;
+    this.game = null;
+    this.guestLogin = false;
+    this.zoomFactor = 1;
 
-    self.loggingIn = false;
+    this.loggingIn = false;
 
-    self.sendStatus("You should turn back now...");
+    this.sendStatus("You should turn back now...");
 
-    self.zoom();
-    self.updateOrientation();
-    self.load();
+    this.zoom();
+    this.updateOrientation();
+    this.load();
   }
 
   load() {
-    const self = this;
+    
 
-    self.loginButton.click(function() {
-      self.login();
+    this.loginButton.click(function() {
+      this.login();
     });
 
-    self.createButton.click(function() {
-      self.login();
+    this.createButton.click(function() {
+      this.login();
     });
 
-    self.registerButton.click(function() {
-      self.openScroll("loadCharacter", "createCharacter");
+    this.registerButton.click(function() {
+      this.openScroll("loadCharacter", "createCharacter");
     });
 
-    self.cancelButton.click(function() {
-      self.openScroll("createCharacter", "loadCharacter");
+    this.cancelButton.click(function() {
+      this.openScroll("createCharacter", "loadCharacter");
     });
 
-    self.wrapper.click(function() {
+    this.wrapper.click(function() {
       if (
-        self.wrapper.hasClass("about") ||
-        self.wrapper.hasClass("credits") ||
-        self.wrapper.hasClass("git")
+        this.wrapper.hasClass("about") ||
+        this.wrapper.hasClass("credits") ||
+        this.wrapper.hasClass("git")
       ) {
-        self.wrapper.removeClass("about credits git");
-        self.displayScroll("loadCharacter");
+        this.wrapper.removeClass("about credits git");
+        this.displayScroll("loadCharacter");
       }
     });
 
-    self.about.click(function() {
-      self.displayScroll("about");
+    this.about.click(function() {
+      this.displayScroll("about");
     });
 
-    self.credits.click(function() {
-      self.displayScroll("credits");
+    this.credits.click(function() {
+      this.displayScroll("credits");
     });
 
-    self.git.click(function() {
-      self.displayScroll("git");
+    this.git.click(function() {
+      this.displayScroll("git");
     });
 
     // dismissing the welcome screen
     const welcomeContinue = function() {
-      if (!self.game) return;
+      if (!this.game) return;
 
       // hide the welcome screen so it doesn't appear again
-      self.game.storage.data.welcome = false;
-      self.game.storage.save();
+      this.game.storage.data.welcome = false;
+      this.game.storage.save();
 
-      self.body.removeClass("welcomeMessage");
+      this.body.removeClass("welcomeMessage");
     };
 
-    self.yes.click(welcomeContinue);
-    self.no.click(welcomeContinue);
+    this.yes.click(welcomeContinue);
+    this.no.click(welcomeContinue);
 
-    self.rememberMe.click(function() {
-      if (!self.game || !self.game.storage) return;
+    this.rememberMe.click(function() {
+      if (!this.game || !this.game.storage) return;
 
-      const active = self.rememberMe.hasClass("active");
+      const active = this.rememberMe.hasClass("active");
 
-      self.rememberMe.toggleClass("active");
+      this.rememberMe.toggleClass("active");
 
-      self.game.storage.toggleRemember(!active);
+      this.game.storage.toggleRemember(!active);
     });
 
-    self.guest.click(function() {
-      if (!self.game) return;
+    this.guest.click(function() {
+      if (!this.game) return;
 
-      self.guestLogin = true;
-      self.login();
+      this.guestLogin = true;
+      this.login();
     });
 
-    self.respawn.click(function() {
-      if (!self.game || !self.game.player || !self.game.player.dead) return;
+    this.respawn.click(function() {
+      if (!this.game || !this.game.player || !this.game.player.dead) return;
 
-      self.game.respawn();
+      this.game.respawn();
     });
 
     window.scrollTo(0, 1);
 
-    self.window.resize(function() {
-      self.zoom();
+    this.window.resize(function() {
+      this.zoom();
     });
 
     $.getJSON("data/config.json", function(json) {
-      self.config = json;
+      this.config = json;
 
-      if (self.readyCallback) self.readyCallback();
+      if (this.readyCallback) this.readyCallback();
     });
 
     $(document).bind("keydown", function(e) {
@@ -155,141 +155,141 @@ export default class App {
     $(document).keydown(function(e) {
       const key = e.which;
 
-      if (!self.game) return;
+      if (!this.game) return;
 
-      self.body.focus();
+      this.body.focus();
 
-      if (key === Modules.Keys.Enter && !self.game.started) {
-        self.login();
+      if (key === Modules.Keys.Enter && !this.game.started) {
+        this.login();
         return;
       }
 
-      if (self.game.started) self.game.onInput(Modules.InputType.Key, key);
+      if (this.game.started) this.game.onInput(Modules.InputType.Key, key);
     });
 
     $(document).keyup(function(e) {
       const key = e.which;
 
-      if (!self.game || !self.game.started) return;
+      if (!this.game || !this.game.started) return;
 
-      self.game.input.keyUp(key);
+      this.game.input.keyUp(key);
     });
 
     $(document).mousemove(function(event) {
-      if (!self.game || !self.game.input || !self.game.started) return;
+      if (!this.game || !this.game.input || !this.game.started) return;
 
-      self.game.input.setCoords(event);
-      self.game.input.moveCursor();
+      this.game.input.setCoords(event);
+      this.game.input.moveCursor();
     });
 
-    self.canvas.click(function(event) {
-      if (!self.game || !self.game.started || event.button !== 0) return;
+    this.canvas.click(function(event) {
+      if (!this.game || !this.game.started || event.button !== 0) return;
 
       window.scrollTo(0, 1);
 
-      self.game.input.handle(Modules.InputType.LeftClick, event);
+      this.game.input.handle(Modules.InputType.LeftClick, event);
     });
 
     $('input[type="range"]').on("input", function() {
-      self.updateRange($(this));
+      this.updateRange($(this));
     });
   }
 
   login() {
-    const self = this;
+    
 
     if (
-      self.loggingIn ||
-      !self.game ||
-      !self.game.loaded ||
-      self.statusMessage ||
-      !self.verifyForm()
+      this.loggingIn ||
+      !this.game ||
+      !this.game.loaded ||
+      this.statusMessage ||
+      !this.verifyForm()
     )
       return;
 
-    self.toggleLogin(true);
-    self.game.connect();
+    this.toggleLogin(true);
+    this.game.connect();
   }
 
   zoom() {
-    const self = this;
+    
 
-    const containerWidth = self.container.width(),
-      containerHeight = self.container.height(),
-      windowWidth = self.window.width(),
-      windowHeight = self.window.height(),
+    const containerWidth = this.container.width(),
+      containerHeight = this.container.height(),
+      windowWidth = this.window.width(),
+      windowHeight = this.window.height(),
       zoomFactor = windowWidth / containerWidth;
 
     if (containerHeight + 50 >= windowHeight) {
       zoomFactor = windowHeight / (containerHeight + 50);
     }
 
-    if (self.getScaleFactor() === 3) zoomFactor -= 0.1;
+    if (this.getScaleFactor() === 3) zoomFactor -= 0.1;
 
-    self.body.css({
+    this.body.css({
       zoom: zoomFactor,
       "-moz-transform": "scale(" + zoomFactor + ")"
     });
 
-    self.border.css("top", 0);
+    this.border.css("top", 0);
 
-    self.zoomFactor = zoomFactor;
+    this.zoomFactor = zoomFactor;
   }
 
   fadeMenu() {
-    const self = this;
+    
 
-    self.updateLoader(null);
+    this.updateLoader(null);
 
     setTimeout(() => {
-      self.body.addClass("game");
-      self.body.addClass("started");
-      self.body.removeClass("intro");
+      this.body.addClass("game");
+      this.body.addClass("started");
+      this.body.removeClass("intro");
     }, 500);
   }
 
   showMenu() {
-    const self = this;
+    
 
-    self.body.removeClass("game");
-    self.body.removeClass("started");
-    self.body.addClass("intro");
+    this.body.removeClass("game");
+    this.body.removeClass("started");
+    this.body.addClass("intro");
   }
 
   showDeath() {}
 
   openScroll(origin, destination) {
-    const self = this;
+    
 
     console.log("open scroll", origin, destination);
 
-    if (!destination || self.loggingIn) return;
+    if (!destination || this.loggingIn) return;
 
-    self.cleanErrors();
-    // self.wrapper.removeClass(origin).addClass(destination);
+    this.cleanErrors();
+    // this.wrapper.removeClass(origin).addClass(destination);
     $("#" + origin).css("display", "none");
     $("#" + destination).css("display", "block");
   }
 
   displayScroll(content) {
     const self = this,
-      state = self.wrapper.attr("class");
+      state = this.wrapper.attr("class");
 
-    if (self.game.started) {
-      self.wrapper.removeClass().addClass(content);
+    if (this.game.started) {
+      this.wrapper.removeClass().addClass(content);
 
-      self.body.removeClass("credits legal about").toggleClass(content);
+      this.body.removeClass("credits legal about").toggleClass(content);
 
-      if (self.game.player) self.body.toggleClass("death");
+      if (this.game.player) this.body.toggleClass("death");
 
-      if (content !== "about") self.helpButton.removeClass("active");
+      if (content !== "about") this.helpButton.removeClass("active");
     } else if (state !== "animate")
-      self.openScroll(state, state === content ? "loadCharacter" : content);
+      this.openScroll(state, state === content ? "loadCharacter" : content);
   }
 
   verifyForm() {
     const self = this,
-      activeForm = self.getActiveForm();
+      activeForm = this.getActiveForm();
 
     if (activeForm === "null") {
       return;
@@ -300,16 +300,16 @@ export default class App {
         const nameInput = $("#loginNameInput"),
           passwordInput = $("#loginPasswordInput");
 
-        if (self.loginFields.length === 0)
-          self.loginFields = [nameInput, passwordInput];
+        if (this.loginFields.length === 0)
+          this.loginFields = [nameInput, passwordInput];
 
-        if (!nameInput.val() && !self.isGuest()) {
-          self.sendError(nameInput, "Please enter a username.");
+        if (!nameInput.val() && !this.isGuest()) {
+          this.sendError(nameInput, "Please enter a username.");
           return false;
         }
 
-        if (!passwordInput.val() && !self.isGuest()) {
-          self.sendError(passwordInput, "Please enter a password.");
+        if (!passwordInput.val() && !this.isGuest()) {
+          this.sendError(passwordInput, "Please enter a password.");
           return false;
         }
 
@@ -323,8 +323,8 @@ export default class App {
           ),
           email = $("#registerEmailInput");
 
-        if (self.registerFields.length === 0)
-          self.registerFields = [
+        if (this.registerFields.length === 0)
+          this.registerFields = [
             characterName,
             registerPassword,
             registerPasswordConfirmation,
@@ -332,25 +332,25 @@ export default class App {
           ];
 
         if (!characterName.val()) {
-          self.sendError(characterName, "A username is necessary you silly.");
+          this.sendError(characterName, "A username is necessary you silly.");
           return false;
         }
 
         if (!registerPassword.val()) {
-          self.sendError(registerPassword, "You must enter a password.");
+          this.sendError(registerPassword, "You must enter a password.");
           return false;
         }
 
         if (registerPasswordConfirmation.val() !== registerPassword.val()) {
-          self.sendError(
+          this.sendError(
             registerPasswordConfirmation,
             "The passwords do not match!"
           );
           return false;
         }
 
-        if (!email.val() || !self.verifyEmail(email.val())) {
-          self.sendError(email, "An email is required!");
+        if (!email.val() || !this.verifyEmail(email.val())) {
+          this.sendError(email, "An email is required!");
           return false;
         }
 
@@ -367,20 +367,20 @@ export default class App {
   }
 
   sendStatus(message) {
-    const self = this;
+    
 
-    self.cleanErrors();
+    this.cleanErrors();
 
-    self.statusMessage = message;
+    this.statusMessage = message;
 
     if (!message) {
-      self.loadingMsg.html("");
-      self.loading.hide();
+      this.loadingMsg.html("");
+      this.loading.hide();
       return;
     }
 
-    self.loading.show();
-    self.loadingMsg.html(message);
+    this.loading.show();
+    this.loadingMsg.html(message);
   }
 
   sendError(field, error) {
@@ -404,9 +404,9 @@ export default class App {
 
   cleanErrors() {
     const self = this,
-      activeForm = self.getActiveForm(),
+      activeForm = this.getActiveForm(),
       fields =
-        activeForm === "loadCharacter" ? self.loginFields : self.registerFields;
+        activeForm === "loadCharacter" ? this.loginFields : this.registerFields;
 
     for (let i = 0; i < fields.length; i++)
       fields[i].removeClass("field-error");
@@ -428,9 +428,9 @@ export default class App {
   }
 
   resize() {
-    const self = this;
+    
 
-    if (self.game) self.game.resize();
+    if (this.game) this.game.resize();
   }
 
   setGame(game) {
@@ -459,52 +459,52 @@ export default class App {
   }
 
   updateLoader(message) {
-    const self = this;
+    
 
     if (!message) {
-      self.loading.hide();
-      self.loadingMsg.html("");
+      this.loading.hide();
+      this.loadingMsg.html("");
       return;
     }
 
-    self.loading.show();
-    self.loadingMsg.html(message);
+    this.loading.show();
+    this.loadingMsg.html(message);
   }
 
   toggleLogin(toggle) {
     log.info("Logging in: " + toggle);
 
-    const self = this;
+    
 
-    self.revertLoader();
+    this.revertLoader();
 
-    self.toggleTyping(toggle);
+    this.toggleTyping(toggle);
 
-    self.loggingIn = toggle;
+    this.loggingIn = toggle;
 
     if (toggle) {
-      self.loading.hide();
+      this.loading.hide();
 
-      self.loginButton.addClass("disabled");
-      self.registerButton.addClass("disabled");
+      this.loginButton.addClass("disabled");
+      this.registerButton.addClass("disabled");
     } else {
-      self.loading.hide();
+      this.loading.hide();
 
-      self.loginButton.removeClass("disabled");
-      self.registerButton.removeClass("disabled");
+      this.loginButton.removeClass("disabled");
+      this.registerButton.removeClass("disabled");
     }
   }
 
   toggleTyping(state) {
-    const self = this;
+    
 
-    if (self.loginFields)
-      _.each(self.loginFields, function(field) {
+    if (this.loginFields)
+      _.each(this.loginFields, function(field) {
         field.prop("readonly", state);
       });
 
-    if (self.registerFields)
-      _.each(self.registerFields, function(field) {
+    if (this.registerFields)
+      _.each(this.registerFields, function(field) {
         field.prop("readOnly", state);
       });
   }

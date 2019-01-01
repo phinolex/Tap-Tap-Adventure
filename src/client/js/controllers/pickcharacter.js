@@ -10,32 +10,32 @@ define([
     init(game) {
       var self = this;
 
-      self.game = game;
-      self.renderer = game.renderer;
+      this.game = game;
+      this.renderer = game.renderer;
 
-      self.grids = null;
-      self.sprites = null;
+      this.grids = null;
+      this.sprites = null;
 
-      self.entities = {};
-      self.decrepit = {};
+      this.entities = {};
+      this.decrepit = {};
     },
 
     load() {
       var self = this;
 
-      self.game.app.sendStatus("Inviting craziness...");
+      this.game.app.sendStatus("Inviting craziness...");
 
-      if (!self.sprites) {
-        self.sprites = new Sprites(self.game.renderer);
+      if (!this.sprites) {
+        this.sprites = new Sprites(this.game.renderer);
       }
 
-      self.game.app.sendStatus("Lots of spooky monsters...");
+      this.game.app.sendStatus("Lots of spooky monsters...");
     },
 
     update() {
       var self = this;
 
-      if (self.sprites) self.sprites.updateSprites();
+      if (this.sprites) this.sprites.updateSprites();
     },
 
     create(info) {
@@ -45,21 +45,21 @@ define([
       entity.setGridPosition(0, 0);
 
       // set the default character sprite
-      entity.setSprite(self.getSprite("clotharmor"));
+      entity.setSprite(this.getSprite("clotharmor"));
       entity.idle();
 
-      entity.loadHandler(self.game);
+      entity.loadHandler(this.game);
 
-      self.addEntity(entity);
+      this.addEntity(entity);
 
       entity.setGridPosition(0, 0);
 
       entity.idle();
 
-      self.addEntity(entity);
+      this.addEntity(entity);
 
       if (entity.handler) {
-        entity.handler.setGame(self.game);
+        entity.handler.setGame(this.game);
         entity.handler.load();
       }
 
@@ -71,7 +71,7 @@ define([
     get(id) {
       var self = this;
 
-      if (id in self.entities) return self.entities[id];
+      if (id in this.entities) return this.entities[id];
 
       return null;
     },
@@ -83,35 +83,35 @@ define([
     clearPlayers(exception) {
       var self = this;
 
-      _.each(self.entities, function(entity) {
+      _.each(this.entities, function(entity) {
         if (entity.id !== exception.id && entity.type === "player") {
-          self.grids.removeFromRenderingGrid(
+          this.grids.removeFromRenderingGrid(
             entity,
             entity.gridX,
             entity.gridY
           );
-          self.grids.removeFromPathingGrid(entity.gridX, entity.gridY);
+          this.grids.removeFromPathingGrid(entity.gridX, entity.gridY);
 
-          delete self.entities[entity.id];
+          delete this.entities[entity.id];
         }
       });
 
-      self.grids.resetPathingGrid();
+      this.grids.resetPathingGrid();
     },
 
     addEntity(entity) {
       var self = this;
 
-      if (self.entities[entity.id]) return;
+      if (this.entities[entity.id]) return;
 
-      self.entities[entity.id] = entity;
-      self.registerPosition(entity);
+      this.entities[entity.id] = entity;
+      this.registerPosition(entity);
 
       if (
         !(entity instanceof Item && entity.dropped) &&
-        !self.renderer.isPortableDevice()
+        !this.renderer.isPortableDevice()
       )
-        entity.fadeIn(self.game.time);
+        entity.fadeIn(this.game.time);
     },
 
     removeItem(item) {
@@ -119,10 +119,10 @@ define([
 
       if (!item) return;
 
-      self.grids.removeFromItemGrid(item, item.gridX, item.gridY);
-      self.grids.removeFromRenderingGrid(item, item.gridX, item.gridY);
+      this.grids.removeFromItemGrid(item, item.gridX, item.gridY);
+      this.grids.removeFromRenderingGrid(item, item.gridX, item.gridY);
 
-      delete self.entities[item.id];
+      delete this.entities[item.id];
     },
 
     registerPosition(entity) {
@@ -136,16 +136,16 @@ define([
         entity.type === "npc" ||
         entity.type === "chest"
       ) {
-        self.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);
+        this.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);
 
         if (entity.type !== "player" || entity.nonPathable)
-          self.grids.addToPathingGrid(entity.gridX, entity.gridY);
+          this.grids.addToPathingGrid(entity.gridX, entity.gridY);
       }
 
       if (entity.type === "item")
-        self.grids.addToItemGrid(entity, entity.gridX, entity.gridY);
+        this.grids.addToItemGrid(entity, entity.gridX, entity.gridY);
 
-      self.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
+      this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
     },
 
     registerDuality(entity) {
@@ -153,17 +153,17 @@ define([
 
       if (!entity) return;
 
-      self.grids.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;
+      this.grids.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;
 
-      self.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
+      this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
 
       if (entity.nextGridX > -1 && entity.nextGridY > -1) {
-        self.grids.entityGrid[entity.nextGridY][entity.nextGridX][
+        this.grids.entityGrid[entity.nextGridY][entity.nextGridX][
           entity.id
         ] = entity;
 
         if (!(entity instanceof Player))
-          self.grids.pathingGrid[entity.nextGridY][entity.nextGridX] = 1;
+          this.grids.pathingGrid[entity.nextGridY][entity.nextGridX] = 1;
       }
     },
 
@@ -172,7 +172,7 @@ define([
 
       if (!entity) return;
 
-      self.grids.removeEntity(entity);
+      this.grids.removeEntity(entity);
     },
 
     getSprite(name) {
@@ -194,9 +194,9 @@ define([
 
       for (var i = x - radius, max_i = x + radius; i <= max_i; i++) {
         for (var j = y - radius, max_j = y + radius; j <= max_j; j++) {
-          if (self.map.isOutOfBounds(i, j)) continue;
+          if (this.map.isOutOfBounds(i, j)) continue;
 
-          _.each(self.grids.renderingGrid[j][i], function(entity) {
+          _.each(this.grids.renderingGrid[j][i], function(entity) {
             callback(entity);
           });
         }

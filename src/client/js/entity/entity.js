@@ -11,50 +11,50 @@ define(["./entityhandler"], function(EntityHandler) {
     init(id, kind) {
       var self = this;
 
-      self.id = id;
-      self.kind = kind;
+      this.id = id;
+      this.kind = kind;
 
-      self.x = 0;
-      self.y = 0;
-      self.gridX = 0;
-      self.gridY = 0;
+      this.x = 0;
+      this.y = 0;
+      this.gridX = 0;
+      this.gridY = 0;
 
-      self.name = "";
+      this.name = "";
 
-      self.sprite = null;
-      self.spriteFlipX = false;
-      self.spriteFlipY = false;
+      this.sprite = null;
+      this.spriteFlipX = false;
+      this.spriteFlipY = false;
 
-      self.animations = null;
-      self.currentAnimation = null;
+      this.animations = null;
+      this.currentAnimation = null;
 
-      self.shadowOffsetY = 0;
-      self.hidden = false;
+      this.shadowOffsetY = 0;
+      this.hidden = false;
 
-      self.spriteLoaded = false;
-      self.visible = true;
-      self.fading = false;
-      self.handler = new EntityHandler(self);
+      this.spriteLoaded = false;
+      this.visible = true;
+      this.fading = false;
+      this.handler = new EntityHandler(self);
 
-      self.angled = false;
-      self.angle = 0;
+      this.angled = false;
+      this.angle = 0;
 
-      self.critical = false;
-      self.stunned = false;
-      self.terror = false;
+      this.critical = false;
+      this.stunned = false;
+      this.terror = false;
 
-      self.nonPathable = false;
-      self.hasCounter = false;
+      this.nonPathable = false;
+      this.hasCounter = false;
 
-      self.countdownTime = 0;
-      self.counter = 0;
+      this.countdownTime = 0;
+      this.counter = 0;
 
-      self.renderingData = {
+      this.renderingData = {
         scale: -1,
         angle: 0
       };
 
-      self.loadDirty();
+      this.loadDirty();
     },
 
     /**
@@ -70,42 +70,42 @@ define(["./entityhandler"], function(EntityHandler) {
       var self = this;
 
       // north west - diagonal
-      if (!ignoreDiagonals && x - 1 === self.gridX && y + 1 === self.gridY) {
+      if (!ignoreDiagonals && x - 1 === this.gridX && y + 1 === this.gridY) {
         return true;
       }
 
       // north
-      if (x === self.gridX && y + 1 === self.gridY) {
+      if (x === this.gridX && y + 1 === this.gridY) {
         return true;
       }
 
       // north east - diagonal
-      if (!ignoreDiagonals && x + 1 === self.gridX && y + 1 === self.gridY) {
+      if (!ignoreDiagonals && x + 1 === this.gridX && y + 1 === this.gridY) {
         return true;
       }
 
       // west
-      if (x - 1 === self.gridX && y === self.gridY) {
+      if (x - 1 === this.gridX && y === this.gridY) {
         return true;
       }
 
       // east
-      if (x + 1 === self.gridX && y === self.gridY) {
+      if (x + 1 === this.gridX && y === this.gridY) {
         return true;
       }
 
       // south west - diagonal
-      if (!ignoreDiagonals && x - 1 === self.gridX && y - 1 === self.gridY) {
+      if (!ignoreDiagonals && x - 1 === this.gridX && y - 1 === this.gridY) {
         return true;
       }
 
       // south
-      if (x === self.gridX && y - 1 === self.gridY) {
+      if (x === this.gridX && y - 1 === this.gridY) {
         return true;
       }
 
       // south west - diagonal
-      if (!ignoreDiagonals && x - 1 === self.gridX && y - 1 === self.gridY) {
+      if (!ignoreDiagonals && x - 1 === this.gridX && y - 1 === this.gridY) {
         return true;
       }
 
@@ -121,32 +121,32 @@ define(["./entityhandler"], function(EntityHandler) {
     loadDirty() {
       var self = this;
 
-      self.dirty = true;
+      this.dirty = true;
 
-      if (self.dirtyCallback) self.dirtyCallback();
+      if (this.dirtyCallback) this.dirtyCallback();
     },
 
     fadeIn(time) {
       var self = this;
 
-      self.fading = true;
-      self.fadingTime = time;
+      this.fading = true;
+      this.fadingTime = time;
     },
 
     blink(speed) {
       var self = this;
 
-      self.blinking = setInterval(function() {
-        self.toggleVisibility();
+      this.blinking = setInterval(function() {
+        this.toggleVisibility();
       }, speed);
     },
 
     stopBlinking() {
       var self = this;
 
-      if (self.blinking) clearInterval(self.blinking);
+      if (this.blinking) clearInterval(this.blinking);
 
-      self.setVisible(true);
+      this.setVisible(true);
     },
 
     setName(name) {
@@ -156,62 +156,62 @@ define(["./entityhandler"], function(EntityHandler) {
     setSprite(sprite) {
       var self = this;
 
-      if (!sprite || (self.sprite && self.sprite.name === sprite.name)) return;
+      if (!sprite || (this.sprite && this.sprite.name === sprite.name)) return;
 
       if (!sprite.loaded) sprite.load();
 
       sprite.name = sprite.id;
 
-      self.sprite = sprite;
+      this.sprite = sprite;
 
-      self.normalSprite = self.sprite;
-      self.hurtSprite = sprite.getHurtSprite();
-      self.animations = sprite.createAnimations();
-      self.spriteLoaded = true;
+      this.normalSprite = this.sprite;
+      this.hurtSprite = sprite.getHurtSprite();
+      this.animations = sprite.createAnimations();
+      this.spriteLoaded = true;
 
-      if (self.readyCallback) self.readyCallback();
+      if (this.readyCallback) this.readyCallback();
     },
 
     setPosition(x, y) {
       var self = this;
 
-      self.x = x;
-      self.y = y;
+      this.x = x;
+      this.y = y;
     },
 
     setGridPosition(x, y) {
       var self = this;
 
-      self.gridX = x;
-      self.gridY = y;
+      this.gridX = x;
+      this.gridY = y;
 
-      self.setPosition(x * 16, y * 16);
+      this.setPosition(x * 16, y * 16);
     },
 
     setAnimation(name, speed, count, onEndCount) {
       var self = this;
 
       if (
-        !self.spriteLoaded ||
-        (self.currentAnimation && self.currentAnimation.name === name)
+        !this.spriteLoaded ||
+        (this.currentAnimation && this.currentAnimation.name === name)
       )
         return;
 
-      var anim = self.getAnimationByName(name);
+      var anim = this.getAnimationByName(name);
 
       if (!anim) return;
 
-      self.currentAnimation = anim;
+      this.currentAnimation = anim;
 
-      if (name.substr(0, 3) === "atk") self.currentAnimation.reset();
+      if (name.substr(0, 3) === "atk") this.currentAnimation.reset();
 
-      self.currentAnimation.setSpeed(speed);
+      this.currentAnimation.setSpeed(speed);
 
-      self.currentAnimation.setCount(
+      this.currentAnimation.setCount(
         count ? count : 0,
         onEndCount ||
           function() {
-            self.idle();
+            this.idle();
           }
       );
     },
@@ -219,11 +219,11 @@ define(["./entityhandler"], function(EntityHandler) {
     setCountdown(count) {
       var self = this;
 
-      self.counter = count;
+      this.counter = count;
 
-      self.countdownTime = new Date().getTime();
+      this.countdownTime = new Date().getTime();
 
-      self.hasCounter = true;
+      this.hasCounter = true;
     },
 
     setVisible(visible) {
@@ -236,16 +236,16 @@ define(["./entityhandler"], function(EntityHandler) {
 
     getDistance(entity) {
       var self = this,
-        x = Math.abs(self.gridX - entity.gridX),
-        y = Math.abs(self.gridY - entity.gridY);
+        x = Math.abs(this.gridX - entity.gridX),
+        y = Math.abs(this.gridY - entity.gridY);
 
       return x > y ? x : y;
     },
 
     getCoordDistance(toX, toY) {
       var self = this,
-        x = Math.abs(self.gridX - toX),
-        y = Math.abs(self.gridY - toY);
+        x = Math.abs(this.gridX - toX),
+        y = Math.abs(this.gridY - toY);
 
       return x > y ? x : y;
     },

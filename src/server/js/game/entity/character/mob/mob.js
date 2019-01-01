@@ -8,55 +8,55 @@ module.exports = Mob = Character.extend({
   init(id, instance, x, y) {
     var self = this;
 
-    self._super(id, "mob", instance, x, y);
+    this._super(id, "mob", instance, x, y);
 
     if (!Mobs.exists(id)) return;
 
-    self.data = Mobs.Ids[self.id];
-    self.hitPoints = self.data.hitPoints;
-    self.maxHitPoints = self.data.hitPoints;
-    self.drops = self.data.drops;
+    this.data = Mobs.Ids[this.id];
+    this.hitPoints = this.data.hitPoints;
+    this.maxHitPoints = this.data.hitPoints;
+    this.drops = this.data.drops;
 
-    self.respawnDelay = self.data.spawnDelay;
+    this.respawnDelay = this.data.spawnDelay;
 
-    self.level = self.data.level;
+    this.level = this.data.level;
 
-    self.armourLevel = self.data.armour;
-    self.weaponLevel = self.data.weapon;
-    self.attackRange = self.data.attackRange;
-    self.aggroRange = self.data.aggroRange;
-    self.aggressive = self.data.aggressive;
+    this.armourLevel = this.data.armour;
+    this.weaponLevel = this.data.weapon;
+    this.attackRange = this.data.attackRange;
+    this.aggroRange = this.data.aggroRange;
+    this.aggressive = this.data.aggressive;
 
-    self.spawnLocation = [x, y];
+    this.spawnLocation = [x, y];
 
-    self.dead = false;
-    self.boss = false;
-    self.static = false;
+    this.dead = false;
+    this.boss = false;
+    this.static = false;
 
-    self.projectileName = self.getProjectileName();
+    this.projectileName = this.getProjectileName();
   },
 
   refresh() {
     var self = this;
 
-    self.hitPoints = self.data.hitPoints;
-    self.maxHitPoints = self.data.hitPoints;
+    this.hitPoints = this.data.hitPoints;
+    this.maxHitPoints = this.data.hitPoints;
 
-    if (self.refreshCallback) self.refreshCallback();
+    if (this.refreshCallback) this.refreshCallback();
   },
 
   getDrop() {
     var self = this;
 
-    if (!self.drops) return null;
+    if (!this.drops) return null;
 
     var min = 0,
       percent = 0,
       random = Utils.randomInt(0, 1000);
 
-    for (var drop in self.drops)
-      if (self.drops.hasOwnProperty(drop)) {
-        var chance = self.drops[drop];
+    for (var drop in this.drops)
+      if (this.drops.hasOwnProperty(drop)) {
+        var chance = this.drops[drop];
 
         min = percent;
         percent += chance;
@@ -67,8 +67,8 @@ module.exports = Mob = Character.extend({
           if (drop === "gold")
             count = Utils.randomInt(
               1,
-              self.level *
-                Math.floor(Math.pow(2, self.level / 7) / (self.level / 4))
+              this.level *
+                Math.floor(Math.pow(2, this.level / 7) / (this.level / 4))
             );
 
           return {
@@ -91,32 +91,32 @@ module.exports = Mob = Character.extend({
     var self = this;
 
     if (
-      self.hasTarget() ||
-      !self.aggressive ||
-      Math.floor(self.level * 1.5) < player.level
+      this.hasTarget() ||
+      !this.aggressive ||
+      Math.floor(this.level * 1.5) < player.level
     )
       return false;
 
-    return self.isNear(player, self.aggroRange);
+    return this.isNear(player, this.aggroRange);
   },
 
   destroy() {
     var self = this;
 
-    self.dead = true;
-    self.clearTarget();
-    self.resetPosition();
-    self.respawn();
+    this.dead = true;
+    this.clearTarget();
+    this.resetPosition();
+    this.respawn();
 
-    if (self.area) self.area.removeEntity(self);
+    if (this.area) this.area.removeEntity(self);
   },
 
   return() {
     var self = this;
 
-    self.clearTarget();
-    self.resetPosition();
-    self.move(self.x, self.y);
+    this.clearTarget();
+    this.resetPosition();
+    this.move(this.x, this.y);
   },
 
   isRanged() {
@@ -138,7 +138,7 @@ module.exports = Mob = Character.extend({
   addToChestArea(chestAreas) {
     var self = this,
       area = _.find(chestAreas, function(area) {
-        return area.contains(self.x, self.y);
+        return area.contains(this.x, this.y);
       });
 
     if (area) area.addEntity(self);
@@ -153,21 +153,21 @@ module.exports = Mob = Character.extend({
      * so the resawning script is handled elsewhere.
      */
 
-    if (!self.static || self.respawnDelay === -1) return;
+    if (!this.static || this.respawnDelay === -1) return;
 
     setTimeout(function() {
-      if (self.respawnCallback) self.respawnCallback();
-    }, self.respawnDelay);
+      if (this.respawnCallback) this.respawnCallback();
+    }, this.respawnDelay);
   },
 
   getState() {
     var self = this,
-      base = self._super();
+      base = this._super();
 
-    base.hitPoints = self.hitPoints;
-    base.maxHitPoints = self.maxHitPoints;
-    base.attackRange = self.attackRange;
-    base.level = self.level;
+    base.hitPoints = this.hitPoints;
+    base.maxHitPoints = this.maxHitPoints;
+    base.attackRange = this.attackRange;
+    base.level = this.level;
 
     return base;
   },
@@ -175,7 +175,7 @@ module.exports = Mob = Character.extend({
   resetPosition() {
     var self = this;
 
-    self.setPosition(self.spawnLocation[0], self.spawnLocation[1]);
+    this.setPosition(this.spawnLocation[0], this.spawnLocation[1]);
   },
 
   onRespawn(callback) {
@@ -201,8 +201,8 @@ module.exports = Mob = Character.extend({
   move(x, y) {
     var self = this;
 
-    self.setPosition(x, y);
+    this.setPosition(x, y);
 
-    if (self.moveCallback) self.moveCallback(self);
+    if (this.moveCallback) this.moveCallback(self);
   }
 });

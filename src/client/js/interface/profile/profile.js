@@ -11,72 +11,72 @@ define([
     init(game) {
       var self = this;
 
-      self.game = game;
+      this.game = game;
 
-      self.body = $("#profileDialog");
-      self.button = $("#profileButton");
+      this.body = $("#profileDialog");
+      this.button = $("#profileButton");
 
-      self.next = $("#next");
-      self.previous = $("#previous");
+      this.next = $("#next");
+      this.previous = $("#previous");
 
-      self.activePage = null;
-      self.activeIndex = 0;
-      self.pages = [];
+      this.activePage = null;
+      this.activeIndex = 0;
+      this.pages = [];
 
-      self.load();
+      this.load();
     },
 
     load() {
       var self = this;
 
-      self.button.click(function() {
-        self.game.interface.hideAll();
-        self.settings.hide();
+      this.button.click(function() {
+        this.game.interface.hideAll();
+        this.settings.hide();
 
-        if (self.isVisible()) {
-          self.hide();
-          self.button.removeClass("active");
+        if (this.isVisible()) {
+          this.hide();
+          this.button.removeClass("active");
         } else {
-          self.show();
-          self.button.addClass("active");
+          this.show();
+          this.button.addClass("active");
         }
 
-        if (!self.activePage.loaded) self.activePage.load();
+        if (!this.activePage.loaded) this.activePage.load();
 
-        self.game.socket.send(Packets.Click, [
+        this.game.socket.send(Packets.Click, [
           "profile",
-          self.button.hasClass("active")
+          this.button.hasClass("active")
         ]);
       });
 
-      self.next.click(function() {
-        if (self.activeIndex + 1 < self.pages.length)
-          self.setPage(self.activeIndex + 1);
-        else self.next.removeClass("enabled");
+      this.next.click(function() {
+        if (this.activeIndex + 1 < this.pages.length)
+          this.setPage(this.activeIndex + 1);
+        else this.next.removeClass("enabled");
       });
 
-      self.previous.click(function() {
-        if (self.activeIndex > 0) self.setPage(self.activeIndex - 1);
-        else self.previous.removeClass("enabled");
+      this.previous.click(function() {
+        if (this.activeIndex > 0) this.setPage(this.activeIndex - 1);
+        else this.previous.removeClass("enabled");
       });
 
-      self.state = new State(self.game);
-      self.ability = new Ability(self.game);
-      self.settings = new Settings(self.game);
-      self.quests = new Quest(self.game);
+      this.state = new State(this.game);
+      this.ability = new Ability(this.game);
+      this.settings = new Settings(this.game);
+      this.quests = new Quest(this.game);
 
-      self.pages.push(self.state, self.quests, self.ability);
+      this.pages.push(this.state, this.quests, this.ability);
 
-      self.activePage = self.state;
+      this.activePage = this.state;
 
-      if (self.activeIndex === 0 && self.activeIndex !== self.pages.length)
-        self.next.addClass("enabled");
+      if (this.activeIndex === 0 && this.activeIndex !== this.pages.length)
+        this.next.addClass("enabled");
     },
 
     update() {
       var self = this;
 
-      _.each(self.pages, function(page) {
+      _.each(this.pages, function(page) {
         page.update();
       });
     },
@@ -84,28 +84,28 @@ define([
     resize() {
       var self = this;
 
-      _.each(self.pages, function(page) {
+      _.each(this.pages, function(page) {
         page.resize();
       });
     },
 
     setPage(index) {
       var self = this,
-        page = self.pages[index];
+        page = this.pages[index];
 
-      self.clear();
+      this.clear();
 
       if (page.isVisible()) return;
 
-      self.activePage = page;
-      self.activeIndex = index;
+      this.activePage = page;
+      this.activeIndex = index;
 
-      if (self.activeIndex + 1 === self.pages.length)
-        self.next.removeClass("enabled");
-      else if (self.activeIndex === 0) self.previous.removeClass("enabled");
+      if (this.activeIndex + 1 === this.pages.length)
+        this.next.removeClass("enabled");
+      else if (this.activeIndex === 0) this.previous.removeClass("enabled");
       else {
-        self.previous.addClass("enabled");
-        self.next.addClass("enabled");
+        this.previous.addClass("enabled");
+        this.next.addClass("enabled");
       }
 
       page.show();
@@ -114,17 +114,17 @@ define([
     show() {
       var self = this;
 
-      self.body.fadeIn("slow");
-      self.button.addClass("active");
+      this.body.fadeIn("slow");
+      this.button.addClass("active");
     },
 
     hide() {
       var self = this;
 
-      self.body.fadeOut("fast");
-      self.button.removeClass("active");
+      this.body.fadeOut("fast");
+      this.button.removeClass("active");
 
-      if (self.settings) self.settings.hide();
+      if (this.settings) this.settings.hide();
     },
 
     isVisible() {
@@ -134,7 +134,7 @@ define([
     clear() {
       var self = this;
 
-      if (self.activePage) self.activePage.hide();
+      if (this.activePage) this.activePage.hide();
     },
 
     getScale() {

@@ -5,10 +5,10 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
     init(game) {
       var self = this;
 
-      self.game = game;
+      this.game = game;
 
-      self.infos = {};
-      self.destroyQueue = new Queue();
+      this.infos = {};
+      this.destroyQueue = new Queue();
     },
 
     create(type, data, x, y) {
@@ -20,7 +20,7 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
         case Modules.Hits.Critical:
           var damage = data.shift(),
             isTarget = data.shift(),
-            dId = self.generateId(self.game.time, damage, x, y);
+            dId = this.generateId(this.game.time, damage, x, y);
 
           if (damage < 1 || !isInt(damage)) damage = "MISS";
 
@@ -31,7 +31,7 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
 
           hitSplat.setColours(dColour.fill, dColour.stroke);
 
-          self.addInfo(hitSplat);
+          this.addInfo(hitSplat);
 
           break;
 
@@ -39,7 +39,7 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
         case Modules.Hits.Mana:
         case Modules.Hits.Experience:
           var amount = data.shift(),
-            id = self.generateId(self.game.time, amount, x, y),
+            id = this.generateId(this.game.time, amount, x, y),
             text = "+",
             colour;
 
@@ -57,18 +57,18 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
 
           splat.setColours(colour.fill, colour.stroke);
 
-          self.addInfo(splat);
+          this.addInfo(splat);
 
           break;
 
         case Modules.Hits.LevelUp:
-          var lId = self.generateId(self.game.time, "-1", x, y),
+          var lId = this.generateId(this.game.time, "-1", x, y),
             levelSplat = new Splat(lId, type, "Level Up!", x, y, false),
             lColour = Modules.DamageColours.exp;
 
           levelSplat.setColours(lColour.fill, lColour.stroke);
 
-          self.addInfo(levelSplat);
+          this.addInfo(levelSplat);
 
           break;
       }
@@ -81,25 +81,25 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
     addInfo(info) {
       var self = this;
 
-      self.infos[info.id] = info;
+      this.infos[info.id] = info;
 
       info.onDestroy(function(id) {
-        self.destroyQueue.add(id);
+        this.destroyQueue.add(id);
       });
     },
 
     update(time) {
       var self = this;
 
-      self.forEachInfo(function(info) {
+      this.forEachInfo(function(info) {
         info.update(time);
       });
 
-      self.destroyQueue.forEachQueue(function(id) {
-        delete self.infos[id];
+      this.destroyQueue.forEachQueue(function(id) {
+        delete this.infos[id];
       });
 
-      self.destroyQueue.reset();
+      this.destroyQueue.reset();
     },
 
     forEachInfo(callback) {

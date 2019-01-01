@@ -16,13 +16,13 @@ module.exports = Incoming = cls.Class.extend({
   init(player) {
     var self = this;
 
-    self.player = player;
-    self.connection = self.player.connection;
-    self.world = self.player.world;
-    self.mysql = self.player.mysql;
-    self.commands = new Commands(self.player);
+    this.player = player;
+    this.connection = this.player.connection;
+    this.world = this.player.world;
+    this.mysql = this.player.mysql;
+    this.commands = new Commands(this.player);
 
-    self.connection.listen(function(data) {
+    this.connection.listen(function(data) {
       var packet = data.shift(),
         message = data[0];
 
@@ -33,79 +33,79 @@ module.exports = Incoming = cls.Class.extend({
         return;
       }
 
-      self.player.refreshTimeout();
+      this.player.refreshTimeout();
 
       switch (packet) {
         case Packets.Intro:
-          self.handleIntro(message);
+          this.handleIntro(message);
           break;
 
         case Packets.Ready:
-          self.handleReady(message);
+          this.handleReady(message);
           break;
 
         case Packets.Who:
-          self.handleWho(message);
+          this.handleWho(message);
           break;
 
         case Packets.Equipment:
-          self.handleEquipment(message);
+          this.handleEquipment(message);
           break;
 
         case Packets.Movement:
-          self.handleMovement(message);
+          this.handleMovement(message);
           break;
 
         case Packets.Request:
-          self.handleRequest(message);
+          this.handleRequest(message);
           break;
 
         case Packets.Target:
-          self.handleTarget(message);
+          this.handleTarget(message);
           break;
 
         case Packets.Combat:
-          self.handleCombat(message);
+          this.handleCombat(message);
           break;
 
         case Packets.Projectile:
-          self.handleProjectile(message);
+          this.handleProjectile(message);
           break;
 
         case Packets.Network:
-          self.handleNetwork(message);
+          this.handleNetwork(message);
           break;
 
         case Packets.Chat:
-          self.handleChat(message);
+          this.handleChat(message);
           break;
 
         case Packets.Inventory:
-          self.handleInventory(message);
+          this.handleInventory(message);
           break;
 
         case Packets.Bank:
-          self.handleBank(message);
+          this.handleBank(message);
           break;
 
         case Packets.Respawn:
-          self.handleRespawn(message);
+          this.handleRespawn(message);
           break;
 
         case Packets.Trade:
-          self.handleTrade(message);
+          this.handleTrade(message);
           break;
 
         case Packets.Enchant:
-          self.handleEnchant(message);
+          this.handleEnchant(message);
           break;
 
         case Packets.Click:
-          self.handleClick(message);
+          this.handleClick(message);
           break;
 
         case Packets.Warp:
-          self.handleWarp(message);
+          this.handleWarp(message);
           break;
       }
     });
@@ -125,35 +125,35 @@ module.exports = Incoming = cls.Class.extend({
         ? username.charAt(0).toUpperCase() + username.slice(1)
         : "";
 
-    self.player.username = formattedUsername.substr(0, 32).trim();
-    self.player.password = password.substr(0, 32).trim();
-    self.player.email = email.substr(0, 128).trim();
+    this.player.username = formattedUsername.substr(0, 32).trim();
+    this.player.password = password.substr(0, 32).trim();
+    this.player.email = email.substr(0, 128).trim();
 
-    if (self.introduced) return;
+    if (this.introduced) return;
 
-    if (self.world.playerInWorld(self.player.username)) {
-      self.connection.sendUTF8("loggedin");
-      self.connection.close("Player already logged in..");
+    if (this.world.playerInWorld(this.player.username)) {
+      this.connection.sendUTF8("loggedin");
+      this.connection.close("Player already logged in..");
       return;
     }
 
     if (config.overrideAuth) {
-      self.mysql.login(self.player);
+      this.mysql.login(this.player);
       return;
     }
 
     if (config.offlineMode) {
       var creator = new Creator(null);
 
-      self.player.isNew = true;
-      self.player.load(creator.getPlayerData(self.player));
-      self.player.isNew = false;
-      self.player.intro();
+      this.player.isNew = true;
+      this.player.load(creator.getPlayerData(this.player));
+      this.player.isNew = false;
+      this.player.intro();
 
       return;
     }
 
-    self.introduced = true;
+    this.introduced = true;
 
     if (isRegistering) {
       info.log("is registering");
@@ -163,11 +163,11 @@ module.exports = Incoming = cls.Class.extend({
           "https://taptapadventure.com/api/register.php?a=" +
           "9a4c5ddb-5ce6-4a01-a14f-3ae49d8c6507" +
           "&u=" +
-          self.player.username +
+          this.player.username +
           "&p=" +
-          self.player.password +
+          this.player.password +
           "&e=" +
-          self.player.email
+          this.player.email
       };
 
       Request(registerOptions, function(error, response, body) {
@@ -176,42 +176,42 @@ module.exports = Incoming = cls.Class.extend({
 
           switch (data.code) {
             case "ok":
-              self.mysql.register(self.player);
+              this.mysql.register(this.player);
               break;
 
             case "internal-server-error": //email
-              self.connection.sendUTF8("emailexists");
-              self.connection.close("Email not available.");
+              this.connection.sendUTF8("emailexists");
+              this.connection.close("Email not available.");
               break;
 
             case "not-authorised": //username
-              self.connection.sendUTF8("userexists");
-              self.connection.close("Username not available.");
+              this.connection.sendUTF8("userexists");
+              this.connection.close("Username not available.");
               break;
 
             default:
-              self.connection.sendUTF8("error");
-              self.connection.close("Unknown API Response: " + error);
+              this.connection.sendUTF8("error");
+              this.connection.close("Unknown API Response: " + error);
               break;
           }
         } catch (e) {
           log.info("Could not decipher API message");
 
-          self.connection.sendUTF8("disallowed");
-          self.connection.close("API response is malformed!");
+          this.connection.sendUTF8("disallowed");
+          this.connection.close("API response is malformed!");
         }
       });
     } else if (isGuest) {
-      self.player.username = "Guest" + Utils.randomInt(0, 2000000);
-      self.player.password = null;
-      self.player.email = null;
-      self.player.isGuest = true;
+      this.player.username = "Guest" + Utils.randomInt(0, 2000000);
+      this.player.password = null;
+      this.player.email = null;
+      this.player.isGuest = true;
 
-      self.mysql.login(self.player);
+      this.mysql.login(this.player);
     } else {
       console.log("validating login");
-      self.connection.sendUTF8("validatingLogin");
-      self.mysql.login(self.player);
+      this.connection.sendUTF8("validatingLogin");
+      this.mysql.login(this.player);
     }
   },
 
@@ -221,28 +221,28 @@ module.exports = Incoming = cls.Class.extend({
 
     if (!isReady) return;
 
-    self.player.ready = true;
+    this.player.ready = true;
 
-    self.world.handleEntityGroup(self.player);
-    self.world.pushEntities(self.player);
+    this.world.handleEntityGroup(this.player);
+    this.world.pushEntities(this.player);
 
-    self.player.sendEquipment();
-    self.player.loadInventory();
-    self.player.loadBank();
-    self.player.loadQuests();
+    this.player.sendEquipment();
+    this.player.loadInventory();
+    this.player.loadBank();
+    this.player.loadQuests();
 
-    self.player.handler.detectMusic();
+    this.player.handler.detectMusic();
 
-    if (self.player.readyCallback) self.player.readyCallback();
+    if (this.player.readyCallback) this.player.readyCallback();
   },
 
   handleWho(message) {
     var self = this;
 
     _.each(message.shift(), function(id) {
-      var entity = self.world.getEntityByInstance(id);
+      var entity = this.world.getEntityByInstance(id);
 
-      if (entity && entity.id) self.player.send(new Messages.Spawn(entity));
+      if (entity && entity.id) this.player.send(new Messages.Spawn(entity));
     });
   },
 
@@ -254,8 +254,8 @@ module.exports = Incoming = cls.Class.extend({
       case Packets.EquipmentOpcode.Unequip:
         var type = message.shift();
 
-        if (!self.player.inventory.hasSpace()) {
-          self.player.send(
+        if (!this.player.inventory.hasSpace()) {
+          this.player.send(
             new Messages.Notification(
               Packets.NotificationOpcode.Text,
               "You do not have enough space in your inventory."
@@ -266,51 +266,51 @@ module.exports = Incoming = cls.Class.extend({
 
         switch (type) {
           case "weapon":
-            if (!self.player.hasWeapon()) return;
+            if (!this.player.hasWeapon()) return;
 
-            self.player.inventory.add(self.player.weapon.getItem());
-            self.player.setWeapon(-1, -1, -1, -1);
+            this.player.inventory.add(this.player.weapon.getItem());
+            this.player.setWeapon(-1, -1, -1, -1);
 
             break;
 
           case "armour":
-            if (self.player.hasArmour() && self.player.armour.id === 114)
+            if (this.player.hasArmour() && this.player.armour.id === 114)
               return;
 
-            self.player.inventory.add(self.player.armour.getItem());
-            self.player.setArmour(114, 1, -1, -1);
+            this.player.inventory.add(this.player.armour.getItem());
+            this.player.setArmour(114, 1, -1, -1);
 
             break;
 
           case "pendant":
-            if (!self.player.hasPendant()) return;
+            if (!this.player.hasPendant()) return;
 
-            self.player.inventory.add(self.player.pendant.getItem());
-            self.player.setPendant(-1, -1, -1, -1);
+            this.player.inventory.add(this.player.pendant.getItem());
+            this.player.setPendant(-1, -1, -1, -1);
 
             break;
 
           case "ring":
-            if (!self.player.hasRing()) return;
+            if (!this.player.hasRing()) return;
 
-            self.player.inventory.add(self.player.ring.getItem());
-            self.player.setRing(-1, -1, -1, -1);
+            this.player.inventory.add(this.player.ring.getItem());
+            this.player.setRing(-1, -1, -1, -1);
 
             break;
 
           case "boots":
-            if (!self.player.hasBoots()) return;
+            if (!this.player.hasBoots()) return;
 
-            self.player.inventory.add(self.player.boots.getItem());
-            self.player.setBoots(-1, -1, -1, -1);
+            this.player.inventory.add(this.player.boots.getItem());
+            this.player.setBoots(-1, -1, -1, -1);
 
             break;
         }
 
-        self.player.send(
+        this.player.send(
           new Messages.Equipment(Packets.EquipmentOpcode.Unequip, [type])
         );
-        self.player.sync();
+        this.player.sync();
 
         break;
     }
@@ -320,7 +320,7 @@ module.exports = Incoming = cls.Class.extend({
     var self = this,
       opcode = message.shift();
 
-    if (!self.player || self.player.dead) return;
+    if (!this.player || this.player.dead) return;
 
     switch (opcode) {
       case Packets.MovementOpcode.Request:
@@ -329,9 +329,9 @@ module.exports = Incoming = cls.Class.extend({
           playerX = message.shift(),
           playerY = message.shift();
 
-        if (playerX !== self.player.x || playerY !== self.player.y) return;
+        if (playerX !== this.player.x || playerY !== this.player.y) return;
 
-        self.player.guessPosition(requestX, requestY);
+        this.player.guessPosition(requestX, requestY);
 
         break;
 
@@ -341,10 +341,10 @@ module.exports = Incoming = cls.Class.extend({
           pX = message.shift(),
           pY = message.shift();
 
-        if (pX !== self.player.x || pY !== self.player.y || self.player.stunned)
+        if (pX !== this.player.x || pY !== this.player.y || this.player.stunned)
           return;
 
-        self.player.moving = true;
+        this.player.moving = true;
 
         break;
 
@@ -352,9 +352,9 @@ module.exports = Incoming = cls.Class.extend({
         var x = message.shift(),
           y = message.shift();
 
-        if (self.player.stunned) return;
+        if (this.player.stunned) return;
 
-        self.player.setPosition(x, y);
+        this.player.setPosition(x, y);
 
         break;
 
@@ -363,19 +363,19 @@ module.exports = Incoming = cls.Class.extend({
           posY = message.shift(),
           id = message.shift(),
           hasTarget = message.shift(),
-          entity = self.world.getEntityByInstance(id);
+          entity = this.world.getEntityByInstance(id);
 
         if (entity && entity.type === "item" && !hasTarget)
-          self.player.inventory.add(entity);
+          this.player.inventory.add(entity);
 
-        if (self.world.map.isDoor(posX, posY) && !hasTarget) {
-          var destination = self.world.map.getDoorDestination(posX, posY);
+        if (this.world.map.isDoor(posX, posY) && !hasTarget) {
+          var destination = this.world.map.getDoorDestination(posX, posY);
 
-          self.player.teleport(destination.x, destination.y, true);
-        } else self.player.setPosition(posX, posY);
+          this.player.teleport(destination.x, destination.y, true);
+        } else this.player.setPosition(posX, posY);
 
-        self.player.moving = false;
-        self.player.lastMovement = new Date().getTime();
+        this.player.moving = false;
+        this.player.lastMovement = new Date().getTime();
 
         break;
 
@@ -383,7 +383,7 @@ module.exports = Incoming = cls.Class.extend({
         var instance = message.shift(),
           entityX = message.shift(),
           entityY = message.shift(),
-          oEntity = self.world.getEntityByInstance(instance);
+          oEntity = this.world.getEntityByInstance(instance);
 
         if (!oEntity || (oEntity.x === entityX && oEntity.y === entityY))
           return;
@@ -400,9 +400,9 @@ module.exports = Incoming = cls.Class.extend({
     var self = this,
       id = message.shift();
 
-    if (id !== self.player.instance) return;
+    if (id !== this.player.instance) return;
 
-    self.world.pushEntities(self.player);
+    this.world.pushEntities(this.player);
   },
 
   handleTarget(message) {
@@ -414,7 +414,7 @@ module.exports = Incoming = cls.Class.extend({
 
     switch (opcode) {
       case Packets.TargetOpcode.Talk:
-        var entity = self.world.getEntityByInstance(instance);
+        var entity = this.world.getEntityByInstance(instance);
 
         if (!entity) return;
 
@@ -425,21 +425,21 @@ module.exports = Incoming = cls.Class.extend({
 
         if (entity.dead) return;
 
-        if (self.player.npcTalkCallback) self.player.npcTalkCallback(entity);
+        if (this.player.npcTalkCallback) this.player.npcTalkCallback(entity);
 
         break;
 
       case Packets.TargetOpcode.Attack:
-        var target = self.world.getEntityByInstance(instance);
+        var target = this.world.getEntityByInstance(instance);
 
-        if (!target || target.dead || !self.canAttack(self.player, target))
+        if (!target || target.dead || !this.canAttack(this.player, target))
           return;
 
-        self.world.pushToAdjacentGroups(
+        this.world.pushToAdjacentGroups(
           target.group,
           new Messages.Combat(
             Packets.CombatOpcode.Initiate,
-            self.player.instance,
+            this.player.instance,
             target.instance
           )
         );
@@ -447,8 +447,8 @@ module.exports = Incoming = cls.Class.extend({
         break;
 
       case Packets.TargetOpcode.None:
-        self.player.combat.stop();
-        self.player.removeTarget();
+        this.player.combat.stop();
+        this.player.removeTarget();
 
         break;
     }
@@ -460,15 +460,15 @@ module.exports = Incoming = cls.Class.extend({
 
     switch (opcode) {
       case Packets.CombatOpcode.Initiate:
-        var attacker = self.world.getEntityByInstance(message.shift()),
-          target = self.world.getEntityByInstance(message.shift());
+        var attacker = this.world.getEntityByInstance(message.shift()),
+          target = this.world.getEntityByInstance(message.shift());
 
         if (
           !target ||
           target.dead ||
           !attacker ||
           attacker.dead ||
-          !self.canAttack(attacker, target)
+          !this.canAttack(attacker, target)
         )
           return;
 
@@ -493,13 +493,13 @@ module.exports = Incoming = cls.Class.extend({
 
     switch (type) {
       case Packets.ProjectileOpcode.Impact:
-        var projectile = self.world.getEntityByInstance(message.shift()),
-          target = self.world.getEntityByInstance(message.shift());
+        var projectile = this.world.getEntityByInstance(message.shift()),
+          target = this.world.getEntityByInstance(message.shift());
 
         if (!target || target.dead || !projectile) return;
 
-        self.world.handleDamage(projectile.owner, target, projectile.damage);
-        self.world.removeProjectile(projectile);
+        this.world.handleDamage(projectile.owner, target, projectile.damage);
+        this.world.removeProjectile(projectile);
 
         if (target.combat.started || target.dead || target.type !== "mob")
           return;
@@ -528,10 +528,10 @@ module.exports = Incoming = cls.Class.extend({
     if (!text || text.length < 1 || !/\S/.test(text)) return;
 
     if (text.charAt(0) === "/" || text.charAt(0) === ";")
-      self.commands.parse(text);
+      this.commands.parse(text);
     else {
-      if (self.player.isMuted()) {
-        self.player.send(
+      if (this.player.isMuted()) {
+        this.player.send(
           new Messages.Notification(
             Packets.NotificationOpcode.Text,
             "You are currently muted."
@@ -540,8 +540,8 @@ module.exports = Incoming = cls.Class.extend({
         return;
       }
 
-      if (!self.player.canTalk) {
-        self.player.send(
+      if (!this.player.canTalk) {
+        this.player.send(
           new Messages.Notification(
             Packets.NotificationOpcode.Text,
             "You are not allowed to talk for the duration of this event."
@@ -550,11 +550,11 @@ module.exports = Incoming = cls.Class.extend({
         return;
       }
 
-      self.world.pushToGroup(
-        self.player.group,
+      this.world.pushToGroup(
+        this.player.group,
         new Messages.Chat({
-          id: self.player.instance,
-          name: self.player.username,
+          id: this.player.instance,
+          name: this.player.username,
           withBubble: true,
           text: text,
           duration: 7000
@@ -577,23 +577,23 @@ module.exports = Incoming = cls.Class.extend({
         if (item.count > 1) count = message.shift();
 
         var id = Items.stringToId(item.string),
-          iSlot = self.player.inventory.slots[item.index];
+          iSlot = this.player.inventory.slots[item.index];
 
         if (count > iSlot.count) count = iSlot.count;
 
-        self.player.inventory.remove(
+        this.player.inventory.remove(
           id,
           count ? count : item.count,
           item.index
         );
 
-        self.world.dropItem(id, count, self.player.x, self.player.y);
+        this.world.dropItem(id, count, this.player.x, this.player.y);
 
         break;
 
       case Packets.InventoryOpcode.Select:
         var index = message.shift(),
-          slot = self.player.inventory.slots[index],
+          slot = this.player.inventory.slots[index],
           string = slot.string,
           sCount = slot.count,
           ability = slot.ability,
@@ -604,15 +604,15 @@ module.exports = Incoming = cls.Class.extend({
         id = Items.stringToId(slot.string);
 
         if (slot.equippable) {
-          if (!self.player.canEquip(string)) return;
+          if (!this.player.canEquip(string)) return;
 
-          self.player.inventory.remove(id, slot.count, slot.index);
+          this.player.inventory.remove(id, slot.count, slot.index);
 
-          self.player.equip(string, sCount, ability, abilityLevel);
+          this.player.equip(string, sCount, ability, abilityLevel);
         } else if (slot.edible) {
-          self.player.inventory.remove(id, 1, slot.index);
+          this.player.inventory.remove(id, 1, slot.index);
 
-          self.player.eat(id);
+          this.player.eat(id);
         }
 
         break;
@@ -630,26 +630,26 @@ module.exports = Incoming = cls.Class.extend({
           isBank = type === "bank";
 
         if (isBank) {
-          var bankSlot = self.player.bank.slots[index];
+          var bankSlot = this.player.bank.slots[index];
 
           //Infinite stacks move all at onces, otherwise move one by one.
           var moveAmount =
             Items.maxStackSize(bankSlot.id) === -1 ? bankSlot.count : 1;
 
-          if (self.player.inventory.add(bankSlot, moveAmount))
-            self.player.bank.remove(bankSlot.id, moveAmount, index);
+          if (this.player.inventory.add(bankSlot, moveAmount))
+            this.player.bank.remove(bankSlot.id, moveAmount, index);
         } else {
-          var inventorySlot = self.player.inventory.slots[index];
+          var inventorySlot = this.player.inventory.slots[index];
 
           if (
-            self.player.bank.add(
+            this.player.bank.add(
               inventorySlot.id,
               inventorySlot.count,
               inventorySlot.ability,
               inventorySlot.abilityLevel
             )
           )
-            self.player.inventory.remove(
+            this.player.inventory.remove(
               inventorySlot.id,
               inventorySlot.count,
               index
@@ -664,29 +664,29 @@ module.exports = Incoming = cls.Class.extend({
     var self = this,
       instance = message.shift();
 
-    if (self.player.instance !== instance) return;
+    if (this.player.instance !== instance) return;
 
-    var spawn = self.player.getSpawn();
+    var spawn = this.player.getSpawn();
 
-    self.player.dead = false;
-    self.player.setPosition(spawn.x, spawn.y);
+    this.player.dead = false;
+    this.player.setPosition(spawn.x, spawn.y);
 
-    self.world.pushToAdjacentGroups(
-      self.player.group,
-      new Messages.Spawn(self.player),
-      self.player.instance
+    this.world.pushToAdjacentGroups(
+      this.player.group,
+      new Messages.Spawn(this.player),
+      this.player.instance
     );
-    self.player.send(
-      new Messages.Respawn(self.player.instance, self.player.x, self.player.y)
+    this.player.send(
+      new Messages.Respawn(this.player.instance, this.player.x, this.player.y)
     );
 
-    self.player.revertPoints();
+    this.player.revertPoints();
   },
 
   handleTrade(message) {
     var self = this,
       opcode = message.shift(),
-      oPlayer = self.world.getEntityByInstance(message.shift());
+      oPlayer = this.world.getEntityByInstance(message.shift());
 
     if (!oPlayer || !opcode) return;
 
@@ -709,22 +709,22 @@ module.exports = Incoming = cls.Class.extend({
     switch (opcode) {
       case Packets.EnchantOpcode.Select:
         var index = message.shift(),
-          item = self.player.inventory.slots[index],
+          item = this.player.inventory.slots[index],
           type = "item";
 
         if (Items.isShard(item.id)) type = "shards";
 
-        self.player.enchant.add(type, item);
+        this.player.enchant.add(type, item);
 
         break;
 
       case Packets.EnchantOpcode.Remove:
-        self.player.enchant.remove(message.shift());
+        this.player.enchant.remove(message.shift());
 
         break;
 
       case Packets.EnchantOpcode.Enchant:
-        self.player.enchant.enchant();
+        this.player.enchant.enchant();
 
         break;
     }
@@ -737,8 +737,8 @@ module.exports = Incoming = cls.Class.extend({
 
     switch (type) {
       case "profile":
-        if (self.player.profileToggleCallback)
-          self.player.profileToggleCallback(isOpen);
+        if (this.player.profileToggleCallback)
+          this.player.profileToggleCallback(isOpen);
 
         break;
     }
@@ -748,7 +748,7 @@ module.exports = Incoming = cls.Class.extend({
     var self = this,
       id = parseInt(message.shift()) - 1;
 
-    if (self.player.warp) self.player.warp.warp(id);
+    if (this.player.warp) this.player.warp.warp(id);
   },
 
   canAttack(attacker, target) {

@@ -4,20 +4,20 @@ module.exports = Profession = cls.Class.extend({
   init(player) {
     var self = this;
 
-    self.id = -1;
-    self.name = null;
+    this.id = -1;
+    this.name = null;
 
-    self.level = -1;
-    self.maxLevel = -1;
-    self.experience = -1;
+    this.level = -1;
+    this.maxLevel = -1;
+    this.experience = -1;
   },
 
   load(id, name, level, maxLevel) {
     var self = this;
 
-    self.id = id;
-    self.name = name;
-    self.level = level;
-    self.maxLevel = maxLevel;
+    this.id = id;
+    this.name = name;
+    this.level = level;
+    this.maxLevel = maxLevel;
   }
 });

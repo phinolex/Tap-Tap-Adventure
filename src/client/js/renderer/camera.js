@@ -5,48 +5,48 @@ export default class Camera {
   constructor(renderer) {
     var self = this;
 
-    self.renderer = renderer;
+    this.renderer = renderer;
 
-    self.offset = 0.5;
-    self.x = 0;
-    self.y = 0;
+    this.offset = 0.5;
+    this.x = 0;
+    this.y = 0;
 
-    self.dX = 0;
-    self.dY = 0;
+    this.dX = 0;
+    this.dY = 0;
 
-    self.gridX = 0;
-    self.gridY = 0;
+    this.gridX = 0;
+    this.gridY = 0;
 
-    self.prevGridX = 0;
-    self.prevGridY = 0;
+    this.prevGridX = 0;
+    this.prevGridY = 0;
 
-    self.speed = 1;
-    self.panning = false;
-    self.centered = true;
-    self.player = null;
+    this.speed = 1;
+    this.panning = false;
+    this.centered = true;
+    this.player = null;
 
-    self.update();
+    this.update();
   };
 
   update() {
     var self = this,
-      factor = self.renderer.getUpscale();
+      factor = this.renderer.getUpscale();
 
-    self.gridWidth = 15 * factor;
-    self.gridHeight = 8 * factor;
+    this.gridWidth = 15 * factor;
+    this.gridHeight = 8 * factor;
   };
 
   setPosition(x, y) {
     var self = this;
 
-    self.x = x;
-    self.y = y;
+    this.x = x;
+    this.y = y;
 
-    self.prevGridX = self.gridX;
-    self.prevGridY = self.gridY;
+    this.prevGridX = this.gridX;
+    this.prevGridY = this.gridY;
 
-    self.gridX = Math.floor(x / 16);
-    self.gridY = Math.floor(y / 16);
+    this.gridX = Math.floor(x / 16);
+    this.gridY = Math.floor(y / 16);
   };
 
   clip() {
@@ -56,66 +56,66 @@ export default class Camera {
   center() {
     var self = this;
 
-    if (self.centered) return;
+    if (this.centered) return;
 
-    self.centered = true;
-    self.centreOn(self.player);
+    this.centered = true;
+    this.centreOn(this.player);
 
-    self.renderer.verifyCentration();
+    this.renderer.verifyCentration();
   };
 
   decenter() {
     var self = this;
 
-    if (!self.centered) return;
+    if (!this.centered) return;
 
-    self.clip();
-    self.centered = false;
+    this.clip();
+    this.centered = false;
 
-    self.renderer.verifyCentration();
+    this.renderer.verifyCentration();
   };
 
   setGridPosition(x, y) {
     var self = this;
 
-    self.prevGridX = self.gridX;
-    self.prevGridY = self.gridY;
+    this.prevGridX = this.gridX;
+    this.prevGridY = this.gridY;
 
-    self.gridX = x;
-    self.gridY = y;
+    this.gridX = x;
+    this.gridY = y;
 
-    self.x = self.gridX * 16;
-    self.y = self.gridY * 16;
+    this.x = this.gridX * 16;
+    this.y = this.gridY * 16;
   };
 
   setPlayer(player) {
     var self = this;
 
-    self.player = player;
+    this.player = player;
 
-    self.centreOn(self.player);
+    this.centreOn(this.player);
   }
 
   handlePanning(direction) {
     var self = this;
 
-    if (!self.panning) return;
+    if (!this.panning) return;
 
     switch (direction) {
       case Modules.Keys.Up:
-        self.setPosition(self.x, self.y - 1);
+        this.setPosition(this.x, this.y - 1);
         break;
 
       case Modules.Keys.Down:
-        self.setPosition(self.x, self.y + 1);
+        this.setPosition(this.x, this.y + 1);
         break;
 
       case Modules.Keys.Left:
-        self.setPosition(self.x - 1, self.y);
+        this.setPosition(this.x - 1, this.y);
         break;
 
       case Modules.Keys.Right:
-        self.setPosition(self.x + 1, self.y);
+        this.setPosition(this.x + 1, this.y);
         break;
     }
   }
@@ -125,14 +125,14 @@ export default class Camera {
 
     if (!entity) return;
 
-    var width = Math.floor(self.gridWidth / 2),
-      height = Math.floor(self.gridHeight / 2);
+    var width = Math.floor(this.gridWidth / 2),
+      height = Math.floor(this.gridHeight / 2);
 
-    self.x = entity.x - width * self.renderer.tileSize;
-    self.y = entity.y - height * self.renderer.tileSize;
+    this.x = entity.x - width * this.renderer.tileSize;
+    this.y = entity.y - height * this.renderer.tileSize;
 
-    self.gridX = Math.round(entity.x / 16) - width;
-    self.gridY = Math.round(entity.y / 16) - height;
+    this.gridX = Math.round(entity.x / 16) - width;
+    this.gridY = Math.round(entity.y / 16) - height;
   }
 
   zone(direction) {
@@ -140,22 +140,22 @@ export default class Camera {
 
     switch (direction) {
       case Modules.Orientation.Up:
-        self.setGridPosition(self.gridX, self.gridY - self.gridHeight + 2);
+        this.setGridPosition(this.gridX, this.gridY - this.gridHeight + 2);
 
         break;
 
       case Modules.Orientation.Down:
-        self.setGridPosition(self.gridX, self.gridY + self.gridHeight - 2);
+        this.setGridPosition(this.gridX, this.gridY + this.gridHeight - 2);
 
         break;
 
       case Modules.Orientation.Right:
-        self.setGridPosition(self.gridX + self.gridWidth - 2, self.gridY);
+        this.setGridPosition(this.gridX + this.gridWidth - 2, this.gridY);
 
         break;
 
       case Modules.Orientation.Left:
-        self.setGridPosition(self.gridX - self.gridWidth + 2, self.gridY);
+        this.setGridPosition(this.gridX - this.gridWidth + 2, this.gridY);
 
         break;
     }
@@ -168,8 +168,8 @@ export default class Camera {
       offset = 1;
     }
 
-    for (let y = self.gridY - offset, maxY = y + self.gridHeight + offset * 2; y < maxY; y++) {
-      for (let x = self.gridX - offset, maxX = x + self.gridWidth + offset * 2; x < maxX; x++) {
+    for (let y = this.gridY - offset, maxY = y + this.gridHeight + offset * 2; y < maxY; y++) {
+      for (let x = this.gridX - offset, maxX = x + this.gridWidth + offset * 2; x < maxX; x++) {
         callback(x, y);
       }
     }

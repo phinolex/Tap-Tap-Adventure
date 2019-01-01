@@ -9,9 +9,9 @@ module.exports = PVPAreas = cls.Class.extend({
   constructor() {
     var self = this;
 
-    self.pvpAreas = [];
+    this.pvpAreas = [];
 
-    self.load();
+    this.load();
   },
 
   load() {
@@ -21,9 +21,9 @@ module.exports = PVPAreas = cls.Class.extend({
     _.each(list, function(p) {
       var pvpArea = new Area(p.id, p.x, p.y, p.width, p.height);
 
-      self.pvpAreas.push(pvpArea);
+      this.pvpAreas.push(pvpArea);
     });
 
-    log.info("Loaded " + self.pvpAreas.length + " PVP areas.");
+    log.info("Loaded " + this.pvpAreas.length + " PVP areas.");
   }
 });

@@ -5,174 +5,174 @@ define(["jquery", "../page"], function($, Page) {
     init(game) {
       var self = this;
 
-      self.game = game;
-      self.audio = game.audio;
-      self.storage = game.storage;
-      self.renderer = game.renderer;
-      self.camera = game.renderer.camera;
+      this.game = game;
+      this.audio = game.audio;
+      this.storage = game.storage;
+      this.renderer = game.renderer;
+      this.camera = game.renderer.camera;
 
-      self.body = $("#settingsPage");
-      self.button = $("#settingsButton");
+      this.body = $("#settingsPage");
+      this.button = $("#settingsButton");
 
-      self.volume = $("#volume");
-      self.sfx = $("#sfx");
-      self.brightness = $("#brightness");
-      self.intensity = $("#intensity");
+      this.volume = $("#volume");
+      this.sfx = $("#sfx");
+      this.brightness = $("#brightness");
+      this.intensity = $("#intensity");
 
-      self.info = $("#info");
+      this.info = $("#info");
 
-      self.soundCheck = $("#soundCheck");
-      self.cameraCheck = $("#cameraCheck");
-      self.debugCheck = $("#debugCheck");
-      self.centreCheck = $("#centreCheck");
-      self.nameCheck = $("#nameCheck");
-      self.levelCheck = $("#levelCheck");
+      this.soundCheck = $("#soundCheck");
+      this.cameraCheck = $("#cameraCheck");
+      this.debugCheck = $("#debugCheck");
+      this.centreCheck = $("#centreCheck");
+      this.nameCheck = $("#nameCheck");
+      this.levelCheck = $("#levelCheck");
 
-      self.loaded = false;
+      this.loaded = false;
 
-      self.load();
+      this.load();
     },
 
     load() {
       var self = this;
 
-      if (self.loaded) return;
+      if (this.loaded) return;
 
-      self.volume.val(self.getMusicLevel());
-      self.sfx.val(self.getSFXLevel());
-      self.brightness.val(self.getBrightness());
-      self.intensity.val(self.getIntensity());
+      this.volume.val(this.getMusicLevel());
+      this.sfx.val(this.getSFXLevel());
+      this.brightness.val(this.getBrightness());
+      this.intensity.val(this.getIntensity());
 
-      self.game.app.updateRange(self.volume);
-      self.game.app.updateRange(self.sfx);
-      self.game.app.updateRange(self.brightness);
-      self.game.app.updateRange(self.intensity);
+      this.game.app.updateRange(this.volume);
+      this.game.app.updateRange(this.sfx);
+      this.game.app.updateRange(this.brightness);
+      this.game.app.updateRange(this.intensity);
 
-      self.renderer.adjustBrightness(self.getBrightness());
+      this.renderer.adjustBrightness(this.getBrightness());
 
-      self.button.click(function() {
-        self.game.interface.hideAll();
+      this.button.click(function() {
+        this.game.interface.hideAll();
 
-        self.button.toggleClass("active");
+        this.button.toggleClass("active");
 
-        if (self.isVisible()) self.hide();
-        else self.show();
+        if (this.isVisible()) this.hide();
+        else this.show();
       });
 
-      self.volume.on("input", function() {
-        if (self.audio.song) self.audio.song.volume = this.value / 100;
+      this.volume.on("input", function() {
+        if (this.audio.song) this.audio.song.volume = this.value / 100;
       });
 
-      self.brightness.on("input", function() {
-        self.renderer.adjustBrightness(this.value);
+      this.brightness.on("input", function() {
+        this.renderer.adjustBrightness(this.value);
       });
 
-      self.volume.change(function() {
-        self.setMusicLevel(this.value);
+      this.volume.change(function() {
+        this.setMusicLevel(this.value);
       });
 
-      self.sfx.change(function() {
-        self.setSFXLevel(this.value);
+      this.sfx.change(function() {
+        this.setSFXLevel(this.value);
       });
 
-      self.brightness.change(function() {
-        self.setBrightness(this.value);
+      this.brightness.change(function() {
+        this.setBrightness(this.value);
       });
 
-      self.intensity.change(function() {
-        self.setIntensity(this.value);
+      this.intensity.change(function() {
+        this.setIntensity(this.value);
       });
 
-      self.soundCheck.click(function() {
-        var isActive = self.soundCheck.hasClass("active");
+      this.soundCheck.click(function() {
+        var isActive = this.soundCheck.hasClass("active");
 
-        self.setSound(!isActive);
+        this.setSound(!isActive);
 
         if (isActive) {
-          self.audio.reset(self.audio.song);
-          self.audio.song = null;
+          this.audio.reset(this.audio.song);
+          this.audio.song = null;
 
-          self.soundCheck.removeClass("active");
+          this.soundCheck.removeClass("active");
         } else {
-          self.audio.update();
+          this.audio.update();
 
-          self.soundCheck.addClass("active");
+          this.soundCheck.addClass("active");
         }
       });
 
-      self.cameraCheck.click(function() {
-        var active = self.cameraCheck.hasClass("active");
+      this.cameraCheck.click(function() {
+        var active = this.cameraCheck.hasClass("active");
 
-        if (active) self.renderer.camera.decenter();
-        else self.renderer.camera.center();
+        if (active) this.renderer.camera.decenter();
+        else this.renderer.camera.center();
 
-        self.cameraCheck.toggleClass("active");
+        this.cameraCheck.toggleClass("active");
 
-        self.setCamera(!active);
+        this.setCamera(!active);
       });
 
-      self.debugCheck.click(function() {
-        var active = self.debugCheck.hasClass("active");
+      this.debugCheck.click(function() {
+        var active = this.debugCheck.hasClass("active");
 
-        self.debugCheck.toggleClass("active");
+        this.debugCheck.toggleClass("active");
 
-        self.renderer.debugging = !active;
+        this.renderer.debugging = !active;
 
-        self.setDebug(!active);
+        this.setDebug(!active);
       });
 
-      self.centreCheck.click(function() {
-        var active = self.centreCheck.hasClass("active");
+      this.centreCheck.click(function() {
+        var active = this.centreCheck.hasClass("active");
 
-        self.centreCheck.toggleClass("active");
+        this.centreCheck.toggleClass("active");
 
-        self.renderer.autoCentre = !active;
+        this.renderer.autoCentre = !active;
 
-        self.setCentre(!active);
+        this.setCentre(!active);
       });
 
-      self.nameCheck.click(function() {
-        var active = self.nameCheck.hasClass("active");
+      this.nameCheck.click(function() {
+        var active = this.nameCheck.hasClass("active");
 
-        self.nameCheck.toggleClass("active");
+        this.nameCheck.toggleClass("active");
 
-        self.renderer.drawNames = !active;
+        this.renderer.drawNames = !active;
 
-        self.setName(!active);
+        this.setName(!active);
       });
 
-      self.levelCheck.click(function() {
-        var active = self.levelCheck.hasClass("active");
+      this.levelCheck.click(function() {
+        var active = this.levelCheck.hasClass("active");
 
-        self.levelCheck.toggleClass("active");
+        this.levelCheck.toggleClass("active");
 
-        self.renderer.drawLevels = !active;
+        this.renderer.drawLevels = !active;
 
-        self.setName(!active);
+        this.setName(!active);
       });
 
-      if (self.getSound()) self.soundCheck.addClass("active");
+      if (this.getSound()) this.soundCheck.addClass("active");
 
-      if (self.getCamera()) self.cameraCheck.addClass("active");
+      if (this.getCamera()) this.cameraCheck.addClass("active");
       else {
-        self.camera.centered = false;
-        self.renderer.verifyCentration();
+        this.camera.centered = false;
+        this.renderer.verifyCentration();
       }
 
-      if (self.getDebug()) {
-        self.debugCheck.addClass("active");
-        self.renderer.debugging = true;
+      if (this.getDebug()) {
+        this.debugCheck.addClass("active");
+        this.renderer.debugging = true;
       }
 
-      if (self.getCentreCap()) self.centreCheck.addClass("active");
+      if (this.getCentreCap()) this.centreCheck.addClass("active");
 
-      if (self.getName()) self.nameCheck.addClass("active");
-      else self.renderer.drawNames = false;
+      if (this.getName()) this.nameCheck.addClass("active");
+      else this.renderer.drawNames = false;
 
-      if (self.getLevel()) self.levelCheck.addClass("active");
-      else self.renderer.drawLevels = false;
+      if (this.getLevel()) this.levelCheck.addClass("active");
+      else this.renderer.drawLevels = false;
 
-      self.loaded = true;
+      this.loaded = true;
     },
 
     show() {
@@ -186,72 +186,72 @@ define(["jquery", "../page"], function($, Page) {
     setMusicLevel(musicLevel) {
       var self = this;
 
-      self.storage.data.settings.music = musicLevel;
-      self.storage.save();
+      this.storage.data.settings.music = musicLevel;
+      this.storage.save();
     },
 
     setSFXLevel(sfxLevel) {
       var self = this;
 
-      self.storage.data.settings.sfx = sfxLevel;
-      self.storage.save();
+      this.storage.data.settings.sfx = sfxLevel;
+      this.storage.save();
     },
 
     setBrightness(brightness) {
       var self = this;
 
-      self.storage.data.settings.brightness = brightness;
-      self.storage.save();
+      this.storage.data.settings.brightness = brightness;
+      this.storage.save();
     },
 
     setIntensity(intensity) {
       var self = this,
         converted = (10 - intensity) / 10;
 
-      self.storage.data.intensity = converted;
-      self.storage.save();
+      this.storage.data.intensity = converted;
+      this.storage.save();
     },
 
     setSound(state) {
       var self = this;
 
-      self.storage.data.settings.soundEnabled = state;
-      self.storage.save();
+      this.storage.data.settings.soundEnabled = state;
+      this.storage.save();
     },
 
     setCamera(state) {
       var self = this;
 
-      self.storage.data.settings.centerCamera = state;
-      self.storage.save();
+      this.storage.data.settings.centerCamera = state;
+      this.storage.save();
     },
 
     setDebug(state) {
       var self = this;
 
-      self.storage.data.settings.debug = state;
-      self.storage.save();
+      this.storage.data.settings.debug = state;
+      this.storage.save();
     },
 
     setCentre(state) {
       var self = this;
 
-      self.storage.data.settings.autoCentre = state;
-      self.storage.save();
+      this.storage.data.settings.autoCentre = state;
+      this.storage.save();
     },
 
     setName(state) {
       var self = this;
 
-      self.storage.data.settings.showNames = state;
-      self.storage.save();
+      this.storage.data.settings.showNames = state;
+      this.storage.save();
     },
 
     setLevel(state) {
       var self = this;
 
-      self.storage.data.settings.showLevels = state;
-      self.storage.save();
+      this.storage.data.settings.showLevels = state;
+      this.storage.save();
     },
 
     getMusicLevel() {

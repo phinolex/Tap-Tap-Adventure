@@ -11,20 +11,20 @@ module.exports = Grids = cls.Class.extend({
   init(map) {
     var self = this;
 
-    self.map = map;
+    this.map = map;
 
-    self.entityGrid = [];
+    this.entityGrid = [];
 
-    self.load();
+    this.load();
   },
 
   load() {
     var self = this;
 
-    for (var i = 0; i < self.map.height; i++) {
-      self.entityGrid[i] = [];
+    for (var i = 0; i < this.map.height; i++) {
+      this.entityGrid[i] = [];
 
-      for (var j = 0; j < self.map.width; j++) self.entityGrid[i][j] = {};
+      for (var j = 0; j < this.map.width; j++) this.entityGrid[i][j] = {};
     }
   },
 
@@ -33,8 +33,8 @@ module.exports = Grids = cls.Class.extend({
 
     if (entity && entity.oldX === entity.x && entity.oldY === entity.y) return;
 
-    self.removeFromEntityGrid(entity, entity.oldX, entity.oldY);
-    self.addToEntityGrid(entity, entity.x, entity.y);
+    this.removeFromEntityGrid(entity, entity.oldX, entity.oldY);
+    this.addToEntityGrid(entity, entity.x, entity.y);
 
     entity.updatePosition();
   },
@@ -46,11 +46,11 @@ module.exports = Grids = cls.Class.extend({
       entity &&
       x > 0 &&
       y > 0 &&
-      x < self.map.width &&
-      x < self.map.height &&
-      self.entityGrid[y][x]
+      x < this.map.width &&
+      x < this.map.height &&
+      this.entityGrid[y][x]
     )
-      self.entityGrid[y][x][entity.instance] = entity;
+      this.entityGrid[y][x][entity.instance] = entity;
   },
 
   removeFromEntityGrid(entity, x, y) {
@@ -60,23 +60,23 @@ module.exports = Grids = cls.Class.extend({
       entity &&
       x > 0 &&
       y > 0 &&
-      x < self.map.width &&
-      y < self.map.height &&
-      self.entityGrid[y][x] &&
-      entity.instance in self.entityGrid[y][x]
+      x < this.map.width &&
+      y < this.map.height &&
+      this.entityGrid[y][x] &&
+      entity.instance in this.entityGrid[y][x]
     )
-      delete self.entityGrid[y][x][entity.instance];
+      delete this.entityGrid[y][x][entity.instance];
   },
 
   getSurroundingEntities(entity, radius, include) {
     var self = this,
       entities = [];
 
-    if (!self.checkBounds(entity.x, entity.y, radius)) return;
+    if (!this.checkBounds(entity.x, entity.y, radius)) return;
 
     for (var i = -radius; i < radius + 1; i++) {
       for (var j = -radius; j < radius + 1; j++) {
-        var pos = self.entityGrid[entity.y + i][entity.x + j];
+        var pos = this.entityGrid[entity.y + i][entity.x + j];
 
         if (_.size(pos) > 0) {
           _.each(pos, function(pEntity) {

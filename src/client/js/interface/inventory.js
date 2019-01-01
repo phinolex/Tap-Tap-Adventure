@@ -5,19 +5,19 @@ define(["jquery", "./container/container"], function($, Container) {
     init(game, size) {
       var self = this;
 
-      self.game = game;
-      self.actions = game.interface.actions;
+      this.game = game;
+      this.actions = game.interface.actions;
 
-      self.body = $("#inventory");
-      self.button = $("#hud-inventory");
-      self.action = $("#actionContainer");
+      this.body = $("#inventory");
+      this.button = $("#hud-inventory");
+      this.action = $("#actionContainer");
 
-      self.container = new Container(size);
+      this.container = new Container(size);
 
-      self.activeClass = "inventory";
+      this.activeClass = "inventory";
 
-      self.selectedSlot = null;
-      self.selectedItem = null;
+      this.selectedSlot = null;
+      this.selectedItem = null;
     },
 
     load(data) {
@@ -27,24 +27,24 @@ define(["jquery", "./container/container"], function($, Container) {
       for (var i = 0; i < data.length; i++) {
         var item = data[i];
 
-        self.container.setSlot(i, item);
+        this.container.setSlot(i, item);
 
         var itemSlot = $('<div id="slot' + i + '" class="itemSlot"></div>');
 
         if (item.string !== "null")
           itemSlot.css(
             "background-image",
-            self.container.getImageFormat(self.getScale(), item.string)
+            this.container.getImageFormat(this.getScale(), item.string)
           );
 
-        if (self.game.app.isMobile()) itemSlot.css("background-size", "600%");
+        if (this.game.app.isMobile()) itemSlot.css("background-size", "600%");
 
         itemSlot.dblclick(function(event) {
-          self.clickDouble(event);
+          this.clickDouble(event);
         });
 
         itemSlot.click(function(event) {
-          self.click(event);
+          this.click(event);
         });
 
         var itemSlotList = $("<li></li>");
@@ -61,91 +61,91 @@ define(["jquery", "./container/container"], function($, Container) {
         list.append(itemSlotList);
       }
 
-      self.button.click(function(event) {
-        self.game.interface.hideAll();
+      this.button.click(function(event) {
+        this.game.interface.hideAll();
 
-        if (self.isVisible()) self.hide();
-        else self.display();
+        if (this.isVisible()) this.hide();
+        else this.display();
       });
     },
 
     click(event) {
       var self = this,
         index = event.currentTarget.id.substring(4),
-        slot = self.container.slots[index],
-        item = $(self.getList()[index]);
+        slot = this.container.slots[index],
+        item = $(this.getList()[index]);
 
-      self.clearSelection();
+      this.clearSelection();
 
       if (slot.string === null || slot.count === -1) return;
 
-      self.actions.reset();
-      self.actions.loadDefaults("inventory");
+      this.actions.reset();
+      this.actions.loadDefaults("inventory");
 
       if (slot.edible)
-        self.actions.add($('<div id="eat" class="actionButton">Eat</div>'));
+        this.actions.add($('<div id="eat" class="actionButton">Eat</div>'));
       else if (slot.equippable)
-        self.actions.add($('<div id="wield" class="actionButton">Wield</div>'));
+        this.actions.add($('<div id="wield" class="actionButton">Wield</div>'));
 
-      if (!self.actions.isVisible()) self.actions.show();
+      if (!this.actions.isVisible()) this.actions.show();
 
       var sSlot = item.find("#slot" + index);
 
       sSlot.addClass("select");
 
-      self.selectedSlot = sSlot;
-      self.selectedItem = slot;
+      this.selectedSlot = sSlot;
+      this.selectedItem = slot;
 
-      self.actions.hideDrop();
+      this.actions.hideDrop();
     },
 
     clickDouble(event) {
       var self = this,
         index = event.currentTarget.id.substring(4),
-        slot = self.container.slots[index];
+        slot = this.container.slots[index];
 
       if (!slot.edible && !slot.equippable) return;
 
-      var item = $(self.getList()[index]),
+      var item = $(this.getList()[index]),
         sSlot = item.find("#slot" + index);
 
-      self.clearSelection();
+      this.clearSelection();
 
-      self.selectedSlot = sSlot;
-      self.selectedItem = slot;
+      this.selectedSlot = sSlot;
+      this.selectedItem = slot;
 
-      self.clickAction(slot.edible ? "eat" : "wield");
+      this.clickAction(slot.edible ? "eat" : "wield");
 
-      self.actions.hideDrop();
+      this.actions.hideDrop();
     },
 
     clickAction(event, dAction) {
       var self = this,
         action = event.currentTarget ? event.currentTarget.id : event;
 
-      if (!self.selectedSlot || !self.selectedItem) return;
+      if (!this.selectedSlot || !this.selectedItem) return;
 
       switch (action) {
         case "eat":
         case "wield":
-          self.game.socket.send(Packets.Inventory, [
+          this.game.socket.send(Packets.Inventory, [
             Packets.InventoryOpcode.Select,
-            self.selectedItem.index
+            this.selectedItem.index
           ]);
-          self.clearSelection();
+          this.clearSelection();
 
           break;
 
         case "drop":
-          var item = self.selectedItem;
+          var item = this.selectedItem;
 
-          if (item.count > 1) self.actions.displayDrop("inventory");
+          if (item.count > 1) this.actions.displayDrop("inventory");
           else {
-            self.game.socket.send(Packets.Inventory, [
+            this.game.socket.send(Packets.Inventory, [
               Packets.InventoryOpcode.Remove,
               item
             ]);
-            self.clearSelection();
+            this.clearSelection();
           }
 
           break;
@@ -155,30 +155,30 @@ define(["jquery", "./container/container"], function($, Container) {
 
           if (isNaN(count) || count < 1) return;
 
-          self.game.socket.send(Packets.Inventory, [
+          this.game.socket.send(Packets.Inventory, [
             Packets.InventoryOpcode.Remove,
-            self.selectedItem,
+            this.selectedItem,
             count
           ]);
-          self.actions.hideDrop();
-          self.clearSelection();
+          this.actions.hideDrop();
+          this.clearSelection();
 
           break;
 
         case "dropCancel":
-          self.actions.hideDrop();
-          self.clearSelection();
+          this.actions.hideDrop();
+          this.clearSelection();
 
           break;
       }
 
-      self.actions.hide();
+      this.actions.hide();
     },
 
     add(info) {
       var self = this,
-        item = $(self.getList()[info.index]),
-        slot = self.container.slots[info.index];
+        item = $(this.getList()[info.index]),
+        slot = this.container.slots[info.index];
 
       if (!item || !slot) return;
 
@@ -198,10 +198,10 @@ define(["jquery", "./container/container"], function($, Container) {
 
       cssSlot.css(
         "background-image",
-        self.container.getImageFormat(self.getScale(), slot.string)
+        this.container.getImageFormat(this.getScale(), slot.string)
       );
 
-      if (self.game.app.isMobile()) cssSlot.css("background-size", "600%");
+      if (this.game.app.isMobile()) cssSlot.css("background-size", "600%");
 
       item
         .find("#itemCount" + info.index)
@@ -210,8 +210,8 @@ define(["jquery", "./container/container"], function($, Container) {
 
     remove(info) {
       var self = this,
-        item = $(self.getList()[info.index]),
-        slot = self.container.slots[info.index];
+        item = $(this.getList()[info.index]),
+        slot = this.container.slots[info.index];
 
       if (!item || !slot) return;
 
@@ -228,19 +228,19 @@ define(["jquery", "./container/container"], function($, Container) {
 
     resize() {
       var self = this,
-        list = self.getList();
+        list = this.getList();
 
       for (var i = 0; i < list.length; i++) {
         var item = $(list[i]).find("#slot" + i),
-          slot = self.container.slots[i];
+          slot = this.container.slots[i];
 
         if (!slot) continue;
 
-        if (self.game.app.isMobile()) item.css("background-size", "600%");
+        if (this.game.app.isMobile()) item.css("background-size", "600%");
         else
           item.css(
             "background-image",
-            self.container.getImageFormat(self.getScale(), slot.string)
+            this.container.getImageFormat(this.getScale(), slot.string)
           );
       }
     },
@@ -248,28 +248,28 @@ define(["jquery", "./container/container"], function($, Container) {
     clearSelection() {
       var self = this;
 
-      if (!self.selectedSlot) return;
+      if (!this.selectedSlot) return;
 
-      self.selectedSlot.removeClass("select");
-      self.selectedSlot = null;
-      self.selectedItem = null;
+      this.selectedSlot.removeClass("select");
+      this.selectedSlot = null;
+      this.selectedItem = null;
     },
 
     display() {
       var self = this;
 
-      self.body.fadeIn("fast");
-      self.button.addClass("active");
+      this.body.fadeIn("fast");
+      this.button.addClass("active");
     },
 
     hide() {
       var self = this;
 
-      self.button.removeClass("active");
+      this.button.removeClass("active");
 
-      self.body.fadeOut("slow");
-      self.button.removeClass("active");
-      self.clearSelection();
+      this.body.fadeOut("slow");
+      this.button.removeClass("active");
+      this.clearSelection();
     },
 
     getScale() {

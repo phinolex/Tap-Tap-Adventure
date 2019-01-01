@@ -3,14 +3,14 @@ define(["../character"], function(Character) {
     init(id, kind) {
       var self = this;
 
-      self._super(id, kind);
+      this._super(id, kind);
 
-      self.name = name;
+      this.name = name;
 
-      self.hitPoints = -1;
-      self.maxHitPoints = -1;
+      this.hitPoints = -1;
+      this.maxHitPoints = -1;
 
-      self.type = "mob";
+      this.type = "mob";
     },
 
     setHitPoints(hitPoints) {
