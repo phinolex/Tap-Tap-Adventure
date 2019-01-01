@@ -1,239 +1,268 @@
-/* global log, Modules */
+import Modules from '../utils/modules';
+import Character from '../entity/character/character';
 
-define(["../entity/character/character"], function(Character) {
-  return Class.extend({
-    init(game) {
-      var self = this;
+export default class Updater {
+  init(game) {
+    this.game = game;
+    this.camera = game.getCamera();
+    this.renderer = game.renderer;
+    this.input = game.input;
+    this.sprites = null;
+  }
 
-      self.game = game;
-      self.camera = game.getCamera();
-      self.renderer = game.renderer;
-      self.input = game.input;
-      self.sprites = null;
-    },
+  update() {
+    this.timeDifferential = (new Date() - this.lastUpdate) / 1000;
 
-    update() {
-      this.timeDifferential = (new Date() - this.lastUpdate) / 1000;
+    this.animateTiles();
+    this.updateEntities();
+    this.input.updateCursor();
+    this.updateKeyboard();
+    this.updateAnimations();
+    this.verifyScale();
+    this.updateInfos();
+    this.updateBubbles();
 
-      this.animateTiles();
-      this.updateEntities();
-      this.input.updateCursor();
-      this.updateKeyboard();
-      this.updateAnimations();
-      this.verifyScale();
-      this.updateInfos();
-      this.updateBubbles();
+    this.lastUpdate = new Date();
+  }
 
-      this.lastUpdate = new Date();
-    },
+  animateTiles() {
+    const {
+      time,
+    } = this.game;
 
-    animateTiles() {
-      var self = this,
-        time = self.game.time;
-
-      self.renderer.forEachAnimatedTile(function(tile) {
-        if (tile.animate(time)) {
-          tile.isDirty = true;
-          tile.dirtyRect = self.renderer.getTileBounds(tile);
-        }
-      });
-    },
-
-    updateEntities() {
-      var self = this;
-
-      self.game.entities.forEachEntity(function(entity) {
-        if (entity.spriteLoaded) {
-          self.updateFading(entity);
-
-          var animation = entity.currentAnimation;
-
-          if (animation) animation.update(self.game.time);
-
-          if (entity instanceof Character) {
-            if (entity.critical && entity.criticalAnimation)
-              entity.criticalAnimation.update(self.game.time);
-
-            if (entity.terror && entity.terrorAnimation)
-              entity.terrorAnimation.update(self.game.time);
-
-            if (entity.stunned && entity.stunAnimation)
-              entity.stunAnimation.update(self.game.time);
-
-            if (entity.explosion && entity.explosionAnimation)
-              entity.explosionAnimation.update(self.game.time);
-
-            if (entity.movement && entity.movement.inProgress)
-              entity.movement.step(self.game.time);
-
-            if (entity.hasPath() && !entity.movement.inProgress) {
-              var tick = Math.round(266 / entity.movementSpeed);
-
-              switch (entity.orientation) {
-                case Modules.Orientation.Left:
-                  entity.movement.start(
-                    self.game.time,
-                    function(x) {
-                      entity.x = x;
-                      entity.moved();
-                    },
-                    function() {
-                      entity.x = entity.movement.endValue;
-                      entity.moved();
-                      entity.nextStep();
-                    },
-                    entity.x - tick,
-                    entity.x - 16,
-                    entity.movementSpeed
-                  );
-
-                  break;
-
-                case Modules.Orientation.Right:
-                  entity.movement.start(
-                    self.game.time,
-                    function(x) {
-                      entity.x = x;
-                      entity.moved();
-                    },
-                    function() {
-                      entity.x = entity.movement.endValue;
-                      entity.moved();
-                      entity.nextStep();
-                    },
-                    entity.x + tick,
-                    entity.x + 16,
-                    entity.movementSpeed
-                  );
-
-                  break;
-
-                case Modules.Orientation.Up:
-                  entity.movement.start(
-                    self.game.time,
-                    function(y) {
-                      entity.y = y;
-                      entity.moved();
-                    },
-                    function() {
-                      entity.y = entity.movement.endValue;
-                      entity.moved();
-                      entity.nextStep();
-                    },
-                    entity.y - tick,
-                    entity.y - 16,
-                    entity.movementSpeed
-                  );
-
-                  break;
-
-                case Modules.Orientation.Down:
-                  entity.movement.start(
-                    self.game.time,
-                    function(y) {
-                      entity.y = y;
-                      entity.moved();
-                    },
-                    function() {
-                      entity.y = entity.movement.endValue;
-                      entity.moved();
-                      entity.nextStep();
-                    },
-                    entity.y + tick,
-                    entity.y + 16,
-                    entity.movementSpeed
-                  );
-
-                  break;
-              }
-            }
-          } else if (entity.type === "projectile") {
-            var mDistance = entity.speed * self.timeDifferential,
-              dx = entity.destX - entity.x,
-              dy = entity.destY - entity.y,
-              tDistance = Math.sqrt(dx * dx + dy * dy),
-              amount = mDistance / tDistance;
-
-            if (amount > 1) amount = 1;
-
-            entity.x += dx * amount;
-            entity.y += dy * amount;
-
-            if (tDistance < 5) entity.impact();
-          }
-        }
-      });
-    },
-
-    updateFading(entity) {
-      var self = this;
-
-      if (!entity || !entity.fading) return;
-
-      var duration = 1000,
-        time = self.game.time,
-        dt = time - entity.fadingTime;
-
-      if (dt > duration) {
-        entity.isFading = false;
-        entity.fadingAlpha = 1;
-      } else entity.fadingAlpha = dt / duration;
-    },
-
-    updateKeyboard() {
-      var self = this,
-        player = self.game.player,
-        position = {
-          x: player.gridX,
-          y: player.gridY
-        };
-
-      if (player.frozen) return;
-
-      if (player.moveUp) position.y--;
-      else if (player.moveDown) position.y++;
-      else if (player.moveRight) position.x++;
-      else if (player.moveLeft) position.x--;
-
-      if (player.hasKeyboardMovement()) self.input.keyMove(position);
-    },
-
-    updateAnimations() {
-      var self = this,
-        target = self.input.targetAnimation;
-
-      // stops animation from updating on targetAnimation
-      if (target && self.input.selectedCellVisible && !self.renderer.mobile) {
-        target.update(self.game.time);
+    this.renderer.forEachAnimatedTile((tile) => {
+      if (tile.animate(time)) {
+        tile.isDirty = true; // eslint-disable-line
+        tile.dirtyRect = this.renderer.getTileBounds(tile); // eslint-disable-line
       }
+    });
+  }
 
-      if (!self.sprites) return;
+  updateEntities() {
+    this.game.entities.forEachEntity((entity) => {
+      if (entity.spriteLoaded) {
+        this.updateFading(entity);
 
-      var sparks = self.sprites.sparksAnimation;
+        const animation = entity.currentAnimation;
 
-      if (sparks) sparks.update(self.game.time);
-    },
+        if (animation) animation.update(this.game.time);
 
-    verifyScale() {
-      var self = this,
-        scale = self.renderer.getDrawingScale();
+        if (entity instanceof Character) {
+          if (entity.critical && entity.criticalAnimation) {
+            entity.criticalAnimation.update(this.game.time);
+          }
 
-      if (self.renderer.tileset && self.renderer.tileset.scale !== scale)
-        self.game.map.updateTileset();
-    },
+          if (entity.terror && entity.terrorAnimation) {
+            entity.terrorAnimation.update(this.game.time);
+          }
 
-    updateInfos() {
-      if (this.game.info) this.game.info.update(this.game.time);
-    },
+          if (entity.stunned && entity.stunAnimation) {
+            entity.stunAnimation.update(this.game.time);
+          }
 
-    updateBubbles() {
-      if (this.game.bubble) this.game.bubble.update(this.game.time);
+          if (entity.explosion && entity.explosionAnimation) {
+            entity.explosionAnimation.update(this.game.time);
+          }
 
-      if (this.game.pointer) this.game.pointer.update();
-    },
+          if (entity.movement && entity.movement.inProgress) {
+            entity.movement.step(this.game.time);
+          }
 
-    setSprites(sprites) {
-      this.sprites = sprites;
+          if (entity.hasPath() && !entity.movement.inProgress) {
+            const tick = Math.round(266 / entity.movementSpeed);
+
+            switch (entity.orientation) {
+              case Modules.Orientation.Left:
+                entity.movement.start(
+                  this.game.time,
+                  (x) => {
+                    entity.x = x; // eslint-disable-line
+                    entity.moved();
+                  },
+                  () => {
+                    entity.x = entity.movement.endValue; // eslint-disable-line
+                    entity.moved();
+                    entity.nextStep();
+                  },
+                  entity.x - tick,
+                  entity.x - 16,
+                  entity.movementSpeed,
+                );
+
+                break;
+
+              case Modules.Orientation.Right:
+                entity.movement.start(
+                  this.game.time,
+                  (x) => {
+                    entity.x = x; // eslint-disable-line
+                    entity.moved();
+                  },
+                  () => {
+                    entity.x = entity.movement.endValue; // eslint-disable-line
+                    entity.moved();
+                    entity.nextStep();
+                  },
+                  entity.x + tick,
+                  entity.x + 16,
+                  entity.movementSpeed,
+                );
+
+                break;
+
+              case Modules.Orientation.Up:
+                entity.movement.start(
+                  this.game.time,
+                  (y) => {
+                    entity.y = y; // eslint-disable-line
+                    entity.moved();
+                  },
+                  () => {
+                    entity.y = entity.movement.endValue; // eslint-disable-line
+                    entity.moved();
+                    entity.nextStep();
+                  },
+                  entity.y - tick,
+                  entity.y - 16,
+                  entity.movementSpeed,
+                );
+
+                break;
+
+              case Modules.Orientation.Down:
+                entity.movement.start(
+                  this.game.time,
+                  (y) => {
+                    entity.y = y; // eslint-disable-line
+                    entity.moved();
+                  },
+                  () => {
+                    entity.y = entity.movement.endValue; // eslint-disable-line
+                    entity.moved();
+                    entity.nextStep();
+                  },
+                  entity.y + tick,
+                  entity.y + 16,
+                  entity.movementSpeed,
+                );
+
+                break;
+              default:
+                break;
+            }
+          }
+        } else if (entity.type === 'projectile') {
+          const mDistance = entity.speed * this.timeDifferential;
+          const dx = entity.destX - entity.x;
+          const dy = entity.destY - entity.y;
+          const tDistance = Math.sqrt(dx * dx + dy * dy);
+          let amount = mDistance / tDistance;
+
+          if (amount > 1) {
+            amount = 1;
+          }
+
+          entity.x += dx * amount; // eslint-disable-line
+          entity.y += dy * amount; // eslint-disable-line
+
+          if (tDistance < 5) entity.impact();
+        }
+      }
+    });
+  }
+
+  updateFading(entity) {
+    if (!entity || !entity.fading) {
+      return;
     }
-  });
-});
+
+    const duration = 1000;
+    const {
+      time,
+    } = this.game;
+    const dt = time - entity.fadingTime;
+
+    if (dt > duration) {
+      entity.isFading = false; // eslint-disable-line
+      entity.fadingAlpha = 1; // eslint-disable-line
+    } else {
+      entity.fadingAlpha = dt / duration; // eslint-disable-line
+    }
+  }
+
+  updateKeyboard() {
+    const {
+      player,
+    } = this.game;
+
+    const position = {
+      x: player.gridX,
+      y: player.gridY,
+    };
+
+    if (player.frozen) {
+      return;
+    }
+
+    if (player.moveUp) {
+      position.y -= 1;
+    } else if (player.moveDown) {
+      position.y += 1;
+    } else if (player.moveRight) {
+      position.x += 1;
+    } else if (player.moveLeft) {
+      position.x -= 1;
+    }
+
+    if (player.hasKeyboardMovement()) {
+      this.input.keyMove(position);
+    }
+  }
+
+  updateAnimations() {
+    const target = this.input.targetAnimation;
+
+    // stops animation from updating on targetAnimation
+    if (target && this.input.selectedCellVisible && !this.renderer.mobile) {
+      target.update(this.game.time);
+    }
+
+    if (!this.sprites) {
+      return;
+    }
+
+    const sparks = this.sprites.sparksAnimation;
+
+    if (sparks) {
+      sparks.update(this.game.time);
+    }
+  }
+
+  verifyScale() {
+    const scale = this.renderer.getDrawingScale();
+
+    if (this.renderer.tileset && this.renderer.tileset.scale !== scale) {
+      this.game.map.updateTileset();
+    }
+  }
+
+  updateInfos() {
+    if (this.game.info) {
+      this.game.info.update(this.game.time);
+    }
+  }
+
+  updateBubbles() {
+    if (this.game.bubble) {
+      this.game.bubble.update(this.game.time);
+    }
+
+    if (this.game.pointer) {
+      this.game.pointer.update();
+    }
+  }
+
+  setSprites(sprites) {
+    this.sprites = sprites;
+  }
+}
