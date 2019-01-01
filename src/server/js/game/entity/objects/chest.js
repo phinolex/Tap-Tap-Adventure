@@ -5,7 +5,7 @@ module.exports = Chest = Entity.extend({
   constructor(id, instance, x, y) {
     
 
-    this._super(id, "chest", instance, x, y);
+    this.super(id, "chest", instance, x, y);
 
     this.respawnDuration = 25000; //Every 25 seconds
     this.static = false;

@@ -7,7 +7,7 @@ module.exports = Tenebris = Combat.extend({
   constructor(character) {
     
 
-    this._super(character);
+    this.super(character);
 
     character.spawnDistance = 24;
 
@@ -50,7 +50,7 @@ module.exports = Tenebris = Combat.extend({
 
     if (this.canSpawn()) this.spawnIllusions();
 
-    this._super(attacker, target, hitInfo);
+    this.super(attacker, target, hitInfo);
   },
 
   spawnTenbris() {

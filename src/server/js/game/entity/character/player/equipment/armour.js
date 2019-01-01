@@ -5,7 +5,7 @@ module.exports = Armour = Equipment.extend({
   constructor(name, id, count, ability, abilityLevel) {
     
 
-    this._super(name, id, count, ability, abilityLevel);
+    this.super(name, id, count, ability, abilityLevel);
 
     this.defense = Items.getArmourLevel(name);
   },

@@ -4,7 +4,7 @@ module.exports = Mana = Points.extend({
   constructor(mana, maxMana) {
     
 
-    this._super(mana, maxMana);
+    this.super(mana, maxMana);
   },
 
   getMana() {

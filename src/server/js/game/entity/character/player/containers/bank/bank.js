@@ -10,13 +10,13 @@ module.exports = Slot = Container.extend({
 
     this.open = false;
 
-    this._super("Bank", owner, size);
+    this.super("Bank", owner, size);
   },
 
   load(ids, counts, abilities, abilityLevels) {
     
 
-    this._super(ids, counts, abilities, abilityLevels);
+    this.super(ids, counts, abilities, abilityLevels);
 
     this.owner.send(
       new Messages.Bank(Packets.BankOpcode.Batch, [this.size, this.slots])
@@ -36,7 +36,7 @@ module.exports = Slot = Container.extend({
       return false;
     }
 
-    var slot = this._super(id, parseInt(count), ability, abilityLevel);
+    var slot = this.super(id, parseInt(count), ability, abilityLevel);
 
     this.owner.send(new Messages.Bank(Packets.BankOpcode.Add, slot));
 
@@ -47,7 +47,7 @@ module.exports = Slot = Container.extend({
   remove(id, count, index) {
     
 
-    if (!this._super(index, id, count)) return;
+    if (!this.super(index, id, count)) return;
 
     this.owner.send(
       new Messages.Bank(Packets.BankOpcode.Remove, {

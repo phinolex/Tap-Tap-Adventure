@@ -9,7 +9,7 @@ module.exports = OgreLord = Combat.extend({
   constructor(character) {
     
 
-    this._super(character);
+    this.super(character);
 
     this.character = character;
 
@@ -63,7 +63,7 @@ module.exports = OgreLord = Combat.extend({
 
     if (this.canSpawn()) this.spawnMinions();
 
-    this._super(character, target, hitInfo);
+    this.super(character, target, hitInfo);
   },
 
   forceTalk(message) {

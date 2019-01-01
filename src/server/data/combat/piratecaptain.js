@@ -7,7 +7,7 @@ module.exports = PirateCaptain = Combat.extend({
   constructor(character) {
     
 
-    this._super(character);
+    this.super(character);
     this.character = character;
 
     character.spawnDistance = 20;
@@ -38,7 +38,7 @@ module.exports = PirateCaptain = Combat.extend({
   hit(character, target, hitInfo) {
     
     if (this.canTeleport()) this.teleport();
-    else this._super(character, target, hitInfo);
+    else this.super(character, target, hitInfo);
   },
 
   teleport() {

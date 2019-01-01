@@ -8,7 +8,7 @@ module.exports = Mob = Character.extend({
   constructor(id, instance, x, y) {
     
 
-    this._super(id, "mob", instance, x, y);
+    this.super(id, "mob", instance, x, y);
 
     if (!Mobs.exists(id)) return;
 
@@ -162,7 +162,7 @@ module.exports = Mob = Character.extend({
 
   getState() {
     var self = this,
-      base = this._super();
+      base = this.super();
 
     base.hitPoints = this.hitPoints;
     base.maxHitPoints = this.maxHitPoints;

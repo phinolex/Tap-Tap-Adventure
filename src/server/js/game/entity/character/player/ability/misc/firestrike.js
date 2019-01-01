@@ -4,6 +4,6 @@ module.exports = FireStrike = Ability.extend({
   constructor(name, type) {
     
 
-    this._super(name, type);
+    this.super(name, type);
   }
 });

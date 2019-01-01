@@ -17,7 +17,7 @@ module.exports = QueenAnt = Combat.extend({
 
     character.spawnDistance = 18;
 
-    this._super(character);
+    this.super(character);
 
     this.lastActionThreshold = 10000; //Due to the nature of the AoE attack
 
@@ -64,7 +64,7 @@ module.exports = QueenAnt = Combat.extend({
 
     this.resetAoE();
 
-    this._super(attacker);
+    this.super(attacker);
   },
 
   hit(attacker, target, hitInfo) {
@@ -81,7 +81,7 @@ module.exports = QueenAnt = Combat.extend({
 
     if (this.isAttacked()) this.beginMinionAttack();
 
-    this._super(attacker, target, hitInfo);
+    this.super(attacker, target, hitInfo);
   },
 
   doAoE() {
@@ -90,7 +90,7 @@ module.exports = QueenAnt = Combat.extend({
     /**
      * The reason this function does not use its superclass
      * representation is because of the setTimeout function
-     * which does not allow us to call _super().
+     * which does not allow us to call super().
      */
 
     this.resetAoE();

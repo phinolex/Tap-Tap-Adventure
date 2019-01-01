@@ -9,6 +9,6 @@ module.exports = TeamWar = Minigame.extend({
 
     this.data = Data["TeamWar"];
 
-    this._super(this.data.id, this.data.name);
+    this.super(this.data.id, this.data.name);
   }
 });

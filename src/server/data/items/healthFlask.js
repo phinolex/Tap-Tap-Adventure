@@ -4,7 +4,7 @@ var Item = require("../../js/game/entity/objects/item.js"),
 module.exports = Flask = Item.extend({
   constructor(id, instance, x, y) {
     
-    this._super(id, instance, x, y);
+    this.super(id, instance, x, y);
 
     this.healAmount = 0;
     this.manaAmount = 0;

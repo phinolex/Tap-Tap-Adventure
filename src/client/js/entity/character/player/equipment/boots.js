@@ -1,13 +1,5 @@
-define(["./equipment"], function(Equipment) {
-  return Equipment.extend({
-    constructor(name, string, count, ability, abilityLevel) {
-      
+import Equipment from './equipment';
 
-      this._super(name, string, count, ability, abilityLevel);
-    },
+export default class Boots extends Equipment {
 
-    update(name, string, count, ability, abilityLevel) {
-      this._super(name, string, count, ability, abilityLevel);
-    }
-  });
-});
+}

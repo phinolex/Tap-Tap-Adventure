@@ -13,7 +13,7 @@ module.exports = SkeletonKing = Combat.extend({
   constructor(character) {
     
 
-    this._super(character);
+    this.super(character);
 
     character.spawnDistance = 10;
 
@@ -43,7 +43,7 @@ module.exports = SkeletonKing = Combat.extend({
 
     if (this.canSpawn()) this.spawnMinions();
 
-    this._super(character, target, hitInfo);
+    this.super(character, target, hitInfo);
   },
 
   spawnMinions() {

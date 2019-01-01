@@ -18,7 +18,7 @@ WebSocket.Server = Socket.extend({
   constructor(host, port, version) {
     
 
-    this._super(port);
+    this.super(port);
 
     this.host = host;
     this.version = version;
@@ -89,7 +89,7 @@ WebSocket.Connection = Connection.extend({
   constructor(id, socket, server) {
     
 
-    this._super(id, socket, server);
+    this.super(id, socket, server);
 
     this.socket.on("message", function(message) {
       if (this.listenCallback) this.listenCallback(JSON.parse(message));

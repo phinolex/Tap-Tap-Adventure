@@ -4,7 +4,7 @@ module.exports = Item = Entity.extend({
   constructor(id, instance, x, y) {
     
 
-    this._super(id, "item", instance, x, y);
+    this.super(id, "item", instance, x, y);
 
     this.static = false;
     this.dropped = false;
@@ -62,7 +62,7 @@ module.exports = Item = Entity.extend({
 
   getState() {
     var self = this,
-      state = this._super();
+      state = this.super();
 
     state.count = this.count;
     state.ability = this.ability;

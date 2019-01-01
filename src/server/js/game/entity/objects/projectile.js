@@ -4,7 +4,7 @@ module.exports = Projectile = Entity.extend({
   constructor(id, instance) {
     
 
-    this._super(id, "projectile", instance);
+    this.super(id, "projectile", instance);
 
     this.startX = -1;
     this.startY = -1;

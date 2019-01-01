@@ -10,7 +10,7 @@ module.exports = TheLie = Quest.extend({
     this.player = player;
     this.data = data;
 
-    this._super(data.id, data.name, data.description);
+    this.super(data.id, data.name, data.description);
   },
 
   load(stage) {

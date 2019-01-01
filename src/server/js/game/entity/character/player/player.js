@@ -31,7 +31,7 @@ module.exports = Player = Character.extend({
   constructor(world, database, connection, clientId) {
     
 
-    this._super(-1, "player", connection.id, -1, -1);
+    this.super(-1, "player", connection.id, -1, -1);
 
     this.world = world;
     this.mysql = database;
@@ -590,7 +590,7 @@ module.exports = Player = Character.extend({
 
     if (this.dead) return;
 
-    this._super(x, y);
+    this.super(x, y);
 
     this.world.pushToAdjacentGroups(
       this.group,

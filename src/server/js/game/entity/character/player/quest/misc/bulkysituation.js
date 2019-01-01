@@ -11,7 +11,7 @@ module.exports = BulkySituation = Quest.extend({
 
     this.lastNPC = null;
 
-    this._super(player, data);
+    this.super(player, data);
   },
 
   load(stage) {
@@ -83,7 +83,7 @@ module.exports = BulkySituation = Quest.extend({
   },
 
   finish() {
-    this._super();
+    this.super();
   },
 
   hasRequirement() {

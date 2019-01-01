@@ -12,7 +12,7 @@ module.exports = Introduction = Quest.extend({
 
     this.lastNPC = null;
 
-    this._super(player, data);
+    this.super(player, data);
   },
 
   load(stage) {
@@ -119,7 +119,7 @@ module.exports = Introduction = Quest.extend({
   },
 
   isFinished() {
-    return this._super() || !this.player.inTutorial();
+    return this.super() || !this.player.inTutorial();
   },
 
   toggleChat() {
@@ -129,7 +129,7 @@ module.exports = Introduction = Quest.extend({
   setStage(stage) {
     
 
-    this._super(stage);
+    this.super(stage);
 
     this.clearPointers();
   },
@@ -138,7 +138,7 @@ module.exports = Introduction = Quest.extend({
     
 
     this.toggleChat();
-    this._super();
+    this.super();
   },
 
   verifyDoor(destX, destY) {

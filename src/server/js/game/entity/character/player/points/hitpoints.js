@@ -4,7 +4,7 @@ module.exports = HitPoints = Points.extend({
   constructor(hitPoints, maxHitPoints) {
     
 
-    this._super(hitPoints, maxHitPoints);
+    this.super(hitPoints, maxHitPoints);
   },
 
   setHitPoints(hitPoints) {

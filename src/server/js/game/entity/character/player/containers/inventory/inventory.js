@@ -18,13 +18,13 @@ module.exports = Inventory = Container.extend({
   constructor(owner, size) {
     
 
-    this._super("Inventory", owner, size);
+    this.super("Inventory", owner, size);
   },
 
   load(ids, counts, abilities, abilityLevels) {
     
 
-    this._super(ids, counts, abilities, abilityLevels);
+    this.super(ids, counts, abilities, abilityLevels);
 
     this.owner.send(
       new Messages.Inventory(Packets.InventoryOpcode.Batch, [
@@ -53,7 +53,7 @@ module.exports = Inventory = Container.extend({
       return false;
     }
 
-    var slot = this._super(item.id, count, item.ability, item.abilityLevel);
+    var slot = this.super(item.id, count, item.ability, item.abilityLevel);
 
     if (!slot) return false;
 
@@ -71,7 +71,7 @@ module.exports = Inventory = Container.extend({
 
     if (!index) index = this.getIndex(id);
 
-    if (!this._super(index, id, count)) return;
+    if (!this.super(index, id, count)) return;
 
     this.owner.send(
       new Messages.Inventory(Packets.InventoryOpcode.Remove, {

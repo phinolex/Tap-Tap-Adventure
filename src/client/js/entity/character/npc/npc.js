@@ -1,43 +1,27 @@
-define(["../character"], function(Character) {
-  return Character.extend({
-    constructor(id, kind) {
-      
+import Character from '../character';
 
-      this._super(id, kind);
+export default class Npc extends Character {
+  constructor(id, kind) {
+    super(id, kind);
 
+    this.index = 0;
+    this.type = 'npc';
+  }
+
+  talk(messages) {
+    const count = messages.length;
+    let message;
+
+    if (this.index > count) {
       this.index = 0;
-
-      this.type = "npc";
-    },
-
-    talk(messages) {
-      var self = this,
-        count = messages.length,
-        message;
-
-      if (this.index > count) this.index = 0;
-
-      if (this.index < count) message = messages[this.index];
-
-      this.index++;
-
-      return message;
-    },
-
-    idle() {
-      this._super();
-    },
-
-    setSprite(sprite) {
-      this._super(sprite);
-    },
-
-    setName(name) {
-      this._super(name);
-    },
-
-    setGridPosition(x, y) {
-      this._super(x, y);
     }
-  });
-});
+
+    if (this.index < count) {
+      message = messages[this.index];
+    }
+
+    this.index += 1;
+
+    return message;
+  }
+}

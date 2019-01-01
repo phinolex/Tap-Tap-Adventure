@@ -3,7 +3,7 @@ define(["jquery", "../page"], function($, Page) {
     constructor() {
       
 
-      this._super("#questPage");
+      this.super("#questPage");
 
       this.achievements = $("#achievementList");
       this.quests = $("#questList");

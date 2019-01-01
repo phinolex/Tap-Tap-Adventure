@@ -10,7 +10,7 @@ module.exports = Character = Entity.extend({
   constructor(id, type, instance, x, y) {
     
 
-    this._super(id, type, instance, x, y);
+    this.super(id, type, instance, x, y);
 
     this.level = -1;
     this.loaded = false;
@@ -128,7 +128,7 @@ module.exports = Character = Entity.extend({
   setPosition(x, y) {
     
 
-    this._super(x, y);
+    this.super(x, y);
 
     if (this.movementCallback) this.movementCallback(x, y);
   },

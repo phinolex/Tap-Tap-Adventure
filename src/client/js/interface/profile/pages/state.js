@@ -5,7 +5,7 @@ define(["jquery", "../page"], function($, Page) {
     constructor(game) {
       
 
-      this._super("#statePage");
+      this.super("#statePage");
 
       this.game = game;
       this.player = game.player;
