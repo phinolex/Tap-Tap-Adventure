@@ -2,8 +2,8 @@ var Entity = require("../entity"),
   Utils = require("../../../util/utils");
 
 module.exports = Chest = Entity.extend({
-  init(id, instance, x, y) {
-    var self = this;
+  constructor(id, instance, x, y) {
+    
 
     this._super(id, "chest", instance, x, y);
 
@@ -14,13 +14,13 @@ module.exports = Chest = Entity.extend({
   },
 
   openChest() {
-    var self = this;
+    
 
     if (this.openCallback) this.openCallback();
   },
 
   respawn() {
-    var self = this;
+    
 
     setTimeout(function() {
       if (this.respawnCallback) this.respawnCallback();

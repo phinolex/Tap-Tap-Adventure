@@ -2,8 +2,8 @@ var cls = require("../../../../../../lib/class"),
   Abilities = require("../../../../../../util/abilities");
 
 module.exports = Ability = cls.Class.extend({
-  init(name, type) {
-    var self = this;
+  constructor(name, type) {
+    
 
     this.name = name;
     this.type = type;

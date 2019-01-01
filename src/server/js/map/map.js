@@ -14,8 +14,8 @@ var cls = require("../lib/class"),
   Grids = require("./grids");
 
 module.exports = Map = cls.Class.extend({
-  init(world) {
-    var self = this;
+  constructor(world) {
+    
 
     this.world = world;
     this.ready = false;
@@ -26,7 +26,7 @@ module.exports = Map = cls.Class.extend({
   },
 
   load() {
-    var self = this;
+    
 
     this.width = map.width;
     this.height = map.height;
@@ -53,7 +53,7 @@ module.exports = Map = cls.Class.extend({
   },
 
   loadAreas() {
-    var self = this;
+    
 
     /**
      * The structure for the new this.areas is as follows:
@@ -77,7 +77,7 @@ module.exports = Map = cls.Class.extend({
   },
 
   loadDoors() {
-    var self = this;
+    
 
     this.doors = {};
 
@@ -178,7 +178,7 @@ module.exports = Map = cls.Class.extend({
   },
 
   isColliding(x, y) {
-    var self = this;
+    
 
     if (this.isOutOfBounds(x, y)) return false;
 
@@ -186,7 +186,7 @@ module.exports = Map = cls.Class.extend({
   },
 
   indexToGridPosition(tileIndex) {
-    var self = this;
+    
 
     tileIndex -= 1;
 

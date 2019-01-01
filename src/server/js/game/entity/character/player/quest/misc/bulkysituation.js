@@ -3,8 +3,8 @@ var Quest = require("../quest"),
   Packets = require("../../../../../../network/packets");
 
 module.exports = BulkySituation = Quest.extend({
-  init(player, data) {
-    var self = this;
+  constructor(player, data) {
+    
 
     this.player = player;
     this.data = data;
@@ -15,7 +15,7 @@ module.exports = BulkySituation = Quest.extend({
   },
 
   load(stage) {
-    var self = this;
+    
 
     if (!stage) this.update();
     else this.stage = stage;
@@ -24,7 +24,7 @@ module.exports = BulkySituation = Quest.extend({
   },
 
   loadCallbacks() {
-    var self = this;
+    
 
     if (this.stage > 9999) return;
 

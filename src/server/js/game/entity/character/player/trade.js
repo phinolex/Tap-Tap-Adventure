@@ -8,8 +8,8 @@ module.exports = Trade = cls.Class.extend({
    * started and/or requested.
    */
 
-  init(player) {
-    var self = this;
+  constructor(player) {
+    
 
     this.player = player;
     this.oPlayer = null;
@@ -24,14 +24,14 @@ module.exports = Trade = cls.Class.extend({
   },
 
   start() {
-    var self = this;
+    
 
     this.oPlayer = this.requestee;
     this.state = Modules.Trade.Started;
   },
 
   stop() {
-    var self = this;
+    
 
     this.oPlayer = null;
     this.state = null;
@@ -43,7 +43,7 @@ module.exports = Trade = cls.Class.extend({
   },
 
   finalize() {
-    var self = this;
+    
 
     if (!this.player.inventory.containsSpaces(this.oPlayerItems.length)) return;
 
@@ -67,7 +67,7 @@ module.exports = Trade = cls.Class.extend({
   },
 
   request(oPlayer) {
-    var self = this;
+    
 
     this.requestee = oPlayer;
 
@@ -75,7 +75,7 @@ module.exports = Trade = cls.Class.extend({
   },
 
   accept() {
-    var self = this;
+    
 
     this.subState = Modules.Trade.Accepted;
 
@@ -86,7 +86,7 @@ module.exports = Trade = cls.Class.extend({
   },
 
   getRequestee() {
-    var self = this;
+    
 
     if (!this.requestee) return null;
 

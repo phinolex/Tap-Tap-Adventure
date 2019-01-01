@@ -2,8 +2,8 @@ var Minigame = require("../minigame"),
   Data = require("../../../data/minigames.json");
 
 module.exports = TeamWar = Minigame.extend({
-  init(world) {
-    var self = this;
+  constructor(world) {
+    
 
     this.world = world;
 

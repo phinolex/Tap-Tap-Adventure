@@ -7,8 +7,8 @@ var cls = require("../lib/class"),
   Config = require("../../config.json");
 
 module.exports = MySQL = cls.Class.extend({
-  init(host, port, user, pass, database) {
-    var self = this;
+  constructor(host, port, user, pass, database) {
+    
 
     /**
      * Main file for MySQL, it splits into Creator and Loader.
@@ -32,7 +32,7 @@ module.exports = MySQL = cls.Class.extend({
   },
 
   connect(usingDB, forceCallbacks) {
-    var self = this;
+    
 
     if (this.connection) {
       this.connection.destroy();
@@ -51,7 +51,7 @@ module.exports = MySQL = cls.Class.extend({
   },
 
   loadCallbacks() {
-    var self = this;
+    
 
     this.connection.connect(function(err) {
       if (err) {
@@ -84,7 +84,7 @@ module.exports = MySQL = cls.Class.extend({
   },
 
   loadCreator() {
-    var self = this;
+    
 
     if (this.creator) return;
 
@@ -135,7 +135,7 @@ module.exports = MySQL = cls.Class.extend({
   },
 
   register(player) {
-    var self = this;
+    
 
     this.connection.query(
       "SELECT * FROM `player_data` WHERE `player_data`.`username`= ?",
@@ -194,7 +194,7 @@ module.exports = MySQL = cls.Class.extend({
   },
 
   loadDatabases() {
-    var self = this;
+    
 
     log.info("[MySQL] Creating database....");
 
@@ -217,7 +217,7 @@ module.exports = MySQL = cls.Class.extend({
   },
 
   queryData(type, database, data) {
-    var self = this;
+    
 
     this.connection.query(type + " " + database + " SET ?", data, function(
       error
@@ -229,7 +229,7 @@ module.exports = MySQL = cls.Class.extend({
   },
 
   alter(database, column, type) {
-    var self = this;
+    
 
     this.connection.query(
       "ALTER TABLE " + database + " ADD " + column + " " + type,

@@ -3,8 +3,8 @@ var cls = require("../../../../lib/class"),
   Utils = require("../../../../util/utils");
 
 module.exports = Warp = cls.Class.extend({
-  init(player) {
-    var self = this;
+  constructor(player) {
+    
 
     this.player = player;
 
@@ -13,7 +13,7 @@ module.exports = Warp = cls.Class.extend({
   },
 
   warp(id) {
-    var self = this;
+    
 
     if (!this.canWarp()) {
       this.player.notify(
@@ -46,7 +46,7 @@ module.exports = Warp = cls.Class.extend({
   },
 
   setLastWarp(lastWarp) {
-    var self = this;
+    
 
     if (isNaN(lastWarp)) {
       this.lastWarp = 0;

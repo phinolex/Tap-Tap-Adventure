@@ -4,8 +4,8 @@ var Combat = require("../../js/game/entity/character/combat/combat"),
   Modules = require("../../js/util/modules");
 
 module.exports = PirateCaptain = Combat.extend({
-  init(character) {
-    var self = this;
+  constructor(character) {
+    
 
     this._super(character);
     this.character = character;
@@ -36,7 +36,7 @@ module.exports = PirateCaptain = Combat.extend({
   },
 
   hit(character, target, hitInfo) {
-    var self = this;
+    
     if (this.canTeleport()) this.teleport();
     else this._super(character, target, hitInfo);
   },

@@ -4,8 +4,8 @@ var cls = require("../../lib/class"),
   _ = require("underscore");
 
 module.exports = ChestAreas = cls.Class.extend({
-  init(world) {
-    var self = this;
+  constructor(world) {
+    
 
     this.world = world;
 
@@ -15,7 +15,7 @@ module.exports = ChestAreas = cls.Class.extend({
   },
 
   load() {
-    var self = this;
+    
 
     _.each(map.chestAreas, function(m) {
       var chestArea = new Area(m.id, m.x, m.y, m.width, m.height);
@@ -40,7 +40,7 @@ module.exports = ChestAreas = cls.Class.extend({
   },
 
   standardize() {
-    var self = this;
+    
 
     _.each(this.chestAreas, function(chestArea) {
       chestArea.setMaxEntities(chestArea.entities.length);
@@ -48,7 +48,7 @@ module.exports = ChestAreas = cls.Class.extend({
   },
 
   spawnChest(chestArea) {
-    var self = this;
+    
 
     /**
      * Works beautifully :)
@@ -63,7 +63,7 @@ module.exports = ChestAreas = cls.Class.extend({
   },
 
   removeChest(chestArea) {
-    var self = this;
+    
 
     if (!chestArea.chest) return;
 

@@ -7,8 +7,8 @@ define(function() {
    */
 
   return Class.extend({
-    init(name, string, count, ability, abilityLevel) {
-      var self = this;
+    constructor(name, string, count, ability, abilityLevel) {
+      
 
       this.name = name;
       this.string = string;
@@ -42,7 +42,7 @@ define(function() {
     },
 
     update(name, string, count, ability, abilityLevel) {
-      var self = this;
+      
 
       this.name = name;
       this.string = string;

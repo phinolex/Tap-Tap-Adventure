@@ -5,8 +5,8 @@ var cls = require("../../server/js/lib/class"),
   _ = require("underscore");
 
 module.exports = Bot = cls.Class.extend({
-  init(world, count) {
-    var self = this;
+  constructor(world, count) {
+    
 
     this.world = world;
     this.count = count;
@@ -19,7 +19,7 @@ module.exports = Bot = cls.Class.extend({
   },
 
   load() {
-    var self = this;
+    
 
     for (var i = 0; i < this.count; i++) {
       var connection = {

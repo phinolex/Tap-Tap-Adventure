@@ -9,8 +9,8 @@ module.exports = Achievement = cls.Class.extend({
    * TODO: Change the conditionals to use Modules to clarify what is done where.
    */
 
-  init(id, player) {
-    var self = this;
+  constructor(id, player) {
+    
 
     this.id = id;
     this.player = player;
@@ -26,7 +26,7 @@ module.exports = Achievement = cls.Class.extend({
   },
 
   step() {
-    var self = this;
+    
 
     if (this.isThreshold()) return;
 
@@ -46,7 +46,7 @@ module.exports = Achievement = cls.Class.extend({
   },
 
   converse(npc) {
-    var self = this;
+    
 
     if (this.isThreshold() || this.hasItem()) this.finish(npc);
     else {
@@ -113,7 +113,7 @@ module.exports = Achievement = cls.Class.extend({
   },
 
   hasItem() {
-    var self = this;
+    
 
     if (
       this.data.type === Modules.Achievements.Type.Scavenge &&

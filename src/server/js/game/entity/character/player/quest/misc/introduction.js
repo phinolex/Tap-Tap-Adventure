@@ -4,8 +4,8 @@ var Quest = require("../quest"),
   Utils = require("../../../../../../util/utils");
 
 module.exports = Introduction = Quest.extend({
-  init(player, data) {
-    var self = this;
+  constructor(player, data) {
+    
 
     this.player = player;
     this.data = data;
@@ -16,7 +16,7 @@ module.exports = Introduction = Quest.extend({
   },
 
   load(stage) {
-    var self = this;
+    
 
     if (!this.player.inTutorial()) {
       this.setStage(9999);
@@ -31,7 +31,7 @@ module.exports = Introduction = Quest.extend({
   },
 
   loadCallbacks() {
-    var self = this;
+    
 
     if (this.stage >= 9999) return;
 
@@ -127,7 +127,7 @@ module.exports = Introduction = Quest.extend({
   },
 
   setStage(stage) {
-    var self = this;
+    
 
     this._super(stage);
 
@@ -135,7 +135,7 @@ module.exports = Introduction = Quest.extend({
   },
 
   finish() {
-    var self = this;
+    
 
     this.toggleChat();
     this._super();

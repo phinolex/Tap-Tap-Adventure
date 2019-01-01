@@ -2,7 +2,7 @@ import Modules from '../utils/modules';
 import Character from '../entity/character/character';
 
 export default class Updater {
-  init(game) {
+  constructor(game) {
     this.game = game;
     this.camera = game.getCamera();
     this.renderer = game.renderer;

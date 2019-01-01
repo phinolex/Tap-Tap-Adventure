@@ -4,14 +4,14 @@ var cls = require("../lib/class"),
   Packets = require("../network/packets");
 
 module.exports = Shops = cls.Class.extend({
-  init(world) {
-    var self = this;
+  constructor(world) {
+    
 
     this.world = world;
   },
 
   open(player, shopId) {
-    var self = this;
+    
 
     player.send(
       new Messages.Shop(Packets.Shop, {
@@ -30,11 +30,11 @@ module.exports = Shops = cls.Class.extend({
   },
 
   refresh() {
-    var self = this;
+    
   },
 
   getShopData(id) {
-    var self = this;
+    
 
     if (!Shops.isShopNPC(id)) return;
 

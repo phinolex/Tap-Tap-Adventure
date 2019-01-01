@@ -5,8 +5,8 @@ var Character = require("../character"),
   Items = require("../../../../util/items");
 
 module.exports = Mob = Character.extend({
-  init(id, instance, x, y) {
-    var self = this;
+  constructor(id, instance, x, y) {
+    
 
     this._super(id, "mob", instance, x, y);
 
@@ -37,7 +37,7 @@ module.exports = Mob = Character.extend({
   },
 
   refresh() {
-    var self = this;
+    
 
     this.hitPoints = this.data.hitPoints;
     this.maxHitPoints = this.data.hitPoints;
@@ -46,7 +46,7 @@ module.exports = Mob = Character.extend({
   },
 
   getDrop() {
-    var self = this;
+    
 
     if (!this.drops) return null;
 
@@ -88,7 +88,7 @@ module.exports = Mob = Character.extend({
   },
 
   canAggro(player) {
-    var self = this;
+    
 
     if (
       this.hasTarget() ||
@@ -101,7 +101,7 @@ module.exports = Mob = Character.extend({
   },
 
   destroy() {
-    var self = this;
+    
 
     this.dead = true;
     this.clearTarget();
@@ -112,7 +112,7 @@ module.exports = Mob = Character.extend({
   },
 
   return() {
-    var self = this;
+    
 
     this.clearTarget();
     this.resetPosition();
@@ -145,7 +145,7 @@ module.exports = Mob = Character.extend({
   },
 
   respawn() {
-    var self = this;
+    
 
     /**
      * Some entities are static (only spawned once during an event)
@@ -173,7 +173,7 @@ module.exports = Mob = Character.extend({
   },
 
   resetPosition() {
-    var self = this;
+    
 
     this.setPosition(this.spawnLocation[0], this.spawnLocation[1]);
   },
@@ -199,7 +199,7 @@ module.exports = Mob = Character.extend({
   },
 
   move(x, y) {
-    var self = this;
+    
 
     this.setPosition(x, y);
 

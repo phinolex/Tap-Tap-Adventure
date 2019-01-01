@@ -6,7 +6,7 @@ var cls = require("../lib/class"),
 module.exports = Messages;
 
 Messages.Handshake = Message.extend({
-  init(clientId, devClient) {
+  constructor(clientId, devClient) {
     this.clientId = clientId;
     this.devClient = devClient;
   },
@@ -17,7 +17,7 @@ Messages.Handshake = Message.extend({
 });
 
 Messages.Welcome = Message.extend({
-  init(data) {
+  constructor(data) {
     this.data = data; //array of info
   },
 
@@ -27,7 +27,7 @@ Messages.Welcome = Message.extend({
 });
 
 Messages.Spawn = Message.extend({
-  init(entity) {
+  constructor(entity) {
     this.entity = entity;
   },
 
@@ -37,7 +37,7 @@ Messages.Spawn = Message.extend({
 });
 
 Messages.List = Message.extend({
-  init(list) {
+  constructor(list) {
     this.list = list;
   },
 
@@ -47,7 +47,7 @@ Messages.List = Message.extend({
 });
 
 Messages.Sync = Message.extend({
-  init(data) {
+  constructor(data) {
     this.data = data;
   },
 
@@ -57,7 +57,7 @@ Messages.Sync = Message.extend({
 });
 
 Messages.Equipment = Message.extend({
-  init(opcode, equipmentData) {
+  constructor(opcode, equipmentData) {
     this.opcode = opcode;
     this.equipmentData = equipmentData;
   },
@@ -68,7 +68,7 @@ Messages.Equipment = Message.extend({
 });
 
 Messages.Movement = Message.extend({
-  init(opcode, data) {
+  constructor(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
@@ -79,7 +79,7 @@ Messages.Movement = Message.extend({
 });
 
 Messages.Teleport = Message.extend({
-  init(id, x, y, withAnimation) {
+  constructor(id, x, y, withAnimation) {
     this.id = id;
     this.x = x;
     this.y = y;
@@ -92,7 +92,7 @@ Messages.Teleport = Message.extend({
 });
 
 Messages.Despawn = Message.extend({
-  init(id) {
+  constructor(id) {
     this.id = id;
   },
 
@@ -102,7 +102,7 @@ Messages.Despawn = Message.extend({
 });
 
 Messages.Animation = Message.extend({
-  init(id, data) {
+  constructor(id, data) {
     this.id = id;
     this.data = data;
   },
@@ -113,7 +113,7 @@ Messages.Animation = Message.extend({
 });
 
 Messages.Combat = Message.extend({
-  init(opcode, attackerId, targetId, hitData) {
+  constructor(opcode, attackerId, targetId, hitData) {
     this.opcode = opcode;
     this.attackerId = attackerId;
     this.targetId = targetId;
@@ -129,7 +129,7 @@ Messages.Combat = Message.extend({
 });
 
 Messages.Projectile = Message.extend({
-  init(opcode, data) {
+  constructor(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
@@ -140,7 +140,7 @@ Messages.Projectile = Message.extend({
 });
 
 Messages.Population = Message.extend({
-  init(playerCount) {
+  constructor(playerCount) {
     this.playerCount = playerCount;
   },
 
@@ -150,7 +150,7 @@ Messages.Population = Message.extend({
 });
 
 Messages.Points = Message.extend({
-  init(id, hitPoints, mana) {
+  constructor(id, hitPoints, mana) {
     this.id = id;
     this.hitPoints = hitPoints;
     this.mana = mana;
@@ -162,7 +162,7 @@ Messages.Points = Message.extend({
 });
 
 Messages.Network = Message.extend({
-  init(opcode) {
+  constructor(opcode) {
     this.opcode = opcode;
   },
 
@@ -172,7 +172,7 @@ Messages.Network = Message.extend({
 });
 
 Messages.Chat = Message.extend({
-  init(data) {
+  constructor(data) {
     this.data = data;
   },
 
@@ -187,7 +187,7 @@ Messages.Chat = Message.extend({
  */
 
 Messages.Inventory = Message.extend({
-  init(opcode, data) {
+  constructor(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
@@ -198,7 +198,7 @@ Messages.Inventory = Message.extend({
 });
 
 Messages.Bank = Message.extend({
-  init(opcode, data) {
+  constructor(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
@@ -209,7 +209,7 @@ Messages.Bank = Message.extend({
 });
 
 Messages.Ability = Message.extend({
-  init(opcode, data) {
+  constructor(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
@@ -220,7 +220,7 @@ Messages.Ability = Message.extend({
 });
 
 Messages.Quest = Message.extend({
-  init(opcode, data) {
+  constructor(opcode, data) {
     this.opcode = opcode;
     this.data = data;
   },
@@ -231,7 +231,7 @@ Messages.Quest = Message.extend({
 });
 
 Messages.Notification = Message.extend({
-  init(opcode, message) {
+  constructor(opcode, message) {
     this.opcode = opcode;
     this.message = message;
   },
@@ -242,7 +242,7 @@ Messages.Notification = Message.extend({
 });
 
 Messages.Blink = Message.extend({
-  init(instance) {
+  constructor(instance) {
     this.instance = instance;
   },
 
@@ -252,7 +252,7 @@ Messages.Blink = Message.extend({
 });
 
 Messages.Heal = Message.extend({
-  init(info) {
+  constructor(info) {
     this.info = info;
   },
 
@@ -262,7 +262,7 @@ Messages.Heal = Message.extend({
 });
 
 Messages.Experience = Message.extend({
-  init(info) {
+  constructor(info) {
     this.info = info;
   },
 
@@ -272,7 +272,7 @@ Messages.Experience = Message.extend({
 });
 
 Messages.Death = Message.extend({
-  init(id) {
+  constructor(id) {
     this.id = id;
   },
 
@@ -282,7 +282,7 @@ Messages.Death = Message.extend({
 });
 
 Messages.Audio = Message.extend({
-  init(song) {
+  constructor(song) {
     this.song = song;
   },
 
@@ -292,7 +292,7 @@ Messages.Audio = Message.extend({
 });
 
 Messages.NPC = Message.extend({
-  init(opcode, info) {
+  constructor(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },
@@ -303,7 +303,7 @@ Messages.NPC = Message.extend({
 });
 
 Messages.Respawn = Message.extend({
-  init(instance, x, y) {
+  constructor(instance, x, y) {
     this.instance = instance;
     this.x = x;
     this.y = y;
@@ -315,7 +315,7 @@ Messages.Respawn = Message.extend({
 });
 
 Messages.Enchant = Message.extend({
-  init(opcode, info) {
+  constructor(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },
@@ -326,7 +326,7 @@ Messages.Enchant = Message.extend({
 });
 
 Messages.Guild = Message.extend({
-  init(opcode, info) {
+  constructor(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },
@@ -337,7 +337,7 @@ Messages.Guild = Message.extend({
 });
 
 Messages.Pointer = Message.extend({
-  init(opcode, info) {
+  constructor(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },
@@ -348,7 +348,7 @@ Messages.Pointer = Message.extend({
 });
 
 Messages.PVP = Message.extend({
-  init(id, pvp) {
+  constructor(id, pvp) {
     this.id = id;
     this.pvp = pvp;
   },
@@ -359,7 +359,7 @@ Messages.PVP = Message.extend({
 });
 
 Messages.Shop = Message.extend({
-  init(opcode, info) {
+  constructor(opcode, info) {
     this.opcode = opcode;
     this.info = info;
   },

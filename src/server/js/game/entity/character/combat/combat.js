@@ -16,8 +16,8 @@ var cls = require("../../../../lib/class"),
  */
 
 module.exports = Combat = cls.Class.extend({
-  init(character) {
-    var self = this;
+  constructor(character) {
+    
 
     this.character = character;
     this.world = null;
@@ -68,7 +68,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   begin(attacker) {
-    var self = this;
+    
 
     this.start();
 
@@ -81,7 +81,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   start() {
-    var self = this;
+    
 
     if (this.started) return;
 
@@ -107,7 +107,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   stop() {
-    var self = this;
+    
 
     if (!this.started) return;
 
@@ -123,7 +123,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   parseAttack() {
-    var self = this;
+    
 
     if (!this.world || !this.queue || this.character.stunned) return;
 
@@ -139,7 +139,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   parseFollow() {
-    var self = this;
+    
 
     if (this.character.frozen || this.character.stunned) return;
 
@@ -180,7 +180,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   dealAoE(radius, hasTerror) {
-    var self = this;
+    
 
     /**
      * TODO - Find a way to implement special effects without hardcoding them.
@@ -206,7 +206,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   forceAttack() {
-    var self = this;
+    
 
     if (!this.character.target || !this.inProximity()) return;
 
@@ -218,13 +218,13 @@ module.exports = Combat = cls.Class.extend({
   },
 
   attackCount(count, target) {
-    var self = this;
+    
 
     for (var i = 0; i < count; i++) this.attack(target);
   },
 
   addAttacker(character) {
-    var self = this;
+    
 
     if (this.hasAttacker(character)) return;
 
@@ -232,7 +232,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   removeAttacker(character) {
-    var self = this;
+    
 
     if (this.hasAttacker(character)) delete this.attackers[character.instance];
 
@@ -240,7 +240,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   sendToSpawn() {
-    var self = this;
+    
 
     if (!this.isMob()) return;
 
@@ -258,7 +258,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   hasAttacker(character) {
-    var self = this;
+    
 
     if (!this.isAttacked()) return;
 
@@ -266,7 +266,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   onSameTile() {
-    var self = this;
+    
 
     if (!this.character.target || this.character.type !== "mob") return;
 
@@ -308,7 +308,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   inProximity() {
-    var self = this;
+    
 
     if (!this.character.target) return;
 
@@ -335,13 +335,13 @@ module.exports = Combat = cls.Class.extend({
   },
 
   setWorld(world) {
-    var self = this;
+    
 
     if (!this.world) this.world = world;
   },
 
   forget() {
-    var self = this;
+    
 
     this.attackers = {};
     this.character.removeTarget();
@@ -350,7 +350,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   move(character, x, y) {
-    var self = this;
+    
 
     /**
      * The server and mob types can parse the mob movement
@@ -420,7 +420,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   sendFollow() {
-    var self = this;
+    
 
     if (!this.character.hasTarget() || this.character.target.isDead()) return;
 
@@ -446,7 +446,7 @@ module.exports = Combat = cls.Class.extend({
   },
 
   targetOutOfBounds() {
-    var self = this;
+    
 
     if (!this.character.hasTarget() || !this.isMob()) return;
 

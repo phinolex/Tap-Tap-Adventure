@@ -2,8 +2,8 @@ var Combat = require("../../js/game/entity/character/combat/combat"),
   Modules = require("../../js/util/modules");
 
 module.exports = GreatSquid = Combat.extend({
-  init(character) {
-    var self = this;
+  constructor(character) {
+    
 
     character.spawnDistance = 15;
 
@@ -15,7 +15,7 @@ module.exports = GreatSquid = Combat.extend({
   },
 
   hit(character, target, hitInfo) {
-    var self = this;
+    
 
     if (this.canUseTerror()) {
       hitInfo.type = Modules.Hits.Stun;

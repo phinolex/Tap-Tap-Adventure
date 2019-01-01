@@ -1,8 +1,8 @@
 var Entity = require("../entity");
 
 module.exports = Projectile = Entity.extend({
-  init(id, instance) {
-    var self = this;
+  constructor(id, instance) {
+    
 
     this._super(id, "projectile", instance);
 
@@ -21,14 +21,14 @@ module.exports = Projectile = Entity.extend({
   },
 
   setStart(x, y) {
-    var self = this;
+    
 
     this.x = x;
     this.y = y;
   },
 
   setTarget(target) {
-    var self = this;
+    
 
     this.target = target;
 
@@ -37,7 +37,7 @@ module.exports = Projectile = Entity.extend({
   },
 
   setStaticTarget(x, y) {
-    var self = this;
+    
 
     this.static = true;
 
@@ -46,7 +46,7 @@ module.exports = Projectile = Entity.extend({
   },
 
   getData() {
-    var self = this;
+    
 
     /**
      * Cannot generate a projectile

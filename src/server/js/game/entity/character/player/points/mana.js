@@ -1,8 +1,8 @@
 var Points = require("./points");
 
 module.exports = Mana = Points.extend({
-  init(mana, maxMana) {
-    var self = this;
+  constructor(mana, maxMana) {
+    
 
     this._super(mana, maxMana);
   },
@@ -16,7 +16,7 @@ module.exports = Mana = Points.extend({
   },
 
   setMana(mana) {
-    var self = this;
+    
 
     this.points = mana;
 
@@ -24,7 +24,7 @@ module.exports = Mana = Points.extend({
   },
 
   setMaxMana(maxMana) {
-    var self = this;
+    
 
     this.maxPoints = maxMana;
 

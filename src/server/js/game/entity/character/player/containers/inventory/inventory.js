@@ -15,14 +15,14 @@ module.exports = Inventory = Container.extend({
    * setup for the inventory until the interface is done.
    */
 
-  init(owner, size) {
-    var self = this;
+  constructor(owner, size) {
+    
 
     this._super("Inventory", owner, size);
   },
 
   load(ids, counts, abilities, abilityLevels) {
-    var self = this;
+    
 
     this._super(ids, counts, abilities, abilityLevels);
 
@@ -35,7 +35,7 @@ module.exports = Inventory = Container.extend({
   },
 
   add(item, count) {
-    var self = this;
+    
 
     if (!count) count = -1;
 
@@ -67,7 +67,7 @@ module.exports = Inventory = Container.extend({
   },
 
   remove(id, count, index) {
-    var self = this;
+    
 
     if (!index) index = this.getIndex(id);
 

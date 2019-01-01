@@ -2,8 +2,8 @@ var cls = require("../lib/class"),
   TeamWar = require("../minigames/impl/teamwar");
 
 module.exports = Minigames = cls.Class.extend({
-  init(world) {
-    var self = this;
+  constructor(world) {
+    
 
     this.world = world;
     this.minigames = {};
@@ -12,7 +12,7 @@ module.exports = Minigames = cls.Class.extend({
   },
 
   load() {
-    var self = this;
+    
 
     this.minigames["TeamWar"] = new TeamWar();
   },

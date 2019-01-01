@@ -1,7 +1,7 @@
 define(["../character"], function(Character) {
   return Character.extend({
-    init(id, kind) {
-      var self = this;
+    constructor(id, kind) {
+      
 
       this._super(id, kind);
 

@@ -1,152 +1,153 @@
-/* global log, _ */
+/* global Image, document */
+import Animation from './animation';
 
-define(["./animation"], function(Animation) {
-  return Class.extend({
-    init(sprite, scale) {
-      var self = this;
+export default class Sprite {
+  constructor(sprite, scale) {
+    this.sprite = sprite;
+    this.scale = scale;
 
-      this.sprite = sprite;
-      this.scale = scale;
+    this.id = sprite.id;
 
-      this.id = sprite.id;
+    this.loaded = false;
 
-      this.loaded = false;
+    this.offsetX = 0;
+    this.offsetY = 0;
+    this.offsetAngle = 0;
 
-      this.offsetX = 0;
-      this.offsetY = 0;
-      this.offsetAngle = 0;
+    this.whiteSprite = {
+      loaded: false,
+    };
 
-      this.whiteSprite = {
-        loaded: false
-      };
+    this.loadSprite();
+  }
 
-      this.loadSprite();
-    },
+  load() {
+    this.image = new Image();
+    this.image.crossOrigin = 'Anonymous';
+    this.image.src = this.filepath;
 
-    load() {
-      var self = this;
+    this.image.onload = () => {
+      this.loaded = true;
 
-      this.image = new Image();
-      this.image.crossOrigin = "Anonymous";
-      this.image.src = this.filepath;
+      if (this.onLoadCallback) this.onLoadCallback();
+    };
+  }
 
-      this.image.onload = function() {
-        this.loaded = true;
+  loadSprite() {
+    const {
+      sprite,
+    } = this;
 
-        if (this.onLoadCallback) this.onLoadCallback();
-      };
-    },
+    this.filepath = `img/${this.scale}/${this.id}.png`;
+    this.animationData = sprite.animations;
 
-    loadSprite() {
-      var self = this,
-        sprite = this.sprite;
+    this.width = sprite.width;
+    this.height = sprite.height;
 
-      this.filepath = "img/" + this.scale + "/" + this.id + ".png";
-      this.animationData = sprite.animations;
+    this.offsetX = sprite.offsetX !== undefined ? sprite.offsetX : -16;
+    this.offsetY = sprite.offsetY !== undefined ? sprite.offsetY : -16;
+    this.offfsetAngle = sprite.offsetAngle !== undefined ? sprite.offsetAngle : 0;
+  }
 
-      this.width = sprite.width;
-      this.height = sprite.height;
+  update(newScale) {
+    this.scale = newScale;
 
-      this.offsetX = sprite.offsetX !== undefined ? sprite.offsetX : -16;
-      this.offsetY = sprite.offsetY !== undefined ? sprite.offsetY : -16;
-      this.offfsetAngle =
-        sprite.offsetAngle !== undefined ? sprite.offsetAngle : 0;
-    },
+    this.loadSprite();
+    this.load();
+  }
 
-    update(newScale) {
-      var self = this;
+  createAnimations() {
+    const animations = {};
 
-      this.scale = newScale;
+    for (const name in this.animationData) { // eslint-disable-line
+      if (this.animationData.hasOwnProperty(name)) { // eslint-disable-line
+        const a = this.animationData[name];
 
-      this.loadSprite();
-      this.load();
-    },
+        animations[name] = new Animation(
+          name,
+          a.length,
+          a.row,
+          this.width,
+          this.height,
+        );
+      }
+    }
 
-    createAnimations() {
-      var self = this,
-        animations = {};
+    return animations;
+  }
 
-      for (var name in this.animationData) {
-        if (this.animationData.hasOwnProperty(name)) {
-          var a = this.animationData[name];
+  /**
+   * This is when an entity gets hit, they turn red then white.
+   */
 
-          animations[name] = new Animation(
-            name,
-            a.length,
-            a.row,
-            this.width,
-            this.height
-          );
-        }
+  createHurtSprite() {
+    if (!this.loaded) this.load();
+
+    if (this.whiteSprite.loaded) return;
+
+    const canvas = document.createElement('canvas');
+
+
+    const context = canvas.getContext('2d');
+
+
+    let spriteData;
+
+    canvas.width = this.image.width;
+    canvas.height = this.image.height;
+
+    context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
+
+    try {
+      spriteData = context.getImageData(
+        0,
+        0,
+        this.image.width,
+        this.image.height,
+      );
+
+      const {
+        data,
+      } = spriteData;
+
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = 255;
+        data[i + 1] = data[i + 2] = 75; // eslint-disable-line
       }
 
-      return animations;
-    },
+      spriteData.data = data;
 
-    /**
-     * This is when an entity gets hit, they turn red then white.
-     */
+      context.putImageData(spriteData, 0, 0);
 
-    createHurtSprite() {
-      var self = this;
-
-      if (!this.loaded) this.load();
-
-      if (this.whiteSprite.loaded) return;
-
-      var canvas = document.createElement("canvas"),
-        context = canvas.getContext("2d"),
-        spriteData,
-        data;
-
-      canvas.width = this.image.width;
-      canvas.height = this.image.height;
-
-      context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
-
-      try {
-        spriteData = context.getImageData(
-          0,
-          0,
-          this.image.width,
-          this.image.height
-        );
-        data = spriteData.data;
-
-        for (var i = 0; i < data.length; i += 4) {
-          data[i] = 255;
-          data[i + 1] = data[i + 2] = 75;
-        }
-
-        spriteData.data = data;
-
-        context.putImageData(spriteData, 0, 0);
-
-        this.whiteSprite = {
-          image: canvas,
-          loaded: true,
-          offsetX: this.offsetX,
-          offsetY: this.offsetY,
-          width: this.width,
-          height: this.height
-        };
-      } catch (e) {}
-    },
-
-    getHurtSprite() {
-      var self = this;
-
-      try {
-        if (!this.loaded) this.load();
-
-        this.createHurtSprite();
-
-        return this.whiteSprite;
-      } catch (e) {}
-    },
-
-    onLoad(callback) {
-      this.onLoadCallback = callback;
+      this.whiteSprite = {
+        image: canvas,
+        loaded: true,
+        offsetX: this.offsetX,
+        offsetY: this.offsetY,
+        width: this.width,
+        height: this.height,
+      };
+    } catch (e) {
+      console.log('sprite error', e); // eslint-disable-line
     }
-  });
-});
+  }
+
+  getHurtSprite() {
+    try {
+      if (!this.loaded) {
+        this.load();
+      }
+
+      this.createHurtSprite();
+
+      return this.whiteSprite;
+    } catch (e) {
+      console.log('sprite hurt error', e); // eslint-disable-line
+      return null;
+    }
+  }
+
+  onLoad(callback) {
+    this.onLoadCallback = callback;
+  }
+}

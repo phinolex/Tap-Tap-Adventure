@@ -6,8 +6,8 @@ var cls = require("../../../../lib/class");
  */
 
 module.exports = Hit = cls.Class.extend({
-  init(type, damage) {
-    var self = this;
+  constructor(type, damage) {
+    
 
     this.type = type;
     this.damage = damage;

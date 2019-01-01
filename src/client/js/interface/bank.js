@@ -1,7 +1,7 @@
 define(["jquery", "./container/container"], function($, Container) {
   return Class.extend({
-    init(game, inventoryContainer, size) {
-      var self = this;
+    constructor(game, inventoryContainer, size) {
+      
 
       this.game = game;
       this.inventoryContainer = inventoryContainer;

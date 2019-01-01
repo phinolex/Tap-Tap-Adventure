@@ -1,7 +1,7 @@
 define(["jquery"], function($) {
   return Class.extend({
-    init(game, intrface) {
-      var self = this;
+    constructor(game, intrface) {
+      
 
       this.game = game;
       this.interface = intrface;
@@ -152,14 +152,14 @@ define(["jquery"], function($) {
     },
 
     display() {
-      var self = this;
+      
 
       this.body.fadeIn("fast");
       this.load();
     },
 
     hide() {
-      var self = this;
+      
 
       this.selectedItem.css("background-image", "");
       this.selectedShards.css("background-image", "");

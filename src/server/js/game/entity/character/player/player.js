@@ -28,8 +28,8 @@ var Character = require("../character"),
   Warp = require("./warp");
 
 module.exports = Player = Character.extend({
-  init(world, database, connection, clientId) {
-    var self = this;
+  constructor(world, database, connection, clientId) {
+    
 
     this._super(-1, "player", connection.id, -1, -1);
 
@@ -80,7 +80,7 @@ module.exports = Player = Character.extend({
   },
 
   load(data) {
-    var self = this;
+    
 
     this.loaded = true;
     this.kind = data.kind;
@@ -119,7 +119,7 @@ module.exports = Player = Character.extend({
   },
 
   loadInventory() {
-    var self = this;
+    
 
     if (config.offlineMode) {
       this.inventory.loadEmpty();
@@ -140,7 +140,7 @@ module.exports = Player = Character.extend({
   },
 
   loadBank() {
-    var self = this;
+    
 
     if (config.offlineMode) {
       this.bank.loadEmpty();
@@ -156,7 +156,7 @@ module.exports = Player = Character.extend({
   },
 
   loadQuests() {
-    var self = this;
+    
 
     if (config.offlineMode) return;
 
@@ -193,7 +193,7 @@ module.exports = Player = Character.extend({
   },
 
   intro() {
-    var self = this;
+    
 
     if (this.ban > new Date()) {
       this.connection.sendUTF8("ban");
@@ -235,7 +235,7 @@ module.exports = Player = Character.extend({
   },
 
   addExperience(exp) {
-    var self = this;
+    
 
     this.experience += exp;
 
@@ -258,7 +258,7 @@ module.exports = Player = Character.extend({
   },
 
   heal(amount) {
-    var self = this;
+    
     this.hitPoints = this.healHitPoints(amount);
     this.mana = this.healManaPoints(amount);
   },
@@ -396,7 +396,7 @@ module.exports = Player = Character.extend({
   },
 
   die() {
-    var self = this;
+    
 
     this.dead = true;
 
@@ -406,7 +406,7 @@ module.exports = Player = Character.extend({
   },
 
   teleport(x, y, isDoor, animate) {
-    var self = this;
+    
 
     if (isDoor && !this.finishedTutorial()) {
       if (this.doorCallback) {
@@ -427,7 +427,7 @@ module.exports = Player = Character.extend({
   },
 
   updatePVP(pvp) {
-    var self = this;
+    
 
     /**
      * No need to update if the state is the same
@@ -444,7 +444,7 @@ module.exports = Player = Character.extend({
   },
 
   updateMusic(song) {
-    var self = this;
+    
 
     this.currentSong = song;
 
@@ -452,7 +452,7 @@ module.exports = Player = Character.extend({
   },
 
   revertPoints() {
-    var self = this;
+    
 
     this.hitPoints.setHitPoints(this.hitPoints.getMaxHitPoints());
     this.mana.setMana(this.mana.getMaxMana());
@@ -465,7 +465,7 @@ module.exports = Player = Character.extend({
   },
 
   toggleProfile(state) {
-    var self = this;
+    
 
     this.profileDialogOpen = state;
 
@@ -497,7 +497,7 @@ module.exports = Player = Character.extend({
    */
 
   setArmour(id, count, ability, abilityLevel) {
-    var self = this;
+    
 
     if (!id) return;
 
@@ -511,7 +511,7 @@ module.exports = Player = Character.extend({
   },
 
   breakWeapon() {
-    var self = this;
+    
 
     this.notify("Your weapon has been broken.");
 
@@ -521,7 +521,7 @@ module.exports = Player = Character.extend({
   },
 
   setWeapon(id, count, ability, abilityLevel) {
-    var self = this;
+    
 
     if (!id) return;
 
@@ -537,7 +537,7 @@ module.exports = Player = Character.extend({
   },
 
   setPendant(id, count, ability, abilityLevel) {
-    var self = this;
+    
 
     if (!id) return;
 
@@ -551,7 +551,7 @@ module.exports = Player = Character.extend({
   },
 
   setRing(id, count, ability, abilityLevel) {
-    var self = this;
+    
 
     if (!id) return;
 
@@ -565,7 +565,7 @@ module.exports = Player = Character.extend({
   },
 
   setBoots(id, count, ability, abilityLevel) {
-    var self = this;
+    
 
     if (!id) return;
 
@@ -586,7 +586,7 @@ module.exports = Player = Character.extend({
   },
 
   setPosition(x, y) {
-    var self = this;
+    
 
     if (this.dead) return;
 
@@ -619,19 +619,19 @@ module.exports = Player = Character.extend({
   },
 
   timeout() {
-    var self = this;
+    
     this.connection.sendUTF8("timeout");
     this.connection.close(this.username + " timed out.");
   },
 
   invalidLogin() {
-    var self = this;
+    
     this.connection.sendUTF8("invalidlogin");
     this.connection.close(this.username + " invalid login.");
   },
 
   refreshTimeout() {
-    var self = this;
+    
 
     clearTimeout(this.disconnectTimeout);
 
@@ -692,7 +692,7 @@ module.exports = Player = Character.extend({
   },
 
   getState() {
-    var self = this;
+    
 
     return {
       type: this.type,
@@ -743,7 +743,7 @@ module.exports = Player = Character.extend({
   },
 
   getHit(target) {
-    var self = this;
+    
 
     var defaultDamage = Formulas.getDamage(self, target),
       isSpecial = 100 - this.weapon.abilityLevel < Utils.randomInt(0, 100);
@@ -821,7 +821,7 @@ module.exports = Player = Character.extend({
   },
 
   sync(all) {
-    var self = this;
+    
 
     /**
      * Function to be used for syncing up health,
@@ -852,7 +852,7 @@ module.exports = Player = Character.extend({
   },
 
   notify(message) {
-    var self = this;
+    
 
     if (!message) return;
 
@@ -868,13 +868,13 @@ module.exports = Player = Character.extend({
      * being transported elsewhere.
      */
 
-    var self = this;
+    
 
     this.send(new Messages.Movement(Packets.MovementOpcode.Stop, force));
   },
 
   finishedTutorial() {
-    var self = this;
+    
 
     if (!this.quests) return true;
 
@@ -882,7 +882,7 @@ module.exports = Player = Character.extend({
   },
 
   checkGroups() {
-    var self = this;
+    
 
     if (!this.groupPosition) return;
 
@@ -897,7 +897,7 @@ module.exports = Player = Character.extend({
   },
 
   movePlayer() {
-    var self = this;
+    
 
     /**
      * Server-sided callbacks towards movement should
@@ -911,7 +911,7 @@ module.exports = Player = Character.extend({
   },
 
   walkRandomly() {
-    var self = this;
+    
 
     setInterval(function() {
       this.setPosition(
@@ -922,13 +922,13 @@ module.exports = Player = Character.extend({
   },
 
   killCharacter(character) {
-    var self = this;
+    
 
     if (this.killCallback) this.killCallback(character);
   },
 
   save() {
-    var self = this;
+    
 
     if (config.offlineMode || this.isGuest) return;
 

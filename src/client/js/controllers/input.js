@@ -7,8 +7,8 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
   Overlay
 ) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
       this.app = game.app;
@@ -44,7 +44,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     },
 
     load() {
-      var self = this;
+      
 
       /**
        * This is the animation for the target
@@ -59,7 +59,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     },
 
     loadCursors() {
-      var self = this;
+      
 
       this.cursors["hand"] = this.game.getSprite("hand");
       this.cursors["sword"] = this.game.getSprite("sword");
@@ -77,7 +77,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     },
 
     handle(inputType, data) {
-      var self = this;
+      
 
       switch (inputType) {
         case Modules.InputType.Key:
@@ -239,7 +239,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     },
 
     updateCursor() {
-      var self = this;
+      
 
       if (!this.cursorVisible) return;
 
@@ -250,7 +250,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     },
 
     moveCursor() {
-      var self = this;
+      
 
       if (!this.renderer || this.renderer.mobile || !this.renderer.camera)
         return;
@@ -299,7 +299,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     },
 
     setPosition(x, y) {
-      var self = this;
+      
 
       this.selectedX = x;
       this.selectedY = y;
@@ -326,21 +326,21 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     },
 
     setCursor(cursor) {
-      var self = this;
+      
 
       if (cursor) this.newCursor = cursor;
       else log.error("Cursor: " + cursor + " could not be found.");
     },
 
     setAttackTarget() {
-      var self = this;
+      
 
       this.targetAnimation.setRow(1);
       this.mobileTargetColour = "rgb(255, 51, 0)";
     },
 
     setPassiveTarget() {
-      var self = this;
+      
 
       this.targetAnimation.setRow(0);
       this.mobileTargetColour = "rgb(51, 255, 0)";
@@ -351,7 +351,7 @@ define(["jquery", "../entity/animation", "./chat", "./overlay"], function(
     },
 
     getCoords() {
-      var self = this;
+      
 
       if (!this.renderer || !this.renderer.camera) return;
 

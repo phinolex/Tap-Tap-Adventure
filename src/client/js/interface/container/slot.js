@@ -1,7 +1,7 @@
 define(function() {
   return Class.extend({
-    init(index) {
-      var self = this;
+    constructor(index) {
+      
 
       this.index = index;
 
@@ -15,7 +15,7 @@ define(function() {
     },
 
     load(string, count, ability, abilityLevel, edible, equippable) {
-      var self = this;
+      
 
       this.string = string;
       this.count = count;
@@ -27,7 +27,7 @@ define(function() {
     },
 
     empty() {
-      var self = this;
+      
 
       this.string = null;
       this.count = -1;

@@ -2,8 +2,8 @@ var Equipment = require("./equipment"),
   Items = require("../../../../../util/items");
 
 module.exports = Armour = Equipment.extend({
-  init(name, id, count, ability, abilityLevel) {
-    var self = this;
+  constructor(name, id, count, ability, abilityLevel) {
+    
 
     this._super(name, id, count, ability, abilityLevel);
 

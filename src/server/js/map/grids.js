@@ -8,8 +8,8 @@ module.exports = Grids = cls.Class.extend({
    * of all the entities in the world.
    */
 
-  init(map) {
-    var self = this;
+  constructor(map) {
+    
 
     this.map = map;
 
@@ -19,7 +19,7 @@ module.exports = Grids = cls.Class.extend({
   },
 
   load() {
-    var self = this;
+    
 
     for (var i = 0; i < this.map.height; i++) {
       this.entityGrid[i] = [];
@@ -29,7 +29,7 @@ module.exports = Grids = cls.Class.extend({
   },
 
   updateEntityPosition(entity) {
-    var self = this;
+    
 
     if (entity && entity.oldX === entity.x && entity.oldY === entity.y) return;
 
@@ -40,7 +40,7 @@ module.exports = Grids = cls.Class.extend({
   },
 
   addToEntityGrid(entity, x, y) {
-    var self = this;
+    
 
     if (
       entity &&
@@ -54,7 +54,7 @@ module.exports = Grids = cls.Class.extend({
   },
 
   removeFromEntityGrid(entity, x, y) {
-    var self = this;
+    
 
     if (
       entity &&

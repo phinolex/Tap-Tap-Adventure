@@ -1,15 +1,15 @@
 var cls = require("../../../../../lib/class");
 
 module.exports = Points = cls.Class.extend({
-  init(points, maxPoints) {
-    var self = this;
+  constructor(points, maxPoints) {
+    
 
     this.points = points;
     this.maxPoints = maxPoints;
   },
 
   heal(amount) {
-    var self = this;
+    
 
     this.setPoints(this.points + amount);
 
@@ -25,7 +25,7 @@ module.exports = Points = cls.Class.extend({
   },
 
   setPoints(points) {
-    var self = this;
+    
 
     this.points = points;
 

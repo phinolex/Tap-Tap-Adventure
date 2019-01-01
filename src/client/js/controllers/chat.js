@@ -2,8 +2,8 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
 
@@ -52,7 +52,7 @@ define(["jquery"], function($) {
     },
 
     key(data) {
-      var self = this;
+      
 
       switch (data) {
         case Modules.Keys.Enter:
@@ -64,14 +64,14 @@ define(["jquery"], function($) {
     },
 
     send() {
-      var self = this;
+      
 
       this.game.socket.send(Packets.Chat, [this.input.val()]);
       this.toggle();
     },
 
     toggle() {
-      var self = this;
+      
 
       this.clean();
 
@@ -86,7 +86,7 @@ define(["jquery"], function($) {
     },
 
     showChat() {
-      var self = this;
+      
 
       this.chat.fadeIn("fast");
 
@@ -94,7 +94,7 @@ define(["jquery"], function($) {
     },
 
     showInput() {
-      var self = this;
+      
 
       this.button.addClass("active");
 
@@ -106,7 +106,7 @@ define(["jquery"], function($) {
     },
 
     hideChat() {
-      var self = this;
+      
 
       if (this.fadingTimeout) {
         clearTimeout(this.fadingTimeout);
@@ -123,7 +123,7 @@ define(["jquery"], function($) {
     },
 
     hideInput() {
-      var self = this;
+      
 
       this.button.removeClass("active");
 
@@ -135,7 +135,7 @@ define(["jquery"], function($) {
     },
 
     clean() {
-      var self = this;
+      
 
       clearTimeout(this.fadingTimeout);
       this.fadingTimeout = null;

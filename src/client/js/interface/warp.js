@@ -2,8 +2,8 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
 
@@ -43,7 +43,7 @@ define(["jquery"], function($) {
     },
 
     toggle() {
-      var self = this;
+      
 
       /**
        * Just so it fades out nicely.

@@ -7,8 +7,8 @@ var Entity = require("../entity"),
   Mobs = require("../../../util/mobs");
 
 module.exports = Character = Entity.extend({
-  init(id, type, instance, x, y) {
-    var self = this;
+  constructor(id, type, instance, x, y) {
+    
 
     this._super(id, type, instance, x, y);
 
@@ -50,7 +50,7 @@ module.exports = Character = Entity.extend({
   },
 
   loadCombat() {
-    var self = this;
+    
 
     if (Mobs.hasCombatPlugin(this.id))
       this.combat = new (Mobs.isNewCombatPlugin(this.id))(self);
@@ -58,7 +58,7 @@ module.exports = Character = Entity.extend({
   },
 
   setStun(stun) {
-    var self = this;
+    
 
     this.stunned = stun;
 
@@ -66,7 +66,7 @@ module.exports = Character = Entity.extend({
   },
 
   startHealing() {
-    var self = this;
+    
 
     this.healingInterval = setInterval(function() {
       if (
@@ -81,20 +81,20 @@ module.exports = Character = Entity.extend({
   },
 
   stopHealing() {
-    var self = this;
+    
 
     clearInterval(this.healingInterval);
     this.healingInterval = null;
   },
 
   hit(attacker) {
-    var self = this;
+    
 
     if (this.hitCallback) this.hitCallback(attacker);
   },
 
   heal(amount) {
-    var self = this;
+    
 
     this.setHitPoints(this.hitPoints + amount);
 
@@ -126,7 +126,7 @@ module.exports = Character = Entity.extend({
   },
 
   setPosition(x, y) {
-    var self = this;
+    
 
     this._super(x, y);
 
@@ -134,7 +134,7 @@ module.exports = Character = Entity.extend({
   },
 
   setTarget(target) {
-    var self = this;
+    
 
     this.target = target;
 
@@ -146,7 +146,7 @@ module.exports = Character = Entity.extend({
   },
 
   setHitPoints(hitPoints) {
-    var self = this;
+    
 
     this.hitPoints = hitPoints;
 
@@ -170,7 +170,7 @@ module.exports = Character = Entity.extend({
   },
 
   removeTarget() {
-    var self = this;
+    
 
     if (this.removeTargetCallback) this.removeTargetCallback();
 

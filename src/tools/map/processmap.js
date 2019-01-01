@@ -12,7 +12,7 @@ var collisions = {},
   mode;
 
 module.exports = function parse(json, options) {
-  var self = this;
+  
 
   this.json = json;
   this.options = options;

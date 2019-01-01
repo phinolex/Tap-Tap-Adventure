@@ -1,7 +1,7 @@
 define(["jquery", "../page"], function($, Page) {
   return Page.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this._super("#skillPage");
 

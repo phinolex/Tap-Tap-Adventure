@@ -13,8 +13,8 @@ define(function() {
      * accordingly.
      */
 
-    init(app) {
-      var self = this;
+    constructor(app) {
+      
 
       this.app = app;
 
@@ -65,7 +65,7 @@ define(function() {
     },
 
     handleBulkData(data) {
-      var self = this;
+      
 
       _.each(data, function(message) {
         this.handleData(message);
@@ -73,7 +73,7 @@ define(function() {
     },
 
     handleUTF8(message) {
-      var self = this;
+      
 
       this.app.toggleLogin(false);
 
@@ -169,7 +169,7 @@ define(function() {
      */
 
     receiveHandshake(data) {
-      var self = this;
+      
 
       if (this.handshakeCallback) this.handshakeCallback(data.shift());
     },
@@ -182,7 +182,7 @@ define(function() {
     },
 
     receiveSpawn(data) {
-      var self = this;
+      
 
       if (this.spawnCallback) this.spawnCallback(data);
     },
@@ -196,13 +196,13 @@ define(function() {
     },
 
     receiveEntityList(data) {
-      var self = this;
+      
 
       if (this.entityListCallback) this.entityListCallback(data);
     },
 
     receiveSync(data) {
-      var self = this;
+      
 
       if (this.syncCallback) this.syncCallback(data.shift());
     },
@@ -252,7 +252,7 @@ define(function() {
     },
 
     receivePopulation(data) {
-      var self = this;
+      
 
       if (this.populationCallback) this.populationCallback(data.shift());
     },
@@ -333,25 +333,25 @@ define(function() {
     },
 
     receiveHeal(data) {
-      var self = this;
+      
 
       if (this.healCallback) this.healCallback(data.shift());
     },
 
     receiveExperience(data) {
-      var self = this;
+      
 
       if (this.experienceCallback) this.experienceCallback(data.shift());
     },
 
     receiveDeath(data) {
-      var self = this;
+      
 
       if (this.deathCallback) this.deathCallback(data.shift());
     },
 
     receiveAudio(data) {
-      var self = this;
+      
 
       if (this.audioCallback) this.audioCallback(data.shift());
     },

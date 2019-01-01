@@ -1,7 +1,7 @@
 define(["./slot"], function(Slot) {
   return Class.extend({
-    init(size) {
-      var self = this;
+    constructor(size) {
+      
 
       this.size = size;
 
@@ -11,7 +11,7 @@ define(["./slot"], function(Slot) {
     },
 
     setSlot(index, info) {
-      var self = this;
+      
 
       /**
        * We receive information from the server here,
@@ -30,7 +30,7 @@ define(["./slot"], function(Slot) {
     },
 
     getEmptySlot() {
-      var self = this;
+      
 
       for (var i = 0; i < this.slots; i++) if (!this.slots[i].string) return i;
 

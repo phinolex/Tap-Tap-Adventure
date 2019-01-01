@@ -16,7 +16,7 @@ var cls = require("../lib/class"),
 
 module.exports = Parser = cls.Class.extend({
   constructor() {
-    var self = this;
+    
 
     this.loadMobData();
     this.loadNPCData();

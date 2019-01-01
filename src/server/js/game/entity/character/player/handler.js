@@ -9,8 +9,8 @@ var cls = require("../../../../lib/class"),
   Modules = require("../../../../util/modules");
 
 module.exports = Handler = cls.Class.extend({
-  init(player) {
-    var self = this;
+  constructor(player) {
+    
 
     this.player = player;
     this.world = player.world;
@@ -19,7 +19,7 @@ module.exports = Handler = cls.Class.extend({
   },
 
   load() {
-    var self = this;
+    
 
     this.player.onMovement(function(x, y) {
       this.player.checkGroups();

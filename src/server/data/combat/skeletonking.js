@@ -10,8 +10,8 @@ module.exports = SkeletonKing = Combat.extend({
    * And two death knights on (x + 1, y - 1) & (x - 1, y - 1)
    */
 
-  init(character) {
-    var self = this;
+  constructor(character) {
+    
 
     this._super(character);
 
@@ -27,7 +27,7 @@ module.exports = SkeletonKing = Combat.extend({
   },
 
   reset() {
-    var self = this;
+    
 
     this.lastSpawn = 0;
 
@@ -37,7 +37,7 @@ module.exports = SkeletonKing = Combat.extend({
   },
 
   hit(character, target, hitInfo) {
-    var self = this;
+    
 
     if (this.isAttacked()) this.beginMinionAttack();
 
@@ -77,7 +77,7 @@ module.exports = SkeletonKing = Combat.extend({
   },
 
   beginMinionAttack() {
-    var self = this;
+    
 
     if (!this.hasMinions()) return;
 
@@ -90,7 +90,7 @@ module.exports = SkeletonKing = Combat.extend({
   },
 
   getRandomTarget() {
-    var self = this;
+    
 
     if (this.isAttacked()) {
       var keys = Object.keys(this.attackers),

@@ -2,8 +2,8 @@ var Item = require("../../js/game/entity/objects/item.js"),
   Utils = require("../../js/util/utils"),
   Items = require("../../js/util/items");
 module.exports = Flask = Item.extend({
-  init(id, instance, x, y) {
-    var self = this;
+  constructor(id, instance, x, y) {
+    
     this._super(id, instance, x, y);
 
     this.healAmount = 0;
@@ -17,7 +17,7 @@ module.exports = Flask = Item.extend({
   },
 
   onUse(character) {
-    var self = this;
+    
     if (this.healAmount) {
       character.healHitPoints(this.healAmount);
     }

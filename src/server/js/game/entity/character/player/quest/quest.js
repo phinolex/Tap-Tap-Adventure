@@ -4,8 +4,8 @@ var cls = require("../../../../../lib/class"),
   Utils = require("../../../../../util/utils");
 
 module.exports = Quest = cls.Class.extend({
-  init(player, data) {
-    var self = this;
+  constructor(player, data) {
+    
 
     this.player = player;
     this.data = data;
@@ -18,7 +18,7 @@ module.exports = Quest = cls.Class.extend({
   },
 
   finish() {
-    var self = this;
+    
 
     if (this.hasItemReward()) {
       var item = this.getItemReward();
@@ -50,7 +50,7 @@ module.exports = Quest = cls.Class.extend({
   },
 
   setStage(stage) {
-    var self = this;
+    
 
     this.stage = stage;
     this.update();
@@ -61,7 +61,7 @@ module.exports = Quest = cls.Class.extend({
   },
 
   triggerTalk(npc) {
-    var self = this;
+    
 
     if (this.npcTalkCallback) this.npcTalkCallback(npc);
   },
@@ -79,7 +79,7 @@ module.exports = Quest = cls.Class.extend({
   },
 
   updatePointers() {
-    var self = this;
+    
 
     if (!this.data.pointers) return;
 
@@ -101,7 +101,7 @@ module.exports = Quest = cls.Class.extend({
   },
 
   forceTalk(npc, message) {
-    var self = this;
+    
 
     if (!npc) return;
 
@@ -116,7 +116,7 @@ module.exports = Quest = cls.Class.extend({
   },
 
   resetTalkIndex(npc) {
-    var self = this;
+    
 
     /**
      * Ensures that an NPC does not go off the conversation

@@ -1,8 +1,8 @@
 var Ability = require("./ability");
 
 module.exports = FireStrike = Ability.extend({
-  init(name, type) {
-    var self = this;
+  constructor(name, type) {
+    
 
     this._super(name, type);
   }

@@ -2,8 +2,8 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
       this.renderer = this.game.renderer;
@@ -36,7 +36,7 @@ define(["jquery"], function($) {
     },
 
     load() {
-      var self = this;
+      
 
       if (this.supportsWorker) {
         log.info("Parsing map with Web Workers...");
@@ -115,7 +115,7 @@ define(["jquery"], function($) {
     },
 
     parseMap(map) {
-      var self = this;
+      
 
       this.width = map.width;
       this.height = map.height;
@@ -128,7 +128,7 @@ define(["jquery"], function($) {
     },
 
     loadCollisions() {
-      var self = this;
+      
 
       this.grid = [];
 
@@ -150,7 +150,7 @@ define(["jquery"], function($) {
     },
 
     indexToGridPosition(index) {
-      var self = this;
+      
 
       index -= 1;
 
@@ -168,7 +168,7 @@ define(["jquery"], function($) {
     },
 
     isColliding(x, y) {
-      var self = this;
+      
 
       if (this.isOutOfBounds(x, y) || !this.grid) return false;
 

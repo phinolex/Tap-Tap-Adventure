@@ -7,8 +7,8 @@ var cls = require("../lib/class"),
   _ = require("underscore");
 
 module.exports = Quests = cls.Class.extend({
-  init(player) {
-    var self = this;
+  constructor(player) {
+    
 
     this.player = player;
     this.quests = {};
@@ -39,7 +39,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   updateQuests(ids, stages) {
-    var self = this;
+    
 
     for (var id = 0; id < ids.length; id++)
       if (!isNaN(parseInt(ids[id])) && this.quests[id])
@@ -47,7 +47,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   updateAchievements(ids, progress) {
-    var self = this;
+    
 
     for (var id = 0; id < ids.length; id++)
       if (!isNaN(parseInt(ids[id])) && this.achievements[id])
@@ -57,7 +57,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   getQuest(id) {
-    var self = this;
+    
 
     if (id in this.quests) return this.quests[id];
 
@@ -160,7 +160,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   getQuestByNPC(npc) {
-    var self = this;
+    
 
     /**
      * Iterate through the quest list in the order it has been
@@ -180,7 +180,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   getAchievementByNPC(npc) {
-    var self = this;
+    
 
     for (var id in this.achievements)
       if (this.achievements.hasOwnProperty(id))
@@ -194,7 +194,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   getAchievementByMob(mob) {
-    var self = this;
+    
 
     for (var id in this.achievements)
       if (this.achievements.hasOwnProperty(id))
@@ -205,7 +205,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   isQuestMob(mob) {
-    var self = this;
+    
 
     for (var id in this.quests) {
       if (this.quests.hasOwnProperty(id)) {
@@ -217,7 +217,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   isAchievementMob(mob) {
-    var self = this;
+    
 
     for (var id in this.achievements)
       if (this.achievements.hasOwnProperty(id))
@@ -231,7 +231,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   isQuestNPC(npc) {
-    var self = this;
+    
 
     for (var id in this.quests) {
       if (this.quests.hasOwnProperty(id)) {
@@ -243,7 +243,7 @@ module.exports = Quests = cls.Class.extend({
   },
 
   isAchievementNPC(npc) {
-    var self = this;
+    
 
     for (var id in this.achievements)
       if (this.achievements.hasOwnProperty(id))

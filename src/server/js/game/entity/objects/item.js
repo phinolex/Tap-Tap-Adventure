@@ -1,8 +1,8 @@
 var Entity = require("../entity");
 
 module.exports = Item = Entity.extend({
-  init(id, instance, x, y) {
-    var self = this;
+  constructor(id, instance, x, y) {
+    
 
     this._super(id, "item", instance, x, y);
 
@@ -25,7 +25,7 @@ module.exports = Item = Entity.extend({
   },
 
   destroy() {
-    var self = this;
+    
 
     if (this.blinkTimeout) clearTimeout(this.blinkTimeout);
 
@@ -35,7 +35,7 @@ module.exports = Item = Entity.extend({
   },
 
   despawn() {
-    var self = this;
+    
 
     this.blinkTimeout = setTimeout(function() {
       if (this.blinkCallback) this.blinkCallback();
@@ -47,7 +47,7 @@ module.exports = Item = Entity.extend({
   },
 
   respawn() {
-    var self = this;
+    
 
     setTimeout(function() {
       if (this.respawnCallback) this.respawnCallback();
@@ -55,7 +55,7 @@ module.exports = Item = Entity.extend({
   },
 
   getData() {
-    var self = this;
+    
 
     return [this.id, this.count, this.ability, this.abilityLevel];
   },

@@ -7,8 +7,8 @@ var cls = require("../../lib/class"),
   Items = require("../../util/items");
 
 module.exports = Entity = cls.Class.extend({
-  init(id, type, instance, x, y) {
-    var self = this;
+  constructor(id, type, instance, x, y) {
+    
 
     this.id = id;
     this.type = type;
@@ -47,7 +47,7 @@ module.exports = Entity = cls.Class.extend({
   },
 
   isAdjacent(entity) {
-    var self = this;
+    
 
     if (!entity) return false;
 
@@ -97,7 +97,7 @@ module.exports = Entity = cls.Class.extend({
   },
 
   setPosition(x, y) {
-    var self = this;
+    
 
     this.x = x;
     this.y = y;
@@ -110,7 +110,7 @@ module.exports = Entity = cls.Class.extend({
   },
 
   updatePosition() {
-    var self = this;
+    
 
     this.oldX = this.x;
     this.oldY = this.y;

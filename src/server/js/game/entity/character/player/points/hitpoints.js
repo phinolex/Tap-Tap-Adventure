@@ -1,14 +1,14 @@
 var Points = require("./points");
 
 module.exports = HitPoints = Points.extend({
-  init(hitPoints, maxHitPoints) {
-    var self = this;
+  constructor(hitPoints, maxHitPoints) {
+    
 
     this._super(hitPoints, maxHitPoints);
   },
 
   setHitPoints(hitPoints) {
-    var self = this;
+    
 
     this.setPoints(hitPoints);
 
@@ -16,7 +16,7 @@ module.exports = HitPoints = Points.extend({
   },
 
   setMaxHitPoints(maxHitPoints) {
-    var self = this;
+    
 
     this.setMaxPoints(maxHitPoints);
 

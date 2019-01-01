@@ -1,113 +1,106 @@
-define(["../entity"], function(Entity) {
-  return Entity.extend({
-    init(id, kind, owner) {
-      var self = this;
+import Entity from '../entity';
 
-      this._super(id, kind);
+export default class Projectile extends Entity {
+  constructor(id, kind, owner) {
+    super(id, kind);
 
-      this.owner = owner;
+    this.owner = owner;
 
-      this.name = "";
+    this.name = '';
 
-      this.startX = -1;
-      this.startY = -1;
+    this.startX = -1;
+    this.startY = -1;
 
-      this.destX = -1;
-      this.destY = -1;
+    this.destX = -1;
+    this.destY = -1;
 
-      this.special = -1;
+    this.speed = 1;
+    this.special = -1;
 
-      this.static = false;
-      this.dynamic = false;
+    this.static = false;
+    this.dynamic = false;
 
-      this.speed = 200;
+    this.speed = 200;
 
-      this.angle = 0;
-    },
+    this.angle = 0;
+    this.path = false;
+  }
 
-    getId() {
-      return this.id;
-    },
+  getId() {
+    return this.id;
+  }
 
-    impact() {
-      if (this.impactCallback) this.impactCallback();
-    },
+  impact() {
+    if (this.impactCallback) {
+      this.impactCallback();
+    }
+  }
 
-    setSprite(sprite) {
-      this._super(sprite);
-    },
+  setSprite(sprite) {
+    this.super(sprite);
+  }
 
-    setAnimation(name, speed, count, onEndCount) {
-      this._super(name, speed, count, onEndCount);
-    },
+  setAnimation(name, speed, count, onEndCount) {
+    this.super(name, speed, count, onEndCount);
+  }
 
-    setStart(x, y) {
-      var self = this;
+  setStart(x, y) {
+    this.setGridPosition(Math.floor(x / 16), Math.floor(y / 16));
 
-      this.setGridPosition(Math.floor(x / 16), Math.floor(y / 16));
+    this.startX = x;
+    this.startY = y;
+  }
 
-      this.startX = x;
-      this.startY = y;
-    },
+  setDestination(x, y) {
+    this.static = true;
 
-    setDestination(x, y) {
-      var self = this;
+    this.destX = x;
+    this.destY = y;
 
-      this.static = true;
+    this.updateAngle();
+  }
 
-      this.destX = x;
-      this.destY = y;
+  setTarget(target) {
+    if (!target) {
+      return;
+    }
 
-      this.updateAngle();
-    },
+    this.dynamic = true;
 
-    setTarget(target) {
-      var self = this;
+    this.destX = target.x;
+    this.destY = target.y;
 
-      if (!target) return;
+    this.updateAngle();
 
-      this.dynamic = true;
+    if (target.type !== 'mob') return;
 
+    target.onMove(() => {
       this.destX = target.x;
       this.destY = target.y;
 
       this.updateAngle();
+    });
+  }
 
-      if (target.type !== "mob") return;
+  getSpeed() {
+    return this.speed;
+  }
 
-      target.onMove(function() {
-        this.destX = target.x;
-        this.destY = target.y;
+  updateTarget(x, y) {
+    this.destX = x;
+    this.destY = y;
+  }
 
-        this.updateAngle();
-      });
-    },
+  hasPath() {
+    return this.path;
+  }
 
-    getSpeed() {
-      var self = this;
+  updateAngle() {
+    this.angle = Math.atan2(this.destY - this.y, this.destX - this.x)
+      * (180 / Math.PI) - 90;
+  }
 
-      return 1;
-    },
-
-    updateTarget(x, y) {
-      var self = this;
-
-      this.destX = x;
-      this.destY = y;
-    },
-
-    hasPath() {
-      return false;
-    },
-
-    updateAngle() {
-      this.angle =
-        Math.atan2(this.destY - this.y, this.destX - this.x) * (180 / Math.PI) -
-        90;
-    },
-
-    onImpact(callback) {
-      this.impactCallback = callback;
-    }
-  });
-});
+  onImpact(callback) {
+    this.impactCallback = callback;
+  }
+}

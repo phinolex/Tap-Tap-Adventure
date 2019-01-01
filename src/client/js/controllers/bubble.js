@@ -2,8 +2,8 @@
 
 define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
       this.bubbles = {};
@@ -12,7 +12,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
     },
 
     create(id, message, time, duration) {
-      var self = this;
+      
 
       if (this.bubbles[id]) {
         this.bubbles[id].reset(time);
@@ -35,7 +35,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
     },
 
     setTo(entity) {
-      var self = this;
+      
 
       var bubble = this.get(entity.id);
 
@@ -59,7 +59,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
     },
 
     update(time) {
-      var self = this;
+      
 
       _.each(this.bubbles, function(bubble) {
         var entity = this.game.entities.get(bubble.id);
@@ -74,7 +74,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
     },
 
     get(id) {
-      var self = this;
+      
 
       if (id in this.bubbles) return this.bubbles[id];
 
@@ -82,7 +82,7 @@ define(["jquery", "../renderer/bubbles/blob"], function($, Blob) {
     },
 
     clean() {
-      var self = this;
+      
 
       _.each(this.bubbles, function(bubble) {
         bubble.destroy();

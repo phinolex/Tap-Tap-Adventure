@@ -2,8 +2,8 @@
 
 define(function() {
   return Class.extend({
-    init(id, type, text, x, y, statique) {
-      var self = this;
+    constructor(id, type, text, x, y, statique) {
+      
 
       this.id = id;
       this.type = type;
@@ -30,7 +30,7 @@ define(function() {
     },
 
     tick() {
-      var self = this;
+      
 
       if (!this.statique) this.y -= 1;
 
@@ -40,7 +40,7 @@ define(function() {
     },
 
     update(time) {
-      var self = this;
+      
 
       if (time - this.lastTime > this.speed) {
         this.lastTime = time;
@@ -49,7 +49,7 @@ define(function() {
     },
 
     destroy() {
-      var self = this;
+      
 
       if (this.destroyCallback) this.destroyCallback(this.id);
     },

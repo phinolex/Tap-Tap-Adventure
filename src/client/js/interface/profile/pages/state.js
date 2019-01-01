@@ -2,8 +2,8 @@
 
 define(["jquery", "../page"], function($, Page) {
   return Page.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this._super("#statePage");
 
@@ -38,7 +38,7 @@ define(["jquery", "../page"], function($, Page) {
     },
 
     load() {
-      var self = this;
+      
 
       if (!this.game.player.armour) return;
 
@@ -87,7 +87,7 @@ define(["jquery", "../page"], function($, Page) {
     },
 
     loadSlots() {
-      var self = this;
+      
 
       this.weaponSlot.css(
         "background-image",
@@ -117,7 +117,7 @@ define(["jquery", "../page"], function($, Page) {
     },
 
     update() {
-      var self = this;
+      
 
       this.level.text(this.player.level);
       this.experience.text(this.player.experience);

@@ -7,7 +7,7 @@ var cls = require("../../lib/class"),
 
 module.exports = PVPAreas = cls.Class.extend({
   constructor() {
-    var self = this;
+    
 
     this.pvpAreas = [];
 

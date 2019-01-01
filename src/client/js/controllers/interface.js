@@ -10,8 +10,8 @@ define([
   "../interface/warp"
 ], function($, Inventory, Profile, Actions, Bank, Enchant, Warp) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
 
@@ -36,7 +36,7 @@ define([
     },
 
     resize() {
-      var self = this;
+      
 
       if (this.inventory) this.inventory.resize();
 
@@ -48,7 +48,7 @@ define([
     },
 
     loadInventory(size, data) {
-      var self = this;
+      
 
       /**
        * This can be called multiple times and can be used
@@ -61,7 +61,7 @@ define([
     },
 
     loadBank(size, data) {
-      var self = this;
+      
 
       /**
        * Similar structure as the inventory, just that it
@@ -76,25 +76,25 @@ define([
     },
 
     loadProfile() {
-      var self = this;
+      
 
       if (!this.profile) this.profile = new Profile(this.game);
     },
 
     loadActions() {
-      var self = this;
+      
 
       if (!this.actions) this.actions = new Actions(self);
     },
 
     loadEnchant() {
-      var self = this;
+      
 
       if (!this.enchant) this.enchant = new Enchant(this.game, self);
     },
 
     loadWarp() {
-      var self = this;
+      
 
       if (!this.warp) this.warp = new Warp(this.game, self);
     },
@@ -130,7 +130,7 @@ define([
     },
 
     hideAll() {
-      var self = this;
+      
 
       if (this.inventory && this.inventory.isVisible()) this.inventory.hide();
 
@@ -157,7 +157,7 @@ define([
     },
 
     displayNotify(message) {
-      var self = this;
+      
 
       if (this.isNotifyVisible()) return;
 
@@ -169,7 +169,7 @@ define([
     },
 
     displayConfirm(message) {
-      var self = this;
+      
 
       if (this.isConfirmVisible()) return;
 
@@ -178,7 +178,7 @@ define([
     },
 
     hideNotify() {
-      var self = this;
+      
 
       this.fade.css("display", "none");
       this.notify.css("display", "none");

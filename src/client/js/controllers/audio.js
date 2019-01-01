@@ -2,8 +2,8 @@
 
 define(function() {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
 
@@ -19,7 +19,7 @@ define(function() {
     },
 
     load() {
-      var self = this;
+      
 
       this.music = {
         codingroom: false,
@@ -97,7 +97,7 @@ define(function() {
     },
 
     play(type, name) {
-      var self = this;
+      
 
       if (!this.isEnabled() || !this.fileExists(name)) return;
 
@@ -137,7 +137,7 @@ define(function() {
     },
 
     update() {
-      var self = this;
+      
 
       if (!this.isEnabled()) return;
 
@@ -172,7 +172,7 @@ define(function() {
     },
 
     fadeIn(song) {
-      var self = this;
+      
 
       if (!song || song.fadingIn) return;
 
@@ -189,7 +189,7 @@ define(function() {
     },
 
     fadeOut(song, callback) {
-      var self = this;
+      
 
       if (!song || song.fadingOut) return;
 
@@ -211,7 +211,7 @@ define(function() {
     },
 
     fadeSongOut() {
-      var self = this;
+      
 
       if (!this.song) return;
 
@@ -244,7 +244,7 @@ define(function() {
     },
 
     stop() {
-      var self = this;
+      
 
       if (!this.song) return;
 
@@ -259,7 +259,7 @@ define(function() {
     },
 
     get(name) {
-      var self = this;
+      
 
       if (!this.audibles[name]) return null;
 

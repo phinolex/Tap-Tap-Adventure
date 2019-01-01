@@ -7,8 +7,8 @@ module.exports = Equipment = cls.Class.extend({
    * the equipment child
    */
 
-  init(name, id, count, ability, abilityLevel) {
-    var self = this;
+  constructor(name, id, count, ability, abilityLevel) {
+    
 
     this.name = name;
     this.id = id;

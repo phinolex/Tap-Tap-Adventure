@@ -9,8 +9,8 @@ module.exports = Area = cls.Class.extend({
    * entities in it.
    */
 
-  init(id, x, y, width, height) {
-    var self = this;
+  constructor(id, x, y, width, height) {
+    
 
     this.id = id;
     this.x = x;
@@ -37,7 +37,7 @@ module.exports = Area = cls.Class.extend({
   },
 
   addEntity(entity) {
-    var self = this;
+    
 
     if (this.entities.indexOf(entity) > 0) return;
 

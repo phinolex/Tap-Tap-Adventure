@@ -3,8 +3,8 @@
 var cls = require("../lib/class");
 
 module.exports = Creator = cls.Class.extend({
-  init(mysql) {
-    var self = this;
+  constructor(mysql) {
+    
 
     this.mysql = mysql;
   },
@@ -30,7 +30,7 @@ module.exports = Creator = cls.Class.extend({
   },
 
   createTables() {
-    var self = this;
+    
 
     function handleError(tableName) {
       return function(error) {

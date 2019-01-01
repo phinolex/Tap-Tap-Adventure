@@ -6,8 +6,8 @@ var cls = require("../lib/class"),
   _ = require("underscore");
 
 module.exports = Commands = cls.Class.extend({
-  init(player) {
-    var self = this;
+  constructor(player) {
+    
 
     this.world = player.world;
     this.player = player;
@@ -29,7 +29,7 @@ module.exports = Commands = cls.Class.extend({
   },
 
   handlePlayerCommands(command, blocks) {
-    var self = this;
+    
 
     switch (command) {
       case "players":
@@ -85,7 +85,7 @@ module.exports = Commands = cls.Class.extend({
   },
 
   handleModeratorCommands(command, blocks) {
-    var self = this;
+    
 
     switch (command) {
       case "mute":
@@ -128,7 +128,7 @@ module.exports = Commands = cls.Class.extend({
   },
 
   handleAdminCommands(command, blocks) {
-    var self = this;
+    
 
     switch (command) {
       case "spawn":

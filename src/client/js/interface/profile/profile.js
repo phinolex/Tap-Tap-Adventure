@@ -8,8 +8,8 @@ define([
   "./pages/quest"
 ], function($, State, Ability, Settings, Quest) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
 
@@ -27,7 +27,7 @@ define([
     },
 
     load() {
-      var self = this;
+      
 
       this.button.click(function() {
         this.game.interface.hideAll();
@@ -74,7 +74,7 @@ define([
     },
 
     update() {
-      var self = this;
+      
 
       _.each(this.pages, function(page) {
         page.update();
@@ -82,7 +82,7 @@ define([
     },
 
     resize() {
-      var self = this;
+      
 
       _.each(this.pages, function(page) {
         page.resize();
@@ -112,14 +112,14 @@ define([
     },
 
     show() {
-      var self = this;
+      
 
       this.body.fadeIn("slow");
       this.button.addClass("active");
     },
 
     hide() {
-      var self = this;
+      
 
       this.body.fadeOut("fast");
       this.button.removeClass("active");
@@ -132,7 +132,7 @@ define([
     },
 
     clear() {
-      var self = this;
+      
 
       if (this.activePage) this.activePage.hide();
     },

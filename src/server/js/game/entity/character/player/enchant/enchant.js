@@ -13,8 +13,8 @@ module.exports = Enchant = cls.Class.extend({
    * Tier 5 - Damage boost (1-40% & 25% for special ability or special ability level up)
    */
 
-  init(player) {
-    var self = this;
+  constructor(player) {
+    
 
     this.player = player;
 
@@ -23,7 +23,7 @@ module.exports = Enchant = cls.Class.extend({
   },
 
   convert(shard) {
-    var self = this;
+    
 
     if (!Items.isShard(shard.id) || !this.player.inventory.hasSpace()) return;
 
@@ -44,7 +44,7 @@ module.exports = Enchant = cls.Class.extend({
   },
 
   enchant() {
-    var self = this;
+    
 
     if (!this.selectedItem) {
       this.player.notify("You have not selected an item to enchant.");

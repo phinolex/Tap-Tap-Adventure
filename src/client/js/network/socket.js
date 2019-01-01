@@ -2,8 +2,8 @@
 
 define(["./packets", "./messages"], function(Packets, Messages) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
       this.config = this.game.app.config;
@@ -59,7 +59,7 @@ define(["./packets", "./messages"], function(Packets, Messages) {
     },
 
     receive(message) {
-      var self = this;
+      
 
       if (!this.listening) return;
 

@@ -2,8 +2,8 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init(element) {
-      var self = this;
+    constructor(element) {
+      
 
       this.body = $(element);
 

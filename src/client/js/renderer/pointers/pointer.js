@@ -1,7 +1,7 @@
 define(function() {
   return Class.extend({
-    init(id, element, type) {
-      var self = this;
+    constructor(id, element, type) {
+      
 
       this.id = id;
       this.element = element;
@@ -17,7 +17,7 @@ define(function() {
     },
 
     load() {
-      var self = this;
+      
 
       this.blinkInterval = setInterval(function() {
         if (this.visible) this.hide();
@@ -28,14 +28,14 @@ define(function() {
     },
 
     destroy() {
-      var self = this;
+      
 
       clearInterval(this.blinkInterval);
       this.element.remove();
     },
 
     setPosition(x, y) {
-      var self = this;
+      
 
       this.x = x;
       this.y = y;

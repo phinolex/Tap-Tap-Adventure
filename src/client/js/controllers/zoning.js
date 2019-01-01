@@ -2,8 +2,8 @@
 
 define(function() {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
       this.renderer = game.renderer;

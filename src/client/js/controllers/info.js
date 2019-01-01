@@ -2,8 +2,8 @@
 
 define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
 
@@ -12,7 +12,7 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
     },
 
     create(type, data, x, y) {
-      var self = this;
+      
 
       switch (type) {
         case Modules.Hits.Damage:
@@ -79,7 +79,7 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
     },
 
     addInfo(info) {
-      var self = this;
+      
 
       this.infos[info.id] = info;
 
@@ -89,7 +89,7 @@ define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
     },
 
     update(time) {
-      var self = this;
+      
 
       this.forEachInfo(function(info) {
         info.update(time);

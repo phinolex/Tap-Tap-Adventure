@@ -8,7 +8,7 @@ var cls = require("../lib/class"),
  */
 
 module.exports = Socket = cls.Class.extend({
-  init(port) {
+  constructor(port) {
     this.port = port;
   },
 

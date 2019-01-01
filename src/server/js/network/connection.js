@@ -3,8 +3,8 @@
 var cls = require("../lib/class");
 
 module.exports = Connection = cls.Class.extend({
-  init(id, connection, server) {
-    var self = this;
+  constructor(id, connection, server) {
+    
 
     this.id = id;
     this.socket = connection;

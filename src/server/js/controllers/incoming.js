@@ -13,8 +13,8 @@ var cls = require("../lib/class"),
   Utils = require("../util/utils");
 
 module.exports = Incoming = cls.Class.extend({
-  init(player) {
-    var self = this;
+  constructor(player) {
+    
 
     this.player = player;
     this.connection = this.player.connection;
@@ -237,7 +237,7 @@ module.exports = Incoming = cls.Class.extend({
   },
 
   handleWho(message) {
-    var self = this;
+    
 
     _.each(message.shift(), function(id) {
       var entity = this.world.getEntityByInstance(id);

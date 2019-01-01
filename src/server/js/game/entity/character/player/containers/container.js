@@ -11,8 +11,8 @@ module.exports = Container = cls.Class.extend({
    * TODO: Add a limit of 2^31 - 1 for stackable items.
    */
 
-  init(type, owner, size) {
-    var self = this;
+  constructor(type, owner, size) {
+    
 
     this.type = type;
     this.owner = owner;
@@ -24,7 +24,7 @@ module.exports = Container = cls.Class.extend({
   },
 
   load(ids, counts, abilities, abilityLevels) {
-    var self = this;
+    
 
     /**
      * Fill each slot with manual data or the database
@@ -51,7 +51,7 @@ module.exports = Container = cls.Class.extend({
   },
 
   add(id, count, ability, abilityLevel) {
-    var self = this;
+    
 
     //log.info('Trying to pickup ' + count + ' x ' + id);
     var maxStackSize =
@@ -119,7 +119,7 @@ module.exports = Container = cls.Class.extend({
   },
 
   canHold(id, count) {
-    var self = this;
+    
 
     if (!Items.isStackable(id)) return this.hasSpace();
 
@@ -142,7 +142,7 @@ module.exports = Container = cls.Class.extend({
   },
 
   remove(index, id, count) {
-    var self = this;
+    
 
     if (
       !id ||
@@ -165,7 +165,7 @@ module.exports = Container = cls.Class.extend({
   },
 
   getSlot(id) {
-    var self = this;
+    
 
     for (var i = 0; i < this.slots.length; i++)
       if (this.slots[i].id === id) return this.slots[i];
@@ -174,7 +174,7 @@ module.exports = Container = cls.Class.extend({
   },
 
   contains(id) {
-    var self = this;
+    
 
     for (var i = 0; i < this.slots.length; i++)
       if (this.slots[i].id === id) return true;
@@ -197,7 +197,7 @@ module.exports = Container = cls.Class.extend({
   },
 
   getEmptySlot() {
-    var self = this;
+    
 
     for (var i = 0; i < this.slots.length; i++)
       if (this.slots[i].id === -1) return i;
@@ -206,7 +206,7 @@ module.exports = Container = cls.Class.extend({
   },
 
   getIndex(id) {
-    var self = this;
+    
 
     /**
      * Used when the index is not determined,
@@ -220,7 +220,7 @@ module.exports = Container = cls.Class.extend({
   },
 
   check() {
-    var self = this;
+    
 
     _.each(this.slots, function(slot) {
       if (isNaN(slot.id)) slot.empty();

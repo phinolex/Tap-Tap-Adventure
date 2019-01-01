@@ -15,8 +15,8 @@ WebSocket.Server = Socket.extend({
   _connections: {},
   _counter: 0,
 
-  init(host, port, version) {
-    var self = this;
+  constructor(host, port, version) {
+    
 
     this._super(port);
 
@@ -86,8 +86,8 @@ WebSocket.Server = Socket.extend({
 });
 
 WebSocket.Connection = Connection.extend({
-  init(id, socket, server) {
-    var self = this;
+  constructor(id, socket, server) {
+    
 
     this._super(id, socket, server);
 

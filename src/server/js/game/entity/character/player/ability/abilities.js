@@ -3,8 +3,8 @@ var cls = require("../../../../../lib/class"),
   _ = require("underscore");
 
 module.exports = Abilities = cls.Class.extend({
-  init(player) {
-    var self = this;
+  constructor(player) {
+    
 
     this.player = player;
 
@@ -19,7 +19,7 @@ module.exports = Abilities = cls.Class.extend({
   },
 
   addShortcut(ability) {
-    var self = this;
+    
 
     if (this.shortcutSize >= 5) return;
 
@@ -27,7 +27,7 @@ module.exports = Abilities = cls.Class.extend({
   },
 
   removeAbility(ability) {
-    var self = this;
+    
 
     if (this.isShortcut(ability))
       this.removeShortcut(this.shortcuts.indexOf(ability.name));

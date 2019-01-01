@@ -15,7 +15,7 @@ define([
 ], function(Character, Armour, Weapon, Pendant, Boots, Ring) {
   return Character.extend({
     constructor() {
-      var self = this;
+      
 
       this._super(-1, Modules.Types.Player);
 
@@ -53,7 +53,7 @@ define([
     },
 
     load(data) {
-      var self = this;
+      
 
       this.setId(data.instance);
       this.setGridPosition(data.x, data.y);
@@ -71,7 +71,7 @@ define([
     },
 
     loadHandler(game) {
-      var self = this;
+      
 
       /**
        * This is for other player characters
@@ -98,7 +98,7 @@ define([
     },
 
     loadEquipment() {
-      var self = this;
+      
 
       this.armour = null;
       this.weapon = null;
@@ -128,7 +128,7 @@ define([
     },
 
     setName(name) {
-      var self = this;
+      
 
       this.username = name;
       this.name = name;
@@ -257,7 +257,7 @@ define([
     },
 
     unequip(type) {
-      var self = this;
+      
 
       switch (type) {
         case "armour":
@@ -283,7 +283,7 @@ define([
     },
 
     tempBlink() {
-      var self = this;
+      
 
       this.blink(90);
 

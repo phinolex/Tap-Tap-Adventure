@@ -22,8 +22,8 @@ define([
   Projectile
 ) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
       this.renderer = game.renderer;
@@ -36,7 +36,7 @@ define([
     },
 
     load() {
-      var self = this;
+      
 
       this.game.app.sendStatus("Lots of monsters ahead...");
 
@@ -54,7 +54,7 @@ define([
     },
 
     update() {
-      var self = this;
+      
 
       if (this.sprites) this.sprites.updateSprites();
     },
@@ -247,7 +247,7 @@ define([
     },
 
     get(id) {
-      var self = this;
+      
 
       if (id in this.entities) return this.entities[id];
 
@@ -259,7 +259,7 @@ define([
     },
 
     clearPlayers(exception) {
-      var self = this;
+      
 
       _.each(this.entities, function(entity) {
         if (entity.id !== exception.id && entity.type === "player") {
@@ -278,7 +278,7 @@ define([
     },
 
     addEntity(entity) {
-      var self = this;
+      
 
       if (this.entities[entity.id]) return;
 
@@ -293,7 +293,7 @@ define([
     },
 
     removeItem(item) {
-      var self = this;
+      
 
       if (!item) return;
 
@@ -304,7 +304,7 @@ define([
     },
 
     registerPosition(entity) {
-      var self = this;
+      
 
       if (!entity) return;
 
@@ -327,7 +327,7 @@ define([
     },
 
     registerDuality(entity) {
-      var self = this;
+      
 
       if (!entity) return;
 
@@ -346,7 +346,7 @@ define([
     },
 
     unregisterPosition(entity) {
-      var self = this;
+      
 
       if (!entity) return;
 
@@ -368,7 +368,7 @@ define([
     },
 
     forEachEntityAround(x, y, radius, callback) {
-      var self = this;
+      
 
       for (var i = x - radius, max_i = x + radius; i <= max_i; i++) {
         for (var j = y - radius, max_j = y + radius; j <= max_j; j++) {

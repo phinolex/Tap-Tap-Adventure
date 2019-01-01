@@ -7,7 +7,7 @@ var cls = require("../../../../lib/class");
 
 module.exports = CombatQueue = cls.Class.extend({
   constructor() {
-    var self = this;
+    
 
     this.hitQueue = [];
   },
@@ -25,7 +25,7 @@ module.exports = CombatQueue = cls.Class.extend({
   },
 
   getHit() {
-    var self = this;
+    
 
     if (this.hitQueue.length < 1) return;
 

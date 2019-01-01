@@ -1,8 +1,8 @@
 define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
   return Class.extend({
 
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
       this.pointers = {};
@@ -11,7 +11,7 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     },
 
     create(id, type) {
-      var self = this;
+      
 
       if (id in this.pointers) {
         return;
@@ -27,7 +27,7 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     },
 
     resize() {
-      var self = this;
+      
 
       _.each(this.pointers, function(pointer) {
 
@@ -52,7 +52,7 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     },
 
     setSize(element) {
-      var self = this;
+      
       var width = 8;
       var height = width + (width * .2);
       var image = 'url("img/common/hud-active.png")';
@@ -72,7 +72,7 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     },
 
     clean() {
-      var self = this;
+      
 
       _.each(this.pointers, function(pointer) {
         pointer.destroy();
@@ -82,14 +82,14 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     },
 
     destroy(pointer) {
-      var self = this;
+      
 
       delete this.pointers[pointer.id];
       pointer.destroy();
     },
 
     set(pointer, posX, posY) {
-      var self = this;
+      
 
       this.updateScale();
       this.updateCamera();
@@ -159,7 +159,7 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     },
 
     update() {
-      var self = this;
+      
 
       _.each(this.pointers, function(pointer) {
 
@@ -185,7 +185,7 @@ define(['jquery', '../renderer/pointers/pointer'], function($, Pointer) {
     },
 
     get(id) {
-      var self = this;
+      
 
       if (id in this.pointers) {
         return this.pointers[id];

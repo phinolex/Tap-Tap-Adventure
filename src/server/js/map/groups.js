@@ -5,8 +5,8 @@ var cls = require("../lib/class"),
   _ = require("underscore");
 
 module.exports = Groups = cls.Class.extend({
-  init(map) {
-    var self = this;
+  constructor(map) {
+    
 
     this.map = map;
 
@@ -70,14 +70,14 @@ module.exports = Groups = cls.Class.extend({
   },
 
   forEachGroup(callback) {
-    var self = this;
+    
 
     for (var x = 0; x < this.groupWidth; x++)
       for (var y = 0; y < this.groupHeight; y++) callback(x + "-" + y);
   },
 
   forEachAdjacentGroup(groupId, callback) {
-    var self = this;
+    
 
     if (!groupId) return;
 

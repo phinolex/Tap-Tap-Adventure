@@ -2,8 +2,8 @@
 
 define(["jquery", "./container/container"], function($, Container) {
   return Class.extend({
-    init(game, size) {
-      var self = this;
+    constructor(game, size) {
+      
 
       this.game = game;
       this.actions = game.interface.actions;
@@ -246,7 +246,7 @@ define(["jquery", "./container/container"], function($, Container) {
     },
 
     clearSelection() {
-      var self = this;
+      
 
       if (!this.selectedSlot) return;
 
@@ -256,14 +256,14 @@ define(["jquery", "./container/container"], function($, Container) {
     },
 
     display() {
-      var self = this;
+      
 
       this.body.fadeIn("fast");
       this.button.addClass("active");
     },
 
     hide() {
-      var self = this;
+      
 
       this.button.removeClass("active");
 

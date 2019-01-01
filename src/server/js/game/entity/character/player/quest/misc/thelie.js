@@ -4,8 +4,8 @@ var Quest = require("../quest"),
   Utils = require("../../../../../../util/utils");
 
 module.exports = TheLie = Quest.extend({
-  init(player, data) {
-    var self = this;
+  constructor(player, data) {
+    
 
     this.player = player;
     this.data = data;
@@ -14,7 +14,7 @@ module.exports = TheLie = Quest.extend({
   },
 
   load(stage) {
-    var self = this;
+    
 
     if (stage) this.update();
     else this.stage = stage;

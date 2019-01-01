@@ -6,8 +6,8 @@ var Combat = require("../../js/game/entity/character/combat/combat"),
   _ = require("underscore");
 
 module.exports = OgreLord = Combat.extend({
-  init(character) {
-    var self = this;
+  constructor(character) {
+    
 
     this._super(character);
 
@@ -34,7 +34,7 @@ module.exports = OgreLord = Combat.extend({
   },
 
   load() {
-    var self = this;
+    
 
     this.talkingInterval = setInterval(function() {
       if (this.character.hasTarget()) this.forceTalk(this.getMessage());
@@ -48,7 +48,7 @@ module.exports = OgreLord = Combat.extend({
   },
 
   hit(character, target, hitInfo) {
-    var self = this;
+    
 
     if (this.isAttacked()) this.beginMinionAttack();
 
@@ -67,7 +67,7 @@ module.exports = OgreLord = Combat.extend({
   },
 
   forceTalk(message) {
-    var self = this;
+    
 
     if (!this.world) return;
 
@@ -111,7 +111,7 @@ module.exports = OgreLord = Combat.extend({
   },
 
   beginMinionAttack() {
-    var self = this;
+    
 
     if (!this.hasMinions()) return;
 
@@ -124,7 +124,7 @@ module.exports = OgreLord = Combat.extend({
   },
 
   reset() {
-    var self = this;
+    
 
     this.lastSpawn = 0;
 
@@ -142,7 +142,7 @@ module.exports = OgreLord = Combat.extend({
   },
 
   getRandomTarget() {
-    var self = this;
+    
 
     if (this.isAttacked()) {
       var keys = Object.keys(this.attackers),

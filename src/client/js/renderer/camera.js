@@ -3,7 +3,7 @@ import log from '../lib/log';
 
 export default class Camera {
   constructor(renderer) {
-    var self = this;
+    
 
     this.renderer = renderer;
 
@@ -37,7 +37,7 @@ export default class Camera {
   };
 
   setPosition(x, y) {
-    var self = this;
+    
 
     this.x = x;
     this.y = y;
@@ -54,7 +54,7 @@ export default class Camera {
   };
 
   center() {
-    var self = this;
+    
 
     if (this.centered) return;
 
@@ -65,7 +65,7 @@ export default class Camera {
   };
 
   decenter() {
-    var self = this;
+    
 
     if (!this.centered) return;
 
@@ -76,7 +76,7 @@ export default class Camera {
   };
 
   setGridPosition(x, y) {
-    var self = this;
+    
 
     this.prevGridX = this.gridX;
     this.prevGridY = this.gridY;
@@ -89,7 +89,7 @@ export default class Camera {
   };
 
   setPlayer(player) {
-    var self = this;
+    
 
     this.player = player;
 
@@ -97,7 +97,7 @@ export default class Camera {
   }
 
   handlePanning(direction) {
-    var self = this;
+    
 
     if (!this.panning) return;
 
@@ -121,7 +121,7 @@ export default class Camera {
   }
 
   centreOn(entity) {
-    var self = this;
+    
 
     if (!entity) return;
 
@@ -136,7 +136,7 @@ export default class Camera {
   }
 
   zone(direction) {
-    var self = this;
+    
 
     switch (direction) {
       case Modules.Orientation.Up:
@@ -162,7 +162,7 @@ export default class Camera {
   }
 
   forEachVisiblePosition(callback, offset) {
-    var self = this;
+    
 
     if (!offset) {
       offset = 1;

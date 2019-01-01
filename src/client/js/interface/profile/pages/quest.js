@@ -1,7 +1,7 @@
 define(["jquery", "../page"], function($, Page) {
   return Page.extend({
     constructor() {
-      var self = this;
+      
 
       this._super("#questPage");
 

@@ -1,8 +1,8 @@
 var cls = require("../../../../../lib/class");
 
 module.exports = Profession = cls.Class.extend({
-  init(player) {
-    var self = this;
+  constructor(player) {
+    
 
     this.id = -1;
     this.name = null;
@@ -13,7 +13,7 @@ module.exports = Profession = cls.Class.extend({
   },
 
   load(id, name, level, maxLevel) {
-    var self = this;
+    
 
     this.id = id;
     this.name = name;

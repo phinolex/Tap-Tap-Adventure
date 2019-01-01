@@ -2,8 +2,8 @@
 
 define(["jquery"], function($) {
   return Class.extend({
-    init(intrfce) {
-      var self = this;
+    constructor(intrfce) {
+      
 
       this.interface = intrfce;
 
@@ -39,7 +39,7 @@ define(["jquery"], function($) {
     },
 
     loadDefaults(activeClass) {
-      var self = this;
+      
 
       this.activeClass = activeClass;
 
@@ -57,7 +57,7 @@ define(["jquery"], function($) {
     },
 
     add(button, misc) {
-      var self = this;
+      
 
       this.body.find("ul").prepend($("<li></li>").append(button));
 
@@ -70,7 +70,7 @@ define(["jquery"], function($) {
     },
 
     removeMisc() {
-      var self = this;
+      
 
       this.miscButton.remove();
       this.miscButton = null;
@@ -88,7 +88,7 @@ define(["jquery"], function($) {
     },
 
     showPlayerActions(player, mouseX, mouseY) {
-      var self = this;
+      
 
       if (!player) return;
 
@@ -120,7 +120,7 @@ define(["jquery"], function($) {
     },
 
     displayDrop(activeClass) {
-      var self = this;
+      
 
       this.activeClass = activeClass;
 
@@ -131,7 +131,7 @@ define(["jquery"], function($) {
     },
 
     hideDrop() {
-      var self = this;
+      
 
       this.drop.fadeOut("slow");
 

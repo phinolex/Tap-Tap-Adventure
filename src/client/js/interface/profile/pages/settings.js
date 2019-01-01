@@ -2,8 +2,8 @@
 
 define(["jquery", "../page"], function($, Page) {
   return Class.extend({
-    init(game) {
-      var self = this;
+    constructor(game) {
+      
 
       this.game = game;
       this.audio = game.audio;
@@ -34,7 +34,7 @@ define(["jquery", "../page"], function($, Page) {
     },
 
     load() {
-      var self = this;
+      
 
       if (this.loaded) return;
 
@@ -184,21 +184,21 @@ define(["jquery", "../page"], function($, Page) {
     },
 
     setMusicLevel(musicLevel) {
-      var self = this;
+      
 
       this.storage.data.settings.music = musicLevel;
       this.storage.save();
     },
 
     setSFXLevel(sfxLevel) {
-      var self = this;
+      
 
       this.storage.data.settings.sfx = sfxLevel;
       this.storage.save();
     },
 
     setBrightness(brightness) {
-      var self = this;
+      
 
       this.storage.data.settings.brightness = brightness;
       this.storage.save();
@@ -213,42 +213,42 @@ define(["jquery", "../page"], function($, Page) {
     },
 
     setSound(state) {
-      var self = this;
+      
 
       this.storage.data.settings.soundEnabled = state;
       this.storage.save();
     },
 
     setCamera(state) {
-      var self = this;
+      
 
       this.storage.data.settings.centerCamera = state;
       this.storage.save();
     },
 
     setDebug(state) {
-      var self = this;
+      
 
       this.storage.data.settings.debug = state;
       this.storage.save();
     },
 
     setCentre(state) {
-      var self = this;
+      
 
       this.storage.data.settings.autoCentre = state;
       this.storage.save();
     },
 
     setName(state) {
-      var self = this;
+      
 
       this.storage.data.settings.showNames = state;
       this.storage.save();
     },
 
     setLevel(state) {
-      var self = this;
+      
 
       this.storage.data.settings.showLevels = state;
       this.storage.save();

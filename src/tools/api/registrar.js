@@ -10,7 +10,7 @@ function load() {
 
 module.exports = Registrar = cls.Class.extend({
   constructor() {
-    var self = this;
+    
 
     this.client = redis.createClient("127.0.0.1", 6379, {
       socket_nodelay: true

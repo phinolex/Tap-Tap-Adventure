@@ -4,8 +4,8 @@ var Combat = require("../../js/game/entity/character/combat/combat"),
   Utils = require("../../js/util/utils");
 
 module.exports = Tenebris = Combat.extend({
-  init(character) {
-    var self = this;
+  constructor(character) {
+    
 
     this._super(character);
 
@@ -31,7 +31,7 @@ module.exports = Tenebris = Combat.extend({
   },
 
   reset() {
-    var self = this;
+    
 
     this.illusions = [];
     this.firstIllusionKilled = false;
@@ -44,7 +44,7 @@ module.exports = Tenebris = Combat.extend({
   },
 
   hit(attacker, target, hitInfo) {
-    var self = this;
+    
 
     if (this.isAttacked()) this.beginIllusionAttack();
 
@@ -54,13 +54,13 @@ module.exports = Tenebris = Combat.extend({
   },
 
   spawnTenbris() {
-    var self = this;
+    
 
     this.world.spawnMob(104, this.character.x, this.character.y);
   },
 
   spawnIllusions() {
-    var self = this;
+    
 
     this.illusions.push(
       this.world.spawnMob(105, this.character.x + 1, this.character.y + 1)
@@ -92,7 +92,7 @@ module.exports = Tenebris = Combat.extend({
   },
 
   removeIllusions() {
-    var self = this;
+    
 
     this.lastIllusion = 0;
 
@@ -102,7 +102,7 @@ module.exports = Tenebris = Combat.extend({
   },
 
   beginIllusionAttack() {
-    var self = this;
+    
 
     if (!this.hasIllusions()) return;
 
@@ -114,7 +114,7 @@ module.exports = Tenebris = Combat.extend({
   },
 
   getRandomTarget() {
-    var self = this;
+    
 
     if (this.isAttacked()) {
       var keys = Object.keys(this.attackers),
@@ -129,7 +129,7 @@ module.exports = Tenebris = Combat.extend({
   },
 
   forceTalk(instance, message) {
-    var self = this;
+    
 
     if (!this.world) return;
 

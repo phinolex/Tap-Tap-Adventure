@@ -12,8 +12,8 @@ module.exports = QueenAnt = Combat.extend({
    * explosion sprite is drawn above them.
    */
 
-  init(character) {
-    var self = this;
+  constructor(character) {
+    
 
     character.spawnDistance = 18;
 
@@ -60,7 +60,7 @@ module.exports = QueenAnt = Combat.extend({
   },
 
   begin(attacker) {
-    var self = this;
+    
 
     this.resetAoE();
 
@@ -68,7 +68,7 @@ module.exports = QueenAnt = Combat.extend({
   },
 
   hit(attacker, target, hitInfo) {
-    var self = this;
+    
 
     if (this.frozen) return;
 
@@ -85,7 +85,7 @@ module.exports = QueenAnt = Combat.extend({
   },
 
   doAoE() {
-    var self = this;
+    
 
     /**
      * The reason this function does not use its superclass
@@ -109,7 +109,7 @@ module.exports = QueenAnt = Combat.extend({
   },
 
   spawnMinions() {
-    var self = this;
+    
 
     this.lastSpawn = new Date().getTime();
 
@@ -133,7 +133,7 @@ module.exports = QueenAnt = Combat.extend({
   },
 
   beginMinionAttack() {
-    var self = this;
+    
 
     if (!this.hasMinions()) return;
 
@@ -150,7 +150,7 @@ module.exports = QueenAnt = Combat.extend({
   },
 
   getRandomTarget() {
-    var self = this;
+    
 
     if (this.isAttacked()) {
       var keys = Object.keys(this.attackers),
@@ -165,14 +165,14 @@ module.exports = QueenAnt = Combat.extend({
   },
 
   pushFreeze(state) {
-    var self = this;
+    
 
     this.character.frozen = state;
     this.character.stunned = state;
   },
 
   pushCountdown(count) {
-    var self = this;
+    
 
     this.world.pushToAdjacentGroups(
       this.character.group,
