@@ -1,115 +1,118 @@
-/* global _, Modules */
+import _ from 'underscore';
+import Queue from '../utils/queue';
+import Splat from '../renderer/infos/splat';
+import Modules from '../utils/modules';
+import {
+  isInt,
+} from '../utils/util';
 
-define(["../utils/queue", "../renderer/infos/splat"], function(Queue, Splat) {
-  return Class.extend({
-    constructor(game) {
-      
+export default class Info {
+  constructor(game) {
+    this.game = game;
 
-      this.game = game;
+    this.infos = {};
+    this.destroyQueue = new Queue();
+  }
 
-      this.infos = {};
-      this.destroyQueue = new Queue();
-    },
+  create(type, data, x, y) {
+    switch (type) {
+      default:
+        break;
+      case Modules.Hits.Damage:
+      case Modules.Hits.Stun:
+      case Modules.Hits.Critical:
+        let damage = data.shift(); // eslint-disable-line
+        const isTarget = data.shift(); // eslint-disable-line
+        const dId = this.generateId(damage, x, y); // eslint-disable-line
 
-    create(type, data, x, y) {
-      
+        if (damage < 1 || !isInt(damage)) {
+          damage = 'MISS';
+        }
 
-      switch (type) {
-        case Modules.Hits.Damage:
-        case Modules.Hits.Stun:
-        case Modules.Hits.Critical:
-          var damage = data.shift(),
-            isTarget = data.shift(),
-            dId = this.generateId(this.game.time, damage, x, y);
+        const hitSplat = new Splat(dId, type, damage, x, y, false); // eslint-disable-line
 
-          if (damage < 1 || !isInt(damage)) damage = "MISS";
+        const dColour = isTarget // eslint-disable-line
+          ? Modules.DamageColours.received
+          : Modules.DamageColours.inflicted;
 
-          var hitSplat = new Splat(dId, type, damage, x, y, false),
-            dColour = isTarget
-              ? Modules.DamageColours.received
-              : Modules.DamageColours.inflicted;
+        hitSplat.setColours(dColour.fill, dColour.stroke);
 
-          hitSplat.setColours(dColour.fill, dColour.stroke);
+        this.addInfo(hitSplat);
 
-          this.addInfo(hitSplat);
+        break;
 
-          break;
+      case Modules.Hits.Heal:
+      case Modules.Hits.Mana:
+      case Modules.Hits.Experience:
+        const amount = data.shift(); // eslint-disable-line
+        const id = this.generateId(amount, x, y); // eslint-disable-line
+        let text = '+'; // eslint-disable-line
+        let colour = null; // eslint-disable-line
 
-        case Modules.Hits.Heal:
-        case Modules.Hits.Mana:
-        case Modules.Hits.Experience:
-          var amount = data.shift(),
-            id = this.generateId(this.game.time, amount, x, y),
-            text = "+",
-            colour;
+        if (amount < 1 || !isInt(amount)) {
+          return;
+        }
 
-          if (amount < 1 || !isInt(amount)) return;
+        if (type !== Modules.Hits.Experience) {
+          text = '++';
+        }
 
-          if (type !== Modules.Hits.Experience) text = "++";
+        const splat = new Splat(id, type, text + amount, x, y, false); // eslint-disable-line
 
-          var splat = new Splat(id, type, text + amount, x, y, false);
+        if (type === Modules.Hits.Heal) {
+          colour = Modules.DamageColours.healed;
+        } else if (type === Modules.Hits.Mana) {
+          colour = Modules.DamageColours.mana;
+        } else if (type === Modules.Hits.Experience) {
+          colour = Modules.DamageColours.exp;
+        }
 
-          if (type === Modules.Hits.Heal) colour = Modules.DamageColours.healed;
-          else if (type === Modules.Hits.Mana)
-            colour = Modules.DamageColours.mana;
-          else if (type === Modules.Hits.Experience)
-            colour = Modules.DamageColours.exp;
+        splat.setColours(colour.fill, colour.stroke);
+        this.addInfo(splat);
+        break;
 
-          splat.setColours(colour.fill, colour.stroke);
+      case Modules.Hits.LevelUp:
+        const lId = this.generateId('-1', x, y); // eslint-disable-line
+        const levelSplat = new Splat(lId, type, 'Level Up!', x, y, false); // eslint-disable-line
+        const lColour = Modules.DamageColours.exp; // eslint-disable-line
 
-          this.addInfo(splat);
-
-          break;
-
-        case Modules.Hits.LevelUp:
-          var lId = this.generateId(this.game.time, "-1", x, y),
-            levelSplat = new Splat(lId, type, "Level Up!", x, y, false),
-            lColour = Modules.DamageColours.exp;
-
-          levelSplat.setColours(lColour.fill, lColour.stroke);
-
-          this.addInfo(levelSplat);
-
-          break;
-      }
-    },
-
-    getCount() {
-      return Object.keys(this.infos).length;
-    },
-
-    addInfo(info) {
-      
-
-      this.infos[info.id] = info;
-
-      info.onDestroy(function(id) {
-        this.destroyQueue.add(id);
-      });
-    },
-
-    update(time) {
-      
-
-      this.forEachInfo(function(info) {
-        info.update(time);
-      });
-
-      this.destroyQueue.forEachQueue(function(id) {
-        delete this.infos[id];
-      });
-
-      this.destroyQueue.reset();
-    },
-
-    forEachInfo(callback) {
-      _.each(this.infos, function(info) {
-        callback(info);
-      });
-    },
-
-    generateId(time, info, x, y) {
-      return time + "" + Math.abs(info) + "" + x + "" + y;
+        levelSplat.setColours(lColour.fill, lColour.stroke);
+        this.addInfo(levelSplat);
+        break;
     }
-  });
-});
+  }
+
+  getCount() {
+    return Object.keys(this.infos).length;
+  }
+
+  addInfo(info) {
+    this.infos[info.id] = info;
+
+    info.onDestroy((id) => {
+      this.destroyQueue.add(id);
+    });
+  }
+
+  update(time) {
+    this.forEachInfo((info) => {
+      info.update(time);
+    });
+
+    this.destroyQueue.forEachQueue((id) => {
+      delete this.infos[id];
+    });
+
+    this.destroyQueue.reset();
+  }
+
+  forEachInfo(callback) {
+    _.each(this.infos, (info) => {
+      callback(info);
+    });
+  }
+
+  generateId(info, x, y) {
+    return `${this.game.time}${Math.abs(info)}${x}${y}`;
+  }
+}
