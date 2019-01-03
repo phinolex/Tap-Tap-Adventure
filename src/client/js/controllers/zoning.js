@@ -1,40 +1,36 @@
-/* global Modules */
+import Modules from '../utils/modules';
 
-define(function() {
-  return Class.extend({
-    constructor(game) {
-      
+export default class Zone {
+  constructor(game) {
+    this.game = game;
+    this.renderer = game.renderer;
+    this.camera = game.camera;
+    this.input = game.input;
 
-      this.game = game;
-      this.renderer = game.renderer;
-      this.camera = game.camera;
-      this.input = game.input;
+    this.direction = null;
+  }
 
-      this.direction = null;
-    },
+  reset() {
+    this.direction = null;
+  }
 
-    reset() {
-      this.direction = null;
-    },
+  setUp() {
+    this.direction = Modules.Orientation.Up;
+  }
 
-    setUp() {
-      this.direction = Modules.Orientation.Up;
-    },
+  setDown() {
+    this.direction = Modules.Orientation.Down;
+  }
 
-    setDown() {
-      this.direction = Modules.Orientation.Down;
-    },
+  setRight() {
+    this.direction = Modules.Orientation.Right;
+  }
 
-    setRight() {
-      this.direction = Modules.Orientation.Right;
-    },
+  setLeft() {
+    this.direction = Modules.Orientation.Left;
+  }
 
-    setLeft() {
-      this.direction = Modules.Orientation.Left;
-    },
-
-    getDirection() {
-      return this.direction;
-    }
-  });
-});
+  getDirection() {
+    return this.direction;
+  }
+}
