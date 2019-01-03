@@ -1,15 +1,12 @@
-define(["jquery"], function($) {
-  return Class.extend({
-    constructor(game) {
-      
+import $ from 'jquery';
 
-      this.game = game;
+export default class Abilities {
+  constructor(game) {
+    this.game = game;
+    this.shortcuts = $('#abilityShortcut');
+  }
 
-      this.shortcuts = $("#abilityShortcut");
-    },
-
-    getList() {
-      return this.shortcuts.find("ul");
-    }
-  });
-});
+  getList() {
+    return this.shortcuts.find('ul');
+  }
+}

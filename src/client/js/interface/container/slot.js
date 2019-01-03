@@ -1,49 +1,37 @@
-define(function() {
-  return Class.extend({
-    constructor(index) {
-      
+export default class Slot {
+  constructor(index) {
+    this.index = index;
+    this.string = null;
+    this.count = -1;
+    this.ability = -1;
+    this.abilityLevel = -1;
+    this.edible = false;
+    this.equippable = false;
+  }
 
-      this.index = index;
+  load(string, count, ability, abilityLevel, edible, equippable) {
+    this.string = string;
+    this.count = count;
+    this.ability = ability;
+    this.abilityLevel = abilityLevel;
+    this.edible = edible;
+    this.equippable = equippable;
+  }
 
-      this.string = null;
-      this.count = -1;
-      this.ability = -1;
-      this.abilityLevel = -1;
+  empty() {
+    this.string = null;
+    this.count = -1;
+    this.ability = -1;
+    this.abilityLevel = -1;
+    this.edible = false;
+    this.equippable = false;
+  }
 
-      this.edible = false;
-      this.equippable = false;
-    },
+  isEmpty() {
+    return this.string === null || this.count === -1;
+  }
 
-    load(string, count, ability, abilityLevel, edible, equippable) {
-      
-
-      this.string = string;
-      this.count = count;
-      this.ability = ability;
-      this.abilityLevel = abilityLevel;
-
-      this.edible = edible;
-      this.equippable = equippable;
-    },
-
-    empty() {
-      
-
-      this.string = null;
-      this.count = -1;
-      this.ability = -1;
-      this.abilityLevel = -1;
-
-      this.edible = false;
-      this.equippable = false;
-    },
-
-    isEmpty() {
-      return this.string === null || this.count === -1;
-    },
-
-    setCount(count) {
-      this.count = count;
-    }
-  });
-});
+  setCount(count) {
+    this.count = count;
+  }
+}

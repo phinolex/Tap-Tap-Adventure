@@ -1,43 +1,40 @@
-/* global log */
+import $ from 'jquery';
 
-define(["jquery"], function($) {
-  return Class.extend({
-    constructor(element) {
-      
+export default class Page {
+  constructor(element) {
+    this.body = $(element);
+    this.loaded = false;
+  }
 
-      this.body = $(element);
+  show() {
+    this.body.fadeIn('slow');
+  }
 
-      this.loaded = false;
-    },
+  hide() {
+    this.body.fadeOut('slow');
+  }
 
-    show() {
-      this.body.fadeIn("slow");
-    },
+  isVisible() {
+    return this.body.css('display') === 'block';
+  }
 
-    hide() {
-      this.body.fadeOut("slow");
-    },
+  load() {
+    log.info('Uninitialized.');
+  }
 
-    isVisible() {
-      return this.body.css("display") === "block";
-    },
+  resize() {
+    log.info('Uninitialized.');
+  }
 
-    load() {
-      log.info("Uninitialized.");
-    },
+  update() {
+    log.info('Uninitialized.');
+  }
 
-    resize() {
-      log.info("Uninitialized.");
-    },
-
-    update() {
-      log.info("Uninitialized.");
-    },
-
-    getImageFormat(scale, name) {
-      if (!name || name === "null") return "";
-
-      return 'url("img/' + scale + "/item-" + name + '.png")';
+  getImageFormat(scale, name) {
+    if (!name || name === 'null') {
+      return '';
     }
-  });
-});
+
+    return `url("img/${scale}/item-${name}.png")`;
+  }
+}
