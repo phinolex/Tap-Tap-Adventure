@@ -1,35 +1,37 @@
-var Logger = function(level) {
+/* global window, printStackTrace */
+
+const Logger = (level) => {
   this.level = level;
 };
 
-Logger.prototype.info = function() {};
-Logger.prototype.debug = function() {};
-Logger.prototype.error = function() {};
-Logger.prototype.info = function(message) {
-  if (this.level === "debug" || this.level === "info") {
+Logger.prototype.info = () => {};
+Logger.prototype.debug = () => {};
+Logger.prototype.error = () => {};
+Logger.prototype.info = (message) => {
+  if (this.level === 'debug' || this.level === 'info') {
     if (window.console) {
-      console.info(message);
+      console.info(message); //eslint-disable-line
     }
   }
 };
 
-Logger.prototype.debug = function(message) {
-  if (this.level === "debug") {
+Logger.prototype.debug = (message) => {
+  if (this.level === 'debug') {
     if (window.console) {
-      console.log(message);
+      console.log(message); //eslint-disable-line
     }
   }
 };
 
-Logger.prototype.error = function(message, stacktrace) {
+Logger.prototype.error = (message, stacktrace) => {
   if (window.console) {
-    console.error(message);
+    console.error(message); // eslint-disable-line
     if (stacktrace !== undefined && stacktrace === true) {
-      var trace = printStackTrace();
-      console.error(trace.join("\n\n"));
-      console.error("-----------------------------");
+      const trace = printStackTrace();
+      console.error(trace.join('\n\n')); //eslint-disable-line
+      console.error('-----------------------------'); //eslint-disable-line
     }
   }
 };
 
-log = new Logger("debug");
+export default new Logger('debug');

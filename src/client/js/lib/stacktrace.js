@@ -51,34 +51,32 @@
  * @return {Array} of Strings with functions, lines, files, and arguments where possible
  */
 function printStackTrace(options) {
-  var ex = options && options.e ? options.e : null;
-  var guess = options ? !!options.guess : true;
+  const ex = options && options.e ? options.e : null;
+  const guess = options ? !!options.guess : true;
 
-  var p = new printStackTrace.implementation();
-  var result = p.run(ex);
+  const p = new printStackTrace.implementation();
+  const result = p.run(ex);
   return guess ? p.guessFunctions(result) : result;
 }
 
-printStackTrace.implementation = function() {};
+printStackTrace.implementation = () => {};
 
 printStackTrace.implementation.prototype = {
   run(ex) {
     // Use either the stored mode, or resolve it
-    var mode = this._mode || this.mode();
-    if (mode === "other") {
+    const mode = this._mode || this.mode();
+    if (mode === 'other') {
       return this.other(arguments.callee);
-    } else {
-      ex =
-        ex ||
-        (function() {
-          try {
-            var _err = __undef__ << 1;
-          } catch (e) {
-            return e;
-          }
-        })();
-      return this[mode](ex);
     }
+    ex = ex
+      || (function () {
+        try {
+          const _err = __undef__ << 1;
+        } catch (e) {
+          return e;
+        }
+      }());
+    return this[mode](ex);
   },
 
   /**
@@ -86,20 +84,23 @@ printStackTrace.implementation.prototype = {
    */
   mode() {
     try {
-      var _err = __undef__ << 1;
+      const _err = __undef__ << 1;
     } catch (e) {
-      if (e["arguments"]) {
-        return (this._mode = "chrome");
-      } else if (window.opera && e.stacktrace) {
-        return (this._mode = "opera10");
-      } else if (e.stack) {
-        return (this._mode = "firefox");
-      } else if (window.opera && !("stacktrace" in e)) {
-        //Opera 9-
-        return (this._mode = "opera");
+      if (e.arguments) {
+        return (this._mode = 'chrome');
+      }
+      if (window.opera && e.stacktrace) {
+        return (this._mode = 'opera10');
+      }
+      if (e.stack) {
+        return (this._mode = 'firefox');
+      }
+      if (window.opera && !('stacktrace' in e)) {
+        // Opera 9-
+        return (this._mode = 'opera');
       }
     }
-    return (this._mode = "other");
+    return (this._mode = 'other');
   },
 
   /**
@@ -112,10 +113,10 @@ printStackTrace.implementation.prototype = {
    */
   instrumentFunction(context, functionName, callback) {
     context = context || window;
-    context["_old" + functionName] = context[functionName];
-    context[functionName] = function() {
+    context[`_old${functionName}`] = context[functionName];
+    context[functionName] = function () {
       callback.call(this, printStackTrace());
-      return context["_old" + functionName].apply(this, arguments);
+      return context[`_old${functionName}`].apply(this, arguments);
     };
     context[functionName]._instrumented = true;
   },
@@ -130,11 +131,11 @@ printStackTrace.implementation.prototype = {
    */
   deinstrumentFunction(context, functionName) {
     if (
-      context[functionName].constructor === Function &&
-      context[functionName]._instrumented &&
-      context["_old" + functionName].constructor === Function
+      context[functionName].constructor === Function
+      && context[functionName]._instrumented
+      && context[`_old${functionName}`].constructor === Function
     ) {
-      context[functionName] = context["_old" + functionName];
+      context[functionName] = context[`_old${functionName}`];
     }
   },
 
@@ -146,12 +147,12 @@ printStackTrace.implementation.prototype = {
    */
   chrome(e) {
     return e.stack
-      .replace(/^[^\n]*\n/, "")
-      .replace(/^[^\n]*\n/, "")
-      .replace(/^[^\(]+?[\n$]/gm, "")
-      .replace(/^\s+at\s+/gm, "")
-      .replace(/^Object.<anonymous>\s*\(/gm, "{anonymous}()@")
-      .split("\n");
+      .replace(/^[^\n]*\n/, '')
+      .replace(/^[^\n]*\n/, '')
+      .replace(/^[^\(]+?[\n$]/gm, '')
+      .replace(/^\s+at\s+/gm, '')
+      .replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@')
+      .split('\n');
   },
 
   /**
@@ -162,10 +163,10 @@ printStackTrace.implementation.prototype = {
    */
   firefox(e) {
     return e.stack
-      .replace(/^[^\n]*\n/, "")
-      .replace(/(?:\n@:0)?\s+$/m, "")
-      .replace(/^\(/gm, "{anonymous}(")
-      .split("\n");
+      .replace(/^[^\n]*\n/, '')
+      .replace(/(?:\n@:0)?\s+$/m, '')
+      .replace(/^\(/gm, '{anonymous}(')
+      .split('\n');
   },
 
   /**
@@ -175,19 +176,20 @@ printStackTrace.implementation.prototype = {
    * @return Array<String> of function calls, files and line numbers
    */
   opera10(e) {
-    var stack = e.stacktrace;
-    var lines = stack.split("\n"),
-      ANON = "{anonymous}",
-      lineRE = /.*line (\d+), column (\d+) in ((<anonymous function\:?\s*(\S+))|([^\(]+)\([^\)]*\))(?: in )?(.*)\s*$/i,
-      i,
-      j,
-      len;
-    for (i = 2, j = 0, len = lines.length; i < len - 2; i++) {
+    const stack = e.stacktrace;
+    const lines = stack.split('\n');
+    const ANON = '{anonymous}';
+    const lineRE = /.*line (\d+), column (\d+) in ((<anonymous function\:?\s*(\S+))|([^\(]+)\([^\)]*\))(?: in )?(.*)\s*$/i;
+    let i;
+    let j;
+    let len;
+
+    for (i = 2, j = 0, len = lines.length; i < len - 2; i += 1) {
       if (lineRE.test(lines[i])) {
-        var location = RegExp.$6 + ":" + RegExp.$1 + ":" + RegExp.$2;
-        var fnName = RegExp.$3;
+        const location = `${RegExp.$6}:${RegExp.$1}:${RegExp.$2}`;
+        let fnName = RegExp.$3;
         fnName = fnName.replace(/<anonymous function\s?(\S+)?>/g, ANON);
-        lines[j++] = fnName + "@" + location;
+        lines[j += 1] = `${fnName}@${location}`;
       }
     }
 
@@ -197,22 +199,21 @@ printStackTrace.implementation.prototype = {
 
   // Opera 7.x-9.x only!
   opera(e) {
-    var lines = e.message.split("\n"),
-      ANON = "{anonymous}",
-      lineRE = /Line\s+(\d+).*script\s+(http\S+)(?:.*in\s+function\s+(\S+))?/i,
-      i,
-      j,
-      len;
+    const lines = e.message.split('\n');
+    const ANON = '{anonymous}';
+    const lineRE = /Line\s+(\d+).*script\s+(http\S+)(?:.*in\s+function\s+(\S+))?/i;
+    let i;
+    let j;
+    let len;
 
     for (i = 4, j = 0, len = lines.length; i < len; i += 2) {
-      //TODO: RegExp.exec() would probably be cleaner here
+      // TODO: RegExp.exec() would probably be cleaner here
       if (lineRE.test(lines[i])) {
-        lines[j++] =
-          (RegExp.$3
-            ? RegExp.$3 + "()@" + RegExp.$2 + RegExp.$1
-            : ANON + "()@" + RegExp.$2 + ":" + RegExp.$1) +
-          " -- " +
-          lines[i + 1].replace(/^\s+/, "");
+        lines[j += 1] = `${RegExp.$3
+          ? `${RegExp.$3}()@${RegExp.$2}${RegExp.$1}`
+          : `${ANON}()@${RegExp.$2}:${RegExp.$1}`
+        } -- ${
+          lines[i + 1].replace(/^\s+/, '')}`;
       }
     }
 
@@ -222,18 +223,17 @@ printStackTrace.implementation.prototype = {
 
   // Safari, IE, and others
   other(curr) {
-    var ANON = "{anonymous}",
-      fnRE = /function\s*([\w\-$]+)?\s*\(/i,
-      stack = [],
-      j = 0,
-      fn,
-      args;
-
-    var maxStackSize = 10;
+    const ANON = '{anonymous}';
+    const fnRE = /function\s*([\w\-$]+)?\s*\(/i;
+    const stack = [];
+    let j = 0;
+    let fn;
+    let args;
+    const maxStackSize = 10;
     while (curr && stack.length < maxStackSize) {
       fn = fnRE.test(curr.toString()) ? RegExp.$1 || ANON : ANON;
-      args = Array.prototype.slice.call(curr["arguments"]);
-      stack[j++] = fn + "(" + this.stringifyArguments(args) + ")";
+      args = Array.prototype.slice.call(curr.arguments);
+      stack[j += 1] = `${fn}(${this.stringifyArguments(args)})`;
       curr = curr.caller;
     }
     return stack;
@@ -246,34 +246,33 @@ printStackTrace.implementation.prototype = {
    * @return {Array} of Strings with stringified arguments
    */
   stringifyArguments(args) {
-    for (var i = 0; i < args.length; ++i) {
-      var arg = args[i];
+    for (let i = 0; i < args.length; ++i) {
+      const arg = args[i];
       if (arg === undefined) {
-        args[i] = "undefined";
+        args[i] = 'undefined';
       } else if (arg === null) {
-        args[i] = "null";
+        args[i] = 'null';
       } else if (arg.constructor) {
         if (arg.constructor === Array) {
           if (arg.length < 3) {
-            args[i] = "[" + this.stringifyArguments(arg) + "]";
+            args[i] = `[${this.stringifyArguments(arg)}]`;
           } else {
-            args[i] =
-              "[" +
-              this.stringifyArguments(Array.prototype.slice.call(arg, 0, 1)) +
-              "..." +
-              this.stringifyArguments(Array.prototype.slice.call(arg, -1)) +
-              "]";
+            args[i] = `[${
+              this.stringifyArguments(Array.prototype.slice.call(arg, 0, 1))
+            }...${
+              this.stringifyArguments(Array.prototype.slice.call(arg, -1))
+            }]`;
           }
         } else if (arg.constructor === Object) {
-          args[i] = "#object";
+          args[i] = '#object';
         } else if (arg.constructor === Function) {
-          args[i] = "#function";
+          args[i] = '#function';
         } else if (arg.constructor === String) {
-          args[i] = '"' + arg + '"';
+          args[i] = `"${arg}"`;
         }
       }
     }
-    return args.join(",");
+    return args.join(',');
   },
 
   sourceCache: {},
@@ -282,13 +281,13 @@ printStackTrace.implementation.prototype = {
    * @return the text from a given URL.
    */
   ajax(url) {
-    var req = this.createXMLHTTPObject();
+    const req = this.createXMLHTTPObject();
     if (!req) {
       return;
     }
-    req.open("GET", url, false);
-    req.setRequestHeader("User-Agent", "XMLHTTP/1.0");
-    req.send("");
+    req.open('GET', url, false);
+    req.setRequestHeader('User-Agent', 'XMLHTTP/1.0');
+    req.send('');
     return req.responseText;
   },
 
@@ -298,22 +297,14 @@ printStackTrace.implementation.prototype = {
    * @return <Function> XHR function or equivalent
    */
   createXMLHTTPObject() {
-    var xmlhttp,
-      XMLHttpFactories = [
-        function() {
-          return new XMLHttpRequest();
-        },
-        function() {
-          return new ActiveXObject("Msxml2.XMLHTTP");
-        },
-        function() {
-          return new ActiveXObject("Msxml3.XMLHTTP");
-        },
-        function() {
-          return new ActiveXObject("Microsoft.XMLHTTP");
-        }
-      ];
-    for (var i = 0; i < XMLHttpFactories.length; i++) {
+    let xmlhttp;
+    const XMLHttpFactories = [
+      () => new XMLHttpRequest(),
+      () => new ActiveXObject('Msxml2.XMLHTTP'),
+      () => new ActiveXObject('Msxml3.XMLHTTP'),
+      () => new ActiveXObject('Microsoft.XMLHTTP'),
+    ];
+    for (let i = 0; i < XMLHttpFactories.length; i += 1) {
       try {
         xmlhttp = XMLHttpFactories[i]();
         // Use memoization to cache the factory
@@ -342,22 +333,22 @@ printStackTrace.implementation.prototype = {
    */
   getSource(url) {
     if (!(url in this.sourceCache)) {
-      this.sourceCache[url] = this.ajax(url).split("\n");
+      this.sourceCache[url] = this.ajax(url).split('\n');
     }
     return this.sourceCache[url];
   },
 
   guessFunctions(stack) {
-    for (var i = 0; i < stack.length; ++i) {
-      var reStack = /\{anonymous\}\(.*\)@(\w+:\/\/([\-\w\.]+)+(:\d+)?[^:]+):(\d+):?(\d+)?/;
-      var frame = stack[i],
-        m = reStack.exec(frame);
+    for (let i = 0; i < stack.length; ++i) {
+      const reStack = /\{anonymous\}\(.*\)@(\w+:\/\/([\-\w\.]+)+(:\d+)?[^:]+):(\d+):?(\d+)?/;
+      const frame = stack[i];
+      const m = reStack.exec(frame);
       if (m) {
-        var file = m[1],
-          lineno = m[4]; //m[7] is character position in Chrome
+        const file = m[1];
+        const lineno = m[4]; // m[7] is character position in Chrome
         if (file && this.isSameDomain(file) && lineno) {
-          var functionName = this.guessFunctionName(file, lineno);
-          stack[i] = frame.replace("{anonymous}", functionName);
+          const functionName = this.guessFunctionName(file, lineno);
+          stack[i] = frame.replace('{anonymous}', functionName);
         }
       }
     }
@@ -369,32 +360,32 @@ printStackTrace.implementation.prototype = {
       return this.guessFunctionNameFromLines(lineNo, this.getSource(url));
     } catch (e) {
       return (
-        "getSource failed with url: " + url + ", exception: " + e.toString()
+        `getSource failed with url: ${url}, exception: ${e.toString()}`
       );
     }
   },
 
   guessFunctionNameFromLines(lineNo, source) {
-    var reFunctionArgNames = /function ([^(]*)\(([^)]*)\)/;
-    var reGuessFunction = /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*(function|eval|new Function)/;
+    const reFunctionArgNames = /function ([^(]*)\(([^)]*)\)/;
+    const reGuessFunction = /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*(function|eval|new Function)/;
     // Walk backwards from the first line in the function until we find the line which
     // matches the pattern above, which is the function definition
-    var line = "",
-      maxLines = 10;
-    for (var i = 0; i < maxLines; ++i) {
+    let line = '';
+    const maxLines = 10;
+
+    for (let i = 0; i < maxLines; ++i) {
       line = source[lineNo - i] + line;
       if (line !== undefined) {
-        var m = reGuessFunction.exec(line);
+        let m = reGuessFunction.exec(line);
         if (m && m[1]) {
           return m[1];
-        } else {
-          m = reFunctionArgNames.exec(line);
-          if (m && m[1]) {
-            return m[1];
-          }
+        }
+        m = reFunctionArgNames.exec(line);
+        if (m && m[1]) {
+          return m[1];
         }
       }
     }
-    return "(?)";
-  }
+    return '(?)';
+  },
 };
