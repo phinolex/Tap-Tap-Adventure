@@ -20,13 +20,22 @@ export default class Socket {
 
     this.connection = null;
 
+    log.info(io);
+
     this.connection = io(url, {
       forceNew: true,
       reconnection: false,
+      upgrade: false,
+      transports: ['websocket'],
     });
 
-    this.connection.on('connect_error', () => {
+    this.connection.on('error', (error) => {
+      log.info('Socket Error', error);
+    });
+
+    this.connection.on('connect_error', (error) => {
       log.info(`Failed to connect to: ${this.config.ip}`);
+      log.error(error);
 
       this.listening = false;
 
