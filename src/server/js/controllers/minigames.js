@@ -1,23 +1,18 @@
-var cls = require("../lib/class"),
-  TeamWar = require("../minigames/impl/teamwar");
+import TeamWar from '../minigames/impl/teamwar';
 
-module.exports = Minigames = cls.Class.extend({
+export default class Minigames {
   constructor(world) {
-    
-
     this.world = world;
     this.minigames = {};
 
     this.load();
-  },
+  }
 
   load() {
-    
-
-    this.minigames["TeamWar"] = new TeamWar();
-  },
+    this.minigames.TeamWar = new TeamWar();
+  }
 
   getTeamWar() {
-    return this.minigames["TeamWar"];
+    return this.minigames.TeamWar;
   }
-});
+}

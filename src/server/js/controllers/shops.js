@@ -1,46 +1,42 @@
-var cls = require("../lib/class"),
-  Shops = require("../util/shops"),
-  Messages = require("../network/messages"),
-  Packets = require("../network/packets");
+import ShopUtils from '../util/shops';
+import Messages from '../network/messages';
+import Packets from '../network/packets';
 
-module.exports = Shops = cls.Class.extend({
+export default class Shops {
   constructor(world) {
-    
-
     this.world = world;
-  },
+  }
 
   open(player, shopId) {
-    
-
     player.send(
       new Messages.Shop(Packets.Shop, {
         instance: player.instance,
         npcId: shopId,
-        shopData: this.getShopData(shopId)
-      })
+        shopData: this.getShopData(shopId),
+      }),
     );
-  },
+  }
 
   buy(player, shopId, itemId, count) {
-    var self = this,
-      cost = Shops.getCost(shopId, itemId, count);
-
+    // const cost = ShopUtils.getCost(shopId, itemId, count);
     this.refresh();
-  },
+  }
 
   refresh() {
-    
-  },
+    // refresh shop
+  }
 
   getShopData(id) {
-    
-
-    if (!Shops.isShopNPC(id)) return;
+    if (!ShopUtils.isShopNPC(id)) {
+      return {
+        items: [],
+        counts: [],
+      };
+    }
 
     return {
-      items: Shops.getItems(id),
-      counts: Shops.getCount(id)
+      items: ShopUtils.getItems(id),
+      counts: ShopUtils.getCount(id),
     };
   }
-});
+}
