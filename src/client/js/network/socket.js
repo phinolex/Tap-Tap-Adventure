@@ -1,82 +1,81 @@
-/* global log */
+import io from 'socket.io-client';
+import log from '../lib/log';
+import Messages from './messages';
 
-define(["./packets", "./messages"], function(Packets, Messages) {
-  return Class.extend({
-    constructor(game) {
-      
+export default class Socket {
+  constructor(game) {
+    this.game = game;
+    this.config = this.game.app.config;
+    this.connection = null;
+    this.listening = false;
+    this.disconnected = false;
+    this.messages = new Messages(this.game.app);
+  }
 
-      this.game = game;
-      this.config = this.game.app.config;
-      this.connection = null;
+  connect() {
+    const protocol = this.config.ssl ? 'wss' : 'ws';
+    const url = `${protocol}://${this.config.ip}:${this.config.port}`;
+
+    log.info(`Opening WebSocket: ${url}`);
+
+    this.connection = null;
+
+    this.connection = io(url, {
+      forceNew: true,
+      reconnection: false,
+    });
+
+    this.connection.on('connect_error', () => {
+      log.info(`Failed to connect to: ${this.config.ip}`);
 
       this.listening = false;
 
-      this.disconnected = false;
+      this.game.app.toggleLogin(false);
+      this.game.app.sendError(null, 'Could not connect to the game server.');
+    });
 
-      this.messages = new Messages(this.game.app);
-    },
+    this.connection.on('connect', () => {
+      this.listening = true;
 
-    connect() {
-      var self = this,
-        protocol = this.config.ssl ? "wss" : "ws",
-        url = protocol + "://" + this.config.ip + ":" + this.config.port;
-
-      log.info("Opening WebSocket: " + url);
-
-      this.connection = null;
-
-      this.connection = io(url, {
-        forceNew: true,
-        reconnection: false
+      this.game.app.updateLoader('Preparing handshake...');
+      this.connection.emit('client', {
+        gVer: this.config.version,
+        cType: 'HTML5',
       });
+    });
 
-      this.connection.on("connect_error", function() {
-        log.info("Failed to connect to: " + this.config.ip);
+    this.connection.on('message', (message) => {
+      this.receive(message);
+    });
 
-        this.listening = false;
+    this.connection.on('disconnect', () => {
+      this.game.handleDisconnection();
+    });
+  }
 
-        this.game.app.toggleLogin(false);
-        this.game.app.sendError(null, "Could not connect to the game server.");
-      });
-
-      this.connection.on("connect", function() {
-        this.listening = true;
-
-        this.game.app.updateLoader("Preparing handshake...");
-        this.connection.emit("client", {
-          gVer: this.config.version,
-          cType: "HTML5"
-        });
-      });
-
-      this.connection.on("message", function(message) {
-        this.receive(message);
-      });
-
-      this.connection.on("disconnect", function() {
-        this.game.handleDisconnection();
-      });
-    },
-
-    receive(message) {
-      
-
-      if (!this.listening) return;
-
-      if (message.startsWith("[")) {
-        var data = JSON.parse(message);
-
-        if (data.length > 1) this.messages.handleBulkData(data);
-        else this.messages.handleData(JSON.parse(message).shift());
-      } else this.messages.handleUTF8(message);
-    },
-
-    send(packet, data) {
-      var self = this,
-        json = JSON.stringify([packet, data]);
-
-      if (this.connection && this.connection.connected)
-        this.connection.send(json);
+  receive(message) {
+    if (!this.listening) {
+      return;
     }
-  });
-});
+
+    if (message.startsWith('[')) {
+      const data = JSON.parse(message);
+
+      if (data.length > 1) {
+        this.messages.handleBulkData(data);
+      } else {
+        this.messages.handleData(JSON.parse(message).shift());
+      }
+    } else {
+      this.messages.handleUTF8(message);
+    }
+  }
+
+  send(packet, data) {
+    const json = JSON.stringify([packet, data]);
+
+    if (this.connection && this.connection.connected) {
+      this.connection.send(json);
+    }
+  }
+}
