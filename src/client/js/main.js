@@ -1,7 +1,7 @@
+/* global document, window */
 import $ from 'jquery';
-import log from './lib/log';
 import Detect from './utils/detect';
-import App from './app'
+import App from './app';
 import Game from './game';
 
 export default class WTF {
@@ -13,58 +13,57 @@ export default class WTF {
   }
 
   load() {
-    $(document).ready(function() {
+    $(document).ready(() => {
       this.app = new App();
-      this.body = $("body");
-      this.chatInput = $("#chatInput");
+      this.body = $('body');
+      this.chatInput = $('#chatInput');
 
       this.addClasses();
       this.initGame();
       this.addListeners();
     });
-  };
+  }
 
   addClasses() {
-
     if (Detect.isWindows()) {
-      this.body.addClass("windows");
+      this.body.addClass('windows');
     }
 
     if (Detect.isOpera()) {
-      this.body.addClass("opera");
+      this.body.addClass('opera');
     }
 
     if (Detect.isFirefoxAndroid()) {
-      this.chatInput.removeAttr("placeholder");
+      this.chatInput.removeAttr('placeholder');
     }
-  };
+  }
 
   addListeners() {
-    var resizeCheck = $("#resizeCheck");
+    const resizeCheck = $('#resizeCheck');
 
-    document.addEventListener("touchstart", function() {}, false);
-    document.addEventListener("touchmove", function(e) {
+    document.addEventListener('touchstart', () => {}, false);
+    document.addEventListener('touchmove', (e) => {
       e.preventDefault();
     });
 
-    resizeCheck.bind("transitionend", this.app.resize.bind(app));
-    resizeCheck.bind("webkitTransitionEnd", this.app.resize.bind(app));
-    resizeCheck.bind("oTransitionEnd", this.app.resize.bind(app));
+    resizeCheck.bind('transitionend', this.app.resize.bind(this));
+    resizeCheck.bind('webkitTransitionEnd', this.app.resize.bind(this));
+    resizeCheck.bind('oTransitionEnd', this.app.resize.bind(this));
 
-    $(window).on("orientationchange", function(event) {
+    $(window).on('orientationchange', () => {
       this.app.updateOrientation();
     });
-  };
+  }
 
   initGame() {
-    this.app.onReady(function() {
-      this.app.sendStatus("Welcome, welcome...");
+    this.app.onReady(() => {
+      this.app.sendStatus('Welcome, welcome...');
 
-      game = new Game(this.app);
+      const game = new Game(this.app);
       this.app.setGame(game);
     });
-  };
-};
+  }
+}
 
 const wtf = new WTF();
 wtf.load();

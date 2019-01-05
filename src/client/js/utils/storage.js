@@ -19,7 +19,7 @@ export default class Storage {
       this.data = this.create();
     }
 
-    log.info(storage.data);
+    log.info('loading localstorage', storage.data);
 
     if (this.data.clientVersion !== this.app.config.version) {
       this.data = this.create();

@@ -1,52 +1,45 @@
-define(function() {
-  return Class.extend({
-    constructor(id, element, type) {
-      
+export default class Pointer {
+  constructor(id, element, type) {
+    this.id = id;
+    this.element = element;
+    this.type = type;
 
-      this.id = id;
-      this.element = element;
-      this.type = type;
+    this.blinkInterval = null;
+    this.visible = true;
 
-      this.blinkInterval = null;
-      this.visible = true;
+    this.x = -1;
+    this.y = -1;
 
-      this.x = -1;
-      this.y = -1;
+    this.load();
+  }
 
-      this.load();
-    },
+  load() {
+    this.blinkInterval = setInterval(() => {
+      if (this.visible) {
+        this.hide();
+      } else {
+        this.show();
+      }
 
-    load() {
-      
+      this.visible = !this.visible;
+    }, 600);
+  }
 
-      this.blinkInterval = setInterval(function() {
-        if (this.visible) this.hide();
-        else this.show();
+  destroy() {
+    clearInterval(this.blinkInterval);
+    this.element.remove();
+  }
 
-        this.visible = !this.visible;
-      }, 600);
-    },
+  setPosition(x, y) {
+    this.x = x;
+    this.y = y;
+  }
 
-    destroy() {
-      
+  show() {
+    this.element.css('display', 'block');
+  }
 
-      clearInterval(this.blinkInterval);
-      this.element.remove();
-    },
-
-    setPosition(x, y) {
-      
-
-      this.x = x;
-      this.y = y;
-    },
-
-    show() {
-      this.element.css("display", "block");
-    },
-
-    hide() {
-      this.element.css("display", "none");
-    }
-  });
-});
+  hide() {
+    this.element.css('display', 'none');
+  }
+}

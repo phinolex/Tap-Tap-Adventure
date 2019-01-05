@@ -1,46 +1,46 @@
-import $ from "jquery";
-import Modules from "./utils/modules";
-import log from "./lib/log";
-import Detect from "./utils/detect";
+/* global document, window */
+import $ from 'jquery';
+import _ from 'underscore';
+import Modules from './utils/modules';
+import log from './lib/log';
+import Detect from './utils/detect';
 
 export default class App {
   constructor() {
-    
-
-    log.info("Loading the main application...");
+    log.info('Loading the main application...');
 
     this.config = null;
 
-    this.body = $("body");
-    this.wrapper = $("#content");
-    this.container = $("#container");
+    this.body = $('body');
+    this.wrapper = $('#content');
+    this.container = $('#container');
     this.window = $(window);
-    this.canvas = $("#canvasLayers");
-    this.border = $("#border");
+    this.canvas = $('#canvasLayers');
+    this.border = $('#border');
 
-    this.intro = $("#modal");
+    this.intro = $('#modal');
 
-    this.loginButton = $("#loginButton");
-    this.createButton = $("#play");
-    this.registerButton = $("#newCharacter");
-    this.helpButton = $("#helpButton");
-    this.cancelButton = $("#cancelButton");
-    this.yes = $("#yes");
-    this.no = $("#no");
-    this.loading = $(".loader");
-    this.loadingMsg = $(".loader.message");
-    this.errorMsg = $(".error.message");
+    this.loginButton = $('#loginButton');
+    this.createButton = $('#play');
+    this.registerButton = $('#newCharacter');
+    this.helpButton = $('#helpButton');
+    this.cancelButton = $('#cancelButton');
+    this.yes = $('#yes');
+    this.no = $('#no');
+    this.loading = $('.loader');
+    this.loadingMsg = $('.loader.message');
+    this.errorMsg = $('.error.message');
 
-    this.respawn = $("#respawn");
+    this.respawn = $('#respawn');
 
-    this.rememberMe = $("#rememberMe");
-    this.guest = $("#guest");
+    this.rememberMe = $('#rememberMe');
+    this.guest = $('#guest');
 
-    this.about = $("#toggle-about");
-    this.credits = $("#toggle-credits");
-    this.git = $("#toggle-git");
+    this.about = $('#toggle-about');
+    this.credits = $('#toggle-credits');
+    this.git = $('#toggle-git');
 
-    this.loginFields = [$("#loginNameInput"), $("#loginPasswordInput")];
+    this.loginFields = [$('#loginNameInput'), $('#loginPasswordInput')];
 
     this.registerFields = [];
 
@@ -50,7 +50,10 @@ export default class App {
 
     this.loggingIn = false;
 
-    this.sendStatus("You should turn back now...");
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+
+    this.sendStatus('You should turn back now...');
 
     this.zoom();
     this.updateOrientation();
@@ -58,104 +61,117 @@ export default class App {
   }
 
   load() {
-    
-
-    this.loginButton.click(function() {
+    this.loginButton.click(() => {
       this.login();
     });
 
-    this.createButton.click(function() {
+    this.createButton.click(() => {
       this.login();
     });
 
-    this.registerButton.click(function() {
-      this.openScroll("loadCharacter", "createCharacter");
+    this.registerButton.click(() => {
+      this.openScroll('loadCharacter', 'createCharacter');
     });
 
-    this.cancelButton.click(function() {
-      this.openScroll("createCharacter", "loadCharacter");
+    this.cancelButton.click(() => {
+      this.openScroll('createCharacter', 'loadCharacter');
     });
 
-    this.wrapper.click(function() {
+    this.wrapper.click(() => {
       if (
-        this.wrapper.hasClass("about") ||
-        this.wrapper.hasClass("credits") ||
-        this.wrapper.hasClass("git")
+        this.wrapper.hasClass('about')
+        || this.wrapper.hasClass('credits')
+        || this.wrapper.hasClass('git')
       ) {
-        this.wrapper.removeClass("about credits git");
-        this.displayScroll("loadCharacter");
+        this.wrapper.removeClass('about credits git');
+        this.displayScroll('loadCharacter');
       }
     });
 
-    this.about.click(function() {
-      this.displayScroll("about");
+    this.about.click(() => {
+      this.displayScroll('about');
     });
 
-    this.credits.click(function() {
-      this.displayScroll("credits");
+    this.credits.click(() => {
+      this.displayScroll('credits');
     });
 
-    this.git.click(function() {
-      this.displayScroll("git");
+    this.git.click(() => {
+      this.displayScroll('git');
     });
 
     // dismissing the welcome screen
-    const welcomeContinue = function() {
-      if (!this.game) return;
+    const welcomeContinue = () => {
+      if (!this.game) {
+        return;
+      }
 
       // hide the welcome screen so it doesn't appear again
       this.game.storage.data.welcome = false;
       this.game.storage.save();
 
-      this.body.removeClass("welcomeMessage");
+      this.body.removeClass('welcomeMessage');
     };
 
     this.yes.click(welcomeContinue);
     this.no.click(welcomeContinue);
 
-    this.rememberMe.click(function() {
-      if (!this.game || !this.game.storage) return;
+    this.rememberMe.click(() => {
+      if (!this.game || !this.game.storage) {
+        return;
+      }
 
-      const active = this.rememberMe.hasClass("active");
+      const active = this.rememberMe.hasClass('active');
 
-      this.rememberMe.toggleClass("active");
+      this.rememberMe.toggleClass('active');
 
       this.game.storage.toggleRemember(!active);
     });
 
-    this.guest.click(function() {
-      if (!this.game) return;
+    this.guest.click(() => {
+      if (!this.game) {
+        return;
+      }
 
       this.guestLogin = true;
       this.login();
     });
 
-    this.respawn.click(function() {
-      if (!this.game || !this.game.player || !this.game.player.dead) return;
+    this.respawn.click(() => {
+      if (!this.game || !this.game.player || !this.game.player.dead) {
+        return;
+      }
 
       this.game.respawn();
     });
 
     window.scrollTo(0, 1);
 
-    this.window.resize(function() {
+    this.window.resize(() => {
       this.zoom();
     });
 
-    $.getJSON("data/config.json", function(json) {
+    $.getJSON('./assets/data/config.json', (json) => {
       this.config = json;
 
-      if (this.readyCallback) this.readyCallback();
+      if (this.readyCallback) {
+        this.readyCallback();
+      }
     });
 
-    $(document).bind("keydown", function(e) {
-      if (e.which === Modules.Keys.Enter) return false;
+    $(document).bind('keydown', (e) => {
+      if (e.which === Modules.Keys.Enter) {
+        return false;
+      }
+      return true;
     });
 
-    $(document).keydown(function(e) {
+    $(document).keydown((e) => {
       const key = e.which;
 
-      if (!this.game) return;
+      if (!this.game) {
+        return;
+      }
 
       this.body.focus();
 
@@ -164,193 +180,197 @@ export default class App {
         return;
       }
 
-      if (this.game.started) this.game.onInput(Modules.InputType.Key, key);
+      if (this.game.started) {
+        this.game.onInput(Modules.InputType.Key, key);
+      }
     });
 
-    $(document).keyup(function(e) {
+    $(document).keyup((e) => {
       const key = e.which;
 
-      if (!this.game || !this.game.started) return;
+      if (!this.game || !this.game.started) {
+        return;
+      }
 
       this.game.input.keyUp(key);
     });
 
-    $(document).mousemove(function(event) {
-      if (!this.game || !this.game.input || !this.game.started) return;
+    $(document).mousemove((event) => {
+      if (!this.game || !this.game.input || !this.game.started) {
+        return;
+      }
 
       this.game.input.setCoords(event);
       this.game.input.moveCursor();
     });
 
-    this.canvas.click(function(event) {
-      if (!this.game || !this.game.started || event.button !== 0) return;
+    this.canvas.click((event) => {
+      if (!this.game || !this.game.started || event.button !== 0) {
+        return;
+      }
 
       window.scrollTo(0, 1);
 
       this.game.input.handle(Modules.InputType.LeftClick, event);
     });
 
-    $('input[type="range"]').on("input", function() {
+    $('input[type="range"]').on('input', () => {
       this.updateRange($(this));
     });
   }
 
   login() {
-    
-
     if (
-      this.loggingIn ||
-      !this.game ||
-      !this.game.loaded ||
-      this.statusMessage ||
-      !this.verifyForm()
-    )
-      return;
+      this.loggingIn
+      || !this.game
+      || !this.game.loaded
+      || this.statusMessage
+      || !this.verifyForm()
+    ) return;
 
     this.toggleLogin(true);
     this.game.connect();
   }
 
   zoom() {
-    
-
-    const containerWidth = this.container.width(),
-      containerHeight = this.container.height(),
-      windowWidth = this.window.width(),
-      windowHeight = this.window.height(),
-      zoomFactor = windowWidth / containerWidth;
+    const containerWidth = this.container.width();
+    const containerHeight = this.container.height();
+    const windowWidth = this.window.width();
+    const windowHeight = this.window.height();
+    let zoomFactor = windowWidth / containerWidth;
 
     if (containerHeight + 50 >= windowHeight) {
       zoomFactor = windowHeight / (containerHeight + 50);
     }
 
-    if (this.getScaleFactor() === 3) zoomFactor -= 0.1;
+    if (this.getScaleFactor() === 3) {
+      zoomFactor -= 0.1;
+    }
 
     this.body.css({
       zoom: zoomFactor,
-      "-moz-transform": "scale(" + zoomFactor + ")"
+      '-moz-transform': `scale(${zoomFactor})`,
     });
 
-    this.border.css("top", 0);
-
+    this.border.css('top', 0);
     this.zoomFactor = zoomFactor;
   }
 
   fadeMenu() {
-    
-
     this.updateLoader(null);
 
     setTimeout(() => {
-      this.body.addClass("game");
-      this.body.addClass("started");
-      this.body.removeClass("intro");
+      this.body.addClass('game');
+      this.body.addClass('started');
+      this.body.removeClass('intro');
     }, 500);
   }
 
   showMenu() {
-    
-
-    this.body.removeClass("game");
-    this.body.removeClass("started");
-    this.body.addClass("intro");
+    this.body.removeClass('game');
+    this.body.removeClass('started');
+    this.body.addClass('intro');
   }
 
-  showDeath() {}
-
   openScroll(origin, destination) {
-    
+    log.info('open scroll', origin, destination);
 
-    console.log("open scroll", origin, destination);
-
-    if (!destination || this.loggingIn) return;
+    if (!destination || this.loggingIn) {
+      return;
+    }
 
     this.cleanErrors();
     // this.wrapper.removeClass(origin).addClass(destination);
-    $("#" + origin).css("display", "none");
-    $("#" + destination).css("display", "block");
+    $(`#${origin}`).css('display', 'none');
+    $(`#${destination}`).css('display', 'block');
   }
 
   displayScroll(content) {
-    const self = this,
-      state = this.wrapper.attr("class");
+    const state = this.wrapper.attr('class');
 
     if (this.game.started) {
       this.wrapper.removeClass().addClass(content);
 
-      this.body.removeClass("credits legal about").toggleClass(content);
+      this.body.removeClass('credits legal about').toggleClass(content);
 
-      if (this.game.player) this.body.toggleClass("death");
+      if (this.game.player) {
+        this.body.toggleClass('death');
+      }
 
-      if (content !== "about") this.helpButton.removeClass("active");
-    } else if (state !== "animate")
-      this.openScroll(state, state === content ? "loadCharacter" : content);
+      if (content !== 'about') {
+        this.helpButton.removeClass('active');
+      }
+    } else if (state !== 'animate') {
+      this.openScroll(state, state === content ? 'loadCharacter' : content);
+    }
   }
 
   verifyForm() {
-    const self = this,
-      activeForm = this.getActiveForm();
+    const activeForm = this.getActiveForm();
 
-    if (activeForm === "null") {
-      return;
+    if (activeForm === 'null') {
+      return true;
     }
 
     switch (activeForm) {
-      case "loadCharacter":
-        const nameInput = $("#loginNameInput"),
-          passwordInput = $("#loginPasswordInput");
+      default:
+        break;
+      case 'loadCharacter':
+        const nameInput = $('#loginNameInput'); // eslint-disable-line
+        const passwordInput = $('#loginPasswordInput'); // eslint-disable-line
 
-        if (this.loginFields.length === 0)
+        if (this.loginFields.length === 0) {
           this.loginFields = [nameInput, passwordInput];
+        }
 
         if (!nameInput.val() && !this.isGuest()) {
-          this.sendError(nameInput, "Please enter a username.");
+          this.sendError(nameInput, 'Please enter a username.');
           return false;
         }
 
         if (!passwordInput.val() && !this.isGuest()) {
-          this.sendError(passwordInput, "Please enter a password.");
+          this.sendError(passwordInput, 'Please enter a password.');
           return false;
         }
-
         break;
 
-      case "createCharacter":
-        const characterName = $("#registerNameInput"),
-          registerPassword = $("#registerPasswordInput"),
-          registerPasswordConfirmation = $(
-            "#registerPasswordConfirmationInput"
-          ),
-          email = $("#registerEmailInput");
+      case 'createCharacter':
+        const characterName = $('#registerNameInput'); // eslint-disable-line
+        const registerPassword = $('#registerPasswordInput'); // eslint-disable-line
+        const email = $('#registerEmailInput'); // eslint-disable-line
+        const registerPasswordConfirmation = $( // eslint-disable-line
+          '#registerPasswordConfirmationInput',
+        );
 
-        if (this.registerFields.length === 0)
+        if (this.registerFields.length === 0) {
           this.registerFields = [
             characterName,
             registerPassword,
             registerPasswordConfirmation,
-            email
+            email,
           ];
+        }
 
         if (!characterName.val()) {
-          this.sendError(characterName, "A username is necessary you silly.");
+          this.sendError(characterName, 'A username is necessary you silly.');
           return false;
         }
 
         if (!registerPassword.val()) {
-          this.sendError(registerPassword, "You must enter a password.");
+          this.sendError(registerPassword, 'You must enter a password.');
           return false;
         }
 
         if (registerPasswordConfirmation.val() !== registerPassword.val()) {
           this.sendError(
             registerPasswordConfirmation,
-            "The passwords do not match!"
+            'The passwords do not match!',
           );
           return false;
         }
 
         if (!email.val() || !this.verifyEmail(email.val())) {
-          this.sendError(email, "An email is required!");
+          this.sendError(email, 'An email is required!');
           return false;
         }
 
@@ -360,21 +380,21 @@ export default class App {
     return true;
   }
 
+  /* eslint-disable */
   verifyEmail(email) {
     return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      email
+      email,
     );
   }
+  /* eslint-enable */
 
   sendStatus(message) {
-    
-
     this.cleanErrors();
 
     this.statusMessage = message;
 
     if (!message) {
-      this.loadingMsg.html("");
+      this.loadingMsg.html('');
       this.loading.hide();
       return;
     }
@@ -385,34 +405,33 @@ export default class App {
 
   sendError(field, error) {
     this.cleanErrors();
-    console.log("Error: " + error);
+    log.info(`Error: ${error}`);
 
     this.errorMsg.html(error);
     this.errorMsg.show();
 
     if (!field) return;
 
-    field.addClass("field-error").select();
-    field.bind("keypress", function(event) {
-      field.removeClass("field-error");
+    field.addClass('field-error').select();
+    field.bind('keypress', (event) => {
+      field.removeClass('field-error');
 
-      $(".validation-error").remove();
+      $('.validation-error').remove();
 
       $(this).unbind(event);
     });
   }
 
   cleanErrors() {
-    const self = this,
-      activeForm = this.getActiveForm(),
-      fields =
-        activeForm === "loadCharacter" ? this.loginFields : this.registerFields;
+    const activeForm = this.getActiveForm();
+    const fields = activeForm === 'loadCharacter' ? this.loginFields : this.registerFields;
 
-    for (let i = 0; i < fields.length; i++)
-      fields[i].removeClass("field-error");
+    for (let i = 0; i < fields.length; i += 1) {
+      fields[i].removeClass('field-error');
+    }
 
-    $(".validation-error").remove();
-    $(".status").remove();
+    $('.validation-error').remove();
+    $('.status').remove();
   }
 
   getActiveForm() {
@@ -420,7 +439,7 @@ export default class App {
   }
 
   isRegistering() {
-    return this.getActiveForm() === "createCharacter";
+    return this.getActiveForm() === 'createCharacter';
   }
 
   isGuest() {
@@ -428,8 +447,6 @@ export default class App {
   }
 
   resize() {
-    
-
     if (this.game) this.game.resize();
   }
 
@@ -438,12 +455,15 @@ export default class App {
   }
 
   hasWorker() {
-    return !!window.Worker;
+    return !!this.window.Worker;
   }
 
   getScaleFactor() {
-    const width = window.innerWidth,
-      height = window.innerHeight;
+    const mobile = 1;
+    const desktop = 2;
+    const tablet = 3;
+
+    const tabletOrDesktop = this.width <= 1500 || this.height <= 870 ? desktop : tablet;
 
     /**
      * These are raw scales, we can adjust
@@ -451,19 +471,19 @@ export default class App {
      * rendering file.
      */
 
-    return width <= 1000 ? 1 : width <= 1500 || height <= 870 ? 2 : 3;
+    return this.width <= 1000
+      ? mobile
+      : tabletOrDesktop;
   }
 
   revertLoader() {
-    this.updateLoader("Connecting to server...");
+    this.updateLoader('Connecting to server...');
   }
 
   updateLoader(message) {
-    
-
     if (!message) {
       this.loading.hide();
-      this.loadingMsg.html("");
+      this.loadingMsg.html('');
       return;
     }
 
@@ -472,9 +492,8 @@ export default class App {
   }
 
   toggleLogin(toggle) {
-    log.info("Logging in: " + toggle);
+    log.info(`Logging in: ${toggle}`);
 
-    
 
     this.revertLoader();
 
@@ -485,44 +504,36 @@ export default class App {
     if (toggle) {
       this.loading.hide();
 
-      this.loginButton.addClass("disabled");
-      this.registerButton.addClass("disabled");
+      this.loginButton.addClass('disabled');
+      this.registerButton.addClass('disabled');
     } else {
       this.loading.hide();
 
-      this.loginButton.removeClass("disabled");
-      this.registerButton.removeClass("disabled");
+      this.loginButton.removeClass('disabled');
+      this.registerButton.removeClass('disabled');
     }
   }
 
   toggleTyping(state) {
-    
-
-    if (this.loginFields)
-      _.each(this.loginFields, function(field) {
-        field.prop("readonly", state);
+    if (this.loginFields) {
+      _.each(this.loginFields, (field) => {
+        field.prop('readonly', state);
       });
+    }
 
-    if (this.registerFields)
-      _.each(this.registerFields, function(field) {
-        field.prop("readOnly", state);
+    if (this.registerFields) {
+      _.each(this.registerFields, (field) => {
+        field.prop('readOnly', state);
       });
+    }
   }
 
   updateRange(obj) {
-    const self = this,
-      val = (obj.val() - obj.attr("min")) / (obj.attr("max") - obj.attr("min"));
+    const val = (obj.val() - obj.attr('min')) / (obj.attr('max') - obj.attr('min'));
 
     obj.css(
-      "background-image",
-      "-webkit-gradient(linear, left top, right top, " +
-        "color-stop(" +
-        val +
-        ", #4d4d4d), " +
-        "color-stop(" +
-        val +
-        ", #C5C5C5)" +
-        ")"
+      'background-image',
+      `-webkit-gradient(linear, left top, right top, color-stop(${val}, #4d4d4d), color-stop(${val}, #C5C5C5)`,
     );
   }
 
@@ -531,7 +542,7 @@ export default class App {
   }
 
   getOrientation() {
-    return window.innerHeight > window.innerWidth ? "portrait" : "landscape";
+    return this.height > this.width ? 'portrait' : 'landscape';
   }
 
   getZoom() {

@@ -1,5 +1,6 @@
 /* global Image, document */
 import Animation from './animation';
+import log from '../lib/log';
 
 export default class Sprite {
   constructor(sprite, scale) {
@@ -128,7 +129,7 @@ export default class Sprite {
         height: this.height,
       };
     } catch (e) {
-      console.log('sprite error', e); // eslint-disable-line
+      log.info('sprite error', e);
     }
   }
 
@@ -142,7 +143,7 @@ export default class Sprite {
 
       return this.whiteSprite;
     } catch (e) {
-      console.log('sprite hurt error', e); // eslint-disable-line
+      log.info('sprite hurt error', e);
       return null;
     }
   }

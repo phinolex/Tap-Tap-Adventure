@@ -127,16 +127,17 @@ canvas {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 100;
-}
 
-#modal input {
-  background-color: #322838;
-  padding: 10px;
-  color: #fff;
-  border: 0px;
-  border-radius: 5px;
-  width: 25%;
-  margin-top: 10px;
+  input {
+    width: calc(100% - 19px);
+    text-align: right;
+    background-color: #322838;
+    padding: 10px;
+    color: #fff;
+    border: 0px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
 }
 
 #createCharacter,
@@ -148,11 +149,6 @@ canvas {
 
 .form-field {
   display: block;
-}
-
-#modal input {
-  width: calc(100% - 19px);
-  text-align: right;
 }
 
 .form-field img {
@@ -411,10 +407,6 @@ canvas {
 /* Desktop View */
 @media only screen and (max-width: 1500px),
   only screen and (max-height: 870px) {
-  #modal {
-    top: 35%;
-  }
-
   #border {
     position: absolute;
     width: 980px;

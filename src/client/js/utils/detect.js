@@ -1,39 +1,22 @@
-/* global navigator, window, userAgentContains */
+/* global navigator, window */
+
+const userAgentContains = string => navigator.userAgent.indexOf(string) !== -1;
+
 export default {
   isIpad: () => /ipad/i.test(navigator.userAgent.toLowerCase()),
   isAndroid: () => /Android/i.test(navigator.userAgent),
   isWindows: () => userAgentContains('Windows'),
-  isChromeOnWindows: () => (
-    userAgentContains('Chrome') && userAgentContains('Windows')
-  ),
-  isCanaryOnWindows: () => (
-    userAgentContains('Chrome/52') && userAgentContains('Windows')
-  ),
-  isEdgeOnWindows: () => (
-    userAgentContains('Edge') && userAgentContains('Windows')
-  ),
+  isChromeOnWindows: () => userAgentContains('Chrome') && userAgentContains('Windows'),
+  isCanaryOnWindows: () => userAgentContains('Chrome/52') && userAgentContains('Windows'),
+  isEdgeOnWindows: () => userAgentContains('Edge') && userAgentContains('Windows'),
   isFirefox: () => userAgentContains('Firefox'),
-  isSafari: () => (
-    userAgentContains('Safari') && !userAgentContains('Chrome')
-  ),
-
+  isSafari: () => userAgentContains('Safari') && !userAgentContains('Chrome'),
   isOpera: () => userAgentContains('Opera'),
-
-  isFirefoxAndroid: () => (
-    userAgentContains('Android') && userAgentContains('Firefox')
-  ),
-
-  userAgentContains: string => navigator.userAgent.indexOf(string) !== -1,
-
+  isFirefoxAndroid: () => userAgentContains('Android') && userAgentContains('Firefox'),
   isTablet: (screenWidth) => {
     const userAgent = navigator.userAgent.toLowerCase();
-
-
     const isAppleTablet = /ipad/i.test(userAgent);
-
-
     const isAndroidTablet = /android/i.test(userAgent);
-
     return (isAppleTablet || isAndroidTablet) && screenWidth >= 640;
   },
 
@@ -65,7 +48,7 @@ export default {
     let version;
 
     if (userAgent.length > 1) {
-      version = userAgent[1].split(';')[0]; // eslint-disable-line 
+      version = userAgent[1].split(';')[0]; // eslint-disable-line
     }
 
     return version;
