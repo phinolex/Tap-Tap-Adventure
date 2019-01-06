@@ -1,18 +1,18 @@
-var Character = require("../character"),
-  Mobs = require("../../../../util/mobs"),
-  _ = require("underscore"),
-  Utils = require("../../../../util/utils"),
-  Items = require("../../../../util/items");
+const _ = require('underscore');
+const Character = require('../character');
+const MobsDictionary = require('../../../../util/mobs');
+const Utils = require('../../../../util/utils');
+const ItemsDictionary = require('../../../../util/items');
 
-module.exports = Mob = Character.extend({
+export default class Mob extends Character {
   constructor(id, instance, x, y) {
-    
+    super(id, 'mob', instance, x, y);
 
-    this.super(id, "mob", instance, x, y);
+    if (!MobsDictionary.exists(id)) {
+      return;
+    }
 
-    if (!Mobs.exists(id)) return;
-
-    this.data = Mobs.Ids[this.id];
+    this.data = MobsDictionary.mobs[this.id];
     this.hitPoints = this.data.hitPoints;
     this.maxHitPoints = this.data.hitPoints;
     this.drops = this.data.drops;
@@ -34,135 +34,132 @@ module.exports = Mob = Character.extend({
     this.static = false;
 
     this.projectileName = this.getProjectileName();
-  },
+  }
 
   refresh() {
-    
-
     this.hitPoints = this.data.hitPoints;
     this.maxHitPoints = this.data.hitPoints;
 
     if (this.refreshCallback) this.refreshCallback();
-  },
+  }
 
   getDrop() {
-    
-
     if (!this.drops) return null;
 
-    var min = 0,
-      percent = 0,
-      random = Utils.randomInt(0, 1000);
+    let min = 0;
 
-    for (var drop in this.drops)
+
+    let percent = 0;
+
+
+    const random = Utils.randomInt(0, 1000);
+
+    for (const drop in this.drops) {
       if (this.drops.hasOwnProperty(drop)) {
-        var chance = this.drops[drop];
+        const chance = this.drops[drop];
 
         min = percent;
         percent += chance;
 
         if (random >= min && random < percent) {
-          var count = 1;
+          let count = 1;
 
-          if (drop === "gold")
+          if (drop === 'gold') {
             count = Utils.randomInt(
               1,
-              this.level *
-                Math.floor(Math.pow(2, this.level / 7) / (this.level / 4))
+              this.level
+              * Math.floor(Math.pow(2, this.level / 7) / (this.level / 4)),
             );
+          }
 
           return {
-            id: Items.stringToId(drop),
-            count: count
+            id: ItemsDictionary.stringToId(drop),
+            count,
           };
         }
       }
+    }
 
     return null;
-  },
+  }
 
   getProjectileName() {
     return this.data.projectileName
       ? this.data.projectileName
-      : "projectile-pinearrow";
-  },
+      : 'projectile-pinearrow';
+  }
 
   canAggro(player) {
-    
-
     if (
-      this.hasTarget() ||
-      !this.aggressive ||
-      Math.floor(this.level * 1.5) < player.level
-    )
-      return false;
+      this.hasTarget()
+      || !this.aggressive
+      || Math.floor(this.level * 1.5) < player.level
+    ) return false;
 
     return this.isNear(player, this.aggroRange);
-  },
+  }
 
   destroy() {
-    
-
     this.dead = true;
     this.clearTarget();
     this.resetPosition();
     this.respawn();
 
-    if (this.area) this.area.removeEntity(self);
-  },
+    if (this.area) {
+      this.area.removeEntity(this);
+    }
+  }
 
   return() {
-    
-
     this.clearTarget();
     this.resetPosition();
     this.move(this.x, this.y);
-  },
+  }
 
   isRanged() {
     return this.attackRange > 1;
-  },
+  }
 
   distanceToSpawn() {
     return this.getCoordDistance(this.spawnLocation[0], this.spawnLocation[1]);
-  },
+  }
 
   isAtSpawn() {
     return this.x === this.spawnLocation[0] && this.y === this.spawnLocation[1];
-  },
+  }
 
   isOutsideSpawn() {
     return this.distanceToSpawn() > this.spawnDistance;
-  },
+  }
 
   addToChestArea(chestAreas) {
-    var self = this,
-      area = _.find(chestAreas, function(area) {
-        return area.contains(this.x, this.y);
-      });
+    const area = _.find(chestAreas, area => area.contains(this.x, this.y));
 
-    if (area) area.addEntity(self);
-  },
+    if (area) {
+      area.addEntity(this);
+    }
+  }
 
   respawn() {
-    
-
     /**
      * Some entities are static (only spawned once during an event)
      * Meanwhile, other entities act as an illusion to another entity,
      * so the resawning script is handled elsewhere.
      */
 
-    if (!this.static || this.respawnDelay === -1) return;
+    if (!this.static || this.respawnDelay === -1) {
+      return;
+    }
 
-    setTimeout(function() {
-      if (this.respawnCallback) this.respawnCallback();
+    setTimeout(() => {
+      if (this.respawnCallback) {
+        this.respawnCallback();
+      }
     }, this.respawnDelay);
-  },
+  }
 
   getState() {
-    var self = this,
-      base = this.super();
+    const base = this.super();
 
     base.hitPoints = this.hitPoints;
     base.maxHitPoints = this.maxHitPoints;
@@ -170,39 +167,37 @@ module.exports = Mob = Character.extend({
     base.level = this.level;
 
     return base;
-  },
+  }
 
   resetPosition() {
-    
-
     this.setPosition(this.spawnLocation[0], this.spawnLocation[1]);
-  },
+  }
 
   onRespawn(callback) {
     this.respawnCallback = callback;
-  },
+  }
 
   onMove(callback) {
     this.moveCallback = callback;
-  },
+  }
 
   onReturn(callback) {
     this.returnCallback = callback;
-  },
+  }
 
   onRefresh(callback) {
     this.refreshCallback = callback;
-  },
+  }
 
   onDeath(callback) {
     this.deathCallback = callback;
-  },
+  }
 
   move(x, y) {
-    
-
     this.setPosition(x, y);
 
-    if (this.moveCallback) this.moveCallback(self);
+    if (this.moveCallback) {
+      this.moveCallback(this);
+    }
   }
-});
+}

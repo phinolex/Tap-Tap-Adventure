@@ -1,31 +1,29 @@
-/* global log */
+import log from 'log';
 
-var cls = require("../lib/class");
-
-module.exports = Connection = cls.Class.extend({
+export default class Connection {
   constructor(id, connection, server) {
-    
-
     this.id = id;
     this.socket = connection;
-    this._server = server;
-  },
+    this._server = server; // eslint-disable-line
+  }
 
-  broadcast(message) {
-    throw "Invalid initialization.";
-  },
+  broadcast() {
+    throw 'Invalid initialization.';
+  }
 
-  send(message) {
-    throw "Invalid initialization.";
-  },
+  send() {
+    throw 'Invalid initialization.';
+  }
 
-  sendUTF8(data) {
-    throw "Invalid initialization.";
-  },
+  sendUTF8() {
+    throw 'Invalid initialization.';
+  }
 
   close(reason) {
-    if (reason) log.info(reason);
+    if (reason) {
+      log.info(reason);
+    }
 
     this.socket.conn.close();
   }
-});
+}

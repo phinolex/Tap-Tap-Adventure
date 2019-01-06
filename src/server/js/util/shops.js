@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-export default class ShopUtils {
+export default class ShopsDictionary {
   constructor() {
     this.shops = {};
     this.data = {};

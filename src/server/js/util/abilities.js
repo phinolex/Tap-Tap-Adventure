@@ -1,6 +1,6 @@
-var Abilities = {};
-
-Abilities.Data = {};
-Abilities.Ids = {};
-
-module.exports = Abilities;
+export default class AbilityDictionary {
+  constructor() {
+    this.data = {};
+    this.abilities = {};
+  }
+}

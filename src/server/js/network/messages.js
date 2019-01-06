@@ -1,370 +1,435 @@
-var cls = require("../lib/class"),
-  Packets = require("./packets"),
-  Messages = {},
-  Message = cls.Class.extend({});
+const Packets = require('./packets');
 
-module.exports = Messages;
+export class Message {}
 
-Messages.Handshake = Message.extend({
+class Handshake extends Message {
   constructor(clientId, devClient) {
+    super();
     this.clientId = clientId;
     this.devClient = devClient;
-  },
+  }
 
   serialize() {
     return [Packets.Handshake, [this.clientId, this.devClient]];
   }
-});
+}
 
-Messages.Welcome = Message.extend({
+class Welcome extends Message {
   constructor(data) {
-    this.data = data; //array of info
-  },
+    super();
+    this.data = data; // array of info
+  }
 
   serialize() {
     return [Packets.Welcome, this.data];
   }
-});
+}
 
-Messages.Spawn = Message.extend({
+class Spawn extends Message {
   constructor(entity) {
+    super();
     this.entity = entity;
-  },
+  }
 
   serialize() {
     return [Packets.Spawn, this.entity.getState()];
   }
-});
+}
 
-Messages.List = Message.extend({
+class List extends Message {
   constructor(list) {
+    super();
     this.list = list;
-  },
+  }
 
   serialize() {
     return [Packets.List, this.list];
   }
-});
+}
 
-Messages.Sync = Message.extend({
+class Sync extends Message {
   constructor(data) {
+    super();
     this.data = data;
-  },
+  }
 
   serialize() {
     return [Packets.Sync, this.data];
   }
-});
+}
 
-Messages.Equipment = Message.extend({
+class Equipment extends Message {
   constructor(opcode, equipmentData) {
+    super();
     this.opcode = opcode;
     this.equipmentData = equipmentData;
-  },
+  }
 
   serialize() {
     return [Packets.Equipment, this.opcode, this.equipmentData];
   }
-});
+}
 
-Messages.Movement = Message.extend({
+class Movement extends Message {
   constructor(opcode, data) {
+    super();
     this.opcode = opcode;
     this.data = data;
-  },
+  }
 
   serialize() {
     return [Packets.Movement, [this.opcode, this.data]];
   }
-});
+}
 
-Messages.Teleport = Message.extend({
+class Teleport extends Message {
   constructor(id, x, y, withAnimation) {
+    super();
     this.id = id;
     this.x = x;
     this.y = y;
     this.withAnimation = withAnimation;
-  },
+  }
 
   serialize() {
     return [Packets.Teleport, [this.id, this.x, this.y, this.withAnimation]];
   }
-});
+}
 
-Messages.Despawn = Message.extend({
+class Despawn extends Message {
   constructor(id) {
+    super();
     this.id = id;
-  },
+  }
 
   serialize() {
     return [Packets.Despawn, this.id];
   }
-});
+}
 
-Messages.Animation = Message.extend({
+class Animation extends Message {
   constructor(id, data) {
+    super();
     this.id = id;
     this.data = data;
-  },
+  }
 
   serialize() {
     return [Packets.Animation, this.id, this.data];
   }
-});
+}
 
-Messages.Combat = Message.extend({
+class Combat extends Message {
   constructor(opcode, attackerId, targetId, hitData) {
+    super();
     this.opcode = opcode;
     this.attackerId = attackerId;
     this.targetId = targetId;
     this.hitData = hitData;
-  },
+  }
 
   serialize() {
     return [
       Packets.Combat,
-      [this.opcode, this.attackerId, this.targetId, this.hitData]
+      [this.opcode, this.attackerId, this.targetId, this.hitData],
     ];
   }
-});
+}
 
-Messages.Projectile = Message.extend({
+class Projectile extends Message {
   constructor(opcode, data) {
+    super();
     this.opcode = opcode;
     this.data = data;
-  },
+  }
 
   serialize() {
     return [Packets.Projectile, this.opcode, this.data];
   }
-});
+}
 
-Messages.Population = Message.extend({
+class Population extends Message {
   constructor(playerCount) {
+    super();
     this.playerCount = playerCount;
-  },
+  }
 
   serialize() {
     return [Packets.Population, this.playerCount];
   }
-});
+}
 
-Messages.Points = Message.extend({
+class Points extends Message {
   constructor(id, hitPoints, mana) {
+    super();
     this.id = id;
     this.hitPoints = hitPoints;
     this.mana = mana;
-  },
+  }
 
   serialize() {
     return [Packets.Points, [this.id, this.hitPoints, this.mana]];
   }
-});
+}
 
-Messages.Network = Message.extend({
+class Network extends Message {
   constructor(opcode) {
+    super();
     this.opcode = opcode;
-  },
+  }
 
   serialize() {
     return [Packets.Network, this.opcode];
   }
-});
+}
 
-Messages.Chat = Message.extend({
+class Chat extends Message {
   constructor(data) {
+    super();
     this.data = data;
-  },
+  }
 
   serialize() {
     return [Packets.Chat, this.data];
   }
-});
+}
 
 /**
  * Should we just have a packet that represents containers
  * as a whole or just send it separately for each?
  */
-
-Messages.Inventory = Message.extend({
+class Inventory extends Message {
   constructor(opcode, data) {
+    super();
     this.opcode = opcode;
     this.data = data;
-  },
+  }
 
   serialize() {
     return [Packets.Inventory, this.opcode, this.data];
   }
-});
+}
 
-Messages.Bank = Message.extend({
+class Bank extends Message {
   constructor(opcode, data) {
+    super();
     this.opcode = opcode;
     this.data = data;
-  },
+  }
 
   serialize() {
     return [Packets.Bank, this.opcode, this.data];
   }
-});
+}
 
-Messages.Ability = Message.extend({
+class Ability extends Message {
   constructor(opcode, data) {
+    super();
     this.opcode = opcode;
     this.data = data;
-  },
+  }
 
   serialize() {
     return [Packets.Ability, this.opcode, this.data];
   }
-});
+}
 
-Messages.Quest = Message.extend({
+class Quest extends Message {
   constructor(opcode, data) {
+    super();
     this.opcode = opcode;
     this.data = data;
-  },
+  }
 
   serialize() {
     return [Packets.Quest, this.opcode, this.data];
   }
-});
+}
 
-Messages.Notification = Message.extend({
+class Notification extends Message {
   constructor(opcode, message) {
+    super();
     this.opcode = opcode;
     this.message = message;
-  },
+  }
 
   serialize() {
     return [Packets.Notification, this.opcode, this.message];
   }
-});
+}
 
-Messages.Blink = Message.extend({
+class Blink extends Message {
   constructor(instance) {
+    super();
     this.instance = instance;
-  },
+  }
 
   serialize() {
     return [Packets.Blink, this.instance];
   }
-});
+}
 
-Messages.Heal = Message.extend({
+class Heal extends Message {
   constructor(info) {
+    super();
     this.info = info;
-  },
+  }
 
   serialize() {
     return [Packets.Heal, this.info];
   }
-});
+}
 
-Messages.Experience = Message.extend({
+class Experience extends Message {
   constructor(info) {
+    super();
     this.info = info;
-  },
+  }
 
   serialize() {
     return [Packets.Experience, this.info];
   }
-});
+}
 
-Messages.Death = Message.extend({
+class Death extends Message {
   constructor(id) {
+    super();
     this.id = id;
-  },
+  }
 
   serialize() {
     return [Packets.Death, this.id];
   }
-});
+}
 
-Messages.Audio = Message.extend({
+class Audio extends Message {
   constructor(song) {
+    super();
     this.song = song;
-  },
+  }
 
   serialize() {
     return [Packets.Audio, this.song];
   }
-});
+}
 
-Messages.NPC = Message.extend({
+class NPC extends Message {
   constructor(opcode, info) {
+    super();
     this.opcode = opcode;
     this.info = info;
-  },
+  }
 
   serialize() {
     return [Packets.NPC, this.opcode, this.info];
   }
-});
+}
 
-Messages.Respawn = Message.extend({
+class Respawn extends Message {
   constructor(instance, x, y) {
+    super();
     this.instance = instance;
     this.x = x;
     this.y = y;
-  },
+  }
 
   serialize() {
     return [Packets.Respawn, this.instance, this.x, this.y];
   }
-});
+}
 
-Messages.Enchant = Message.extend({
+class Enchant extends Message {
   constructor(opcode, info) {
+    super();
     this.opcode = opcode;
     this.info = info;
-  },
+  }
 
   serialize() {
     return [Packets.Enchant, this.opcode, this.info];
   }
-});
+}
 
-Messages.Guild = Message.extend({
+class Guild extends Message {
   constructor(opcode, info) {
+    super();
     this.opcode = opcode;
     this.info = info;
-  },
+  }
 
   serialize() {
     return [Packets.Enchant, this.opcode, this.info];
   }
-});
+}
 
-Messages.Pointer = Message.extend({
+class Pointer extends Message {
   constructor(opcode, info) {
+    super();
     this.opcode = opcode;
     this.info = info;
-  },
+  }
 
   serialize() {
     return [Packets.Pointer, this.opcode, this.info];
   }
-});
+}
 
-Messages.PVP = Message.extend({
+class PVP extends Message {
   constructor(id, pvp) {
+    super();
     this.id = id;
     this.pvp = pvp;
-  },
+  }
 
   serialize() {
     return [Packets.PVP, this.id, this.pvp];
   }
-});
+}
 
-Messages.Shop = Message.extend({
+class Shop extends Message {
   constructor(opcode, info) {
+    super();
     this.opcode = opcode;
     this.info = info;
-  },
+  }
 
   serialize() {
     return [Packets.Shop, this.opcode, this.info];
   }
-});
+}
+
+export const Messages = {
+  Handshake,
+  Welcome,
+  Spawn,
+  List,
+  Sync,
+  Equipment,
+  Movement,
+  Teleport,
+  Despawn,
+  Animation,
+  Combat,
+  Projectile,
+  Population,
+  Points,
+  Network,
+  Chat,
+  Inventory,
+  Bank,
+  Ability,
+  Quest,
+  Notification,
+  Blink,
+  Heal,
+  Experience,
+  Death,
+  Pointer,
+  NPC,
+  Audio,
+  Respawn,
+  Enchant,
+  Guild,
+  PVP,
+  Shop,
+};

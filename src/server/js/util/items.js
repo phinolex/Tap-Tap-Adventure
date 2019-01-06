@@ -1,212 +1,282 @@
-var Items = {};
+import log from 'log';
 
-Items.Data = {};
-Items.Ids = {};
-Items.onCreate = {};
+export default class ItemsDictionary {
+  constructor() {
+    this.data = {};
+    this.items = {};
+    this.onCreate = {};
+    this.plugins = {};
+  }
 
-Items.Plugins = {};
+  getData(name) {
+    if (name in this.data) {
+      return this.data[name];
+    }
 
-Items.getData = function(name) {
-  if (name in Items.Data) return Items.Data[name];
+    return 'null';
+  }
 
-  return "null";
-};
+  hasPlugin(id) {
+    if (id in this.items && this.items[id].plugin in this.plugins) {
+      return true;
+    }
 
-Items.hasPlugin = function(id) {
-  if (id in Items.Ids) if (Items.Ids[id].plugin in Items.Plugins) return true;
+    return false;
+  }
 
-  return false;
-};
+  isNewPlugin(id) {
+    if (id in this.items && this.items[id].plugin in this.plugins) {
+      return this.plugins[this.items[id].plugin];
+    }
 
-Items.isNewPlugin = function(id) {
-  if (id in Items.Ids)
-    if (Items.Ids[id].plugin in Items.Plugins)
-      return Items.Plugins[Items.Ids[id].plugin];
-};
+    return false;
+  }
 
-Items.idToString = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].key;
+  idToString(id) {
+    if (id in this.items) {
+      return this.items[id].key;
+    }
 
-  return "null";
-};
+    return 'null';
+  }
 
-Items.idToName = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].name;
+  idToName(id) {
+    if (id in this.items) {
+      return this.items[id].name;
+    }
 
-  return "null";
-};
+    return 'null';
+  }
 
-Items.stringToId = function(name) {
-  if (name in Items.Data) return Items.Data[name].id;
-  else log.error("Item: " + name + " not found in the database.");
+  stringToId(name) {
+    if (name in this.data) {
+      return this.data[name].id;
+    }
 
-  return "null";
-};
+    log.error(`Item: ${name} not found in the database.`);
+    return 'null';
+  }
 
-Items.getLevelRequirement = function(name) {
-  var level = 1,
-    item = Items.Data[name];
+  getLevelRequirement(name) {
+    let level = 1;
+    const item = this.data[name];
 
-  if (item && item.requirement) return item.requirement;
+    if (item && item.requirement) {
+      return item.requirement;
+    }
 
-  if (Items.isWeapon(name)) level = Items.Data[name].attack;
-  else if (Items.isArmour(name)) level = Items.Data[name].defense;
-  else if (Items.isPendant(name)) level = Items.Data[name].pendantLevel;
-  else if (Items.isRing(name)) level = Items.Data[name].ringLevel;
-  else if (Items.isBoots(name)) level = Items.Data[name].bootsLevel;
+    if (this.isWeapon(name)) {
+      level = this.data[name].attack;
+    } else if (this.isArmour(name)) {
+      level = this.data[name].defense;
+    } else if (this.isPendant(name)) {
+      level = this.data[name].pendantLevel;
+    } else if (this.isRing(name)) {
+      level = this.data[name].ringLevel;
+    } else if (this.isBoots(name)) {
+      level = this.data[name].bootsLevel;
+    }
 
-  return level * 2;
-};
+    return level * 2;
+  }
 
-Items.getWeaponLevel = function(weaponName) {
-  if (Items.isWeapon(weaponName)) return Items.Data[weaponName].attack;
+  getWeaponLevel(weaponName) {
+    if (this.isWeapon(weaponName)) {
+      return this.data[weaponName].attack;
+    }
 
-  return -1;
-};
+    return -1;
+  }
 
-Items.getArmourLevel = function(armourName) {
-  if (Items.isArmour(armourName)) return Items.Data[armourName].defense;
+  getArmourLevel(armourName) {
+    if (this.isArmour(armourName)) {
+      return this.data[armourName].defense;
+    }
 
-  return -1;
-};
+    return -1;
+  }
 
-Items.getPendantLevel = function(pendantName) {
-  if (Items.isPendant(pendantName)) return Items.Data[pendantName].pendantLevel;
+  getPendantLevel(pendantName) {
+    if (this.isPendant(pendantName)) {
+      return this.data[pendantName].pendantLevel;
+    }
 
-  return -1;
-};
+    return -1;
+  }
 
-Items.getRingLevel = function(ringName) {
-  if (Items.isRing(ringName)) return Items.Data[ringName].ringLevel;
+  getRingLevel(ringName) {
+    if (this.isRing(ringName)) {
+      return this.data[ringName].ringLevel;
+    }
 
-  return -1;
-};
+    return -1;
+  }
 
-Items.getBootsLevel = function(bootsName) {
-  if (Items.isBoots(bootsName)) return Items.Data[bootsName].bootsLevel;
+  getBootsLevel(bootsName) {
+    if (this.isBoots(bootsName)) {
+      return this.data[bootsName].bootsLevel;
+    }
 
-  return -1;
-};
+    return -1;
+  }
 
-Items.isArcherWeapon = function(string) {
-  if (string in Items.Data) return Items.Data[string].type === "weaponarcher";
+  isArcherWeapon(string) {
+    if (string in this.data) {
+      return this.data[string].type === 'weaponarcher';
+    }
 
-  return false;
-};
+    return false;
+  }
 
-Items.isWeapon = function(string) {
-  if (string in Items.Data)
+  isWeapon(string) {
+    if (string in this.data) {
+      return (
+        this.data[string].type === 'weapon'
+        || this.data[string].type === 'weaponarcher'
+      );
+    }
+
+    return false;
+  }
+
+  isArmour(string) {
+    if (string in this.data) {
+      return (
+        this.data[string].type === 'armor'
+        || this.data[string].type === 'armorarcher'
+      );
+    }
+
+    return false;
+  }
+
+  isPendant(string) {
+    if (string in this.data) {
+      return this.data[string].type === 'pendant';
+    }
+
+    return false;
+  }
+
+  isRing(string) {
+    if (string in this.data) {
+      return this.data[string].type === 'ring';
+    }
+
+    return false;
+  }
+
+  isBoots(string) {
+    if (string in this.data) {
+      return this.data[string].type === 'boots';
+    }
+
+    return false;
+  }
+
+  getType(id) {
+    if (id in this.items) {
+      return this.items[id].type;
+    }
+
+    return null;
+  }
+
+  isStackable(id) {
+    if (id in this.items) {
+      return this.items[id].stackable;
+    }
+
+    return false;
+  }
+
+  isEdible(id) {
+    if (id in this.items) {
+      return this.items[id].edible;
+    }
+
+    return false;
+  }
+
+  getCustomData(id) {
+    if (id in this.items) {
+      return this.items[id].customData;
+    }
+
+    return null;
+  }
+
+  maxStackSize(id) {
+    if (id in this.items) {
+      return this.items[id].maxStackSize;
+    }
+
+    return false;
+  }
+
+  isShard(id) {
+    return id === 253 || id === 254 || id === 255 || id === 256 || id === 257;
+  }
+
+  isEnchantable(id) {
+    return this.getType(id) !== 'object' && this.getType(id) !== 'craft';
+  }
+
+  getShardTier(id) {
+    switch (id) {
+      case 253:
+        return 1;
+      case 254:
+        return 2;
+      case 255:
+        return 3;
+      case 256:
+        return 4;
+      case 257:
+        return 5;
+      default:
+        return -1;
+    }
+  }
+
+  isEquippable(string) {
     return (
-      Items.Data[string].type === "weapon" ||
-      Items.Data[string].type === "weaponarcher"
+      this.isArmour(string)
+      || this.isWeapon(string)
+      || this.isPendant(string)
+      || this.isRing(string)
+      || this.isBoots(string)
     );
+  }
 
-  return false;
-};
+  healsHealth(id) {
+    if (id in this.items) {
+      return this.items[id].healsHealth > 0;
+    }
 
-Items.isArmour = function(string) {
-  if (string in Items.Data)
-    return (
-      Items.Data[string].type === "armor" ||
-      Items.Data[string].type === "armorarcher"
-    );
+    return false;
+  }
 
-  return false;
-};
+  healsMana(id) {
+    if (id in this.items) {
+      return this.items[id].healsMana > 0;
+    }
 
-Items.isPendant = function(string) {
-  if (string in Items.Data) return Items.Data[string].type === "pendant";
+    return false;
+  }
 
-  return false;
-};
+  getHealingFactor(id) {
+    if (id in this.items) {
+      return this.items[id].healsHealth;
+    }
 
-Items.isRing = function(string) {
-  if (string in Items.Data) return Items.Data[string].type === "ring";
+    return 0;
+  }
 
-  return false;
-};
-
-Items.isBoots = function(string) {
-  if (string in Items.Data) return Items.Data[string].type === "boots";
-
-  return false;
-};
-
-Items.getType = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].type;
-
-  return null;
-};
-
-Items.isStackable = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].stackable;
-
-  return false;
-};
-
-Items.isEdible = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].edible;
-
-  return false;
-};
-
-Items.getCustomData = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].customData;
-
-  return null;
-};
-
-Items.maxStackSize = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].maxStackSize;
-
-  return false;
-};
-
-Items.isShard = function(id) {
-  return id === 253 || id === 254 || id === 255 || id === 256 || id === 257;
-};
-
-Items.isEnchantable = function(id) {
-  return Items.getType(id) !== "object" && Items.getType(id) !== "craft";
-};
-
-Items.getShardTier = function(id) {
-  if (id === 253) return 1;
-  else if (id === 254) return 2;
-  else if (id === 255) return 3;
-  else if (id === 256) return 4;
-  else if (id === 257) return 5;
-};
-
-Items.isEquippable = function(string) {
-  return (
-    Items.isArmour(string) ||
-    Items.isWeapon(string) ||
-    Items.isPendant(string) ||
-    Items.isRing(string) ||
-    Items.isBoots(string)
-  );
-};
-
-Items.healsHealth = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].healsHealth > 0;
-
-  return false;
-};
-
-Items.healsMana = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].healsMana > 0;
-};
-
-Items.getHealingFactor = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].healsHealth;
-
-  return 0;
-};
-
-Items.getManaFactor = function(id) {
-  if (id in Items.Ids) return Items.Ids[id].healsMana;
-  return 0;
-};
-
-module.exports = Items;
+  getManaFactor(id) {
+    if (id in this.items) {
+      return this.items[id].healsMana;
+    }
+    return 0;
+  }
+}

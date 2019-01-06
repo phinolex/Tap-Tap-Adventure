@@ -1,5 +1,3 @@
-var Constants = {
-  MAX_STACK: 2147483646
+export default {
+  MAX_STACK: 2147483646,
 };
-
-module.exports = Constants;

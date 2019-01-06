@@ -1,11 +1,9 @@
-/* global module */
-
-var Modules = {
+export default {
   Orientation: {
     Up: 0,
     Down: 1,
     Left: 2,
-    Right: 3
+    Right: 3,
   },
 
   Equipment: {
@@ -13,7 +11,7 @@ var Modules = {
     Weapon: 1,
     Pendant: 2,
     Ring: 3,
-    Boots: 4
+    Boots: 4,
   },
 
   Hits: {
@@ -25,7 +23,7 @@ var Modules = {
     LevelUp: 5,
     Critical: 6,
     Stun: 7,
-    Explosive: 8
+    Explosive: 8,
   },
 
   Projectiles: {
@@ -34,7 +32,7 @@ var Modules = {
     FireBall: 2,
     IceBall: 3,
     Terror: 4,
-    Tornado: 5
+    Tornado: 5,
   },
 
   Abilities: {
@@ -43,7 +41,7 @@ var Modules = {
     Smash: 2,
     Tornado: 3,
     Run: 4,
-    Call: 5
+    Call: 5,
   },
 
   Enchantment: {
@@ -54,31 +52,31 @@ var Modules = {
     Explosive: 4,
     Stun: 5,
     AntiStun: 6,
-    Splash: 7
+    Splash: 7,
   },
 
   Trade: {
     Request: 0,
     Started: 1,
     Accepted: 2,
-    Finished: 3
+    Finished: 3,
   },
 
   Achievements: {
     Type: {
       Killing: 0,
-      Scavenge: 1
+      Scavenge: 1,
     },
 
     Rewards: {
       Item: 0,
       Experience: 1,
-      Skill: 2
-    }
+      Skill: 2,
+    },
   },
 
   Quests: {
-    Introduction: 0
+    Introduction: 0,
   },
 
   Languages: {
@@ -88,17 +86,15 @@ var Modules = {
     Spanish: 3,
     German: 4,
     Japanese: 5,
-    Chinese: 6
+    Chinese: 6,
   },
 
   Warps: {
-    0: ["Mudwich", 25, 95, true, 1], //Starting Village
-    1: ["Northton", 49, 207, true, 25], //Ice World
-    2: ["Lakesworld", 530, 121, false, 60], //Citadels
-    3: ["Aynor", 178, 140, true, 50],
-    4: ["Crullfeld", 397, 227, true, 20], //Desert
-    5: ["Patsow", 262, 131, true, 25] //Lava
-  }
+    0: ['Mudwich', 25, 95, true, 1], // Starting Village
+    1: ['Northton', 49, 207, true, 25], // Ice World
+    2: ['Lakesworld', 530, 121, false, 60], // Citadels
+    3: ['Aynor', 178, 140, true, 50],
+    4: ['Crullfeld', 397, 227, true, 20], // Desert
+    5: ['Patsow', 262, 131, true, 25], // Lava
+  },
 };
-
-module.exports = Modules;

@@ -1,38 +1,38 @@
-var NPCs = {};
-
-NPCs.Properties = {};
-NPCs.Ids = {};
-
-NPCs.idToString = function(id) {
-  if (id in NPCs.Ids) {
-    return NPCs.Ids[id].key;
+export default class NpcsDictionary {
+  constructor() {
+    this.properties = {};
+    this.npcs = {};
   }
 
-  return null;
-};
+  idToString(id) {
+    if (id in this.npcs) {
+      return this.npcs[id].key;
+    }
 
-NPCs.idToName = function(id) {
-  if (id in NPCs.Ids) {
-    return NPCs.Ids[id].name;
+    return null;
   }
 
-  return null;
-};
+  idToName(id) {
+    if (id in this.npcs) {
+      return this.npcs[id].name;
+    }
 
-NPCs.getText = function(id) {
-  if (id in NPCs.Ids) {
-    return NPCs.Ids[id].text;
+    return null;
   }
 
-  return null;
-};
+  getText(id) {
+    if (this.npcs && this.npcs[id]) {
+      return this.npcs[id].text;
+    }
 
-NPCs.getType = function(id) {
-  if (id in NPCs.Ids) {
-    return NPCs.Ids[id].type;
+    return null;
   }
 
-  return null;
-};
+  getType(id) {
+    if (this.npcs && this.npcs[id]) {
+      return this.npcs[id].type;
+    }
 
-module.exports = NPCs;
+    return null;
+  }
+}

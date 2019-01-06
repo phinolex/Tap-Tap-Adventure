@@ -1,44 +1,46 @@
-var Mobs = {};
-
-Mobs.Properties = {};
-Mobs.Ids = {};
-Mobs.Plugins = {};
-
-Mobs.idToString = function(id) {
-  if (id in Mobs.Ids) {
-    return Mobs.Ids[id].key;
+export default class MobsDictionary {
+  constructor() {
+    this.properties = {};
+    this.mobs = {};
+    this.plugins = {};
   }
 
-  return null;
-};
+  idToString(id) {
+    if (this.mobs && this.mobs[id]) {
+      return this.mobs[id].key;
+    }
 
-Mobs.idToName = function(id) {
-  if (id in Mobs.Ids) {
-    return Mobs.Ids[id].name;
+    return null;
   }
 
-  return null;
-};
+  idToName(id) {
+    if (this.mobs && this.mobs[id]) {
+      return this.mobs[id].name;
+    }
 
-Mobs.getXp = function(id) {
-  if (id in Mobs.Ids) {
-    return Mobs.Ids[id].xp;
+    return null;
   }
 
-  return -1;
-};
+  getXp(id) {
+    if (this.mobs && this.mobs[id]) {
+      return this.mobs[id].xp;
+    }
 
-Mobs.exists = function(id) {
-  return id in Mobs.Ids;
-};
+    return -1;
+  }
 
-Mobs.hasCombatPlugin = function(id) {
-  return id in Mobs.Ids && Mobs.Ids[id].combatPlugin in Mobs.Plugins;
-};
+  exists(id) {
+    return id in this.mobs;
+  }
 
-Mobs.isNewCombatPlugin = function(id) {
-  if (id in Mobs.Ids && Mobs.Ids[id].combatPlugin in Mobs.Plugins)
-    return Mobs.Plugins[Mobs.Ids[id].combatPlugin];
-};
+  hasCombatPlugin(id) {
+    return id in this.mobs && this.mobs[id].combatPlugin in this.plugins;
+  }
 
-module.exports = Mobs;
+  isNewCombatPlugin(id) {
+    if (id in this.mobs && this.mobs[id].combatPlugin in this.plugins) {
+      return this.plugins[this.mobs[id].combatPlugin];
+    }
+    return null;
+  }
+}

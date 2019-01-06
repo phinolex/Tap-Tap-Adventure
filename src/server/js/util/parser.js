@@ -1,39 +1,36 @@
-/* global log */
+/* eslint-disable */
+import log from 'log';
+import _ from 'underscore';
+import NPCData from '../../data/npcs.json';
+import ItemData from '../../data/items.json';
+import MobData from '../../data/mobs.json';
+import AbilityData from '../../data/abilities.json';
+import ShopsData from '../../data/shops.json';
+import ItemsDictionary from './items';
+import NpcsDictionary from './npcs';
+import MobsDictionary from './mobs';
+import AbilitiesDictionary from './abilities';
+import ShopsDictionary from './shops';
+import Formulas from '../game/formulas';
 
-var cls = require("../lib/class"),
-  NPCData = require("../../data/npcs.json"),
-  ItemData = require("../../data/items.json"),
-  MobData = require("../../data/mobs.json"),
-  AbilityData = require("../../data/abilities.json"),
-  ShopsData = require("../../data/shops.json"),
-  Items = require("./items"),
-  NPCs = require("./npcs"),
-  Mobs = require("./mobs"),
-  Abilities = require("./abilities"),
-  Shops = require("./shops"),
-  _ = require("underscore"),
-  Formulas = require("../game/formulas");
-
-module.exports = Parser = cls.Class.extend({
+export default class Parser {
   constructor() {
-    
-
     this.loadMobData();
     this.loadNPCData();
     this.loadItemData();
     this.loadAbilityData();
     this.loadShops();
     this.loadLevels();
-  },
+  }
 
   loadMobData() {
-    var mobCounter = 0;
+    let mobCounter = 0;
 
-    _.each(MobData, function(value, key) {
-      key = key.toLowerCase();
+    _.each(MobData, (value, key) => {
+      key = key.toLowerCase(); // eslint-disable-line
 
-      Mobs.Properties[key] = {
-        key: key,
+      MobsDictionary.properties[key] = {
+        key,
         id: value.id,
         name: value.name ? value.name : key,
         drops: value.drops ? value.drops : null,
@@ -50,54 +47,52 @@ module.exports = Parser = cls.Class.extend({
         movementSpeed: value.movementSpeed ? value.movementSpeed : 200,
         projectileName: value.projectileName ? value.projectileName : null,
         spawnDelay: value.spawnDelay ? value.spawnDelay : 60000,
-        combatPlugin: value.combatPlugin ? value.combatPlugin : null
+        combatPlugin: value.combatPlugin ? value.combatPlugin : null,
       };
 
-      Mobs.Ids[value.id] = Mobs.Properties[key];
+      MobsDictionary.mobs[value.id] = MobsDictionary.properties[key];
 
-      mobCounter++;
+      mobCounter += 1;
     });
 
-    Mobs.Plugins = require("../util/plugins")(
-      __dirname + "/../../data/combat/"
-    );
+    MobsDictionary.plugins = require('../util/plugins')(`${__dirname}/../../data/combat/`);
 
-    log.info("Finished loading " + mobCounter + " mobs.");
-    log.info("Loaded " + Object.keys(Mobs.Plugins).length + " mob plugins.");
-  },
+    log.info(`Finished loading ${mobCounter} mobs.`);
+    log.info(`Loaded ${Object.keys(MobsDictionary.plugins).length} mob plugins.`);
+  }
 
   loadNPCData() {
-    var npcCounter = 0;
+    let npcCounter = 0;
 
-    _.each(NPCData, function(value, key) {
-      key = key.toLowerCase();
+    _.each(NPCData, (value, key) => {
+      key = key.toLowerCase(); // eslint-disable-line
 
-      NPCs.Properties[key] = {
-        key: key,
+      NpcsDictionary.properties[key] = {
+        key,
         id: value.id,
         name: value.name ? value.name : key,
         text: value.text ? value.text : null,
-        type: value.type ? value.type : null
+        type: value.type ? value.type : null,
       };
 
-      NPCs.Ids[value.id] = NPCs.Properties[key];
+      NpcsDictionary.npcs[value.id] = NpcsDictionary.properties[key];
 
-      npcCounter++;
+      npcCounter += 1;
     });
 
-    log.info("Finished loading " + npcCounter + " NPCs.");
-  },
+    log.info(`Finished loading ${npcCounter} NPCs.`);
+  }
 
   loadItemData() {
-    var itemCounter = 0;
+    let itemCounter = 0;
 
-    _.each(ItemData, function(value, key) {
-      key = key.toLowerCase();
+    _.each(ItemData, (value, key) => {
+      key = key.toLowerCase(); // eslint-disable-line
 
-      Items.Data[key] = {
-        key: key,
+      ItemsDictionary.data[key] = {
+        key,
         id: value.id ? value.id : -1,
-        type: value.type ? value.type : "object",
+        type: value.type ? value.type : 'object',
         attack: value.attack ? value.attack : 0,
         defense: value.defense ? value.defense : 0,
         pendantLevel: value.pendantLevel ? value.pendantLevel : null,
@@ -112,72 +107,70 @@ module.exports = Parser = cls.Class.extend({
         healsMana: value.healsMana ? value.healsMana : 0,
         maxStackSize: value.maxStackSize ? value.maxStackSize : -1,
         plugin: value.plugin ? value.plugin : null,
-        customData: value.customData ? value.customData : null
+        customData: value.customData ? value.customData : null,
       };
 
-      Items.Ids[value.id] = Items.Data[key];
+      ItemsDictionary.items[value.id] = ItemsDictionary.data[key];
 
-      itemCounter++;
+      itemCounter += 1;
     });
 
-    Items.Plugins = require("../util/plugins")(
-      __dirname + "/../../data/items/"
-    );
+    ItemsDictionary.plugins = require('../util/plugins')(`${__dirname}/../../data/items/`);
 
-    log.info("Finished loading " + itemCounter + " items.");
-    log.info("Loaded " + Object.keys(Items.Plugins).length + " item plugins.");
-  },
+    log.info(`Finished loading ${itemCounter} items.`);
+    log.info(`Loaded ${Object.keys(ItemsDictionary.plugins).length} item plugins.`);
+  }
 
   loadAbilityData() {
-    var skillCounter = 0;
+    let skillCounter = 0;
 
-    _.each(AbilityData, function(value, key) {
-      key = key.toLowerCase();
+    _.each(AbilityData, (value, key) => {
+      key = key.toLowerCase(); // eslint-disable-line
 
-      Abilities.Data[key] = {
-        key: key,
+      AbilitiesDictionary.data[key] = {
+        key,
         id: value.id,
         type: value.type,
         mana: value.mana ? value.mana : 0,
-        cooldown: value.cooldown ? value.cooldown : null
+        cooldown: value.cooldown ? value.cooldown : null,
       };
 
-      Abilities.Ids[value.id] = Abilities.Data[key];
+      AbilitiesDictionary.abilities[value.id] = AbilitiesDictionary.data[key];
 
-      skillCounter++;
+      skillCounter += 1;
     });
 
-    log.info("Finished loading " + skillCounter + " skills.");
-  },
+    log.info(`Finished loading ${skillCounter} skills.`);
+  }
 
   loadShops() {
-    var shopCounter = 0;
+    let shopCounter = 0;
 
-    _.each(ShopsData, function(value, key) {
+    _.each(ShopsData, (value, key) => {
       key = key.toLowerCase();
 
-      Shops.Data[key] = {
-        key: key,
+      ShopsDictionary.data[key] = {
+        key,
         id: value.npcId,
         items: value.items,
         count: value.count,
-        prices: value.prices
+        prices: value.prices,
       };
 
-      Shops.Ids[value.npcId] = Shops.Data[key];
+      ShopsDictionary.shops[value.npcId] = ShopsDictionary.data[key];
 
-      shopCounter++;
+      shopCounter += 1;
     });
 
-    log.info("Finished loading " + shopCounter + " shops.");
-  },
+    log.info(`Finished loading ${shopCounter} shops.`);
+  }
 
   loadLevels() {
     Formulas.LevelExp[0] = 0;
 
-    for (var i = 1; i < 130; i++) {
-      var points = Math.floor(0.25 * Math.floor(i + 300 * Math.pow(2, i / 7)));
+    for (let i = 1; i < 130; i += 1) {
+      const points = Math.floor(0.25 * Math.floor(i + 300 * Math.pow(2, i / 7)));
       Formulas.LevelExp[i] = points + Formulas.LevelExp[i - 1];
     }
   }
-});
+}

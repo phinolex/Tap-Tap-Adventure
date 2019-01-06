@@ -1,54 +1,87 @@
-/* global module, log */
+/* global WebSocket */
+import log from 'log';
+import serve from 'serve-static';
+import http from 'http';
+import SocketIO from 'socket.io';
+import Socket from './socket';
+import Utils from '../util/utils';
 
-var Socket = require("./socket"),
-  Connection = require("./connection"),
-  connect = require("connect"),
-  serve = require("serve-static"),
-  http = require("http"),
-  SocketIO = require("socket.io"),
-  Utils = require("../util/utils"),
-  WebSocket = {};
+class Connection {
+  constructor(id, socket, server) {
+    this.id = id;
+    this.socket = socket;
+    this._server = server; // eslint-disable-line
 
-module.exports = WebSocket;
+    this.socket.on('message', (message) => {
+      if (this.listenCallback) {
+        this.listenCallback(JSON.parse(message));
+      }
+    });
 
-WebSocket.Server = Socket.extend({
-  _connections: {},
-  _counter: 0,
+    this.socket.on('disconnect', () => {
+      log.notice(`Closed socket: ${this.socket.conn.remoteAddress}`);
 
+      if (this.closeCallback) {
+        this.closeCallback();
+      }
+
+      delete this._server.removeConnection(this.id);
+    });
+  }
+
+  listen(callback) {
+    this.listenCallback = callback;
+  }
+
+  onClose(callback) {
+    this.closeCallback = callback;
+  }
+
+  send(message) {
+    this.sendUTF8(JSON.stringify(message));
+  }
+
+  sendUTF8(data) {
+    this.socket.send(data);
+  }
+}
+
+class Server extends Socket {
   constructor(host, port, version) {
-    
-
-    this.super(port);
+    super(port);
 
     this.host = host;
     this.version = version;
-
+    this._connections = {};
+    this._counter = 0;
     this.ips = {};
 
-    //Serve statically for faster development
+    // Serve statically for faster development
+    const app = Connection();
 
-    var app = connect();
-    app.use(serve("client", {index: ["index.html"]}), null);
+    app.use(serve('client', {
+      index: ['index.html'],
+    }), null);
 
     this.httpServer = http
       .createServer(app)
-      .listen(port, host, function serverEverythingListening() {
-        log.notice("Server is now listening on: " + port);
+      .listen(port, host, () => {
+        log.notice(`Server is now listening on: ${port}`);
       });
 
     this.io = new SocketIO(this.httpServer);
-    this.io.on("connection", function webSocketListener(socket) {
-      log.notice("Received connection from: " + socket.conn.remoteAddress);
+    this.io.on('connection', (socket) => {
+      log.notice(`Received connection from: ${socket.conn.remoteAddress}`);
 
-      var client = new WebSocket.Connection(this.createId(), socket, self);
+      const client = new WebSocket.Connection(this.createId(), socket, this);
 
-      socket.on("client", function(data) {
+      socket.on('client', (data) => {
         // check the client version of socket.io matches the server version
         if (data.gVer !== this.version) {
-          client.sendUTF8("updated");
+          client.sendUTF8('updated');
           log.notice(data.gVer);
           log.notice(this.version);
-          client.close("Client version is out of sync with the server.");
+          client.close('Client version is out of sync with the server.');
         }
 
         if (this.connectionCallback) {
@@ -58,65 +91,35 @@ WebSocket.Server = Socket.extend({
         this.addConnection(client);
       });
 
-      socket.on("u_message", function(message) {
-        //Used for unity messages as Socket.IO differs
+      socket.on('u_message', (message) => {
+        // Used for unity messages as Socket.IO differs
 
         if (client.listenCallback) client.listenCallback(message);
       });
     });
-  },
+  }
 
   createId() {
-    return "1" + Utils.random(99) + "" + this._counter++;
-  },
+    this._counter += 1;
+    return `1${Utils.random(99)}${this._counter}`;
+  }
 
   broadcast(message) {
-    this.forEachConnection(function(connection) {
+    this.forEachConnection((connection) => {
       connection.send(message);
     });
-  },
+  }
 
   onConnect(callback) {
     this.connectionCallback = callback;
-  },
+  }
 
   onRequestStatus(callback) {
     this.statusCallback = callback;
   }
-});
+}
 
-WebSocket.Connection = Connection.extend({
-  constructor(id, socket, server) {
-    
-
-    this.super(id, socket, server);
-
-    this.socket.on("message", function(message) {
-      if (this.listenCallback) this.listenCallback(JSON.parse(message));
-    });
-
-    this.socket.on("disconnect", function() {
-      log.notice("Closed socket: " + this.socket.conn.remoteAddress);
-
-      if (this.closeCallback) this.closeCallback();
-
-      delete this._server.removeConnection(this.id);
-    });
-  },
-
-  listen(callback) {
-    this.listenCallback = callback;
-  },
-
-  onClose(callback) {
-    this.closeCallback = callback;
-  },
-
-  send(message) {
-    this.sendUTF8(JSON.stringify(message));
-  },
-
-  sendUTF8(data) {
-    this.socket.send(data);
-  }
-});
+export default {
+  Server,
+  Connection,
+};
