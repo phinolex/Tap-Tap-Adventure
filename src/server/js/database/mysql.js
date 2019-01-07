@@ -1,15 +1,12 @@
-/* global log */
-var cls = require("../lib/class"),
-  mysql = require("mysql"),
-  Creator = require("./creator"),
-  _ = require("underscore"),
-  Loader = require("./loader"),
-  Config = require("../../config.json");
+import mysql from 'mysql';
+import _ from 'underscore';
+import log from 'log';
+import Creator from './creator';
+import Loader from './loader';
+import Config from '../../config.json';
 
-module.exports = MySQL = cls.Class.extend({
+export default class MySQL {
   constructor(host, port, user, pass, database) {
-    
-
     /**
      * Main file for MySQL, it splits into Creator and Loader.
      * Responsible for creating and loading data, respectively.
@@ -24,16 +21,14 @@ module.exports = MySQL = cls.Class.extend({
 
     this.connect(
       true,
-      false
+      false,
     );
 
     this.loadCreator();
     this.loadCallbacks();
-  },
+  }
 
   connect(usingDB, forceCallbacks) {
-    
-
     if (this.connection) {
       this.connection.destroy();
       this.connection = null;
@@ -44,79 +39,77 @@ module.exports = MySQL = cls.Class.extend({
       port: this.port,
       user: this.user,
       password: this.password,
-      database: usingDB ? this.database : null
+      database: usingDB ? this.database : null,
     });
 
     if (forceCallbacks) this.loadCallbacks();
-  },
+  }
 
   loadCallbacks() {
-    
-
-    this.connection.connect(function(err) {
-      if (err) {
-        log.info("[MySQL] No database found...");
+    this.connection.connect((error) => {
+      if (error) {
+        log.info('[MySQL] No database found...');
+        log.info(error);
         this.connect(
           false,
-          false
+          false,
         );
         this.loadDatabases();
         return;
       }
 
       this.creator.createTables();
-      log.info("Successfully established connection to the MySQL database!");
-      this.loader = new Loader(self);
+      log.info('Successfully established connection to the MySQL database!');
+      this.loader = new Loader(this);
     });
 
-    this.connection.on("error", function(error) {
-      log.error("MySQL database disconnected.");
+    this.connection.on('error', (error) => {
+      log.error('MySQL database disconnected.');
+      log.error(error);
 
       this.connect(
         true,
-        true
+        true,
       );
     });
 
-    this.onSelected(function() {
+    this.onSelected(() => {
       this.creator.createTables();
     });
-  },
+  }
 
   loadCreator() {
-    
-
     if (this.creator) return;
 
-    this.creator = new Creator(self);
-  },
+    this.creator = new Creator(this);
+  }
 
-  login(player, guest) {
-    var self = this,
+  login(player) {
+    let
       found;
 
-    log.info("Initiating login for: " + player.username);
+    log.info(`Initiating login for: ${player.username}`);
 
     this.connection.query(
-      "SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? AND `player_data`.`password`= ?",
+      'SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? AND `player_data`.`password`= ?',
       [player.username, player.password],
-      function(error, rows, fields) {
+      (error, rows) => {
         if (error) {
           log.error(error);
           throw error;
         }
 
-        _.each(rows, function(row) {
+        _.each(rows, (row) => {
           if (row.username === player.username) {
             found = true;
 
-            var data = row;
+            const data = row;
 
-            data.armour = data.armour.split(",").map(Number);
-            data.weapon = data.weapon.split(",").map(Number);
-            data.pendant = data.pendant.split(",").map(Number);
-            data.ring = data.ring.split(",").map(Number);
-            data.boots = data.boots.split(",").map(Number);
+            data.armour = data.armour.split(',').map(Number);
+            data.weapon = data.weapon.split(',').map(Number);
+            data.pendant = data.pendant.split(',').map(Number);
+            data.ring = data.ring.split(',').map(Number);
+            data.boots = data.boots.split(',').map(Number);
 
             player.load(data);
             player.intro();
@@ -127,124 +120,120 @@ module.exports = MySQL = cls.Class.extend({
           // register the guest account
           this.register(player);
         } else if (!found) {
-          log.info("Mysql.login(player) failed for " + player.username);
+          log.info(`Mysql.login(player) failed for ${player.username}`);
           player.invalidLogin();
         }
-      }
+      },
     );
-  },
+  }
 
   register(player) {
-    
-
     this.connection.query(
-      "SELECT * FROM `player_data` WHERE `player_data`.`username`= ?",
+      'SELECT * FROM `player_data` WHERE `player_data`.`username`= ?',
       [player.username],
-      function(error, rows, fields) {
-        var exists;
+      (error, rows) => {
+        let exists;
 
         if (error) {
           log.error(error);
           throw error;
         }
 
-        _.each(rows, function(row) {
+        _.each(rows, (row) => {
           if (row.name === player.username) exists = true;
         });
 
         if (!exists) {
-          log.info("No player data found for: " + player.username);
+          log.info(`No player data found for: ${player.username}`);
 
-          player.isNew = true;
+          player.isNew = true; // eslint-disable-line
           player.load(this.creator.getPlayerData(player));
 
           this.creator.save(player);
 
-          player.isNew = false;
+          player.isNew = false; // eslint-disable-line
           player.intro();
         } else {
-          log.info("MySQL.register(player) Error: Username already exists.");
-          player.notify("This username is already taken!");
+          log.info('MySQL.register(player) Error: Username already exists.');
+          player.notify('This username is already taken!');
         }
-      }
+      },
     );
-  },
+  }
 
   delete(player) {
-    var self = this,
+    const
       tables = [
-        "player_data",
-        "player_equipment",
-        "player_inventory",
-        "player_abilities",
-        "player_bank",
-        "player_quests",
-        "player_achievements"
+        'player_data',
+        'player_equipment',
+        'player_inventory',
+        'player_abilities',
+        'player_bank',
+        'player_quests',
+        'player_achievements',
       ];
 
-    _.each(tables, function(table) {
+    _.each(tables, (table) => {
       this.connection.query(
-        "DELETE FROM `" + table + "` WHERE `" + table + "`.`" + "username`=?",
+        `DELETE FROM \`${table}\` WHERE \`${table}\`.\`username\`=?`,
         [player.username],
-        function(error) {
-          if (error) log.error("Error while deleting user: " + player.username);
-        }
+        (error) => {
+          if (error) {
+            log.error(`Error while deleting user: ${player.username}`);
+          }
+        },
       );
     });
-  },
+  }
 
   loadDatabases() {
-    
-
-    log.info("[MySQL] Creating database....");
+    log.info('[MySQL] Creating database....');
 
     this.connection.query(
-      "CREATE DATABASE IF NOT EXISTS " + Config.mysqlDatabase,
-      function(error, results, fields) {
-        if (error) throw error;
+      `CREATE DATABASE IF NOT EXISTS ${Config.mysqlDatabase}`,
+      (error) => {
+        if (error) {
+          throw error;
+        }
 
-        log.info("[MySQL] Successfully created database.");
+        log.info('[MySQL] Successfully created database.');
 
-        this.connection.query("USE " + Config.mysqlDatabase, function(
-          error,
-          results,
-          fields
-        ) {
-          if (this.selectDatabase_callback) this.selectDatabase_callback();
+        this.connection.query(`USE ${Config.mysqlDatabase}`, () => {
+          if (this.selectDatabase_callback) {
+            this.selectDatabase_callback();
+          }
         });
-      }
+      },
     );
-  },
+  }
 
   queryData(type, database, data) {
-    
+    this.connection.query(`${type} ${database} SET ?`, data, (
+      error,
+    ) => {
+      if (error) {
+        throw error;
+      }
 
-    this.connection.query(type + " " + database + " SET ?", data, function(
-      error
-    ) {
-      if (error) throw error;
-
-      log.info("Successfully updated " + database);
+      log.info(`Successfully updated ${database}`);
     });
-  },
+  }
 
   alter(database, column, type) {
-    
-
     this.connection.query(
-      "ALTER TABLE " + database + " ADD " + column + " " + type,
-      function(error, results, fields) {
+      `ALTER TABLE ${database} ADD ${column} ${type}`,
+      (error) => {
         if (error) {
-          log.error("Malformation in the database type and/or type.");
+          log.error('Malformation in the database type and/or type.');
           return;
         }
 
-        log.info("Database " + database + " has been successfully altered.");
-      }
+        log.info(`Database ${database} has been successfully altered.`);
+      },
     );
-  },
+  }
 
   onSelected(callback) {
     this.selectDatabase_callback = callback;
   }
-});
+}

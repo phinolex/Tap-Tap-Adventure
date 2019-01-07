@@ -1,8 +1,8 @@
-const _ = require('underscore');
-const Character = require('../character');
-const MobsDictionary = require('../../../../util/mobs');
-const Utils = require('../../../../util/utils');
-const ItemsDictionary = require('../../../../util/items');
+import _ from 'underscore';
+import Character from '../character';
+import MobsDictionary from '../../../../util/mobs';
+import Utils from '../../../../util/utils';
+import ItemsDictionary from '../../../../util/items';
 
 export default class Mob extends Character {
   constructor(id, instance, x, y) {
@@ -44,14 +44,12 @@ export default class Mob extends Character {
   }
 
   getDrop() {
-    if (!this.drops) return null;
+    if (!this.drops) {
+      return null;
+    }
 
     let min = 0;
-
-
     let percent = 0;
-
-
     const random = Utils.randomInt(0, 1000);
 
     for (const drop in this.drops) {
@@ -133,7 +131,7 @@ export default class Mob extends Character {
   }
 
   addToChestArea(chestAreas) {
-    const area = _.find(chestAreas, area => area.contains(this.x, this.y));
+    const area = _.find(chestAreas, coords => coords.contains(this.x, this.y));
 
     if (area) {
       area.addEntity(this);

@@ -119,7 +119,7 @@ class Server extends Socket {
   }
 }
 
-export default {
+export default class {
   Server,
   Connection,
 };

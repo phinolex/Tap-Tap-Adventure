@@ -1,14 +1,10 @@
-var Minigame = require("../minigame"),
-  Data = require("../../../data/minigames.json");
+import Minigame from '../minigame';
+import Data from '../../../data/minigames.json';
 
-module.exports = TeamWar = Minigame.extend({
+export default class TeamWar extends Minigame {
   constructor(world) {
-    
-
+    super(Data.TeamWar.id, Data.TeamWar.name);
     this.world = world;
-
-    this.data = Data["TeamWar"];
-
-    this.super(this.data.id, this.data.name);
+    this.data = Data.TeamWar;
   }
-});
+}

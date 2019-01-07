@@ -1,9 +1,3 @@
-var Ability = require("./ability");
+import Ability from './ability';
 
-module.exports = Run = Ability.extend({
-  constructor(name, type) {
-    
-
-    this.super(name, type);
-  }
-});
+export default class Run extends Ability {}

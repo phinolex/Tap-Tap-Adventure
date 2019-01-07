@@ -1,19 +1,16 @@
-var Entity = require("../entity");
+import Entity from '../entity';
 
-module.exports = NPC = Entity.extend({
+export default class NPC extends Entity {
   constructor(id, instance, x, y) {
-    
-
-    this.super(id, "npc", instance, x, y);
-
+    super(id, 'npc', instance, x, y);
     this.talkIndex = 0;
-  },
+  }
 
   talk(messages) {
-    
+    if (this.talkIndex > messages.length) {
+      this.talkIndex = 0;
+    }
 
-    if (this.talkIndex > messages.length) this.talkIndex = 0;
-
-    this.talkIndex++;
+    this.talkIndex += 1;
   }
-});
+}

@@ -1,47 +1,44 @@
-var Entity = require("../entity"),
-  Utils = require("../../../util/utils");
+import Entity from '../entity';
+import Utils from '../../../util/utils';
 
-module.exports = Chest = Entity.extend({
+export default class Chest extends Entity {
   constructor(id, instance, x, y) {
-    
+    super(id, 'chest', instance, x, y);
 
-    this.super(id, "chest", instance, x, y);
-
-    this.respawnDuration = 25000; //Every 25 seconds
+    this.respawnDuration = 25000; // Every 25 seconds
     this.static = false;
 
     this.items = [];
-  },
+  }
 
   openChest() {
-    
-
-    if (this.openCallback) this.openCallback();
-  },
+    if (this.openCallback) {
+      this.openCallback();
+    }
+  }
 
   respawn() {
-    
-
-    setTimeout(function() {
+    setTimeout(() => {
       if (this.respawnCallback) this.respawnCallback();
     }, this.respawnDuration);
-  },
+  }
 
   getItem() {
-    var self = this,
-      random = Utils.randomInt(0, this.items.length - 1),
-      item = this.items[random];
+    const random = Utils.randomInt(0, this.items.length - 1);
+    const item = this.items[random];
 
-    if (!item) return;
+    if (!item) {
+      return null;
+    }
 
     return item;
-  },
+  }
 
   onOpen(callback) {
     this.openCallback = callback;
-  },
+  }
 
   onRespawn(callback) {
     this.respawnCallback = callback;
   }
-});
+}

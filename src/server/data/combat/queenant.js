@@ -1,10 +1,10 @@
-var Combat = require("../../js/game/entity/character/combat/combat"),
-  Packets = require("../../js/network/packets"),
-  Messages = require("../../js/network/messages"),
-  Utils = require("../../js/util/utils"),
-  _ = require("underscore");
+var Combat from "../../js/game/entity/character/combat/combat"),
+  Packets from "../../js/network/packets"),
+  Messages from "../../js/network/messages"),
+  Utils from "../../js/util/utils"),
+  _ from "underscore");
 
-module.exports = QueenAnt = Combat.extend({
+export default class QueenAnt = Combat.extend({
   /**
    * This is where bosses start to get a bit more complex.
    * The queen ant will do an AoE attack after staggering for five seconds,
@@ -50,7 +50,7 @@ module.exports = QueenAnt = Combat.extend({
 
       var listCopy = this.minions.slice();
 
-      for (var i = 0; i < listCopy.length; i++) this.world.kill(listCopy[i]);
+      for (var i = 0; i < listCopy.length; i += 1) this.world.kill(listCopy[i]);
     });
 
     this.character.onReturn(function() {
@@ -113,7 +113,7 @@ module.exports = QueenAnt = Combat.extend({
 
     this.lastSpawn = new Date().getTime();
 
-    for (var i = 0; i < this.minionCount; i++)
+    for (var i = 0; i < this.minionCount; i += 1)
       this.minions.push(
         this.world.spawnMob(13, this.character.x, this.character.y)
       );
@@ -184,7 +184,7 @@ module.exports = QueenAnt = Combat.extend({
   },
 
   getMinions() {
-    var self = this,
+    var 
       grids = this.world.getGrids();
   },
 

@@ -1,35 +1,28 @@
-/* global module, log */
+import _ from 'underscore';
+import log from 'log';
+import config from '../../config.json';
+import Player from './entity/character/player/player';
+import Map from '../map/map';
+import Messages from '../network/messages';
+import Utils from '../util/utils';
+import MobsDictionary from '../util/mobs';
+import Mob from './entity/character/mob/mob';
+import NpcsDictionary from '../util/npcs';
+import NPC from './entity/npc/npc';
+import ItemsDictionary from '../util/items';
+import Item from './entity/objects/item';
+import Chest from './entity/objects/chest';
+import Character from './entity/character/character';
+import Projectile from './entity/objects/projectile';
+import Packets from '../network/packets';
+import Formulas from './formulas';
+import Modules from '../util/modules';
 
-var cls = require("../lib/class"),
-  config = require("../../config.json"),
-  Player = require("./entity/character/player/player"),
-  Map = require("../map/map"),
-  _ = require("underscore"),
-  Messages = require("../network/messages"),
-  Utils = require("../util/utils"),
-  Mobs = require("../util/mobs"),
-  Mob = require("./entity/character/mob/mob"),
-  NPCs = require("../util/npcs"),
-  NPC = require("./entity/npc/npc"),
-  Items = require("../util/items"),
-  Item = require("./entity/objects/item"),
-  Chest = require("./entity/objects/chest"),
-  Character = require("./entity/character/character"),
-  Projectile = require("./entity/objects/projectile"),
-  Packets = require("../network/packets"),
-  Formulas = require("./formulas"),
-  Modules = require("../util/modules"),
-  Minigames = require("../controllers/minigames"),
-  Shops = require("../controllers/shops");
-
-module.exports = World = cls.Class.extend({
+export default class World {
   constructor(id, socket, database) {
-    
-
     this.id = id;
     this.socket = socket;
     this.database = database;
-
     this.playerCount = 0;
     this.maxPlayers = config.maxPlayers;
     this.updateTime = config.updateTime;
@@ -37,40 +30,34 @@ module.exports = World = cls.Class.extend({
 
     this.players = {};
     this.entities = {};
-    this.items = {};
+    this.ItemsDictionary = {};
     this.chests = {};
-    this.mobs = {};
-    this.npcs = {};
+    this.MobsDictionary = {};
+    this.NpcsDictionary = {};
     this.projectiles = {};
-
     this.packets = {};
     this.groups = {};
 
     this.loadedGroups = false;
-
     this.ready = false;
-
     this.malformTimeout = null;
 
-    this.onPlayerConnection(function(connection) {
-      var remoteAddress = connection.socket.conn.remoteAddress;
-
+    this.onPlayerConnection((connection) => {
       if (config.development) {
-        connection.sendUTF8("maintenance");
+        connection.sendUTF8('maintenance');
         connection.close();
 
         return;
       }
 
-      var clientId = Utils.generateClientId(),
-        player = new Player(self, this.database, connection, clientId),
-        diff =
-          new Date().getTime() -
-          this.socket.ips[connection.socket.conn.remoteAddress];
+      const clientId = Utils.generateClientId();
+      const player = new Player(this, this.database, connection, clientId);
+      const diff = new Date().getTime()
+        - this.socket.ips[connection.socket.conn.remoteAddress];
 
       if (diff < 4000) {
-        connection.sendUTF8("toofast");
-        connection.close("Logging in too rapidly");
+        connection.sendUTF8('toofast');
+        connection.close('Logging in too rapidly');
 
         return;
       }
@@ -83,282 +70,282 @@ module.exports = World = cls.Class.extend({
 
       this.pushToPlayer(
         player,
-        new Messages.Handshake(clientId, config.devClient)
+        new Messages.Handshake(clientId, config.devClient),
       );
     });
 
-    this.onPopulationChange(function() {
-      /**
-       * Grab the exact number of players from
-       * the array of packets instead of adding
-       * and subtracting and risking uncertainties.
-       */
-
+    /**
+     * Grab the exact number of players from
+     * the array of packets instead of adding
+     * and subtracting and risking uncertainties.
+     */
+    this.onPopulationChange(() => {
       this.pushBroadcast(new Messages.Population(this.getPopulation()));
     });
-  },
+  }
 
+  /**
+   * The reason maps are loaded per each world is because
+   * we can have slight modifications for each world if we want in the
+   * future. Using region loading, we can just send the client
+   * whatever new map we have created server sided. Cleaner and nicer.
+   */
   load(onWorldLoad) {
-    
+    log.info(`************ World ${this.id} ***********`);
 
-    log.info("************ World " + this.id + " ***********");
-
-    /**
-     * The reason maps are loaded per each world is because
-     * we can have slight modifications for each world if we want in the
-     * future. Using region loading, we can just send the client
-     * whatever new map we have created server sided. Cleaner and nicer.
-     */
-
-    this.map = new Map(self);
-    this.map.isReady(function() {
+    this.map = new Map(this);
+    this.map.isReady(() => {
       this.loadGroups();
-
       this.spawnChests();
       this.spawnEntities();
 
-      log.info("The map has been successfully loaded!");
+      log.info('The map has been successfully loaded!');
 
       this.loaded();
-
       onWorldLoad();
     });
-  },
+  }
 
+  /**
+   * Similar to TTA engine here, but it's loaded upon initialization
+   * rather than being called from elsewhere.
+   */
   loaded() {
-    
-    /**
-     * Similar to TTA engine here, but it's loaded upon initialization
-     * rather than being called from elsewhere.
-     */
-
     this.tick();
 
-    if (!config.offlineMode) this.dataParser();
+    if (!config.offlineMode) {
+      this.dataParser();
+    }
 
     this.ready = true;
-
-    log.info("********************************");
-  },
+    log.info('********************************');
+  }
 
   tick() {
-    
-
-    setInterval(function() {
+    setInterval(() => {
       this.parsePackets();
       this.parseGroups();
     }, 1000 / this.updateTime);
-  },
+  }
 
   dataParser() {
-    
-
-    setInterval(function() {
+    setInterval(() => {
       this.saveAll();
     }, 30000);
-  },
+  }
 
   parsePackets() {
-    
-
     /**
      * This parses through the packet pool and sends them
      */
 
-    for (var id in this.packets) {
+    for (const id in this.packets) {
       if (this.packets[id].length > 0 && this.packets.hasOwnProperty(id)) {
-        var conn = this.socket.getConnection(id);
+        const conn = this.socket.getConnection(id);
 
         if (conn) {
           conn.send(this.packets[id]);
           this.packets[id] = [];
           this.packets[id].id = id;
-        } else delete this.socket.getConnection(id);
+        } else {
+          delete this.socket.getConnection(id);
+        }
       }
     }
-  },
+  }
 
   parseGroups() {
-    
+    if (!this.loadedGroups) {
+      return;
+    }
 
-    if (!this.loadedGroups) return;
-
-    this.map.groups.forEachGroup(function(groupId) {
-      if (this.groups[groupId].incoming.length < 1) return;
+    this.map.groups.forEachGroup((groupId) => {
+      if (this.groups[groupId].incoming.length < 1) {
+        return;
+      }
 
       this.sendSpawns(groupId);
 
       this.groups[groupId].incoming = [];
     });
-  },
+  }
 
   /**
    * Entity related functions
    */
 
   kill(entity) {
-    
-
     entity.applyDamage(entity.hitPoints);
 
     this.pushToAdjacentGroups(
       entity.group,
-      new Messages.Points(entity.instance, entity.getHitPoints(), null)
+      new Messages.Points(entity.instance, entity.getHitPoints(), null),
     );
     this.pushToAdjacentGroups(
       entity.group,
-      new Messages.Despawn(entity.instance)
+      new Messages.Despawn(entity.instance),
     );
 
     this.handleDeath(entity, true);
-  },
+  }
 
   handleDamage(attacker, target, damage) {
-    
+    if (!attacker || !target || isNaN(damage) || target.invincible) {
+      return;
+    }
 
-    if (!attacker || !target || isNaN(damage) || target.invincible) return;
-
-    if (target.type === "player" && target.hitCallback)
+    if (target.type === 'player' && target.hitCallback) {
       target.hitCallback(attacker, damage);
+    }
 
-    //Stop screwing with this - it's so the target retaliates.
-
+    // Stop screwing with this - it's so the target retaliates.
     target.hit(attacker);
-
     target.applyDamage(damage);
 
     this.pushToAdjacentGroups(
       target.group,
-      new Messages.Points(target.instance, target.getHitPoints(), null)
+      new Messages.Points(target.instance, target.getHitPoints(), null),
     );
 
     if (target.getHitPoints() < 1) {
-      target.combat.forEachAttacker(function(attacker) {
-        attacker.removeTarget();
+      target.combat.forEachAttacker((opponent) => {
+        opponent.removeTarget();
 
         this.pushToAdjacentGroups(
           target.group,
           new Messages.Combat(Packets.CombatOpcode.Finish, [
-            attacker.instance,
-            target.instance
-          ])
+            opponent.instance,
+            target.instance,
+          ]),
         );
 
-        if (attacker.type === "player" || target.type === "player") {
-          if (target.type === "mob")
-            attacker.addExperience(Mobs.getXp(target.id));
+        if (opponent.type === 'player' || target.type === 'player') {
+          if (opponent.type === 'mob') {
+            opponent.addExperience(MobsDictionary.getXp(target.id));
+          }
 
-          if (attacker.type === "player") attacker.killCharacter(target);
+          if (opponent.type === 'player') {
+            opponent.killCharacter(target);
+          }
         }
       });
 
       this.pushToAdjacentGroups(
         target.group,
-        new Messages.Despawn(target.instance)
+        new Messages.Despawn(target.instance),
       );
       this.handleDeath(target);
     }
-  },
+  }
 
   handleDeath(character, ignoreDrops) {
-    
+    if (!character) {
+      return;
+    }
 
-    if (!character) return;
+    if (character.type === 'mob') {
+      const deathX = character.x;
+      const deathY = character.y;
 
-    if (character.type === "mob") {
-      var deathX = character.x,
-        deathY = character.y;
-
-      if (character.deathCallback) character.deathCallback();
+      if (character.deathCallback) {
+        character.deathCallback();
+      }
 
       this.removeEntity(character);
 
-      character.dead = true;
-
+      character.dead = true; // eslint-disable-line
       character.destroy();
-
       character.combat.stop();
 
       if (!ignoreDrops) {
-        var drop = character.getDrop();
+        const drop = character.getDrop();
 
         if (drop) this.dropItem(drop.id, drop.count, deathX, deathY);
       }
-    } else if (character.type === "player") character.die();
-  },
+    } else if (character.type === 'player') character.die();
+  }
 
-  createProjectile(info, hitInfo) {
-    var self = this,
-      attacker = info.shift(),
-      target = info.shift();
+  createProjectile(info) {
+    const attacker = info.shift();
+    const target = info.shift();
 
-    if (!attacker || !target) return null;
+    if (!attacker || !target) {
+      return null;
+    }
 
-    var startX = attacker.x,
-      startY = attacker.y,
-      type = attacker.getProjectile(),
-      hit = null;
+    const startX = attacker.x;
+    const startY = attacker.y;
+    const type = attacker.getProjectile();
+    let hit = null;
 
-    var projectile = new Projectile(
+    const projectile = new Projectile(
       type,
-      Utils.generateInstance(5, type, startX + startY)
+      Utils.generateInstance(5, type, startX + startY),
     );
 
     projectile.setStart(startX, startY);
     projectile.setTarget(target);
 
-    if (attacker.type === "player") hit = attacker.getHit(target);
+    if (attacker.type === 'player') {
+      hit = attacker.getHit(target);
+    }
 
     projectile.damage = hit
       ? hit.damage
       : Formulas.getDamage(attacker, target, true);
-    projectile.hitType = hit ? hit.type : Modules.Hits.Damage;
+
+    projectile.hitType = hit
+      ? hit.type
+      : Modules.Hits.Damage;
 
     projectile.owner = attacker;
 
     this.addProjectile(projectile);
 
     return projectile;
-  },
+  }
 
   /**
    *
-   * @param {{instance: int}} groupId
+   * @param {int} groupId
    */
-
   sendSpawns(groupId) {
-    
+    if (!groupId) {
+      return;
+    }
 
-    if (!groupId) return;
-
-    _.each(this.groups[groupId].incoming, function(entity) {
-      if (entity.instance === null) return;
+    _.each(this.groups[groupId].incoming, (entity) => {
+      if (entity.instance === null) {
+        return;
+      }
 
       this.pushToGroup(
         groupId,
         new Messages.Spawn(entity),
-        entity.isPlayer() ? entity.instance : null
+        entity.isPlayer() ? entity.instance : null,
       );
     });
-  },
+  }
 
   loadGroups() {
-    
-
-    this.map.groups.forEachGroup(function(groupId) {
+    this.map.groups.forEachGroup((groupId) => {
       this.groups[groupId] = {
         entities: {},
         players: [],
-        incoming: []
+        incoming: [],
       };
     });
 
     this.loadedGroups = true;
-  },
+  }
 
   getEntityByInstance(instance) {
-    if (instance in this.entities) return this.entities[instance];
-  },
+    if (instance in this.entities) {
+      return this.entities[instance];
+    }
+
+    return null;
+  }
 
   /**
    * Important functions for sending
@@ -366,63 +353,59 @@ module.exports = World = cls.Class.extend({
    */
 
   pushBroadcast(message) {
-    
-
-    _.each(this.packets, function(packet) {
+    _.each(this.packets, (packet) => {
       packet.push(message.serialize());
     });
-  },
+  }
 
   pushSelectively(message, ignores) {
-    
-
-    _.each(this.packets, function(packet) {
-      if (ignores.indexOf(packet.id) < 0) packet.push(message.serialize());
+    _.each(this.packets, (packet) => {
+      if (ignores.indexOf(packet.id) < 0) {
+        packet.push(message.serialize());
+      }
     });
-  },
+  }
 
   pushToPlayer(player, message) {
-    if (player && player.instance in this.packets)
+    if (player && player.instance in this.packets) {
       this.packets[player.instance].push(message.serialize());
-  },
+    }
+  }
 
   pushToGroup(id, message, ignoreId) {
-    var self = this,
+    const
       group = this.groups[id];
 
     if (!group) return;
 
-    _.each(group.players, function(playerId) {
-      if (playerId !== ignoreId)
+    _.each(group.players, (playerId) => {
+      if (playerId !== ignoreId) {
         this.pushToPlayer(this.getEntityByInstance(playerId), message);
+      }
     });
-  },
+  }
 
   pushToAdjacentGroups(groupId, message, ignoreId) {
-    
-
-    this.map.groups.forEachAdjacentGroup(groupId, function(id) {
+    this.map.groups.forEachAdjacentGroup(groupId, (id) => {
       this.pushToGroup(id, message, ignoreId);
     });
-  },
+  }
 
   pushToOldGroups(player, message) {
-    
-
-    _.each(player.recentGroups, function(id) {
+    _.each(player.recentGroups, (id) => {
       this.pushToGroup(id, message);
     });
 
-    player.recentGroups = [];
-  },
+    player.recentGroups = []; // eslint-disable-line
+  }
 
   addToGroup(entity, groupId) {
-    var self = this,
+    const
       newGroups = [];
 
     if (entity && groupId && groupId in this.groups) {
-      this.map.groups.forEachAdjacentGroup(groupId, function(id) {
-        var group = this.groups[id];
+      this.map.groups.forEachAdjacentGroup(groupId, (id) => {
+        const group = this.groups[id];
 
         if (group && group.entities) {
           group.entities[entity.instance] = entity;
@@ -430,220 +413,221 @@ module.exports = World = cls.Class.extend({
         }
       });
 
-      entity.group = groupId;
+      entity.group = groupId; // eslint-disable-line
 
-      if (entity instanceof Player)
+      if (entity instanceof Player) {
         this.groups[groupId].players.push(entity.instance);
+      }
     }
 
     return newGroups;
-  },
+  }
 
   removeFromGroups(entity) {
-    var self = this,
-      oldGroups = [];
+    const oldGroups = [];
 
     if (entity && entity.group) {
-      var group = this.groups[entity.group];
+      const group = this.groups[entity.group];
 
-      if (entity instanceof Player)
-        group.players = _.reject(group.players, function(id) {
-          return id === entity.instance;
-        });
+      if (entity instanceof Player) {
+        group.players = _.reject(group.players, id => id === entity.instance);
+      }
 
-      this.map.groups.forEachAdjacentGroup(entity.group, function(id) {
+      this.map.groups.forEachAdjacentGroup(entity.group, (id) => {
         if (this.groups[id] && entity.instance in this.groups[id].entities) {
           delete this.groups[id].entities[entity.instance];
           oldGroups.push(id);
         }
       });
 
-      entity.group = null;
+      entity.group = null; // eslint-disable-line
     }
 
     return oldGroups;
-  },
+  }
 
   incomingToGroup(entity, groupId) {
-    
+    if (!entity || !groupId) {
+      return;
+    }
 
-    if (!entity || !groupId) return;
+    this.map.groups.forEachAdjacentGroup(groupId, (id) => {
+      const group = this.groups[id];
 
-    this.map.groups.forEachAdjacentGroup(groupId, function(id) {
-      var group = this.groups[id];
-
-      if (group && !_.include(group.entities, entity.instance))
+      if (group && !_.include(group.entities, entity.instance)) {
         group.incoming.push(entity);
+      }
     });
-  },
+  }
 
   handleEntityGroup(entity) {
-    var self = this,
-      groupsChanged = false;
+    let groupsChanged = false;
 
-    if (!entity) return groupsChanged;
+    if (!entity) {
+      return groupsChanged;
+    }
 
-    var groupId = this.map.groups.groupIdFromPosition(entity.x, entity.y);
+    const groupId = this.map.groups.groupIdFromPosition(entity.x, entity.y);
 
     if (!entity.group || (entity.group && entity.group !== groupId)) {
       groupsChanged = true;
 
       this.incomingToGroup(entity, groupId);
 
-      var oldGroups = this.removeFromGroups(entity),
-        newGroups = this.addToGroup(entity, groupId);
+      const oldGroups = this.removeFromGroups(entity);
+      const newGroups = this.addToGroup(entity, groupId);
 
-      if (_.size(oldGroups) > 0)
-        entity.recentGroups = _.difference(oldGroups, newGroups);
+      if (_.size(oldGroups) > 0) {
+        entity.recentGroups = _.difference(oldGroups, newGroups); // eslint-disable-line
+      }
     }
 
     return groupsChanged;
-  },
+  }
 
   spawnEntities() {
-    var self = this,
-      entities = 0;
+    let entities = 0;
 
-    _.each(this.map.staticEntities, function(key, tileIndex) {
-      var isMob = !!Mobs.Properties[key],
-        isNpc = !!NPCs.Properties[key],
-        isItem = !!Items.Data[key],
-        info = isMob
-          ? Mobs.Properties[key]
-          : isNpc
-          ? NPCs.Properties[key]
-          : isItem
-          ? Items.getData(key)
-          : null,
-        position = this.map.indexToGridPosition(tileIndex);
+    _.each(this.map.staticEntities, (key, tileIndex) => {
+      const isMob = !!MobsDictionary.properties[key];
+      const isNpc = !!NpcsDictionary.properties[key];
+      const isItem = !!ItemsDictionary.data[key];
 
-      position.x++;
+      const itemData = isItem
+        ? ItemsDictionary.getData(key)
+        : null;
 
-      if (!info || info === "null") {
-        if (this.debug)
+      const npcData = isNpc
+        ? NpcsDictionary.properties[key]
+        : itemData;
+
+      const info = isMob
+        ? MobsDictionary.properties[key]
+        : npcData;
+
+      const position = this.map.indexToGridPosition(tileIndex);
+
+      position.x += 1;
+
+      if (!info || info === 'null') {
+        if (this.debug) {
           log.info(
-            "Unknown object spawned at: " + position.x + " " + position.y
+            `Unknown object spawned at: ${position.x} ${position.y}`,
           );
+        }
 
         return;
       }
 
-      var instance = Utils.generateInstance(
+      const instance = Utils.generateInstance(
         isMob ? 2 : isNpc ? 3 : 4,
         info.id + entities,
         position.x + entities,
-        position.y
+        position.y,
       );
 
       if (isMob) {
-        var mob = new Mob(info.id, instance, position.x, position.y);
+        const mob = new Mob(info.id, instance, position.x, position.y);
 
         mob.static = true;
 
-        mob.onRespawn(function() {
+        mob.onRespawn(() => {
           mob.dead = false;
-
           mob.refresh();
-
           this.addMob(mob);
         });
 
         this.addMob(mob);
       }
 
-      if (isNpc)
+      if (isNpc) {
         this.addNPC(new NPC(info.id, instance, position.x, position.y));
+      }
 
       if (isItem) {
-        var item = this.createItem(info.id, instance, position.x, position.y);
+        const item = this.createItem(info.id, instance, position.x, position.y);
         item.static = true;
         this.addItem(item);
       }
 
-      entities++;
+      entities += 1;
     });
 
-    log.info("Spawned " + Object.keys(this.entities).length + " entities!");
-  },
+    log.info(`Spawned ${entities} entities!`);
+  }
 
   spawnChests() {
-    var self = this,
-      chests = 0;
+    let chests = 0;
 
-    _.each(this.map.chests, function(info) {
+    _.each(this.map.chests, (info) => {
       this.spawnChest(info.i, info.x, info.y, true);
 
-      chests++;
+      chests += 1;
     });
 
-    log.info("Spawned " + Object.keys(this.chests).length + " static chests");
-  },
+    log.info(`Spawned ${chests} static chests`);
+  }
 
   spawnMob(id, x, y) {
-    var self = this,
-      instance = Utils.generateInstance(2, id, x + id, y),
-      mob = new Mob(id, instance, x, y);
+    const instance = Utils.generateInstance(2, id, x + id, y);
+    const mob = new Mob(id, instance, x, y);
 
-    if (!Mobs.exists(id)) return;
+    if (!MobsDictionary.exists(id)) {
+      return null;
+    }
 
     this.addMob(mob);
-
     return mob;
-  },
+  }
 
   spawnChest(items, x, y, staticChest) {
-    var self = this,
-      chestCount = Object.keys(this.chests).length,
-      instance = Utils.generateInstance(5, 194, chestCount, x, y),
-      chest = new Chest(194, instance, x, y);
+    const chestCount = Object.keys(this.chests).length;
+    const instance = Utils.generateInstance(5, 194, chestCount, x, y);
+    const chest = new Chest(194, instance, x, y);
 
-    chest.items = items;
+    chest.ItemsDictionary = items;
 
     if (staticChest) {
       chest.static = staticChest;
-
-      chest.onRespawn(this.addChest.bind(self, chest));
+      chest.onRespawn(this.addChest.bind(this, chest));
     }
 
-    chest.onOpen(function() {
-      /**
-       * Pretty simple concept, detect when the player opens the chest
-       * then remove it and drop an item instead. Give it a 25 second
-       * cooldown prior to respawning and voila.
-       */
-
+    /**
+     * Pretty simple concept, detect when the player opens the chest
+     * then remove it and drop an item instead. Give it a 25 second
+     * cooldown prior to respawning and voila.
+     */
+    chest.onOpen(() => {
       this.removeChest(chest);
-
-      this.dropItem(Items.stringToId(chest.getItem()), 1, chest.x, chest.y);
+      this.dropItem(ItemsDictionary.stringToId(chest.getItem()), 1, chest.x, chest.y);
     });
 
     this.addChest(chest);
-
     return chest;
-  },
+  }
 
   createItem(id, instance, x, y) {
-    
+    let item;
 
-    var item;
-
-    if (Items.hasPlugin(id))
-      item = new (Items.isNewPlugin(id))(id, instance, x, y);
-    else item = new Item(id, instance, x, y);
+    if (ItemsDictionary.hasPlugin(id)) {
+      item = new (ItemsDictionary.isNewPlugin(id))(id, instance, x, y);
+    } else {
+      item = new Item(id, instance, x, y);
+    }
 
     return item;
-  },
+  }
 
   dropItem(id, count, x, y) {
-    var self = this,
+    const
       instance = Utils.generateInstance(
         4,
         id + Object.keys(this.entities).length,
         x,
-        y
+        y,
       );
 
-    var item = this.createItem(id, instance, x, y);
+    const item = this.createItem(id, instance, x, y);
 
     item.count = count;
     item.dropped = true;
@@ -651,48 +635,47 @@ module.exports = World = cls.Class.extend({
     this.addItem(item);
     item.despawn();
 
-    item.onBlink(function() {
+    item.onBlink(() => {
       this.pushBroadcast(new Messages.Blink(item.instance));
     });
 
-    item.onDespawn(function() {
+    item.onDespawn(() => {
       this.removeItem(item);
     });
-  },
+  }
 
   pushEntities(player) {
-    var self = this,
-      entities;
+    let entities;
 
-    if (!player || !(player.group in this.groups)) return;
+    if (!player || !(player.group in this.groups)) {
+      return;
+    }
 
     entities = _.keys(this.groups[player.group].entities);
+    entities = _.reject(entities, instance => instance === player.instance);
+    entities = _.map(entities, instance => parseInt(instance, 10));
 
-    entities = _.reject(entities, function(instance) {
-      return instance === player.instance;
-    });
-
-    entities = _.map(entities, function(instance) {
-      return parseInt(instance);
-    });
-
-    if (entities) player.send(new Messages.List(entities));
-  },
+    if (entities) {
+      player.send(new Messages.List(entities));
+    }
+  }
 
   addEntity(entity) {
-    
-
-    if (entity.instance in this.entities)
-      log.info("Entity " + entity.instance + " already exists.");
+    if (entity.instance in this.entities) {
+      log.info(`Entity ${entity.instance} already exists.`);
+    }
 
     this.entities[entity.instance] = entity;
 
-    if (entity.type !== "projectile") this.handleEntityGroup(entity);
+    if (entity.type !== 'projectile') {
+      this.handleEntityGroup(entity);
+    }
 
-    if (entity.x > 0 && entity.y > 0)
+    if (entity.x > 0 && entity.y > 0) {
       this.getGrids().addToEntityGrid(entity, entity.x, entity.y);
+    }
 
-    entity.onSetPosition(function() {
+    entity.onSetPosition(() => {
       this.getGrids().updateEntityPosition(entity);
 
       if (entity.isMob() && entity.isOutsideSpawn()) {
@@ -706,8 +689,8 @@ module.exports = World = cls.Class.extend({
           new Messages.Combat(
             Packets.CombatOpcode.Finish,
             null,
-            entity.instance
-          )
+            entity.instance,
+          ),
         );
         this.pushBroadcast(
           new Messages.Movement(Packets.MovementOpcode.Move, [
@@ -715,130 +698,116 @@ module.exports = World = cls.Class.extend({
             entity.x,
             entity.y,
             false,
-            false
-          ])
+            false,
+          ]),
         );
       }
     });
 
     if (entity instanceof Character) {
-      entity.getCombat().setWorld(self);
+      entity.getCombat().setWorld(this);
 
-      entity.onStunned(function(stun) {
+      entity.onStunned((stun) => {
         this.pushToAdjacentGroups(
           entity.group,
           new Messages.Movement(Packets.MovementOpcode.Stunned, [
             entity.instance,
-            stun
-          ])
+            stun,
+          ]),
         );
       });
     }
-  },
+  }
 
   addPlayer(player) {
-    
-
     this.addEntity(player);
     this.players[player.instance] = player;
 
     if (this.populationCallback) this.populationCallback();
-  },
+  }
 
   addToPackets(player) {
-    
-
     this.packets[player.instance] = [];
-  },
+  }
 
   addNPC(npc) {
-    
-
     this.addEntity(npc);
-    this.npcs[npc.instance] = npc;
-  },
+    this.NpcsDictionary[npc.instance] = npc;
+  }
 
   addMob(mob) {
-    
-
-    if (!Mobs.exists(mob.id)) {
-      log.error("Cannot spawn mob. " + mob.id + " does not exist.");
+    if (!MobsDictionary.exists(mob.id)) {
+      log.error(`Cannot spawn mob. ${mob.id} does not exist.`);
       return;
     }
 
     this.addEntity(mob);
-    this.mobs[mob.instance] = mob;
+    this.MobsDictionary[mob.instance] = mob;
 
     mob.addToChestArea(this.getChestAreas());
 
-    mob.onHit(function(attacker) {
+    mob.onHit((attacker) => {
       if (mob.isDead() || mob.combat.started) return;
 
       mob.combat.begin(attacker);
     });
-  },
+  }
 
   addItem(item) {
-    
-
-    if (item.static) item.onRespawn(this.addItem.bind(self, item));
+    if (item.static) item.onRespawn(this.addItem.bind(this, item));
 
     this.addEntity(item);
-    this.items[item.instance] = item;
-  },
+    this.ItemsDictionary[item.instance] = item;
+  }
 
   addProjectile(projectile) {
-    
-
     this.addEntity(projectile);
     this.projectiles[projectile.instance] = projectile;
-  },
+  }
 
   addChest(chest) {
-    
-
     this.addEntity(chest);
     this.chests[chest.instance] = chest;
-  },
+  }
 
   removeEntity(entity) {
-    
+    if (entity.instance in this.entities) {
+      delete this.entities[entity.instance];
+    }
 
-    if (entity.instance in this.entities) delete this.entities[entity.instance];
+    if (entity.instance in this.MobsDictionary) {
+      delete this.MobsDictionary[entity.instance];
+    }
 
-    if (entity.instance in this.mobs) delete this.mobs[entity.instance];
-
-    if (entity.instance in this.items) delete this.items[entity.instance];
+    if (entity.instance in this.ItemsDictionary) {
+      delete this.ItemsDictionary[entity.instance];
+    }
 
     this.getGrids().removeFromEntityGrid(entity, entity.x, entity.y);
-
     this.removeFromGroups(entity);
-  },
+  }
 
   cleanCombat(entity) {
     entity.combat.stop();
 
-    _.each(this.entities, function(oEntity) {
-      if (oEntity instanceof Character && oEntity.combat.hasAttacker(entity))
+    _.each(this.entities, (oEntity) => {
+      if (oEntity instanceof Character && oEntity.combat.hasAttacker(entity)) {
         oEntity.combat.removeAttacker(entity);
+      }
     });
-  },
+  }
 
   removeItem(item) {
-    
-
     this.removeEntity(item);
     this.pushBroadcast(new Messages.Despawn(item.instance));
 
     if (item.static) item.respawn();
-  },
+  }
 
   removePlayer(player) {
-    
-
     this.pushToAdjacentGroups(
       player.group,
-      new Messages.Despawn(player.instance)
+      new Messages.Despawn(player.instance),
     );
 
     if (player.ready) player.save();
@@ -853,80 +822,75 @@ module.exports = World = cls.Class.extend({
 
     delete this.players[player.instance];
     delete this.packets[player.instance];
-  },
+  }
 
   removeProjectile(projectile) {
-    
-
     this.removeEntity(projectile);
 
     delete this.projectiles[projectile.instance];
-  },
+  }
 
   removeChest(chest) {
-    
-
     this.removeEntity(chest);
     this.pushBroadcast(new Messages.Despawn(chest.instance));
 
     if (chest.static) chest.respawn();
     else delete this.chests[chest.instance];
-  },
+  }
 
   playerInWorld(username) {
-    
-
-    for (var id in this.players)
-      if (this.players.hasOwnProperty(id))
-        if (this.players[id].username === username) return true;
+    for (const id in this.players) {
+      if (this.players.hasOwnProperty(id) && this.players[id].username === username) {
+        return true;
+      }
+    }
 
     return false;
-  },
+  }
 
   getPlayerByName(username) {
-    
-
-    for (var id in this.players)
-      if (this.players.hasOwnProperty(id))
-        if (this.players[id].username.toLowerCase() === username.toLowerCase())
+    for (const id in this.players) {
+      if (this.players.hasOwnProperty(id)) {
+        if (this.players[id].username.toLowerCase() === username.toLowerCase()) {
           return this.players[id];
+        }
+      }
+    }
 
     return null;
-  },
+  }
 
   saveAll() {
-    
-
-    _.each(this.players, function(player) {
+    _.each(this.players, (player) => {
       player.save();
     });
-  },
+  }
 
   getPVPAreas() {
-    return this.map.areas["PVP"].pvpAreas;
-  },
+    return this.map.areas.PVP.pvpAreas;
+  }
 
   getMusicAreas() {
-    return this.map.areas["Music"].musicAreas;
-  },
+    return this.map.areas.Music.musicAreas;
+  }
 
   getChestAreas() {
-    return this.map.areas["Chests"].chestAreas;
-  },
+    return this.map.areas.Chests.chestAreas;
+  }
 
   getGrids() {
     return this.map.grids;
-  },
+  }
 
   getPopulation() {
     return _.size(this.players);
-  },
+  }
 
   onPlayerConnection(callback) {
     this.playerConnectCallback = callback;
-  },
+  }
 
   onPopulationChange(callback) {
     this.populationCallback = callback;
   }
-});
+}

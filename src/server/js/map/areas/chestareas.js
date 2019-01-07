@@ -1,24 +1,20 @@
-var cls = require("../../lib/class"),
-  Area = require("../area"),
-  map = require("../../../data/map/world_server.json"),
-  _ = require("underscore");
+import _ from 'underscore';
+import log from 'log';
+import Area from '../area';
+import map from '../../../data/map/world_server.json';
 
-module.exports = ChestAreas = cls.Class.extend({
+export default class ChestAreas {
   constructor(world) {
-    
-
     this.world = world;
 
     this.chestAreas = [];
 
     this.load();
-  },
+  }
 
   load() {
-    
-
-    _.each(map.chestAreas, function(m) {
-      var chestArea = new Area(m.id, m.x, m.y, m.width, m.height);
+    _.each(map.chestAreas, (m) => {
+      const chestArea = new Area(m.id, m.x, m.y, m.width, m.height);
 
       chestArea.maxEntities = m.entities;
       chestArea.items = m.i;
@@ -27,48 +23,40 @@ module.exports = ChestAreas = cls.Class.extend({
 
       this.chestAreas.push(chestArea);
 
-      chestArea.onEmpty(function() {
+      chestArea.onEmpty(() => {
         this.spawnChest(this);
       });
 
-      chestArea.onSpawn(function() {
+      chestArea.onSpawn(() => {
         this.removeChest(this);
       });
     });
 
-    log.info("Loaded " + this.chestAreas.length + " chest areas.");
-  },
+    log.info(`Loaded ${this.chestAreas.length} chest areas.`);
+  }
 
   standardize() {
-    
-
-    _.each(this.chestAreas, function(chestArea) {
+    _.each(this.chestAreas, (chestArea) => {
       chestArea.setMaxEntities(chestArea.entities.length);
     });
-  },
+  }
 
   spawnChest(chestArea) {
-    
-
-    /**
-     * Works beautifully :)
-     */
-
-    chestArea.chest = this.world.spawnChest(
+    chestArea.chest = this.world.spawnChest( // eslint-disable-line
       chestArea.items,
       chestArea.cX,
       chestArea.cY,
-      false
+      false,
     );
-  },
+  }
 
   removeChest(chestArea) {
-    
-
-    if (!chestArea.chest) return;
+    if (!chestArea.chest) {
+      return;
+    }
 
     this.world.removeChest(chestArea.chest);
 
-    chestArea.chest = null;
+    chestArea.chest = null; // eslint-disable-line
   }
-});
+}

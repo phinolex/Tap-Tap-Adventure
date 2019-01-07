@@ -1,7 +1,7 @@
-var Combat = require("../../js/game/entity/character/combat/combat"),
-  Modules = require("../../js/util/modules");
+var Combat from "../../js/game/entity/character/combat/combat"),
+  Modules from "../../js/util/modules");
 
-module.exports = GreatSquid = Combat.extend({
+export default class GreatSquid = Combat.extend({
   constructor(character) {
     
 

@@ -1,7 +1,7 @@
-var Item = require("../../js/game/entity/objects/item.js"),
-  Utils = require("../../js/util/utils"),
-  Items = require("../../js/util/items");
-module.exports = Flask = Item.extend({
+var Item from "../../js/game/entity/objects/item.js"),
+  Utils from "../../js/util/utils"),
+  Items from "../../js/util/items");
+export default class Flask = Item.extend({
   constructor(id, instance, x, y) {
     
     this.super(id, instance, x, y);

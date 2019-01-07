@@ -4,6 +4,7 @@ const randomInt = (min, max) => min + Math.floor(Math.random() * (max - min + 1)
 const random = range => Math.floor(Math.random() * range);
 
 export default {
+  isInt: n => n % 1 === 0,
   random,
   randomRange: (min, max) => min + Math.random() * (max - min),
   randomInt,

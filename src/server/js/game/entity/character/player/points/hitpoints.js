@@ -1,41 +1,35 @@
-var Points = require("./points");
+import Points from './points';
 
-module.exports = HitPoints = Points.extend({
-  constructor(hitPoints, maxHitPoints) {
-    
-
-    this.super(hitPoints, maxHitPoints);
-  },
-
+export default class HitPoints extends Points {
   setHitPoints(hitPoints) {
-    
-
     this.setPoints(hitPoints);
 
-    if (this.hitPointsCallback) this.hitPointsCallback();
-  },
+    if (this.hitPointsCallback) {
+      this.hitPointsCallback();
+    }
+  }
 
   setMaxHitPoints(maxHitPoints) {
-    
-
     this.setMaxPoints(maxHitPoints);
 
-    if (this.maxHitPointsCallback) this.maxHitPointsCallback();
-  },
+    if (this.maxHitPointsCallback) {
+      this.maxHitPointsCallback();
+    }
+  }
 
   getHitPoints() {
     return this.points;
-  },
+  }
 
   getMaxHitPoints() {
     return this.maxPoints;
-  },
+  }
 
   onHitPoints(callback) {
     this.hitPointsCallback = callback;
-  },
+  }
 
   onMaxHitPoints(callback) {
     this.maxHitPointsCallback = callback;
   }
-});
+}

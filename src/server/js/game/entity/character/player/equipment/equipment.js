@@ -1,45 +1,41 @@
-var cls = require("../../../../../lib/class"),
-  Items = require("../../../../../util/items");
+import Items from '../../../../../util/items';
 
-module.exports = Equipment = cls.Class.extend({
-  /**
-   * Count represents the enchantment level of
-   * the equipment child
-   */
-
+/**
+ * Count represents the enchantment level of
+ * the equipment child
+ */
+export default class Equipment {
   constructor(name, id, count, ability, abilityLevel) {
-    
-
     this.name = name;
     this.id = id;
-    this.count = count ? count : 0;
-    this.ability = ability ? ability : 0;
-    this.abilityLevel = abilityLevel ? abilityLevel : 0;
-  },
+    this.count = count || 0;
+    this.ability = ability || 0;
+    this.abilityLevel = abilityLevel || 0;
+  }
 
   getName() {
     return this.name;
-  },
+  }
 
   getId() {
     return this.id;
-  },
+  }
 
   getCount() {
     return this.count;
-  },
+  }
 
   getAbility() {
     return this.ability;
-  },
+  }
 
   getAbilityLevel() {
     return this.abilityLevel;
-  },
+  }
 
   getBaseAmplifier() {
     return 1.0;
-  },
+  }
 
   getData() {
     return [
@@ -47,13 +43,13 @@ module.exports = Equipment = cls.Class.extend({
       Items.idToString(this.id),
       this.count,
       this.ability,
-      this.abilityLevel
+      this.abilityLevel,
     ];
-  },
+  }
 
   getString() {
     return Items.idToString(this.id);
-  },
+  }
 
   getItem() {
     return {
@@ -62,7 +58,7 @@ module.exports = Equipment = cls.Class.extend({
       id: this.id,
       count: this.count,
       ability: this.ability,
-      abilityLevel: this.abilityLevel
+      abilityLevel: this.abilityLevel,
     };
   }
-});
+}

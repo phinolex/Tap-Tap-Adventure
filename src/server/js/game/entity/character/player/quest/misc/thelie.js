@@ -1,26 +1,21 @@
-var Quest = require("../quest"),
-  Messages = require("../../../../../../network/messages"),
-  Packets = require("../../../../../../network/packets"),
-  Utils = require("../../../../../../util/utils");
+import Quest from '../quest';
 
-module.exports = TheLie = Quest.extend({
+export default class TheLie extends Quest {
   constructor(player, data) {
-    
-
+    super(data.id, data.name, data.description);
     this.player = player;
     this.data = data;
-
-    this.super(data.id, data.name, data.description);
-  },
+  }
 
   load(stage) {
-    
-
-    if (stage) this.update();
-    else this.stage = stage;
-  },
+    if (stage) {
+      this.update();
+    } else {
+      this.stage = stage;
+    }
+  }
 
   update() {
     this.player.save();
   }
-});
+}

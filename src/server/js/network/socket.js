@@ -8,7 +8,7 @@ export default class Socket {
     this.port = port;
   }
 
-  broadcast(message) {
+  broadcast() {
     throw 'Invalid initialization.';
   }
 

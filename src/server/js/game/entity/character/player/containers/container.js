@@ -1,160 +1,153 @@
-/* global log */
+import _ from 'underscore';
+import log from 'log';
+import Slot from './slot';
+import Items from '../../../../../util/items';
+import Constants from '../../../../../util/constants';
 
-var cls = require("../../../../../lib/class"),
-  _ = require("underscore"),
-  Slot = require("./slot"),
-  Items = require("../../../../../util/items"),
-  Constants = require("../../../../../util/constants");
-
-module.exports = Container = cls.Class.extend({
-  /**
-   * TODO: Add a limit of 2^31 - 1 for stackable items.
-   */
-
+export default class Container {
   constructor(type, owner, size) {
-    
-
     this.type = type;
     this.owner = owner;
     this.size = size;
-
     this.slots = [];
 
-    for (var i = 0; i < this.size; i++) this.slots.push(new Slot(i));
-  },
+    for (let i = 0; i < this.size; i += 1) {
+      this.slots.push(new Slot(i));
+    }
+  }
 
+  /**
+   * Fill each slot with manual data or the database
+   */
   load(ids, counts, abilities, abilityLevels) {
-    
+    if (ids.length !== this.slots.length) {
+      log.error(`[${this.type}] Mismatch in container size.`);
+    }
 
-    /**
-     * Fill each slot with manual data or the database
-     */
-
-    if (ids.length !== this.slots.length)
-      log.error("[" + this.type + "] Mismatch in container size.");
-
-    for (var i = 0; i < this.slots.length; i++)
+    for (let i = 0; i < this.slots.length; i += 1) {
       this.slots[i].load(ids[i], counts[i], abilities[i], abilityLevels[i]);
-  },
+    }
+  }
 
   loadEmpty() {
-    var self = this,
+    const
       data = [];
 
     /**
      * Better to have it condensed into one.
      */
 
-    for (var i = 0; i < this.size; i++) data.push(-1);
+    for (let i = 0; i < this.size; i += 1) data.push(-1);
 
     this.load(data, data, data, data);
-  },
+  }
 
   add(id, count, ability, abilityLevel) {
-    
+    // log.info('Trying to pickup ' + count + ' x ' + id);
+    const maxStackSize = Items.maxStackSize(id) === -1
+      ? Constants.MAX_STACK
+      : Items.maxStackSize(id);
 
-    //log.info('Trying to pickup ' + count + ' x ' + id);
-    var maxStackSize =
-      Items.maxStackSize(id) === -1
-        ? Constants.MAX_STACK
-        : Items.maxStackSize(id);
-
-    //log.info('Max stack size = ' + maxStackSize);
+    // log.info('Max stack size = ' + maxStackSize);
 
     if (!id || count < 0 || count > maxStackSize) return null;
 
     if (!Items.isStackable(id)) {
       if (this.hasSpace()) {
-        var nsSlot = this.slots[this.getEmptySlot()]; //non-stackable slot
+        const nsSlot = this.slots[this.getEmptySlot()]; // non-stackable slot
 
         nsSlot.load(id, count, ability, abilityLevel);
 
         return nsSlot;
       }
+    } else if (maxStackSize === -1 || this.type === 'Bank') {
+      const sSlot = this.getSlot(id);
+
+      if (sSlot) {
+        sSlot.increment(count);
+        return sSlot;
+      }
+      if (this.hasSpace()) {
+        const slot = this.slots[this.getEmptySlot()];
+
+        slot.load(id, count, ability, abilityLevel);
+
+        return slot;
+      }
     } else {
-      if (maxStackSize === -1 || this.type === "Bank") {
-        var sSlot = this.getSlot(id);
+      let remainingItems = count;
 
-        if (sSlot) {
-          sSlot.increment(count);
-          return sSlot;
-        } else {
-          if (this.hasSpace()) {
-            var slot = this.slots[this.getEmptySlot()];
+      for (let i = 0; i < this.slots.length; i += 1) {
+        if (this.slots[i].id === id) {
+          const rSlot = this.slots[i];
 
-            slot.load(id, count, ability, abilityLevel);
+          const available = maxStackSize - rSlot.count;
 
-            return slot;
+          if (available >= remainingItems) {
+            rSlot.increment(remainingItems);
+
+            return rSlot;
           }
-        }
-      } else {
-        var remainingItems = count;
-
-        for (var i = 0; i < this.slots.length; i++) {
-          if (this.slots[i].id === id) {
-            var rSlot = this.slots[i];
-
-            var available = maxStackSize - rSlot.count;
-
-            if (available >= remainingItems) {
-              rSlot.increment(remainingItems);
-
-              return rSlot;
-            } else if (available > 0) {
-              rSlot.increment(available);
-              remainingItems -= available;
-            }
+          if (available > 0) {
+            rSlot.increment(available);
+            remainingItems -= available;
           }
-        }
-
-        if (remainingItems > 0 && this.hasSpace()) {
-          var rrSlot = this.slots[this.getEmptySlot()];
-
-          rrSlot.load(id, remainingItems, ability, abilityLevel);
-
-          return rrSlot;
         }
       }
+
+      if (remainingItems > 0 && this.hasSpace()) {
+        const rrSlot = this.slots[this.getEmptySlot()];
+
+        rrSlot.load(id, remainingItems, ability, abilityLevel);
+
+        return rrSlot;
+      }
     }
-  },
+
+    return null;
+  }
 
   canHold(id, count) {
-    
+    if (!Items.isStackable(id)) {
+      return this.hasSpace();
+    }
 
-    if (!Items.isStackable(id)) return this.hasSpace();
-
-    if (this.hasSpace()) return true;
-
-    var maxStackSize = Items.maxStackSize(id);
-
-    if ((this.type === "Bank" || maxStackSize === -1) && this.contains(id))
+    if (this.hasSpace()) {
       return true;
+    }
 
-    if (maxStackSize !== -1 && count > maxStackSize) return false;
+    const maxStackSize = Items.maxStackSize(id);
 
-    var remainingSpace = 0;
+    if ((this.type === 'Bank' || maxStackSize === -1) && this.contains(id)) {
+      return true;
+    }
 
-    for (var i = 0; i < this.slots.length; i++)
-      if (this.slots[i].id === id)
+    if (maxStackSize !== -1 && count > maxStackSize) {
+      return false;
+    }
+
+    let remainingSpace = 0;
+
+    for (let i = 0; i < this.slots.length; i += 1) {
+      if (this.slots[i].id === id) {
         remainingSpace += maxStackSize - this.slots[i].count;
+      }
+    }
 
     return remainingSpace >= count;
-  },
+  }
 
   remove(index, id, count) {
-    
-
     if (
-      !id ||
-      count < 0 ||
-      !this.contains(id) ||
-      !this.slots[index] ||
-      this.slots[index].id === -1 ||
-      this.slots[index].id !== id
-    )
-      return false;
+      !id
+      || count < 0
+      || !this.contains(id)
+      || !this.slots[index]
+      || this.slots[index].id === -1
+      || this.slots[index].id !== id
+    ) return false;
 
-    var slot = this.slots[index];
+    const slot = this.slots[index];
 
     if (Items.isStackable(id)) {
       if (count >= slot.count) slot.empty();
@@ -162,83 +155,91 @@ module.exports = Container = cls.Class.extend({
     } else slot.empty();
 
     return true;
-  },
+  }
 
   getSlot(id) {
-    
-
-    for (var i = 0; i < this.slots.length; i++)
-      if (this.slots[i].id === id) return this.slots[i];
+    for (let i = 0; i < this.slots.length; i += 1) {
+      if (this.slots[i].id === id) {
+        return this.slots[i];
+      }
+    }
 
     return null;
-  },
+  }
 
   contains(id) {
-    
-
-    for (var i = 0; i < this.slots.length; i++)
-      if (this.slots[i].id === id) return true;
+    for (let i = 0; i < this.slots.length; i += 1) {
+      if (this.slots[i].id === id) {
+        return true;
+      }
+    }
 
     return false;
-  },
+  }
 
   containsSpaces(count) {
-    var self = this,
-      emptySpaces = [];
+    const emptySpaces = [];
 
-    for (var i = 0; i < this.slots.length; i++)
-      if (this.slots[i].id === -1) emptySpaces.push(this.slots[i]);
+    for (let i = 0; i < this.slots.length; i += 1) {
+      if (this.slots[i].id === -1) {
+        emptySpaces.push(this.slots[i]);
+      }
+    }
 
     return emptySpaces.length === count;
-  },
+  }
 
   hasSpace() {
     return this.getEmptySlot() > -1;
-  },
+  }
 
   getEmptySlot() {
-    
-
-    for (var i = 0; i < this.slots.length; i++)
-      if (this.slots[i].id === -1) return i;
+    for (let i = 0; i < this.slots.length; i += 1) if (this.slots[i].id === -1) return i;
 
     return -1;
-  },
+  }
 
   getIndex(id) {
-    
-
     /**
      * Used when the index is not determined,
      * returns the first item found based on the id.
      */
 
-    for (var i = 0; i < this.slots.length; i++)
-      if (this.slots[i].id === id) return i;
+    for (let i = 0; i < this.slots.length; i += 1) {
+      if (this.slots[i].id === id) {
+        return i;
+      }
+    }
 
     return -1;
-  },
+  }
 
   check() {
-    
-
-    _.each(this.slots, function(slot) {
-      if (isNaN(slot.id)) slot.empty();
+    _.each(this.slots, (slot) => {
+      if (isNaN(slot.id)) {
+        slot.empty();
+      }
     });
-  },
+  }
 
   getArray() {
-    var self = this,
-      ids = "",
-      counts = "",
-      abilities = "",
-      abilityLevels = "";
+    let
+      ids = '';
 
-    for (var i = 0; i < this.slots.length; i++) {
-      ids += this.slots[i].id + " ";
-      counts += this.slots[i].count + " ";
-      abilities += this.slots[i].ability + " ";
-      abilityLevels += this.slots[i].abilityLevel + " ";
+
+    let counts = '';
+
+
+    let abilities = '';
+
+
+    let abilityLevels = '';
+
+    for (let i = 0; i < this.slots.length; i += 1) {
+      ids += `${this.slots[i].id} `;
+      counts += `${this.slots[i].count} `;
+      abilities += `${this.slots[i].ability} `;
+      abilityLevels += `${this.slots[i].abilityLevel} `;
     }
 
     return {
@@ -246,7 +247,7 @@ module.exports = Container = cls.Class.extend({
       ids: ids.slice(0, -1),
       counts: counts.slice(0, -1),
       abilities: abilities.slice(0, -1),
-      abilityLevels: abilityLevels.slice(0, -1)
+      abilityLevels: abilityLevels.slice(0, -1),
     };
   }
-});
+}

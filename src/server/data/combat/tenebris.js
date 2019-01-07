@@ -1,9 +1,9 @@
-var Combat = require("../../js/game/entity/character/combat/combat"),
-  Messages = require("../../js/network/messages"),
-  Packets = require("../../js/network/packets"),
-  Utils = require("../../js/util/utils");
+var Combat from "../../js/game/entity/character/combat/combat"),
+  Messages from "../../js/network/messages"),
+  Packets from "../../js/network/packets"),
+  Utils from "../../js/util/utils");
 
-module.exports = Tenebris = Combat.extend({
+export default class Tenebris = Combat.extend({
   constructor(character) {
     
 
@@ -98,7 +98,7 @@ module.exports = Tenebris = Combat.extend({
 
     var listCopy = this.illusions.slice();
 
-    for (var i = 0; i < listCopy.length; i++) this.world.kill(listCopy[i]);
+    for (var i = 0; i < listCopy.length; i += 1) this.world.kill(listCopy[i]);
   },
 
   beginIllusionAttack() {

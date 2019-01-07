@@ -1,11 +1,11 @@
-var Combat = require("../../js/game/entity/character/combat/combat"),
-  Messages = require("../../js/network/messages"),
-  Packets = require("../../js/network/packets"),
-  Modules = require("../../js/util/modules"),
-  Utils = require("../../js/util/utils"),
-  _ = require("underscore");
+var Combat from "../../js/game/entity/character/combat/combat"),
+  Messages from "../../js/network/messages"),
+  Packets from "../../js/network/packets"),
+  Modules from "../../js/util/modules"),
+  Utils from "../../js/util/utils"),
+  _ from "underscore");
 
-module.exports = OgreLord = Combat.extend({
+export default class OgreLord = Combat.extend({
   constructor(character) {
     
 
@@ -86,7 +86,7 @@ module.exports = OgreLord = Combat.extend({
   },
 
   spawnMinions() {
-    var self = this,
+    var 
       xs = [414, 430, 415, 420, 429],
       ys = [172, 173, 183, 185, 180];
 
@@ -94,7 +94,7 @@ module.exports = OgreLord = Combat.extend({
 
     this.forceTalk("Now you shall see my true power!");
 
-    for (var i = 0; i < xs.length; i++)
+    for (var i = 0; i < xs.length; i += 1)
       this.minions.push(this.world.spawnMob(12, xs[i], ys[i]));
 
     _.each(this.minions, function(minion) {
@@ -130,7 +130,7 @@ module.exports = OgreLord = Combat.extend({
 
     var listCopy = this.minions.slice();
 
-    for (var i = 0; i < listCopy.length; i++) this.world.kill(listCopy[i]);
+    for (var i = 0; i < listCopy.length; i += 1) this.world.kill(listCopy[i]);
 
     clearInterval(this.talkingInterval);
     clearInterval(this.updateInterval);

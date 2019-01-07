@@ -1,72 +1,71 @@
-var cls = require("../../../../../lib/class"),
-  AbilityInfo = require("../../../../../util/abilities"),
-  _ = require("underscore");
+import _ from 'underscore';
 
-module.exports = Abilities = cls.Class.extend({
+export default class Abilities {
   constructor(player) {
-    
-
     this.player = player;
 
     this.abilities = {};
     this.shortcuts = [];
 
     this.shortcutSize = 5;
-  },
+  }
 
   addAbility(ability) {
     this.abilities[ability.name] = ability;
-  },
+  }
 
   addShortcut(ability) {
-    
-
-    if (this.shortcutSize >= 5) return;
+    if (this.shortcutSize >= 5) {
+      return;
+    }
 
     this.shortcuts.push(ability.name);
-  },
+  }
 
   removeAbility(ability) {
-    
-
-    if (this.isShortcut(ability))
+    if (this.isShortcut(ability)) {
       this.removeShortcut(this.shortcuts.indexOf(ability.name));
+    }
 
     delete this.abilities[ability.name];
-  },
+  }
 
   removeShortcut(index) {
-    if (index > -1) this.shortcuts.splice(index, 1);
-  },
+    if (index > -1) {
+      this.shortcuts.splice(index, 1);
+    }
+  }
 
   hasAbility(ability) {
-    _.each(this.abilities, function(uAbility) {
-      if (uAbility.name === ability.name) return true;
+    _.each(this.abilities, (uAbility) => {
+      if (uAbility.name === ability.name) {
+        return true;
+      }
+      return false;
     });
 
     return false;
-  },
+  }
 
   isShortcut(ability) {
     return this.shortcuts.indexOf(ability.name) > -1;
-  },
+  }
 
   getArray() {
-    var self = this,
-      abilities = "",
-      abilityLevels = "",
-      shortcuts = this.shortcuts.toString();
+    let abilities = '';
+    let abilityLevels = '';
+    const shortcuts = this.shortcuts.toString();
 
-    _.each(this.abilities, function(ability) {
+    _.each(this.abilities, (ability) => {
       abilities += ability.name;
       abilityLevels += ability.level;
     });
 
     return {
       username: this.player.username,
-      abilities: abilities,
-      abilityLevels: abilityLevels,
-      shortcuts: shortcuts
+      abilities,
+      abilityLevels,
+      shortcuts,
     };
   }
-});
+}

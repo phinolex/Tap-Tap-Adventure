@@ -1,14 +1,11 @@
-var cls = require("../../../../../../lib/class"),
-  Abilities = require("../../../../../../util/abilities");
+import Abilities from '../../../../../../util/abilities';
 
-module.exports = Ability = cls.Class.extend({
+export default class Ability {
   constructor(name, type) {
-    
-
     this.name = name;
     this.type = type;
     this.level = -1;
 
-    this.data = Abilities.Data[name];
+    this.data = Abilities.data[name];
   }
-});
+}

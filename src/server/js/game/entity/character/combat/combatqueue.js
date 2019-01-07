@@ -1,36 +1,27 @@
-var cls = require("../../../../lib/class");
-
-/**
- * Author: Tachyon
- * Company: uDeva 2017
- */
-
-module.exports = CombatQueue = cls.Class.extend({
+export default class CombatQueue {
   constructor() {
-    
-
     this.hitQueue = [];
-  },
+  }
 
   add(hit) {
     this.hitQueue.push(hit);
-  },
+  }
 
   hasQueue() {
     return this.hitQueue.length > 0;
-  },
+  }
 
   clear() {
     this.hitQueue = [];
-  },
+  }
 
   getHit() {
-    
+    if (this.hitQueue.length < 1) {
+      return null;
+    }
 
-    if (this.hitQueue.length < 1) return;
-
-    var hit = this.hitQueue.shift();
+    const hit = this.hitQueue.shift();
 
     return hit.getData();
   }
-});
+}

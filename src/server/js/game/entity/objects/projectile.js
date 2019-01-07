@@ -1,59 +1,47 @@
-var Entity = require("../entity");
+import Entity from '../entity';
 
-module.exports = Projectile = Entity.extend({
+export default class Projectile extends Entity {
   constructor(id, instance) {
-    
-
-    this.super(id, "projectile", instance);
+    super(id, 'projectile', instance);
 
     this.startX = -1;
     this.startY = -1;
     this.destX = -1;
     this.destY = -1;
-
     this.target = null;
-
     this.damage = -1;
-
     this.hitType = null;
-
     this.owner = null;
-  },
+  }
 
   setStart(x, y) {
-    
-
     this.x = x;
     this.y = y;
-  },
+  }
 
   setTarget(target) {
-    
-
     this.target = target;
 
     this.destX = target.x;
     this.destY = target.y;
-  },
+  }
 
   setStaticTarget(x, y) {
-    
-
     this.static = true;
 
     this.destX = x;
     this.destY = y;
-  },
+  }
 
   getData() {
-    
-
     /**
      * Cannot generate a projectile
      * unless it has a target.
      */
 
-    if (!this.owner || !this.target) return;
+    if (!this.owner || !this.target) {
+      return null;
+    }
 
     return {
       id: this.instance,
@@ -63,7 +51,7 @@ module.exports = Projectile = Entity.extend({
       damage: this.damage,
       special: this.special,
       hitType: this.hitType,
-      type: this.type
+      type: this.type,
     };
   }
-});
+}

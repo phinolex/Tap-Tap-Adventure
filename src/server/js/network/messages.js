@@ -1,6 +1,12 @@
-const Packets = require('./packets');
+import Packets from './packets';
 
-export class Message {}
+/**
+ * Abstract class wrapper for all message classes
+ * Should contain:
+ *  - constructor()
+ *  - serialize() => returns Array
+ */
+class Message {}
 
 class Handshake extends Message {
   constructor(clientId, devClient) {
@@ -398,7 +404,7 @@ class Shop extends Message {
   }
 }
 
-export const Messages = {
+export default {
   Handshake,
   Welcome,
   Spawn,

@@ -17,7 +17,7 @@ export default class Shops {
     );
   }
 
-  buy(player, shopId, itemId, count) {
+  buy() {
     // const cost = ShopUtils.getCost(shopId, itemId, count);
     this.refresh();
   }

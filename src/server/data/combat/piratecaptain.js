@@ -1,9 +1,9 @@
-var Combat = require("../../js/game/entity/character/combat/combat"),
-  Utils = require("../../js/util/utils"),
-  Messages = require("../../js/network/messages"),
-  Modules = require("../../js/util/modules");
+var Combat from "../../js/game/entity/character/combat/combat"),
+  Utils from "../../js/util/utils"),
+  Messages from "../../js/network/messages"),
+  Modules from "../../js/util/modules");
 
-module.exports = PirateCaptain = Combat.extend({
+export default class PirateCaptain = Combat.extend({
   constructor(character) {
     
 
@@ -26,7 +26,7 @@ module.exports = PirateCaptain = Combat.extend({
   },
 
   load() {
-    var self = this,
+    var 
       south = {x: 251, y: 574},
       west = {x: 243, y: 569},
       east = {x: 258, y: 568},
@@ -42,7 +42,7 @@ module.exports = PirateCaptain = Combat.extend({
   },
 
   teleport() {
-    var self = this,
+    var 
       position = this.getRandomPosition();
 
     if (!position) return;
@@ -73,7 +73,7 @@ module.exports = PirateCaptain = Combat.extend({
   },
 
   getRandomPosition() {
-    var self = this,
+    var 
       random = Utils.randomInt(0, this.teleportLocations.length - 1),
       position = this.teleportLocations[random];
 

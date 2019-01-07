@@ -1,85 +1,81 @@
-var cls = require("../../../../lib/class"),
-  Data = require("../../../../../data/achievements.json"),
-  Messages = require("../../../../network/messages"),
-  Packets = require("../../../../network/packets"),
-  Modules = require("../../../../util/modules");
+import Data from '../../../../../data/achievements.json';
+import Messages from '../../../../network/messages';
+import Packets from '../../../../network/packets';
+import Modules from '../../../../util/modules';
 
-module.exports = Achievement = cls.Class.extend({
-  /**
-   * TODO: Change the conditionals to use Modules to clarify what is done where.
-   */
-
+/**
+ * TODO: Change the conditionals to use Modules to clarify what is done where.
+ */
+export default class Achievement {
   constructor(id, player) {
-    
-
     this.id = id;
     this.player = player;
-
     this.progress = 0;
-
     this.data = Data[this.id];
-
     this.name = this.data.name;
     this.description = this.data.description;
-
     this.discovered = false;
-  },
+  }
 
   step() {
-    
+    if (this.isThreshold()) {
+      return;
+    }
 
-    if (this.isThreshold()) return;
-
-    this.progress++;
-
+    this.progress += 1;
     this.update();
 
     this.player.send(
-      new Messages.Quest(Packets.QuestOpcode.Progress, {
-        id: this.id,
-        name: this.name,
-        progress: this.progress - 1,
-        count: this.data.count,
-        isQuest: false
-      })
+      new Messages.Quest(
+        Packets.QuestOpcode.Progress, {
+          id: this.id,
+          name: this.name,
+          progress: this.progress - 1,
+          count: this.data.count,
+          isQuest: false,
+        },
+      ),
     );
-  },
+  }
 
   converse(npc) {
-    
-
-    if (this.isThreshold() || this.hasItem()) this.finish(npc);
-    else {
+    if (this.isThreshold() || this.hasItem()) {
+      this.finish(npc);
+    } else {
       npc.talk(this.data.text);
 
       this.player.send(
         new Messages.NPC(Packets.NPCOpcode.Talk, {
           id: npc.instance,
-          text: this.data.text
-        })
+          text: this.data.text,
+        }),
       );
 
-      if (!this.isStarted() && npc.talkIndex > this.data.text.length)
+      if (!this.isStarted() && npc.talkIndex > this.data.text.length) {
         this.step();
+      }
     }
-  },
+  }
 
   finish(npc) {
-    var self = this,
-      rewardType = this.data.rewardType;
+    const {
+      rewardType,
+    } = this.data;
 
     switch (rewardType) {
+      default:
+        break;
       case Modules.Achievements.Rewards.Item:
         if (!this.player.inventory.hasSpace()) {
           this.player.notify(
-            "You do not have enough space in your inventory to finish this achievement."
+            'You do not have enough space in your inventory to finish this achievement.',
           );
           return;
         }
 
         this.player.inventory.add({
           id: this.data.item,
-          count: this.data.itemCount
+          count: this.data.itemCount,
         });
 
         break;
@@ -97,27 +93,25 @@ module.exports = Achievement = cls.Class.extend({
       new Messages.Quest(Packets.QuestOpcode.Finish, {
         id: this.id,
         name: this.name,
-        isQuest: false
-      })
+        isQuest: false,
+      }),
     );
 
     if (npc && this.player.npcTalkCallback) this.player.npcTalkCallback(npc);
-  },
+  }
 
   update() {
     this.player.save();
-  },
+  }
 
   isThreshold() {
     return this.progress >= this.data.count;
-  },
+  }
 
   hasItem() {
-    
-
     if (
-      this.data.type === Modules.Achievements.Type.Scavenge &&
-      this.player.inventory.contains(this.data.item)
+      this.data.type === Modules.Achievements.Type.Scavenge
+      && this.player.inventory.contains(this.data.item)
     ) {
       this.player.inventory.remove(this.data.item, this.data.itemCount);
 
@@ -125,19 +119,19 @@ module.exports = Achievement = cls.Class.extend({
     }
 
     return false;
-  },
+  }
 
   setProgress(progress) {
     this.progress = progress;
-  },
+  }
 
   isStarted() {
     return this.progress > 0;
-  },
+  }
 
   isFinished() {
     return this.progress > 9998;
-  },
+  }
 
   getInfo() {
     return {
@@ -147,7 +141,7 @@ module.exports = Achievement = cls.Class.extend({
       description: this.description,
       count: this.data.count ? this.data.count : 1,
       progress: this.progress,
-      finished: this.isFinished()
+      finished: this.isFinished(),
     };
   }
-});
+}

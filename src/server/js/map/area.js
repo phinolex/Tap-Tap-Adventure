@@ -1,17 +1,10 @@
-/* global module */
-
-var cls = require("../lib/class");
-
-module.exports = Area = cls.Class.extend({
-  /**
-   * This is an abstract file for Area,
-   * it encompasses the dimensions and all
-   * entities in it.
-   */
-
+/**
+ * This is an abstract file for Area,
+ * it encompasses the dimensions and all
+ * entities in it.
+ */
+export default class Area {
   constructor(id, x, y, width, height) {
-    
-
     this.id = id;
     this.x = x;
     this.y = y;
@@ -25,50 +18,51 @@ module.exports = Area = cls.Class.extend({
     this.chest = null;
 
     this.maxEntities = 0;
-  },
+  }
 
   contains(x, y) {
     return (
-      x >= this.x &&
-      y >= this.y &&
-      x < this.x + this.width &&
-      y < this.y + this.height
+      x >= this.x
+      && y >= this.y
+      && x < this.x + this.width
+      && y < this.y + this.height
     );
-  },
+  }
 
   addEntity(entity) {
-    
-
-    if (this.entities.indexOf(entity) > 0) return;
+    if (this.entities.indexOf(entity) > 0) {
+      return;
+    }
 
     this.entities.push(entity);
-    entity.area = self;
+    entity.area = this; // eslint-disable-line
 
-    if (this.spawnCallback) this.spawnCallback();
-  },
+    if (this.spawnCallback) {
+      this.spawnCallback();
+    }
+  }
 
   removeEntity(entity) {
-    var self = this,
-      index = this.entities.indexOf(entity);
+    const index = this.entities.indexOf(entity);
 
     if (index > -1) this.entities.splice(index, 1);
 
     if (this.entities.length === 0 && this.emptyCallback) this.emptyCallback();
-  },
+  }
 
   isFull() {
     return this.entities.length >= this.maxEntities;
-  },
+  }
 
   setMaxEntities(maxEntities) {
     this.maxEntities = maxEntities;
-  },
+  }
 
   onEmpty(callback) {
     this.emptyCallback = callback;
-  },
+  }
 
   onSpawn(callback) {
     this.spawnCallback = callback;
   }
-});
+}

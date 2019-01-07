@@ -1,16 +1,11 @@
-/* global module */
+import Entity from '../entity';
+import Combat from './combat/combat';
+import Modules from '../../../util/modules';
+import Mobs from '../../../util/mobs';
 
-var Entity = require("../entity"),
-  _ = require("underscore"),
-  Combat = require("./combat/combat"),
-  Modules = require("../../../util/modules"),
-  Mobs = require("../../../util/mobs");
-
-module.exports = Character = Entity.extend({
+export default class Character extends Entity {
   constructor(id, type, instance, x, y) {
-    
-
-    this.super(id, type, instance, x, y);
+    super(id, type, instance, x, y);
 
     this.level = -1;
     this.loaded = false;
@@ -41,183 +36,165 @@ module.exports = Character = Entity.extend({
     this.stunTimeout = null;
 
     this.projectile = Modules.Projectiles.Arrow;
-    this.projectileName = "projectile-pinearrow";
+    this.projectileName = 'projectile-pinearrow';
 
     this.healingInterval = null;
 
     this.loadCombat();
     this.startHealing();
-  },
+  }
 
   loadCombat() {
-    
-
-    if (Mobs.hasCombatPlugin(this.id))
-      this.combat = new (Mobs.isNewCombatPlugin(this.id))(self);
-    else this.combat = new Combat(self);
-  },
+    if (Mobs.hasCombatPlugin(this.id)) {
+      this.combat = new (Mobs.isNewCombatPlugin(this.id))(this);
+    } else {
+      this.combat = new Combat(this);
+    }
+  }
 
   setStun(stun) {
-    
-
     this.stunned = stun;
 
     if (this.stunCallback) this.stunCallback(stun);
-  },
+  }
 
   startHealing() {
-    
-
-    this.healingInterval = setInterval(function() {
+    this.healingInterval = setInterval(() => {
       if (
-        !this.hasTarget() &&
-        !this.combat.isAttacked() &&
-        !this.dead &&
-        this.loaded
+        !this.hasTarget()
+        && !this.combat.isAttacked()
+        && !this.dead
+        && this.loaded
       ) {
         this.heal(1);
       }
     }, 5000);
-  },
+  }
 
   stopHealing() {
-    
-
     clearInterval(this.healingInterval);
     this.healingInterval = null;
-  },
+  }
 
   hit(attacker) {
-    
-
     if (this.hitCallback) this.hitCallback(attacker);
-  },
+  }
 
   heal(amount) {
-    
-
     this.setHitPoints(this.hitPoints + amount);
 
     if (this.hitPoints > this.maxHitPoints) this.hitPoints = this.maxHitPoints;
-  },
+  }
 
   isRanged() {
     return this.attackRange > 1;
-  },
+  }
 
   applyDamage(damage) {
     this.hitPoints -= damage;
-  },
+  }
 
   isDead() {
     return this.hitPoints < 1 || this.dead;
-  },
+  }
 
   getCombat() {
     return this.combat;
-  },
+  }
 
   getHitPoints() {
     return this.hitPoints;
-  },
+  }
 
   getMaxHitPoints() {
     return this.maxHitPoints;
-  },
+  }
 
   setPosition(x, y) {
-    
-
     this.super(x, y);
 
     if (this.movementCallback) this.movementCallback(x, y);
-  },
+  }
 
   setTarget(target) {
-    
-
     this.target = target;
 
     if (this.targetCallback) this.targetCallback(target);
-  },
+  }
 
   setPotentialTarget(potentialTarget) {
     this.potentialTarget = potentialTarget;
-  },
+  }
 
   setHitPoints(hitPoints) {
-    
-
     this.hitPoints = hitPoints;
 
     if (this.hitPointsCallback) this.hitPointsCallback();
-  },
+  }
 
   getProjectile() {
     return this.projectile;
-  },
+  }
 
   getProjectileName() {
     return this.projectileName;
-  },
+  }
 
   getDrop() {
     return null;
-  },
+  }
 
   hasMaxHitPoints() {
     return this.hitPoints >= this.maxHitPoints;
-  },
+  }
 
   removeTarget() {
-    
-
     if (this.removeTargetCallback) this.removeTargetCallback();
 
     this.target = null;
-  },
+  }
 
   hasTarget() {
     return !(this.target === null);
-  },
+  }
 
   hasPotentialTarget(potentialTarget) {
     return this.potentialTarget === potentialTarget;
-  },
+  }
 
   clearTarget() {
     this.target = null;
-  },
+  }
 
   onTarget(callback) {
     this.targetCallback = callback;
-  },
+  }
 
   onRemoveTarget(callback) {
     this.removeTargetCallback = callback;
-  },
+  }
 
   onMovement(callback) {
     this.movementCallback = callback;
-  },
+  }
 
   onHit(callback) {
     this.hitCallback = callback;
-  },
+  }
 
   onHealthChange(callback) {
     this.hitPointsCallback = callback;
-  },
+  }
 
   onDamage(callback) {
     this.damageCallback = callback;
-  },
+  }
 
   onStunned(callback) {
     this.stunCallback = callback;
-  },
+  }
 
   onSubAoE(callback) {
     this.subAoECallback = callback;
   }
-});
+}

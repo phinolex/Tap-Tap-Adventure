@@ -1,32 +1,20 @@
-var cls = require("../../../../lib/class"),
-  fs = require("fs"),
-  Guilds = require("../../../../../data/guilds.json");
+import log from 'log';
+import Guilds from '../../../../../data/guilds.json';
 
-module.exports = Guild = cls.Class.extend({
+export default class Guild {
   constructor(name, leader) {
-    
-
     this.name = name;
     this.leader = leader;
-
     this.members = [];
-
     this.connected = false;
-  },
-
-  create() {},
+  }
 
   add(player) {
-    
-
     this.members.push(player);
-
     this.save();
-  },
+  }
 
   save() {
-    
-
     log.info(Guilds[this.leader.username]);
   }
-});
+}

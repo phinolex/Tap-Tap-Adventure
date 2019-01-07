@@ -1,8 +1,8 @@
-var Combat = require("../../js/game/entity/character/combat/combat"),
-  Utils = require("../../js/util/utils"),
-  _ = require("underscore");
+var Combat from "../../js/game/entity/character/combat/combat"),
+  Utils from "../../js/util/utils"),
+  _ from "underscore");
 
-module.exports = SkeletonKing = Combat.extend({
+export default class SkeletonKing = Combat.extend({
   /**
    * First of its kind, the Skeleton King will spawn 4 minions.
    * Two sorcerers on (x + 1, y + 1) & (x - 1, y + 1)
@@ -33,7 +33,7 @@ module.exports = SkeletonKing = Combat.extend({
 
     var listCopy = this.minions.slice();
 
-    for (var i = 0; i < listCopy.length; i++) this.world.kill(listCopy[i]);
+    for (var i = 0; i < listCopy.length; i += 1) this.world.kill(listCopy[i]);
   },
 
   hit(character, target, hitInfo) {
@@ -47,7 +47,7 @@ module.exports = SkeletonKing = Combat.extend({
   },
 
   spawnMinions() {
-    var self = this,
+    var 
       x = this.character.x,
       y = this.character.y;
 
