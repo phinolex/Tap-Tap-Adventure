@@ -1,4 +1,4 @@
-import log from 'log';
+import log from '../../util/log';
 import Messages from '../../network/messages';
 import Mobs from '../../util/mobs';
 import NPCs from '../../util/npcs';

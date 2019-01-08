@@ -1,6 +1,6 @@
 import mysql from 'mysql';
 import _ from 'underscore';
-import log from 'log';
+import log from '../util/log';
 import Creator from './creator';
 import Loader from './loader';
 import Config from '../../config.json';

@@ -1,6 +1,3 @@
-export default class AbilityDictionary {
-  constructor() {
-    this.data = {};
-    this.abilities = {};
-  }
-}
+import Dictionary from './dictionary';
+
+export default class AbilityDictionary extends Dictionary {}

@@ -1,6 +1,6 @@
 /* eslint-disable */
-import log from 'log';
 import _ from 'underscore';
+import log from '../util/log';
 import NPCData from '../../data/npcs.json';
 import ItemData from '../../data/items.json';
 import MobData from '../../data/mobs.json';
@@ -15,12 +15,20 @@ import Formulas from '../game/formulas';
 
 export default class Parser {
   constructor() {
+    this.mobsDictionary = new MobsDictionary();
+    this.npcsDictionary = new NpcsDictionary();
+    this.shopsDictionary = new ShopsDictionary();
+    this.itemsDictionary = new ItemsDictionary();
+    this.abilitiesDictionary = new AbilitiesDictionary();
+
     this.loadMobData();
     this.loadNPCData();
     this.loadItemData();
     this.loadAbilityData();
     this.loadShops();
     this.loadLevels();
+
+    return true;
   }
 
   loadMobData() {
@@ -29,7 +37,7 @@ export default class Parser {
     _.each(MobData, (value, key) => {
       key = key.toLowerCase(); // eslint-disable-line
 
-      MobsDictionary.properties[key] = {
+      this.mobsDictionary.setData(key, {
         key,
         id: value.id,
         name: value.name ? value.name : key,
@@ -48,17 +56,15 @@ export default class Parser {
         projectileName: value.projectileName ? value.projectileName : null,
         spawnDelay: value.spawnDelay ? value.spawnDelay : 60000,
         combatPlugin: value.combatPlugin ? value.combatPlugin : null,
-      };
-
-      MobsDictionary.mobs[value.id] = MobsDictionary.properties[key];
+      });
 
       mobCounter += 1;
     });
 
-    MobsDictionary.plugins = require('../util/plugins')(`${__dirname}/../../data/combat/`);
+    this.mobsDictionary.setPlugins(`${__dirname}/../../data/combat/`);
 
     log.info(`Finished loading ${mobCounter} mobs.`);
-    log.info(`Loaded ${Object.keys(MobsDictionary.plugins).length} mob plugins.`);
+    log.info(`Loaded ${Object.keys(this.mobsDictionary.plugins).length} mob plugins.`);
   }
 
   loadNPCData() {
@@ -67,15 +73,13 @@ export default class Parser {
     _.each(NPCData, (value, key) => {
       key = key.toLowerCase(); // eslint-disable-line
 
-      NpcsDictionary.properties[key] = {
+      this.npcsDictionary.setData(key, {
         key,
         id: value.id,
         name: value.name ? value.name : key,
         text: value.text ? value.text : null,
         type: value.type ? value.type : null,
-      };
-
-      NpcsDictionary.npcs[value.id] = NpcsDictionary.properties[key];
+      });
 
       npcCounter += 1;
     });
@@ -89,7 +93,7 @@ export default class Parser {
     _.each(ItemData, (value, key) => {
       key = key.toLowerCase(); // eslint-disable-line
 
-      ItemsDictionary.data[key] = {
+      this.itemsDictionary.setData(key, {
         key,
         id: value.id ? value.id : -1,
         type: value.type ? value.type : 'object',
@@ -108,17 +112,15 @@ export default class Parser {
         maxStackSize: value.maxStackSize ? value.maxStackSize : -1,
         plugin: value.plugin ? value.plugin : null,
         customData: value.customData ? value.customData : null,
-      };
-
-      ItemsDictionary.items[value.id] = ItemsDictionary.data[key];
+      });
 
       itemCounter += 1;
     });
 
-    ItemsDictionary.plugins = require('../util/plugins')(`${__dirname}/../../data/items/`);
+    this.itemsDictionary.setPlugins(`${__dirname}/../../data/items/`);
 
     log.info(`Finished loading ${itemCounter} items.`);
-    log.info(`Loaded ${Object.keys(ItemsDictionary.plugins).length} item plugins.`);
+    log.info(`Loaded ${Object.keys(this.itemsDictionary.plugins).length} item plugins.`);
   }
 
   loadAbilityData() {
@@ -127,15 +129,13 @@ export default class Parser {
     _.each(AbilityData, (value, key) => {
       key = key.toLowerCase(); // eslint-disable-line
 
-      AbilitiesDictionary.data[key] = {
+      this.abilitiesDictionary.setData(key, {
         key,
         id: value.id,
         type: value.type,
         mana: value.mana ? value.mana : 0,
         cooldown: value.cooldown ? value.cooldown : null,
-      };
-
-      AbilitiesDictionary.abilities[value.id] = AbilitiesDictionary.data[key];
+      });
 
       skillCounter += 1;
     });
@@ -149,16 +149,13 @@ export default class Parser {
     _.each(ShopsData, (value, key) => {
       key = key.toLowerCase();
 
-      ShopsDictionary.data[key] = {
+      this.shopsDictionary.setData(key, {
         key,
         id: value.npcId,
         items: value.items,
         count: value.count,
         prices: value.prices,
-      };
-
-      ShopsDictionary.shops[value.npcId] = ShopsDictionary.data[key];
-
+      });
       shopCounter += 1;
     });
 

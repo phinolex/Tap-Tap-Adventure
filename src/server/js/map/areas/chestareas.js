@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import log from 'log';
+import log from '../../util/log';
 import Area from '../area';
 import map from '../../../data/map/world_server.json';
 

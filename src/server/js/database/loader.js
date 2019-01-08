@@ -1,4 +1,4 @@
-import log from 'log';
+import log from '../util/log';
 
 export default class Loader {
   constructor(mysql) {

@@ -1,4 +1,4 @@
-import log from 'log';
+import log from '../../../../util/log';
 import Guilds from '../../../../../data/guilds.json';
 
 export default class Guild {

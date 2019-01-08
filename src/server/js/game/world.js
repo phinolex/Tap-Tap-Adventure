@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import log from 'log';
+import log from '../util/log';
 import config from '../../config.json';
 import Player from './entity/character/player/player';
 import Map from '../map/map';
@@ -30,10 +30,10 @@ export default class World {
 
     this.players = {};
     this.entities = {};
-    this.ItemsDictionary = {};
     this.chests = {};
-    this.MobsDictionary = {};
-    this.NpcsDictionary = {};
+    this.itemsDictionary = new ItemsDictionary();
+    this.mobsDictionary = new MobsDictionary();
+    this.npcsDictionary = new NpcsDictionary();
     this.projectiles = {};
     this.packets = {};
     this.groups = {};
@@ -489,16 +489,16 @@ export default class World {
     let entities = 0;
 
     _.each(this.map.staticEntities, (key, tileIndex) => {
-      const isMob = !!MobsDictionary.properties[key];
-      const isNpc = !!NpcsDictionary.properties[key];
-      const isItem = !!ItemsDictionary.data[key];
+      const isMob = !!this.mobsDictionary.getData(key);
+      const isNpc = !!this.npcsDictionary.getData(key);
+      const isItem = !!this.itemsDictionary.getData(key);
 
       const itemData = isItem
-        ? ItemsDictionary.getData(key)
+        ? this.itemsDictionary.getData(key)
         : null;
 
       const npcData = isNpc
-        ? NpcsDictionary.properties[key]
+        ? this.npcsDictionary.properties[key]
         : itemData;
 
       const info = isMob

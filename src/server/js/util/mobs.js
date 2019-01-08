@@ -1,46 +1,28 @@
-export default class MobsDictionary {
+import Dictionary from './dictionary';
+
+export default class MobsDictionary extends Dictionary {
   constructor() {
-    this.properties = {};
-    this.mobs = {};
-    this.plugins = {};
-  }
-
-  idToString(id) {
-    if (this.mobs && this.mobs[id]) {
-      return this.mobs[id].key;
-    }
-
-    return null;
-  }
-
-  idToName(id) {
-    if (this.mobs && this.mobs[id]) {
-      return this.mobs[id].name;
-    }
-
-    return null;
+    super();
+    this.data = {};
   }
 
   getXp(id) {
-    if (this.mobs && this.mobs[id]) {
-      return this.mobs[id].xp;
+    if (this.data && this.data[id]) {
+      return this.data[id].xp;
     }
 
     return -1;
   }
 
-  exists(id) {
-    return id in this.mobs;
-  }
-
   hasCombatPlugin(id) {
-    return id in this.mobs && this.mobs[id].combatPlugin in this.plugins;
+    return id in this.data && this.data[id].combatPlugin in this.plugins;
   }
 
   isNewCombatPlugin(id) {
-    if (id in this.mobs && this.mobs[id].combatPlugin in this.plugins) {
-      return this.plugins[this.mobs[id].combatPlugin];
+    if (id in this.data && this.data[id].combatPlugin in this.plugins) {
+      return this.plugins[this.data[id].combatPlugin];
     }
+
     return null;
   }
 }

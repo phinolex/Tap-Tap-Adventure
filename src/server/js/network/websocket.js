@@ -1,8 +1,9 @@
 /* global WebSocket */
-import log from 'log';
 import serve from 'serve-static';
 import http from 'http';
+import StaticConnection from 'connect';
 import SocketIO from 'socket.io';
+import log from '../util/log';
 import Socket from './socket';
 import Utils from '../util/utils';
 
@@ -57,7 +58,7 @@ class Server extends Socket {
     this.ips = {};
 
     // Serve statically for faster development
-    const app = Connection();
+    const app = StaticConnection();
 
     app.use(serve('client', {
       index: ['index.html'],
@@ -119,7 +120,7 @@ class Server extends Socket {
   }
 }
 
-export default class {
+export default {
   Server,
   Connection,
 };

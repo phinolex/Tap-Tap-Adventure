@@ -1,22 +1,19 @@
-var Combat from "../../js/game/entity/character/combat/combat"),
-  Messages from "../../js/network/messages"),
-  Packets from "../../js/network/packets"),
-  Modules from "../../js/util/modules"),
-  Utils from "../../js/util/utils"),
-  _ from "underscore");
+import _ from 'underscore';
+import Combat from '../../js/game/entity/character/combat/combat';
+import Messages from '../../js/network/messages';
+import Packets from '../../js/network/packets';
+import Modules from '../../js/util/modules';
+import Utils from '../../js/util/utils';
 
-export default class OgreLord = Combat.extend({
+export default class OgreLord extends Combat {
   constructor(character) {
-    
-
-    this.super(character);
-
+    super(character);
     this.character = character;
 
     this.dialogues = [
-      "Get outta my swamp",
-      "No, not the onion.",
-      "My minions give me strength! You stand no chance!"
+      'Get outta my swamp',
+      'No, not the onion.',
+      'My minions give me strength! You stand no chance!',
     ];
 
     this.minions = [];
@@ -25,112 +22,122 @@ export default class OgreLord = Combat.extend({
 
     this.loaded = false;
 
-    character.projectile = Modules.Projectiles.Boulder;
-    character.projectileName = "projectile-boulder";
+    character.projectile = Modules.Projectiles.Boulder; // eslint-disable-line
+    character.projectileName = 'projectile-boulder'; // eslint-disable-line
 
-    character.onDeath(function() {
+    character.onDeath(() => {
       this.reset();
     });
-  },
+  }
 
   load() {
-    
-
-    this.talkingInterval = setInterval(function() {
-      if (this.character.hasTarget()) this.forceTalk(this.getMessage());
+    this.talkingInterval = setInterval(() => {
+      if (this.character.hasTarget()) {
+        this.forceTalk(this.getMessage());
+      }
     }, 9000);
 
-    this.updateInterval = setInterval(function() {
+    this.updateInterval = setInterval(() => {
       this.character.armourLevel = 50 + this.minions.length * 15;
     }, 2000);
 
     this.loaded = true;
-  },
+  }
 
   hit(character, target, hitInfo) {
-    
-
-    if (this.isAttacked()) this.beginMinionAttack();
+    if (this.isAttacked()) {
+      this.beginMinionAttack();
+    }
 
     if (!character.isNonDiagonal(target)) {
-      var distance = character.getDistance(target);
+      const distance = character.getDistance(target);
 
       if (distance < 7) {
-        hitInfo.isRanged = true;
-        character.attackRange = 7;
+        hitInfo.isRanged = true; // eslint-disable-line
+        character.attackRange = 7; // eslint-disable-line
       }
     }
 
-    if (this.canSpawn()) this.spawnMinions();
+    if (this.canSpawn()) {
+      this.spawnMinions();
+    }
 
     this.super(character, target, hitInfo);
-  },
+  }
 
   forceTalk(message) {
-    
-
-    if (!this.world) return;
+    if (!this.world) {
+      return;
+    }
 
     this.world.pushToAdjacentGroups(
       this.character.target.group,
       new Messages.NPC(Packets.NPCOpcode.Talk, {
         id: this.character.instance,
         text: message,
-        nonNPC: true
-      })
+        nonNPC: true,
+      }),
     );
-  },
+  }
 
   getMessage() {
     return this.dialogues[Utils.randomInt(0, this.dialogues.length - 1)];
-  },
+  }
 
   spawnMinions() {
-    var 
-      xs = [414, 430, 415, 420, 429],
-      ys = [172, 173, 183, 185, 180];
+    const
+      xs = [414, 430, 415, 420, 429];
+
+
+    const ys = [172, 173, 183, 185, 180];
 
     this.lastSpawn = new Date().getTime();
 
-    this.forceTalk("Now you shall see my true power!");
+    this.forceTalk('Now you shall see my true power!');
 
-    for (var i = 0; i < xs.length; i += 1)
-      this.minions.push(this.world.spawnMob(12, xs[i], ys[i]));
+    for (let i = 0; i < xs.length; i += 1) this.minions.push(this.world.spawnMob(12, xs[i], ys[i]));
 
-    _.each(this.minions, function(minion) {
-      minion.onDeath(function() {
-        if (this.isLast()) this.lastSpawn = new Date().getTime();
+    _.each(this.minions, (minion) => {
+      minion.onDeath(() => {
+        if (this.isLast()) {
+          this.lastSpawn = new Date().getTime();
+        }
 
         this.minions.splice(this.minions.indexOf(minion), 1);
       });
 
-      if (this.isAttacked()) this.beginMinionAttack();
+      if (this.isAttacked()) {
+        this.beginMinionAttack();
+      }
     });
 
-    if (!this.loaded) this.load();
-  },
+    if (!this.loaded) {
+      this.load();
+    }
+  }
 
   beginMinionAttack() {
-    
+    if (!this.hasMinions()) {
+      return;
+    }
 
-    if (!this.hasMinions()) return;
+    _.each(this.minions, (minion) => {
+      const randomTarget = this.getRandomTarget();
 
-    _.each(this.minions, function(minion) {
-      var randomTarget = this.getRandomTarget();
-
-      if (!minion.hasTarget() && randomTarget)
+      if (!minion.hasTarget() && randomTarget) {
         minion.combat.begin(randomTarget);
+      }
     });
-  },
+  }
 
   reset() {
-    
-
     this.lastSpawn = 0;
 
-    var listCopy = this.minions.slice();
+    const listCopy = this.minions.slice();
 
-    for (var i = 0; i < listCopy.length; i += 1) this.world.kill(listCopy[i]);
+    for (let i = 0; i < listCopy.length; i += 1) {
+      this.world.kill(listCopy[i]);
+    }
 
     clearInterval(this.talkingInterval);
     clearInterval(this.updateInterval);
@@ -139,36 +146,38 @@ export default class OgreLord = Combat.extend({
     this.updateInterval = null;
 
     this.loaded = false;
-  },
+  }
 
   getRandomTarget() {
-    
-
     if (this.isAttacked()) {
-      var keys = Object.keys(this.attackers),
-        randomAttacker = this.attackers[keys[Utils.randomInt(0, keys.length)]];
+      const keys = Object.keys(this.attackers);
+      const randomAttacker = this.attackers[keys[Utils.randomInt(0, keys.length)]];
 
-      if (randomAttacker) return randomAttacker;
+      if (randomAttacker) {
+        return randomAttacker;
+      }
     }
 
-    if (this.character.hasTarget()) return this.character.target;
+    if (this.character.hasTarget()) {
+      return this.character.target;
+    }
 
     return null;
-  },
+  }
 
   hasMinions() {
     return this.minions.length > 0;
-  },
+  }
 
   isLast() {
     return this.minions.length === 1;
-  },
+  }
 
   canSpawn() {
     return (
-      new Date().getTime() - this.lastSpawn > 50000 &&
-      !this.hasMinions() &&
-      this.isAttacked()
+      new Date().getTime() - this.lastSpawn > 50000
+      && !this.hasMinions()
+      && this.isAttacked()
     );
   }
-});
+}

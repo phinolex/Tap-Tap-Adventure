@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import log from 'log';
+import log from '../../../../../util/log';
 import Slot from './slot';
 import Items from '../../../../../util/items';
 import Constants from '../../../../../util/constants';

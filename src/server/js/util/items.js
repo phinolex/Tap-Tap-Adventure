@@ -1,11 +1,9 @@
-import log from 'log';
+import Dictionary from './dictionary';
 
-export default class ItemsDictionary {
+export default class ItemsDictionary extends Dictionary {
   constructor() {
-    this.data = {};
-    this.items = {};
+    super();
     this.onCreate = {};
-    this.plugins = {};
   }
 
   getData(name) {
@@ -17,7 +15,7 @@ export default class ItemsDictionary {
   }
 
   hasPlugin(id) {
-    if (id in this.items && this.items[id].plugin in this.plugins) {
+    if (id in this.data && this.data[id].plugin in this.plugins) {
       return true;
     }
 
@@ -25,36 +23,11 @@ export default class ItemsDictionary {
   }
 
   isNewPlugin(id) {
-    if (id in this.items && this.items[id].plugin in this.plugins) {
-      return this.plugins[this.items[id].plugin];
+    if (id in this.data && this.data[id].plugin in this.plugins) {
+      return this.plugins[this.data[id].plugin];
     }
 
     return false;
-  }
-
-  idToString(id) {
-    if (id in this.items) {
-      return this.items[id].key;
-    }
-
-    return 'null';
-  }
-
-  idToName(id) {
-    if (id in this.items) {
-      return this.items[id].name;
-    }
-
-    return 'null';
-  }
-
-  stringToId(name) {
-    if (name in this.data) {
-      return this.data[name].id;
-    }
-
-    log.error(`Item: ${name} not found in the database.`);
-    return 'null';
   }
 
   getLevelRequirement(name) {
@@ -175,40 +148,40 @@ export default class ItemsDictionary {
   }
 
   getType(id) {
-    if (id in this.items) {
-      return this.items[id].type;
+    if (id in this.data) {
+      return this.data[id].type;
     }
 
     return null;
   }
 
   isStackable(id) {
-    if (id in this.items) {
-      return this.items[id].stackable;
+    if (id in this.data) {
+      return this.data[id].stackable;
     }
 
     return false;
   }
 
   isEdible(id) {
-    if (id in this.items) {
-      return this.items[id].edible;
+    if (id in this.data) {
+      return this.data[id].edible;
     }
 
     return false;
   }
 
   getCustomData(id) {
-    if (id in this.items) {
-      return this.items[id].customData;
+    if (id in this.data) {
+      return this.data[id].customData;
     }
 
     return null;
   }
 
   maxStackSize(id) {
-    if (id in this.items) {
-      return this.items[id].maxStackSize;
+    if (id in this.data) {
+      return this.data[id].maxStackSize;
     }
 
     return false;
@@ -250,32 +223,32 @@ export default class ItemsDictionary {
   }
 
   healsHealth(id) {
-    if (id in this.items) {
-      return this.items[id].healsHealth > 0;
+    if (id in this.data) {
+      return this.data[id].healsHealth > 0;
     }
 
     return false;
   }
 
   healsMana(id) {
-    if (id in this.items) {
-      return this.items[id].healsMana > 0;
+    if (id in this.data) {
+      return this.data[id].healsMana > 0;
     }
 
     return false;
   }
 
   getHealingFactor(id) {
-    if (id in this.items) {
-      return this.items[id].healsHealth;
+    if (id in this.data) {
+      return this.data[id].healsHealth;
     }
 
     return 0;
   }
 
   getManaFactor(id) {
-    if (id in this.items) {
-      return this.items[id].healsMana;
+    if (id in this.data) {
+      return this.data[id].healsMana;
     }
     return 0;
   }

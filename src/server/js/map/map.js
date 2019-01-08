@@ -1,6 +1,6 @@
-import log from 'log';
 import fs from 'fs';
 import _ from 'underscore';
+import log from '../util/log';
 import Modules from '../util/modules';
 import Utils from '../util/utils';
 import Groups from './groups';
@@ -9,6 +9,7 @@ import MusicAreas from './areas/musicareas';
 import ChestAreas from './areas/chestareas';
 import Grids from './grids';
 
+import gridData from '../../data/map/collisions.json';
 import map from '../../data/map/world_server.json';
 import config from '../../config.json';
 
@@ -114,7 +115,7 @@ export default class Map {
   }
 
   loadCollisions() {
-    const location = './server/data/map/collisions.json';
+    const location = `${__dirname}/../../data/map/collisions.json`;
 
     this.grid = null;
 
@@ -150,7 +151,7 @@ export default class Map {
           this.done();
         });
       } else {
-        this.grid = require('../../data/map/collisions.json');
+        this.grid = gridData;
         this.done();
       }
     });

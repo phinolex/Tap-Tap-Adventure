@@ -1,17 +1,13 @@
 import _ from 'underscore';
+import Dictionary from './dictionary';
 
-export default class ShopsDictionary {
-  constructor() {
-    this.shops = {};
-    this.data = {};
-  }
-
+export default class ShopsDictionary extends Dictionary {
   isShopNPC(npcId) {
-    return this.shops[npcId];
+    return this.data[npcId];
   }
 
   getItems(id) {
-    return this.shops[id].items;
+    return this.data[id].items;
   }
 
   getItemCount(id) {
@@ -24,7 +20,7 @@ export default class ShopsDictionary {
    * spice up the game.
    */
   getCost(shopId, itemId, count) {
-    const shop = this.shops[shopId];
+    const shop = this.data[shopId];
     const index = shop.items.indexOf(itemId);
 
     if (!index) {
@@ -37,7 +33,7 @@ export default class ShopsDictionary {
   getCount(id) {
     const {
       count,
-    } = this.shops[id];
+    } = this.data[id];
     const counts = [];
 
     if (_.isArray(count)) {

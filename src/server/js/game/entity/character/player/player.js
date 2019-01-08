@@ -1,4 +1,4 @@
-import log from 'log';
+import log from '../../../../util/log';
 import Character from '../character';
 import Incoming from '../../../../controllers/incoming';
 import Armour from './equipment/armour';

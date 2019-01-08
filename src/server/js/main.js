@@ -1,7 +1,6 @@
-import fs from 'fs';
 import _ from 'underscore';
 import ShutdownHook from 'shutdown-hook';
-import Log from 'log';
+import log from './util/log';
 import config from '../config.json';
 import MySQL from './database/mysql';
 import WebSocket from './network/websocket';
@@ -15,13 +14,9 @@ const worlds = [];
 let database;
 let worldsCreated = 0;
 
-const log = new Log(
-  config.worlds > 1 ? 'notice' : config.debugLevel,
-  config.localDebug ? fs.createWriteStream('runtime.log') : null,
-);
-
 function loadParser() {
-  Parser();
+  const parsed = new Parser();
+  log.info(`Parser loaded ${parsed}`);
 }
 
 function saveAll() {

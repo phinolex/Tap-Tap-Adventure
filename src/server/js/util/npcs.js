@@ -1,36 +1,17 @@
-export default class NpcsDictionary {
-  constructor() {
-    this.properties = {};
-    this.npcs = {};
-  }
+import Dictionary from './dictionary';
 
-  idToString(id) {
-    if (id in this.npcs) {
-      return this.npcs[id].key;
-    }
-
-    return null;
-  }
-
-  idToName(id) {
-    if (id in this.npcs) {
-      return this.npcs[id].name;
-    }
-
-    return null;
-  }
-
+export default class NpcsDictionary extends Dictionary {
   getText(id) {
-    if (this.npcs && this.npcs[id]) {
-      return this.npcs[id].text;
+    if (this.data && this.data[id]) {
+      return this.data[id].text;
     }
 
     return null;
   }
 
   getType(id) {
-    if (this.npcs && this.npcs[id]) {
-      return this.npcs[id].type;
+    if (this.data && this.data[id]) {
+      return this.data[id].type;
     }
 
     return null;
