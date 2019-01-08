@@ -494,7 +494,6 @@ export default class App {
   toggleLogin(toggle) {
     log.info(`Logging in: ${toggle}`);
 
-
     this.revertLoader();
 
     this.toggleTyping(toggle);
