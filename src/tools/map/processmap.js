@@ -1,19 +1,15 @@
-var fs = require("fs"),
-  _ = require("underscore");
+import _ from 'underscore';
 
 /**
  * Global Values
  */
+const collisions = {};
+const entities = {};
+let mobsFirstGid = -1;
+let map;
+let mode;
 
-var collisions = {},
-  entities = {},
-  mobsFirstGid = -1,
-  map,
-  mode;
-
-module.exports = function parse(json, options) {
-  
-
+export default function parse(json, options) {
   this.json = json;
   this.options = options;
 
@@ -22,20 +18,20 @@ module.exports = function parse(json, options) {
   map = {
     width: 0,
     height: 0,
-    collisions: []
+    collisions: [],
   };
 
   switch (mode) {
-    case "client":
+    default: break;
+    case 'client':
       map.data = [];
       map.high = [];
       map.blocking = [];
-
       map.animated = {};
 
       break;
 
-    case "server":
+    case 'server':
       map.roamingAreas = [];
       map.pvpAreas = [];
       map.gameAreas = [];
@@ -54,19 +50,19 @@ module.exports = function parse(json, options) {
 
   map.tilesize = this.json.tilewidth;
 
-  var handleProperty = function(property, value, id) {
-    if (property === "c") collisions[id] = true;
+  const handleProperty = function (property, value, id) {
+    if (property === 'c') collisions[id] = true;
 
-    if (mode === "client") {
-      if (property === "v") map.high.push(id);
+    if (mode === 'client') {
+      if (property === 'v') map.high.push(id);
 
-      if (property === "length") {
+      if (property === 'length') {
         if (!map.animated[id]) map.animated[id] = {};
 
         map.animated[id].l = value;
       }
 
-      if (property === "delay") {
+      if (property === 'delay') {
         if (!map.animated[id]) map.animated[id] = {};
 
         map.animated[id].d = value;
@@ -75,26 +71,26 @@ module.exports = function parse(json, options) {
   };
 
   if (this.json.tilesets instanceof Array) {
-    _.each(this.json.tilesets, function(tileset) {
-      var name = tileset.name.toLowerCase();
+    _.each(this.json.tilesets, (tileset) => {
+      const name = tileset.name.toLowerCase();
 
-      if (name === "tilesheet") {
-        _.each(tileset.tileproperties, function(value, name) {
-          var id = parseInt(name, 10) + 1;
+      if (name === 'tilesheet') {
+        _.each(tileset.tileproperties, (value, name) => {
+          const id = parseInt(name, 10) + 1;
 
-          _.each(value, function(value, name) {
+          _.each(value, (value, name) => {
             handleProperty(
               name,
               isValid(parseInt(value, 10)) ? parseInt(value, 10) : value,
-              id
+              id,
             );
           });
         });
-      } else if (name === "mobs" && mode === "server") {
+      } else if (name === 'mobs' && mode === 'server') {
         mobsFirstGid = tileset.firstgid;
 
-        _.each(tileset.tileproperties, function(value, name) {
-          var id = parseInt(name, 10) + 1;
+        _.each(tileset.tileproperties, (value, name) => {
+          const id = parseInt(name, 10) + 1;
 
           entities[id] = value.type;
         });
@@ -102,24 +98,26 @@ module.exports = function parse(json, options) {
     });
   }
 
-  _.each(this.json.layers, function(layer) {
-    var name = layer.name.toLowerCase(),
-      type = layer.type;
+  _.each(this.json.layers, (layer) => {
+    const name = layer.name.toLowerCase();
 
-    if (mode === "server")
+
+    const type = layer.type;
+
+    if (mode === 'server') {
       switch (name) {
-        case "doors":
+        case 'doors':
           var doors = layer.objects;
 
-          for (var d = 0; d < doors.length; d++) {
+          for (var d = 0; d < doors.length; d += 1) {
             map.doors[d] = {
               x: doors[d].x / map.tilesize,
               y: doors[d].y / map.tilesize,
-              p: doors[d].type === "portal" ? 1 : 0
+              p: doors[d].type === 'portal' ? 1 : 0,
             };
 
-            _.each(doors[d].properties, function(value, name) {
-              map.doors[d]["t" + name] = isValid(parseInt(value, 10))
+            _.each(doors[d].properties, (value, name) => {
+              map.doors[d][`t${name}`] = isValid(parseInt(value, 10))
                 ? parseInt(value, 10)
                 : value;
             });
@@ -127,14 +125,13 @@ module.exports = function parse(json, options) {
 
           break;
 
-        case "roaming":
+        case 'roaming':
           var areas = layer.objects;
 
-          for (var a = 0; a < areas.length; a++) {
-            var count = 1;
+          for (let a = 0; a < areas.length; a++) {
+            let count = 1;
 
-            if (areas[a].properties)
-              count = parseInt(areas[a].properties.count, 10);
+            if (areas[a].properties) count = parseInt(areas[a].properties.count, 10);
 
             map.roamingAreas[a] = {
               id: a,
@@ -143,34 +140,31 @@ module.exports = function parse(json, options) {
               width: areas[a].width / map.tilesize,
               height: areas[a].height / map.tilesize,
               type: areas[a].type,
-              count: count
+              count,
             };
           }
 
           break;
 
-        case "chestareas":
+        case 'chestareas':
           var cAreas = layer.objects;
 
-          _.each(cAreas, function(area) {
-            var chestArea = {
+          _.each(cAreas, (area) => {
+            const chestArea = {
               x: area.x / map.tilesize,
               y: area.y / map.tilesize,
               width: area.width / map.tilesize,
-              height: area.height / map.tilesize
+              height: area.height / map.tilesize,
             };
 
-            chestArea["i"] = _.map(area.properties.items.split(","), function(
-              name
-            ) {
-              return name;
-            });
+            chestArea.i = _.map(area.properties.items.split(','), name => name);
 
-            _.each(area.properties, function(value, name) {
-              if (name !== "items")
-                chestArea["t" + name] = isValid(parseInt(value, 10))
+            _.each(area.properties, (value, name) => {
+              if (name !== 'items') {
+                chestArea[`t${name}`] = isValid(parseInt(value, 10))
                   ? parseInt(value, 10)
                   : value;
+              }
             });
 
             map.chestAreas.push(chestArea);
@@ -178,36 +172,32 @@ module.exports = function parse(json, options) {
 
           break;
 
-        case "chests":
+        case 'chests':
           var chests = layer.objects;
 
-          _.each(chests, function(chest) {
-            var oChest = {
+          _.each(chests, (chest) => {
+            const oChest = {
               x: chest.x / map.tilesize,
-              y: chest.y / map.tilesize
+              y: chest.y / map.tilesize,
             };
 
-            oChest["i"] = _.map(chest.properties.items.split(","), function(
-              name
-            ) {
-              return name;
-            });
+            oChest.i = _.map(chest.properties.items.split(','), name => name);
 
             map.chests.push(oChest);
           });
 
           break;
 
-        case "music":
+        case 'music':
           var mAreas = layer.objects;
 
-          _.each(mAreas, function(area) {
-            var musicArea = {
+          _.each(mAreas, (area) => {
+            const musicArea = {
               x: area.x / map.tilesize,
               y: area.y / map.tilesize,
               width: area.width / map.tilesize,
               height: area.height / map.tilesize,
-              id: area.properties.id
+              id: area.properties.id,
             };
 
             map.musicAreas.push(musicArea);
@@ -215,15 +205,15 @@ module.exports = function parse(json, options) {
 
           break;
 
-        case "pvp":
+        case 'pvp':
           var pAreas = layer.objects;
 
-          _.each(pAreas, function(area) {
-            var pvpArea = {
+          _.each(pAreas, (area) => {
+            const pvpArea = {
               x: area.x / map.tilesize,
               y: area.y / map.tilesize,
               width: area.width / map.tilesize,
-              height: area.height / map.tilesize
+              height: area.height / map.tilesize,
             };
 
             map.pvpAreas.push(pvpArea);
@@ -231,15 +221,15 @@ module.exports = function parse(json, options) {
 
           break;
 
-        case "games":
+        case 'games':
           var gAreas = layer.objects;
 
-          _.each(gAreas, function(area) {
-            var gameArea = {
+          _.each(gAreas, (area) => {
+            const gameArea = {
               x: area.x / map.tilesize,
               y: area.y / map.tilesize,
               width: area.width / map.tilesize,
-              height: area.height / map.tilesize
+              height: area.height / map.tilesize,
             };
 
             map.gameAreas.push(gameArea);
@@ -247,67 +237,83 @@ module.exports = function parse(json, options) {
 
           break;
       }
+    }
   });
 
-  for (var l = this.json.layers.length - 1; l > 0; l--)
+  for (let l = this.json.layers.length - 1; l > 0; l -= 1) {
     parseLayer(this.json.layers[l]);
+  }
 
-  if (mode === "client")
-    for (var i = 0, max = map.data.length; i < max; i++)
-      if (!map.data[i]) map.data[i] = 0;
+  if (mode === 'client') {
+    for (let i = 0, max = map.data.length; i < max; i++) {
+      if (!map.data[i]) {
+        map.data[i] = 0;
+      }
+    }
+  }
 
   return map;
-};
+}
 
-var isValid = function(number) {
+var isValid = function (number) {
   return (
-    number &&
-    !isNaN(number - 0) &&
-    number !== null &&
-    number !== "" &&
-    number !== false
+    number
+    && !isNaN(number - 0)
+    && number !== null
+    && number !== ''
+    && number !== false
   );
 };
 
-var parseLayer = function(layer) {
-  var name = layer.name.toLowerCase(),
-    type = layer.type;
+var parseLayer = function (layer) {
+  const name = layer.name.toLowerCase();
+  const type = layer.type;
 
-  if (name === "entities" && mode === "server") {
+  if (name === 'entities' && mode === 'server') {
     var tiles = layer.data;
 
-    for (var i = 0; i < tiles.length; i++) {
-      var gid = tiles[i] - mobsFirstGid + 1;
+    for (let i = 0; i < tiles.length; i++) {
+      const gid = tiles[i] - mobsFirstGid + 1;
 
-      if (gid && gid > 0) map.staticEntities[i] = entities[gid];
+      if (gid && gid > 0) {
+        map.staticEntities[i] = entities[gid];
+      }
     }
   }
 
   var tiles = layer.data;
 
-  if (name === "blocking" && mode === "client") {
-    for (var j = 0; j < tiles.length; j++) {
-      var bGid = tiles[j];
+  if (name === 'blocking' && mode === 'client') {
+    for (let j = 0; j < tiles.length; j += 1) {
+      const bGid = tiles[j];
 
-      if (bGid && bGid > 0) map.blocking.push(j);
+      if (bGid && bGid > 0) {
+        map.blocking.push(j);
+      }
     }
   } else if (
-    type === "tilelayer" &&
-    layer.visible !== 0 &&
-    name !== "entities"
+    type === 'tilelayer'
+    && layer.visible !== 0
+    && name !== 'entities'
   ) {
-    for (var k = 0; k < tiles.length; k++) {
-      var tGid = tiles[k];
+    for (let k = 0; k < tiles.length; k += 1) {
+      const tGid = tiles[k];
 
-      if (mode === "client") {
+      if (mode === 'client') {
         if (tGid > 0) {
-          if (map.data[k] === undefined) map.data[k] = tGid;
-          else if (map.data[k] instanceof Array) map.data[k].unshift(tGid);
-          else map.data[k] = [tGid, map.data[k]];
+          if (map.data[k] === undefined) {
+            map.data[k] = tGid;
+          } else if (map.data[k] instanceof Array) {
+            map.data[k].unshift(tGid);
+          } else {
+            map.data[k] = [tGid, map.data[k]];
+          }
         }
       }
 
-      if (tGid in collisions) map.collisions.push(k);
+      if (tGid in collisions) {
+        map.collisions.push(k);
+      }
     }
   }
 };

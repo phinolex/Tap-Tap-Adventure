@@ -1,5 +1,9 @@
 import EntityHandler from './entityhandler';
 
+/**
+ * Initialize a new entity
+ * @class
+ */
 export default class Entity {
   /**
    * Initialize a new entity
@@ -61,7 +65,7 @@ export default class Entity {
    * entity's current position
    *
    * @param {Number} x
-   * @param {Number}  int
+   * @param {Number} y
    * @param {Boolean} ignoreDiagonals if true, will ignore diagonal directions (optional)
    * @return {Boolean}
    */
@@ -114,7 +118,6 @@ export default class Entity {
    * on a mobile screen. So the sprite has to be
    * handled differently.
    */
-
   loadDirty() {
     this.dirty = true;
 

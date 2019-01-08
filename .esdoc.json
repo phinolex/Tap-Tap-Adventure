@@ -1,0 +1,36 @@
+{
+  "source": "./",
+  "destination": "./docs",
+  "includes": ["\\.js$"],
+  "excludes": [
+    "node_modules",
+    "build",
+    "world_client.js"
+  ],
+  "plugins": [
+    { "name": "esdoc-ecmascript-proposal-plugin", "option": { "all": true } },
+    {
+      "name": "esdoc-standard-plugin",
+      "option": {
+        "lint": { "enable": true },
+        "coverage": { "enable": true },
+        "accessor": {
+          "access": ["public", "protected", "package", "private"],
+          "autoPrivate": true
+        },
+        "undocumentIdentifier": { "enable": true },
+        "unexportedIdentifier": { "enable": false },
+        "typeInference": { "enable": true },
+        "brand": {
+          "logo": "./assets/img/wtflogo-small.png",
+          "title": "WTF Adventure",
+          "description": "documentation for your wtf needs",
+          "repository": "https://github.com/design1online/wtfadventure",
+          "site": "http://design1online.com",
+          "author": "https://design1online.com",
+          "image": "http://design1online.com/logo.png"
+        }
+      }
+    }
+  ]
+}
