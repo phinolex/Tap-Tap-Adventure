@@ -7,7 +7,7 @@
     "type": "git"
   },
   "scripts": {
-    "client": "webpack --mode=development",
+    "start": "webpack --mode=development",
     "wtfserver": "nodemon --exec babel-node src/server/js/main.js",
     "deploy": "webpack --mode=production --config webpack.production.config.js",
     "test": "eslint ./src/**/**.js",

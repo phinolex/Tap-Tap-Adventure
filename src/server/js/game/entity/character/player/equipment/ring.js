@@ -1,10 +1,11 @@
 import Equipment from './equipment';
-import Items from '../../../../../util/items';
+import ItemsDictionary from '../../../../../util/items';
 
 export default class Ring extends Equipment {
   constructor(name, id, count, ability, abilityLevel) {
     super(name, id, count, ability, abilityLevel);
-    this.ringLevel = Items.getRingLevel(name);
+    this.itemsDictionary = new ItemsDictionary();
+    this.ringLevel = this.itemsDictionary.getRingLevel(name);
   }
 
   getBaseAmplifier() {

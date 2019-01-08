@@ -6,7 +6,7 @@ import Weapon from './equipment/weapon';
 import Pendant from './equipment/pendant';
 import Ring from './equipment/ring';
 import Boots from './equipment/boots';
-import Items from '../../../../util/items';
+import ItemsDictionary from '../../../../util/items';
 import Messages from '../../../../network/messages';
 import Formulas from '../../../formulas';
 import Hitpoints from './points/hitpoints';
@@ -60,6 +60,7 @@ export default class Player extends Character {
     this.enchant = new Enchant(this);
     this.trade = new Trade(this);
     this.warp = new Warp(this);
+    this.itemsDictionary = new ItemsDictionary();
 
     this.introduced = false;
     this.currentSong = null;
@@ -296,8 +297,8 @@ export default class Player extends Character {
   }
 
   eat(id) {
-    if (Items.hasPlugin(id)) {
-      const tempItem = new (Items.isNewPlugin(id))(id, -1, this.x, this.y);
+    if (this.itemsDictionary.hasPlugin(id)) {
+      const tempItem = new (this.itemsDictionary.isNewPlugin(id))(id, -1, this.x, this.y);
 
       tempItem.onUse(this);
 
@@ -307,24 +308,26 @@ export default class Player extends Character {
   }
 
   equip(string, count, ability, abilityLevel) {
-    const data = Items.getData(string);
+    const data = this.itemsDictionary.getData(string);
     let type;
 
-    if (!data || data === 'null') return;
+    if (!data || data === 'null') {
+      return;
+    }
 
-    if (Items.isArmour(string)) {
+    if (this.itemsDictionary.isArmour(string)) {
       type = Modules.Equipment.Armour;
-    } else if (Items.isWeapon(string)) {
+    } else if (this.itemsDictionary.isWeapon(string)) {
       type = Modules.Equipment.Weapon;
-    } else if (Items.isPendant(string)) {
+    } else if (this.itemsDictionary.isPendant(string)) {
       type = Modules.Equipment.Pendant;
-    } else if (Items.isRing(string)) {
+    } else if (this.itemsDictionary.isRing(string)) {
       type = Modules.Equipment.Ring;
-    } else if (Items.isBoots(string)) {
+    } else if (this.itemsDictionary.isBoots(string)) {
       type = Modules.Equipment.Boots;
     }
 
-    const id = Items.stringToId(string);
+    const id = this.itemsDictionary.stringToId(string);
 
     switch (type) {
       default:
@@ -363,7 +366,7 @@ export default class Player extends Character {
     this.send(
       new Messages.Equipment(Packets.EquipmentOpcode.Equip, [
         type,
-        Items.idToName(id),
+        this.itemsDictionary.idToName(id),
         string,
         count,
         ability,
@@ -376,7 +379,7 @@ export default class Player extends Character {
 
   canEquip(string) {
     const
-      requirement = Items.getLevelRequirement(string);
+      requirement = this.itemsDictionary.getLevelRequirement(string);
 
     if (requirement > this.level) {
       this.notify(
@@ -481,7 +484,7 @@ export default class Player extends Character {
     if (!id) return;
 
     this.armour = new Armour(
-      Items.idToString(id),
+      this.itemsDictionary.idToString(id),
       id,
       count,
       ability,
@@ -501,7 +504,7 @@ export default class Player extends Character {
     if (!id) return;
 
     this.weapon = new Weapon(
-      Items.idToString(id),
+      this.itemsDictionary.idToString(id),
       id,
       count,
       ability,
@@ -515,7 +518,7 @@ export default class Player extends Character {
     if (!id) return;
 
     this.pendant = new Pendant(
-      Items.idToString(id),
+      this.itemsDictionary.idToString(id),
       id,
       count,
       ability,
@@ -527,7 +530,7 @@ export default class Player extends Character {
     if (!id) return;
 
     this.ring = new Ring(
-      Items.idToString(id),
+      this.itemsDictionary.idToString(id),
       id,
       count,
       ability,
@@ -536,10 +539,12 @@ export default class Player extends Character {
   }
 
   setBoots(id, count, ability, abilityLevel) {
-    if (!id) return;
+    if (!id) {
+      return;
+    }
 
     this.boots = new Boots(
-      Items.idToString(id),
+      this.itemsDictionary.idToString(id),
       id,
       count,
       ability,

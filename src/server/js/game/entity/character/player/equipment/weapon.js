@@ -1,11 +1,12 @@
 import Equipment from './equipment';
-import Items from '../../../../../util/items';
+import ItemsDictionary from '../../../../../util/items';
 
 export default class Weapon extends Equipment {
   constructor(name, id, count, ability, abilityLevel) {
     super(name, id, count, ability, abilityLevel);
-    this.level = Items.getWeaponLevel(name);
-    this.ranged = Items.isArcherWeapon(name);
+    this.itemsDictionary = new ItemsDictionary();
+    this.level = this.itemsDictionary.getWeaponLevel(name);
+    this.ranged = this.itemsDictionary.isArcherWeapon(name);
     this.breakable = false;
   }
 

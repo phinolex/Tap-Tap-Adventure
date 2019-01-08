@@ -1,10 +1,11 @@
 import Equipment from './equipment';
-import Items from '../../../../../util/items';
+import ItemsDictionary from '../../../../../util/items';
 
 export default class Boots extends Equipment {
   constructor(name, id, count, ability, abilityLevel) {
     super(name, id, count, ability, abilityLevel);
-    this.bootsLevel = Items.getBootsLevel(name);
+    this.itemsDictionary = new ItemsDictionary();
+    this.bootsLevel = this.itemsDictionary.getBootsLevel(name);
   }
 
   getBaseAmplifier() {

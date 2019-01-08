@@ -1,4 +1,4 @@
-import Items from '../../../../../util/items';
+import ItemsDictionary from '../../../../../util/items';
 
 /**
  * Count represents the enchantment level of
@@ -11,6 +11,7 @@ export default class Equipment {
     this.count = count || 0;
     this.ability = ability || 0;
     this.abilityLevel = abilityLevel || 0;
+    this.itemsDictionary = new ItemsDictionary();
   }
 
   getName() {
@@ -39,8 +40,8 @@ export default class Equipment {
 
   getData() {
     return [
-      Items.idToName(this.id),
-      Items.idToString(this.id),
+      this.itemsDictionary.idToName(this.id),
+      this.itemsDictionary.idToString(this.id),
       this.count,
       this.ability,
       this.abilityLevel,
@@ -48,13 +49,13 @@ export default class Equipment {
   }
 
   getString() {
-    return Items.idToString(this.id);
+    return this.itemsDictionary.idToString(this.id);
   }
 
   getItem() {
     return {
       name: this.name,
-      string: Items.idToString(this.id),
+      string: this.itemsDictionary.idToString(this.id),
       id: this.id,
       count: this.count,
       ability: this.ability,

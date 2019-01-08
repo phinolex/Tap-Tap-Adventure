@@ -32,7 +32,6 @@ const getMaxDamage = (attacker, target) => {
     ? target.armour.getDefense()
     : target.armourLevel;
 
-
   const targetPendant = target.pendant ? target.pendant : null;
   const targetRing = target.ring ? target.ring : null;
   const targetBoots = target.boots ? target.boots : null;
@@ -155,7 +154,7 @@ const expToLevel = (experience) => {
   }
 
   for (let i = 1; i < LevelExp.length; i += 1) {
-    if (experience < LevelExp.LevelExp[i]) {
+    if (experience < LevelExp[i]) {
       return i;
     }
   }
