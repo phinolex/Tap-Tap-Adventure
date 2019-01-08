@@ -1,0 +1,27 @@
+{
+  "name": "WTF?! Adventure",
+  "host": "0.0.0.0",
+  "port": 8081,
+
+  "offlineMode": false,
+  "devClient": true,
+  "development": false,
+  "overrideAuth": false,
+
+  "mysqlHost": "localhost",
+  "mysqlPort": 8890,
+  "mysqlUser": "root",
+  "mysqlPassword": "root",
+  "mysqlDatabase": "wtfadventure",
+
+  "debugLevel": "info",
+  "localDebug": false,
+  "worlds": 1,
+  "maxPlayers": 200,
+  "gver": 3,
+  "updateTime": 200,
+
+  "secretKey": "INSERT_BASE_62_KEY_HERE",
+
+  "forceCollisions": false
+}
