@@ -15,7 +15,7 @@ export default class Inventory extends Container {
   }
 
   load(ids, counts, abilities, abilityLevels) {
-    this.super(ids, counts, abilities, abilityLevels);
+    super.load(ids, counts, abilities, abilityLevels);
 
     this.owner.send(
       new Messages.Inventory(Packets.InventoryOpcode.Batch, [
@@ -45,12 +45,13 @@ export default class Inventory extends Container {
       return false;
     }
 
-    const slot = this.super(item.id, count, item.ability, item.abilityLevel);
+    const slot = super.add(item.id, count, item.ability, item.abilityLevel);
 
-    if (!slot) return false;
+    if (!slot) {
+      return false;
+    }
 
     this.owner.send(new Messages.Inventory(Packets.InventoryOpcode.Add, slot));
-
     this.owner.save();
 
     if (item.instance) {
@@ -65,7 +66,7 @@ export default class Inventory extends Container {
       index = this.getIndex(id); // eslint-disable-line
     }
 
-    if (!this.super(index, id, count)) {
+    if (!super.remove(index, id, count)) {
       return;
     }
 

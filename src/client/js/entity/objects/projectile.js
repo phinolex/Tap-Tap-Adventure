@@ -36,14 +36,6 @@ export default class Projectile extends Entity {
     }
   }
 
-  setSprite(sprite) {
-    this.super(sprite);
-  }
-
-  setAnimation(name, speed, count, onEndCount) {
-    this.super(name, speed, count, onEndCount);
-  }
-
   setStart(x, y) {
     this.setGridPosition(Math.floor(x / 16), Math.floor(y / 16));
 
@@ -72,7 +64,9 @@ export default class Projectile extends Entity {
 
     this.updateAngle();
 
-    if (target.type !== 'mob') return;
+    if (target.type !== 'mob') {
+      return;
+    }
 
     target.onMove(() => {
       this.destX = target.x;

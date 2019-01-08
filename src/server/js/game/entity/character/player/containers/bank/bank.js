@@ -9,7 +9,7 @@ export default class Slot extends Container {
   }
 
   load(ids, counts, abilities, abilityLevels) {
-    this.super(ids, counts, abilities, abilityLevels);
+    super.load(ids, counts, abilities, abilityLevels);
 
     this.owner.send(
       new Messages.Bank(Packets.BankOpcode.Batch, [this.size, this.slots]),
@@ -27,16 +27,18 @@ export default class Slot extends Container {
       return false;
     }
 
-    const slot = this.super(id, parseInt(count, 10), ability, abilityLevel);
+    const slot = super.add(id, parseInt(count, 10), ability, abilityLevel);
 
     this.owner.send(new Messages.Bank(Packets.BankOpcode.Add, slot));
-
     this.owner.save();
+
     return true;
   }
 
   remove(id, count, index) {
-    if (!this.super(index, id, count)) return;
+    if (!super.remove(index, id, count)) {
+      return;
+    }
 
     this.owner.send(
       new Messages.Bank(Packets.BankOpcode.Remove, {

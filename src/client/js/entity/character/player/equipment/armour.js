@@ -14,8 +14,4 @@ export default class Armour extends Equipment {
   getDefence() {
     return this.defence;
   }
-
-  update(name, string, count, ability, abilityLevel) {
-    this.super(name, string, count, ability, abilityLevel);
-  }
 }

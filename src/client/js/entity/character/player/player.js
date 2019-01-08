@@ -64,11 +64,10 @@ export default class Player extends Character {
     this.type = 'player';
   }
 
+  /**
+   * This is for other player characters
+   */
   loadHandler(game) {
-    /**
-     * This is for other player characters
-     */
-
     this.handler.setGame(game);
     this.handler.load();
   }
@@ -77,16 +76,8 @@ export default class Player extends Character {
     return this.moveLeft || this.moveRight || this.moveUp || this.moveDown;
   }
 
-  stop(force) {
-    this.super(force);
-  }
-
   setId(id) {
     this.id = id;
-  }
-
-  idle() {
-    this.super();
   }
 
   loadEquipment() {
@@ -101,20 +92,8 @@ export default class Player extends Character {
     return this.weapon && this.weapon.ranged;
   }
 
-  follow(character) {
-    this.super(character);
-  }
-
-  go(x, y, forced) {
-    this.super(x, y, forced);
-  }
-
   hasWeapon() {
     return this.weapon ? this.weapon.exists() : false;
-  }
-
-  performAction(orientation, action) {
-    this.super(orientation, action);
   }
 
   setName(name) {
@@ -122,24 +101,8 @@ export default class Player extends Character {
     this.name = name;
   }
 
-  setSprite(sprite) {
-    this.super(sprite);
-  }
-
   getSpriteName() {
     return this.armour ? this.armour.string : 'clotharmor';
-  }
-
-  setGridPosition(x, y) {
-    this.super(x, y);
-  }
-
-  setHitPoints(hitPoints) {
-    this.super(hitPoints);
-  }
-
-  setMaxHitPoints(maxHitPoints) {
-    this.super(maxHitPoints);
   }
 
   setMana(mana) {
@@ -148,10 +111,6 @@ export default class Player extends Character {
 
   setMaxMana(maxMana) {
     this.maxMana = maxMana;
-  }
-
-  clearHealthBar() {
-    this.super();
   }
 
   getX() {
@@ -177,17 +136,9 @@ export default class Player extends Character {
 
   setEquipment(type, info) {
     const name = info.shift();
-
-
     const string = info.shift();
-
-
     const count = info.shift();
-
-
     const ability = info.shift();
-
-
     const abilityLevel = info.shift();
 
     switch (type) {
@@ -200,9 +151,13 @@ export default class Player extends Character {
             ability,
             abilityLevel,
           );
-        } else this.armour.update(name, string, count, ability, abilityLevel);
+        } else {
+          this.armour.update(name, string, count, ability, abilityLevel);
+        }
 
-        if (this.updateArmourCallback) this.updateArmourCallback(string);
+        if (this.updateArmourCallback) {
+          this.updateArmourCallback(string);
+        }
 
         break;
 
@@ -284,10 +239,6 @@ export default class Player extends Character {
         this.stopBlinking();
       }, 500);
     }
-  }
-
-  getDistance(entity) {
-    return this.super(entity);
   }
 
   onUpdateArmour(callback) {

@@ -1,7 +1,7 @@
 import Entity from '../entity';
 import Combat from './combat/combat';
 import Modules from '../../../util/modules';
-import Mobs from '../../../util/mobs';
+import MobsDictionary from '../../../util/mobs';
 
 export default class Character extends Entity {
   constructor(id, type, instance, x, y) {
@@ -40,13 +40,15 @@ export default class Character extends Entity {
 
     this.healingInterval = null;
 
+    this.mobsDictionary = new MobsDictionary();
+
     this.loadCombat();
     this.startHealing();
   }
 
   loadCombat() {
-    if (Mobs.hasCombatPlugin(this.id)) {
-      this.combat = new (Mobs.isNewCombatPlugin(this.id))(this);
+    if (this.mobsDictionary.hasCombatPlugin(this.id)) {
+      this.combat = new (this.mobsDictionary.isNewCombatPlugin(this.id))(this);
     } else {
       this.combat = new Combat(this);
     }
@@ -55,7 +57,9 @@ export default class Character extends Entity {
   setStun(stun) {
     this.stunned = stun;
 
-    if (this.stunCallback) this.stunCallback(stun);
+    if (this.stunCallback) {
+      this.stunCallback(stun);
+    }
   }
 
   startHealing() {
@@ -77,13 +81,17 @@ export default class Character extends Entity {
   }
 
   hit(attacker) {
-    if (this.hitCallback) this.hitCallback(attacker);
+    if (this.hitCallback) {
+      this.hitCallback(attacker);
+    }
   }
 
   heal(amount) {
     this.setHitPoints(this.hitPoints + amount);
 
-    if (this.hitPoints > this.maxHitPoints) this.hitPoints = this.maxHitPoints;
+    if (this.hitPoints > this.maxHitPoints) {
+      this.hitPoints = this.maxHitPoints;
+    }
   }
 
   isRanged() {
@@ -111,15 +119,19 @@ export default class Character extends Entity {
   }
 
   setPosition(x, y) {
-    this.super(x, y);
+    super.setPosition(x, y);
 
-    if (this.movementCallback) this.movementCallback(x, y);
+    if (this.movementCallback) {
+      this.movementCallback(x, y);
+    }
   }
 
   setTarget(target) {
     this.target = target;
 
-    if (this.targetCallback) this.targetCallback(target);
+    if (this.targetCallback) {
+      this.targetCallback(target);
+    }
   }
 
   setPotentialTarget(potentialTarget) {
@@ -129,7 +141,9 @@ export default class Character extends Entity {
   setHitPoints(hitPoints) {
     this.hitPoints = hitPoints;
 
-    if (this.hitPointsCallback) this.hitPointsCallback();
+    if (this.hitPointsCallback) {
+      this.hitPointsCallback();
+    }
   }
 
   getProjectile() {
@@ -149,7 +163,9 @@ export default class Character extends Entity {
   }
 
   removeTarget() {
-    if (this.removeTargetCallback) this.removeTargetCallback();
+    if (this.removeTargetCallback) {
+      this.removeTargetCallback();
+    }
 
     this.target = null;
   }

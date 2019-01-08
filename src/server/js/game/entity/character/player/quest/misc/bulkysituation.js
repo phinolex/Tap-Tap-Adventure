@@ -7,10 +7,7 @@ export default class BulkySituation extends Quest {
     super(player, data);
     this.player = player;
     this.data = data;
-
     this.lastNPC = null;
-
-    this.super(player, data);
   }
 
   load(stage) {
@@ -85,10 +82,6 @@ export default class BulkySituation extends Quest {
         isQuest: true,
       }),
     );
-  }
-
-  finish() {
-    this.super();
   }
 
   hasRequirement() {

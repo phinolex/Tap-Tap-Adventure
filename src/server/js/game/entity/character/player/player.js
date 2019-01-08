@@ -555,9 +555,11 @@ export default class Player extends Character {
   }
 
   setPosition(x, y) {
-    if (this.dead) return;
+    if (this.dead) {
+      return;
+    }
 
-    this.super(x, y);
+    super.setPosition(x, y);
 
     this.world.pushToAdjacentGroups(
       this.group,

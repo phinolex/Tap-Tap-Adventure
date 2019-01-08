@@ -157,7 +157,7 @@ export default class Mob extends Character {
   }
 
   getState() {
-    const base = this.super();
+    const base = super.getState();
 
     base.hitPoints = this.hitPoints;
     base.maxHitPoints = this.maxHitPoints;

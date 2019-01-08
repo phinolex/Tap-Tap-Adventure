@@ -19,22 +19,6 @@ export default class Item extends Entity {
     this.setAnimation('idle', 150);
   }
 
-  setName(name) {
-    this.super(name);
-  }
-
-  setAnimation(name, speed, count) {
-    this.super(name, speed, count);
-  }
-
-  setGridPosition(x, y) {
-    this.super(x, y);
-  }
-
-  setSprite(sprite) {
-    this.super(sprite);
-  }
-
   hasShadow() {
     return this.shadow;
   }

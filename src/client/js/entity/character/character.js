@@ -486,18 +486,6 @@ export default class Character extends Entity {
     if (this.moveCallback) this.moveCallback();
   }
 
-  getDistance(entity) {
-    return this.super(entity);
-  }
-
-  setName(name) {
-    this.super(name);
-  }
-
-  setSprite(sprite) {
-    this.super(sprite);
-  }
-
   setTarget(target) {
     if (target === null) {
       this.removeTarget();
@@ -523,10 +511,6 @@ export default class Character extends Entity {
 
   setOrientation(orientation) {
     this.orientation = orientation;
-  }
-
-  setGridPosition(x, y) {
-    this.super(x, y);
   }
 
   onRequestPath(callback) {

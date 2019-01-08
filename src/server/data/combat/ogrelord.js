@@ -62,7 +62,7 @@ export default class OgreLord extends Combat {
       this.spawnMinions();
     }
 
-    this.super(character, target, hitInfo);
+    super.hit(character, target, hitInfo);
   }
 
   forceTalk(message) {

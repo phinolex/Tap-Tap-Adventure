@@ -45,7 +45,9 @@ export default class Item extends Entity {
 
   respawn() {
     setTimeout(() => {
-      if (this.respawnCallback) this.respawnCallback();
+      if (this.respawnCallback) {
+        this.respawnCallback();
+      }
     }, this.respawnTime);
   }
 
@@ -54,7 +56,7 @@ export default class Item extends Entity {
   }
 
   getState() {
-    const state = this.super();
+    const state = super.getState();
 
     state.count = this.count;
     state.ability = this.ability;

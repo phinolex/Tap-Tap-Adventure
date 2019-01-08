@@ -19,7 +19,7 @@ export default class GreatSquid extends Combat {
       this.lastTerror = new Date().getTime();
     }
 
-    this.super(character, target, hitInfo);
+    super.hit(character, target, hitInfo);
   }
 
   canUseTerror() {

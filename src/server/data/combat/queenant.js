@@ -54,7 +54,7 @@ export default class QueenAnt extends Combat {
 
   begin(attacker) {
     this.resetAoE();
-    this.super(attacker);
+    super.begin(attacker);
   }
 
   hit(attacker, target, hitInfo) {
@@ -75,7 +75,7 @@ export default class QueenAnt extends Combat {
       this.beginMinionAttack();
     }
 
-    this.super(attacker, target, hitInfo);
+    super.hit(attacker, target, hitInfo);
   }
 
   /**

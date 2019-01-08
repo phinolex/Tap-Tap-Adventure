@@ -42,7 +42,7 @@ export default class SkeletonKing extends Combat {
       this.spawnMinions();
     }
 
-    this.super(character, target, hitInfo);
+    super.hit(character, target, hitInfo);
   }
 
   spawnMinions() {

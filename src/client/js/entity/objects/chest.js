@@ -10,20 +10,4 @@ export default class Chest extends Entity {
   idle() {
     this.setAnimation('idle_down', 150);
   }
-
-  setName(name) {
-    this.super(name);
-  }
-
-  setAnimation(name, speed, count, onEndCount) {
-    this.super(name, speed, count, onEndCount);
-  }
-
-  setGridPosition(x, y) {
-    this.super(x, y);
-  }
-
-  setSprite(sprite) {
-    this.super(sprite);
-  }
 }

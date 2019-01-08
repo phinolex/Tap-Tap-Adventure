@@ -117,7 +117,7 @@ export default class Introduction extends Quest {
   }
 
   isFinished() {
-    return this.super() || !this.player.inTutorial();
+    return super.isFinished() || !this.player.inTutorial();
   }
 
   toggleChat() {
@@ -125,14 +125,13 @@ export default class Introduction extends Quest {
   }
 
   setStage(stage) {
-    this.super(stage);
-
+    super.setStage(stage);
     this.clearPointers();
   }
 
   finish() {
     this.toggleChat();
-    this.super();
+    super.finish();
   }
 
   verifyDoor(destX, destY) {

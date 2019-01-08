@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import Combat from '../../js/game/entity/character/combat/combat';
 import Messages from '../../js/network/messages';
 import Packets from '../../js/network/packets';
@@ -51,7 +52,7 @@ export default class Tenebris extends Combat {
       this.spawnIllusions();
     }
 
-    this.super(attacker, target, hitInfo);
+    super.hit(attacker, target, hitInfo);
   }
 
   spawnTenbris() {

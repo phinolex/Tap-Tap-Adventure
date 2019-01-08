@@ -48,7 +48,7 @@ export default class PirateCaptain extends Combat {
     if (this.canTeleport()) {
       this.teleport();
     } else {
-      this.super(character, target, hitInfo);
+      super.hit(character, target, hitInfo);
     }
   }
 
