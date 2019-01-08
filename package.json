@@ -14,6 +14,10 @@
     "mysql-start": "mysql-ctl start",
     "wtf": "npm run mysql-start && npm start"
   },
+  "nodemonConfig": {
+    "ignore": ["src/client/*", "assets/*", "build/*", "css/*"],
+    "delay": "2500"
+  },
   "dependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",

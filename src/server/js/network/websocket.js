@@ -1,4 +1,3 @@
-/* global WebSocket */
 import serve from 'serve-static';
 import http from 'http';
 import StaticConnection from 'connect';
@@ -74,7 +73,7 @@ class Server extends Socket {
     this.io.on('connection', (socket) => {
       log.notice(`Received connection from: ${socket.conn.remoteAddress}`);
 
-      const client = new WebSocket.Connection(this.createId(), socket, this);
+      const client = new Connection(this.createId(), socket, this);
 
       socket.on('client', (data) => {
         // check the client version of socket.io matches the server version

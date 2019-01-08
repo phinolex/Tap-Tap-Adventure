@@ -67,8 +67,18 @@ module.exports = {
       host: process.env.IP || 'localhost',
       port: process.env.PORT || 3000,
       server: {
-        baseDir: ['./', './build'],
+        baseDir: ['./build', './'],
       },
+      socket: {
+        clients: {
+          heartbeatTimeout: 80000,
+        },
+      },
+      watchOptions: {
+        awaitWriteFinish: true,
+      },
+    }, {
+      reload: false,
     }),
     new ModernizrWebpackPlugin({
       'feature-detects': ['input', 'canvas', 'css/resize'],
