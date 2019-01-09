@@ -55,7 +55,11 @@ WTF?! Adventure is completely open-source, allowing its community to collaborate
 - Private Messages
 - Passive Companions
 - Active Companions
-
+- Add Guilds and Parties
+- Implement trading amongst player
+- Abilities
+- Finalize all bosses
+- More quests and achievements
 
 ## Running WTF?! Adventure
 
