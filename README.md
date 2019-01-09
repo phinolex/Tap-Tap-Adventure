@@ -1,6 +1,6 @@
 ![WTF?! Adventure](https://github.com/design1online/WTF-Adventure/blob/master/assets/img/wtfadventure.png?raw=true "WTF?! Adventure")
 
-[![CircleCI](https://circleci.com/gh/design1online/WTF-Adventure.svg?style=svg)](https://circleci.com/gh/design1online/WTF-Adventure) ![Docs](https://raw.githubusercontent.com/design1online/WTF-Adventure/master/docs/badge.svg?sanitize=true)
+[![CircleCI](https://circleci.com/gh/design1online/WTF-Adventure.svg?style=svg)](https://circleci.com/gh/design1online/WTF-Adventure) ![Docs](https://raw.githubusercontent.com/design1online/WTF-Adventure/master/docs/badge.svg?sanitize=true) ![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)
 
 WTF?! Adventure is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ) and a subsequent fork called Tap Tap Adventure.
 WTF?! Adventure is completely open-source, allowing its community to collaborate and aid in the perfection of the game. Anyone is free to create their own derivative of WTF?! Adventure, with no strings attached.
@@ -60,6 +60,7 @@ WTF?! Adventure is completely open-source, allowing its community to collaborate
 - Abilities
 - Finalize all bosses
 - More quests and achievements
+
 
 ## Running WTF?! Adventure
 
