@@ -37,4 +37,4 @@ jobs:
       - run: npm test
 
       # generate docs
-      - run: npm esdoc
+      - run: npm run esdoc
