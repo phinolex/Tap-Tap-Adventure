@@ -20,8 +20,6 @@ export default class Socket {
 
     this.connection = null;
 
-    log.info(io);
-
     this.connection = io(url, {
       forceNew: true,
       reconnection: false,

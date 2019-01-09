@@ -7,3 +7,4 @@ dump.rdb
 server/config.json
 data/config.json
 npm-debug.log
+.external-ecmascript.js

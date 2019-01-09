@@ -4,14 +4,43 @@ import Detect from './utils/detect';
 import App from './app';
 import Game from './game';
 
+/**
+ * Launch the WTF client application and start the game
+ * @class
+ */
 export default class WTF {
+  /**
+   * Keep track of the instance of the app, document body, chat input and the game
+   */
   constructor() {
+    /**
+    * Instance of the client application
+    * @type {App}
+    */
     this.app = null;
+
+    /**
+     * Instance of the DOM $('body') element
+     * @type {Object}
+     */
     this.body = null;
+
+    /**
+    * Instance of the DOM $('#chatInput') DOM element
+    * @type {Object}
+    */
     this.chatInput = null;
+
+    /**
+    * Instance of the game class running on the HTML5 Canvas
+    * @type {Game}
+    */
     this.game = null;
   }
 
+  /**
+   * Initialize the application and the game as soon as the DOM is ready
+   */
   load() {
     $(document).ready(() => {
       this.app = new App();
@@ -20,10 +49,13 @@ export default class WTF {
 
       this.addClasses();
       this.initGame();
-      this.addListeners();
+      this.addResizeListeners();
     });
   }
 
+  /**
+   * Add classes to the body element after detecting the user's browser or device
+   */
   addClasses() {
     if (Detect.isWindows()) {
       this.body.addClass('windows');
@@ -38,7 +70,16 @@ export default class WTF {
     }
   }
 
-  addListeners() {
+  /**
+   * Adds event listeners for a resize check
+   * @listens {touchstart} - touching start
+   * @listens {touchmove} - touching move/drag
+   * @listens {transitionend} - transition ends
+   * @listens {webkitTransitionEnd} - webkit transition ends
+   * @listens {oTransitionEnd} - opera transition ends
+   * @listens {orientationchange} - device orientation change
+   */
+  addResizeListeners() {
     const resizeCheck = $('#resizeCheck');
 
     document.addEventListener('touchstart', () => {}, false);
@@ -55,6 +96,10 @@ export default class WTF {
     });
   }
 
+  /**
+   * Initialize the game once the client application is ready
+   * @listens {App.onReady} - when App is done loading
+   */
   initGame() {
     this.app.onReady(() => {
       this.app.sendStatus('Welcome, welcome...');
@@ -65,5 +110,4 @@ export default class WTF {
   }
 }
 
-const wtf = new WTF();
-wtf.load();
+new WTF().load();
