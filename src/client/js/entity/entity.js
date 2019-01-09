@@ -65,9 +65,10 @@ export default class Entity {
    * Checks to see if the x,y coordinate is adjacent to the
    * entity's current position
    *
-   * @param {Number} x
-   * @param {Number} y
-   * @param {Boolean} ignoreDiagonals if true, will ignore diagonal directions, defaults to false (optional)
+   * @param {Number} x coordinate
+   * @param {Number} y coordinate
+   * @param {Boolean} ignoreDiagonals if true, will ignore diagonal
+   * directions, defaults to false (optional)
    * @return {Boolean}
    */
   isPositionAdjacent(x, y, ignoreDiagonals = false) {
@@ -395,7 +396,7 @@ export default class Entity {
 
   /**
    * When this entity's is dirty (mobile) use this callback
-   * @param  {Function} callback the function to call when the sprite isDirty
+   * @param {Function} callback the function to call when the sprite isDirty
    */
   onDirty(callback) {
     this.dirtyCallback = callback;
