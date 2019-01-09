@@ -22,15 +22,63 @@ import Modules from './utils/modules';
 import Packets from './network/packets';
 import Detect from './utils/detect';
 
+/**
+ * Creates an instance of the game
+ * @class
+ */
 export default class Game {
+  /**
+   * Keep track of the game logic and the HTML5 canvas
+   * @param {App} app an instance of the client application
+   */
   constructor(app) {
+    /**
+     * An instance of the client application
+     * @type {App}
+     */
     this.app = app;
+
+    /**
+     * An ID used to identify the player after they've
+     * been given a handshake by the Node server
+     * @type {Number}
+     */
     this.id = -1;
+
+    /**
+     * An instance of the web socket used to talk to the node server
+     * @type {Object}
+     */
     this.socket = null;
+
+    /**
+     * An array of mesages from the web socket
+     * @type {Messages}
+     */
     this.messages = null;
+
+    /**
+     * An instance of the renderer
+     * @type {Renderer}
+     */
     this.renderer = null;
+
+    /**
+     * An instance of the updater
+     * @type {Updater}
+     */
     this.updater = null;
+
+    /**
+     * A reference to the player's LocalStorage
+     * @type {Object}
+     */
     this.storage = null;
+
+    /**
+     * An array of entities in the game
+     * @type {Entity[]}
+     */
     this.entities = null;
     this.input = null;
     this.map = null;
