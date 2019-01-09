@@ -1,6 +1,6 @@
-![WTF?! Adventure](https://github.com/design1online/WTF-Adventure/blob/master/client/img/wtfadventure.png?raw=true "WTF?! Adventure")
+![WTF?! Adventure](https://github.com/design1online/WTF-Adventure/blob/master/assets/img/wtfadventure.png?raw=true "WTF?! Adventure")
 
-![Documentation Coverage](https://github.com/design1online/WTF-Adventure/blob/master/docs/badge.svg?raw=true "Documentation Coverage")
+[![Coverage Status](https://coveralls.io/repos/github/boennemann/badges/badge.svg?branch=master)](https://coveralls.io/github/boennemann/badges?branch=master)
 
 WTF?! Adventure is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ) and a subsequent fork called Tap Tap Adventure.
 WTF?! Adventure is completely open-source, allowing its community to collaborate and aid in the perfection of the game. Anyone is free to create their own derivative of WTF?! Adventure, with no strings attached.
