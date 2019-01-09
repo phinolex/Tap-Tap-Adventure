@@ -1,15 +1,14 @@
-var exists, existsSync;
-(function() {
-  var semver = require("semver");
-  var module = semver.satisfies(process.version, ">=0.7.1")
-    ? require("fs")
-    : require("path");
+import semver from 'semver';
+import fs from 'fs';
+import path from 'path';
 
-  exists = module.exists;
-  existsSync = module.existsSync;
-})();
+const module = semver.satisfies(process.version, '>=0.7.1')
+  ? fs
+  : path;
 
-if (!(typeof exports === "undefined")) {
+const { exists, existsSync } = module.exists;
+
+if (!(typeof exports === 'undefined')) {
   module.exports.exists = exists;
   module.exports.existsSync = existsSync;
 }
