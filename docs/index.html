@@ -182,66 +182,71 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><p><img src="https://github.com/design1online/WTF-Adventure/blob/master/client/img/wtfadventure.png?raw=true" alt="WTF?! Adventure" title="WTF?! Adventure"></p>
-<p><img src="docs/badge.svg" alt="Documentation Coverage"></p>
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><p><img src="https://github.com/design1online/WTF-Adventure/blob/master/assets/img/wtfadventure.png?raw=true" alt="WTF?! Adventure" title="WTF?! Adventure"></p>
+<p><a href="https://circleci.com/gh/design1online/WTF-Adventure"><img src="https://circleci.com/gh/design1online/WTF-Adventure.svg?style=svg" alt="CircleCI"></a> <img src="https://raw.githubusercontent.com/design1online/WTF-Adventure/master/docs/badge.svg?sanitize=true" alt="Docs"></p>
 <p>WTF?! Adventure is a massively multi-player online open-source project based on Little Workshop&apos;s 2012 demonstration for HTML5 WebSockets - BrowserQuest (BQ) and a subsequent fork called Tap Tap Adventure.
 WTF?! Adventure is completely open-source, allowing its community to collaborate and aid in the perfection of the game. Anyone is free to create their own derivative of WTF?! Adventure, with no strings attached.</p>
-<p>Currently it is available on the three major platforms: iOS, Android &amp; PC. Though compatibility is questionable on older devices, there are still features implemented to ensure maximum performance is achieved.
-If you are interested in researching previous versions of the rewritten source, be sure to check out <a href="https://github.com/udeva/Kaetram">Kaetram</a>.</p>
-<h3 id="things-added-from-the-tap-tap-adventure-fork">Things added from the Tap Tap Adventure fork</h3><ul>
-<li>Rendering: Has been completely redone to only draw frames whenever necessary. This in turns boosts the performance on browsers such as Safari &amp; Firefox.</li>
-<li>Networking &amp; Packets: Previously, everything regarding networking was crammed into a singular class, now it has all been laid out properly with every class pertaining necessary functions.</li>
-<li>Dependencies: All dependencies have been brought up to date, and are constantly updated.</li>
-<li>Client Rework: The stress put on the client previously was unbelievable, the client not only had to receive packet data, it was responsible for parsing music, achievements, quests, item data, and many other nonsense. This has all been moved to the server side, the client received information about whatever it needs from the server, removing upwards of 20MB of unnecessary data.</li>
-<li>Source Structure: Since everything has been rewritten from scratch, the code itself is located in designated files following a logical structure, as opposed to random scattered code throughout the source. As an extra, the convention remains unanimous throughout the source, ensuring maximum readability is achieved all throughout. Many functions have been rewritten, and most classes incorporate the Object-Oriented Programming (OOP) paradigm. Ensuring the same thing isn&apos;t unnecessarily written a bunch of times.</li>
-<li>Database Loading: The new version uses MySQL as opposed to Redis. This is because MySQL is far more reliable. With this, the source is able to generate its own database structure regardless of the chosen MySQL server. Everything is stored in its according type and retrieved upon logging in.</li>
-<li>Data Parser: Located in server/js/util/ the parser loads all data regarding NPCs, Mobs, Items and so on right when the server starts. It is then able to use it throughout the source statically.</li>
-<li>Map Loading: The client-sided map has been brought down to the bare minimum, it is only responsible for its fair share of collisions (checked both client and server sided) and determining tiles and what gets drawn where. While the server-side map loading ensures the location of objects, NPCs, areas and so on. The client receives information depending on the actions taken by the player (i.e. a player walks into a new zone and must receive new music)</li>
-<li>Combat System: Completely rewritten and much more controlled, the combat system accounts for both single, multi, ranged or melee combat. It can easily be expanded to include special mobs (e.g. bosses). It is all done in the server-side, greatly reducing the chance of any exploit.</li>
-<li>Controllers: Both the client and the server side contain a folder named <code>controllers</code>. The name is pretty self explanatory, this controls important functions of the game.</li>
-<li>Quest System: The quest controller encompasses both achievements and quests, both have been created in a plugin format and allow for manipulation of server events. Achievements are far more simplistic in nature, consisting of minor tasks and small rewards.</li>
-<li>Plugin System: Expands upon the controllers and combat and allows direct control over individual items.</li>
+<h3 id="features--amp--functionality">Features &amp; Functionality</h3><ul>
+<li><p><strong>Webpack:</strong> Dev and prod config files and now utilizes browserSync for easier client side development. A new build folder is created that contains minified versions of the client side resources.</p>
+</li>
+<li><p><strong>NodeJS:</strong> Server has been updated to use nodemon for easier restarting and server development</p>
+</li>
+<li><p><strong>Babel ES6:</strong> All files updated to take advantage of newer JS functionality and class format</p>
+</li>
+<li><p><strong>Testing:</strong> Updated to use eslinter using airBnB standards</p>
+</li>
+<li><p><strong>Styles:</strong> Converted to allow the use of SASS</p>
+</li>
+<li><p><strong>Dependencies:</strong> All dependencies are now pulling from npm packages in package.json</p>
+</li>
+<li><p><strong>Rendering:</strong> Has been completely redone to only draw frames whenever necessary. This in turns boosts the performance on browsers such as Safari &amp; Firefox.</p>
+</li>
+<li><p><strong>Networking &amp; Packets:</strong> Previously, everything regarding networking was crammed into a singular class, now it has all been laid out properly with every class pertaining necessary functions.</p>
+</li>
+<li><p><strong>Client Rework:</strong> The stress put on the client previously was unbelievable, the client not only had to receive packet data, it was responsible for parsing music, achievements, quests, item data, and many other nonsense. This has all been moved to the server side, the client received information about whatever it needs from the server, removing upwards of 20MB of unnecessary data.</p>
+</li>
+<li><p><strong>Source Structure:</strong> Since everything has been rewritten from scratch, the code itself is located in designated files following a logical structure, as opposed to random scattered code throughout the source. As an extra, the convention remains unanimous throughout the source, ensuring maximum readability is achieved all throughout.</p>
+</li>
+<li><p><strong>Database Loading:</strong> Now uses MySQL as opposed to Redis. This is because MySQL is far more reliable. With this, the source is able to generate its own database structure regardless of the chosen MySQL server. Everything is stored in its according type and retrieved upon logging in.</p>
+</li>
+<li><p><strong>Data Parser:</strong> Located in <code>server/js/util/</code> the parser loads all data regarding NPCs, Mobs, Items and so on right when the server starts. It is then able to use it throughout the source statically.</p>
+</li>
+<li><p><strong>Map Loading:</strong> The client-sided map has been brought down to the bare minimum, it is only responsible for its fair share of collisions (checked both client and server sided) and determining tiles and what gets drawn where. While the server-side map loading ensures the location of objects, NPCs, areas and so on. The client receives information depending on the actions taken by the player (i.e. a player walks into a new zone and must receive new music)</p>
+</li>
+<li><p><strong>Combat System:</strong> Completely rewritten and much more controlled, the combat system accounts for both single, multi, ranged or melee combat. It can easily be expanded to include special mobs (e.g. bosses). It is all done in the server-side, greatly reducing the chance of any exploit.</p>
+</li>
+<li><p><strong>Controllers:</strong> Both the client and the server side contain a folder named <code>controllers</code>. The name is pretty self explanatory, this controls important functions of the game.</p>
+</li>
+<li><p><strong>Quest System:</strong> The quest controller encompasses both achievements and quests, both have been created in a plugin format and allow for manipulation of server events. Achievements are far more simplistic in nature, consisting of minor tasks and small rewards.</p>
+</li>
+<li><p><strong>Plugin System:</strong> Expands upon the controllers and combat and allows direct control over individual items.</p>
+</li>
+<li><p><strong>Crypto:</strong> removed this functionality</p>
+</li>
+<li><p><strong>Graphics:</strong> entirely new UI graphics</p>
+</li>
+<li><p><strong>Doors:</strong> enhanced to make going in and out of doors easier with mouse click functionality</p>
+</li>
 </ul>
-<h2 id="things-we--39-ve-added--removed-or-modified">Things we&apos;ve added, removed or modified</h2><ul>
-<li>Removed crypto</li>
-<li>Removed weird AdvoCut font</li>
-<li>Updated graphics</li>
-<li>Updated movement cursors</li>
-<li>Bug fixes</li>
-</ul>
-<h2 id="todo-list">ToDo List</h2><ul>
-<li>Documenting codebase and adding Document.js</li>
+<h2 id="todo-list">Todo List</h2><ul>
 <li>Better tutorial</li>
 <li>Advertisements</li>
 <li>Private Messages</li>
 <li>Passive Companions</li>
 <li>Active Companions</li>
+<li>Add Guilds and Parties</li>
+<li>Implement trading amongst player</li>
+<li>Abilities</li>
+<li>Finalize all bosses</li>
+<li>More quests and achievements</li>
 </ul>
 <h2 id="running-wtf---adventure">Running WTF?! Adventure</h2><p>Running the server is fairly straightforward, for the most part. If you encounter any issues, make sure you use the alternative solution.</p>
-<p>First, you must <code>clone</code> the repository. There&apos;s really no way around it, you kinda need the source to run it, y&apos;know? You have two options:</p>
-<p>1) Click the GitHub Clone or Download button
-2) <a href="https://ide.c9.io/design1online/taptapgame">Clone a copy of our c9.io workspace</a></p>
-<h3 id="using-c9-io">Using c9.io</h3><p>In your terminal run the following commands:</p>
-<p>1) <code>sudo npm install</code>
-2) <code>npm run mysql-start</code>
-3) <code>npm start</code></p>
-<p>Now navigate to <code>https://{project}-{username}.c9users.io:8081/</code></p>
-<p>Where <code>{project}</code> is the name of your c9.io clone of WTF Adventure,
-<code>{username}</code> is your c9.io username.</p>
-<h3 id="without-c9-io">Without c9.io</h3><h5 id="step-1---install-the-dependencies">Step 1 - Install the dependencies</h5><p>In the command line run: <code>sudo npm install</code></p>
-<h5 id="step-2---installing-the-utilities">Step 2 - Installing the utilities</h5><p>Convert the configuration for local usage, go in both <code>server</code> folder and <code>client/data</code> folder and rename <code>config.json-dist</code> to <code>config.json</code>.</p>
-<p>You can either choose to install MySQL for full distribution, or simply enable <code>offlineMode</code> in the server configuration.</p>
-<p>If you choose to use MySQL, install <code>mysql-server</code> for the operating system you&apos;re using, and update the configuration to contain your details.</p>
-<h5 id="step-2---run-the-server">Step 2 - Run the server</h5><p>Make sure MySQL is running and then start WTF adventure by entering this in the command line run: <code>npm start</code></p>
-<h5 id="step-3---connect-to-the-server">Step 3 - Connect to the server</h5><p>Now open your browser and navigate to <code>http://127.0.0.1:{port}/</code></p>
+<h5 id="step-1---install-the-dependencies">Step 1 - Install the dependencies</h5><p>In the command line run: <code>npm install</code></p>
+<h5 id="step-2---setting-the-config-files">Step 2 - Setting the config files</h5><p>Convert the server configuration for local usage, go in both <code>src/server/config.json</code> and <code>src/client/config.json</code> and update the ports and settings to meet your needs.</p>
+<h5 id="step-3---run-the-nodejs-server">Step 3 - Run the NodeJS server</h5><p><code>npm run wtfserver</code></p>
+<h5 id="step-4---run-the-client-html5-files">Step 4 - Run the Client HTML5 files</h5><p>Open another terminal and then type <code>npm run wtfclient</code></p>
+<h5 id="step-5---view-in-browser">Step 5 - View in Browser</h5><p>Now open your browser and navigate to <code>http://127.0.0.1:{port}/</code></p>
 <p>Where <code>{port}</code> is whatever port number you&apos;ve configured in your config.json files.</p>
-<h4 id="troubleshooting">Troubleshooting</h4><p>Usually you get errors if you forgot to install the server dependancies before you try to run WTF Adventure. In that
-case you can install them by typing <code>sudo npm install</code> and then trying to run WTF Adventure again.</p>
-<p>In most cases, the server was programmed to automatically generate the MySQL data in the database given, in the event this does not occur, there are two solutions you can attempt:</p>
-<p>1) Grant the MySQL user FULL permissions
-2) Run or query the <code>.sql</code> file in the <code>tools</code> folder.</p>
-<h3 id="for-developers">For Developers</h3><p>If you install <code>nodemon</code> as a npm dependency, it will automatically restarts the server and saves you the hassle
-of having to do it yourself.</p>
 </div>
 </div>
 

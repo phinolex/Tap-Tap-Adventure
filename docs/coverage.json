@@ -1,6 +1,6 @@
 {
-  "coverage": "6.01%",
-  "expectCount": 2960,
+  "coverage": "6%",
+  "expectCount": 2962,
   "actualCount": 178,
   "files": {
     "WTF-Adventure/src/client/js/app.js": {
@@ -3676,6 +3676,14 @@
         9,
         11,
         16
+      ]
+    },
+    "WTF-Adventure/src/tools/file.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        5,
+        9
       ]
     },
     "WTF-Adventure/src/tools/map/exportmap.js": {

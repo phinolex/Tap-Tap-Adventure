@@ -183,18 +183,17 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/tools/file.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">var exists, existsSync;
-(function() {
-  var semver = require(&quot;semver&quot;);
-  var module = semver.satisfies(process.version, &quot;&gt;=0.7.1&quot;)
-    ? require(&quot;fs&quot;)
-    : require(&quot;path&quot;);
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import semver from &apos;semver&apos;;
+import fs from &apos;fs&apos;;
+import path from &apos;path&apos;;
 
-  exists = module.exists;
-  existsSync = module.existsSync;
-})();
+const module = semver.satisfies(process.version, &apos;&gt;=0.7.1&apos;)
+  ? fs
+  : path;
 
-if (!(typeof exports === &quot;undefined&quot;)) {
+const { exists, existsSync } = module.exists;
+
+if (!(typeof exports === &apos;undefined&apos;)) {
   module.exports.exists = exists;
   module.exports.existsSync = existsSync;
 }
