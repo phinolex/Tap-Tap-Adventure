@@ -34,10 +34,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run linter
-      - run: npm lint
+      - run: npm run lint
 
       # run unit tests
       - run: npm test
-
-      # generate docs
-      - run: npm run esdoc
