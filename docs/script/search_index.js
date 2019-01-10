@@ -1176,6 +1176,18 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "wtf-adventure/coverage/lcov-report/prettify.js",
+    "file/WTF-Adventure/coverage/lcov-report/prettify.js.html",
+    "WTF-Adventure/coverage/lcov-report/prettify.js",
+    "file"
+  ],
+  [
+    "wtf-adventure/coverage/lcov-report/sorter.js",
+    "file/WTF-Adventure/coverage/lcov-report/sorter.js.html",
+    "WTF-Adventure/coverage/lcov-report/sorter.js",
+    "file"
+  ],
+  [
     "wtf-adventure/docs/script/inherited-summary.js",
     "file/WTF-Adventure/docs/script/inherited-summary.js.html",
     "WTF-Adventure/docs/script/inherited-summary.js",
@@ -1227,6 +1239,12 @@ window.esdocSearchIndex = [
     "wtf-adventure/docs/script/test-summary.js",
     "file/WTF-Adventure/docs/script/test-summary.js.html",
     "WTF-Adventure/docs/script/test-summary.js",
+    "file"
+  ],
+  [
+    "wtf-adventure/src/client/js/__tests__/main.test.js",
+    "file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
+    "WTF-Adventure/src/client/js/__tests__/main.test.js",
     "file"
   ],
   [

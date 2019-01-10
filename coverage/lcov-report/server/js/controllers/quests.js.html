@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for server/js/controllers/quests.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">server/js/controllers</a> quests.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/106</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/61</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/101</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import _ from 'underscore';</span>
+<span class="cstat-no" title="statement not covered" >import Introduction from '../game/entity/character/player/quest/misc/introduction';</span>
+<span class="cstat-no" title="statement not covered" >import BulkySituation from '../game/entity/character/player/quest/misc/bulkysituation';</span>
+<span class="cstat-no" title="statement not covered" >import QuestData from '../../data/quests.json';</span>
+<span class="cstat-no" title="statement not covered" >import AchievementData from '../../data/achievements.json';</span>
+<span class="cstat-no" title="statement not covered" >import Achievement from '../game/entity/character/player/achievement';</span>
+&nbsp;
+export default class Quests {
+<span class="fstat-no" title="function not covered" >  constructor(</span>player) <span class="cstat-no" title="statement not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    this.player = player;</span>
+<span class="cstat-no" title="statement not covered" >    this.quests = {};</span>
+<span class="cstat-no" title="statement not covered" >    this.achievements = {};</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.load();</span>
+  }
+&nbsp;
+  load() <span class="cstat-no" title="statement not covered" >{</span>
+    let questCount = <span class="cstat-no" title="statement not covered" >0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    _.each(QuestData, <span class="fstat-no" title="function not covered" >(</span>quest) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (questCount === 0) <span class="cstat-no" title="statement not covered" >this.quests[quest.id] = new Introduction(this.player, quest);</span></span>
+      else <span class="cstat-no" title="statement not covered" >if (questCount === 1) <span class="cstat-no" title="statement not covered" >t</span>his.quests[quest.id] = new BulkySituation(this.player, quest);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      questCount += 1;</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    _.each(AchievementData, <span class="fstat-no" title="function not covered" >(</span>achievement) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.achievements[achievement.id] = new Achievement(</span>
+        achievement.id,
+        this.player,
+      );
+    });
+  }
+&nbsp;
+  updateQuests(ids, stages) {
+<span class="cstat-no" title="statement not covered" >    for (let id = 0; id &lt; ids.length; id += 1) {</span>
+<span class="cstat-no" title="statement not covered" >      if (parseInt(ids[id], 10) &amp;&amp; this.quests[id]) {</span>
+<span class="cstat-no" title="statement not covered" >        this.quests[id].load(stages[id]);</span>
+      }
+    }
+  }
+&nbsp;
+  updateAchievements(ids, progress) {
+<span class="cstat-no" title="statement not covered" >    for (let id = 0; id &lt; ids.length; id += 1) {</span>
+<span class="cstat-no" title="statement not covered" >      if (parseInt(ids[id], 10) &amp;&amp; this.achievements[id]) {</span>
+<span class="cstat-no" title="statement not covered" >        this.achievements[id].setProgress(progress[id]);</span>
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.readyCallback) <span class="cstat-no" title="statement not covered" >t</span>his.readyCallback();</span>
+  }
+&nbsp;
+  getQuest(id) {
+<span class="cstat-no" title="statement not covered" >    if (id in this.quests) <span class="cstat-no" title="statement not covered" >r</span>eturn this.quests[id];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  }
+&nbsp;
+  getQuests() {
+    let ids = <span class="cstat-no" title="statement not covered" >'';</span>
+&nbsp;
+&nbsp;
+    let stages = <span class="cstat-no" title="statement not covered" >'';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let id = 0; id &lt; this.getQuestSize(); id += 1) {</span>
+<span class="cstat-no" title="statement not covered" >      ids += `${id} `;</span>
+<span class="cstat-no" title="statement not covered" >      stages += `${this.quests[id].stage} `;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      username: this.player.username,
+      ids,
+      stages,
+    };
+  }
+&nbsp;
+  getAchievements() {
+    let ids = <span class="cstat-no" title="statement not covered" >'';</span>
+    let progress = <span class="cstat-no" title="statement not covered" >'';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let id = 0; id &lt; this.getAchievementSize(); id += 1) {</span>
+<span class="cstat-no" title="statement not covered" >      ids += `${id} `;</span>
+<span class="cstat-no" title="statement not covered" >      progress += `${this.achievements[id].progress} `;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      username: this.player.username,
+      ids,
+      progress,
+    };
+  }
+&nbsp;
+  getData() {
+    const quests = <span class="cstat-no" title="statement not covered" >[];</span>
+&nbsp;
+&nbsp;
+    const achievements = <span class="cstat-no" title="statement not covered" >[];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.forEachQuest(<span class="fstat-no" title="function not covered" >(</span>quest) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      quests.push(quest.getInfo());</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.forEachAchievement(<span class="fstat-no" title="function not covered" >(</span>achievement) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      achievements.push(achievement.getInfo());</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      quests,
+      achievements,
+    };
+  }
+&nbsp;
+  forEachQuest(callback) {
+<span class="cstat-no" title="statement not covered" >    _.each(this.quests, <span class="fstat-no" title="function not covered" >(</span>quest) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      callback(quest);</span>
+    });
+  }
+&nbsp;
+  forEachAchievement(callback) {
+<span class="cstat-no" title="statement not covered" >    _.each(this.achievements, <span class="fstat-no" title="function not covered" >(</span>achievement) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      callback(achievement);</span>
+    });
+  }
+&nbsp;
+  getQuestsCompleted() {
+    let count = <span class="cstat-no" title="statement not covered" >0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (const id in this.quests) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.quests.hasOwnProperty(id)) {</span>
+<span class="cstat-no" title="statement not covered" >        if (this.quests[id].isFinished()) {</span>
+<span class="cstat-no" title="statement not covered" >          count += 1;</span>
+        }
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return count;</span>
+  }
+&nbsp;
+  getAchievementsCompleted() {
+    let count = <span class="cstat-no" title="statement not covered" >0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (const id in this.achievements) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.achievements.hasOwnProperty(id)) {</span>
+<span class="cstat-no" title="statement not covered" >        if (this.achievements[id].isFinished()) {</span>
+<span class="cstat-no" title="statement not covered" >          count += 1;</span>
+        }
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return count;</span>
+  }
+&nbsp;
+  getQuestSize() {
+<span class="cstat-no" title="statement not covered" >    return Object.keys(this.quests).length;</span>
+  }
+&nbsp;
+  getAchievementSize() {
+<span class="cstat-no" title="statement not covered" >    return Object.keys(this.achievements).length;</span>
+  }
+&nbsp;
+  getQuestByNPC(npc) {
+    /**
+     * Iterate through the quest list in the order it has been
+     * added so that NPC's that are required by multiple quests
+     * follow the proper order.
+     */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (const id in this.quests) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.quests.hasOwnProperty(id)) {</span>
+        const quest = <span class="cstat-no" title="statement not covered" >this.quests[id];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (quest.hasNPC(npc.id)) <span class="cstat-no" title="statement not covered" >r</span>eturn quest;</span>
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  }
+&nbsp;
+  getAchievementByNPC(npc) {
+<span class="cstat-no" title="statement not covered" >    for (const id in this.achievements) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.achievements.hasOwnProperty(id) &amp;&amp; this.achievements[id].data.npc === npc.id</span>
+        &amp;&amp; !this.achievements[id].isFinished()
+      ) <span class="cstat-no" title="statement not covered" >return this.achievements[id];</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  }
+&nbsp;
+  getAchievementByMob(mob) {
+<span class="cstat-no" title="statement not covered" >    for (const id in this.achievements) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.achievements.hasOwnProperty(id) &amp;&amp; this.achievements[id].data.mob === mob.id) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.achievements[id];</span>
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  }
+&nbsp;
+  isQuestMob(mob) {
+<span class="cstat-no" title="statement not covered" >    for (const id in this.quests) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.quests.hasOwnProperty(id)) {</span>
+        const quest = <span class="cstat-no" title="statement not covered" >this.quests[id];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!quest.isFinished() &amp;&amp; quest.hasMob(mob.id)) {</span>
+<span class="cstat-no" title="statement not covered" >          return true;</span>
+        }
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
+  isAchievementMob(mob) {
+<span class="cstat-no" title="statement not covered" >    for (const id in this.achievements) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.achievements.hasOwnProperty(id)) {</span>
+<span class="cstat-no" title="statement not covered" >        if (</span>
+          this.achievements[id].data.mob === mob.id
+          &amp;&amp; !this.achievements[id].isFinished()
+        ) <span class="cstat-no" title="statement not covered" >return true;</span>
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
+  isQuestNPC(npc) {
+<span class="cstat-no" title="statement not covered" >    for (const id in this.quests) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.quests.hasOwnProperty(id)) {</span>
+        const quest = <span class="cstat-no" title="statement not covered" >this.quests[id];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!quest.isFinished() &amp;&amp; quest.hasNPC(npc.id)) {</span>
+<span class="cstat-no" title="statement not covered" >          return true;</span>
+        }
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
+  isAchievementNPC(npc) {
+<span class="cstat-no" title="statement not covered" >    for (const id in this.achievements) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.achievements.hasOwnProperty(id)) {</span>
+<span class="cstat-no" title="statement not covered" >        if (</span>
+          this.achievements[id].data.npc === npc.id
+          &amp;&amp; !this.achievements[id].isFinished()
+        ) <span class="cstat-no" title="statement not covered" >return true;</span>
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
+  onReady(callback) {
+<span class="cstat-no" title="statement not covered" >    this.readyCallback = callback;</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 19:24:40 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for client/js/controllers/chat.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">client/js/controllers</a> chat.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/60</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/13</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/59</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import $ from 'jquery';
+import Modules from '../utils/modules';
+import Packets from '../network/packets';
+&nbsp;
+export default class Chat {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(game) {
+<span class="cstat-no" title="statement not covered" >    this.game = game;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.chat = $('#chat');</span>
+<span class="cstat-no" title="statement not covered" >    this.log = $('#chatLog');</span>
+<span class="cstat-no" title="statement not covered" >    this.input = $('#hud-chat-input');</span>
+<span class="cstat-no" title="statement not covered" >    this.button = $('#hud-chat');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.visible = false;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.fadingDuration = 5000;</span>
+<span class="cstat-no" title="statement not covered" >    this.fadingTimeout = null;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.button.click(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.button.blur();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (this.input.is(':visible')) {</span>
+<span class="cstat-no" title="statement not covered" >        this.hideInput();</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        this.toggle();</span>
+      }
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ad</span>d(source, text, labelColor, textColor) {
+    const styleLabel = <span class="cstat-no" title="statement not covered" >labelColor || 'white';</span>
+    const styleText = <span class="cstat-no" title="statement not covered" >textColor || 'white';</span>
+&nbsp;
+    const element = <span class="cstat-no" title="statement not covered" >$(</span>
+      `&lt;p&gt;
+        &lt;span style="color:${styleLabel}"&gt;${source}:&lt;/span&gt;
+        &lt;span style="color: ${styleText}"&gt; ${text}&lt;/span&gt;
+      &lt;/p&gt;`,
+    );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.showChat();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this.isActive()) {</span>
+<span class="cstat-no" title="statement not covered" >      this.hideInput();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.hideChat();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.log.append(element);</span>
+<span class="cstat-no" title="statement not covered" >    this.log.scrollTop(99999);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ke</span>y(data) {
+<span class="cstat-no" title="statement not covered" >    switch (data) {</span>
+      case Modules.Keys.Enter:
+<span class="cstat-no" title="statement not covered" >        if (this.input.val() === '') {</span>
+<span class="cstat-no" title="statement not covered" >          this.toggle();</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          this.send();</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>nd() {
+<span class="cstat-no" title="statement not covered" >    this.game.socket.send(Packets.Chat, [this.input.val()]);</span>
+<span class="cstat-no" title="statement not covered" >    this.toggle();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  to</span>ggle() {
+<span class="cstat-no" title="statement not covered" >    this.clean();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.visible &amp;&amp; !this.isActive()) <span class="cstat-no" title="statement not covered" >this.showInput();</span></span>
+    else <span class="cstat-no" title="statement not covered" >if (this.visible) {</span>
+<span class="cstat-no" title="statement not covered" >      this.hideInput();</span>
+<span class="cstat-no" title="statement not covered" >      this.hideChat();</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      this.showChat();</span>
+<span class="cstat-no" title="statement not covered" >      this.showInput();</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  sh</span>owChat() {
+<span class="cstat-no" title="statement not covered" >    this.chat.fadeIn('fast');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.visible = true;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  sh</span>owInput() {
+<span class="cstat-no" title="statement not covered" >    this.button.addClass('active');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.input.fadeIn('fast');</span>
+<span class="cstat-no" title="statement not covered" >    this.input.val('');</span>
+<span class="cstat-no" title="statement not covered" >    this.input.focus();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.clean();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  hi</span>deChat() {
+<span class="cstat-no" title="statement not covered" >    if (this.fadingTimeout) {</span>
+<span class="cstat-no" title="statement not covered" >      clearTimeout(this.fadingTimeout);</span>
+<span class="cstat-no" title="statement not covered" >      this.fadingTimeout = null;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.fadingTimeout = setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (!this.isActive()) {</span>
+<span class="cstat-no" title="statement not covered" >        this.chat.fadeOut('slow');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.visible = false;</span>
+      }
+    }, this.fadingDuration);
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  hi</span>deInput() {
+<span class="cstat-no" title="statement not covered" >    this.button.removeClass('active');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.input.val('');</span>
+<span class="cstat-no" title="statement not covered" >    this.input.fadeOut('fast');</span>
+<span class="cstat-no" title="statement not covered" >    this.input.blur();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.hideChat();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cl</span>ean() {
+<span class="cstat-no" title="statement not covered" >    clearTimeout(this.fadingTimeout);</span>
+<span class="cstat-no" title="statement not covered" >    this.fadingTimeout = null;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  is</span>Active() {
+<span class="cstat-no" title="statement not covered" >    return this.input.is(':focus');</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 19:24:40 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
