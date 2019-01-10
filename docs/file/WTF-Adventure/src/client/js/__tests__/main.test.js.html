@@ -185,13 +185,49 @@
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/__tests__/main.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import WTF from &apos;../main&apos;;
 
-/** @test {WTF} */
-describe(&apos;class WTF()&apos;, () =&gt; {
-  /** @test {WTF#constructor} */
-  it(&apos;initializes&apos;, () =&gt; {
-    const instance = new WTF();
-    expect(instance).toBeDefined();
+/**
+ * @test {WTF}
+ */
+describe(&apos;WTF&apos;, () =&gt; {
+  const instance = new WTF();
+
+  /**
+   * @test {WTF#constructor}
+   */
+  it(&apos;.constructor()&apos;, () =&gt; {
+    expect(WTF).toBeDefined();
   });
+
+  /**
+   * @test {WTF#load}
+   */
+  it(&apos;.load()&apos;, () =&gt; {
+    expect(instance.app).toEqual(null);
+    instance.load();
+    expect(instance.app).toBeDefined();
+    expect(instance.body).toBeDefined();
+    expect(instance.chatInput).toBeDefined();
+  });
+
+  /**
+   * @test {WTF#documentReady}
+   */
+  it(&apos;.documentReady()&apos;, () =&gt; {
+    expect(instance.app).toEqual(null);
+    instance.documentReady();
+    expect(instance.app).toBeDefined();
+    expect(instance.body).toBeDefined();
+    expect(instance.chatInput).toBeDefined();
+  });
+
+  // /**
+  //  * @test {WTF#addClasses}
+  //  */
+  // it(&apos;.addClasses()&apos;, () =&gt; {
+  //   const instance = new WTF();
+  //   console.log(instance);
+  //   expect(instance.chatInput).toBeDefined();
+  // });
 });
 </code></pre>
 

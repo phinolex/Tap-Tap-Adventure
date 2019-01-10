@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for WTF-Adventure/src/client/js/interface/inventory.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../../index.html">All files</a> / <a href="index.html">WTF-Adventure/src/client/js/interface</a> inventory.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/131</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/64</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/124</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import $ from 'jquery';
+import Container from './container/container';
+import Packets from '../network/packets';
+&nbsp;
+export default class Inventory {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(game, size) {
+<span class="cstat-no" title="statement not covered" >    this.game = game;</span>
+<span class="cstat-no" title="statement not covered" >    this.actions = game.interface.actions;</span>
+<span class="cstat-no" title="statement not covered" >    this.body = $('#inventory');</span>
+<span class="cstat-no" title="statement not covered" >    this.button = $('#hud-inventory');</span>
+<span class="cstat-no" title="statement not covered" >    this.action = $('#actionContainer');</span>
+<span class="cstat-no" title="statement not covered" >    this.container = new Container(size);</span>
+<span class="cstat-no" title="statement not covered" >    this.activeClass = 'inventory';</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedSlot = null;</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedItem = null;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  lo</span>ad(data) {
+    const list = <span class="cstat-no" title="statement not covered" >$('#inventory').find('ul');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; data.length; i += 1) {</span>
+      const item = <span class="cstat-no" title="statement not covered" >data[i];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.container.setSlot(i, item);</span>
+&nbsp;
+      const itemSlot = <span class="cstat-no" title="statement not covered" >$(`&lt;div id="slot${i}" class="itemSlot"&gt;&lt;/div&gt;`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (item.string !== 'null') {</span>
+<span class="cstat-no" title="statement not covered" >        itemSlot.css(</span>
+          'background-image',
+          this.container.getImageFormat(this.getScale(), item.string),
+        );
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (this.game.app.isMobile()) <span class="cstat-no" title="statement not covered" >itemSlot.css('background-size', '600%');</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      itemSlot.dblclick(<span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        this.clickDouble(event);</span>
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      itemSlot.click(<span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        this.click(event);</span>
+      });
+&nbsp;
+      const itemSlotList = <span class="cstat-no" title="statement not covered" >$('&lt;li&gt;&lt;/li&gt;');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      itemSlotList.append(itemSlot);</span>
+<span class="cstat-no" title="statement not covered" >      itemSlotList.append(</span>
+        `&lt;div id="itemCount${i}" class="itemCount"&gt;${item.count &gt; 1 ? item.count : ''}&lt;/div&gt;`,
+      );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      list.append(itemSlotList);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.button.click(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.game.interface.hideAll();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (this.isVisible()) <span class="cstat-no" title="statement not covered" >this.hide();</span></span>
+      else <span class="cstat-no" title="statement not covered" >this.display();</span>
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cl</span>ick(event) {
+    const index = <span class="cstat-no" title="statement not covered" >event.currentTarget.id.substring(4);</span>
+    const slot = <span class="cstat-no" title="statement not covered" >this.container.slots[index];</span>
+    const item = <span class="cstat-no" title="statement not covered" >$(this.getList()[index]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.clearSelection();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (slot.string === null || slot.count === -1) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.actions.reset();</span>
+<span class="cstat-no" title="statement not covered" >    this.actions.loadDefaults('inventory');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (slot.edible) <span class="cstat-no" title="statement not covered" >this.actions.add($('&lt;div id="eat" class="actionButton"&gt;Eat&lt;/div&gt;'));</span></span>
+    else <span class="cstat-no" title="statement not covered" >if (slot.equippable) <span class="cstat-no" title="statement not covered" >this.actions.add($('&lt;div id="wield" class="actionButton"&gt;Wield&lt;/div&gt;'));</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this.actions.isVisible()) {</span>
+<span class="cstat-no" title="statement not covered" >      this.actions.show();</span>
+    }
+&nbsp;
+    const sSlot = <span class="cstat-no" title="statement not covered" >item.find(`#slot${index}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    sSlot.addClass('select');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.selectedSlot = sSlot;</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedItem = slot;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.actions.hideDrop();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cl</span>ickDouble(event) {
+    const index = <span class="cstat-no" title="statement not covered" >event.currentTarget.id.substring(4);</span>
+    const slot = <span class="cstat-no" title="statement not covered" >this.container.slots[index];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!slot.edible &amp;&amp; !slot.equippable) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+    const item = <span class="cstat-no" title="statement not covered" >$(this.getList()[index]);</span>
+    const sSlot = <span class="cstat-no" title="statement not covered" >item.find(`#slot${index}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.clearSelection();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.selectedSlot = sSlot;</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedItem = slot;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.clickAction(slot.edible ? 'eat' : 'wield');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.actions.hideDrop();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cl</span>ickAction(event) {
+    const action = <span class="cstat-no" title="statement not covered" >event.currentTarget ? event.currentTarget.id : event;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this.selectedSlot || !this.selectedItem) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    switch (action) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'eat':
+      case 'wield':
+<span class="cstat-no" title="statement not covered" >        this.game.socket.send(Packets.Inventory, [</span>
+          Packets.InventoryOpcode.Select,
+          this.selectedItem.index,
+        ]);
+<span class="cstat-no" title="statement not covered" >        this.clearSelection();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'drop':
+        const item = <span class="cstat-no" title="statement not covered" >this.selectedItem;</span> // eslint-disable-line
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (item.count &gt; 1) <span class="cstat-no" title="statement not covered" >this.actions.displayDrop('inventory');</span></span>
+        else {
+<span class="cstat-no" title="statement not covered" >          this.game.socket.send(Packets.Inventory, [</span>
+            Packets.InventoryOpcode.Remove,
+            item,
+          ]);
+<span class="cstat-no" title="statement not covered" >          this.clearSelection();</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'dropAccept':
+        const count = <span class="cstat-no" title="statement not covered" >parseInt($('#dropCount').val(), 10);</span> // eslint-disable-line
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!count || count &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >          return;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.game.socket.send(Packets.Inventory, [</span>
+          Packets.InventoryOpcode.Remove,
+          this.selectedItem,
+          count,
+        ]);
+<span class="cstat-no" title="statement not covered" >        this.actions.hideDrop();</span>
+<span class="cstat-no" title="statement not covered" >        this.clearSelection();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'dropCancel':
+<span class="cstat-no" title="statement not covered" >        this.actions.hideDrop();</span>
+<span class="cstat-no" title="statement not covered" >        this.clearSelection();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.actions.hide();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ad</span>d(info) {
+    const item = <span class="cstat-no" title="statement not covered" >$(this.getList()[info.index]);</span>
+    const slot = <span class="cstat-no" title="statement not covered" >this.container.slots[info.index];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!item || !slot) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (slot.isEmpty()) {</span>
+<span class="cstat-no" title="statement not covered" >      slot.load(</span>
+        info.string,
+        info.count,
+        info.ability,
+        info.abilityLevel,
+        info.edible,
+        info.equippable,
+      );
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    slot.setCount(info.count);</span>
+&nbsp;
+    const cssSlot = <span class="cstat-no" title="statement not covered" >item.find(`#slot${info.index}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    cssSlot.css(</span>
+      'background-image',
+      this.container.getImageFormat(this.getScale(), slot.string),
+    );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.game.app.isMobile()) <span class="cstat-no" title="statement not covered" >cssSlot.css('background-size', '600%');</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    item</span>
+      .find(`#itemCount${info.index}`)
+      .text(slot.count &gt; 1 ? slot.count : '');
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>move(info) {
+    const item = <span class="cstat-no" title="statement not covered" >$(this.getList()[info.index]);</span>
+    const slot = <span class="cstat-no" title="statement not covered" >this.container.slots[info.index];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!item || !slot) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    slot.count -= info.count;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    item.find(`#itemCount${info.index}`).text(slot.count);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (slot.count &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >      item.find(`#slot${info.index}`).css('background-image', '');</span>
+<span class="cstat-no" title="statement not covered" >      item.find(`#itemCount${info.index}`).text('');</span>
+<span class="cstat-no" title="statement not covered" >      slot.empty();</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>size() {
+    const list = <span class="cstat-no" title="statement not covered" >this.getList();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; list.length; i += 1) {</span>
+      const item = <span class="cstat-no" title="statement not covered" >$(list[i]).find(`#slot${i}`);</span>
+      const slot = <span class="cstat-no" title="statement not covered" >this.container.slots[i];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (slot) {</span>
+<span class="cstat-no" title="statement not covered" >        if (this.game.app.isMobile()) {</span>
+<span class="cstat-no" title="statement not covered" >          item.css('background-size', '600%');</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          item.css(</span>
+            'background-image',
+            this.container.getImageFormat(this.getScale(), slot.string),
+          );
+        }
+      }
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cl</span>earSelection() {
+<span class="cstat-no" title="statement not covered" >    if (!this.selectedSlot) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.selectedSlot.removeClass('select');</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedSlot = null;</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedItem = null;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  di</span>splay() {
+<span class="cstat-no" title="statement not covered" >    this.body.fadeIn('fast');</span>
+<span class="cstat-no" title="statement not covered" >    this.button.addClass('active');</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  hi</span>de() {
+<span class="cstat-no" title="statement not covered" >    this.button.removeClass('active');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.body.fadeOut('slow');</span>
+<span class="cstat-no" title="statement not covered" >    this.button.removeClass('active');</span>
+<span class="cstat-no" title="statement not covered" >    this.clearSelection();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tScale() {
+<span class="cstat-no" title="statement not covered" >    return this.game.renderer.getDrawingScale();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tSize() {
+<span class="cstat-no" title="statement not covered" >    return this.container.size;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tList() {
+<span class="cstat-no" title="statement not covered" >    return $('#inventory')</span>
+      .find('ul')
+      .find('li');
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  is</span>Visible() {
+<span class="cstat-no" title="statement not covered" >    return this.body.css('display') === 'block';</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 23:23:28 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../../sorter.js"></script>
+</body>
+</html>

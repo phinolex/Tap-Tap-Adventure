@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for js/interface/profile/profile.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">js/interface/profile</a> profile.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/63</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/61</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import $ from 'jquery';
+import _ from 'underscore';
+import State from './pages/state';
+import Ability from './pages/ability';
+import Settings from './pages/settings';
+import Quest from './pages/quest';
+import Packets from '../../network/packets';
+&nbsp;
+export default class Profile {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(game) {
+<span class="cstat-no" title="statement not covered" >    this.game = game;</span>
+<span class="cstat-no" title="statement not covered" >    this.body = $('#profileDialog');</span>
+<span class="cstat-no" title="statement not covered" >    this.button = $('#profileButton');</span>
+<span class="cstat-no" title="statement not covered" >    this.next = $('#next');</span>
+<span class="cstat-no" title="statement not covered" >    this.previous = $('#previous');</span>
+<span class="cstat-no" title="statement not covered" >    this.activePage = null;</span>
+<span class="cstat-no" title="statement not covered" >    this.activeIndex = 0;</span>
+<span class="cstat-no" title="statement not covered" >    this.pages = [];</span>
+<span class="cstat-no" title="statement not covered" >    this.load();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  lo</span>ad() {
+<span class="cstat-no" title="statement not covered" >    this.button.click(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.game.interface.hideAll();</span>
+<span class="cstat-no" title="statement not covered" >      this.settings.hide();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (this.isVisible()) {</span>
+<span class="cstat-no" title="statement not covered" >        this.hide();</span>
+<span class="cstat-no" title="statement not covered" >        this.button.removeClass('active');</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        this.show();</span>
+<span class="cstat-no" title="statement not covered" >        this.button.addClass('active');</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (!this.activePage.loaded) {</span>
+<span class="cstat-no" title="statement not covered" >        this.activePage.load();</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.game.socket.send(Packets.Click, [</span>
+        'profile',
+        this.button.hasClass('active'),
+      ]);
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.next.click(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.activeIndex + 1 &lt; this.pages.length) <span class="cstat-no" title="statement not covered" >this.setPage(this.activeIndex + 1);</span></span>
+      else <span class="cstat-no" title="statement not covered" >this.next.removeClass('enabled');</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.previous.click(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.activeIndex &gt; 0) <span class="cstat-no" title="statement not covered" >this.setPage(this.activeIndex - 1);</span></span>
+      else <span class="cstat-no" title="statement not covered" >this.previous.removeClass('enabled');</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.state = new State(this.game);</span>
+<span class="cstat-no" title="statement not covered" >    this.ability = new Ability(this.game);</span>
+<span class="cstat-no" title="statement not covered" >    this.settings = new Settings(this.game);</span>
+<span class="cstat-no" title="statement not covered" >    this.quests = new Quest(this.game);</span>
+<span class="cstat-no" title="statement not covered" >    this.pages.push(this.state, this.quests, this.ability);</span>
+<span class="cstat-no" title="statement not covered" >    this.activePage = this.state;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.activeIndex === 0 &amp;&amp; this.activeIndex !== this.pages.length) {</span>
+<span class="cstat-no" title="statement not covered" >      this.next.addClass('enabled');</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  up</span>date() {
+<span class="cstat-no" title="statement not covered" >    _.each(this.pages, <span class="fstat-no" title="function not covered" >(p</span>age) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      page.update();</span>
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>size() {
+<span class="cstat-no" title="statement not covered" >    _.each(this.pages, <span class="fstat-no" title="function not covered" >(p</span>age) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      page.resize();</span>
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>tPage(index) {
+    const page = <span class="cstat-no" title="statement not covered" >this.pages[index];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.clear();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (page.isVisible()) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.activePage = page;</span>
+<span class="cstat-no" title="statement not covered" >    this.activeIndex = index;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.activeIndex + 1 === this.pages.length) {</span>
+<span class="cstat-no" title="statement not covered" >      this.next.removeClass('enabled');</span>
+    } else <span class="cstat-no" title="statement not covered" >if (this.activeIndex === 0) {</span>
+<span class="cstat-no" title="statement not covered" >      this.previous.removeClass('enabled');</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      this.previous.addClass('enabled');</span>
+<span class="cstat-no" title="statement not covered" >      this.next.addClass('enabled');</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    page.show();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  sh</span>ow() {
+<span class="cstat-no" title="statement not covered" >    this.body.fadeIn('slow');</span>
+<span class="cstat-no" title="statement not covered" >    this.button.addClass('active');</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  hi</span>de() {
+<span class="cstat-no" title="statement not covered" >    this.body.fadeOut('fast');</span>
+<span class="cstat-no" title="statement not covered" >    this.button.removeClass('active');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.settings) {</span>
+<span class="cstat-no" title="statement not covered" >      this.settings.hide();</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  is</span>Visible() {
+<span class="cstat-no" title="statement not covered" >    return this.body.css('display') === 'block';</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cl</span>ear() {
+<span class="cstat-no" title="statement not covered" >    if (this.activePage) {</span>
+<span class="cstat-no" title="statement not covered" >      this.activePage.hide();</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tScale() {
+<span class="cstat-no" title="statement not covered" >    return this.game.getScaleFactor();</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 23:19:31 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

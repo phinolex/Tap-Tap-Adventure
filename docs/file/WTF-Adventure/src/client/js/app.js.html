@@ -875,7 +875,7 @@ export default class App {
    * @return {String} active form&apos;s ID
    */
   getActiveForm() {
-    return this.wrapper[0].className;
+    return this.wrapper &amp;&amp; this.wrapper[0] &amp;&amp; this.wrapper[0].className;
   }
 
   /**

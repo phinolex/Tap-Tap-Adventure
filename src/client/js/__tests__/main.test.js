@@ -1,22 +1,46 @@
 import WTF from '../main';
 
-/** @test {WTF} */
+/**
+ * @test {WTF}
+ */
 describe('WTF', () => {
-  /** @test {WTF#constructor} */
+  const instance = new WTF();
+
+  /**
+   * @test {WTF#constructor}
+   */
   it('.constructor()', () => {
-    const instance = new WTF();
-    expect(instance).toBeDefined();
+    expect(WTF).toBeDefined();
   });
 
-  /** @test {WTF#constructor} */
-  it('.loads()', () => {
-    const instance = new WTF();
-    const spy = jest.spyOn(instance, 'load');
+  /**
+   * @test {WTF#load}
+   */
+  it('.load()', () => {
+    expect(instance.app).toEqual(null);
     instance.load();
-    expect(spy).toBeDefined();
+    expect(instance.app).toBeDefined();
+    expect(instance.body).toBeDefined();
+    expect(instance.chatInput).toBeDefined();
   });
 
-  it('fails', () => {
-    expect(true).toEqual(false);
+  /**
+   * @test {WTF#documentReady}
+   */
+  it('.documentReady()', () => {
+    expect(instance.app).toEqual(null);
+    instance.documentReady();
+    expect(instance.app).toBeDefined();
+    expect(instance.body).toBeDefined();
+    expect(instance.chatInput).toBeDefined();
   });
+
+  // /**
+  //  * @test {WTF#addClasses}
+  //  */
+  // it('.addClasses()', () => {
+  //   const instance = new WTF();
+  //   console.log(instance);
+  //   expect(instance.chatInput).toBeDefined();
+  // });
 });

@@ -1,6 +1,6 @@
 {
   "coverage": "6%",
-  "expectCount": 2963,
+  "expectCount": 2965,
   "actualCount": 178,
   "files": {
     "WTF-Adventure/coverage/lcov-report/sorter.js": {
@@ -1205,9 +1205,11 @@
       "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/main.js": {
-      "expectCount": 10,
+      "expectCount": 11,
       "actualCount": 10,
-      "undocumentLines": []
+      "undocumentLines": [
+        48
+      ]
     },
     "WTF-Adventure/src/client/js/map/map.js": {
       "expectCount": 35,
@@ -3714,6 +3716,13 @@
         12,
         258,
         268
+      ]
+    },
+    "WTF-Adventure/wallaby.config.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        2
       ]
     },
     "WTF-Adventure/webpack.config.js": {

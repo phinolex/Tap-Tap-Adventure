@@ -227,15 +227,16 @@ export default class WTF {
    * Initialize the application and the game as soon as the DOM is ready
    */
   load() {
-    $(document).ready(() =&gt; {
-      this.app = new App();
-      this.body = $(&apos;body&apos;);
-      this.chatInput = $(&apos;#chatInput&apos;);
+    $(document).ready(this.documentReady);
+  }
 
-      this.addClasses();
-      this.initGame();
-      this.addResizeListeners();
-    });
+  documentReady() {
+    this.app = new App();
+    this.body = $(&apos;body&apos;);
+    this.chatInput = $(&apos;#chatInput&apos;);
+    this.addClasses();
+    this.initGame();
+    this.addResizeListeners();
   }
 
   /**

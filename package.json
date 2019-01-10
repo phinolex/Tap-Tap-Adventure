@@ -12,7 +12,7 @@
     "wtf": "npm run mysql-start && npm start",
     "esdoc": "./node_modules/.bin/esdoc",
     "docs": "open ./docs/index.html",
-    "test": "jest --coverage && npm run badges",
+    "test": "jest --env=jsdom --coverage",
     "badges": "make-coverage-badge"
   },
   "nodemonConfig": {
@@ -25,17 +25,14 @@
     "delay": "2500"
   },
   "jest": {
-    "verbose": true,
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     },
+    "testEnvironment": "jsdom",
     "coverageReporters": [
       "json-summary",
       "text",
       "lcov"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.js"
     ],
     "moduleFileExtensions": [
       "js",
@@ -43,7 +40,8 @@
     ],
     "moduleDirectories": [
       "node_modules"
-    ]
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js"
   },
   "dependencies": {
     "@babel/core": "^7.2.2",
