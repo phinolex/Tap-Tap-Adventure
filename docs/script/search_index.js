@@ -1248,6 +1248,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "wtf-adventure/src/client/js/__tests__/main.test.js",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
+    "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "testFile"
+  ],
+  [
     "wtf-adventure/src/client/js/app.js",
     "file/WTF-Adventure/src/client/js/app.js.html",
     "WTF-Adventure/src/client/js/app.js",
@@ -17662,5 +17668,17 @@ window.esdocSearchIndex = [
     "file/WTF-Adventure/webpack.prod.config.js.html",
     "WTF-Adventure/webpack.prod.config.js",
     "file"
+  ],
+  [
+    "wtf wtf-adventure/src/client/js/main.js~wtf,wtf",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber4",
+    "class WTF()",
+    "test"
+  ],
+  [
+    "wtf#constructor wtf-adventure/src/client/js/main.js~wtf#constructor,wtf#constructor",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber6",
+    "class WTF() initializes",
+    "test"
   ]
 ]

@@ -709,7 +709,7 @@
     "__docId__": 60,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/__tests__/main.test.js",
-    "content": "import WTF from '../main';\n\ndescribe('class WTF()', () => {\n  it('initializes', () => {\n    const instance = new WTF();\n    expect(instance).toBeDefined();\n  });\n});\n",
+    "content": "import WTF from '../main';\n\n/** @test {WTF} */\ndescribe('class WTF()', () => {\n  /** @test {WTF#constructor} */\n  it('initializes', () => {\n    const instance = new WTF();\n    expect(instance).toBeDefined();\n  });\n});\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/__tests__/main.test.js",
     "access": "public",
@@ -61086,5 +61086,48 @@
     "name": "package.json",
     "static": true,
     "access": "public"
+  },
+  {
+    "__docId__": 3631,
+    "kind": "testFile",
+    "name": "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "content": "import WTF from '../main';\n\n/** @test {WTF} */\ndescribe('class WTF()', () => {\n  /** @test {WTF#constructor} */\n  it('initializes', () => {\n    const instance = new WTF();\n    expect(instance).toBeDefined();\n  });\n});\n",
+    "static": true,
+    "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 3632,
+    "kind": "test",
+    "name": "describe0",
+    "testId": 0,
+    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe0",
+    "access": null,
+    "description": "class WTF()",
+    "lineNumber": 4,
+    "testTargets": [
+      "WTF"
+    ]
+  },
+  {
+    "__docId__": 3633,
+    "kind": "test",
+    "name": "it1",
+    "testId": 1,
+    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe0.it1",
+    "access": null,
+    "description": "initializes",
+    "lineNumber": 6,
+    "testTargets": [
+      "WTF#constructor"
+    ]
   }
 ]

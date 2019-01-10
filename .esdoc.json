@@ -12,6 +12,12 @@
     {
       "name": "esdoc-standard-plugin",
       "option": {
+        "test": {
+          "source": "./",
+          "interfaces": ["describe", "it", "context", "suite", "test"],
+          "includes": ["(spec|Spec|test|Test)\\.js$"],
+          "excludes": ["node_modules","build"]
+        },
         "lint": { "enable": true },
         "coverage": { "enable": true },
         "accessor": {
