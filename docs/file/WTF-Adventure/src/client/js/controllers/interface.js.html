@@ -192,6 +192,10 @@ import Enchant from &apos;../interface/enchant&apos;;
 import Warp from &apos;../interface/warp&apos;;
 import log from &apos;../lib/log&apos;;
 
+/**
+ * Handles game UI interfaces
+ * @class
+ */
 export default class Interface {
   constructor(game) {
     this.game = game;
@@ -234,22 +238,20 @@ export default class Interface {
     }
   }
 
+  /**
+   * This can be called multiple times and can be used
+   * to completely refresh the inventory.
+   */
   loadInventory(size, data) {
-    /**
-     * This can be called multiple times and can be used
-     * to completely refresh the inventory.
-     */
-
     this.inventory = new Inventory(this.game, size);
     this.inventory.load(data);
   }
 
+  /**
+   * Similar structure as the inventory, just that it
+   * has two containers. The bank and the inventory.
+   */
   loadBank(size, data) {
-    /**
-     * Similar structure as the inventory, just that it
-     * has two containers. The bank and the inventory.
-     */
-
     this.bank = new Bank(this.game, this.inventory.container, size);
     this.bank.load(data);
     this.loadEnchant();

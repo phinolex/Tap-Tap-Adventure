@@ -3,14 +3,16 @@ import Player from '../entity/character/player/player';
 import Sprites from './sprites';
 import Item from '../entity/objects/item';
 
+/**
+ * Used to load the character and items for the player
+ * @class
+ */
 export default class PickCharacter {
   constructor(game) {
     this.game = game;
     this.renderer = game.renderer;
-
     this.grids = null;
     this.sprites = null;
-
     this.entities = {};
     this.decrepit = {};
   }
@@ -26,7 +28,9 @@ export default class PickCharacter {
   }
 
   update() {
-    if (this.sprites) this.sprites.updateSprites();
+    if (this.sprites) {
+      this.sprites.updateSprites();
+    }
   }
 
   create() {
@@ -37,15 +41,10 @@ export default class PickCharacter {
     // set the default character sprite
     entity.setSprite(this.getSprite('clotharmor'));
     entity.idle();
-
     entity.loadHandler(this.game);
-
     this.addEntity(entity);
-
     entity.setGridPosition(0, 0);
-
     entity.idle();
-
     this.addEntity(entity);
 
     if (entity.handler) {
@@ -59,7 +58,9 @@ export default class PickCharacter {
   }
 
   get(id) {
-    if (id in this.entities) return this.entities[id];
+    if (id in this.entities) {
+      return this.entities[id];
+    }
 
     return null;
   }
@@ -86,7 +87,9 @@ export default class PickCharacter {
   }
 
   addEntity(entity) {
-    if (this.entities[entity.id]) return;
+    if (this.entities[entity.id]) {
+      return;
+    }
 
     this.entities[entity.id] = entity;
     this.registerPosition(entity);
@@ -98,7 +101,9 @@ export default class PickCharacter {
   }
 
   removeItem(item) {
-    if (!item) return;
+    if (!item) {
+      return;
+    }
 
     this.grids.removeFromItemGrid(item, item.gridX, item.gridY);
     this.grids.removeFromRenderingGrid(item, item.gridX, item.gridY);
@@ -107,7 +112,9 @@ export default class PickCharacter {
   }
 
   registerPosition(entity) {
-    if (!entity) return;
+    if (!entity) {
+      return;
+    }
 
     if (
       entity.type === 'player'
@@ -117,16 +124,22 @@ export default class PickCharacter {
     ) {
       this.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);
 
-      if (entity.type !== 'player' || entity.nonPathable) this.grids.addToPathingGrid(entity.gridX, entity.gridY);
+      if (entity.type !== 'player' || entity.nonPathable) {
+        this.grids.addToPathingGrid(entity.gridX, entity.gridY);
+      }
     }
 
-    if (entity.type === 'item') this.grids.addToItemGrid(entity, entity.gridX, entity.gridY);
+    if (entity.type === 'item') {
+      this.grids.addToItemGrid(entity, entity.gridX, entity.gridY);
+    }
 
     this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
   }
 
   registerDuality(entity) {
-    if (!entity) return;
+    if (!entity) {
+      return;
+    }
 
     this.grids.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;
 
@@ -144,7 +157,9 @@ export default class PickCharacter {
   }
 
   unregisterPosition(entity) {
-    if (!entity) return;
+    if (!entity) {
+      return;
+    }
 
     this.grids.removeEntity(entity);
   }

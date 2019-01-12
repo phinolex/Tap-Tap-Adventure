@@ -2,6 +2,10 @@ import _ from 'underscore';
 import $ from 'jquery';
 import Blob from '../renderer/bubbles/blob';
 
+/**
+ * Creates player speach bubbles
+ * @class
+ */
 export default class Bubble {
   constructor(game) {
     this.game = game;

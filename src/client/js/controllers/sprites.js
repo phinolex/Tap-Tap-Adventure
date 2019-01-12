@@ -6,6 +6,7 @@ import log from '../lib/log';
 
 /**
  * Class responsible for loading all the necessary sprites from the JSON.
+ * @class
  */
 export default class Sprites {
   constructor(renderer) {

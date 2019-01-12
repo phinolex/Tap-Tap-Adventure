@@ -185,13 +185,17 @@
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/controllers/overlay.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
 
+/**
+ * Shows an popup overlay when the mouse
+ * is over a character or enemy that displays
+ * information about them
+ * @class
+ */
 export default class Overlay {
   constructor(input) {
     this.input = input;
     this.hovering = null;
-
     this.attackInfo = $(&apos;#attackInfo&apos;);
-
     this.image = this.attackInfo.find(&apos;.image div&apos;);
     this.name = this.attackInfo.find(&apos;.name&apos;);
     this.details = this.attackInfo.find(&apos;.details&apos;);
@@ -202,16 +206,22 @@ export default class Overlay {
     if (!this.validEntity(entity)) {
       this.hovering = null;
 
-      if (this.isVisible()) this.hide();
+      if (this.isVisible()) {
+        this.hide();
+      }
 
       return;
     }
 
-    if (!this.isVisible()) this.display();
+    if (!this.isVisible()) {
+      this.display();
+    }
 
     this.hovering = entity;
 
-    this.name.html(entity.type === &apos;player&apos; ? entity.username : entity.name);
+    this.name.html(entity.type === &apos;player&apos;
+      ? entity.username
+      : entity.name);
 
     if (this.hasHealth()) {
       this.health.css({
@@ -232,8 +242,9 @@ export default class Overlay {
         &amp;&amp; this.hovering.type !== &apos;npc&apos;
         &amp;&amp; this.hovering.type !== &apos;item&apos;
       ) {
-        if (hitPoints &lt; 1) this.hide();
-        else {
+        if (hitPoints &lt; 1) {
+          this.hide();
+        } else {
           this.health.css(
             &apos;width&apos;,
             `${Math.ceil((hitPoints / this.hovering.maxHitPoints) * 100)

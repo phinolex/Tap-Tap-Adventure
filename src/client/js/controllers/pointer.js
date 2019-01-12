@@ -4,6 +4,10 @@ import Pointer from '../renderer/pointers/pointer';
 import Modules from '../utils/modules';
 import log from '../lib/log';
 
+/**
+ * Handles the cursor on the HTML5 canvas
+ * @class
+ */
 export default class Cursor {
   constructor(game) {
     this.game = game;
@@ -29,8 +33,6 @@ export default class Cursor {
   resize() {
     _.each(this.pointers, (pointer) => {
       switch (pointer.type) {
-        default:
-          break;
         case Modules.Pointers.Relative:
           const scale = this.getScale(); // eslint-disable-line
           const x = pointer.x; // eslint-disable-line
@@ -45,6 +47,8 @@ export default class Cursor {
 
           pointer.element.css('left', `${(x * scale) - offsetX}px`);
           pointer.element.css('top', `${(y * scale) - offsetY}px`);
+          break;
+        default:
           break;
       }
     });
@@ -104,7 +108,6 @@ export default class Cursor {
     }
 
     log.info('set to entity', entity);
-
     this.set(pointer, entity.x, entity.y);
   }
 
@@ -116,7 +119,6 @@ export default class Cursor {
     }
 
     pointer.setPosition(x, y);
-
     this.set(pointer, x, y);
   }
 
@@ -128,11 +130,7 @@ export default class Cursor {
     }
 
     const scale = this.getScale();
-
-
     let offsetX = 0;
-
-
     let offsetY = 0;
 
     /**
@@ -145,7 +143,6 @@ export default class Cursor {
     }
 
     pointer.setPosition(x, y);
-
     pointer.element.css('left', `${(x * scale) - offsetX}px`);
     pointer.element.css('top', `${(y * scale) - offsetY}px`);
   }
@@ -153,10 +150,7 @@ export default class Cursor {
   update() {
     _.each(this.pointers, (pointer) => {
       switch (pointer.type) {
-        default:
-          break;
         case Modules.Pointers.Entity:
-
           const entity = this.game.entities.get(pointer.id); // eslint-disable-line
 
           if (entity) {
@@ -165,11 +159,12 @@ export default class Cursor {
             this.destroy(pointer);
           }
           break;
-
         case Modules.Pointers.Position:
           if (pointer.x !== -1 && pointer.y !== -1) {
             this.set(pointer, pointer.x, pointer.y);
           }
+          break;
+        default:
           break;
       }
     });

@@ -1998,6 +1998,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/controllers/audio.js~audio#sfx",
+    "class/WTF-Adventure/src/client/js/controllers/audio.js~Audio.html#instance-member-sfx",
+    "WTF-Adventure/src/client/js/controllers/audio.js~Audio#sfx",
+    "member"
+  ],
+  [
     "wtf-adventure/src/client/js/controllers/audio.js~audio#song",
     "class/WTF-Adventure/src/client/js/controllers/audio.js~Audio.html#instance-member-song",
     "WTF-Adventure/src/client/js/controllers/audio.js~Audio#song",
@@ -2007,12 +2013,6 @@ window.esdocSearchIndex = [
     "wtf-adventure/src/client/js/controllers/audio.js~audio#songname",
     "class/WTF-Adventure/src/client/js/controllers/audio.js~Audio.html#instance-member-songName",
     "WTF-Adventure/src/client/js/controllers/audio.js~Audio#songName",
-    "member"
-  ],
-  [
-    "wtf-adventure/src/client/js/controllers/audio.js~audio#sounds",
-    "class/WTF-Adventure/src/client/js/controllers/audio.js~Audio.html#instance-member-sounds",
-    "WTF-Adventure/src/client/js/controllers/audio.js~Audio#sounds",
     "member"
   ],
   [
@@ -2412,10 +2412,28 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/controllers/info.js~info#hit",
+    "class/WTF-Adventure/src/client/js/controllers/info.js~Info.html#instance-method-hit",
+    "WTF-Adventure/src/client/js/controllers/info.js~Info#hit",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/controllers/info.js~info#infos",
     "class/WTF-Adventure/src/client/js/controllers/info.js~Info.html#instance-member-infos",
     "WTF-Adventure/src/client/js/controllers/info.js~Info#infos",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/controllers/info.js~info#levelup",
+    "class/WTF-Adventure/src/client/js/controllers/info.js~Info.html#instance-method-levelup",
+    "WTF-Adventure/src/client/js/controllers/info.js~Info#levelup",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/controllers/info.js~info#regenerate",
+    "class/WTF-Adventure/src/client/js/controllers/info.js~Info.html#instance-method-regenerate",
+    "WTF-Adventure/src/client/js/controllers/info.js~Info#regenerate",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/controllers/info.js~info#update",

@@ -2,6 +2,10 @@ import $ from 'jquery';
 import Modules from '../utils/modules';
 import Packets from '../network/packets';
 
+/**
+ * Manages the game's chat log window and chat history
+ * @class
+ */
 export default class Chat {
   constructor(game) {
     this.game = game;

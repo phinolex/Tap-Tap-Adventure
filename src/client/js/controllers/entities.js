@@ -10,6 +10,11 @@ import Projectile from '../entity/objects/projectile';
 import Modules from '../utils/modules';
 import Packets from '../network/packets';
 
+/**
+ * Entities in the game
+ * Character (Mob, Npc, Player), Chest, Item, Projectile
+ * @class
+ */
 export default class Entities {
   constructor(game) {
     this.game = game;

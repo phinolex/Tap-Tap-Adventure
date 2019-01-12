@@ -6,6 +6,10 @@ import Modules from '../utils/modules';
 import Packets from '../network/packets';
 import Detect from '../utils/detect';
 
+/**
+ * Handles game mouse and keyboard input
+ * @class
+ */
 export default class Input {
   constructor(game) {
     this.game = game;
@@ -46,7 +50,6 @@ export default class Input {
      * This is the animation for the target
      * cell spinner sprite (only on desktop)
      */
-
     this.targetAnimation = new Animation('move', 4, 0, 16, 16);
     this.targetAnimation.setSpeed(50);
 

@@ -185,13 +185,16 @@
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/controllers/zoning.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Modules from &apos;../utils/modules&apos;;
 
+/**
+ * Keeps track of the player&apos;s current direction
+ * @class
+ */
 export default class Zone {
   constructor(game) {
     this.game = game;
     this.renderer = game.renderer;
     this.camera = game.camera;
     this.input = game.input;
-
     this.direction = null;
   }
 

@@ -1,12 +1,16 @@
 import $ from 'jquery';
 
+/**
+ * Shows an popup overlay when the mouse
+ * is over a character or enemy that displays
+ * information about them
+ * @class
+ */
 export default class Overlay {
   constructor(input) {
     this.input = input;
     this.hovering = null;
-
     this.attackInfo = $('#attackInfo');
-
     this.image = this.attackInfo.find('.image div');
     this.name = this.attackInfo.find('.name');
     this.details = this.attackInfo.find('.details');
@@ -17,16 +21,22 @@ export default class Overlay {
     if (!this.validEntity(entity)) {
       this.hovering = null;
 
-      if (this.isVisible()) this.hide();
+      if (this.isVisible()) {
+        this.hide();
+      }
 
       return;
     }
 
-    if (!this.isVisible()) this.display();
+    if (!this.isVisible()) {
+      this.display();
+    }
 
     this.hovering = entity;
 
-    this.name.html(entity.type === 'player' ? entity.username : entity.name);
+    this.name.html(entity.type === 'player'
+      ? entity.username
+      : entity.name);
 
     if (this.hasHealth()) {
       this.health.css({
@@ -47,8 +57,9 @@ export default class Overlay {
         && this.hovering.type !== 'npc'
         && this.hovering.type !== 'item'
       ) {
-        if (hitPoints < 1) this.hide();
-        else {
+        if (hitPoints < 1) {
+          this.hide();
+        } else {
           this.health.css(
             'width',
             `${Math.ceil((hitPoints / this.hovering.maxHitPoints) * 100)
