@@ -86,6 +86,7 @@ export default class WTF {
     document.addEventListener('touchstart', () => {}, false);
     document.addEventListener('touchmove', (e) => {
       e.preventDefault();
+      return false;
     });
 
     resizeCheck.bind('transitionend', this.app.resize.bind(this));

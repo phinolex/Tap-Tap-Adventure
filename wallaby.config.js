@@ -1,7 +1,7 @@
 /* eslint-disable */
 module.exports = function (wallaby) {
   return {
-    files: ['src/**/*.js', '!src/**/__tests__/*.js'],
+    files: ['src/**/*.js', '!src/**/__tests__/*.js', 'setupTests.js'],
 
     tests: ['src/**/__tests__/*.js'],
 
