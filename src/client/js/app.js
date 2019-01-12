@@ -245,7 +245,7 @@ export default class App {
     this.wrapper.click(this.loadCharacter);
     this.yes.click(this.welcomeContinue);
     this.no.click(this.welcomeContinue);
-    this.rememberMe.click(this.rememberMe);
+    this.rememberMe.click(this.rememberLogin);
     this.guest.click(this.loginAsGuest);
 
     this.registerButton.click(() => this.displayScreen('loadCharacter', 'createCharacter'));
@@ -253,7 +253,7 @@ export default class App {
     this.about.click(() => this.displayScroll('about'));
     this.credits.click(() => this.displayScroll('credits'));
     this.git.click(() => this.displayScroll('git'));
-    this.respawn.click(this.respawn);
+    this.respawn.click(this.respawnPlayer);
 
     window.scrollTo(0, 1); // why do we do this?
     this.window.resize(this.zoom());
@@ -282,18 +282,20 @@ export default class App {
    */
   welcomeContinue() {
     if (!this.game) {
-      return;
+      return false;
     }
 
     // makes sure the welcome screen doesn't appear again
     this.game.storage.data.welcome = false;
     this.game.storage.save();
     this.body.removeClass('welcomeMessage');
+    return true;
   }
 
   /**
    * Try to connect and login to the game
    * @private
+   * @return {Boolean}
    */
   login() {
     if (
@@ -302,28 +304,32 @@ export default class App {
       || !this.game.loaded
       || this.statusMessage
       || !this.verifyForm()
-    ) return;
+    ) return false;
 
     this.toggleLogin(true);
     this.game.connect();
+    return true;
   }
 
   /**
    * Try to login as a guest
    * @private
+   * @return {Boolean}
    */
   loginAsGuest() {
     if (!this.game) {
-      return;
+      return false;
     }
 
     this.guestLogin = true;
     this.login();
+    return true;
   }
 
   /**
    * Switch to the load character screen
    * @private
+   * @return {Boolean}
    */
   loadCharacter() {
     if (
@@ -333,7 +339,10 @@ export default class App {
     ) {
       this.wrapper.removeClass('about credits git');
       this.displayScroll('loadCharacter');
+      return true;
     }
+
+    return false;
   }
 
   /**
@@ -342,65 +351,74 @@ export default class App {
    *
    * @TODO update this to use the database instead
    * @private
+   * @return {Boolean}
    */
-  rememberMe() {
+  rememberLogin() {
     if (!this.game || !this.game.storage) {
-      return;
+      return false;
     }
 
     const active = this.rememberMe.hasClass('active');
 
     this.rememberMe.toggleClass('active');
     this.game.storage.toggleRemember(!active);
+    return true;
   }
 
   /**
    * Tells the game to respawn the player
    * @private
+   * @return {Boolean}
    */
-  respawn() {
+  respawnPlayer() {
     if (!this.game || !this.game.player || !this.game.player.dead) {
-      return;
+      return false;
     }
 
     this.game.respawn();
+    return true;
   }
 
   /**
    * Handles key down presses
    * @param {Object} event keypress event
+   * @return {Boolean}
    */
   keydownEventListener(event) {
     const key = event.which;
 
     if (!this.game) {
-      return;
+      return false;
     }
 
     this.body.focus();
 
     if (key === Modules.Keys.Enter && !this.game.started) {
       this.login();
-      return;
+      return false;
     }
 
     if (this.game.started) {
       this.game.onInput(Modules.InputType.Key, key);
     }
+
+    return true;
   }
 
   /**
    * Handles key up presses
    * @param {Object} event keypress event
+   * @return {Boolean}
    */
   keyupEventListener(event) {
     const key = event.which;
 
     if (!this.game || !this.game.started) {
-      return;
+      return false;
     }
 
     this.game.input.keyUp(key);
+    return true;
   }
 
   /**
@@ -409,24 +427,27 @@ export default class App {
    */
   mousemoveEventListener(event) {
     if (!this.game || !this.game.input || !this.game.started) {
-      return;
+      return false;
     }
 
     this.game.input.setCoords(event);
     this.game.input.moveCursor();
+    return true;
   }
 
   /**
    * Handles clicks on the HTML5 canvas
    * @param {Object} event click event
+   * @return {Boolean}
    */
   canvasClickEventListener(event) {
     if (!this.game || !this.game.started || event.button !== 0) {
-      return;
+      return false;
     }
 
     window.scrollTo(0, 1);
     this.game.input.handle(Modules.InputType.LeftClick, event);
+    return true;
   }
 
   /**

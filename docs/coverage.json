@@ -1,7 +1,7 @@
 {
-  "coverage": "6%",
-  "expectCount": 2965,
-  "actualCount": 178,
+  "coverage": "6.06%",
+  "expectCount": 2967,
+  "actualCount": 180,
   "files": {
     "WTF-Adventure/coverage/lcov-report/sorter.js": {
       "expectCount": 1,
@@ -11,8 +11,8 @@
       ]
     },
     "WTF-Adventure/src/client/js/app.js": {
-      "expectCount": 76,
-      "actualCount": 76,
+      "expectCount": 78,
+      "actualCount": 78,
       "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/controllers/audio.js": {
