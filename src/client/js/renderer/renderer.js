@@ -6,6 +6,7 @@ import Tile from './tile';
 import Character from '../entity/character/character';
 import Item from '../entity/objects/item';
 import Detect from '../utils/detect';
+
 import {
   isIntersecting,
 } from '../utils/util';

@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for WTF-Adventure/src/client/js/utils/detect.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../../index.html">All files</a> / <a href="index.html">WTF-Adventure/src/client/js/utils</a> detect.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.71% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>5/34</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">3.7% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/27</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">26.67% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>4/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.12% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>4/33</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* global navigator, window */
+&nbsp;
+const userAgentContains = string =&gt; navigator.userAgent.indexOf(string) !== -1;
+&nbsp;
+export default {
+  isIpad: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >/ipad/i.test(navigator.userAgent.toLowerCase()),</span>
+  isAndroid: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >/Android/i.test(navigator.userAgent),</span>
+  isWindows: () =&gt; userAgentContains('Windows'),
+  isChromeOnWindows: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >userAgentContains('Chrome') &amp;&amp; userAgentContains('Windows'),</span>
+  isCanaryOnWindows: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >userAgentContains('Chrome/52') &amp;&amp; userAgentContains('Windows'),</span>
+  isEdgeOnWindows: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >userAgentContains('Edge') &amp;&amp; userAgentContains('Windows'),</span>
+  isFirefox: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >userAgentContains('Firefox'),</span>
+  isSafari: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >userAgentContains('Safari') &amp;&amp; !userAgentContains('Chrome'),</span>
+  isOpera: () =&gt; userAgentContains('Opera'),
+  isFirefoxAndroid: () =&gt; userAgentContains('Android') &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >userAgentContains('Firefox'),</span>
+  isTablet: <span class="fstat-no" title="function not covered" >(s</span>creenWidth) =&gt; {
+    const userAgent = <span class="cstat-no" title="statement not covered" >navigator.userAgent.toLowerCase();</span>
+    const isAppleTablet = <span class="cstat-no" title="statement not covered" >/ipad/i.test(userAgent);</span>
+    const isAndroidTablet = <span class="cstat-no" title="statement not covered" >/android/i.test(userAgent);</span>
+<span class="cstat-no" title="statement not covered" >    return (isAppleTablet || isAndroidTablet) &amp;&amp; screenWidth &gt;= 640;</span>
+  },
+&nbsp;
+  iOSVersion: <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >    if (window.MSStream) {</span>
+      // There is some iOS in Windows Phone...
+      // https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
+<span class="cstat-no" title="statement not covered" >      return '';</span>
+    }
+    const match = <span class="cstat-no" title="statement not covered" >navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);</span>
+&nbsp;
+&nbsp;
+    let version;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (match !== undefined &amp;&amp; match !== null) {</span>
+<span class="cstat-no" title="statement not covered" >      version = [</span>
+        parseInt(match[1], 10),
+        parseInt(match[2], 10),
+        parseInt(match[3] || 0, 10),
+      ];
+<span class="cstat-no" title="statement not covered" >      return parseFloat(version.join('.'));</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return '';</span>
+  },
+&nbsp;
+  androidVersion: <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+    const userAgent = <span class="cstat-no" title="statement not covered" >navigator.userAgent.split('Android');</span>
+    let version;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (userAgent.length &gt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >      version = userAgent[1].split(';')[0]; </span>// eslint-disable-line
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return version;</span>
+  },
+&nbsp;
+  isAppleDevice: <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+    const devices = <span class="cstat-no" title="statement not covered" >[</span>
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod',
+    ];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (navigator.platform) {</span>
+<span class="cstat-no" title="statement not covered" >      while (devices.length) {</span>
+<span class="cstat-no" title="statement not covered" >        navigator.platform = devices.pop();</span>
+<span class="cstat-no" title="statement not covered" >        if (navigator.platform) {</span>
+<span class="cstat-no" title="statement not covered" >          return true;</span>
+        }
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  },
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 23:23:28 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../../sorter.js"></script>
+</body>
+</html>

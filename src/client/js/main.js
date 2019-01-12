@@ -42,15 +42,16 @@ export default class WTF {
    * Initialize the application and the game as soon as the DOM is ready
    */
   load() {
-    $(document).ready(() => {
-      this.app = new App();
-      this.body = $('body');
-      this.chatInput = $('#chatInput');
+    $(document).ready(this.documentReady);
+  }
 
-      this.addClasses();
-      this.initGame();
-      this.addResizeListeners();
-    });
+  documentReady() {
+    this.app = new App();
+    this.body = $('body');
+    this.chatInput = $('#chatInput');
+    this.addClasses();
+    this.initGame();
+    this.addResizeListeners();
   }
 
   /**
@@ -85,6 +86,7 @@ export default class WTF {
     document.addEventListener('touchstart', () => {}, false);
     document.addEventListener('touchmove', (e) => {
       e.preventDefault();
+      return false;
     });
 
     resizeCheck.bind('transitionend', this.app.resize.bind(this));

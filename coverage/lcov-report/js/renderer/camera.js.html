@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for js/renderer/camera.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">js/renderer</a> camera.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/78</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/78</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Modules from '../utils/modules';
+&nbsp;
+export default class Camera {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(renderer) {
+<span class="cstat-no" title="statement not covered" >    this.renderer = renderer;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.offset = 0.5;</span>
+<span class="cstat-no" title="statement not covered" >    this.x = 0;</span>
+<span class="cstat-no" title="statement not covered" >    this.y = 0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.dX = 0;</span>
+<span class="cstat-no" title="statement not covered" >    this.dY = 0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.gridX = 0;</span>
+<span class="cstat-no" title="statement not covered" >    this.gridY = 0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.prevGridX = 0;</span>
+<span class="cstat-no" title="statement not covered" >    this.prevGridY = 0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.speed = 1;</span>
+<span class="cstat-no" title="statement not covered" >    this.panning = false;</span>
+<span class="cstat-no" title="statement not covered" >    this.centered = true;</span>
+<span class="cstat-no" title="statement not covered" >    this.player = null;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.update();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  up</span>date() {
+    const factor = <span class="cstat-no" title="statement not covered" >this.renderer.getUpscale();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.gridWidth = 15 * factor;</span>
+<span class="cstat-no" title="statement not covered" >    this.gridHeight = 8 * factor;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>tPosition(x, y) {
+<span class="cstat-no" title="statement not covered" >    this.x = x;</span>
+<span class="cstat-no" title="statement not covered" >    this.y = y;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.prevGridX = this.gridX;</span>
+<span class="cstat-no" title="statement not covered" >    this.prevGridY = this.gridY;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.gridX = Math.floor(x / 16);</span>
+<span class="cstat-no" title="statement not covered" >    this.gridY = Math.floor(y / 16);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cl</span>ip() {
+<span class="cstat-no" title="statement not covered" >    this.setGridPosition(Math.round(this.x / 16), Math.round(this.y / 16));</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ce</span>nter() {
+<span class="cstat-no" title="statement not covered" >    if (this.centered) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.centered = true;</span>
+<span class="cstat-no" title="statement not covered" >    this.centreOn(this.player);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.renderer.verifyCentration();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  de</span>center() {
+<span class="cstat-no" title="statement not covered" >    if (!this.centered) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.clip();</span>
+<span class="cstat-no" title="statement not covered" >    this.centered = false;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.renderer.verifyCentration();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>tGridPosition(x, y) {
+<span class="cstat-no" title="statement not covered" >    this.prevGridX = this.gridX;</span>
+<span class="cstat-no" title="statement not covered" >    this.prevGridY = this.gridY;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.gridX = x;</span>
+<span class="cstat-no" title="statement not covered" >    this.gridY = y;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.x = this.gridX * 16;</span>
+<span class="cstat-no" title="statement not covered" >    this.y = this.gridY * 16;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>tPlayer(player) {
+<span class="cstat-no" title="statement not covered" >    this.player = player;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.centreOn(this.player);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ha</span>ndlePanning(direction) {
+<span class="cstat-no" title="statement not covered" >    if (!this.panning) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    switch (direction) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case Modules.Keys.Up:
+<span class="cstat-no" title="statement not covered" >        this.setPosition(this.x, this.y - 1);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case Modules.Keys.Down:
+<span class="cstat-no" title="statement not covered" >        this.setPosition(this.x, this.y + 1);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case Modules.Keys.Left:
+<span class="cstat-no" title="statement not covered" >        this.setPosition(this.x - 1, this.y);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case Modules.Keys.Right:
+<span class="cstat-no" title="statement not covered" >        this.setPosition(this.x + 1, this.y);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ce</span>ntreOn(entity) {
+<span class="cstat-no" title="statement not covered" >    if (!entity) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+    const width = <span class="cstat-no" title="statement not covered" >Math.floor(this.gridWidth / 2);</span>
+    const height = <span class="cstat-no" title="statement not covered" >Math.floor(this.gridHeight / 2);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.x = entity.x - width * this.renderer.tileSize;</span>
+<span class="cstat-no" title="statement not covered" >    this.y = entity.y - height * this.renderer.tileSize;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.gridX = Math.round(entity.x / 16) - width;</span>
+<span class="cstat-no" title="statement not covered" >    this.gridY = Math.round(entity.y / 16) - height;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  zo</span>ne(direction) {
+<span class="cstat-no" title="statement not covered" >    switch (direction) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case Modules.Orientation.Up:
+<span class="cstat-no" title="statement not covered" >        this.setGridPosition(this.gridX, this.gridY - this.gridHeight + 2);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case Modules.Orientation.Down:
+<span class="cstat-no" title="statement not covered" >        this.setGridPosition(this.gridX, this.gridY + this.gridHeight - 2);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case Modules.Orientation.Right:
+<span class="cstat-no" title="statement not covered" >        this.setGridPosition(this.gridX + this.gridWidth - 2, this.gridY);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case Modules.Orientation.Left:
+<span class="cstat-no" title="statement not covered" >        this.setGridPosition(this.gridX - this.gridWidth + 2, this.gridY);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  fo</span>rEachVisiblePosition(callback, offset) {
+<span class="cstat-no" title="statement not covered" >    if (!offset) {</span>
+<span class="cstat-no" title="statement not covered" >      offset = 1; </span>// eslint-disable-line
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let y = this.gridY - offset, maxY = y + this.gridHeight + offset * 2; y &lt; maxY; y += 1) {</span>
+<span class="cstat-no" title="statement not covered" >      for (let x = this.gridX - offset, maxX = x + this.gridWidth + offset * 2; x &lt; maxX; x += 1) {</span>
+<span class="cstat-no" title="statement not covered" >        callback(x, y);</span>
+      }
+    }
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 23:19:31 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

@@ -894,6 +894,30 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "wtf wtf-adventure/src/client/js/main.js~wtf,wtf",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber6",
+    "WTF",
+    "test"
+  ],
+  [
+    "wtf#constructor wtf-adventure/src/client/js/main.js~wtf#constructor,wtf#constructor",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber12",
+    "WTF .constructor()",
+    "test"
+  ],
+  [
+    "wtf#documentready wtf-adventure/src/client/js/main.js~wtf#documentready,wtf#documentready",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber30",
+    "WTF .documentReady()",
+    "test"
+  ],
+  [
+    "wtf#load wtf-adventure/src/client/js/main.js~wtf#load,wtf#load",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber19",
+    "WTF .load()",
+    "test"
+  ],
+  [
     "wtf-adventure/.external-ecmascript.js~array",
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
     "WTF-Adventure/.external-ecmascript.js~Array",
@@ -1242,10 +1266,22 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "wtf-adventure/setuptests.js",
+    "file/WTF-Adventure/setupTests.js.html",
+    "WTF-Adventure/setupTests.js",
+    "file"
+  ],
+  [
     "wtf-adventure/src/client/js/__tests__/main.test.js",
     "file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
     "WTF-Adventure/src/client/js/__tests__/main.test.js",
     "file"
+  ],
+  [
+    "wtf-adventure/src/client/js/__tests__/main.test.js",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
+    "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "testFile"
   ],
   [
     "wtf-adventure/src/client/js/app.js",
@@ -7467,6 +7503,12 @@ window.esdocSearchIndex = [
     "wtf-adventure/src/client/js/main.js~wtf#constructor",
     "class/WTF-Adventure/src/client/js/main.js~WTF.html#instance-constructor-constructor",
     "WTF-Adventure/src/client/js/main.js~WTF#constructor",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/main.js~wtf#documentready",
+    "class/WTF-Adventure/src/client/js/main.js~WTF.html#instance-method-documentReady",
+    "WTF-Adventure/src/client/js/main.js~WTF#documentReady",
     "method"
   ],
   [
@@ -17649,6 +17691,12 @@ window.esdocSearchIndex = [
     "wtf-adventure/src/tools/map/processmap.js",
     "file/WTF-Adventure/src/tools/map/processmap.js.html",
     "WTF-Adventure/src/tools/map/processmap.js",
+    "file"
+  ],
+  [
+    "wtf-adventure/wallaby.config.js",
+    "file/WTF-Adventure/wallaby.config.js.html",
+    "WTF-Adventure/wallaby.config.js",
     "file"
   ],
   [
