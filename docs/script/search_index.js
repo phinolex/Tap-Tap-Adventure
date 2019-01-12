@@ -895,25 +895,43 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf wtf-adventure/src/client/js/main.js~wtf,wtf",
-    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber6",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber10",
     "WTF",
     "test"
   ],
   [
+    "wtf#addclasses wtf-adventure/src/client/js/main.js~wtf#addclasses,wtf#addclasses",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber45",
+    "WTF .addClasses()",
+    "test"
+  ],
+  [
+    "wtf#addresizelisteners wtf-adventure/src/client/js/main.js~wtf#addresizelisteners,wtf#addresizelisteners",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber55",
+    "WTF .addResizeListeners()",
+    "test"
+  ],
+  [
     "wtf#constructor wtf-adventure/src/client/js/main.js~wtf#constructor,wtf#constructor",
-    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber12",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber16",
     "WTF .constructor()",
     "test"
   ],
   [
     "wtf#documentready wtf-adventure/src/client/js/main.js~wtf#documentready,wtf#documentready",
-    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber30",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber34",
     "WTF .documentReady()",
     "test"
   ],
   [
+    "wtf#initgame wtf-adventure/src/client/js/main.js~wtf#initgame,wtf#initgame",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber70",
+    "WTF .initGame()",
+    "test"
+  ],
+  [
     "wtf#load wtf-adventure/src/client/js/main.js~wtf#load,wtf#load",
-    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber19",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html#lineNumber23",
     "WTF .load()",
     "test"
   ],
@@ -9934,6 +9952,12 @@ window.esdocSearchIndex = [
     "class/WTF-Adventure/src/client/js/renderer/updater.js~Updater.html#instance-method-verifyScale",
     "WTF-Adventure/src/client/js/renderer/updater.js~Updater#verifyScale",
     "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/utils/__mocks__/detect.js",
+    "file/WTF-Adventure/src/client/js/utils/__mocks__/detect.js.html",
+    "WTF-Adventure/src/client/js/utils/__mocks__/detect.js",
+    "file"
   ],
   [
     "wtf-adventure/src/client/js/utils/detect.js",

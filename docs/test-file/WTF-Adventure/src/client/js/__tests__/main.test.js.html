@@ -183,7 +183,11 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/__tests__/main.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import WTF from &apos;../main&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global document, Event */
+import WTF from &apos;../main&apos;;
+
+// mock the Detect import
+jest.mock(&apos;../utils/detect&apos;);
 
 /**
  * @test {WTF}
@@ -220,14 +224,41 @@ describe(&apos;WTF&apos;, () =&gt; {
     expect(instance.chatInput).toBeDefined();
   });
 
-  // /**
-  //  * @test {WTF#addClasses}
-  //  */
-  // it(&apos;.addClasses()&apos;, () =&gt; {
-  //   const instance = new WTF();
-  //   console.log(instance);
-  //   expect(instance.chatInput).toBeDefined();
-  // });
+  /**
+   * @test {WTF#addClasses}
+   */
+  it(&apos;.addClasses()&apos;, () =&gt; {
+    instance.documentReady();
+    instance.addClasses();
+    expect(instance.chatInput).toBeDefined();
+    expect(instance.body[0].className).toEqual(&apos;windows opera&apos;);
+  });
+
+  /**
+   * @test {WTF#addResizeListeners}
+   */
+  it(&apos;.addResizeListeners()&apos;, () =&gt; {
+    instance.documentReady();
+    const map = {};
+    document.addEventListener = jest.fn((event, callback) =&gt; {
+      map[event] = callback;
+    });
+    instance.addResizeListeners();
+    expect(map.touchstart).toBeDefined();
+    expect(map.touchmove).toBeDefined();
+    expect(map.touchmove(new Event(&apos;test&apos;))).toEqual(false);
+  });
+
+  /**
+   * @test {WTF#initGame}
+   */
+  it(&apos;.initGame()&apos;, () =&gt; {
+    const wtf = new WTF();
+    expect(wtf.app).toEqual(null);
+    wtf.documentReady();
+    wtf.initGame();
+    expect(wtf.app.readyCallback).toBeDefined();
+  });
 });
 </code></pre>
 
