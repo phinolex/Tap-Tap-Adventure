@@ -7,13 +7,38 @@ import Blob from '../renderer/bubbles/blob';
  * @class
  */
 export default class Bubble {
+  /**
+   * Default constructor
+   * @param {Game} game instance of the game class
+   */
   constructor(game) {
+    /**
+     * Instance of the game object
+     * @type {Game}
+     */
     this.game = game;
+
+    /**
+     * An object with all of the bubbles to display
+     * @type {Object<Blob>}
+     */
     this.bubbles = {};
 
+    /**
+     * The DOM element that will display bubble text messages
+     * @type {Object}
+     */
     this.container = $('#bubbles');
   }
 
+  /**
+   * Create a bubble message
+   * @param  {Number} id       the id of the bubble message
+   * @param  {String} message  contents of the bubble
+   * @param  {Number} time     when the bubble will reset
+   * @param  {Number} [duration=5000] duration set on the Blob's internal Timer
+   * @return {Blob} an instance of the bubble message
+   */
   create(id, message, time, duration) {
     if (this.bubbles[id]) {
       this.bubbles[id].reset(time);

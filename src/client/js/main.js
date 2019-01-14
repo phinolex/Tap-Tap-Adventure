@@ -42,7 +42,7 @@ export default class WTF {
    * Initialize the application and the game as soon as the DOM is ready
    */
   load() {
-    $(document).ready(this.documentReady);
+    $(document).ready(() => this.documentReady());
   }
 
   documentReady() {

@@ -5604,6 +5604,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#animationcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-animationCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#animationCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#app",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-app",
     "WTF-Adventure/src/client/js/game.js~Game#app",
@@ -5616,10 +5622,40 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#audiocallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-audioCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#audioCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#bankcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-bankCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#bankCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#blinkcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-blinkCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#blinkCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#bubble",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-bubble",
     "WTF-Adventure/src/client/js/game.js~Game#bubble",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#chatcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-chatCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#chatCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#combatcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-combatCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#combatCallback",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/game.js~game#connect",
@@ -5640,16 +5676,52 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#deathcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-deathCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#deathCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#despawncallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-despawnCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#despawnCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#development",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-development",
     "WTF-Adventure/src/client/js/game.js~Game#development",
     "member"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#enchantcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-enchantCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#enchantCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#entities",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-entities",
     "WTF-Adventure/src/client/js/game.js~Game#entities",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#entitylistcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-entityListCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#entityListCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#equipmentcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-equipmentCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#equipmentCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#experiencecallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-experienceCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#experienceCallback",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/game.js~game#findpath",
@@ -5700,15 +5772,39 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#guild",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-guild",
+    "WTF-Adventure/src/client/js/game.js~Game#guild",
+    "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#guildcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-guildCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#guildCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#handledisconnection",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-handleDisconnection",
     "WTF-Adventure/src/client/js/game.js~Game#handleDisconnection",
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#handshakecallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-handshakeCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#handshakeCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#hasremember",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-hasRemember",
     "WTF-Adventure/src/client/js/game.js~Game#hasRemember",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#healcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-healCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#healCallback",
     "method"
   ],
   [
@@ -5740,6 +5836,12 @@ window.esdocSearchIndex = [
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-interface",
     "WTF-Adventure/src/client/js/game.js~Game#interface",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#inventorycallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-inventoryCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#inventoryCallback",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/game.js~game#lasttime",
@@ -5778,6 +5880,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#mapreadycallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-mapReadyCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#mapReadyCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#messages",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-messages",
     "WTF-Adventure/src/client/js/game.js~Game#messages",
@@ -5793,6 +5901,30 @@ window.esdocSearchIndex = [
     "wtf-adventure/src/client/js/game.js~game#moveplayer",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-movePlayer",
     "WTF-Adventure/src/client/js/game.js~Game#movePlayer",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#movementcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-movementCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#movementCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#networkcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-networkCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#networkCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#notificationcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-notificationCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#notificationCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#npccallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-npcCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#npcCallback",
     "method"
   ],
   [
@@ -5826,10 +5958,28 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#pointercallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-pointerCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#pointerCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#pointscallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-pointsCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#pointsCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#population",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-population",
     "WTF-Adventure/src/client/js/game.js~Game#population",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#populationcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-populationCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#populationCallback",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/game.js~game#postload",
@@ -5838,10 +5988,28 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#projectilecallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-projectileCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#projectileCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#pvp",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-pvp",
     "WTF-Adventure/src/client/js/game.js~Game#pvp",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#pvpcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-pvpCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#pvpCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#questcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-questCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#questCallback",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/game.js~game#ready",
@@ -5865,6 +6033,12 @@ window.esdocSearchIndex = [
     "wtf-adventure/src/client/js/game.js~game#respawn",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-respawn",
     "WTF-Adventure/src/client/js/game.js~Game#respawn",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#respawncallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-respawnCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#respawnCallback",
     "method"
   ],
   [
@@ -5952,10 +6126,28 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#shop",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-shop",
+    "WTF-Adventure/src/client/js/game.js~Game#shop",
+    "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#shopcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-shopCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#shopCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#socket",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-socket",
     "WTF-Adventure/src/client/js/game.js~Game#socket",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#spawncallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-spawnCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#spawnCallback",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/game.js~game#start",
@@ -5976,16 +6168,22 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "wtf-adventure/src/client/js/game.js~game#stopped",
-    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-stopped",
-    "WTF-Adventure/src/client/js/game.js~Game#stopped",
-    "member"
-  ],
-  [
     "wtf-adventure/src/client/js/game.js~game#storage",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-storage",
     "WTF-Adventure/src/client/js/game.js~Game#storage",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#synccallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-syncCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#syncCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/game.js~game#teleportcallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-teleportCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#teleportCallback",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/game.js~game#tick",
@@ -6018,10 +6216,10 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "wtf-adventure/src/client/js/game.js~game#welcome",
-    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-welcome",
-    "WTF-Adventure/src/client/js/game.js~Game#welcome",
-    "member"
+    "wtf-adventure/src/client/js/game.js~game#welcomecallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-welcomeCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#welcomeCallback",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/game.js~game#zoning",

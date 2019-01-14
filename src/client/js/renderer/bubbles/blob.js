@@ -1,6 +1,10 @@
 import $ from 'jquery';
 import Timer from '../../utils/timer';
 
+/**
+ * A type of bubble
+ * @class
+ */
 export default class Blob {
   constructor(id, time, element, duration) {
     this.id = id;
