@@ -80,7 +80,7 @@ Convert the server configuration for local usage, go in both `src/server/config.
 
 ##### Step 4 - Run the Client HTML5 files
 
-Open another terminal and then type `npm run wtfclient`
+Open another terminal and then type `npm start`
 
 ##### Step 5 - View in Browser
 
