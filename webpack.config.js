@@ -13,10 +13,7 @@ module.exports = {
     ],
     assets: [
       // stylesheets
-      path.resolve(__dirname, './build/modernizr-bundle.js'),
       path.resolve(__dirname, './css/main.scss'),
-      // client config
-      path.resolve(__dirname, './src/client/config.json'),
       // data
       path.resolve(__dirname, './assets/data/sprites.json'),
       // maps
@@ -67,6 +64,7 @@ module.exports = {
     new BrowserSyncPlugin({
       host: process.env.IP || 'localhost',
       port: process.env.PORT || 3000,
+      // proxy: 'http://localhost:3100/',
       server: {
         baseDir: ['./build', './'],
       },
