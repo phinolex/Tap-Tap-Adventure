@@ -74,16 +74,23 @@ In the command line run: `npm install`
 
 Convert the server configuration for local usage, go in both `src/server/config.json` and `src/client/config.json` and update the ports and settings to meet your needs.
 
-##### Step 3 - Run the NodeJS server
+##### Step 3 - Make sure MySQL is up and running
 
-`npm run wtfserver`
+If you are running this project locally then you will need something like [XAMP](https://www.apachefriends.org/index.html) or [MAMP](https://www.mamp.info/en/) that you can turn on and use to run MySQL locally.
 
-##### Step 4 - Run the Client HTML5 files
+If you are running this project on a server then you will need to make sure you have a mysqld instance running.
 
-Open another terminal and then type `npm start`
+Make sure you have the proper config for the MySQL server in your `src/server/config.json` file, often times connection issues with WTFServer will be due to connection or authentication errors when trying to connect to your MySQL database.
 
-##### Step 5 - View in Browser
 
-Now open your browser and navigate to `http://127.0.0.1:{port}/`
+##### Step 4 - Run the NodeJS server
 
-Where `{port}` is whatever port number you've configured in your config.json files.
+In the command line type: `npm run wtfserver`
+
+##### Step 5 - Run the HTML5 Client Webpack
+
+Open another terminal and then type: `npm start`
+
+##### Step 6 - View in Browser
+
+Now open your browser and navigate to `http://{ip}:{port}/` as defined in your configuration files. Typically this will be `http://localhost:3000` if you use the default webpack and client configuration settings provided.
