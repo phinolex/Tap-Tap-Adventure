@@ -15,8 +15,9 @@ module.exports = {
       // stylesheets
       path.resolve(__dirname, './build/modernizr-bundle.js'),
       path.resolve(__dirname, './css/main.scss'),
+      // client config
+      path.resolve(__dirname, './src/client/config.json'),
       // data
-      path.resolve(__dirname, './assets/data/config.json'),
       path.resolve(__dirname, './assets/data/sprites.json'),
       // maps
       path.resolve(__dirname, './assets/data/maps/world_client.json'),
