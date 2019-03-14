@@ -1,8 +1,10 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -14,6 +16,8 @@ module.exports = {
     assets: [
       // stylesheets
       path.resolve(__dirname, './css/main.scss'),
+      // client config
+      path.resolve(__dirname, './src/client/config.json'),
       // data
       path.resolve(__dirname, './assets/data/sprites.json'),
       // maps
@@ -27,6 +31,11 @@ module.exports = {
       'underscore',
     ],
   },
+  resolve: {
+    alias: {
+      jquery: 'jquery/src/jquery',
+    },
+  },
   devtool: 'cheap-source-map',
   output: {
     pathinfo: true,
@@ -38,6 +47,12 @@ module.exports = {
   },
   watch: true,
   plugins: [
+    new CleanWebpackPlugin(['build']),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'windows.jQuery': 'jquery',
+    }),
     new HtmlWebpackPlugin({
       filename: '../index.html',
       template: './src/client/index.html',
@@ -76,8 +91,6 @@ module.exports = {
       watchOptions: {
         awaitWriteFinish: true,
       },
-    }, {
-      reload: false,
     }),
     new ModernizrWebpackPlugin({
       'feature-detects': ['input', 'canvas', 'css/resize'],
