@@ -1,6 +1,6 @@
 {
   "name": "WTF-Adventure",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A modern HTML5 multiplayer adventure!",
   "license": "wtfpl-2.0",
   "scripts": {
