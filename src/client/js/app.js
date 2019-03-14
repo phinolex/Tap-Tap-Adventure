@@ -240,25 +240,25 @@ export default class App {
    * Add click listeners for the different parts of the UI
    */
   load() {
-    this.loginButton.click(this.login);
-    this.createButton.click(this.login);
-    this.wrapper.click(this.loadCharacter);
-    this.yes.click(this.welcomeContinue);
-    this.no.click(this.welcomeContinue);
-    this.rememberMe.click(this.rememberLogin);
-    this.guest.click(this.loginAsGuest);
+    this.loginButton.click(() => this.login());
+    this.createButton.click(() => this.login());
+    this.wrapper.click(() => this.loadCharacter());
+    this.yes.click(() => this.welcomeContinue());
+    this.no.click(() => this.welcomeContinue());
+    this.rememberMe.click(() => this.rememberLogin());
+    this.guest.click(() => this.loginAsGuest());
 
     this.registerButton.click(() => this.displayScreen('loadCharacter', 'createCharacter'));
     this.cancelButton.click(() => this.displayScreen('createCharacter', 'loadCharacter'));
     this.about.click(() => this.displayScroll('about'));
     this.credits.click(() => this.displayScroll('credits'));
     this.git.click(() => this.displayScroll('git'));
-    this.respawn.click(this.respawnPlayer);
+    this.respawn.click(() => this.respawnPlayer());
 
     window.scrollTo(0, 1); // why do we do this?
     this.window.resize(this.zoom());
 
-    $.getJSON('./assets/data/config.json', (json) => {
+    $.getJSON('./src/client/config.json', (json) => {
       this.config = json;
 
       if (this.readyCallback) {
