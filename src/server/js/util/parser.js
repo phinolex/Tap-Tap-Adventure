@@ -15,11 +15,11 @@ import Formulas from '../game/formulas';
 
 export default class Parser {
   constructor() {
-    this.mobsDictionary = new MobsDictionary();
-    this.npcsDictionary = new NpcsDictionary();
-    this.shopsDictionary = new ShopsDictionary();
-    this.itemsDictionary = new ItemsDictionary();
-    this.abilitiesDictionary = new AbilitiesDictionary();
+    this.mobsDictionary = MobsDictionary;
+    this.npcsDictionary = NpcsDictionary;
+    this.shopsDictionary = ShopsDictionary;
+    this.itemsDictionary = ItemsDictionary;
+    this.abilitiesDictionary = AbilitiesDictionary;
 
     this.loadMobData();
     this.loadNPCData();
@@ -37,7 +37,7 @@ export default class Parser {
     _.each(MobData, (value, key) => {
       key = key.toLowerCase(); // eslint-disable-line
 
-      this.mobsDictionary.setData(key, {
+      MobsDictionary.setData(key, {
         key,
         id: value.id,
         name: value.name ? value.name : key,
@@ -61,10 +61,10 @@ export default class Parser {
       mobCounter += 1;
     });
 
-    this.mobsDictionary.setPlugins(`${__dirname}/../../data/combat/`);
+    MobsDictionary.setPlugins(`${__dirname}/../../data/combat/`);
 
     log.info(`Finished loading ${mobCounter} mobs.`);
-    log.info(`Loaded ${Object.keys(this.mobsDictionary.plugins).length} mob plugins.`);
+    log.info(`Loaded ${Object.keys(MobsDictionary.plugins).length} mob plugins.`);
   }
 
   loadNPCData() {
@@ -73,7 +73,7 @@ export default class Parser {
     _.each(NPCData, (value, key) => {
       key = key.toLowerCase(); // eslint-disable-line
 
-      this.npcsDictionary.setData(key, {
+      NpcsDictionary.setData(key, {
         key,
         id: value.id,
         name: value.name ? value.name : key,
@@ -93,7 +93,7 @@ export default class Parser {
     _.each(ItemData, (value, key) => {
       key = key.toLowerCase(); // eslint-disable-line
 
-      this.itemsDictionary.setData(key, {
+      ItemsDictionary.setData(key, {
         key,
         id: value.id ? value.id : -1,
         type: value.type ? value.type : 'object',
@@ -117,10 +117,10 @@ export default class Parser {
       itemCounter += 1;
     });
 
-    this.itemsDictionary.setPlugins(`${__dirname}/../../data/items/`);
+    ItemsDictionary.setPlugins(`${__dirname}/../../data/items/`);
 
     log.info(`Finished loading ${itemCounter} items.`);
-    log.info(`Loaded ${Object.keys(this.itemsDictionary.plugins).length} item plugins.`);
+    log.info(`Loaded ${Object.keys(ItemsDictionary.plugins).length} item plugins.`);
   }
 
   loadAbilityData() {
@@ -129,7 +129,7 @@ export default class Parser {
     _.each(AbilityData, (value, key) => {
       key = key.toLowerCase(); // eslint-disable-line
 
-      this.abilitiesDictionary.setData(key, {
+      AbilitiesDictionary.setData(key, {
         key,
         id: value.id,
         type: value.type,

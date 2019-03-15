@@ -363,7 +363,10 @@ export default class Game {
    */
   loadMap() {
     this.map = new Map(this);
-    this.map.onReady(this.mapReadyCallback);
+    this.map.onReady(() => {
+      console.log('map ready');
+      this.mapReadyCallback();
+    });
     return true;
   }
 
@@ -1577,23 +1580,33 @@ export default class Game {
   }
 
   setRenderer(renderer) {
-    if (!this.renderer) this.renderer = renderer;
+    if (!this.renderer) {
+      this.renderer = renderer;
+    }
   }
 
   setStorage(storage) {
-    if (!this.storage) this.storage = storage;
+    if (!this.storage) {
+      this.storage = storage;
+    }
   }
 
   setSocket(socket) {
-    if (!this.socket) this.socket = socket;
+    if (!this.socket) {
+      this.socket = socket;
+    }
   }
 
   setMessages(messages) {
-    if (!this.messages) this.messages = messages;
+    if (!this.messages) {
+      this.messages = messages;
+    }
   }
 
   setUpdater(updater) {
-    if (!this.updater) this.updater = updater;
+    if (!this.updater) {
+      this.updater = updater;
+    }
   }
 
   setEntityController(entities) {

@@ -1,28 +1,60 @@
-import Dictionary from './dictionary';
+import log from './log';
+import PluginLoader from './plugins';
 
-export default class MobsDictionary extends Dictionary {
-  constructor() {
-    super();
-    this.data = {};
-  }
-
-  getXp(id) {
-    if (this.data && this.data[id]) {
-      return this.data[id].xp;
-    }
-
-    return -1;
-  }
-
-  hasCombatPlugin(id) {
-    return id in this.data && this.data[id].combatPlugin in this.plugins;
-  }
-
-  isNewCombatPlugin(id) {
-    if (id in this.data && this.data[id].combatPlugin in this.plugins) {
-      return this.plugins[this.data[id].combatPlugin];
+const MobsDictionary = {
+  data: {},
+  properties: {},
+  plugins: {},
+  getProperty: key => MobsDictionary.properties[key],
+  setProperty: (key, value) => {
+    MobsDictionary.properties[key] = value;
+  },
+  getData: key => MobsDictionary.data[key],
+  setData: (key, value) => {
+    MobsDictionary.data[key] = value;
+  },
+  idToString: (id) => {
+    if (id in MobsDictionary.data) {
+      return MobsDictionary.data[id].key;
     }
 
     return null;
-  }
-}
+  },
+  idToName: (id) => {
+    if (id in MobsDictionary.data) {
+      return MobsDictionary.data[id].name;
+    }
+
+    return null;
+  },
+  stringToId: (name) => {
+    if (name in MobsDictionary.data) {
+      return MobsDictionary.data[name].id;
+    }
+
+    log.error(`${name} not found in the MobsDictionary.`);
+    return 'null';
+  },
+  exists: id => id in MobsDictionary.data,
+  setPlugins: (directory) => {
+    MobsDictionary.plugins = PluginLoader(directory);
+  },
+  getXp: (id) => {
+    if (id in MobsDictionary.data) {
+      return MobsDictionary.data[id].xp;
+    }
+
+    return -1;
+  },
+  hasCombatPlugin: id => id in MobsDictionary.data
+    && MobsDictionary.data[id].combatPlugin in MobsDictionary.plugins,
+  isNewCombatPlugin: (id) => {
+    if (id in MobsDictionary.data
+      && MobsDictionary.data[id].combatPlugin in MobsDictionary.plugins) {
+      return MobsDictionary.plugins[MobsDictionary.data[id].combatPlugin];
+    }
+    return null;
+  },
+};
+
+export default MobsDictionary;

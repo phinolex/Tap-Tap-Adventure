@@ -31,9 +31,9 @@ export default class World {
     this.players = {};
     this.entities = {};
     this.chests = {};
-    this.itemsDictionary = new ItemsDictionary();
-    this.mobsDictionary = new MobsDictionary();
-    this.npcsDictionary = new NpcsDictionary();
+    this.itemsDictionary = ItemsDictionary;
+    this.mobsDictionary = MobsDictionary;
+    this.npcsDictionary = NpcsDictionary;
     this.projectiles = {};
     this.packets = {};
     this.groups = {};
@@ -502,7 +502,7 @@ export default class World {
         : itemData;
 
       const info = isMob
-        ? MobsDictionary.properties[key]
+        ? this.mobsDictionary.properties[key]
         : npcData;
 
       const position = this.map.indexToGridPosition(tileIndex);
@@ -732,7 +732,7 @@ export default class World {
 
   addNPC(npc) {
     this.addEntity(npc);
-    this.NpcsDictionary[npc.instance] = npc;
+    this.npcsDictionary[npc.instance] = npc;
   }
 
   addMob(mob) {
@@ -742,7 +742,7 @@ export default class World {
     }
 
     this.addEntity(mob);
-    this.MobsDictionary[mob.instance] = mob;
+    this.mobsDictionary[mob.instance] = mob;
 
     mob.addToChestArea(this.getChestAreas());
 
@@ -757,7 +757,7 @@ export default class World {
     if (item.static) item.onRespawn(this.addItem.bind(this, item));
 
     this.addEntity(item);
-    this.ItemsDictionary[item.instance] = item;
+    this.itemsDictionary[item.instance] = item;
   }
 
   addProjectile(projectile) {
@@ -775,12 +775,12 @@ export default class World {
       delete this.entities[entity.instance];
     }
 
-    if (entity.instance in this.MobsDictionary) {
-      delete this.MobsDictionary[entity.instance];
+    if (entity.instance in this.mobsDictionary) {
+      delete this.mobsDictionary[entity.instance];
     }
 
-    if (entity.instance in this.ItemsDictionary) {
-      delete this.ItemsDictionary[entity.instance];
+    if (entity.instance in this.itemsDictionary) {
+      delete this.itemsDictionary[entity.instance];
     }
 
     this.getGrids().removeFromEntityGrid(entity, entity.x, entity.y);
