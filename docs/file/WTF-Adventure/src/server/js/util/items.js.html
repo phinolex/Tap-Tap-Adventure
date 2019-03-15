@@ -167,14 +167,13 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames">src/server/js/minigames</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/minigame.js~Minigame.html">Minigame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames-impl">src/server/js/minigames/impl</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/impl/teamwar.js~TeamWar.html">TeamWar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-network">src/server/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/network/socket.js~Socket.html">Socket</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/abilities.js~AbilityDictionary.html">AbilityDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html">Dictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html">ItemsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html">MobsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary.html">NpcsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html">ShopsDictionary</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-requireItems">requireItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AbilityDictionary">AbilityDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ItemsDictionary">ItemsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MobsDictionary">MobsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NpcsDictionary">NpcsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ShopsDictionary">ShopsDictionary</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-api">src/tools/api</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/api/registrar.js~Registrar.html">Registrar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-bot">src/tools/bot</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/bot/bot.js~Bot.html">Bot</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-map">src/tools/map</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
@@ -183,204 +182,232 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/server/js/util/items.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Dictionary from &apos;./dictionary&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import log from &apos;./log&apos;;
+import PluginLoader from &apos;./plugins&apos;;
 
-export default class ItemsDictionary extends Dictionary {
-  constructor() {
-    super();
-    this.onCreate = {};
-  }
+const ItemsDictionary = {
+  data: {},
+  properties: {},
+  plugins: {},
+  onCreate: {},
+  getProperty: key =&gt; ItemsDictionary.properties[key],
+  setProperty: (key, value) =&gt; {
+    ItemsDictionary.properties[key] = value;
+  },
+  setData: (key, value) =&gt; {
+    ItemsDictionary.data[key] = value;
+  },
+  idToString: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].key;
+    }
 
-  getData(name) {
-    if (name in this.data) {
-      return this.data[name];
+    return null;
+  },
+  idToName: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].name;
+    }
+
+    return null;
+  },
+  stringToId: (name) =&gt; {
+    if (name in ItemsDictionary.data) {
+      return ItemsDictionary.data[name].id;
+    }
+
+    log.error(`${name} not found in the ItemsDictionary.`);
+    return &apos;null&apos;;
+  },
+  exists: id =&gt; id in ItemsDictionary.data,
+  setPlugins: (directory) =&gt; {
+    ItemsDictionary.plugins = PluginLoader(directory);
+  },
+  getData: (name) =&gt; {
+    if (name in ItemsDictionary.data) {
+      return ItemsDictionary.data[name];
     }
 
     return &apos;null&apos;;
-  }
-
-  hasPlugin(id) {
-    if (id in this.data &amp;&amp; this.data[id].plugin in this.plugins) {
+  },
+  hasPlugin: (id) =&gt; {
+    if (id in ItemsDictionary.data &amp;&amp; ItemsDictionary.data[id].plugin in ItemsDictionary.plugins) {
       return true;
     }
 
     return false;
-  }
+  },
 
-  isNewPlugin(id) {
-    if (id in this.data &amp;&amp; this.data[id].plugin in this.plugins) {
-      return this.plugins[this.data[id].plugin];
+  isNewPlugin: (id) =&gt; {
+    if (id in ItemsDictionary.data &amp;&amp; ItemsDictionary.data[id].plugin in ItemsDictionary.plugins) {
+      return ItemsDictionary.plugins[ItemsDictionary.data[id].plugin];
     }
 
     return false;
-  }
+  },
 
-  getLevelRequirement(name) {
+  getLevelRequirement: (name) =&gt; {
     let level = 1;
-    const item = this.data[name];
+    const item = ItemsDictionary.data[name];
 
     if (item &amp;&amp; item.requirement) {
       return item.requirement;
     }
 
-    if (this.isWeapon(name)) {
-      level = this.data[name].attack;
-    } else if (this.isArmour(name)) {
-      level = this.data[name].defense;
-    } else if (this.isPendant(name)) {
-      level = this.data[name].pendantLevel;
-    } else if (this.isRing(name)) {
-      level = this.data[name].ringLevel;
-    } else if (this.isBoots(name)) {
-      level = this.data[name].bootsLevel;
+    if (ItemsDictionary.isWeapon(name)) {
+      level = ItemsDictionary.data[name].attack;
+    } else if (ItemsDictionary.isArmour(name)) {
+      level = ItemsDictionary.data[name].defense;
+    } else if (ItemsDictionary.isPendant(name)) {
+      level = ItemsDictionary.data[name].pendantLevel;
+    } else if (ItemsDictionary.isRing(name)) {
+      level = ItemsDictionary.data[name].ringLevel;
+    } else if (ItemsDictionary.isBoots(name)) {
+      level = ItemsDictionary.data[name].bootsLevel;
     }
 
     return level * 2;
-  }
+  },
 
-  getWeaponLevel(weaponName) {
-    if (this.isWeapon(weaponName)) {
-      return this.data[weaponName].attack;
+  getWeaponLevel: (weaponName) =&gt; {
+    if (ItemsDictionary.isWeapon(weaponName)) {
+      return ItemsDictionary.data[weaponName].attack;
     }
 
     return -1;
-  }
+  },
 
-  getArmourLevel(armourName) {
-    if (this.isArmour(armourName)) {
-      return this.data[armourName].defense;
+  getArmourLevel: (armourName) =&gt; {
+    if (ItemsDictionary.isArmour(armourName)) {
+      return ItemsDictionary.data[armourName].defense;
     }
 
     return -1;
-  }
+  },
 
-  getPendantLevel(pendantName) {
-    if (this.isPendant(pendantName)) {
-      return this.data[pendantName].pendantLevel;
+  getPendantLevel: (pendantName) =&gt; {
+    if (ItemsDictionary.isPendant(pendantName)) {
+      return ItemsDictionary.data[pendantName].pendantLevel;
     }
 
     return -1;
-  }
+  },
 
-  getRingLevel(ringName) {
-    if (this.isRing(ringName)) {
-      return this.data[ringName].ringLevel;
+  getRingLevel: (ringName) =&gt; {
+    if (ItemsDictionary.isRing(ringName)) {
+      return ItemsDictionary.data[ringName].ringLevel;
     }
 
     return -1;
-  }
+  },
 
-  getBootsLevel(bootsName) {
-    if (this.isBoots(bootsName)) {
-      return this.data[bootsName].bootsLevel;
+  getBootsLevel: (bootsName) =&gt; {
+    if (ItemsDictionary.isBoots(bootsName)) {
+      return ItemsDictionary.data[bootsName].bootsLevel;
     }
 
     return -1;
-  }
+  },
 
-  isArcherWeapon(string) {
-    if (string in this.data) {
-      return this.data[string].type === &apos;weaponarcher&apos;;
+  isArcherWeapon: (string) =&gt; {
+    if (string in ItemsDictionary.data) {
+      return ItemsDictionary.data[string].type === &apos;weaponarcher&apos;;
     }
 
     return false;
-  }
+  },
 
-  isWeapon(string) {
-    if (string in this.data) {
+  isWeapon: (string) =&gt; {
+    if (string in ItemsDictionary.data) {
       return (
-        this.data[string].type === &apos;weapon&apos;
-        || this.data[string].type === &apos;weaponarcher&apos;
+        ItemsDictionary.data[string].type === &apos;weapon&apos;
+        || ItemsDictionary.data[string].type === &apos;weaponarcher&apos;
       );
     }
 
     return false;
-  }
+  },
 
-  isArmour(string) {
-    if (string in this.data) {
+  isArmour: (string) =&gt; {
+    if (string in ItemsDictionary.data) {
       return (
-        this.data[string].type === &apos;armor&apos;
-        || this.data[string].type === &apos;armorarcher&apos;
+        ItemsDictionary.data[string].type === &apos;armor&apos;
+        || ItemsDictionary.data[string].type === &apos;armorarcher&apos;
       );
     }
 
     return false;
-  }
+  },
 
-  isPendant(string) {
-    if (string in this.data) {
-      return this.data[string].type === &apos;pendant&apos;;
+  isPendant: (string) =&gt; {
+    if (string in ItemsDictionary.data) {
+      return ItemsDictionary.data[string].type === &apos;pendant&apos;;
     }
 
     return false;
-  }
+  },
 
-  isRing(string) {
-    if (string in this.data) {
-      return this.data[string].type === &apos;ring&apos;;
+  isRing: (string) =&gt; {
+    if (string in ItemsDictionary.data) {
+      return ItemsDictionary.data[string].type === &apos;ring&apos;;
     }
 
     return false;
-  }
+  },
 
-  isBoots(string) {
-    if (string in this.data) {
-      return this.data[string].type === &apos;boots&apos;;
+  isBoots: (string) =&gt; {
+    if (string in ItemsDictionary.data) {
+      return ItemsDictionary.data[string].type === &apos;boots&apos;;
     }
 
     return false;
-  }
+  },
 
-  getType(id) {
-    if (id in this.data) {
-      return this.data[id].type;
+  getType: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].type;
     }
 
     return null;
-  }
+  },
 
-  isStackable(id) {
-    if (id in this.data) {
-      return this.data[id].stackable;
+  isStackable: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].stackable;
     }
 
     return false;
-  }
+  },
 
-  isEdible(id) {
-    if (id in this.data) {
-      return this.data[id].edible;
+  isEdible: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].edible;
     }
 
     return false;
-  }
+  },
 
-  getCustomData(id) {
-    if (id in this.data) {
-      return this.data[id].customData;
+  getCustomData: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].customData;
     }
 
     return null;
-  }
+  },
 
-  maxStackSize(id) {
-    if (id in this.data) {
-      return this.data[id].maxStackSize;
+  maxStackSize: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].maxStackSize;
     }
 
     return false;
-  }
+  },
 
-  isShard(id) {
-    return id === 253 || id === 254 || id === 255 || id === 256 || id === 257;
-  }
+  isShard: id =&gt; id === 253 || id === 254 || id === 255 || id === 256 || id === 257,
 
-  isEnchantable(id) {
-    return this.getType(id) !== &apos;object&apos; &amp;&amp; this.getType(id) !== &apos;craft&apos;;
-  }
+  isEnchantable: id =&gt; ItemsDictionary.getType(id) !== &apos;object&apos; &amp;&amp; ItemsDictionary.getType(id) !== &apos;craft&apos;,
 
-  getShardTier(id) {
+  getShardTier: (id) =&gt; {
     switch (id) {
       case 253:
         return 1;
@@ -395,49 +422,49 @@ export default class ItemsDictionary extends Dictionary {
       default:
         return -1;
     }
-  }
+  },
 
-  isEquippable(string) {
-    return (
-      this.isArmour(string)
-      || this.isWeapon(string)
-      || this.isPendant(string)
-      || this.isRing(string)
-      || this.isBoots(string)
-    );
-  }
+  isEquippable: string =&gt; (
+    ItemsDictionary.isArmour(string)
+      || ItemsDictionary.isWeapon(string)
+      || ItemsDictionary.isPendant(string)
+      || ItemsDictionary.isRing(string)
+      || ItemsDictionary.isBoots(string)
+  ),
 
-  healsHealth(id) {
-    if (id in this.data) {
-      return this.data[id].healsHealth &gt; 0;
+  healsHealth: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].healsHealth &gt; 0;
     }
 
     return false;
-  }
+  },
 
-  healsMana(id) {
-    if (id in this.data) {
-      return this.data[id].healsMana &gt; 0;
+  healsMana: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].healsMana &gt; 0;
     }
 
     return false;
-  }
+  },
 
-  getHealingFactor(id) {
-    if (id in this.data) {
-      return this.data[id].healsHealth;
+  getHealingFactor: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].healsHealth;
     }
 
     return 0;
-  }
+  },
 
-  getManaFactor(id) {
-    if (id in this.data) {
-      return this.data[id].healsMana;
+  getManaFactor: (id) =&gt; {
+    if (id in ItemsDictionary.data) {
+      return ItemsDictionary.data[id].healsMana;
     }
     return 0;
-  }
-}
+  },
+};
+
+export default ItemsDictionary;
 </code></pre>
 
 </div>

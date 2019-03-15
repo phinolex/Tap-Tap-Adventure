@@ -167,14 +167,13 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames">src/server/js/minigames</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/minigame.js~Minigame.html">Minigame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames-impl">src/server/js/minigames/impl</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/impl/teamwar.js~TeamWar.html">TeamWar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-network">src/server/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/network/socket.js~Socket.html">Socket</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/abilities.js~AbilityDictionary.html">AbilityDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html">Dictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html">ItemsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html">MobsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary.html">NpcsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html">ShopsDictionary</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-requireItems">requireItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AbilityDictionary">AbilityDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ItemsDictionary">ItemsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MobsDictionary">MobsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NpcsDictionary">NpcsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ShopsDictionary">ShopsDictionary</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-api">src/tools/api</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/api/registrar.js~Registrar.html">Registrar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-bot">src/tools/bot</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/bot/bot.js~Bot.html">Bot</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-map">src/tools/map</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
@@ -184,10 +183,12 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/webpack.config.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const path = require(&apos;path&apos;);
+const webpack = require(&apos;webpack&apos;);
 const HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;);
 const BrowserSyncPlugin = require(&apos;browser-sync-webpack-plugin&apos;);
 const ModernizrWebpackPlugin = require(&apos;modernizr-webpack-plugin&apos;);
 const MiniCssExtractPlugin = require(&apos;mini-css-extract-plugin&apos;);
+const CleanWebpackPlugin = require(&apos;clean-webpack-plugin&apos;);
 
 module.exports = {
   entry: {
@@ -198,10 +199,10 @@ module.exports = {
     ],
     assets: [
       // stylesheets
-      path.resolve(__dirname, &apos;./build/modernizr-bundle.js&apos;),
       path.resolve(__dirname, &apos;./css/main.scss&apos;),
+      // client config
+      path.resolve(__dirname, &apos;./src/client/config.json&apos;),
       // data
-      path.resolve(__dirname, &apos;./assets/data/config.json&apos;),
       path.resolve(__dirname, &apos;./assets/data/sprites.json&apos;),
       // maps
       path.resolve(__dirname, &apos;./assets/data/maps/world_client.json&apos;),
@@ -214,6 +215,11 @@ module.exports = {
       &apos;underscore&apos;,
     ],
   },
+  resolve: {
+    alias: {
+      jquery: &apos;jquery/src/jquery&apos;,
+    },
+  },
   devtool: &apos;cheap-source-map&apos;,
   output: {
     pathinfo: true,
@@ -225,6 +231,12 @@ module.exports = {
   },
   watch: true,
   plugins: [
+    new CleanWebpackPlugin([&apos;build&apos;]),
+    new webpack.ProvidePlugin({
+      $: &apos;jquery&apos;,
+      jQuery: &apos;jquery&apos;,
+      &apos;windows.jQuery&apos;: &apos;jquery&apos;,
+    }),
     new HtmlWebpackPlugin({
       filename: &apos;../index.html&apos;,
       template: &apos;./src/client/index.html&apos;,
@@ -251,6 +263,7 @@ module.exports = {
     new BrowserSyncPlugin({
       host: process.env.IP || &apos;localhost&apos;,
       port: process.env.PORT || 3000,
+      // proxy: &apos;http://localhost:3100/&apos;,
       server: {
         baseDir: [&apos;./build&apos;, &apos;./&apos;],
       },
@@ -262,8 +275,6 @@ module.exports = {
       watchOptions: {
         awaitWriteFinish: true,
       },
-    }, {
-      reload: false,
     }),
     new ModernizrWebpackPlugin({
       &apos;feature-detects&apos;: [&apos;input&apos;, &apos;canvas&apos;, &apos;css/resize&apos;],

@@ -167,14 +167,13 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames">src/server/js/minigames</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/minigame.js~Minigame.html">Minigame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames-impl">src/server/js/minigames/impl</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/impl/teamwar.js~TeamWar.html">TeamWar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-network">src/server/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/network/socket.js~Socket.html">Socket</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/abilities.js~AbilityDictionary.html">AbilityDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html">Dictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html">ItemsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html">MobsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary.html">NpcsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html">ShopsDictionary</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-requireItems">requireItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AbilityDictionary">AbilityDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ItemsDictionary">ItemsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MobsDictionary">MobsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NpcsDictionary">NpcsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ShopsDictionary">ShopsDictionary</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-api">src/tools/api</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/api/registrar.js~Registrar.html">Registrar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-bot">src/tools/bot</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/bot/bot.js~Bot.html">Bot</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-map">src/tools/map</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
@@ -243,10 +242,12 @@ WTF?! Adventure is completely open-source, allowing its community to collaborate
 <h2 id="running-wtf---adventure">Running WTF?! Adventure</h2><p>Running the server is fairly straightforward, for the most part. If you encounter any issues, make sure you use the alternative solution.</p>
 <h5 id="step-1---install-the-dependencies">Step 1 - Install the dependencies</h5><p>In the command line run: <code>npm install</code></p>
 <h5 id="step-2---setting-the-config-files">Step 2 - Setting the config files</h5><p>Convert the server configuration for local usage, go in both <code>src/server/config.json</code> and <code>src/client/config.json</code> and update the ports and settings to meet your needs.</p>
-<h5 id="step-3---run-the-nodejs-server">Step 3 - Run the NodeJS server</h5><p><code>npm run wtfserver</code></p>
-<h5 id="step-4---run-the-client-html5-files">Step 4 - Run the Client HTML5 files</h5><p>Open another terminal and then type <code>npm run wtfclient</code></p>
-<h5 id="step-5---view-in-browser">Step 5 - View in Browser</h5><p>Now open your browser and navigate to <code>http://127.0.0.1:{port}/</code></p>
-<p>Where <code>{port}</code> is whatever port number you&apos;ve configured in your config.json files.</p>
+<h5 id="step-3---make-sure-mysql-is-up-and-running">Step 3 - Make sure MySQL is up and running</h5><p>If you are running this project locally then you will need something like <a href="https://www.apachefriends.org/index.html">XAMP</a> or <a href="https://www.mamp.info/en/">MAMP</a> that you can turn on and use to run MySQL locally.</p>
+<p>If you are running this project on a server then you will need to make sure you have a mysqld instance running.</p>
+<p>Make sure you have the proper config for the MySQL server in your <code>src/server/config.json</code> file, often times connection issues with WTFServer will be due to connection or authentication errors when trying to connect to your MySQL database.</p>
+<h5 id="step-4---run-the-nodejs-server">Step 4 - Run the NodeJS server</h5><p>In the command line type: <code>npm run wtfserver</code></p>
+<h5 id="step-5---run-the-html5-client-webpack">Step 5 - Run the HTML5 Client Webpack</h5><p>Open another terminal and then type: <code>npm start</code></p>
+<h5 id="step-6---view-in-browser">Step 6 - View in Browser</h5><p>Now open your browser and navigate to <code>http://{ip}:{port}/</code> as defined in your configuration files. Typically this will be <code>http://localhost:3000</code> if you use the default webpack and client configuration settings provided.</p>
 </div>
 </div>
 

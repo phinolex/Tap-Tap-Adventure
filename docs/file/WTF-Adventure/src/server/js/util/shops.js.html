@@ -167,14 +167,13 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames">src/server/js/minigames</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/minigame.js~Minigame.html">Minigame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames-impl">src/server/js/minigames/impl</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/impl/teamwar.js~TeamWar.html">TeamWar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-network">src/server/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/network/socket.js~Socket.html">Socket</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/abilities.js~AbilityDictionary.html">AbilityDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html">Dictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html">ItemsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html">MobsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary.html">NpcsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html">ShopsDictionary</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-requireItems">requireItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AbilityDictionary">AbilityDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ItemsDictionary">ItemsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MobsDictionary">MobsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NpcsDictionary">NpcsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ShopsDictionary">ShopsDictionary</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-api">src/tools/api</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/api/registrar.js~Registrar.html">Registrar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-bot">src/tools/bot</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/bot/bot.js~Bot.html">Bot</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-map">src/tools/map</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
@@ -184,28 +183,58 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/server/js/util/shops.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import _ from &apos;underscore&apos;;
-import Dictionary from &apos;./dictionary&apos;;
+import log from &apos;./log&apos;;
+import PluginLoader from &apos;./plugins&apos;;
 
-export default class ShopsDictionary extends Dictionary {
-  isShopNPC(npcId) {
-    return this.data[npcId];
-  }
+const ShopsDictionary = {
+  data: {},
+  properties: {},
+  plugins: {},
+  getProperty: key =&gt; ShopsDictionary.properties[key],
+  setProperty: (key, value) =&gt; {
+    ShopsDictionary.properties[key] = value;
+  },
+  getData: key =&gt; ShopsDictionary.data[key],
+  setData: (key, value) =&gt; {
+    ShopsDictionary.data[key] = value;
+  },
+  idToString: (id) =&gt; {
+    if (id in ShopsDictionary.data) {
+      return ShopsDictionary.data[id].key;
+    }
 
-  getItems(id) {
-    return this.data[id].items;
-  }
+    return null;
+  },
+  idToName: (id) =&gt; {
+    if (id in ShopsDictionary.data) {
+      return ShopsDictionary.data[id].name;
+    }
 
-  getItemCount(id) {
-    return this.getItems(id).length;
-  }
+    return null;
+  },
+  stringToId: (name) =&gt; {
+    if (name in ShopsDictionary.data) {
+      return ShopsDictionary.data[name].id;
+    }
+
+    log.error(`${name} not found in the ShopsDictionary.`);
+    return &apos;null&apos;;
+  },
+  exists: id =&gt; id in ShopsDictionary.data,
+  setPlugins: (directory) =&gt; {
+    ShopsDictionary.plugins = PluginLoader(directory);
+  },
+  isShopNPC: npcId =&gt; ShopsDictionary.data[npcId],
+  getItems: id =&gt; ShopsDictionary.data[id].items,
+  getItemCount: id =&gt; ShopsDictionary.getItems(id).length,
 
   /**
    * Reason for the shopId variable is because some shops
    * may have different prices for the same item. A way to
    * spice up the game.
    */
-  getCost(shopId, itemId, count) {
-    const shop = this.data[shopId];
+  getCost: (shopId, itemId, count) =&gt; {
+    const shop = ShopsDictionary.data[shopId];
     const index = shop.items.indexOf(itemId);
 
     if (!index) {
@@ -213,25 +242,27 @@ export default class ShopsDictionary extends Dictionary {
     }
 
     return shop.prices[index] * count;
-  }
+  },
 
-  getCount(id) {
+  getCount: (id) =&gt; {
     const {
       count,
-    } = this.data[id];
+    } = ShopsDictionary.data[id];
     const counts = [];
 
     if (_.isArray(count)) {
       return count;
     }
 
-    for (let i = 0; i &lt; this.getItemCount(id); i += 1) {
+    for (let i = 0; i &lt; ShopsDictionary.getItemCount(id); i += 1) {
       counts.push(count);
     }
 
     return counts;
-  }
-}
+  },
+};
+
+export default ShopsDictionary;
 </code></pre>
 
 </div>

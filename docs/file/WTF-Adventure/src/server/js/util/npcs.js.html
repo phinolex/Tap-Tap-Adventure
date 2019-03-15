@@ -167,14 +167,13 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames">src/server/js/minigames</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/minigame.js~Minigame.html">Minigame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames-impl">src/server/js/minigames/impl</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/impl/teamwar.js~TeamWar.html">TeamWar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-network">src/server/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/network/socket.js~Socket.html">Socket</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/abilities.js~AbilityDictionary.html">AbilityDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html">Dictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html">ItemsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html">MobsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary.html">NpcsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html">ShopsDictionary</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-requireItems">requireItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AbilityDictionary">AbilityDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ItemsDictionary">ItemsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MobsDictionary">MobsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NpcsDictionary">NpcsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ShopsDictionary">ShopsDictionary</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-api">src/tools/api</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/api/registrar.js~Registrar.html">Registrar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-bot">src/tools/bot</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/bot/bot.js~Bot.html">Bot</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-map">src/tools/map</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
@@ -183,25 +182,65 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/server/js/util/npcs.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Dictionary from &apos;./dictionary&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import log from &apos;./log&apos;;
+import PluginLoader from &apos;./plugins&apos;;
 
-export default class NpcsDictionary extends Dictionary {
-  getText(id) {
-    if (this.data &amp;&amp; this.data[id]) {
-      return this.data[id].text;
+const NpcsDictionary = {
+  data: {},
+  properties: {},
+  plugins: {},
+  getProperty: key =&gt; NpcsDictionary.properties[key],
+  setProperty: (key, value) =&gt; {
+    NpcsDictionary.properties[key] = value;
+  },
+  getData: key =&gt; NpcsDictionary.data[key],
+  setData: (key, value) =&gt; {
+    NpcsDictionary.data[key] = value;
+  },
+  idToString: (id) =&gt; {
+    if (id in NpcsDictionary.data) {
+      return NpcsDictionary.data[id].key;
     }
 
     return null;
-  }
-
-  getType(id) {
-    if (this.data &amp;&amp; this.data[id]) {
-      return this.data[id].type;
+  },
+  idToName: (id) =&gt; {
+    if (id in NpcsDictionary.data) {
+      return NpcsDictionary.data[id].name;
     }
 
     return null;
-  }
-}
+  },
+  stringToId: (name) =&gt; {
+    if (name in NpcsDictionary.data) {
+      return NpcsDictionary.data[name].id;
+    }
+
+    log.error(`${name} not found in the NpcsDictionary.`);
+    return &apos;null&apos;;
+  },
+  exists: id =&gt; id in NpcsDictionary.data,
+  setPlugins: (directory) =&gt; {
+    NpcsDictionary.plugins = PluginLoader(directory);
+  },
+  getText: (id) =&gt; {
+    if (NpcsDictionary.data &amp;&amp; NpcsDictionary.data[id]) {
+      return NpcsDictionary.data[id].text;
+    }
+
+    return null;
+  },
+
+  getType: (id) =&gt; {
+    if (NpcsDictionary.data &amp;&amp; NpcsDictionary.data[id]) {
+      return NpcsDictionary.data[id].type;
+    }
+
+    return null;
+  },
+};
+
+export default NpcsDictionary;
 </code></pre>
 
 </div>

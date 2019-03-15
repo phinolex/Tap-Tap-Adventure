@@ -25,9 +25,9 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/js/util/abilities.js~abilitydictionary",
-    "class/WTF-Adventure/src/server/js/util/abilities.js~AbilityDictionary.html",
+    "variable/index.html#static-variable-AbilityDictionary",
     "<span>AbilityDictionary</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/server/js/util/abilities.js</span>",
-    "class"
+    "variable"
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/js/game/entity/character/player/achievement.js~achievement",
@@ -207,12 +207,6 @@ window.esdocSearchIndex = [
     "wtf-adventure/wtf-adventure/src/client/js/controllers/pointer.js~cursor",
     "class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html",
     "<span>Cursor</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/client/js/controllers/pointer.js</span>",
-    "class"
-  ],
-  [
-    "wtf-adventure/wtf-adventure/src/server/js/util/dictionary.js~dictionary",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html",
-    "<span>Dictionary</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/server/js/util/dictionary.js</span>",
     "class"
   ],
   [
@@ -397,9 +391,9 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/js/util/items.js~itemsdictionary",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html",
+    "variable/index.html#static-variable-ItemsDictionary",
     "<span>ItemsDictionary</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/server/js/util/items.js</span>",
-    "class"
+    "variable"
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/js/database/loader.js~loader",
@@ -463,9 +457,9 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/js/util/mobs.js~mobsdictionary",
-    "class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html",
+    "variable/index.html#static-variable-MobsDictionary",
     "<span>MobsDictionary</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/server/js/util/mobs.js</span>",
-    "class"
+    "variable"
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/js/map/areas/musicareas.js~musicareas",
@@ -493,9 +487,9 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/js/util/npcs.js~npcsdictionary",
-    "class/WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary.html",
+    "variable/index.html#static-variable-NpcsDictionary",
     "<span>NpcsDictionary</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/server/js/util/npcs.js</span>",
-    "class"
+    "variable"
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/data/combat/ogrelord.js~ogrelord",
@@ -691,9 +685,9 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/js/util/shops.js~shopsdictionary",
-    "class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html",
+    "variable/index.html#static-variable-ShopsDictionary",
     "<span>ShopsDictionary</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/server/js/util/shops.js</span>",
-    "class"
+    "variable"
   ],
   [
     "wtf-adventure/wtf-adventure/src/server/data/combat/skeletonking.js~skeletonking",
@@ -17484,274 +17478,10 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "wtf-adventure/src/server/js/util/dictionary.js",
-    "file/WTF-Adventure/src/server/js/util/dictionary.js.html",
-    "WTF-Adventure/src/server/js/util/dictionary.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#constructor",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-constructor-constructor",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#constructor",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#data",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-member-data",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#data",
-    "member"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#exists",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-method-exists",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#exists",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#getdata",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-method-getData",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#getData",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#getproperty",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-method-getProperty",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#getProperty",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#idtoname",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-method-idToName",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#idToName",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#idtostring",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-method-idToString",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#idToString",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#plugins",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-member-plugins",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#plugins",
-    "member"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#properties",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-member-properties",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#properties",
-    "member"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#setdata",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-method-setData",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#setData",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#setplugins",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-method-setPlugins",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#setPlugins",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#setproperty",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-method-setProperty",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#setProperty",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/dictionary.js~dictionary#stringtoid",
-    "class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html#instance-method-stringToId",
-    "WTF-Adventure/src/server/js/util/dictionary.js~Dictionary#stringToId",
-    "method"
-  ],
-  [
     "wtf-adventure/src/server/js/util/items.js",
     "file/WTF-Adventure/src/server/js/util/items.js.html",
     "WTF-Adventure/src/server/js/util/items.js",
     "file"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#constructor",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-constructor-constructor",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#constructor",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getarmourlevel",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getArmourLevel",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getArmourLevel",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getbootslevel",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getBootsLevel",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getBootsLevel",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getcustomdata",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getCustomData",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getCustomData",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getdata",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getData",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getData",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#gethealingfactor",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getHealingFactor",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getHealingFactor",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getlevelrequirement",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getLevelRequirement",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getLevelRequirement",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getmanafactor",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getManaFactor",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getManaFactor",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getpendantlevel",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getPendantLevel",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getPendantLevel",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getringlevel",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getRingLevel",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getRingLevel",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getshardtier",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getShardTier",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getShardTier",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#gettype",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getType",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getType",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#getweaponlevel",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-getWeaponLevel",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#getWeaponLevel",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#hasplugin",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-hasPlugin",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#hasPlugin",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#healshealth",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-healsHealth",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#healsHealth",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#healsmana",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-healsMana",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#healsMana",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isarcherweapon",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isArcherWeapon",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isArcherWeapon",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isarmour",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isArmour",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isArmour",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isboots",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isBoots",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isBoots",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isedible",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isEdible",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isEdible",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isenchantable",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isEnchantable",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isEnchantable",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isequippable",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isEquippable",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isEquippable",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isnewplugin",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isNewPlugin",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isNewPlugin",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#ispendant",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isPendant",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isPendant",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isring",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isRing",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isRing",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isshard",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isShard",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isShard",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isstackable",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isStackable",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isStackable",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#isweapon",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-isWeapon",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#isWeapon",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#maxstacksize",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-method-maxStackSize",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#maxStackSize",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/items.js~itemsdictionary#oncreate",
-    "class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html#instance-member-onCreate",
-    "WTF-Adventure/src/server/js/util/items.js~ItemsDictionary#onCreate",
-    "member"
   ],
   [
     "wtf-adventure/src/server/js/util/log.js",
@@ -17766,36 +17496,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "wtf-adventure/src/server/js/util/mobs.js~mobsdictionary#constructor",
-    "class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html#instance-constructor-constructor",
-    "WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary#constructor",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/mobs.js~mobsdictionary#data",
-    "class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html#instance-member-data",
-    "WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary#data",
-    "member"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/mobs.js~mobsdictionary#getxp",
-    "class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html#instance-method-getXp",
-    "WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary#getXp",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/mobs.js~mobsdictionary#hascombatplugin",
-    "class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html#instance-method-hasCombatPlugin",
-    "WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary#hasCombatPlugin",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/mobs.js~mobsdictionary#isnewcombatplugin",
-    "class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html#instance-method-isNewCombatPlugin",
-    "WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary#isNewCombatPlugin",
-    "method"
-  ],
-  [
     "wtf-adventure/src/server/js/util/modules.js",
     "file/WTF-Adventure/src/server/js/util/modules.js.html",
     "WTF-Adventure/src/server/js/util/modules.js",
@@ -17806,18 +17506,6 @@ window.esdocSearchIndex = [
     "file/WTF-Adventure/src/server/js/util/npcs.js.html",
     "WTF-Adventure/src/server/js/util/npcs.js",
     "file"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/npcs.js~npcsdictionary#gettext",
-    "class/WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary.html#instance-method-getText",
-    "WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary#getText",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/npcs.js~npcsdictionary#gettype",
-    "class/WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary.html#instance-method-getType",
-    "WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary#getType",
-    "method"
   ],
   [
     "wtf-adventure/src/server/js/util/parser.js",
@@ -17908,36 +17596,6 @@ window.esdocSearchIndex = [
     "file/WTF-Adventure/src/server/js/util/shops.js.html",
     "WTF-Adventure/src/server/js/util/shops.js",
     "file"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/shops.js~shopsdictionary#getcost",
-    "class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html#instance-method-getCost",
-    "WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary#getCost",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/shops.js~shopsdictionary#getcount",
-    "class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html#instance-method-getCount",
-    "WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary#getCount",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/shops.js~shopsdictionary#getitemcount",
-    "class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html#instance-method-getItemCount",
-    "WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary#getItemCount",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/shops.js~shopsdictionary#getitems",
-    "class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html#instance-method-getItems",
-    "WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary#getItems",
-    "method"
-  ],
-  [
-    "wtf-adventure/src/server/js/util/shops.js~shopsdictionary#isshopnpc",
-    "class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html#instance-method-isShopNPC",
-    "WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary#isShopNPC",
-    "method"
   ],
   [
     "wtf-adventure/src/server/js/util/utils.js",

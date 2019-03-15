@@ -167,14 +167,13 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames">src/server/js/minigames</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/minigame.js~Minigame.html">Minigame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-minigames-impl">src/server/js/minigames/impl</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/minigames/impl/teamwar.js~TeamWar.html">TeamWar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-network">src/server/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/network/socket.js~Socket.html">Socket</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/abilities.js~AbilityDictionary.html">AbilityDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/dictionary.js~Dictionary.html">Dictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/items.js~ItemsDictionary.html">ItemsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/mobs.js~MobsDictionary.html">MobsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/npcs.js~NpcsDictionary.html">NpcsDictionary</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/shops.js~ShopsDictionary.html">ShopsDictionary</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-js-util">src/server/js/util</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/js/util/parser.js~Parser.html">Parser</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-requireItems">requireItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AbilityDictionary">AbilityDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ItemsDictionary">ItemsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MobsDictionary">MobsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NpcsDictionary">NpcsDictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ShopsDictionary">ShopsDictionary</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-api">src/tools/api</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/api/registrar.js~Registrar.html">Registrar</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-bot">src/tools/bot</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/tools/bot/bot.js~Bot.html">Bot</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-tools-map">src/tools/map</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
@@ -200,11 +199,11 @@ import Formulas from &apos;../game/formulas&apos;;
 
 export default class Parser {
   constructor() {
-    this.mobsDictionary = new MobsDictionary();
-    this.npcsDictionary = new NpcsDictionary();
-    this.shopsDictionary = new ShopsDictionary();
-    this.itemsDictionary = new ItemsDictionary();
-    this.abilitiesDictionary = new AbilitiesDictionary();
+    this.mobsDictionary = MobsDictionary;
+    this.npcsDictionary = NpcsDictionary;
+    this.shopsDictionary = ShopsDictionary;
+    this.itemsDictionary = ItemsDictionary;
+    this.abilitiesDictionary = AbilitiesDictionary;
 
     this.loadMobData();
     this.loadNPCData();
@@ -222,7 +221,7 @@ export default class Parser {
     _.each(MobData, (value, key) =&gt; {
       key = key.toLowerCase(); // eslint-disable-line
 
-      this.mobsDictionary.setData(key, {
+      MobsDictionary.setData(key, {
         key,
         id: value.id,
         name: value.name ? value.name : key,
@@ -246,10 +245,10 @@ export default class Parser {
       mobCounter += 1;
     });
 
-    this.mobsDictionary.setPlugins(`${__dirname}/../../data/combat/`);
+    MobsDictionary.setPlugins(`${__dirname}/../../data/combat/`);
 
     log.info(`Finished loading ${mobCounter} mobs.`);
-    log.info(`Loaded ${Object.keys(this.mobsDictionary.plugins).length} mob plugins.`);
+    log.info(`Loaded ${Object.keys(MobsDictionary.plugins).length} mob plugins.`);
   }
 
   loadNPCData() {
@@ -258,7 +257,7 @@ export default class Parser {
     _.each(NPCData, (value, key) =&gt; {
       key = key.toLowerCase(); // eslint-disable-line
 
-      this.npcsDictionary.setData(key, {
+      NpcsDictionary.setData(key, {
         key,
         id: value.id,
         name: value.name ? value.name : key,
@@ -278,7 +277,7 @@ export default class Parser {
     _.each(ItemData, (value, key) =&gt; {
       key = key.toLowerCase(); // eslint-disable-line
 
-      this.itemsDictionary.setData(key, {
+      ItemsDictionary.setData(key, {
         key,
         id: value.id ? value.id : -1,
         type: value.type ? value.type : &apos;object&apos;,
@@ -302,10 +301,10 @@ export default class Parser {
       itemCounter += 1;
     });
 
-    this.itemsDictionary.setPlugins(`${__dirname}/../../data/items/`);
+    ItemsDictionary.setPlugins(`${__dirname}/../../data/items/`);
 
     log.info(`Finished loading ${itemCounter} items.`);
-    log.info(`Loaded ${Object.keys(this.itemsDictionary.plugins).length} item plugins.`);
+    log.info(`Loaded ${Object.keys(ItemsDictionary.plugins).length} item plugins.`);
   }
 
   loadAbilityData() {
@@ -314,7 +313,7 @@ export default class Parser {
     _.each(AbilityData, (value, key) =&gt; {
       key = key.toLowerCase(); // eslint-disable-line
 
-      this.abilitiesDictionary.setData(key, {
+      AbilitiesDictionary.setData(key, {
         key,
         id: value.id,
         type: value.type,
@@ -355,7 +354,8 @@ export default class Parser {
       Formulas.LevelExp[i] = points + Formulas.LevelExp[i - 1];
     }
   }
-}</code></pre>
+}
+</code></pre>
 
 </div>
 
