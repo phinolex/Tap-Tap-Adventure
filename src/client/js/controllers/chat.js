@@ -7,19 +7,63 @@ import Packets from '../network/packets';
  * @class
  */
 export default class Chat {
+  /**
+   * Default constructor
+   * @param {Game} game instance of the game class
+   */
   constructor(game) {
+    /**
+     * Instance of the game object
+     * @type {Game}
+     */
     this.game = game;
 
+    /**
+     * A reference to the chat container
+     * @type {Object}
+     */
     this.chat = $('#chat');
+
+    /**
+     * A reference to the chat logs container
+     * @type {Object}
+     */
     this.log = $('#chatLog');
+
+    /**
+     * A reference to the chat input element
+     * @type {Object}
+     */
     this.input = $('#hud-chat-input');
+
+    /**
+     * A reference to the chat button
+     * @type {Object}
+     */
     this.button = $('#hud-chat');
 
+    /**
+     * The visibility of the chat containers
+     * @type {Boolean}
+     */
     this.visible = false;
 
+    /**
+     * The duration before the chat message starts to fade out
+     * @type {Number}
+     */
     this.fadingDuration = 5000;
+
+    /**
+     * A reference to the timeout for the chat message
+     * @type {Object}
+     */
     this.fadingTimeout = null;
 
+    /**
+     * On click handler for the chat button, toggles the visibility
+     * @type {Function}
+     */
     this.button.click(() => {
       this.button.blur();
 

@@ -243,6 +243,11 @@ export default class Bubble {
     return this.bubbles[id];
   }
 
+  /**
+   * Set a speech bubble to a specific entity
+   * @param  {Entity} entity   an entity in the game
+   * @return null, speech bubble shows in the location of the entity
+   */
   setTo(entity) {
     const bubble = this.get(entity.id);
 
@@ -265,6 +270,11 @@ export default class Bubble {
     bubble.element.css(&apos;top&apos;, `${y}px`);
   }
 
+  /**
+   * Update the display of the bubbles (automatically disappear over time)
+   * @param  {Number} time the current timestamp
+   * @return null, deletes expired speech bubbles
+   */
   update(time) {
     _.each(this.bubbles, (bubble) =&gt; {
       const entity = this.game.entities.get(bubble.id);
@@ -280,6 +290,11 @@ export default class Bubble {
     });
   }
 
+  /**
+   * Fetch a specific bubble
+   * @param  {Number} id       the id of the bubble message
+   * @return {Bubble} an instance of the bubble message
+   */
   get(id) {
     if (id in this.bubbles) {
       return this.bubbles[id];
@@ -288,6 +303,10 @@ export default class Bubble {
     return null;
   }
 
+  /**
+   * Destroy all the active bubbles
+   * @return null, empty array of bubbles
+   */
   clean() {
     _.each(this.bubbles, (bubble) =&gt; {
       bubble.destroy();
@@ -296,6 +315,11 @@ export default class Bubble {
     this.bubbles = {};
   }
 
+  /**
+   * Delete a specific bubble
+   * @param  {Number} id the id of the bubble message
+   * @return null, the bubble is removed from the array
+   */
   destroy(id) {
     const bubble = this.get(id);
 
