@@ -10,7 +10,7 @@
     "lint": "eslint ./src/**/**.js",
     "mysql-start": "mysql-ctl start",
     "wtf": "npm run mysql-start && npm start",
-    "esdoc": "./node_modules/.bin/esdoc",
+    "esdocs": "./node_modules/.bin/esdoc",
     "docs": "open ./docs/index.html",
     "test": "jest --env=jsdom --coverage && npm run badges",
     "badges": "make-coverage-badge"

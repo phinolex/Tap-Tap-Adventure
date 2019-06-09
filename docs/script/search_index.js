@@ -913,13 +913,13 @@ window.esdocSearchIndex = [
   ],
   [
     "app#keyupeventlistener wtf-adventure/src/client/js/app.js~app#keyupeventlistener,app#keyupeventlistener",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber136",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber150",
     "App .keyupEventListener()",
     "test"
   ],
   [
     "app#keyupeventlistener wtf-adventure/src/client/js/app.js~app#keyupeventlistener,app#keyupeventlistener",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber150",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber136",
     "App .keyupEventListener()",
     "test"
   ],
@@ -1363,20 +1363,14 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf-adventure/src/client/js/__tests__/app.test.js",
-    "file/WTF-Adventure/src/client/js/__tests__/app.test.js.html",
-    "WTF-Adventure/src/client/js/__tests__/app.test.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/src/client/js/__tests__/app.test.js",
     "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html",
     "WTF-Adventure/src/client/js/__tests__/app.test.js",
     "testFile"
   ],
   [
-    "wtf-adventure/src/client/js/__tests__/main.test.js",
-    "file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
-    "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "wtf-adventure/src/client/js/__tests__/app.test.js",
+    "file/WTF-Adventure/src/client/js/__tests__/app.test.js.html",
+    "WTF-Adventure/src/client/js/__tests__/app.test.js",
     "file"
   ],
   [
@@ -1384,6 +1378,12 @@ window.esdocSearchIndex = [
     "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
     "WTF-Adventure/src/client/js/__tests__/main.test.js",
     "testFile"
+  ],
+  [
+    "wtf-adventure/src/client/js/__tests__/main.test.js",
+    "file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
+    "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "file"
   ],
   [
     "wtf-adventure/src/client/js/app.js",

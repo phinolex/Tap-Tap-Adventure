@@ -1,7 +1,7 @@
 {
-  "coverage": "9.39%",
+  "coverage": "9.73%",
   "expectCount": 2949,
-  "actualCount": 277,
+  "actualCount": 287,
   "files": {
     "WTF-Adventure/coverage/lcov-report/sorter.js": {
       "expectCount": 1,
@@ -27,19 +27,8 @@
     },
     "WTF-Adventure/src/client/js/controllers/chat.js": {
       "expectCount": 20,
-      "actualCount": 10,
-      "undocumentLines": [
-        78,
-        101,
-        116,
-        121,
-        134,
-        140,
-        150,
-        165,
-        175,
-        180
-      ]
+      "actualCount": 20,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/controllers/entities.js": {
       "expectCount": 24,

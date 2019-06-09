@@ -75,14 +75,22 @@ export default class Chat {
     });
   }
 
-  add(source, text, labelColor, textColor) {
+  /**
+  * Add a chat message
+  * @param {String} label info in front of the message
+  * @param {String} text the message text
+  * @param {String} labelColor the color of the label
+  * @param {String} textColor the color of the message text
+  * @return null
+  */
+  add(label, text, labelColor, textColor) {
     const styleLabel = labelColor || 'white';
     const styleText = textColor || 'white';
 
     const element = $(
       `<p>
-        <span style="color:${styleLabel}">${source}:</span>
-        <span style="color: ${styleText}"> ${text}</span>
+        <span style="color:${styleLabel}">${label}:</span>
+        <span style="color:${styleText}"> ${text}</span>
       </p>`,
     );
 
@@ -98,8 +106,13 @@ export default class Chat {
     this.log.scrollTop(99999);
   }
 
-  key(data) {
-    switch (data) {
+  /**
+  * Respond to key enter key presses for chat messages
+  * @param {Number} keyCode the code for the key that was pressed
+  * @return null
+  */
+  key(keyCode) {
+    switch (keyCode) {
       case Modules.Keys.Enter:
         if (this.input.val() === '') {
           this.toggle();
@@ -113,11 +126,19 @@ export default class Chat {
     }
   }
 
+  /**
+  * Send chat messages to the server via sockets
+  * @return null
+  */
   send() {
     this.game.socket.send(Packets.Chat, [this.input.val()]);
     this.toggle();
   }
 
+  /**
+  * Toggle if they chat UI is visible or not
+  * @return null
+  */
   toggle() {
     this.clean();
 
@@ -131,12 +152,20 @@ export default class Chat {
     }
   }
 
+  /**
+  * Show the chat messages box
+  * @return null
+  */
   showChat() {
     this.chat.fadeIn('fast');
 
     this.visible = true;
   }
 
+  /**
+  * Show the input box for entering chat messages into
+  * @return null
+  */
   showInput() {
     this.button.addClass('active');
 
@@ -147,6 +176,10 @@ export default class Chat {
     this.clean();
   }
 
+  /**
+  * Hides the input box for entering chat messages into
+  * @return null
+  */
   hideChat() {
     if (this.fadingTimeout) {
       clearTimeout(this.fadingTimeout);
@@ -162,6 +195,10 @@ export default class Chat {
     }, this.fadingDuration);
   }
 
+  /**
+  * Hide the chat input boxes
+  * @return null
+  */
   hideInput() {
     this.button.removeClass('active');
 
@@ -172,11 +209,20 @@ export default class Chat {
     this.hideChat();
   }
 
+  /**
+  * Reset the fade timeout
+  * @return null
+  */
   clean() {
     clearTimeout(this.fadingTimeout);
     this.fadingTimeout = null;
   }
 
+  /**
+  * Returns true if the input box has focus and is currently active
+  * or being typed into
+  * @return {Boolean}
+  */
   isActive() {
     return this.input.is(':focus');
   }
