@@ -11,8 +11,14 @@ import Modules from '../utils/modules';
 import Packets from '../network/packets';
 
 /**
- * Entities in the game
- * Character (Mob, Npc, Player), Chest, Item, Projectile
+ * Entities in the game:
+ * * {@link Character} - parent class for:
+ *   * {@link Mob} - game controlled npc or monster that can move around the map
+ *   * {@link Npc} - game controlled entity that always stays in one location
+ *   * {@link Player} - a user in the game
+ * * {@link Chest} - open to reveal an item
+ * * {@link Item} - weapons, health, magic, armor
+ * * {@link Projectile} - entities that can be thrown (magic, weapons, arrows, mob attacks)
  * @class
  */
 export default class Entities {
@@ -449,7 +455,7 @@ export default class Entities {
   }
 
   /**
-  * Return all entites
+  * Return all entities
   */
   getAll() {
     return this.entities;

@@ -182,13 +182,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Entities from &apos;<span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber18">WTF-Adventure/WTF-Adventure/src/client/js/controllers/entities.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Entities from &apos;<span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber24">WTF-Adventure/WTF-Adventure/src/client/js/controllers/entities.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber18">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber24">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -208,8 +208,18 @@
 
   
   
-  <div class="description" data-ice="description"><p>Entities in the game
-Character (Mob, Npc, Player), Chest, Item, Projectile</p>
+  <div class="description" data-ice="description"><p>Entities in the game:</p>
+<ul>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/character.js~Character.html">Character</a></span> - parent class for:<ul>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> - game controlled npc or monster that can move around the map</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/npc/npc.js~Npc.html">Npc</a></span> - game controlled entity that always stays in one location</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span> - a user in the game</li>
+</ul>
+</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> - open to reveal an item</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> - weapons, health, magic, armor</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> - entities that can be thrown (magic, weapons, arrows, mob attacks)</li>
+</ul>
 </div>
   
 
@@ -669,7 +679,7 @@ as long as the radius is not out of bounds in the grid</p>
       <div>
         
         
-        <div data-ice="description"><p>Return all entites</p>
+        <div data-ice="description"><p>Return all entities</p>
 </div>
       </div>
     </td>
@@ -932,7 +942,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber23">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber29">source</a></span></span>
     </span>
   </h3>
 
@@ -996,7 +1006,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber58">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber64">source</a></span></span>
     </span>
   </h3>
 
@@ -1040,7 +1050,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber52">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber58">source</a></span></span>
     </span>
   </h3>
 
@@ -1084,7 +1094,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber28">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber34">source</a></span></span>
     </span>
   </h3>
 
@@ -1128,7 +1138,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber40">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber46">source</a></span></span>
     </span>
   </h3>
 
@@ -1172,7 +1182,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber34">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber40">source</a></span></span>
     </span>
   </h3>
 
@@ -1216,7 +1226,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber46">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber52">source</a></span></span>
     </span>
   </h3>
 
@@ -1263,7 +1273,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber342">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber348">source</a></span></span>
     </span>
   </h3>
 
@@ -1337,7 +1347,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber319">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber325">source</a></span></span>
     </span>
   </h3>
 
@@ -1411,7 +1421,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber99">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber105">source</a></span></span>
     </span>
   </h3>
 
@@ -1485,7 +1495,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber310">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber316">source</a></span></span>
     </span>
   </h3>
 
@@ -1559,7 +1569,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber463">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber469">source</a></span></span>
     </span>
   </h3>
 
@@ -1633,7 +1643,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber478">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber484">source</a></span></span>
     </span>
   </h3>
 
@@ -1729,7 +1739,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber297">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber303">source</a></span></span>
     </span>
   </h3>
 
@@ -1802,14 +1812,14 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber454">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber460">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Return all entites</p>
+  <div data-ice="description"><p>Return all entities</p>
 </div>
 
   
@@ -1858,7 +1868,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber447">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber453">source</a></span></span>
     </span>
   </h3>
 
@@ -1931,7 +1941,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber288">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber294">source</a></span></span>
     </span>
   </h3>
 
@@ -2004,7 +2014,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber65">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber71">source</a></span></span>
     </span>
   </h3>
 
@@ -2061,7 +2071,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber409">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber415">source</a></span></span>
     </span>
   </h3>
 
@@ -2135,7 +2145,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber379">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber385">source</a></span></span>
     </span>
   </h3>
 
@@ -2209,7 +2219,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber363">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber369">source</a></span></span>
     </span>
   </h3>
 
@@ -2283,7 +2293,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber434">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber440">source</a></span></span>
     </span>
   </h3>
 
@@ -2357,7 +2367,7 @@ as long as the radius is not out of bounds in the grid</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber87">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber93">source</a></span></span>
     </span>
   </h3>
 

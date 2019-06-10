@@ -3931,7 +3931,7 @@
     "__docId__": 226,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/controllers/entities.js",
-    "content": "import _ from 'underscore';\nimport Grids from '../renderer/grids';\nimport Chest from '../entity/objects/chest';\nimport Player from '../entity/character/player/player';\nimport Item from '../entity/objects/item';\nimport Sprites from './sprites';\nimport Mob from '../entity/character/mob/mob';\nimport NPC from '../entity/character/npc/npc';\nimport Projectile from '../entity/objects/projectile';\nimport Modules from '../utils/modules';\nimport Packets from '../network/packets';\n\n/**\n * Entities in the game\n * Character (Mob, Npc, Player), Chest, Item, Projectile\n * @class\n */\nexport default class Entities {\n  /**\n  * Default constructor\n  * @param {Game} instance of the game\n  */\n  constructor(game) {\n    /**\n    * An instance of the game\n    * @type {Game}\n    */\n    this.game = game;\n\n    /**\n    * An instance of the game renderer\n    * @type {Renderer}\n    */\n    this.renderer = game.renderer;\n\n    /**\n    * An array of game grid maps\n    * @type {Grids}\n    */\n    this.grids = null;\n\n    /**\n    * An array of sprites\n    * @type {Sprites}\n    */\n    this.sprites = null;\n\n    /**\n    * An array of an entity type instances\n    * @type {Chest|NPC|Item|Mob|Projectile|Player}\n    */\n    this.entities = {};\n\n    /**\n    * Keeps track of entities that need to be cleaned up\n    * @type {Chest|NPC|Item|Mob|Projectile|Player}\n    */\n    this.decrepit = {};\n  }\n\n  /**\n  * Load the entities in the game for the current game map\n  * @return null\n  */\n  load() {\n    this.game.app.sendStatus('Lots of monsters ahead...');\n\n    if (!this.sprites) {\n      this.sprites = new Sprites(this.game.renderer);\n\n      this.sprites.onLoadedSprites(() => {\n        this.game.input.loadCursors();\n      });\n    }\n\n    this.game.app.sendStatus('Yes, you are also a monster...');\n\n    if (!this.grids) {\n      this.grids = new Grids(this.game.map);\n    }\n  }\n\n  /**\n  * Update the sprites\n  * @return null\n  */\n  update() {\n    if (this.sprites) {\n      this.sprites.updateSprites();\n    }\n  }\n\n  /**\n  * Create a new entity\n  * @param {{id:Number, type:'chest'|'npc'|'item'|'mob'|'projectile'|'player'}}\n  * info information about the entity we need to create\n  * @return null\n  */\n  create(info) {\n    let entity;\n\n    if (this.isPlayer(info.id)) {\n      return;\n    }\n\n    switch (info.type) {\n      default:\n        break;\n      case 'chest':\n        /**\n         * Here we will parse the different types of chests..\n         * We can go Dark Souls style and implement mimics\n         * the proper way -ahem- TTA V1.0\n         */\n\n        const chest = new Chest(info.id, info.string); // eslint-disable-line\n        entity = chest;\n        break;\n\n      case 'npc':\n        const npc = new NPC(info.id, info.string); // eslint-disable-line\n        entity = npc;\n        break;\n\n      case 'item':\n        const item = new Item( // eslint-disable-line\n          info.id,\n          info.string,\n          info.count,\n          info.ability,\n          info.abilityLevel,\n        );\n        entity = item;\n        break;\n\n      case 'mob':\n        const mob = new Mob(info.id, info.string); // eslint-disable-line\n\n        mob.setHitPoints(info.hitPoints);\n        mob.setMaxHitPoints(info.maxHitPoints);\n\n        mob.attackRange = info.attackRange;\n        mob.level = info.level;\n\n        entity = mob;\n\n        break;\n\n      case 'projectile':\n        const attacker = this.get(info.characterId); // eslint-disable-line\n        const target = this.get(info.targetId); // eslint-disable-line\n\n        if (!attacker || !target) {\n          return;\n        }\n\n        attacker.lookAt(target);\n\n        const projectile = new Projectile( // eslint-disable-line\n          info.id,\n          info.projectileType,\n          attacker,\n        );\n\n        projectile.name = info.name;\n\n        projectile.setStart(attacker.x, attacker.y);\n        projectile.setTarget(target);\n\n        projectile.setSprite(this.getSprite(projectile.name));\n        projectile.setAnimation('travel', projectile.getSpeed());\n\n        projectile.angled = true;\n        projectile.type = info.type;\n\n        /**\n         * Move this into the external overall function\n         */\n\n        projectile.onImpact(() => {\n          /**\n           * The data in the projectile is only for rendering purposes\n           * there is nothing you can change for the actual damage output here.\n           */\n\n          if (this.isPlayer(projectile.owner.id) || this.isPlayer(target.id)) {\n            this.game.socket.send(Packets.Projectile, [\n              Packets.ProjectileOpcode.Impact,\n              info.id,\n              target.id,\n            ]);\n          }\n\n          if (info.hitType === Modules.Hits.Explosive) {\n            target.explosion = true;\n          }\n\n          this.game.info.create(\n            Modules.Hits.Damage,\n            [info.damage, this.isPlayer(target.id)],\n            target.x,\n            target.y,\n          );\n\n          target.triggerHealthBar();\n\n          this.unregisterPosition(projectile);\n          delete this.entities[projectile.getId()];\n        });\n\n        this.addEntity(projectile);\n\n        attacker.performAction(attacker.orientation, Modules.Actions.Attack);\n        attacker.triggerHealthBar();\n        return;\n\n      case 'player':\n        const player = new Player(); // eslint-disable-line\n\n        player.setId(info.id);\n        player.setName(info.name);\n        player.setGridPosition(info.x, info.y);\n\n        player.rights = info.rights;\n        player.level = info.level;\n        player.pvp = info.pvp;\n        player.pvpKills = info.pvpKills;\n        player.pvpDeaths = info.pvpDeaths;\n        player.type = info.type;\n\n        const hitPointsData = info.hitPoints; // eslint-disable-line\n        const manaData = info.mana; // eslint-disable-line\n\n        player.setHitPoints(hitPointsData[0]);\n        player.setMaxHitPoints(hitPointsData[1]);\n\n        player.setMana(manaData[0]);\n        player.setMaxMana(manaData[1]);\n\n        player.setSprite(this.getSprite(info.armour[1]));\n        player.idle();\n\n        player.setEquipment(Modules.Equipment.Armour, info.armour);\n        player.setEquipment(Modules.Equipment.Weapon, info.weapon);\n        player.setEquipment(Modules.Equipment.Pendant, info.pendant);\n        player.setEquipment(Modules.Equipment.Ring, info.ring);\n        player.setEquipment(Modules.Equipment.Boots, info.boots);\n\n        player.loadHandler(this.game);\n\n        this.addEntity(player);\n\n        return;\n    }\n\n    // if we didn't load an entity for any reason quit trying while we're ahead\n    if (!entity) {\n      return;\n    }\n\n    entity.setGridPosition(info.x, info.y);\n    entity.setName(info.name);\n\n    entity.setSprite(\n      this.getSprite(\n        info.type === 'item'\n          ? `item-${info.string}`\n          : info.string,\n      ),\n    );\n\n    entity.idle();\n    entity.type = info.type;\n\n    this.addEntity(entity);\n\n    if (info.type !== 'item' && entity.handler) {\n      entity.handler.setGame(this.game);\n      entity.handler.load();\n    }\n  }\n\n  /**\n  * Checks whether or not this entity ID is a player\n  * @param {Number} id the id of the entity\n  * @return {Boolean}\n  */\n  isPlayer(id) {\n    return this.game.player.id === id;\n  }\n\n  /**\n  * Returns the entity object based off the ID if it exists, otherwise returns null\n  * @param {Number} id the id of the entity\n  * @return {Chest|NPC|Item|Mob|Projectile|Player|null}\n  */\n  get(id) {\n    if (id in this.entities) {\n      return this.entities[id];\n    }\n\n    return null;\n  }\n\n  /**\n  * Check to see if an entity with this ID exists or not\n  * @param {Number} id the id of the entity\n  * @return {Boolean} true if it exists, otherwise false\n  */\n  exists(id) {\n    return id in this.entities;\n  }\n\n  /**\n  * Removes players from the game map, will only work for entities of type player\n  * @param {{id:Number, type:String}} exception entitys (players) to keep on the game map\n  * @return null\n  */\n  clearPlayers(exception) {\n    _.each(this.entities, (entity) => {\n      if (entity.id !== exception.id && entity.type === 'player') {\n        this.grids.removeFromRenderingGrid(\n          entity,\n          entity.gridX,\n          entity.gridY,\n        );\n\n        this.grids.removeFromPathingGrid(entity.gridX, entity.gridY);\n\n        delete this.entities[entity.id];\n      }\n    });\n\n    this.grids.resetPathingGrid();\n  }\n\n  /**\n  * Add a new entity to the map grid\n  * @param {Chest|NPC|Item|Mob|Projectile|Player} entity the entity to add to the game\n  * @return null\n  */\n  addEntity(entity) {\n    if (this.entities[entity.id]) {\n      return;\n    }\n\n    this.entities[entity.id] = entity;\n    this.registerPosition(entity);\n\n    if (\n      !(entity instanceof Item && entity.dropped)\n      && !this.renderer.isPortableDevice()\n    ) {\n      entity.fadeIn(this.game.time);\n    }\n  }\n\n  /**\n  * Remove an item from the game\n  * @param {{Chest|NPC|Item|Mob|Projectile}} item the item to remove from the map grid\n  * @return null\n  */\n  removeItem(item) {\n    if (!item) {\n      return;\n    }\n\n    this.grids.removeFromItemGrid(item, item.gridX, item.gridY);\n    this.grids.removeFromRenderingGrid(item, item.gridX, item.gridY);\n\n    delete this.entities[item.id];\n  }\n\n  /**\n  * Figure out which part of the grid to add an entity to\n  * @param {Chest|NPC|Item|Mob|Player} entity an entity in the game\n  * @return null\n  */\n  registerPosition(entity) {\n    if (!entity) {\n      return;\n    }\n\n    if (\n      entity.type === 'player'\n      || entity.type === 'mob'\n      || entity.type === 'npc'\n      || entity.type === 'chest'\n    ) {\n      this.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);\n\n      if (entity.type !== 'player' || entity.nonPathable) {\n        this.grids.addToPathingGrid(entity.gridX, entity.gridY);\n      }\n    }\n\n    if (entity.type === 'item') {\n      this.grids.addToItemGrid(entity, entity.gridX, entity.gridY);\n    }\n\n    this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);\n  }\n\n  /**\n  * Register this entity on the grid twice\n  * @param {Chest|NPC|Item|Mob|Projectile|Player} entity the entity to add to the game map again\n  * @return null\n  */\n  registerDuality(entity) {\n    if (!entity) {\n      return;\n    }\n\n    this.grids.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;\n\n    this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);\n\n    if (entity.nextGridX > -1 && entity.nextGridY > -1) {\n      this.grids.entityGrid[entity.nextGridY][entity.nextGridX][\n        entity.id\n      ] = entity;\n\n      if (!(entity instanceof Player)) {\n        this.grids.pathingGrid[entity.nextGridY][entity.nextGridX] = 1;\n      }\n    }\n  }\n\n  /**\n  * Remove this entity from the game map\n  * @param {Chest|NPC|Item|Mob|Projectile|Player} entity the entity to remove from the grid\n  * @return null\n  */\n  unregisterPosition(entity) {\n    if (!entity) {\n      return;\n    }\n\n    this.grids.removeEntity(entity);\n  }\n\n  /**\n  * Return all the sprites with the given name\n  * @param {String} name the name of the sprite\n  * @return {Chest|NPC|Item|Mob|Projectile|Player}\n  */\n  getSprite(name) {\n    return this.sprites.sprites[name];\n  }\n\n  /**\n  * Return all entites\n  */\n  getAll() {\n    return this.entities;\n  }\n\n  /**\n  * Apply a callback for every entity in the array\n  * @param {Function} callback the function to apply, the entity is passed into it\n  * @return null\n  */\n  forEachEntity(callback) {\n    _.each(this.entities, (entity) => {\n      callback(entity);\n    });\n  }\n\n  /**\n  * Apply a callback for every entity in the radius of an area on the map grid\n  * as long as the radius is not out of bounds in the grid\n  * @param {Number} x the x coordinate center of the circle radius\n  * @param {Number} y the y coordinate center of the circle radius\n  * @param {Number} radius the the distance to spread out from the center of the circle point\n  * @param {Function} callback the function to apply, the entity is passed into it\n  * @return null\n  */\n  forEachEntityAround(x, y, radius, callback) {\n    for (let i = x - radius, maxI = x + radius; i <= maxI; i += 1) {\n      for (let j = y - radius, maxJ = y + radius; j <= maxJ; j += 1) {\n        if (!this.map.isOutOfBounds(i, j)) {\n          _.each(this.grids.renderingGrid[j][i], (entity) => {\n            callback(entity);\n          });\n        }\n      }\n    }\n  }\n}\n",
+    "content": "import _ from 'underscore';\nimport Grids from '../renderer/grids';\nimport Chest from '../entity/objects/chest';\nimport Player from '../entity/character/player/player';\nimport Item from '../entity/objects/item';\nimport Sprites from './sprites';\nimport Mob from '../entity/character/mob/mob';\nimport NPC from '../entity/character/npc/npc';\nimport Projectile from '../entity/objects/projectile';\nimport Modules from '../utils/modules';\nimport Packets from '../network/packets';\n\n/**\n * Entities in the game:\n * * {@link Character} - parent class for:\n *   * {@link Mob} - game controlled npc or monster that can move around the map\n *   * {@link Npc} - game controlled entity that always stays in one location\n *   * {@link Player} - a user in the game\n * * {@link Chest} - open to reveal an item\n * * {@link Item} - weapons, health, magic, armor\n * * {@link Projectile} - entities that can be thrown (magic, weapons, arrows, mob attacks)\n * @class\n */\nexport default class Entities {\n  /**\n  * Default constructor\n  * @param {Game} instance of the game\n  */\n  constructor(game) {\n    /**\n    * An instance of the game\n    * @type {Game}\n    */\n    this.game = game;\n\n    /**\n    * An instance of the game renderer\n    * @type {Renderer}\n    */\n    this.renderer = game.renderer;\n\n    /**\n    * An array of game grid maps\n    * @type {Grids}\n    */\n    this.grids = null;\n\n    /**\n    * An array of sprites\n    * @type {Sprites}\n    */\n    this.sprites = null;\n\n    /**\n    * An array of an entity type instances\n    * @type {Chest|NPC|Item|Mob|Projectile|Player}\n    */\n    this.entities = {};\n\n    /**\n    * Keeps track of entities that need to be cleaned up\n    * @type {Chest|NPC|Item|Mob|Projectile|Player}\n    */\n    this.decrepit = {};\n  }\n\n  /**\n  * Load the entities in the game for the current game map\n  * @return null\n  */\n  load() {\n    this.game.app.sendStatus('Lots of monsters ahead...');\n\n    if (!this.sprites) {\n      this.sprites = new Sprites(this.game.renderer);\n\n      this.sprites.onLoadedSprites(() => {\n        this.game.input.loadCursors();\n      });\n    }\n\n    this.game.app.sendStatus('Yes, you are also a monster...');\n\n    if (!this.grids) {\n      this.grids = new Grids(this.game.map);\n    }\n  }\n\n  /**\n  * Update the sprites\n  * @return null\n  */\n  update() {\n    if (this.sprites) {\n      this.sprites.updateSprites();\n    }\n  }\n\n  /**\n  * Create a new entity\n  * @param {{id:Number, type:'chest'|'npc'|'item'|'mob'|'projectile'|'player'}}\n  * info information about the entity we need to create\n  * @return null\n  */\n  create(info) {\n    let entity;\n\n    if (this.isPlayer(info.id)) {\n      return;\n    }\n\n    switch (info.type) {\n      default:\n        break;\n      case 'chest':\n        /**\n         * Here we will parse the different types of chests..\n         * We can go Dark Souls style and implement mimics\n         * the proper way -ahem- TTA V1.0\n         */\n\n        const chest = new Chest(info.id, info.string); // eslint-disable-line\n        entity = chest;\n        break;\n\n      case 'npc':\n        const npc = new NPC(info.id, info.string); // eslint-disable-line\n        entity = npc;\n        break;\n\n      case 'item':\n        const item = new Item( // eslint-disable-line\n          info.id,\n          info.string,\n          info.count,\n          info.ability,\n          info.abilityLevel,\n        );\n        entity = item;\n        break;\n\n      case 'mob':\n        const mob = new Mob(info.id, info.string); // eslint-disable-line\n\n        mob.setHitPoints(info.hitPoints);\n        mob.setMaxHitPoints(info.maxHitPoints);\n\n        mob.attackRange = info.attackRange;\n        mob.level = info.level;\n\n        entity = mob;\n\n        break;\n\n      case 'projectile':\n        const attacker = this.get(info.characterId); // eslint-disable-line\n        const target = this.get(info.targetId); // eslint-disable-line\n\n        if (!attacker || !target) {\n          return;\n        }\n\n        attacker.lookAt(target);\n\n        const projectile = new Projectile( // eslint-disable-line\n          info.id,\n          info.projectileType,\n          attacker,\n        );\n\n        projectile.name = info.name;\n\n        projectile.setStart(attacker.x, attacker.y);\n        projectile.setTarget(target);\n\n        projectile.setSprite(this.getSprite(projectile.name));\n        projectile.setAnimation('travel', projectile.getSpeed());\n\n        projectile.angled = true;\n        projectile.type = info.type;\n\n        /**\n         * Move this into the external overall function\n         */\n\n        projectile.onImpact(() => {\n          /**\n           * The data in the projectile is only for rendering purposes\n           * there is nothing you can change for the actual damage output here.\n           */\n\n          if (this.isPlayer(projectile.owner.id) || this.isPlayer(target.id)) {\n            this.game.socket.send(Packets.Projectile, [\n              Packets.ProjectileOpcode.Impact,\n              info.id,\n              target.id,\n            ]);\n          }\n\n          if (info.hitType === Modules.Hits.Explosive) {\n            target.explosion = true;\n          }\n\n          this.game.info.create(\n            Modules.Hits.Damage,\n            [info.damage, this.isPlayer(target.id)],\n            target.x,\n            target.y,\n          );\n\n          target.triggerHealthBar();\n\n          this.unregisterPosition(projectile);\n          delete this.entities[projectile.getId()];\n        });\n\n        this.addEntity(projectile);\n\n        attacker.performAction(attacker.orientation, Modules.Actions.Attack);\n        attacker.triggerHealthBar();\n        return;\n\n      case 'player':\n        const player = new Player(); // eslint-disable-line\n\n        player.setId(info.id);\n        player.setName(info.name);\n        player.setGridPosition(info.x, info.y);\n\n        player.rights = info.rights;\n        player.level = info.level;\n        player.pvp = info.pvp;\n        player.pvpKills = info.pvpKills;\n        player.pvpDeaths = info.pvpDeaths;\n        player.type = info.type;\n\n        const hitPointsData = info.hitPoints; // eslint-disable-line\n        const manaData = info.mana; // eslint-disable-line\n\n        player.setHitPoints(hitPointsData[0]);\n        player.setMaxHitPoints(hitPointsData[1]);\n\n        player.setMana(manaData[0]);\n        player.setMaxMana(manaData[1]);\n\n        player.setSprite(this.getSprite(info.armour[1]));\n        player.idle();\n\n        player.setEquipment(Modules.Equipment.Armour, info.armour);\n        player.setEquipment(Modules.Equipment.Weapon, info.weapon);\n        player.setEquipment(Modules.Equipment.Pendant, info.pendant);\n        player.setEquipment(Modules.Equipment.Ring, info.ring);\n        player.setEquipment(Modules.Equipment.Boots, info.boots);\n\n        player.loadHandler(this.game);\n\n        this.addEntity(player);\n\n        return;\n    }\n\n    // if we didn't load an entity for any reason quit trying while we're ahead\n    if (!entity) {\n      return;\n    }\n\n    entity.setGridPosition(info.x, info.y);\n    entity.setName(info.name);\n\n    entity.setSprite(\n      this.getSprite(\n        info.type === 'item'\n          ? `item-${info.string}`\n          : info.string,\n      ),\n    );\n\n    entity.idle();\n    entity.type = info.type;\n\n    this.addEntity(entity);\n\n    if (info.type !== 'item' && entity.handler) {\n      entity.handler.setGame(this.game);\n      entity.handler.load();\n    }\n  }\n\n  /**\n  * Checks whether or not this entity ID is a player\n  * @param {Number} id the id of the entity\n  * @return {Boolean}\n  */\n  isPlayer(id) {\n    return this.game.player.id === id;\n  }\n\n  /**\n  * Returns the entity object based off the ID if it exists, otherwise returns null\n  * @param {Number} id the id of the entity\n  * @return {Chest|NPC|Item|Mob|Projectile|Player|null}\n  */\n  get(id) {\n    if (id in this.entities) {\n      return this.entities[id];\n    }\n\n    return null;\n  }\n\n  /**\n  * Check to see if an entity with this ID exists or not\n  * @param {Number} id the id of the entity\n  * @return {Boolean} true if it exists, otherwise false\n  */\n  exists(id) {\n    return id in this.entities;\n  }\n\n  /**\n  * Removes players from the game map, will only work for entities of type player\n  * @param {{id:Number, type:String}} exception entitys (players) to keep on the game map\n  * @return null\n  */\n  clearPlayers(exception) {\n    _.each(this.entities, (entity) => {\n      if (entity.id !== exception.id && entity.type === 'player') {\n        this.grids.removeFromRenderingGrid(\n          entity,\n          entity.gridX,\n          entity.gridY,\n        );\n\n        this.grids.removeFromPathingGrid(entity.gridX, entity.gridY);\n\n        delete this.entities[entity.id];\n      }\n    });\n\n    this.grids.resetPathingGrid();\n  }\n\n  /**\n  * Add a new entity to the map grid\n  * @param {Chest|NPC|Item|Mob|Projectile|Player} entity the entity to add to the game\n  * @return null\n  */\n  addEntity(entity) {\n    if (this.entities[entity.id]) {\n      return;\n    }\n\n    this.entities[entity.id] = entity;\n    this.registerPosition(entity);\n\n    if (\n      !(entity instanceof Item && entity.dropped)\n      && !this.renderer.isPortableDevice()\n    ) {\n      entity.fadeIn(this.game.time);\n    }\n  }\n\n  /**\n  * Remove an item from the game\n  * @param {{Chest|NPC|Item|Mob|Projectile}} item the item to remove from the map grid\n  * @return null\n  */\n  removeItem(item) {\n    if (!item) {\n      return;\n    }\n\n    this.grids.removeFromItemGrid(item, item.gridX, item.gridY);\n    this.grids.removeFromRenderingGrid(item, item.gridX, item.gridY);\n\n    delete this.entities[item.id];\n  }\n\n  /**\n  * Figure out which part of the grid to add an entity to\n  * @param {Chest|NPC|Item|Mob|Player} entity an entity in the game\n  * @return null\n  */\n  registerPosition(entity) {\n    if (!entity) {\n      return;\n    }\n\n    if (\n      entity.type === 'player'\n      || entity.type === 'mob'\n      || entity.type === 'npc'\n      || entity.type === 'chest'\n    ) {\n      this.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);\n\n      if (entity.type !== 'player' || entity.nonPathable) {\n        this.grids.addToPathingGrid(entity.gridX, entity.gridY);\n      }\n    }\n\n    if (entity.type === 'item') {\n      this.grids.addToItemGrid(entity, entity.gridX, entity.gridY);\n    }\n\n    this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);\n  }\n\n  /**\n  * Register this entity on the grid twice\n  * @param {Chest|NPC|Item|Mob|Projectile|Player} entity the entity to add to the game map again\n  * @return null\n  */\n  registerDuality(entity) {\n    if (!entity) {\n      return;\n    }\n\n    this.grids.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;\n\n    this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);\n\n    if (entity.nextGridX > -1 && entity.nextGridY > -1) {\n      this.grids.entityGrid[entity.nextGridY][entity.nextGridX][\n        entity.id\n      ] = entity;\n\n      if (!(entity instanceof Player)) {\n        this.grids.pathingGrid[entity.nextGridY][entity.nextGridX] = 1;\n      }\n    }\n  }\n\n  /**\n  * Remove this entity from the game map\n  * @param {Chest|NPC|Item|Mob|Projectile|Player} entity the entity to remove from the grid\n  * @return null\n  */\n  unregisterPosition(entity) {\n    if (!entity) {\n      return;\n    }\n\n    this.grids.removeEntity(entity);\n  }\n\n  /**\n  * Return all the sprites with the given name\n  * @param {String} name the name of the sprite\n  * @return {Chest|NPC|Item|Mob|Projectile|Player}\n  */\n  getSprite(name) {\n    return this.sprites.sprites[name];\n  }\n\n  /**\n  * Return all entities\n  */\n  getAll() {\n    return this.entities;\n  }\n\n  /**\n  * Apply a callback for every entity in the array\n  * @param {Function} callback the function to apply, the entity is passed into it\n  * @return null\n  */\n  forEachEntity(callback) {\n    _.each(this.entities, (entity) => {\n      callback(entity);\n    });\n  }\n\n  /**\n  * Apply a callback for every entity in the radius of an area on the map grid\n  * as long as the radius is not out of bounds in the grid\n  * @param {Number} x the x coordinate center of the circle radius\n  * @param {Number} y the y coordinate center of the circle radius\n  * @param {Number} radius the the distance to spread out from the center of the circle point\n  * @param {Function} callback the function to apply, the entity is passed into it\n  * @return null\n  */\n  forEachEntityAround(x, y, radius, callback) {\n    for (let i = x - radius, maxI = x + radius; i <= maxI; i += 1) {\n      for (let j = y - radius, maxJ = y + radius; j <= maxJ; j += 1) {\n        if (!this.map.isOutOfBounds(i, j)) {\n          _.each(this.grids.renderingGrid[j][i], (entity) => {\n            callback(entity);\n          });\n        }\n      }\n    }\n  }\n}\n",
     "static": true,
     "longname": "/Users/krafsigg/repos/WTF-Adventure/src/client/js/controllers/entities.js",
     "access": "public",
@@ -3949,8 +3949,8 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/controllers/entities.js",
     "importStyle": "Entities",
-    "description": "Entities in the game\nCharacter (Mob, Npc, Player), Chest, Item, Projectile",
-    "lineNumber": 18,
+    "description": "Entities in the game:\n* {@link Character} - parent class for:\n  * {@link Mob} - game controlled npc or monster that can move around the map\n  * {@link Npc} - game controlled entity that always stays in one location\n  * {@link Player} - a user in the game\n* {@link Chest} - open to reveal an item\n* {@link Item} - weapons, health, magic, armor\n* {@link Projectile} - entities that can be thrown (magic, weapons, arrows, mob attacks)",
+    "lineNumber": 24,
     "unknown": [
       {
         "tagName": "@class",
@@ -3970,7 +3970,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#constructor",
     "access": "public",
     "description": "Default constructor",
-    "lineNumber": 23,
+    "lineNumber": 29,
     "params": [
       {
         "nullable": null,
@@ -3993,7 +3993,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#game",
     "access": "public",
     "description": "An instance of the game",
-    "lineNumber": 28,
+    "lineNumber": 34,
     "type": {
       "nullable": null,
       "types": [
@@ -4012,7 +4012,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#renderer",
     "access": "public",
     "description": "An instance of the game renderer",
-    "lineNumber": 34,
+    "lineNumber": 40,
     "type": {
       "nullable": null,
       "types": [
@@ -4031,7 +4031,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#grids",
     "access": "public",
     "description": "An array of game grid maps",
-    "lineNumber": 40,
+    "lineNumber": 46,
     "type": {
       "nullable": null,
       "types": [
@@ -4050,7 +4050,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#sprites",
     "access": "public",
     "description": "An array of sprites",
-    "lineNumber": 46,
+    "lineNumber": 52,
     "type": {
       "nullable": null,
       "types": [
@@ -4069,7 +4069,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#entities",
     "access": "public",
     "description": "An array of an entity type instances",
-    "lineNumber": 52,
+    "lineNumber": 58,
     "type": {
       "nullable": null,
       "types": [
@@ -4093,7 +4093,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#decrepit",
     "access": "public",
     "description": "Keeps track of entities that need to be cleaned up",
-    "lineNumber": 58,
+    "lineNumber": 64,
     "type": {
       "nullable": null,
       "types": [
@@ -4119,7 +4119,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#load",
     "access": "public",
     "description": "Load the entities in the game for the current game map",
-    "lineNumber": 65,
+    "lineNumber": 71,
     "return": {
       "nullable": null,
       "types": [
@@ -4141,7 +4141,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#update",
     "access": "public",
     "description": "Update the sprites",
-    "lineNumber": 87,
+    "lineNumber": 93,
     "return": {
       "nullable": null,
       "types": [
@@ -4163,7 +4163,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#create",
     "access": "public",
     "description": "Create a new entity",
-    "lineNumber": 99,
+    "lineNumber": 105,
     "params": [
       {
         "nullable": null,
@@ -4196,7 +4196,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#isPlayer",
     "access": "public",
     "description": "Checks whether or not this entity ID is a player",
-    "lineNumber": 288,
+    "lineNumber": 294,
     "params": [
       {
         "nullable": null,
@@ -4229,7 +4229,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#get",
     "access": "public",
     "description": "Returns the entity object based off the ID if it exists, otherwise returns null",
-    "lineNumber": 297,
+    "lineNumber": 303,
     "params": [
       {
         "nullable": null,
@@ -4268,7 +4268,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#exists",
     "access": "public",
     "description": "Check to see if an entity with this ID exists or not",
-    "lineNumber": 310,
+    "lineNumber": 316,
     "params": [
       {
         "nullable": null,
@@ -4301,7 +4301,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#clearPlayers",
     "access": "public",
     "description": "Removes players from the game map, will only work for entities of type player",
-    "lineNumber": 319,
+    "lineNumber": 325,
     "params": [
       {
         "nullable": null,
@@ -4334,7 +4334,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#addEntity",
     "access": "public",
     "description": "Add a new entity to the map grid",
-    "lineNumber": 342,
+    "lineNumber": 348,
     "params": [
       {
         "nullable": null,
@@ -4372,7 +4372,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#removeItem",
     "access": "public",
     "description": "Remove an item from the game",
-    "lineNumber": 363,
+    "lineNumber": 369,
     "params": [
       {
         "nullable": null,
@@ -4405,7 +4405,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#registerPosition",
     "access": "public",
     "description": "Figure out which part of the grid to add an entity to",
-    "lineNumber": 379,
+    "lineNumber": 385,
     "params": [
       {
         "nullable": null,
@@ -4442,7 +4442,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#registerDuality",
     "access": "public",
     "description": "Register this entity on the grid twice",
-    "lineNumber": 409,
+    "lineNumber": 415,
     "params": [
       {
         "nullable": null,
@@ -4480,7 +4480,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#unregisterPosition",
     "access": "public",
     "description": "Remove this entity from the game map",
-    "lineNumber": 434,
+    "lineNumber": 440,
     "params": [
       {
         "nullable": null,
@@ -4518,7 +4518,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#getSprite",
     "access": "public",
     "description": "Return all the sprites with the given name",
-    "lineNumber": 447,
+    "lineNumber": 453,
     "params": [
       {
         "nullable": null,
@@ -4555,8 +4555,8 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#getAll",
     "access": "public",
-    "description": "Return all entites",
-    "lineNumber": 454,
+    "description": "Return all entities",
+    "lineNumber": 460,
     "params": [],
     "return": {
       "types": [
@@ -4575,7 +4575,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#forEachEntity",
     "access": "public",
     "description": "Apply a callback for every entity in the array",
-    "lineNumber": 463,
+    "lineNumber": 469,
     "params": [
       {
         "nullable": null,
@@ -4608,7 +4608,7 @@
     "longname": "WTF-Adventure/src/client/js/controllers/entities.js~Entities#forEachEntityAround",
     "access": "public",
     "description": "Apply a callback for every entity in the radius of an area on the map grid\nas long as the radius is not out of bounds in the grid",
-    "lineNumber": 478,
+    "lineNumber": 484,
     "params": [
       {
         "nullable": null,
