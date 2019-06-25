@@ -14,7 +14,7 @@ export default class Sprites {
     this.sprites = {};
     this.sparksAnimation = null;
 
-    $.getJSON('data/sprites.json', (json) => {
+    $.getJSON('assets/data/sprites.json', (json) => {
       this.load(json);
     });
 

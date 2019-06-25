@@ -35,6 +35,6 @@ export default class Page {
       return '';
     }
 
-    return `url("img/${scale}/item-${name}.png")`;
+    return `url("assets/img/${scale}/item-${name}.png")`;
   }
 }

@@ -53,21 +53,17 @@ function onWorldLoad() {
 }
 
 function initializeWorlds() {
-  for (const worldId in worlds) {
-    if (worlds.hasOwnProperty(worldId)) {
-      worlds[worldId].load(onWorldLoad);
-    }
-  }
+  Object.keys(worlds).forEach((worldId) => {
+    worlds[worldId].load(onWorldLoad);
+  });
 }
 
 function getPopulations() {
   const counts = [];
 
-  for (const index in worlds) {
-    if (worlds.hasOwnProperty(index)) {
-      counts.push(worlds[index].getPopulation());
-    }
-  }
+  Object.keys(worlds).forEach((index) => {
+    counts.push(worlds[index].getPopulation());
+  });
 
   return counts;
 }

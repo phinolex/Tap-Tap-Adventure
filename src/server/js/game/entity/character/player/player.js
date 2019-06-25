@@ -60,7 +60,7 @@ export default class Player extends Character {
     this.enchant = new Enchant(this);
     this.trade = new Trade(this);
     this.warp = new Warp(this);
-    this.itemsDictionary = new ItemsDictionary();
+    this.itemsDictionary = ItemsDictionary;
 
     this.introduced = false;
     this.currentSong = null;
@@ -193,7 +193,8 @@ export default class Player extends Character {
   intro() {
     if (this.ban > new Date()) {
       this.connection.sendUTF8('ban');
-      this.connection.close(`Player: ${this.username} is banned.`);
+      console.log(this.connection);
+      this.connection.socket.close(`Player: ${this.username} is banned.`);
     }
 
     if (this.x <= 0 || this.y <= 0) this.sendToSpawn();
@@ -594,11 +595,13 @@ export default class Player extends Character {
 
   timeout() {
     this.connection.sendUTF8('timeout');
+    console.log(this.connection);
     this.connection.close(`${this.username} timed out.`);
   }
 
   invalidLogin() {
     this.connection.sendUTF8('invalidlogin');
+    console.log(this.connection);
     this.connection.close(`${this.username} invalid login.`);
   }
 

@@ -53,7 +53,7 @@ export default class Map {
       log.info('Parsing map with Ajax...');
 
       $.get(
-        'data/maps/world_client.json',
+        'assets/data/maps/world_client.json',
         (data) => {
           this.parseMap(data);
           this.loadCollisions();
@@ -74,10 +74,10 @@ export default class Map {
      * that neither the entities would be necessary.
      */
 
-    this.tilesets.push(this.loadTileset('img/2/tilesheet.png'));
+    this.tilesets.push(this.loadTileset('assets/img/2/tilesheet.png'));
 
     if (isBigScale) {
-      this.tilesets.push(this.loadTileset('img/3/tilesheet.png'));
+      this.tilesets.push(this.loadTileset('assets/img/3/tilesheet.png'));
     }
 
     this.renderer.setTileset(this.tilesets[isBigScale ? 1 : 0]);
@@ -88,7 +88,7 @@ export default class Map {
     const scale = this.renderer.getDrawingScale();
 
     if (scale > 2 && !this.tilesets[1]) {
-      this.tilesets.push(this.loadTileset('img/3/tilesheet.png'));
+      this.tilesets.push(this.loadTileset('assets/img/3/tilesheet.png'));
     }
 
     this.renderer.setTileset(this.tilesets[scale - 2]);

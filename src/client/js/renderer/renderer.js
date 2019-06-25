@@ -22,18 +22,21 @@ const getX = (index, width) => {
 };
 
 export default class Renderer {
-  constructor(background, entities, foreground, textCanvas, cursor, game) {
-    this.background = background;
-    this.entities = entities;
-    this.foreground = foreground;
-    this.textCanvas = textCanvas;
-    this.cursor = cursor;
+  constructor(backgroundCanvas, entitiesCanvas, foregroundCanvas, textCanvas, cursorCanvas, game) {
+    log.debug('Renderer - constructor()');
+    log.debug(entitiesCanvas);
 
-    this.context = entities.getContext('2d');
-    this.backContext = background.getContext('2d');
-    this.foreContext = foreground.getContext('2d');
+    this.backgroundCanvas = backgroundCanvas;
+    this.entitiesCanvas = entitiesCanvas;
+    this.foregroundCanvas = foregroundCanvas;
+    this.textCanvas = textCanvas;
+    this.cursorCanvas = cursorCanvas;
+
+    this.context = entitiesCanvas.getContext('2d');
+    this.backContext = backgroundCanvas.getContext('2d');
+    this.foreContext = foregroundCanvas.getContext('2d');
     this.textContext = textCanvas.getContext('2d');
-    this.cursorContext = cursor.getContext('2d');
+    this.cursorContext = cursorCanvas.getContext('2d');
 
     this.context.imageSmoothingEnabled = false;
     this.backContext.imageSmoothingEnabled = false;
@@ -43,11 +46,11 @@ export default class Renderer {
 
     this.contexts = [this.backContext, this.foreContext, this.context];
     this.canvases = [
-      this.background,
-      this.entities,
-      this.foreground,
+      this.backgroundCanvas,
+      this.entitiesCanvas,
+      this.foregroundCanvas,
       this.textCanvas,
-      this.cursor,
+      this.cursorCanvas,
     ];
 
     this.game = game;
@@ -116,14 +119,14 @@ export default class Renderer {
   }
 
   loadSizes() {
-    if (!this.camera) return;
+    if (!this.camera) {
+      return;
+    }
 
     this.screenWidth = this.camera.gridWidth * this.tileSize;
     this.screenHeight = this.camera.gridHeight * this.tileSize;
 
     const width = this.screenWidth * this.drawingScale;
-
-
     const height = this.screenHeight * this.drawingScale;
 
     this.forEachCanvas((canvas) => {
@@ -173,13 +176,21 @@ export default class Renderer {
 
         this.loadSizes();
 
-        if (this.entities) this.entities.update();
+        if (this.entities) {
+          this.entities.update();
+        }
 
-        if (this.map) this.map.updateTileset();
+        if (this.map) {
+          this.map.updateTileset();
+        }
 
-        if (this.camera) this.camera.centreOn(this.game.player);
+        if (this.camera) {
+          this.camera.centreOn(this.game.player);
+        }
 
-        if (this.game.interface) this.game.interface.resize();
+        if (this.game.interface) {
+          this.game.interface.resize();
+        }
 
         this.renderedFrame[0] = -1;
 
@@ -190,7 +201,9 @@ export default class Renderer {
   }
 
   render() {
-    if (this.stopRendering) return;
+    if (this.stopRendering) {
+      return;
+    }
 
     this.clearScreen(this.context);
     this.clearText();
@@ -1106,13 +1119,20 @@ export default class Renderer {
   }
 
   loadStaticSprites() {
+    log.debug('Renderer - loadStaticSprites()', this.entities);
+    console.log('renderer load static sprites', this);
+
     this.shadowSprite = this.entities.getSprite('shadow16');
 
-    if (!this.shadowSprite.loaded) this.shadowSprite.load();
+    if (!this.shadowSprite.loaded) {
+      this.shadowSprite.load();
+    }
 
     this.sparksSprite = this.entities.getSprite('sparks');
 
-    if (!this.sparksSprite.loaded) this.sparksSprite.load();
+    if (!this.sparksSprite.loaded) {
+      this.sparksSprite.load();
+    }
   }
 
   /**
@@ -1127,7 +1147,9 @@ export default class Renderer {
 
   forEachDrawingContext(callback) {
     _.each(this.contexts, (context) => {
-      if (context.canvas.id !== 'entities') callback(context);
+      if (context.canvas.id !== 'entities') {
+        callback(context);
+      }
     });
   }
 

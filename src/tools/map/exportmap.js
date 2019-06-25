@@ -48,8 +48,8 @@ function parseServer(data, destination) {
 }
 
 function onMap(data) {
-  parseClient(data, '../../client/data/maps/world_client');
-  parseServer(data, '../../server/data/map/world_server');
+  parseClient(data, '../../../assets/data/maps/world_client');
+  parseServer(data, '../../../assets/data/map/world_server');
 }
 
 function getMap() {

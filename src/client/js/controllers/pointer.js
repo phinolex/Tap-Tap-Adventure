@@ -57,7 +57,7 @@ export default class Cursor {
   setSize(element) {
     const width = 8;
     const height = width + (width * 0.2);
-    const image = 'url("img/common/hud-active.png")';
+    const image = 'url("assets/img/common/hud-active.png")';
 
     this.updateScale();
 

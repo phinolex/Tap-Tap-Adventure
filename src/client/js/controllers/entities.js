@@ -35,6 +35,8 @@ export default class Entities {
 
       this.sprites.onLoadedSprites(() => {
         this.game.input.loadCursors();
+        this.game.start();
+        this.game.postLoad();
       });
     }
 
@@ -327,6 +329,7 @@ export default class Entities {
   }
 
   getSprite(name) {
+    console.log('get Sprite', this.sprites.sprites);
     return this.sprites.sprites[name];
   }
 

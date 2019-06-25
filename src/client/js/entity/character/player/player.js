@@ -172,7 +172,7 @@ export default class Player extends Character {
           );
         } else this.weapon.update(name, string, count, ability, abilityLevel);
 
-        this.weapon.ranged = string.includes('bow');
+        this.weapon.ranged = string && string.includes('bow');
 
         break;
 

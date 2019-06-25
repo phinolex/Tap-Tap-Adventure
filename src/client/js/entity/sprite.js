@@ -39,7 +39,7 @@ export default class Sprite {
       sprite,
     } = this;
 
-    this.filepath = `img/${this.scale}/${this.id}.png`;
+    this.filepath = `assets/img/${this.scale}/${this.id}.png`;
     this.animationData = sprite.animations;
 
     this.width = sprite.width;

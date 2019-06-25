@@ -37,6 +37,6 @@ export default class Container {
   }
 
   getImageFormat(scale, name) {
-    return `url("img/${scale}/item-${name}.png")`;
+    return `url("assets/img/${scale}/item-${name}.png")`;
   }
 }

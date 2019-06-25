@@ -4,7 +4,7 @@ import ItemsDictionary from '../../../../../util/items';
 export default class Weapon extends Equipment {
   constructor(name, id, count, ability, abilityLevel) {
     super(name, id, count, ability, abilityLevel);
-    this.itemsDictionary = new ItemsDictionary();
+    this.itemsDictionary = ItemsDictionary;
     this.level = this.itemsDictionary.getWeaponLevel(name);
     this.ranged = this.itemsDictionary.isArcherWeapon(name);
     this.breakable = false;
