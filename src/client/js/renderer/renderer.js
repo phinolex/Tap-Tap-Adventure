@@ -239,15 +239,17 @@ export default class Renderer {
    */
 
   draw() {
-    if (this.hasRenderedFrame()) return;
+    console.log('Renderer - draw()');
+    if (this.hasRenderedFrame()) {
+      console.log('has rendered rate', this.hasRenderedFrame());
+      return;
+    }
 
     this.clearDrawing();
     this.updateDrawingView();
 
     this.forEachVisibleTile((id, index) => {
       const isHighTile = this.map.isHighTile(id);
-
-
       const context = isHighTile ? this.foreContext : this.backContext;
 
       if (!this.map.isAnimatedTile(id) || !this.animateTiles) {

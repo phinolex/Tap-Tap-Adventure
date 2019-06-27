@@ -22,6 +22,7 @@ export default class Sprites {
   }
 
   load(spriteData) {
+    console.log('loading sprite data', spriteData);
     _.each(spriteData, (sprite) => {
       this.sprites[sprite.id] = new Sprite(
         sprite,

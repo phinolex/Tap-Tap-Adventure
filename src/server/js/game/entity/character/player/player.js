@@ -596,13 +596,13 @@ export default class Player extends Character {
   timeout() {
     this.connection.sendUTF8('timeout');
     console.log(this.connection);
-    this.connection.close(`${this.username} timed out.`);
+    this.connection.socket.close(`${this.username} timed out.`);
   }
 
   invalidLogin() {
     this.connection.sendUTF8('invalidlogin');
     console.log(this.connection);
-    this.connection.close(`${this.username} invalid login.`);
+    this.connection.socket.close(`${this.username} invalid login.`);
   }
 
   refreshTimeout() {

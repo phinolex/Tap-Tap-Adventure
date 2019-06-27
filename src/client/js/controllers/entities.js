@@ -31,12 +31,14 @@ export default class Entities {
     this.game.app.sendStatus('Lots of monsters ahead...');
 
     if (!this.sprites) {
+      console.log('loading sprites', this.game.renderer);
       this.sprites = new Sprites(this.game.renderer);
 
       this.sprites.onLoadedSprites(() => {
+        console.log('sprites loaded!');
         this.game.input.loadCursors();
-        this.game.start();
-        this.game.postLoad();
+        // this.game.start();
+        // this.game.postLoad();
       });
     }
 
@@ -48,7 +50,9 @@ export default class Entities {
   }
 
   update() {
-    if (this.sprites) this.sprites.updateSprites();
+    if (this.sprites) {
+      this.sprites.updateSprites();
+    }
   }
 
   create(info) {
@@ -329,7 +333,7 @@ export default class Entities {
   }
 
   getSprite(name) {
-    console.log('get Sprite', this.sprites.sprites);
+    console.log('get Sprite', name, this.sprites.sprites, this.sprites.sprites[name]);
     return this.sprites.sprites[name];
   }
 

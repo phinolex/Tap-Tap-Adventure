@@ -818,8 +818,6 @@ export default class App {
    * @return {Number} 1 = mobile, 2 = desktop and 3 = tablet
    */
   getScaleFactor() {
-    log.debug('App - getScaleFactor()');
-
     const mobile = 1;
     const tablet = 2;
     const desktop = 3;

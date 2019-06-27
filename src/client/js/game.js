@@ -228,9 +228,12 @@ export default class Game {
     }
 
     this.app.fadeMenu();
-    this.tick();
 
     this.started = true;
+
+    this.tick();
+
+    // this.started = true;
     return true;
   }
 
@@ -250,15 +253,19 @@ export default class Game {
    * the game is started
    */
   tick() {
-    log.debug('Game - tick()', this.ready, this.updater);
+    log.debug('Game - tick()');
+    console.log(this.ready, this.updater, this.started);
 
-    if (this.ready && this.updater) {
+    if (this.ready) {
+      log.debug('Game - tick() => ready');
       this.time = new Date().getTime();
       this.renderer.render();
       this.updater.update();
 
       if (this.started) {
+        console.log('bind', this.tick.bind(this));
         window.requestAnimFrame(this.tick.bind(this));
+        console.log('Game - tick() => started', window);
       }
     }
   }
@@ -562,8 +569,10 @@ export default class Game {
 
     this.player.load(playerData);
     this.input.setPosition(this.player.getX(), this.player.getY());
-    // this.start();
-    // this.postLoad();
+
+    this.start();
+    this.postLoad();
+
     return true;
   }
 
@@ -1658,8 +1667,6 @@ export default class Game {
   }
 
   getScaleFactor() {
-    log.debug('Game - getScaleFactor()');
-
     return this.app.getScaleFactor();
   }
 
