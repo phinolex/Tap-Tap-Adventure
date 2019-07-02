@@ -1108,11 +1108,15 @@ export default class Renderer {
   loadStaticSprites() {
     this.shadowSprite = this.entities.getSprite('shadow16');
 
-    if (!this.shadowSprite.loaded) this.shadowSprite.load();
+    if (!this.shadowSprite.loaded) {
+      this.shadowSprite.load();
+    }
 
     this.sparksSprite = this.entities.getSprite('sparks');
 
-    if (!this.sparksSprite.loaded) this.sparksSprite.load();
+    if (!this.sparksSprite.loaded) {
+      this.sparksSprite.load();
+    }
   }
 
   /**

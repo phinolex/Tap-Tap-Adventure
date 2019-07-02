@@ -382,6 +382,7 @@ export default class Game {
     this.renderer.loadCamera();
 
     this.app.sendStatus("You're beyond help at this point...");
+    console.log('setting updater');
     this.setUpdater(new Updater(this));
 
     this.entities.load();
@@ -389,7 +390,9 @@ export default class Game {
 
     // clears the status message out now that we've loaded everything
     this.app.sendStatus(null);
+    this.ready = true;
     this.loaded = true;
+    // this.postLoad();
     return true;
   }
 
@@ -455,7 +458,6 @@ export default class Game {
   handshakeCallback(data) {
     this.id = data.shift();
     this.development = data.shift();
-    this.ready = true;
 
     if (!this.player) {
       this.createPlayer();
@@ -526,7 +528,6 @@ export default class Game {
     this.player.load(playerData);
     this.input.setPosition(this.player.getX(), this.player.getY());
     this.start();
-    this.postLoad();
     return true;
   }
 
@@ -591,6 +592,7 @@ export default class Game {
    * @return {Boolean}
    */
   entityListCallback(data) {
+    console.log('entity list callback', data);
     const ids = _.pluck(this.entities.getAll(), 'id');
     const known = _.intersection(ids, data);
     const newIds = _.difference(data, known);

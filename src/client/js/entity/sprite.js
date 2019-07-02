@@ -23,14 +23,18 @@ export default class Sprite {
   }
 
   load() {
+    console.log('loading sprite', this.filepath);
     this.image = new Image();
     this.image.crossOrigin = 'Anonymous';
-    this.image.src = this.filepath;
+    this.image.src = `assets/${this.filepath}`;
 
     this.image.onload = () => {
+      console.log('image loaded', this.filepath);
       this.loaded = true;
 
-      if (this.onLoadCallback) this.onLoadCallback();
+      if (this.onLoadCallback) {
+        this.onLoadCallback();
+      }
     };
   }
 
@@ -82,20 +86,21 @@ export default class Sprite {
    */
 
   createHurtSprite() {
-    if (!this.loaded) this.load();
+    if (!this.loaded) {
+      console.log('loading hurt sprite');
+      this.load();
+    }
 
-    if (this.whiteSprite.loaded) return;
+    if (this.whiteSprite.loaded) {
+      return;
+    }
 
     const canvas = document.createElement('canvas');
-
-
     const context = canvas.getContext('2d');
 
-
     let spriteData;
-
-    canvas.width = this.image.width;
-    canvas.height = this.image.height;
+    canvas.width = this.width;
+    canvas.height = this.height;
 
     context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
 
@@ -129,7 +134,7 @@ export default class Sprite {
         height: this.height,
       };
     } catch (e) {
-      log.info('sprite error', e);
+      console.log('sprite error', e, spriteData);
     }
   }
 

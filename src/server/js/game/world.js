@@ -645,17 +645,21 @@ export default class World {
   }
 
   pushEntities(player) {
+    console.log('in push entities', player);
     let entities;
 
     if (!player || !(player.group in this.groups)) {
       return;
     }
 
+    console.log('groups', this.groups, player.group);
+
     entities = _.keys(this.groups[player.group].entities);
     entities = _.reject(entities, instance => instance === player.instance);
     entities = _.map(entities, instance => parseInt(instance, 10));
 
     if (entities) {
+      console.log('push entities', entities);
       player.send(new Messages.List(entities));
     }
   }

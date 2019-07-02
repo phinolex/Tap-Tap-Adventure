@@ -17,6 +17,8 @@ export default class Messages {
 
     this.messages = [];
 
+    console.log('messages', Packets.List);
+
     this.messages[Packets.Handshake] = this.receiveHandshake;
     this.messages[Packets.Welcome] = this.receiveWelcome;
     this.messages[Packets.Spawn] = this.receiveSpawn;
@@ -191,6 +193,7 @@ export default class Messages {
   }
 
   receiveEntityList(data) {
+    console.log('recieved entity list', data);
     if (this.entityListCallback) {
       this.entityListCallback(data);
     }

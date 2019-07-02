@@ -10,11 +10,12 @@ import log from '../lib/log';
  */
 export default class Sprites {
   constructor(renderer) {
+    console.log('loading sprites', renderer);
     this.renderer = renderer;
     this.sprites = {};
     this.sparksAnimation = null;
 
-    $.getJSON('data/sprites.json', (json) => {
+    $.getJSON('assets/data/sprites.json', (json) => {
       this.load(json);
     });
 
@@ -22,6 +23,7 @@ export default class Sprites {
   }
 
   load(spriteData) {
+    console.log('loading sprite data', spriteData);
     _.each(spriteData, (sprite) => {
       this.sprites[sprite.id] = new Sprite(
         sprite,

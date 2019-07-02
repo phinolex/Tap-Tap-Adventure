@@ -4,7 +4,7 @@ import ItemsDictionary from '../../../../../util/items';
 export default class Ring extends Equipment {
   constructor(name, id, count, ability, abilityLevel) {
     super(name, id, count, ability, abilityLevel);
-    this.itemsDictionary = new ItemsDictionary();
+    this.itemsDictionary = ItemsDictionary;
     this.ringLevel = this.itemsDictionary.getRingLevel(name);
   }
 
