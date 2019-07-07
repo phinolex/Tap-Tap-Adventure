@@ -261,9 +261,11 @@ export default class App {
     this.window.resize(this.zoom());
 
     $.getJSON('./src/client/config.json', (json) => {
+      log.debug('App - loading client config');
       this.config = json;
 
       if (this.readyCallback) {
+        log.debug('App - loading client config done - readyCallback()');
         this.readyCallback();
       }
     });
@@ -444,7 +446,7 @@ export default class App {
    * @param {Object} event mouse event
    */
   mousemoveEventListener(event) {
-    log.debug('App - mousemoveEventListener()', event);
+    // log.debug('App - mousemoveEventListener()', event);
 
     if (!this.game || !this.game.input || !this.game.started) {
       return false;
@@ -715,8 +717,6 @@ export default class App {
     log.debug('App - sendError()', field, error);
 
     this.cleanErrors();
-    log.info(`Error: ${error}`);
-
     this.errorMsg.html(error);
     this.errorMsg.show();
 

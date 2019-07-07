@@ -23,8 +23,7 @@ const getX = (index, width) => {
 
 export default class Renderer {
   constructor(backgroundCanvas, entitiesCanvas, foregroundCanvas, textCanvas, cursorCanvas, game) {
-    log.debug('Renderer - constructor()');
-    log.debug(entitiesCanvas);
+    log.debug('Renderer - constructor()', backgroundCanvas, entitiesCanvas, foregroundCanvas, textCanvas, cursorCanvas, game);
 
     this.backgroundCanvas = backgroundCanvas;
     this.entitiesCanvas = entitiesCanvas;
@@ -239,9 +238,9 @@ export default class Renderer {
    */
 
   draw() {
-    console.log('Renderer - draw()');
+    log.debug('Renderer - draw()');
     if (this.hasRenderedFrame()) {
-      console.log('has rendered rate', this.hasRenderedFrame());
+      log.debug('has rendered rate', this.hasRenderedFrame());
       return;
     }
 
@@ -1122,7 +1121,7 @@ export default class Renderer {
 
   loadStaticSprites() {
     log.debug('Renderer - loadStaticSprites()', this.entities);
-    console.log('renderer load static sprites', this);
+    log.debug('renderer load static sprites', this);
 
     this.shadowSprite = this.entities.getSprite('shadow16');
 

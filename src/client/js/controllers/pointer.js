@@ -101,13 +101,14 @@ export default class Cursor {
   }
 
   setToEntity(entity) {
+    log.debug('Cursor - setToEntity()', entity);
+
     const pointer = this.get(entity.id);
 
     if (!pointer) {
       return;
     }
 
-    log.info('set to entity', entity);
     this.set(pointer, entity.x, entity.y);
   }
 

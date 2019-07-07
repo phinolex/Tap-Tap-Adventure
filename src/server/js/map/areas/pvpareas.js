@@ -19,6 +19,6 @@ export default class PVPAreas {
       this.pvpAreas.push(pvpArea);
     });
 
-    log.info(`Loaded ${this.pvpAreas.length} PVP areas.`);
+    log.debug(`Loaded ${this.pvpAreas.length} PVP areas.`);
   }
 }

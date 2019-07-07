@@ -9,6 +9,7 @@ import NPC from '../entity/character/npc/npc';
 import Projectile from '../entity/objects/projectile';
 import Modules from '../utils/modules';
 import Packets from '../network/packets';
+import log from '../lib/log';
 
 /**
  * Entities in the game
@@ -17,6 +18,8 @@ import Packets from '../network/packets';
  */
 export default class Entities {
   constructor(game) {
+    log.debug('Entities - constructor()');
+
     this.game = game;
     this.renderer = game.renderer;
 
@@ -28,15 +31,15 @@ export default class Entities {
   }
 
   load() {
-    console.log('loading entities', this.game.renderer);
+    log.debug('Entities - load()', this.game.renderer);
     this.game.app.sendStatus('Lots of monsters ahead...');
 
     if (!this.sprites) {
-      console.log('loading sprites', this.game.renderer);
+      log.debug('Entities - load() - no sprites loaded yet', this.game.renderer);
       this.sprites = new Sprites(this.game.renderer);
 
       this.sprites.onLoadedSprites(() => {
-        console.log('loaded sprites');
+        log.debug('Entities - load() - sprites done loading, loading cursors');
         // this.game.postLoad();
         this.game.input.loadCursors();
         // this.game.start();
@@ -47,17 +50,22 @@ export default class Entities {
     this.game.app.sendStatus('Yes, you are also a monster...');
 
     if (!this.grids) {
+      log.debug('Entities - load() - no grids loaded yet');
       this.grids = new Grids(this.game.map);
     }
   }
 
   update() {
+    log.debug('Entities - update()');
+
     if (this.sprites) {
       this.sprites.updateSprites();
     }
   }
 
   create(info) {
+    log.debug('Entities - create()', info);
+
     let entity;
 
     if (this.isPlayer(info.id)) {
@@ -152,7 +160,9 @@ export default class Entities {
             ]);
           }
 
-          if (info.hitType === Modules.Hits.Explosive) target.explosion = true;
+          if (info.hitType === Modules.Hits.Explosive) {
+            target.explosion = true;
+          }
 
           this.game.info.create(
             Modules.Hits.Damage,
@@ -171,7 +181,6 @@ export default class Entities {
 
         attacker.performAction(attacker.orientation, Modules.Actions.Attack);
         attacker.triggerHealthBar();
-
         return;
 
       case 'player':
@@ -209,11 +218,12 @@ export default class Entities {
         player.loadHandler(this.game);
 
         this.addEntity(player);
-
         return;
     }
 
-    if (!entity) return;
+    if (!entity) {
+      return;
+    }
 
     entity.setGridPosition(info.x, info.y);
     entity.setName(info.name);
@@ -233,27 +243,29 @@ export default class Entities {
       entity.handler.setGame(this.game);
       entity.handler.load();
     }
-
-    /**
-     * Get ready for errors!
-     */
   }
 
   isPlayer(id) {
+    log.debug('Entities - isPlayer()', id);
     return this.game.player.id === id;
   }
 
   get(id) {
-    if (id in this.entities) return this.entities[id];
+    log.debug('Entities - get()', id);
+    if (id in this.entities) {
+      return this.entities[id];
+    }
 
     return null;
   }
 
   exists(id) {
+    log.debug('Entities - exists()', id);
     return id in this.entities;
   }
 
   clearPlayers(exception) {
+    log.debug('Entities - clearPlayers()', exception);
     _.each(this.entities, (entity) => {
       if (entity.id !== exception.id && entity.type === 'player') {
         this.grids.removeFromRenderingGrid(
@@ -271,7 +283,11 @@ export default class Entities {
   }
 
   addEntity(entity) {
-    if (this.entities[entity.id]) return;
+    log.debug('Entities - addEntity()', entity);
+
+    if (this.entities[entity.id]) {
+      return;
+    }
 
     this.entities[entity.id] = entity;
     this.registerPosition(entity);
@@ -283,7 +299,11 @@ export default class Entities {
   }
 
   removeItem(item) {
-    if (!item) return;
+    log.debug('Entities - removeItem()');
+
+    if (!item) {
+      return;
+    }
 
     this.grids.removeFromItemGrid(item, item.gridX, item.gridY);
     this.grids.removeFromRenderingGrid(item, item.gridX, item.gridY);
@@ -292,7 +312,11 @@ export default class Entities {
   }
 
   registerPosition(entity) {
-    if (!entity) return;
+    log.debug('Entities - registerPosition()', entity);
+
+    if (!entity) {
+      return;
+    }
 
     if (
       entity.type === 'player'
@@ -302,16 +326,24 @@ export default class Entities {
     ) {
       this.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);
 
-      if (entity.type !== 'player' || entity.nonPathable) this.grids.addToPathingGrid(entity.gridX, entity.gridY);
+      if (entity.type !== 'player' || entity.nonPathable) {
+        this.grids.addToPathingGrid(entity.gridX, entity.gridY);
+      }
     }
 
-    if (entity.type === 'item') this.grids.addToItemGrid(entity, entity.gridX, entity.gridY);
+    if (entity.type === 'item') {
+      this.grids.addToItemGrid(entity, entity.gridX, entity.gridY);
+    }
 
     this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
   }
 
   registerDuality(entity) {
-    if (!entity) return;
+    log.debug('Entities - registerDuality()', entity);
+
+    if (!entity) {
+      return;
+    }
 
     this.grids.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;
 
@@ -329,27 +361,35 @@ export default class Entities {
   }
 
   unregisterPosition(entity) {
-    if (!entity) return;
+    log.debug('Entities - unregisterPosition()', entity);
+
+    if (!entity) {
+      return;
+    }
 
     this.grids.removeEntity(entity);
   }
 
   getSprite(name) {
-    console.log('get Sprite', name, this.sprites.sprites, this.sprites.sprites[name]);
+    log.debug('Entities - getSprite()', name);
     return this.sprites.sprites[name];
   }
 
   getAll() {
+    log.debug('Entities - getAll()');
     return this.entities;
   }
 
   forEachEntity(callback) {
+    log.debug('Entities - forEachEntity()', callback);
     _.each(this.entities, (entity) => {
       callback(entity);
     });
   }
 
   forEachEntityAround(x, y, radius, callback) {
+    log.debug('Entities - forEachEntityAround()', x, y, radius, callback);
+
     for (let i = x - radius, maxI = x + radius; i <= maxI; i += 1) {
       for (let j = y - radius, maxJ = y + radius; j <= maxJ; j += 1) {
         if (!this.map.isOutOfBounds(i, j)) {

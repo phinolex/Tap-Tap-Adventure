@@ -28,7 +28,7 @@ export default class Grids {
       }
     }
 
-    log.info('Finished loading preliminary grids.');
+    log.debug('Finished loading preliminary grids.');
   }
 
   checkPathingGrid(player, xRadius, yRadius) {

@@ -10,7 +10,8 @@ import log from '../lib/log';
  */
 export default class Sprites {
   constructor(renderer) {
-    console.log('loading sprites', renderer);
+    log.debug('Sprites - constructor()', renderer);
+
     this.renderer = renderer;
     this.sprites = {};
     this.sparksAnimation = null;
@@ -23,7 +24,8 @@ export default class Sprites {
   }
 
   load(spriteData) {
-    console.log('loading sprite data', spriteData);
+    log.debug('Sprites - load()', spriteData);
+
     _.each(spriteData, (sprite) => {
       this.sprites[sprite.id] = new Sprite(
         sprite,
@@ -31,27 +33,28 @@ export default class Sprites {
       );
     });
 
-    log.info('Finished loading sprite data...');
-
     if (this.loadedSpritesCallback) {
+      log.debug('Sprites - load() - Finished loading sprite data...');
       this.loadedSpritesCallback();
     }
   }
 
   loadAnimations() {
+    log.debug('Sprites - loadAnimations()');
     this.sparksAnimation = new Animation('idle_down', 6, 0, 16, 16);
     this.sparksAnimation.setSpeed(120);
   }
 
   updateSprites() {
+    log.debug('Sprites - updateSprites()', this.renderer.getDrawingScale());
+
     _.each(this.sprites, (sprite) => {
       sprite.update(this.renderer.getDrawingScale());
     });
-
-    log.info(`Updated sprites to: ${this.renderer.getDrawingScale()}`);
   }
 
   onLoadedSprites(callback) {
+    log.debug('Sprites - onLoadedSprites()', callback);
     this.loadedSpritesCallback = callback;
   }
 }

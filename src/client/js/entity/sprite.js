@@ -4,44 +4,42 @@ import log from '../lib/log';
 
 export default class Sprite {
   constructor(sprite, scale) {
+    log.debug('Sprite - constructor()', sprite, scale);
+
     this.sprite = sprite;
     this.scale = scale;
-
     this.id = sprite.id;
-
     this.loaded = false;
-
     this.offsetX = 0;
     this.offsetY = 0;
     this.offsetAngle = 0;
-
-    this.whiteSprite = {
-      loaded: false,
-    };
+    this.whiteSprite = { loaded: false };
 
     this.loadSprite();
   }
 
   load() {
-    console.log('loading sprite', this.filepath);
+    log.debug('Sprite - load()', this.filepath);
+
     this.image = new Image();
     this.image.crossOrigin = 'Anonymous';
     this.image.src = `assets/${this.filepath}`;
 
     this.image.onload = () => {
-      console.log('image loaded', this.filepath);
+      log.debug('Sprite - load() - image loaded', this.filepath);
       this.loaded = true;
 
       if (this.onLoadCallback) {
+        log.debug('Sprite - load() - image loaded callback', this.onLoadCallback);
         this.onLoadCallback();
       }
     };
   }
 
   loadSprite() {
-    const {
-      sprite,
-    } = this;
+    log.debug('Sprite - loadSprite()');
+
+    const { sprite } = this;
 
     this.filepath = `assets/img/${this.scale}/${this.id}.png`;
     this.animationData = sprite.animations;
@@ -55,6 +53,7 @@ export default class Sprite {
   }
 
   update(newScale) {
+    log.debug('Sprite - update()');
     this.scale = newScale;
 
     this.loadSprite();
@@ -62,6 +61,8 @@ export default class Sprite {
   }
 
   createAnimations() {
+    log.debug('Sprite - createAnimations()');
+
     const animations = {};
 
     for (const name in this.animationData) { // eslint-disable-line
@@ -87,7 +88,7 @@ export default class Sprite {
 
   createHurtSprite() {
     if (!this.loaded) {
-      console.log('loading hurt sprite');
+      log.debug('Sprite - createHurtSprite()');
       this.load();
     }
 
@@ -134,11 +135,13 @@ export default class Sprite {
         height: this.height,
       };
     } catch (e) {
-      console.log('sprite error', e, spriteData);
+      log.debug('Sprite - createHurtSprite() - error', e, spriteData);
     }
   }
 
   getHurtSprite() {
+    log.debug('Sprite - getHurtSprite()');
+
     try {
       if (!this.loaded) {
         this.load();
@@ -148,12 +151,13 @@ export default class Sprite {
 
       return this.whiteSprite;
     } catch (e) {
-      log.info('sprite hurt error', e);
+      log.debug('Sprite - getHurtSprite() - error', e);
       return null;
     }
   }
 
   onLoad(callback) {
+    log.debug('Sprite - onLoad()', callback);
     this.onLoadCallback = callback;
   }
 }

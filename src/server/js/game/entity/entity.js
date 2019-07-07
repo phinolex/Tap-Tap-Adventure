@@ -73,7 +73,7 @@ export default class Entity {
   }
 
   talk() {
-    log.info('Who is screwing around with the client?');
+    log.debug('Who is screwing around with the client?');
   }
 
   drop(item) {

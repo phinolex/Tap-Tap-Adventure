@@ -163,7 +163,7 @@ export default class Player extends Character {
       stages.pop();
 
       if (this.quests.getQuestSize() !== ids.length) {
-        log.info('Mismatch in quest data.');
+        log.debug('Mismatch in quest data.');
         this.save();
       }
 
@@ -175,7 +175,7 @@ export default class Player extends Character {
       progress.pop();
 
       if (this.quests.getAchievementSize() !== ids.length) {
-        log.info('Mismatch in achievements data.');
+        log.debug('Mismatch in achievements data.');
 
         this.save();
       }
@@ -193,8 +193,8 @@ export default class Player extends Character {
   intro() {
     if (this.ban > new Date()) {
       this.connection.sendUTF8('ban');
-      console.log(this.connection);
-      this.connection.socket.close(`Player: ${this.username} is banned.`);
+      log.debug(this.connection);
+      this.connection.close(`Player: ${this.username} is banned.`);
     }
 
     if (this.x <= 0 || this.y <= 0) this.sendToSpawn();
@@ -595,22 +595,14 @@ export default class Player extends Character {
 
   timeout() {
     this.connection.sendUTF8('timeout');
-<<<<<<< HEAD
-    console.log(this.connection);
-=======
-    console.log('timeout', this.connection);
->>>>>>> fix-es6-issues
-    this.connection.socket.close(`${this.username} timed out.`);
+    log.debug('timeout', this.connection);
+    this.connection.close(`${this.username} timed out.`);
   }
 
   invalidLogin() {
     this.connection.sendUTF8('invalidlogin');
-<<<<<<< HEAD
-    console.log(this.connection);
-=======
-    console.log('connection', this.connection);
->>>>>>> fix-es6-issues
-    this.connection.socket.close(`${this.username} invalid login.`);
+    log.debug('connection', this.connection);
+    this.connection.close(`${this.username} invalid login.`);
   }
 
   refreshTimeout() {

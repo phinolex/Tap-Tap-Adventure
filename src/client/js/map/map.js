@@ -37,7 +37,7 @@ export default class Map {
 
   load() {
     if (this.supportsWorker) {
-      log.info('Parsing map with Web Workers...');
+      log.debug('Map - load() - Parsing map with Web Workers...');
 
       const worker = new Worker('./js/map/mapworker.js');
       worker.postMessage(1);
@@ -50,7 +50,7 @@ export default class Map {
         this.mapLoaded = true;
       };
     } else {
-      log.info('Parsing map with Ajax...');
+      log.debug('Map - load() - Parsing map with Ajax...');
 
       $.get(
         'assets/data/maps/world_client.json',

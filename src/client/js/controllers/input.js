@@ -22,21 +22,15 @@ export default class Input {
     this.targetVisible = true;
     this.selectedX = -1;
     this.selectedY = -1;
-
     this.cursor = null;
     this.newCursor = null;
-
     this.targetData = null;
     this.targetColour = null;
     this.newTargetColour = null;
     this.mobileTargetColour = 'rgba(51, 255, 0)';
-
     this.previousKey = {};
-
     this.cursors = {};
-
     this.hovering = null;
-
     this.mouse = {
       x: 0,
       y: 0,
@@ -58,6 +52,8 @@ export default class Input {
   }
 
   loadCursors() {
+    log.debug('Input - loadCursors()');
+
     this.cursors.hand = this.game.getSprite('hand');
     this.cursors.sword = this.game.getSprite('sword');
     this.cursors.loot = this.game.getSprite('loot');
@@ -69,8 +65,6 @@ export default class Input {
 
     this.newCursor = this.cursors.hand;
     this.newTargetColour = 'rgba(255, 255, 255, 0.5)';
-
-    log.info('Loaded Cursors!');
   }
 
   handle(inputType, data) {

@@ -19,15 +19,18 @@ export default class Page {
   }
 
   load() {
-    log.info('Uninitialized.');
+    // @TODO
+    log.debug('Page - load() - @TODO');
   }
 
   resize() {
-    log.info('Uninitialized.');
+    // @TODO
+    log.debug('Page - resize() - @TODO');
   }
 
   update() {
-    log.info('Uninitialized.');
+    // @TODO
+    log.debug('Page - update() - @TODO');
   }
 
   getImageFormat(scale, name) {

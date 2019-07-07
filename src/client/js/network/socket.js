@@ -16,7 +16,7 @@ export default class Socket {
     const protocol = this.config.ssl ? 'wss' : 'ws';
     const url = `${protocol}://${this.config.ip}:${this.config.port}`;
 
-    log.info(`Opening WebSocket: ${url}`);
+    log.debug(`Opening WebSocket: ${url}`);
 
     this.connection = null;
 
@@ -28,11 +28,11 @@ export default class Socket {
     });
 
     this.connection.on('error', (error) => {
-      log.info('Socket Error', error);
+      log.debug('Socket Error', error);
     });
 
     this.connection.on('connect_error', (error) => {
-      log.info(`Failed to connect to: ${this.config.ip}`);
+      log.debug(`Failed to connect to: ${this.config.ip}`);
       log.error(error);
 
       this.listening = false;

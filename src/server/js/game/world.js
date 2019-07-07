@@ -91,7 +91,7 @@ export default class World {
    * whatever new map we have created server sided. Cleaner and nicer.
    */
   load(onWorldLoad) {
-    log.info(`************ World ${this.id} ***********`);
+    log.debug(`************ World ${this.id} ***********`);
 
     this.map = new Map(this);
     this.map.isReady(() => {
@@ -99,7 +99,7 @@ export default class World {
       this.spawnChests();
       this.spawnEntities();
 
-      log.info('The map has been successfully loaded!');
+      log.debug('The map has been successfully loaded!');
 
       this.loaded();
       onWorldLoad();
@@ -118,7 +118,7 @@ export default class World {
     }
 
     this.ready = true;
-    log.info('********************************');
+    log.debug('********************************');
   }
 
   tick() {
@@ -511,7 +511,7 @@ export default class World {
 
       if (!info || info === 'null') {
         if (this.debug) {
-          log.info(
+          log.debug(
             `Unknown object spawned at: ${position.x} ${position.y}`,
           );
         }
@@ -553,7 +553,7 @@ export default class World {
       entities += 1;
     });
 
-    log.info(`Spawned ${entities} entities!`);
+    log.debug(`Spawned ${entities} entities!`);
   }
 
   spawnChests() {
@@ -565,7 +565,7 @@ export default class World {
       chests += 1;
     });
 
-    log.info(`Spawned ${chests} static chests`);
+    log.debug(`Spawned ${chests} static chests`);
   }
 
   spawnMob(id, x, y) {
@@ -645,28 +645,28 @@ export default class World {
   }
 
   pushEntities(player) {
-    console.log('in push entities', player);
+    log.debug('in push entities', player);
     let entities;
 
     if (!player || !(player.group in this.groups)) {
       return;
     }
 
-    console.log('groups', this.groups, player.group);
+    log.debug('groups', this.groups, player.group);
 
     entities = _.keys(this.groups[player.group].entities);
     entities = _.reject(entities, instance => instance === player.instance);
     entities = _.map(entities, instance => parseInt(instance, 10));
 
     if (entities) {
-      console.log('push entities', entities);
+      log.debug('push entities', entities);
       player.send(new Messages.List(entities));
     }
   }
 
   addEntity(entity) {
     if (entity.instance in this.entities) {
-      log.info(`Entity ${entity.instance} already exists.`);
+      log.debug(`Entity ${entity.instance} already exists.`);
     }
 
     this.entities[entity.instance] = entity;

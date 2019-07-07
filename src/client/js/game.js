@@ -253,19 +253,17 @@ export default class Game {
    * the game is started
    */
   tick() {
-    log.debug('Game - tick()');
-    console.log(this.ready, this.updater, this.started);
+    log.debug('Game - tick()', this.ready, this.updater, this.started);
 
     if (this.ready) {
-      log.debug('Game - tick() => ready');
+      log.debug('Game - tick() - ready');
       this.time = new Date().getTime();
       this.renderer.render();
       this.updater.update();
 
       if (this.started) {
-        console.log('bind', this.tick.bind(this));
+        log.debug('Game - tick() - started', window);
         window.requestAnimFrame(this.tick.bind(this));
-        console.log('Game - tick() => started', window);
       }
     }
   }
@@ -309,20 +307,16 @@ export default class Game {
    * @return {Boolean}
    */
   loadRenderer() {
-    log.debug('Game - loadRenderer()');
-
     const background = document.getElementById('background');
     const foreground = document.getElementById('foreground');
     const textCanvas = document.getElementById('textCanvas');
     const entities = document.getElementById('entities');
     const cursor = document.getElementById('cursor');
 
+    log.debug('Game - loadRenderer()', background, entities, foreground, textCanvas, cursor);
     this.app.sendStatus('Soul sucking monster...');
 
-    log.info('loading renderer', background, entities, foreground, textCanvas, cursor, this);
-
     const renderer = new Renderer(background, entities, foreground, textCanvas, cursor, this);
-    console.log(renderer);
 
     this.setRenderer(renderer);
 
@@ -386,11 +380,11 @@ export default class Game {
    * @return {Boolean}
    */
   loadMap() {
-    log.debug('Game - loadMap');
+    log.debug('Game - loadMap()');
 
     this.map = new Map(this);
     this.map.onReady(() => {
-      console.log('Game - map ready');
+      log.debug('Game - loadMap() - map ready');
       this.mapReadyCallback();
     });
     return true;
@@ -410,11 +404,9 @@ export default class Game {
     this.renderer.loadCamera();
 
     this.app.sendStatus("You're beyond help at this point...");
-    console.log('setting updater');
     this.setUpdater(new Updater(this));
 
     this.entities.load();
-    console.log('setting entities', this.entities);
     this.renderer.setEntities(this.entities);
 
     // this.postLoad();
@@ -428,7 +420,7 @@ export default class Game {
   }
 
   loadedSpritesCallback() {
-    console.log('loaded sprites callback');
+    log.debug('loaded sprites callback');
   }
 
   /**
@@ -510,7 +502,7 @@ export default class Game {
     this.app.updateLoader('Logging in...');
 
     if (this.app.isRegistering()) {
-      log.info('creating an account');
+      log.debug('Game - handshakeCallback() - creating an account');
 
       const registerInfo = this.app.registerFields;
       const username = registerInfo[0].val();
@@ -524,7 +516,7 @@ export default class Game {
         email,
       ]);
     } else if (this.app.isGuest()) {
-      log.info('guest logging in');
+      log.debug('Game - handshakeCallback() - guest logging in');
       this.socket.send(Packets.Intro, [
         Packets.IntroOpcode.Guest,
         'n',
@@ -532,7 +524,7 @@ export default class Game {
         'n',
       ]);
     } else {
-      log.info('player logging in');
+      log.debug('Game - handshakeCallback() - player logging in');
       const loginInfo = this.app.loginFields;
       const name = loginInfo[0].val();
       const pass = loginInfo[1].val();
@@ -567,7 +559,6 @@ export default class Game {
    */
   welcomeCallback(playerData) {
     log.debug('Game - welcomeCallback()', playerData);
-    console.log('player data', playerData);
 
     this.player.load(playerData);
     this.input.setPosition(this.player.getX(), this.player.getY());
@@ -642,7 +633,7 @@ export default class Game {
    * @return {Boolean}
    */
   entityListCallback(data) {
-    console.log('entity list callback', data);
+    log.debug('Game - entityListCallback()', data);
     const ids = _.pluck(this.entities.getAll(), 'id');
     const known = _.intersection(ids, data);
     const newIds = _.difference(data, known);
@@ -652,8 +643,7 @@ export default class Game {
       entity => _.include(known, entity.id) || entity.id === this.player.id,
     );
 
-    console.log('entities', this.entities, this);
-    // this.entities.clean();
+    this.entities.clean();
     this.entities.load();
 
     this.socket.send(Packets.Who, newIds);
@@ -815,7 +805,6 @@ export default class Game {
 
       this.socket.send(Packets.Request, [this.player.id]);
       this.entities.registerPosition(entity);
-      log.info('Teleport registered...');
 
       entity.frozen = false;
       return true;
@@ -1421,7 +1410,6 @@ export default class Game {
         break;
       case Packets.PointerOpcode.NPC:
         const entity = this.entities.get(info.id); // eslint-disable-line
-        log.info('pointer NPC', info, entity);
 
         if (!entity) {
           return;
@@ -1434,18 +1422,15 @@ export default class Game {
       case Packets.PointerOpcode.Location:
         this.pointer.create(info.id, Modules.Pointers.Position);
         this.pointer.setToPosition(info.id, info.x * 16, info.y * 16);
-        log.info('pointer location', info);
         break;
 
       case Packets.PointerOpcode.Relative:
         this.pointer.create(info.id, Modules.Pointers.Relative);
         this.pointer.setRelative(info.id, info.x, info.y);
-        log.info('pointer relative', info);
         break;
 
       case Packets.PointerOpcode.Remove:
         this.pointer.clean();
-        log.info('pointer remove', info);
         break;
     }
   }
@@ -1489,7 +1474,6 @@ export default class Game {
    */
   postLoad() {
     log.debug('Game - postLoad()');
-    console.log('renderer post load', this.renderer);
 
     // this.renderer.loadStaticSprites();
 
@@ -1734,7 +1718,6 @@ export default class Game {
 
   setRenderer(renderer) {
     log.debug('Game - setRenderer()', renderer);
-    console.log('setting renderer', renderer, this.renderer);
 
     if (this.renderer === null) {
       this.renderer = renderer;

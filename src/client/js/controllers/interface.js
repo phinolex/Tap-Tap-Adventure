@@ -91,7 +91,9 @@ export default class Interface {
   }
 
   loadWarp() {
-    if (!this.warp) this.warp = new Warp(this.game, this);
+    if (!this.warp) {
+      this.warp = new Warp(this.game, this);
+    }
   }
 
   loadNotifications() {
@@ -102,8 +104,8 @@ export default class Interface {
     /**
      * Simple warning dialogue
      */
-
     ok.click(() => {
+      log.debug('App - loadNotifications() - dialog ok clicked');
       this.hideNotify();
     });
 
@@ -111,13 +113,13 @@ export default class Interface {
      * Callbacks responsible for
      * Confirmation dialogues
      */
-
     cancel.click(() => {
+      log.debug('App - loadNotifications() - dialog cancel clicked');
       this.hideConfirm();
     });
 
     done.click(() => {
-      log.info(this.confirm.className);
+      log.debug('App - loadNotifications() - dialog done clicked');
       this.hideConfirm();
     });
   }
