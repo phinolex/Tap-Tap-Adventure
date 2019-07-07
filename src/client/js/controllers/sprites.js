@@ -10,6 +10,7 @@ import log from '../lib/log';
  */
 export default class Sprites {
   constructor(renderer) {
+    console.log('loading sprites', renderer);
     this.renderer = renderer;
     this.sprites = {};
     this.sparksAnimation = null;

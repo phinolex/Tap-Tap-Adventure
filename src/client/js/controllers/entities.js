@@ -28,6 +28,7 @@ export default class Entities {
   }
 
   load() {
+    console.log('loading entities', this.game.renderer);
     this.game.app.sendStatus('Lots of monsters ahead...');
 
     if (!this.sprites) {
@@ -35,7 +36,8 @@ export default class Entities {
       this.sprites = new Sprites(this.game.renderer);
 
       this.sprites.onLoadedSprites(() => {
-        console.log('sprites loaded!');
+        console.log('loaded sprites');
+        // this.game.postLoad();
         this.game.input.loadCursors();
         // this.game.start();
         // this.game.postLoad();
