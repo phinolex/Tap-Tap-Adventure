@@ -4,7 +4,7 @@ import log from '../lib/log';
 
 export default class Sprite {
   constructor(sprite, scale) {
-    log.debug('Sprite - constructor()', sprite, scale);
+    // log.debug('Sprite - constructor()', sprite, scale);
 
     this.sprite = sprite;
     this.scale = scale;
@@ -19,7 +19,7 @@ export default class Sprite {
   }
 
   load() {
-    log.debug('Sprite - load()', this.filepath);
+    // log.debug('Sprite - load()', this.filepath);
 
     this.image = new Image();
     this.image.crossOrigin = 'Anonymous';
@@ -37,7 +37,7 @@ export default class Sprite {
   }
 
   loadSprite() {
-    log.debug('Sprite - loadSprite()');
+    // log.debug('Sprite - loadSprite()', this.sprite);
 
     const { sprite } = this;
 

@@ -44,6 +44,14 @@ class Connection {
   sendUTF8(data) {
     this.socket.send(data);
   }
+
+  close(reason) {
+    if (reason) {
+      log.debug(`[Connection] Closing - ${reason}`);
+    }
+
+    this.socket.conn.close();
+  }
 }
 
 class Server extends Socket {

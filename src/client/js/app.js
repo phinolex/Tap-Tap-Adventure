@@ -401,7 +401,7 @@ export default class App {
    * @return {Boolean}
    */
   keydownEventListener(event) {
-    log.debug('App - keydownEventListener()', event);
+    // log.debug('App - keydownEventListener()', event);
 
     const key = event.which;
 
@@ -429,7 +429,7 @@ export default class App {
    * @return {Boolean}
    */
   keyupEventListener(event) {
-    log.debug('App - keyupEventListener()', event);
+    // log.debug('App - keyupEventListener()', event);
 
     const key = event.which;
 

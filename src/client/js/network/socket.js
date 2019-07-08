@@ -4,6 +4,8 @@ import Messages from './messages';
 
 export default class Socket {
   constructor(game) {
+    log.debug('Socket - constructor()', game);
+
     this.game = game;
     this.config = this.game.app.config;
     this.connection = null;
@@ -16,7 +18,7 @@ export default class Socket {
     const protocol = this.config.ssl ? 'wss' : 'ws';
     const url = `${protocol}://${this.config.ip}:${this.config.port}`;
 
-    log.debug(`Opening WebSocket: ${url}`);
+    log.debug('Socket - connect()', url);
 
     this.connection = null;
 
@@ -28,11 +30,11 @@ export default class Socket {
     });
 
     this.connection.on('error', (error) => {
-      log.debug('Socket Error', error);
+      log.debug('Socket - connect() - error', error);
     });
 
     this.connection.on('connect_error', (error) => {
-      log.debug(`Failed to connect to: ${this.config.ip}`);
+      log.debug('Socket - connect() - server connection error', this.config.ip);
       log.error(error);
 
       this.listening = false;
@@ -42,6 +44,7 @@ export default class Socket {
     });
 
     this.connection.on('connect', () => {
+      log.debug('Socket - connect() - connecting to server', this.config.ip);
       this.listening = true;
 
       this.game.app.updateLoader('Preparing handshake...');
@@ -52,15 +55,19 @@ export default class Socket {
     });
 
     this.connection.on('message', (message) => {
+      log.debug('Socket - connect() - message', message);
       this.receive(message);
     });
 
     this.connection.on('disconnect', () => {
+      log.debug('Socket - connect() - disconnecting');
       this.game.handleDisconnection();
     });
   }
 
   receive(message) {
+    log.debug('Socket - receive()', message);
+
     if (!this.listening) {
       return;
     }
@@ -79,6 +86,8 @@ export default class Socket {
   }
 
   send(packet, data) {
+    log.debug('Socket - send()', packet, data);
+
     const json = JSON.stringify([packet, data]);
 
     if (this.connection && this.connection.connected) {

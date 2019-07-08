@@ -6,10 +6,7 @@ import Tile from './tile';
 import Character from '../entity/character/character';
 import Item from '../entity/objects/item';
 import Detect from '../utils/detect';
-
-import {
-  isIntersecting,
-} from '../utils/util';
+import { isIntersecting } from '../utils/util';
 
 const getX = (index, width) => {
   if (index === 0) {
@@ -94,6 +91,8 @@ export default class Renderer {
   }
 
   stop() {
+    log.debug('Renderer - stop()');
+
     this.camera = null;
     this.input = null;
     this.stopRendering = true;
@@ -105,6 +104,8 @@ export default class Renderer {
   }
 
   load() {
+    log.debug('Renderer - load()');
+
     this.scale = this.getScale();
     this.drawingScale = this.getDrawingScale();
 
@@ -118,6 +119,8 @@ export default class Renderer {
   }
 
   loadSizes() {
+    log.debug('Renderer - loadSizes()');
+
     if (!this.camera) {
       return;
     }
@@ -135,10 +138,9 @@ export default class Renderer {
   }
 
   loadCamera() {
-    const {
-      storage,
-    } = this.game;
+    log.debug('Renderer - loadCamera()');
 
+    const { storage } = this.game;
     this.camera = new Camera(this);
 
     this.loadSizes();
@@ -158,10 +160,11 @@ export default class Renderer {
   }
 
   resize() {
+    log.debug('Renderer - resize()');
+
     this.stopRendering = true;
 
     this.clearAll();
-
     this.checkDevice();
 
     if (!this.resizeTimeout) {
@@ -169,7 +172,9 @@ export default class Renderer {
         this.scale = this.getScale();
         this.drawingScale = this.getDrawingScale();
 
-        if (this.camera) this.camera.update();
+        if (this.camera) {
+          this.camera.update();
+        }
 
         this.updateAnimatedTiles();
 
@@ -192,7 +197,6 @@ export default class Renderer {
         }
 
         this.renderedFrame[0] = -1;
-
         this.stopRendering = false;
         this.resizeTimeout = null;
       }, 500);
@@ -200,36 +204,30 @@ export default class Renderer {
   }
 
   render() {
+    log.debug('Renderer - render()');
+
     if (this.stopRendering) {
       return;
     }
 
     this.clearScreen(this.context);
     this.clearText();
-
     this.saveAll();
 
     /**
      * Rendering related draws
      */
-
     this.draw();
-
     this.drawAnimatedTiles();
 
     // the annoying square under the cursor
     // this.drawTargetCell();
 
     this.drawSelectedCell();
-
     this.drawEntities();
-
     this.drawInfos();
-
     this.drawDebugging();
-
     this.restoreAll();
-
     this.drawCursor();
   }
 
@@ -239,6 +237,7 @@ export default class Renderer {
 
   draw() {
     log.debug('Renderer - draw()');
+
     if (this.hasRenderedFrame()) {
       log.debug('has rendered rate', this.hasRenderedFrame());
       return;
@@ -267,9 +266,13 @@ export default class Renderer {
   }
 
   drawAnimatedTiles() {
+    log.debug('Renderer - drawAnimatedTiles()');
+
     this.setCameraView(this.context);
 
-    if (!this.animateTiles) return;
+    if (!this.animateTiles) {
+      return;
+    }
 
     this.forEachAnimatedTile((tile) => {
       this.drawTile(
@@ -285,7 +288,11 @@ export default class Renderer {
   }
 
   drawInfos() {
-    if (this.game.info.getCount() === 0) return;
+    log.debug('Renderer - drawInfos()');
+
+    if (this.game.info.getCount() === 0) {
+      return;
+    }
 
     this.game.info.forEachInfo((info) => {
       const factor = this.mobile ? 2 : 1;
@@ -307,7 +314,11 @@ export default class Renderer {
   }
 
   drawDebugging() {
-    if (!this.debugging) return;
+    log.debug('Renderer - drawDebugging()');
+
+    if (!this.debugging) {
+      return;
+    }
 
     this.drawFPS();
 
@@ -318,63 +329,56 @@ export default class Renderer {
   }
 
   drawEntities() {
+    log.debug('Renderer - drawEntities()');
+
     this.forEachVisibleEntity((entity) => {
       if (entity.spriteLoaded) this.drawEntity(entity);
     });
   }
 
   drawEntity(entity) {
-    const {
-      sprite,
-    } = entity;
+    log.debug('Renderer - drawEntity()', entity);
+
+    const { sprite } = entity;
     const animation = entity.currentAnimation;
     const data = entity.renderingData;
 
-    if (!sprite || !animation || !entity.isVisible()) return;
+    if (!sprite || !animation || !entity.isVisible()) {
+      return;
+    }
 
     const frame = animation.currentFrame;
-
-
     const x = frame.x * this.drawingScale;
-
-
     const y = frame.y * this.drawingScale;
-
-
     const dx = entity.x * this.drawingScale;
-
-
     const dy = entity.y * this.drawingScale;
-
-
     const flipX = dx + this.tileSize * this.drawingScale;
-
-
     const flipY = dy + data.height;
 
     this.context.save();
 
     if (data.scale !== this.scale || data.sprite !== sprite) {
       data.scale = this.scale;
-
       data.sprite = sprite;
-
       data.width = sprite.width * this.drawingScale;
       data.height = sprite.height * this.drawingScale;
       data.ox = sprite.offsetX * this.drawingScale;
       data.oy = sprite.offsetY * this.drawingScale;
 
-      if (entity.angled) data.angle = (entity.angle * Math.PI) / 180;
+      if (entity.angled) {
+        data.angle = (entity.angle * Math.PI) / 180;
+      }
 
       if (entity.hasShadow()) {
         data.shadowWidth = this.shadowSprite.width * this.drawingScale;
         data.shadowHeight = this.shadowSprite.height * this.drawingScale;
-
         data.shadowOffsetY = entity.shadowOffsetY * this.drawingScale;
       }
     }
 
-    if (entity.fading) this.context.globalAlpha = entity.fadingAlpha;
+    if (entity.fading) {
+      this.context.globalAlpha = entity.fadingAlpha;
+    }
 
     if (entity.spriteFlipX) {
       this.context.translate(flipX, dy);
@@ -384,7 +388,9 @@ export default class Renderer {
       this.context.scale(1, -1);
     } else this.context.translate(dx, dy);
 
-    if (entity.angled) this.context.rotate(data.angle);
+    if (entity.angled) {
+      this.context.rotate(data.angle);
+    }
 
     if (entity.hasShadow()) {
       this.context.drawImage(
@@ -423,10 +429,11 @@ export default class Renderer {
       const weapon = this.entities.getSprite(entity.weapon.getString());
 
       if (weapon) {
-        if (!weapon.loaded) weapon.load();
+        if (!weapon.loaded) {
+          weapon.load();
+        }
 
         const weaponAnimationData = weapon.animationData[animation.name];
-
 
         const index = frame.index < weaponAnimationData.length
           ? frame.index
@@ -434,14 +441,8 @@ export default class Renderer {
 
 
         const weaponX = weapon.width * index * this.drawingScale;
-
-
         const weaponY = weapon.height * animation.row * this.drawingScale;
-
-
         const weaponWidth = weapon.width * this.drawingScale;
-
-
         const weaponHeight = weapon.height * this.drawingScale;
 
         this.context.drawImage(
@@ -494,6 +495,8 @@ export default class Renderer {
   }
 
   drawEntityFore(entity) {
+    log.debug('Renderer - drawEntityFore()');
+
     /**
      * Function used to draw special effects after
      * having rendererd the entity
@@ -507,13 +510,13 @@ export default class Renderer {
     ) {
       const sprite = this.entities.getSprite(entity.getActiveEffect());
 
-      if (!sprite.loaded) sprite.load();
+      if (!sprite.loaded) {
+        sprite.load();
+      }
 
       if (sprite) {
         const animation = entity.getEffectAnimation();
-        const {
-          index,
-        } = animation.currentFrame;
+        const { index } = animation.currentFrame;
         const x = sprite.width * index * this.drawingScale;
         const y = sprite.height * animation.row * this.drawingScale;
         const width = sprite.width * this.drawingScale;
@@ -537,23 +540,21 @@ export default class Renderer {
   }
 
   drawHealth(entity) {
-    if (!entity.hitPoints || entity.hitPoints < 0 || !entity.healthBarVisible) return;
+    log.debug('Renderer - entity()');
+
+    if (!entity.hitPoints || entity.hitPoints < 0 || !entity.healthBarVisible) {
+      return;
+    }
 
     const barLength = 16;
-
-
     const healthX = entity.x * this.drawingScale - barLength / 2 + 8;
-
-
     const healthY = (entity.y - 9) * this.drawingScale;
-
 
     const healthWidth = Math.round(
       (entity.hitPoints / entity.maxHitPoints)
       * barLength
       * this.drawingScale,
     );
-
 
     const healthHeight = 2 * this.drawingScale;
 
@@ -572,17 +573,24 @@ export default class Renderer {
   }
 
   drawName(entity) {
-    if (entity.hidden || (!this.drawNames && !this.drawLevels)) return;
+    log.debug('Renderer - drawName()');
+
+    if (entity.hidden || (!this.drawNames && !this.drawLevels)) {
+      return;
+    }
 
     let colour = entity.wanted ? 'red' : 'white';
-
-
     const factor = this.mobile ? 2 : 1;
 
-    if (entity.rights > 1) colour = '#ba1414';
-    else if (entity.rights > 0) colour = '#a59a9a';
+    if (entity.rights > 1) {
+      colour = '#ba1414';
+    } else if (entity.rights > 0) {
+      colour = '#a59a9a';
+    }
 
-    if (entity.id === this.game.player.id) colour = '#fcda5c';
+    if (entity.id === this.game.player.id) {
+      colour = '#fcda5c';
+    }
 
     this.textContext.save();
     this.setCameraView(this.textContext);
@@ -644,19 +652,21 @@ export default class Renderer {
   }
 
   drawCursor() {
+    log.debug('Renderer - drawCursor()');
+
     if (this.tablet || this.mobile) {
       return;
     }
 
-    const {
-      cursor,
-    } = this.input;
+    const { cursor } = this.input;
 
     this.clearScreen(this.cursorContext);
     this.cursorContext.save();
 
     if (cursor && this.scale > 1) {
-      if (!cursor.loaded) cursor.load();
+      if (!cursor.loaded) {
+        cursor.load();
+      }
 
       if (cursor.loaded) {
         this.cursorContext.drawImage(
@@ -677,9 +687,9 @@ export default class Renderer {
   }
 
   drawFPS() {
+    log.debug('Renderer - drawFPS()');
+
     const currentTime = new Date();
-
-
     const timeDiff = currentTime - this.time;
 
     if (timeDiff >= 1000) {
@@ -695,9 +705,9 @@ export default class Renderer {
   }
 
   drawPosition() {
-    const {
-      player,
-    } = this.game;
+    log.debug('Renderer - drawPosition()');
+
+    const { player } = this.game;
 
     this.drawText(
       `x: ${player.gridX} y: ${player.gridY}`,
@@ -709,9 +719,9 @@ export default class Renderer {
   }
 
   drawPathing() {
-    const {
-      pathingGrid,
-    } = this.entities.grids;
+    log.debug('Renderer - drawPathing()');
+
+    const { pathingGrid } = this.entities.grids;
 
     if (!pathingGrid) {
       return;
@@ -725,13 +735,13 @@ export default class Renderer {
   }
 
   drawSelectedCell() {
+    log.debug('Renderer - drawSelectedCell()');
+
     if (!this.input.selectedCellVisible) {
       return;
     }
 
     const posX = this.input.selectedX;
-
-
     const posY = this.input.selectedY;
 
     // only draw the highlight cell if they are not adjacent
@@ -746,7 +756,11 @@ export default class Renderer {
    */
 
   drawTile(context, tileId, tileset, setWidth, gridWidth, cellId) {
-    if (tileId === -1) return;
+    log.debug('Renderer - draw()', context, tileId, tileset, setWidth, gridWidth, cellId);
+
+    if (tileId === -1) {
+      return;
+    }
 
     this.drawScaledImage(
       context,
@@ -761,29 +775,31 @@ export default class Renderer {
   }
 
   clearTile(context, gridWidth, cellId) {
+    log.debug('Renderer - clearTile()', context, gridWidth, cellId);
+
     const x = getX(cellId + 1, gridWidth) * this.tileSize * this.drawingScale;
-
-
     const y = Math.floor(cellId / gridWidth) * this.tileSize * this.drawingScale;
-
-
     const w = this.tileSize * this.scale;
 
     context.clearRect(x, y, w, w);
   }
 
   drawText(text, x, y, centered, colour, strokeColour) {
+    log.debug('Renderer - drawText()', text, x, y, centered, colour, strokeColour);
+
     let strokeSize = 1;
-
-
     const context = this.textContext;
 
-    if (this.scale > 2) strokeSize = 3;
+    if (this.scale > 2) {
+      strokeSize = 3;
+    }
 
     if (text && x && y) {
       context.save();
 
-      if (centered) context.textAlign = 'center';
+      if (centered) {
+        context.textAlign = 'center';
+      }
 
       context.strokeStyle = strokeColour || '#373737';
       context.lineWidth = strokeSize;
@@ -796,7 +812,11 @@ export default class Renderer {
   }
 
   drawScaledImage(context, image, x, y, width, height, dx, dy) {
-    if (!context) return;
+    log.debug('Renderer - drawScaledImage()', context, image, x, y, width, height, dx, dy);
+
+    if (!context) {
+      return;
+    }
 
     context.drawImage(
       image,
@@ -812,7 +832,11 @@ export default class Renderer {
   }
 
   updateAnimatedTiles() {
-    if (!this.animateTiles) return;
+    log.debug('Renderer - updateAnimatedTiles()');
+
+    if (!this.animateTiles) {
+      return;
+    }
 
     const newTiles = [];
 
@@ -823,7 +847,9 @@ export default class Renderer {
        * it every time the tile moves slightly.
        */
 
-      if (!this.map.isAnimatedTile(id)) return;
+      if (!this.map.isAnimatedTile(id)) {
+        return;
+      }
 
       /**
        * Push the pre-existing tiles.
@@ -843,11 +869,9 @@ export default class Renderer {
         this.map.getTileAnimationDelay(id),
       );
 
-
       const position = this.map.indexToGridPosition(tile.index);
 
       tile.setPosition(position);
-
       newTiles.push(tile);
     }, 2);
 
@@ -855,6 +879,8 @@ export default class Renderer {
   }
 
   checkDirty(rectOne, source, x, y) {
+    log.debug('Renderer - checkDirty()', rectOne, source, x, y);
+
     this.entities.forEachEntityAround(x, y, 2, (entityTwo) => {
       if (source && source.id && entityTwo.id === source.id) return;
 
@@ -882,21 +908,21 @@ export default class Renderer {
   }
 
   drawCellRect(x, y, colour) {
+    log.debug('Renderer - drawCellRect()', x, y, colour);
+
     const multiplier = this.tileSize * this.drawingScale;
 
     this.context.save();
-
     this.context.lineWidth = 2 * this.drawingScale;
-
     this.context.translate(x + 2, y + 2);
-
     this.context.strokeStyle = colour;
     this.context.strokeRect(0, 0, multiplier - 4, multiplier - 4);
-
     this.context.restore();
   }
 
   drawCellHighlight(x, y, colour) {
+    log.debug('Renderer - drawCellHighlight()', x, y, colour);
+
     this.drawCellRect(
       x * this.drawingScale * this.tileSize,
       y * this.drawingScale * this.tileSize,
@@ -905,13 +931,17 @@ export default class Renderer {
   }
 
   drawTargetCell() {
+    log.debug('Renderer - drawTargetCell()');
+
     if (
       this.mobile
       || this.tablet
       || !this.input.targetVisible
       || !this.input
       || !this.camera
-    ) return;
+    ) {
+      return;
+    }
 
     const location = this.input.getCoords();
 
@@ -930,13 +960,19 @@ export default class Renderer {
    */
 
   forEachVisibleIndex(callback, offset) {
+    log.debug('Renderer - forEachVisibleIndex()', callback, offset);
+
     this.camera.forEachVisiblePosition((x, y) => {
       if (!this.map.isOutOfBounds(x, y)) callback(this.map.gridPositionToIndex(x, y) - 1);
     }, offset);
   }
 
   forEachVisibleTile(callback, offset) {
-    if (!this.map || !this.map.mapLoaded) return;
+    log.debug('Renderer - forEachVisibleTile()', callback, offset);
+
+    if (!this.map || !this.map.mapLoaded) {
+      return;
+    }
 
     this.forEachVisibleIndex((index) => {
       if (_.isArray(this.map.data[index])) {
@@ -950,19 +986,21 @@ export default class Renderer {
   }
 
   forEachAnimatedTile(callback) {
+    log.debug('Renderer - forEachAnimatedTile()', callback);
+
     _.each(this.animatedTiles, (tile) => {
       callback(tile);
     });
   }
 
   forEachVisibleEntity(callback) {
+    log.debug('Renderer - forEachVisibleEntity()', callback);
+
     if (!this.entities || !this.camera) {
       return;
     }
 
-    const {
-      grids,
-    } = this.entities;
+    const { grids } = this.entities;
 
     this.camera.forEachVisiblePosition((x, y) => {
       if (!this.map.isOutOfBounds(x, y) && grids.renderingGrid[y][x]) {
@@ -974,6 +1012,8 @@ export default class Renderer {
   }
 
   isVisiblePosition(x, y) {
+    log.debug('Renderer - isVisiblePosition()', x, y);
+
     return (
       y >= this.camera.gridY
       && y < this.camera.gridY + this.camera.gridHeight
@@ -983,26 +1023,38 @@ export default class Renderer {
   }
 
   getScale() {
+    log.debug('Renderer - getScale()');
+
     return this.game.getScaleFactor();
   }
 
   getDrawingScale() {
+    log.debug('Renderer - getDrawingScale()');
+
     let scale = this.getScale();
 
-    if (this.mobile) scale = 2;
+    if (this.mobile) {
+      scale = 2;
+    }
 
     return scale;
   }
 
   getUpscale() {
+    log.debug('Renderer - getUpscale()');
+
     let scale = this.getScale();
 
-    if (scale > 2) scale = 2;
+    if (scale > 2) {
+      scale = 2;
+    }
 
     return scale;
   }
 
   clearContext() {
+    log.debug('Renderer - clearContext()');
+
     this.context.clearRect(
       0,
       0,
@@ -1012,6 +1064,8 @@ export default class Renderer {
   }
 
   clearText() {
+    log.debug('Renderer - clearText()');
+
     this.textContext.clearRect(
       0,
       0,
@@ -1021,36 +1075,48 @@ export default class Renderer {
   }
 
   restore() {
+    log.debug('Renderer - restore()');
+
     this.forEachContext((context) => {
       context.restore();
     });
   }
 
   clearAll() {
+    log.debug('Renderer - clearAll()');
+
     this.forEachContext((context) => {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     });
   }
 
   clearDrawing() {
+    log.debug('Renderer - clearDrawing()');
+
     this.forEachDrawingContext((context) => {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     });
   }
 
   saveAll() {
+    log.debug('Renderer - saveAll()');
+
     this.forEachContext((context) => {
       context.save();
     });
   }
 
   restoreAll() {
+    log.debug('Renderer - restoreAll()');
+
     this.forEachContext((context) => {
       context.restore();
     });
   }
 
   focus() {
+    log.debug('Renderer - focus()');
+
     this.forEachContext((context) => {
       context.focus();
     });
@@ -1061,19 +1127,27 @@ export default class Renderer {
    */
 
   updateView() {
+    log.debug('Renderer - updateView()');
+
     this.forEachContext((context) => {
       this.setCameraView(context);
     });
   }
 
   updateDrawingView() {
+    log.debug('Renderer - updateDrawingView()');
+
     this.forEachDrawingContext((context) => {
       this.setCameraView(context);
     });
   }
 
   setCameraView(context) {
-    if (!this.camera || this.stopRendering) return;
+    log.debug('Renderer - setCameraView()');
+
+    if (!this.camera || this.stopRendering) {
+      return;
+    }
 
     context.translate(
       -this.camera.x * this.drawingScale,
@@ -1082,6 +1156,8 @@ export default class Renderer {
   }
 
   clearScreen(context) {
+    log.debug('Renderer - clearScreen()', context);
+
     context.clearRect(
       0,
       0,
@@ -1091,9 +1167,15 @@ export default class Renderer {
   }
 
   hasRenderedFrame() {
-    if (this.forceRendering) return false;
+    log.debug('Renderer - hasRenderedFrame()');
 
-    if (!this.camera || this.stopRendering || !this.input) return true;
+    if (this.forceRendering) {
+      return false;
+    }
+
+    if (!this.camera || this.stopRendering || !this.input) {
+      return true;
+    }
 
     return (
       this.renderedFrame[0] === this.camera.x
@@ -1102,6 +1184,8 @@ export default class Renderer {
   }
 
   saveFrame() {
+    log.debug('Renderer - saveFrame()');
+
     if (!this.hasRenderedFrame()) {
       this.renderedFrame[0] = this.camera.x;
       this.renderedFrame[1] = this.camera.y;
@@ -1109,6 +1193,8 @@ export default class Renderer {
   }
 
   adjustBrightness(level) {
+    log.debug('Renderer - adjustBrightness()', level);
+
     if (level < 0 || level > 100) {
       return;
     }
@@ -1120,8 +1206,7 @@ export default class Renderer {
   }
 
   loadStaticSprites() {
-    log.debug('Renderer - loadStaticSprites()', this.entities);
-    log.debug('renderer load static sprites', this);
+    log.debug('Renderer - loadStaticSprites()');
 
     this.shadowSprite = this.entities.getSprite('shadow16');
 
@@ -1141,12 +1226,16 @@ export default class Renderer {
    */
 
   forEachContext(callback) {
+    log.debug('Renderer - forEachContext()', callback);
+
     _.each(this.contexts, (context) => {
       callback(context);
     });
   }
 
   forEachDrawingContext(callback) {
+    log.debug('Renderer - forEachDrawingContext()', callback);
+
     _.each(this.contexts, (context) => {
       if (context.canvas.id !== 'entities') {
         callback(context);
@@ -1155,22 +1244,30 @@ export default class Renderer {
   }
 
   forEachCanvas(callback) {
+    log.debug('Renderer - forEachCanvas()', callback);
+
     _.each(this.canvases, (canvas) => {
       callback(canvas);
     });
   }
 
   checkDevice() {
+    log.debug('Renderer - checkDevice()');
+
     this.mobile = this.game.app.isMobile();
     this.tablet = this.game.app.isTablet();
     this.firefox = Detect.isFirefox();
   }
 
   verifyCentration() {
+    log.debug('Renderer - verifyCentration()');
+
     this.forceRendering = (this.mobile || this.tablet) && this.camera.centered;
   }
 
   isPortableDevice() {
+    log.debug('Renderer - isPortableDevice()');
+
     return this.mobile || this.tablet;
   }
 
@@ -1179,18 +1276,26 @@ export default class Renderer {
    */
 
   setTileset(tileset) {
+    log.debug('Renderer - setTileset()', tileset);
+
     this.tileset = tileset;
   }
 
   setMap(map) {
+    log.debug('Renderer - setMap()', map);
+
     this.map = map;
   }
 
   setEntities(entities) {
+    log.debug('Renderer - entities()', entities);
+
     this.entities = entities;
   }
 
   setInput(input) {
+    log.debug('Renderer - setInput()', input);
+
     this.input = input;
   }
 
@@ -1199,9 +1304,9 @@ export default class Renderer {
    */
 
   getTileBounds(tile) {
+    log.debug('Renderer - getTileBounds()', tile);
+
     const bounds = {};
-
-
     const cellId = tile.index;
 
     bounds.x = (getX(cellId + 1, this.map.width) * this.tileSize
@@ -1220,15 +1325,16 @@ export default class Renderer {
   }
 
   getEntityBounds(entity) {
+    log.debug('Renderer - getEntityBounds()', entity);
+
     const bounds = {};
-    const {
-      sprite,
-    } = entity;
+    const { sprite } = entity;
 
     // TODO - Ensure that the sprite over there has the correct bounds
 
-    if (!sprite) log.error(`Sprite malformation for: ${entity.name}`);
-    else {
+    if (!sprite) {
+      log.error(`Sprite malformation for: ${entity.name}`);
+    } else {
       bounds.x = (entity.x + sprite.offsetX - this.camera.x) * this.drawingScale;
       bounds.y = (entity.y + sprite.offsetY - this.camera.y) * this.drawingScale;
       bounds.width = sprite.width * this.drawingScale;
@@ -1243,12 +1349,10 @@ export default class Renderer {
   }
 
   getTargetBounds(x, y) {
+    log.debug('Renderer - getTargetBounds()', x, y);
+
     const bounds = {};
-
-
     const tx = x || this.input.selectedX;
-
-
     const ty = y || this.input.selectedY;
 
     bounds.x = (tx * this.tileSize - this.camera.x) * this.drawingScale;
@@ -1264,6 +1368,8 @@ export default class Renderer {
   }
 
   getTileset() {
+    log.debug('Renderer - getTileset()');
+
     return this.tileset;
   }
 }
