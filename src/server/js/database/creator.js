@@ -34,7 +34,7 @@ export default class Creator {
             `[MySQL] Failed to created table ${tableName} : ${error}`,
           );
           throw error;
-        } else log.debug(`[MySQL] Created table ${tableName}`);
+        } else console.log(`[MySQL] Created table ${tableName}`);
       };
     }
 

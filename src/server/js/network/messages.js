@@ -49,7 +49,7 @@ class List extends Message {
   }
 
   serialize() {
-    log.debug('sending list', this);
+    console.log('sending list', this);
     return [Packets.List, this.list];
   }
 }

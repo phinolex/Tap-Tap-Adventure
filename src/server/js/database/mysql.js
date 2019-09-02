@@ -48,8 +48,8 @@ export default class MySQL {
   loadCallbacks() {
     this.connection.connect((error) => {
       if (error) {
-        log.debug('[MySQL] No database found...');
-        log.debug(error);
+        console.log('[MySQL] No database found...');
+        console.log(error);
         this.connect(
           false,
           false,
@@ -59,7 +59,7 @@ export default class MySQL {
       }
 
       this.creator.createTables();
-      log.debug('Successfully established connection to the MySQL database!');
+      console.log('Successfully established connection to the MySQL database!');
       this.loader = new Loader(this);
     });
 
@@ -88,7 +88,7 @@ export default class MySQL {
     let
       found;
 
-    log.debug(`Initiating login for: ${player.username}`);
+    console.log(`Initiating login for: ${player.username}`);
 
     this.connection.query(
       'SELECT * FROM `player_data`, `player_equipment` WHERE `player_data`.`username`= ? AND `player_data`.`password`= ?',
@@ -120,7 +120,7 @@ export default class MySQL {
           // register the guest account
           this.register(player);
         } else if (!found) {
-          log.debug(`Mysql.login(player) failed for ${player.username}`);
+          console.log(`Mysql.login(player) failed for ${player.username}`);
           player.invalidLogin();
         }
       },
@@ -144,7 +144,7 @@ export default class MySQL {
         });
 
         if (!exists) {
-          log.debug(`No player data found for: ${player.username}`);
+          console.log(`No player data found for: ${player.username}`);
 
           player.isNew = true; // eslint-disable-line
           player.load(this.creator.getPlayerData(player));
@@ -154,7 +154,7 @@ export default class MySQL {
           player.isNew = false; // eslint-disable-line
           player.intro();
         } else {
-          log.debug('MySQL.register(player) Error: Username already exists.');
+          console.log('MySQL.register(player) Error: Username already exists.');
           player.notify('This username is already taken!');
         }
       },
@@ -187,7 +187,7 @@ export default class MySQL {
   }
 
   loadDatabases() {
-    log.debug('[MySQL] Creating database....');
+    console.log('[MySQL] Creating database....');
 
     this.connection.query(
       `CREATE DATABASE IF NOT EXISTS ${Config.mysqlDatabase}`,
@@ -196,7 +196,7 @@ export default class MySQL {
           throw error;
         }
 
-        log.debug('[MySQL] Successfully created database.');
+        console.log('[MySQL] Successfully created database.');
 
         this.connection.query(`USE ${Config.mysqlDatabase}`, () => {
           if (this.selectDatabase_callback) {
@@ -215,7 +215,7 @@ export default class MySQL {
         throw error;
       }
 
-      log.debug(`Successfully updated ${database}`);
+      console.log(`Successfully updated ${database}`);
     });
   }
 
@@ -228,7 +228,7 @@ export default class MySQL {
           return;
         }
 
-        log.debug(`Database ${database} has been successfully altered.`);
+        console.log(`Database ${database} has been successfully altered.`);
       },
     );
   }

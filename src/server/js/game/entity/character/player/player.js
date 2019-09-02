@@ -163,7 +163,7 @@ export default class Player extends Character {
       stages.pop();
 
       if (this.quests.getQuestSize() !== ids.length) {
-        log.debug('Mismatch in quest data.');
+        console.log('Mismatch in quest data.');
         this.save();
       }
 
@@ -175,7 +175,7 @@ export default class Player extends Character {
       progress.pop();
 
       if (this.quests.getAchievementSize() !== ids.length) {
-        log.debug('Mismatch in achievements data.');
+        console.log('Mismatch in achievements data.');
 
         this.save();
       }
@@ -193,7 +193,7 @@ export default class Player extends Character {
   intro() {
     if (this.ban > new Date()) {
       this.connection.sendUTF8('ban');
-      log.debug(this.connection);
+      console.log(this.connection);
       this.connection.close(`Player: ${this.username} is banned.`);
     }
 
@@ -595,13 +595,13 @@ export default class Player extends Character {
 
   timeout() {
     this.connection.sendUTF8('timeout');
-    log.debug('timeout', this.connection);
+    console.log('timeout', this.connection);
     this.connection.close(`${this.username} timed out.`);
   }
 
   invalidLogin() {
     this.connection.sendUTF8('invalidlogin');
-    log.debug('connection', this.connection);
+    console.log('connection', this.connection);
     this.connection.close(`${this.username} invalid login.`);
   }
 

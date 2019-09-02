@@ -63,8 +63,8 @@ export default class Parser {
 
     MobsDictionary.setPlugins(`${__dirname}/../../data/combat/`);
 
-    log.debug(`Finished loading ${mobCounter} mobs.`);
-    log.debug(`Loaded ${Object.keys(MobsDictionary.plugins).length} mob plugins.`);
+    console.log(`Finished loading ${mobCounter} mobs.`);
+    console.log(`Loaded ${Object.keys(MobsDictionary.plugins).length} mob plugins.`);
   }
 
   loadNPCData() {
@@ -84,7 +84,7 @@ export default class Parser {
       npcCounter += 1;
     });
 
-    log.debug(`Finished loading ${npcCounter} NPCs.`);
+    console.log(`Finished loading ${npcCounter} NPCs.`);
   }
 
   loadItemData() {
@@ -119,8 +119,8 @@ export default class Parser {
 
     ItemsDictionary.setPlugins(`${__dirname}/../../data/items/`);
 
-    log.debug(`Finished loading ${itemCounter} items.`);
-    log.debug(`Loaded ${Object.keys(ItemsDictionary.plugins).length} item plugins.`);
+    console.log(`Finished loading ${itemCounter} items.`);
+    console.log(`Loaded ${Object.keys(ItemsDictionary.plugins).length} item plugins.`);
   }
 
   loadAbilityData() {
@@ -140,7 +140,7 @@ export default class Parser {
       skillCounter += 1;
     });
 
-    log.debug(`Finished loading ${skillCounter} skills.`);
+    console.log(`Finished loading ${skillCounter} skills.`);
   }
 
   loadShops() {
@@ -159,7 +159,7 @@ export default class Parser {
       shopCounter += 1;
     });
 
-    log.debug(`Finished loading ${shopCounter} shops.`);
+    console.log(`Finished loading ${shopCounter} shops.`);
   }
 
   loadLevels() {

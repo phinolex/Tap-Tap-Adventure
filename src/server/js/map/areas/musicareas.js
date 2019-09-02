@@ -16,6 +16,6 @@ export default class MusicAreas {
       this.musicAreas.push(musicArea);
     });
 
-    log.debug(`Loaded ${this.musicAreas.length} music areas.`);
+    console.log(`Loaded ${this.musicAreas.length} music areas.`);
   }
 }

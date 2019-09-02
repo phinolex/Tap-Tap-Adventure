@@ -42,8 +42,9 @@ export default class Entities {
         log.debug('Entities - load() - sprites done loading, loading cursors');
         // this.game.postLoad();
         this.game.input.loadCursors();
-        // this.game.start();
-        // this.game.postLoad();
+
+        this.game.postLoad();
+        this.game.start();
       });
     }
 

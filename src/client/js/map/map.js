@@ -24,11 +24,14 @@ export default class Map {
 
   ready() {
     const rC = () => {
-      if (this.readyCallback) this.readyCallback();
+      if (this.readyCallback) {
+        this.readyCallback();
+      }
     };
 
-    if (this.mapLoaded && this.tilesetsLoaded) rC();
-    else {
+    if (this.mapLoaded && this.tilesetsLoaded) {
+      rC();
+    } else {
       setTimeout(() => {
         this.ready();
       }, 50);

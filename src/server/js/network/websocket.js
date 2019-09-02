@@ -47,7 +47,7 @@ class Connection {
 
   close(reason) {
     if (reason) {
-      log.debug(`[Connection] Closing - ${reason}`);
+      console.log(`[Connection] Closing - ${reason}`);
     }
 
     this.socket.conn.close();

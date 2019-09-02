@@ -233,7 +233,7 @@ export default class Game {
 
     this.tick();
 
-    // this.started = true;
+    this.started = true;
     return true;
   }
 
@@ -407,6 +407,7 @@ export default class Game {
     this.setUpdater(new Updater(this));
 
     this.entities.load();
+    log.debug('Game - mapReadyCallback() - setting entities', this.entities);
     this.renderer.setEntities(this.entities);
 
     // this.postLoad();
@@ -415,7 +416,7 @@ export default class Game {
     this.app.sendStatus(null);
     this.ready = true;
     this.loaded = true;
-    // this.postLoad();
+    this.postLoad();
     return true;
   }
 
@@ -563,8 +564,8 @@ export default class Game {
     this.player.load(playerData);
     this.input.setPosition(this.player.getX(), this.player.getY());
 
-    this.start();
-    this.postLoad();
+    // this.start();
+    // this.postLoad();
 
     return true;
   }
@@ -643,9 +644,8 @@ export default class Game {
       entity => _.include(known, entity.id) || entity.id === this.player.id,
     );
 
-    this.entities.clean();
+    // this.entities.clean();
     this.entities.load();
-
     this.socket.send(Packets.Who, newIds);
     return true;
   }
@@ -1757,9 +1757,10 @@ export default class Game {
   }
 
   setEntityController(entities) {
-    log.debug('Game - setEntityController()', entities);
+    log.debug('Game - setEntityController()', entities, this.entities);
 
     if (!this.entities) {
+      console.log('setting entities to', entities);
       this.entities = entities;
     }
   }
