@@ -54,6 +54,7 @@ export default class Input {
   loadCursors() {
     log.debug('Input - loadCursors()');
 
+    console.log('get hand cursor', this.game.getSprite('hand'));
     this.cursors.hand = this.game.getSprite('hand');
     this.cursors.sword = this.game.getSprite('sword');
     this.cursors.loot = this.game.getSprite('loot');
@@ -299,10 +300,11 @@ export default class Input {
 
   setCoords(event) {
     const offset = this.app.canvas.offset();
+    // check background
     const {
       width,
       height,
-    } = this.renderer.background;
+    } = this.renderer.backgroundCanvas;
 
     this.mouse.x = Math.round(
       (event.pageX - offset.left) / this.app.getZoom(),

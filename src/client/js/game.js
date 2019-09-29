@@ -21,6 +21,7 @@ import Pointer from './controllers/pointer';
 import Modules from './utils/modules';
 import Packets from './network/packets';
 import Detect from './utils/detect';
+import { requestAnimFrame } from './utils/util';
 
 /**
  * Creates an instance of the game
@@ -230,10 +231,8 @@ export default class Game {
     this.app.fadeMenu();
 
     this.started = true;
-
     this.tick();
 
-    this.started = true;
     return true;
   }
 
@@ -253,17 +252,18 @@ export default class Game {
    * the game is started
    */
   tick() {
-    log.debug('Game - tick()', this.ready, this.updater, this.started);
+    // log.debug('Game - tick()', this.ready, this.updater, this.started);
 
     if (this.ready) {
-      log.debug('Game - tick() - ready');
+      // log.debug('Game - tick() - ready');
       this.time = new Date().getTime();
       this.renderer.render();
       this.updater.update();
 
       if (this.started) {
-        log.debug('Game - tick() - started', window);
-        window.requestAnimFrame(this.tick.bind(this));
+        // log.debug('Game - tick() - started', window);
+        // console.log('tick', requestAnimFrame(this.tick.bind(this)));
+        requestAnimFrame(this.tick.bind(this));
       }
     }
   }

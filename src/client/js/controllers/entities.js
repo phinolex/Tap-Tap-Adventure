@@ -382,7 +382,7 @@ export default class Entities {
   }
 
   forEachEntity(callback) {
-    log.debug('Entities - forEachEntity()', callback);
+    // log.debug('Entities - forEachEntity()', callback);
     _.each(this.entities, (entity) => {
       callback(entity);
     });

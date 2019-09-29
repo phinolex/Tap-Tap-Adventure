@@ -271,8 +271,26 @@ export default class App {
     });
 
     $(document).keydown(this.keydownEventListener);
-    $(document).keyup(this.keyupEventListener);
-    $(document).mousemove(this.mousemoveEventListener);
+    // $(document).keyup(this.keyupEventListener);
+    $(document).keyup((event) => {
+      const key = event.which;
+
+      if (!this.game || !this.game.started) {
+        return false;
+      }
+
+      this.game.input.keyUp(key);
+      return true;
+    });
+
+    // $(document).mousemove(this.mousemoveEventListener);
+    $(document).mousemove((event) => {
+      if (!this.game || !this.game.input || !this.game.started) return;
+
+      this.game.input.setCoords(event);
+      this.game.input.moveCursor();
+    });
+
     this.canvas.click(this.canvasClickEventListener);
 
     $('input[type="range"]').on('input', () => {
@@ -446,7 +464,7 @@ export default class App {
    * @param {Object} event mouse event
    */
   mousemoveEventListener(event) {
-    // log.debug('App - mousemoveEventListener()', event);
+    log.debug('App - mousemoveEventListener()', event, this);
 
     if (!this.game || !this.game.input || !this.game.started) {
       return false;
@@ -800,6 +818,7 @@ export default class App {
     log.debug('App - setGame()', game);
 
     this.game = game;
+    window.wtf = this;
   }
 
   /**
@@ -929,6 +948,7 @@ export default class App {
   updateOrientation() {
     log.debug('App - updateOrientation()');
 
+    // this.zoom();
     this.orientation = this.getOrientation();
   }
 
