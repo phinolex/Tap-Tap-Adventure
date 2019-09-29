@@ -811,7 +811,7 @@ export default class Player extends Character {
       maxMana: this.mana.getMaxMana(),
       experience: this.experience,
       level: this.level,
-      armour: this.armour.getString(),
+      armour: this.armour.getName(),
       weapon: this.weapon.getData(),
     };
 

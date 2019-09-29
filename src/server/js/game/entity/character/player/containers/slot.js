@@ -7,7 +7,7 @@ export default class Slot {
     this.count = -1;
     this.ability = -1;
     this.abilityLevel = -1;
-    this.string = null;
+    this.name = null;
   }
 
   load(id, count, ability, abilityLevel) {
@@ -16,9 +16,9 @@ export default class Slot {
     this.ability = parseInt(ability, 10);
     this.abilityLevel = parseInt(abilityLevel, 10);
 
-    this.string = Items.idToString(this.id);
+    this.name = Items.idToString(this.id);
     this.edible = Items.isEdible(this.id);
-    this.equippable = Items.isEquippable(this.string);
+    this.equippable = Items.isEquippable(this.name);
 
     this.verify();
   }
@@ -28,7 +28,7 @@ export default class Slot {
     this.count = -1;
     this.ability = -1;
     this.abilityLevel = -1;
-    this.string = null;
+    this.name = null;
   }
 
   increment(amount) {
@@ -50,7 +50,7 @@ export default class Slot {
   getData() {
     return {
       index: this.index,
-      string: this.string,
+      name: this.name,
       count: this.count,
       ability: this.ability,
       abilityLevel: this.abilityLevel,

@@ -134,10 +134,13 @@ export default class PlayerHandler {
 
       if (this.camera.centered) this.camera.centreOn(this.player);
 
-      if (this.player.hasTarget()) this.player.follow(this.player.target);
+      if (this.player.hasTarget()) {
+        this.player.follow(this.player.target);
+      }
     });
 
     this.player.onUpdateArmour((armourName) => {
+      console.log('update player sprite armour', armourName);
       this.player.setSprite(this.game.getSprite(armourName));
     });
   }

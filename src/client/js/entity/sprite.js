@@ -19,11 +19,11 @@ export default class Sprite {
   }
 
   load() {
-    // log.debug('Sprite - load()', this.filepath);
+    log.debug('Sprite - load()', this.filepath);
 
     this.image = new Image();
     this.image.crossOrigin = 'Anonymous';
-    this.image.src = `assets/${this.filepath}`;
+    this.image.src = this.filepath;
 
     this.image.onload = () => {
       log.debug('Sprite - load() - image loaded', this.filepath);
@@ -135,7 +135,7 @@ export default class Sprite {
         height: this.height,
       };
     } catch (e) {
-      log.debug('Sprite - createHurtSprite() - error', e, spriteData);
+      log.debug('Sprite - createHurtSprite() - error', e, this.image, spriteData);
     }
   }
 

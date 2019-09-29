@@ -1,8 +1,8 @@
 import Equipment from './equipment';
 
 export default class Weapon extends Equipment {
-  constructor(name, string, count, ability, abilityLevel) {
-    super(name, string, count, ability, abilityLevel);
+  constructor(name, count, ability, abilityLevel) {
+    super(name, count, ability, abilityLevel);
 
     this.level = -1;
     this.damage = -1;

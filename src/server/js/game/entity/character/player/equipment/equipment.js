@@ -48,7 +48,7 @@ export default class Equipment {
     ];
   }
 
-  getString() {
+  getName() {
     return this.itemsDictionary.idToString(this.id);
   }
 

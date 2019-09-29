@@ -83,19 +83,19 @@ export default class Entities {
          * the proper way -ahem- TTA V1.0
          */
 
-        const chest = new Chest(info.id, info.string); // eslint-disable-line
+        const chest = new Chest(info.id, info.name); // eslint-disable-line
         entity = chest;
         break;
 
       case 'npc':
-        const npc = new NPC(info.id, info.string); // eslint-disable-line
+        const npc = new NPC(info.id, info.name); // eslint-disable-line
         entity = npc;
         break;
 
       case 'item':
         const item = new Item( // eslint-disable-line
           info.id,
-          info.string,
+          info.name,
           info.count,
           info.ability,
           info.abilityLevel,
@@ -104,7 +104,7 @@ export default class Entities {
         break;
 
       case 'mob':
-        const mob = new Mob(info.id, info.string); // eslint-disable-line
+        const mob = new Mob(info.id, info.name); // eslint-disable-line
 
         mob.setHitPoints(info.hitPoints);
         mob.setMaxHitPoints(info.maxHitPoints);
@@ -186,6 +186,7 @@ export default class Entities {
 
       case 'player':
         const player = new Player(); // eslint-disable-line
+        console.log('loading player entity data', info);
 
         player.setId(info.id);
         player.setName(info.name);
@@ -231,7 +232,7 @@ export default class Entities {
 
     entity.setSprite(
       this.getSprite(
-        info.type === 'item' ? `item-${info.string}` : info.string,
+        info.type === 'item' ? `item-${info.name}` : info.name,
       ),
     );
 
@@ -372,6 +373,7 @@ export default class Entities {
   }
 
   getSprite(name) {
+    console.log('get sprite', name);
     log.debug('Entities - getSprite()', name);
     return this.sprites.sprites[name];
   }

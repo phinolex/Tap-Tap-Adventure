@@ -35,10 +35,10 @@ export default class Bank {
 
       const image = $(`<div id="bankImage${i}" class="bankImage"></div>`);
 
-      if (item.string) {
+      if (item.name) {
         image.css(
           'background-image',
-          this.container.getImageFormat(this.getDrawingScale(), item.string),
+          this.container.getImageFormat(this.getDrawingScale(), item.name),
         );
       }
 
@@ -82,10 +82,10 @@ export default class Bank {
         `<div id="inventoryImage${j}" class="bankImage"></div>`,
       );
 
-      if (iItem.string) {
+      if (iItem.name) {
         slotImage.css(
           'background-image',
-          this.container.getImageFormat(this.getDrawingScale(), iItem.string),
+          this.container.getImageFormat(this.getDrawingScale(), iItem.name),
         );
       }
 
@@ -138,7 +138,7 @@ export default class Bank {
       } else {
         image.css(
           'background-image',
-          this.container.getImageFormat(this.getDrawingScale(), slot.string),
+          this.container.getImageFormat(this.getDrawingScale(), slot.name),
         );
       }
     }
@@ -158,7 +158,7 @@ export default class Bank {
       } else {
         iImage.css(
           'background-image',
-          this.container.getImageFormat(this.getDrawingScale(), iSlot.string),
+          this.container.getImageFormat(this.getDrawingScale(), iSlot.name),
         );
       }
     }
@@ -184,7 +184,7 @@ export default class Bank {
     }
 
     if (slot.isEmpty()) {
-      slot.load(info.string, info.count, info.ability, info.abilityLevel);
+      slot.load(info.name, info.count, info.ability, info.abilityLevel);
     }
 
     slot.setCount(info.count);
@@ -195,7 +195,7 @@ export default class Bank {
 
     cssSlot.css(
       'background-image',
-      this.container.getImageFormat(this.getDrawingScale(), info.string),
+      this.container.getImageFormat(this.getDrawingScale(), info.name),
     );
 
     if (this.game.app.isMobile()) {
@@ -239,7 +239,7 @@ export default class Bank {
 
     image.css(
       'background-image',
-      this.container.getImageFormat(this.getDrawingScale(), info.string),
+      this.container.getImageFormat(this.getDrawingScale(), info.name),
     );
 
     if (this.game.app.isMobile()) {

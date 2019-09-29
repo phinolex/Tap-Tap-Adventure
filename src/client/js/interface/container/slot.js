@@ -1,7 +1,7 @@
 export default class Slot {
   constructor(index) {
     this.index = index;
-    this.string = null;
+    this.name = null;
     this.count = -1;
     this.ability = -1;
     this.abilityLevel = -1;
@@ -9,8 +9,8 @@ export default class Slot {
     this.equippable = false;
   }
 
-  load(string, count, ability, abilityLevel, edible, equippable) {
-    this.string = string;
+  load(name, count, ability, abilityLevel, edible, equippable) {
+    this.name = name;
     this.count = count;
     this.ability = ability;
     this.abilityLevel = abilityLevel;
@@ -19,7 +19,7 @@ export default class Slot {
   }
 
   empty() {
-    this.string = null;
+    this.name = null;
     this.count = -1;
     this.ability = -1;
     this.abilityLevel = -1;
@@ -28,7 +28,7 @@ export default class Slot {
   }
 
   isEmpty() {
-    return this.string === null || this.count === -1;
+    return this.name === null || this.count === -1;
   }
 
   setCount(count) {

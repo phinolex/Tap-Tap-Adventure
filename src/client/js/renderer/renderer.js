@@ -406,8 +406,7 @@ export default class Renderer {
       );
     }
 
-    // this.drawEntityBack(entity);
-    this.drawEntity(entity);
+    this.drawEntityBack(entity);
 
     this.context.drawImage(
       sprite.image,
@@ -427,7 +426,7 @@ export default class Renderer {
       && !entity.teleporting
       && entity.hasWeapon()
     ) {
-      const weapon = this.entities.getSprite(entity.weapon.getString());
+      const weapon = this.entities.getSprite(entity.weapon.getName());
 
       if (weapon) {
         if (!weapon.loaded) {
@@ -493,6 +492,15 @@ export default class Renderer {
 
     this.drawHealth(entity);
     this.drawName(entity);
+  }
+
+  /**
+   * Function used to draw special effects prior
+   * to rendering the entity.
+   */
+  drawEntityBack(entity) {
+    // const self = this;
+    // @TODO
   }
 
   drawEntityFore(entity) {
@@ -1211,19 +1219,19 @@ export default class Renderer {
   }
 
   loadStaticSprites() {
-    // log.debug('Renderer - loadStaticSprites()');
+    log.debug('Renderer - loadStaticSprites()');
 
     this.shadowSprite = this.entities.getSprite('shadow16');
 
-    if (!this.shadowSprite.loaded) {
-      this.shadowSprite.load();
-    }
+    // if (!this.shadowSprite.loaded) {
+    //   this.shadowSprite.load();
+    // }
 
     this.sparksSprite = this.entities.getSprite('sparks');
 
-    if (!this.sparksSprite.loaded) {
-      this.sparksSprite.load();
-    }
+    // if (!this.sparksSprite.loaded) {
+    //   this.sparksSprite.load();
+    // }
   }
 
   /**

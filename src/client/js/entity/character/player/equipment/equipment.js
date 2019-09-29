@@ -6,9 +6,8 @@
  */
 
 export default class Equipment {
-  constructor(name, string, count, ability, abilityLevel) {
+  constructor(name, count, ability, abilityLevel) {
     this.name = name;
-    this.string = string;
     this.count = count;
     this.ability = ability;
     this.abilityLevel = abilityLevel;
@@ -20,10 +19,6 @@ export default class Equipment {
 
   getName() {
     return this.name;
-  }
-
-  getString() {
-    return this.string;
   }
 
   getCount() {
@@ -38,9 +33,8 @@ export default class Equipment {
     return this.abilityLevel;
   }
 
-  update(name, string, count, ability, abilityLevel) {
+  update(name, count, ability, abilityLevel) {
     this.name = name;
-    this.string = string;
     this.count = count;
     this.ability = ability;
     this.abilityLevel = abilityLevel;

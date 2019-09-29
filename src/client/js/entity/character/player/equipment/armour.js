@@ -1,10 +1,11 @@
 import Equipment from './equipment';
 
 export default class Armour extends Equipment {
-  constructor(name, string, count, ability, abilityLevel) {
-    super(name, string, count, ability, abilityLevel);
+  constructor(name, count, ability, abilityLevel) {
+    super(name, count, ability, abilityLevel);
 
     this.defence = -1;
+    this.name = 'clotharmor';
   }
 
   setDefence(defence) {

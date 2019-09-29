@@ -89,23 +89,23 @@ export default class State extends Page {
   loadSlots() {
     this.weaponSlot.css(
       'background-image',
-      this.getImageFormat(this.getScale(), this.player.weapon.string),
+      this.getImageFormat(this.getScale(), this.player.weapon.name),
     );
     this.armourSlot.css(
       'background-image',
-      this.getImageFormat(this.getScale(), this.player.armour.string),
+      this.getImageFormat(this.getScale(), this.player.armour.name),
     );
     this.pendantSlot.css(
       'background-image',
-      this.getImageFormat(this.getScale(), this.player.pendant.string),
+      this.getImageFormat(this.getScale(), this.player.pendant.name),
     );
     this.ringSlot.css(
       'background-image',
-      this.getImageFormat(this.getScale(), this.player.ring.string),
+      this.getImageFormat(this.getScale(), this.player.ring.name),
     );
     this.bootsSlot.css(
       'background-image',
-      this.getImageFormat(this.getScale(), this.player.boots.string),
+      this.getImageFormat(this.getScale(), this.player.boots.name),
     );
 
     if (this.game.getScaleFactor() === 1) {

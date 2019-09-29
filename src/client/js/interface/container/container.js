@@ -17,7 +17,7 @@ export default class Container {
    */
   setSlot(index, info) {
     this.slots[index].load(
-      info.string,
+      info.name,
       info.count,
       info.ability,
       info.abilityLevel,
@@ -28,7 +28,7 @@ export default class Container {
 
   getEmptySlot() {
     for (let i = 0; i < this.slots; i += 1) {
-      if (!this.slots[i].string) {
+      if (!this.slots[i].name) {
         return i;
       }
     }
