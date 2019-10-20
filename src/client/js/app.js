@@ -229,6 +229,13 @@ export default class App {
      */
     this.statusMessage = null;
 
+    // auto-binding
+    this.keydownEventListener = this.keydownEventListener.bind(this);
+    this.keyupEventListener = this.keyupEventListener.bind(this);
+    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);
+    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);
+    this.canvasClickEventListener = this.canvasClickEventListener.bind(this);
+
     this.sendStatus('You should turn back now...');
 
     this.zoom();
@@ -270,27 +277,9 @@ export default class App {
       }
     });
 
-    $(document).keydown(this.keydownEventListener);
-    // $(document).keyup(this.keyupEventListener);
-    $(document).keyup((event) => {
-      const key = event.which;
-
-      if (!this.game || !this.game.started) {
-        return false;
-      }
-
-      this.game.input.keyUp(key);
-      return true;
-    });
-
-    // $(document).mousemove(this.mousemoveEventListener);
-    $(document).mousemove((event) => {
-      if (!this.game || !this.game.input || !this.game.started) return;
-
-      this.game.input.setCoords(event);
-      this.game.input.moveCursor();
-    });
-
+    $(document).on('keydown', this.keydownEventListener);
+    $(document).on('keyup', this.keyupEventListener);
+    $(document).on('mousemove', this.mousemoveEventListener);
     this.canvas.click(this.canvasClickEventListener);
 
     $('input[type="range"]').on('input', () => {
@@ -419,7 +408,7 @@ export default class App {
    * @return {Boolean}
    */
   keydownEventListener(event) {
-    // log.debug('App - keydownEventListener()', event);
+    log.debug('App - keydownEventListener()', event);
 
     const key = event.which;
 
@@ -447,7 +436,7 @@ export default class App {
    * @return {Boolean}
    */
   keyupEventListener(event) {
-    // log.debug('App - keyupEventListener()', event);
+    log.debug('App - keyupEventListener()', event);
 
     const key = event.which;
 
