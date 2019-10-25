@@ -182,13 +182,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Entities from &apos;<span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber18">WTF-Adventure/WTF-Adventure/src/client/js/controllers/entities.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Entities from &apos;<span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber24">WTF-Adventure/WTF-Adventure/src/client/js/controllers/entities.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber18">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber24">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -208,8 +208,18 @@
 
   
   
-  <div class="description" data-ice="description"><p>Entities in the game
-Character (Mob, Npc, Player), Chest, Item, Projectile</p>
+  <div class="description" data-ice="description"><p>Entities in the game:</p>
+<ul>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/character.js~Character.html">Character</a></span> - parent class for:<ul>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> - game controlled npc or monster that can move around the map</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/npc/npc.js~Npc.html">Npc</a></span> - game controlled entity that always stays in one location</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span> - a user in the game</li>
+</ul>
+</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> - open to reveal an item</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> - weapons, health, magic, armor</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> - entities that can be thrown (magic, weapons, arrows, mob attacks)</li>
+</ul>
 </div>
   
 
@@ -242,13 +252,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(instance: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Default constructor</p>
+</div>
       </div>
     </td>
     <td>
@@ -277,13 +288,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-decrepit">decrepit</a></span></span><span class="code" data-ice="signature">: {}</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-decrepit">decrepit</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Keeps track of entities that need to be cleaned up</p>
+</div>
       </div>
     </td>
     <td>
@@ -305,13 +317,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-entities">entities</a></span></span><span class="code" data-ice="signature">: {}</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-entities">entities</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>An array of an entity type instances</p>
+</div>
       </div>
     </td>
     <td>
@@ -333,13 +346,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-game">game</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-game">game</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>An instance of the game</p>
+</div>
       </div>
     </td>
     <td>
@@ -361,13 +375,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-grids">grids</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-grids">grids</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/grids.js~Grids.html">Grids</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>An array of game grid maps</p>
+</div>
       </div>
     </td>
     <td>
@@ -389,13 +404,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-renderer">renderer</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-renderer">renderer</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html">Renderer</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>An instance of the game renderer</p>
+</div>
       </div>
     </td>
     <td>
@@ -417,13 +433,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-sprites">sprites</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-member-sprites">sprites</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/sprites.js~Sprites.html">Sprites</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>An array of sprites</p>
+</div>
       </div>
     </td>
     <td>
@@ -452,13 +469,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-addEntity">addEntity</a></span></span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-addEntity">addEntity</a></span></span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Add a new entity to the map grid</p>
+</div>
       </div>
     </td>
     <td>
@@ -480,13 +498,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-clearPlayers">clearPlayers</a></span></span><span class="code" data-ice="signature">(exception: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-clearPlayers">clearPlayers</a></span></span><span class="code" data-ice="signature">(exception: {id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>}): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Removes players from the game map, will only work for entities of type player</p>
+</div>
       </div>
     </td>
     <td>
@@ -508,13 +527,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-create">create</a></span></span><span class="code" data-ice="signature">(info: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-create">create</a></span></span><span class="code" data-ice="signature">(info: {id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, type: <span>&apos;chest&apos;</span>|<span>&apos;npc&apos;</span>|<span>&apos;item&apos;</span>|<span>&apos;mob&apos;</span>|<span>&apos;projectile&apos;</span>|<span>&apos;player&apos;</span>}): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Create a new entity</p>
+</div>
       </div>
     </td>
     <td>
@@ -536,13 +556,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-exists">exists</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-exists">exists</a></span></span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Check to see if an entity with this ID exists or not</p>
+</div>
       </div>
     </td>
     <td>
@@ -564,13 +585,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-forEachEntity">forEachEntity</a></span></span><span class="code" data-ice="signature">(callback: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-forEachEntity">forEachEntity</a></span></span><span class="code" data-ice="signature">(callback: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Apply a callback for every entity in the array</p>
+</div>
       </div>
     </td>
     <td>
@@ -592,13 +614,15 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-forEachEntityAround">forEachEntityAround</a></span></span><span class="code" data-ice="signature">(x: <span>*</span>, y: <span>*</span>, radius: <span>*</span>, callback: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-forEachEntityAround">forEachEntityAround</a></span></span><span class="code" data-ice="signature">(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, radius: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, callback: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Apply a callback for every entity in the radius of an area on the map grid
+as long as the radius is not out of bounds in the grid</p>
+</div>
       </div>
     </td>
     <td>
@@ -620,13 +644,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-get">get</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-get">get</a></span></span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Returns the entity object based off the ID if it exists, otherwise returns null</p>
+</div>
       </div>
     </td>
     <td>
@@ -654,7 +679,8 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Return all entities</p>
+</div>
       </div>
     </td>
     <td>
@@ -676,13 +702,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-getSprite">getSprite</a></span></span><span class="code" data-ice="signature">(name: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-getSprite">getSprite</a></span></span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Return all the sprites with the given name</p>
+</div>
       </div>
     </td>
     <td>
@@ -704,13 +731,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-isPlayer">isPlayer</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-isPlayer">isPlayer</a></span></span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Checks whether or not this entity ID is a player</p>
+</div>
       </div>
     </td>
     <td>
@@ -732,13 +760,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-load">load</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-load">load</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Load the entities in the game for the current game map</p>
+</div>
       </div>
     </td>
     <td>
@@ -760,13 +789,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-registerDuality">registerDuality</a></span></span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-registerDuality">registerDuality</a></span></span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Register this entity on the grid twice</p>
+</div>
       </div>
     </td>
     <td>
@@ -788,13 +818,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-registerPosition">registerPosition</a></span></span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-registerPosition">registerPosition</a></span></span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Figure out which part of the grid to add an entity to</p>
+</div>
       </div>
     </td>
     <td>
@@ -816,13 +847,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-removeItem">removeItem</a></span></span><span class="code" data-ice="signature">(item: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-removeItem">removeItem</a></span></span><span class="code" data-ice="signature">(item: *): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Remove an item from the game</p>
+</div>
       </div>
     </td>
     <td>
@@ -844,13 +876,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-unregisterPosition">unregisterPosition</a></span></span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-unregisterPosition">unregisterPosition</a></span></span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Remove this entity from the game map</p>
+</div>
       </div>
     </td>
     <td>
@@ -872,13 +905,14 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-update">update</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/entities.js~Entities.html#instance-method-update">update</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Update the sprites</p>
+</div>
       </div>
     </td>
     <td>
@@ -904,22 +938,40 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(instance: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber29">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Default constructor</p>
+</div>
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">instance</td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>of the game</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
   
@@ -950,18 +1002,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">decrepit</span><span class="code" data-ice="signature">: {}</span>
+    <span class="code" data-ice="name">decrepit</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber27">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber64">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Keeps track of entities that need to be cleaned up</p>
+</div>
 
   
 
@@ -993,18 +1046,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">entities</span><span class="code" data-ice="signature">: {}</span>
+    <span class="code" data-ice="name">entities</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber58">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>An array of an entity type instances</p>
+</div>
 
   
 
@@ -1036,18 +1090,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">game</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">game</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber20">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber34">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>An instance of the game</p>
+</div>
 
   
 
@@ -1079,18 +1134,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">grids</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">grids</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/grids.js~Grids.html">Grids</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber23">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber46">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>An array of game grid maps</p>
+</div>
 
   
 
@@ -1122,18 +1178,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">renderer</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">renderer</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html">Renderer</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber21">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber40">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>An instance of the game renderer</p>
+</div>
 
   
 
@@ -1165,18 +1222,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">sprites</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">sprites</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/sprites.js~Sprites.html">Sprites</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber24">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber52">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>An array of sprites</p>
+</div>
 
   
 
@@ -1211,18 +1269,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">addEntity</span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+    <span class="code" data-ice="name">addEntity</span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber265">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber348">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Add a new entity to the map grid</p>
+</div>
 
   
 
@@ -1236,16 +1295,30 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">entity</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the entity to add to the game</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1270,18 +1343,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">clearPlayers</span><span class="code" data-ice="signature">(exception: <span>*</span>)</span>
+    <span class="code" data-ice="name">clearPlayers</span><span class="code" data-ice="signature">(exception: {id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>}): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber248">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber325">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Removes players from the game map, will only work for entities of type player</p>
+</div>
 
   
 
@@ -1295,16 +1369,30 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">exception</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code">{id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>}</td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>entitys (players) to keep on the game map</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1329,18 +1417,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(info: <span>*</span>)</span>
+    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(info: {id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, type: <span>&apos;chest&apos;</span>|<span>&apos;npc&apos;</span>|<span>&apos;item&apos;</span>|<span>&apos;mob&apos;</span>|<span>&apos;projectile&apos;</span>|<span>&apos;player&apos;</span>}): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber52">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber105">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Create a new entity</p>
+</div>
 
   
 
@@ -1354,16 +1443,30 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">info</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code">{id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, type: <span>&apos;chest&apos;</span>|<span>&apos;npc&apos;</span>|<span>&apos;item&apos;</span>|<span>&apos;mob&apos;</span>|<span>&apos;projectile&apos;</span>|<span>&apos;player&apos;</span>}</td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>information about the entity we need to create</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1388,18 +1491,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">exists</span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">exists</span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber244">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber316">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Check to see if an entity with this ID exists or not</p>
+</div>
 
   
 
@@ -1413,9 +1517,10 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">id</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the id of the entity</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1427,8 +1532,9 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>true if it exists, otherwise false</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1459,18 +1565,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">forEachEntity</span><span class="code" data-ice="signature">(callback: <span>*</span>)</span>
+    <span class="code" data-ice="name">forEachEntity</span><span class="code" data-ice="signature">(callback: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber337">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber469">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Apply a callback for every entity in the array</p>
+</div>
 
   
 
@@ -1484,16 +1591,30 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">callback</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the function to apply, the entity is passed into it</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1518,18 +1639,20 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">forEachEntityAround</span><span class="code" data-ice="signature">(x: <span>*</span>, y: <span>*</span>, radius: <span>*</span>, callback: <span>*</span>)</span>
+    <span class="code" data-ice="name">forEachEntityAround</span><span class="code" data-ice="signature">(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, radius: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, callback: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber343">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber484">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Apply a callback for every entity in the radius of an area on the map grid
+as long as the radius is not out of bounds in the grid</p>
+</div>
 
   
 
@@ -1543,34 +1666,51 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">x</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the x coordinate center of the circle radius</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">y</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the y coordinate center of the circle radius</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">radius</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the the distance to spread out from the center of the circle point</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">callback</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the function to apply, the entity is passed into it</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1595,18 +1735,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">get</span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">get</span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber238">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber303">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Returns the entity object based off the ID if it exists, otherwise returns null</p>
+</div>
 
   
 
@@ -1620,9 +1761,10 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">id</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the id of the entity</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1634,7 +1776,7 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></td>
           
         </tr>
       </tbody>
@@ -1670,14 +1812,15 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber333">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber460">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Return all entities</p>
+</div>
 
   
 
@@ -1721,18 +1864,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">getSprite</span><span class="code" data-ice="signature">(name: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">getSprite</span><span class="code" data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber329">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber453">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Return all the sprites with the given name</p>
+</div>
 
   
 
@@ -1746,9 +1890,10 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">name</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the name of the sprite</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1760,7 +1905,7 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></td>
           
         </tr>
       </tbody>
@@ -1792,18 +1937,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">isPlayer</span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">isPlayer</span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber234">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber294">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Checks whether or not this entity ID is a player</p>
+</div>
 
   
 
@@ -1817,9 +1963,10 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">id</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the id of the entity</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1831,7 +1978,7 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></td>
           
         </tr>
       </tbody>
@@ -1863,25 +2010,39 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">load</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">load</span><span class="code" data-ice="signature">(): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber71">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Load the entities in the game for the current game map</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1906,18 +2067,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">registerDuality</span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+    <span class="code" data-ice="name">registerDuality</span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber305">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber415">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Register this entity on the grid twice</p>
+</div>
 
   
 
@@ -1931,16 +2093,30 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">entity</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the entity to add to the game map again</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1965,18 +2141,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">registerPosition</span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+    <span class="code" data-ice="name">registerPosition</span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber286">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber385">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Figure out which part of the grid to add an entity to</p>
+</div>
 
   
 
@@ -1990,16 +2167,30 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">entity</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>an entity in the game</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -2024,18 +2215,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">removeItem</span><span class="code" data-ice="signature">(item: <span>*</span>)</span>
+    <span class="code" data-ice="name">removeItem</span><span class="code" data-ice="signature">(item: *): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber277">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber369">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Remove an item from the game</p>
+</div>
 
   
 
@@ -2049,16 +2241,30 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">item</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code">*</td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the item to remove from the map grid</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -2083,18 +2289,19 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">unregisterPosition</span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+    <span class="code" data-ice="name">unregisterPosition</span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber323">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber440">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Remove this entity from the game map</p>
+</div>
 
   
 
@@ -2108,16 +2315,30 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">entity</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span> | <span><a href="class/WTF-Adventure/src/server/js/game/entity/npc/npc.js~NPC.html">NPC</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span> | <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the entity to remove from the grid</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -2142,25 +2363,39 @@ Character (Mob, Npc, Player), Chest, Item, Projectile</p>
     
     
     
-    <span class="code" data-ice="name">update</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">update</span><span class="code" data-ice="signature">(): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber48">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/entities.js.html#lineNumber93">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Update the sprites</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>null</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
