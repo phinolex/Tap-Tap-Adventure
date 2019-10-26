@@ -1,7 +1,7 @@
 {
-  "coverage": "9.39%",
+  "coverage": "10.51%",
   "expectCount": 2949,
-  "actualCount": 277,
+  "actualCount": 310,
   "files": {
     "WTF-Adventure/coverage/lcov-report/sorter.js": {
       "expectCount": 1,
@@ -27,48 +27,13 @@
     },
     "WTF-Adventure/src/client/js/controllers/chat.js": {
       "expectCount": 20,
-      "actualCount": 10,
-      "undocumentLines": [
-        78,
-        101,
-        116,
-        121,
-        134,
-        140,
-        150,
-        165,
-        175,
-        180
-      ]
+      "actualCount": 20,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/controllers/entities.js": {
       "expectCount": 24,
-      "actualCount": 1,
-      "undocumentLines": [
-        19,
-        20,
-        21,
-        23,
-        24,
-        26,
-        27,
-        30,
-        48,
-        52,
-        234,
-        238,
-        244,
-        248,
-        265,
-        277,
-        286,
-        305,
-        323,
-        329,
-        333,
-        337,
-        343
-      ]
+      "actualCount": 24,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/controllers/info.js": {
       "expectCount": 14,

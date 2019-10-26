@@ -12,24 +12,60 @@ import Packets from '../network/packets';
 import log from '../lib/log';
 
 /**
- * Entities in the game
- * Character (Mob, Npc, Player), Chest, Item, Projectile
+ * Entities in the game:
+ * * {@link Character} - parent class for:
+ *   * {@link Mob} - game controlled npc or monster that can move around the map
+ *   * {@link Npc} - game controlled entity that always stays in one location
+ *   * {@link Player} - a user in the game
+ * * {@link Chest} - open to reveal an item
+ * * {@link Item} - weapons, health, magic, armor
+ * * {@link Projectile} - entities that can be thrown (magic, weapons, arrows, mob attacks)
  * @class
  */
 export default class Entities {
+  /**
+  * Default constructor
+  * @param {Game} instance of the game
+  */
   constructor(game) {
     log.debug('Entities - constructor()');
-
     this.game = game;
+
+    /**
+    * An instance of the game renderer
+    * @type {Renderer}
+    */
     this.renderer = game.renderer;
 
+    /**
+    * An array of game grid maps
+    * @type {Grids}
+    */
     this.grids = null;
+
+    /**
+    * An array of sprites
+    * @type {Sprites}
+    */
     this.sprites = null;
 
+    /**
+    * An array of an entity type instances
+    * @type {Chest|NPC|Item|Mob|Projectile|Player}
+    */
     this.entities = {};
+
+    /**
+    * Keeps track of entities that need to be cleaned up
+    * @type {Chest|NPC|Item|Mob|Projectile|Player}
+    */
     this.decrepit = {};
   }
 
+  /**
+  * Load the entities in the game for the current game map
+  * @return null
+  */
   load() {
     log.debug('Entities - load()', this.game.renderer);
     this.game.app.sendStatus('Lots of monsters ahead...');
@@ -56,6 +92,10 @@ export default class Entities {
     }
   }
 
+  /**
+  * Update the sprites
+  * @return null
+  */
   update() {
     log.debug('Entities - update()');
 
@@ -64,6 +104,12 @@ export default class Entities {
     }
   }
 
+  /**
+  * Create a new entity
+  * @param {{id:Number, type:'chest'|'npc'|'item'|'mob'|'projectile'|'player'}}
+  * info information about the entity we need to create
+  * @return null
+  */
   create(info) {
     log.debug('Entities - create()', info);
 
@@ -223,6 +269,7 @@ export default class Entities {
         return;
     }
 
+    // if we didn't load an entity for any reason quit trying while we're ahead
     if (!entity) {
       return;
     }
@@ -232,7 +279,9 @@ export default class Entities {
 
     entity.setSprite(
       this.getSprite(
-        info.type === 'item' ? `item-${info.name}` : info.name,
+        info.type === 'item'
+          ? `item-${info.name}`
+          : info.name,
       ),
     );
 
@@ -247,13 +296,24 @@ export default class Entities {
     }
   }
 
+  /**
+  * Checks whether or not this entity ID is a player
+  * @param {Number} id the id of the entity
+  * @return {Boolean}
+  */
   isPlayer(id) {
     log.debug('Entities - isPlayer()', id);
     return this.game.player.id === id;
   }
 
+  /**
+  * Returns the entity object based off the ID if it exists, otherwise returns null
+  * @param {Number} id the id of the entity
+  * @return {Chest|NPC|Item|Mob|Projectile|Player|null}
+  */
   get(id) {
     log.debug('Entities - get()', id);
+
     if (id in this.entities) {
       return this.entities[id];
     }
@@ -261,11 +321,21 @@ export default class Entities {
     return null;
   }
 
+  /**
+  * Check to see if an entity with this ID exists or not
+  * @param {Number} id the id of the entity
+  * @return {Boolean} true if it exists, otherwise false
+  */
   exists(id) {
     log.debug('Entities - exists()', id);
     return id in this.entities;
   }
 
+  /**
+  * Removes players from the game map, will only work for entities of type player
+  * @param {{id:Number, type:String}} exception entitys (players) to keep on the game map
+  * @return null
+  */
   clearPlayers(exception) {
     log.debug('Entities - clearPlayers()', exception);
     _.each(this.entities, (entity) => {
@@ -275,6 +345,7 @@ export default class Entities {
           entity.gridX,
           entity.gridY,
         );
+
         this.grids.removeFromPathingGrid(entity.gridX, entity.gridY);
 
         delete this.entities[entity.id];
@@ -284,6 +355,11 @@ export default class Entities {
     this.grids.resetPathingGrid();
   }
 
+  /**
+  * Add a new entity to the map grid
+  * @param {Chest|NPC|Item|Mob|Projectile|Player} entity the entity to add to the game
+  * @return null
+  */
   addEntity(entity) {
     log.debug('Entities - addEntity()', entity);
 
@@ -297,9 +373,16 @@ export default class Entities {
     if (
       !(entity instanceof Item && entity.dropped)
       && !this.renderer.isPortableDevice()
-    ) entity.fadeIn(this.game.time);
+    ) {
+      entity.fadeIn(this.game.time);
+    }
   }
 
+  /**
+  * Remove an item from the game
+  * @param {{Chest|NPC|Item|Mob|Projectile}} item the item to remove from the map grid
+  * @return null
+  */
   removeItem(item) {
     log.debug('Entities - removeItem()');
 
@@ -313,7 +396,13 @@ export default class Entities {
     delete this.entities[item.id];
   }
 
+  /**
+  * Figure out which part of the grid to add an entity to
+  * @param {Chest|NPC|Item|Mob|Player} entity an entity in the game
+  * @return null
+  */
   registerPosition(entity) {
+
     log.debug('Entities - registerPosition()', entity);
 
     if (!entity) {
@@ -340,6 +429,11 @@ export default class Entities {
     this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);
   }
 
+  /**
+  * Register this entity on the grid twice
+  * @param {Chest|NPC|Item|Mob|Projectile|Player} entity the entity to add to the game map again
+  * @return null
+  */
   registerDuality(entity) {
     log.debug('Entities - registerDuality()', entity);
 
@@ -362,6 +456,11 @@ export default class Entities {
     }
   }
 
+  /**
+  * Remove this entity from the game map
+  * @param {Chest|NPC|Item|Mob|Projectile|Player} entity the entity to remove from the grid
+  * @return null
+  */
   unregisterPosition(entity) {
     log.debug('Entities - unregisterPosition()', entity);
 
@@ -372,17 +471,30 @@ export default class Entities {
     this.grids.removeEntity(entity);
   }
 
+  /**
+  * Return all the sprites with the given name
+  * @param {String} name the name of the sprite
+  * @return {Chest|NPC|Item|Mob|Projectile|Player}
+  */
   getSprite(name) {
     console.log('get sprite', name);
     log.debug('Entities - getSprite()', name);
     return this.sprites.sprites[name];
   }
 
+  /**
+  * Return all entities
+  */
   getAll() {
     log.debug('Entities - getAll()');
     return this.entities;
   }
 
+  /**
+  * Apply a callback for every entity in the array
+  * @param {Function} callback the function to apply, the entity is passed into it
+  * @return null
+  */
   forEachEntity(callback) {
     // log.debug('Entities - forEachEntity()', callback);
     _.each(this.entities, (entity) => {
@@ -390,6 +502,15 @@ export default class Entities {
     });
   }
 
+  /**
+  * Apply a callback for every entity in the radius of an area on the map grid
+  * as long as the radius is not out of bounds in the grid
+  * @param {Number} x the x coordinate center of the circle radius
+  * @param {Number} y the y coordinate center of the circle radius
+  * @param {Number} radius the the distance to spread out from the center of the circle point
+  * @param {Function} callback the function to apply, the entity is passed into it
+  * @return null
+  */
   forEachEntityAround(x, y, radius, callback) {
     log.debug('Entities - forEachEntityAround()', x, y, radius, callback);
 
