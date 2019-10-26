@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -182,13 +183,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Renderer from &apos;<span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber24">WTF-Adventure/WTF-Adventure/src/client/js/renderer/renderer.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Renderer from &apos;<span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber21">WTF-Adventure/WTF-Adventure/src/client/js/renderer/renderer.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber24">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber21">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -387,7 +388,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-background">background</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-backgroundCanvas">backgroundCanvas</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -555,7 +556,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-cursor">cursor</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-cursorCanvas">cursorCanvas</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -779,6 +780,34 @@
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-entitiesCanvas">entitiesCanvas</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-firefox">firefox</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
         </p>
       </div>
@@ -891,7 +920,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-foreground">foreground</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-foregroundCanvas">foregroundCanvas</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -2054,6 +2083,36 @@
         
         
         
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-method-drawEntityBack">drawEntityBack</a></span></span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Function used to draw special effects prior
+to rendering the entity.</p>
+</div>
       </div>
     </td>
     <td>
@@ -3489,7 +3548,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber25">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber22">source</a></span></span>
     </span>
   </h3>
 
@@ -3535,7 +3594,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber83">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber82">source</a></span></span>
     </span>
   </h3>
 
@@ -3578,7 +3637,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber74">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber73">source</a></span></span>
     </span>
   </h3>
 
@@ -3621,7 +3680,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber77">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber76">source</a></span></span>
     </span>
   </h3>
 
@@ -3664,7 +3723,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber33">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber32">source</a></span></span>
     </span>
   </h3>
 
@@ -3696,18 +3755,18 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-background">
+  <h3 data-ice="anchor" id="instance-member-backgroundCanvas">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">background</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">backgroundCanvas</span><span class="code" data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber25">source</a></span></span>
     </span>
   </h3>
 
@@ -3750,7 +3809,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber85">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber84">source</a></span></span>
     </span>
   </h3>
 
@@ -3793,7 +3852,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber54">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber53">source</a></span></span>
     </span>
   </h3>
 
@@ -3836,7 +3895,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber45">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber44">source</a></span></span>
     </span>
   </h3>
 
@@ -3879,7 +3938,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber32">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber31">source</a></span></span>
     </span>
   </h3>
 
@@ -3922,7 +3981,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber44">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber43">source</a></span></span>
     </span>
   </h3>
 
@@ -3954,18 +4013,18 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-cursor">
+  <h3 data-ice="anchor" id="instance-member-cursorCanvas">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">cursor</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">cursorCanvas</span><span class="code" data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber29">source</a></span></span>
     </span>
   </h3>
 
@@ -4008,7 +4067,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber36">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber35">source</a></span></span>
     </span>
   </h3>
 
@@ -4051,7 +4110,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber84">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber83">source</a></span></span>
     </span>
   </h3>
 
@@ -4094,7 +4153,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber87">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber86">source</a></span></span>
     </span>
   </h3>
 
@@ -4137,7 +4196,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber86">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber85">source</a></span></span>
     </span>
   </h3>
 
@@ -4180,7 +4239,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber79">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber78">source</a></span></span>
     </span>
   </h3>
 
@@ -4223,7 +4282,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber107">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber110">source</a></span></span>
     </span>
   </h3>
 
@@ -4266,7 +4325,50 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber27">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber54">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-entitiesCanvas">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">entitiesCanvas</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber26">source</a></span></span>
     </span>
   </h3>
 
@@ -4309,7 +4411,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1143">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1275">source</a></span></span>
     </span>
   </h3>
 
@@ -4352,7 +4454,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber62">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber61">source</a></span></span>
     </span>
   </h3>
 
@@ -4395,7 +4497,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber88">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber87">source</a></span></span>
     </span>
   </h3>
 
@@ -4438,7 +4540,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber34">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber33">source</a></span></span>
     </span>
   </h3>
 
@@ -4470,18 +4572,18 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-foreground">
+  <h3 data-ice="anchor" id="instance-member-foregroundCanvas">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">foreground</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">foregroundCanvas</span><span class="code" data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber28">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber27">source</a></span></span>
     </span>
   </h3>
 
@@ -4524,7 +4626,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber69">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber68">source</a></span></span>
     </span>
   </h3>
 
@@ -4567,7 +4669,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber70">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber69">source</a></span></span>
     </span>
   </h3>
 
@@ -4610,7 +4712,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber53">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber52">source</a></span></span>
     </span>
   </h3>
 
@@ -4653,7 +4755,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber56">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber55">source</a></span></span>
     </span>
   </h3>
 
@@ -4696,7 +4798,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber72">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber71">source</a></span></span>
     </span>
   </h3>
 
@@ -4739,7 +4841,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1163">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1303">source</a></span></span>
     </span>
   </h3>
 
@@ -4782,7 +4884,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1141">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1273">source</a></span></span>
     </span>
   </h3>
 
@@ -4825,7 +4927,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber672">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber708">source</a></span></span>
     </span>
   </h3>
 
@@ -4868,7 +4970,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber71">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber70">source</a></span></span>
     </span>
   </h3>
 
@@ -4911,7 +5013,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber76">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber75">source</a></span></span>
     </span>
   </h3>
 
@@ -4954,7 +5056,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber60">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber59">source</a></span></span>
     </span>
   </h3>
 
@@ -4997,7 +5099,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber65">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber64">source</a></span></span>
     </span>
   </h3>
 
@@ -5040,7 +5142,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber64">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber63">source</a></span></span>
     </span>
   </h3>
 
@@ -5083,7 +5185,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber80">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber79">source</a></span></span>
     </span>
   </h3>
 
@@ -5126,7 +5228,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1109">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1227">source</a></span></span>
     </span>
   </h3>
 
@@ -5169,7 +5271,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1113">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1233">source</a></span></span>
     </span>
   </h3>
 
@@ -5212,7 +5314,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber82">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber81">source</a></span></span>
     </span>
   </h3>
 
@@ -5255,7 +5357,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1142">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1274">source</a></span></span>
     </span>
   </h3>
 
@@ -5298,7 +5400,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber865">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber921">source</a></span></span>
     </span>
   </h3>
 
@@ -5341,7 +5443,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber29">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber28">source</a></span></span>
     </span>
   </h3>
 
@@ -5384,7 +5486,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber35">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber34">source</a></span></span>
     </span>
   </h3>
 
@@ -5427,7 +5529,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber61">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber60">source</a></span></span>
     </span>
   </h3>
 
@@ -5470,7 +5572,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1159">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1297">source</a></span></span>
     </span>
   </h3>
 
@@ -5513,7 +5615,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber67">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber66">source</a></span></span>
     </span>
   </h3>
 
@@ -5559,7 +5661,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1097">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1211">source</a></span></span>
     </span>
   </h3>
 
@@ -5618,7 +5720,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1140">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1270">source</a></span></span>
     </span>
   </h3>
 
@@ -5661,7 +5763,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber843">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber897">source</a></span></span>
     </span>
   </h3>
 
@@ -5738,7 +5840,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1015">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1101">source</a></span></span>
     </span>
   </h3>
 
@@ -5781,7 +5883,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber991">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1071">source</a></span></span>
     </span>
   </h3>
 
@@ -5824,7 +5926,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1021">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1109">source</a></span></span>
     </span>
   </h3>
 
@@ -5867,7 +5969,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1070">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1174">source</a></span></span>
     </span>
   </h3>
 
@@ -5926,7 +6028,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1000">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1082">source</a></span></span>
     </span>
   </h3>
 
@@ -5969,7 +6071,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber749">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber793">source</a></span></span>
     </span>
   </h3>
 
@@ -6040,7 +6142,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber228">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber238">source</a></span></span>
     </span>
   </h3>
 
@@ -6084,7 +6186,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber255">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber268">source</a></span></span>
     </span>
   </h3>
 
@@ -6127,7 +6229,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber885">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber939">source</a></span></span>
     </span>
   </h3>
 
@@ -6198,7 +6300,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber870">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber926">source</a></span></span>
     </span>
   </h3>
 
@@ -6269,7 +6371,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber632">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber666">source</a></span></span>
     </span>
   </h3>
 
@@ -6312,7 +6414,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber295">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber316">source</a></span></span>
     </span>
   </h3>
 
@@ -6355,7 +6457,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber306">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber331">source</a></span></span>
     </span>
   </h3>
 
@@ -6398,7 +6500,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber312">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber342">source</a></span></span>
     </span>
   </h3>
 
@@ -6406,6 +6508,67 @@
   
   
   
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">entity</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-drawEntityBack">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">drawEntityBack</span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber504">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Function used to draw special effects prior
+to rendering the entity.</p>
+</div>
 
   
 
@@ -6457,7 +6620,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber482">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber509">source</a></span></span>
     </span>
   </h3>
 
@@ -6516,7 +6679,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber665">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber701">source</a></span></span>
     </span>
   </h3>
 
@@ -6559,7 +6722,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber525">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber554">source</a></span></span>
     </span>
   </h3>
 
@@ -6618,7 +6781,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber273">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber290">source</a></span></span>
     </span>
   </h3>
 
@@ -6661,7 +6824,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber560">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber587">source</a></span></span>
     </span>
   </h3>
 
@@ -6720,7 +6883,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber697">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber733">source</a></span></span>
     </span>
   </h3>
 
@@ -6763,7 +6926,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber683">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber719">source</a></span></span>
     </span>
   </h3>
 
@@ -6806,7 +6969,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber784">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber830">source</a></span></span>
     </span>
   </h3>
 
@@ -6907,7 +7070,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber713">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber753">source</a></span></span>
     </span>
   </h3>
 
@@ -6950,7 +7113,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber893">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber949">source</a></span></span>
     </span>
   </h3>
 
@@ -6993,7 +7156,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber761">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber803">source</a></span></span>
     </span>
   </h3>
 
@@ -7082,7 +7245,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber734">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber774">source</a></span></span>
     </span>
   </h3>
 
@@ -7172,7 +7335,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1039">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1133">source</a></span></span>
     </span>
   </h3>
 
@@ -7215,7 +7378,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber938">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1004">source</a></span></span>
     </span>
   </h3>
 
@@ -7274,7 +7437,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1134">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1262">source</a></span></span>
     </span>
   </h3>
 
@@ -7333,7 +7496,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1122">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1244">source</a></span></span>
     </span>
   </h3>
 
@@ -7393,7 +7556,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1128">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1252">source</a></span></span>
     </span>
   </h3>
 
@@ -7452,7 +7615,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber944">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1012">source</a></span></span>
     </span>
   </h3>
 
@@ -7511,7 +7674,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber918">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber978">source</a></span></span>
     </span>
   </h3>
 
@@ -7577,7 +7740,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber924">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber986">source</a></span></span>
     </span>
   </h3>
 
@@ -7642,7 +7805,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber975">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1047">source</a></span></span>
     </span>
   </h3>
 
@@ -7697,7 +7860,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1199">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1343">source</a></span></span>
     </span>
   </h3>
 
@@ -7768,7 +7931,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber971">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1041">source</a></span></span>
     </span>
   </h3>
 
@@ -7823,7 +7986,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1222">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1367">source</a></span></span>
     </span>
   </h3>
 
@@ -7900,7 +8063,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1178">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1322">source</a></span></span>
     </span>
   </h3>
 
@@ -7972,7 +8135,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1243">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1386">source</a></span></span>
     </span>
   </h3>
 
@@ -8027,7 +8190,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber983">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1059">source</a></span></span>
     </span>
   </h3>
 
@@ -8082,7 +8245,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1079">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1185">source</a></span></span>
     </span>
   </h3>
 
@@ -8137,7 +8300,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1150">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1284">source</a></span></span>
     </span>
   </h3>
 
@@ -8192,7 +8355,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber962">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1030">source</a></span></span>
     </span>
   </h3>
 
@@ -8269,7 +8432,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber105">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber106">source</a></span></span>
     </span>
   </h3>
 
@@ -8312,7 +8475,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber135">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber140">source</a></span></span>
     </span>
   </h3>
 
@@ -8355,7 +8518,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber118">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber121">source</a></span></span>
     </span>
   </h3>
 
@@ -8398,7 +8561,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1108">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1224">source</a></span></span>
     </span>
   </h3>
 
@@ -8441,7 +8604,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber192">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber206">source</a></span></span>
     </span>
   </h3>
 
@@ -8484,7 +8647,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber158">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber162">source</a></span></span>
     </span>
   </h3>
 
@@ -8527,7 +8690,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1009">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1093">source</a></span></span>
     </span>
   </h3>
 
@@ -8570,7 +8733,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1033">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1125">source</a></span></span>
     </span>
   </h3>
 
@@ -8613,7 +8776,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1027">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1117">source</a></span></span>
     </span>
   </h3>
 
@@ -8656,7 +8819,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1090">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1202">source</a></span></span>
     </span>
   </h3>
 
@@ -8699,7 +8862,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1061">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1161">source</a></span></span>
     </span>
   </h3>
 
@@ -8758,7 +8921,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1166">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1306">source</a></span></span>
     </span>
   </h3>
 
@@ -8817,7 +8980,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1170">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1312">source</a></span></span>
     </span>
   </h3>
 
@@ -8876,7 +9039,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1162">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1300">source</a></span></span>
     </span>
   </h3>
 
@@ -8935,7 +9098,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1158">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1294">source</a></span></span>
     </span>
   </h3>
 
@@ -8995,7 +9158,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber94">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber93">source</a></span></span>
     </span>
   </h3>
 
@@ -9038,7 +9201,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber800">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber850">source</a></span></span>
     </span>
   </h3>
 
@@ -9081,7 +9244,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1055">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1153">source</a></span></span>
     </span>
   </h3>
 
@@ -9124,7 +9287,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1049">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1145">source</a></span></span>
     </span>
   </h3>
 
@@ -9168,7 +9331,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1146">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/renderer/renderer.js.html#lineNumber1278">source</a></span></span>
     </span>
   </h3>
 

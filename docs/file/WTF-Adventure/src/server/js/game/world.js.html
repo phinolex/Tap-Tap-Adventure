@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -241,7 +242,7 @@ export default class World {
 
       if (diff &lt; 4000) {
         connection.sendUTF8(&apos;toofast&apos;);
-        connection.close(&apos;Logging in too rapidly&apos;);
+        connection.Socket.close(&apos;Logging in too rapidly&apos;);
 
         return;
       }
@@ -275,7 +276,7 @@ export default class World {
    * whatever new map we have created server sided. Cleaner and nicer.
    */
   load(onWorldLoad) {
-    log.info(`************ World ${this.id} ***********`);
+    console.log(`************ World ${this.id} ***********`);
 
     this.map = new Map(this);
     this.map.isReady(() =&gt; {
@@ -283,7 +284,7 @@ export default class World {
       this.spawnChests();
       this.spawnEntities();
 
-      log.info(&apos;The map has been successfully loaded!&apos;);
+      console.log(&apos;The map has been successfully loaded!&apos;);
 
       this.loaded();
       onWorldLoad();
@@ -302,7 +303,7 @@ export default class World {
     }
 
     this.ready = true;
-    log.info(&apos;********************************&apos;);
+    console.log(&apos;********************************&apos;);
   }
 
   tick() {
@@ -695,7 +696,7 @@ export default class World {
 
       if (!info || info === &apos;null&apos;) {
         if (this.debug) {
-          log.info(
+          console.log(
             `Unknown object spawned at: ${position.x} ${position.y}`,
           );
         }
@@ -737,7 +738,7 @@ export default class World {
       entities += 1;
     });
 
-    log.info(`Spawned ${entities} entities!`);
+    console.log(`Spawned ${entities} entities!`);
   }
 
   spawnChests() {
@@ -749,7 +750,7 @@ export default class World {
       chests += 1;
     });
 
-    log.info(`Spawned ${chests} static chests`);
+    console.log(`Spawned ${chests} static chests`);
   }
 
   spawnMob(id, x, y) {
@@ -840,13 +841,14 @@ export default class World {
     entities = _.map(entities, instance =&gt; parseInt(instance, 10));
 
     if (entities) {
+      console.log(&apos;pushing entities list&apos;, entities);
       player.send(new Messages.List(entities));
     }
   }
 
   addEntity(entity) {
     if (entity.instance in this.entities) {
-      log.info(`Entity ${entity.instance} already exists.`);
+      console.log(`Entity ${entity.instance} already exists.`);
     }
 
     this.entities[entity.instance] = entity;

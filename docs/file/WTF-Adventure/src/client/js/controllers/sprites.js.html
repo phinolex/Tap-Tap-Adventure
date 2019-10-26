@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -194,11 +195,13 @@ import log from &apos;../lib/log&apos;;
  */
 export default class Sprites {
   constructor(renderer) {
+    log.debug(&apos;Sprites - constructor()&apos;, renderer);
+
     this.renderer = renderer;
     this.sprites = {};
     this.sparksAnimation = null;
 
-    $.getJSON(&apos;data/sprites.json&apos;, (json) =&gt; {
+    $.getJSON(&apos;assets/data/sprites.json&apos;, (json) =&gt; {
       this.load(json);
     });
 
@@ -206,6 +209,8 @@ export default class Sprites {
   }
 
   load(spriteData) {
+    log.debug(&apos;Sprites - load()&apos;, spriteData);
+
     _.each(spriteData, (sprite) =&gt; {
       this.sprites[sprite.id] = new Sprite(
         sprite,
@@ -213,27 +218,28 @@ export default class Sprites {
       );
     });
 
-    log.info(&apos;Finished loading sprite data...&apos;);
-
     if (this.loadedSpritesCallback) {
+      log.debug(&apos;Sprites - load() - Finished loading sprite data...&apos;);
       this.loadedSpritesCallback();
     }
   }
 
   loadAnimations() {
+    log.debug(&apos;Sprites - loadAnimations()&apos;);
     this.sparksAnimation = new Animation(&apos;idle_down&apos;, 6, 0, 16, 16);
     this.sparksAnimation.setSpeed(120);
   }
 
   updateSprites() {
+    log.debug(&apos;Sprites - updateSprites()&apos;, this.renderer.getDrawingScale());
+
     _.each(this.sprites, (sprite) =&gt; {
       sprite.update(this.renderer.getDrawingScale());
     });
-
-    log.info(`Updated sprites to: ${this.renderer.getDrawingScale()}`);
   }
 
   onLoadedSprites(callback) {
+    log.debug(&apos;Sprites - onLoadedSprites()&apos;, callback);
     this.loadedSpritesCallback = callback;
   }
 }

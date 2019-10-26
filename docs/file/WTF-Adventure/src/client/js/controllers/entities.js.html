@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -193,6 +194,7 @@ import NPC from &apos;../entity/character/npc/npc&apos;;
 import Projectile from &apos;../entity/objects/projectile&apos;;
 import Modules from &apos;../utils/modules&apos;;
 import Packets from &apos;../network/packets&apos;;
+import log from &apos;../lib/log&apos;;
 
 /**
  * Entities in the game:
@@ -211,10 +213,7 @@ export default class Entities {
   * @param {Game} instance of the game
   */
   constructor(game) {
-    /**
-    * An instance of the game
-    * @type {Game}
-    */
+    log.debug(&apos;Entities - constructor()&apos;);
     this.game = game;
 
     /**
@@ -253,19 +252,27 @@ export default class Entities {
   * @return null
   */
   load() {
+    log.debug(&apos;Entities - load()&apos;, this.game.renderer);
     this.game.app.sendStatus(&apos;Lots of monsters ahead...&apos;);
 
     if (!this.sprites) {
+      log.debug(&apos;Entities - load() - no sprites loaded yet&apos;, this.game.renderer);
       this.sprites = new Sprites(this.game.renderer);
 
       this.sprites.onLoadedSprites(() =&gt; {
+        log.debug(&apos;Entities - load() - sprites done loading, loading cursors&apos;);
+        // this.game.postLoad();
         this.game.input.loadCursors();
+
+        this.game.postLoad();
+        this.game.start();
       });
     }
 
     this.game.app.sendStatus(&apos;Yes, you are also a monster...&apos;);
 
     if (!this.grids) {
+      log.debug(&apos;Entities - load() - no grids loaded yet&apos;);
       this.grids = new Grids(this.game.map);
     }
   }
@@ -275,6 +282,8 @@ export default class Entities {
   * @return null
   */
   update() {
+    log.debug(&apos;Entities - update()&apos;);
+
     if (this.sprites) {
       this.sprites.updateSprites();
     }
@@ -287,6 +296,8 @@ export default class Entities {
   * @return null
   */
   create(info) {
+    log.debug(&apos;Entities - create()&apos;, info);
+
     let entity;
 
     if (this.isPlayer(info.id)) {
@@ -303,19 +314,19 @@ export default class Entities {
          * the proper way -ahem- TTA V1.0
          */
 
-        const chest = new Chest(info.id, info.string); // eslint-disable-line
+        const chest = new Chest(info.id, info.name); // eslint-disable-line
         entity = chest;
         break;
 
       case &apos;npc&apos;:
-        const npc = new NPC(info.id, info.string); // eslint-disable-line
+        const npc = new NPC(info.id, info.name); // eslint-disable-line
         entity = npc;
         break;
 
       case &apos;item&apos;:
         const item = new Item( // eslint-disable-line
           info.id,
-          info.string,
+          info.name,
           info.count,
           info.ability,
           info.abilityLevel,
@@ -324,7 +335,7 @@ export default class Entities {
         break;
 
       case &apos;mob&apos;:
-        const mob = new Mob(info.id, info.string); // eslint-disable-line
+        const mob = new Mob(info.id, info.name); // eslint-disable-line
 
         mob.setHitPoints(info.hitPoints);
         mob.setMaxHitPoints(info.maxHitPoints);
@@ -406,6 +417,7 @@ export default class Entities {
 
       case &apos;player&apos;:
         const player = new Player(); // eslint-disable-line
+        console.log(&apos;loading player entity data&apos;, info);
 
         player.setId(info.id);
         player.setName(info.name);
@@ -439,7 +451,6 @@ export default class Entities {
         player.loadHandler(this.game);
 
         this.addEntity(player);
-
         return;
     }
 
@@ -454,8 +465,8 @@ export default class Entities {
     entity.setSprite(
       this.getSprite(
         info.type === &apos;item&apos;
-          ? `item-${info.string}`
-          : info.string,
+          ? `item-${info.name}`
+          : info.name,
       ),
     );
 
@@ -476,6 +487,7 @@ export default class Entities {
   * @return {Boolean}
   */
   isPlayer(id) {
+    log.debug(&apos;Entities - isPlayer()&apos;, id);
     return this.game.player.id === id;
   }
 
@@ -485,6 +497,8 @@ export default class Entities {
   * @return {Chest|NPC|Item|Mob|Projectile|Player|null}
   */
   get(id) {
+    log.debug(&apos;Entities - get()&apos;, id);
+
     if (id in this.entities) {
       return this.entities[id];
     }
@@ -498,6 +512,7 @@ export default class Entities {
   * @return {Boolean} true if it exists, otherwise false
   */
   exists(id) {
+    log.debug(&apos;Entities - exists()&apos;, id);
     return id in this.entities;
   }
 
@@ -507,6 +522,7 @@ export default class Entities {
   * @return null
   */
   clearPlayers(exception) {
+    log.debug(&apos;Entities - clearPlayers()&apos;, exception);
     _.each(this.entities, (entity) =&gt; {
       if (entity.id !== exception.id &amp;&amp; entity.type === &apos;player&apos;) {
         this.grids.removeFromRenderingGrid(
@@ -530,6 +546,8 @@ export default class Entities {
   * @return null
   */
   addEntity(entity) {
+    log.debug(&apos;Entities - addEntity()&apos;, entity);
+
     if (this.entities[entity.id]) {
       return;
     }
@@ -551,6 +569,8 @@ export default class Entities {
   * @return null
   */
   removeItem(item) {
+    log.debug(&apos;Entities - removeItem()&apos;);
+
     if (!item) {
       return;
     }
@@ -567,6 +587,9 @@ export default class Entities {
   * @return null
   */
   registerPosition(entity) {
+
+    log.debug(&apos;Entities - registerPosition()&apos;, entity);
+
     if (!entity) {
       return;
     }
@@ -597,6 +620,8 @@ export default class Entities {
   * @return null
   */
   registerDuality(entity) {
+    log.debug(&apos;Entities - registerDuality()&apos;, entity);
+
     if (!entity) {
       return;
     }
@@ -622,6 +647,8 @@ export default class Entities {
   * @return null
   */
   unregisterPosition(entity) {
+    log.debug(&apos;Entities - unregisterPosition()&apos;, entity);
+
     if (!entity) {
       return;
     }
@@ -635,6 +662,8 @@ export default class Entities {
   * @return {Chest|NPC|Item|Mob|Projectile|Player}
   */
   getSprite(name) {
+    console.log(&apos;get sprite&apos;, name);
+    log.debug(&apos;Entities - getSprite()&apos;, name);
     return this.sprites.sprites[name];
   }
 
@@ -642,6 +671,7 @@ export default class Entities {
   * Return all entities
   */
   getAll() {
+    log.debug(&apos;Entities - getAll()&apos;);
     return this.entities;
   }
 
@@ -651,6 +681,7 @@ export default class Entities {
   * @return null
   */
   forEachEntity(callback) {
+    // log.debug(&apos;Entities - forEachEntity()&apos;, callback);
     _.each(this.entities, (entity) =&gt; {
       callback(entity);
     });
@@ -666,6 +697,8 @@ export default class Entities {
   * @return null
   */
   forEachEntityAround(x, y, radius, callback) {
+    log.debug(&apos;Entities - forEachEntityAround()&apos;, x, y, radius, callback);
+
     for (let i = x - radius, maxI = x + radius; i &lt;= maxI; i += 1) {
       for (let j = y - radius, maxJ = y + radius; j &lt;= maxJ; j += 1) {
         if (!this.map.isOutOfBounds(i, j)) {

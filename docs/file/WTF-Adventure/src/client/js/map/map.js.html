@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -208,11 +209,14 @@ export default class Map {
 
   ready() {
     const rC = () =&gt; {
-      if (this.readyCallback) this.readyCallback();
+      if (this.readyCallback) {
+        this.readyCallback();
+      }
     };
 
-    if (this.mapLoaded &amp;&amp; this.tilesetsLoaded) rC();
-    else {
+    if (this.mapLoaded &amp;&amp; this.tilesetsLoaded) {
+      rC();
+    } else {
       setTimeout(() =&gt; {
         this.ready();
       }, 50);
@@ -221,7 +225,7 @@ export default class Map {
 
   load() {
     if (this.supportsWorker) {
-      log.info(&apos;Parsing map with Web Workers...&apos;);
+      log.debug(&apos;Map - load() - Parsing map with Web Workers...&apos;);
 
       const worker = new Worker(&apos;./js/map/mapworker.js&apos;);
       worker.postMessage(1);
@@ -234,10 +238,10 @@ export default class Map {
         this.mapLoaded = true;
       };
     } else {
-      log.info(&apos;Parsing map with Ajax...&apos;);
+      log.debug(&apos;Map - load() - Parsing map with Ajax...&apos;);
 
       $.get(
-        &apos;data/maps/world_client.json&apos;,
+        &apos;assets/data/maps/world_client.json&apos;,
         (data) =&gt; {
           this.parseMap(data);
           this.loadCollisions();
@@ -258,10 +262,10 @@ export default class Map {
      * that neither the entities would be necessary.
      */
 
-    this.tilesets.push(this.loadTileset(&apos;img/2/tilesheet.png&apos;));
+    this.tilesets.push(this.loadTileset(&apos;assets/img/2/tilesheet.png&apos;));
 
     if (isBigScale) {
-      this.tilesets.push(this.loadTileset(&apos;img/3/tilesheet.png&apos;));
+      this.tilesets.push(this.loadTileset(&apos;assets/img/3/tilesheet.png&apos;));
     }
 
     this.renderer.setTileset(this.tilesets[isBigScale ? 1 : 0]);
@@ -272,7 +276,7 @@ export default class Map {
     const scale = this.renderer.getDrawingScale();
 
     if (scale &gt; 2 &amp;&amp; !this.tilesets[1]) {
-      this.tilesets.push(this.loadTileset(&apos;img/3/tilesheet.png&apos;));
+      this.tilesets.push(this.loadTileset(&apos;assets/img/3/tilesheet.png&apos;));
     }
 
     this.renderer.setTileset(this.tilesets[scale - 2]);

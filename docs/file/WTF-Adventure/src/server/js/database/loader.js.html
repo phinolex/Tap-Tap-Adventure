@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -197,7 +198,7 @@ export default class Loader {
         const info = rows.shift();
 
         if (info.username !== player.username) {
-          log.info(
+          console.log(
             `Mismatch whilst retrieving inventory data for: ${player.username}`,
           );
         }
@@ -220,7 +221,7 @@ export default class Loader {
         const info = rows.shift();
 
         if (info.username !== player.username) {
-          log.info(
+          console.log(
             `Mismatch whilst retrieving bank data for: ${player.username}`,
           );
         }
@@ -243,7 +244,7 @@ export default class Loader {
         const info = rows.shift();
 
         if (info.username !== player.username) {
-          log.info(
+          console.log(
             `Mismatch whilst retrieving quest data for: ${player.username}`,
           );
         }
@@ -261,7 +262,7 @@ export default class Loader {
         const info = rows.shift();
 
         if (info.username !== player.username) {
-          log.info(
+          console.log(
             `Mismatch whilst retreiving achievement data for: ${
               player.username}`,
           );

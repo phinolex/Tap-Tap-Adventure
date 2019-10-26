@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -191,7 +192,7 @@ export default class Slot {
     this.count = -1;
     this.ability = -1;
     this.abilityLevel = -1;
-    this.string = null;
+    this.name = null;
   }
 
   load(id, count, ability, abilityLevel) {
@@ -200,9 +201,9 @@ export default class Slot {
     this.ability = parseInt(ability, 10);
     this.abilityLevel = parseInt(abilityLevel, 10);
 
-    this.string = Items.idToString(this.id);
+    this.name = Items.idToString(this.id);
     this.edible = Items.isEdible(this.id);
-    this.equippable = Items.isEquippable(this.string);
+    this.equippable = Items.isEquippable(this.name);
 
     this.verify();
   }
@@ -212,7 +213,7 @@ export default class Slot {
     this.count = -1;
     this.ability = -1;
     this.abilityLevel = -1;
-    this.string = null;
+    this.name = null;
   }
 
   increment(amount) {
@@ -234,7 +235,7 @@ export default class Slot {
   getData() {
     return {
       index: this.index,
-      string: this.string,
+      name: this.name,
       count: this.count,
       ability: this.ability,
       abilityLevel: this.abilityLevel,

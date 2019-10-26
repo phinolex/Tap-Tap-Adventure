@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -206,21 +207,15 @@ export default class Input {
     this.targetVisible = true;
     this.selectedX = -1;
     this.selectedY = -1;
-
     this.cursor = null;
     this.newCursor = null;
-
     this.targetData = null;
     this.targetColour = null;
     this.newTargetColour = null;
     this.mobileTargetColour = &apos;rgba(51, 255, 0)&apos;;
-
     this.previousKey = {};
-
     this.cursors = {};
-
     this.hovering = null;
-
     this.mouse = {
       x: 0,
       y: 0,
@@ -242,6 +237,9 @@ export default class Input {
   }
 
   loadCursors() {
+    log.debug(&apos;Input - loadCursors()&apos;);
+
+    console.log(&apos;get hand cursor&apos;, this.game.getSprite(&apos;hand&apos;));
     this.cursors.hand = this.game.getSprite(&apos;hand&apos;);
     this.cursors.sword = this.game.getSprite(&apos;sword&apos;);
     this.cursors.loot = this.game.getSprite(&apos;loot&apos;);
@@ -253,8 +251,6 @@ export default class Input {
 
     this.newCursor = this.cursors.hand;
     this.newTargetColour = &apos;rgba(255, 255, 255, 0.5)&apos;;
-
-    log.info(&apos;Loaded Cursors!&apos;);
   }
 
   handle(inputType, data) {
@@ -489,10 +485,11 @@ export default class Input {
 
   setCoords(event) {
     const offset = this.app.canvas.offset();
+    // check background
     const {
       width,
       height,
-    } = this.renderer.background;
+    } = this.renderer.backgroundCanvas;
 
     this.mouse.x = Math.round(
       (event.pageX - offset.left) / this.app.getZoom(),

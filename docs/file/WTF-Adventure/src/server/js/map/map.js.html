@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -305,7 +306,7 @@ export default class Map {
 
     fs.exists(location, (exists) =&gt; {
       if (!exists || config.forceCollisions) {
-        log.info(&apos;Generating the collision grid...&apos;);
+        console.log(&apos;Generating the collision grid...&apos;);
 
         this.grid = [];
 
@@ -326,11 +327,11 @@ export default class Map {
 
         fs.writeFile(location, JSON.stringify(this.grid), (err) =&gt; {
           if (err) {
-            log.info(`An error has occurred: ${err}`);
+            console.log(`An error has occurred: ${err}`);
             return;
           }
 
-          log.info(&apos;The collision grid has been successfully generated!&apos;);
+          console.log(&apos;The collision grid has been successfully generated!&apos;);
 
           this.done();
         });

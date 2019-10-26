@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -203,7 +204,7 @@ function parseClient(data, destination) {
     if (err) {
       log.error(JSON.stringify(err));
     } else {
-      log.info(`[Client] Map saved at: ${destination}.json`);
+      log.debug(`[Client] Map saved at: ${destination}.json`);
     }
   });
 
@@ -211,7 +212,7 @@ function parseClient(data, destination) {
 
   fs.writeFile(`${destination}.js`, map, (err) =&gt; {
     if (err) log.error(JSON.stringify(err));
-    else log.info(`[Client] Map saved at: ${destination}.js`);
+    else log.debug(`[Client] Map saved at: ${destination}.js`);
   });
 }
 
@@ -226,14 +227,14 @@ function parseServer(data, destination) {
     if (err) {
       log.error(JSON.stringify(err));
     } else {
-      log.info(`[Server] Map saved at: ${destination}.json`);
+      log.debug(`[Server] Map saved at: ${destination}.json`);
     }
   });
 }
 
 function onMap(data) {
-  parseClient(data, &apos;../../client/data/maps/world_client&apos;);
-  parseServer(data, &apos;../../server/data/map/world_server&apos;);
+  parseClient(data, &apos;../../../assets/data/maps/world_client&apos;);
+  parseServer(data, &apos;../../../assets/data/map/world_server&apos;);
 }
 
 function getMap() {

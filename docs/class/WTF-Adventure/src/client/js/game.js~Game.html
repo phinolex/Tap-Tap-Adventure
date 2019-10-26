@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -182,13 +183,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Game from &apos;<span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber29">WTF-Adventure/WTF-Adventure/src/client/js/game.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Game from &apos;<span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber30">WTF-Adventure/WTF-Adventure/src/client/js/game.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber29">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber30">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -1783,7 +1784,10 @@ and adds the new entities to the screen</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>This function is responsible for handling sudden
+disconnects of a player whilst in the game, not
+menu-based errors.</p>
+</div>
       </div>
     </td>
     <td>
@@ -2022,6 +2026,34 @@ registration or login requests</p>
 <li>cursor</li>
 </ul>
 </div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-loadedSpritesCallback">loadedSpritesCallback</a></span></span><span class="code" data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
       </div>
     </td>
     <td>
@@ -3243,7 +3275,7 @@ players is done.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber34">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber35">source</a></span></span>
     </span>
   </h3>
 
@@ -3307,7 +3339,7 @@ players is done.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber39">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber42">source</a></span></span>
     </span>
   </h3>
 
@@ -3351,7 +3383,7 @@ players is done.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber132">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber135">source</a></span></span>
     </span>
   </h3>
 
@@ -3395,7 +3427,7 @@ players is done.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber198">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber201">source</a></span></span>
     </span>
   </h3>
 
@@ -3439,7 +3471,7 @@ players is done.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber186">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber189">source</a></span></span>
     </span>
   </h3>
 
@@ -3483,7 +3515,7 @@ players is done.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber82">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber85">source</a></span></span>
     </span>
   </h3>
 
@@ -3527,7 +3559,7 @@ players is done.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber204">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber207">source</a></span></span>
     </span>
   </h3>
 
@@ -3571,7 +3603,7 @@ players is done.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber46">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber49">source</a></span></span>
     </span>
   </h3>
 
@@ -3616,7 +3648,7 @@ been given a handshake by the Node server</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber120">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber123">source</a></span></span>
     </span>
   </h3>
 
@@ -3662,7 +3694,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber88">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber91">source</a></span></span>
     </span>
   </h3>
 
@@ -3706,7 +3738,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber126">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber129">source</a></span></span>
     </span>
   </h3>
 
@@ -3750,7 +3782,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber180">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber183">source</a></span></span>
     </span>
   </h3>
 
@@ -3794,7 +3826,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber156">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber159">source</a></span></span>
     </span>
   </h3>
 
@@ -3838,7 +3870,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber94">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber97">source</a></span></span>
     </span>
   </h3>
 
@@ -3882,7 +3914,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber58">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber61">source</a></span></span>
     </span>
   </h3>
 
@@ -3926,7 +3958,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber106">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber109">source</a></span></span>
     </span>
   </h3>
 
@@ -3970,7 +4002,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber138">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber141">source</a></span></span>
     </span>
   </h3>
 
@@ -4014,7 +4046,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber100">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber103">source</a></span></span>
     </span>
   </h3>
 
@@ -4058,7 +4090,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber192">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber195">source</a></span></span>
     </span>
   </h3>
 
@@ -4102,7 +4134,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber174">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber177">source</a></span></span>
     </span>
   </h3>
 
@@ -4146,7 +4178,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber168">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber171">source</a></span></span>
     </span>
   </h3>
 
@@ -4190,7 +4222,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber150">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber153">source</a></span></span>
     </span>
   </h3>
 
@@ -4234,7 +4266,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber64">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber67">source</a></span></span>
     </span>
   </h3>
 
@@ -4278,7 +4310,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1372">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1474">source</a></span></span>
     </span>
   </h3>
 
@@ -4321,7 +4353,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber52">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber55">source</a></span></span>
     </span>
   </h3>
 
@@ -4365,7 +4397,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber144">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber147">source</a></span></span>
     </span>
   </h3>
 
@@ -4409,7 +4441,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber76">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber79">source</a></span></span>
     </span>
   </h3>
 
@@ -4453,7 +4485,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber162">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber165">source</a></span></span>
     </span>
   </h3>
 
@@ -4497,7 +4529,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber70">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber73">source</a></span></span>
     </span>
   </h3>
 
@@ -4541,7 +4573,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber112">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber115">source</a></span></span>
     </span>
   </h3>
 
@@ -4588,7 +4620,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber914">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber975">source</a></span></span>
     </span>
   </h3>
 
@@ -4653,7 +4685,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1176">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1265">source</a></span></span>
     </span>
   </h3>
 
@@ -4712,7 +4744,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1032">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1107">source</a></span></span>
     </span>
   </h3>
 
@@ -4777,7 +4809,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1093">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1174">source</a></span></span>
     </span>
   </h3>
 
@@ -4836,7 +4868,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber970">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1041">source</a></span></span>
     </span>
   </h3>
 
@@ -4895,7 +4927,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber835">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber894">source</a></span></span>
     </span>
   </h3>
 
@@ -4954,7 +4986,7 @@ health/exp regeneration)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber401">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber432">source</a></span></span>
     </span>
   </h3>
 
@@ -5011,7 +5043,7 @@ server to client callback messages</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1527">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1656">source</a></span></span>
     </span>
   </h3>
 
@@ -5054,7 +5086,7 @@ server to client callback messages</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1162">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1249">source</a></span></span>
     </span>
   </h3>
 
@@ -5113,7 +5145,7 @@ server to client callback messages</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber785">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber840">source</a></span></span>
     </span>
   </h3>
 
@@ -5186,7 +5218,7 @@ server to client callback messages</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1280">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1376">source</a></span></span>
     </span>
   </h3>
 
@@ -5251,7 +5283,7 @@ server to client callback messages</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber593">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber637">source</a></span></span>
     </span>
   </h3>
 
@@ -5325,7 +5357,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber539">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber579">source</a></span></span>
     </span>
   </h3>
 
@@ -5405,7 +5437,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1143">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1228">source</a></span></span>
     </span>
   </h3>
 
@@ -5464,7 +5496,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1453">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1567">source</a></span></span>
     </span>
   </h3>
 
@@ -5553,7 +5585,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1539">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1672">source</a></span></span>
     </span>
   </h3>
 
@@ -5608,7 +5640,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1547">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1684">source</a></span></span>
     </span>
   </h3>
 
@@ -5691,7 +5723,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1531">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1662">source</a></span></span>
     </span>
   </h3>
 
@@ -5746,7 +5778,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1543">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1678">source</a></span></span>
     </span>
   </h3>
 
@@ -5817,7 +5849,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1535">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1666">source</a></span></span>
     </span>
   </h3>
 
@@ -5872,7 +5904,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1574">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1715">source</a></span></span>
     </span>
   </h3>
 
@@ -5927,7 +5959,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1570">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1709">source</a></span></span>
     </span>
   </h3>
 
@@ -5982,7 +6014,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1298">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1396">source</a></span></span>
     </span>
   </h3>
 
@@ -6047,14 +6079,17 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1478">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1601">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>This function is responsible for handling sudden
+disconnects of a player whilst in the game, not
+menu-based errors.</p>
+</div>
 
   
 
@@ -6106,7 +6141,7 @@ and adds the new entities to the screen</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber455">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber489">source</a></span></span>
     </span>
   </h3>
 
@@ -6182,7 +6217,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1578">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1721">source</a></span></span>
     </span>
   </h3>
 
@@ -6237,7 +6272,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1103">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1186">source</a></span></span>
     </span>
   </h3>
 
@@ -6296,7 +6331,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1415">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1521">source</a></span></span>
     </span>
   </h3>
 
@@ -6339,7 +6374,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber993">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1066">source</a></span></span>
     </span>
   </h3>
 
@@ -6404,7 +6439,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber314">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber330">source</a></span></span>
     </span>
   </h3>
 
@@ -6460,7 +6495,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber364">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber382">source</a></span></span>
     </span>
   </h3>
 
@@ -6516,7 +6551,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber294">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber309">source</a></span></span>
     </span>
   </h3>
 
@@ -6568,6 +6603,49 @@ registration or login requests</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-loadedSpritesCallback">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">loadedSpritesCallback</span><span class="code" data-ice="signature">()</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber423">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-mapReadyCallback">
     <span class="access" data-ice="access">public</span>
     
@@ -6579,7 +6657,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber377">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber397">source</a></span></span>
     </span>
   </h3>
 
@@ -6635,7 +6713,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1445">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1557">source</a></span></span>
     </span>
   </h3>
 
@@ -6706,7 +6784,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1441">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1551">source</a></span></span>
     </span>
   </h3>
 
@@ -6771,7 +6849,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber655">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber704">source</a></span></span>
     </span>
   </h3>
 
@@ -6844,7 +6922,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber966">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1035">source</a></span></span>
     </span>
   </h3>
 
@@ -6887,7 +6965,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1075">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1154">source</a></span></span>
     </span>
   </h3>
 
@@ -6952,7 +7030,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1186">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1277">source</a></span></span>
     </span>
   </h3>
 
@@ -7017,7 +7095,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1474">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1590">source</a></span></span>
     </span>
   </h3>
 
@@ -7082,7 +7160,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1311">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1411">source</a></span></span>
     </span>
   </h3>
 
@@ -7147,7 +7225,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber941">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1008">source</a></span></span>
     </span>
   </h3>
 
@@ -7206,7 +7284,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber937">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1002">source</a></span></span>
     </span>
   </h3>
 
@@ -7265,7 +7343,7 @@ registration or login requests</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1379">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1481">source</a></span></span>
     </span>
   </h3>
 
@@ -7310,7 +7388,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber927">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber990">source</a></span></span>
     </span>
   </h3>
 
@@ -7375,7 +7453,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1346">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1444">source</a></span></span>
     </span>
   </h3>
 
@@ -7440,7 +7518,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1057">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1134">source</a></span></span>
     </span>
   </h3>
 
@@ -7505,7 +7583,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1521">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1646">source</a></span></span>
     </span>
   </h3>
 
@@ -7548,7 +7626,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1508">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1627">source</a></span></span>
     </span>
   </h3>
 
@@ -7591,7 +7669,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1265">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1358">source</a></span></span>
     </span>
   </h3>
 
@@ -7662,7 +7740,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1643">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1825">source</a></span></span>
     </span>
   </h3>
 
@@ -7721,7 +7799,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1631">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1801">source</a></span></span>
     </span>
   </h3>
 
@@ -7780,7 +7858,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1612">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1767">source</a></span></span>
     </span>
   </h3>
 
@@ -7839,7 +7917,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1627">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1793">source</a></span></span>
     </span>
   </h3>
 
@@ -7898,7 +7976,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1616">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1776">source</a></span></span>
     </span>
   </h3>
 
@@ -7957,7 +8035,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1639">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1817">source</a></span></span>
     </span>
   </h3>
 
@@ -8016,7 +8094,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1600">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1751">source</a></span></span>
     </span>
   </h3>
 
@@ -8075,7 +8153,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1623">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1785">source</a></span></span>
     </span>
   </h3>
 
@@ -8134,7 +8212,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1437">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1545">source</a></span></span>
     </span>
   </h3>
 
@@ -8193,7 +8271,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1635">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1809">source</a></span></span>
     </span>
   </h3>
 
@@ -8252,7 +8330,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1582">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1727">source</a></span></span>
     </span>
   </h3>
 
@@ -8311,7 +8389,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1594">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1743">source</a></span></span>
     </span>
   </h3>
 
@@ -8370,7 +8448,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1588">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1735">source</a></span></span>
     </span>
   </h3>
 
@@ -8429,7 +8507,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1606">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1759">source</a></span></span>
     </span>
   </h3>
 
@@ -8488,7 +8566,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1358">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1458">source</a></span></span>
     </span>
   </h3>
 
@@ -8553,7 +8631,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber583">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber626">source</a></span></span>
     </span>
   </h3>
 
@@ -8626,7 +8704,7 @@ by the server and the client received the connection.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber221">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber224">source</a></span></span>
     </span>
   </h3>
 
@@ -8684,7 +8762,7 @@ false if the game is already running</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber236">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber242">source</a></span></span>
     </span>
   </h3>
 
@@ -8728,7 +8806,7 @@ false if the game is already running</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber616">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber662">source</a></span></span>
     </span>
   </h3>
 
@@ -8805,7 +8883,7 @@ for them</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber719">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber770">source</a></span></span>
     </span>
   </h3>
 
@@ -8878,7 +8956,7 @@ for them</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber246">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber254">source</a></span></span>
     </span>
   </h3>
 
@@ -8924,7 +9002,7 @@ the game is started</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1515">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber1636">source</a></span></span>
     </span>
   </h3>
 
@@ -8983,7 +9061,7 @@ the game is started</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber265">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber278">source</a></span></span>
     </span>
   </h3>
 
@@ -9042,7 +9120,7 @@ it can be initialized like a new game all over again</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber525">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/game.js.html#lineNumber561">source</a></span></span>
     </span>
   </h3>
 

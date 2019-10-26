@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -273,23 +274,23 @@ export default class State extends Page {
   loadSlots() {
     this.weaponSlot.css(
       &apos;background-image&apos;,
-      this.getImageFormat(this.getScale(), this.player.weapon.string),
+      this.getImageFormat(this.getScale(), this.player.weapon.name),
     );
     this.armourSlot.css(
       &apos;background-image&apos;,
-      this.getImageFormat(this.getScale(), this.player.armour.string),
+      this.getImageFormat(this.getScale(), this.player.armour.name),
     );
     this.pendantSlot.css(
       &apos;background-image&apos;,
-      this.getImageFormat(this.getScale(), this.player.pendant.string),
+      this.getImageFormat(this.getScale(), this.player.pendant.name),
     );
     this.ringSlot.css(
       &apos;background-image&apos;,
-      this.getImageFormat(this.getScale(), this.player.ring.string),
+      this.getImageFormat(this.getScale(), this.player.ring.name),
     );
     this.bootsSlot.css(
       &apos;background-image&apos;,
-      this.getImageFormat(this.getScale(), this.player.boots.string),
+      this.getImageFormat(this.getScale(), this.player.boots.name),
     );
 
     if (this.game.getScaleFactor() === 1) {

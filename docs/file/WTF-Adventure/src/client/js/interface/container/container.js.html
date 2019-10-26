@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -201,7 +202,7 @@ export default class Container {
    */
   setSlot(index, info) {
     this.slots[index].load(
-      info.string,
+      info.name,
       info.count,
       info.ability,
       info.abilityLevel,
@@ -212,7 +213,7 @@ export default class Container {
 
   getEmptySlot() {
     for (let i = 0; i &lt; this.slots; i += 1) {
-      if (!this.slots[i].string) {
+      if (!this.slots[i].name) {
         return i;
       }
     }
@@ -221,7 +222,7 @@ export default class Container {
   }
 
   getImageFormat(scale, name) {
-    return `url(&quot;img/${scale}/item-${name}.png&quot;)`;
+    return `url(&quot;assets/img/${scale}/item-${name}.png&quot;)`;
   }
 }
 </code></pre>

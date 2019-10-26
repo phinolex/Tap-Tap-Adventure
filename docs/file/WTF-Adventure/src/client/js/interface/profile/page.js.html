@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -203,15 +204,18 @@ export default class Page {
   }
 
   load() {
-    log.info(&apos;Uninitialized.&apos;);
+    // @TODO
+    log.debug(&apos;Page - load() - @TODO&apos;);
   }
 
   resize() {
-    log.info(&apos;Uninitialized.&apos;);
+    // @TODO
+    log.debug(&apos;Page - resize() - @TODO&apos;);
   }
 
   update() {
-    log.info(&apos;Uninitialized.&apos;);
+    // @TODO
+    log.debug(&apos;Page - update() - @TODO&apos;);
   }
 
   getImageFormat(scale, name) {
@@ -219,7 +223,7 @@ export default class Page {
       return &apos;&apos;;
     }
 
-    return `url(&quot;img/${scale}/item-${name}.png&quot;)`;
+    return `url(&quot;assets/img/${scale}/item-${name}.png&quot;)`;
   }
 }
 </code></pre>

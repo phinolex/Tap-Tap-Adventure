@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -205,6 +206,7 @@ import Pointer from &apos;./controllers/pointer&apos;;
 import Modules from &apos;./utils/modules&apos;;
 import Packets from &apos;./network/packets&apos;;
 import Detect from &apos;./utils/detect&apos;;
+import { requestAnimFrame } from &apos;./utils/util&apos;;
 
 /**
  * Creates an instance of the game
@@ -216,6 +218,8 @@ export default class Game {
    * @param {App} app an instance of the client application
    */
   constructor(app) {
+    log.debug(&apos;Game - constructor()&apos;, app);
+
     /**
      * An instance of the client application
      * @type {App}
@@ -403,14 +407,17 @@ export default class Game {
    * false if the game is already running
    */
   start() {
+    log.debug(&apos;Game - start()&apos;, this.started);
+
     if (this.started) {
       return false;
     }
 
     this.app.fadeMenu();
-    this.tick();
 
     this.started = true;
+    this.tick();
+
     return true;
   }
 
@@ -418,6 +425,8 @@ export default class Game {
    * Stop the game, sets started and ready to false
    */
   stop() {
+    log.debug(&apos;Game - stop()&apos;);
+
     this.started = false;
     this.ready = false;
   }
@@ -428,13 +437,18 @@ export default class Game {
    * the game is started
    */
   tick() {
+    // log.debug(&apos;Game - tick()&apos;, this.ready, this.updater, this.started);
+
     if (this.ready) {
+      // log.debug(&apos;Game - tick() - ready&apos;);
       this.time = new Date().getTime();
       this.renderer.render();
       this.updater.update();
 
       if (this.started) {
-        window.requestAnimFrame(this.tick.bind(this));
+        // log.debug(&apos;Game - tick() - started&apos;, window);
+        // console.log(&apos;tick&apos;, requestAnimFrame(this.tick.bind(this)));
+        requestAnimFrame(this.tick.bind(this));
       }
     }
   }
@@ -447,6 +461,8 @@ export default class Game {
    * @return {Boolean}
    */
   unload() {
+    log.debug(&apos;Game - unload()&apos;);
+
     this.socket = null;
     this.messages = null;
     this.renderer = null;
@@ -482,11 +498,12 @@ export default class Game {
     const entities = document.getElementById(&apos;entities&apos;);
     const cursor = document.getElementById(&apos;cursor&apos;);
 
+    log.debug(&apos;Game - loadRenderer()&apos;, background, entities, foreground, textCanvas, cursor);
     this.app.sendStatus(&apos;Soul sucking monster...&apos;);
 
-    this.setRenderer(
-      new Renderer(background, entities, foreground, textCanvas, cursor, this),
-    );
+    const renderer = new Renderer(background, entities, foreground, textCanvas, cursor, this);
+
+    this.setRenderer(renderer);
 
     return true;
   }
@@ -496,6 +513,8 @@ export default class Game {
    * @return {Boolean}
    */
   loadControllers() {
+    log.debug(&apos;Game - loadControllers()&apos;);
+
     const hasWorker = this.app.hasWorker();
 
     this.app.sendStatus(hasWorker ? &apos;I tried to tell you...&apos; : null);
@@ -546,9 +565,11 @@ export default class Game {
    * @return {Boolean}
    */
   loadMap() {
+    log.debug(&apos;Game - loadMap()&apos;);
+
     this.map = new Map(this);
     this.map.onReady(() =&gt; {
-      console.log(&apos;map ready&apos;);
+      log.debug(&apos;Game - loadMap() - map ready&apos;);
       this.mapReadyCallback();
     });
     return true;
@@ -559,6 +580,8 @@ export default class Game {
    * @return {Boolean}
    */
   mapReadyCallback() {
+    log.debug(&apos;Game - mapReadyCallback()&apos;);
+
     this.app.sendStatus(&apos;Okay I give up...&apos;);
     this.setPathfinder(new Pathfinder(this.map.width, this.map.height));
 
@@ -569,12 +592,21 @@ export default class Game {
     this.setUpdater(new Updater(this));
 
     this.entities.load();
+    log.debug(&apos;Game - mapReadyCallback() - setting entities&apos;, this.entities);
     this.renderer.setEntities(this.entities);
+
+    // this.postLoad();
 
     // clears the status message out now that we&apos;ve loaded everything
     this.app.sendStatus(null);
+    this.ready = true;
     this.loaded = true;
+    this.postLoad();
     return true;
+  }
+
+  loadedSpritesCallback() {
+    log.debug(&apos;loaded sprites callback&apos;);
   }
 
   /**
@@ -583,6 +615,8 @@ export default class Game {
    * @return {Boolean}
    */
   connect() {
+    log.debug(&apos;Game - connect()&apos;);
+
     this.app.cleanErrors();
     setTimeout(() =&gt; this.socket.connect(), 1000);
 
@@ -625,6 +659,7 @@ export default class Game {
     this.messages.onPointer((opcode, info) =&gt; this.pointerCallback(opcode, info));
     this.messages.onPVP((id, pvp) =&gt; this.pvpCallback(id, pvp));
     this.messages.onShop((opcode, info) =&gt; this.shopCallback(opcode, info));
+
     return true;
   }
 
@@ -637,9 +672,10 @@ export default class Game {
    * @return {Boolean}
    */
   handshakeCallback(data) {
+    log.debug(&apos;Game - handshakeCallback()&apos;, data);
+
     this.id = data.shift();
     this.development = data.shift();
-    this.ready = true;
 
     if (!this.player) {
       this.createPlayer();
@@ -652,7 +688,8 @@ export default class Game {
     this.app.updateLoader(&apos;Logging in...&apos;);
 
     if (this.app.isRegistering()) {
-      log.info(&apos;creating an account&apos;);
+      log.debug(&apos;Game - handshakeCallback() - creating an account&apos;);
+
       const registerInfo = this.app.registerFields;
       const username = registerInfo[0].val();
       const password = registerInfo[1].val();
@@ -665,7 +702,7 @@ export default class Game {
         email,
       ]);
     } else if (this.app.isGuest()) {
-      log.info(&apos;guest logging in&apos;);
+      log.debug(&apos;Game - handshakeCallback() - guest logging in&apos;);
       this.socket.send(Packets.Intro, [
         Packets.IntroOpcode.Guest,
         &apos;n&apos;,
@@ -673,7 +710,7 @@ export default class Game {
         &apos;n&apos;,
       ]);
     } else {
-      log.info(&apos;player logging in&apos;);
+      log.debug(&apos;Game - handshakeCallback() - player logging in&apos;);
       const loginInfo = this.app.loginFields;
       const name = loginInfo[0].val();
       const pass = loginInfo[1].val();
@@ -707,10 +744,14 @@ export default class Game {
    * @return {Boolean}
    */
   welcomeCallback(playerData) {
+    log.debug(&apos;Game - welcomeCallback()&apos;, playerData);
+
     this.player.load(playerData);
     this.input.setPosition(this.player.getX(), this.player.getY());
-    this.start();
-    this.postLoad();
+
+    // this.start();
+    // this.postLoad();
+
     return true;
   }
 
@@ -721,6 +762,8 @@ export default class Game {
    * @return {Boolean}
    */
   equipmentCallback(action, info) {
+    log.debug(&apos;Game - equipmentCallback()&apos;, action, info);
+
     switch (action) {
       case Packets.EquipmentOpcode.Batch:
         for (let i = 0; i &lt; info.length; i += 1) {
@@ -750,6 +793,7 @@ export default class Game {
         const type = info.shift(); // eslint-disable-line
         this.player.unequip(type);
         if (type === &apos;armour&apos;) {
+          console.log(&apos;get armour sprite&apos;, this.player.getSpriteName());
           this.player.setSprite(this.getSprite(this.player.getSpriteName()));
         }
         this.interface.profile.update();
@@ -765,6 +809,7 @@ export default class Game {
    * @return {Boolean}
    */
   spawnCallback(data) {
+    log.debug(&apos;Game - spawnCallback()&apos;, data);
     return this.entities.create(data.shift());
   }
 
@@ -775,6 +820,7 @@ export default class Game {
    * @return {Boolean}
    */
   entityListCallback(data) {
+    log.debug(&apos;Game - entityListCallback()&apos;, data);
     const ids = _.pluck(this.entities.getAll(), &apos;id&apos;);
     const known = _.intersection(ids, data);
     const newIds = _.difference(data, known);
@@ -784,7 +830,8 @@ export default class Game {
       entity =&gt; _.include(known, entity.id) || entity.id === this.player.id,
     );
 
-    this.entities.clean();
+    // this.entities.clean();
+    this.entities.load();
     this.socket.send(Packets.Who, newIds);
     return true;
   }
@@ -798,6 +845,8 @@ export default class Game {
    * @return {Boolean} false if this entity is not a player type
    */
   syncCallback(playerEntity) {
+    log.debug(&apos;Game - syncCallback()&apos;, playerEntity);
+
     const entity = this.entities.get(playerEntity.id);
 
     if (!entity || entity.type !== &apos;player&apos;) {
@@ -820,6 +869,7 @@ export default class Game {
     }
 
     if (playerEntity.armour) {
+      console.log(&apos;get player entity armour sprite&apos;, playerEntity.armour);
       entity.setSprite(this.getSprite(playerEntity.armour));
     }
 
@@ -837,6 +887,8 @@ export default class Game {
    * @return {Boolean}
    */
   movementCallback(data) {
+    log.debug(&apos;Game - movementCallback()&apos;, data);
+
     const opcode = data.shift();
     const info = data.shift();
 
@@ -901,6 +953,8 @@ export default class Game {
    * @return {Boolean}
    */
   teleportCallback(data) {
+    log.debug(&apos;Game - teleportCallback()&apos;, data);
+
     const id = data.shift();
     const x = data.shift();
     const y = data.shift();
@@ -921,6 +975,8 @@ export default class Game {
      * @return {Boolean}
      */
     const doTeleport = () =&gt; {
+      log.debug(&apos;Game - doTeleport()&apos;);
+
       this.entities.unregisterPosition(entity);
       entity.setGridPosition(x, y);
 
@@ -936,7 +992,6 @@ export default class Game {
 
       this.socket.send(Packets.Request, [this.player.id]);
       this.entities.registerPosition(entity);
-      log.info(&apos;Teleport registered...&apos;);
 
       entity.frozen = false;
       return true;
@@ -945,6 +1000,7 @@ export default class Game {
     if (withAnimation) {
       const originalSprite = entity.sprite;
       entity.teleporting = true;
+      console.log(&apos;get sprite death&apos;);
       entity.setSprite(this.getSprite(&apos;death&apos;));
 
       entity.animate(&apos;death&apos;, 240, 1, () =&gt; {
@@ -967,6 +1023,8 @@ export default class Game {
    * @return {Boolean}
    */
   despawnCallback(id) {
+    log.debug(&apos;Game - despawnCallback()&apos;, id);
+
     const entity = this.entities.get(id);
 
     if (!entity) {
@@ -983,6 +1041,7 @@ export default class Game {
         this.entities.removeItem(entity);
         return false;
       case &apos;chest&apos;:
+        console.log(&apos;chest get sprite death&apos;);
         entity.setSprite(this.getSprite(&apos;death&apos;));
 
         entity.setAnimation(&apos;death&apos;, 120, 1, () =&gt; {
@@ -1006,6 +1065,7 @@ export default class Game {
     }
 
     entity.hitPoints = 0;
+    console.log(&apos;entity get sprite death&apos;);
     entity.setSprite(this.getSprite(&apos;death&apos;));
 
     entity.animate(&apos;death&apos;, 120, 1, () =&gt; {
@@ -1017,6 +1077,8 @@ export default class Game {
   }
 
   combatCallback(data) {
+    log.debug(&apos;Game - combatCallback()&apos;, data);
+
     const opcode = data.shift();
     const attacker = this.entities.get(data.shift());
     const target = this.entities.get(data.shift());
@@ -1096,6 +1158,8 @@ export default class Game {
   }
 
   animationCallback(id, info) {
+    log.debug(&apos;Game - animationCallback()&apos;, id, info);
+
     const entity = this.entities.get(id);
     const animation = info.shift();
     const speed = info.shift();
@@ -1109,6 +1173,8 @@ export default class Game {
   }
 
   projectileCallback(opcode, info) {
+    log.debug(&apos;Game - projectileCallback()&apos;, opcode, info);
+
     switch (opcode) {
       default:
         break;
@@ -1119,10 +1185,14 @@ export default class Game {
   }
 
   populationCallback(population) {
+    log.debug(&apos;Game - populationCallback()&apos;, population);
+
     this.population = population;
   }
 
   pointsCallback(data) {
+    log.debug(&apos;Game - pointsCallback()&apos;, data);
+
     const id = data.shift();
     const hitPoints = data.shift();
     const mana = data.shift();
@@ -1148,10 +1218,14 @@ export default class Game {
   }
 
   networkCallback() {
+    log.debug(&apos;Game - networkCallback()&apos;);
+
     this.socket.send(Packets.Network, [Packets.NetworkOpcode.Pong]);
   }
 
   chatCallback(info) {
+    log.debug(&apos;Game - chatCallback()&apos;, info);
+
     if (!info.duration) {
       info.duration = 5000; // eslint-disable-line
     }
@@ -1175,6 +1249,8 @@ export default class Game {
   }
 
   inventoryCallback(opcode, info) {
+    log.debug(&apos;Game - inventoryCallback()&apos;, opcode, info);
+
     switch (opcode) {
       default:
         break;
@@ -1214,6 +1290,8 @@ export default class Game {
   }
 
   bankCallback(opcode, info) {
+    log.debug(&apos;Game - bankCallback()&apos;, opcode, info);
+
     switch (opcode) {
       default:
         break;
@@ -1239,24 +1317,28 @@ export default class Game {
   }
 
   questCallback(opcode, info) {
+    log.debug(&apos;Game - questCallback()&apos;, opcode, info);
+
     switch (opcode) {
       default:
         break;
       case Packets.QuestOpcode.Batch:
-        this.interface.getQuestPage().load(info.quests, info.achievements);
+        // this.interface.getQuestPage().load(info.quests, info.achievements);
         break;
 
       case Packets.QuestOpcode.Progress:
-        this.interface.getQuestPage().progress(info);
+        // this.interface.getQuestPage().progress(info);
         break;
 
       case Packets.QuestOpcode.Finish:
-        this.interface.getQuestPage().finish(info);
+        // this.interface.getQuestPage().finish(info);
         break;
     }
   }
 
   notificationCallback(opcode, message) {
+    log.debug(&apos;Game - notificationCallback()&apos;, opcode, message);
+
     switch (opcode) {
       default:
         break;
@@ -1275,6 +1357,8 @@ export default class Game {
   }
 
   blinkCallback(instance) {
+    log.debug(&apos;Game - blickCallback()&apos;, instance);
+
     const item = this.entities.get(instance);
 
     if (!item) {
@@ -1285,6 +1369,8 @@ export default class Game {
   }
 
   healCallback(info) {
+    log.debug(&apos;Game - healCallback()&apos;, info);
+
     const entity = this.entities.get(info.id);
 
     if (!entity) {
@@ -1325,6 +1411,8 @@ export default class Game {
   }
 
   experienceCallback(info) {
+    log.debug(&apos;Game - experienceCallback()&apos;, info);
+
     const entity = this.entities.get(info.id);
 
     if (!entity || entity.type !== &apos;player&apos;) {
@@ -1344,6 +1432,8 @@ export default class Game {
   }
 
   deathCallback(id) {
+    log.debug(&apos;Game - deathCallback()&apos;, id);
+
     const entity = this.entities.get(id);
 
     if (!entity || id !== this.player.id) {
@@ -1358,6 +1448,8 @@ export default class Game {
   }
 
   audioCallback(song) {
+    log.debug(&apos;Game - audioCallback()&apos;, song);
+
     this.audio.songName = song;
 
     if (Detect.isSafari() &amp;&amp; !this.audio.song) {
@@ -1368,6 +1460,8 @@ export default class Game {
   }
 
   npcCallback(opcode, info) {
+    log.debug(&apos;Game - npcCallback()&apos;, opcode, info);
+
     switch (opcode) {
       default:
         break;
@@ -1447,6 +1541,8 @@ export default class Game {
   }
 
   respawnCallback(id, x, y) {
+    log.debug(&apos;Game - respawnCallback()&apos;, id, x, y);
+
     if (id !== this.player.id) {
       log.error(&apos;Player id mismatch.&apos;);
       return;
@@ -1456,12 +1552,15 @@ export default class Game {
     this.entities.addEntity(this.player);
     this.renderer.camera.centreOn(this.player);
     this.player.currentAnimation = null;
+    console.log(&apos;get sprite player sprite name&apos;, this.player.getSpriteName());
     this.player.setSprite(this.getSprite(this.player.getSpriteName()));
     this.player.idle();
     this.player.dead = false;
   }
 
   enchantCallback(opcode, info) {
+    log.debug(&apos;Game - enchantCallback()&apos;, opcode, info);
+
     const {
       type,
       index,
@@ -1480,6 +1579,8 @@ export default class Game {
   }
 
   guildCallback(opcode, info) {
+    log.debug(&apos;Game - guildCallback()&apos;, opcode, info);
+
     switch (opcode) {
       default:
         break;
@@ -1493,12 +1594,13 @@ export default class Game {
   }
 
   pointerCallback(opcode, info) {
+    log.debug(&apos;Game - pointerCallback()&apos;, opcode, info);
+
     switch (opcode) {
       default:
         break;
       case Packets.PointerOpcode.NPC:
         const entity = this.entities.get(info.id); // eslint-disable-line
-        log.info(&apos;pointer NPC&apos;, info, entity);
 
         if (!entity) {
           return;
@@ -1511,23 +1613,22 @@ export default class Game {
       case Packets.PointerOpcode.Location:
         this.pointer.create(info.id, Modules.Pointers.Position);
         this.pointer.setToPosition(info.id, info.x * 16, info.y * 16);
-        log.info(&apos;pointer location&apos;, info);
         break;
 
       case Packets.PointerOpcode.Relative:
         this.pointer.create(info.id, Modules.Pointers.Relative);
         this.pointer.setRelative(info.id, info.x, info.y);
-        log.info(&apos;pointer relative&apos;, info);
         break;
 
       case Packets.PointerOpcode.Remove:
         this.pointer.clean();
-        log.info(&apos;pointer remove&apos;, info);
         break;
     }
   }
 
   pvpCallback(id, pvp) {
+    log.debug(&apos;Game - pvpCallback()&apos;, id, pvp);
+
     if (this.player.id === id) {
       this.pvp = pvp;
     } else {
@@ -1540,6 +1641,8 @@ export default class Game {
   }
 
   shopCallback(opcode, info) {
+    log.debug(&apos;Game - spawnCallback()&apos;, opcode, info);
+
     switch (opcode) {
       case Packets.ShopOpcode.Open:
         break;
@@ -1561,6 +1664,9 @@ export default class Game {
    * by the server and the client received the connection.
    */
   postLoad() {
+    log.debug(&apos;Game - postLoad()&apos;);
+
+    // @TODO fix this line
     this.renderer.loadStaticSprites();
 
     this.getCamera().setPlayer(this.player);
@@ -1569,6 +1675,7 @@ export default class Game {
 
     this.entities.addEntity(this.player);
 
+    console.log(&apos;default sprite&apos;, this.player);
     const defaultSprite = this.getSprite(this.player.getSpriteName());
 
     this.player.setSprite(defaultSprite);
@@ -1597,6 +1704,8 @@ export default class Game {
   }
 
   implementStorage() {
+    log.debug(&apos;Game - implementStorage()&apos;);
+
     const loginName = $(&apos;#wrapperNameInput&apos;);
     const loginPassword = $(&apos;#wrapperPasswordInput&apos;);
 
@@ -1619,14 +1728,20 @@ export default class Game {
   }
 
   setPlayerMovement(direction) {
+    log.debug(&apos;Game - setPlayerMovement()&apos;, direction);
+
     this.player.direction = direction;
   }
 
   movePlayer(x, y) {
+    log.debug(&apos;Game - movePlayer()&apos;, x, y);
+
     this.moveCharacter(this.player, x, y);
   }
 
   moveCharacter(character, x, y) {
+    log.debug(&apos;Game - moveCharacter()&apos;, character, x, y);
+
     if (!character) {
       return;
     }
@@ -1635,6 +1750,8 @@ export default class Game {
   }
 
   findPath(character, x, y, ignores) {
+    log.debug(&apos;Game - findPath()&apos;, x, y, ignores);
+
     const grid = this.entities.grids.pathingGrid;
     let path = [];
 
@@ -1656,15 +1773,18 @@ export default class Game {
   }
 
   onInput(inputType, data) {
+    log.debug(&apos;Game - onInput()&apos;, inputType, data);
+
     this.input.handle(inputType, data);
   }
 
+  /**
+   * This function is responsible for handling sudden
+   * disconnects of a player whilst in the game, not
+   * menu-based errors.
+   */
   handleDisconnection(noError) {
-    /**
-     * This function is responsible for handling sudden
-     * disconnects of a player whilst in the game, not
-     * menu-based errors.
-     */
+    log.debug(&apos;Game - handleDisconnection()&apos;, noError);
 
     if (!this.started) {
       return;
@@ -1690,6 +1810,8 @@ export default class Game {
   }
 
   respawn() {
+    log.debug(&apos;Game - respawn()&apos;);
+
     this.audio.play(Modules.AudioTypes.SFX, &apos;revive&apos;);
     this.app.body.removeClass(&apos;death&apos;);
 
@@ -1697,18 +1819,28 @@ export default class Game {
   }
 
   tradeWith(player) {
-    if (!player || player.id === this.player.id) return;
+    log.debug(&apos;Game - tradeWith()&apos;, player);
+
+    if (!player || player.id === this.player.id) {
+      return;
+    }
 
     this.socket.send(Packets.Trade, [Packets.TradeOpcode.Request, player.id]);
   }
 
   resize() {
+    log.debug(&apos;Game - resize()&apos;);
+
     this.renderer.resize();
 
-    if (this.pointer) this.pointer.resize();
+    if (this.pointer) {
+      this.pointer.resize();
+    }
   }
 
   createPlayer() {
+    log.debug(&apos;Game - createPlayer()&apos;);
+
     this.player = new Player();
   }
 
@@ -1717,18 +1849,26 @@ export default class Game {
   }
 
   getStorage() {
+    log.debug(&apos;Game - getStorage()&apos;);
+
     return this.storage;
   }
 
   getCamera() {
+    log.debug(&apos;Game - getCamera()&apos;);
+
     return this.renderer.camera;
   }
 
   getSprite(spriteName) {
+    log.debug(&apos;Game - getSprite()&apos;, spriteName);
+
     return this.entities.getSprite(spriteName);
   }
 
   getEntityAt(x, y, ignoreSelf) {
+    log.debug(&apos;Game - getEntityAt()&apos;, x, y, ignoreSelf);
+
     const entities = this.entities.grids.renderingGrid[y][x];
 
     if (_.size(entities) &gt; 0) {
@@ -1752,52 +1892,75 @@ export default class Game {
   }
 
   getStorageUsername() {
+    log.debug(&apos;Game - getStorageUsername()&apos;);
+
     return this.storage.data.player.username;
   }
 
   getStoragePassword() {
+    log.debug(&apos;Game - getStoragePassword()&apos;);
+
     return this.storage.data.player.password;
   }
 
   hasRemember() {
+    log.debug(&apos;Game - hasRemember()&apos;);
+
     return this.storage.data.player.rememberMe;
   }
 
   setRenderer(renderer) {
-    if (!this.renderer) {
+    log.debug(&apos;Game - setRenderer()&apos;, renderer);
+
+    if (this.renderer === null) {
       this.renderer = renderer;
     }
   }
 
   setStorage(storage) {
+    log.debug(&apos;Game - setStorage()&apos;, storage);
+
     if (!this.storage) {
       this.storage = storage;
     }
   }
 
   setSocket(socket) {
+    log.debug(&apos;Game - setSocket()&apos;, socket);
+
     if (!this.socket) {
       this.socket = socket;
     }
   }
 
   setMessages(messages) {
+    log.debug(&apos;Game - setMessages()&apos;, messages);
+
     if (!this.messages) {
       this.messages = messages;
     }
   }
 
   setUpdater(updater) {
+    log.debug(&apos;Game - setUpdater()&apos;, updater);
+
     if (!this.updater) {
       this.updater = updater;
     }
   }
 
   setEntityController(entities) {
-    if (!this.entities) this.entities = entities;
+    log.debug(&apos;Game - setEntityController()&apos;, entities, this.entities);
+
+    if (!this.entities) {
+      console.log(&apos;setting entities to&apos;, entities);
+      this.entities = entities;
+    }
   }
 
   setInput(input) {
+    log.debug(&apos;Game - setInput()&apos;, input);
+
     if (!this.input) {
       this.input = input;
       this.renderer.setInput(this.input);
@@ -1805,27 +1968,51 @@ export default class Game {
   }
 
   setPathfinder(pathfinder) {
-    if (!this.pathfinder) this.pathfinder = pathfinder;
+    log.debug(&apos;Game - setPathfinder()&apos;, pathfinder);
+
+    if (!this.pathfinder) {
+      this.pathfinder = pathfinder;
+    }
   }
 
   setInfo(info) {
-    if (!this.info) this.info = info;
+    log.debug(&apos;Game - setInfo()&apos;, info);
+
+    if (!this.info) {
+      this.info = info;
+    }
   }
 
   setBubble(bubble) {
-    if (!this.bubble) this.bubble = bubble;
+    log.debug(&apos;Game - setBubble()&apos;, bubble);
+
+    if (!this.bubble) {
+      this.bubble = bubble;
+    }
   }
 
   setPointer(pointer) {
-    if (!this.pointer) this.pointer = pointer;
+    log.debug(&apos;Game - setPointer()&apos;, pointer);
+
+    if (!this.pointer) {
+      this.pointer = pointer;
+    }
   }
 
   setInterface(intrface) {
-    if (!this.interface) this.interface = intrface;
+    log.debug(&apos;Game - setInterface()&apos;, intrface);
+
+    if (!this.interface) {
+      this.interface = intrface;
+    }
   }
 
   setAudio(audio) {
-    if (!this.audio) this.audio = audio;
+    log.debug(&apos;Game - setAudio()&apos;, audio);
+
+    if (!this.audio) {
+      this.audio = audio;
+    }
   }
 }
 </code></pre>
