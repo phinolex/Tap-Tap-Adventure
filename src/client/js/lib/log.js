@@ -22,7 +22,16 @@ class Logger {
     return `#${this.padEnd(color, 6, '0')}`;
   }
 
-  padEnd(str, targetLength, val) {
+  /**
+   * Pads the end of a string with the value if the String.prototype doesn't exist
+   * This is particularly for CircleCI which keeps failing :( and always uses the
+   * proptotype if it exists
+   * @param  {String} str          a string (will be cast to be sure)
+   * @param  {Number} targetLength how long the final string should be
+   * @param  {String} val          what to pad the string with, defaults to space
+   * @return {String}              returns the string at targetLength with val padded on the end
+   */
+  padEnd(str, targetLength, val = ' ') {
    str = String(str);
    targetLength = parseInt(targetLength, 10) || 0;
 
