@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/17</span>
+        <span class='fraction'>0/21</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/17</span>
+        <span class='fraction'>0/21</span>
       </div>
     </div>
   </div>
@@ -97,31 +97,19 @@
 52
 53
 54
-55</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+55
+56
+57
+58
+59
+60
+61</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -131,14 +119,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -148,6 +129,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -159,14 +171,17 @@ import log from '../lib/log';
 &nbsp;
 /**
  * Class responsible for loading all the necessary sprites from the JSON.
+ * @class
  */
 export default class Sprites {
 <span class="fstat-no" title="function not covered" >  co</span>nstructor(renderer) {
+<span class="cstat-no" title="statement not covered" >    log.debug('Sprites - constructor()', renderer);</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.renderer = renderer;</span>
 <span class="cstat-no" title="statement not covered" >    this.sprites = {};</span>
 <span class="cstat-no" title="statement not covered" >    this.sparksAnimation = null;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    $.getJSON('data/sprites.json', <span class="fstat-no" title="function not covered" >(j</span>son) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    $.getJSON('assets/data/sprites.json', <span class="fstat-no" title="function not covered" >(j</span>son) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      this.load(json);</span>
     });
 &nbsp;
@@ -174,6 +189,8 @@ export default class Sprites {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  lo</span>ad(spriteData) {
+<span class="cstat-no" title="statement not covered" >    log.debug('Sprites - load()', spriteData);</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    _.each(spriteData, <span class="fstat-no" title="function not covered" >(s</span>prite) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      this.sprites[sprite.id] = new Sprite(</span>
         sprite,
@@ -181,27 +198,28 @@ export default class Sprites {
       );
     });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    log.info('Finished loading sprite data...');</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    if (this.loadedSpritesCallback) {</span>
+<span class="cstat-no" title="statement not covered" >      log.debug('Sprites - load() - Finished loading sprite data...');</span>
 <span class="cstat-no" title="statement not covered" >      this.loadedSpritesCallback();</span>
     }
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  lo</span>adAnimations() {
+<span class="cstat-no" title="statement not covered" >    log.debug('Sprites - loadAnimations()');</span>
 <span class="cstat-no" title="statement not covered" >    this.sparksAnimation = new Animation('idle_down', 6, 0, 16, 16);</span>
 <span class="cstat-no" title="statement not covered" >    this.sparksAnimation.setSpeed(120);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  up</span>dateSprites() {
+<span class="cstat-no" title="statement not covered" >    log.debug('Sprites - updateSprites()', this.renderer.getDrawingScale());</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    _.each(this.sprites, <span class="fstat-no" title="function not covered" >(s</span>prite) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      sprite.update(this.renderer.getDrawingScale());</span>
     });
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    log.info(`Updated sprites to: ${this.renderer.getDrawingScale()}`);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  on</span>LoadedSprites(callback) {
+<span class="cstat-no" title="statement not covered" >    log.debug('Sprites - onLoadedSprites()', callback);</span>
 <span class="cstat-no" title="statement not covered" >    this.loadedSpritesCallback = callback;</span>
   }
 }
@@ -211,7 +229,7 @@ export default class Sprites {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jan 12 2019 15:59:30 GMT-0500 (Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 25 2019 21:03:04 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../../../../prettify.js"></script>

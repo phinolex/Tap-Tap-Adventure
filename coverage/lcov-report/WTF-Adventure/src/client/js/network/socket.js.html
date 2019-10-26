@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/38</span>
+        <span class='fraction'>0/44</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/38</span>
+        <span class='fraction'>0/44</span>
       </div>
     </div>
   </div>
@@ -131,11 +131,22 @@
 86
 87
 88
-89</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -176,26 +187,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -211,6 +227,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -225,6 +243,8 @@ import Messages from './messages';
 &nbsp;
 export default class Socket {
 <span class="fstat-no" title="function not covered" >  co</span>nstructor(game) {
+<span class="cstat-no" title="statement not covered" >    log.debug('Socket - constructor()', game);</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.game = game;</span>
 <span class="cstat-no" title="statement not covered" >    this.config = this.game.app.config;</span>
 <span class="cstat-no" title="statement not covered" >    this.connection = null;</span>
@@ -237,7 +257,7 @@ export default class Socket {
     const protocol = <span class="cstat-no" title="statement not covered" >this.config.ssl ? 'wss' : 'ws';</span>
     const url = <span class="cstat-no" title="statement not covered" >`${protocol}://${this.config.ip}:${this.config.port}`;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    log.info(`Opening WebSocket: ${url}`);</span>
+<span class="cstat-no" title="statement not covered" >    log.debug('Socket - connect()', url);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.connection = null;</span>
 &nbsp;
@@ -249,11 +269,11 @@ export default class Socket {
     });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.connection.on('error', <span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      log.info('Socket Error', error);</span>
+<span class="cstat-no" title="statement not covered" >      log.debug('Socket - connect() - error', error);</span>
     });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.connection.on('connect_error', <span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      log.info(`Failed to connect to: ${this.config.ip}`);</span>
+<span class="cstat-no" title="statement not covered" >      log.debug('Socket - connect() - server connection error', this.config.ip);</span>
 <span class="cstat-no" title="statement not covered" >      log.error(error);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      this.listening = false;</span>
@@ -263,6 +283,7 @@ export default class Socket {
     });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.connection.on('connect', <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      log.debug('Socket - connect() - connecting to server', this.config.ip);</span>
 <span class="cstat-no" title="statement not covered" >      this.listening = true;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      this.game.app.updateLoader('Preparing handshake...');</span>
@@ -273,15 +294,19 @@ export default class Socket {
     });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.connection.on('message', <span class="fstat-no" title="function not covered" >(m</span>essage) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      log.debug('Socket - connect() - message', message);</span>
 <span class="cstat-no" title="statement not covered" >      this.receive(message);</span>
     });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.connection.on('disconnect', <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      log.debug('Socket - connect() - disconnecting');</span>
 <span class="cstat-no" title="statement not covered" >      this.game.handleDisconnection();</span>
     });
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  re</span>ceive(message) {
+<span class="cstat-no" title="statement not covered" >    log.debug('Socket - receive()', message);</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    if (!this.listening) {</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
@@ -300,6 +325,8 @@ export default class Socket {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  se</span>nd(packet, data) {
+<span class="cstat-no" title="statement not covered" >    log.debug('Socket - send()', packet, data);</span>
+&nbsp;
     const json = <span class="cstat-no" title="statement not covered" >JSON.stringify([packet, data]);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (this.connection &amp;&amp; this.connection.connected) {</span>
@@ -313,7 +340,7 @@ export default class Socket {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jan 12 2019 15:59:30 GMT-0500 (Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 25 2019 21:03:04 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../../../../prettify.js"></script>

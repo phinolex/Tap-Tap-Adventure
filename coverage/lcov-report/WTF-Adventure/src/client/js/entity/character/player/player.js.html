@@ -22,12 +22,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/108</span>
+        <span class='fraction'>0/110</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/36</span>
+        <span class='fraction'>0/38</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/106</span>
+        <span class='fraction'>0/110</span>
       </div>
     </div>
   </div>
@@ -290,7 +290,20 @@
 245
 246
 247
-248</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -395,6 +408,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -431,6 +445,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -462,8 +478,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -471,6 +489,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -479,17 +498,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -641,7 +667,8 @@ export default class Player extends Character {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  ge</span>tSpriteName() {
-<span class="cstat-no" title="statement not covered" >    return this.armour ? this.armour.string : 'clotharmor';</span>
+<span class="cstat-no" title="statement not covered" >    console.log('get player sprite armour', this.armour);</span>
+<span class="cstat-no" title="statement not covered" >    return this.armour ? this.armour.name : 'clotharmor';</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  se</span>tMana(mana) {
@@ -680,6 +707,8 @@ export default class Player extends Character {
     const ability = <span class="cstat-no" title="statement not covered" >info.shift();</span>
     const abilityLevel = <span class="cstat-no" title="statement not covered" >info.shift();</span>
 &nbsp;
+<span class="cstat-no" title="statement not covered" >    console.log('setting player equipment', type, info);</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    switch (type) {</span>
       case Modules.Equipment.Armour:
 <span class="cstat-no" title="statement not covered" >        if (!this.armour) {</span>
@@ -709,9 +738,11 @@ export default class Player extends Character {
             ability,
             abilityLevel,
           );
-        } else <span class="cstat-no" title="statement not covered" >this.weapon.update(name, string, count, ability, abilityLevel);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          this.weapon.update(name, string, count, ability, abilityLevel);</span>
+        }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        this.weapon.ranged = string.includes('bow');</span>
+<span class="cstat-no" title="statement not covered" >        this.weapon.ranged = string &amp;&amp; string.includes('bow');</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        break;</span>
 &nbsp;
@@ -724,19 +755,27 @@ export default class Player extends Character {
             ability,
             abilityLevel,
           );
-        } else <span class="cstat-no" title="statement not covered" >this.pendant.update(name, string, count, ability, abilityLevel);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          this.pendant.update(name, string, count, ability, abilityLevel);</span>
+        }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        break;</span>
 &nbsp;
       case Modules.Equipment.Ring:
-<span class="cstat-no" title="statement not covered" >        if (!this.ring) <span class="cstat-no" title="statement not covered" >this.ring = new Ring(name, string, count, ability, abilityLevel);</span></span>
-        else <span class="cstat-no" title="statement not covered" >this.ring.update(name, string, count, ability, abilityLevel);</span>
+<span class="cstat-no" title="statement not covered" >        if (!this.ring) {</span>
+<span class="cstat-no" title="statement not covered" >          this.ring = new Ring(name, string, count, ability, abilityLevel);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          this.ring.update(name, string, count, ability, abilityLevel);</span>
+        }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        break;</span>
 &nbsp;
       case Modules.Equipment.Boots:
-<span class="cstat-no" title="statement not covered" >        if (!this.boots) <span class="cstat-no" title="statement not covered" >this.boots = new Boots(name, string, count, ability, abilityLevel);</span></span>
-        else <span class="cstat-no" title="statement not covered" >this.boots.update(name, string, count, ability, abilityLevel);</span>
+<span class="cstat-no" title="statement not covered" >        if (!this.boots) {</span>
+<span class="cstat-no" title="statement not covered" >          this.boots = new Boots(name, string, count, ability, abilityLevel);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          this.boots.update(name, string, count, ability, abilityLevel);</span>
+        }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        break;</span>
       default:
@@ -790,7 +829,7 @@ export default class Player extends Character {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jan 12 2019 15:59:30 GMT-0500 (Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 25 2019 21:03:04 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../../../../../../prettify.js"></script>

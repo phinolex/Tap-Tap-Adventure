@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/88</span>
+        <span class='fraction'>0/90</span>
       </div>
     </div>
   </div>
@@ -250,7 +250,10 @@
 205
 206
 207
-208</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+208
+209
+210
+211</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,8 +280,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -483,11 +489,14 @@ export default class Map {
 &nbsp;
 <span class="fstat-no" title="function not covered" >  re</span>ady() {
     const rC = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (this.readyCallback) <span class="cstat-no" title="statement not covered" >this.readyCallback();</span></span>
+<span class="cstat-no" title="statement not covered" >      if (this.readyCallback) {</span>
+<span class="cstat-no" title="statement not covered" >        this.readyCallback();</span>
+      }
     };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (this.mapLoaded &amp;&amp; this.tilesetsLoaded) <span class="cstat-no" title="statement not covered" >rC();</span></span>
-    else {
+<span class="cstat-no" title="statement not covered" >    if (this.mapLoaded &amp;&amp; this.tilesetsLoaded) {</span>
+<span class="cstat-no" title="statement not covered" >      rC();</span>
+    } else {
 <span class="cstat-no" title="statement not covered" >      setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        this.ready();</span>
       }, 50);
@@ -496,7 +505,7 @@ export default class Map {
 &nbsp;
 <span class="fstat-no" title="function not covered" >  lo</span>ad() {
 <span class="cstat-no" title="statement not covered" >    if (this.supportsWorker) {</span>
-<span class="cstat-no" title="statement not covered" >      log.info('Parsing map with Web Workers...');</span>
+<span class="cstat-no" title="statement not covered" >      log.debug('Map - load() - Parsing map with Web Workers...');</span>
 &nbsp;
       const worker = <span class="cstat-no" title="statement not covered" >new Worker('./js/map/mapworker.js');</span>
 <span class="cstat-no" title="statement not covered" >      worker.postMessage(1);</span>
@@ -509,10 +518,10 @@ export default class Map {
 <span class="cstat-no" title="statement not covered" >        this.mapLoaded = true;</span>
       };
     } else {
-<span class="cstat-no" title="statement not covered" >      log.info('Parsing map with Ajax...');</span>
+<span class="cstat-no" title="statement not covered" >      log.debug('Map - load() - Parsing map with Ajax...');</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      $.get(</span>
-        'data/maps/world_client.json',
+        'assets/data/maps/world_client.json',
 <span class="fstat-no" title="function not covered" >        (d</span>ata) =&gt; {
 <span class="cstat-no" title="statement not covered" >          this.parseMap(data);</span>
 <span class="cstat-no" title="statement not covered" >          this.loadCollisions();</span>
@@ -533,10 +542,10 @@ export default class Map {
      * that neither the entities would be necessary.
      */
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    this.tilesets.push(this.loadTileset('img/2/tilesheet.png'));</span>
+<span class="cstat-no" title="statement not covered" >    this.tilesets.push(this.loadTileset('assets/img/2/tilesheet.png'));</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (isBigScale) {</span>
-<span class="cstat-no" title="statement not covered" >      this.tilesets.push(this.loadTileset('img/3/tilesheet.png'));</span>
+<span class="cstat-no" title="statement not covered" >      this.tilesets.push(this.loadTileset('assets/img/3/tilesheet.png'));</span>
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.renderer.setTileset(this.tilesets[isBigScale ? 1 : 0]);</span>
@@ -547,7 +556,7 @@ export default class Map {
     const scale = <span class="cstat-no" title="statement not covered" >this.renderer.getDrawingScale();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (scale &gt; 2 &amp;&amp; !this.tilesets[1]) {</span>
-<span class="cstat-no" title="statement not covered" >      this.tilesets.push(this.loadTileset('img/3/tilesheet.png'));</span>
+<span class="cstat-no" title="statement not covered" >      this.tilesets.push(this.loadTileset('assets/img/3/tilesheet.png'));</span>
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.renderer.setTileset(this.tilesets[scale - 2]);</span>
@@ -670,7 +679,7 @@ export default class Map {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jan 12 2019 15:59:30 GMT-0500 (Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 25 2019 21:03:04 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../../../../prettify.js"></script>

@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/172</span>
+        <span class='fraction'>0/173</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/158</span>
+        <span class='fraction'>0/159</span>
       </div>
     </div>
   </div>
@@ -448,8 +448,7 @@
 403
 404
 405
-406
-407</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+406</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -459,6 +458,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -469,28 +472,21 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -507,6 +503,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -514,11 +511,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -753,6 +750,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -863,6 +861,10 @@ import Modules from '../utils/modules';
 import Packets from '../network/packets';
 import Detect from '../utils/detect';
 &nbsp;
+/**
+ * Handles game mouse and keyboard input
+ * @class
+ */
 export default class Input {
 <span class="fstat-no" title="function not covered" >  co</span>nstructor(game) {
 <span class="cstat-no" title="statement not covered" >    this.game = game;</span>
@@ -875,21 +877,15 @@ export default class Input {
 <span class="cstat-no" title="statement not covered" >    this.targetVisible = true;</span>
 <span class="cstat-no" title="statement not covered" >    this.selectedX = -1;</span>
 <span class="cstat-no" title="statement not covered" >    this.selectedY = -1;</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.cursor = null;</span>
 <span class="cstat-no" title="statement not covered" >    this.newCursor = null;</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.targetData = null;</span>
 <span class="cstat-no" title="statement not covered" >    this.targetColour = null;</span>
 <span class="cstat-no" title="statement not covered" >    this.newTargetColour = null;</span>
 <span class="cstat-no" title="statement not covered" >    this.mobileTargetColour = 'rgba(51, 255, 0)';</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.previousKey = {};</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.cursors = {};</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.hovering = null;</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.mouse = {</span>
       x: 0,
       y: 0,
@@ -903,7 +899,6 @@ export default class Input {
      * This is the animation for the target
      * cell spinner sprite (only on desktop)
      */
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.targetAnimation = new Animation('move', 4, 0, 16, 16);</span>
 <span class="cstat-no" title="statement not covered" >    this.targetAnimation.setSpeed(50);</span>
 &nbsp;
@@ -912,6 +907,9 @@ export default class Input {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  lo</span>adCursors() {
+<span class="cstat-no" title="statement not covered" >    log.debug('Input - loadCursors()');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    console.log('get hand cursor', this.game.getSprite('hand'));</span>
 <span class="cstat-no" title="statement not covered" >    this.cursors.hand = this.game.getSprite('hand');</span>
 <span class="cstat-no" title="statement not covered" >    this.cursors.sword = this.game.getSprite('sword');</span>
 <span class="cstat-no" title="statement not covered" >    this.cursors.loot = this.game.getSprite('loot');</span>
@@ -923,8 +921,6 @@ export default class Input {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.newCursor = this.cursors.hand;</span>
 <span class="cstat-no" title="statement not covered" >    this.newTargetColour = 'rgba(255, 255, 255, 0.5)';</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    log.info('Loaded Cursors!');</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  ha</span>ndle(inputType, data) {
@@ -1159,10 +1155,11 @@ export default class Input {
 &nbsp;
 <span class="fstat-no" title="function not covered" >  se</span>tCoords(event) {
     const offset = <span class="cstat-no" title="statement not covered" >this.app.canvas.offset();</span>
+    // check background
     const {
       width,
       height,
-    } = <span class="cstat-no" title="statement not covered" >this.renderer.background;</span>
+    } = <span class="cstat-no" title="statement not covered" >this.renderer.backgroundCanvas;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.mouse.x = Math.round(</span>
       (event.pageX - offset.left) / this.app.getZoom(),
@@ -1267,7 +1264,7 @@ export default class Input {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jan 12 2019 15:59:30 GMT-0500 (Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 25 2019 21:03:04 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../../../../prettify.js"></script>

@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/33</span>
+        <span class='fraction'>0/36</span>
       </div>
     </div>
   </div>
@@ -143,7 +143,34 @@
 98
 99
 100
-101</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -151,19 +178,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -171,7 +192,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -192,6 +213,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -245,13 +267,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import $ from 'jquery';
 &nbsp;
+/**
+ * Shows an popup overlay when the mouse
+ * is over a character or enemy that displays
+ * information about them
+ * @class
+ */
 export default class Overlay {
 <span class="fstat-no" title="function not covered" >  co</span>nstructor(input) {
 <span class="cstat-no" title="statement not covered" >    this.input = input;</span>
 <span class="cstat-no" title="statement not covered" >    this.hovering = null;</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.attackInfo = $('#attackInfo');</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.image = this.attackInfo.find('.image div');</span>
 <span class="cstat-no" title="statement not covered" >    this.name = this.attackInfo.find('.name');</span>
 <span class="cstat-no" title="statement not covered" >    this.details = this.attackInfo.find('.details');</span>
@@ -262,16 +288,22 @@ export default class Overlay {
 <span class="cstat-no" title="statement not covered" >    if (!this.validEntity(entity)) {</span>
 <span class="cstat-no" title="statement not covered" >      this.hovering = null;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (this.isVisible()) <span class="cstat-no" title="statement not covered" >this.hide();</span></span>
+<span class="cstat-no" title="statement not covered" >      if (this.isVisible()) {</span>
+<span class="cstat-no" title="statement not covered" >        this.hide();</span>
+      }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!this.isVisible()) <span class="cstat-no" title="statement not covered" >this.display();</span></span>
+<span class="cstat-no" title="statement not covered" >    if (!this.isVisible()) {</span>
+<span class="cstat-no" title="statement not covered" >      this.display();</span>
+    }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.hovering = entity;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    this.name.html(entity.type === 'player' ? entity.username : entity.name);</span>
+<span class="cstat-no" title="statement not covered" >    this.name.html(entity.type === 'player'</span>
+      ? entity.username
+      : entity.name);
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (this.hasHealth()) {</span>
 <span class="cstat-no" title="statement not covered" >      this.health.css({</span>
@@ -292,8 +324,9 @@ export default class Overlay {
         &amp;&amp; this.hovering.type !== 'npc'
         &amp;&amp; this.hovering.type !== 'item'
       ) {
-<span class="cstat-no" title="statement not covered" >        if (hitPoints &lt; 1) <span class="cstat-no" title="statement not covered" >this.hide();</span></span>
-        else {
+<span class="cstat-no" title="statement not covered" >        if (hitPoints &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >          this.hide();</span>
+        } else {
 <span class="cstat-no" title="statement not covered" >          this.health.css(</span>
             'width',
             `${Math.ceil((hitPoints / this.hovering.maxHitPoints) * 100)
@@ -349,7 +382,7 @@ export default class Overlay {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jan 12 2019 15:59:30 GMT-0500 (Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 25 2019 21:03:04 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../../../../prettify.js"></script>
