@@ -19,8 +19,23 @@ class Logger {
    */
   randomColor() {
     let color = (Math.floor(Math.random() * 16777215)).toString(16);
-    return `#${color.padEnd(6, '0')}`;
+    return `#${this.padEnd(color, 6, '0')}`;
   }
+
+  padEnd(str, targetLength, val) {
+   str = String(str);
+   targetLength = parseInt(targetLength, 10) || 0;
+
+   if (str.length >= targetLength) {
+     return str;
+   }
+
+   if (String.prototype.padEnd) {
+     return str.padEnd(targetLength);
+   }
+   targetLength -= str.length;
+   return str + val.repeat(targetLength);
+ }
 
   /**
    * Figure out whether to return white or black text color for the

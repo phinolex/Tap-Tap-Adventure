@@ -332,7 +332,10 @@ export default class Renderer {
     // log.debug('Renderer - drawEntities()');
 
     this.forEachVisibleEntity((entity) => {
-      if (entity.spriteLoaded) this.drawEntity(entity);
+      if (entity.spriteLoaded) {
+        log.debug('drawEntities', entity);
+        this.drawEntity(entity);
+      }
     });
   }
 
