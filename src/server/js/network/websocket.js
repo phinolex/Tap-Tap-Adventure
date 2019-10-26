@@ -44,6 +44,14 @@ class Connection {
   sendUTF8(data) {
     this.socket.send(data);
   }
+
+  close(reason) {
+    if (reason) {
+      console.log(`[Connection] Closing - ${reason}`);
+    }
+
+    this.socket.conn.close();
+  }
 }
 
 class Server extends Socket {
@@ -67,6 +75,9 @@ class Server extends Socket {
       .createServer(app)
       .listen(port, host, () => {
         log.notice(`Server is now listening on: ${port}`);
+        if (this.webSocketReadyCallback) {
+          this.webSocketReadyCallback();
+        }
       });
 
     this.io = new SocketIO(this.httpServer);
@@ -116,6 +127,10 @@ class Server extends Socket {
 
   onRequestStatus(callback) {
     this.statusCallback = callback;
+  }
+
+  onWebSocketReady(callback) {
+    this.webSocketReadyCallback = callback;
   }
 }
 

@@ -4,7 +4,7 @@ import ItemsDictionary from '../../../../../util/items';
 export default class Pendant extends Equipment {
   constructor(name, id, count, ability, abilityLevel) {
     super(name, id, count, ability, abilityLevel);
-    this.itemsDictionary = new ItemsDictionary();
+    this.itemsDictionary = ItemsDictionary;
     this.pendantLevel = this.itemsDictionary.getPendantLevel(name);
   }
 

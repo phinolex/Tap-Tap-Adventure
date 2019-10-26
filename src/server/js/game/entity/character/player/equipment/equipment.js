@@ -11,7 +11,7 @@ export default class Equipment {
     this.count = count || 0;
     this.ability = ability || 0;
     this.abilityLevel = abilityLevel || 0;
-    this.itemsDictionary = new ItemsDictionary();
+    this.itemsDictionary = ItemsDictionary;
   }
 
   getName() {
@@ -48,7 +48,7 @@ export default class Equipment {
     ];
   }
 
-  getString() {
+  getName() {
     return this.itemsDictionary.idToString(this.id);
   }
 

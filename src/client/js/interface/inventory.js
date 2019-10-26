@@ -25,10 +25,10 @@ export default class Inventory {
 
       const itemSlot = $(`<div id="slot${i}" class="itemSlot"></div>`);
 
-      if (item.string !== 'null') {
+      if (item.name !== 'null') {
         itemSlot.css(
           'background-image',
-          this.container.getImageFormat(this.getScale(), item.string),
+          this.container.getImageFormat(this.getScale(), item.name),
         );
       }
 
@@ -67,7 +67,7 @@ export default class Inventory {
 
     this.clearSelection();
 
-    if (slot.string === null || slot.count === -1) {
+    if (slot.name === null || slot.count === -1) {
       return;
     }
 
@@ -183,7 +183,7 @@ export default class Inventory {
 
     if (slot.isEmpty()) {
       slot.load(
-        info.string,
+        info.name,
         info.count,
         info.ability,
         info.abilityLevel,
@@ -198,7 +198,7 @@ export default class Inventory {
 
     cssSlot.css(
       'background-image',
-      this.container.getImageFormat(this.getScale(), slot.string),
+      this.container.getImageFormat(this.getScale(), slot.name),
     );
 
     if (this.game.app.isMobile()) cssSlot.css('background-size', '600%');
@@ -240,7 +240,7 @@ export default class Inventory {
         } else {
           item.css(
             'background-image',
-            this.container.getImageFormat(this.getScale(), slot.string),
+            this.container.getImageFormat(this.getScale(), slot.name),
           );
         }
       }

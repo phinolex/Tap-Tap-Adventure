@@ -57,7 +57,7 @@ export default class World {
 
       if (diff < 4000) {
         connection.sendUTF8('toofast');
-        connection.close('Logging in too rapidly');
+        connection.Socket.close('Logging in too rapidly');
 
         return;
       }
@@ -91,7 +91,7 @@ export default class World {
    * whatever new map we have created server sided. Cleaner and nicer.
    */
   load(onWorldLoad) {
-    log.info(`************ World ${this.id} ***********`);
+    console.log(`************ World ${this.id} ***********`);
 
     this.map = new Map(this);
     this.map.isReady(() => {
@@ -99,7 +99,7 @@ export default class World {
       this.spawnChests();
       this.spawnEntities();
 
-      log.info('The map has been successfully loaded!');
+      console.log('The map has been successfully loaded!');
 
       this.loaded();
       onWorldLoad();
@@ -118,7 +118,7 @@ export default class World {
     }
 
     this.ready = true;
-    log.info('********************************');
+    console.log('********************************');
   }
 
   tick() {
@@ -511,7 +511,7 @@ export default class World {
 
       if (!info || info === 'null') {
         if (this.debug) {
-          log.info(
+          console.log(
             `Unknown object spawned at: ${position.x} ${position.y}`,
           );
         }
@@ -553,7 +553,7 @@ export default class World {
       entities += 1;
     });
 
-    log.info(`Spawned ${entities} entities!`);
+    console.log(`Spawned ${entities} entities!`);
   }
 
   spawnChests() {
@@ -565,7 +565,7 @@ export default class World {
       chests += 1;
     });
 
-    log.info(`Spawned ${chests} static chests`);
+    console.log(`Spawned ${chests} static chests`);
   }
 
   spawnMob(id, x, y) {
@@ -656,13 +656,14 @@ export default class World {
     entities = _.map(entities, instance => parseInt(instance, 10));
 
     if (entities) {
+      console.log('pushing entities list', entities);
       player.send(new Messages.List(entities));
     }
   }
 
   addEntity(entity) {
     if (entity.instance in this.entities) {
-      log.info(`Entity ${entity.instance} already exists.`);
+      console.log(`Entity ${entity.instance} already exists.`);
     }
 
     this.entities[entity.instance] = entity;

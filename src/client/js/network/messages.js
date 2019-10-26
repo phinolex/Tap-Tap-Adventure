@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import Packets from './packets';
+import log from '../lib/log';
 
 /**
  * Do not clutter up the Socket class with callbacks,
@@ -13,10 +14,9 @@ import Packets from './packets';
  */
 export default class Messages {
   constructor(app) {
+    log.debug('Messages - constructor()', app);
     this.app = app;
-
     this.messages = [];
-
     this.messages[Packets.Handshake] = this.receiveHandshake;
     this.messages[Packets.Welcome] = this.receiveWelcome;
     this.messages[Packets.Spawn] = this.receiveSpawn;
@@ -54,6 +54,8 @@ export default class Messages {
   }
 
   handleData(data) {
+    log.debug('Messages - handleData()', data);
+
     const packet = data.shift();
 
     if (this.messages[packet] && _.isFunction(this.messages[packet])) {
@@ -62,12 +64,16 @@ export default class Messages {
   }
 
   handleBulkData(data) {
+    log.debug('Messages - handleBulkData()', data);
+
     _.each(data, (message) => {
       this.handleData(message);
     });
   }
 
   handleUTF8(message) {
+    log.debug('Messages - handleUTF8()', message);
+
     this.app.toggleLogin(false);
 
     switch (message) {
@@ -162,12 +168,16 @@ export default class Messages {
    */
 
   receiveHandshake(data) {
+    log.debug('Messages - receiveHandshake()', data);
+
     if (this.handshakeCallback) {
       this.handshakeCallback(data.shift());
     }
   }
 
   receiveWelcome(data) {
+    log.debug('Messages - receiveWelcome()', data);
+
     const playerData = data.shift();
 
     if (this.welcomeCallback) {
@@ -176,12 +186,16 @@ export default class Messages {
   }
 
   receiveSpawn(data) {
+    log.debug('Messages - receiveSpawn()', data);
+
     if (this.spawnCallback) {
       this.spawnCallback(data);
     }
   }
 
   receiveEquipment(data) {
+    log.debug('Messages - receiveEquipment()', data);
+
     const equipType = data.shift();
     const equipInfo = data.shift();
 
@@ -191,18 +205,24 @@ export default class Messages {
   }
 
   receiveEntityList(data) {
+    log.debug('Messages - receiveEntityList()', data);
+
     if (this.entityListCallback) {
       this.entityListCallback(data);
     }
   }
 
   receiveSync(data) {
+    log.debug('Messages - receiveSync()', data);
+
     if (this.syncCallback) {
       this.syncCallback(data.shift());
     }
   }
 
   receiveMovement(data) {
+    log.debug('Messages - receiveMovement()', data);
+
     const movementData = data.shift();
     if (this.movementCallback) {
       this.movementCallback(movementData);
@@ -210,6 +230,8 @@ export default class Messages {
   }
 
   receiveTeleport(data) {
+    log.debug('Messages - receiveTeleport()', data);
+
     const teleportData = data.shift();
 
     if (this.teleportCallback) {
@@ -218,6 +240,8 @@ export default class Messages {
   }
 
   receiveDespawn(data) {
+    log.debug('Messages - receiveTeleport()', data);
+
     const id = data.shift();
 
     if (this.despawnCallback) {
@@ -226,6 +250,8 @@ export default class Messages {
   }
 
   receiveCombat(data) {
+    log.debug('Messages - receiveCombat()', data);
+
     const combatData = data.shift();
 
     if (this.combatCallback) {
@@ -234,6 +260,8 @@ export default class Messages {
   }
 
   receiveAnimation(data) {
+    log.debug('Messages - receiveAnimation()', data);
+
     const id = data.shift();
     const info = data.shift();
 
@@ -243,6 +271,8 @@ export default class Messages {
   }
 
   receiveProjectile(data) {
+    log.debug('Messages - receiveProjectile()', data);
+
     const type = data.shift();
     const info = data.shift();
 
@@ -252,12 +282,16 @@ export default class Messages {
   }
 
   receivePopulation(data) {
+    log.debug('Messages - receivePopulation()', data);
+
     if (this.populationCallback) {
       this.populationCallback(data.shift());
     }
   }
 
   receivePoints(data) {
+    log.debug('Messages - receivePoints()', data);
+
     const pointsData = data.shift();
 
     if (this.pointsCallback) {
@@ -266,6 +300,8 @@ export default class Messages {
   }
 
   receiveNetwork(data) {
+    log.debug('Messages - receiveNetwork()', data);
+
     const opcode = data.shift();
 
     if (this.networkCallback) {
@@ -274,6 +310,8 @@ export default class Messages {
   }
 
   receiveChat(data) {
+    log.debug('Messages - receiveChat()', data);
+
     const info = data.shift();
 
     if (this.chatCallback) {
@@ -282,6 +320,8 @@ export default class Messages {
   }
 
   receiveCommand(data) {
+    log.debug('Messages - receiveCommand()', data);
+
     const info = data.shift();
 
     if (this.commandCallback) {
@@ -290,6 +330,8 @@ export default class Messages {
   }
 
   receiveInventory(data) {
+    log.debug('Messages - receiveInventory()', data);
+
     const opcode = data.shift();
     const info = data.shift();
 
@@ -299,6 +341,8 @@ export default class Messages {
   }
 
   receiveBank(data) {
+    log.debug('Messages - receiveBank()', data);
+
     const opcode = data.shift();
     const info = data.shift();
 
@@ -308,6 +352,8 @@ export default class Messages {
   }
 
   receiveAbility(data) {
+    log.debug('Messages - receiveAbility()', data);
+
     const opcode = data.shift();
     const info = data.shift();
 
@@ -317,6 +363,8 @@ export default class Messages {
   }
 
   receiveQuest(data) {
+    log.debug('Messages - receiveQuest()', data);
+
     const opcode = data.shift();
     const info = data.shift();
 
@@ -326,6 +374,8 @@ export default class Messages {
   }
 
   receiveNotification(data) {
+    log.debug('Messages - receiveNotification()', data);
+
     const opcode = data.shift();
     const message = data.shift();
 
@@ -335,6 +385,8 @@ export default class Messages {
   }
 
   receiveBlink(data) {
+    log.debug('Messages - receiveBlink()', data);
+
     const instance = data.shift();
 
     if (this.blinkCallback) {
@@ -343,18 +395,24 @@ export default class Messages {
   }
 
   receiveHeal(data) {
+    log.debug('Messages - receiveHeal()', data);
+
     if (this.healCallback) {
       this.healCallback(data.shift());
     }
   }
 
   receiveExperience(data) {
+    log.debug('Messages - receiveExperience()', data);
+
     if (this.experienceCallback) {
       this.experienceCallback(data.shift());
     }
   }
 
   receiveDeath(data) {
+    log.debug('Messages - receiveDeath()', data);
+
     if (this.deathCallback) {
       this.deathCallback(data.shift());
     }

@@ -25,7 +25,7 @@ export default class Pathfinder {
       for (let j = 0; j < this.width; j += 1) this.blankGrid[i][j] = 0;
     }
 
-    log.info('Sucessfully loaded the pathfinder!');
+    log.debug('Sucessfully loaded the pathfinder!');
   }
 
   find(grid, entity, x, y, incomplete) {

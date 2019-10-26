@@ -161,7 +161,7 @@ export default class Audio {
    */
   play(type, name) {
     if (!this.isEnabled() || !this.fileExists(name)) {
-      log.info('Audio is disabled');
+      log.debug('Audio - play() - audio is disabled');
       return false;
     }
 
@@ -174,7 +174,7 @@ export default class Audio {
         });
 
         if (!this.song) {
-          log.info(`${name} - music could not be loaded`);
+          log.debug(`Audio - play() - ${name} could not be loaded`);
           return false;
         }
 
@@ -188,7 +188,7 @@ export default class Audio {
         }
 
         if (!this.song) {
-          log.info(`${name} - sfx could not be loaded`);
+          log.debug(`Audio - play() - ${name} sfx could not be loaded`);
           return false;
         }
 
@@ -207,11 +207,12 @@ export default class Audio {
    * @return {Boolean}
    */
   update() {
+    log.debug('Audio - update()', this.songName);
+
     if (!this.isEnabled()) {
+      log.debug('Audio - update() - audio is disabled');
       return false;
     }
-
-    log.info(`updating ${this.songName}`);
 
     const song = this.getMusic(this.songName);
 

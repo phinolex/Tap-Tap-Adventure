@@ -22,21 +22,15 @@ export default class Input {
     this.targetVisible = true;
     this.selectedX = -1;
     this.selectedY = -1;
-
     this.cursor = null;
     this.newCursor = null;
-
     this.targetData = null;
     this.targetColour = null;
     this.newTargetColour = null;
     this.mobileTargetColour = 'rgba(51, 255, 0)';
-
     this.previousKey = {};
-
     this.cursors = {};
-
     this.hovering = null;
-
     this.mouse = {
       x: 0,
       y: 0,
@@ -58,6 +52,9 @@ export default class Input {
   }
 
   loadCursors() {
+    log.debug('Input - loadCursors()');
+
+    console.log('get hand cursor', this.game.getSprite('hand'));
     this.cursors.hand = this.game.getSprite('hand');
     this.cursors.sword = this.game.getSprite('sword');
     this.cursors.loot = this.game.getSprite('loot');
@@ -69,8 +66,6 @@ export default class Input {
 
     this.newCursor = this.cursors.hand;
     this.newTargetColour = 'rgba(255, 255, 255, 0.5)';
-
-    log.info('Loaded Cursors!');
   }
 
   handle(inputType, data) {
@@ -305,10 +300,11 @@ export default class Input {
 
   setCoords(event) {
     const offset = this.app.canvas.offset();
+    // check background
     const {
       width,
       height,
-    } = this.renderer.background;
+    } = this.renderer.backgroundCanvas;
 
     this.mouse.x = Math.round(
       (event.pageX - offset.left) / this.app.getZoom(),

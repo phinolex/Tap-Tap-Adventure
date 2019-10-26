@@ -16,7 +16,7 @@ export default class App {
    * orientation and then load the login screen
    */
   constructor() {
-    log.info('Loading the main application...');
+    log.debug('App - constructor()');
 
     /**
      * Configuration for the client application
@@ -229,6 +229,13 @@ export default class App {
      */
     this.statusMessage = null;
 
+    // auto-binding
+    this.keydownEventListener = this.keydownEventListener.bind(this);
+    this.keyupEventListener = this.keyupEventListener.bind(this);
+    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);
+    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);
+    this.canvasClickEventListener = this.canvasClickEventListener.bind(this);
+
     this.sendStatus('You should turn back now...');
 
     this.zoom();
@@ -240,6 +247,8 @@ export default class App {
    * Add click listeners for the different parts of the UI
    */
   load() {
+    log.debug('App - load()');
+
     this.loginButton.click(() => this.login());
     this.createButton.click(() => this.login());
     this.wrapper.click(() => this.loadCharacter());
@@ -259,16 +268,18 @@ export default class App {
     this.window.resize(this.zoom());
 
     $.getJSON('./src/client/config.json', (json) => {
+      log.debug('App - loading client config');
       this.config = json;
 
       if (this.readyCallback) {
+        log.debug('App - loading client config done - readyCallback()');
         this.readyCallback();
       }
     });
 
-    $(document).keydown(this.keydownEventListener);
-    $(document).keyup(this.keyupEventListener);
-    $(document).mousemove(this.mousemoveEventListener);
+    $(document).on('keydown', this.keydownEventListener);
+    $(document).on('keyup', this.keyupEventListener);
+    $(document).on('mousemove', this.mousemoveEventListener);
     this.canvas.click(this.canvasClickEventListener);
 
     $('input[type="range"]').on('input', () => {
@@ -281,6 +292,8 @@ export default class App {
    * finished loading
    */
   welcomeContinue() {
+    log.debug('App - welcomeContinue()');
+
     if (!this.game) {
       return false;
     }
@@ -298,6 +311,8 @@ export default class App {
    * @return {Boolean}
    */
   login() {
+    log.debug('App - login()');
+
     if (
       this.loggingIn
       || !this.game
@@ -317,6 +332,8 @@ export default class App {
    * @return {Boolean}
    */
   loginAsGuest() {
+    log.debug('App - loginAsGuest()');
+
     if (!this.game) {
       return false;
     }
@@ -332,6 +349,8 @@ export default class App {
    * @return {Boolean}
    */
   loadCharacter() {
+    log.debug('App - loadCharacter()');
+
     if (
       this.wrapper.hasClass('about')
       || this.wrapper.hasClass('credits')
@@ -354,6 +373,8 @@ export default class App {
    * @return {Boolean}
    */
   rememberLogin() {
+    log.debug('App - rememberLogin()');
+
     if (!this.game || !this.game.storage) {
       return false;
     }
@@ -371,6 +392,8 @@ export default class App {
    * @return {Boolean}
    */
   respawnPlayer() {
+    log.debug('App - respawnPlayer()');
+
     if (!this.game || !this.game.player || !this.game.player.dead) {
       return false;
     }
@@ -385,6 +408,8 @@ export default class App {
    * @return {Boolean}
    */
   keydownEventListener(event) {
+    log.debug('App - keydownEventListener()', event);
+
     const key = event.which;
 
     if (!this.game) {
@@ -411,6 +436,8 @@ export default class App {
    * @return {Boolean}
    */
   keyupEventListener(event) {
+    log.debug('App - keyupEventListener()', event);
+
     const key = event.which;
 
     if (!this.game || !this.game.started) {
@@ -426,12 +453,15 @@ export default class App {
    * @param {Object} event mouse event
    */
   mousemoveEventListener(event) {
+    log.debug('App - mousemoveEventListener()', event, this);
+
     if (!this.game || !this.game.input || !this.game.started) {
       return false;
     }
 
     this.game.input.setCoords(event);
     this.game.input.moveCursor();
+
     return true;
   }
 
@@ -441,12 +471,15 @@ export default class App {
    * @return {Boolean}
    */
   canvasClickEventListener(event) {
+    log.debug('App - canvasClickEventListener()', event);
+
     if (!this.game || !this.game.started || event.button !== 0) {
       return false;
     }
 
     window.scrollTo(0, 1);
     this.game.input.handle(Modules.InputType.LeftClick, event);
+
     return true;
   }
 
@@ -455,6 +488,8 @@ export default class App {
    * game to fit porportionally with the player's window size
    */
   zoom() {
+    log.debug('App - zoom()');
+
     const containerWidth = this.container.width();
     const containerHeight = this.container.height();
     const windowWidth = this.window.width();
@@ -482,6 +517,8 @@ export default class App {
    * Fades the menu
    */
   fadeMenu() {
+    log.debug('App - fadeMenu()');
+
     this.updateLoader(null);
 
     setTimeout(() => {
@@ -495,6 +532,8 @@ export default class App {
    * Shows the menu
    */
   showMenu() {
+    log.debug('App - showMenu()');
+
     this.body.removeClass('game');
     this.body.removeClass('started');
     this.body.addClass('intro');
@@ -506,7 +545,7 @@ export default class App {
    * @param {String} destination the new screen to show
    */
   displayScreen(origin, destination) {
-    log.info('open scroll', origin, destination);
+    log.debug('App - displayScreen()', origin, destination);
 
     if (!destination || this.loggingIn) {
       return;
@@ -523,6 +562,8 @@ export default class App {
    * @param {String} content - the screen to display
    */
   displayScroll(content) {
+    log.debug('App - displayScroll()', content);
+
     const state = this.wrapper.attr('class');
 
     if (this.game.started) {
@@ -545,6 +586,8 @@ export default class App {
    * Verify the active form
    */
   verifyForm() {
+    log.debug('App - verifyForm()');
+
     const activeForm = this.getActiveForm();
 
     if (activeForm === 'null') {
@@ -565,6 +608,8 @@ export default class App {
    * @return {Boolean} true if valid
    */
   verifyJoinForm() {
+    log.debug('App - verifyJoinForm()');
+
     const characterName = $('#registerNameInput');
     const registerPassword = $('#registerPasswordInput');
     const email = $('#registerEmailInput');
@@ -611,6 +656,8 @@ export default class App {
    * @return {Boolean} true if valid
    */
   verifyLoginForm() {
+    log.debug('App - verifyLoginForm()');
+
     const nameInput = $('#loginNameInput');
     const passwordInput = $('#loginPasswordInput');
 
@@ -638,6 +685,8 @@ export default class App {
    * @return {Boolean} true if valid
    */
   verifyEmail(email) {
+    log.debug('App - verifyEmail()', email);
+
     return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       email,
     );
@@ -649,6 +698,8 @@ export default class App {
    * @param {String} message the message
    */
   sendStatus(message) {
+    log.debug('App - sendStatus()', message);
+
     this.cleanErrors();
 
     this.statusMessage = message;
@@ -670,9 +721,9 @@ export default class App {
    * that this field has an issue
    */
   sendError(field, error) {
-    this.cleanErrors();
-    log.info(`Error: ${error}`);
+    log.debug('App - sendError()', field, error);
 
+    this.cleanErrors();
     this.errorMsg.html(error);
     this.errorMsg.show();
 
@@ -693,6 +744,8 @@ export default class App {
    * on the active form's input fields
    */
   cleanErrors() {
+    log.debug('App - cleanErrors()');
+
     const activeForm = this.getActiveForm();
     const fields = activeForm === 'loadCharacter'
       ? this.loginFields
@@ -711,6 +764,8 @@ export default class App {
    * @return {String} active form's ID
    */
   getActiveForm() {
+    log.debug('App - getActiveForm()');
+
     return this.wrapper && this.wrapper[0] && this.wrapper[0].className;
   }
 
@@ -719,6 +774,8 @@ export default class App {
    * @return {Boolean} true if on the join form
    */
   isRegistering() {
+    log.debug('App - isRegistering()');
+
     return this.getActiveForm() === 'createCharacter';
   }
 
@@ -727,6 +784,8 @@ export default class App {
    * @return {Boolean} true if player is a guest
    */
   isGuest() {
+    log.debug('App - isGuest()');
+
     return this.guestLogin;
   }
 
@@ -734,6 +793,8 @@ export default class App {
    * Call the game's resizer function
    */
   resize() {
+    log.debug('App - resize()');
+
     if (this.game) {
       this.game.resize();
     }
@@ -743,7 +804,10 @@ export default class App {
    * Set the app to use a new instance of the game
    */
   setGame(game) {
+    log.debug('App - setGame()', game);
+
     this.game = game;
+    window.wtf = this;
   }
 
   /**
@@ -751,6 +815,8 @@ export default class App {
    * @return {Boolean} returns true if the window has an active web worker
    */
   hasWorker() {
+    log.debug('App - hasWorker()');
+
     return !!this.window.Worker;
   }
 
@@ -782,6 +848,8 @@ export default class App {
    * of 'Connecting to server...'
    */
   revertLoader() {
+    log.debug('App - revertLoader()');
+
     this.updateLoader('Connecting to server...');
   }
 
@@ -790,6 +858,8 @@ export default class App {
    * @param  {String} message the loader message to display
    */
   updateLoader(message) {
+    log.debug('App - updateLoader()', message);
+
     if (!message) {
       this.loading.hide();
       this.loadingMsg.html('');
@@ -805,7 +875,7 @@ export default class App {
    * @param  {Boolean} toggle true to hide, false to show
    */
   toggleLogin(toggle) {
-    log.info(`Logging in: ${toggle}`);
+    log.debug('App - toggleLogin()', toggle);
 
     this.revertLoader();
     this.toggleTyping(toggle);
@@ -828,6 +898,8 @@ export default class App {
    * @param  {String} state the state to update the fields to
    */
   toggleTyping(state) {
+    log.debug('App - toggleTyping()', state);
+
     if (this.loginFields) {
       _.each(this.loginFields, (field) => {
         field.prop('readonly', state);
@@ -846,6 +918,8 @@ export default class App {
    * using a linear gradient on the background color
    */
   updateRange(field) {
+    log.debug('App - updateRange()', field);
+
     const obj = $(field);
     const val = (obj.val() - obj.attr('min')) / (obj.attr('max') - obj.attr('min'));
 
@@ -861,6 +935,9 @@ export default class App {
    * player is using
    */
   updateOrientation() {
+    log.debug('App - updateOrientation()');
+
+    // this.zoom();
     this.orientation = this.getOrientation();
   }
 
@@ -869,6 +946,8 @@ export default class App {
    * @return {String} portrait|landscape
    */
   getOrientation() {
+    log.debug('App - getOrientation()');
+
     return this.height > this.width ? 'portrait' : 'landscape';
   }
 
@@ -877,16 +956,20 @@ export default class App {
    * @return {Number} a value from 0 to 1
    */
   getZoom() {
+    log.debug('App - getZoom()');
+
     return this.zoomFactor;
   }
 
   /**
    * The callback function when this app class is ready
    * and done loading
-   * @param  {Function} callback the callback function when
+   * @param {Function} callback the callback function when
    * this application class is done loading
    */
   onReady(callback) {
+    log.debug('App - onReady()', callback);
+
     this.readyCallback = callback;
   }
 
@@ -895,6 +978,8 @@ export default class App {
    * @return {Boolean} true if a phone
    */
   isMobile() {
+    log.debug('App - isMobile()');
+
     return this.getScaleFactor() < 2;
   }
 
@@ -903,6 +988,8 @@ export default class App {
    * @return {Boolean} true if a tablet
    */
   isTablet() {
+    log.debug('App - isTablet()');
+
     return Detect.isIpad() || (Detect.isAndroid() && this.getScaleFactor() > 1);
   }
 }

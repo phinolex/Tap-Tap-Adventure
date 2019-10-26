@@ -16,7 +16,8 @@ let worldsCreated = 0;
 
 function loadParser() {
   const parsed = new Parser();
-  log.info(`Parser loaded ${parsed}`);
+  console.log('Parser loaded');
+  return parsed;
 }
 
 function saveAll() {
@@ -53,21 +54,17 @@ function onWorldLoad() {
 }
 
 function initializeWorlds() {
-  for (const worldId in worlds) {
-    if (worlds.hasOwnProperty(worldId)) {
-      worlds[worldId].load(onWorldLoad);
-    }
-  }
+  Object.keys(worlds).forEach((worldId) => {
+    worlds[worldId].load(onWorldLoad);
+  });
 }
 
 function getPopulations() {
   const counts = [];
 
-  for (const index in worlds) {
-    if (worlds.hasOwnProperty(index)) {
-      counts.push(worlds[index].getPopulation());
-    }
-  }
+  Object.keys(worlds).forEach((index) => {
+    counts.push(worlds[index].getPopulation());
+  });
 
   return counts;
 }
@@ -104,9 +101,10 @@ function Main() {
       }
     }
 
-    if (world) world.playerConnectCallback(connection);
-    else {
-      log.info('Worlds are currently full, closing...');
+    if (world) {
+      world.playerConnectCallback(connection);
+    } else {
+      console.log('Worlds are currently full, closing...');
 
       connection.sendUTF8('full');
       connection.close();
@@ -114,6 +112,7 @@ function Main() {
   });
 
   setTimeout(() => {
+    console.log('setting timeout, initializing worlds');
     for (let i = 0; i < config.worlds; i += 1) {
       worlds.push(new World(i + 1, webSocket, database));
     }
@@ -164,7 +163,7 @@ function Main() {
 
     switch (command) {
       case 'stop':
-        log.info('Safely shutting down the server...');
+        console.log('Safely shutting down the server...');
         saveAll();
         process.exit();
         break;

@@ -36,6 +36,8 @@ export default class WTF {
     * @type {Game}
     */
     this.game = null;
+
+    this.documentReady = this.documentReady.bind(this);
   }
 
   /**

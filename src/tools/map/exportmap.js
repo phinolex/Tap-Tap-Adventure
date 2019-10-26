@@ -19,7 +19,7 @@ function parseClient(data, destination) {
     if (err) {
       log.error(JSON.stringify(err));
     } else {
-      log.info(`[Client] Map saved at: ${destination}.json`);
+      log.debug(`[Client] Map saved at: ${destination}.json`);
     }
   });
 
@@ -27,7 +27,7 @@ function parseClient(data, destination) {
 
   fs.writeFile(`${destination}.js`, map, (err) => {
     if (err) log.error(JSON.stringify(err));
-    else log.info(`[Client] Map saved at: ${destination}.js`);
+    else log.debug(`[Client] Map saved at: ${destination}.js`);
   });
 }
 
@@ -42,14 +42,14 @@ function parseServer(data, destination) {
     if (err) {
       log.error(JSON.stringify(err));
     } else {
-      log.info(`[Server] Map saved at: ${destination}.json`);
+      log.debug(`[Server] Map saved at: ${destination}.json`);
     }
   });
 }
 
 function onMap(data) {
-  parseClient(data, '../../client/data/maps/world_client');
-  parseServer(data, '../../server/data/map/world_server');
+  parseClient(data, '../../../assets/data/maps/world_client');
+  parseServer(data, '../../../assets/data/map/world_server');
 }
 
 function getMap() {

@@ -4,42 +4,44 @@ import log from '../lib/log';
 
 export default class Sprite {
   constructor(sprite, scale) {
+    // log.debug('Sprite - constructor()', sprite, scale);
+
     this.sprite = sprite;
     this.scale = scale;
-
     this.id = sprite.id;
-
     this.loaded = false;
-
     this.offsetX = 0;
     this.offsetY = 0;
     this.offsetAngle = 0;
-
-    this.whiteSprite = {
-      loaded: false,
-    };
+    this.whiteSprite = { loaded: false };
 
     this.loadSprite();
   }
 
   load() {
+    log.debug('Sprite - load()', this.filepath);
+
     this.image = new Image();
     this.image.crossOrigin = 'Anonymous';
     this.image.src = this.filepath;
 
     this.image.onload = () => {
+      log.debug('Sprite - load() - image loaded', this.filepath);
       this.loaded = true;
 
-      if (this.onLoadCallback) this.onLoadCallback();
+      if (this.onLoadCallback) {
+        log.debug('Sprite - load() - image loaded callback', this.onLoadCallback);
+        this.onLoadCallback();
+      }
     };
   }
 
   loadSprite() {
-    const {
-      sprite,
-    } = this;
+    // log.debug('Sprite - loadSprite()', this.sprite);
 
-    this.filepath = `img/${this.scale}/${this.id}.png`;
+    const { sprite } = this;
+
+    this.filepath = `assets/img/${this.scale}/${this.id}.png`;
     this.animationData = sprite.animations;
 
     this.width = sprite.width;
@@ -51,6 +53,7 @@ export default class Sprite {
   }
 
   update(newScale) {
+    log.debug('Sprite - update()');
     this.scale = newScale;
 
     this.loadSprite();
@@ -58,6 +61,8 @@ export default class Sprite {
   }
 
   createAnimations() {
+    log.debug('Sprite - createAnimations()');
+
     const animations = {};
 
     for (const name in this.animationData) { // eslint-disable-line
@@ -82,20 +87,21 @@ export default class Sprite {
    */
 
   createHurtSprite() {
-    if (!this.loaded) this.load();
+    if (!this.loaded) {
+      log.debug('Sprite - createHurtSprite()');
+      this.load();
+    }
 
-    if (this.whiteSprite.loaded) return;
+    if (this.whiteSprite.loaded) {
+      return;
+    }
 
     const canvas = document.createElement('canvas');
-
-
     const context = canvas.getContext('2d');
 
-
     let spriteData;
-
-    canvas.width = this.image.width;
-    canvas.height = this.image.height;
+    canvas.width = this.width;
+    canvas.height = this.height;
 
     context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
 
@@ -129,11 +135,13 @@ export default class Sprite {
         height: this.height,
       };
     } catch (e) {
-      log.info('sprite error', e);
+      log.debug('Sprite - createHurtSprite() - error', e, this.image, spriteData);
     }
   }
 
   getHurtSprite() {
+    log.debug('Sprite - getHurtSprite()');
+
     try {
       if (!this.loaded) {
         this.load();
@@ -143,12 +151,13 @@ export default class Sprite {
 
       return this.whiteSprite;
     } catch (e) {
-      log.info('sprite hurt error', e);
+      log.debug('Sprite - getHurtSprite() - error', e);
       return null;
     }
   }
 
   onLoad(callback) {
+    log.debug('Sprite - onLoad()', callback);
     this.onLoadCallback = callback;
   }
 }

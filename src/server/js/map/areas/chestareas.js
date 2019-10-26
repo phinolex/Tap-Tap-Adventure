@@ -32,7 +32,7 @@ export default class ChestAreas {
       });
     });
 
-    log.info(`Loaded ${this.chestAreas.length} chest areas.`);
+    console.log(`Loaded ${this.chestAreas.length} chest areas.`);
   }
 
   standardize() {

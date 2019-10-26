@@ -40,7 +40,7 @@ export default class Character extends Entity {
 
     this.healingInterval = null;
 
-    this.mobsDictionary = new MobsDictionary();
+    this.mobsDictionary = MobsDictionary;
 
     this.loadCombat();
     this.startHealing();

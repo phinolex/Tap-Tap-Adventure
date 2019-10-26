@@ -6,6 +6,8 @@ const name = 'data';
 
 export default class Storage {
   constructor(app) {
+    log.debug('Storage - constructor()');
+
     this.app = app;
     this.data = null;
 
@@ -19,7 +21,7 @@ export default class Storage {
       this.data = this.create();
     }
 
-    log.info('loading localstorage', storage.data);
+    log.debug('Storage - load()', storage.data);
 
     if (this.data.clientVersion !== this.app.config.version) {
       this.data = this.create();
@@ -28,6 +30,8 @@ export default class Storage {
   }
 
   create() {
+    log.debug('Storage - create()');
+
     return {
       new: true,
       welcome: true,
@@ -55,22 +59,30 @@ export default class Storage {
   }
 
   save() {
+    log.debug('Storage - save()');
+
     if (this.data) {
       storage.setItem(name, JSON.stringify(this.data));
     }
   }
 
   clear() {
+    log.debug('Storage - clear()');
+
     storage.removeItem(name);
     this.data = this.create();
   }
 
   toggleRemember(toggle) {
+    log.debug('Storage - toggleRemember()', toggle);
+
     this.data.player.rememberMe = toggle;
     this.save();
   }
 
   setPlayer(option, value) {
+    log.debug('Storage - setPlayer()', option, value);
+
     const pData = this.getPlayer();
 
     if (pData.hasOwnProperty(option)) { // eslint-disable-line
@@ -81,6 +93,8 @@ export default class Storage {
   }
 
   setSettings(option, value) {
+    log.debug('Storage - setSettings()', option, value);
+
     const sData = this.getSettings();
 
     if (sData.hasOwnProperty(option)) { // eslint-disable-line
@@ -91,10 +105,12 @@ export default class Storage {
   }
 
   getPlayer() {
+    log.debug('Storage - getPlayer()');
     return this.data.player;
   }
 
   getSettings() {
+    log.debug('Storage - getSettings()');
     return this.data ? this.data.settings : null;
   }
 }

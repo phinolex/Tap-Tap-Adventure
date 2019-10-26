@@ -24,11 +24,14 @@ export default class Map {
 
   ready() {
     const rC = () => {
-      if (this.readyCallback) this.readyCallback();
+      if (this.readyCallback) {
+        this.readyCallback();
+      }
     };
 
-    if (this.mapLoaded && this.tilesetsLoaded) rC();
-    else {
+    if (this.mapLoaded && this.tilesetsLoaded) {
+      rC();
+    } else {
       setTimeout(() => {
         this.ready();
       }, 50);
@@ -37,7 +40,7 @@ export default class Map {
 
   load() {
     if (this.supportsWorker) {
-      log.info('Parsing map with Web Workers...');
+      log.debug('Map - load() - Parsing map with Web Workers...');
 
       const worker = new Worker('./js/map/mapworker.js');
       worker.postMessage(1);
@@ -50,10 +53,10 @@ export default class Map {
         this.mapLoaded = true;
       };
     } else {
-      log.info('Parsing map with Ajax...');
+      log.debug('Map - load() - Parsing map with Ajax...');
 
       $.get(
-        'data/maps/world_client.json',
+        'assets/data/maps/world_client.json',
         (data) => {
           this.parseMap(data);
           this.loadCollisions();
@@ -74,10 +77,10 @@ export default class Map {
      * that neither the entities would be necessary.
      */
 
-    this.tilesets.push(this.loadTileset('img/2/tilesheet.png'));
+    this.tilesets.push(this.loadTileset('assets/img/2/tilesheet.png'));
 
     if (isBigScale) {
-      this.tilesets.push(this.loadTileset('img/3/tilesheet.png'));
+      this.tilesets.push(this.loadTileset('assets/img/3/tilesheet.png'));
     }
 
     this.renderer.setTileset(this.tilesets[isBigScale ? 1 : 0]);
@@ -88,7 +91,7 @@ export default class Map {
     const scale = this.renderer.getDrawingScale();
 
     if (scale > 2 && !this.tilesets[1]) {
-      this.tilesets.push(this.loadTileset('img/3/tilesheet.png'));
+      this.tilesets.push(this.loadTileset('assets/img/3/tilesheet.png'));
     }
 
     this.renderer.setTileset(this.tilesets[scale - 2]);

@@ -5,16 +5,16 @@ export const isInt = n => n % 1 === 0;
 export const TRANSITIONEND = 'transitionend webkitTransitionEnd oTransitionEnd';
 
 // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-window.requestAnimFrame = () => (
-  window.requestAnimationFrame
-  || window.webkitRequestAnimationFrame
-  || window.mozRequestAnimationFrame
-  || window.oRequestAnimationFrame
-  || window.msRequestAnimationFrame
-  || ((callback, element) => {
-    window.setTimeout(callback, 20);
-  })
-);
+export const requestAnimFrame = (function requestAnmiF() {
+  return window.requestAnimationFrame
+        || window.webkitRequestAnimationFrame
+        || window.mozRequestAnimationFrame
+        || window.oRequestAnimationFrame
+        || window.msRequestAnimationFrame
+        || function (callback, element) {
+          window.setTimeout(callback, 20);
+        };
+}());
 
 export const isIntersecting = (rectOne, rectTwo) => (
   rectTwo.left > rectOne.right

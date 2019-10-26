@@ -1,6 +1,6 @@
 /* global postMessage */
 import _ from 'underscore';
-import mapData from '../../data/maps/world_client.js';
+import mapData from '../../../../assets/data/maps/world_client';
 
 function loadCollisionGrid() {
   const tileIndex = 0;

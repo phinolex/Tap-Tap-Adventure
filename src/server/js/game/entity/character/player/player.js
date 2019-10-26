@@ -60,7 +60,7 @@ export default class Player extends Character {
     this.enchant = new Enchant(this);
     this.trade = new Trade(this);
     this.warp = new Warp(this);
-    this.itemsDictionary = new ItemsDictionary();
+    this.itemsDictionary = ItemsDictionary;
 
     this.introduced = false;
     this.currentSong = null;
@@ -163,7 +163,7 @@ export default class Player extends Character {
       stages.pop();
 
       if (this.quests.getQuestSize() !== ids.length) {
-        log.info('Mismatch in quest data.');
+        console.log('Mismatch in quest data.');
         this.save();
       }
 
@@ -175,7 +175,7 @@ export default class Player extends Character {
       progress.pop();
 
       if (this.quests.getAchievementSize() !== ids.length) {
-        log.info('Mismatch in achievements data.');
+        console.log('Mismatch in achievements data.');
 
         this.save();
       }
@@ -193,6 +193,7 @@ export default class Player extends Character {
   intro() {
     if (this.ban > new Date()) {
       this.connection.sendUTF8('ban');
+      console.log(this.connection);
       this.connection.close(`Player: ${this.username} is banned.`);
     }
 
@@ -594,11 +595,13 @@ export default class Player extends Character {
 
   timeout() {
     this.connection.sendUTF8('timeout');
+    console.log('timeout', this.connection);
     this.connection.close(`${this.username} timed out.`);
   }
 
   invalidLogin() {
     this.connection.sendUTF8('invalidlogin');
+    console.log('connection', this.connection);
     this.connection.close(`${this.username} invalid login.`);
   }
 
@@ -808,7 +811,7 @@ export default class Player extends Character {
       maxMana: this.mana.getMaxMana(),
       experience: this.experience,
       level: this.level,
-      armour: this.armour.getString(),
+      armour: this.armour.getName(),
       weapon: this.weapon.getData(),
     };
 

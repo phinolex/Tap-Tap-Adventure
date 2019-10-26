@@ -102,7 +102,8 @@ export default class Player extends Character {
   }
 
   getSpriteName() {
-    return this.armour ? this.armour.string : 'clotharmor';
+    console.log('get player sprite armour', this.armour);
+    return this.armour ? this.armour.name : 'clotharmor';
   }
 
   setMana(mana) {
@@ -141,6 +142,8 @@ export default class Player extends Character {
     const ability = info.shift();
     const abilityLevel = info.shift();
 
+    console.log('setting player equipment', type, info);
+
     switch (type) {
       case Modules.Equipment.Armour:
         if (!this.armour) {
@@ -170,9 +173,11 @@ export default class Player extends Character {
             ability,
             abilityLevel,
           );
-        } else this.weapon.update(name, string, count, ability, abilityLevel);
+        } else {
+          this.weapon.update(name, string, count, ability, abilityLevel);
+        }
 
-        this.weapon.ranged = string.includes('bow');
+        this.weapon.ranged = string && string.includes('bow');
 
         break;
 
@@ -185,19 +190,27 @@ export default class Player extends Character {
             ability,
             abilityLevel,
           );
-        } else this.pendant.update(name, string, count, ability, abilityLevel);
+        } else {
+          this.pendant.update(name, string, count, ability, abilityLevel);
+        }
 
         break;
 
       case Modules.Equipment.Ring:
-        if (!this.ring) this.ring = new Ring(name, string, count, ability, abilityLevel);
-        else this.ring.update(name, string, count, ability, abilityLevel);
+        if (!this.ring) {
+          this.ring = new Ring(name, string, count, ability, abilityLevel);
+        } else {
+          this.ring.update(name, string, count, ability, abilityLevel);
+        }
 
         break;
 
       case Modules.Equipment.Boots:
-        if (!this.boots) this.boots = new Boots(name, string, count, ability, abilityLevel);
-        else this.boots.update(name, string, count, ability, abilityLevel);
+        if (!this.boots) {
+          this.boots = new Boots(name, string, count, ability, abilityLevel);
+        } else {
+          this.boots.update(name, string, count, ability, abilityLevel);
+        }
 
         break;
       default:
