@@ -18,7 +18,7 @@ class Logger {
    * @return {String} hexcode with a # prepended on it
    */
   randomColor() {
-    let color = Math.floor(Math.random() * 16777215).toString(16);
+    let color = (Math.floor(Math.random() * 16777215)).toString(16);
     return `#${color.padEnd(6, '0')}`;
   }
 
