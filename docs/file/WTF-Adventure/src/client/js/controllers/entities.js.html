@@ -214,6 +214,11 @@ export default class Entities {
   */
   constructor(game) {
     log.debug(&apos;Entities - constructor()&apos;);
+
+    /**
+    * The instance of the game
+    * @type {Game}
+    */
     this.game = game;
 
     /**
@@ -587,7 +592,6 @@ export default class Entities {
   * @return null
   */
   registerPosition(entity) {
-
     log.debug(&apos;Entities - registerPosition()&apos;, entity);
 
     if (!entity) {
