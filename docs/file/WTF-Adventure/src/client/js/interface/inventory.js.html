@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -209,10 +210,10 @@ export default class Inventory {
 
       const itemSlot = $(`&lt;div id=&quot;slot${i}&quot; class=&quot;itemSlot&quot;&gt;&lt;/div&gt;`);
 
-      if (item.string !== &apos;null&apos;) {
+      if (item.name !== &apos;null&apos;) {
         itemSlot.css(
           &apos;background-image&apos;,
-          this.container.getImageFormat(this.getScale(), item.string),
+          this.container.getImageFormat(this.getScale(), item.name),
         );
       }
 
@@ -251,7 +252,7 @@ export default class Inventory {
 
     this.clearSelection();
 
-    if (slot.string === null || slot.count === -1) {
+    if (slot.name === null || slot.count === -1) {
       return;
     }
 
@@ -367,7 +368,7 @@ export default class Inventory {
 
     if (slot.isEmpty()) {
       slot.load(
-        info.string,
+        info.name,
         info.count,
         info.ability,
         info.abilityLevel,
@@ -382,7 +383,7 @@ export default class Inventory {
 
     cssSlot.css(
       &apos;background-image&apos;,
-      this.container.getImageFormat(this.getScale(), slot.string),
+      this.container.getImageFormat(this.getScale(), slot.name),
     );
 
     if (this.game.app.isMobile()) cssSlot.css(&apos;background-size&apos;, &apos;600%&apos;);
@@ -424,7 +425,7 @@ export default class Inventory {
         } else {
           item.css(
             &apos;background-image&apos;,
-            this.container.getImageFormat(this.getScale(), slot.string),
+            this.container.getImageFormat(this.getScale(), slot.name),
           );
         }
       }

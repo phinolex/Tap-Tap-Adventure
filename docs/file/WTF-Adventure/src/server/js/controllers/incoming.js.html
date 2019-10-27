@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -294,7 +295,7 @@ export default class Incoming {
   }
 
   handleIntro(message) {
-    log.info(`incoming message: ${message.toString()}`);
+    console.log(`incoming message: ${message.toString()}`);
     const loginType = message.shift();
     const username = message.shift().toLowerCase();
     const password = message.shift();
@@ -336,7 +337,7 @@ export default class Incoming {
     this.introduced = true;
 
     if (isRegistering) {
-      log.info(&apos;is registering&apos;);
+      console.log(&apos;is registering&apos;);
       const registerOptions = {
         method: &apos;GET&apos;,
         uri: `${&apos;https://taptapadventure.com/api/register.php?a=&apos;
@@ -374,7 +375,7 @@ export default class Incoming {
               break;
           }
         } catch (e) {
-          log.info(&apos;Could not decipher API message&apos;);
+          console.log(&apos;Could not decipher API message&apos;);
 
           this.connection.sendUTF8(&apos;disallowed&apos;);
           this.connection.close(&apos;API response is malformed!&apos;);
@@ -388,7 +389,7 @@ export default class Incoming {
 
       this.mysql.login(this.player);
     } else {
-      log.info(&apos;validating login&apos;);
+      console.log(&apos;validating login&apos;);
       this.connection.sendUTF8(&apos;validatingLogin&apos;);
       this.mysql.login(this.player);
     }
@@ -584,7 +585,7 @@ export default class Incoming {
     const opcode = message.shift();
     const instance = message.shift();
 
-    log.debug(`Targeted: ${instance}`);
+    console.log(`Targeted: ${instance}`);
 
     switch (opcode) {
       default:
@@ -692,7 +693,7 @@ export default class Incoming {
       default:
         break;
       case Packets.NetworkOpcode.Pong:
-        log.info(&apos;Pingy pongy pong pong.&apos;);
+        console.log(&apos;Pingy pongy pong pong.&apos;);
         break;
     }
   }

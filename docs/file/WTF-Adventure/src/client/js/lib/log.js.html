@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -183,31 +184,182 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/lib/log.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global window, printStackTrace */
-
+/* eslint-disable */
 class Logger {
+
+  /**
+   * Default constructor
+   * @param {String|null} level debug|info|error
+   */
   constructor(level) {
     this.level = level;
+    this.classMap = {};
+
+    console.log(&quot;%c    &quot;, &quot;background-image:url(&apos;https://raw.githubusercontent.com/design1online/WTF-Adventure/master/assets/img/wtflogo.png&apos;);background-repeat:no-repeat;background-position:center center;line-height:.85em;background-size:100% 100%;font-size:200px&quot;)
   }
 
-  info(message) {
+  /**
+   * Generate a random color within the acceptable 256 color range
+   * @return {String} hexcode with a # prepended on it
+   */
+  randomColor() {
+    let color = (Math.floor(Math.random() * 16777215)).toString(16);
+    return `#${this.padEnd(color, 6, &apos;0&apos;)}`;
+  }
+
+  /**
+   * Pads the end of a string with the value if the String.prototype doesn&apos;t exist
+   * This is particularly for CircleCI which keeps failing :( and always uses the
+   * proptotype if it exists
+   * @param  {String} str          a string (will be cast to be sure)
+   * @param  {Number} targetLength how long the final string should be
+   * @param  {String} val          what to pad the string with, defaults to space
+   * @return {String}              returns the string at targetLength with val padded on the end
+   */
+  padEnd(str, targetLength, val = &apos; &apos;) {
+   str = String(str);
+   targetLength = parseInt(targetLength, 10) || 0;
+
+   if (str.length &gt;= targetLength) {
+     return str;
+   }
+
+   if (String.prototype.padEnd) {
+     return str.padEnd(targetLength);
+   }
+   targetLength -= str.length;
+   return str + val.repeat(targetLength);
+ }
+
+  /**
+   * Figure out whether to return white or black text color for the
+   * given background colorMatch
+   * @param  {String} color the hexcode color without a # mark in front of it
+   * @return {String} #000 for light colors and #fff for dark colors
+   */
+  lightOrDark(color) {
+
+    let r;
+    let g;
+    let b;
+    let hsp;
+    let colorMatch;
+
+    // Check the format of the color, HEX or RGB?
+    if (color.match(/^rgb/)) {
+      // If HEX --&gt; store the red, green, blue values in separate variables
+      colorMatch = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+      [r, b, g] = colorMatch;
+    } else {
+      // If RGB --&gt; Convert it to HEX: http://gist.github.com/983661
+      color = +(`0x${color.slice(1).replace(
+        color.length &lt; 5 &amp;&amp; /./g, &apos;$&amp;$&amp;&apos;,
+      )}`);
+
+      r = color &gt;&gt; 16;
+      g = color &gt;&gt; 8 &amp; 255;
+      b = color &amp; 255;
+    }
+
+    // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+    hsp = Math.sqrt(
+      0.299 * (r * r)
+    + 0.587 * (g * g)
+    + 0.114 * (b * b),
+    );
+
+    // Using the HSP value, determine whether the color is light or dark
+    if (hsp &gt; 150) {
+      return &apos;#000&apos;;
+    }
+
+    return &apos;#fff&apos;;
+  }
+
+  /**
+   * Given the name of the class this is for return
+   * the previously associated color or associate a random
+   * color to this class name
+   * @param  {String} className the name of the class this log message is for
+   * @return {{bgcolor:String, textcolor:String}} the background and text color for this
+   *  class name
+   */
+  getColors(className) {
+    let bgcolor;
+    let textcolor;
+
+    if (bgcolor = this.classMap[className]) {
+      textcolor = this.lightOrDark(bgcolor.replace(&apos;#&apos;, &apos;&apos;));
+    } else {
+      bgcolor = this.randomColor();
+      textcolor = this.lightOrDark(bgcolor.replace(&apos;#&apos;, &apos;&apos;));
+
+      // set the color in the classMap
+      this.classMap[className] = bgcolor;
+    }
+
+    return { bgcolor, textcolor };
+  }
+
+  /**
+   * Helpter function format the console.log message
+   * @param  {String} message the first variable passed to the console.log, generally a message
+   *  formatted as `ClassName - propertyFunction() - optional additional message`
+   * @param  {Object} rest an array of the rest of the variables passed to the console.log, typically class
+   *  instances or variables in the file used for debugging
+   */
+  consoleLog(message, rest) {
+    const [className, ...msg] = message.split(&apos;-&apos;).map(value =&gt; value.trim());
+    const { bgcolor, textcolor } = this.getColors(className);
+
+    if (rest.length) {
+      console.info(`%c${className}`, `padding:5px;background-color:${bgcolor};color:${textcolor};font-weight:bold;`, &apos;-&apos;, ...msg, rest); //eslint-disable-line
+    } else {
+      console.info(`%c${className}`, `padding:5px;background-color:${bgcolor};color:${textcolor};font-weight:bold;`, &apos;-&apos;, ...msg); //eslint-disable-line
+    }
+  }
+
+  /**
+   * Put a information level message into the developer console, will only show up in debug or info level
+   * @param  {String} message the first variable passed to the console.log, generally a message
+   *  formatted as `ClassName - propertyFunction() - optional additional message`
+   * @param  {Object} rest an array of the rest of the variables passed to the console.log, typically class
+   *  instances or variables in the file used for debugging
+   */
+  info(message, ...rest) {
     if (this.level === &apos;debug&apos; || this.level === &apos;info&apos;) {
       if (window.console) {
-        console.info(message); //eslint-disable-line
+        this.consoleLog(message, rest);
       }
     }
   }
 
-  debug(message) {
+  /**
+   * Put a debug level message into the developer console, will only show up in debug level
+   * @param  {String} message the first variable passed to the console.log, generally a message
+   *  formatted as `ClassName - propertyFunction() - optional additional message`
+   * @param  {Object} rest an array of the rest of the variables passed to the console.log, typically class
+   *  instances or variables in the file used for debugging
+   */
+  debug(message, ...rest) {
     if (this.level === &apos;debug&apos;) {
       if (window.console) {
-        console.log(message); //eslint-disable-line
+        this.consoleLog(message, rest);
       }
     }
   }
 
-  error(message, stacktrace) {
+  /**
+   * Put an error level message into the developer console, will only show up if there is some level specified
+   * @param  {String} message the first variable passed to the console.log, generally a message
+   *  formatted as `ClassName - propertyFunction() - optional additional message`
+   * @param  {Object} stacktrace the error stack trace
+   * @param  {Object} rest an array of the rest of the variables passed to the console.log, typically class
+   *  instances or variables in the file used for debugging
+   */
+  error(message, stacktrace, ...rest) {
     if (window.console &amp;&amp; this.level) {
-      console.error(message); // eslint-disable-line
+      console.error(message, rest); // eslint-disable-line
       if (stacktrace !== undefined &amp;&amp; stacktrace === true) {
         const trace = printStackTrace();
         console.error(trace.join(&apos;\n\n&apos;)); //eslint-disable-line

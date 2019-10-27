@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -188,6 +189,8 @@ import Messages from &apos;./messages&apos;;
 
 export default class Socket {
   constructor(game) {
+    log.debug(&apos;Socket - constructor()&apos;, game);
+
     this.game = game;
     this.config = this.game.app.config;
     this.connection = null;
@@ -200,7 +203,7 @@ export default class Socket {
     const protocol = this.config.ssl ? &apos;wss&apos; : &apos;ws&apos;;
     const url = `${protocol}://${this.config.ip}:${this.config.port}`;
 
-    log.info(`Opening WebSocket: ${url}`);
+    log.debug(&apos;Socket - connect()&apos;, url);
 
     this.connection = null;
 
@@ -212,11 +215,11 @@ export default class Socket {
     });
 
     this.connection.on(&apos;error&apos;, (error) =&gt; {
-      log.info(&apos;Socket Error&apos;, error);
+      log.debug(&apos;Socket - connect() - error&apos;, error);
     });
 
     this.connection.on(&apos;connect_error&apos;, (error) =&gt; {
-      log.info(`Failed to connect to: ${this.config.ip}`);
+      log.debug(&apos;Socket - connect() - server connection error&apos;, this.config.ip);
       log.error(error);
 
       this.listening = false;
@@ -226,6 +229,7 @@ export default class Socket {
     });
 
     this.connection.on(&apos;connect&apos;, () =&gt; {
+      log.debug(&apos;Socket - connect() - connecting to server&apos;, this.config.ip);
       this.listening = true;
 
       this.game.app.updateLoader(&apos;Preparing handshake...&apos;);
@@ -236,15 +240,19 @@ export default class Socket {
     });
 
     this.connection.on(&apos;message&apos;, (message) =&gt; {
+      log.debug(&apos;Socket - connect() - message&apos;, message);
       this.receive(message);
     });
 
     this.connection.on(&apos;disconnect&apos;, () =&gt; {
+      log.debug(&apos;Socket - connect() - disconnecting&apos;);
       this.game.handleDisconnection();
     });
   }
 
   receive(message) {
+    log.debug(&apos;Socket - receive()&apos;, message);
+
     if (!this.listening) {
       return;
     }
@@ -263,6 +271,8 @@ export default class Socket {
   }
 
   send(packet, data) {
+    log.debug(&apos;Socket - send()&apos;, packet, data);
+
     const json = JSON.stringify([packet, data]);
 
     if (this.connection &amp;&amp; this.connection.connected) {

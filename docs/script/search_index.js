@@ -882,6 +882,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "wtf-adventure/wtf-adventure/src/client/js/utils/util.js~requestanimframe",
+    "variable/index.html#static-variable-requestAnimFrame",
+    "<span>requestAnimFrame</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/client/js/utils/util.js</span>",
+    "variable"
+  ],
+  [
     "wtf-adventure/wtf-adventure/src/server/js/util/plugins.js~requireitems",
     "function/index.html#static-function-requireItems",
     "<span>requireItems</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/server/js/util/plugins.js</span>",
@@ -913,13 +919,13 @@ window.esdocSearchIndex = [
   ],
   [
     "app#keyupeventlistener wtf-adventure/src/client/js/app.js~app#keyupeventlistener,app#keyupeventlistener",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber150",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber136",
     "App .keyupEventListener()",
     "test"
   ],
   [
     "app#keyupeventlistener wtf-adventure/src/client/js/app.js~app#keyupeventlistener,app#keyupeventlistener",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber136",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber150",
     "App .keyupEventListener()",
     "test"
   ],
@@ -1363,20 +1369,14 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf-adventure/src/client/js/__tests__/app.test.js",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html",
-    "WTF-Adventure/src/client/js/__tests__/app.test.js",
-    "testFile"
-  ],
-  [
-    "wtf-adventure/src/client/js/__tests__/app.test.js",
     "file/WTF-Adventure/src/client/js/__tests__/app.test.js.html",
     "WTF-Adventure/src/client/js/__tests__/app.test.js",
     "file"
   ],
   [
-    "wtf-adventure/src/client/js/__tests__/main.test.js",
-    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
-    "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "wtf-adventure/src/client/js/__tests__/app.test.js",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html",
+    "WTF-Adventure/src/client/js/__tests__/app.test.js",
     "testFile"
   ],
   [
@@ -1384,6 +1384,12 @@ window.esdocSearchIndex = [
     "file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
     "WTF-Adventure/src/client/js/__tests__/main.test.js",
     "file"
+  ],
+  [
+    "wtf-adventure/src/client/js/__tests__/main.test.js",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
+    "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "testFile"
   ],
   [
     "wtf-adventure/src/client/js/app.js",
@@ -4212,6 +4218,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/entity/character/player/equipment/armour.js~armour#name",
+    "class/WTF-Adventure/src/client/js/entity/character/player/equipment/armour.js~Armour.html#instance-member-name",
+    "WTF-Adventure/src/client/js/entity/character/player/equipment/armour.js~Armour#name",
+    "member"
+  ],
+  [
     "wtf-adventure/src/client/js/entity/character/player/equipment/armour.js~armour#setdefence",
     "class/WTF-Adventure/src/client/js/entity/character/player/equipment/armour.js~Armour.html#instance-method-setDefence",
     "WTF-Adventure/src/client/js/entity/character/player/equipment/armour.js~Armour#setDefence",
@@ -4284,21 +4296,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "wtf-adventure/src/client/js/entity/character/player/equipment/equipment.js~equipment#getstring",
-    "class/WTF-Adventure/src/client/js/entity/character/player/equipment/equipment.js~Equipment.html#instance-method-getString",
-    "WTF-Adventure/src/client/js/entity/character/player/equipment/equipment.js~Equipment#getString",
-    "method"
-  ],
-  [
     "wtf-adventure/src/client/js/entity/character/player/equipment/equipment.js~equipment#name",
     "class/WTF-Adventure/src/client/js/entity/character/player/equipment/equipment.js~Equipment.html#instance-member-name",
     "WTF-Adventure/src/client/js/entity/character/player/equipment/equipment.js~Equipment#name",
-    "member"
-  ],
-  [
-    "wtf-adventure/src/client/js/entity/character/player/equipment/equipment.js~equipment#string",
-    "class/WTF-Adventure/src/client/js/entity/character/player/equipment/equipment.js~Equipment.html#instance-member-string",
-    "WTF-Adventure/src/client/js/entity/character/player/equipment/equipment.js~Equipment#string",
     "member"
   ],
   [
@@ -5868,6 +5868,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "wtf-adventure/src/client/js/game.js~game#loadedspritescallback",
+    "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-method-loadedSpritesCallback",
+    "WTF-Adventure/src/client/js/game.js~Game#loadedSpritesCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/game.js~game#map",
     "class/WTF-Adventure/src/client/js/game.js~Game.html#instance-member-map",
     "WTF-Adventure/src/client/js/game.js~Game#map",
@@ -6660,16 +6666,16 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/interface/container/slot.js~slot#name",
+    "class/WTF-Adventure/src/client/js/interface/container/slot.js~Slot.html#instance-member-name",
+    "WTF-Adventure/src/client/js/interface/container/slot.js~Slot#name",
+    "member"
+  ],
+  [
     "wtf-adventure/src/client/js/interface/container/slot.js~slot#setcount",
     "class/WTF-Adventure/src/client/js/interface/container/slot.js~Slot.html#instance-method-setCount",
     "WTF-Adventure/src/client/js/interface/container/slot.js~Slot#setCount",
     "method"
-  ],
-  [
-    "wtf-adventure/src/client/js/interface/container/slot.js~slot#string",
-    "class/WTF-Adventure/src/client/js/interface/container/slot.js~Slot.html#instance-member-string",
-    "WTF-Adventure/src/client/js/interface/container/slot.js~Slot#string",
-    "member"
   ],
   [
     "wtf-adventure/src/client/js/interface/enchant.js",
@@ -7758,6 +7764,18 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "wtf-adventure/src/client/js/lib/log.js~logger#classmap",
+    "class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-member-classMap",
+    "WTF-Adventure/src/client/js/lib/log.js~Logger#classMap",
+    "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/lib/log.js~logger#consolelog",
+    "class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-consoleLog",
+    "WTF-Adventure/src/client/js/lib/log.js~Logger#consoleLog",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/lib/log.js~logger#constructor",
     "class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-constructor-constructor",
     "WTF-Adventure/src/client/js/lib/log.js~Logger#constructor",
@@ -7776,6 +7794,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/lib/log.js~logger#getcolors",
+    "class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-getColors",
+    "WTF-Adventure/src/client/js/lib/log.js~Logger#getColors",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/lib/log.js~logger#info",
     "class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-info",
     "WTF-Adventure/src/client/js/lib/log.js~Logger#info",
@@ -7786,6 +7810,24 @@ window.esdocSearchIndex = [
     "class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-member-level",
     "WTF-Adventure/src/client/js/lib/log.js~Logger#level",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/lib/log.js~logger#lightordark",
+    "class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-lightOrDark",
+    "WTF-Adventure/src/client/js/lib/log.js~Logger#lightOrDark",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/lib/log.js~logger#padend",
+    "class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-padEnd",
+    "WTF-Adventure/src/client/js/lib/log.js~Logger#padEnd",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/lib/log.js~logger#randomcolor",
+    "class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-randomColor",
+    "WTF-Adventure/src/client/js/lib/log.js~Logger#randomColor",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/lib/stacktrace.js",
@@ -9402,9 +9444,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "wtf-adventure/src/client/js/renderer/renderer.js~renderer#background",
-    "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-background",
-    "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#background",
+    "wtf-adventure/src/client/js/renderer/renderer.js~renderer#backgroundcanvas",
+    "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-backgroundCanvas",
+    "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#backgroundCanvas",
     "member"
   ],
   [
@@ -9492,9 +9534,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "wtf-adventure/src/client/js/renderer/renderer.js~renderer#cursor",
-    "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-cursor",
-    "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#cursor",
+    "wtf-adventure/src/client/js/renderer/renderer.js~renderer#cursorcanvas",
+    "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-cursorCanvas",
+    "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#cursorCanvas",
     "member"
   ],
   [
@@ -9555,6 +9597,12 @@ window.esdocSearchIndex = [
     "wtf-adventure/src/client/js/renderer/renderer.js~renderer#drawentity",
     "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-method-drawEntity",
     "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#drawEntity",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/renderer/renderer.js~renderer#drawentityback",
+    "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-method-drawEntityBack",
+    "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#drawEntityBack",
     "method"
   ],
   [
@@ -9660,6 +9708,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "wtf-adventure/src/client/js/renderer/renderer.js~renderer#entitiescanvas",
+    "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-entitiesCanvas",
+    "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#entitiesCanvas",
+    "member"
+  ],
+  [
     "wtf-adventure/src/client/js/renderer/renderer.js~renderer#firefox",
     "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-firefox",
     "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#firefox",
@@ -9732,9 +9786,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "wtf-adventure/src/client/js/renderer/renderer.js~renderer#foreground",
-    "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-foreground",
-    "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#foreground",
+    "wtf-adventure/src/client/js/renderer/renderer.js~renderer#foregroundcanvas",
+    "class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html#instance-member-foregroundCanvas",
+    "WTF-Adventure/src/client/js/renderer/renderer.js~Renderer#foregroundCanvas",
     "member"
   ],
   [
@@ -13518,9 +13572,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "wtf-adventure/src/server/js/game/entity/character/player/containers/slot.js~slot#string",
-    "class/WTF-Adventure/src/server/js/game/entity/character/player/containers/slot.js~Slot.html#instance-member-string",
-    "WTF-Adventure/src/server/js/game/entity/character/player/containers/slot.js~Slot#string",
+    "wtf-adventure/src/server/js/game/entity/character/player/containers/slot.js~slot#name",
+    "class/WTF-Adventure/src/server/js/game/entity/character/player/containers/slot.js~Slot.html#instance-member-name",
+    "WTF-Adventure/src/server/js/game/entity/character/player/containers/slot.js~Slot#name",
     "member"
   ],
   [
@@ -13752,9 +13806,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "wtf-adventure/src/server/js/game/entity/character/player/equipment/equipment.js~equipment#getstring",
-    "class/WTF-Adventure/src/server/js/game/entity/character/player/equipment/equipment.js~Equipment.html#instance-method-getString",
-    "WTF-Adventure/src/server/js/game/entity/character/player/equipment/equipment.js~Equipment#getString",
+    "wtf-adventure/src/server/js/game/entity/character/player/equipment/equipment.js~equipment#getname",
+    "class/WTF-Adventure/src/server/js/game/entity/character/player/equipment/equipment.js~Equipment.html#instance-method-getName",
+    "WTF-Adventure/src/server/js/game/entity/character/player/equipment/equipment.js~Equipment#getName",
     "method"
   ],
   [

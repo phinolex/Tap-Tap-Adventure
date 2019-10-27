@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -195,32 +196,123 @@ import Detect from &apos;../utils/detect&apos;;
  * @class
  */
 export default class Input {
+  /**
+   * Default constructor
+   * @param {Game} game instance of the game
+   */
   constructor(game) {
+    /**
+    * An instance of the game
+    * @type {Game}
+    */
     this.game = game;
+
+    /**
+    * An instance of the game app
+    * @type {App}
+    */
     this.app = game.app;
+
+    /**
+    * An instance of the game renderer
+    * @type {Renderer}
+    */
     this.renderer = game.renderer;
 
+    /**
+    * Whether or not the selected cell is visible
+    * @type {Boolean}
+    */
     this.selectedCellVisible = false;
+
+    /**
+    * The previous mouse click envent
+    * @type {MouseEvent}
+    */
     this.previousClick = {};
+
+    /**
+    * Whether or not the cursor is visible
+    * @type {Boolean}
+    */
     this.cursorVisible = true;
+
+    /**
+    * Whether or not the target is visible
+    * @type {Boolean}
+    */
     this.targetVisible = true;
+
+    /**
+    * The select x position
+    * @type {Number}
+    */
     this.selectedX = -1;
+
+    /**
+    * The select y position
+    * @type {Number}
+    */
     this.selectedY = -1;
 
+    /**
+    * The cursor
+    * @type {Cursor}
+    */
     this.cursor = null;
+
+    /**
+    * A new instance of the cursor (for changing cursors)
+    * @type {Cursor}
+    */
     this.newCursor = null;
 
+    /**
+    * Data on the targeted entity
+    * @type {Entity}
+    */
     this.targetData = null;
+
+    /**
+    * The color of the target
+    * @type {String}
+    */
     this.targetColour = null;
+
+    /**
+    * The new target color
+    * @type {String}
+    */
     this.newTargetColour = null;
+
+    /**
+    * A moving target&apos;s color
+    * @type {String}
+    */
     this.mobileTargetColour = &apos;rgba(51, 255, 0)&apos;;
 
+    /**
+    * The previous key pressed
+    * @type {KeyboardEvent}
+    */
     this.previousKey = {};
 
+    /**
+    * All loaded cursors
+    * @type {Object&lt;Cursor&gt;}
+    */
     this.cursors = {};
 
+    /**
+    * The entity being hovered over
+    * @type {Entity}
+    */
     this.hovering = null;
 
+    /**
+    * Information about the mouse position
+    * @type {{x: Number, y:Number}}
+    */
     this.mouse = {
       x: 0,
       y: 0,
@@ -229,6 +321,9 @@ export default class Input {
     this.load();
   }
 
+  /**
+   * Load spinner sprite, chat handler and overlay
+   */
   load() {
     /**
      * This is the animation for the target
@@ -236,12 +331,16 @@ export default class Input {
      */
     this.targetAnimation = new Animation(&apos;move&apos;, 4, 0, 16, 16);
     this.targetAnimation.setSpeed(50);
-
     this.chatHandler = new Chat(this.game);
     this.overlay = new Overlay(this);
   }
 
+  /**
+   * Load cursors
+   */
   loadCursors() {
+    log.debug(&apos;Input - loadCursors()&apos;);
+
     this.cursors.hand = this.game.getSprite(&apos;hand&apos;);
     this.cursors.sword = this.game.getSprite(&apos;sword&apos;);
     this.cursors.loot = this.game.getSprite(&apos;loot&apos;);
@@ -253,14 +352,19 @@ export default class Input {
 
     this.newCursor = this.cursors.hand;
     this.newTargetColour = &apos;rgba(255, 255, 255, 0.5)&apos;;
-
-    log.info(&apos;Loaded Cursors!&apos;);
   }
 
+  /**
+   * Handle input
+   * @param  {Modules} inputType the Modules.InputType to handle
+   * @param  {Object} data      data related to the input (keycode, coordinates, etc)
+   */
   handle(inputType, data) {
     switch (inputType) {
       default:
         break;
+
+      // WASD and arrow key press movement
       case Modules.InputType.Key:
         if (this.chatHandler.isActive()) {
           this.chatHandler.key(data);
@@ -273,47 +377,42 @@ export default class Input {
           case Modules.Keys.Up:
           case Modules.Keys.W:
             this.getPlayer().moveUp = true;
-
             break;
-
           case Modules.Keys.A:
           case Modules.Keys.Left:
             this.getPlayer().moveLeft = true;
-
             break;
-
           case Modules.Keys.S:
           case Modules.Keys.Down:
             this.getPlayer().moveDown = true;
-
             break;
-
           case Modules.Keys.D:
           case Modules.Keys.Right:
             this.getPlayer().moveRight = true;
-
             break;
-
           case Modules.Keys.Enter:
             this.chatHandler.toggle();
-
             break;
         }
-
         break;
 
+      // mouse click movement and interactions
       case Modules.InputType.LeftClick:
         this.getPlayer().disableAction = false;
         this.setCoords(data);
         this.click(this.getCoords());
-
         break;
     }
   }
 
+  /**
+   * Handle keyUp events
+   * @param  {Modules} key the Modules.Keys that was triggered
+   */
   keyUp(key) {
     const player = this.getPlayer();
 
+    // WASD and arrow key press movement
     switch (key) {
       default:
         break;
@@ -321,17 +420,14 @@ export default class Input {
       case Modules.Keys.Up:
         player.moveUp = false;
         break;
-
       case Modules.Keys.A:
       case Modules.Keys.Left:
         player.moveLeft = false;
         break;
-
       case Modules.Keys.S:
       case Modules.Keys.Down:
         player.moveDown = false;
         break;
-
       case Modules.Keys.D:
       case Modules.Keys.Right:
         player.moveRight = false;
@@ -341,12 +437,22 @@ export default class Input {
     player.disableAction = false;
   }
 
+  /**
+   * Handle key presses to move the player in a direction
+   * @param  {Object} position The x,y coordinates of the click position
+   */
   keyMove(position) {
     const player = this.getPlayer();
 
-    if (!player.hasPath()) this.click(position);
+    if (!player.hasPath()) {
+      this.click(position);
+    }
   }
 
+  /**
+   * Handle clicking events
+   * @param  {Object} position the x,y coordinates of the click position
+   */
   click(position) {
     const player = this.getPlayer();
 
@@ -360,14 +466,15 @@ export default class Input {
      * It can be really annoying having the chat open
      * on mobile, and it is far harder to control.
      */
-
     if (
       this.renderer.mobile
       &amp;&amp; this.chatHandler.input.is(&apos;:visible&apos;)
       &amp;&amp; this.chatHandler.input.val() === &apos;&apos;
     ) this.chatHandler.hideInput();
 
-    if (this.game.zoning &amp;&amp; this.game.zoning.direction) return;
+    if (this.game.zoning &amp;&amp; this.game.zoning.direction) {
+      return;
+    }
 
     const entity = this.game.getEntityAt(
       position.x,
@@ -378,7 +485,9 @@ export default class Input {
     if (entity &amp;&amp; !player.disableAction) {
       this.setAttackTarget();
 
-      if (this.isTargetable(entity)) player.setTarget(entity);
+      if (this.isTargetable(entity)) {
+        player.setTarget(entity);
+      }
 
       if (
         player.getDistance(entity) &lt; 7
@@ -400,10 +509,11 @@ export default class Input {
         ]);
       }
 
-      /* if (entity.type === &apos;player&apos;) {
-                    this.getActions().showPlayerActions(entity, this.mouse.x, this.mouse.y);
-                    return;
-                } */
+      // @TODO this was commented out, not sure why??
+      if (entity.type === &apos;player&apos;) {
+        this.getActions().showPlayerActions(entity, this.mouse.x, this.mouse.y);
+        return;
+      }
 
       if (this.isTargetable(entity)) {
         player.follow(entity);
@@ -411,34 +521,52 @@ export default class Input {
       }
 
       player.disableAction = true;
-    } else player.removeTarget();
+    } else {
+      player.removeTarget();
+    }
 
     this.getActions().hidePlayerActions();
 
     player.go(position.x, position.y);
 
-    if (this.game.interface) this.game.interface.hideAll();
+    if (this.game.interface) {
+      this.game.interface.hideAll();
+    }
 
-    if (!this.game.audio.song &amp;&amp; Detect.isSafari()) this.game.audio.update();
+    if (!this.game.audio.song &amp;&amp; Detect.isSafari()) {
+      this.game.audio.update();
+    }
   }
 
+  /**
+   * Change the cursor if visible and newCursor doesn&apos;t equal cursor
+   */
   updateCursor() {
-    if (!this.cursorVisible) return;
+    if (!this.cursorVisible) {
+      return;
+    }
 
-    if (this.newCursor !== this.cursor) this.cursor = this.newCursor;
+    // change to this new cursor
+    if (this.newCursor !== this.cursor) {
+      this.cursor = this.newCursor;
+    }
 
-    if (this.newTargetColour !== this.targetColour) this.targetColour = this.newTargetColour;
+    if (this.newTargetColour !== this.targetColour) {
+      this.targetColour = this.newTargetColour;
+    }
   }
 
+  /**
+   * Move the cursor or display a different cursor depending on what the
+   * player is hovering over
+   */
   moveCursor() {
-    if (!this.renderer || this.renderer.mobile || !this.renderer.camera) return;
+    if (!this.renderer || this.renderer.mobile || !this.renderer.camera) {
+      return;
+    }
 
     const position = this.getCoords();
-
-
     const player = this.getPlayer();
-
-
     const entity = this.game.getEntityAt(
       position.x,
       position.y,
@@ -482,51 +610,90 @@ export default class Input {
     }
   }
 
+  /**
+   * Set the selectedX and selectedY positions
+   * @param {Number} x X coordinate
+   * @param {Number} y Y coordinate
+   */
   setPosition(x, y) {
     this.selectedX = x;
     this.selectedY = y;
   }
 
+  /**
+   * Sets the coordinates of the mouse relative to the offset of the canvas
+   * @param {MouseEvent} event the mouse move or mouse click event
+   */
   setCoords(event) {
     const offset = this.app.canvas.offset();
+
+    // check background
     const {
       width,
       height,
-    } = this.renderer.background;
+    } = this.renderer.backgroundCanvas;
 
     this.mouse.x = Math.round(
       (event.pageX - offset.left) / this.app.getZoom(),
     );
+
     this.mouse.y = Math.round(
       (event.pageY - offset.top) / this.app.getZoom(),
     );
 
-    if (this.mouse.x &gt;= width) this.mouse.x = width - 1;
-    else if (this.mouse.x &lt;= 0) this.mouse.x = 0;
+    if (this.mouse.x &gt;= width) {
+      this.mouse.x = width - 1;
+    } else if (this.mouse.x &lt;= 0) {
+      this.mouse.x = 0;
+    }
 
-    if (this.mouse.y &gt;= height) this.mouse.y = height - 1;
-    else if (this.mouse.y &lt;= 0) this.mouse.y = 0;
+    if (this.mouse.y &gt;= height) {
+      this.mouse.y = height - 1;
+    } else if (this.mouse.y &lt;= 0) {
+      this.mouse.y = 0;
+    }
   }
 
+  /**
+   * Set a new cursor
+   * @param {Cusror} cursor the cursor to use
+   */
   setCursor(cursor) {
-    if (cursor) this.newCursor = cursor;
-    else log.error(`Cursor: ${cursor} could not be found.`);
+    if (cursor) {
+      this.newCursor = cursor;
+    } else {
+      log.error(`Cursor: ${cursor} could not be found.`);
+    }
   }
 
+  /**
+   * Set an attack target
+   */
   setAttackTarget() {
     this.targetAnimation.setRow(1);
     this.mobileTargetColour = &apos;rgb(255, 51, 0)&apos;;
   }
 
+  /**
+   * Set a passive target
+   */
   setPassiveTarget() {
     this.targetAnimation.setRow(0);
     this.mobileTargetColour = &apos;rgb(51, 255, 0)&apos;;
   }
 
+  /**
+   * Get an attack cursor (bow or sword) depending on if the player is ranged or not
+   * @return {Cursor} the cursor to use for attacking
+   */
   getAttackCursor() {
     return this.cursors[this.getPlayer().isRanged() ? &apos;bow&apos; : &apos;sword&apos;];
   }
 
+  /**
+   * Get the coordinates from the mouse relative to the canvas grid
+   * @return {{x: Number, y:Number}} returns the grid x,y coordinates
+   */
   getCoords() {
     if (!this.renderer || !this.renderer.camera) {
       return {};
@@ -544,6 +711,19 @@ export default class Input {
     };
   }
 
+  /**
+   * Get data about the current target
+   * @return {{
+   *  sprite: Sprite,
+   *  x: Number,
+   *  y: Number,
+   *  width: Number,
+   *  height: Number,
+   *  dy: Number,
+   *  dw: Number,
+   *  dh: Number,
+   *  }} target data
+   */
   getTargetData() {
     const frame = this.targetAnimation.currentFrame;
     const scale = this.renderer.getDrawingScale();
@@ -568,6 +748,11 @@ export default class Input {
     return this.targetData;
   }
 
+  /**
+   * Returns whether or not this entity can be targeted
+   * @param  {Entity}  entity the entity to check if it can be targeted or not
+   * @return {Boolean} returns true player can target this entity
+   */
   isTargetable(entity) {
     return (
       this.isAttackable(entity)
@@ -576,6 +761,11 @@ export default class Input {
     );
   }
 
+  /**
+   * Returns whether or not the player can attack this entity
+   * @param  {Entity}  entity the entity they want to attack
+   * @return {Boolean} returns true if they can attack this entity
+   */
   isAttackable(entity) {
     return (
       entity.type === &apos;mob&apos;
@@ -583,10 +773,18 @@ export default class Input {
     );
   }
 
+  /**
+   * Returns an instance of the player
+   * @return {Entity} the player&apos;s entity
+   */
   getPlayer() {
     return this.game.player;
   }
 
+  /**
+   * Returns the interface actions
+   * @return {Actions} game interface actions
+   */
   getActions() {
     return this.game.interface.actions;
   }

@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -244,7 +245,7 @@ export default class Player extends Character {
     this.enchant = new Enchant(this);
     this.trade = new Trade(this);
     this.warp = new Warp(this);
-    this.itemsDictionary = new ItemsDictionary();
+    this.itemsDictionary = ItemsDictionary;
 
     this.introduced = false;
     this.currentSong = null;
@@ -347,7 +348,7 @@ export default class Player extends Character {
       stages.pop();
 
       if (this.quests.getQuestSize() !== ids.length) {
-        log.info(&apos;Mismatch in quest data.&apos;);
+        console.log(&apos;Mismatch in quest data.&apos;);
         this.save();
       }
 
@@ -359,7 +360,7 @@ export default class Player extends Character {
       progress.pop();
 
       if (this.quests.getAchievementSize() !== ids.length) {
-        log.info(&apos;Mismatch in achievements data.&apos;);
+        console.log(&apos;Mismatch in achievements data.&apos;);
 
         this.save();
       }
@@ -377,6 +378,7 @@ export default class Player extends Character {
   intro() {
     if (this.ban &gt; new Date()) {
       this.connection.sendUTF8(&apos;ban&apos;);
+      console.log(this.connection);
       this.connection.close(`Player: ${this.username} is banned.`);
     }
 
@@ -778,11 +780,13 @@ export default class Player extends Character {
 
   timeout() {
     this.connection.sendUTF8(&apos;timeout&apos;);
+    console.log(&apos;timeout&apos;, this.connection);
     this.connection.close(`${this.username} timed out.`);
   }
 
   invalidLogin() {
     this.connection.sendUTF8(&apos;invalidlogin&apos;);
+    console.log(&apos;connection&apos;, this.connection);
     this.connection.close(`${this.username} invalid login.`);
   }
 
@@ -992,7 +996,7 @@ export default class Player extends Character {
       maxMana: this.mana.getMaxMana(),
       experience: this.experience,
       level: this.level,
-      armour: this.armour.getString(),
+      armour: this.armour.getName(),
       weapon: this.weapon.getData(),
     };
 

@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -241,13 +242,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(game: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Default constructor</p>
+</div>
       </div>
     </td>
     <td>
@@ -276,13 +278,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-app">app</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-app">app</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/app.js~App.html">App</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>An instance of the game app</p>
+</div>
       </div>
     </td>
     <td>
@@ -332,13 +335,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-cursor">cursor</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-cursor">cursor</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html">Cursor</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The cursor</p>
+</div>
       </div>
     </td>
     <td>
@@ -360,13 +364,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-cursorVisible">cursorVisible</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-cursorVisible">cursorVisible</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Whether or not the cursor is visible</p>
+</div>
       </div>
     </td>
     <td>
@@ -388,13 +393,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-cursors">cursors</a></span></span><span class="code" data-ice="signature">: {}</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-cursors">cursors</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>&lt;<span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html">Cursor</a></span>&gt;</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>All loaded cursors</p>
+</div>
       </div>
     </td>
     <td>
@@ -416,13 +422,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-game">game</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-game">game</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>An instance of the game</p>
+</div>
       </div>
     </td>
     <td>
@@ -444,13 +451,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-hovering">hovering</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-hovering">hovering</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The entity being hovered over</p>
+</div>
       </div>
     </td>
     <td>
@@ -472,13 +480,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-mobileTargetColour">mobileTargetColour</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-mobileTargetColour">mobileTargetColour</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>A moving target&apos;s color</p>
+</div>
       </div>
     </td>
     <td>
@@ -500,13 +509,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-mouse">mouse</a></span></span><span class="code" data-ice="signature">: {&quot;x&quot;: <span>*</span>, &quot;y&quot;: <span>*</span>}</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-mouse">mouse</a></span></span><span class="code" data-ice="signature">: {x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>}</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Information about the mouse position</p>
+</div>
       </div>
     </td>
     <td>
@@ -528,13 +538,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-newCursor">newCursor</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-newCursor">newCursor</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html">Cursor</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>A new instance of the cursor (for changing cursors)</p>
+</div>
       </div>
     </td>
     <td>
@@ -556,13 +567,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-newTargetColour">newTargetColour</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-newTargetColour">newTargetColour</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The new target color</p>
+</div>
       </div>
     </td>
     <td>
@@ -612,13 +624,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-previousClick">previousClick</a></span></span><span class="code" data-ice="signature">: {}</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-previousClick">previousClick</a></span></span><span class="code" data-ice="signature">: <span>MouseEvent</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The previous mouse click envent</p>
+</div>
       </div>
     </td>
     <td>
@@ -640,13 +653,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-previousKey">previousKey</a></span></span><span class="code" data-ice="signature">: {}</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-previousKey">previousKey</a></span></span><span class="code" data-ice="signature">: <span>KeyboardEvent</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The previous key pressed</p>
+</div>
       </div>
     </td>
     <td>
@@ -668,13 +682,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-renderer">renderer</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-renderer">renderer</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html">Renderer</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>An instance of the game renderer</p>
+</div>
       </div>
     </td>
     <td>
@@ -696,13 +711,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-selectedCellVisible">selectedCellVisible</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-selectedCellVisible">selectedCellVisible</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Whether or not the selected cell is visible</p>
+</div>
       </div>
     </td>
     <td>
@@ -724,13 +740,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-selectedX">selectedX</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-selectedX">selectedX</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The select x position</p>
+</div>
       </div>
     </td>
     <td>
@@ -752,13 +769,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-selectedY">selectedY</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-selectedY">selectedY</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The select y position</p>
+</div>
       </div>
     </td>
     <td>
@@ -810,13 +828,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-targetColour">targetColour</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-targetColour">targetColour</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The color of the target</p>
+</div>
       </div>
     </td>
     <td>
@@ -838,13 +857,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-targetData">targetData</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-targetData">targetData</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Data on the targeted entity</p>
+</div>
       </div>
     </td>
     <td>
@@ -866,13 +886,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-targetVisible">targetVisible</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-targetVisible">targetVisible</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Whether or not the target is visible</p>
+</div>
       </div>
     </td>
     <td>
@@ -901,13 +922,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-click">click</a></span></span><span class="code" data-ice="signature">(position: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-click">click</a></span></span><span class="code" data-ice="signature">(position: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Handle clicking events</p>
+</div>
       </div>
     </td>
     <td>
@@ -929,13 +951,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getActions">getActions</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getActions">getActions</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/WTF-Adventure/src/client/js/interface/actions.js~Actions.html">Actions</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Returns the interface actions</p>
+</div>
       </div>
     </td>
     <td>
@@ -957,13 +980,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getAttackCursor">getAttackCursor</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getAttackCursor">getAttackCursor</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html">Cursor</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Get an attack cursor (bow or sword) depending on if the player is ranged or not</p>
+</div>
       </div>
     </td>
     <td>
@@ -985,13 +1009,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getCoords">getCoords</a></span></span><span class="code" data-ice="signature">(): {&quot;x&quot;: <span>*</span>, &quot;y&quot;: <span>*</span>}</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getCoords">getCoords</a></span></span><span class="code" data-ice="signature">(): {x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>}</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Get the coordinates from the mouse relative to the canvas grid</p>
+</div>
       </div>
     </td>
     <td>
@@ -1013,13 +1038,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getPlayer">getPlayer</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getPlayer">getPlayer</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Returns an instance of the player</p>
+</div>
       </div>
     </td>
     <td>
@@ -1041,13 +1067,23 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getTargetData">getTargetData</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-getTargetData">getTargetData</a></span></span><span class="code" data-ice="signature">(): <span>{
+ sprite: Sprite,
+ x: Number,
+ y: Number,
+ width: Number,
+ height: Number,
+ dy: Number,
+ dw: Number,
+ dh: Number,
+ }</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Get data about the current target</p>
+</div>
       </div>
     </td>
     <td>
@@ -1069,13 +1105,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-handle">handle</a></span></span><span class="code" data-ice="signature">(inputType: <span>*</span>, data: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-handle">handle</a></span></span><span class="code" data-ice="signature">(inputType: <span>Modules</span>, data: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Handle input</p>
+</div>
       </div>
     </td>
     <td>
@@ -1097,13 +1134,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-isAttackable">isAttackable</a></span></span><span class="code" data-ice="signature">(entity: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-isAttackable">isAttackable</a></span></span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Returns whether or not the player can attack this entity</p>
+</div>
       </div>
     </td>
     <td>
@@ -1125,13 +1163,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-isTargetable">isTargetable</a></span></span><span class="code" data-ice="signature">(entity: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-isTargetable">isTargetable</a></span></span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Returns whether or not this entity can be targeted</p>
+</div>
       </div>
     </td>
     <td>
@@ -1153,13 +1192,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-keyMove">keyMove</a></span></span><span class="code" data-ice="signature">(position: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-keyMove">keyMove</a></span></span><span class="code" data-ice="signature">(position: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Handle key presses to move the player in a direction</p>
+</div>
       </div>
     </td>
     <td>
@@ -1181,13 +1221,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-keyUp">keyUp</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-keyUp">keyUp</a></span></span><span class="code" data-ice="signature">(key: <span>Modules</span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Handle keyUp events</p>
+</div>
       </div>
     </td>
     <td>
@@ -1215,7 +1256,8 @@ cell spinner sprite (only on desktop)</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Load spinner sprite, chat handler and overlay</p>
+</div>
       </div>
     </td>
     <td>
@@ -1243,7 +1285,8 @@ cell spinner sprite (only on desktop)</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Load cursors</p>
+</div>
       </div>
     </td>
     <td>
@@ -1271,7 +1314,9 @@ cell spinner sprite (only on desktop)</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Move the cursor or display a different cursor depending on what the
+player is hovering over</p>
+</div>
       </div>
     </td>
     <td>
@@ -1299,7 +1344,8 @@ cell spinner sprite (only on desktop)</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set an attack target</p>
+</div>
       </div>
     </td>
     <td>
@@ -1321,13 +1367,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-setCoords">setCoords</a></span></span><span class="code" data-ice="signature">(event: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-setCoords">setCoords</a></span></span><span class="code" data-ice="signature">(event: <span>MouseEvent</span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets the coordinates of the mouse relative to the offset of the canvas</p>
+</div>
       </div>
     </td>
     <td>
@@ -1349,13 +1396,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-setCursor">setCursor</a></span></span><span class="code" data-ice="signature">(cursor: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-setCursor">setCursor</a></span></span><span class="code" data-ice="signature">(cursor: <span>Cusror</span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set a new cursor</p>
+</div>
       </div>
     </td>
     <td>
@@ -1383,7 +1431,8 @@ cell spinner sprite (only on desktop)</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set a passive target</p>
+</div>
       </div>
     </td>
     <td>
@@ -1405,13 +1454,14 @@ cell spinner sprite (only on desktop)</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-setPosition">setPosition</a></span></span><span class="code" data-ice="signature">(x: <span>*</span>, y: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-method-setPosition">setPosition</a></span></span><span class="code" data-ice="signature">(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set the selectedX and selectedY positions</p>
+</div>
       </div>
     </td>
     <td>
@@ -1439,7 +1489,8 @@ cell spinner sprite (only on desktop)</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Change the cursor if visible and newCursor doesn&apos;t equal cursor</p>
+</div>
       </div>
     </td>
     <td>
@@ -1465,22 +1516,40 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(game: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber14">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber18">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Default constructor</p>
+</div>
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">game</td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>instance of the game</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
   
@@ -1511,18 +1580,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">app</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">app</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/app.js~App.html">App</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber16">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber29">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>An instance of the game app</p>
+</div>
 
   
 
@@ -1558,7 +1628,7 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber56">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber149">source</a></span></span>
     </span>
   </h3>
 
@@ -1597,18 +1667,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">cursor</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">cursor</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html">Cursor</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber77">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The cursor</p>
+</div>
 
   
 
@@ -1640,18 +1711,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">cursorVisible</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+    <span class="code" data-ice="name">cursorVisible</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber21">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber53">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Whether or not the cursor is visible</p>
+</div>
 
   
 
@@ -1683,18 +1755,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">cursors</span><span class="code" data-ice="signature">: {}</span>
+    <span class="code" data-ice="name">cursors</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>&lt;<span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html">Cursor</a></span>&gt;</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber36">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber119">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>All loaded cursors</p>
+</div>
 
   
 
@@ -1726,18 +1799,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">game</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">game</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber23">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>An instance of the game</p>
+</div>
 
   
 
@@ -1769,18 +1843,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">hovering</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">hovering</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber38">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber125">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The entity being hovered over</p>
+</div>
 
   
 
@@ -1812,18 +1887,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">mobileTargetColour</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="code" data-ice="name">mobileTargetColour</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber32">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber107">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>A moving target&apos;s color</p>
+</div>
 
   
 
@@ -1855,18 +1931,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">mouse</span><span class="code" data-ice="signature">: {&quot;x&quot;: <span>*</span>, &quot;y&quot;: <span>*</span>}</span>
+    <span class="code" data-ice="name">mouse</span><span class="code" data-ice="signature">: {x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>}</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber40">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber131">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Information about the mouse position</p>
+</div>
 
   
 
@@ -1898,18 +1975,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">newCursor</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">newCursor</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html">Cursor</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber27">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber83">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>A new instance of the cursor (for changing cursors)</p>
+</div>
 
   
 
@@ -1941,18 +2019,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">newTargetColour</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">newTargetColour</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber31">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber101">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The new target color</p>
+</div>
 
   
 
@@ -1988,7 +2067,7 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber57">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber150">source</a></span></span>
     </span>
   </h3>
 
@@ -2027,18 +2106,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">previousClick</span><span class="code" data-ice="signature">: {}</span>
+    <span class="code" data-ice="name">previousClick</span><span class="code" data-ice="signature">: <span>MouseEvent</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber20">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber47">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The previous mouse click envent</p>
+</div>
 
   
 
@@ -2070,18 +2150,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">previousKey</span><span class="code" data-ice="signature">: {}</span>
+    <span class="code" data-ice="name">previousKey</span><span class="code" data-ice="signature">: <span>KeyboardEvent</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber34">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber113">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The previous key pressed</p>
+</div>
 
   
 
@@ -2113,18 +2194,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">renderer</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">renderer</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/renderer.js~Renderer.html">Renderer</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber17">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber35">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>An instance of the game renderer</p>
+</div>
 
   
 
@@ -2156,18 +2238,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">selectedCellVisible</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+    <span class="code" data-ice="name">selectedCellVisible</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber41">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Whether or not the selected cell is visible</p>
+</div>
 
   
 
@@ -2199,18 +2282,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">selectedX</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">selectedX</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber23">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber65">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The select x position</p>
+</div>
 
   
 
@@ -2242,18 +2326,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">selectedY</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">selectedY</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber24">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber71">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The select y position</p>
+</div>
 
   
 
@@ -2289,7 +2374,7 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber53">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber147">source</a></span></span>
     </span>
   </h3>
 
@@ -2330,18 +2415,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">targetColour</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">targetColour</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber95">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The color of the target</p>
+</div>
 
   
 
@@ -2373,18 +2459,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">targetData</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">targetData</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber29">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber89">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Data on the targeted entity</p>
+</div>
 
   
 
@@ -2416,18 +2503,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">targetVisible</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+    <span class="code" data-ice="name">targetVisible</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber22">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber59">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Whether or not the target is visible</p>
+</div>
 
   
 
@@ -2462,18 +2550,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">click</span><span class="code" data-ice="signature">(position: <span>*</span>)</span>
+    <span class="code" data-ice="name">click</span><span class="code" data-ice="signature">(position: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber166">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber271">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Handle clicking events</p>
+</div>
 
   
 
@@ -2487,9 +2576,10 @@ cell spinner sprite (only on desktop)</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">position</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the x,y coordinates of the click position</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2521,18 +2611,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">getActions</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">getActions</span><span class="code" data-ice="signature">(): <span><a href="class/WTF-Adventure/src/client/js/interface/actions.js~Actions.html">Actions</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber406">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber603">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Returns the interface actions</p>
+</div>
 
   
 
@@ -2544,8 +2635,9 @@ cell spinner sprite (only on desktop)</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span><a href="class/WTF-Adventure/src/client/js/interface/actions.js~Actions.html">Actions</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>game interface actions</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2576,18 +2668,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">getAttackCursor</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">getAttackCursor</span><span class="code" data-ice="signature">(): <span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html">Cursor</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber342">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber504">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Get an attack cursor (bow or sword) depending on if the player is ranged or not</p>
+</div>
 
   
 
@@ -2599,8 +2692,9 @@ cell spinner sprite (only on desktop)</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html">Cursor</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the cursor to use for attacking</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2631,18 +2725,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">getCoords</span><span class="code" data-ice="signature">(): {&quot;x&quot;: <span>*</span>, &quot;y&quot;: <span>*</span>}</span>
+    <span class="code" data-ice="name">getCoords</span><span class="code" data-ice="signature">(): {x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>}</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber346">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber512">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Get the coordinates from the mouse relative to the canvas grid</p>
+</div>
 
   
 
@@ -2654,8 +2749,9 @@ cell spinner sprite (only on desktop)</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType">{&quot;x&quot;: <span>*</span>, &quot;y&quot;: <span>*</span>}</td>
-          
+          <td class="return-type code" data-ice="returnType">{x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>}</td>
+          <td class="return-desc" data-ice="returnDescription"><p>returns the grid x,y coordinates</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2686,18 +2782,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">getPlayer</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">getPlayer</span><span class="code" data-ice="signature">(): <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber402">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber595">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Returns an instance of the player</p>
+</div>
 
   
 
@@ -2709,8 +2806,9 @@ cell spinner sprite (only on desktop)</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the player&apos;s entity</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2741,18 +2839,28 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">getTargetData</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">getTargetData</span><span class="code" data-ice="signature">(): <span>{
+ sprite: Sprite,
+ x: Number,
+ y: Number,
+ width: Number,
+ height: Number,
+ dy: Number,
+ dw: Number,
+ dh: Number,
+ }</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber363">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber542">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Get data about the current target</p>
+</div>
 
   
 
@@ -2764,8 +2872,18 @@ cell spinner sprite (only on desktop)</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span>{
+ sprite: Sprite,
+ x: Number,
+ y: Number,
+ width: Number,
+ height: Number,
+ dy: Number,
+ dw: Number,
+ dh: Number,
+ }</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>target data</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2796,18 +2914,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">handle</span><span class="code" data-ice="signature">(inputType: <span>*</span>, data: <span>*</span>)</span>
+    <span class="code" data-ice="name">handle</span><span class="code" data-ice="signature">(inputType: <span>Modules</span>, data: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber76">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber177">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Handle input</p>
+</div>
 
   
 
@@ -2821,15 +2940,17 @@ cell spinner sprite (only on desktop)</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">inputType</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span>Modules</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the Modules.InputType to handle</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">data</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>data related to the input (keycode, coordinates, etc)</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2861,18 +2982,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">isAttackable</span><span class="code" data-ice="signature">(entity: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">isAttackable</span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber395">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber584">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Returns whether or not the player can attack this entity</p>
+</div>
 
   
 
@@ -2886,9 +3008,10 @@ cell spinner sprite (only on desktop)</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">entity</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the entity they want to attack</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2900,8 +3023,9 @@ cell spinner sprite (only on desktop)</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>returns true if they can attack this entity</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2932,18 +3056,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">isTargetable</span><span class="code" data-ice="signature">(entity: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">isTargetable</span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber387">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber571">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Returns whether or not this entity can be targeted</p>
+</div>
 
   
 
@@ -2957,9 +3082,10 @@ cell spinner sprite (only on desktop)</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">entity</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the entity to check if it can be targeted or not</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2971,8 +3097,9 @@ cell spinner sprite (only on desktop)</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>returns true player can target this entity</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -3003,18 +3130,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">keyMove</span><span class="code" data-ice="signature">(position: <span>*</span>)</span>
+    <span class="code" data-ice="name">keyMove</span><span class="code" data-ice="signature">(position: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber160">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber259">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Handle key presses to move the player in a direction</p>
+</div>
 
   
 
@@ -3028,9 +3156,10 @@ cell spinner sprite (only on desktop)</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">position</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>The x,y coordinates of the click position</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3062,18 +3191,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">keyUp</span><span class="code" data-ice="signature">(key: <span>*</span>)</span>
+    <span class="code" data-ice="name">keyUp</span><span class="code" data-ice="signature">(key: <span>Modules</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber130">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber227">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Handle keyUp events</p>
+</div>
 
   
 
@@ -3087,9 +3217,10 @@ cell spinner sprite (only on desktop)</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">key</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span>Modules</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the Modules.Keys that was triggered</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3125,14 +3256,15 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber48">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber142">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Load spinner sprite, chat handler and overlay</p>
+</div>
 
   
 
@@ -3168,14 +3300,15 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber60">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber156">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Load cursors</p>
+</div>
 
   
 
@@ -3211,14 +3344,16 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber249">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber378">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Move the cursor or display a different cursor depending on what the
+player is hovering over</p>
+</div>
 
   
 
@@ -3254,14 +3389,15 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber332">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber487">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set an attack target</p>
+</div>
 
   
 
@@ -3293,18 +3429,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">setCoords</span><span class="code" data-ice="signature">(event: <span>*</span>)</span>
+    <span class="code" data-ice="name">setCoords</span><span class="code" data-ice="signature">(event: <span>MouseEvent</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber306">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber442">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets the coordinates of the mouse relative to the offset of the canvas</p>
+</div>
 
   
 
@@ -3318,9 +3455,10 @@ cell spinner sprite (only on desktop)</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">event</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span>MouseEvent</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the mouse move or mouse click event</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3352,18 +3490,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">setCursor</span><span class="code" data-ice="signature">(cursor: <span>*</span>)</span>
+    <span class="code" data-ice="name">setCursor</span><span class="code" data-ice="signature">(cursor: <span>Cusror</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber327">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber476">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set a new cursor</p>
+</div>
 
   
 
@@ -3377,9 +3516,10 @@ cell spinner sprite (only on desktop)</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">cursor</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span>Cusror</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the cursor to use</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3415,14 +3555,15 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber337">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber495">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set a passive target</p>
+</div>
 
   
 
@@ -3454,18 +3595,19 @@ cell spinner sprite (only on desktop)</p>
     
     
     
-    <span class="code" data-ice="name">setPosition</span><span class="code" data-ice="signature">(x: <span>*</span>, y: <span>*</span>)</span>
+    <span class="code" data-ice="name">setPosition</span><span class="code" data-ice="signature">(x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber301">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber433">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set the selectedX and selectedY positions</p>
+</div>
 
   
 
@@ -3479,15 +3621,17 @@ cell spinner sprite (only on desktop)</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">x</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>X coordinate</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">y</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Y coordinate</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3523,14 +3667,15 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber241">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber359">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Change the cursor if visible and newCursor doesn&apos;t equal cursor</p>
+</div>
 
   
 

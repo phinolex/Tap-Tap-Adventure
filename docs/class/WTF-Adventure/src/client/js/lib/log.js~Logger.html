@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -244,13 +245,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(level: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Default constructor</p>
+</div>
       </div>
     </td>
     <td>
@@ -266,6 +268,34 @@
   <tbody>
   
   <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-member-classMap">classMap</a></span></span><span class="code" data-ice="signature">: {}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
     <td>
       <span class="access" data-ice="access">public</span>
       
@@ -314,13 +344,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-debug">debug</a></span></span><span class="code" data-ice="signature">(message: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-consoleLog">consoleLog</a></span></span><span class="code" data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, rest: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Helpter function format the console.log message</p>
+</div>
       </div>
     </td>
     <td>
@@ -342,13 +373,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-error">error</a></span></span><span class="code" data-ice="signature">(message: <span>*</span>, stacktrace: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-debug">debug</a></span></span><span class="code" data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, rest: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Put a debug level message into the developer console, will only show up in debug level</p>
+</div>
       </div>
     </td>
     <td>
@@ -370,13 +402,164 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-info">info</a></span></span><span class="code" data-ice="signature">(message: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-error">error</a></span></span><span class="code" data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, stacktrace: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, rest: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
+        <div data-ice="description"><p>Put an error level message into the developer console, will only show up if there is some level specified</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-getColors">getColors</a></span></span><span class="code" data-ice="signature">(className: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): {bgcolor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, textcolor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>}</span>
+        </p>
+      </div>
+      <div>
         
+        
+        <div data-ice="description"><p>Given the name of the class this is for return
+the previously associated color or associate a random
+color to this class name</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-info">info</a></span></span><span class="code" data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, rest: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Put a information level message into the developer console, will only show up in debug or info level</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-lightOrDark">lightOrDark</a></span></span><span class="code" data-ice="signature">(color: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Figure out whether to return white or black text color for the
+given background colorMatch</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-padEnd">padEnd</a></span></span><span class="code" data-ice="signature">(str: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, targetLength: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, val: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Pads the end of a string with the value if the String.prototype doesn&apos;t exist
+This is particularly for CircleCI which keeps failing :( and always uses the
+proptotype if it exists</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html#instance-method-randomColor">randomColor</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Generate a random color within the acceptable 256 color range</p>
+</div>
       </div>
     </td>
     <td>
@@ -402,11 +585,75 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(level: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber4">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber9">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Default constructor</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">level</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>debug|info|error</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
+<div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-classMap">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">classMap</span><span class="code" data-ice="signature">: {}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber11">source</a></span></span>
     </span>
   </h3>
 
@@ -437,9 +684,6 @@
   
   
 </div>
-</div>
-<div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
-
 <div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-member-level">
     <span class="access" data-ice="access">public</span>
@@ -452,7 +696,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber5">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber10">source</a></span></span>
     </span>
   </h3>
 
@@ -487,25 +731,26 @@
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-debug">
+  <h3 data-ice="anchor" id="instance-method-consoleLog">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">debug</span><span class="code" data-ice="signature">(message: <span>*</span>)</span>
+    <span class="code" data-ice="name">consoleLog</span><span class="code" data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, rest: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber16">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber126">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Helpter function format the console.log message</p>
+</div>
 
   
 
@@ -519,9 +764,89 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">message</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the first variable passed to the console.log, generally a message
+ formatted as <code>ClassName - propertyFunction() - optional additional message</code></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">rest</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>an array of the rest of the variables passed to the console.log, typically class
+ instances or variables in the file used for debugging</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-debug">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">debug</span><span class="code" data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, rest: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber159">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Put a debug level message into the developer console, will only show up in debug level</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">message</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>the first variable passed to the console.log, generally a message
+ formatted as <code>ClassName - propertyFunction() - optional additional message</code></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">rest</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>an array of the rest of the variables passed to the console.log, typically class
+ instances or variables in the file used for debugging</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -553,18 +878,19 @@
     
     
     
-    <span class="code" data-ice="name">error</span><span class="code" data-ice="signature">(message: <span>*</span>, stacktrace: <span>*</span>)</span>
+    <span class="code" data-ice="name">error</span><span class="code" data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, stacktrace: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, rest: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber24">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber175">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Put an error level message into the developer console, will only show up if there is some level specified</p>
+</div>
 
   
 
@@ -578,15 +904,26 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">message</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the first variable passed to the console.log, generally a message
+ formatted as <code>ClassName - propertyFunction() - optional additional message</code></p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">stacktrace</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the error stack trace</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">rest</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>an array of the rest of the variables passed to the console.log, typically class
+ instances or variables in the file used for debugging</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -611,6 +948,83 @@
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-getColors">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">getColors</span><span class="code" data-ice="signature">(className: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): {bgcolor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, textcolor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber102">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Given the name of the class this is for return
+the previously associated color or associate a random
+color to this class name</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">className</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>the name of the class this log message is for</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType">{bgcolor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, textcolor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>}</td>
+          <td class="return-desc" data-ice="returnDescription"><p>the background and text color for this
+ class name</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-info">
     <span class="access" data-ice="access">public</span>
     
@@ -618,18 +1032,19 @@
     
     
     
-    <span class="code" data-ice="name">info</span><span class="code" data-ice="signature">(message: <span>*</span>)</span>
+    <span class="code" data-ice="name">info</span><span class="code" data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, rest: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber8">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber144">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Put a information level message into the developer console, will only show up in debug or info level</p>
+</div>
 
   
 
@@ -643,9 +1058,19 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">message</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the first variable passed to the console.log, generally a message
+ formatted as <code>ClassName - propertyFunction() - optional additional message</code></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">rest</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>an array of the rest of the variables passed to the console.log, typically class
+ instances or variables in the file used for debugging</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -653,6 +1078,228 @@
 </div>
 
   
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-lightOrDark">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">lightOrDark</span><span class="code" data-ice="signature">(color: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber55">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Figure out whether to return white or black text color for the
+given background colorMatch</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">color</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>the hexcode color without a # mark in front of it</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>#000 for light colors and #fff for dark colors</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-padEnd">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">padEnd</span><span class="code" data-ice="signature">(str: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>, targetLength: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, val: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber34">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Pads the end of a string with the value if the String.prototype doesn&apos;t exist
+This is particularly for CircleCI which keeps failing :( and always uses the
+proptotype if it exists</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">str</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>a string (will be cast to be sure)</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">targetLength</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>how long the final string should be</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">val</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>what to pad the string with, defaults to space</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>returns the string at targetLength with val padded on the end</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-randomColor">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">randomColor</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/lib/log.js.html#lineNumber20">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Generate a random color within the acceptable 256 color range</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>hexcode with a # prepended on it</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 

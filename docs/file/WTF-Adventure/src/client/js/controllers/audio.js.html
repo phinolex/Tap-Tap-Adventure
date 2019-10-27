@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -345,7 +346,7 @@ export default class Audio {
    */
   play(type, name) {
     if (!this.isEnabled() || !this.fileExists(name)) {
-      log.info(&apos;Audio is disabled&apos;);
+      log.debug(&apos;Audio - play() - audio is disabled&apos;);
       return false;
     }
 
@@ -358,7 +359,7 @@ export default class Audio {
         });
 
         if (!this.song) {
-          log.info(`${name} - music could not be loaded`);
+          log.debug(`Audio - play() - ${name} could not be loaded`);
           return false;
         }
 
@@ -372,7 +373,7 @@ export default class Audio {
         }
 
         if (!this.song) {
-          log.info(`${name} - sfx could not be loaded`);
+          log.debug(`Audio - play() - ${name} sfx could not be loaded`);
           return false;
         }
 
@@ -391,11 +392,12 @@ export default class Audio {
    * @return {Boolean}
    */
   update() {
+    log.debug(&apos;Audio - update()&apos;, this.songName);
+
     if (!this.isEnabled()) {
+      log.debug(&apos;Audio - update() - audio is disabled&apos;);
       return false;
     }
-
-    log.info(`updating ${this.songName}`);
 
     const song = this.getMusic(this.songName);
 

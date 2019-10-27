@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -200,7 +201,7 @@ export default class App {
    * orientation and then load the login screen
    */
   constructor() {
-    log.info(&apos;Loading the main application...&apos;);
+    log.debug(&apos;App - constructor()&apos;);
 
     /**
      * Configuration for the client application
@@ -413,6 +414,13 @@ export default class App {
      */
     this.statusMessage = null;
 
+    // auto-binding
+    this.keydownEventListener = this.keydownEventListener.bind(this);
+    this.keyupEventListener = this.keyupEventListener.bind(this);
+    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);
+    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);
+    this.canvasClickEventListener = this.canvasClickEventListener.bind(this);
+
     this.sendStatus(&apos;You should turn back now...&apos;);
 
     this.zoom();
@@ -424,6 +432,8 @@ export default class App {
    * Add click listeners for the different parts of the UI
    */
   load() {
+    log.debug(&apos;App - load()&apos;);
+
     this.loginButton.click(() =&gt; this.login());
     this.createButton.click(() =&gt; this.login());
     this.wrapper.click(() =&gt; this.loadCharacter());
@@ -443,16 +453,18 @@ export default class App {
     this.window.resize(this.zoom());
 
     $.getJSON(&apos;./src/client/config.json&apos;, (json) =&gt; {
+      log.debug(&apos;App - loading client config&apos;);
       this.config = json;
 
       if (this.readyCallback) {
+        log.debug(&apos;App - loading client config done - readyCallback()&apos;);
         this.readyCallback();
       }
     });
 
-    $(document).keydown(this.keydownEventListener);
-    $(document).keyup(this.keyupEventListener);
-    $(document).mousemove(this.mousemoveEventListener);
+    $(document).on(&apos;keydown&apos;, this.keydownEventListener);
+    $(document).on(&apos;keyup&apos;, this.keyupEventListener);
+    $(document).on(&apos;mousemove&apos;, this.mousemoveEventListener);
     this.canvas.click(this.canvasClickEventListener);
 
     $(&apos;input[type=&quot;range&quot;]&apos;).on(&apos;input&apos;, () =&gt; {
@@ -465,6 +477,8 @@ export default class App {
    * finished loading
    */
   welcomeContinue() {
+    log.debug(&apos;App - welcomeContinue()&apos;);
+
     if (!this.game) {
       return false;
     }
@@ -482,6 +496,8 @@ export default class App {
    * @return {Boolean}
    */
   login() {
+    log.debug(&apos;App - login()&apos;);
+
     if (
       this.loggingIn
       || !this.game
@@ -501,6 +517,8 @@ export default class App {
    * @return {Boolean}
    */
   loginAsGuest() {
+    log.debug(&apos;App - loginAsGuest()&apos;);
+
     if (!this.game) {
       return false;
     }
@@ -516,6 +534,8 @@ export default class App {
    * @return {Boolean}
    */
   loadCharacter() {
+    log.debug(&apos;App - loadCharacter()&apos;);
+
     if (
       this.wrapper.hasClass(&apos;about&apos;)
       || this.wrapper.hasClass(&apos;credits&apos;)
@@ -538,6 +558,8 @@ export default class App {
    * @return {Boolean}
    */
   rememberLogin() {
+    log.debug(&apos;App - rememberLogin()&apos;);
+
     if (!this.game || !this.game.storage) {
       return false;
     }
@@ -555,6 +577,8 @@ export default class App {
    * @return {Boolean}
    */
   respawnPlayer() {
+    log.debug(&apos;App - respawnPlayer()&apos;);
+
     if (!this.game || !this.game.player || !this.game.player.dead) {
       return false;
     }
@@ -569,6 +593,8 @@ export default class App {
    * @return {Boolean}
    */
   keydownEventListener(event) {
+    log.debug(&apos;App - keydownEventListener()&apos;, event);
+
     const key = event.which;
 
     if (!this.game) {
@@ -595,6 +621,8 @@ export default class App {
    * @return {Boolean}
    */
   keyupEventListener(event) {
+    log.debug(&apos;App - keyupEventListener()&apos;, event);
+
     const key = event.which;
 
     if (!this.game || !this.game.started) {
@@ -610,12 +638,15 @@ export default class App {
    * @param {Object} event mouse event
    */
   mousemoveEventListener(event) {
+    log.debug(&apos;App - mousemoveEventListener()&apos;, event, this);
+
     if (!this.game || !this.game.input || !this.game.started) {
       return false;
     }
 
     this.game.input.setCoords(event);
     this.game.input.moveCursor();
+
     return true;
   }
 
@@ -625,12 +656,15 @@ export default class App {
    * @return {Boolean}
    */
   canvasClickEventListener(event) {
+    log.debug(&apos;App - canvasClickEventListener()&apos;, event);
+
     if (!this.game || !this.game.started || event.button !== 0) {
       return false;
     }
 
     window.scrollTo(0, 1);
     this.game.input.handle(Modules.InputType.LeftClick, event);
+
     return true;
   }
 
@@ -639,6 +673,8 @@ export default class App {
    * game to fit porportionally with the player&apos;s window size
    */
   zoom() {
+    log.debug(&apos;App - zoom()&apos;);
+
     const containerWidth = this.container.width();
     const containerHeight = this.container.height();
     const windowWidth = this.window.width();
@@ -666,6 +702,8 @@ export default class App {
    * Fades the menu
    */
   fadeMenu() {
+    log.debug(&apos;App - fadeMenu()&apos;);
+
     this.updateLoader(null);
 
     setTimeout(() =&gt; {
@@ -679,6 +717,8 @@ export default class App {
    * Shows the menu
    */
   showMenu() {
+    log.debug(&apos;App - showMenu()&apos;);
+
     this.body.removeClass(&apos;game&apos;);
     this.body.removeClass(&apos;started&apos;);
     this.body.addClass(&apos;intro&apos;);
@@ -690,7 +730,7 @@ export default class App {
    * @param {String} destination the new screen to show
    */
   displayScreen(origin, destination) {
-    log.info(&apos;open scroll&apos;, origin, destination);
+    log.debug(&apos;App - displayScreen()&apos;, origin, destination);
 
     if (!destination || this.loggingIn) {
       return;
@@ -707,6 +747,8 @@ export default class App {
    * @param {String} content - the screen to display
    */
   displayScroll(content) {
+    log.debug(&apos;App - displayScroll()&apos;, content);
+
     const state = this.wrapper.attr(&apos;class&apos;);
 
     if (this.game.started) {
@@ -729,6 +771,8 @@ export default class App {
    * Verify the active form
    */
   verifyForm() {
+    log.debug(&apos;App - verifyForm()&apos;);
+
     const activeForm = this.getActiveForm();
 
     if (activeForm === &apos;null&apos;) {
@@ -749,6 +793,8 @@ export default class App {
    * @return {Boolean} true if valid
    */
   verifyJoinForm() {
+    log.debug(&apos;App - verifyJoinForm()&apos;);
+
     const characterName = $(&apos;#registerNameInput&apos;);
     const registerPassword = $(&apos;#registerPasswordInput&apos;);
     const email = $(&apos;#registerEmailInput&apos;);
@@ -795,6 +841,8 @@ export default class App {
    * @return {Boolean} true if valid
    */
   verifyLoginForm() {
+    log.debug(&apos;App - verifyLoginForm()&apos;);
+
     const nameInput = $(&apos;#loginNameInput&apos;);
     const passwordInput = $(&apos;#loginPasswordInput&apos;);
 
@@ -822,6 +870,8 @@ export default class App {
    * @return {Boolean} true if valid
    */
   verifyEmail(email) {
+    log.debug(&apos;App - verifyEmail()&apos;, email);
+
     return /^(([^&lt;&gt;()[\]\\.,;:\s@\&quot;]+(\.[^&lt;&gt;()[\]\\.,;:\s@\&quot;]+)*)|(\&quot;.+\&quot;))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       email,
     );
@@ -833,6 +883,8 @@ export default class App {
    * @param {String} message the message
    */
   sendStatus(message) {
+    log.debug(&apos;App - sendStatus()&apos;, message);
+
     this.cleanErrors();
 
     this.statusMessage = message;
@@ -854,9 +906,9 @@ export default class App {
    * that this field has an issue
    */
   sendError(field, error) {
-    this.cleanErrors();
-    log.info(`Error: ${error}`);
+    log.debug(&apos;App - sendError()&apos;, field, error);
 
+    this.cleanErrors();
     this.errorMsg.html(error);
     this.errorMsg.show();
 
@@ -877,6 +929,8 @@ export default class App {
    * on the active form&apos;s input fields
    */
   cleanErrors() {
+    log.debug(&apos;App - cleanErrors()&apos;);
+
     const activeForm = this.getActiveForm();
     const fields = activeForm === &apos;loadCharacter&apos;
       ? this.loginFields
@@ -895,6 +949,8 @@ export default class App {
    * @return {String} active form&apos;s ID
    */
   getActiveForm() {
+    log.debug(&apos;App - getActiveForm()&apos;);
+
     return this.wrapper &amp;&amp; this.wrapper[0] &amp;&amp; this.wrapper[0].className;
   }
 
@@ -903,6 +959,8 @@ export default class App {
    * @return {Boolean} true if on the join form
    */
   isRegistering() {
+    log.debug(&apos;App - isRegistering()&apos;);
+
     return this.getActiveForm() === &apos;createCharacter&apos;;
   }
 
@@ -911,6 +969,8 @@ export default class App {
    * @return {Boolean} true if player is a guest
    */
   isGuest() {
+    log.debug(&apos;App - isGuest()&apos;);
+
     return this.guestLogin;
   }
 
@@ -918,6 +978,8 @@ export default class App {
    * Call the game&apos;s resizer function
    */
   resize() {
+    log.debug(&apos;App - resize()&apos;);
+
     if (this.game) {
       this.game.resize();
     }
@@ -927,7 +989,10 @@ export default class App {
    * Set the app to use a new instance of the game
    */
   setGame(game) {
+    log.debug(&apos;App - setGame()&apos;, game);
+
     this.game = game;
+    window.wtf = this;
   }
 
   /**
@@ -935,6 +1000,8 @@ export default class App {
    * @return {Boolean} returns true if the window has an active web worker
    */
   hasWorker() {
+    log.debug(&apos;App - hasWorker()&apos;);
+
     return !!this.window.Worker;
   }
 
@@ -966,6 +1033,8 @@ export default class App {
    * of &apos;Connecting to server...&apos;
    */
   revertLoader() {
+    log.debug(&apos;App - revertLoader()&apos;);
+
     this.updateLoader(&apos;Connecting to server...&apos;);
   }
 
@@ -974,6 +1043,8 @@ export default class App {
    * @param  {String} message the loader message to display
    */
   updateLoader(message) {
+    log.debug(&apos;App - updateLoader()&apos;, message);
+
     if (!message) {
       this.loading.hide();
       this.loadingMsg.html(&apos;&apos;);
@@ -989,7 +1060,7 @@ export default class App {
    * @param  {Boolean} toggle true to hide, false to show
    */
   toggleLogin(toggle) {
-    log.info(`Logging in: ${toggle}`);
+    log.debug(&apos;App - toggleLogin()&apos;, toggle);
 
     this.revertLoader();
     this.toggleTyping(toggle);
@@ -1012,6 +1083,8 @@ export default class App {
    * @param  {String} state the state to update the fields to
    */
   toggleTyping(state) {
+    log.debug(&apos;App - toggleTyping()&apos;, state);
+
     if (this.loginFields) {
       _.each(this.loginFields, (field) =&gt; {
         field.prop(&apos;readonly&apos;, state);
@@ -1030,6 +1103,8 @@ export default class App {
    * using a linear gradient on the background color
    */
   updateRange(field) {
+    log.debug(&apos;App - updateRange()&apos;, field);
+
     const obj = $(field);
     const val = (obj.val() - obj.attr(&apos;min&apos;)) / (obj.attr(&apos;max&apos;) - obj.attr(&apos;min&apos;));
 
@@ -1045,6 +1120,9 @@ export default class App {
    * player is using
    */
   updateOrientation() {
+    log.debug(&apos;App - updateOrientation()&apos;);
+
+    // this.zoom();
     this.orientation = this.getOrientation();
   }
 
@@ -1053,6 +1131,8 @@ export default class App {
    * @return {String} portrait|landscape
    */
   getOrientation() {
+    log.debug(&apos;App - getOrientation()&apos;);
+
     return this.height &gt; this.width ? &apos;portrait&apos; : &apos;landscape&apos;;
   }
 
@@ -1061,16 +1141,20 @@ export default class App {
    * @return {Number} a value from 0 to 1
    */
   getZoom() {
+    log.debug(&apos;App - getZoom()&apos;);
+
     return this.zoomFactor;
   }
 
   /**
    * The callback function when this app class is ready
    * and done loading
-   * @param  {Function} callback the callback function when
+   * @param {Function} callback the callback function when
    * this application class is done loading
    */
   onReady(callback) {
+    log.debug(&apos;App - onReady()&apos;, callback);
+
     this.readyCallback = callback;
   }
 
@@ -1079,6 +1163,8 @@ export default class App {
    * @return {Boolean} true if a phone
    */
   isMobile() {
+    log.debug(&apos;App - isMobile()&apos;);
+
     return this.getScaleFactor() &lt; 2;
   }
 
@@ -1087,6 +1173,8 @@ export default class App {
    * @return {Boolean} true if a tablet
    */
   isTablet() {
+    log.debug(&apos;App - isTablet()&apos;);
+
     return Detect.isIpad() || (Detect.isAndroid() &amp;&amp; this.getScaleFactor() &gt; 1);
   }
 }

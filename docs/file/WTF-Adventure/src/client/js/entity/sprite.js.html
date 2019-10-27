@@ -99,6 +99,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isInt">isInt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isIntersecting">isIntersecting</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TRANSITIONEND">TRANSITIONEND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-requestAnimFrame">requestAnimFrame</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-server-data-combat">src/server/data/combat</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/greatsquid.js~GreatSquid.html">GreatSquid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/ogrelord.js~OgreLord.html">OgreLord</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/server/data/combat/piratecaptain.js~PirateCaptain.html">PirateCaptain</a></span></span></li>
@@ -188,42 +189,44 @@ import log from &apos;../lib/log&apos;;
 
 export default class Sprite {
   constructor(sprite, scale) {
+    // log.debug(&apos;Sprite - constructor()&apos;, sprite, scale);
+
     this.sprite = sprite;
     this.scale = scale;
-
     this.id = sprite.id;
-
     this.loaded = false;
-
     this.offsetX = 0;
     this.offsetY = 0;
     this.offsetAngle = 0;
-
-    this.whiteSprite = {
-      loaded: false,
-    };
+    this.whiteSprite = { loaded: false };
 
     this.loadSprite();
   }
 
   load() {
+    log.debug(&apos;Sprite - load()&apos;, this.filepath);
+
     this.image = new Image();
     this.image.crossOrigin = &apos;Anonymous&apos;;
     this.image.src = this.filepath;
 
     this.image.onload = () =&gt; {
+      log.debug(&apos;Sprite - load() - image loaded&apos;, this.filepath);
       this.loaded = true;
 
-      if (this.onLoadCallback) this.onLoadCallback();
+      if (this.onLoadCallback) {
+        log.debug(&apos;Sprite - load() - image loaded callback&apos;, this.onLoadCallback);
+        this.onLoadCallback();
+      }
     };
   }
 
   loadSprite() {
-    const {
-      sprite,
-    } = this;
+    // log.debug(&apos;Sprite - loadSprite()&apos;, this.sprite);
 
-    this.filepath = `img/${this.scale}/${this.id}.png`;
+    const { sprite } = this;
+
+    this.filepath = `assets/img/${this.scale}/${this.id}.png`;
     this.animationData = sprite.animations;
 
     this.width = sprite.width;
@@ -235,6 +238,7 @@ export default class Sprite {
   }
 
   update(newScale) {
+    log.debug(&apos;Sprite - update()&apos;);
     this.scale = newScale;
 
     this.loadSprite();
@@ -242,6 +246,8 @@ export default class Sprite {
   }
 
   createAnimations() {
+    log.debug(&apos;Sprite - createAnimations()&apos;);
+
     const animations = {};
 
     for (const name in this.animationData) { // eslint-disable-line
@@ -266,20 +272,21 @@ export default class Sprite {
    */
 
   createHurtSprite() {
-    if (!this.loaded) this.load();
+    if (!this.loaded) {
+      log.debug(&apos;Sprite - createHurtSprite()&apos;);
+      this.load();
+    }
 
-    if (this.whiteSprite.loaded) return;
+    if (this.whiteSprite.loaded) {
+      return;
+    }
 
     const canvas = document.createElement(&apos;canvas&apos;);
-
-
     const context = canvas.getContext(&apos;2d&apos;);
 
-
     let spriteData;
-
-    canvas.width = this.image.width;
-    canvas.height = this.image.height;
+    canvas.width = this.width;
+    canvas.height = this.height;
 
     context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
 
@@ -313,11 +320,13 @@ export default class Sprite {
         height: this.height,
       };
     } catch (e) {
-      log.info(&apos;sprite error&apos;, e);
+      log.debug(&apos;Sprite - createHurtSprite() - error&apos;, e, this.image, spriteData);
     }
   }
 
   getHurtSprite() {
+    log.debug(&apos;Sprite - getHurtSprite()&apos;);
+
     try {
       if (!this.loaded) {
         this.load();
@@ -327,12 +336,13 @@ export default class Sprite {
 
       return this.whiteSprite;
     } catch (e) {
-      log.info(&apos;sprite hurt error&apos;, e);
+      log.debug(&apos;Sprite - getHurtSprite() - error&apos;, e);
       return null;
     }
   }
 
   onLoad(callback) {
+    log.debug(&apos;Sprite - onLoad()&apos;, callback);
     this.onLoadCallback = callback;
   }
 }
