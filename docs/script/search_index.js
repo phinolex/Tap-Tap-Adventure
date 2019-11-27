@@ -1381,15 +1381,15 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf-adventure/src/client/js/__tests__/main.test.js",
-    "file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
-    "WTF-Adventure/src/client/js/__tests__/main.test.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/src/client/js/__tests__/main.test.js",
     "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
     "WTF-Adventure/src/client/js/__tests__/main.test.js",
     "testFile"
+  ],
+  [
+    "wtf-adventure/src/client/js/__tests__/main.test.js",
+    "file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
+    "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "file"
   ],
   [
     "wtf-adventure/src/client/js/app.js",

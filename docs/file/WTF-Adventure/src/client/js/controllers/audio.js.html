@@ -598,11 +598,7 @@ export default class Audio {
   /**
    * Returns an object with the sound and the name of the sound
    * @param {String} name the name of the music
-   * @return {Object}
-   * {
-   *  sound: instance of the music,
-   *  name: name of the song
-   * }
+   * @return {{ sound: HTMLAudioElement, name: String }}
    */
   getMusic(name) {
     return {

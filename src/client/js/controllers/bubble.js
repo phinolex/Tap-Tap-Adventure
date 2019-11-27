@@ -20,7 +20,7 @@ export default class Bubble {
 
     /**
      * An object with all of the bubbles to display
-     * @type {Object<Blob>}
+     * @type {Blob[]}
      */
     this.bubbles = {};
 
@@ -61,7 +61,7 @@ export default class Bubble {
 
   /**
    * Set a speech bubble to a specific entity
-   * @param  {Entity} entity   an entity in the game
+   * @param {Entity} entity an entity in the game
    * @return null, speech bubble shows in the location of the entity
    */
   setTo(entity) {
@@ -88,7 +88,7 @@ export default class Bubble {
 
   /**
    * Update the display of the bubbles (automatically disappear over time)
-   * @param  {Number} time the current timestamp
+   * @param {Number} time the current timestamp
    * @return null, deletes expired speech bubbles
    */
   update(time) {
@@ -108,7 +108,7 @@ export default class Bubble {
 
   /**
    * Fetch a specific bubble
-   * @param  {Number} id       the id of the bubble message
+   * @param {Number} id the id of the bubble message
    * @return {Bubble} an instance of the bubble message
    */
   get(id) {
@@ -133,7 +133,7 @@ export default class Bubble {
 
   /**
    * Delete a specific bubble
-   * @param  {Number} id the id of the bubble message
+   * @param {Number} id the id of the bubble message
    * @return null, the bubble is removed from the array
    */
   destroy(id) {
