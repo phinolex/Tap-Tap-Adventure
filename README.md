@@ -64,7 +64,7 @@ WTF?! Adventure is completely open-source, allowing its community to collaborate
 
 ## Running WTF?! Adventure
 
-Running the server is fairly straightforward, for the most part. If you encounter any issues, make sure you use the alternative solution.
+Running the server is fairly straightforward, for the most part. If you already have everything installed and configured you can skip directly to step 3.
 
 ##### Step 1 - Install the dependencies
 
