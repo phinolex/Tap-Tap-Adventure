@@ -1,3 +1,4 @@
+/* global document */
 import _ from 'underscore';
 import $ from 'jquery';
 import log from '../lib/log';
@@ -125,11 +126,15 @@ export default class Renderer {
       return;
     }
 
+    console.log('camera grid width');
+    console.log('camera tile size', this.tileSize);
+
+
     this.screenWidth = this.camera.gridWidth * this.tileSize;
     this.screenHeight = this.camera.gridHeight * this.tileSize;
 
-    const width = this.screenWidth * this.drawingScale;
-    const height = this.screenHeight * this.drawingScale;
+    const width = $('#container').width() - this.camera.gridWidth;
+    const height = $('#container').height() - this.camera.gridHeight;
 
     this.forEachCanvas((canvas) => {
       canvas.width = width; // eslint-disable-line
@@ -333,7 +338,7 @@ export default class Renderer {
 
     this.forEachVisibleEntity((entity) => {
       if (entity.spriteLoaded) {
-        log.debug('drawEntities', entity);
+        // log.debug('drawEntities', entity);
         this.drawEntity(entity);
       }
     });

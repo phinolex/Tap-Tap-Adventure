@@ -38,6 +38,7 @@ export default class PlayerHandler {
 
     this.player.onStartPathing((path) => {
       const i = path.length - 1;
+      console.log('path is', path);
 
       this.input.selectedX = path[i][0]; // eslint-disable-line
       this.input.selectedY = path[i][1]; // eslint-disable-line

@@ -1568,6 +1568,7 @@ export default class Game {
     log.debug('Game - findPath()', x, y, ignores);
 
     const grid = this.entities.grids.pathingGrid;
+    console.log('GRID IS ----------- ', grid);
     let path = [];
 
     if (this.map.isColliding(x, y) || !this.pathfinder || !character) {
@@ -1582,7 +1583,9 @@ export default class Game {
 
     path = this.pathfinder.find(grid, character, x, y, false);
 
-    if (ignores) this.pathfinder.clearIgnores();
+    if (ignores) {
+      this.pathfinder.clearIgnores();
+    }
 
     return path;
   }
