@@ -23,7 +23,9 @@ export default class PlayerHandler {
 
       const ignores = [this.player];
 
-      if (this.player.hasTarget()) ignores.push(this.player.target);
+      if (this.player.hasTarget()) {
+        ignores.push(this.player.target);
+      }
 
       this.socket.send(Packets.Movement, [
         Packets.MovementOpcode.Request,

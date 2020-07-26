@@ -1,11 +1,24 @@
-const Astar = () => (function () {
-  /**
-   * A* (A-Star) algorithm for a path finder
-   * @author  Andrea Giammarchi
-   * @license Mit Style License
-   */
-
-  function diagonalSuccessors($N, $S, $E, $W, N, S, E, W, grid, rows, cols, result, i) {
+/**
+* A* (A-Star) algorithm for a path finder
+* @author  Andrea Giammarchi
+* @license Mit Style License
+*/
+define(() => (function () {
+  function diagonalSuccessors(
+    $N,
+    $S,
+    $E,
+    $W,
+    N,
+    S,
+    E,
+    W,
+    grid,
+    rows,
+    cols,
+    result,
+    i,
+  ) {
     if ($N) {
       $E && !grid[N][E] && (result[i++] = { x: E, y: N });
       $W && !grid[N][W] && (result[i++] = { x: W, y: N });
@@ -17,7 +30,21 @@ const Astar = () => (function () {
     return result;
   }
 
-  function diagonalSuccessorsFree($N, $S, $E, $W, N, S, E, W, grid, rows, cols, result, i) {
+  function diagonalSuccessorsFree(
+    $N,
+    $S,
+    $E,
+    $W,
+    N,
+    S,
+    E,
+    W,
+    grid,
+    rows,
+    cols,
+    result,
+    i,
+  ) {
     $N = N > -1;
     $S = S < rows;
     $E = E < cols;
@@ -33,39 +60,34 @@ const Astar = () => (function () {
     return result;
   }
 
-  function nothingToDo($N, $S, $E, $W, N, S, E, W, grid, rows, cols, result, i) {
+  function nothingToDo(
+    $N,
+    $S,
+    $E,
+    $W,
+    N,
+    S,
+    E,
+    W,
+    grid,
+    rows,
+    cols,
+    result,
+    i,
+  ) {
     return result;
   }
 
   function successors(find, x, y, grid, rows, cols) {
-    const
-      N = y - 1;
-
-
+    const N = y - 1;
     const S = y + 1;
-
-
     const E = x + 1;
-
-
     const W = x - 1;
-
-
     const $N = N > -1 && !grid[N][x];
-
-
     const $S = S < rows && !grid[S][x];
-
-
     const $E = E < cols && !grid[y][E];
-
-
     const $W = W > -1 && !grid[y][W];
-
-
     const result = [];
-
-
     let i = 0;
     $N && (result[i++] = { x, y: N });
     $E && (result[i++] = { x: E, y });
@@ -79,10 +101,7 @@ const Astar = () => (function () {
   }
 
   function euclidean(start, end, f1, f2) {
-    const
-      x = start.x - end.x;
-
-
+    const x = start.x - end.x;
     const y = start.y - end.y;
     return f2(x * x + y * y);
   }
@@ -93,36 +112,27 @@ const Astar = () => (function () {
 
   function AStar(grid, start, end, f) {
     const cols = grid[0].length;
-
-
     const rows = grid.length;
-
-
     const limit = cols * rows;
-
-
     const f1 = Math.abs;
-
-
     let f2 = Math.max;
-
-
     const list = {};
-
-
     const result = [];
-
-
-    const open = [{
-      x: start[0], y: start[1], f: 0, g: 0, v: start[0] + start[1] * cols,
-    }];
-
-
+    const open = [
+      {
+        x: start[0], y: start[1], f: 0, g: 0, v: start[0] + start[1] * cols,
+      },
+    ];
     let length = 1;
-
-
-    let adj; let distance; let find; let i; let j; let max; let min; let current; let
-      next;
+    let adj;
+    let distance;
+    let find;
+    let i;
+    let j;
+    let max;
+    let min;
+    let current;
+    let next;
     end = { x: end[0], y: end[1], v: end[0] + end[1] * cols };
     switch (f) {
       case 'Diagonal':
@@ -161,7 +171,8 @@ const Astar = () => (function () {
           adj.f = adj.g = 0;
           adj.v = adj.x + adj.y * cols;
           if (!(adj.v in list)) {
-            adj.f = (adj.g = current.g + distance(adj, current, f1, f2)) + distance(adj, end, f1, f2);
+            adj.f = (adj.g = current.g + distance(adj, current, f1, f2))
+                + distance(adj, end, f1, f2);
             open[length++] = adj;
             list[adj.v] = 1;
           }
@@ -170,7 +181,7 @@ const Astar = () => (function () {
         i = length = 0;
         do {
           result[i++] = [current.x, current.y];
-        } while (current = current.p);
+        } while ((current = current.p));
         result.reverse();
       }
     } while (length);
@@ -179,6 +190,4 @@ const Astar = () => (function () {
   }
 
   return AStar;
-}());
-
-export default Astar;
+}()));

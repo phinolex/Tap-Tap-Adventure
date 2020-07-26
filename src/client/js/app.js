@@ -321,7 +321,7 @@ export default class App {
       || !this.verifyForm()
     ) return false;
 
-    this.toggleLogin(true);
+    // this.toggleLogin(true);
     this.game.connect();
     return true;
   }
