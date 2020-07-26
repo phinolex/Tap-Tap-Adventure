@@ -518,6 +518,7 @@ export default class Character extends Entity {
   }
 
   onStartPathing(callback) {
+    console.log('my path callback is', callback);
     this.startPathingCallback = callback;
   }
 

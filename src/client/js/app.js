@@ -251,7 +251,7 @@ export default class App {
 
     this.loginButton.click(() => this.login());
     this.createButton.click(() => this.login());
-    this.wrapper.click(() => this.loadCharacter());
+    this.loadCharacter();
     this.yes.click(() => this.welcomeContinue());
     this.no.click(() => this.welcomeContinue());
     this.rememberMe.click(() => this.rememberLogin());
@@ -321,7 +321,7 @@ export default class App {
       || !this.verifyForm()
     ) return false;
 
-    this.toggleLogin(true);
+    // this.toggleLogin(true);
     this.game.connect();
     return true;
   }
@@ -453,12 +453,13 @@ export default class App {
    * @param {Object} event mouse event
    */
   mousemoveEventListener(event) {
-    log.debug('App - mousemoveEventListener()', event, this);
+    // log.debug('App - mousemoveEventListener()', event, this);
 
     if (!this.game || !this.game.input || !this.game.started) {
       return false;
     }
 
+    log.debug('App - mousemoveEventListener()', event, this);
     this.game.input.setCoords(event);
     this.game.input.moveCursor();
 
@@ -504,13 +505,13 @@ export default class App {
       zoomFactor -= 0.1;
     }
 
-    this.body.css({
-      zoom: zoomFactor,
-      '-moz-transform': `scale(${zoomFactor})`,
-    });
+    // this.body.css({
+    //   zoom: zoomFactor,
+    //   '-moz-transform': `scale(${zoomFactor})`,
+    // });
 
     this.border.css('top', 0);
-    this.zoomFactor = zoomFactor;
+    // this.zoomFactor = zoomFactor;
   }
 
   /**
@@ -956,7 +957,7 @@ export default class App {
    * @return {Number} a value from 0 to 1
    */
   getZoom() {
-    log.debug('App - getZoom()');
+    // log.debug('App - getZoom()');
 
     return this.zoomFactor;
   }

@@ -1,9 +1,9 @@
 /**
- * A* (A-Star) algorithm for a path finder
- * @author  Andrea Giammarchi
- * @license Mit Style License
- */
-export default function () {
+* A* (A-Star) algorithm for a path finder
+* @author  Andrea Giammarchi
+* @license Mit Style License
+*/
+define(() => (function () {
   function diagonalSuccessors(
     $N,
     $S,
@@ -20,24 +20,12 @@ export default function () {
     i,
   ) {
     if ($N) {
-      $E && !grid[N][E] && (result[i += 1] = {
-        x: E,
-        y: N,
-      });
-      $W && !grid[N][W] && (result[i += 1] = {
-        x: W,
-        y: N,
-      });
+      $E && !grid[N][E] && (result[i++] = { x: E, y: N });
+      $W && !grid[N][W] && (result[i++] = { x: W, y: N });
     }
     if ($S) {
-      $E && !grid[S][E] && (result[i++] = {
-        x: E,
-        y: S,
-      });
-      $W && !grid[S][W] && (result[i++] = {
-        x: W,
-        y: S,
-      });
+      $E && !grid[S][E] && (result[i++] = { x: E, y: S });
+      $W && !grid[S][W] && (result[i++] = { x: W, y: S });
     }
     return result;
   }
@@ -62,24 +50,12 @@ export default function () {
     $E = E < cols;
     $W = W > -1;
     if ($E) {
-      $N && !grid[N][E] && (result[i++] = {
-        x: E,
-        y: N,
-      });
-      $S && !grid[S][E] && (result[i++] = {
-        x: E,
-        y: S,
-      });
+      $N && !grid[N][E] && (result[i++] = { x: E, y: N });
+      $S && !grid[S][E] && (result[i++] = { x: E, y: S });
     }
     if ($W) {
-      $N && !grid[N][W] && (result[i++] = {
-        x: W,
-        y: N,
-      });
-      $S && !grid[S][W] && (result[i++] = {
-        x: W,
-        y: S,
-      });
+      $N && !grid[N][W] && (result[i++] = { x: W, y: N });
+      $S && !grid[S][W] && (result[i++] = { x: W, y: S });
     }
     return result;
   }
@@ -113,22 +89,10 @@ export default function () {
     const $W = W > -1 && !grid[y][W];
     const result = [];
     let i = 0;
-    $N && (result[i += 1] = {
-      x,
-      y: N,
-    });
-    $E && (result[i++] = {
-      x: E,
-      y,
-    });
-    $S && (result[i++] = {
-      x,
-      y: S,
-    });
-    $W && (result[i++] = {
-      x: W,
-      y,
-    });
+    $N && (result[i++] = { x, y: N });
+    $E && (result[i++] = { x: E, y });
+    $S && (result[i++] = { x, y: S });
+    $W && (result[i++] = { x: W, y });
     return find($N, $S, $E, $W, N, S, E, W, grid, rows, cols, result, i);
   }
 
@@ -138,13 +102,11 @@ export default function () {
 
   function euclidean(start, end, f1, f2) {
     const x = start.x - end.x;
-
-
     const y = start.y - end.y;
     return f2(x * x + y * y);
   }
 
-  function manhattan(start, end, f1) {
+  function manhattan(start, end, f1, f2) {
     return f1(start.x - end.x) + f1(start.y - end.y);
   }
 
@@ -156,14 +118,11 @@ export default function () {
     let f2 = Math.max;
     const list = {};
     const result = [];
-    const open = [{
-      x: start[0],
-      y: start[1],
-      f: 0,
-      g: 0,
-      v: start[0] + start[1] * cols,
-    }];
-
+    const open = [
+      {
+        x: start[0], y: start[1], f: 0, g: 0, v: start[0] + start[1] * cols,
+      },
+    ];
     let length = 1;
     let adj;
     let distance;
@@ -174,12 +133,7 @@ export default function () {
     let min;
     let current;
     let next;
-
-    end = {
-      x: end[0],
-      y: end[1],
-      v: end[0] + end[1] * cols,
-    };
+    end = { x: end[0], y: end[1], v: end[0] + end[1] * cols };
     switch (f) {
       case 'Diagonal':
       case 'Euclidean':
@@ -187,6 +141,7 @@ export default function () {
       case 'DiagonalFree':
         distance = diagonal;
         break;
+
       case 'EuclideanFree':
         f2 = Math.sqrt;
         distance = euclidean;
@@ -217,7 +172,7 @@ export default function () {
           adj.v = adj.x + adj.y * cols;
           if (!(adj.v in list)) {
             adj.f = (adj.g = current.g + distance(adj, current, f1, f2))
-              + distance(adj, end, f1, f2);
+                + distance(adj, end, f1, f2);
             open[length++] = adj;
             list[adj.v] = 1;
           }
@@ -225,7 +180,7 @@ export default function () {
       } else {
         i = length = 0;
         do {
-          result[i += 1] = [current.x, current.y];
+          result[i++] = [current.x, current.y];
         } while ((current = current.p));
         result.reverse();
       }
@@ -235,4 +190,4 @@ export default function () {
   }
 
   return AStar;
-}
+}()));
