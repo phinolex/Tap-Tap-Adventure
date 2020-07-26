@@ -23,7 +23,9 @@ export default class PlayerHandler {
 
       const ignores = [this.player];
 
-      if (this.player.hasTarget()) ignores.push(this.player.target);
+      if (this.player.hasTarget()) {
+        ignores.push(this.player.target);
+      }
 
       this.socket.send(Packets.Movement, [
         Packets.MovementOpcode.Request,
@@ -38,6 +40,7 @@ export default class PlayerHandler {
 
     this.player.onStartPathing((path) => {
       const i = path.length - 1;
+      console.log('path is', path);
 
       this.input.selectedX = path[i][0]; // eslint-disable-line
       this.input.selectedY = path[i][1]; // eslint-disable-line

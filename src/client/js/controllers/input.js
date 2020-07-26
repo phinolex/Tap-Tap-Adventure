@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Animation from '../entity/animation';
 import Chat from './chat';
 import Overlay from './overlay';
@@ -440,7 +441,10 @@ export default class Input {
    * @param {MouseEvent} event the mouse move or mouse click event
    */
   setCoords(event) {
+    log.debug('Input - setCoords', event, this.app.canvas);
     const offset = this.app.canvas.offset();
+    const x = event.clientX - offset.left;
+    const y = event.clientY - offset.top;
 
     // check background
     const {
@@ -449,12 +453,14 @@ export default class Input {
     } = this.renderer.backgroundCanvas;
 
     this.mouse.x = Math.round(
-      (event.pageX - offset.left) / this.app.getZoom(),
+      x - this.newCursor.width,
     );
 
     this.mouse.y = Math.round(
-      (event.pageY - offset.top) / this.app.getZoom(),
+      y,
     );
+
+    log.debug('Input - variables', offset, height, width, this.mouse.x, this.mouse.y, this.app.getZoom());
 
     if (this.mouse.x >= width) {
       this.mouse.x = width - 1;
