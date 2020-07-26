@@ -852,12 +852,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "wtf-adventure/wtf-adventure/src/client/js/lib/astar.js~astar",
-    "function/index.html#static-function-astar",
-    "<span>astar</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/client/js/lib/astar.js</span>",
-    "function"
-  ],
-  [
     "wtf-adventure/wtf-adventure/src/client/js/utils/util.js~isint",
     "function/index.html#static-function-isInt",
     "<span>isInt</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/client/js/utils/util.js</span>",
@@ -1381,15 +1375,15 @@ window.esdocSearchIndex = [
   ],
   [
     "wtf-adventure/src/client/js/__tests__/main.test.js",
-    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
-    "WTF-Adventure/src/client/js/__tests__/main.test.js",
-    "testFile"
-  ],
-  [
-    "wtf-adventure/src/client/js/__tests__/main.test.js",
     "file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
     "WTF-Adventure/src/client/js/__tests__/main.test.js",
     "file"
+  ],
+  [
+    "wtf-adventure/src/client/js/__tests__/main.test.js",
+    "test-file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
+    "WTF-Adventure/src/client/js/__tests__/main.test.js",
+    "testFile"
   ],
   [
     "wtf-adventure/src/client/js/app.js",
