@@ -41,7 +41,7 @@
     "moduleDirectories": [
       "node_modules"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js"
+    "setupFilesAfterEnv": ["<rootDir>/setupTests.js"]
   },
   "dependencies": {
     "@babel/core": "^7.6.4",
