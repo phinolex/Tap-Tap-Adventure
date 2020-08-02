@@ -2,6 +2,29 @@
   "name": "WTF-Adventure",
   "version": "1.0.6",
   "description": "A modern HTML5 multiplayer adventure!",
+  "keywords": [
+    "mmo",
+    "mmorpg",
+    "html5",
+    "multiplayer",
+    "nodejs",
+    "browserquest",
+    "javascript",
+    "es6",
+    "canvas"
+  ],
+  "homepage": "https://github.com/design1online/WTF-Adventure",
+  "bugs": {
+    "url" : "https://github.com/design1online/WTF-Adventure/issues"
+  },
+  "contributors": [
+    "Flavius Poenaru (https://kaetram.com)",
+    "Noctisdark (https://github.com/Noctisdark)",
+    "TassadarX (https://github.com/TassadarX)",
+    "Greta Krafsig (https://github.com/design1online)",
+    "Eric Hodges (https://github.com/eric256)",
+    "Spoobert (https://github.com/spoobert)"
+  ],
   "license": "wtfpl-2.0",
   "scripts": {
     "start": "webpack --mode=development",
@@ -15,6 +38,10 @@
     "test": "jest --env=jsdom --coverage && npm run badges",
     "badges": "make-coverage-badge"
   },
+  "engines": {
+    "node": ">=8.0"
+  },
+  "engineStrict" : true,
   "nodemonConfig": {
     "ignore": [
       "src/client/*",
