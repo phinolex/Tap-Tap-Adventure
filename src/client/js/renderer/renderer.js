@@ -81,7 +81,7 @@ export default class Renderer {
 
     this.stopRendering = false;
     this.animateTiles = true;
-    this.debugging = false;
+    this.debugging = true;
     this.brightness = 100;
     this.drawNames = true;
     this.drawLevels = true;
@@ -110,6 +110,9 @@ export default class Renderer {
     this.scale = this.getScale();
     this.drawingScale = this.getDrawingScale();
 
+    console.log('camera scale', this.scale);
+    console.log('camera drawing scale', this.drawingScale);
+
     this.forEachContext((context) => {
       context.imageSmoothingEnabled = false; // eslint-disable-line
       context.webkitImageSmoothingEnabled = false; // eslint-disable-line
@@ -126,9 +129,8 @@ export default class Renderer {
       return;
     }
 
-    console.log('camera grid width');
+    console.log('camera grid widthxheight', this.camera.gridWidth, this.camera.gridHeight);
     console.log('camera tile size', this.tileSize);
-
 
     this.screenWidth = this.camera.gridWidth * this.tileSize;
     this.screenHeight = this.camera.gridHeight * this.tileSize;
@@ -1090,8 +1092,8 @@ export default class Renderer {
     this.textContext.clearRect(
       0,
       0,
-      this.textCanvas.width,
-      this.textCanvas.height,
+      this.textCanvas.width * this.scale,
+      this.textCanvas.height * this.scale,
     );
   }
 

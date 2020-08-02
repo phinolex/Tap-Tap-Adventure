@@ -831,8 +831,8 @@ export default class App {
     const tablet = 2;
     const desktop = 3;
     const tabletOrDesktop = this.width <= 1500 || this.height <= 870
-      ? desktop
-      : tablet;
+      ? tablet
+      : desktop;
 
     /**
      * These are raw scales, we can adjust
