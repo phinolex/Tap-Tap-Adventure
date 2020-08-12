@@ -5,17 +5,48 @@ import Modules from '../utils/modules';
 import log from '../lib/log';
 
 /**
- * Handles the cursor on the HTML5 canvas
+ * Handles the cursor on the HTML5 canvas, different pointers
+ * can be swapped out depending on the entity the player is
+ * interacting with, this holds all of the individual pointers
+ * whereas {@link Pointer} holds a specific/individual; cursor
  * @class
  */
 export default class Cursor {
+  /**
+   * Default constructor
+   * @param {Game} game instance of the game
+   */
   constructor(game) {
+    /**
+     * Instance of the game
+     * @type {Game}
+     */
     this.game = game;
+
+    /**
+     * Pointer from the renderer
+     * @type {Pointer}
+     */
     this.pointers = {};
+
+    /**
+     * Scale of the device
+     * @type {Number}
+     */
     this.scale = this.getScale();
+
+    /**
+     * Jquery referencce to the bubble message box
+     * @type {DOMElement}
+     */
     this.container = $('#bubbles');
   }
 
+  /**
+   * Create a new cursor
+   * @param  {Number} id   ID of the cursor
+   * @param  {String} type type of the pointer
+   */
   create(id, type) {
     if (id in this.pointers) {
       return;
@@ -24,12 +55,13 @@ export default class Cursor {
     const element = $(`<div id="${id}" class="pointer"></div>`);
 
     this.setSize(element);
-
     this.container.append(element);
-
     this.pointers[id] = new Pointer(id, element, type);
   }
 
+  /**
+   * Handle resizing the cursors
+   */
   resize() {
     _.each(this.pointers, (pointer) => {
       switch (pointer.type) {
@@ -54,6 +86,9 @@ export default class Cursor {
     });
   }
 
+  /**
+   * Set the size of the cursors
+   */
   setSize(element) {
     const width = 8;
     const height = width + (width * 0.2);
@@ -73,6 +108,9 @@ export default class Cursor {
     });
   }
 
+  /**
+   * Destroy all the cursors
+   */
   clean() {
     _.each(this.pointers, (pointer) => {
       pointer.destroy();
@@ -81,11 +119,21 @@ export default class Cursor {
     this.pointers = {};
   }
 
+  /**
+   * Destroy a specific cursor
+   * @param  {Pointer} pointer An instance of the cursor
+   */
   destroy(pointer) {
     delete this.pointers[pointer.id];
     pointer.destroy();
   }
 
+  /**
+   * Set the position of the cursor
+   * @param {Pointer} pointer Instance of the pointer to move
+   * @param {Number} posX    X position
+   * @param {Number} posY    Y position
+   */
   set(pointer, posX, posY) {
     this.updateScale();
     this.updateCamera();
@@ -100,6 +148,10 @@ export default class Cursor {
     pointer.element.css('top', `${y}px`);
   }
 
+  /**
+   * Set the cursor to a specific entity
+   * @param {Entity} entity an instance of the entity
+   */
   setToEntity(entity) {
     log.debug('Cursor - setToEntity()', entity);
 

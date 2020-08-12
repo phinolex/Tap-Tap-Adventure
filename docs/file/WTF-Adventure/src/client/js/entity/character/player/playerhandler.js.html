@@ -77,7 +77,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/settings.js~Settings.html">Settings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/state.js~State.html">State</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-lib">src/client/js/lib</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html">Logger</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-astar">astar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logger">logger</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-map">src/client/js/map</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/map/map.js~Map.html">Map</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-network">src/client/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/network/messages.js~Messages.html">Messages</a></span></span></li>
@@ -208,7 +207,9 @@ export default class PlayerHandler {
 
       const ignores = [this.player];
 
-      if (this.player.hasTarget()) ignores.push(this.player.target);
+      if (this.player.hasTarget()) {
+        ignores.push(this.player.target);
+      }
 
       this.socket.send(Packets.Movement, [
         Packets.MovementOpcode.Request,
@@ -223,6 +224,7 @@ export default class PlayerHandler {
 
     this.player.onStartPathing((path) =&gt; {
       const i = path.length - 1;
+      console.log(&apos;path is&apos;, path);
 
       this.input.selectedX = path[i][0]; // eslint-disable-line
       this.input.selectedY = path[i][1]; // eslint-disable-line
@@ -253,9 +255,7 @@ export default class PlayerHandler {
 
       const hasTarget = this.player.hasTarget();
 
-      const {
-        id,
-      } = entity;
+      const id = (entity &amp;&amp; entity.id) || null;
 
       this.socket.send(Packets.Movement, [
         Packets.MovementOpcode.Stop,

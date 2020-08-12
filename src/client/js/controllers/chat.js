@@ -19,26 +19,26 @@ export default class Chat {
     this.game = game;
 
     /**
-     * A reference to the chat container
-     * @type {Object}
+     * Jquery reference to the chat container
+     * @type {DOMElement}
      */
     this.chat = $('#chat');
 
     /**
-     * A reference to the chat logs container
-     * @type {Object}
+     * Jquery reference to the chat logs container
+     * @type {DOMElement}
      */
     this.log = $('#chatLog');
 
     /**
-     * A reference to the chat input element
-     * @type {Object}
+     * Jquery reference to the chat input element
+     * @type {DOMElement}
      */
     this.input = $('#hud-chat-input');
 
     /**
-     * A reference to the chat button
-     * @type {Object}
+     * Jquery reference to the chat button
+     * @type {DOMElement}
      */
     this.button = $('#hud-chat');
 

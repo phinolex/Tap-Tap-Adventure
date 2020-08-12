@@ -852,12 +852,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "wtf-adventure/wtf-adventure/src/client/js/lib/astar.js~astar",
-    "function/index.html#static-function-astar",
-    "<span>astar</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/client/js/lib/astar.js</span>",
-    "function"
-  ],
-  [
     "wtf-adventure/wtf-adventure/src/client/js/utils/util.js~isint",
     "function/index.html#static-function-isInt",
     "<span>isInt</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/client/js/utils/util.js</span>",
@@ -1296,94 +1290,10 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
-    "wtf-adventure/coverage/lcov-report/prettify.js",
-    "file/WTF-Adventure/coverage/lcov-report/prettify.js.html",
-    "WTF-Adventure/coverage/lcov-report/prettify.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/coverage/lcov-report/sorter.js",
-    "file/WTF-Adventure/coverage/lcov-report/sorter.js.html",
-    "WTF-Adventure/coverage/lcov-report/sorter.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/docs/script/inherited-summary.js",
-    "file/WTF-Adventure/docs/script/inherited-summary.js.html",
-    "WTF-Adventure/docs/script/inherited-summary.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/docs/script/inner-link.js",
-    "file/WTF-Adventure/docs/script/inner-link.js.html",
-    "WTF-Adventure/docs/script/inner-link.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/docs/script/manual.js",
-    "file/WTF-Adventure/docs/script/manual.js.html",
-    "WTF-Adventure/docs/script/manual.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/docs/script/patch-for-local.js",
-    "file/WTF-Adventure/docs/script/patch-for-local.js.html",
-    "WTF-Adventure/docs/script/patch-for-local.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/docs/script/prettify/prettify.js",
-    "file/WTF-Adventure/docs/script/prettify/prettify.js.html",
-    "WTF-Adventure/docs/script/prettify/prettify.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/docs/script/pretty-print.js",
-    "file/WTF-Adventure/docs/script/pretty-print.js.html",
-    "WTF-Adventure/docs/script/pretty-print.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/docs/script/search.js",
-    "file/WTF-Adventure/docs/script/search.js.html",
-    "WTF-Adventure/docs/script/search.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/docs/script/search_index.js",
-    "file/WTF-Adventure/docs/script/search_index.js.html",
-    "WTF-Adventure/docs/script/search_index.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/docs/script/test-summary.js",
-    "file/WTF-Adventure/docs/script/test-summary.js.html",
-    "WTF-Adventure/docs/script/test-summary.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/setuptests.js",
-    "file/WTF-Adventure/setupTests.js.html",
-    "WTF-Adventure/setupTests.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/src/client/js/__tests__/app.test.js",
-    "file/WTF-Adventure/src/client/js/__tests__/app.test.js.html",
-    "WTF-Adventure/src/client/js/__tests__/app.test.js",
-    "file"
-  ],
-  [
     "wtf-adventure/src/client/js/__tests__/app.test.js",
     "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html",
     "WTF-Adventure/src/client/js/__tests__/app.test.js",
     "testFile"
-  ],
-  [
-    "wtf-adventure/src/client/js/__tests__/main.test.js",
-    "file/WTF-Adventure/src/client/js/__tests__/main.test.js.html",
-    "WTF-Adventure/src/client/js/__tests__/main.test.js",
-    "file"
   ],
   [
     "wtf-adventure/src/client/js/__tests__/main.test.js",
@@ -17745,24 +17655,6 @@ window.esdocSearchIndex = [
     "wtf-adventure/src/tools/map/processmap.js",
     "file/WTF-Adventure/src/tools/map/processmap.js.html",
     "WTF-Adventure/src/tools/map/processmap.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/wallaby.config.js",
-    "file/WTF-Adventure/wallaby.config.js.html",
-    "WTF-Adventure/wallaby.config.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/webpack.config.js",
-    "file/WTF-Adventure/webpack.config.js.html",
-    "WTF-Adventure/webpack.config.js",
-    "file"
-  ],
-  [
-    "wtf-adventure/webpack.prod.config.js",
-    "file/WTF-Adventure/webpack.prod.config.js.html",
-    "WTF-Adventure/webpack.prod.config.js",
     "file"
   ]
 ]
