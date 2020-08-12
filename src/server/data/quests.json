@@ -2,7 +2,7 @@
   "The Knack Of": {
     "id": 0,
     "name": "Creeper",
-    "description": "Teaching you the basics about WTF?! Adventur!",
+    "description": "Teaching you the basics about WTF?! Adventure!",
     "npcs": [17, 8],
     "stages": 5,
     "conversations": {
