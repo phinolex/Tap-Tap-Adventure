@@ -71,9 +71,7 @@ export default class PlayerHandler {
 
       const hasTarget = this.player.hasTarget();
 
-      const {
-        id,
-      } = entity;
+      const id = (entity && entity.id) || null;
 
       this.socket.send(Packets.Movement, [
         Packets.MovementOpcode.Stop,
