@@ -81,7 +81,7 @@ module.exports = {
       port: process.env.PORT || 3000,
       // proxy: 'http://localhost:3100/',
       server: {
-        baseDir: ['./build', './'],
+        baseDir: ['./build', './', './assets'],
       },
       socket: {
         clients: {
@@ -101,51 +101,55 @@ module.exports = {
     }),
   ],
   module: {
-    rules: [{
-      test: /\.js$/,
-      use: ['babel-loader'],
-      include: path.join(__dirname, 'src'),
-    },
-    // raw files
-    {
-      test: [/\.vert$/, /\.frag$/],
-      use: 'raw-loader',
-    },
-    // css
-    {
-      test: /\.(sa|sc|c)ss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
-    },
-    // images
-    {
-      test: /.(jpg|png|gif)(\?[a-z0-9]+)?$/,
-      use: [{
-        loader: 'file-loader',
-        options: {
-          name: '[path][name].[ext]',
-        },
-      }],
-    },
-    // audio
-    {
-      test: /.(mp3)(\?[a-z0-9]+)?$/,
-      use: [{
-        loader: 'file-loader',
-        options: {
-          name: '[path][name].[ext]',
-        },
-      }],
-    },
-    // fonts
-    {
-      test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-      use: [{
-        loader: 'file-loader',
-        options: {
-          name: '[path][name].[ext]',
-        },
-      }],
-    },
+    rules: [
+      // javascript files
+      {
+        test: /\.js$/,
+        use: ['babel-loader'],
+        include: path.join(__dirname, 'src'),
+      },
+      // raw files
+      {
+        test: [/\.vert$/, /\.frag$/],
+        use: 'raw-loader',
+      },
+      // css
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      // images
+      {
+        test: /.(jpg|png|gif)(\?[a-z0-9]+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]',
+          },
+        }],
+      },
+      // audio
+      {
+        test: /\.mp3$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]',
+          },
+        }],
+        include: path.join(__dirname, 'assets'),
+      },
+      // fonts
+      {
+        test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]',
+          },
+        }],
+        include: path.join(__dirname, 'assets/fonts'),
+      },
     ],
   },
 };
