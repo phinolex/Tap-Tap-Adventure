@@ -7,16 +7,66 @@ import $ from 'jquery';
  * @class
  */
 export default class Overlay {
+  /**
+   * Default constructor
+   * @param {Input} input reference to the Input class
+   */
   constructor(input) {
+    /**
+     * Input class
+     * @type {Input}
+     */
     this.input = input;
+
+    /**
+     * A reference to the entity they are hovering over
+     * @type {Entity}
+     */
     this.hovering = null;
+
+    /**
+     * Jquery reference to the attack info box
+     * @type {DOMElement}
+     */
     this.attackInfo = $('#attackInfo');
+
+    /**
+     * Jquery reference to the image section of the attack info box
+     * @type {DOMElement}
+     */
     this.image = this.attackInfo.find('.image div');
+
+    /**
+     * Jquery reference to the name of the attack info box
+     * @type {DOMElement}
+     */
     this.name = this.attackInfo.find('.name');
+
+    /**
+     * Jquery reference to the details of the attack info box
+     * @type {DOMElement}
+     */
     this.details = this.attackInfo.find('.details');
+
+    /**
+     * Jquery reference to the name of the health bar of the
+     * attack info box
+     * @type {DOMElement}
+     */
     this.health = this.attackInfo.find('.health');
+
+    /**
+     * A callback for when the overlay is done updating
+     * @type {Function}
+     */
+    this.updateCallback = null;
   }
 
+  /**
+   * Update the overlay
+   * @param  {Entity} entity The entity they are attacking
+   * @return {Boolean} returns false if invalid entity or currently visible
+   */
   update(entity) {
     if (!this.validEntity(entity)) {
       this.hovering = null;
@@ -72,6 +122,12 @@ export default class Overlay {
     });
   }
 
+  /**
+   * Checks whether or not this is an entity they can
+   * interact with
+   * @param  {Entity} entity the entity they want to interact with
+   * @return {Boolean} Returns true if this is not a player or projectile
+   */
   validEntity(entity) {
     return (
       entity
@@ -80,31 +136,56 @@ export default class Overlay {
     );
   }
 
+  /**
+   * Cleans out the details and the entity they're hovering on
+   */
   clean() {
     this.details.html('');
     this.hovering = null;
   }
 
+  /**
+   * Check if the entity has a health bar
+   * @return {Boolean} Rturns true if this entity is a (mob or player)
+   */
   hasHealth() {
     return this.hovering.type === 'mob' || this.hovering.type === 'player';
   }
 
+  /**
+   * Fades in the attack info
+   */
   display() {
     this.attackInfo.fadeIn('fast');
   }
 
+  /**
+   * Fades out and hides the attack info
+   */
   hide() {
     this.attackInfo.fadeOut('fast');
   }
 
+  /**
+   * Check to see if the atttack info is currently visible
+   * @return {Boolean}
+   */
   isVisible() {
     return this.attackInfo.css('display') === 'block';
   }
 
+  /**
+   * Returns an instance of the game object
+   * @return {Game}
+   */
   getGame() {
     return this.input.game;
   }
 
+  /**
+   * Sets an update callback
+   * @param  {Function} callback called when the overlay is updated
+   */
   onUpdate(callback) {
     this.updateCallback = callback;
   }
