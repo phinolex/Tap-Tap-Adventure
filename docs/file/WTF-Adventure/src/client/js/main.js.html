@@ -275,6 +275,8 @@ export default class WTF {
       return false;
     });
 
+    window.onresize = this.app.resize.bind(this);
+
     resizeCheck.bind(&apos;transitionend&apos;, this.app.resize.bind(this));
     resizeCheck.bind(&apos;webkitTransitionEnd&apos;, this.app.resize.bind(this));
     resizeCheck.bind(&apos;oTransitionEnd&apos;, this.app.resize.bind(this));

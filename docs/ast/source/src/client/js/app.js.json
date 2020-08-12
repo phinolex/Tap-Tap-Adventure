@@ -37890,7 +37890,7 @@
                         },
                         "end": {
                           "line": 835,
-                          "column": 15
+                          "column": 16
                         }
                       },
                       "declarations": [
@@ -37905,7 +37905,7 @@
                             },
                             "end": {
                               "line": 835,
-                              "column": 14
+                              "column": 15
                             }
                           },
                           "id": {
@@ -37936,7 +37936,7 @@
                               },
                               "end": {
                                 "line": 835,
-                                "column": 14
+                                "column": 15
                               }
                             },
                             "test": {
@@ -38126,7 +38126,7 @@
                             "consequent": {
                               "type": "Identifier",
                               "start": 19302,
-                              "end": 19309,
+                              "end": 19308,
                               "loc": {
                                 "start": {
                                   "line": 834,
@@ -38134,15 +38134,15 @@
                                 },
                                 "end": {
                                   "line": 834,
-                                  "column": 15
+                                  "column": 14
                                 },
-                                "identifierName": "desktop"
+                                "identifierName": "tablet"
                               },
-                              "name": "desktop"
+                              "name": "tablet"
                             },
                             "alternate": {
                               "type": "Identifier",
-                              "start": 19318,
+                              "start": 19317,
                               "end": 19324,
                               "loc": {
                                 "start": {
@@ -38151,11 +38151,11 @@
                                 },
                                 "end": {
                                   "line": 835,
-                                  "column": 14
+                                  "column": 15
                                 },
-                                "identifierName": "tablet"
+                                "identifierName": "desktop"
                               },
-                              "name": "tablet"
+                              "name": "desktop"
                             }
                           }
                         }
@@ -116687,9 +116687,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "desktop",
+      "value": "tablet",
       "start": 19302,
-      "end": 19309,
+      "end": 19308,
       "loc": {
         "start": {
           "line": 834,
@@ -116697,7 +116697,7 @@
         },
         "end": {
           "line": 834,
-          "column": 15
+          "column": 14
         }
       }
     },
@@ -116714,8 +116714,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 19316,
-      "end": 19317,
+      "start": 19315,
+      "end": 19316,
       "loc": {
         "start": {
           "line": 835,
@@ -116739,8 +116739,8 @@
         "postfix": false,
         "binop": null
       },
-      "value": "tablet",
-      "start": 19318,
+      "value": "desktop",
+      "start": 19317,
       "end": 19324,
       "loc": {
         "start": {
@@ -116749,7 +116749,7 @@
         },
         "end": {
           "line": 835,
-          "column": 14
+          "column": 15
         }
       }
     },
@@ -116771,11 +116771,11 @@
       "loc": {
         "start": {
           "line": 835,
-          "column": 14
+          "column": 15
         },
         "end": {
           "line": 835,
-          "column": 15
+          "column": 16
         }
       }
     },

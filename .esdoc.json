@@ -5,7 +5,14 @@
   "excludes": [
     "node_modules",
     "build",
-    "world_client.js"
+    "world_client.js",
+    "coverage",
+    "docs/script",
+    "setupTests.js",
+    "src/client/js/__tests__",
+    "wallaby.config.js",
+    "webpack.config.js",
+    "webpack.prod.config.js"
   ],
   "plugins": [
     { "name": "esdoc-ecmascript-proposal-plugin", "option": { "all": true } },

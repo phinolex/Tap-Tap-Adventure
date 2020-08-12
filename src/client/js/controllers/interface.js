@@ -12,20 +12,84 @@ import log from '../lib/log';
  * @class
  */
 export default class Interface {
+  /**
+   * Default constructor
+   * @param {Game} game instance of the game
+   */
   constructor(game) {
+    /**
+     * An instance of the game
+     * @type {Game}
+     */
     this.game = game;
 
+    /**
+     * Jquery DOM reference to the notifcations box
+     * @type {DOMElement}
+     */
     this.notify = $('#notify');
+
+    /**
+     * Jquery DOM reference to the confirm box
+     * @type {DOMElement}
+     */
     this.confirm = $('#confirm');
+
+    /**
+     * Jquery DOM reference to the message box
+     * @type {DOMElement}
+     */
     this.message = $('#message');
+
+    /**
+     * Jquery DOM reference to the notifcations fading out
+     * @type {DOMElement}
+     */
     this.fade = $('#notifFade');
+
+    /**
+     * Jquery DOM reference to the notifcations done button
+     * @type {DOMElement}
+     */
     this.done = $('#notifyDone');
 
+    /**
+     * A reference to the inventory class
+     * @type {Inventory}
+     */
     this.inventory = null;
+
+    /**
+     * A reference to the player's profile class
+     * @type {Profile}
+     */
     this.profile = null;
+
+    /**
+     * A reference to player click interactions
+     * @type {Actions}
+     */
     this.actions = null;
+
+    /**
+     * A reference to player's bank
+     * @type {Bank}
+     */
+    this.bank = null;
+
+    /**
+     * A reference to the player's magic
+     * @type {Enchant}
+     */
     this.enchant = null;
 
+    /**
+     * A reference to warp map
+     * @type {Warp}
+     */
+    this.warp = null;
+
+    // load the good stuff
     this.loadNotifications();
     this.loadActions();
     this.loadWarp();
@@ -35,6 +99,10 @@ export default class Interface {
     });
   }
 
+  /**
+   * Handles resizing the interface elements by calling
+   * each UI element's unique resize functionality
+   */
   resize() {
     if (this.inventory) {
       this.inventory.resize();
@@ -56,6 +124,8 @@ export default class Interface {
   /**
    * This can be called multiple times and can be used
    * to completely refresh the inventory.
+   * @param {Number} size how large the inventory is
+   * @param {Object} data the player's inventory items from the server
    */
   loadInventory(size, data) {
     this.inventory = new Inventory(this.game, size);
@@ -65,37 +135,56 @@ export default class Interface {
   /**
    * Similar structure as the inventory, just that it
    * has two containers. The bank and the inventory.
+   * @param {Number} size how large the inventory is
+   * @param {Object} data the player's bank information
    */
   loadBank(size, data) {
     this.bank = new Bank(this.game, this.inventory.container, size);
     this.bank.load(data);
+
+    // @TODO why is load enchant in load bank??
     this.loadEnchant();
   }
 
+  /**
+   * Load the player's profile
+   */
   loadProfile() {
     if (!this.profile) {
       this.profile = new Profile(this.game);
     }
   }
 
+  /**
+   * Load the player's click actions
+   */
   loadActions() {
     if (!this.actions) {
       this.actions = new Actions(this);
     }
   }
 
+  /**
+   * Load the player's magic enchantments
+   */
   loadEnchant() {
     if (!this.enchant) {
       this.enchant = new Enchant(this.game, this);
     }
   }
 
+  /**
+   * Load warp map
+   */
   loadWarp() {
     if (!this.warp) {
       this.warp = new Warp(this.game, this);
     }
   }
 
+  /**
+   * Load the player's current notifications
+   */
   loadNotifications() {
     const ok = $('#ok');
     const cancel = $('#cancel');
@@ -118,12 +207,18 @@ export default class Interface {
       this.hideConfirm();
     });
 
+    /**
+     * Callback responsible for dismissing the dialog box
+     */
     done.click(() => {
       log.debug('App - loadNotifications() - dialog done clicked');
       this.hideConfirm();
     });
   }
 
+  /**
+   * Hides all interface menus
+   */
   hideAll() {
     if (this.inventory && this.inventory.isVisible()) {
       this.inventory.hide();
@@ -159,6 +254,10 @@ export default class Interface {
     }
   }
 
+  /**
+   * Display a notification if not already visible
+   * @param  {String} message the message to display
+   */
   displayNotify(message) {
     if (this.isNotifyVisible()) {
       return;
@@ -171,6 +270,10 @@ export default class Interface {
     this.message.text(message);
   }
 
+  /**
+   * Display the confirmation box
+   * @param  {[type]} message The confirmation message
+   */
   displayConfirm(message) {
     if (this.isConfirmVisible()) {
       return;
@@ -180,24 +283,42 @@ export default class Interface {
     this.confirm.text(message);
   }
 
+  /**
+   * Hide the notifications window
+   */
   hideNotify() {
     this.fade.css('display', 'none');
     this.notify.css('display', 'none');
     this.message.css('display', 'none');
   }
 
+  /**
+   * Hide the confirmation window
+   */
   hideConfirm() {
     this.confirm.css('display', 'none');
   }
 
+  /**
+   * Return a reference to the profile quests
+   * @return {Quest} The quests for this player
+   */
   getQuestPage() {
     return this.profile.quests;
   }
 
+  /**
+   * Checks to see if the notifications window is visible or not
+   * @return {Boolean} the status of the notifications window
+   */
   isNotifyVisible() {
     return this.notify.css('display') === 'block';
   }
 
+  /**
+   * Check if the confirmation box is visible
+   * @return {Boolean} the status of the confirmation window
+   */
   isConfirmVisible() {
     return this.confirm.css('display') === 'block';
   }

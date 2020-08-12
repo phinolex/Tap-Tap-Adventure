@@ -25,8 +25,8 @@ export default class Bubble {
     this.bubbles = {};
 
     /**
-     * The DOM element that will display bubble text messages
-     * @type {Object}
+     * Jquery reference to the display bubble for text messages
+     * @type {DOMElement}
      */
     this.container = $('#bubbles');
   }
