@@ -77,7 +77,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/settings.js~Settings.html">Settings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/state.js~State.html">State</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-lib">src/client/js/lib</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html">Logger</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-astar">astar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logger">logger</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-map">src/client/js/map</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/map/map.js~Map.html">Map</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-network">src/client/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/network/messages.js~Messages.html">Messages</a></span></span></li>
@@ -183,7 +182,8 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/controllers/input.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Animation from &apos;../entity/animation&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
+import Animation from &apos;../entity/animation&apos;;
 import Chat from &apos;./chat&apos;;
 import Overlay from &apos;./overlay&apos;;
 import log from &apos;../lib/log&apos;;
@@ -625,7 +625,10 @@ export default class Input {
    * @param {MouseEvent} event the mouse move or mouse click event
    */
   setCoords(event) {
+    log.debug(&apos;Input - setCoords&apos;, event, this.app.canvas);
     const offset = this.app.canvas.offset();
+    const x = event.clientX - offset.left;
+    const y = event.clientY - offset.top;
 
     // check background
     const {
@@ -634,12 +637,14 @@ export default class Input {
     } = this.renderer.backgroundCanvas;
 
     this.mouse.x = Math.round(
-      (event.pageX - offset.left) / this.app.getZoom(),
+      x - this.newCursor.width,
     );
 
     this.mouse.y = Math.round(
-      (event.pageY - offset.top) / this.app.getZoom(),
+      y,
     );
+
+    log.debug(&apos;Input - variables&apos;, offset, height, width, this.mouse.x, this.mouse.y, this.app.getZoom());
 
     if (this.mouse.x &gt;= width) {
       this.mouse.x = width - 1;

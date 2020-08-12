@@ -852,12 +852,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "wtf-adventure/wtf-adventure/src/client/js/lib/astar.js~astar",
-    "function/index.html#static-function-astar",
-    "<span>astar</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/client/js/lib/astar.js</span>",
-    "function"
-  ],
-  [
     "wtf-adventure/wtf-adventure/src/client/js/utils/util.js~isint",
     "function/index.html#static-function-isInt",
     "<span>isInt</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/client/js/utils/util.js</span>",
@@ -1294,6 +1288,12 @@ window.esdocSearchIndex = [
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
     "WTF-Adventure/.external-ecmascript.js~undefined",
     "external"
+  ],
+  [
+    "wtf-adventure/coverage/lcov-report/block-navigation.js",
+    "file/WTF-Adventure/coverage/lcov-report/block-navigation.js.html",
+    "WTF-Adventure/coverage/lcov-report/block-navigation.js",
+    "file"
   ],
   [
     "wtf-adventure/coverage/lcov-report/prettify.js",

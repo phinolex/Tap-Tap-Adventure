@@ -77,7 +77,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/settings.js~Settings.html">Settings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/state.js~State.html">State</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-lib">src/client/js/lib</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html">Logger</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-astar">astar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logger">logger</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-map">src/client/js/map</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/map/map.js~Map.html">Map</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-network">src/client/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/network/messages.js~Messages.html">Messages</a></span></span></li>
@@ -436,7 +435,7 @@ export default class App {
 
     this.loginButton.click(() =&gt; this.login());
     this.createButton.click(() =&gt; this.login());
-    this.wrapper.click(() =&gt; this.loadCharacter());
+    this.loadCharacter();
     this.yes.click(() =&gt; this.welcomeContinue());
     this.no.click(() =&gt; this.welcomeContinue());
     this.rememberMe.click(() =&gt; this.rememberLogin());
@@ -506,7 +505,7 @@ export default class App {
       || !this.verifyForm()
     ) return false;
 
-    this.toggleLogin(true);
+    // this.toggleLogin(true);
     this.game.connect();
     return true;
   }
@@ -638,12 +637,13 @@ export default class App {
    * @param {Object} event mouse event
    */
   mousemoveEventListener(event) {
-    log.debug(&apos;App - mousemoveEventListener()&apos;, event, this);
+    // log.debug(&apos;App - mousemoveEventListener()&apos;, event, this);
 
     if (!this.game || !this.game.input || !this.game.started) {
       return false;
     }
 
+    log.debug(&apos;App - mousemoveEventListener()&apos;, event, this);
     this.game.input.setCoords(event);
     this.game.input.moveCursor();
 
@@ -689,13 +689,13 @@ export default class App {
       zoomFactor -= 0.1;
     }
 
-    this.body.css({
-      zoom: zoomFactor,
-      &apos;-moz-transform&apos;: `scale(${zoomFactor})`,
-    });
+    // this.body.css({
+    //   zoom: zoomFactor,
+    //   &apos;-moz-transform&apos;: `scale(${zoomFactor})`,
+    // });
 
     this.border.css(&apos;top&apos;, 0);
-    this.zoomFactor = zoomFactor;
+    // this.zoomFactor = zoomFactor;
   }
 
   /**
@@ -1015,8 +1015,8 @@ export default class App {
     const tablet = 2;
     const desktop = 3;
     const tabletOrDesktop = this.width &lt;= 1500 || this.height &lt;= 870
-      ? desktop
-      : tablet;
+      ? tablet
+      : desktop;
 
     /**
      * These are raw scales, we can adjust
@@ -1141,7 +1141,7 @@ export default class App {
    * @return {Number} a value from 0 to 1
    */
   getZoom() {
-    log.debug(&apos;App - getZoom()&apos;);
+    // log.debug(&apos;App - getZoom()&apos;);
 
     return this.zoomFactor;
   }

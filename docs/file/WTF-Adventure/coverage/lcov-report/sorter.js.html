@@ -77,7 +77,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/settings.js~Settings.html">Settings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/state.js~State.html">State</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-lib">src/client/js/lib</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html">Logger</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-astar">astar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logger">logger</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-map">src/client/js/map</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/map/map.js~Map.html">Map</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-network">src/client/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/network/messages.js~Messages.html">Messages</a></span></span></li>
@@ -183,8 +182,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/coverage/lcov-report/sorter.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">var addSorting = (function () {
-    &quot;use strict&quot;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable */
+var addSorting = (function() {
+    &apos;use strict&apos;;
     var cols,
         currentSort = {
             index: 0,
@@ -192,13 +192,21 @@
         };
 
     // returns the summary table element
-    function getTable() { return document.querySelector(&apos;.coverage-summary&apos;); }
+    function getTable() {
+        return document.querySelector(&apos;.coverage-summary&apos;);
+    }
     // returns the thead element of the summary table
-    function getTableHeader() { return getTable().querySelector(&apos;thead tr&apos;); }
+    function getTableHeader() {
+        return getTable().querySelector(&apos;thead tr&apos;);
+    }
     // returns the tbody element of the summary table
-    function getTableBody() { return getTable().querySelector(&apos;tbody&apos;); }
+    function getTableBody() {
+        return getTable().querySelector(&apos;tbody&apos;);
+    }
     // returns the th element for nth column
-    function getNthColumn(n) { return getTableHeader().querySelectorAll(&apos;th&apos;)[n]; }
+    function getNthColumn(n) {
+        return getTableHeader().querySelectorAll(&apos;th&apos;)[n];
+    }
 
     // loads all columns
     function loadColumns() {
@@ -218,7 +226,8 @@
             cols.push(col);
             if (col.sortable) {
                 col.defaultDescSort = col.type === &apos;number&apos;;
-                colNode.innerHTML = colNode.innerHTML + &apos;&lt;span class=&quot;sorter&quot;&gt;&lt;/span&gt;&apos;;
+                colNode.innerHTML =
+                    colNode.innerHTML + &apos;&lt;span class=&quot;sorter&quot;&gt;&lt;/span&gt;&apos;;
             }
         }
         return cols;
@@ -255,7 +264,7 @@
     // sorts the table using the data for the ith column
     function sortByIndex(index, desc) {
         var key = cols[index].key,
-            sorter = function (a, b) {
+            sorter = function(a, b) {
                 a = a.data[key];
                 b = b.data[key];
                 return a &lt; b ? -1 : a &gt; b ? 1 : 0;
@@ -267,7 +276,7 @@
             i;
 
         if (desc) {
-            finalSorter = function (a, b) {
+            finalSorter = function(a, b) {
                 return -1 * sorter(a, b);
             };
         }
@@ -293,7 +302,9 @@
     }
     // adds sort indicators for current column being sorted
     function addSortIndicators() {
-        getNthColumn(currentSort.index).className += currentSort.desc ? &apos; sorted-desc&apos; : &apos; sorted&apos;;
+        getNthColumn(currentSort.index).className += currentSort.desc
+            ? &apos; sorted-desc&apos;
+            : &apos; sorted&apos;;
     }
     // adds event listeners for all sorter widgets
     function enableUI() {
@@ -302,7 +313,7 @@
             ithSorter = function ithSorter(i) {
                 var col = cols[i];
 
-                return function () {
+                return function() {
                     var desc = col.defaultDescSort;
 
                     if (currentSort.index === i) {
@@ -315,7 +326,7 @@
                     addSortIndicators();
                 };
             };
-        for (i =0 ; i &lt; cols.length; i += 1) {
+        for (i = 0; i &lt; cols.length; i += 1) {
             if (cols[i].sortable) {
                 // add the click event handler on the th so users
                 // dont have to click on those tiny arrows
@@ -329,12 +340,12 @@
         }
     }
     // adds sorting functionality to the UI
-    return function () {
+    return function() {
         if (!getTable()) {
             return;
         }
         cols = loadColumns();
-        loadData(cols);
+        loadData();
         addSortIndicators();
         enableUI();
     };

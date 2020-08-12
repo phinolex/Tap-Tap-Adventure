@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0.2% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>1/494</span>
+        <span class='fraction'>1/496</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0.2% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>1/492</span>
+        <span class='fraction'>1/494</span>
       </div>
     </div>
     <p class="quiet">
@@ -1442,7 +1442,9 @@
 <a name='L1394'></a><a href='#L1394'>1394</a>
 <a name='L1395'></a><a href='#L1395'>1395</a>
 <a name='L1396'></a><a href='#L1396'>1396</a>
-<a name='L1397'></a><a href='#L1397'>1397</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1397'></a><a href='#L1397'>1397</a>
+<a name='L1398'></a><a href='#L1398'>1398</a>
+<a name='L1399'></a><a href='#L1399'>1399</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1556,6 +1558,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1572,7 +1577,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2921,7 +2925,7 @@ export default class Renderer {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.stopRendering = false;</span>
 <span class="cstat-no" title="statement not covered" >    this.animateTiles = true;</span>
-<span class="cstat-no" title="statement not covered" >    this.debugging = false;</span>
+<span class="cstat-no" title="statement not covered" >    this.debugging = true;</span>
 <span class="cstat-no" title="statement not covered" >    this.brightness = 100;</span>
 <span class="cstat-no" title="statement not covered" >    this.drawNames = true;</span>
 <span class="cstat-no" title="statement not covered" >    this.drawLevels = true;</span>
@@ -2950,6 +2954,9 @@ export default class Renderer {
 <span class="cstat-no" title="statement not covered" >    this.scale = this.getScale();</span>
 <span class="cstat-no" title="statement not covered" >    this.drawingScale = this.getDrawingScale();</span>
 &nbsp;
+<span class="cstat-no" title="statement not covered" >    console.log('camera scale', this.scale);</span>
+<span class="cstat-no" title="statement not covered" >    console.log('camera drawing scale', this.drawingScale);</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.forEachContext(<span class="fstat-no" title="function not covered" >(c</span>ontext) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      context.imageSmoothingEnabled = false; </span>// eslint-disable-line
 <span class="cstat-no" title="statement not covered" >      context.webkitImageSmoothingEnabled = false; </span>// eslint-disable-line
@@ -2966,9 +2973,8 @@ export default class Renderer {
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    console.log('camera grid width');</span>
+<span class="cstat-no" title="statement not covered" >    console.log('camera grid widthxheight', this.camera.gridWidth, this.camera.gridHeight);</span>
 <span class="cstat-no" title="statement not covered" >    console.log('camera tile size', this.tileSize);</span>
-&nbsp;
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.screenWidth = this.camera.gridWidth * this.tileSize;</span>
 <span class="cstat-no" title="statement not covered" >    this.screenHeight = this.camera.gridHeight * this.tileSize;</span>
@@ -3930,8 +3936,8 @@ export default class Renderer {
 <span class="cstat-no" title="statement not covered" >    this.textContext.clearRect(</span>
       0,
       0,
-      this.textCanvas.width,
-      this.textCanvas.height,
+      this.textCanvas.width * this.scale,
+      this.textCanvas.height * this.scale,
     );
   }
 &nbsp;
@@ -4240,7 +4246,7 @@ export default class Renderer {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Aug 02 2020 13:18:00 GMT-0400 (Eastern Daylight Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Aug 11 2020 23:16:14 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>
