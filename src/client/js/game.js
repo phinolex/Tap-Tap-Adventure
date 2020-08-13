@@ -1132,21 +1132,25 @@ export default class Game {
   }
 
   questCallback(opcode, info) {
-    log.debug('Game - questCallback()', opcode, info);
+    log.debug('Game - questCallback()', opcode, info, this.interface.getQuestPage());
 
     switch (opcode) {
       default:
+        log.debug('Game - questCallback() - invalid opcode', opcode);
         break;
       case Packets.QuestOpcode.Batch:
-        // this.interface.getQuestPage().load(info.quests, info.achievements);
+        log.debug('Game - questCallback() - batch', info.quests, info.achievements);
+        this.interface.getQuestPage().load(info.quests, info.achievements);
         break;
 
       case Packets.QuestOpcode.Progress:
-        // this.interface.getQuestPage().progress(info);
+        log.debug('Game - questCallback() - progress', info);
+        this.interface.getQuestPage().progress(info);
         break;
 
       case Packets.QuestOpcode.Finish:
-        // this.interface.getQuestPage().finish(info);
+        log.debug('Game - questCallback() - finish', info);
+        this.interface.getQuestPage().finish(info);
         break;
     }
   }

@@ -401,12 +401,13 @@ export default class Player extends Character {
   }
 
   teleport(x, y, isDoor, animate) {
-    if (isDoor && !this.finishedTutorial()) {
-      if (this.doorCallback) {
-        this.doorCallback(x, y);
-      }
-      return;
-    }
+    // @TODO fix tutorial
+    // if (isDoor && !this.finishedTutorial()) {
+    //   if (this.doorCallback) {
+    //     this.doorCallback(x, y);
+    //   }
+    //   return;
+    // }
 
     this.world.pushToAdjacentGroups(
       this.group,
