@@ -219,7 +219,7 @@ export default class Audio {
     if (song && !(this.song && this.song.name === song.name)) {
       if (this.game.renderer.mobile) {
         this.reset(this.song);
-      } else {
+      } else if (this.song) {
         this.fadeSongOut();
       }
 
@@ -260,7 +260,11 @@ export default class Audio {
     this.clearFadeOut(this.song);
 
     this.song.fadingIn = setInterval(() => {
-      this.song.volume += 0.02;
+      if (this.song.volume + 0.02 < 1) {
+        this.song.volume += 0.02;
+      } else {
+        this.song.volume = 1;
+      }
 
       if (this.song.volume >= this.getMusicVolume() - 0.02) {
         this.song.volume = this.getMusicVolume();
@@ -284,8 +288,10 @@ export default class Audio {
     this.clearFadeIn(this.song);
 
     this.song.fadingOut = setInterval(() => {
-      if (this.song.volume) {
+      if (this.song.volume - 0.08 > 0) {
         this.song.volume -= 0.08;
+      } else {
+        this.song.volume = 0;
       }
 
       if (this.song.volume <= 0.08) {

@@ -81,7 +81,7 @@ export default class Renderer {
 
     this.stopRendering = false;
     this.animateTiles = true;
-    this.debugging = true;
+    this.debugging = false;
     this.brightness = 100;
     this.drawNames = true;
     this.drawLevels = true;
