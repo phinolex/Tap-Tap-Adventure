@@ -77,7 +77,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/settings.js~Settings.html">Settings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/state.js~State.html">State</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-lib">src/client/js/lib</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html">Logger</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-astar">astar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logger">logger</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-map">src/client/js/map</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/map/map.js~Map.html">Map</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-network">src/client/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/network/messages.js~Messages.html">Messages</a></span></span></li>
@@ -183,7 +182,8 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/renderer/renderer.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import _ from &apos;underscore&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global document */
+import _ from &apos;underscore&apos;;
 import $ from &apos;jquery&apos;;
 import log from &apos;../lib/log&apos;;
 import Camera from &apos;./camera&apos;;
@@ -265,7 +265,7 @@ export default class Renderer {
 
     this.stopRendering = false;
     this.animateTiles = true;
-    this.debugging = false;
+    this.debugging = true;
     this.brightness = 100;
     this.drawNames = true;
     this.drawLevels = true;
@@ -294,6 +294,9 @@ export default class Renderer {
     this.scale = this.getScale();
     this.drawingScale = this.getDrawingScale();
 
+    console.log(&apos;camera scale&apos;, this.scale);
+    console.log(&apos;camera drawing scale&apos;, this.drawingScale);
+
     this.forEachContext((context) =&gt; {
       context.imageSmoothingEnabled = false; // eslint-disable-line
       context.webkitImageSmoothingEnabled = false; // eslint-disable-line
@@ -310,11 +313,14 @@ export default class Renderer {
       return;
     }
 
+    console.log(&apos;camera grid widthxheight&apos;, this.camera.gridWidth, this.camera.gridHeight);
+    console.log(&apos;camera tile size&apos;, this.tileSize);
+
     this.screenWidth = this.camera.gridWidth * this.tileSize;
     this.screenHeight = this.camera.gridHeight * this.tileSize;
 
-    const width = this.screenWidth * this.drawingScale;
-    const height = this.screenHeight * this.drawingScale;
+    const width = $(&apos;#container&apos;).width() - this.camera.gridWidth;
+    const height = $(&apos;#container&apos;).height() - this.camera.gridHeight;
 
     this.forEachCanvas((canvas) =&gt; {
       canvas.width = width; // eslint-disable-line
@@ -518,7 +524,7 @@ export default class Renderer {
 
     this.forEachVisibleEntity((entity) =&gt; {
       if (entity.spriteLoaded) {
-        log.debug(&apos;drawEntities&apos;, entity);
+        // log.debug(&apos;drawEntities&apos;, entity);
         this.drawEntity(entity);
       }
     });
@@ -1270,8 +1276,8 @@ export default class Renderer {
     this.textContext.clearRect(
       0,
       0,
-      this.textCanvas.width,
-      this.textCanvas.height,
+      this.textCanvas.width * this.scale,
+      this.textCanvas.height * this.scale,
     );
   }
 

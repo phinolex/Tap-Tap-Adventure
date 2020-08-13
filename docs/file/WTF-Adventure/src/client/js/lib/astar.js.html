@@ -77,7 +77,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/settings.js~Settings.html">Settings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/state.js~State.html">State</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-lib">src/client/js/lib</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html">Logger</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-astar">astar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logger">logger</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-map">src/client/js/map</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/map/map.js~Map.html">Map</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-network">src/client/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/network/messages.js~Messages.html">Messages</a></span></span></li>
@@ -184,11 +183,11 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/lib/astar.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
- * A* (A-Star) algorithm for a path finder
- * @author  Andrea Giammarchi
- * @license Mit Style License
- */
-export default function () {
+* A* (A-Star) algorithm for a path finder
+* @author  Andrea Giammarchi
+* @license Mit Style License
+*/
+const Astar = () =&gt; (function () {
   function diagonalSuccessors(
     $N,
     $S,
@@ -205,24 +204,12 @@ export default function () {
     i,
   ) {
     if ($N) {
-      $E &amp;&amp; !grid[N][E] &amp;&amp; (result[i += 1] = {
-        x: E,
-        y: N,
-      });
-      $W &amp;&amp; !grid[N][W] &amp;&amp; (result[i += 1] = {
-        x: W,
-        y: N,
-      });
+      $E &amp;&amp; !grid[N][E] &amp;&amp; (result[i++] = { x: E, y: N });
+      $W &amp;&amp; !grid[N][W] &amp;&amp; (result[i++] = { x: W, y: N });
     }
     if ($S) {
-      $E &amp;&amp; !grid[S][E] &amp;&amp; (result[i++] = {
-        x: E,
-        y: S,
-      });
-      $W &amp;&amp; !grid[S][W] &amp;&amp; (result[i++] = {
-        x: W,
-        y: S,
-      });
+      $E &amp;&amp; !grid[S][E] &amp;&amp; (result[i++] = { x: E, y: S });
+      $W &amp;&amp; !grid[S][W] &amp;&amp; (result[i++] = { x: W, y: S });
     }
     return result;
   }
@@ -247,24 +234,12 @@ export default function () {
     $E = E &lt; cols;
     $W = W &gt; -1;
     if ($E) {
-      $N &amp;&amp; !grid[N][E] &amp;&amp; (result[i++] = {
-        x: E,
-        y: N,
-      });
-      $S &amp;&amp; !grid[S][E] &amp;&amp; (result[i++] = {
-        x: E,
-        y: S,
-      });
+      $N &amp;&amp; !grid[N][E] &amp;&amp; (result[i++] = { x: E, y: N });
+      $S &amp;&amp; !grid[S][E] &amp;&amp; (result[i++] = { x: E, y: S });
     }
     if ($W) {
-      $N &amp;&amp; !grid[N][W] &amp;&amp; (result[i++] = {
-        x: W,
-        y: N,
-      });
-      $S &amp;&amp; !grid[S][W] &amp;&amp; (result[i++] = {
-        x: W,
-        y: S,
-      });
+      $N &amp;&amp; !grid[N][W] &amp;&amp; (result[i++] = { x: W, y: N });
+      $S &amp;&amp; !grid[S][W] &amp;&amp; (result[i++] = { x: W, y: S });
     }
     return result;
   }
@@ -298,22 +273,10 @@ export default function () {
     const $W = W &gt; -1 &amp;&amp; !grid[y][W];
     const result = [];
     let i = 0;
-    $N &amp;&amp; (result[i += 1] = {
-      x,
-      y: N,
-    });
-    $E &amp;&amp; (result[i++] = {
-      x: E,
-      y,
-    });
-    $S &amp;&amp; (result[i++] = {
-      x,
-      y: S,
-    });
-    $W &amp;&amp; (result[i++] = {
-      x: W,
-      y,
-    });
+    $N &amp;&amp; (result[i++] = { x, y: N });
+    $E &amp;&amp; (result[i++] = { x: E, y });
+    $S &amp;&amp; (result[i++] = { x, y: S });
+    $W &amp;&amp; (result[i++] = { x: W, y });
     return find($N, $S, $E, $W, N, S, E, W, grid, rows, cols, result, i);
   }
 
@@ -323,13 +286,11 @@ export default function () {
 
   function euclidean(start, end, f1, f2) {
     const x = start.x - end.x;
-
-
     const y = start.y - end.y;
     return f2(x * x + y * y);
   }
 
-  function manhattan(start, end, f1) {
+  function manhattan(start, end, f1, f2) {
     return f1(start.x - end.x) + f1(start.y - end.y);
   }
 
@@ -341,14 +302,11 @@ export default function () {
     let f2 = Math.max;
     const list = {};
     const result = [];
-    const open = [{
-      x: start[0],
-      y: start[1],
-      f: 0,
-      g: 0,
-      v: start[0] + start[1] * cols,
-    }];
-
+    const open = [
+      {
+        x: start[0], y: start[1], f: 0, g: 0, v: start[0] + start[1] * cols,
+      },
+    ];
     let length = 1;
     let adj;
     let distance;
@@ -359,12 +317,7 @@ export default function () {
     let min;
     let current;
     let next;
-
-    end = {
-      x: end[0],
-      y: end[1],
-      v: end[0] + end[1] * cols,
-    };
+    end = { x: end[0], y: end[1], v: end[0] + end[1] * cols };
     switch (f) {
       case &apos;Diagonal&apos;:
       case &apos;Euclidean&apos;:
@@ -372,6 +325,7 @@ export default function () {
       case &apos;DiagonalFree&apos;:
         distance = diagonal;
         break;
+
       case &apos;EuclideanFree&apos;:
         f2 = Math.sqrt;
         distance = euclidean;
@@ -402,7 +356,7 @@ export default function () {
           adj.v = adj.x + adj.y * cols;
           if (!(adj.v in list)) {
             adj.f = (adj.g = current.g + distance(adj, current, f1, f2))
-              + distance(adj, end, f1, f2);
+                + distance(adj, end, f1, f2);
             open[length++] = adj;
             list[adj.v] = 1;
           }
@@ -410,7 +364,7 @@ export default function () {
       } else {
         i = length = 0;
         do {
-          result[i += 1] = [current.x, current.y];
+          result[i++] = [current.x, current.y];
         } while ((current = current.p));
         result.reverse();
       }
@@ -420,7 +374,9 @@ export default function () {
   }
 
   return AStar;
-}
+}());
+
+export default Astar();
 </code></pre>
 
 </div>

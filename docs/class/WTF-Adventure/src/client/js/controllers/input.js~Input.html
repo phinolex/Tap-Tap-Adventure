@@ -77,7 +77,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/settings.js~Settings.html">Settings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/interface/profile/pages/state.js~State.html">State</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-lib">src/client/js/lib</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/lib/log.js~Logger.html">Logger</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-astar">astar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-logger">logger</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-map">src/client/js/map</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/map/map.js~Map.html">Map</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#src-client-js-network">src/client/js/network</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/network/messages.js~Messages.html">Messages</a></span></span></li>
@@ -183,13 +182,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Input from &apos;<span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber13">WTF-Adventure/WTF-Adventure/src/client/js/controllers/input.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Input from &apos;<span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber14">WTF-Adventure/WTF-Adventure/src/client/js/controllers/input.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber13">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber14">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -307,13 +306,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-chatHandler">chatHandler</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-chatHandler">chatHandler</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/chat.js~Chat.html">Chat</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>A reference to the Chat class</p>
+</div>
       </div>
     </td>
     <td>
@@ -596,13 +596,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-overlay">overlay</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/input.js~Input.html#instance-member-overlay">overlay</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/overlay.js~Overlay.html">Overlay</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>A reference to the overlay handler</p>
+</div>
       </div>
     </td>
     <td>
@@ -1520,7 +1521,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber18">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber19">source</a></span></span>
     </span>
   </h3>
 
@@ -1584,7 +1585,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber29">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber30">source</a></span></span>
     </span>
   </h3>
 
@@ -1624,18 +1625,23 @@ player is hovering over</p>
     
     
     
-    <span class="code" data-ice="name">chatHandler</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">chatHandler</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/chat.js~Chat.html">Chat</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber149">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber150">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber132">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>A reference to the Chat class</p>
+</div>
 
   
 
@@ -1671,7 +1677,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber77">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber78">source</a></span></span>
     </span>
   </h3>
 
@@ -1715,7 +1721,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber53">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber54">source</a></span></span>
     </span>
   </h3>
 
@@ -1759,7 +1765,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber119">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber120">source</a></span></span>
     </span>
   </h3>
 
@@ -1803,7 +1809,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber23">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
@@ -1847,7 +1853,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber125">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber126">source</a></span></span>
     </span>
   </h3>
 
@@ -1891,7 +1897,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber107">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber108">source</a></span></span>
     </span>
   </h3>
 
@@ -1935,7 +1941,11 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber131">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber132">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber144">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -1979,7 +1989,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber83">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber84">source</a></span></span>
     </span>
   </h3>
 
@@ -2023,7 +2033,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber101">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber102">source</a></span></span>
     </span>
   </h3>
 
@@ -2063,18 +2073,23 @@ player is hovering over</p>
     
     
     
-    <span class="code" data-ice="name">overlay</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">overlay</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/controllers/overlay.js~Overlay.html">Overlay</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber150">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber151">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber138">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>A reference to the overlay handler</p>
+</div>
 
   
 
@@ -2110,7 +2125,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber47">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber48">source</a></span></span>
     </span>
   </h3>
 
@@ -2154,7 +2169,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber113">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber114">source</a></span></span>
     </span>
   </h3>
 
@@ -2198,7 +2213,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber35">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber36">source</a></span></span>
     </span>
   </h3>
 
@@ -2242,7 +2257,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber41">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber42">source</a></span></span>
     </span>
   </h3>
 
@@ -2286,7 +2301,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber65">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber66">source</a></span></span>
     </span>
   </h3>
 
@@ -2330,7 +2345,7 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber71">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber72">source</a></span></span>
     </span>
   </h3>
 
@@ -2374,7 +2389,11 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber147">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber148">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber160">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -2419,7 +2438,7 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber95">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber96">source</a></span></span>
     </span>
   </h3>
 
@@ -2463,7 +2482,7 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber89">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber90">source</a></span></span>
     </span>
   </h3>
 
@@ -2507,7 +2526,7 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber59">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber60">source</a></span></span>
     </span>
   </h3>
 
@@ -2554,7 +2573,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber271">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber272">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber284">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -2615,7 +2638,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber603">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber609">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber621">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -2672,7 +2699,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber504">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber510">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber522">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -2729,7 +2760,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber512">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber518">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber530">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -2786,7 +2821,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber595">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber601">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber613">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -2852,7 +2891,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber542">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber548">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber560">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -2918,7 +2961,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber177">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber178">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber190">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -2986,7 +3033,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber584">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber590">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber602">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3060,7 +3111,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber571">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber577">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber589">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3134,7 +3189,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber259">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber260">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber272">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3195,7 +3254,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber227">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber228">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber240">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3256,7 +3319,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber142">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber143">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber155">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3300,7 +3367,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber156">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber157">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber169">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3344,7 +3415,11 @@ cell spinner sprite (only on desktop)</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber378">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber379">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber391">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3389,7 +3464,11 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber487">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber493">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber505">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3433,7 +3512,11 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber442">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber443">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber455">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3494,7 +3577,11 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber476">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber482">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber494">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3555,7 +3642,11 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber495">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber501">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber513">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3599,7 +3690,11 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber433">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber434">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber446">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
@@ -3667,7 +3762,11 @@ player is hovering over</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber359">source</a></span></span>
+<<<<<<< HEAD
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber360">source</a></span></span>
+=======
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/input.js.html#lineNumber372">source</a></span></span>
+>>>>>>> main
     </span>
   </h3>
 
