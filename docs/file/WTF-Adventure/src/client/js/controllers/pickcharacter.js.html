@@ -186,6 +186,7 @@
 import Player from &apos;../entity/character/player/player&apos;;
 import Sprites from &apos;./sprites&apos;;
 import Item from &apos;../entity/objects/item&apos;;
+import log from &apos;../lib/log&apos;;
 
 /**
  * Used to load the character and items for the player
@@ -238,6 +239,7 @@ export default class PickCharacter {
    * Load the character into the game
    */
   load() {
+    log.debug(&apos;PickCharacter - load()&apos;, this.sprites);
     this.game.app.sendStatus(&apos;Inviting craziness...&apos;);
 
     if (!this.sprites) {
@@ -361,6 +363,8 @@ export default class PickCharacter {
    * @param  {Entity} entity An instance of a player, mob, npc or chest
    */
   registerPosition(entity) {
+    log.debug(&apos;PickCharacter - registerPosition()&apos;, entity);
+
     if (!entity) {
       return;
     }

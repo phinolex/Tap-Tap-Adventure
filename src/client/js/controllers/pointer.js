@@ -36,6 +36,12 @@ export default class Cursor {
     this.scale = this.getScale();
 
     /**
+     * The camera used for the pointer
+     * @type {Camera}
+     */
+    this.camera = null;
+
+    /**
      * Jquery referencce to the bubble message box
      * @type {DOMElement}
      */
@@ -164,6 +170,12 @@ export default class Cursor {
     this.set(pointer, entity.x, entity.y);
   }
 
+  /**
+   * Set the pointer to this x and y position
+   * @param {Number} id the pointer's id
+   * @param {Number}  x the x coordinate
+   * @param {Number}  y the y coordinate
+   */
   setToPosition(id, x, y) {
     const pointer = this.get(id);
 
@@ -175,6 +187,13 @@ export default class Cursor {
     this.set(pointer, x, y);
   }
 
+  /**
+   * Set this pointer to a relative position
+   * based on the scale of the screen
+   * @param {Number} id the pointer's id
+   * @param {Number}  x the x coordinate
+   * @param {Number}  y the y coordinate
+   */
   setRelative(id, x, y) {
     const pointer = this.get(id);
 
@@ -189,7 +208,6 @@ export default class Cursor {
     /**
      * Must be set in accordance to the lowest scale.
      */
-
     if (scale === 1) {
       offsetX = pointer.element.width() / 2 + 5;
       offsetY = pointer.element.height() / 2 - 4;
@@ -200,6 +218,9 @@ export default class Cursor {
     pointer.element.css('top', `${(y * scale) - offsetY}px`);
   }
 
+  /**
+   * Update the pointer in the render loop
+   */
   update() {
     _.each(this.pointers, (pointer) => {
       switch (pointer.type) {
@@ -223,6 +244,11 @@ export default class Cursor {
     });
   }
 
+  /**
+   * Return a specific pointer
+   * @param  {Number} id the pointer's id
+   * @return {Pointer} the pointer
+   */
   get(id) {
     if (id in this.pointers) {
       return this.pointers[id];
@@ -231,18 +257,33 @@ export default class Cursor {
     return null;
   }
 
+  /**
+   * Update the scale of the pointer
+   */
   updateScale() {
     this.scale = this.getDrawingScale();
   }
 
+  /**
+   * Update the camera reference with the
+   * game renderer camera reference
+   */
   updateCamera() {
     this.camera = this.game.renderer.camera;
   }
 
+  /**
+   * Return the current scale of the pointer
+   * @return {Number} the scale
+   */
   getScale() {
     return this.game.getScaleFactor();
   }
 
+  /**
+   * Return the renderer's drawing scale
+   * @return {Number} the actual renderer calculated drawing scale
+   */
   getDrawingScale() {
     return this.game.renderer.getDrawingScale();
   }

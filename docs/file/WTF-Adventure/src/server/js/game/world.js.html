@@ -677,6 +677,8 @@ export default class World {
       const isNpc = !!this.npcsDictionary.getData(key);
       const isItem = !!this.itemsDictionary.getData(key);
 
+      console.log(&apos;Spawning&apos;, key, tileIndex, isMob, isNpc, isItem);
+
       const itemData = isItem
         ? this.itemsDictionary.getData(key)
         : null;
@@ -721,14 +723,17 @@ export default class World {
           this.addMob(mob);
         });
 
+        console.log(&apos;Spawned mob&apos;, info, instance, position, mob);
         this.addMob(mob);
       }
 
       if (isNpc) {
+        console.log(&apos;Spawned NPC&apos;, info, instance, position);
         this.addNPC(new NPC(info.id, instance, position.x, position.y));
       }
 
       if (isItem) {
+        console.log(&apos;Spawned Item&apos;, info, instance, position);
         const item = this.createItem(info.id, instance, position.x, position.y);
         item.static = true;
         this.addItem(item);
