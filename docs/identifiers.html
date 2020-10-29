@@ -587,7 +587,7 @@ information about them</p>
         <div data-ice="description"><p>Handles the cursor on the HTML5 canvas, different pointers
 can be swapped out depending on the entity the player is
 interacting with, this holds all of the individual pointers
-whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span> holds a specific/individual; cursor</p>
+whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span> holds a specific/individual cursor</p>
 </div>
       </div>
     </td>
@@ -645,7 +645,7 @@ whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/point
       <div>
         
         
-        <div data-ice="description"><p>Keeps track of the player&apos;s current direction</p>
+        <div data-ice="description"><p>Keeps track of the <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span> direction</p>
 </div>
       </div>
     </td>
@@ -713,7 +713,18 @@ whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/point
       <div>
         
         
-        <div data-ice="description"><p>Initialize a new entity</p>
+        <div data-ice="description"><p>Initialize a new entity:</p>
+<ul>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/character.js~Character.html">Character</a></span><ul>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/mob/mob.js~Mob.html">Mob</a></span></li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/npc/npc.js~Npc.html">Npc</a></span></li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></li>
+</ul>
+</li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html">Chest</a></span></li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/objects/item.js~Item.html">Item</a></span></li>
+<li><span><a href="class/WTF-Adventure/src/client/js/entity/objects/projectile.js~Projectile.html">Projectile</a></span></li>
+</ul>
 </div>
       </div>
     </td>
@@ -742,7 +753,9 @@ whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/point
       <div>
         
         
-        
+        <div data-ice="description"><p>This is a entity handler, responsible for all the <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span> callbacks
+without having to clutter up the entire file.</p>
+</div>
       </div>
     </td>
     <td>
@@ -808,7 +821,7 @@ whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/point
       <div>
         
         
-        <div data-ice="description"><p>A character in the game.</p>
+        <div data-ice="description"><p>A specific type of <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span>.</p>
 </div>
       </div>
     </td>
@@ -847,7 +860,7 @@ whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/point
       <div>
         
         
-        <div data-ice="description"><p>A mobile character, some can attack, others just move</p>
+        <div data-ice="description"><p>A mobile <span><a href="class/WTF-Adventure/src/client/js/entity/character/character.js~Character.html">Character</a></span>, some can attack while others just move</p>
 </div>
       </div>
     </td>
@@ -886,7 +899,7 @@ whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/point
       <div>
         
         
-        <div data-ice="description"><p>A non playable character</p>
+        <div data-ice="description"><p>A non-playable <span><a href="class/WTF-Adventure/src/client/js/entity/character/character.js~Character.html">Character</a></span></p>
 </div>
       </div>
     </td>
@@ -919,13 +932,13 @@ whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/point
           <span data-ice="kind-icon" class="kind-class">C</span>
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/entity/character/character.js~Character.html">Character</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Player</p>
+        <div data-ice="description"><p>A member&apos;s playable <span><a href="class/WTF-Adventure/src/client/js/entity/character/character.js~Character.html">Character</a></span> in the game</p>
 </div>
       </div>
     </td>
@@ -954,8 +967,8 @@ whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/point
       <div>
         
         
-        <div data-ice="description"><p>This is a player handler, responsible for all the callbacks
-without having to clutter up the entire game file.</p>
+        <div data-ice="description"><p>This is a player handler, responsible for all the <span><a href="class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html">Player</a></span> callbacks
+without having to clutter up the entire file.</p>
 </div>
       </div>
     </td>
