@@ -1,13 +1,36 @@
 import Character from '../character';
 
+/**
+ * A non playable character
+ * @class
+ */
 export default class Npc extends Character {
+  /**
+   * Default constructor
+   * @param {Number} id the ID of the {@link Entity}
+   * @param {Number} kind the kind of {@link Entity} this is
+   */
   constructor(id, kind) {
     super(id, kind);
 
+    /**
+     * Index for this NPC
+     * @type {Number}
+     */
     this.index = 0;
+
+    /**
+     * Type of this character
+     * @type {String}
+     */
     this.type = 'npc';
   }
 
+  /**
+   * Set the messages for this character, return a single message
+   * @param  {String[]} messages the messages this character can say
+   * @return {String} the next message in their talk sequence
+   */
   talk(messages) {
     const count = messages.length;
     let message;
