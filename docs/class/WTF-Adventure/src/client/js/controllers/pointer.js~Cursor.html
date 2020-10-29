@@ -182,13 +182,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Cursor from &apos;<span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber11">WTF-Adventure/WTF-Adventure/src/client/js/controllers/pointer.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Cursor from &apos;<span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber14">WTF-Adventure/WTF-Adventure/src/client/js/controllers/pointer.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber11">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber14">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -208,7 +208,10 @@
 
   
   
-  <div class="description" data-ice="description"><p>Handles the cursor on the HTML5 canvas</p>
+  <div class="description" data-ice="description"><p>Handles the cursor on the HTML5 canvas, different pointers
+can be swapped out depending on the entity the player is
+interacting with, this holds all of the individual pointers
+whereas <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span> holds a specific/individual; cursor</p>
 </div>
   
 
@@ -241,13 +244,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(game: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Default constructor</p>
+</div>
       </div>
     </td>
     <td>
@@ -276,13 +280,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-camera">camera</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-camera">camera</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/camera.js~Camera.html">Camera</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The camera used for the pointer</p>
+</div>
       </div>
     </td>
     <td>
@@ -304,13 +309,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-container">container</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-container">container</a></span></span><span class="code" data-ice="signature">: <span>DOMElement</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Jquery referencce to the bubble message box</p>
+</div>
       </div>
     </td>
     <td>
@@ -332,13 +338,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-game">game</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-game">game</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Instance of the game</p>
+</div>
       </div>
     </td>
     <td>
@@ -360,13 +367,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-pointers">pointers</a></span></span><span class="code" data-ice="signature">: {}</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-pointers">pointers</a></span></span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Pointer from the renderer</p>
+</div>
       </div>
     </td>
     <td>
@@ -388,13 +396,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-scale">scale</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-member-scale">scale</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Scale of the device</p>
+</div>
       </div>
     </td>
     <td>
@@ -429,7 +438,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Destroy all the cursors</p>
+</div>
       </div>
     </td>
     <td>
@@ -451,13 +461,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-create">create</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>, type: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-create">create</a></span></span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Create a new cursor</p>
+</div>
       </div>
     </td>
     <td>
@@ -479,13 +490,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-destroy">destroy</a></span></span><span class="code" data-ice="signature">(pointer: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-destroy">destroy</a></span></span><span class="code" data-ice="signature">(pointer: <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Destroy a specific cursor</p>
+</div>
       </div>
     </td>
     <td>
@@ -507,13 +519,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-get">get</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-get">get</a></span></span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Return a specific pointer</p>
+</div>
       </div>
     </td>
     <td>
@@ -535,13 +548,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-getDrawingScale">getDrawingScale</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-getDrawingScale">getDrawingScale</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Return the renderer&apos;s drawing scale</p>
+</div>
       </div>
     </td>
     <td>
@@ -563,13 +577,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-getScale">getScale</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-getScale">getScale</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Return the current scale of the pointer</p>
+</div>
       </div>
     </td>
     <td>
@@ -597,7 +612,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Handle resizing the cursors</p>
+</div>
       </div>
     </td>
     <td>
@@ -619,13 +635,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-set">set</a></span></span><span class="code" data-ice="signature">(pointer: <span>*</span>, posX: <span>*</span>, posY: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-set">set</a></span></span><span class="code" data-ice="signature">(pointer: <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span>, posX: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, posY: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set the position of the cursor</p>
+</div>
       </div>
     </td>
     <td>
@@ -647,13 +664,15 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-setRelative">setRelative</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>, x: <span>*</span>, y: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-setRelative">setRelative</a></span></span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set this pointer to a relative position
+based on the scale of the screen</p>
+</div>
       </div>
     </td>
     <td>
@@ -681,7 +700,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Set the size of the cursors</p>
+</div>
       </div>
     </td>
     <td>
@@ -703,13 +723,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-setToEntity">setToEntity</a></span></span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-setToEntity">setToEntity</a></span></span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set the cursor to a specific entity</p>
+</div>
       </div>
     </td>
     <td>
@@ -731,13 +752,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-setToPosition">setToPosition</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>, x: <span>*</span>, y: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/WTF-Adventure/src/client/js/controllers/pointer.js~Cursor.html#instance-method-setToPosition">setToPosition</a></span></span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set the pointer to this x and y position</p>
+</div>
       </div>
     </td>
     <td>
@@ -765,7 +787,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Update the pointer in the render loop</p>
+</div>
       </div>
     </td>
     <td>
@@ -793,7 +816,9 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Update the camera reference with the
+game renderer camera reference</p>
+</div>
       </div>
     </td>
     <td>
@@ -821,7 +846,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Update the scale of the pointer</p>
+</div>
       </div>
     </td>
     <td>
@@ -847,22 +873,40 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(game: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber12">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber19">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Default constructor</p>
+</div>
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">game</td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>instance of the game</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
   
@@ -893,18 +937,19 @@
     
     
     
-    <span class="code" data-ice="name">camera</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">camera</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/camera.js~Camera.html">Camera</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber187">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber42">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The camera used for the pointer</p>
+</div>
 
   
 
@@ -936,18 +981,19 @@
     
     
     
-    <span class="code" data-ice="name">container</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">container</span><span class="code" data-ice="signature">: <span>DOMElement</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber16">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber48">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Jquery referencce to the bubble message box</p>
+</div>
 
   
 
@@ -979,18 +1025,19 @@
     
     
     
-    <span class="code" data-ice="name">game</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">game</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/game.js~Game.html">Game</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber13">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Instance of the game</p>
+</div>
 
   
 
@@ -1022,18 +1069,19 @@
     
     
     
-    <span class="code" data-ice="name">pointers</span><span class="code" data-ice="signature">: {}</span>
+    <span class="code" data-ice="name">pointers</span><span class="code" data-ice="signature">: <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber14">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber30">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Pointer from the renderer</p>
+</div>
 
   
 
@@ -1065,18 +1113,19 @@
     
     
     
-    <span class="code" data-ice="name">scale</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">scale</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber36">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Scale of the device</p>
+</div>
 
   
 
@@ -1115,14 +1164,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber76">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber120">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Destroy all the cursors</p>
+</div>
 
   
 
@@ -1154,18 +1204,19 @@
     
     
     
-    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(id: <span>*</span>, type: <span>*</span>)</span>
+    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, type: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber56">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Create a new cursor</p>
+</div>
 
   
 
@@ -1179,15 +1230,17 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">id</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>ID of the cursor</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">type</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>type of the pointer</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1219,18 +1272,19 @@
     
     
     
-    <span class="code" data-ice="name">destroy</span><span class="code" data-ice="signature">(pointer: <span>*</span>)</span>
+    <span class="code" data-ice="name">destroy</span><span class="code" data-ice="signature">(pointer: <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber84">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber132">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Destroy a specific cursor</p>
+</div>
 
   
 
@@ -1244,9 +1298,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">pointer</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>An instance of the cursor</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1278,18 +1333,19 @@
     
     
     
-    <span class="code" data-ice="name">get</span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">get</span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>): <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber174">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber252">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Return a specific pointer</p>
+</div>
 
   
 
@@ -1303,9 +1359,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">id</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the pointer&apos;s id</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1317,8 +1374,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the pointer</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1349,18 +1407,19 @@
     
     
     
-    <span class="code" data-ice="name">getDrawingScale</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">getDrawingScale</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber194">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber287">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Return the renderer&apos;s drawing scale</p>
+</div>
 
   
 
@@ -1372,8 +1431,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the actual renderer calculated drawing scale</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1404,18 +1464,19 @@
     
     
     
-    <span class="code" data-ice="name">getScale</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">getScale</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber190">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber279">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Return the current scale of the pointer</p>
+</div>
 
   
 
@@ -1427,8 +1488,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the scale</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1463,14 +1525,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber33">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber71">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Handle resizing the cursors</p>
+</div>
 
   
 
@@ -1502,18 +1565,19 @@
     
     
     
-    <span class="code" data-ice="name">set</span><span class="code" data-ice="signature">(pointer: <span>*</span>, posX: <span>*</span>, posY: <span>*</span>)</span>
+    <span class="code" data-ice="name">set</span><span class="code" data-ice="signature">(pointer: <span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span>, posX: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, posY: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber89">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber143">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set the position of the cursor</p>
+</div>
 
   
 
@@ -1527,21 +1591,24 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">pointer</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/renderer/pointers/pointer.js~Pointer.html">Pointer</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Instance of the pointer to move</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">posX</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>X position</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">posY</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Y position</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1573,18 +1640,20 @@
     
     
     
-    <span class="code" data-ice="name">setRelative</span><span class="code" data-ice="signature">(id: <span>*</span>, x: <span>*</span>, y: <span>*</span>)</span>
+    <span class="code" data-ice="name">setRelative</span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber126">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber197">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set this pointer to a relative position
+based on the scale of the screen</p>
+</div>
 
   
 
@@ -1598,21 +1667,24 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">id</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the pointer&apos;s id</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">x</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the x coordinate</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">y</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the y coordinate</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1648,14 +1720,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber57">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber98">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set the size of the cursors</p>
+</div>
 
   
 
@@ -1703,18 +1776,19 @@
     
     
     
-    <span class="code" data-ice="name">setToEntity</span><span class="code" data-ice="signature">(entity: <span>*</span>)</span>
+    <span class="code" data-ice="name">setToEntity</span><span class="code" data-ice="signature">(entity: <span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber103">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber161">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set the cursor to a specific entity</p>
+</div>
 
   
 
@@ -1728,9 +1802,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">entity</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html">Entity</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>an instance of the entity</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1762,18 +1837,19 @@
     
     
     
-    <span class="code" data-ice="name">setToPosition</span><span class="code" data-ice="signature">(id: <span>*</span>, x: <span>*</span>, y: <span>*</span>)</span>
+    <span class="code" data-ice="name">setToPosition</span><span class="code" data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, x: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>, y: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber115">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber179">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set the pointer to this x and y position</p>
+</div>
 
   
 
@@ -1787,21 +1863,24 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">id</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the pointer&apos;s id</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">x</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the x coordinate</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">y</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the y coordinate</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1837,14 +1916,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber151">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber224">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Update the pointer in the render loop</p>
+</div>
 
   
 
@@ -1880,14 +1960,16 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber186">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber271">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Update the camera reference with the
+game renderer camera reference</p>
+</div>
 
   
 
@@ -1923,14 +2005,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber182">source</a></span></span>
+      <span data-ice="source"><span><a href="file/WTF-Adventure/src/client/js/controllers/pointer.js.html#lineNumber263">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Update the scale of the pointer</p>
+</div>
 
   
 

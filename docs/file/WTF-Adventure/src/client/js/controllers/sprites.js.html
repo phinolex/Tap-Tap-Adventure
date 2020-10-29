@@ -193,12 +193,36 @@ import log from &apos;../lib/log&apos;;
  * @class
  */
 export default class Sprites {
+  /**
+   * Default constructor
+   * @param {Renderer} renderer instance of the renderer
+   */
   constructor(renderer) {
     log.debug(&apos;Sprites - constructor()&apos;, renderer);
 
+    /**
+     * An instance of the game renderer
+     * @type {Renderer}
+     */
     this.renderer = renderer;
+
+    /**
+     * An array of sprites
+     * @type {Sprite[]}
+     */
     this.sprites = {};
+
+    /**
+     * An animation for sparks
+     * @type {Animation}
+     */
     this.sparksAnimation = null;
+
+    /**
+     * A callback function when all sprites are loaded
+     * @type {Function}
+     */
+    this.loadedSpritesCallback = null;
 
     $.getJSON(&apos;assets/data/sprites.json&apos;, (json) =&gt; {
       this.load(json);
@@ -207,6 +231,10 @@ export default class Sprites {
     this.loadAnimations();
   }
 
+  /**
+   * Load data for a sprite
+   * @param  {Array} spriteData an array of data for the sprites to load
+   */
   load(spriteData) {
     log.debug(&apos;Sprites - load()&apos;, spriteData);
 
@@ -223,12 +251,18 @@ export default class Sprites {
     }
   }
 
+  /**
+   * Load animations
+   */
   loadAnimations() {
     log.debug(&apos;Sprites - loadAnimations()&apos;);
     this.sparksAnimation = new Animation(&apos;idle_down&apos;, 6, 0, 16, 16);
     this.sparksAnimation.setSpeed(120);
   }
 
+  /**
+   * Update sprites in the render loop
+   */
   updateSprites() {
     log.debug(&apos;Sprites - updateSprites()&apos;, this.renderer.getDrawingScale());
 
@@ -237,6 +271,10 @@ export default class Sprites {
     });
   }
 
+  /**
+   * Once a sprite is loaded set the sprites callback
+   * @param  {Function} callback the callback for the sprite
+   */
   onLoadedSprites(callback) {
     log.debug(&apos;Sprites - onLoadedSprites()&apos;, callback);
     this.loadedSpritesCallback = callback;

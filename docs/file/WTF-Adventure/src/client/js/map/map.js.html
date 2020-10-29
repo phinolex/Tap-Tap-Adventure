@@ -251,50 +251,43 @@ export default class Map {
     }
   }
 
-  loadTilesets() {
+  /**
+   * The tile-sheet of scale one is never used because
+   * of its wrong proportions. Interesting enough, this would mean
+   * that neither the entities would be necessary.
+   */
+  async loadTilesets() {
     const scale = this.renderer.getScale();
-    const isBigScale = scale === 3;
-
-    /**
-     * The tile-sheet of scale one is never used because
-     * of its wrong proportions. Interesting enough, this would mean
-     * that neither the entities would be necessary.
-     */
-
-    this.tilesets.push(this.loadTileset(&apos;assets/img/2/tilesheet.png&apos;));
-
-    if (isBigScale) {
-      this.tilesets.push(this.loadTileset(&apos;assets/img/3/tilesheet.png&apos;));
-    }
-
-    this.renderer.setTileset(this.tilesets[isBigScale ? 1 : 0]);
+    this.tilesets.push(await this.loadTileset(`assets/img/${scale}/tilesheet.png`));
+    this.renderer.setTileset(this.tilesets[scale - 2]);
     this.tilesetsLoaded = true;
   }
 
-  updateTileset() {
+  async updateTileset() {
     const scale = this.renderer.getDrawingScale();
 
     if (scale &gt; 2 &amp;&amp; !this.tilesets[1]) {
-      this.tilesets.push(this.loadTileset(&apos;assets/img/3/tilesheet.png&apos;));
+      this.tilesets.push(await this.loadTileset(&apos;assets/img/3/tilesheet.png&apos;));
     }
 
     this.renderer.setTileset(this.tilesets[scale - 2]);
   }
 
-  loadTileset(path) {
-    const tileset = new Image();
-    tileset.crossOrigin = &apos;Anonymous&apos;;
-    tileset.src = path;
-    tileset.loaded = true;
-    tileset.scale = this.renderer.getDrawingScale();
+  async loadTileset(path) {
+    return new Promise((resolve) =&gt; {
+      const tileset = new Image();
+      tileset.crossOrigin = &apos;Anonymous&apos;;
+      tileset.src = path;
+      tileset.loaded = true;
+      tileset.scale = this.renderer.getDrawingScale();
 
-    tileset.onload = () =&gt; {
-      if (tileset.width % this.tileSize &gt; 0) {
-        throw Error(`The tile size is malformed in the tile set: ${path}`);
-      }
-    };
-
-    return tileset;
+      tileset.onload = () =&gt; {
+        if (tileset.width % this.tileSize &gt; 0) {
+          throw Error(`The tile size is malformed in the tile set: ${path}`);
+        }
+        resolve(tileset);
+      };
+    });
   }
 
   parseMap(map) {
