@@ -1,7 +1,7 @@
 {
-  "coverage": "16.08%",
+  "coverage": "16.49%",
   "expectCount": 2947,
-  "actualCount": 474,
+  "actualCount": 486,
   "files": {
     "WTF-Adventure/src/client/js/app.js": {
       "expectCount": 78,
@@ -65,21 +65,8 @@
     },
     "WTF-Adventure/src/client/js/controllers/zoning.js": {
       "expectCount": 13,
-      "actualCount": 1,
-      "undocumentLines": [
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        16,
-        20,
-        24,
-        28,
-        32,
-        36
-      ]
+      "actualCount": 13,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/animation.js": {
       "expectCount": 19,

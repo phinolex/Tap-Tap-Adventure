@@ -8280,7 +8280,7 @@
     "__docId__": 444,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/controllers/zoning.js",
-    "content": "import Modules from '../utils/modules';\n\n/**\n * Keeps track of the player's current direction\n * @class\n */\nexport default class Zone {\n  constructor(game) {\n    this.game = game;\n    this.renderer = game.renderer;\n    this.camera = game.camera;\n    this.input = game.input;\n    this.direction = null;\n  }\n\n  reset() {\n    this.direction = null;\n  }\n\n  setUp() {\n    this.direction = Modules.Orientation.Up;\n  }\n\n  setDown() {\n    this.direction = Modules.Orientation.Down;\n  }\n\n  setRight() {\n    this.direction = Modules.Orientation.Right;\n  }\n\n  setLeft() {\n    this.direction = Modules.Orientation.Left;\n  }\n\n  getDirection() {\n    return this.direction;\n  }\n}\n",
+    "content": "import Modules from '../utils/modules';\n\n/**\n * Keeps track of the player's current direction\n * @class\n */\nexport default class Zone {\n  /**\n   * Default constructor\n   * @param {Game} game instance of the game\n   */\n  constructor(game) {\n    /**\n     * Instance of the game\n     * @type {Game}\n     */\n    this.game = game;\n\n    /**\n     * Instance of the game renderer\n     * @type {Renderer}\n     */\n    this.renderer = game.renderer;\n\n    /**\n     * Instance of the game camera\n     * @type {Camera}\n     */\n    this.camera = game.camera;\n\n    /**\n     * Instance of the game input\n     * @type {Input}\n     */\n    this.input = game.input;\n\n    /**\n     * IThe direction\n     * @type {Orientation}\n     */\n    this.direction = null;\n  }\n\n  /**\n   * Reset the direction\n   */\n  reset() {\n    this.direction = null;\n  }\n\n  /**\n   * Set the direction to up\n   */\n  setUp() {\n    this.direction = Modules.Orientation.Up;\n  }\n\n  /**\n   * Set the direction to down\n   */\n  setDown() {\n    this.direction = Modules.Orientation.Down;\n  }\n\n  /**\n   * Set the direction to right\n   */\n  setRight() {\n    this.direction = Modules.Orientation.Right;\n  }\n\n  /**\n   * Set the direction to right\n   */\n  setLeft() {\n    this.direction = Modules.Orientation.Left;\n  }\n\n  /**\n   * Return the current direction\n   * @return {Orientation} the direction for the zone\n   */\n  getDirection() {\n    return this.direction;\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/controllers/zoning.js",
     "access": "public",
@@ -8318,9 +8318,20 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#constructor",
     "access": "public",
-    "description": null,
-    "lineNumber": 8,
-    "undocument": true
+    "description": "Default constructor",
+    "lineNumber": 12,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Game"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "game",
+        "description": "instance of the game"
+      }
+    ]
   },
   {
     "__docId__": 447,
@@ -8330,13 +8341,15 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#game",
     "access": "public",
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
+    "description": "Instance of the game",
+    "lineNumber": 17,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "Game"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -8347,13 +8360,15 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#renderer",
     "access": "public",
-    "description": null,
-    "lineNumber": 10,
-    "undocument": true,
+    "description": "Instance of the game renderer",
+    "lineNumber": 23,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "Renderer"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -8364,13 +8379,15 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#camera",
     "access": "public",
-    "description": null,
-    "lineNumber": 11,
-    "undocument": true,
+    "description": "Instance of the game camera",
+    "lineNumber": 29,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "Camera"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -8381,13 +8398,15 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#input",
     "access": "public",
-    "description": null,
-    "lineNumber": 12,
-    "undocument": true,
+    "description": "Instance of the game input",
+    "lineNumber": 35,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "Input"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -8398,13 +8417,15 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#direction",
     "access": "public",
-    "description": null,
-    "lineNumber": 13,
-    "undocument": true,
+    "description": "IThe direction",
+    "lineNumber": 41,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "Orientation"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -8417,9 +8438,8 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#reset",
     "access": "public",
-    "description": null,
-    "lineNumber": 16,
-    "undocument": true,
+    "description": "Reset the direction",
+    "lineNumber": 47,
     "params": [],
     "return": null
   },
@@ -8433,9 +8453,8 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#setUp",
     "access": "public",
-    "description": null,
-    "lineNumber": 20,
-    "undocument": true,
+    "description": "Set the direction to up",
+    "lineNumber": 54,
     "params": [],
     "return": null
   },
@@ -8449,9 +8468,8 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#setDown",
     "access": "public",
-    "description": null,
-    "lineNumber": 24,
-    "undocument": true,
+    "description": "Set the direction to down",
+    "lineNumber": 61,
     "params": [],
     "return": null
   },
@@ -8465,9 +8483,8 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#setRight",
     "access": "public",
-    "description": null,
-    "lineNumber": 28,
-    "undocument": true,
+    "description": "Set the direction to right",
+    "lineNumber": 68,
     "params": [],
     "return": null
   },
@@ -8481,9 +8498,8 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#setLeft",
     "access": "public",
-    "description": null,
-    "lineNumber": 32,
-    "undocument": true,
+    "description": "Set the direction to right",
+    "lineNumber": 75,
     "params": [],
     "return": null
   },
@@ -8497,15 +8513,17 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/controllers/zoning.js~Zone#getDirection",
     "access": "public",
-    "description": null,
-    "lineNumber": 36,
-    "undocument": true,
-    "params": [],
+    "description": "Return the current direction",
+    "lineNumber": 83,
     "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
-    }
+        "Orientation"
+      ],
+      "spread": false,
+      "description": "the direction for the zone"
+    },
+    "params": []
   },
   {
     "__docId__": 463,
