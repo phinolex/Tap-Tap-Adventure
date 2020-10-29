@@ -188,55 +188,207 @@ import Transition from &apos;../../utils/transition&apos;;
 import Animation from &apos;../animation&apos;;
 import Modules from &apos;../../utils/modules&apos;;
 
+/**
+ * A character in the game. This is the base class.
+ * These can be either a {@link Mob} or {@link Npc} or {@link Player}
+ * @class
+ */
 export default class Character extends Entity {
+  /**
+   * Default constructor
+   * @param {Number} id the ID of the {@link Entity}
+   * @param {Number} kind the kind of {@link Entity} this is
+   */
   constructor(id, kind) {
     super(id, kind);
 
+    /**
+     * Next grid X position
+     * @type {Number}
+     */
     this.nextGridX = -1;
+
+    /**
+     * Next grid Y position
+     * @type {Number}
+     */
     this.nextGridY = -1;
+
+    /**
+     * Previous gridX position
+     * @type {Number}
+     */
     this.prevGridX = -1;
+
+    /**
+     * Previous gridY position
+     * @type {Number}
+     */
     this.prevGridY = -1;
 
+    /**
+     * The direction they are pointing
+     * @type {Orientation}
+     */
     this.orientation = Modules.Orientation.Down;
 
+    /**
+     * How many hit points they have left
+     * @type {Number}
+     */
     this.hitPoints = -1;
+
+    /**
+     * How many hit points they have total
+     * @type {Number}
+     */
     this.maxHitPoints = -1;
+
+    /**
+     * How much magic they have left
+     * @type {Number}
+     */
     this.mana = -1;
+
+    /**
+     * How much magic they have total
+     * @type {Number}
+     */
     this.maxMana = -1;
 
+    /**
+     * Is there health bar visible or not
+     * @type {Boolean}
+     */
     this.healthBarVisible = false;
+
+    /**
+     * Does their health reset after time is up
+     * @type {Boolean}
+     */
     this.healthBarTimeout = false;
 
+    /**
+     * Are they dead
+     * @type {Boolean}
+     */
     this.dead = false;
+
+    /**
+     * Are they following something
+     * @type {Boolean}
+     */
     this.following = false;
+
+    /**
+     * Are they attacking something
+     * @type {Boolean}
+     */
     this.attacking = false;
+
+    /**
+     * Should their action be interrupted
+     * @type {Boolean}
+     */
     this.interrupted = false;
 
+    /**
+     * Did they get a critical hit
+     * @type {Boolean}
+     */
     this.critical = false;
+
+    /**
+     * Are they frozen
+     * @type {Boolean}
+     */
     this.frozen = false;
+
+    /**
+     * Are they stunned
+     * @type {Boolean}
+     */
     this.stunned = false;
+
+    /**
+     * Did they explode
+     * @type {Boolean}
+     */
     this.explosion = false;
 
+    /**
+     * What is their current path
+     * @type {Astar}
+     */
     this.path = null;
+
+    /**
+     * What is their current target
+     * @type {Entity}
+     */
     this.target = null;
 
+    /**
+     * An array of things trying to attack them
+     * @type {Object}
+     */
     this.attackers = {};
 
+    /**
+     * Movement transitions
+     * @type {Transition}
+     */
     this.movement = new Transition();
 
+    /**
+     * Idle animation speed
+     * @type {Number}
+     */
     this.idleSpeed = 450;
+
+    /**
+     * Attack animation speed
+     * @type {Number}
+     */
     this.attackAnimationSpeed = 50;
+
+    /**
+     * Walk animation speed
+     * @type {Number}
+     */
     this.walkAnimationSpeed = 100;
+
+    /**
+     * Movement animation speed
+     * @type {Number}
+     */
     this.movementSpeed = 250;
 
+    /**
+     * Do they have a weapon
+     * @type {Boolean}
+     */
     this.weapon = false;
+
+    /**
+     * Do they have a shadow
+     * @type {Boolean}
+     */
     this.shadow = false;
 
+    /**
+     * What is their attack range
+     * @type {Number}
+     */
     this.attackRange = 1;
 
+    // prep this character by loading global animations
     this.loadGlobals();
   }
 
+  /**
+   * Load all global character animations
+   */
   loadGlobals() {
     this.criticalAnimation = new Animation(&apos;atk_down&apos;, 10, 0, 48, 48);
     this.criticalAnimation.setSpeed(30);

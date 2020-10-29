@@ -184,18 +184,48 @@
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/entity/character/mob/mob.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Character from &apos;../character&apos;;
 
+/**
+ * A mobile character, some can attack, others just move
+ * @class
+ */
 export default class Mob extends Character {
+  /**
+   * Default constructor
+   * @param {Number} id the ID of the {@link Entity}
+   * @param {Number} kind the kind of {@link Entity} this is
+   */
   constructor(id, kind) {
     super(id, kind);
 
+    /**
+     * The name of the character
+     * @type {String}
+     */
     this.name = null;
 
-    this.hitPoints = -1;
-    this.maxHitPoints = -1;
+    /**
+     * How many hit points the character has
+     * @type {Number}
+     */
+    this.hitPoints = -1; // not applicable by default
 
+    /**
+     * Maximum hit points the character has
+     * @type {Number}
+     */
+    this.maxHitPoints = -1; // not applicable by default
+
+    /**
+     * The type of character this is
+     * @type {String}
+     */
     this.type = &apos;mob&apos;;
   }
 
+  /**
+   * Sets the name of this character
+   * @param {String} name character name
+   */
   setName(name) {
     this.name = name;
   }

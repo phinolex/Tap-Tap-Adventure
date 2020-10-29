@@ -35,7 +35,7 @@ export default class Zone {
     this.input = game.input;
 
     /**
-     * IThe direction
+     * The direction
      * @type {Orientation}
      */
     this.direction = null;
