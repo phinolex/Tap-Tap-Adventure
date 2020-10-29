@@ -1,5 +1,10 @@
 import Packets from '../network/packets';
 
+/**
+* This is a entity handler, responsible for all the {@link Entity} callbacks
+* without having to clutter up the entire file.
+* @class
+*/
 export default class EntityHandler {
   constructor(entity) {
     this.entity = entity;

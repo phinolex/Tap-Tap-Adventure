@@ -7513,7 +7513,7 @@
     "__docId__": 405,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/controllers/pointer.js",
-    "content": "import $ from 'jquery';\nimport _ from 'underscore';\nimport Pointer from '../renderer/pointers/pointer';\nimport Modules from '../utils/modules';\nimport log from '../lib/log';\n\n/**\n * Handles the cursor on the HTML5 canvas, different pointers\n * can be swapped out depending on the entity the player is\n * interacting with, this holds all of the individual pointers\n * whereas {@link Pointer} holds a specific/individual; cursor\n * @class\n */\nexport default class Cursor {\n  /**\n   * Default constructor\n   * @param {Game} game instance of the game\n   */\n  constructor(game) {\n    /**\n     * Instance of the game\n     * @type {Game}\n     */\n    this.game = game;\n\n    /**\n     * Pointer from the renderer\n     * @type {Pointer}\n     */\n    this.pointers = {};\n\n    /**\n     * Scale of the device\n     * @type {Number}\n     */\n    this.scale = this.getScale();\n\n    /**\n     * The camera used for the pointer\n     * @type {Camera}\n     */\n    this.camera = null;\n\n    /**\n     * Jquery referencce to the bubble message box\n     * @type {DOMElement}\n     */\n    this.container = $('#bubbles');\n  }\n\n  /**\n   * Create a new cursor\n   * @param  {Number} id   ID of the cursor\n   * @param  {String} type type of the pointer\n   */\n  create(id, type) {\n    if (id in this.pointers) {\n      return;\n    }\n\n    const element = $(`<div id=\"${id}\" class=\"pointer\"></div>`);\n\n    this.setSize(element);\n    this.container.append(element);\n    this.pointers[id] = new Pointer(id, element, type);\n  }\n\n  /**\n   * Handle resizing the cursors\n   */\n  resize() {\n    _.each(this.pointers, (pointer) => {\n      switch (pointer.type) {\n        case Modules.Pointers.Relative:\n          const scale = this.getScale(); // eslint-disable-line\n          const x = pointer.x; // eslint-disable-line\n          const y = pointer.y; // eslint-disable-line\n          let offsetX = 0; // eslint-disable-line\n          let offsetY = 0; // eslint-disable-line\n\n          if (scale === 1) {\n            offsetX = pointer.element.width() / 2 + 5;\n            offsetY = pointer.element.height() / 2 - 4;\n          }\n\n          pointer.element.css('left', `${(x * scale) - offsetX}px`);\n          pointer.element.css('top', `${(y * scale) - offsetY}px`);\n          break;\n        default:\n          break;\n      }\n    });\n  }\n\n  /**\n   * Set the size of the cursors\n   */\n  setSize(element) {\n    const width = 8;\n    const height = width + (width * 0.2);\n    const image = 'url(\"assets/img/common/hud-active.png\")';\n\n    this.updateScale();\n\n    element.css({\n      width: `${width * this.scale}px`,\n      height: `${height * this.scale}px`,\n      margin: 'inherit',\n      'margin-top': `-${(height / 2) * this.scale}px`,\n      'margin-left': '1px',\n      top: `${height * this.scale}px`,\n      background: image,\n      'background-size': '100% 100%',\n    });\n  }\n\n  /**\n   * Destroy all the cursors\n   */\n  clean() {\n    _.each(this.pointers, (pointer) => {\n      pointer.destroy();\n    });\n\n    this.pointers = {};\n  }\n\n  /**\n   * Destroy a specific cursor\n   * @param  {Pointer} pointer An instance of the cursor\n   */\n  destroy(pointer) {\n    delete this.pointers[pointer.id];\n    pointer.destroy();\n  }\n\n  /**\n   * Set the position of the cursor\n   * @param {Pointer} pointer Instance of the pointer to move\n   * @param {Number} posX    X position\n   * @param {Number} posY    Y position\n   */\n  set(pointer, posX, posY) {\n    this.updateScale();\n    this.updateCamera();\n\n    const tileSize = 16 * this.scale;\n    const x = ((posX - this.camera.x) * this.scale);\n    const width = parseInt(pointer.element.css('width') + 24, 10);\n    const offset = (width / 2) - (tileSize / 2);\n    const y = ((posY - this.camera.y) * this.scale) - tileSize;\n\n    pointer.element.css('left', `${x - offset}px`);\n    pointer.element.css('top', `${y}px`);\n  }\n\n  /**\n   * Set the cursor to a specific entity\n   * @param {Entity} entity an instance of the entity\n   */\n  setToEntity(entity) {\n    log.debug('Cursor - setToEntity()', entity);\n\n    const pointer = this.get(entity.id);\n\n    if (!pointer) {\n      return;\n    }\n\n    this.set(pointer, entity.x, entity.y);\n  }\n\n  /**\n   * Set the pointer to this x and y position\n   * @param {Number} id the pointer's id\n   * @param {Number}  x the x coordinate\n   * @param {Number}  y the y coordinate\n   */\n  setToPosition(id, x, y) {\n    const pointer = this.get(id);\n\n    if (!pointer) {\n      return;\n    }\n\n    pointer.setPosition(x, y);\n    this.set(pointer, x, y);\n  }\n\n  /**\n   * Set this pointer to a relative position\n   * based on the scale of the screen\n   * @param {Number} id the pointer's id\n   * @param {Number}  x the x coordinate\n   * @param {Number}  y the y coordinate\n   */\n  setRelative(id, x, y) {\n    const pointer = this.get(id);\n\n    if (!pointer) {\n      return;\n    }\n\n    const scale = this.getScale();\n    let offsetX = 0;\n    let offsetY = 0;\n\n    /**\n     * Must be set in accordance to the lowest scale.\n     */\n    if (scale === 1) {\n      offsetX = pointer.element.width() / 2 + 5;\n      offsetY = pointer.element.height() / 2 - 4;\n    }\n\n    pointer.setPosition(x, y);\n    pointer.element.css('left', `${(x * scale) - offsetX}px`);\n    pointer.element.css('top', `${(y * scale) - offsetY}px`);\n  }\n\n  /**\n   * Update the pointer in the render loop\n   */\n  update() {\n    _.each(this.pointers, (pointer) => {\n      switch (pointer.type) {\n        case Modules.Pointers.Entity:\n          const entity = this.game.entities.get(pointer.id); // eslint-disable-line\n\n          if (entity) {\n            this.setToEntity(entity);\n          } else {\n            this.destroy(pointer);\n          }\n          break;\n        case Modules.Pointers.Position:\n          if (pointer.x !== -1 && pointer.y !== -1) {\n            this.set(pointer, pointer.x, pointer.y);\n          }\n          break;\n        default:\n          break;\n      }\n    });\n  }\n\n  /**\n   * Return a specific pointer\n   * @param  {Number} id the pointer's id\n   * @return {Pointer} the pointer\n   */\n  get(id) {\n    if (id in this.pointers) {\n      return this.pointers[id];\n    }\n\n    return null;\n  }\n\n  /**\n   * Update the scale of the pointer\n   */\n  updateScale() {\n    this.scale = this.getDrawingScale();\n  }\n\n  /**\n   * Update the camera reference with the\n   * game renderer camera reference\n   */\n  updateCamera() {\n    this.camera = this.game.renderer.camera;\n  }\n\n  /**\n   * Return the current scale of the pointer\n   * @return {Number} the scale\n   */\n  getScale() {\n    return this.game.getScaleFactor();\n  }\n\n  /**\n   * Return the renderer's drawing scale\n   * @return {Number} the actual renderer calculated drawing scale\n   */\n  getDrawingScale() {\n    return this.game.renderer.getDrawingScale();\n  }\n}\n",
+    "content": "import $ from 'jquery';\nimport _ from 'underscore';\nimport Pointer from '../renderer/pointers/pointer';\nimport Modules from '../utils/modules';\nimport log from '../lib/log';\n\n/**\n * Handles the cursor on the HTML5 canvas, different pointers\n * can be swapped out depending on the entity the player is\n * interacting with, this holds all of the individual pointers\n * whereas {@link Pointer} holds a specific/individual cursor\n * @class\n */\nexport default class Cursor {\n  /**\n   * Default constructor\n   * @param {Game} game instance of the game\n   */\n  constructor(game) {\n    /**\n     * Instance of the game\n     * @type {Game}\n     */\n    this.game = game;\n\n    /**\n     * Pointer from the renderer\n     * @type {Pointer}\n     */\n    this.pointers = {};\n\n    /**\n     * Scale of the device\n     * @type {Number}\n     */\n    this.scale = this.getScale();\n\n    /**\n     * The camera used for the pointer\n     * @type {Camera}\n     */\n    this.camera = null;\n\n    /**\n     * Jquery referencce to the bubble message box\n     * @type {DOMElement}\n     */\n    this.container = $('#bubbles');\n  }\n\n  /**\n   * Create a new cursor\n   * @param  {Number} id   ID of the cursor\n   * @param  {String} type type of the pointer\n   */\n  create(id, type) {\n    if (id in this.pointers) {\n      return;\n    }\n\n    const element = $(`<div id=\"${id}\" class=\"pointer\"></div>`);\n\n    this.setSize(element);\n    this.container.append(element);\n    this.pointers[id] = new Pointer(id, element, type);\n  }\n\n  /**\n   * Handle resizing the cursors\n   */\n  resize() {\n    _.each(this.pointers, (pointer) => {\n      switch (pointer.type) {\n        case Modules.Pointers.Relative:\n          const scale = this.getScale(); // eslint-disable-line\n          const x = pointer.x; // eslint-disable-line\n          const y = pointer.y; // eslint-disable-line\n          let offsetX = 0; // eslint-disable-line\n          let offsetY = 0; // eslint-disable-line\n\n          if (scale === 1) {\n            offsetX = pointer.element.width() / 2 + 5;\n            offsetY = pointer.element.height() / 2 - 4;\n          }\n\n          pointer.element.css('left', `${(x * scale) - offsetX}px`);\n          pointer.element.css('top', `${(y * scale) - offsetY}px`);\n          break;\n        default:\n          break;\n      }\n    });\n  }\n\n  /**\n   * Set the size of the cursors\n   */\n  setSize(element) {\n    const width = 8;\n    const height = width + (width * 0.2);\n    const image = 'url(\"assets/img/common/hud-active.png\")';\n\n    this.updateScale();\n\n    element.css({\n      width: `${width * this.scale}px`,\n      height: `${height * this.scale}px`,\n      margin: 'inherit',\n      'margin-top': `-${(height / 2) * this.scale}px`,\n      'margin-left': '1px',\n      top: `${height * this.scale}px`,\n      background: image,\n      'background-size': '100% 100%',\n    });\n  }\n\n  /**\n   * Destroy all the cursors\n   */\n  clean() {\n    _.each(this.pointers, (pointer) => {\n      pointer.destroy();\n    });\n\n    this.pointers = {};\n  }\n\n  /**\n   * Destroy a specific cursor\n   * @param  {Pointer} pointer An instance of the cursor\n   */\n  destroy(pointer) {\n    delete this.pointers[pointer.id];\n    pointer.destroy();\n  }\n\n  /**\n   * Set the position of the cursor\n   * @param {Pointer} pointer Instance of the pointer to move\n   * @param {Number} posX    X position\n   * @param {Number} posY    Y position\n   */\n  set(pointer, posX, posY) {\n    this.updateScale();\n    this.updateCamera();\n\n    const tileSize = 16 * this.scale;\n    const x = ((posX - this.camera.x) * this.scale);\n    const width = parseInt(pointer.element.css('width') + 24, 10);\n    const offset = (width / 2) - (tileSize / 2);\n    const y = ((posY - this.camera.y) * this.scale) - tileSize;\n\n    pointer.element.css('left', `${x - offset}px`);\n    pointer.element.css('top', `${y}px`);\n  }\n\n  /**\n   * Set the cursor to a specific entity\n   * @param {Entity} entity an instance of the entity\n   */\n  setToEntity(entity) {\n    log.debug('Cursor - setToEntity()', entity);\n\n    const pointer = this.get(entity.id);\n\n    if (!pointer) {\n      return;\n    }\n\n    this.set(pointer, entity.x, entity.y);\n  }\n\n  /**\n   * Set the pointer to this x and y position\n   * @param {Number} id the pointer's id\n   * @param {Number}  x the x coordinate\n   * @param {Number}  y the y coordinate\n   */\n  setToPosition(id, x, y) {\n    const pointer = this.get(id);\n\n    if (!pointer) {\n      return;\n    }\n\n    pointer.setPosition(x, y);\n    this.set(pointer, x, y);\n  }\n\n  /**\n   * Set this pointer to a relative position\n   * based on the scale of the screen\n   * @param {Number} id the pointer's id\n   * @param {Number}  x the x coordinate\n   * @param {Number}  y the y coordinate\n   */\n  setRelative(id, x, y) {\n    const pointer = this.get(id);\n\n    if (!pointer) {\n      return;\n    }\n\n    const scale = this.getScale();\n    let offsetX = 0;\n    let offsetY = 0;\n\n    /**\n     * Must be set in accordance to the lowest scale.\n     */\n    if (scale === 1) {\n      offsetX = pointer.element.width() / 2 + 5;\n      offsetY = pointer.element.height() / 2 - 4;\n    }\n\n    pointer.setPosition(x, y);\n    pointer.element.css('left', `${(x * scale) - offsetX}px`);\n    pointer.element.css('top', `${(y * scale) - offsetY}px`);\n  }\n\n  /**\n   * Update the pointer in the render loop\n   */\n  update() {\n    _.each(this.pointers, (pointer) => {\n      switch (pointer.type) {\n        case Modules.Pointers.Entity:\n          const entity = this.game.entities.get(pointer.id); // eslint-disable-line\n\n          if (entity) {\n            this.setToEntity(entity);\n          } else {\n            this.destroy(pointer);\n          }\n          break;\n        case Modules.Pointers.Position:\n          if (pointer.x !== -1 && pointer.y !== -1) {\n            this.set(pointer, pointer.x, pointer.y);\n          }\n          break;\n        default:\n          break;\n      }\n    });\n  }\n\n  /**\n   * Return a specific pointer\n   * @param  {Number} id the pointer's id\n   * @return {Pointer} the pointer\n   */\n  get(id) {\n    if (id in this.pointers) {\n      return this.pointers[id];\n    }\n\n    return null;\n  }\n\n  /**\n   * Update the scale of the pointer\n   */\n  updateScale() {\n    this.scale = this.getDrawingScale();\n  }\n\n  /**\n   * Update the camera reference with the\n   * game renderer camera reference\n   */\n  updateCamera() {\n    this.camera = this.game.renderer.camera;\n  }\n\n  /**\n   * Return the current scale of the pointer\n   * @return {Number} the scale\n   */\n  getScale() {\n    return this.game.getScaleFactor();\n  }\n\n  /**\n   * Return the renderer's drawing scale\n   * @return {Number} the actual renderer calculated drawing scale\n   */\n  getDrawingScale() {\n    return this.game.renderer.getDrawingScale();\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/controllers/pointer.js",
     "access": "public",
@@ -7531,7 +7531,7 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/controllers/pointer.js",
     "importStyle": "Cursor",
-    "description": "Handles the cursor on the HTML5 canvas, different pointers\ncan be swapped out depending on the entity the player is\ninteracting with, this holds all of the individual pointers\nwhereas {@link Pointer} holds a specific/individual; cursor",
+    "description": "Handles the cursor on the HTML5 canvas, different pointers\ncan be swapped out depending on the entity the player is\ninteracting with, this holds all of the individual pointers\nwhereas {@link Pointer} holds a specific/individual cursor",
     "lineNumber": 14,
     "unknown": [
       {
@@ -8280,7 +8280,7 @@
     "__docId__": 444,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/controllers/zoning.js",
-    "content": "import Modules from '../utils/modules';\n\n/**\n * Keeps track of the player's current direction\n * @class\n */\nexport default class Zone {\n  /**\n   * Default constructor\n   * @param {Game} game instance of the game\n   */\n  constructor(game) {\n    /**\n     * Instance of the game\n     * @type {Game}\n     */\n    this.game = game;\n\n    /**\n     * Instance of the game renderer\n     * @type {Renderer}\n     */\n    this.renderer = game.renderer;\n\n    /**\n     * Instance of the game camera\n     * @type {Camera}\n     */\n    this.camera = game.camera;\n\n    /**\n     * Instance of the game input\n     * @type {Input}\n     */\n    this.input = game.input;\n\n    /**\n     * The direction\n     * @type {Orientation}\n     */\n    this.direction = null;\n  }\n\n  /**\n   * Reset the direction\n   */\n  reset() {\n    this.direction = null;\n  }\n\n  /**\n   * Set the direction to up\n   */\n  setUp() {\n    this.direction = Modules.Orientation.Up;\n  }\n\n  /**\n   * Set the direction to down\n   */\n  setDown() {\n    this.direction = Modules.Orientation.Down;\n  }\n\n  /**\n   * Set the direction to right\n   */\n  setRight() {\n    this.direction = Modules.Orientation.Right;\n  }\n\n  /**\n   * Set the direction to right\n   */\n  setLeft() {\n    this.direction = Modules.Orientation.Left;\n  }\n\n  /**\n   * Return the current direction\n   * @return {Orientation} the direction for the zone\n   */\n  getDirection() {\n    return this.direction;\n  }\n}\n",
+    "content": "import Modules from '../utils/modules';\n\n/**\n * Keeps track of the {@link Entity} direction\n * @class\n */\nexport default class Zone {\n  /**\n   * Default constructor\n   * @param {Game} game instance of the game\n   */\n  constructor(game) {\n    /**\n     * Instance of the game\n     * @type {Game}\n     */\n    this.game = game;\n\n    /**\n     * Instance of the game renderer\n     * @type {Renderer}\n     */\n    this.renderer = game.renderer;\n\n    /**\n     * Instance of the game camera\n     * @type {Camera}\n     */\n    this.camera = game.camera;\n\n    /**\n     * Instance of the game input\n     * @type {Input}\n     */\n    this.input = game.input;\n\n    /**\n     * The direction\n     * @type {Orientation}\n     */\n    this.direction = null;\n  }\n\n  /**\n   * Reset the direction\n   */\n  reset() {\n    this.direction = null;\n  }\n\n  /**\n   * Set the direction to up\n   */\n  setUp() {\n    this.direction = Modules.Orientation.Up;\n  }\n\n  /**\n   * Set the direction to down\n   */\n  setDown() {\n    this.direction = Modules.Orientation.Down;\n  }\n\n  /**\n   * Set the direction to right\n   */\n  setRight() {\n    this.direction = Modules.Orientation.Right;\n  }\n\n  /**\n   * Set the direction to right\n   */\n  setLeft() {\n    this.direction = Modules.Orientation.Left;\n  }\n\n  /**\n   * Return the current direction\n   * @return {Orientation} the direction for the zone\n   */\n  getDirection() {\n    return this.direction;\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/controllers/zoning.js",
     "access": "public",
@@ -8298,7 +8298,7 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/controllers/zoning.js",
     "importStyle": "Zone",
-    "description": "Keeps track of the player's current direction",
+    "description": "Keeps track of the {@link Entity} direction",
     "lineNumber": 7,
     "unknown": [
       {
@@ -9007,7 +9007,7 @@
     "__docId__": 492,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/entity/character/character.js",
-    "content": "import _ from 'underscore';\nimport Entity from '../entity';\nimport Transition from '../../utils/transition';\nimport Animation from '../animation';\nimport Modules from '../../utils/modules';\n\n/**\n * A character in the game. This is the base class.\n * These can be either a {@link Mob} or {@link Npc} or {@link Player}\n * @class\n */\nexport default class Character extends Entity {\n  /**\n   * Default constructor\n   * @param {Number} id the ID of the {@link Entity}\n   * @param {Number} kind the kind of {@link Entity} this is\n   */\n  constructor(id, kind) {\n    super(id, kind);\n\n    /**\n     * Next grid X position\n     * @type {Number}\n     */\n    this.nextGridX = -1;\n\n    /**\n     * Next grid Y position\n     * @type {Number}\n     */\n    this.nextGridY = -1;\n\n    /**\n     * Previous gridX position\n     * @type {Number}\n     */\n    this.prevGridX = -1;\n\n    /**\n     * Previous gridY position\n     * @type {Number}\n     */\n    this.prevGridY = -1;\n\n    /**\n     * The direction they are pointing\n     * @type {Orientation}\n     */\n    this.orientation = Modules.Orientation.Down;\n\n    /**\n     * How many hit points they have left\n     * @type {Number}\n     */\n    this.hitPoints = -1;\n\n    /**\n     * How many hit points they have total\n     * @type {Number}\n     */\n    this.maxHitPoints = -1;\n\n    /**\n     * How much magic they have left\n     * @type {Number}\n     */\n    this.mana = -1;\n\n    /**\n     * How much magic they have total\n     * @type {Number}\n     */\n    this.maxMana = -1;\n\n    /**\n     * Is there health bar visible or not\n     * @type {Boolean}\n     */\n    this.healthBarVisible = false;\n\n    /**\n     * Does their health reset after time is up\n     * @type {Boolean}\n     */\n    this.healthBarTimeout = false;\n\n    /**\n     * Are they dead\n     * @type {Boolean}\n     */\n    this.dead = false;\n\n    /**\n     * Are they following something\n     * @type {Boolean}\n     */\n    this.following = false;\n\n    /**\n     * Are they attacking something\n     * @type {Boolean}\n     */\n    this.attacking = false;\n\n    /**\n     * Should their action be interrupted\n     * @type {Boolean}\n     */\n    this.interrupted = false;\n\n    /**\n     * Did they get a critical hit\n     * @type {Boolean}\n     */\n    this.critical = false;\n\n    /**\n     * Are they frozen\n     * @type {Boolean}\n     */\n    this.frozen = false;\n\n    /**\n     * Are they stunned\n     * @type {Boolean}\n     */\n    this.stunned = false;\n\n    /**\n     * Did they explode\n     * @type {Boolean}\n     */\n    this.explosion = false;\n\n    /**\n     * What is their current path\n     * @type {Astar}\n     */\n    this.path = null;\n\n    /**\n     * What is their current target\n     * @type {Entity}\n     */\n    this.target = null;\n\n    /**\n     * An array of things trying to attack them\n     * @type {Object}\n     */\n    this.attackers = {};\n\n    /**\n     * Movement transitions\n     * @type {Transition}\n     */\n    this.movement = new Transition();\n\n    /**\n     * Idle animation speed\n     * @type {Number}\n     */\n    this.idleSpeed = 450;\n\n    /**\n     * Attack animation speed\n     * @type {Number}\n     */\n    this.attackAnimationSpeed = 50;\n\n    /**\n     * Walk animation speed\n     * @type {Number}\n     */\n    this.walkAnimationSpeed = 100;\n\n    /**\n     * Movement animation speed\n     * @type {Number}\n     */\n    this.movementSpeed = 250;\n\n    /**\n     * Do they have a weapon\n     * @type {Boolean}\n     */\n    this.weapon = false;\n\n    /**\n     * Do they have a shadow\n     * @type {Boolean}\n     */\n    this.shadow = false;\n\n    /**\n     * What is their attack range\n     * @type {Number}\n     */\n    this.attackRange = 1;\n\n    // prep this character by loading global animations\n    this.loadGlobals();\n  }\n\n  /**\n   * Load all global character animations\n   */\n  loadGlobals() {\n    this.criticalAnimation = new Animation('atk_down', 10, 0, 48, 48);\n    this.criticalAnimation.setSpeed(30);\n\n    this.criticalAnimation.setCount(1, () => {\n      this.critical = false;\n\n      this.criticalAnimation.reset();\n      this.criticalAnimation.count = 1;\n    });\n\n    this.terrorAnimation = new Animation('explosion', 8, 0, 64, 64);\n    this.terrorAnimation.setSpeed(50);\n\n    this.terrorAnimation.setCount(1, () => {\n      this.terror = false;\n\n      this.terrorAnimation.reset();\n      this.terrorAnimation.count = 1;\n    });\n\n    this.stunAnimation = new Animation('atk_down', 6, 0, 48, 48);\n    this.stunAnimation.setSpeed(30);\n\n    this.explosionAnimation = new Animation('explosion', 8, 0, 64, 64);\n    this.explosionAnimation.setSpeed(50);\n\n    this.explosionAnimation.setCount(1, () => {\n      this.explosion = false;\n\n      this.explosionAnimation.reset();\n      this.explosionAnimation.count = 1;\n    });\n  }\n\n  animate(animation, speed, count, onEndCount) {\n    const o = ['atk', 'walk', 'idle'];\n\n    const {\n      orientation,\n    } = this;\n\n    if (this.currentAnimation && this.currentAnimation.name === 'death') return;\n\n    this.spriteFlipX = false;\n    this.spriteFlipY = false;\n\n    const orientationToString = (ots) => {\n      const oM = Modules.Orientation;\n\n      switch (ots) {\n        case oM.Left:\n          return 'left';\n\n        case oM.Right:\n          return 'right';\n\n        case oM.Up:\n          return 'up';\n\n        case oM.Down:\n          return 'down';\n        default:\n          return null;\n      }\n    };\n\n    if (o.indexOf(animation) > -1) {\n      animation // eslint-disable-line\n        += `_${\n          orientation === Modules.Orientation.Left\n            ? 'right'\n            : orientationToString(orientation)}`;\n      this.spriteFlipX = this.orientation === Modules.Orientation.Left;\n    }\n\n    this.setAnimation(animation, speed, count, onEndCount);\n  }\n\n  lookAt(character) {\n    if (character.gridX > this.gridX) this.setOrientation(Modules.Orientation.Right);\n    else if (character.gridX < this.gridX) this.setOrientation(Modules.Orientation.Left);\n    else if (character.gridY > this.gridY) this.setOrientation(Modules.Orientation.Down);\n    else if (character.gridY < this.gridY) this.setOrientation(Modules.Orientation.Up);\n\n    this.idle();\n  }\n\n  follow(character) {\n    this.following = true;\n\n    this.setTarget(character);\n    this.move(character.gridX, character.gridY);\n  }\n\n  attack(attacker, character) {\n    this.attacking = true;\n\n    this.follow(character);\n  }\n\n  backOff() {\n    this.attacking = false;\n    this.following = false;\n\n    this.removeTarget();\n  }\n\n  addAttacker(character) {\n    if (this.hasAttacker(character)) return;\n\n    this.attackers[character.instance] = character;\n  }\n\n  removeAttacker(character) {\n    if (this.hasAttacker(character)) delete this.attackers[character.id];\n  }\n\n  hasAttacker(character) {\n    if (this.attackers.size === 0) return false;\n\n    return character.instance in this.attackers;\n  }\n\n  performAction(orientation, action) {\n    this.setOrientation(orientation);\n\n    switch (action) {\n      case Modules.Actions.Idle:\n        this.animate('idle', this.idleSpeed);\n        break;\n\n      case Modules.Actions.Attack:\n        this.animate('atk', this.attackAnimationSpeed, 1);\n        break;\n\n      case Modules.Actions.Walk:\n        this.animate('walk', this.walkAnimationSpeed);\n        break;\n      default:\n        break;\n    }\n  }\n\n  idle(o) {\n    const orientation = o || this.orientation;\n\n    this.performAction(orientation, Modules.Actions.Idle);\n  }\n\n  go(x, y, forced) {\n    if (this.frozen) return;\n\n    if (this.following) {\n      this.following = false;\n      this.target = null;\n    }\n\n    this.move(x, y, forced);\n  }\n\n  proceed(x, y) {\n    this.newDestination = {\n      x,\n      y,\n    };\n  }\n\n  /**\n   * We can have the movement remain client sided because\n   * the server side will be responsible for determining\n   * whether or not the player should have reached the\n   * location and ban all hackers. That and the fact\n   * the movement speed is constantly updated to avoid\n   * hacks previously present in BQ.\n   */\n\n  nextStep() {\n    let stop = false;\n    let path;\n\n    if (this.step % 2 === 0 && this.secondStepCallback) {\n      this.secondStepCallback();\n    }\n\n    this.prevGridX = this.gridX;\n    this.prevGridY = this.gridY;\n\n    if (!this.hasPath()) return;\n\n    if (this.beforeStepCallback) this.beforeStepCallback();\n\n    this.updateGridPosition();\n\n    if (!this.interrupted) {\n      if (this.hasNextStep()) {\n        this.nextGridX = this.path[this.step + 1][0]; // eslint-disable-line\n        this.nextGridY = this.path[this.step + 1][1]; // eslint-disable-line\n      }\n\n      if (this.stepCallback) this.stepCallback();\n\n      if (this.changedPath()) {\n        const {\n          x,\n        } = this.newDestination;\n        const {\n          y,\n        } = this.newDestination;\n\n        path = this.requestPathfinding(x, y);\n\n        if (!path) return;\n\n        this.newDestination = null;\n\n        if (path.length < 2) stop = true;\n        else this.followPath(path);\n      } else if (this.hasNextStep()) {\n        this.step += 1;\n        this.updateMovement();\n      } else stop = true;\n    } else {\n      stop = true;\n      this.interrupted = false;\n    }\n\n    if (stop) {\n      this.path = null;\n      this.idle();\n\n      if (this.stopPathingCallback) this.stopPathingCallback(this.gridX, this.gridY, this.forced);\n\n      if (this.forced) this.forced = false;\n    }\n  }\n\n  updateMovement() {\n    const {\n      step,\n    } = this;\n\n    if (this.path[step][0] < this.path[step - 1][0]) {\n      this.performAction(Modules.Orientation.Left, Modules.Actions.Walk);\n    }\n\n    if (this.path[step][0] > this.path[step - 1][0]) {\n      this.performAction(Modules.Orientation.Right, Modules.Actions.Walk);\n    }\n\n    if (this.path[step][1] < this.path[step - 1][1]) {\n      this.performAction(Modules.Orientation.Up, Modules.Actions.Walk);\n    }\n\n    if (this.path[step][1] > this.path[step - 1][1]) {\n      this.performAction(Modules.Orientation.Down, Modules.Actions.Walk);\n    }\n  }\n\n  followPath(path) {\n    /**\n     * Taken from TTA - this is to ensure the player\n     * does not click on himself or somehow into another\n     * dimension\n     */\n\n    if (!path || path.length < 2) return;\n\n    this.path = path;\n    this.step = 0;\n\n    if (this.following) path.pop();\n\n    if (this.startPathingCallback) this.startPathingCallback(path);\n\n    this.nextStep();\n  }\n\n  move(x, y, forced) {\n    this.destination = {\n      gridX: x,\n      gridY: y,\n    };\n\n    this.adjacentTiles = {};\n\n    if (this.hasPath() && !forced) this.proceed(x, y);\n    else this.followPath(this.requestPathfinding(x, y));\n  }\n\n  stop(force) {\n    if (!force) this.interrupted = true;\n    else if (this.hasPath()) {\n      this.path = null;\n      this.newDestination = null;\n      this.movement = new Transition();\n      this.performAction(this.orientation, Modules.Actions.Idle);\n      this.nextGridX = this.gridX;\n      this.nextGridY = this.gridY;\n    }\n  }\n\n  getEffectAnimation() {\n    if (this.critical) {\n      return this.criticalAnimation;\n    }\n\n    if (this.stunned) {\n      return this.stunAnimation;\n    }\n\n    if (this.terror) {\n      return this.terrorAnimation;\n    }\n\n    if (this.explosion) {\n      return this.explosionAnimation;\n    }\n\n    return null;\n  }\n\n  getActiveEffect() {\n    if (this.critical) {\n      return 'criticaleffect';\n    }\n\n    if (this.stunned) {\n      return 'stuneffect';\n    }\n\n    if (this.terror) {\n      return 'explosion-terror';\n    }\n\n    if (this.explosion) {\n      return 'explosion-fireball';\n    }\n\n    return null;\n  }\n\n  /**\n   * TRIGGERED!!!!\n   */\n\n  triggerHealthBar() {\n    this.healthBarVisible = true;\n\n    if (this.healthBarTimeout) {\n      clearTimeout(this.healthBarTimeout);\n    }\n\n    this.healthBarTimeout = setTimeout(() => {\n      this.healthBarVisible = false;\n    }, 7000);\n  }\n\n  clearHealthBar() {\n    this.healthBarVisible = false;\n    clearTimeout(this.healthBarTimeout);\n    this.healthBarTimeout = null;\n  }\n\n  requestPathfinding(x, y) {\n    if (this.requestPathCallback) {\n      return this.requestPathCallback(x, y);\n    }\n\n    return null;\n  }\n\n  updateGridPosition() {\n    this.setGridPosition(this.path[this.step][0], this.path[this.step][1]);\n  }\n\n  isMoving() {\n    return (\n      this.currentAnimation.name === 'walk'\n      && (this.x % 2 !== 0 || this.y % 2 !== 0)\n    );\n  }\n\n  forEachAttacker(callback) {\n    _.each(this.attackers, (attacker) => {\n      callback(attacker);\n    });\n  }\n\n  isAttacked() {\n    return Object.keys(this.attackers).length > 0;\n  }\n\n  hasWeapon() {\n    return this.weapon;\n  }\n\n  hasShadow() {\n    return this.shadow;\n  }\n\n  hasTarget() {\n    return !(this.target === null);\n  }\n\n  hasPath() {\n    return this.path !== null;\n  }\n\n  hasNextStep() {\n    return this.path.length - 1 > this.step;\n  }\n\n  changedPath() {\n    return !!this.newDestination;\n  }\n\n  removeTarget() {\n    if (!this.target) return;\n\n    this.target = null;\n  }\n\n  forget() {\n    this.attackers = {};\n  }\n\n  moved() {\n    this.loadDirty();\n\n    if (this.moveCallback) this.moveCallback();\n  }\n\n  setTarget(target) {\n    if (target === null) {\n      this.removeTarget();\n      return;\n    }\n\n    if (this.target && this.target.id === target.id) return;\n\n    if (this.hasTarget()) this.removeTarget();\n\n    this.target = target;\n  }\n\n  setHitPoints(hitPoints) {\n    this.hitPoints = hitPoints;\n\n    if (this.hitPointsCallback) this.hitPointsCallback(this.hitPoints);\n  }\n\n  setMaxHitPoints(maxHitPoints) {\n    this.maxHitPoints = maxHitPoints;\n  }\n\n  setOrientation(orientation) {\n    this.orientation = orientation;\n  }\n\n  onRequestPath(callback) {\n    this.requestPathCallback = callback;\n  }\n\n  onStartPathing(callback) {\n    console.log('my path callback is', callback);\n    this.startPathingCallback = callback;\n  }\n\n  onStopPathing(callback) {\n    this.stopPathingCallback = callback;\n  }\n\n  onBeforeStep(callback) {\n    this.beforeStepCallback = callback;\n  }\n\n  onStep(callback) {\n    this.stepCallback = callback;\n  }\n\n  onSecondStep(callback) {\n    this.secondStepCallback = callback;\n  }\n\n  onMove(callback) {\n    this.moveCallback = callback;\n  }\n\n  onHitPoints(callback) {\n    this.hitPointsCallback = callback;\n  }\n}\n",
+    "content": "import _ from 'underscore';\nimport Entity from '../entity';\nimport Transition from '../../utils/transition';\nimport Animation from '../animation';\nimport Modules from '../../utils/modules';\n\n/**\n * A specific type of {@link Entity}. The base class for a\n * {@link Mob} or {@link Npc} or {@link Player}\n * @class\n */\nexport default class Character extends Entity {\n  /**\n   * Default constructor\n   * @param {Number} id the ID of the {@link Entity}\n   * @param {Number} kind the kind of {@link Entity} this is\n   */\n  constructor(id, kind) {\n    super(id, kind);\n\n    /**\n     * Next grid X position\n     * @type {Number}\n     */\n    this.nextGridX = -1;\n\n    /**\n     * Next grid Y position\n     * @type {Number}\n     */\n    this.nextGridY = -1;\n\n    /**\n     * Previous gridX position\n     * @type {Number}\n     */\n    this.prevGridX = -1;\n\n    /**\n     * Previous gridY position\n     * @type {Number}\n     */\n    this.prevGridY = -1;\n\n    /**\n     * The direction they are pointing\n     * @type {Orientation}\n     */\n    this.orientation = Modules.Orientation.Down;\n\n    /**\n     * How many hit points they have left\n     * @type {Number}\n     */\n    this.hitPoints = -1;\n\n    /**\n     * How many hit points they have total\n     * @type {Number}\n     */\n    this.maxHitPoints = -1;\n\n    /**\n     * How much magic they have left\n     * @type {Number}\n     */\n    this.mana = -1;\n\n    /**\n     * How much magic they have total\n     * @type {Number}\n     */\n    this.maxMana = -1;\n\n    /**\n     * Is there health bar visible or not\n     * @type {Boolean}\n     */\n    this.healthBarVisible = false;\n\n    /**\n     * Does their health reset after time is up\n     * @type {Boolean}\n     */\n    this.healthBarTimeout = false;\n\n    /**\n     * Are they dead\n     * @type {Boolean}\n     */\n    this.dead = false;\n\n    /**\n     * Are they following something\n     * @type {Boolean}\n     */\n    this.following = false;\n\n    /**\n     * Are they attacking something\n     * @type {Boolean}\n     */\n    this.attacking = false;\n\n    /**\n     * Should their action be interrupted\n     * @type {Boolean}\n     */\n    this.interrupted = false;\n\n    /**\n     * Did they get a critical hit\n     * @type {Boolean}\n     */\n    this.critical = false;\n\n    /**\n     * Are they frozen\n     * @type {Boolean}\n     */\n    this.frozen = false;\n\n    /**\n     * Are they stunned\n     * @type {Boolean}\n     */\n    this.stunned = false;\n\n    /**\n     * Did they explode\n     * @type {Boolean}\n     */\n    this.explosion = false;\n\n    /**\n     * What is their current path\n     * @type {Astar}\n     */\n    this.path = null;\n\n    /**\n     * What is their current target\n     * @type {Entity}\n     */\n    this.target = null;\n\n    /**\n     * An array of things trying to attack them\n     * @type {Object}\n     */\n    this.attackers = {};\n\n    /**\n     * Movement transitions\n     * @type {Transition}\n     */\n    this.movement = new Transition();\n\n    /**\n     * Idle animation speed\n     * @type {Number}\n     */\n    this.idleSpeed = 450;\n\n    /**\n     * Attack animation speed\n     * @type {Number}\n     */\n    this.attackAnimationSpeed = 50;\n\n    /**\n     * Walk animation speed\n     * @type {Number}\n     */\n    this.walkAnimationSpeed = 100;\n\n    /**\n     * Movement animation speed\n     * @type {Number}\n     */\n    this.movementSpeed = 250;\n\n    /**\n     * Do they have a weapon\n     * @type {Boolean}\n     */\n    this.weapon = false;\n\n    /**\n     * Do they have a shadow\n     * @type {Boolean}\n     */\n    this.shadow = false;\n\n    /**\n     * What is their attack range\n     * @type {Number}\n     */\n    this.attackRange = 1;\n\n    // prep this character by loading global animations\n    this.loadGlobals();\n  }\n\n  /**\n   * Load all global character animations\n   */\n  loadGlobals() {\n    this.criticalAnimation = new Animation('atk_down', 10, 0, 48, 48);\n    this.criticalAnimation.setSpeed(30);\n\n    this.criticalAnimation.setCount(1, () => {\n      this.critical = false;\n\n      this.criticalAnimation.reset();\n      this.criticalAnimation.count = 1;\n    });\n\n    this.terrorAnimation = new Animation('explosion', 8, 0, 64, 64);\n    this.terrorAnimation.setSpeed(50);\n\n    this.terrorAnimation.setCount(1, () => {\n      this.terror = false;\n\n      this.terrorAnimation.reset();\n      this.terrorAnimation.count = 1;\n    });\n\n    this.stunAnimation = new Animation('atk_down', 6, 0, 48, 48);\n    this.stunAnimation.setSpeed(30);\n\n    this.explosionAnimation = new Animation('explosion', 8, 0, 64, 64);\n    this.explosionAnimation.setSpeed(50);\n\n    this.explosionAnimation.setCount(1, () => {\n      this.explosion = false;\n\n      this.explosionAnimation.reset();\n      this.explosionAnimation.count = 1;\n    });\n  }\n\n  animate(animation, speed, count, onEndCount) {\n    const o = ['atk', 'walk', 'idle'];\n\n    const {\n      orientation,\n    } = this;\n\n    if (this.currentAnimation && this.currentAnimation.name === 'death') return;\n\n    this.spriteFlipX = false;\n    this.spriteFlipY = false;\n\n    const orientationToString = (ots) => {\n      const oM = Modules.Orientation;\n\n      switch (ots) {\n        case oM.Left:\n          return 'left';\n\n        case oM.Right:\n          return 'right';\n\n        case oM.Up:\n          return 'up';\n\n        case oM.Down:\n          return 'down';\n        default:\n          return null;\n      }\n    };\n\n    if (o.indexOf(animation) > -1) {\n      animation // eslint-disable-line\n        += `_${\n          orientation === Modules.Orientation.Left\n            ? 'right'\n            : orientationToString(orientation)}`;\n      this.spriteFlipX = this.orientation === Modules.Orientation.Left;\n    }\n\n    this.setAnimation(animation, speed, count, onEndCount);\n  }\n\n  lookAt(character) {\n    if (character.gridX > this.gridX) this.setOrientation(Modules.Orientation.Right);\n    else if (character.gridX < this.gridX) this.setOrientation(Modules.Orientation.Left);\n    else if (character.gridY > this.gridY) this.setOrientation(Modules.Orientation.Down);\n    else if (character.gridY < this.gridY) this.setOrientation(Modules.Orientation.Up);\n\n    this.idle();\n  }\n\n  follow(character) {\n    this.following = true;\n\n    this.setTarget(character);\n    this.move(character.gridX, character.gridY);\n  }\n\n  attack(attacker, character) {\n    this.attacking = true;\n\n    this.follow(character);\n  }\n\n  backOff() {\n    this.attacking = false;\n    this.following = false;\n\n    this.removeTarget();\n  }\n\n  addAttacker(character) {\n    if (this.hasAttacker(character)) return;\n\n    this.attackers[character.instance] = character;\n  }\n\n  removeAttacker(character) {\n    if (this.hasAttacker(character)) delete this.attackers[character.id];\n  }\n\n  hasAttacker(character) {\n    if (this.attackers.size === 0) return false;\n\n    return character.instance in this.attackers;\n  }\n\n  performAction(orientation, action) {\n    this.setOrientation(orientation);\n\n    switch (action) {\n      case Modules.Actions.Idle:\n        this.animate('idle', this.idleSpeed);\n        break;\n\n      case Modules.Actions.Attack:\n        this.animate('atk', this.attackAnimationSpeed, 1);\n        break;\n\n      case Modules.Actions.Walk:\n        this.animate('walk', this.walkAnimationSpeed);\n        break;\n      default:\n        break;\n    }\n  }\n\n  idle(o) {\n    const orientation = o || this.orientation;\n\n    this.performAction(orientation, Modules.Actions.Idle);\n  }\n\n  go(x, y, forced) {\n    if (this.frozen) return;\n\n    if (this.following) {\n      this.following = false;\n      this.target = null;\n    }\n\n    this.move(x, y, forced);\n  }\n\n  proceed(x, y) {\n    this.newDestination = {\n      x,\n      y,\n    };\n  }\n\n  /**\n   * We can have the movement remain client sided because\n   * the server side will be responsible for determining\n   * whether or not the player should have reached the\n   * location and ban all hackers. That and the fact\n   * the movement speed is constantly updated to avoid\n   * hacks previously present in BQ.\n   */\n\n  nextStep() {\n    let stop = false;\n    let path;\n\n    if (this.step % 2 === 0 && this.secondStepCallback) {\n      this.secondStepCallback();\n    }\n\n    this.prevGridX = this.gridX;\n    this.prevGridY = this.gridY;\n\n    if (!this.hasPath()) return;\n\n    if (this.beforeStepCallback) this.beforeStepCallback();\n\n    this.updateGridPosition();\n\n    if (!this.interrupted) {\n      if (this.hasNextStep()) {\n        this.nextGridX = this.path[this.step + 1][0]; // eslint-disable-line\n        this.nextGridY = this.path[this.step + 1][1]; // eslint-disable-line\n      }\n\n      if (this.stepCallback) this.stepCallback();\n\n      if (this.changedPath()) {\n        const {\n          x,\n        } = this.newDestination;\n        const {\n          y,\n        } = this.newDestination;\n\n        path = this.requestPathfinding(x, y);\n\n        if (!path) return;\n\n        this.newDestination = null;\n\n        if (path.length < 2) stop = true;\n        else this.followPath(path);\n      } else if (this.hasNextStep()) {\n        this.step += 1;\n        this.updateMovement();\n      } else stop = true;\n    } else {\n      stop = true;\n      this.interrupted = false;\n    }\n\n    if (stop) {\n      this.path = null;\n      this.idle();\n\n      if (this.stopPathingCallback) this.stopPathingCallback(this.gridX, this.gridY, this.forced);\n\n      if (this.forced) this.forced = false;\n    }\n  }\n\n  updateMovement() {\n    const {\n      step,\n    } = this;\n\n    if (this.path[step][0] < this.path[step - 1][0]) {\n      this.performAction(Modules.Orientation.Left, Modules.Actions.Walk);\n    }\n\n    if (this.path[step][0] > this.path[step - 1][0]) {\n      this.performAction(Modules.Orientation.Right, Modules.Actions.Walk);\n    }\n\n    if (this.path[step][1] < this.path[step - 1][1]) {\n      this.performAction(Modules.Orientation.Up, Modules.Actions.Walk);\n    }\n\n    if (this.path[step][1] > this.path[step - 1][1]) {\n      this.performAction(Modules.Orientation.Down, Modules.Actions.Walk);\n    }\n  }\n\n  followPath(path) {\n    /**\n     * Taken from TTA - this is to ensure the player\n     * does not click on himself or somehow into another\n     * dimension\n     */\n\n    if (!path || path.length < 2) return;\n\n    this.path = path;\n    this.step = 0;\n\n    if (this.following) path.pop();\n\n    if (this.startPathingCallback) this.startPathingCallback(path);\n\n    this.nextStep();\n  }\n\n  move(x, y, forced) {\n    this.destination = {\n      gridX: x,\n      gridY: y,\n    };\n\n    this.adjacentTiles = {};\n\n    if (this.hasPath() && !forced) this.proceed(x, y);\n    else this.followPath(this.requestPathfinding(x, y));\n  }\n\n  stop(force) {\n    if (!force) this.interrupted = true;\n    else if (this.hasPath()) {\n      this.path = null;\n      this.newDestination = null;\n      this.movement = new Transition();\n      this.performAction(this.orientation, Modules.Actions.Idle);\n      this.nextGridX = this.gridX;\n      this.nextGridY = this.gridY;\n    }\n  }\n\n  getEffectAnimation() {\n    if (this.critical) {\n      return this.criticalAnimation;\n    }\n\n    if (this.stunned) {\n      return this.stunAnimation;\n    }\n\n    if (this.terror) {\n      return this.terrorAnimation;\n    }\n\n    if (this.explosion) {\n      return this.explosionAnimation;\n    }\n\n    return null;\n  }\n\n  getActiveEffect() {\n    if (this.critical) {\n      return 'criticaleffect';\n    }\n\n    if (this.stunned) {\n      return 'stuneffect';\n    }\n\n    if (this.terror) {\n      return 'explosion-terror';\n    }\n\n    if (this.explosion) {\n      return 'explosion-fireball';\n    }\n\n    return null;\n  }\n\n  /**\n   * TRIGGERED!!!!\n   */\n\n  triggerHealthBar() {\n    this.healthBarVisible = true;\n\n    if (this.healthBarTimeout) {\n      clearTimeout(this.healthBarTimeout);\n    }\n\n    this.healthBarTimeout = setTimeout(() => {\n      this.healthBarVisible = false;\n    }, 7000);\n  }\n\n  clearHealthBar() {\n    this.healthBarVisible = false;\n    clearTimeout(this.healthBarTimeout);\n    this.healthBarTimeout = null;\n  }\n\n  requestPathfinding(x, y) {\n    if (this.requestPathCallback) {\n      return this.requestPathCallback(x, y);\n    }\n\n    return null;\n  }\n\n  updateGridPosition() {\n    this.setGridPosition(this.path[this.step][0], this.path[this.step][1]);\n  }\n\n  isMoving() {\n    return (\n      this.currentAnimation.name === 'walk'\n      && (this.x % 2 !== 0 || this.y % 2 !== 0)\n    );\n  }\n\n  forEachAttacker(callback) {\n    _.each(this.attackers, (attacker) => {\n      callback(attacker);\n    });\n  }\n\n  isAttacked() {\n    return Object.keys(this.attackers).length > 0;\n  }\n\n  hasWeapon() {\n    return this.weapon;\n  }\n\n  hasShadow() {\n    return this.shadow;\n  }\n\n  hasTarget() {\n    return !(this.target === null);\n  }\n\n  hasPath() {\n    return this.path !== null;\n  }\n\n  hasNextStep() {\n    return this.path.length - 1 > this.step;\n  }\n\n  changedPath() {\n    return !!this.newDestination;\n  }\n\n  removeTarget() {\n    if (!this.target) return;\n\n    this.target = null;\n  }\n\n  forget() {\n    this.attackers = {};\n  }\n\n  moved() {\n    this.loadDirty();\n\n    if (this.moveCallback) this.moveCallback();\n  }\n\n  setTarget(target) {\n    if (target === null) {\n      this.removeTarget();\n      return;\n    }\n\n    if (this.target && this.target.id === target.id) return;\n\n    if (this.hasTarget()) this.removeTarget();\n\n    this.target = target;\n  }\n\n  setHitPoints(hitPoints) {\n    this.hitPoints = hitPoints;\n\n    if (this.hitPointsCallback) this.hitPointsCallback(this.hitPoints);\n  }\n\n  setMaxHitPoints(maxHitPoints) {\n    this.maxHitPoints = maxHitPoints;\n  }\n\n  setOrientation(orientation) {\n    this.orientation = orientation;\n  }\n\n  onRequestPath(callback) {\n    this.requestPathCallback = callback;\n  }\n\n  onStartPathing(callback) {\n    console.log('my path callback is', callback);\n    this.startPathingCallback = callback;\n  }\n\n  onStopPathing(callback) {\n    this.stopPathingCallback = callback;\n  }\n\n  onBeforeStep(callback) {\n    this.beforeStepCallback = callback;\n  }\n\n  onStep(callback) {\n    this.stepCallback = callback;\n  }\n\n  onSecondStep(callback) {\n    this.secondStepCallback = callback;\n  }\n\n  onMove(callback) {\n    this.moveCallback = callback;\n  }\n\n  onHitPoints(callback) {\n    this.hitPointsCallback = callback;\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/entity/character/character.js",
     "access": "public",
@@ -9025,7 +9025,7 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/entity/character/character.js",
     "importStyle": "Character",
-    "description": "A character in the game. This is the base class.\nThese can be either a {@link Mob} or {@link Npc} or {@link Player}",
+    "description": "A specific type of {@link Entity}. The base class for a\n{@link Mob} or {@link Npc} or {@link Player}",
     "lineNumber": 12,
     "unknown": [
       {
@@ -11062,7 +11062,7 @@
     "__docId__": 628,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/entity/character/mob/mob.js",
-    "content": "import Character from '../character';\n\n/**\n * A mobile character, some can attack, others just move\n * @class\n */\nexport default class Mob extends Character {\n  /**\n   * Default constructor\n   * @param {Number} id the ID of the {@link Entity}\n   * @param {Number} kind the kind of {@link Entity} this is\n   */\n  constructor(id, kind) {\n    super(id, kind);\n\n    /**\n     * The name of the character\n     * @type {String}\n     */\n    this.name = null;\n\n    /**\n     * How many hit points the character has\n     * @type {Number}\n     */\n    this.hitPoints = -1; // not applicable by default\n\n    /**\n     * Maximum hit points the character has\n     * @type {Number}\n     */\n    this.maxHitPoints = -1; // not applicable by default\n\n    /**\n     * The type of character this is\n     * @type {String}\n     */\n    this.type = 'mob';\n  }\n\n  /**\n   * Sets the name of this character\n   * @param {String} name character name\n   */\n  setName(name) {\n    this.name = name;\n  }\n}\n",
+    "content": "import Character from '../character';\n\n/**\n * A mobile {@link Character}, some can attack while others just move\n * @class\n */\nexport default class Mob extends Character {\n  /**\n   * Default constructor\n   * @param {Number} id the ID of the {@link Entity}\n   * @param {Number} kind the kind of {@link Entity} this is\n   */\n  constructor(id, kind) {\n    super(id, kind);\n\n    /**\n     * The name of the character\n     * @type {String}\n     */\n    this.name = null;\n\n    /**\n     * How many hit points the character has\n     * @type {Number}\n     */\n    this.hitPoints = -1; // not applicable by default\n\n    /**\n     * Maximum hit points the character has\n     * @type {Number}\n     */\n    this.maxHitPoints = -1; // not applicable by default\n\n    /**\n     * The type of character this is\n     * @type {String}\n     */\n    this.type = 'mob';\n  }\n\n  /**\n   * Sets the name of this character\n   * @param {String} name character name\n   */\n  setName(name) {\n    this.name = name;\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/entity/character/mob/mob.js",
     "access": "public",
@@ -11080,7 +11080,7 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/entity/character/mob/mob.js",
     "importStyle": "Mob",
-    "description": "A mobile character, some can attack, others just move",
+    "description": "A mobile {@link Character}, some can attack while others just move",
     "lineNumber": 7,
     "unknown": [
       {
@@ -11234,7 +11234,7 @@
     "__docId__": 637,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/entity/character/npc/npc.js",
-    "content": "import Character from '../character';\n\n/**\n * A non playable character\n * @class\n */\nexport default class Npc extends Character {\n  /**\n   * Default constructor\n   * @param {Number} id the ID of the {@link Entity}\n   * @param {Number} kind the kind of {@link Entity} this is\n   */\n  constructor(id, kind) {\n    super(id, kind);\n\n    /**\n     * Index for this NPC\n     * @type {Number}\n     */\n    this.index = 0;\n\n    /**\n     * Type of this character\n     * @type {String}\n     */\n    this.type = 'npc';\n  }\n\n  /**\n   * Set the messages for this character, return a single message\n   * @param  {String[]} messages the messages this character can say\n   * @return {String} the next message in their talk sequence\n   */\n  talk(messages) {\n    const count = messages.length;\n    let message;\n\n    if (this.index > count) {\n      this.index = 0;\n    }\n\n    if (this.index < count) {\n      message = messages[this.index];\n    }\n\n    this.index += 1;\n\n    return message;\n  }\n}\n",
+    "content": "import Character from '../character';\n\n/**\n * A non-playable {@link Character}\n * @class\n */\nexport default class Npc extends Character {\n  /**\n   * Default constructor\n   * @param {Number} id the ID of the {@link Entity}\n   * @param {Number} kind the kind of {@link Entity} this is\n   */\n  constructor(id, kind) {\n    super(id, kind);\n\n    /**\n     * Index for this NPC\n     * @type {Number}\n     */\n    this.index = 0;\n\n    /**\n     * Type of this character\n     * @type {String}\n     */\n    this.type = 'npc';\n  }\n\n  /**\n   * Set the messages for this character, return a single message\n   * @param  {String[]} messages the messages this character can say\n   * @return {String} the next message in their talk sequence\n   */\n  talk(messages) {\n    const count = messages.length;\n    let message;\n\n    if (this.index > count) {\n      this.index = 0;\n    }\n\n    if (this.index < count) {\n      message = messages[this.index];\n    }\n\n    this.index += 1;\n\n    return message;\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/entity/character/npc/npc.js",
     "access": "public",
@@ -11252,7 +11252,7 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/entity/character/npc/npc.js",
     "importStyle": "Npc",
-    "description": "A non playable character",
+    "description": "A non-playable {@link Character}",
     "lineNumber": 7,
     "unknown": [
       {
@@ -12016,7 +12016,7 @@
     "__docId__": 688,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/entity/character/player/player.js",
-    "content": "import Character from '../character';\nimport Armour from './equipment/armour';\nimport Weapon from './equipment/weapon';\nimport Pendant from './equipment/pendant';\nimport Boots from './equipment/boots';\nimport Ring from './equipment/ring';\nimport Modules from '../../../utils/modules';\n\n/**\n * Player\n * @class\n * @return {Character}\n */\nexport default class Player extends Character {\n  constructor() {\n    super(-1, Modules.Types.Player);\n\n    this.username = '';\n    this.password = '';\n    this.email = '';\n\n    this.avatar = null;\n\n    this.rights = 0;\n    this.wanted = false;\n    this.experience = -1;\n    this.level = -1;\n    this.pvpKills = -1;\n    this.pvpDeaths = -1;\n\n    this.hitPoints = -1;\n    this.maxHitPoints = -1;\n    this.mana = -1;\n    this.maxMana = -1;\n\n    this.prevX = 0;\n    this.prevY = 0;\n\n    this.direction = null;\n    this.pvp = false;\n\n    this.moveLeft = false;\n    this.moveRight = false;\n    this.moveUp = false;\n    this.moveDown = false;\n    this.disableAction = false;\n\n    this.loadEquipment();\n  }\n\n  load(data) {\n    this.setId(data.instance);\n    this.setGridPosition(data.x, data.y);\n    this.setPointsData(data.hitPoints, data.mana);\n\n    this.username = data.username;\n    this.experience = data.experience;\n    this.level = data.level;\n\n    this.lastLogin = data.lastLogin;\n    this.pvpKills = data.pvpKills;\n    this.pvpDeaths = data.pvpDeaths;\n\n    this.type = 'player';\n  }\n\n  /**\n   * This is for other player characters\n   */\n  loadHandler(game) {\n    this.handler.setGame(game);\n    this.handler.load();\n  }\n\n  hasKeyboardMovement() {\n    return this.moveLeft || this.moveRight || this.moveUp || this.moveDown;\n  }\n\n  setId(id) {\n    this.id = id;\n  }\n\n  loadEquipment() {\n    this.armour = null;\n    this.weapon = null;\n    this.pendant = null;\n    this.ring = null;\n    this.boots = null;\n  }\n\n  isRanged() {\n    return this.weapon && this.weapon.ranged;\n  }\n\n  hasWeapon() {\n    return this.weapon ? this.weapon.exists() : false;\n  }\n\n  setName(name) {\n    this.username = name;\n    this.name = name;\n  }\n\n  getSpriteName() {\n    console.log('get player sprite armour', this.armour);\n    return this.armour ? this.armour.name : 'clotharmor';\n  }\n\n  setMana(mana) {\n    this.mana = mana;\n  }\n\n  setMaxMana(maxMana) {\n    this.maxMana = maxMana;\n  }\n\n  getX() {\n    return this.gridX;\n  }\n\n  getY() {\n    return this.gridY;\n  }\n\n  setPointsData(hitPointsData, manaData) {\n    const hitPoints = hitPointsData.shift();\n    const maxHitPoints = hitPointsData.shift();\n    const mana = manaData.shift();\n    const maxMana = manaData.shift();\n\n    this.setHitPoints(hitPoints);\n    this.setMana(mana);\n\n    this.setMaxHitPoints(maxHitPoints);\n    this.setMaxMana(maxMana);\n  }\n\n  setEquipment(type, info) {\n    const name = info.shift();\n    const string = info.shift();\n    const count = info.shift();\n    const ability = info.shift();\n    const abilityLevel = info.shift();\n\n    console.log('setting player equipment', type, info);\n\n    switch (type) {\n      case Modules.Equipment.Armour:\n        if (!this.armour) {\n          this.armour = new Armour(\n            name,\n            string,\n            count,\n            ability,\n            abilityLevel,\n          );\n        } else {\n          this.armour.update(name, string, count, ability, abilityLevel);\n        }\n\n        if (this.updateArmourCallback) {\n          this.updateArmourCallback(string);\n        }\n\n        break;\n\n      case Modules.Equipment.Weapon:\n        if (!this.weapon) {\n          this.weapon = new Weapon(\n            name,\n            string,\n            count,\n            ability,\n            abilityLevel,\n          );\n        } else {\n          this.weapon.update(name, string, count, ability, abilityLevel);\n        }\n\n        this.weapon.ranged = string && string.includes('bow');\n\n        break;\n\n      case Modules.Equipment.Pendant:\n        if (!this.pendant) {\n          this.pendant = new Pendant(\n            name,\n            string,\n            count,\n            ability,\n            abilityLevel,\n          );\n        } else {\n          this.pendant.update(name, string, count, ability, abilityLevel);\n        }\n\n        break;\n\n      case Modules.Equipment.Ring:\n        if (!this.ring) {\n          this.ring = new Ring(name, string, count, ability, abilityLevel);\n        } else {\n          this.ring.update(name, string, count, ability, abilityLevel);\n        }\n\n        break;\n\n      case Modules.Equipment.Boots:\n        if (!this.boots) {\n          this.boots = new Boots(name, string, count, ability, abilityLevel);\n        } else {\n          this.boots.update(name, string, count, ability, abilityLevel);\n        }\n\n        break;\n      default:\n        break;\n    }\n  }\n\n  unequip(type) {\n    switch (type) {\n      case 'armour':\n        this.armour.update('Cloth Armour', 'clotharmor', 1, -1, -1);\n        break;\n\n      case 'weapon':\n        this.weapon.update(null, null, -1, -1, -1);\n        break;\n\n      case 'pendant':\n        this.pendant.update(null, null, -1, -1, -1);\n        break;\n\n      case 'ring':\n        this.ring.update(null, null, -1, -1, -1);\n        break;\n\n      case 'boots':\n        this.boots.update(null, null, -1, -1, -1);\n        break;\n      default:\n        break;\n    }\n  }\n\n  tempBlink() {\n    this.blink(90);\n\n    if (!this.tempBlinkTimeout) {\n      this.tempBlinkTimeout = setTimeout(() => {\n        this.stopBlinking();\n      }, 500);\n    }\n  }\n\n  onUpdateArmour(callback) {\n    this.updateArmourCallback = callback;\n  }\n}\n",
+    "content": "import Character from '../character';\nimport Armour from './equipment/armour';\nimport Weapon from './equipment/weapon';\nimport Pendant from './equipment/pendant';\nimport Boots from './equipment/boots';\nimport Ring from './equipment/ring';\nimport Modules from '../../../utils/modules';\n\n/**\n * A member's playable {@link Character} in the game\n * @class\n */\nexport default class Player extends Character {\n  constructor() {\n    super(-1, Modules.Types.Player);\n\n    this.username = '';\n    this.password = '';\n    this.email = '';\n\n    this.avatar = null;\n\n    this.rights = 0;\n    this.wanted = false;\n    this.experience = -1;\n    this.level = -1;\n    this.pvpKills = -1;\n    this.pvpDeaths = -1;\n\n    this.hitPoints = -1;\n    this.maxHitPoints = -1;\n    this.mana = -1;\n    this.maxMana = -1;\n\n    this.prevX = 0;\n    this.prevY = 0;\n\n    this.direction = null;\n    this.pvp = false;\n\n    this.moveLeft = false;\n    this.moveRight = false;\n    this.moveUp = false;\n    this.moveDown = false;\n    this.disableAction = false;\n\n    this.loadEquipment();\n  }\n\n  load(data) {\n    this.setId(data.instance);\n    this.setGridPosition(data.x, data.y);\n    this.setPointsData(data.hitPoints, data.mana);\n\n    this.username = data.username;\n    this.experience = data.experience;\n    this.level = data.level;\n\n    this.lastLogin = data.lastLogin;\n    this.pvpKills = data.pvpKills;\n    this.pvpDeaths = data.pvpDeaths;\n\n    this.type = 'player';\n  }\n\n  /**\n   * This is for other player characters\n   */\n  loadHandler(game) {\n    this.handler.setGame(game);\n    this.handler.load();\n  }\n\n  hasKeyboardMovement() {\n    return this.moveLeft || this.moveRight || this.moveUp || this.moveDown;\n  }\n\n  setId(id) {\n    this.id = id;\n  }\n\n  loadEquipment() {\n    this.armour = null;\n    this.weapon = null;\n    this.pendant = null;\n    this.ring = null;\n    this.boots = null;\n  }\n\n  isRanged() {\n    return this.weapon && this.weapon.ranged;\n  }\n\n  hasWeapon() {\n    return this.weapon ? this.weapon.exists() : false;\n  }\n\n  setName(name) {\n    this.username = name;\n    this.name = name;\n  }\n\n  getSpriteName() {\n    console.log('get player sprite armour', this.armour);\n    return this.armour ? this.armour.name : 'clotharmor';\n  }\n\n  setMana(mana) {\n    this.mana = mana;\n  }\n\n  setMaxMana(maxMana) {\n    this.maxMana = maxMana;\n  }\n\n  getX() {\n    return this.gridX;\n  }\n\n  getY() {\n    return this.gridY;\n  }\n\n  setPointsData(hitPointsData, manaData) {\n    const hitPoints = hitPointsData.shift();\n    const maxHitPoints = hitPointsData.shift();\n    const mana = manaData.shift();\n    const maxMana = manaData.shift();\n\n    this.setHitPoints(hitPoints);\n    this.setMana(mana);\n\n    this.setMaxHitPoints(maxHitPoints);\n    this.setMaxMana(maxMana);\n  }\n\n  setEquipment(type, info) {\n    const name = info.shift();\n    const string = info.shift();\n    const count = info.shift();\n    const ability = info.shift();\n    const abilityLevel = info.shift();\n\n    console.log('setting player equipment', type, info);\n\n    switch (type) {\n      case Modules.Equipment.Armour:\n        if (!this.armour) {\n          this.armour = new Armour(\n            name,\n            string,\n            count,\n            ability,\n            abilityLevel,\n          );\n        } else {\n          this.armour.update(name, string, count, ability, abilityLevel);\n        }\n\n        if (this.updateArmourCallback) {\n          this.updateArmourCallback(string);\n        }\n\n        break;\n\n      case Modules.Equipment.Weapon:\n        if (!this.weapon) {\n          this.weapon = new Weapon(\n            name,\n            string,\n            count,\n            ability,\n            abilityLevel,\n          );\n        } else {\n          this.weapon.update(name, string, count, ability, abilityLevel);\n        }\n\n        this.weapon.ranged = string && string.includes('bow');\n\n        break;\n\n      case Modules.Equipment.Pendant:\n        if (!this.pendant) {\n          this.pendant = new Pendant(\n            name,\n            string,\n            count,\n            ability,\n            abilityLevel,\n          );\n        } else {\n          this.pendant.update(name, string, count, ability, abilityLevel);\n        }\n\n        break;\n\n      case Modules.Equipment.Ring:\n        if (!this.ring) {\n          this.ring = new Ring(name, string, count, ability, abilityLevel);\n        } else {\n          this.ring.update(name, string, count, ability, abilityLevel);\n        }\n\n        break;\n\n      case Modules.Equipment.Boots:\n        if (!this.boots) {\n          this.boots = new Boots(name, string, count, ability, abilityLevel);\n        } else {\n          this.boots.update(name, string, count, ability, abilityLevel);\n        }\n\n        break;\n      default:\n        break;\n    }\n  }\n\n  unequip(type) {\n    switch (type) {\n      case 'armour':\n        this.armour.update('Cloth Armour', 'clotharmor', 1, -1, -1);\n        break;\n\n      case 'weapon':\n        this.weapon.update(null, null, -1, -1, -1);\n        break;\n\n      case 'pendant':\n        this.pendant.update(null, null, -1, -1, -1);\n        break;\n\n      case 'ring':\n        this.ring.update(null, null, -1, -1, -1);\n        break;\n\n      case 'boots':\n        this.boots.update(null, null, -1, -1, -1);\n        break;\n      default:\n        break;\n    }\n  }\n\n  tempBlink() {\n    this.blink(90);\n\n    if (!this.tempBlinkTimeout) {\n      this.tempBlinkTimeout = setTimeout(() => {\n        this.stopBlinking();\n      }, 500);\n    }\n  }\n\n  onUpdateArmour(callback) {\n    this.updateArmourCallback = callback;\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/entity/character/player/player.js",
     "access": "public",
@@ -12034,22 +12034,14 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/entity/character/player/player.js",
     "importStyle": "Player",
-    "description": "Player",
-    "lineNumber": 14,
+    "description": "A member's playable {@link Character} in the game",
+    "lineNumber": 13,
     "unknown": [
       {
         "tagName": "@class",
         "tagValue": ""
       }
     ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Character"
-      ],
-      "spread": false,
-      "description": ""
-    },
     "interface": false,
     "extends": [
       "WTF-Adventure/src/client/js/entity/character/character.js~Character"
@@ -12066,7 +12058,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#constructor",
     "access": "public",
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 14,
     "undocument": true
   },
   {
@@ -12078,7 +12070,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#username",
     "access": "public",
     "description": null,
-    "lineNumber": 18,
+    "lineNumber": 17,
     "undocument": true,
     "type": {
       "types": [
@@ -12095,7 +12087,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#password",
     "access": "public",
     "description": null,
-    "lineNumber": 19,
+    "lineNumber": 18,
     "undocument": true,
     "type": {
       "types": [
@@ -12112,7 +12104,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#email",
     "access": "public",
     "description": null,
-    "lineNumber": 20,
+    "lineNumber": 19,
     "undocument": true,
     "type": {
       "types": [
@@ -12129,7 +12121,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#avatar",
     "access": "public",
     "description": null,
-    "lineNumber": 22,
+    "lineNumber": 21,
     "undocument": true,
     "type": {
       "types": [
@@ -12146,7 +12138,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#rights",
     "access": "public",
     "description": null,
-    "lineNumber": 24,
+    "lineNumber": 23,
     "undocument": true,
     "type": {
       "types": [
@@ -12163,7 +12155,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#wanted",
     "access": "public",
     "description": null,
-    "lineNumber": 25,
+    "lineNumber": 24,
     "undocument": true,
     "type": {
       "types": [
@@ -12180,7 +12172,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#experience",
     "access": "public",
     "description": null,
-    "lineNumber": 26,
+    "lineNumber": 25,
     "undocument": true,
     "type": {
       "types": [
@@ -12197,7 +12189,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#level",
     "access": "public",
     "description": null,
-    "lineNumber": 27,
+    "lineNumber": 26,
     "undocument": true,
     "type": {
       "types": [
@@ -12214,7 +12206,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#pvpKills",
     "access": "public",
     "description": null,
-    "lineNumber": 28,
+    "lineNumber": 27,
     "undocument": true,
     "type": {
       "types": [
@@ -12231,7 +12223,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#pvpDeaths",
     "access": "public",
     "description": null,
-    "lineNumber": 29,
+    "lineNumber": 28,
     "undocument": true,
     "type": {
       "types": [
@@ -12248,7 +12240,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#hitPoints",
     "access": "public",
     "description": null,
-    "lineNumber": 31,
+    "lineNumber": 30,
     "undocument": true,
     "type": {
       "types": [
@@ -12265,7 +12257,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#maxHitPoints",
     "access": "public",
     "description": null,
-    "lineNumber": 32,
+    "lineNumber": 31,
     "undocument": true,
     "type": {
       "types": [
@@ -12282,7 +12274,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#mana",
     "access": "public",
     "description": null,
-    "lineNumber": 33,
+    "lineNumber": 32,
     "undocument": true,
     "type": {
       "types": [
@@ -12299,7 +12291,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#maxMana",
     "access": "public",
     "description": null,
-    "lineNumber": 34,
+    "lineNumber": 33,
     "undocument": true,
     "type": {
       "types": [
@@ -12316,7 +12308,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#prevX",
     "access": "public",
     "description": null,
-    "lineNumber": 36,
+    "lineNumber": 35,
     "undocument": true,
     "type": {
       "types": [
@@ -12333,7 +12325,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#prevY",
     "access": "public",
     "description": null,
-    "lineNumber": 37,
+    "lineNumber": 36,
     "undocument": true,
     "type": {
       "types": [
@@ -12350,7 +12342,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#direction",
     "access": "public",
     "description": null,
-    "lineNumber": 39,
+    "lineNumber": 38,
     "undocument": true,
     "type": {
       "types": [
@@ -12367,7 +12359,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#pvp",
     "access": "public",
     "description": null,
-    "lineNumber": 40,
+    "lineNumber": 39,
     "undocument": true,
     "type": {
       "types": [
@@ -12384,7 +12376,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#moveLeft",
     "access": "public",
     "description": null,
-    "lineNumber": 42,
+    "lineNumber": 41,
     "undocument": true,
     "type": {
       "types": [
@@ -12401,7 +12393,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#moveRight",
     "access": "public",
     "description": null,
-    "lineNumber": 43,
+    "lineNumber": 42,
     "undocument": true,
     "type": {
       "types": [
@@ -12418,7 +12410,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#moveUp",
     "access": "public",
     "description": null,
-    "lineNumber": 44,
+    "lineNumber": 43,
     "undocument": true,
     "type": {
       "types": [
@@ -12435,7 +12427,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#moveDown",
     "access": "public",
     "description": null,
-    "lineNumber": 45,
+    "lineNumber": 44,
     "undocument": true,
     "type": {
       "types": [
@@ -12452,7 +12444,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#disableAction",
     "access": "public",
     "description": null,
-    "lineNumber": 46,
+    "lineNumber": 45,
     "undocument": true,
     "type": {
       "types": [
@@ -12471,7 +12463,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#load",
     "access": "public",
     "description": null,
-    "lineNumber": 51,
+    "lineNumber": 50,
     "undocument": true,
     "params": [
       {
@@ -12492,7 +12484,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#lastLogin",
     "access": "public",
     "description": null,
-    "lineNumber": 60,
+    "lineNumber": 59,
     "undocument": true,
     "type": {
       "types": [
@@ -12509,7 +12501,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#type",
     "access": "public",
     "description": null,
-    "lineNumber": 64,
+    "lineNumber": 63,
     "undocument": true,
     "type": {
       "types": [
@@ -12528,7 +12520,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#loadHandler",
     "access": "public",
     "description": "This is for other player characters",
-    "lineNumber": 70,
+    "lineNumber": 69,
     "params": [
       {
         "name": "game",
@@ -12550,7 +12542,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#hasKeyboardMovement",
     "access": "public",
     "description": null,
-    "lineNumber": 75,
+    "lineNumber": 74,
     "undocument": true,
     "params": [],
     "return": {
@@ -12570,7 +12562,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#setId",
     "access": "public",
     "description": null,
-    "lineNumber": 79,
+    "lineNumber": 78,
     "undocument": true,
     "params": [
       {
@@ -12591,7 +12583,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#id",
     "access": "public",
     "description": null,
-    "lineNumber": 80,
+    "lineNumber": 79,
     "undocument": true,
     "type": {
       "types": [
@@ -12610,7 +12602,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#loadEquipment",
     "access": "public",
     "description": null,
-    "lineNumber": 83,
+    "lineNumber": 82,
     "undocument": true,
     "params": [],
     "return": null
@@ -12624,7 +12616,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#armour",
     "access": "public",
     "description": null,
-    "lineNumber": 84,
+    "lineNumber": 83,
     "undocument": true,
     "type": {
       "types": [
@@ -12641,7 +12633,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#weapon",
     "access": "public",
     "description": null,
-    "lineNumber": 85,
+    "lineNumber": 84,
     "undocument": true,
     "type": {
       "types": [
@@ -12658,7 +12650,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#pendant",
     "access": "public",
     "description": null,
-    "lineNumber": 86,
+    "lineNumber": 85,
     "undocument": true,
     "type": {
       "types": [
@@ -12675,7 +12667,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#ring",
     "access": "public",
     "description": null,
-    "lineNumber": 87,
+    "lineNumber": 86,
     "undocument": true,
     "type": {
       "types": [
@@ -12692,7 +12684,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#boots",
     "access": "public",
     "description": null,
-    "lineNumber": 88,
+    "lineNumber": 87,
     "undocument": true,
     "type": {
       "types": [
@@ -12711,7 +12703,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#isRanged",
     "access": "public",
     "description": null,
-    "lineNumber": 91,
+    "lineNumber": 90,
     "undocument": true,
     "params": [],
     "return": {
@@ -12731,7 +12723,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#hasWeapon",
     "access": "public",
     "description": null,
-    "lineNumber": 95,
+    "lineNumber": 94,
     "undocument": true,
     "params": [],
     "return": {
@@ -12751,7 +12743,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#setName",
     "access": "public",
     "description": null,
-    "lineNumber": 99,
+    "lineNumber": 98,
     "undocument": true,
     "params": [
       {
@@ -12772,7 +12764,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#name",
     "access": "public",
     "description": null,
-    "lineNumber": 101,
+    "lineNumber": 100,
     "undocument": true,
     "type": {
       "types": [
@@ -12791,7 +12783,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#getSpriteName",
     "access": "public",
     "description": null,
-    "lineNumber": 104,
+    "lineNumber": 103,
     "undocument": true,
     "params": [],
     "return": {
@@ -12811,7 +12803,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#setMana",
     "access": "public",
     "description": null,
-    "lineNumber": 109,
+    "lineNumber": 108,
     "undocument": true,
     "params": [
       {
@@ -12834,7 +12826,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#setMaxMana",
     "access": "public",
     "description": null,
-    "lineNumber": 113,
+    "lineNumber": 112,
     "undocument": true,
     "params": [
       {
@@ -12857,7 +12849,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#getX",
     "access": "public",
     "description": null,
-    "lineNumber": 117,
+    "lineNumber": 116,
     "undocument": true,
     "params": [],
     "return": {
@@ -12877,7 +12869,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#getY",
     "access": "public",
     "description": null,
-    "lineNumber": 121,
+    "lineNumber": 120,
     "undocument": true,
     "params": [],
     "return": {
@@ -12897,7 +12889,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#setPointsData",
     "access": "public",
     "description": null,
-    "lineNumber": 125,
+    "lineNumber": 124,
     "undocument": true,
     "params": [
       {
@@ -12926,7 +12918,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#setEquipment",
     "access": "public",
     "description": null,
-    "lineNumber": 138,
+    "lineNumber": 137,
     "undocument": true,
     "params": [
       {
@@ -12955,7 +12947,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#unequip",
     "access": "public",
     "description": null,
-    "lineNumber": 221,
+    "lineNumber": 220,
     "undocument": true,
     "params": [
       {
@@ -12978,7 +12970,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#tempBlink",
     "access": "public",
     "description": null,
-    "lineNumber": 247,
+    "lineNumber": 246,
     "undocument": true,
     "params": [],
     "return": null
@@ -12992,7 +12984,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#tempBlinkTimeout",
     "access": "public",
     "description": null,
-    "lineNumber": 251,
+    "lineNumber": 250,
     "undocument": true,
     "type": {
       "types": [
@@ -13011,7 +13003,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#onUpdateArmour",
     "access": "public",
     "description": null,
-    "lineNumber": 257,
+    "lineNumber": 256,
     "undocument": true,
     "params": [
       {
@@ -13032,7 +13024,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#updateArmourCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 258,
+    "lineNumber": 257,
     "undocument": true,
     "type": {
       "types": [
@@ -13044,7 +13036,7 @@
     "__docId__": 756,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js",
-    "content": "import Packets from '../../../network/packets';\n\n/**\n * This is a player handler, responsible for all the callbacks\n * without having to clutter up the entire game file.\n */\nexport default class PlayerHandler {\n  constructor(game, player) {\n    this.game = game;\n    this.camera = game.getCamera();\n    this.input = game.input;\n    this.player = player;\n    this.entities = game.entities;\n    this.socket = game.socket;\n    this.renderer = game.renderer;\n\n    this.load();\n  }\n\n  load() {\n    this.player.onRequestPath((x, y) => {\n      if (this.player.dead) return null;\n\n      const ignores = [this.player];\n\n      if (this.player.hasTarget()) {\n        ignores.push(this.player.target);\n      }\n\n      this.socket.send(Packets.Movement, [\n        Packets.MovementOpcode.Request,\n        x,\n        y,\n        this.player.gridX,\n        this.player.gridY,\n      ]);\n\n      return this.game.findPath(this.player, x, y, ignores);\n    });\n\n    this.player.onStartPathing((path) => {\n      const i = path.length - 1;\n      console.log('path is', path);\n\n      this.input.selectedX = path[i][0]; // eslint-disable-line\n      this.input.selectedY = path[i][1]; // eslint-disable-line\n      this.input.selectedCellVisible = true;\n\n      if (!this.game.getEntityAt(this.input.selectedX, this.input.selectedY)) {\n        this.socket.send(Packets.Target, [Packets.TargetOpcode.None]);\n      }\n\n      this.socket.send(Packets.Movement, [\n        Packets.MovementOpcode.Started,\n        this.input.selectedX,\n        this.input.selectedY,\n        this.player.gridX,\n        this.player.gridY,\n      ]);\n    });\n\n    this.player.onStopPathing((x, y) => {\n      this.entities.unregisterPosition(this.player);\n      this.entities.registerPosition(this.player);\n\n      this.input.selectedCellVisible = false;\n\n      this.camera.clip();\n\n      const entity = this.game.getEntityAt(x, y, true);\n\n      const hasTarget = this.player.hasTarget();\n\n      const id = (entity && entity.id) || null;\n\n      this.socket.send(Packets.Movement, [\n        Packets.MovementOpcode.Stop,\n        x,\n        y,\n        id,\n        hasTarget,\n      ]);\n\n      if (hasTarget) {\n        this.socket.send(Packets.Target, [\n          this.isAttackable()\n            ? Packets.TargetOpcode.Attack\n            : Packets.TargetOpcode.Talk,\n          this.player.target.id,\n        ]);\n\n        this.player.lookAt(this.player.target);\n      }\n\n      this.input.setPassiveTarget();\n    });\n\n    this.player.onBeforeStep(() => {\n      this.entities.unregisterPosition(this.player);\n\n      if (!this.isAttackable()) return;\n\n      if (this.player.isRanged()) {\n        if (this.player.getDistance(this.player.target) < 7) this.player.stop();\n      } else {\n        this.input.selectedX = this.player.target.gridX;\n        this.input.selectedY = this.player.target.gridY;\n      }\n    });\n\n    this.player.onStep(() => {\n      if (this.player.hasNextStep()) this.entities.registerDuality(this.player);\n\n      if (!this.camera.centered) this.checkBounds();\n\n      this.player.forEachAttacker((attacker) => {\n        if (!attacker.stunned) attacker.follow(this.player);\n      });\n\n      this.socket.send(Packets.Movement, [\n        Packets.MovementOpcode.Step,\n        this.player.gridX,\n        this.player.gridY,\n      ]);\n    });\n\n    this.player.onSecondStep(() => {\n      this.renderer.updateAnimatedTiles();\n    });\n\n    this.player.onMove(() => {\n      /**\n       * This is a callback representing the absolute exact position of the player.\n       */\n\n      if (this.camera.centered) this.camera.centreOn(this.player);\n\n      if (this.player.hasTarget()) {\n        this.player.follow(this.player.target);\n      }\n    });\n\n    this.player.onUpdateArmour((armourName) => {\n      console.log('update player sprite armour', armourName);\n      this.player.setSprite(this.game.getSprite(armourName));\n    });\n  }\n\n  isAttackable() {\n    const {\n      target,\n    } = this.player;\n\n    if (!target) {\n      return false;\n    }\n\n    return target.type === 'mob' || (target.type === 'player' && target.pvp);\n  }\n\n  checkBounds() {\n    const x = this.player.gridX - this.camera.gridX;\n\n\n    const y = this.player.gridY - this.camera.gridY;\n\n    if (x === 0) this.game.zoning.setLeft();\n    else if (y === 0) this.game.zoning.setUp();\n    else if (x === this.camera.gridWidth - 1) this.game.zoning.setRight();\n    else if (y === this.camera.gridHeight - 1) this.game.zoning.setDown();\n\n    if (this.game.zoning.direction !== null) {\n      this.camera.zone(this.game.zoning.getDirection());\n      this.game.zoning.reset();\n    }\n  }\n}\n",
+    "content": "import Packets from '../../../network/packets';\n\n/**\n * This is a player handler, responsible for all the {@link Player} callbacks\n * without having to clutter up the entire file.\n * @class\n */\nexport default class PlayerHandler {\n  constructor(game, player) {\n    this.game = game;\n    this.camera = game.getCamera();\n    this.input = game.input;\n    this.player = player;\n    this.entities = game.entities;\n    this.socket = game.socket;\n    this.renderer = game.renderer;\n\n    this.load();\n  }\n\n  load() {\n    this.player.onRequestPath((x, y) => {\n      if (this.player.dead) return null;\n\n      const ignores = [this.player];\n\n      if (this.player.hasTarget()) {\n        ignores.push(this.player.target);\n      }\n\n      this.socket.send(Packets.Movement, [\n        Packets.MovementOpcode.Request,\n        x,\n        y,\n        this.player.gridX,\n        this.player.gridY,\n      ]);\n\n      return this.game.findPath(this.player, x, y, ignores);\n    });\n\n    this.player.onStartPathing((path) => {\n      const i = path.length - 1;\n      console.log('path is', path);\n\n      this.input.selectedX = path[i][0]; // eslint-disable-line\n      this.input.selectedY = path[i][1]; // eslint-disable-line\n      this.input.selectedCellVisible = true;\n\n      if (!this.game.getEntityAt(this.input.selectedX, this.input.selectedY)) {\n        this.socket.send(Packets.Target, [Packets.TargetOpcode.None]);\n      }\n\n      this.socket.send(Packets.Movement, [\n        Packets.MovementOpcode.Started,\n        this.input.selectedX,\n        this.input.selectedY,\n        this.player.gridX,\n        this.player.gridY,\n      ]);\n    });\n\n    this.player.onStopPathing((x, y) => {\n      this.entities.unregisterPosition(this.player);\n      this.entities.registerPosition(this.player);\n\n      this.input.selectedCellVisible = false;\n\n      this.camera.clip();\n\n      const entity = this.game.getEntityAt(x, y, true);\n\n      const hasTarget = this.player.hasTarget();\n\n      const id = (entity && entity.id) || null;\n\n      this.socket.send(Packets.Movement, [\n        Packets.MovementOpcode.Stop,\n        x,\n        y,\n        id,\n        hasTarget,\n      ]);\n\n      if (hasTarget) {\n        this.socket.send(Packets.Target, [\n          this.isAttackable()\n            ? Packets.TargetOpcode.Attack\n            : Packets.TargetOpcode.Talk,\n          this.player.target.id,\n        ]);\n\n        this.player.lookAt(this.player.target);\n      }\n\n      this.input.setPassiveTarget();\n    });\n\n    this.player.onBeforeStep(() => {\n      this.entities.unregisterPosition(this.player);\n\n      if (!this.isAttackable()) return;\n\n      if (this.player.isRanged()) {\n        if (this.player.getDistance(this.player.target) < 7) this.player.stop();\n      } else {\n        this.input.selectedX = this.player.target.gridX;\n        this.input.selectedY = this.player.target.gridY;\n      }\n    });\n\n    this.player.onStep(() => {\n      if (this.player.hasNextStep()) this.entities.registerDuality(this.player);\n\n      if (!this.camera.centered) this.checkBounds();\n\n      this.player.forEachAttacker((attacker) => {\n        if (!attacker.stunned) attacker.follow(this.player);\n      });\n\n      this.socket.send(Packets.Movement, [\n        Packets.MovementOpcode.Step,\n        this.player.gridX,\n        this.player.gridY,\n      ]);\n    });\n\n    this.player.onSecondStep(() => {\n      this.renderer.updateAnimatedTiles();\n    });\n\n    this.player.onMove(() => {\n      /**\n       * This is a callback representing the absolute exact position of the player.\n       */\n\n      if (this.camera.centered) this.camera.centreOn(this.player);\n\n      if (this.player.hasTarget()) {\n        this.player.follow(this.player.target);\n      }\n    });\n\n    this.player.onUpdateArmour((armourName) => {\n      console.log('update player sprite armour', armourName);\n      this.player.setSprite(this.game.getSprite(armourName));\n    });\n  }\n\n  isAttackable() {\n    const {\n      target,\n    } = this.player;\n\n    if (!target) {\n      return false;\n    }\n\n    return target.type === 'mob' || (target.type === 'player' && target.pvp);\n  }\n\n  checkBounds() {\n    const x = this.player.gridX - this.camera.gridX;\n\n\n    const y = this.player.gridY - this.camera.gridY;\n\n    if (x === 0) this.game.zoning.setLeft();\n    else if (y === 0) this.game.zoning.setUp();\n    else if (x === this.camera.gridWidth - 1) this.game.zoning.setRight();\n    else if (y === this.camera.gridHeight - 1) this.game.zoning.setDown();\n\n    if (this.game.zoning.direction !== null) {\n      this.camera.zone(this.game.zoning.getDirection());\n      this.game.zoning.reset();\n    }\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js",
     "access": "public",
@@ -13062,8 +13054,14 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js",
     "importStyle": "PlayerHandler",
-    "description": "This is a player handler, responsible for all the callbacks\nwithout having to clutter up the entire game file.",
-    "lineNumber": 7,
+    "description": "This is a player handler, responsible for all the {@link Player} callbacks\nwithout having to clutter up the entire file.",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
     "interface": false
   },
   {
@@ -13077,7 +13075,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#constructor",
     "access": "public",
     "description": null,
-    "lineNumber": 8,
+    "lineNumber": 9,
     "undocument": true
   },
   {
@@ -13089,7 +13087,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#game",
     "access": "public",
     "description": null,
-    "lineNumber": 9,
+    "lineNumber": 10,
     "undocument": true,
     "type": {
       "types": [
@@ -13106,7 +13104,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#camera",
     "access": "public",
     "description": null,
-    "lineNumber": 10,
+    "lineNumber": 11,
     "undocument": true,
     "type": {
       "types": [
@@ -13123,7 +13121,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#input",
     "access": "public",
     "description": null,
-    "lineNumber": 11,
+    "lineNumber": 12,
     "undocument": true,
     "type": {
       "types": [
@@ -13140,7 +13138,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#player",
     "access": "public",
     "description": null,
-    "lineNumber": 12,
+    "lineNumber": 13,
     "undocument": true,
     "type": {
       "types": [
@@ -13157,7 +13155,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#entities",
     "access": "public",
     "description": null,
-    "lineNumber": 13,
+    "lineNumber": 14,
     "undocument": true,
     "type": {
       "types": [
@@ -13174,7 +13172,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#socket",
     "access": "public",
     "description": null,
-    "lineNumber": 14,
+    "lineNumber": 15,
     "undocument": true,
     "type": {
       "types": [
@@ -13191,7 +13189,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#renderer",
     "access": "public",
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 16,
     "undocument": true,
     "type": {
       "types": [
@@ -13210,7 +13208,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#load",
     "access": "public",
     "description": null,
-    "lineNumber": 20,
+    "lineNumber": 21,
     "undocument": true,
     "params": [],
     "return": null
@@ -13226,7 +13224,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#isAttackable",
     "access": "public",
     "description": null,
-    "lineNumber": 149,
+    "lineNumber": 150,
     "undocument": true,
     "params": [],
     "return": {
@@ -13246,7 +13244,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#checkBounds",
     "access": "public",
     "description": null,
-    "lineNumber": 161,
+    "lineNumber": 162,
     "undocument": true,
     "params": [],
     "return": null
@@ -13255,7 +13253,7 @@
     "__docId__": 769,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/entity/entity.js",
-    "content": "import EntityHandler from './entityhandler';\n\n/**\n * Initialize a new entity\n * @class\n * @example\n * const myEntity = new Entity(1, 'player');\n */\nexport default class Entity {\n  /**\n   * Constructor to initialize a new entity\n   * @param {Number} id the entity id\n   * @param {String} kind the type of entity this is\n   */\n  constructor(id, kind) {\n    this.id = id;\n    this.kind = kind;\n\n    this.x = 0;\n    this.y = 0;\n    this.gridX = 0;\n    this.gridY = 0;\n\n    this.name = '';\n\n    this.sprite = null;\n    this.spriteFlipX = false;\n    this.spriteFlipY = false;\n\n    this.animations = null;\n    this.currentAnimation = null;\n\n    this.shadowOffsetY = 0;\n    this.hidden = false;\n\n    this.spriteLoaded = false;\n    this.visible = true;\n    this.fading = false;\n    this.handler = new EntityHandler(this);\n\n    this.angled = false;\n    this.angle = 0;\n\n    this.critical = false;\n    this.stunned = false;\n    this.terror = false;\n\n    this.nonPathable = false;\n    this.hasCounter = false;\n\n    this.countdownTime = 0;\n    this.counter = 0;\n    this.shadow = false;\n    this.path = false;\n\n    this.renderingData = {\n      scale: -1,\n      angle: 0,\n    };\n\n    this.loadDirty();\n  }\n\n  /**\n   * Checks to see if the x,y coordinate is adjacent to the\n   * entity's current position\n   *\n   * @param {Number} x coordinate\n   * @param {Number} y coordinate\n   * @param {Boolean} ignoreDiagonals if true, will ignore diagonal\n   * directions, defaults to false (optional)\n   * @return {Boolean}\n   */\n  isPositionAdjacent(x, y, ignoreDiagonals = false) {\n    // north west - diagonal\n    if (!ignoreDiagonals && x - 1 === this.gridX && y + 1 === this.gridY) {\n      return true;\n    }\n\n    // north\n    if (x === this.gridX && y + 1 === this.gridY) {\n      return true;\n    }\n\n    // north east - diagonal\n    if (!ignoreDiagonals && x + 1 === this.gridX && y + 1 === this.gridY) {\n      return true;\n    }\n\n    // west\n    if (x - 1 === this.gridX && y === this.gridY) {\n      return true;\n    }\n\n    // east\n    if (x + 1 === this.gridX && y === this.gridY) {\n      return true;\n    }\n\n    // south west - diagonal\n    if (!ignoreDiagonals && x - 1 === this.gridX && y - 1 === this.gridY) {\n      return true;\n    }\n\n    // south\n    if (x === this.gridX && y - 1 === this.gridY) {\n      return true;\n    }\n\n    // south west - diagonal\n    if (!ignoreDiagonals && x - 1 === this.gridX && y - 1 === this.gridY) {\n      return true;\n    }\n\n    return false;\n  }\n\n  /**\n   * This is important for when the client is\n   * on a mobile screen. So the sprite has to be\n   * handled differently.\n   */\n  loadDirty() {\n    this.dirty = true;\n\n    if (this.dirtyCallback) {\n      this.dirtyCallback();\n    }\n  }\n\n  /**\n   * Tell this to fade in given the duration\n   * @param {Number} time the amount of time to fade in\n   */\n  fadeIn(time) {\n    this.fading = true;\n    this.fadingTime = time;\n  }\n\n  /**\n   * Tell this entity to start blinking\n   * @param  {Number} speed the interval time between blinks\n   */\n  blink(speed) {\n    this.blinking = setInterval(() => {\n      this.toggleVisibility();\n    }, speed);\n  }\n\n  /**\n   * Tell the entity to stop blinking and force it to be visible\n   */\n  stopBlinking() {\n    if (this.blinking) {\n      clearInterval(this.blinking);\n    }\n\n    this.setVisible(true);\n  }\n\n  /**\n   * Set the entity's name\n   * @param {String} name the name of this entity\n   */\n  setName(name) {\n    this.name = name;\n  }\n\n  /**\n   * Set the sprite for this entity\n   * @param {Sprite} sprite the sprite for this entity\n   */\n  setSprite(sprite) {\n    if (!sprite || (this.sprite && this.sprite.name === sprite.name)) {\n      return;\n    }\n\n    if (!sprite.loaded) {\n      sprite.load();\n    }\n\n    sprite.name = sprite.id; // eslint-disable-line\n\n    this.sprite = sprite;\n\n    this.normalSprite = this.sprite;\n    this.hurtSprite = sprite.getHurtSprite();\n    this.animations = sprite.createAnimations();\n    this.spriteLoaded = true;\n\n    if (this.readyCallback) {\n      this.readyCallback();\n    }\n  }\n\n  /**\n   * Set the x,y position for the entity\n   * @param {Number} x the x position on the screen\n   * @param {[type]} y the y position on the screen\n   */\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n\n  /**\n   * Set the x,y position of the entity on the tile grid\n   * @param {Number} x the gridX\n   * @param {Number} y the gridY\n   */\n  setGridPosition(x, y) {\n    this.gridX = x;\n    this.gridY = y;\n\n    this.setPosition(x * 16, y * 16);\n  }\n\n  /**\n   * Set the animation on this entity\n   * @param {String} name       the name of the animation\n   * @param {Number} speed      the animation speed\n   * @param {Number} count      how many times to play the animation\n   * @param {Number} onEndCount callback to trigger when the animation\n   * ends after count number of times\n   */\n  setAnimation(name, speed, count, onEndCount) {\n    if (\n      !this.spriteLoaded\n      || (this.currentAnimation && this.currentAnimation.name === name)\n    ) {\n      return;\n    }\n\n    const anim = this.getAnimationByName(name);\n\n    if (!anim) {\n      return;\n    }\n\n    this.currentAnimation = anim;\n\n    if (name.substr(0, 3) === 'atk') {\n      this.currentAnimation.reset();\n    }\n\n    this.currentAnimation.setSpeed(speed);\n\n    this.currentAnimation.setCount(\n      count || 0,\n      onEndCount\n      || (() => {\n        this.idle();\n      }),\n    );\n  }\n\n  /**\n   * Set the count for the count down time\n   * @param {Number} count sets the counter\n   */\n  setCountdown(count) {\n    this.counter = count;\n    this.countdownTime = new Date().getTime();\n    this.hasCounter = true;\n  }\n\n  /**\n   * Returns the instance of the weapon this entity has\n   * @return {Item|Projectile} a weapon or projectile\n   */\n  hasWeapon() {\n    return this.weapon;\n  }\n\n  /**\n   * Get the distance from this entity to another entity\n   * @param  {Entity} entity the entity you want to get the distance to\n   * @return {Number} the furtherst x or y distance from the given entity\n   */\n  getDistance(entity) {\n    const x = Math.abs(this.gridX - entity.gridX);\n    const y = Math.abs(this.gridY - entity.gridY);\n    return x > y ? x : y;\n  }\n\n  /**\n   * Get the distance from this entity to the given x,y coordinates\n   * @param  {Number} toX the x coordinate\n   * @param  {Number} toY the y coordinate\n   * @return {Number} the further x or y distance to this coordinate\n   */\n  getCoordDistance(toX, toY) {\n    const x = Math.abs(this.gridX - toX);\n    const y = Math.abs(this.gridY - toY);\n\n    return x > y ? x : y;\n  }\n\n  /**\n   * Figure out if this entity is within the attack radius of the given entity\n   * @param  {Entity} entity Player|Mob|Character|NPC\n   * @return {Boolean} returns true if they are within the entity's attack radius,\n   * if the entity has no attack radius default to 2 grid cells\n   */\n  inAttackRadius(entity) {\n    const attackRadius = entity.attackRadius || 2;\n    return (\n      entity\n      && this.getDistance(entity) < attackRadius\n      && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY)\n    );\n  }\n\n  /**\n   * Figure out if this entity is within the extended attack radius of the given entity\n   * @param  {Entity} entity Player|Mob|Character|NPC\n   * @return {Boolean} returns true if they are within the entity's attack radius,\n   * if the entity has no attack radius default to 3 grid cells\n   */\n  inExtraAttackRadius(entity) {\n    const attackRadius = (entity.attackRadius + 1) || 3;\n    return (\n      entity\n      && this.getDistance(entity) < attackRadius\n      && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY)\n    );\n  }\n\n  /**\n   * Look for an animtions list for this specific animation given it's name\n   * @param  {String} name the name of the animation\n   * @return {Animation|null} returns the animation object or null if not found\n   */\n  getAnimationByName(name) {\n    if (name in this.animations) {\n      return this.animations[name];\n    }\n\n    return null;\n  }\n\n  /**\n   * Returns the name of the sprite\n   * @return {String} the name of the sprite\n   */\n  getSprite() {\n    return this.sprite.name;\n  }\n\n  /**\n   * Set the visibility on this entity\n   * @param {Boolean} visible true|false\n   */\n  setVisible(visible) {\n    this.visible = visible;\n  }\n\n  /**\n   * Toggle the current visibility of this entity\n   */\n  toggleVisibility() {\n    this.setVisible(!this.visible);\n  }\n\n  /**\n   * Check whether or not this entity is visible\n   * @return {Boolean} returns true if visibile\n   */\n  isVisible() {\n    return this.visible;\n  }\n\n  /**\n   * Check whether or not this entity has a shadow\n   * @return {Object} returns the entity's shadow\n   */\n  hasShadow() {\n    return this.shadow;\n  }\n\n  /**\n   * Check if this entity currently has a path\n   * @return {Object} returns the entity's path\n   */\n  hasPath() {\n    return this.path;\n  }\n\n  /**\n   * When this entity's sprite is loaded trigger this callback\n   * @param  {Function} callback the function to call when the sprite is loaded\n   */\n  onReady(callback) {\n    this.readyCallback = callback;\n  }\n\n  /**\n   * When this entity's is dirty (mobile) use this callback\n   * @param {Function} callback the function to call when the sprite isDirty\n   */\n  onDirty(callback) {\n    this.dirtyCallback = callback;\n  }\n}\n",
+    "content": "import EntityHandler from './entityhandler';\n\n/**\n * Initialize a new entity:\n * - {@link Character}\n *   - {@link Mob}\n *   - {@link Npc}\n *   - {@link Player}\n * - {@link Chest}\n * - {@link Item}\n * - {@link Projectile}\n * @class\n * @example const myEntity = new Entity(1, 'player');\n */\nexport default class Entity {\n  /**\n   * Constructor to initialize a new entity\n   * @param {Number} id the entity id\n   * @param {String} kind the type of entity this is\n   */\n  constructor(id, kind) {\n    this.id = id;\n    this.kind = kind;\n\n    this.x = 0;\n    this.y = 0;\n    this.gridX = 0;\n    this.gridY = 0;\n\n    this.name = '';\n\n    this.sprite = null;\n    this.spriteFlipX = false;\n    this.spriteFlipY = false;\n\n    this.animations = null;\n    this.currentAnimation = null;\n\n    this.shadowOffsetY = 0;\n    this.hidden = false;\n\n    this.spriteLoaded = false;\n    this.visible = true;\n    this.fading = false;\n    this.handler = new EntityHandler(this);\n\n    this.angled = false;\n    this.angle = 0;\n\n    this.critical = false;\n    this.stunned = false;\n    this.terror = false;\n\n    this.nonPathable = false;\n    this.hasCounter = false;\n\n    this.countdownTime = 0;\n    this.counter = 0;\n    this.shadow = false;\n    this.path = false;\n\n    this.renderingData = {\n      scale: -1,\n      angle: 0,\n    };\n\n    this.loadDirty();\n  }\n\n  /**\n   * Checks to see if the x,y coordinate is adjacent to the\n   * entity's current position\n   *\n   * @param {Number} x coordinate\n   * @param {Number} y coordinate\n   * @param {Boolean} ignoreDiagonals if true, will ignore diagonal\n   * directions, defaults to false (optional)\n   * @return {Boolean}\n   */\n  isPositionAdjacent(x, y, ignoreDiagonals = false) {\n    // north west - diagonal\n    if (!ignoreDiagonals && x - 1 === this.gridX && y + 1 === this.gridY) {\n      return true;\n    }\n\n    // north\n    if (x === this.gridX && y + 1 === this.gridY) {\n      return true;\n    }\n\n    // north east - diagonal\n    if (!ignoreDiagonals && x + 1 === this.gridX && y + 1 === this.gridY) {\n      return true;\n    }\n\n    // west\n    if (x - 1 === this.gridX && y === this.gridY) {\n      return true;\n    }\n\n    // east\n    if (x + 1 === this.gridX && y === this.gridY) {\n      return true;\n    }\n\n    // south west - diagonal\n    if (!ignoreDiagonals && x - 1 === this.gridX && y - 1 === this.gridY) {\n      return true;\n    }\n\n    // south\n    if (x === this.gridX && y - 1 === this.gridY) {\n      return true;\n    }\n\n    // south west - diagonal\n    if (!ignoreDiagonals && x - 1 === this.gridX && y - 1 === this.gridY) {\n      return true;\n    }\n\n    return false;\n  }\n\n  /**\n   * This is important for when the client is\n   * on a mobile screen. So the sprite has to be\n   * handled differently.\n   */\n  loadDirty() {\n    this.dirty = true;\n\n    if (this.dirtyCallback) {\n      this.dirtyCallback();\n    }\n  }\n\n  /**\n   * Tell this to fade in given the duration\n   * @param {Number} time the amount of time to fade in\n   */\n  fadeIn(time) {\n    this.fading = true;\n    this.fadingTime = time;\n  }\n\n  /**\n   * Tell this entity to start blinking\n   * @param  {Number} speed the interval time between blinks\n   */\n  blink(speed) {\n    this.blinking = setInterval(() => {\n      this.toggleVisibility();\n    }, speed);\n  }\n\n  /**\n   * Tell the entity to stop blinking and force it to be visible\n   */\n  stopBlinking() {\n    if (this.blinking) {\n      clearInterval(this.blinking);\n    }\n\n    this.setVisible(true);\n  }\n\n  /**\n   * Set the entity's name\n   * @param {String} name the name of this entity\n   */\n  setName(name) {\n    this.name = name;\n  }\n\n  /**\n   * Set the sprite for this entity\n   * @param {Sprite} sprite the sprite for this entity\n   */\n  setSprite(sprite) {\n    if (!sprite || (this.sprite && this.sprite.name === sprite.name)) {\n      return;\n    }\n\n    if (!sprite.loaded) {\n      sprite.load();\n    }\n\n    sprite.name = sprite.id; // eslint-disable-line\n\n    this.sprite = sprite;\n\n    this.normalSprite = this.sprite;\n    this.hurtSprite = sprite.getHurtSprite();\n    this.animations = sprite.createAnimations();\n    this.spriteLoaded = true;\n\n    if (this.readyCallback) {\n      this.readyCallback();\n    }\n  }\n\n  /**\n   * Set the x,y position for the entity\n   * @param {Number} x the x position on the screen\n   * @param {[type]} y the y position on the screen\n   */\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n\n  /**\n   * Set the x,y position of the entity on the tile grid\n   * @param {Number} x the gridX\n   * @param {Number} y the gridY\n   */\n  setGridPosition(x, y) {\n    this.gridX = x;\n    this.gridY = y;\n\n    this.setPosition(x * 16, y * 16);\n  }\n\n  /**\n   * Set the animation on this entity\n   * @param {String} name       the name of the animation\n   * @param {Number} speed      the animation speed\n   * @param {Number} count      how many times to play the animation\n   * @param {Number} onEndCount callback to trigger when the animation\n   * ends after count number of times\n   */\n  setAnimation(name, speed, count, onEndCount) {\n    if (\n      !this.spriteLoaded\n      || (this.currentAnimation && this.currentAnimation.name === name)\n    ) {\n      return;\n    }\n\n    const anim = this.getAnimationByName(name);\n\n    if (!anim) {\n      return;\n    }\n\n    this.currentAnimation = anim;\n\n    if (name.substr(0, 3) === 'atk') {\n      this.currentAnimation.reset();\n    }\n\n    this.currentAnimation.setSpeed(speed);\n\n    this.currentAnimation.setCount(\n      count || 0,\n      onEndCount\n      || (() => {\n        this.idle();\n      }),\n    );\n  }\n\n  /**\n   * Set the count for the count down time\n   * @param {Number} count sets the counter\n   */\n  setCountdown(count) {\n    this.counter = count;\n    this.countdownTime = new Date().getTime();\n    this.hasCounter = true;\n  }\n\n  /**\n   * Returns the instance of the weapon this entity has\n   * @return {Item|Projectile} a weapon or projectile\n   */\n  hasWeapon() {\n    return this.weapon;\n  }\n\n  /**\n   * Get the distance from this entity to another entity\n   * @param  {Entity} entity the entity you want to get the distance to\n   * @return {Number} the furtherst x or y distance from the given entity\n   */\n  getDistance(entity) {\n    const x = Math.abs(this.gridX - entity.gridX);\n    const y = Math.abs(this.gridY - entity.gridY);\n    return x > y ? x : y;\n  }\n\n  /**\n   * Get the distance from this entity to the given x,y coordinates\n   * @param  {Number} toX the x coordinate\n   * @param  {Number} toY the y coordinate\n   * @return {Number} the further x or y distance to this coordinate\n   */\n  getCoordDistance(toX, toY) {\n    const x = Math.abs(this.gridX - toX);\n    const y = Math.abs(this.gridY - toY);\n\n    return x > y ? x : y;\n  }\n\n  /**\n   * Figure out if this entity is within the attack radius of the given entity\n   * @param  {Entity} entity Player|Mob|Character|NPC\n   * @return {Boolean} returns true if they are within the entity's attack radius,\n   * if the entity has no attack radius default to 2 grid cells\n   */\n  inAttackRadius(entity) {\n    const attackRadius = entity.attackRadius || 2;\n    return (\n      entity\n      && this.getDistance(entity) < attackRadius\n      && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY)\n    );\n  }\n\n  /**\n   * Figure out if this entity is within the extended attack radius of the given entity\n   * @param  {Entity} entity Player|Mob|Character|NPC\n   * @return {Boolean} returns true if they are within the entity's attack radius,\n   * if the entity has no attack radius default to 3 grid cells\n   */\n  inExtraAttackRadius(entity) {\n    const attackRadius = (entity.attackRadius + 1) || 3;\n    return (\n      entity\n      && this.getDistance(entity) < attackRadius\n      && !(this.gridX !== entity.gridX && this.gridY !== entity.gridY)\n    );\n  }\n\n  /**\n   * Look for an animtions list for this specific animation given it's name\n   * @param  {String} name the name of the animation\n   * @return {Animation|null} returns the animation object or null if not found\n   */\n  getAnimationByName(name) {\n    if (name in this.animations) {\n      return this.animations[name];\n    }\n\n    return null;\n  }\n\n  /**\n   * Returns the name of the sprite\n   * @return {String} the name of the sprite\n   */\n  getSprite() {\n    return this.sprite.name;\n  }\n\n  /**\n   * Set the visibility on this entity\n   * @param {Boolean} visible true|false\n   */\n  setVisible(visible) {\n    this.visible = visible;\n  }\n\n  /**\n   * Toggle the current visibility of this entity\n   */\n  toggleVisibility() {\n    this.setVisible(!this.visible);\n  }\n\n  /**\n   * Check whether or not this entity is visible\n   * @return {Boolean} returns true if visibile\n   */\n  isVisible() {\n    return this.visible;\n  }\n\n  /**\n   * Check whether or not this entity has a shadow\n   * @return {Object} returns the entity's shadow\n   */\n  hasShadow() {\n    return this.shadow;\n  }\n\n  /**\n   * Check if this entity currently has a path\n   * @return {Object} returns the entity's path\n   */\n  hasPath() {\n    return this.path;\n  }\n\n  /**\n   * When this entity's sprite is loaded trigger this callback\n   * @param  {Function} callback the function to call when the sprite is loaded\n   */\n  onReady(callback) {\n    this.readyCallback = callback;\n  }\n\n  /**\n   * When this entity's is dirty (mobile) use this callback\n   * @param {Function} callback the function to call when the sprite isDirty\n   */\n  onDirty(callback) {\n    this.dirtyCallback = callback;\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/entity/entity.js",
     "access": "public",
@@ -13273,11 +13271,11 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/entity/entity.js",
     "importStyle": "Entity",
-    "description": "Initialize a new entity",
+    "description": "Initialize a new entity:\n- {@link Character}\n  - {@link Mob}\n  - {@link Npc}\n  - {@link Player}\n- {@link Chest}\n- {@link Item}\n- {@link Projectile}",
     "examples": [
       "const myEntity = new Entity(1, 'player');"
     ],
-    "lineNumber": 9,
+    "lineNumber": 15,
     "unknown": [
       {
         "tagName": "@class",
@@ -13297,7 +13295,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#constructor",
     "access": "public",
     "description": "Constructor to initialize a new entity",
-    "lineNumber": 15,
+    "lineNumber": 21,
     "params": [
       {
         "nullable": null,
@@ -13330,7 +13328,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#id",
     "access": "public",
     "description": null,
-    "lineNumber": 16,
+    "lineNumber": 22,
     "undocument": true,
     "type": {
       "types": [
@@ -13347,7 +13345,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#kind",
     "access": "public",
     "description": null,
-    "lineNumber": 17,
+    "lineNumber": 23,
     "undocument": true,
     "type": {
       "types": [
@@ -13364,7 +13362,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#x",
     "access": "public",
     "description": null,
-    "lineNumber": 19,
+    "lineNumber": 25,
     "undocument": true,
     "type": {
       "types": [
@@ -13381,7 +13379,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#y",
     "access": "public",
     "description": null,
-    "lineNumber": 20,
+    "lineNumber": 26,
     "undocument": true,
     "type": {
       "types": [
@@ -13398,7 +13396,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#gridX",
     "access": "public",
     "description": null,
-    "lineNumber": 21,
+    "lineNumber": 27,
     "undocument": true,
     "type": {
       "types": [
@@ -13415,7 +13413,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#gridY",
     "access": "public",
     "description": null,
-    "lineNumber": 22,
+    "lineNumber": 28,
     "undocument": true,
     "type": {
       "types": [
@@ -13432,7 +13430,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#name",
     "access": "public",
     "description": null,
-    "lineNumber": 24,
+    "lineNumber": 30,
     "undocument": true,
     "type": {
       "types": [
@@ -13449,7 +13447,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#sprite",
     "access": "public",
     "description": null,
-    "lineNumber": 26,
+    "lineNumber": 32,
     "undocument": true,
     "type": {
       "types": [
@@ -13466,7 +13464,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#spriteFlipX",
     "access": "public",
     "description": null,
-    "lineNumber": 27,
+    "lineNumber": 33,
     "undocument": true,
     "type": {
       "types": [
@@ -13483,7 +13481,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#spriteFlipY",
     "access": "public",
     "description": null,
-    "lineNumber": 28,
+    "lineNumber": 34,
     "undocument": true,
     "type": {
       "types": [
@@ -13500,7 +13498,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#animations",
     "access": "public",
     "description": null,
-    "lineNumber": 30,
+    "lineNumber": 36,
     "undocument": true,
     "type": {
       "types": [
@@ -13517,7 +13515,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#currentAnimation",
     "access": "public",
     "description": null,
-    "lineNumber": 31,
+    "lineNumber": 37,
     "undocument": true,
     "type": {
       "types": [
@@ -13534,7 +13532,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#shadowOffsetY",
     "access": "public",
     "description": null,
-    "lineNumber": 33,
+    "lineNumber": 39,
     "undocument": true,
     "type": {
       "types": [
@@ -13551,7 +13549,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#hidden",
     "access": "public",
     "description": null,
-    "lineNumber": 34,
+    "lineNumber": 40,
     "undocument": true,
     "type": {
       "types": [
@@ -13568,7 +13566,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#spriteLoaded",
     "access": "public",
     "description": null,
-    "lineNumber": 36,
+    "lineNumber": 42,
     "undocument": true,
     "type": {
       "types": [
@@ -13585,7 +13583,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#visible",
     "access": "public",
     "description": null,
-    "lineNumber": 37,
+    "lineNumber": 43,
     "undocument": true,
     "type": {
       "types": [
@@ -13602,7 +13600,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#fading",
     "access": "public",
     "description": null,
-    "lineNumber": 38,
+    "lineNumber": 44,
     "undocument": true,
     "type": {
       "types": [
@@ -13619,7 +13617,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#handler",
     "access": "public",
     "description": null,
-    "lineNumber": 39,
+    "lineNumber": 45,
     "undocument": true,
     "type": {
       "types": [
@@ -13636,7 +13634,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#angled",
     "access": "public",
     "description": null,
-    "lineNumber": 41,
+    "lineNumber": 47,
     "undocument": true,
     "type": {
       "types": [
@@ -13653,7 +13651,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#angle",
     "access": "public",
     "description": null,
-    "lineNumber": 42,
+    "lineNumber": 48,
     "undocument": true,
     "type": {
       "types": [
@@ -13670,7 +13668,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#critical",
     "access": "public",
     "description": null,
-    "lineNumber": 44,
+    "lineNumber": 50,
     "undocument": true,
     "type": {
       "types": [
@@ -13687,7 +13685,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#stunned",
     "access": "public",
     "description": null,
-    "lineNumber": 45,
+    "lineNumber": 51,
     "undocument": true,
     "type": {
       "types": [
@@ -13704,7 +13702,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#terror",
     "access": "public",
     "description": null,
-    "lineNumber": 46,
+    "lineNumber": 52,
     "undocument": true,
     "type": {
       "types": [
@@ -13721,7 +13719,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#nonPathable",
     "access": "public",
     "description": null,
-    "lineNumber": 48,
+    "lineNumber": 54,
     "undocument": true,
     "type": {
       "types": [
@@ -13738,7 +13736,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#hasCounter",
     "access": "public",
     "description": null,
-    "lineNumber": 49,
+    "lineNumber": 55,
     "undocument": true,
     "type": {
       "types": [
@@ -13755,7 +13753,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#countdownTime",
     "access": "public",
     "description": null,
-    "lineNumber": 51,
+    "lineNumber": 57,
     "undocument": true,
     "type": {
       "types": [
@@ -13772,7 +13770,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#counter",
     "access": "public",
     "description": null,
-    "lineNumber": 52,
+    "lineNumber": 58,
     "undocument": true,
     "type": {
       "types": [
@@ -13789,7 +13787,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#shadow",
     "access": "public",
     "description": null,
-    "lineNumber": 53,
+    "lineNumber": 59,
     "undocument": true,
     "type": {
       "types": [
@@ -13806,7 +13804,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#path",
     "access": "public",
     "description": null,
-    "lineNumber": 54,
+    "lineNumber": 60,
     "undocument": true,
     "type": {
       "types": [
@@ -13823,7 +13821,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#renderingData",
     "access": "public",
     "description": null,
-    "lineNumber": 56,
+    "lineNumber": 62,
     "undocument": true,
     "type": {
       "types": [
@@ -13842,7 +13840,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#isPositionAdjacent",
     "access": "public",
     "description": "Checks to see if the x,y coordinate is adjacent to the\nentity's current position",
-    "lineNumber": 74,
+    "lineNumber": 80,
     "params": [
       {
         "nullable": null,
@@ -13895,7 +13893,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#loadDirty",
     "access": "public",
     "description": "This is important for when the client is\non a mobile screen. So the sprite has to be\nhandled differently.",
-    "lineNumber": 123,
+    "lineNumber": 129,
     "params": [],
     "return": null
   },
@@ -13908,7 +13906,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#dirty",
     "access": "public",
     "description": null,
-    "lineNumber": 124,
+    "lineNumber": 130,
     "undocument": true,
     "type": {
       "types": [
@@ -13927,7 +13925,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#fadeIn",
     "access": "public",
     "description": "Tell this to fade in given the duration",
-    "lineNumber": 135,
+    "lineNumber": 141,
     "params": [
       {
         "nullable": null,
@@ -13951,7 +13949,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#fadingTime",
     "access": "public",
     "description": null,
-    "lineNumber": 137,
+    "lineNumber": 143,
     "undocument": true,
     "type": {
       "types": [
@@ -13970,7 +13968,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#blink",
     "access": "public",
     "description": "Tell this entity to start blinking",
-    "lineNumber": 144,
+    "lineNumber": 150,
     "params": [
       {
         "nullable": null,
@@ -13994,7 +13992,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#blinking",
     "access": "public",
     "description": null,
-    "lineNumber": 145,
+    "lineNumber": 151,
     "undocument": true,
     "type": {
       "types": [
@@ -14013,7 +14011,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#stopBlinking",
     "access": "public",
     "description": "Tell the entity to stop blinking and force it to be visible",
-    "lineNumber": 153,
+    "lineNumber": 159,
     "params": [],
     "return": null
   },
@@ -14028,7 +14026,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#setName",
     "access": "public",
     "description": "Set the entity's name",
-    "lineNumber": 165,
+    "lineNumber": 171,
     "params": [
       {
         "nullable": null,
@@ -14054,7 +14052,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#setSprite",
     "access": "public",
     "description": "Set the sprite for this entity",
-    "lineNumber": 173,
+    "lineNumber": 179,
     "params": [
       {
         "nullable": null,
@@ -14078,7 +14076,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#normalSprite",
     "access": "public",
     "description": null,
-    "lineNumber": 186,
+    "lineNumber": 192,
     "undocument": true,
     "type": {
       "types": [
@@ -14095,7 +14093,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#hurtSprite",
     "access": "public",
     "description": null,
-    "lineNumber": 187,
+    "lineNumber": 193,
     "undocument": true,
     "type": {
       "types": [
@@ -14114,7 +14112,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#setPosition",
     "access": "public",
     "description": "Set the x,y position for the entity",
-    "lineNumber": 201,
+    "lineNumber": 207,
     "params": [
       {
         "nullable": null,
@@ -14150,7 +14148,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#setGridPosition",
     "access": "public",
     "description": "Set the x,y position of the entity on the tile grid",
-    "lineNumber": 211,
+    "lineNumber": 217,
     "params": [
       {
         "nullable": null,
@@ -14186,7 +14184,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#setAnimation",
     "access": "public",
     "description": "Set the animation on this entity",
-    "lineNumber": 226,
+    "lineNumber": 232,
     "params": [
       {
         "nullable": null,
@@ -14242,7 +14240,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#setCountdown",
     "access": "public",
     "description": "Set the count for the count down time",
-    "lineNumber": 261,
+    "lineNumber": 267,
     "params": [
       {
         "nullable": null,
@@ -14268,7 +14266,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#hasWeapon",
     "access": "public",
     "description": "Returns the instance of the weapon this entity has",
-    "lineNumber": 271,
+    "lineNumber": 277,
     "return": {
       "nullable": null,
       "types": [
@@ -14291,7 +14289,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#getDistance",
     "access": "public",
     "description": "Get the distance from this entity to another entity",
-    "lineNumber": 280,
+    "lineNumber": 286,
     "params": [
       {
         "nullable": null,
@@ -14324,7 +14322,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#getCoordDistance",
     "access": "public",
     "description": "Get the distance from this entity to the given x,y coordinates",
-    "lineNumber": 292,
+    "lineNumber": 298,
     "params": [
       {
         "nullable": null,
@@ -14367,7 +14365,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#inAttackRadius",
     "access": "public",
     "description": "Figure out if this entity is within the attack radius of the given entity",
-    "lineNumber": 305,
+    "lineNumber": 311,
     "params": [
       {
         "nullable": null,
@@ -14400,7 +14398,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#inExtraAttackRadius",
     "access": "public",
     "description": "Figure out if this entity is within the extended attack radius of the given entity",
-    "lineNumber": 320,
+    "lineNumber": 326,
     "params": [
       {
         "nullable": null,
@@ -14433,7 +14431,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#getAnimationByName",
     "access": "public",
     "description": "Look for an animtions list for this specific animation given it's name",
-    "lineNumber": 334,
+    "lineNumber": 340,
     "params": [
       {
         "nullable": null,
@@ -14467,7 +14465,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#getSprite",
     "access": "public",
     "description": "Returns the name of the sprite",
-    "lineNumber": 346,
+    "lineNumber": 352,
     "return": {
       "nullable": null,
       "types": [
@@ -14489,7 +14487,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#setVisible",
     "access": "public",
     "description": "Set the visibility on this entity",
-    "lineNumber": 354,
+    "lineNumber": 360,
     "params": [
       {
         "nullable": null,
@@ -14515,7 +14513,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#toggleVisibility",
     "access": "public",
     "description": "Toggle the current visibility of this entity",
-    "lineNumber": 361,
+    "lineNumber": 367,
     "params": [],
     "return": null
   },
@@ -14530,7 +14528,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#isVisible",
     "access": "public",
     "description": "Check whether or not this entity is visible",
-    "lineNumber": 369,
+    "lineNumber": 375,
     "return": {
       "nullable": null,
       "types": [
@@ -14552,7 +14550,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#hasShadow",
     "access": "public",
     "description": "Check whether or not this entity has a shadow",
-    "lineNumber": 377,
+    "lineNumber": 383,
     "return": {
       "nullable": null,
       "types": [
@@ -14574,7 +14572,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#hasPath",
     "access": "public",
     "description": "Check if this entity currently has a path",
-    "lineNumber": 385,
+    "lineNumber": 391,
     "return": {
       "nullable": null,
       "types": [
@@ -14596,7 +14594,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#onReady",
     "access": "public",
     "description": "When this entity's sprite is loaded trigger this callback",
-    "lineNumber": 393,
+    "lineNumber": 399,
     "params": [
       {
         "nullable": null,
@@ -14620,7 +14618,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#readyCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 394,
+    "lineNumber": 400,
     "undocument": true,
     "type": {
       "types": [
@@ -14639,7 +14637,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#onDirty",
     "access": "public",
     "description": "When this entity's is dirty (mobile) use this callback",
-    "lineNumber": 401,
+    "lineNumber": 407,
     "params": [
       {
         "nullable": null,
@@ -14663,7 +14661,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entity.js~Entity#dirtyCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 402,
+    "lineNumber": 408,
     "undocument": true,
     "type": {
       "types": [
@@ -14675,7 +14673,7 @@
     "__docId__": 848,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/entity/entityhandler.js",
-    "content": "import Packets from '../network/packets';\n\nexport default class EntityHandler {\n  constructor(entity) {\n    this.entity = entity;\n    this.game = null;\n    this.entities = null;\n  }\n\n  load() {\n    if (!this.entity || !this.game) return;\n\n    if (this.isCharacter()) {\n      this.entity.onRequestPath((x, y) => {\n        const ignored = [this.entity];\n\n        return this.game.findPath(this.entity, x, y, ignored);\n      });\n\n      this.entity.onBeforeStep(() => {\n        this.entities.unregisterPosition(this.entity);\n      });\n\n      this.entity.onStep(() => {\n        this.entities.registerDuality(this.entity);\n\n        this.entity.forEachAttacker((attacker) => {\n          if (\n            attacker.hasTarget()\n            && attacker.target.id === this.entity.id\n            && !attacker.stunned\n          ) attacker.follow(this.entity);\n        });\n\n        if (this.entity.type === 'mob') {\n          this.game.socket.send(Packets.Movement, [\n            Packets.MovementOpcode.Entity,\n            this.entity.id,\n            this.entity.gridX,\n            this.entity.gridY,\n          ]);\n        }\n\n        if (\n          this.entity.attackRange > 1\n          && this.entity.hasTarget()\n          && this.entity.getDistance(this.entity.target)\n          <= this.entity.attackRange\n        ) this.entity.stop(false);\n      });\n\n      this.entity.onStopPathing(() => {\n        this.entities.grids.addToRenderingGrid(\n          this.entity,\n          this.entity.gridX,\n          this.entity.gridY,\n        );\n\n        this.entities.unregisterPosition(this.entity);\n        this.entities.registerPosition(this.entity);\n      });\n    }\n  }\n\n  isCharacter() {\n    return (\n      this.entity.type\n      && (this.entity.type === 'player'\n        || this.entity.type === 'mob'\n        || this.entity.type === 'npc')\n    );\n  }\n\n  setGame(game) {\n    if (!this.game) this.game = game;\n\n    this.setEntities(this.game.entities);\n  }\n\n  setEntities(entities) {\n    if (!this.entities) this.entities = entities;\n  }\n}\n",
+    "content": "import Packets from '../network/packets';\n\n/**\n* This is a entity handler, responsible for all the {@link Entity} callbacks\n* without having to clutter up the entire file.\n* @class\n*/\nexport default class EntityHandler {\n  constructor(entity) {\n    this.entity = entity;\n    this.game = null;\n    this.entities = null;\n  }\n\n  load() {\n    if (!this.entity || !this.game) return;\n\n    if (this.isCharacter()) {\n      this.entity.onRequestPath((x, y) => {\n        const ignored = [this.entity];\n\n        return this.game.findPath(this.entity, x, y, ignored);\n      });\n\n      this.entity.onBeforeStep(() => {\n        this.entities.unregisterPosition(this.entity);\n      });\n\n      this.entity.onStep(() => {\n        this.entities.registerDuality(this.entity);\n\n        this.entity.forEachAttacker((attacker) => {\n          if (\n            attacker.hasTarget()\n            && attacker.target.id === this.entity.id\n            && !attacker.stunned\n          ) attacker.follow(this.entity);\n        });\n\n        if (this.entity.type === 'mob') {\n          this.game.socket.send(Packets.Movement, [\n            Packets.MovementOpcode.Entity,\n            this.entity.id,\n            this.entity.gridX,\n            this.entity.gridY,\n          ]);\n        }\n\n        if (\n          this.entity.attackRange > 1\n          && this.entity.hasTarget()\n          && this.entity.getDistance(this.entity.target)\n          <= this.entity.attackRange\n        ) this.entity.stop(false);\n      });\n\n      this.entity.onStopPathing(() => {\n        this.entities.grids.addToRenderingGrid(\n          this.entity,\n          this.entity.gridX,\n          this.entity.gridY,\n        );\n\n        this.entities.unregisterPosition(this.entity);\n        this.entities.registerPosition(this.entity);\n      });\n    }\n  }\n\n  isCharacter() {\n    return (\n      this.entity.type\n      && (this.entity.type === 'player'\n        || this.entity.type === 'mob'\n        || this.entity.type === 'npc')\n    );\n  }\n\n  setGame(game) {\n    if (!this.game) this.game = game;\n\n    this.setEntities(this.game.entities);\n  }\n\n  setEntities(entities) {\n    if (!this.entities) this.entities = entities;\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/entity/entityhandler.js",
     "access": "public",
@@ -14693,9 +14691,14 @@
     "export": true,
     "importPath": "WTF-Adventure/WTF-Adventure/src/client/js/entity/entityhandler.js",
     "importStyle": "EntityHandler",
-    "description": null,
-    "lineNumber": 3,
-    "undocument": true,
+    "description": "This is a entity handler, responsible for all the {@link Entity} callbacks\nwithout having to clutter up the entire file.",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
     "interface": false
   },
   {
@@ -14709,7 +14712,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entityhandler.js~EntityHandler#constructor",
     "access": "public",
     "description": null,
-    "lineNumber": 4,
+    "lineNumber": 9,
     "undocument": true
   },
   {
@@ -14721,7 +14724,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entityhandler.js~EntityHandler#entity",
     "access": "public",
     "description": null,
-    "lineNumber": 5,
+    "lineNumber": 10,
     "undocument": true,
     "type": {
       "types": [
@@ -14738,7 +14741,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entityhandler.js~EntityHandler#game",
     "access": "public",
     "description": null,
-    "lineNumber": 6,
+    "lineNumber": 11,
     "undocument": true,
     "type": {
       "types": [
@@ -14755,7 +14758,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entityhandler.js~EntityHandler#entities",
     "access": "public",
     "description": null,
-    "lineNumber": 7,
+    "lineNumber": 12,
     "undocument": true,
     "type": {
       "types": [
@@ -14774,7 +14777,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entityhandler.js~EntityHandler#load",
     "access": "public",
     "description": null,
-    "lineNumber": 10,
+    "lineNumber": 15,
     "undocument": true,
     "params": [],
     "return": null
@@ -14790,7 +14793,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entityhandler.js~EntityHandler#isCharacter",
     "access": "public",
     "description": null,
-    "lineNumber": 65,
+    "lineNumber": 70,
     "undocument": true,
     "params": [],
     "return": {
@@ -14810,7 +14813,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entityhandler.js~EntityHandler#setGame",
     "access": "public",
     "description": null,
-    "lineNumber": 74,
+    "lineNumber": 79,
     "undocument": true,
     "params": [
       {
@@ -14833,7 +14836,7 @@
     "longname": "WTF-Adventure/src/client/js/entity/entityhandler.js~EntityHandler#setEntities",
     "access": "public",
     "description": null,
-    "lineNumber": 80,
+    "lineNumber": 85,
     "undocument": true,
     "params": [
       {

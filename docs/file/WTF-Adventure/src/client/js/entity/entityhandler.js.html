@@ -184,6 +184,11 @@
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/entity/entityhandler.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Packets from &apos;../network/packets&apos;;
 
+/**
+* This is a entity handler, responsible for all the {@link Entity} callbacks
+* without having to clutter up the entire file.
+* @class
+*/
 export default class EntityHandler {
   constructor(entity) {
     this.entity = entity;

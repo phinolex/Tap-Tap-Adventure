@@ -1,7 +1,7 @@
 import Modules from '../utils/modules';
 
 /**
- * Keeps track of the player's current direction
+ * Keeps track of the {@link Entity} direction
  * @class
  */
 export default class Zone {

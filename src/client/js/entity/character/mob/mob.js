@@ -1,7 +1,7 @@
 import Character from '../character';
 
 /**
- * A mobile character, some can attack, others just move
+ * A mobile {@link Character}, some can attack while others just move
  * @class
  */
 export default class Mob extends Character {

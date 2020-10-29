@@ -8,7 +8,7 @@ import log from '../lib/log';
  * Handles the cursor on the HTML5 canvas, different pointers
  * can be swapped out depending on the entity the player is
  * interacting with, this holds all of the individual pointers
- * whereas {@link Pointer} holds a specific/individual; cursor
+ * whereas {@link Pointer} holds a specific/individual cursor
  * @class
  */
 export default class Cursor {

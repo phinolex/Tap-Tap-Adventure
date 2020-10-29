@@ -7,9 +7,8 @@ import Ring from './equipment/ring';
 import Modules from '../../../utils/modules';
 
 /**
- * Player
+ * A member's playable {@link Character} in the game
  * @class
- * @return {Character}
  */
 export default class Player extends Character {
   constructor() {

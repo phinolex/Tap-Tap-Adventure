@@ -185,10 +185,16 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import EntityHandler from &apos;./entityhandler&apos;;
 
 /**
- * Initialize a new entity
+ * Initialize a new entity:
+ * - {@link Character}
+ *   - {@link Mob}
+ *   - {@link Npc}
+ *   - {@link Player}
+ * - {@link Chest}
+ * - {@link Item}
+ * - {@link Projectile}
  * @class
- * @example
- * const myEntity = new Entity(1, &apos;player&apos;);
+ * @example const myEntity = new Entity(1, &apos;player&apos;);
  */
 export default class Entity {
   /**

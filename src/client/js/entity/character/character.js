@@ -5,8 +5,8 @@ import Animation from '../animation';
 import Modules from '../../utils/modules';
 
 /**
- * A character in the game. This is the base class.
- * These can be either a {@link Mob} or {@link Npc} or {@link Player}
+ * A specific type of {@link Entity}. The base class for a
+ * {@link Mob} or {@link Npc} or {@link Player}
  * @class
  */
 export default class Character extends Entity {

@@ -1,7 +1,7 @@
 import Character from '../character';
 
 /**
- * A non playable character
+ * A non-playable {@link Character}
  * @class
  */
 export default class Npc extends Character {

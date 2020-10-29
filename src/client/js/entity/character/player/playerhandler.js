@@ -1,8 +1,9 @@
 import Packets from '../../../network/packets';
 
 /**
- * This is a player handler, responsible for all the callbacks
- * without having to clutter up the entire game file.
+ * This is a player handler, responsible for all the {@link Player} callbacks
+ * without having to clutter up the entire file.
+ * @class
  */
 export default class PlayerHandler {
   constructor(game, player) {

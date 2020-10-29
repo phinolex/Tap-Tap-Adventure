@@ -1,10 +1,16 @@
 import EntityHandler from './entityhandler';
 
 /**
- * Initialize a new entity
+ * Initialize a new entity:
+ * - {@link Character}
+ *   - {@link Mob}
+ *   - {@link Npc}
+ *   - {@link Player}
+ * - {@link Chest}
+ * - {@link Item}
+ * - {@link Projectile}
  * @class
- * @example
- * const myEntity = new Entity(1, 'player');
+ * @example const myEntity = new Entity(1, 'player');
  */
 export default class Entity {
   /**
