@@ -1,4 +1,5 @@
 import Packets from '../network/packets';
+import log from '../lib/log';
 
 /**
 * This is a entity handler, responsible for all the {@link Entity} callbacks
@@ -7,6 +8,7 @@ import Packets from '../network/packets';
 */
 export default class EntityHandler {
   constructor(entity) {
+    log.debug('Entity Handler - constructor()', entity);
     this.entity = entity;
     this.game = null;
     this.entities = null;

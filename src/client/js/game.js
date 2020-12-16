@@ -444,7 +444,10 @@ export default class Game {
     this.messages.onHandshake(data => this.handshakeCallback(data));
     this.messages.onWelcome(data => this.welcomeCallback(data));
     this.messages.onEquipment((opcode, info) => this.equipmentCallback(opcode, info));
-    this.messages.onSpawn(data => this.spawnCallback(data));
+    this.messages.onSpawn((data) => {
+      console.log('SERVER ENTITY SPAWN CALLBACK', data[0]);
+      return this.spawnCallback(data);
+    });
     this.messages.onEntityList(data => this.entityListCallback(data));
     this.messages.onSync(data => this.syncCallback(data));
     this.messages.onMovement(data => this.movementCallback(data));
@@ -625,6 +628,7 @@ export default class Game {
    */
   spawnCallback(data) {
     log.debug('Game - spawnCallback()', data);
+    console.log('spawn entity create', data[0]);
     return this.entities.create(data.shift());
   }
 
@@ -636,9 +640,14 @@ export default class Game {
    */
   entityListCallback(data) {
     log.debug('Game - entityListCallback()', data);
+    console.log('-------- ENTITY LIST CALLBACK ------------');
     const ids = _.pluck(this.entities.getAll(), 'id');
     const known = _.intersection(ids, data);
     const newIds = _.difference(data, known);
+
+    console.log('-------- ENTITY IDs ------------', ids, this.entities);
+    console.log('-------- ENTITY KNOWN ------------', known);
+    console.log('-------- ENTITY NEW IDs ------------', newIds);
 
     this.entities.decrepit = _.reject(
       this.entities.getAll(),
@@ -1692,6 +1701,7 @@ export default class Game {
     log.debug('Game - getEntityAt()', x, y, ignoreSelf);
 
     const entities = this.entities.grids.renderingGrid[y][x];
+    console.log('entities are', this.entities);
 
     if (_.size(entities) > 0) {
       return entities[_.keys(entities)[ignoreSelf ? 1 : 0]];

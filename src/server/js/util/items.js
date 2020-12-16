@@ -11,21 +11,27 @@ const ItemsDictionary = {
     ItemsDictionary.properties[key] = value;
   },
   setData: (key, value) => {
-    ItemsDictionary.data[key] = value;
+    ItemsDictionary.data[key] = value; // by key
   },
   idToString: (id) => {
-    if (id in ItemsDictionary.data) {
-      return ItemsDictionary.data[id].key;
-    }
+    let string = null;
+    Object.entries(ItemsDictionary.data).forEach(([key, item]) => {
+      if (key && item.id === id) {
+        string = key;
+      }
+    });
 
-    return null;
+    return string;
   },
   idToName: (id) => {
-    if (id in ItemsDictionary.data) {
-      return ItemsDictionary.data[id].name;
-    }
+    let value = null;
+    Object.entries(ItemsDictionary.data).forEach(([key, item]) => {
+      if (key && item.id === id) {
+        value = item.name;
+      }
+    });
 
-    return null;
+    return value;
   },
   stringToId: (name) => {
     if (name in ItemsDictionary.data) {

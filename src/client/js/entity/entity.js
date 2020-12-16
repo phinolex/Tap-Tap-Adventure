@@ -1,4 +1,5 @@
 import EntityHandler from './entityhandler';
+import log from '../lib/log';
 
 /**
  * Initialize a new entity:
@@ -19,6 +20,7 @@ export default class Entity {
    * @param {String} kind the type of entity this is
    */
   constructor(id, kind) {
+    log.debug('Entity - constructor()', id, kind);
     this.id = id;
     this.kind = kind;
 

@@ -50,6 +50,7 @@ export default class Sprite {
     this.offsetX = sprite.offsetX !== undefined ? sprite.offsetX : -16;
     this.offsetY = sprite.offsetY !== undefined ? sprite.offsetY : -16;
     this.offfsetAngle = sprite.offsetAngle !== undefined ? sprite.offsetAngle : 0;
+    this.load();
   }
 
   update(newScale) {
@@ -57,7 +58,6 @@ export default class Sprite {
     this.scale = newScale;
 
     this.loadSprite();
-    this.load();
   }
 
   createAnimations() {

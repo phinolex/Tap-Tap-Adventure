@@ -14,18 +14,24 @@ const MobsDictionary = {
     MobsDictionary.data[key] = value;
   },
   idToString: (id) => {
-    if (id in MobsDictionary.data) {
-      return MobsDictionary.data[id].key;
-    }
+    let string = null;
+    Object.entries(MobsDictionary.data).forEach(([key, mob]) => {
+      if (key && mob.id === id) {
+        string = key;
+      }
+    });
 
-    return null;
+    return string;
   },
   idToName: (id) => {
-    if (id in MobsDictionary.data) {
-      return MobsDictionary.data[id].name;
-    }
+    let value = null;
+    Object.entries(MobsDictionary.data).forEach(([key, mob]) => {
+      if (key && mob.id === id) {
+        value = mob.name;
+      }
+    });
 
-    return null;
+    return value;
   },
   stringToId: (name) => {
     if (name in MobsDictionary.data) {
@@ -35,7 +41,9 @@ const MobsDictionary = {
     log.error(`${name} not found in the MobsDictionary.`);
     return 'null';
   },
-  exists: id => id in MobsDictionary.data,
+  exists: id =>
+    // console.log('mob exists', id);
+    id in MobsDictionary.data,
   setPlugins: (directory) => {
     MobsDictionary.plugins = PluginLoader(directory);
   },

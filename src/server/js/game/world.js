@@ -493,22 +493,19 @@ export default class World {
       const isNpc = !!this.npcsDictionary.getData(key);
       const isItem = !!this.itemsDictionary.getData(key);
 
-      console.log('Spawning', key, tileIndex, isMob, isNpc, isItem);
-
       const itemData = isItem
         ? this.itemsDictionary.getData(key)
         : null;
 
       const npcData = isNpc
-        ? this.npcsDictionary.properties[key]
+        ? this.npcsDictionary.getData(key)
         : itemData;
 
       const info = isMob
-        ? this.mobsDictionary.properties[key]
+        ? this.mobsDictionary.getData(key)
         : npcData;
 
       const position = this.map.indexToGridPosition(tileIndex);
-
       position.x += 1;
 
       if (!info || info === 'null') {
@@ -522,7 +519,12 @@ export default class World {
       }
 
       const instance = Utils.generateInstance(
-        isMob ? 2 : isNpc ? 3 : 4,
+        isMob
+          ? 2
+          : (isNpc
+            ? 3
+            : 4
+          ),
         info.id + entities,
         position.x + entities,
         position.y,
@@ -539,17 +541,16 @@ export default class World {
           this.addMob(mob);
         });
 
-        console.log('Spawned mob', info, instance, position, mob);
+        // console.log('Spawned mob', info, instance, position, mob);
         this.addMob(mob);
       }
 
       if (isNpc) {
         console.log('Spawned NPC', info, instance, position);
-        this.addNPC(new NPC(info.id, instance, position.x, position.y));
-      }
-
-      if (isItem) {
-        console.log('Spawned Item', info, instance, position);
+        const npc = new NPC(info.id, instance, position.x, position.y);
+        console.log('npc is', npc);
+        this.addNPC(npc);
+      } else if (isItem) {
         const item = this.createItem(info.id, instance, position.x, position.y);
         item.static = true;
         this.addItem(item);
@@ -656,12 +657,14 @@ export default class World {
       return;
     }
 
+    // console.log('Push entities groups', this.groups);
+
     entities = _.keys(this.groups[player.group].entities);
     entities = _.reject(entities, instance => instance === player.instance);
     entities = _.map(entities, instance => parseInt(instance, 10));
 
     if (entities) {
-      console.log('pushing entities list', entities);
+      // console.log('pushing entities list', entities);
       player.send(new Messages.List(entities));
     }
   }
@@ -738,6 +741,7 @@ export default class World {
 
   addNPC(npc) {
     this.addEntity(npc);
+    console.log('adding npc', npc);
     this.npcsDictionary[npc.instance] = npc;
   }
 

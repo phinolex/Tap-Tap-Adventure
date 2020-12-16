@@ -81,9 +81,7 @@ export default class Entities {
 
       this.sprites.onLoadedSprites(() => {
         log.debug('Entities - load() - sprites done loading, loading cursors');
-        // this.game.postLoad();
         this.game.input.loadCursors();
-
         this.game.postLoad();
         this.game.start();
       });
@@ -123,6 +121,9 @@ export default class Entities {
     if (this.isPlayer(info.id)) {
       return;
     }
+
+    console.log('CREATING ENTITY OF TYPE', info.type, info);
+    console.log(info);
 
     switch (info.type) {
       default:

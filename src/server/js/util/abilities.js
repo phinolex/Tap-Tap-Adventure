@@ -7,25 +7,31 @@ const AbilityDictionary = {
   plugins: {},
   getProperty: key => AbilityDictionary.properties[key],
   setProperty: (key, value) => {
-    AbilityDictionary.properties[key] = value;
+    AbilityDictionary.properties[key] = value; // by key
   },
   getData: key => AbilityDictionary.data[key],
   setData: (key, value) => {
     AbilityDictionary.data[key] = value;
   },
   idToString: (id) => {
-    if (id in AbilityDictionary.data) {
-      return AbilityDictionary.data[id].key;
-    }
+    let string = null;
+    Object.entries(AbilityDictionary.data).forEach(([key, ability]) => {
+      if (key && ability.id === id) {
+        string = key;
+      }
+    });
 
-    return null;
+    return string;
   },
   idToName: (id) => {
-    if (id in AbilityDictionary.data) {
-      return AbilityDictionary.data[id].name;
-    }
+    let value = null;
+    Object.entries(AbilityDictionary.data).forEach(([key, ability]) => {
+      if (key && ability.id === id) {
+        value = ability.name;
+      }
+    });
 
-    return null;
+    return value;
   },
   stringToId: (name) => {
     if (name in AbilityDictionary.data) {

@@ -9,7 +9,6 @@ export default class Entity {
     this.id = id;
     this.type = type;
     this.instance = instance;
-
     this.oldX = x;
     this.oldY = y;
     this.x = x;
@@ -117,21 +116,34 @@ export default class Entity {
   }
 
   getState() {
+    console.log('getting state', this.id, this.type, NPCs.idToString(this.id), Items.idToString(this.id), Mobs.idToString(this.id));
     const isNPC = this.isNPC()
       ? NPCs.idToString(this.id)
       : Items.idToString(this.id);
 
+    console.log('entity string', this.isMob(), Mobs.idToString(this.id), isNPC);
     const string = this.isMob()
       ? Mobs.idToString(this.id)
       : isNPC;
 
+    console.log('entity is an NPC?', this.isNPC());
     const isMobNPC = this.isNPC()
       ? NPCs.idToName(this.id)
       : Items.idToName(this.id);
 
+    console.log('entity is a mob?', this.isMob());
     const name = this.isMob()
       ? Mobs.idToName(this.id)
       : isMobNPC;
+
+    console.log('ENTITY IS', {
+      type: this.type,
+      id: this.instance,
+      string,
+      name,
+      x: this.x,
+      y: this.y,
+    });
 
     return {
       type: this.type,
