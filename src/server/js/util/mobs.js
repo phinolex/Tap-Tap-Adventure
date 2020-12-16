@@ -41,9 +41,16 @@ const MobsDictionary = {
     log.error(`${name} not found in the MobsDictionary.`);
     return 'null';
   },
-  exists: id =>
-    // console.log('mob exists', id);
-    id in MobsDictionary.data,
+  exists: (id) => {
+    let value = null;
+    Object.entries(MobsDictionary.data).forEach(([key, mob]) => {
+      if (key && mob.id === id) {
+        value = mob;
+      }
+    });
+
+    return value;
+  },
   setPlugins: (directory) => {
     MobsDictionary.plugins = PluginLoader(directory);
   },

@@ -518,13 +518,13 @@ export default class World {
         return;
       }
 
+      const typeNpc = isNpc ? 3 : 4;
+      const instanceType = isMob ? 2 : typeNpc;
+
+      console.log(`spawning entity: ${key} mob: ${isMob} npc: ${isNpc} item: ${isItem} instance type: ${instanceType}`);
+
       const instance = Utils.generateInstance(
-        isMob
-          ? 2
-          : (isNpc
-            ? 3
-            : 4
-          ),
+        instanceType,
         info.id + entities,
         position.x + entities,
         position.y,
@@ -546,11 +546,10 @@ export default class World {
       }
 
       if (isNpc) {
-        console.log('Spawned NPC', info, instance, position);
         const npc = new NPC(info.id, instance, position.x, position.y);
-        console.log('npc is', npc);
         this.addNPC(npc);
-      } else if (isItem) {
+      } else if (!isMob && isItem) {
+        console.log('---- ADDING ITEM');
         const item = this.createItem(info.id, instance, position.x, position.y);
         item.static = true;
         this.addItem(item);
@@ -671,7 +670,10 @@ export default class World {
 
   addEntity(entity) {
     if (entity.instance in this.entities) {
-      console.log(`Entity ${entity.instance} already exists.`);
+      console.log(`Entity ${entity.instance} ${entity.type} already exists.`,
+        this.entities[entity.instance].id,
+        this.entities[entity.instance].type);
+      return;
     }
 
     this.entities[entity.instance] = entity;
@@ -741,7 +743,6 @@ export default class World {
 
   addNPC(npc) {
     this.addEntity(npc);
-    console.log('adding npc', npc);
     this.npcsDictionary[npc.instance] = npc;
   }
 
@@ -752,7 +753,7 @@ export default class World {
     }
 
     this.addEntity(mob);
-    this.mobsDictionary[mob.instance] = mob;
+    this.mobsDictionary.data[mob.instance] = mob;
 
     mob.addToChestArea(this.getChestAreas());
 
@@ -764,7 +765,10 @@ export default class World {
   }
 
   addItem(item) {
-    if (item.static) item.onRespawn(this.addItem.bind(this, item));
+    console.log('ADDING ITEM', item);
+    if (item.static) {
+      item.onRespawn(this.addItem.bind(this, item));
+    }
 
     this.addEntity(item);
     this.itemsDictionary[item.instance] = item;
