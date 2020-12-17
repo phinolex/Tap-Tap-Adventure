@@ -227,14 +227,13 @@ export default class Container {
   }
 
   add(id, count, ability, abilityLevel) {
-    // console.log(&apos;Trying to pickup &apos; + count + &apos; x &apos; + id);
     const maxStackSize = Items.maxStackSize(id) === -1
       ? Constants.MAX_STACK
       : Items.maxStackSize(id);
 
-    // console.log(&apos;Max stack size = &apos; + maxStackSize);
-
-    if (!id || count &lt; 0 || count &gt; maxStackSize) return null;
+    if (!id || count &lt; 0 || count &gt; maxStackSize) {
+      return null;
+    }
 
     if (!Items.isStackable(id)) {
       if (this.hasSpace()) {

@@ -192,16 +192,11 @@ export default class Mob extends Character {
   /**
    * Default constructor
    * @param {Number} id the ID of the {@link Entity}
-   * @param {Number} kind the kind of {@link Entity} this is
+   * @param {String} kind the kind of {@link Entity} this is (sprite name)
+   * @param {String} label the name to display for the overlay
    */
-  constructor(id, kind) {
-    super(id, kind);
-
-    /**
-     * The name of the character
-     * @type {String}
-     */
-    this.name = null;
+  constructor(id, kind, label) {
+    super(id, kind, label);
 
     /**
      * How many hit points the character has

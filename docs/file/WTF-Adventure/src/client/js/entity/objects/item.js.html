@@ -185,8 +185,8 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Entity from &apos;../entity&apos;;
 
 export default class Item extends Entity {
-  constructor(id, kind, count, ability, abilityLevel) {
-    super(id, kind);
+  constructor(id, kind, name, count, ability, abilityLevel) {
+    super(id, kind, name);
 
     this.count = count;
     this.ability = ability;

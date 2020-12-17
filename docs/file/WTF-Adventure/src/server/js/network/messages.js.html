@@ -233,7 +233,6 @@ class List extends Message {
   }
 
   serialize() {
-    console.log(&apos;sending list&apos;, this);
     return [Packets.List, this.list];
   }
 }

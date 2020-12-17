@@ -305,7 +305,7 @@ export default class Map {
 
     fs.exists(location, (exists) =&gt; {
       if (!exists || config.forceCollisions) {
-        console.log(&apos;Generating the collision grid...&apos;);
+        log.notice(&apos;Generating the collision grid...&apos;);
 
         this.grid = [];
 
@@ -326,11 +326,11 @@ export default class Map {
 
         fs.writeFile(location, JSON.stringify(this.grid), (err) =&gt; {
           if (err) {
-            console.log(`An error has occurred: ${err}`);
+            log.notice(`An error has occurred: ${err}`);
             return;
           }
 
-          console.log(&apos;The collision grid has been successfully generated!&apos;);
+          log.notice(&apos;The collision grid has been successfully generated!&apos;);
 
           this.done();
         });

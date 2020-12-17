@@ -225,7 +225,6 @@ export default class PlayerHandler {
 
     this.player.onStartPathing((path) =&gt; {
       const i = path.length - 1;
-      console.log(&apos;path is&apos;, path);
 
       this.input.selectedX = path[i][0]; // eslint-disable-line
       this.input.selectedY = path[i][1]; // eslint-disable-line
@@ -326,7 +325,6 @@ export default class PlayerHandler {
     });
 
     this.player.onUpdateArmour((armourName) =&gt; {
-      console.log(&apos;update player sprite armour&apos;, armourName);
       this.player.setSprite(this.game.getSprite(armourName));
     });
   }

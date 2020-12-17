@@ -182,7 +182,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/server/js/game/entity/entity.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import log from &apos;../../util/log&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">// import log from &apos;../../util/log&apos;;
 import Messages from &apos;../../network/messages&apos;;
 import Mobs from &apos;../../util/mobs&apos;;
 import NPCs from &apos;../../util/npcs&apos;;
@@ -193,7 +193,6 @@ export default class Entity {
     this.id = id;
     this.type = type;
     this.instance = instance;
-
     this.oldX = x;
     this.oldY = y;
     this.x = x;
@@ -257,7 +256,7 @@ export default class Entity {
   }
 
   talk() {
-    console.log(&apos;Who is screwing around with the client?&apos;);
+    log.notice(&apos;Who is screwing around with the client?&apos;);
   }
 
   drop(item) {
@@ -321,7 +320,8 @@ export default class Entity {
       type: this.type,
       id: this.instance,
       string,
-      name,
+      name: string,
+      label: name,
       x: this.x,
       y: this.y,
     };

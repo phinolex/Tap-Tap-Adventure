@@ -185,12 +185,12 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Entity from &apos;../entity&apos;;
 
 export default class Projectile extends Entity {
-  constructor(id, kind, owner) {
+  constructor(id, kind, owner, name) {
     super(id, kind);
 
     this.owner = owner;
 
-    this.name = &apos;&apos;;
+    this.name = name || &apos;&apos;;
 
     this.startX = -1;
     this.startY = -1;

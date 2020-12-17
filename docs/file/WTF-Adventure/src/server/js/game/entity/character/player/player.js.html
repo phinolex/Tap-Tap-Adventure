@@ -347,7 +347,7 @@ export default class Player extends Character {
       stages.pop();
 
       if (this.quests.getQuestSize() !== ids.length) {
-        console.log(&apos;Mismatch in quest data.&apos;);
+        log.notice(&apos;Mismatch in quest data.&apos;);
         this.save();
       }
 
@@ -359,7 +359,7 @@ export default class Player extends Character {
       progress.pop();
 
       if (this.quests.getAchievementSize() !== ids.length) {
-        console.log(&apos;Mismatch in achievements data.&apos;);
+        log.notice(&apos;Mismatch in achievements data.&apos;);
 
         this.save();
       }
@@ -377,15 +377,21 @@ export default class Player extends Character {
   intro() {
     if (this.ban &gt; new Date()) {
       this.connection.sendUTF8(&apos;ban&apos;);
-      console.log(this.connection);
+      log.notice(&apos;Ban&apos;, this.connection, this.username);
       this.connection.close(`Player: ${this.username} is banned.`);
     }
 
-    if (this.x &lt;= 0 || this.y &lt;= 0) this.sendToSpawn();
+    if (this.x &lt;= 0 || this.y &lt;= 0) {
+      this.sendToSpawn();
+    }
 
-    if (this.hitPoints.getHitPoints() &lt; 0) this.hitPoints.setHitPoints(this.getMaxHitPoints());
+    if (this.hitPoints.getHitPoints() &lt; 0) {
+      this.hitPoints.setHitPoints(this.getMaxHitPoints());
+    }
 
-    if (this.mana.getMana() &lt; 0) this.mana.setMana(this.mana.getMaxMana());
+    if (this.mana.getMana() &lt; 0) {
+      this.mana.setMana(this.mana.getMaxMana());
+    }
 
     const info = {
       instance: this.instance,
@@ -408,7 +414,6 @@ export default class Player extends Character {
     /**
      * Send player data to client here
      */
-
     this.world.addPlayer(this);
 
     this.send(new Messages.Welcome(info));
@@ -780,13 +785,13 @@ export default class Player extends Character {
 
   timeout() {
     this.connection.sendUTF8(&apos;timeout&apos;);
-    console.log(&apos;timeout&apos;, this.connection);
+    log.notice(&apos;timeout&apos;, this.connection);
     this.connection.close(`${this.username} timed out.`);
   }
 
   invalidLogin() {
     this.connection.sendUTF8(&apos;invalidlogin&apos;);
-    console.log(&apos;connection&apos;, this.connection);
+    log.notice(&apos;connection&apos;, this.connection);
     this.connection.close(`${this.username} invalid login.`);
   }
 
