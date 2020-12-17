@@ -44,8 +44,8 @@ export default class Commands {
         break;
 
       case 'tutstage':
-        console.log('tutorial stage', this.player.getTutorial());
-        console.log(this.player.getTutorial().stage);
+        log.notice('tutorial stage', this.player.getTutorial());
+        log.notice(this.player.getTutorial().stage);
         break;
 
       case 'coords':
@@ -202,7 +202,7 @@ export default class Commands {
         break;
 
       case 'nohit':
-        console.log('invincinil');
+        log.notice('invincinil');
         this.player.invincible = !this.player.invincible;
         break;
 

@@ -86,7 +86,7 @@ export default class Overlay {
 
     this.name.html(entity.type === 'player'
       ? entity.username
-      : entity.name);
+      : entity.label);
 
     if (this.hasHealth()) {
       this.health.css({

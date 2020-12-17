@@ -11,7 +11,7 @@ const MobsDictionary = {
   },
   getData: key => MobsDictionary.data[key],
   setData: (key, value) => {
-    MobsDictionary.data[key] = value;
+    MobsDictionary.data[key] = value; // by key
   },
   idToString: (id) => {
     let string = null;

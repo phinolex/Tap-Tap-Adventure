@@ -16,7 +16,7 @@ let worldsCreated = 0;
 
 function loadParser() {
   const parsed = new Parser();
-  console.log('Parser loaded');
+  log.notice('Parser loaded');
   return parsed;
 }
 
@@ -104,7 +104,7 @@ function Main() {
     if (world) {
       world.playerConnectCallback(connection);
     } else {
-      console.log('Worlds are currently full, closing...');
+      log.notice('Worlds are currently full, closing...');
 
       connection.sendUTF8('full');
       connection.close();
@@ -112,7 +112,7 @@ function Main() {
   });
 
   setTimeout(() => {
-    console.log('setting timeout, initializing worlds');
+    log.notice('setting timeout, initializing worlds');
     for (let i = 0; i < config.worlds; i += 1) {
       worlds.push(new World(i + 1, webSocket, database));
     }
@@ -163,7 +163,7 @@ function Main() {
 
     switch (command) {
       case 'stop':
-        console.log('Safely shutting down the server...');
+        log.notice('Safely shutting down the server...');
         saveAll();
         process.exit();
         break;

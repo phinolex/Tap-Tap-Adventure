@@ -1,12 +1,12 @@
 import Entity from '../entity';
 
 export default class Projectile extends Entity {
-  constructor(id, kind, owner) {
+  constructor(id, kind, owner, name) {
     super(id, kind);
 
     this.owner = owner;
 
-    this.name = '';
+    this.name = name || '';
 
     this.startX = -1;
     this.startY = -1;

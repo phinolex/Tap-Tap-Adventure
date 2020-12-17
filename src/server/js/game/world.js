@@ -91,7 +91,7 @@ export default class World {
    * whatever new map we have created server sided. Cleaner and nicer.
    */
   load(onWorldLoad) {
-    console.log(`************ World ${this.id} ***********`);
+    log.notice(`************ World ${this.id} ***********`);
 
     this.map = new Map(this);
     this.map.isReady(() => {
@@ -99,7 +99,7 @@ export default class World {
       this.spawnChests();
       this.spawnEntities();
 
-      console.log('The map has been successfully loaded!');
+      log.notice('The map has been successfully loaded!');
 
       this.loaded();
       onWorldLoad();
@@ -118,7 +118,7 @@ export default class World {
     }
 
     this.ready = true;
-    console.log('********************************');
+    log.notice('********************************');
   }
 
   tick() {
@@ -510,7 +510,7 @@ export default class World {
 
       if (!info || info === 'null') {
         if (this.debug) {
-          console.log(
+          log.notice(
             `Unknown object spawned at: ${position.x} ${position.y}`,
           );
         }
@@ -520,8 +520,6 @@ export default class World {
 
       const typeNpc = isNpc ? 3 : 4;
       const instanceType = isMob ? 2 : typeNpc;
-
-      console.log(`spawning entity: ${key} mob: ${isMob} npc: ${isNpc} item: ${isItem} instance type: ${instanceType}`);
 
       const instance = Utils.generateInstance(
         instanceType,
@@ -541,7 +539,6 @@ export default class World {
           this.addMob(mob);
         });
 
-        // console.log('Spawned mob', info, instance, position, mob);
         this.addMob(mob);
       }
 
@@ -549,7 +546,6 @@ export default class World {
         const npc = new NPC(info.id, instance, position.x, position.y);
         this.addNPC(npc);
       } else if (!isMob && isItem) {
-        console.log('---- ADDING ITEM');
         const item = this.createItem(info.id, instance, position.x, position.y);
         item.static = true;
         this.addItem(item);
@@ -558,7 +554,7 @@ export default class World {
       entities += 1;
     });
 
-    console.log(`Spawned ${entities} entities!`);
+    log.notice(`Spawned ${entities} entities!`);
   }
 
   spawnChests() {
@@ -570,7 +566,7 @@ export default class World {
       chests += 1;
     });
 
-    console.log(`Spawned ${chests} static chests`);
+    log.notice(`Spawned ${chests} static chests`);
   }
 
   spawnMob(id, x, y) {
@@ -578,6 +574,7 @@ export default class World {
     const mob = new Mob(id, instance, x, y);
 
     if (!MobsDictionary.exists(id)) {
+      log.notice('Cannot spawn mob', id);
       return null;
     }
 
@@ -656,21 +653,18 @@ export default class World {
       return;
     }
 
-    // console.log('Push entities groups', this.groups);
-
     entities = _.keys(this.groups[player.group].entities);
     entities = _.reject(entities, instance => instance === player.instance);
     entities = _.map(entities, instance => parseInt(instance, 10));
 
     if (entities) {
-      // console.log('pushing entities list', entities);
       player.send(new Messages.List(entities));
     }
   }
 
   addEntity(entity) {
     if (entity.instance in this.entities) {
-      console.log(`Entity ${entity.instance} ${entity.type} already exists.`,
+      log.notice(`Entity ${entity.instance} ${entity.type} already exists.`,
         this.entities[entity.instance].id,
         this.entities[entity.instance].type);
       return;
@@ -753,7 +747,7 @@ export default class World {
     }
 
     this.addEntity(mob);
-    this.mobsDictionary.data[mob.instance] = mob;
+    this.mobsDictionary[mob.instance] = mob;
 
     mob.addToChestArea(this.getChestAreas());
 
@@ -765,7 +759,6 @@ export default class World {
   }
 
   addItem(item) {
-    console.log('ADDING ITEM', item);
     if (item.static) {
       item.onRespawn(this.addItem.bind(this, item));
     }

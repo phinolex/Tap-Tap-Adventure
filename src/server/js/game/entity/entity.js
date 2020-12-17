@@ -1,4 +1,4 @@
-import log from '../../util/log';
+// import log from '../../util/log';
 import Messages from '../../network/messages';
 import Mobs from '../../util/mobs';
 import NPCs from '../../util/npcs';
@@ -72,7 +72,7 @@ export default class Entity {
   }
 
   talk() {
-    console.log('Who is screwing around with the client?');
+    log.notice('Who is screwing around with the client?');
   }
 
   drop(item) {
@@ -116,40 +116,28 @@ export default class Entity {
   }
 
   getState() {
-    console.log('getting state', this.id, this.type, NPCs.idToString(this.id), Items.idToString(this.id), Mobs.idToString(this.id));
     const isNPC = this.isNPC()
       ? NPCs.idToString(this.id)
       : Items.idToString(this.id);
 
-    console.log('entity string', this.isMob(), Mobs.idToString(this.id), isNPC);
     const string = this.isMob()
       ? Mobs.idToString(this.id)
       : isNPC;
 
-    console.log('entity is an NPC?', this.isNPC());
     const isMobNPC = this.isNPC()
       ? NPCs.idToName(this.id)
       : Items.idToName(this.id);
 
-    console.log('entity is a mob?', this.isMob());
     const name = this.isMob()
       ? Mobs.idToName(this.id)
       : isMobNPC;
-
-    console.log('ENTITY IS', {
-      type: this.type,
-      id: this.instance,
-      string,
-      name,
-      x: this.x,
-      y: this.y,
-    });
 
     return {
       type: this.type,
       id: this.instance,
       string,
-      name,
+      name: string,
+      label: name,
       x: this.x,
       y: this.y,
     };

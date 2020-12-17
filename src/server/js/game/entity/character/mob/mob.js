@@ -9,7 +9,7 @@ export default class Mob extends Character {
     super(id, 'mob', instance, x, y);
 
     if (!MobsDictionary.exists(id)) {
-      console.log('MOB NOT FOUND', id);
+      log.notice('Mob not found', id, instance, x, y);
       return;
     }
 

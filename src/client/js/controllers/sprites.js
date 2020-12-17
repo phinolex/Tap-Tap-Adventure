@@ -55,7 +55,6 @@ export default class Sprites {
     log.debug('Sprites - load()', spriteData);
 
     _.each(spriteData, (sprite) => {
-      console.log('sprite ID is', sprite);
       this.sprites[sprite.id] = new Sprite(
         sprite,
         this.renderer.drawingScale,

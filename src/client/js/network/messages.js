@@ -509,7 +509,6 @@ export default class Messages {
   }
 
   onEntityList(callback) {
-    console.log('entity list callback', callback);
     this.entityListCallback = callback;
   }
 

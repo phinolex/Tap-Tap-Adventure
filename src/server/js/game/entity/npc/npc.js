@@ -3,7 +3,6 @@ import Entity from '../entity';
 export default class NPC extends Entity {
   constructor(id, instance, x, y) {
     super(id, 'npc', instance, x, y);
-    // console.log('CREATING NPC ENTITY', id, instance, x, y);
     this.talkIndex = 0;
   }
 

@@ -35,15 +35,9 @@ class Spawn extends Message {
   constructor(entity) {
     super();
     this.entity = entity;
-    if (this.entity.type == 'npc' && this.entity.id == 25) {
-      console.log('SPAWNING ENTITY CONSTRUCTOR', entity);
-    }
   }
 
   serialize() {
-    if (this.entity.type == 'npc') {
-      console.log('SPAWNING ENTITY SERIALIZE', this.entity, this.entity.getState());
-    }
     return [Packets.Spawn, this.entity.getState()];
   }
 }
@@ -55,7 +49,6 @@ class List extends Message {
   }
 
   serialize() {
-    // console.log('sending list', this);
     return [Packets.List, this.list];
   }
 }

@@ -10,4 +10,8 @@ export default class Chest extends Entity {
   idle() {
     this.setAnimation('idle_down', 150);
   }
+
+  stop() {
+    this.setAnimation('idle_down', 150);
+  }
 }

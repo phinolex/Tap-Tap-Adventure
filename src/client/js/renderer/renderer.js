@@ -21,8 +21,6 @@ const getX = (index, width) => {
 
 export default class Renderer {
   constructor(backgroundCanvas, entitiesCanvas, foregroundCanvas, textCanvas, cursorCanvas, game) {
-    // log.debug('Renderer - constructor()', backgroundCanvas, entitiesCanvas, foregroundCanvas, textCanvas, cursorCanvas, game);
-
     this.backgroundCanvas = backgroundCanvas;
     this.entitiesCanvas = entitiesCanvas;
     this.foregroundCanvas = foregroundCanvas;
@@ -84,7 +82,7 @@ export default class Renderer {
     this.debugging = false;
     this.brightness = 100;
     this.drawNames = true;
-    this.drawLevels = true;
+    this.drawLevels = false;
     this.forceRendering = false;
     this.textCanvas = $('#textCanvas');
 
@@ -110,9 +108,6 @@ export default class Renderer {
     this.scale = this.getScale();
     this.drawingScale = this.getDrawingScale();
 
-    console.log('camera scale', this.scale);
-    console.log('camera drawing scale', this.drawingScale);
-
     this.forEachContext((context) => {
       context.imageSmoothingEnabled = false; // eslint-disable-line
       context.webkitImageSmoothingEnabled = false; // eslint-disable-line
@@ -128,9 +123,6 @@ export default class Renderer {
     if (!this.camera) {
       return;
     }
-
-    console.log('camera grid widthxheight', this.camera.gridWidth, this.camera.gridHeight);
-    console.log('camera tile size', this.tileSize);
 
     this.screenWidth = this.camera.gridWidth * this.tileSize;
     this.screenHeight = this.camera.gridHeight * this.tileSize;
