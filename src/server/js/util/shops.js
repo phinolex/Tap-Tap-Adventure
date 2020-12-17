@@ -3,7 +3,7 @@ import log from './log';
 import PluginLoader from './plugins';
 
 const ShopsDictionary = {
-  data: {},
+  data: [],
   properties: {},
   plugins: {},
   getProperty: key => ShopsDictionary.properties[key],
@@ -12,21 +12,28 @@ const ShopsDictionary = {
   },
   getData: key => ShopsDictionary.data[key],
   setData: (key, value) => {
-    ShopsDictionary.data[key] = value;
+    ShopsDictionary.data[key] = value; // by key
+    ShopsDictionary.data[value.id] = value; // by id
   },
   idToString: (id) => {
-    if (id in ShopsDictionary.data) {
-      return ShopsDictionary.data[id].key;
-    }
+    let string = null;
+    Object.entries(ShopsDictionary.data).forEach(([key, shop]) => {
+      if (key && shop.id === id) {
+        string = key;
+      }
+    });
 
-    return null;
+    return string;
   },
   idToName: (id) => {
-    if (id in ShopsDictionary.data) {
-      return ShopsDictionary.data[id].name;
-    }
+    let value = null;
+    Object.entries(ShopsDictionary.data).forEach(([key, shop]) => {
+      if (key && shop.id === id) {
+        value = shop.name;
+      }
+    });
 
-    return null;
+    return value;
   },
   stringToId: (name) => {
     if (name in ShopsDictionary.data) {

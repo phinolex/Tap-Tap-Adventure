@@ -8,10 +8,11 @@ export default class Npc extends Character {
   /**
    * Default constructor
    * @param {Number} id the ID of the {@link Entity}
-   * @param {Number} kind the kind of {@link Entity} this is
+   * @param {String} kind the kind of {@link Entity} this is (sprite name)
+   * @param {String} label the name to display for the overlay
    */
-  constructor(id, kind) {
-    super(id, kind);
+  constructor(id, kind, label) {
+    super(id, kind, label);
 
     /**
      * Index for this NPC

@@ -91,7 +91,7 @@ export default class World {
    * whatever new map we have created server sided. Cleaner and nicer.
    */
   load(onWorldLoad) {
-    console.log(`************ World ${this.id} ***********`);
+    log.notice(`************ World ${this.id} ***********`);
 
     this.map = new Map(this);
     this.map.isReady(() => {
@@ -99,7 +99,7 @@ export default class World {
       this.spawnChests();
       this.spawnEntities();
 
-      console.log('The map has been successfully loaded!');
+      log.notice('The map has been successfully loaded!');
 
       this.loaded();
       onWorldLoad();
@@ -118,7 +118,7 @@ export default class World {
     }
 
     this.ready = true;
-    console.log('********************************');
+    log.notice('********************************');
   }
 
   tick() {
@@ -493,27 +493,24 @@ export default class World {
       const isNpc = !!this.npcsDictionary.getData(key);
       const isItem = !!this.itemsDictionary.getData(key);
 
-      console.log('Spawning', key, tileIndex, isMob, isNpc, isItem);
-
       const itemData = isItem
         ? this.itemsDictionary.getData(key)
         : null;
 
       const npcData = isNpc
-        ? this.npcsDictionary.properties[key]
+        ? this.npcsDictionary.getData(key)
         : itemData;
 
       const info = isMob
-        ? this.mobsDictionary.properties[key]
+        ? this.mobsDictionary.getData(key)
         : npcData;
 
       const position = this.map.indexToGridPosition(tileIndex);
-
       position.x += 1;
 
       if (!info || info === 'null') {
         if (this.debug) {
-          console.log(
+          log.notice(
             `Unknown object spawned at: ${position.x} ${position.y}`,
           );
         }
@@ -521,8 +518,11 @@ export default class World {
         return;
       }
 
+      const typeNpc = isNpc ? 3 : 4;
+      const instanceType = isMob ? 2 : typeNpc;
+
       const instance = Utils.generateInstance(
-        isMob ? 2 : isNpc ? 3 : 4,
+        instanceType,
         info.id + entities,
         position.x + entities,
         position.y,
@@ -539,17 +539,13 @@ export default class World {
           this.addMob(mob);
         });
 
-        console.log('Spawned mob', info, instance, position, mob);
         this.addMob(mob);
       }
 
       if (isNpc) {
-        console.log('Spawned NPC', info, instance, position);
-        this.addNPC(new NPC(info.id, instance, position.x, position.y));
-      }
-
-      if (isItem) {
-        console.log('Spawned Item', info, instance, position);
+        const npc = new NPC(info.id, instance, position.x, position.y);
+        this.addNPC(npc);
+      } else if (!isMob && isItem) {
         const item = this.createItem(info.id, instance, position.x, position.y);
         item.static = true;
         this.addItem(item);
@@ -558,7 +554,7 @@ export default class World {
       entities += 1;
     });
 
-    console.log(`Spawned ${entities} entities!`);
+    log.notice(`Spawned ${entities} entities!`);
   }
 
   spawnChests() {
@@ -570,7 +566,7 @@ export default class World {
       chests += 1;
     });
 
-    console.log(`Spawned ${chests} static chests`);
+    log.notice(`Spawned ${chests} static chests`);
   }
 
   spawnMob(id, x, y) {
@@ -578,6 +574,7 @@ export default class World {
     const mob = new Mob(id, instance, x, y);
 
     if (!MobsDictionary.exists(id)) {
+      log.notice('Cannot spawn mob', id);
       return null;
     }
 
@@ -661,14 +658,16 @@ export default class World {
     entities = _.map(entities, instance => parseInt(instance, 10));
 
     if (entities) {
-      console.log('pushing entities list', entities);
       player.send(new Messages.List(entities));
     }
   }
 
   addEntity(entity) {
     if (entity.instance in this.entities) {
-      console.log(`Entity ${entity.instance} already exists.`);
+      log.notice(`Entity ${entity.instance} ${entity.type} already exists.`,
+        this.entities[entity.instance].id,
+        this.entities[entity.instance].type);
+      return;
     }
 
     this.entities[entity.instance] = entity;
@@ -760,7 +759,9 @@ export default class World {
   }
 
   addItem(item) {
-    if (item.static) item.onRespawn(this.addItem.bind(this, item));
+    if (item.static) {
+      item.onRespawn(this.addItem.bind(this, item));
+    }
 
     this.addEntity(item);
     this.itemsDictionary[item.instance] = item;

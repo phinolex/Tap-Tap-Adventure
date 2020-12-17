@@ -11,21 +11,27 @@ const NpcsDictionary = {
   },
   getData: key => NpcsDictionary.data[key],
   setData: (key, value) => {
-    NpcsDictionary.data[key] = value;
+    NpcsDictionary.data[key] = value; // by key
   },
   idToString: (id) => {
-    if (id in NpcsDictionary.data) {
-      return NpcsDictionary.data[id].key;
-    }
+    let string = null;
+    Object.entries(NpcsDictionary.data).forEach(([key, npc]) => {
+      if (key && npc.id === id) {
+        string = key;
+      }
+    });
 
-    return null;
+    return string;
   },
   idToName: (id) => {
-    if (id in NpcsDictionary.data) {
-      return NpcsDictionary.data[id].name;
-    }
+    let value = null;
+    Object.entries(NpcsDictionary.data).forEach(([key, npc]) => {
+      if (key && npc.id === id) {
+        value = npc.name;
+      }
+    });
 
-    return null;
+    return value;
   },
   stringToId: (name) => {
     if (name in NpcsDictionary.data) {

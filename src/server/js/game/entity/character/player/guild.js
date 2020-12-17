@@ -15,6 +15,6 @@ export default class Guild {
   }
 
   save() {
-    console.log(Guilds[this.leader.username]);
+    log.notice(Guilds[this.leader.username]);
   }
 }

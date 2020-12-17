@@ -49,7 +49,6 @@ class List extends Message {
   }
 
   serialize() {
-    console.log('sending list', this);
     return [Packets.List, this.list];
   }
 }

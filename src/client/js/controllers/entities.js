@@ -81,9 +81,7 @@ export default class Entities {
 
       this.sprites.onLoadedSprites(() => {
         log.debug('Entities - load() - sprites done loading, loading cursors');
-        // this.game.postLoad();
         this.game.input.loadCursors();
-
         this.game.postLoad();
         this.game.start();
       });
@@ -134,12 +132,12 @@ export default class Entities {
          * the proper way -ahem- TTA V1.0
          */
 
-        const chest = new Chest(info.id, info.name); // eslint-disable-line
+        const chest = new Chest(info.id, info.name, info.label); // eslint-disable-line
         entity = chest;
         break;
 
       case 'npc':
-        const npc = new NPC(info.id, info.name); // eslint-disable-line
+        const npc = new NPC(info.id, info.name, info.label); // eslint-disable-line
         entity = npc;
         break;
 
@@ -147,6 +145,7 @@ export default class Entities {
         const item = new Item( // eslint-disable-line
           info.id,
           info.name,
+          info.label,
           info.count,
           info.ability,
           info.abilityLevel,
@@ -155,7 +154,7 @@ export default class Entities {
         break;
 
       case 'mob':
-        const mob = new Mob(info.id, info.name); // eslint-disable-line
+        const mob = new Mob(info.id, info.name, info.label); // eslint-disable-line
 
         mob.setHitPoints(info.hitPoints);
         mob.setMaxHitPoints(info.maxHitPoints);
@@ -181,9 +180,8 @@ export default class Entities {
           info.id,
           info.projectileType,
           attacker,
+          info.name,
         );
-
-        projectile.name = info.name;
 
         projectile.setStart(attacker.x, attacker.y);
         projectile.setTarget(target);
@@ -237,7 +235,6 @@ export default class Entities {
 
       case 'player':
         const player = new Player(); // eslint-disable-line
-        console.log('loading player entity data', info);
 
         player.setId(info.id);
         player.setName(info.name);
@@ -481,7 +478,6 @@ export default class Entities {
   * @return {Chest|NPC|Item|Mob|Projectile|Player}
   */
   getSprite(name) {
-    console.log('get sprite', name);
     log.debug('Entities - getSprite()', name);
     return this.sprites.sprites[name];
   }

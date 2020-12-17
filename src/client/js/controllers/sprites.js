@@ -62,7 +62,7 @@ export default class Sprites {
     });
 
     if (this.loadedSpritesCallback) {
-      log.debug('Sprites - load() - Finished loading sprite data...');
+      log.debug('Sprites - load() - Finished loading sprite data...', this.sprites);
       this.loadedSpritesCallback();
     }
   }

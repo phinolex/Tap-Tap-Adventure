@@ -1,4 +1,4 @@
-import log from '../../util/log';
+// import log from '../../util/log';
 import Messages from '../../network/messages';
 import Mobs from '../../util/mobs';
 import NPCs from '../../util/npcs';
@@ -9,7 +9,6 @@ export default class Entity {
     this.id = id;
     this.type = type;
     this.instance = instance;
-
     this.oldX = x;
     this.oldY = y;
     this.x = x;
@@ -73,7 +72,7 @@ export default class Entity {
   }
 
   talk() {
-    console.log('Who is screwing around with the client?');
+    log.notice('Who is screwing around with the client?');
   }
 
   drop(item) {
@@ -137,7 +136,8 @@ export default class Entity {
       type: this.type,
       id: this.instance,
       string,
-      name,
+      name: string,
+      label: name,
       x: this.x,
       y: this.y,
     };

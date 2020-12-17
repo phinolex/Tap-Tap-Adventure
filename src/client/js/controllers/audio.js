@@ -260,13 +260,13 @@ export default class Audio {
     this.clearFadeOut(this.song);
 
     this.song.fadingIn = setInterval(() => {
-      if (this.song.volume + 0.02 < 1) {
+      if (this.song && this.song.volume + 0.02 < 1) {
         this.song.volume += 0.02;
-      } else {
+      } else if (this.song) {
         this.song.volume = 1;
       }
 
-      if (this.song.volume >= this.getMusicVolume() - 0.02) {
+      if (this.song && this.song.volume >= this.getMusicVolume() - 0.02) {
         this.song.volume = this.getMusicVolume();
         this.clearFadeIn(this.song);
       }

@@ -163,7 +163,7 @@ export default class Player extends Character {
       stages.pop();
 
       if (this.quests.getQuestSize() !== ids.length) {
-        console.log('Mismatch in quest data.');
+        log.notice('Mismatch in quest data.');
         this.save();
       }
 
@@ -175,7 +175,7 @@ export default class Player extends Character {
       progress.pop();
 
       if (this.quests.getAchievementSize() !== ids.length) {
-        console.log('Mismatch in achievements data.');
+        log.notice('Mismatch in achievements data.');
 
         this.save();
       }
@@ -193,15 +193,21 @@ export default class Player extends Character {
   intro() {
     if (this.ban > new Date()) {
       this.connection.sendUTF8('ban');
-      console.log(this.connection);
+      log.notice('Ban', this.connection, this.username);
       this.connection.close(`Player: ${this.username} is banned.`);
     }
 
-    if (this.x <= 0 || this.y <= 0) this.sendToSpawn();
+    if (this.x <= 0 || this.y <= 0) {
+      this.sendToSpawn();
+    }
 
-    if (this.hitPoints.getHitPoints() < 0) this.hitPoints.setHitPoints(this.getMaxHitPoints());
+    if (this.hitPoints.getHitPoints() < 0) {
+      this.hitPoints.setHitPoints(this.getMaxHitPoints());
+    }
 
-    if (this.mana.getMana() < 0) this.mana.setMana(this.mana.getMaxMana());
+    if (this.mana.getMana() < 0) {
+      this.mana.setMana(this.mana.getMaxMana());
+    }
 
     const info = {
       instance: this.instance,
@@ -224,7 +230,6 @@ export default class Player extends Character {
     /**
      * Send player data to client here
      */
-
     this.world.addPlayer(this);
 
     this.send(new Messages.Welcome(info));
@@ -596,13 +601,13 @@ export default class Player extends Character {
 
   timeout() {
     this.connection.sendUTF8('timeout');
-    console.log('timeout', this.connection);
+    log.notice('timeout', this.connection);
     this.connection.close(`${this.username} timed out.`);
   }
 
   invalidLogin() {
     this.connection.sendUTF8('invalidlogin');
-    console.log('connection', this.connection);
+    log.notice('connection', this.connection);
     this.connection.close(`${this.username} invalid login.`);
   }
 

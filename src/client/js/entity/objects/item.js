@@ -1,8 +1,8 @@
 import Entity from '../entity';
 
 export default class Item extends Entity {
-  constructor(id, kind, count, ability, abilityLevel) {
-    super(id, kind);
+  constructor(id, kind, name, count, ability, abilityLevel) {
+    super(id, kind, name);
 
     this.count = count;
     this.ability = ability;

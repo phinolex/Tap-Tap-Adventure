@@ -13,7 +13,7 @@ export default class Loader {
         const info = rows.shift();
 
         if (info.username !== player.username) {
-          console.log(
+          log.notice(
             `Mismatch whilst retrieving inventory data for: ${player.username}`,
           );
         }
@@ -36,7 +36,7 @@ export default class Loader {
         const info = rows.shift();
 
         if (info.username !== player.username) {
-          console.log(
+          log.notice(
             `Mismatch whilst retrieving bank data for: ${player.username}`,
           );
         }
@@ -59,7 +59,7 @@ export default class Loader {
         const info = rows.shift();
 
         if (info.username !== player.username) {
-          console.log(
+          log.notice(
             `Mismatch whilst retrieving quest data for: ${player.username}`,
           );
         }
@@ -77,7 +77,7 @@ export default class Loader {
         const info = rows.shift();
 
         if (info.username !== player.username) {
-          console.log(
+          log.notice(
             `Mismatch whilst retreiving achievement data for: ${
               player.username}`,
           );
