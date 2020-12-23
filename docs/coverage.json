@@ -1,7 +1,7 @@
 {
-  "coverage": "20.86%",
+  "coverage": "21.87%",
   "expectCount": 2948,
-  "actualCount": 615,
+  "actualCount": 645,
   "files": {
     "WTF-Adventure/src/client/js/app.js": {
       "expectCount": 78,
@@ -80,10 +80,8 @@
     },
     "WTF-Adventure/src/client/js/entity/character/mob/mob.js": {
       "expectCount": 7,
-      "actualCount": 6,
-      "undocumentLines": [
-        41
-      ]
+      "actualCount": 7,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/character/npc/npc.js": {
       "expectCount": 5,
@@ -92,68 +90,33 @@
     },
     "WTF-Adventure/src/client/js/entity/character/player/equipment/armour.js": {
       "expectCount": 6,
-      "actualCount": 0,
-      "undocumentLines": [
-        3,
-        4,
-        7,
-        8,
-        11,
-        15
-      ]
+      "actualCount": 6,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/character/player/equipment/boots.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        3
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/character/player/equipment/equipment.js": {
       "expectCount": 12,
-      "actualCount": 1,
-      "undocumentLines": [
-        9,
-        10,
-        11,
-        12,
-        13,
-        16,
-        20,
-        24,
-        28,
-        32,
-        36
-      ]
+      "actualCount": 12,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/character/player/equipment/pendant.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        3
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/character/player/equipment/ring.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        3
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/character/player/equipment/weapon.js": {
       "expectCount": 9,
-      "actualCount": 0,
-      "undocumentLines": [
-        3,
-        4,
-        7,
-        8,
-        9,
-        12,
-        16,
-        20,
-        24
-      ]
+      "actualCount": 9,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/character/player/player.js": {
       "expectCount": 54,
