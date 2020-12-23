@@ -15,13 +15,13 @@ export default class Mob extends Character {
     super(id, kind, label);
 
     /**
-     * How many hit points the character has
+     * How many hit points the mob has
      * @type {Number}
      */
     this.hitPoints = -1; // not applicable by default
 
     /**
-     * Maximum hit points the character has
+     * Maximum hit points the mob has
      * @type {Number}
      */
     this.maxHitPoints = -1; // not applicable by default
@@ -31,6 +31,12 @@ export default class Mob extends Character {
      * @type {String}
      */
     this.type = 'mob';
+
+    /**
+     * The name of the mob
+     * @type {String}
+     */
+    this.name = kind;
   }
 
   /**

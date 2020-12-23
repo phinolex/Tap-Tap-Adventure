@@ -4,6 +4,20 @@ export default {
     Down: 1,
     Left: 2,
     Right: 3,
+    toString: (orientation) => {
+      switch (orientation) {
+        case 2:
+          return 'left';
+        case 3:
+          return 'right';
+        case 0:
+          return 'up';
+        case 1:
+          return 'down';
+        default:
+          return null;
+      }
+    },
   },
 
   Types: {

@@ -228,8 +228,8 @@ export default class Commands {
         break;
 
       case &apos;tutstage&apos;:
-        console.log(&apos;tutorial stage&apos;, this.player.getTutorial());
-        console.log(this.player.getTutorial().stage);
+        log.notice(&apos;tutorial stage&apos;, this.player.getTutorial());
+        log.notice(this.player.getTutorial().stage);
         break;
 
       case &apos;coords&apos;:
@@ -386,7 +386,7 @@ export default class Commands {
         break;
 
       case &apos;nohit&apos;:
-        console.log(&apos;invincinil&apos;);
+        log.notice(&apos;invincinil&apos;);
         this.player.invincible = !this.player.invincible;
         break;
 

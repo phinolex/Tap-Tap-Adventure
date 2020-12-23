@@ -294,7 +294,7 @@ export default class Incoming {
   }
 
   handleIntro(message) {
-    console.log(`incoming message: ${message.toString()}`);
+    log.notice(`incoming message: ${message.toString()}`);
     const loginType = message.shift();
     const username = message.shift().toLowerCase();
     const password = message.shift();
@@ -336,7 +336,7 @@ export default class Incoming {
     this.introduced = true;
 
     if (isRegistering) {
-      console.log(&apos;is registering&apos;);
+      log.notice(&apos;is registering&apos;);
       const registerOptions = {
         method: &apos;GET&apos;,
         uri: `${&apos;https://taptapadventure.com/api/register.php?a=&apos;
@@ -374,7 +374,7 @@ export default class Incoming {
               break;
           }
         } catch (e) {
-          console.log(&apos;Could not decipher API message&apos;);
+          log.notice(&apos;Could not decipher API message&apos;);
 
           this.connection.sendUTF8(&apos;disallowed&apos;);
           this.connection.close(&apos;API response is malformed!&apos;);
@@ -388,7 +388,7 @@ export default class Incoming {
 
       this.mysql.login(this.player);
     } else {
-      console.log(&apos;validating login&apos;);
+      log.notice(&apos;validating login&apos;);
       this.connection.sendUTF8(&apos;validatingLogin&apos;);
       this.mysql.login(this.player);
     }
@@ -584,7 +584,7 @@ export default class Incoming {
     const opcode = message.shift();
     const instance = message.shift();
 
-    console.log(`Targeted: ${instance}`);
+    log.notice(`Targeted: ${instance}`);
 
     switch (opcode) {
       default:
@@ -692,7 +692,7 @@ export default class Incoming {
       default:
         break;
       case Packets.NetworkOpcode.Pong:
-        console.log(&apos;Pingy pongy pong pong.&apos;);
+        log.notice(&apos;Pingy pongy pong pong.&apos;);
         break;
     }
   }

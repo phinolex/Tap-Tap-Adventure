@@ -446,7 +446,6 @@ export default class Game {
 
       if (this.started) {
         // log.debug(&apos;Game - tick() - started&apos;, window);
-        // console.log(&apos;tick&apos;, requestAnimFrame(this.tick.bind(this)));
         requestAnimFrame(this.tick.bind(this));
       }
     }
@@ -792,7 +791,6 @@ export default class Game {
         const type = info.shift(); // eslint-disable-line
         this.player.unequip(type);
         if (type === &apos;armour&apos;) {
-          console.log(&apos;get armour sprite&apos;, this.player.getSpriteName());
           this.player.setSprite(this.getSprite(this.player.getSpriteName()));
         }
         this.interface.profile.update();
@@ -868,7 +866,6 @@ export default class Game {
     }
 
     if (playerEntity.armour) {
-      console.log(&apos;get player entity armour sprite&apos;, playerEntity.armour);
       entity.setSprite(this.getSprite(playerEntity.armour));
     }
 
@@ -999,7 +996,6 @@ export default class Game {
     if (withAnimation) {
       const originalSprite = entity.sprite;
       entity.teleporting = true;
-      console.log(&apos;get sprite death&apos;);
       entity.setSprite(this.getSprite(&apos;death&apos;));
 
       entity.animate(&apos;death&apos;, 240, 1, () =&gt; {
@@ -1040,7 +1036,6 @@ export default class Game {
         this.entities.removeItem(entity);
         return false;
       case &apos;chest&apos;:
-        console.log(&apos;chest get sprite death&apos;);
         entity.setSprite(this.getSprite(&apos;death&apos;));
 
         entity.setAnimation(&apos;death&apos;, 120, 1, () =&gt; {
@@ -1064,7 +1059,6 @@ export default class Game {
     }
 
     entity.hitPoints = 0;
-    console.log(&apos;entity get sprite death&apos;);
     entity.setSprite(this.getSprite(&apos;death&apos;));
 
     entity.animate(&apos;death&apos;, 120, 1, () =&gt; {
@@ -1555,7 +1549,6 @@ export default class Game {
     this.entities.addEntity(this.player);
     this.renderer.camera.centreOn(this.player);
     this.player.currentAnimation = null;
-    console.log(&apos;get sprite player sprite name&apos;, this.player.getSpriteName());
     this.player.setSprite(this.getSprite(this.player.getSpriteName()));
     this.player.idle();
     this.player.dead = false;
@@ -1678,7 +1671,6 @@ export default class Game {
 
     this.entities.addEntity(this.player);
 
-    console.log(&apos;default sprite&apos;, this.player);
     const defaultSprite = this.getSprite(this.player.getSpriteName());
 
     this.player.setSprite(defaultSprite);
@@ -1756,7 +1748,6 @@ export default class Game {
     log.debug(&apos;Game - findPath()&apos;, x, y, ignores);
 
     const grid = this.entities.grids.pathingGrid;
-    console.log(&apos;GRID IS ----------- &apos;, grid);
     let path = [];
 
     if (this.map.isColliding(x, y) || !this.pathfinder || !character) {
@@ -1959,7 +1950,6 @@ export default class Game {
     log.debug(&apos;Game - setEntityController()&apos;, entities, this.entities);
 
     if (!this.entities) {
-      console.log(&apos;setting entities to&apos;, entities);
       this.entities = entities;
     }
   }

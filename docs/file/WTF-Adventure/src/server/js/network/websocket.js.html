@@ -231,7 +231,7 @@ class Connection {
 
   close(reason) {
     if (reason) {
-      console.log(`[Connection] Closing - ${reason}`);
+      log.notice(`[Connection] Closing - ${reason}`);
     }
 
     this.socket.conn.close();

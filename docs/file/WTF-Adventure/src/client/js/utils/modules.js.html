@@ -188,6 +188,20 @@
     Down: 1,
     Left: 2,
     Right: 3,
+    toString: (orientation) =&gt; {
+      switch (orientation) {
+        case 2:
+          return &apos;left&apos;;
+        case 3:
+          return &apos;right&apos;;
+        case 0:
+          return &apos;up&apos;;
+        case 1:
+          return &apos;down&apos;;
+        default:
+          return null;
+      }
+    },
   },
 
   Types: {

@@ -4884,9 +4884,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "wtf-adventure/src/client/js/entity/entity.js~entity#kind",
-    "class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html#instance-member-kind",
-    "WTF-Adventure/src/client/js/entity/entity.js~Entity#kind",
+    "wtf-adventure/src/client/js/entity/entity.js~entity#label",
+    "class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html#instance-member-label",
+    "WTF-Adventure/src/client/js/entity/entity.js~Entity#label",
     "member"
   ],
   [
@@ -5133,6 +5133,12 @@ window.esdocSearchIndex = [
     "wtf-adventure/src/client/js/entity/objects/chest.js~chest#idle",
     "class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html#instance-method-idle",
     "WTF-Adventure/src/client/js/entity/objects/chest.js~Chest#idle",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/entity/objects/chest.js~chest#stop",
+    "class/WTF-Adventure/src/client/js/entity/objects/chest.js~Chest.html#instance-method-stop",
+    "WTF-Adventure/src/client/js/entity/objects/chest.js~Chest#stop",
     "method"
   ],
   [

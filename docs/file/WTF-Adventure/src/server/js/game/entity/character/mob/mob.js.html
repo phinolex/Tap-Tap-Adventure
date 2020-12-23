@@ -193,10 +193,11 @@ export default class Mob extends Character {
     super(id, &apos;mob&apos;, instance, x, y);
 
     if (!MobsDictionary.exists(id)) {
+      log.notice(&apos;Mob not found&apos;, id, instance, x, y);
       return;
     }
 
-    this.data = MobsDictionary.mobs[this.id];
+    this.data = MobsDictionary.exists(this.id);
     this.hitPoints = this.data.hitPoints;
     this.maxHitPoints = this.data.hitPoints;
     this.drops = this.data.drops;

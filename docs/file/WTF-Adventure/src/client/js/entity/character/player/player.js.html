@@ -285,8 +285,9 @@ export default class Player extends Character {
   }
 
   getSpriteName() {
-    console.log(&apos;get player sprite armour&apos;, this.armour);
-    return this.armour ? this.armour.name : &apos;clotharmor&apos;;
+    return this.armour
+      ? this.armour.name
+      : &apos;clotharmor&apos;;
   }
 
   setMana(mana) {
@@ -324,8 +325,6 @@ export default class Player extends Character {
     const count = info.shift();
     const ability = info.shift();
     const abilityLevel = info.shift();
-
-    console.log(&apos;setting player equipment&apos;, type, info);
 
     switch (type) {
       case Modules.Equipment.Armour:

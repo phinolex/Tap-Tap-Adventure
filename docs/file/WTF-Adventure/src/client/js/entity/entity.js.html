@@ -183,6 +183,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/entity/entity.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import EntityHandler from &apos;./entityhandler&apos;;
+import log from &apos;../lib/log&apos;;
 
 /**
  * Initialize a new entity:
@@ -202,16 +203,16 @@ export default class Entity {
    * @param {Number} id the entity id
    * @param {String} kind the type of entity this is
    */
-  constructor(id, kind) {
+  constructor(id, kind, label) {
+    log.debug(&apos;Entity - constructor()&apos;, id, kind, label);
     this.id = id;
-    this.kind = kind;
+    this.name = kind;
+    this.label = label;
 
     this.x = 0;
     this.y = 0;
     this.gridX = 0;
     this.gridY = 0;
-
-    this.name = &apos;&apos;;
 
     this.sprite = null;
     this.spriteFlipX = false;
