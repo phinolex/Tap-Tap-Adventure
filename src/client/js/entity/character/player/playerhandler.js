@@ -92,6 +92,7 @@ export default class PlayerHandler {
       this.input.selectedCellVisible = true;
 
       if (!this.game.getEntityAt(this.input.selectedX, this.input.selectedY)) {
+        console.log('canvas setting target no entity');
         this.socket.send(Packets.Target, [Packets.TargetOpcode.None]);
       }
 
@@ -127,6 +128,7 @@ export default class PlayerHandler {
       ]);
 
       if (hasTarget) {
+        console.log('canvas stop pathing has target', hasTarget, this.player.target.id);
         this.socket.send(Packets.Target, [
           this.isAttackable()
             ? Packets.TargetOpcode.Attack

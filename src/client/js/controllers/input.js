@@ -188,12 +188,14 @@ export default class Input {
    * @param  {Object} data      data related to the input (keycode, coordinates, etc)
    */
   handle(inputType, data) {
+    console.log('canvas handling game input', inputType, data);
     switch (inputType) {
       default:
         break;
 
       // WASD and arrow key press movement
       case Modules.InputType.Key:
+        console.log('canvas input type key');
         if (this.chatHandler.isActive()) {
           this.chatHandler.key(data);
           return;
@@ -226,8 +228,10 @@ export default class Input {
 
       // mouse click movement and interactions
       case Modules.InputType.LeftClick:
+        console.log('canvas input type click');
         this.getPlayer().disableAction = false;
         this.setCoords(data);
+        console.log('canvas clicking on cords', this.getCoords());
         this.click(this.getCoords());
         break;
     }
@@ -285,6 +289,7 @@ export default class Input {
     const player = this.getPlayer();
 
     if (player.stunned) {
+      console.log('canvas player is stunned');
       return;
     }
 
@@ -298,9 +303,13 @@ export default class Input {
       this.renderer.mobile
       && this.chatHandler.input.is(':visible')
       && this.chatHandler.input.val() === ''
-    ) this.chatHandler.hideInput();
+    ) {
+      console.log('canvas hiding chat handler input');
+      this.chatHandler.hideInput();
+    }
 
     if (this.game.zoning && this.game.zoning.direction) {
+      console.log('canvas zoning');
       return;
     }
 
@@ -310,10 +319,14 @@ export default class Input {
       position.x === player.gridX && position.y === player.gridY,
     );
 
+    console.log('canvas entity is', entity);
+
     if (entity && !player.disableAction) {
+      console.log('canvas setting attack target');
       this.setAttackTarget();
 
       if (this.isTargetable(entity)) {
+        console.log('canvas is targetable');
         player.setTarget(entity);
       }
 
@@ -322,6 +335,7 @@ export default class Input {
         && player.isRanged()
         && this.isAttackable(entity)
       ) {
+        console.log('canvas stopping for ranged enemy');
         this.game.socket.send(Packets.Target, [
           Packets.TargetOpcode.Attack,
           entity.id,
@@ -331,6 +345,7 @@ export default class Input {
       }
 
       if (entity.gridX === player.gridX && entity.gridY === player.gridY) {
+        console.log('canvas setting attack', entity.id);
         this.game.socket.send(Packets.Target, [
           Packets.TargetOpcode.Attack,
           entity.id,
@@ -338,18 +353,21 @@ export default class Input {
       }
 
       // @TODO this was commented out, not sure why??
-      if (entity.type === 'player') {
-        this.getActions().showPlayerActions(entity, this.mouse.x, this.mouse.y);
-        return;
-      }
+      // if (entity.type === 'player') {
+      //   console.log('canvas show player actions');
+      //   this.getActions().showPlayerActions(entity, this.mouse.x, this.mouse.y);
+      //   return;
+      // }
 
       if (this.isTargetable(entity)) {
+        console.log('canvas following the entity');
         player.follow(entity);
         return;
       }
 
       player.disableAction = true;
     } else {
+      console.log('canvas removing target');
       player.removeTarget();
     }
 
@@ -358,10 +376,12 @@ export default class Input {
     player.go(position.x, position.y);
 
     if (this.game.interface) {
+      console.log('canvas hiding all game interface');
       this.game.interface.hideAll();
     }
 
     if (!this.game.audio.song && Detect.isSafari()) {
+      console.log('canvas updating safari audio');
       this.game.audio.update();
     }
   }
@@ -415,12 +435,10 @@ export default class Input {
           this.setCursor(this.cursors.loot);
           this.hovering = Modules.Hovering.Item;
           break;
-
         case 'mob':
           this.setCursor(this.getAttackCursor());
           this.hovering = Modules.Hovering.Mob;
           break;
-
         case 'player':
           this.setCursor(
             this.game.pvp && entity.pvp
@@ -453,7 +471,7 @@ export default class Input {
    * @param {MouseEvent} event the mouse move or mouse click event
    */
   setCoords(event) {
-    log.debug('Input - setCoords', event, this.app.canvas);
+    // log.debug('Input - setCoords', event, this.app.canvas);
     const offset = this.app.canvas.offset();
     const x = event.clientX - offset.left;
     const y = event.clientY - offset.top;
@@ -472,7 +490,7 @@ export default class Input {
       y,
     );
 
-    log.debug('Input - variables', offset, height, width, this.mouse.x, this.mouse.y, this.app.getZoom());
+    // log.debug('Input - variables', offset, height, width, this.mouse.x, this.mouse.y, this.app.getZoom());
 
     if (this.mouse.x >= width) {
       this.mouse.x = width - 1;

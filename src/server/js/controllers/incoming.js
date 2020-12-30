@@ -59,6 +59,7 @@ export default class Incoming {
           break;
 
         case Packets.Target:
+          console.log('RECIEVED TARGET PACKET', message);
           this.handleTarget(message);
           break;
 
@@ -400,7 +401,7 @@ export default class Incoming {
     const opcode = message.shift();
     const instance = message.shift();
 
-    log.notice(`Targeted: ${instance}`);
+    log.notice(`canvas Targeted: ${instance}`);
 
     switch (opcode) {
       default:

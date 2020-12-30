@@ -280,7 +280,9 @@ export default class App {
     $(document).on('keydown', this.keydownEventListener);
     $(document).on('keyup', this.keyupEventListener);
     $(document).on('mousemove', this.mousemoveEventListener);
-    this.canvas.click(this.canvasClickEventListener);
+    this.canvas.on('click', this.canvasClickEventListener);
+
+    // this.canvas.click(this.canvasClickEventListener);
 
     $('input[type="range"]').on('input', () => {
       this.updateRange(this);
@@ -459,7 +461,6 @@ export default class App {
       return false;
     }
 
-    log.debug('App - mousemoveEventListener()', event, this);
     this.game.input.setCoords(event);
     this.game.input.moveCursor();
 
@@ -472,12 +473,14 @@ export default class App {
    * @return {Boolean}
    */
   canvasClickEventListener(event) {
-    log.debug('App - canvasClickEventListener()', event);
+    log.debug('App - canvasClickEventListener()');
+    console.log('canvas', event, this.game, event.button);
 
-    if (!this.game || !this.game.started || event.button !== 0) {
+    if (!this.game || !this.game.started) {
       return false;
     }
 
+    console.log('canvas', 'sending event to input!!', this.game.input);
     window.scrollTo(0, 1);
     this.game.input.handle(Modules.InputType.LeftClick, event);
 

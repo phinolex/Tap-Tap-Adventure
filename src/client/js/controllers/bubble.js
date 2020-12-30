@@ -44,12 +44,10 @@ export default class Bubble {
       this.bubbles[id].reset(time);
       $(`#${id} p`).html(message);
     } else {
-      const element = $(
-        `<div id='${id}' class='bubble'>
+      const element = $(`<div id='${id}' class='bubble'>
           <p>${message}</p>
           <div class='bubbleTip'></div>
-        </div>`,
-      );
+        </div>`);
 
       $(element).appendTo(this.container);
 
@@ -74,16 +72,16 @@ export default class Bubble {
     const scale = this.game.renderer.getDrawingScale();
     const tileSize = 16 * scale;
     const x = (entity.x - this.game.getCamera().x) * scale;
-    const width = parseInt(bubble.element.css('width'), 10) + 24;
+    const width = parseInt($(bubble.element).css('width'), 10) + 24;
     const offset = width / 2 - tileSize / 2;
     const offsetY = 10;
     const y = (entity.y - this.game.getCamera().y) * scale - tileSize * 2 - offsetY;
 
-    bubble.element.css(
+    $(bubble.element).css(
       'left',
       `${x - offset + (2 + this.game.renderer.scale)}px`,
     );
-    bubble.element.css('top', `${y}px`);
+    $(bubble.element).css('top', `${y}px`);
   }
 
   /**
