@@ -742,6 +742,15 @@ body {
   font-size: 15px;
 }
 
+#bubbles {
+  z-index: 99999;
+  background-color: #fff;
+  pointer-events: none;
+  overflow: hidden;
+  position: absolute;
+  font-family: sans-serif;
+}
+
 #bubbles a {
   pointer-events: auto;
   text-decoration: none;
@@ -916,11 +925,6 @@ html [type="button"],
     margin-bottom: -768px;
     top: 15px;
     left: 12px;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 5;
-    position: absolute;
-    font-family: sans-serif;
   }
 
   #chat {
@@ -1011,11 +1015,6 @@ html [type="button"],
     margin-bottom: -512px;
     top: 10px;
     left: 8px;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 5;
-    position: absolute;
-    font-family: sans-serif;
   }
 
   #chat {
@@ -1105,11 +1104,6 @@ html [type="button"],
     margin-bottom: -256px;
     top: 5px;
     left: 4px;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 5;
-    position: absolute;
-    font-family: sans-serif;
   }
 
   #chat {

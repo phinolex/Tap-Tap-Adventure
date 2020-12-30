@@ -52,15 +52,16 @@ export default class Handler {
     });
 
     this.player.onTalkToNPC((npc) => {
+      console.log('talk to NPC', npc);
       if (this.player.quests.isQuestNPC(npc)) {
+        console.log('this is a quest npc');
         this.player.quests.getQuestByNPC(npc).triggerTalk(npc);
-
         return;
       }
 
       if (this.player.quests.isAchievementNPC(npc)) {
+        console.log('this is an achievement npc');
         this.player.quests.getAchievementByNPC(npc).converse(npc);
-
         return;
       }
 
@@ -68,22 +69,26 @@ export default class Handler {
         default:
           break;
         case 'banker':
+          console.log('this is a banker');
           this.player.send(new Messages.NPC(Packets.NPCOpcode.Bank, {}));
           return;
-
         case 'echanter':
+          console.log('this is an enchanter');
           this.player.send(new Messages.NPC(Packets.NPCOpcode.Enchant, {}));
           break;
       }
 
       const text = Npcs.getText(npc.id);
+      console.log('this is a regular npc with this text', text);
 
       if (!text) {
+        console.log('ERROR: this NPC has no next', npc);
         return;
       }
 
       npc.talk(text);
 
+      console.log('sending NPC talk data', npc.instance, text);
       this.player.send(
         new Messages.NPC(Packets.NPCOpcode.Talk, {
           id: npc.instance,

@@ -18,6 +18,15 @@
   float: left;
 }
 
+#bubbles {
+  z-index: 99999;
+  background-color: #fff;
+  pointer-events: none;
+  overflow: hidden;
+  position: absolute;
+  font-family: sans-serif;
+}
+
 #notify,
 #confirm {
   position: absolute;

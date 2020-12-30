@@ -415,6 +415,7 @@ export default class Character extends Entity {
    * @param  {Character} character the character to follow
    */
   follow(character) {
+    console.log('canvas follow', character);
     this.following = true;
 
     this.setTarget(character);
@@ -638,22 +639,22 @@ export default class Character extends Entity {
    * Update movement on the path
    */
   updateMovement() {
-    const { step, path, performAction } = this;
+    const { step, path } = this;
 
     if (path[step][0] < path[step - 1][0]) {
-      performAction(Modules.Orientation.Left, Modules.Actions.Walk);
+      this.performAction(Modules.Orientation.Left, Modules.Actions.Walk);
     }
 
     if (path[step][0] > path[step - 1][0]) {
-      performAction(Modules.Orientation.Right, Modules.Actions.Walk);
+      this.performAction(Modules.Orientation.Right, Modules.Actions.Walk);
     }
 
     if (path[step][1] < path[step - 1][1]) {
-      performAction(Modules.Orientation.Up, Modules.Actions.Walk);
+      this.performAction(Modules.Orientation.Up, Modules.Actions.Walk);
     }
 
     if (path[step][1] > path[step - 1][1]) {
-      performAction(Modules.Orientation.Down, Modules.Actions.Walk);
+      this.performAction(Modules.Orientation.Down, Modules.Actions.Walk);
     }
   }
 
@@ -927,6 +928,7 @@ export default class Character extends Entity {
    * @param {Character} target the character to target
    */
   setTarget(target) {
+    console.log('canvas setting target', target);
     if (target === null) {
       this.removeTarget();
       return;
@@ -934,11 +936,13 @@ export default class Character extends Entity {
 
     // they are already targeting this character
     if (this.target && this.target.id === target.id) {
+      console.log('canvas already has this target');
       return;
     }
 
     // remove any old targets
     if (this.hasTarget()) {
+      console.log('canvas removing old target');
       this.removeTarget();
     }
 

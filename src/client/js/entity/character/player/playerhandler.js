@@ -6,21 +6,66 @@ import Packets from '../../../network/packets';
  * @class
  */
 export default class PlayerHandler {
+  /**
+   * Default constructor
+   * @param {Game} game instance of the game
+   * @param {Player} player instance of the player
+   */
   constructor(game, player) {
+    /**
+     * Instance of the game
+     * @type {Game}
+     */
     this.game = game;
+
+    /**
+     * Reference to the game Camera
+     * @type {Camera}
+     */
     this.camera = game.getCamera();
+
+    /**
+     * Reference to input in the game
+     * @type {Input}
+     */
     this.input = game.input;
+
+    /**
+     * Reference to the player
+     * @type {Player}
+     */
     this.player = player;
+
+    /**
+     * Entities in the game
+     * @type {Entities}
+     */
     this.entities = game.entities;
+
+    /**
+     * Reference to the server Socket
+     * @type {Socket}
+     */
     this.socket = game.socket;
+
+    /**
+     * Reference to the render layers
+     * @type {Renderer}
+     */
     this.renderer = game.renderer;
 
+    // load the player handler
     this.load();
   }
 
+  /**
+   * Load the the callbacks for the player
+   */
   load() {
     this.player.onRequestPath((x, y) => {
-      if (this.player.dead) return null;
+      if (this.player.dead) {
+        return null;
+      }
 
       const ignores = [this.player];
 
@@ -47,6 +92,7 @@ export default class PlayerHandler {
       this.input.selectedCellVisible = true;
 
       if (!this.game.getEntityAt(this.input.selectedX, this.input.selectedY)) {
+        console.log('canvas setting target no entity');
         this.socket.send(Packets.Target, [Packets.TargetOpcode.None]);
       }
 
@@ -82,6 +128,7 @@ export default class PlayerHandler {
       ]);
 
       if (hasTarget) {
+        console.log('canvas stop pathing has target', hasTarget, this.player.target.id);
         this.socket.send(Packets.Target, [
           this.isAttackable()
             ? Packets.TargetOpcode.Attack
@@ -98,10 +145,14 @@ export default class PlayerHandler {
     this.player.onBeforeStep(() => {
       this.entities.unregisterPosition(this.player);
 
-      if (!this.isAttackable()) return;
+      if (!this.isAttackable()) {
+        return;
+      }
 
       if (this.player.isRanged()) {
-        if (this.player.getDistance(this.player.target) < 7) this.player.stop();
+        if (this.player.getDistance(this.player.target) < 7) {
+          this.player.stop();
+        }
       } else {
         this.input.selectedX = this.player.target.gridX;
         this.input.selectedY = this.player.target.gridY;
@@ -109,9 +160,13 @@ export default class PlayerHandler {
     });
 
     this.player.onStep(() => {
-      if (this.player.hasNextStep()) this.entities.registerDuality(this.player);
+      if (this.player.hasNextStep()) {
+        this.entities.registerDuality(this.player);
+      }
 
-      if (!this.camera.centered) this.checkBounds();
+      if (!this.camera.centered) {
+        this.checkBounds();
+      }
 
       this.player.forEachAttacker((attacker) => {
         if (!attacker.stunned) attacker.follow(this.player);
@@ -128,12 +183,13 @@ export default class PlayerHandler {
       this.renderer.updateAnimatedTiles();
     });
 
+    /**
+     * This is a callback representing the absolute exact position of the player.
+     */
     this.player.onMove(() => {
-      /**
-       * This is a callback representing the absolute exact position of the player.
-       */
-
-      if (this.camera.centered) this.camera.centreOn(this.player);
+      if (this.camera.centered) {
+        this.camera.centreOn(this.player);
+      }
 
       if (this.player.hasTarget()) {
         this.player.follow(this.player.target);
@@ -145,10 +201,12 @@ export default class PlayerHandler {
     });
   }
 
+  /**
+   * Whether or not this player can be attacked
+   * @return {Boolean} returns true if it can be attacked
+   */
   isAttackable() {
-    const {
-      target,
-    } = this.player;
+    const { target } = this.player;
 
     if (!target) {
       return false;
@@ -157,17 +215,28 @@ export default class PlayerHandler {
     return target.type === 'mob' || (target.type === 'player' && target.pvp);
   }
 
+  /**
+   * Check the bounds of the player when they're not centered
+   */
   checkBounds() {
+    // get the X and Y position on the grid relative to
+    // the player and the camera coordinates to check for
+    // zoning directions
     const x = this.player.gridX - this.camera.gridX;
-
-
     const y = this.player.gridY - this.camera.gridY;
 
-    if (x === 0) this.game.zoning.setLeft();
-    else if (y === 0) this.game.zoning.setUp();
-    else if (x === this.camera.gridWidth - 1) this.game.zoning.setRight();
-    else if (y === this.camera.gridHeight - 1) this.game.zoning.setDown();
+    if (x === 0) {
+      this.game.zoning.setLeft();
+    } else if (y === 0) {
+      this.game.zoning.setUp();
+    } else if (x === this.camera.gridWidth - 1) {
+      this.game.zoning.setRight();
+    } else if (y === this.camera.gridHeight - 1) {
+      this.game.zoning.setDown();
+    }
 
+    // if the game is zoning to a direction update
+    // the camera to the zone direction
     if (this.game.zoning.direction !== null) {
       this.camera.zone(this.game.zoning.getDirection());
       this.game.zoning.reset();

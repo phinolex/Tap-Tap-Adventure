@@ -57,7 +57,9 @@ export default class World {
 
       if (diff < 4000) {
         connection.sendUTF8('toofast');
-        connection.Socket.close('Logging in too rapidly');
+        if (connection.Socket) {
+          connection.Socket.close('Logging in too rapidly');
+        }
 
         return;
       }

@@ -4404,12 +4404,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "wtf-adventure/src/client/js/entity/character/player/player.js~player#loadequipment",
-    "class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html#instance-method-loadEquipment",
-    "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#loadEquipment",
-    "method"
-  ],
-  [
     "wtf-adventure/src/client/js/entity/character/player/player.js~player#loadhandler",
     "class/WTF-Adventure/src/client/js/entity/character/player/player.js~Player.html#instance-method-loadHandler",
     "WTF-Adventure/src/client/js/entity/character/player/player.js~Player#loadHandler",
@@ -4614,6 +4608,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#beforestepcallback",
+    "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-method-beforeStepCallback",
+    "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#beforeStepCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#camera",
     "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-member-camera",
     "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#camera",
@@ -4662,6 +4662,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#movecallback",
+    "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-method-moveCallback",
+    "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#moveCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#player",
     "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-member-player",
     "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#player",
@@ -4674,10 +4680,46 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#requestpathcallback",
+    "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-method-requestPathCallback",
+    "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#requestPathCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#secondstepcallback",
+    "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-method-secondStepCallback",
+    "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#secondStepCallback",
+    "method"
+  ],
+  [
     "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#socket",
     "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-member-socket",
     "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#socket",
     "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#startpathingcallback",
+    "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-method-startPathingCallback",
+    "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#startPathingCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#stepcallback",
+    "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-method-stepCallback",
+    "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#stepCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#stoppathingcallback",
+    "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-method-stopPathingCallback",
+    "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#stopPathingCallback",
+    "method"
+  ],
+  [
+    "wtf-adventure/src/client/js/entity/character/player/playerhandler.js~playerhandler#updatearmorcallback",
+    "class/WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler.html#instance-method-updateArmorCallback",
+    "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js~PlayerHandler#updateArmorCallback",
+    "method"
   ],
   [
     "wtf-adventure/src/client/js/entity/entity.js",

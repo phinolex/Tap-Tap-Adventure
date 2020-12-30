@@ -1279,23 +1279,32 @@ export default class Game {
       default:
         break;
       case Packets.NPCOpcode.Talk:
+        console.log('canvas NPC talk!!!', info);
         let entity = this.entities.get(info.id); // eslint-disable-line
         const messages = info.text; // eslint-disable-line
         const isNPC = !info.nonNPC; // eslint-disable-line
 
         if (!entity) {
+          console.log('canvas no entity by this ID');
           return;
         }
 
         if (!messages) {
+          console.log('canvas no messages');
           entity.talkIndex = 0;
           return;
         }
 
-        let message = isNPC ? entity.talk(messages) : messages; // eslint-disable-line
+        const message = isNPC
+          ? entity.talk(messages)
+          : messages; // eslint-disable-line
+
+        console.log('canvas messages are', message);
 
         if (isNPC) {
+          console.log('canvas this is an NPC');
           const bubble = this.bubble.create(info.id, message, this.time, 5000);
+          console.log('canvas bubble', bubble);
 
           this.bubble.setTo(entity);
 
@@ -1304,20 +1313,23 @@ export default class Game {
           }
 
           if (bubble) {
+            console.log('canvas clickable bubble');
             bubble.setClickable();
 
-            bubble.element.click(() => {
-              entity = this.entities.get(bubble.id);
+            bubble.element.on('click', () => {
+              const bubbleInstance = this.entities.get(bubble.id);
 
-              if (entity) {
+              if (bubbleInstance) {
+                console.log('canvas bubble instance');
                 this.input.click({
-                  x: entity.gridX,
-                  y: entity.gridY,
+                  x: bubbleInstance.gridX,
+                  y: bubbleInstance.gridY,
                 });
               }
             });
           }
         } else {
+          console.log('canvas this is not an npc');
           this.bubble.create(info.id, message, this.time, 5000);
           this.bubble.setTo(entity);
         }

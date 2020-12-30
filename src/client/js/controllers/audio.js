@@ -288,13 +288,13 @@ export default class Audio {
     this.clearFadeIn(this.song);
 
     this.song.fadingOut = setInterval(() => {
-      if (this.song.volume - 0.08 > 0) {
+      if (this.song && this.song.volume - 0.08 > 0) {
         this.song.volume -= 0.08;
-      } else {
+      } else if (this.song) {
         this.song.volume = 0;
       }
 
-      if (this.song.volume <= 0.08) {
+      if (this.song && this.song.volume <= 0.08) {
         this.song.volume = 0;
 
         if (callback) {
