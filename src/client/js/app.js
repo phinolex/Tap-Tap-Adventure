@@ -492,19 +492,19 @@ export default class App {
   zoom() {
     log.debug('App - zoom()');
 
-    // const containerWidth = this.container.width();
-    // const containerHeight = this.container.height();
-    // const windowWidth = this.window.width();
-    // const windowHeight = this.window.height();
-    // let zoomFactor = windowWidth / containerWidth;
+    const containerWidth = this.container.width();
+    const containerHeight = this.container.height();
+    const windowWidth = this.window.width();
+    const windowHeight = this.window.height();
+    let zoomFactor = windowWidth / containerWidth;
 
-    // if (containerHeight + 50 >= windowHeight) {
-    //   zoomFactor = windowHeight / (containerHeight + 50);
-    // }
-    //
-    // if (this.getScaleFactor() === 3) {
-    //   zoomFactor -= 0.1;
-    // }
+    if (containerHeight + 50 >= windowHeight) {
+      zoomFactor = windowHeight / (containerHeight + 50);
+    }
+
+    if (this.getScaleFactor() === 3) {
+      zoomFactor -= 0.1;
+    }
 
     // this.body.css({
     //   zoom: zoomFactor,
