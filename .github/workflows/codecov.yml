@@ -9,24 +9,19 @@ jobs:
         node-version: [8.x, 10.x, 12.x]
 
     steps:
-    - uses: actions/checkout@master
-    - name: Setup Python
-      uses: actions/setup-python@master
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
       with:
-        python-version: 3.7
+        node-version: ${{ matrix.node-version }}
     - name: Generate coverage report
-      run: |
-        pip install pytest
-        pip install pytest-cov
-        pytest --cov=./ --cov-report=xml
+      run: npm run codecov
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
-        file: ./coverage.xml
-        files: ./coverage1.xml,./coverage2.xml
-        directory: ./coverage/reports/
+        file: ./coverage/coverage-summary.json
+        directory: ./coverage/lcov-report/
         flags: unittests
-        env_vars: OS,PYTHON
         name: codecov-umbrella
         fail_ci_if_error: true
         path_to_write_report: ./coverage/codecov_report.txt
