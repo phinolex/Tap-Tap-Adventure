@@ -1,4 +1,4 @@
-/* global Event */
+/* global document, Event */
 import App from '../app';
 
 /**
@@ -185,5 +185,48 @@ describe('App', () => {
     };
 
     expect(instance.canvasClickEventListener(event)).toEqual(true);
+  });
+
+  /**
+   * @test {App#cleanErrors}
+   */
+  it('.cleanErrors()', () => {
+    expect(instance.loginFields).toBeDefined();
+    expect(instance.registerFields).toBeDefined();
+    instance.cleanErrors();
+
+    expect(document.querySelectorAll('.field-error').length).toEqual(0);
+    expect(document.querySelectorAll('.validation-error').length).toEqual(0);
+    expect(document.querySelectorAll('.status').length).toEqual(0);
+  });
+
+  /**
+   * @test {App#displayScreen}
+   */
+  it('.displayScreen()', () => {
+    expect(instance.displayScreen()).toEqual(false);
+
+    instance.loggingIn = true;
+    expect(instance.displayScreen('logging in fail')).toEqual(false);
+    instance.loggingIn = false;
+
+    // make our DOM elments since this is headless...
+    const loadCharacter = document.createElement('div');
+    loadCharacter.setAttribute('id', 'loadCharacter');
+    document.body.appendChild(loadCharacter);
+
+    const createCharacter = document.createElement('div');
+    createCharacter.setAttribute('id', 'createCharacter');
+    document.body.appendChild(createCharacter);
+
+    // toggle off loading character
+    expect(instance.displayScreen('loadCharacter', 'createCharacter')).toEqual(true);
+    expect(loadCharacter.style.display).toEqual('none');
+    expect(createCharacter.style.display).toEqual('block');
+
+    // toggle off creating character
+    expect(instance.displayScreen('createCharacter', 'loadCharacter')).toEqual(true);
+    expect(loadCharacter.style.display).toEqual('block');
+    expect(createCharacter.style.display).toEqual('none');
   });
 });

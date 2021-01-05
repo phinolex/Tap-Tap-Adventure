@@ -182,7 +182,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/__tests__/app.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global Event */
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global document, Event */
 import App from &apos;../app&apos;;
 
 /**
@@ -291,7 +291,7 @@ describe(&apos;App&apos;, () =&gt; {
   });
 
   /**
-   * @test {App#respawn}
+   * @test {App#respawnPlayer}
    */
   it(&apos;.respawn()&apos;, () =&gt; {
     expect(instance.respawnPlayer()).toEqual(false);
@@ -369,6 +369,26 @@ describe(&apos;App&apos;, () =&gt; {
     };
 
     expect(instance.canvasClickEventListener(event)).toEqual(true);
+  });
+
+  /**
+   * @test {App#cleanErrors}
+   */
+  it(&apos;.cleanErrors()&apos;, () =&gt; {
+    expect(instance.loginFields).toBeDefined();
+    expect(instance.registerFields).toBeDefined();
+    instance.cleanErrors();
+
+    expect(document.querySelectorAll(&apos;.field-error&apos;).length).toEqual(0);
+    expect(document.querySelectorAll(&apos;.validation-error&apos;).length).toEqual(0);
+    expect(document.querySelectorAll(&apos;.status&apos;).length).toEqual(0);
+  });
+
+  /**
+   * @test {App#displayScreen}
+   */
+  it(&apos;.displayScreen()&apos;, () =&gt; {
+    expect(instance.displayScreen()).toEqual(undefined);
   });
 });
 </code></pre>

@@ -191,10 +191,12 @@ class Logger {
    * @param {String|null} level debug|info|error
    */
   constructor(level) {
-    this.level = level;
+    this.level = (window &amp;&amp; window.debugLevel) || level;
     this.classMap = {};
 
-    console.log(&quot;%c    &quot;, &quot;background-image:url(&apos;https://raw.githubusercontent.com/design1online/WTF-Adventure/master/assets/img/wtflogo.png&apos;);background-repeat:no-repeat;background-position:center center;line-height:.85em;background-size:100% 100%;font-size:200px&quot;)
+    if ([&quot;debug&quot;, &quot;info&quot;, &quot;prod&quot;].includes(this.level)) {
+      console.log(&quot;%c    &quot;, &quot;background-image:url(&apos;https://raw.githubusercontent.com/design1online/WTF-Adventure/master/assets/img/wtflogo.png&apos;);background-repeat:no-repeat;background-position:center center;line-height:.85em;background-size:100% 100%;font-size:200px&quot;);
+    }
   }
 
   /**
