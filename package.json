@@ -19,28 +19,28 @@
   },
   "contributors": [
     {
-      "name" : "Veradictus",
-      "url" : "https://github.com/Veradictus"
+      "name": "Veradictus",
+      "url": "https://github.com/Veradictus"
     },
     {
-      "name" : "Noctisdark",
-      "url" : "https://github.com/Noctisdark"
+      "name": "Noctisdark",
+      "url": "https://github.com/Noctisdark"
     },
     {
-      "name" : "TassadarX",
-      "url" : "https://github.com/TassadarX"
+      "name": "TassadarX",
+      "url": "https://github.com/TassadarX"
     },
     {
-      "name" : "Design1online",
-      "url" : "https://github.com/design1online"
+      "name": "Design1online",
+      "url": "https://github.com/design1online"
     },
     {
-      "name" : "Eric256",
-      "url" : "https://github.com/eric256"
+      "name": "Eric256",
+      "url": "https://github.com/eric256"
     },
     {
-      "name" : "Spoobert",
-      "url" : "https://github.com/spoobert"
+      "name": "Spoobert",
+      "url": "https://github.com/spoobert"
     }
   ],
   "license": "wtfpl-2.0",
@@ -74,6 +74,8 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "testEnvironment": "jsdom",
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "coverageReporters": [
       "json-summary",
       "text",
@@ -129,6 +131,7 @@
     "browser-sync-webpack-plugin": "^2.2.2",
     "canvas": "^2.6.1",
     "clean-webpack-plugin": "^1.0.1",
+    "codecov": "^3.8.1",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.1.1",
     "esdoc": "^1.1.0",
