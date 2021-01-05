@@ -1,4 +1,4 @@
-/* global document, Event */
+/* global document, window, Event */
 import WTF from '../main';
 
 // mock the Detect import
@@ -58,10 +58,16 @@ describe('WTF', () => {
     document.addEventListener = jest.fn((event, callback) => {
       map[event] = callback;
     });
+
     instance.addResizeListeners();
     expect(map.touchstart).toBeDefined();
     expect(map.touchmove).toBeDefined();
     expect(map.touchmove(new Event('test'))).toEqual(false);
+
+    // check window orientation changes
+    const updateOrientationMock = jest.spyOn(instance.app, 'updateOrientation');
+    window.dispatchEvent(new Event('orientationchange'));
+    expect(updateOrientationMock).toHaveBeenCalled();
   });
 
   /**
