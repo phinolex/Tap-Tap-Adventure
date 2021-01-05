@@ -47,6 +47,9 @@ export default class WTF {
     $(document).ready(() => this.documentReady());
   }
 
+  /**
+   * Document in jQuery is ready to go
+   */
   documentReady() {
     this.app = new App();
     this.body = $('body');
@@ -97,6 +100,8 @@ export default class WTF {
     resizeCheck.bind('webkitTransitionEnd', this.app.resize.bind(this));
     resizeCheck.bind('oTransitionEnd', this.app.resize.bind(this));
 
+    // @TODO see on why this should use resize instead
+    // {@link https://davidwalsh.name/orientation-change}
     $(window).on('orientationchange', () => {
       this.app.updateOrientation();
     });
