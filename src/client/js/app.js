@@ -550,13 +550,14 @@ export default class App {
     log.debug('App - displayScreen()', origin, destination);
 
     if (!destination || this.loggingIn) {
-      return;
+      return false;
     }
 
     this.cleanErrors();
     // this.wrapper.removeClass(origin).addClass(destination);
     $(`#${origin}`).css('display', 'none');
     $(`#${destination}`).css('display', 'block');
+    return true;
   }
 
   /**
