@@ -107,7 +107,7 @@ describe('App', () => {
   });
 
   /**
-   * @test {App#respawn}
+   * @test {App#respawnPlayer}
    */
   it('.respawn()', () => {
     expect(instance.respawnPlayer()).toEqual(false);

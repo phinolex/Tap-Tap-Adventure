@@ -474,13 +474,11 @@ export default class App {
    */
   canvasClickEventListener(event) {
     log.debug('App - canvasClickEventListener()');
-    console.log('canvas', event, this.game, event.button);
 
     if (!this.game || !this.game.started) {
       return false;
     }
 
-    console.log('canvas', 'sending event to input!!', this.game.input);
     window.scrollTo(0, 1);
     this.game.input.handle(Modules.InputType.LeftClick, event);
 
