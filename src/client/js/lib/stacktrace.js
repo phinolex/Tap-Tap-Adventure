@@ -340,7 +340,7 @@ printStackTrace.implementation.prototype = {
 
   guessFunctions(stack) {
     for (let i = 0; i < stack.length; ++i) {
-      const reStack = /\{anonymous\}\(.*\)@(\w+:\/\/([\-\w\.]+)+(:\d+)?[^:]+):(\d+):?(\d+)?/;
+      const reStack = /\{anonymous\}\(.*\)@(\w+:\/\/([\-\w[^-]]+)+(:\d+)?[^:]+):(\d+):?(\d+)?/;
       const frame = stack[i];
       const m = reStack.exec(frame);
       if (m) {
