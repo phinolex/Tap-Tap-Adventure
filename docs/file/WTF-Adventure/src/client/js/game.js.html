@@ -1463,23 +1463,32 @@ export default class Game {
       default:
         break;
       case Packets.NPCOpcode.Talk:
+        console.log(&apos;canvas NPC talk!!!&apos;, info);
         let entity = this.entities.get(info.id); // eslint-disable-line
         const messages = info.text; // eslint-disable-line
         const isNPC = !info.nonNPC; // eslint-disable-line
 
         if (!entity) {
+          console.log(&apos;canvas no entity by this ID&apos;);
           return;
         }
 
         if (!messages) {
+          console.log(&apos;canvas no messages&apos;);
           entity.talkIndex = 0;
           return;
         }
 
-        let message = isNPC ? entity.talk(messages) : messages; // eslint-disable-line
+        const message = isNPC
+          ? entity.talk(messages)
+          : messages; // eslint-disable-line
+
+        console.log(&apos;canvas messages are&apos;, message);
 
         if (isNPC) {
+          console.log(&apos;canvas this is an NPC&apos;);
           const bubble = this.bubble.create(info.id, message, this.time, 5000);
+          console.log(&apos;canvas bubble&apos;, bubble);
 
           this.bubble.setTo(entity);
 
@@ -1488,20 +1497,23 @@ export default class Game {
           }
 
           if (bubble) {
+            console.log(&apos;canvas clickable bubble&apos;);
             bubble.setClickable();
 
-            bubble.element.click(() =&gt; {
-              entity = this.entities.get(bubble.id);
+            bubble.element.on(&apos;click&apos;, () =&gt; {
+              const bubbleInstance = this.entities.get(bubble.id);
 
-              if (entity) {
+              if (bubbleInstance) {
+                console.log(&apos;canvas bubble instance&apos;);
                 this.input.click({
-                  x: entity.gridX,
-                  y: entity.gridY,
+                  x: bubbleInstance.gridX,
+                  y: bubbleInstance.gridY,
                 });
               }
             });
           }
         } else {
+          console.log(&apos;canvas this is not an npc&apos;);
           this.bubble.create(info.id, message, this.time, 5000);
           this.bubble.setTo(entity);
         }

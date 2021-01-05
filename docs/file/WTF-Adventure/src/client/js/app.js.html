@@ -464,7 +464,9 @@ export default class App {
     $(document).on(&apos;keydown&apos;, this.keydownEventListener);
     $(document).on(&apos;keyup&apos;, this.keyupEventListener);
     $(document).on(&apos;mousemove&apos;, this.mousemoveEventListener);
-    this.canvas.click(this.canvasClickEventListener);
+    this.canvas.on(&apos;click&apos;, this.canvasClickEventListener);
+
+    // this.canvas.click(this.canvasClickEventListener);
 
     $(&apos;input[type=&quot;range&quot;]&apos;).on(&apos;input&apos;, () =&gt; {
       this.updateRange(this);
@@ -643,7 +645,6 @@ export default class App {
       return false;
     }
 
-    log.debug(&apos;App - mousemoveEventListener()&apos;, event, this);
     this.game.input.setCoords(event);
     this.game.input.moveCursor();
 
@@ -656,9 +657,9 @@ export default class App {
    * @return {Boolean}
    */
   canvasClickEventListener(event) {
-    log.debug(&apos;App - canvasClickEventListener()&apos;, event);
+    log.debug(&apos;App - canvasClickEventListener()&apos;);
 
-    if (!this.game || !this.game.started || event.button !== 0) {
+    if (!this.game || !this.game.started) {
       return false;
     }
 

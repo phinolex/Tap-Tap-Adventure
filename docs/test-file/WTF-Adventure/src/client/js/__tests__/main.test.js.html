@@ -182,7 +182,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/__tests__/main.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global document, Event */
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global document, window, Event */
 import WTF from &apos;../main&apos;;
 
 // mock the Detect import
@@ -242,10 +242,16 @@ describe(&apos;WTF&apos;, () =&gt; {
     document.addEventListener = jest.fn((event, callback) =&gt; {
       map[event] = callback;
     });
+
     instance.addResizeListeners();
     expect(map.touchstart).toBeDefined();
     expect(map.touchmove).toBeDefined();
     expect(map.touchmove(new Event(&apos;test&apos;))).toEqual(false);
+
+    // check window orientation changes
+    const updateOrientationMock = jest.spyOn(instance.app, &apos;updateOrientation&apos;);
+    window.dispatchEvent(new Event(&apos;orientationchange&apos;));
+    expect(updateOrientationMock).toHaveBeenCalled();
   });
 
   /**

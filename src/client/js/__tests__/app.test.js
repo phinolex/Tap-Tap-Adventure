@@ -1,4 +1,4 @@
-/* global Event */
+/* global document, Event */
 import App from '../app';
 
 /**
@@ -185,5 +185,25 @@ describe('App', () => {
     };
 
     expect(instance.canvasClickEventListener(event)).toEqual(true);
+  });
+
+  /**
+   * @test {App#cleanErrors}
+   */
+  it('.cleanErrors()', () => {
+    expect(instance.loginFields).toBeDefined();
+    expect(instance.registerFields).toBeDefined();
+    instance.cleanErrors();
+
+    expect(document.querySelectorAll('.field-error').length).toEqual(0);
+    expect(document.querySelectorAll('.validation-error').length).toEqual(0);
+    expect(document.querySelectorAll('.status').length).toEqual(0);
+  });
+
+  /**
+   * @test {App#displayScreen}
+   */
+  it('.displayScreen()', () => {
+    expect(instance.displayScreen()).toEqual(undefined);
   });
 });
