@@ -54,8 +54,7 @@
     "esdocs": "./node_modules/.bin/esdoc",
     "docs": "open ./docs/index.html",
     "test": "jest --env=jsdom --coverage && npm run badges",
-    "badges": "make-coverage-badge",
-    "codecov": "jest --env=jsdom && codecov"
+    "badges": "make-coverage-badge"
   },
   "engines": {
     "node": ">=8.0"

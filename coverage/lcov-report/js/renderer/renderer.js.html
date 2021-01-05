@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0.2% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/496</span>
+                <span class='fraction'>1/492</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0.2% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/494</span>
+                <span class='fraction'>1/490</span>
             </div>
         
             
@@ -1447,15 +1447,7 @@
 <a name='L1388'></a><a href='#L1388'>1388</a>
 <a name='L1389'></a><a href='#L1389'>1389</a>
 <a name='L1390'></a><a href='#L1390'>1390</a>
-<a name='L1391'></a><a href='#L1391'>1391</a>
-<a name='L1392'></a><a href='#L1392'>1392</a>
-<a name='L1393'></a><a href='#L1393'>1393</a>
-<a name='L1394'></a><a href='#L1394'>1394</a>
-<a name='L1395'></a><a href='#L1395'>1395</a>
-<a name='L1396'></a><a href='#L1396'>1396</a>
-<a name='L1397'></a><a href='#L1397'>1397</a>
-<a name='L1398'></a><a href='#L1398'>1398</a>
-<a name='L1399'></a><a href='#L1399'>1399</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1391'></a><a href='#L1391'>1391</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1478,8 +1470,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1569,9 +1559,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1585,9 +1572,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2876,8 +2860,6 @@ const getX = <span class="fstat-no" title="function not covered" >(i</span>ndex,
 &nbsp;
 export default class Renderer {
 <span class="fstat-no" title="function not covered" >  co</span>nstructor(backgroundCanvas, entitiesCanvas, foregroundCanvas, textCanvas, cursorCanvas, game) {
-    // log.debug('Renderer - constructor()', backgroundCanvas, entitiesCanvas, foregroundCanvas, textCanvas, cursorCanvas, game);
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.backgroundCanvas = backgroundCanvas;</span>
 <span class="cstat-no" title="statement not covered" >    this.entitiesCanvas = entitiesCanvas;</span>
 <span class="cstat-no" title="statement not covered" >    this.foregroundCanvas = foregroundCanvas;</span>
@@ -2936,10 +2918,10 @@ export default class Renderer {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.stopRendering = false;</span>
 <span class="cstat-no" title="statement not covered" >    this.animateTiles = true;</span>
-<span class="cstat-no" title="statement not covered" >    this.debugging = true;</span>
+<span class="cstat-no" title="statement not covered" >    this.debugging = false;</span>
 <span class="cstat-no" title="statement not covered" >    this.brightness = 100;</span>
 <span class="cstat-no" title="statement not covered" >    this.drawNames = true;</span>
-<span class="cstat-no" title="statement not covered" >    this.drawLevels = true;</span>
+<span class="cstat-no" title="statement not covered" >    this.drawLevels = false;</span>
 <span class="cstat-no" title="statement not covered" >    this.forceRendering = false;</span>
 <span class="cstat-no" title="statement not covered" >    this.textCanvas = $('#textCanvas');</span>
 &nbsp;
@@ -2965,9 +2947,6 @@ export default class Renderer {
 <span class="cstat-no" title="statement not covered" >    this.scale = this.getScale();</span>
 <span class="cstat-no" title="statement not covered" >    this.drawingScale = this.getDrawingScale();</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    console.log('camera scale', this.scale);</span>
-<span class="cstat-no" title="statement not covered" >    console.log('camera drawing scale', this.drawingScale);</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.forEachContext(<span class="fstat-no" title="function not covered" >(c</span>ontext) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      context.imageSmoothingEnabled = false; </span>// eslint-disable-line
 <span class="cstat-no" title="statement not covered" >      context.webkitImageSmoothingEnabled = false; </span>// eslint-disable-line
@@ -2983,9 +2962,6 @@ export default class Renderer {
 <span class="cstat-no" title="statement not covered" >    if (!this.camera) {</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    console.log('camera grid widthxheight', this.camera.gridWidth, this.camera.gridHeight);</span>
-<span class="cstat-no" title="statement not covered" >    console.log('camera tile size', this.tileSize);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.screenWidth = this.camera.gridWidth * this.tileSize;</span>
 <span class="cstat-no" title="statement not covered" >    this.screenHeight = this.camera.gridHeight * this.tileSize;</span>
@@ -4258,7 +4234,7 @@ export default class Renderer {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Aug 12 2020 22:32:24 GMT-0400 (Eastern Daylight Time)
+                at Mon Jan 04 2021 21:13:40 GMT-0500 (Eastern Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

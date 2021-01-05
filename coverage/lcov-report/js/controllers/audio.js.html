@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/140</span>
+                <span class='fraction'>0/146</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/77</span>
+                <span class='fraction'>0/93</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/139</span>
+                <span class='fraction'>0/145</span>
             </div>
         
             
@@ -515,7 +515,13 @@
 <a name='L456'></a><a href='#L456'>456</a>
 <a name='L457'></a><a href='#L457'>457</a>
 <a name='L458'></a><a href='#L458'>458</a>
-<a name='L459'></a><a href='#L459'>459</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L459'></a><a href='#L459'>459</a>
+<a name='L460'></a><a href='#L460'>460</a>
+<a name='L461'></a><a href='#L461'>461</a>
+<a name='L462'></a><a href='#L462'>462</a>
+<a name='L463'></a><a href='#L463'>463</a>
+<a name='L464'></a><a href='#L464'>464</a>
+<a name='L465'></a><a href='#L465'>465</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -736,7 +742,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -776,8 +782,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -800,6 +810,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1194,7 +1206,7 @@ export default class Audio {
 <span class="cstat-no" title="statement not covered" >    if (song &amp;&amp; !(this.song &amp;&amp; this.song.name === song.name)) {</span>
 <span class="cstat-no" title="statement not covered" >      if (this.game.renderer.mobile) {</span>
 <span class="cstat-no" title="statement not covered" >        this.reset(this.song);</span>
-      } else {
+      } else <span class="cstat-no" title="statement not covered" >if (this.song) {</span>
 <span class="cstat-no" title="statement not covered" >        this.fadeSongOut();</span>
       }
 &nbsp;
@@ -1235,9 +1247,13 @@ export default class Audio {
 <span class="cstat-no" title="statement not covered" >    this.clearFadeOut(this.song);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.song.fadingIn = setInterval(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      this.song.volume += 0.02;</span>
+<span class="cstat-no" title="statement not covered" >      if (this.song &amp;&amp; this.song.volume + 0.02 &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >        this.song.volume += 0.02;</span>
+      } else <span class="cstat-no" title="statement not covered" >if (this.song) {</span>
+<span class="cstat-no" title="statement not covered" >        this.song.volume = 1;</span>
+      }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (this.song.volume &gt;= this.getMusicVolume() - 0.02) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.song &amp;&amp; this.song.volume &gt;= this.getMusicVolume() - 0.02) {</span>
 <span class="cstat-no" title="statement not covered" >        this.song.volume = this.getMusicVolume();</span>
 <span class="cstat-no" title="statement not covered" >        this.clearFadeIn(this.song);</span>
       }
@@ -1259,11 +1275,13 @@ export default class Audio {
 <span class="cstat-no" title="statement not covered" >    this.clearFadeIn(this.song);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.song.fadingOut = setInterval(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (this.song.volume) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.song &amp;&amp; this.song.volume - 0.08 &gt; 0) {</span>
 <span class="cstat-no" title="statement not covered" >        this.song.volume -= 0.08;</span>
+      } else <span class="cstat-no" title="statement not covered" >if (this.song) {</span>
+<span class="cstat-no" title="statement not covered" >        this.song.volume = 0;</span>
       }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (this.song.volume &lt;= 0.08) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.song &amp;&amp; this.song.volume &lt;= 0.08) {</span>
 <span class="cstat-no" title="statement not covered" >        this.song.volume = 0;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        if (callback) {</span>
@@ -1438,7 +1456,7 @@ export default class Audio {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Aug 12 2020 22:32:24 GMT-0400 (Eastern Daylight Time)
+                at Mon Jan 04 2021 21:13:40 GMT-0500 (Eastern Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
