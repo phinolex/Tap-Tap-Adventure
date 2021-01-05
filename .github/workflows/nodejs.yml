@@ -28,10 +28,6 @@ jobs:
     - name: Upload coverage to codecov
       uses: codecov/codecov-action@v1
       with:
-        file: ./coverage/coverage-summary.json
-        directory: ./coverage/lcov-report/
-        flags: unittests
-        name: codecov-umbrella
+        directory: ./coverage
         fail_ci_if_error: true
-        path_to_write_report: ./coverage/codecov_report.txt
         verbose: true
