@@ -183,7 +183,9 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/__tests__/app.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global document, Event */
+import $ from &apos;jquery&apos;;
 import App from &apos;../app&apos;;
+import Game from &apos;../game&apos;;
 
 /**
  * @test {App}
@@ -388,7 +390,94 @@ describe(&apos;App&apos;, () =&gt; {
    * @test {App#displayScreen}
    */
   it(&apos;.displayScreen()&apos;, () =&gt; {
-    expect(instance.displayScreen()).toEqual(undefined);
+    expect(instance.displayScreen()).toEqual(false);
+
+    instance.loggingIn = true;
+    expect(instance.displayScreen(&apos;logging in fail&apos;)).toEqual(false);
+    instance.loggingIn = false;
+
+    // make our DOM elments since this is headless...
+    const loadCharacter = document.createElement(&apos;div&apos;);
+    loadCharacter.setAttribute(&apos;id&apos;, &apos;loadCharacter&apos;);
+    document.body.appendChild(loadCharacter);
+
+    const createCharacter = document.createElement(&apos;div&apos;);
+    createCharacter.setAttribute(&apos;id&apos;, &apos;createCharacter&apos;);
+    document.body.appendChild(createCharacter);
+
+    // toggle off loading character
+    expect(instance.displayScreen(&apos;loadCharacter&apos;, &apos;createCharacter&apos;)).toEqual(true);
+    expect(loadCharacter.style.display).toEqual(&apos;none&apos;);
+    expect(createCharacter.style.display).toEqual(&apos;block&apos;);
+
+    // toggle off creating character
+    expect(instance.displayScreen(&apos;createCharacter&apos;, &apos;loadCharacter&apos;)).toEqual(true);
+    expect(loadCharacter.style.display).toEqual(&apos;block&apos;);
+    expect(createCharacter.style.display).toEqual(&apos;none&apos;);
+  });
+
+  /**
+   * @test {App#displayScroll}
+   */
+  it(&apos;.displayScroll()&apos;, () =&gt; {
+    // mock the displayScreen function
+    const displayScreen = jest.spyOn(instance, &apos;displayScreen&apos;);
+
+    // make sure the wrapper has a valid DOM element
+    const mockWrapper = document.createElement(&apos;div&apos;);
+    mockWrapper.setAttribute(&apos;id&apos;, &apos;wrapper&apos;);
+    document.body.appendChild(mockWrapper);
+    instance.wrapper = $(mockWrapper);
+
+    // make sure the wrapper has a valid DOM element
+    const mockHelpButton = document.createElement(&apos;button&apos;);
+    mockHelpButton.setAttribute(&apos;id&apos;, &apos;helpButton&apos;);
+    document.body.appendChild(mockHelpButton);
+    instance.helpButton = $(mockHelpButton);
+
+    // game is not started
+    instance.game.started = false;
+
+    // state is not set
+    expect(instance.wrapper.attr(&apos;class&apos;)).not.toEqual(&apos;animate&apos;);
+
+    instance.displayScroll(&apos;createCharacter&apos;);
+    expect(displayScreen).toHaveBeenCalled();
+    expect(displayScreen.mock.calls[0]).toEqual([undefined, &apos;createCharacter&apos;]);
+
+    // state is set to animate
+    instance.wrapper.removeClass().addClass(&apos;animate&apos;);
+    expect(instance.wrapper.attr(&apos;class&apos;)).toEqual(&apos;animate&apos;);
+
+    instance.displayScroll(&apos;createCharacter&apos;);
+    expect(displayScreen).toHaveBeenCalled();
+    expect(displayScreen.mock.calls[0]).toEqual([undefined, &apos;createCharacter&apos;]);
+
+    // game has started
+    instance.game.started = true;
+
+    // expect the body to have no class
+    expect(instance.body.attr(&apos;class&apos;)).toEqual(&apos;&apos;);
+
+    // help button should have an active class
+    instance.helpButton.addClass(&apos;active&apos;);
+    expect(instance.helpButton.attr(&apos;class&apos;)).toEqual(&apos;active&apos;);
+
+    instance.displayScroll(&apos;createCharacter&apos;);
+    expect(displayScreen).toHaveBeenCalled();
+    expect(displayScreen.mock.calls[0]).toEqual([undefined, &apos;createCharacter&apos;]);
+
+    // help button should have no active class
+    expect(instance.helpButton.attr(&apos;class&apos;)).toEqual(&apos;&apos;);
+
+    // the game has a player
+    instance.game.player = {};
+    instance.displayScroll(&apos;createCharacter&apos;);
+    expect(displayScreen).toHaveBeenCalled();
+    expect(displayScreen.mock.calls[0]).toEqual([undefined, &apos;createCharacter&apos;]);
+
+    // expect the body to have the player death class
+    expect(instance.body.attr(&apos;class&apos;)).toEqual(&apos;death&apos;);
   });
 });
 </code></pre>

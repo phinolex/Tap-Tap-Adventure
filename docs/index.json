@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/app.js",
-    "content": "/* global document, window */\nimport $ from 'jquery';\nimport _ from 'underscore';\nimport Modules from './utils/modules';\nimport log from './lib/log';\nimport Detect from './utils/detect';\n\n/**\n * Controls the client side changes for the application and game\n * @class\n */\nexport default class App {\n  /**\n   * Load all the different windows/UI portions on the index page\n   * relevant for use in the game, set the zoom factor, update the\n   * orientation and then load the login screen\n   */\n  constructor() {\n    log.debug('App - constructor()');\n\n    /**\n     * Configuration for the client application\n     * loaded from ./assets/data/config.json\n     * @type {Object}\n     */\n    this.config = null;\n\n    /**\n     * An instance of the DOM $('body') element\n     * @type {Object}\n     */\n    this.body = $('body');\n\n    /**\n     * An instance of the DOM $('#content') element\n     * @type {Object}\n     */\n    this.wrapper = $('#content');\n\n    /**\n     * An instance of the DOM $('#container') element\n     * @type {Object}\n     */\n    this.container = $('#container');\n\n    /**\n     * An instance of the DOM $(window) element\n     * @type {Object}\n     */\n    this.window = $(window);\n\n    /**\n     * An instance of the DOM $('#canvasLayers') element\n     * @type {Object}\n     */\n    this.canvas = $('#canvasLayers');\n\n    /**\n     * An instance of the DOM $('#border') element\n     * @type {Object}\n     */\n    this.border = $('#border');\n\n    /**\n     * An instance of the DOM $('#modal') element\n     * @type {Object}\n     */\n    this.intro = $('#modal');\n\n    /**\n     * An instance of the DOM $('#loginButton') element\n     * @type {Object}\n     */\n    this.loginButton = $('#loginButton');\n\n    /**\n     * An instance of the DOM $('#play') element\n     * @type {Object}\n     */\n    this.createButton = $('#play');\n\n    /**\n     * An instance of the DOM $('#newCharacter') element\n     * @type {Object}\n     */\n    this.registerButton = $('#newCharacter');\n\n    /**\n     * An instance of the DOM $('#helpButton') element\n     * @type {Object}\n     */\n    this.helpButton = $('#helpButton');\n\n    /**\n     * An instance of the DOM $('#cancelButton') element\n     * @type {Object}\n     */\n    this.cancelButton = $('#cancelButton');\n\n    /**\n     * An instance of the DOM $('#yes') element\n     * @type {Object}\n     */\n    this.yes = $('#yes');\n\n    /**\n     * An instance of the DOM $('#no') element\n     * @type {Object}\n     */\n    this.no = $('#no');\n\n    /**\n     * An instance of the DOM $('.loader') element\n     * @type {Object}\n     */\n    this.loading = $('.loader');\n\n    /**\n     * An instance of the DOM $('.loader.message') element\n     * @type {Object}\n     */\n    this.loadingMsg = $('.loader.message');\n\n    /**\n     * An instance of the DOM $('.error.message') element\n     * @type {Object}\n     */\n    this.errorMsg = $('.error.message');\n\n    /**\n     * An instance of the DOM $('#respawn') element\n     * @type {Object}\n     */\n    this.respawn = $('#respawn');\n\n    /**\n     * An instance of the DOM $('#rememberMe') element\n     * @type {Object}\n     */\n    this.rememberMe = $('#rememberMe');\n\n    /**\n     * An instance of the DOM $('#guest') element\n     * @type {Object}\n     */\n    this.guest = $('#guest');\n\n    /**\n     * An instance of the DOM $('#toggle-about') element\n     * @type {Object}\n     */\n    this.about = $('#toggle-about');\n\n    /**\n     * An instance of the DOM $('#toggle-credits') element\n     * @type {Object}\n     */\n    this.credits = $('#toggle-credits');\n\n    /**\n     * An instance of the DOM $('#toggle-git') element\n     * @type {Object}\n     */\n    this.git = $('#toggle-git');\n\n    /**\n     * An instance of the DOM $('#loginNameInput') and $('#loginPasswordInput') element\n     * @type {Object[]}\n     */\n    this.loginFields = [$('#loginNameInput'), $('#loginPasswordInput')];\n\n    /**\n     * Register fields\n     * @type {Array}\n     */\n    this.registerFields = [];\n\n    /**\n     * An instance of Game class\n     * @type {Game}\n     */\n    this.game = null;\n\n    /**\n     * Used to determine if the player is logging in as a guest or not\n     * @type {Boolean}\n     */\n    this.guestLogin = false;\n\n    /**\n     * Zoom percentage from 0 to 1\n     * @type {Number}\n     */\n    this.zoomFactor = 1;\n\n    /**\n     * Used to figure out whether or not to show the login screen\n     * @type {Boolean}\n     */\n    this.loggingIn = false;\n\n    /**\n     * The width of the player's browser window\n     * @type {Number}\n     */\n    this.width = window.innerWidth;\n\n    /**\n     * The height of the player's browser window\n     * @type {Number}\n     */\n    this.height = window.innerHeight;\n\n    /**\n     * The orientation of the player's device\n     * @type {String}\n     */\n    this.orientation = 'landscape';\n\n    /**\n     * Callback function when this class is done loading\n     * @type {Function}\n     */\n    this.readyCallback = null;\n\n    /**\n     * Used to display loading status messages\n     * @type {String}\n     */\n    this.statusMessage = null;\n\n    // auto-binding\n    this.keydownEventListener = this.keydownEventListener.bind(this);\n    this.keyupEventListener = this.keyupEventListener.bind(this);\n    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);\n    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);\n    this.canvasClickEventListener = this.canvasClickEventListener.bind(this);\n\n    this.sendStatus('You should turn back now...');\n\n    this.zoom();\n    this.updateOrientation();\n    this.load();\n  }\n\n  /**\n   * Add click listeners for the different parts of the UI\n   */\n  load() {\n    log.debug('App - load()');\n\n    this.loginButton.click(() => this.login());\n    this.createButton.click(() => this.login());\n    this.loadCharacter();\n    this.yes.click(() => this.welcomeContinue());\n    this.no.click(() => this.welcomeContinue());\n    this.rememberMe.click(() => this.rememberLogin());\n    this.guest.click(() => this.loginAsGuest());\n\n    this.registerButton.click(() => this.displayScreen('loadCharacter', 'createCharacter'));\n    this.cancelButton.click(() => this.displayScreen('createCharacter', 'loadCharacter'));\n    this.about.click(() => this.displayScroll('about'));\n    this.credits.click(() => this.displayScroll('credits'));\n    this.git.click(() => this.displayScroll('git'));\n    this.respawn.click(() => this.respawnPlayer());\n\n    window.scrollTo(0, 1); // why do we do this?\n    this.window.resize(this.zoom());\n\n    $.getJSON('./src/client/config.json', (json) => {\n      log.debug('App - loading client config');\n      this.config = json;\n\n      if (this.readyCallback) {\n        log.debug('App - loading client config done - readyCallback()');\n        this.readyCallback();\n      }\n    });\n\n    $(document).on('keydown', this.keydownEventListener);\n    $(document).on('keyup', this.keyupEventListener);\n    $(document).on('mousemove', this.mousemoveEventListener);\n    this.canvas.on('click', this.canvasClickEventListener);\n\n    // this.canvas.click(this.canvasClickEventListener);\n\n    $('input[type=\"range\"]').on('input', () => {\n      this.updateRange(this);\n    });\n  }\n\n  /**\n   * Dismissing the welcome screen when the application has\n   * finished loading\n   */\n  welcomeContinue() {\n    log.debug('App - welcomeContinue()');\n\n    if (!this.game) {\n      return false;\n    }\n\n    // makes sure the welcome screen doesn't appear again\n    this.game.storage.data.welcome = false;\n    this.game.storage.save();\n    this.body.removeClass('welcomeMessage');\n    return true;\n  }\n\n  /**\n   * Try to connect and login to the game\n   * @private\n   * @return {Boolean}\n   */\n  login() {\n    log.debug('App - login()');\n\n    if (\n      this.loggingIn\n      || !this.game\n      || !this.game.loaded\n      || this.statusMessage\n      || !this.verifyForm()\n    ) return false;\n\n    // this.toggleLogin(true);\n    this.game.connect();\n    return true;\n  }\n\n  /**\n   * Try to login as a guest\n   * @private\n   * @return {Boolean}\n   */\n  loginAsGuest() {\n    log.debug('App - loginAsGuest()');\n\n    if (!this.game) {\n      return false;\n    }\n\n    this.guestLogin = true;\n    this.login();\n    return true;\n  }\n\n  /**\n   * Switch to the load character screen\n   * @private\n   * @return {Boolean}\n   */\n  loadCharacter() {\n    log.debug('App - loadCharacter()');\n\n    if (\n      this.wrapper.hasClass('about')\n      || this.wrapper.hasClass('credits')\n      || this.wrapper.hasClass('git')\n    ) {\n      this.wrapper.removeClass('about credits git');\n      this.displayScroll('loadCharacter');\n      return true;\n    }\n\n    return false;\n  }\n\n  /**\n   * Tells the game to toggle remembering this player,\n   * if true will store player information in local storage\n   *\n   * @TODO update this to use the database instead\n   * @private\n   * @return {Boolean}\n   */\n  rememberLogin() {\n    log.debug('App - rememberLogin()');\n\n    if (!this.game || !this.game.storage) {\n      return false;\n    }\n\n    const active = this.rememberMe.hasClass('active');\n\n    this.rememberMe.toggleClass('active');\n    this.game.storage.toggleRemember(!active);\n    return true;\n  }\n\n  /**\n   * Tells the game to respawn the player\n   * @private\n   * @return {Boolean}\n   */\n  respawnPlayer() {\n    log.debug('App - respawnPlayer()');\n\n    if (!this.game || !this.game.player || !this.game.player.dead) {\n      return false;\n    }\n\n    this.game.respawn();\n    return true;\n  }\n\n  /**\n   * Handles key down presses\n   * @param {Object} event keypress event\n   * @return {Boolean}\n   */\n  keydownEventListener(event) {\n    log.debug('App - keydownEventListener()', event);\n\n    const key = event.which;\n\n    if (!this.game) {\n      return false;\n    }\n\n    this.body.focus();\n\n    if (key === Modules.Keys.Enter && !this.game.started) {\n      this.login();\n      return false;\n    }\n\n    if (this.game.started) {\n      this.game.onInput(Modules.InputType.Key, key);\n    }\n\n    return true;\n  }\n\n  /**\n   * Handles key up presses\n   * @param {Object} event keypress event\n   * @return {Boolean}\n   */\n  keyupEventListener(event) {\n    log.debug('App - keyupEventListener()', event);\n\n    const key = event.which;\n\n    if (!this.game || !this.game.started) {\n      return false;\n    }\n\n    this.game.input.keyUp(key);\n    return true;\n  }\n\n  /**\n   * Handles mouse movements\n   * @param {Object} event mouse event\n   */\n  mousemoveEventListener(event) {\n    // log.debug('App - mousemoveEventListener()', event, this);\n\n    if (!this.game || !this.game.input || !this.game.started) {\n      return false;\n    }\n\n    this.game.input.setCoords(event);\n    this.game.input.moveCursor();\n\n    return true;\n  }\n\n  /**\n   * Handles clicks on the HTML5 canvas\n   * @param {Object} event click event\n   * @return {Boolean}\n   */\n  canvasClickEventListener(event) {\n    log.debug('App - canvasClickEventListener()');\n\n    if (!this.game || !this.game.started) {\n      return false;\n    }\n\n    window.scrollTo(0, 1);\n    this.game.input.handle(Modules.InputType.LeftClick, event);\n\n    return true;\n  }\n\n  /**\n   * Handles zooming the container to scale the\n   * game to fit porportionally with the player's window size\n   */\n  zoom() {\n    log.debug('App - zoom()');\n\n    const containerWidth = this.container.width();\n    const containerHeight = this.container.height();\n    const windowWidth = this.window.width();\n    const windowHeight = this.window.height();\n    let zoomFactor = windowWidth / containerWidth;\n\n    if (containerHeight + 50 >= windowHeight) {\n      zoomFactor = windowHeight / (containerHeight + 50);\n    }\n\n    if (this.getScaleFactor() === 3) {\n      zoomFactor -= 0.1;\n    }\n\n    // this.body.css({\n    //   zoom: zoomFactor,\n    //   '-moz-transform': `scale(${zoomFactor})`,\n    // });\n\n    this.border.css('top', 0);\n    // this.zoomFactor = zoomFactor;\n  }\n\n  /**\n   * Fades the menu\n   */\n  fadeMenu() {\n    log.debug('App - fadeMenu()');\n\n    this.updateLoader(null);\n\n    setTimeout(() => {\n      this.body.addClass('game');\n      this.body.addClass('started');\n      this.body.removeClass('intro');\n    }, 500);\n  }\n\n  /**\n   * Shows the menu\n   */\n  showMenu() {\n    log.debug('App - showMenu()');\n\n    this.body.removeClass('game');\n    this.body.removeClass('started');\n    this.body.addClass('intro');\n  }\n\n  /**\n   * Changes from one screen to another\n   * @param {String} origin the old screen to hide\n   * @param {String} destination the new screen to show\n   */\n  displayScreen(origin, destination) {\n    log.debug('App - displayScreen()', origin, destination);\n\n    if (!destination || this.loggingIn) {\n      return;\n    }\n\n    this.cleanErrors();\n    // this.wrapper.removeClass(origin).addClass(destination);\n    $(`#${origin}`).css('display', 'none');\n    $(`#${destination}`).css('display', 'block');\n  }\n\n  /**\n   * Display the given screen\n   * @param {String} content - the screen to display\n   */\n  displayScroll(content) {\n    log.debug('App - displayScroll()', content);\n\n    const state = this.wrapper.attr('class');\n\n    if (this.game.started) {\n      this.wrapper.removeClass().addClass(content);\n      this.body.removeClass('credits legal about').toggleClass(content);\n\n      if (this.game.player) {\n        this.body.toggleClass('death');\n      }\n\n      if (content !== 'about') {\n        this.helpButton.removeClass('active');\n      }\n    } else if (state !== 'animate') {\n      this.displayScreen(state, state === content ? 'loadCharacter' : content);\n    }\n  }\n\n  /**\n   * Verify the active form\n   */\n  verifyForm() {\n    log.debug('App - verifyForm()');\n\n    const activeForm = this.getActiveForm();\n\n    if (activeForm === 'null') {\n      return true;\n    }\n\n    switch (activeForm) {\n      case 'loadCharacter': return this.verifyLoginForm();\n      case 'createCharacter': return this.verifyJoinForm();\n      default: break;\n    }\n\n    return true;\n  }\n\n  /**\n   * Verify the input fields on the join form\n   * @return {Boolean} true if valid\n   */\n  verifyJoinForm() {\n    log.debug('App - verifyJoinForm()');\n\n    const characterName = $('#registerNameInput');\n    const registerPassword = $('#registerPasswordInput');\n    const email = $('#registerEmailInput');\n    const registerPasswordConfirmation = $('#registerPasswordConfirmationInput');\n\n    if (this.registerFields.length === 0) {\n      this.registerFields = [\n        characterName,\n        registerPassword,\n        registerPasswordConfirmation,\n        email,\n      ];\n    }\n\n    if (!characterName.val()) {\n      this.sendError(characterName, 'A username is necessary you silly.');\n      return false;\n    }\n\n    if (!registerPassword.val()) {\n      this.sendError(registerPassword, 'You must enter a password.');\n      return false;\n    }\n\n    if (registerPasswordConfirmation.val() !== registerPassword.val()) {\n      this.sendError(\n        registerPasswordConfirmation,\n        'The passwords do not match!',\n      );\n      return false;\n    }\n\n    if (!email.val() || !this.verifyEmail(email.val())) {\n      this.sendError(email, 'An email is required!');\n      return false;\n    }\n\n    return true;\n  }\n\n  /**\n   * Check to see if the player has entered a valid username and password\n   * before attempting to login\n   * @return {Boolean} true if valid\n   */\n  verifyLoginForm() {\n    log.debug('App - verifyLoginForm()');\n\n    const nameInput = $('#loginNameInput');\n    const passwordInput = $('#loginPasswordInput');\n\n    if (this.loginFields.length === 0) {\n      this.loginFields = [nameInput, passwordInput];\n    }\n\n    if (!nameInput.val() && !this.isGuest()) {\n      this.sendError(nameInput, 'Please enter a username.');\n      return false;\n    }\n\n    if (!passwordInput.val() && !this.isGuest()) {\n      this.sendError(passwordInput, 'Please enter a password.');\n      return false;\n    }\n\n    return true;\n  }\n\n  /* eslint-disable */\n  /**\n   * Verify this is a valid email address\n   * @param  {String} email player's email address\n   * @return {Boolean} true if valid\n   */\n  verifyEmail(email) {\n    log.debug('App - verifyEmail()', email);\n\n    return /^(([^<>()[\\]\\\\.,;:\\s@\\\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\\\"]+)*)|(\\\".+\\\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/.test(\n      email,\n    );\n  }\n  /* eslint-enable */\n\n  /**\n   * Display a status message to the client\n   * @param {String} message the message\n   */\n  sendStatus(message) {\n    log.debug('App - sendStatus()', message);\n\n    this.cleanErrors();\n\n    this.statusMessage = message;\n\n    if (!message) {\n      this.loadingMsg.html('');\n      this.loading.hide();\n      return;\n    }\n\n    this.loading.show();\n    this.loadingMsg.html(message);\n  }\n\n  /**\n   * Set this input field as having an error\n   * @param {Object} field the Jquery instance of the field that has the error\n   * @param {String} error the error message to display telling the player\n   * that this field has an issue\n   */\n  sendError(field, error) {\n    log.debug('App - sendError()', field, error);\n\n    this.cleanErrors();\n    this.errorMsg.html(error);\n    this.errorMsg.show();\n\n    if (!field) {\n      return;\n    }\n\n    field.addClass('field-error').select();\n    field.bind('keypress', (event) => {\n      field.removeClass('field-error');\n      $('.validation-error').remove();\n      $(this).unbind(event);\n    });\n  }\n\n  /**\n   * Clean up any current form validation errors\n   * on the active form's input fields\n   */\n  cleanErrors() {\n    log.debug('App - cleanErrors()');\n\n    const activeForm = this.getActiveForm();\n    const fields = activeForm === 'loadCharacter'\n      ? this.loginFields\n      : this.registerFields;\n\n    for (let i = 0; i < fields.length; i += 1) {\n      fields[i].removeClass('field-error');\n    }\n\n    $('.validation-error').remove();\n    $('.status').remove();\n  }\n\n  /**\n   * Return the active form from the top wrapper's class name\n   * @return {String} active form's ID\n   */\n  getActiveForm() {\n    log.debug('App - getActiveForm()');\n\n    return this.wrapper && this.wrapper[0] && this.wrapper[0].className;\n  }\n\n  /**\n   * Returns true if the join form is displayed\n   * @return {Boolean} true if on the join form\n   */\n  isRegistering() {\n    log.debug('App - isRegistering()');\n\n    return this.getActiveForm() === 'createCharacter';\n  }\n\n  /**\n   * Returns true if this player is playing as a guest\n   * @return {Boolean} true if player is a guest\n   */\n  isGuest() {\n    log.debug('App - isGuest()');\n\n    return this.guestLogin;\n  }\n\n  /**\n   * Call the game's resizer function\n   */\n  resize() {\n    log.debug('App - resize()');\n\n    if (this.game) {\n      this.game.resize();\n    }\n  }\n\n  /**\n   * Set the app to use a new instance of the game\n   */\n  setGame(game) {\n    log.debug('App - setGame()', game);\n\n    this.game = game;\n    window.wtf = this;\n  }\n\n  /**\n   * Checks to see if the window has a web worker\n   * @return {Boolean} returns true if the window has an active web worker\n   */\n  hasWorker() {\n    log.debug('App - hasWorker()');\n\n    return !!this.window.Worker;\n  }\n\n  /**\n   * Figures out the current scale factor to use\n   * for assets\n   * @return {Number} 1 = mobile, 2 = desktop and 3 = tablet\n   */\n  getScaleFactor() {\n    const mobile = 1;\n    const tablet = 2;\n    const desktop = 3;\n    const tabletOrDesktop = this.width <= 1500 || this.height <= 870\n      ? tablet\n      : desktop;\n\n    /**\n     * These are raw scales, we can adjust\n     * for up-scaled rendering in the actual\n     * rendering file.\n     */\n    return this.width <= 1000\n      ? mobile\n      : tabletOrDesktop;\n  }\n\n  /**\n   * Revert the loader message to it's default state\n   * of 'Connecting to server...'\n   */\n  revertLoader() {\n    log.debug('App - revertLoader()');\n\n    this.updateLoader('Connecting to server...');\n  }\n\n  /**\n   * Update the loader to show a specific message\n   * @param  {String} message the loader message to display\n   */\n  updateLoader(message) {\n    log.debug('App - updateLoader()', message);\n\n    if (!message) {\n      this.loading.hide();\n      this.loadingMsg.html('');\n      return;\n    }\n\n    this.loading.show();\n    this.loadingMsg.html(message);\n  }\n\n  /**\n   * Toggle displaying the login form\n   * @param  {Boolean} toggle true to hide, false to show\n   */\n  toggleLogin(toggle) {\n    log.debug('App - toggleLogin()', toggle);\n\n    this.revertLoader();\n    this.toggleTyping(toggle);\n    this.loggingIn = toggle;\n\n    if (toggle) {\n      this.loading.hide();\n      this.loginButton.addClass('disabled');\n      this.registerButton.addClass('disabled');\n    } else {\n      this.loading.hide();\n      this.loginButton.removeClass('disabled');\n      this.registerButton.removeClass('disabled');\n    }\n  }\n\n  /**\n   * Toggle the read only attribute on the login fields\n   * and form registration fields\n   * @param  {String} state the state to update the fields to\n   */\n  toggleTyping(state) {\n    log.debug('App - toggleTyping()', state);\n\n    if (this.loginFields) {\n      _.each(this.loginFields, (field) => {\n        field.prop('readonly', state);\n      });\n    }\n\n    if (this.registerFields) {\n      _.each(this.registerFields, (field) => {\n        field.prop('readOnly', state);\n      });\n    }\n  }\n\n  /**\n   * Update the range of and object\n   * using a linear gradient on the background color\n   */\n  updateRange(field) {\n    log.debug('App - updateRange()', field);\n\n    const obj = $(field);\n    const val = (obj.val() - obj.attr('min')) / (obj.attr('max') - obj.attr('min'));\n\n    obj.css(\n      'background-image',\n      `-webkit-gradient(linear, left top, right top, color-stop(${val}, #4d4d4d), color-stop(${val}, #C5C5C5)`,\n    );\n  }\n\n  /**\n   * Updates the orientation of the application\n   * to match the orientation of the device the\n   * player is using\n   */\n  updateOrientation() {\n    log.debug('App - updateOrientation()');\n\n    // this.zoom();\n    this.orientation = this.getOrientation();\n  }\n\n  /**\n   * Returns the orientation of the device the user is on\n   * @return {String} portrait|landscape\n   */\n  getOrientation() {\n    log.debug('App - getOrientation()');\n\n    return this.height > this.width ? 'portrait' : 'landscape';\n  }\n\n  /**\n   * Returns the zoom factor\n   * @return {Number} a value from 0 to 1\n   */\n  getZoom() {\n    // log.debug('App - getZoom()');\n\n    return this.zoomFactor;\n  }\n\n  /**\n   * The callback function when this app class is ready\n   * and done loading\n   * @param {Function} callback the callback function when\n   * this application class is done loading\n   */\n  onReady(callback) {\n    log.debug('App - onReady()', callback);\n\n    this.readyCallback = callback;\n  }\n\n  /**\n   * Check if the player is using a phone\n   * @return {Boolean} true if a phone\n   */\n  isMobile() {\n    log.debug('App - isMobile()');\n\n    return this.getScaleFactor() < 2;\n  }\n\n  /**\n   * Check if the player is using a tablet\n   * @return {Boolean} true if a tablet\n   */\n  isTablet() {\n    log.debug('App - isTablet()');\n\n    return Detect.isIpad() || (Detect.isAndroid() && this.getScaleFactor() > 1);\n  }\n}\n",
+    "content": "/* global document, window */\nimport $ from 'jquery';\nimport _ from 'underscore';\nimport Modules from './utils/modules';\nimport log from './lib/log';\nimport Detect from './utils/detect';\n\n/**\n * Controls the client side changes for the application and game\n * @class\n */\nexport default class App {\n  /**\n   * Load all the different windows/UI portions on the index page\n   * relevant for use in the game, set the zoom factor, update the\n   * orientation and then load the login screen\n   */\n  constructor() {\n    log.debug('App - constructor()');\n\n    /**\n     * Configuration for the client application\n     * loaded from ./assets/data/config.json\n     * @type {Object}\n     */\n    this.config = null;\n\n    /**\n     * An instance of the DOM $('body') element\n     * @type {Object}\n     */\n    this.body = $('body');\n\n    /**\n     * An instance of the DOM $('#content') element\n     * @type {Object}\n     */\n    this.wrapper = $('#content');\n\n    /**\n     * An instance of the DOM $('#container') element\n     * @type {Object}\n     */\n    this.container = $('#container');\n\n    /**\n     * An instance of the DOM $(window) element\n     * @type {Object}\n     */\n    this.window = $(window);\n\n    /**\n     * An instance of the DOM $('#canvasLayers') element\n     * @type {Object}\n     */\n    this.canvas = $('#canvasLayers');\n\n    /**\n     * An instance of the DOM $('#border') element\n     * @type {Object}\n     */\n    this.border = $('#border');\n\n    /**\n     * An instance of the DOM $('#modal') element\n     * @type {Object}\n     */\n    this.intro = $('#modal');\n\n    /**\n     * An instance of the DOM $('#loginButton') element\n     * @type {Object}\n     */\n    this.loginButton = $('#loginButton');\n\n    /**\n     * An instance of the DOM $('#play') element\n     * @type {Object}\n     */\n    this.createButton = $('#play');\n\n    /**\n     * An instance of the DOM $('#newCharacter') element\n     * @type {Object}\n     */\n    this.registerButton = $('#newCharacter');\n\n    /**\n     * An instance of the DOM $('#helpButton') element\n     * @type {Object}\n     */\n    this.helpButton = $('#helpButton');\n\n    /**\n     * An instance of the DOM $('#cancelButton') element\n     * @type {Object}\n     */\n    this.cancelButton = $('#cancelButton');\n\n    /**\n     * An instance of the DOM $('#yes') element\n     * @type {Object}\n     */\n    this.yes = $('#yes');\n\n    /**\n     * An instance of the DOM $('#no') element\n     * @type {Object}\n     */\n    this.no = $('#no');\n\n    /**\n     * An instance of the DOM $('.loader') element\n     * @type {Object}\n     */\n    this.loading = $('.loader');\n\n    /**\n     * An instance of the DOM $('.loader.message') element\n     * @type {Object}\n     */\n    this.loadingMsg = $('.loader.message');\n\n    /**\n     * An instance of the DOM $('.error.message') element\n     * @type {Object}\n     */\n    this.errorMsg = $('.error.message');\n\n    /**\n     * An instance of the DOM $('#respawn') element\n     * @type {Object}\n     */\n    this.respawn = $('#respawn');\n\n    /**\n     * An instance of the DOM $('#rememberMe') element\n     * @type {Object}\n     */\n    this.rememberMe = $('#rememberMe');\n\n    /**\n     * An instance of the DOM $('#guest') element\n     * @type {Object}\n     */\n    this.guest = $('#guest');\n\n    /**\n     * An instance of the DOM $('#toggle-about') element\n     * @type {Object}\n     */\n    this.about = $('#toggle-about');\n\n    /**\n     * An instance of the DOM $('#toggle-credits') element\n     * @type {Object}\n     */\n    this.credits = $('#toggle-credits');\n\n    /**\n     * An instance of the DOM $('#toggle-git') element\n     * @type {Object}\n     */\n    this.git = $('#toggle-git');\n\n    /**\n     * An instance of the DOM $('#loginNameInput') and $('#loginPasswordInput') element\n     * @type {Object[]}\n     */\n    this.loginFields = [$('#loginNameInput'), $('#loginPasswordInput')];\n\n    /**\n     * Register fields\n     * @type {Array}\n     */\n    this.registerFields = [];\n\n    /**\n     * An instance of Game class\n     * @type {Game}\n     */\n    this.game = null;\n\n    /**\n     * Used to determine if the player is logging in as a guest or not\n     * @type {Boolean}\n     */\n    this.guestLogin = false;\n\n    /**\n     * Zoom percentage from 0 to 1\n     * @type {Number}\n     */\n    this.zoomFactor = 1;\n\n    /**\n     * Used to figure out whether or not to show the login screen\n     * @type {Boolean}\n     */\n    this.loggingIn = false;\n\n    /**\n     * The width of the player's browser window\n     * @type {Number}\n     */\n    this.width = window.innerWidth;\n\n    /**\n     * The height of the player's browser window\n     * @type {Number}\n     */\n    this.height = window.innerHeight;\n\n    /**\n     * The orientation of the player's device\n     * @type {String}\n     */\n    this.orientation = 'landscape';\n\n    /**\n     * Callback function when this class is done loading\n     * @type {Function}\n     */\n    this.readyCallback = null;\n\n    /**\n     * Used to display loading status messages\n     * @type {String}\n     */\n    this.statusMessage = null;\n\n    // auto-binding\n    this.keydownEventListener = this.keydownEventListener.bind(this);\n    this.keyupEventListener = this.keyupEventListener.bind(this);\n    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);\n    this.mousemoveEventListener = this.mousemoveEventListener.bind(this);\n    this.canvasClickEventListener = this.canvasClickEventListener.bind(this);\n\n    this.sendStatus('You should turn back now...');\n\n    this.zoom();\n    this.updateOrientation();\n    this.load();\n  }\n\n  /**\n   * Add click listeners for the different parts of the UI\n   */\n  load() {\n    log.debug('App - load()');\n\n    this.loginButton.click(() => this.login());\n    this.createButton.click(() => this.login());\n    this.loadCharacter();\n    this.yes.click(() => this.welcomeContinue());\n    this.no.click(() => this.welcomeContinue());\n    this.rememberMe.click(() => this.rememberLogin());\n    this.guest.click(() => this.loginAsGuest());\n\n    this.registerButton.click(() => this.displayScreen('loadCharacter', 'createCharacter'));\n    this.cancelButton.click(() => this.displayScreen('createCharacter', 'loadCharacter'));\n    this.about.click(() => this.displayScroll('about'));\n    this.credits.click(() => this.displayScroll('credits'));\n    this.git.click(() => this.displayScroll('git'));\n    this.respawn.click(() => this.respawnPlayer());\n\n    window.scrollTo(0, 1); // why do we do this?\n    this.window.resize(this.zoom());\n\n    $.getJSON('./src/client/config.json', (json) => {\n      log.debug('App - loading client config');\n      this.config = json;\n\n      if (this.readyCallback) {\n        log.debug('App - loading client config done - readyCallback()');\n        this.readyCallback();\n      }\n    });\n\n    $(document).on('keydown', this.keydownEventListener);\n    $(document).on('keyup', this.keyupEventListener);\n    $(document).on('mousemove', this.mousemoveEventListener);\n    this.canvas.on('click', this.canvasClickEventListener);\n\n    // this.canvas.click(this.canvasClickEventListener);\n\n    $('input[type=\"range\"]').on('input', () => {\n      this.updateRange(this);\n    });\n  }\n\n  /**\n   * Dismissing the welcome screen when the application has\n   * finished loading\n   */\n  welcomeContinue() {\n    log.debug('App - welcomeContinue()');\n\n    if (!this.game) {\n      return false;\n    }\n\n    // makes sure the welcome screen doesn't appear again\n    this.game.storage.data.welcome = false;\n    this.game.storage.save();\n    this.body.removeClass('welcomeMessage');\n    return true;\n  }\n\n  /**\n   * Try to connect and login to the game\n   * @private\n   * @return {Boolean}\n   */\n  login() {\n    log.debug('App - login()');\n\n    if (\n      this.loggingIn\n      || !this.game\n      || !this.game.loaded\n      || this.statusMessage\n      || !this.verifyForm()\n    ) return false;\n\n    // this.toggleLogin(true);\n    this.game.connect();\n    return true;\n  }\n\n  /**\n   * Try to login as a guest\n   * @private\n   * @return {Boolean}\n   */\n  loginAsGuest() {\n    log.debug('App - loginAsGuest()');\n\n    if (!this.game) {\n      return false;\n    }\n\n    this.guestLogin = true;\n    this.login();\n    return true;\n  }\n\n  /**\n   * Switch to the load character screen\n   * @private\n   * @return {Boolean}\n   */\n  loadCharacter() {\n    log.debug('App - loadCharacter()');\n\n    if (\n      this.wrapper.hasClass('about')\n      || this.wrapper.hasClass('credits')\n      || this.wrapper.hasClass('git')\n    ) {\n      this.wrapper.removeClass('about credits git');\n      this.displayScroll('loadCharacter');\n      return true;\n    }\n\n    return false;\n  }\n\n  /**\n   * Tells the game to toggle remembering this player,\n   * if true will store player information in local storage\n   *\n   * @TODO update this to use the database instead\n   * @private\n   * @return {Boolean}\n   */\n  rememberLogin() {\n    log.debug('App - rememberLogin()');\n\n    if (!this.game || !this.game.storage) {\n      return false;\n    }\n\n    const active = this.rememberMe.hasClass('active');\n\n    this.rememberMe.toggleClass('active');\n    this.game.storage.toggleRemember(!active);\n    return true;\n  }\n\n  /**\n   * Tells the game to respawn the player\n   * @private\n   * @return {Boolean}\n   */\n  respawnPlayer() {\n    log.debug('App - respawnPlayer()');\n\n    if (!this.game || !this.game.player || !this.game.player.dead) {\n      return false;\n    }\n\n    this.game.respawn();\n    return true;\n  }\n\n  /**\n   * Handles key down presses\n   * @param {Object} event keypress event\n   * @return {Boolean}\n   */\n  keydownEventListener(event) {\n    log.debug('App - keydownEventListener()', event);\n\n    const key = event.which;\n\n    if (!this.game) {\n      return false;\n    }\n\n    this.body.focus();\n\n    if (key === Modules.Keys.Enter && !this.game.started) {\n      this.login();\n      return false;\n    }\n\n    if (this.game.started) {\n      this.game.onInput(Modules.InputType.Key, key);\n    }\n\n    return true;\n  }\n\n  /**\n   * Handles key up presses\n   * @param {Object} event keypress event\n   * @return {Boolean}\n   */\n  keyupEventListener(event) {\n    log.debug('App - keyupEventListener()', event);\n\n    const key = event.which;\n\n    if (!this.game || !this.game.started) {\n      return false;\n    }\n\n    this.game.input.keyUp(key);\n    return true;\n  }\n\n  /**\n   * Handles mouse movements\n   * @param {Object} event mouse event\n   */\n  mousemoveEventListener(event) {\n    // log.debug('App - mousemoveEventListener()', event, this);\n\n    if (!this.game || !this.game.input || !this.game.started) {\n      return false;\n    }\n\n    this.game.input.setCoords(event);\n    this.game.input.moveCursor();\n\n    return true;\n  }\n\n  /**\n   * Handles clicks on the HTML5 canvas\n   * @param {Object} event click event\n   * @return {Boolean}\n   */\n  canvasClickEventListener(event) {\n    log.debug('App - canvasClickEventListener()');\n\n    if (!this.game || !this.game.started) {\n      return false;\n    }\n\n    window.scrollTo(0, 1);\n    this.game.input.handle(Modules.InputType.LeftClick, event);\n\n    return true;\n  }\n\n  /**\n   * Handles zooming the container to scale the\n   * game to fit porportionally with the player's window size\n   */\n  zoom() {\n    log.debug('App - zoom()');\n\n    const containerWidth = this.container.width();\n    const containerHeight = this.container.height();\n    const windowWidth = this.window.width();\n    const windowHeight = this.window.height();\n    let zoomFactor = windowWidth / containerWidth;\n\n    if (containerHeight + 50 >= windowHeight) {\n      zoomFactor = windowHeight / (containerHeight + 50);\n    }\n\n    if (this.getScaleFactor() === 3) {\n      zoomFactor -= 0.1;\n    }\n\n    // this.body.css({\n    //   zoom: zoomFactor,\n    //   '-moz-transform': `scale(${zoomFactor})`,\n    // });\n\n    this.border.css('top', 0);\n    // this.zoomFactor = zoomFactor;\n  }\n\n  /**\n   * Fades the menu\n   */\n  fadeMenu() {\n    log.debug('App - fadeMenu()');\n\n    this.updateLoader(null);\n\n    setTimeout(() => {\n      this.body.addClass('game');\n      this.body.addClass('started');\n      this.body.removeClass('intro');\n    }, 500);\n  }\n\n  /**\n   * Shows the menu\n   */\n  showMenu() {\n    log.debug('App - showMenu()');\n\n    this.body.removeClass('game');\n    this.body.removeClass('started');\n    this.body.addClass('intro');\n  }\n\n  /**\n   * Changes from one screen to another\n   * @param {String} origin the old screen to hide\n   * @param {String} destination the new screen to show\n   */\n  displayScreen(origin, destination) {\n    log.debug('App - displayScreen()', origin, destination);\n\n    if (!destination || this.loggingIn) {\n      return false;\n    }\n\n    this.cleanErrors();\n    // this.wrapper.removeClass(origin).addClass(destination);\n    $(`#${origin}`).css('display', 'none');\n    $(`#${destination}`).css('display', 'block');\n    return true;\n  }\n\n  /**\n   * Display the given screen\n   * @param {String} content - the screen to display\n   */\n  displayScroll(content) {\n    log.debug('App - displayScroll()', content);\n\n    const state = this.wrapper.attr('class');\n\n    if (this.game.started) {\n      this.wrapper.removeClass().addClass(content);\n      this.body.removeClass('credits legal about').toggleClass(content);\n\n      if (this.game.player) {\n        this.body.toggleClass('death');\n      }\n\n      if (content !== 'about') {\n        this.helpButton.removeClass('active');\n      }\n    } else if (state !== 'animate') {\n      this.displayScreen(state, state === content ? 'loadCharacter' : content);\n    }\n  }\n\n  /**\n   * Verify the active form\n   */\n  verifyForm() {\n    log.debug('App - verifyForm()');\n\n    const activeForm = this.getActiveForm();\n\n    if (activeForm === 'null') {\n      return true;\n    }\n\n    switch (activeForm) {\n      case 'loadCharacter': return this.verifyLoginForm();\n      case 'createCharacter': return this.verifyJoinForm();\n      default: break;\n    }\n\n    return true;\n  }\n\n  /**\n   * Verify the input fields on the join form\n   * @return {Boolean} true if valid\n   */\n  verifyJoinForm() {\n    log.debug('App - verifyJoinForm()');\n\n    const characterName = $('#registerNameInput');\n    const registerPassword = $('#registerPasswordInput');\n    const email = $('#registerEmailInput');\n    const registerPasswordConfirmation = $('#registerPasswordConfirmationInput');\n\n    if (this.registerFields.length === 0) {\n      this.registerFields = [\n        characterName,\n        registerPassword,\n        registerPasswordConfirmation,\n        email,\n      ];\n    }\n\n    if (!characterName.val()) {\n      this.sendError(characterName, 'A username is necessary you silly.');\n      return false;\n    }\n\n    if (!registerPassword.val()) {\n      this.sendError(registerPassword, 'You must enter a password.');\n      return false;\n    }\n\n    if (registerPasswordConfirmation.val() !== registerPassword.val()) {\n      this.sendError(\n        registerPasswordConfirmation,\n        'The passwords do not match!',\n      );\n      return false;\n    }\n\n    if (!email.val() || !this.verifyEmail(email.val())) {\n      this.sendError(email, 'An email is required!');\n      return false;\n    }\n\n    return true;\n  }\n\n  /**\n   * Check to see if the player has entered a valid username and password\n   * before attempting to login\n   * @return {Boolean} true if valid\n   */\n  verifyLoginForm() {\n    log.debug('App - verifyLoginForm()');\n\n    const nameInput = $('#loginNameInput');\n    const passwordInput = $('#loginPasswordInput');\n\n    if (this.loginFields.length === 0) {\n      this.loginFields = [nameInput, passwordInput];\n    }\n\n    if (!nameInput.val() && !this.isGuest()) {\n      this.sendError(nameInput, 'Please enter a username.');\n      return false;\n    }\n\n    if (!passwordInput.val() && !this.isGuest()) {\n      this.sendError(passwordInput, 'Please enter a password.');\n      return false;\n    }\n\n    return true;\n  }\n\n  /* eslint-disable */\n  /**\n   * Verify this is a valid email address\n   * @param  {String} email player's email address\n   * @return {Boolean} true if valid\n   */\n  verifyEmail(email) {\n    log.debug('App - verifyEmail()', email);\n\n    return /^(([^<>()[\\]\\\\.,;:\\s@\\\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\\\"]+)*)|(\\\".+\\\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/.test(\n      email,\n    );\n  }\n  /* eslint-enable */\n\n  /**\n   * Display a status message to the client\n   * @param {String} message the message\n   */\n  sendStatus(message) {\n    log.debug('App - sendStatus()', message);\n\n    this.cleanErrors();\n\n    this.statusMessage = message;\n\n    if (!message) {\n      this.loadingMsg.html('');\n      this.loading.hide();\n      return;\n    }\n\n    this.loading.show();\n    this.loadingMsg.html(message);\n  }\n\n  /**\n   * Set this input field as having an error\n   * @param {Object} field the Jquery instance of the field that has the error\n   * @param {String} error the error message to display telling the player\n   * that this field has an issue\n   */\n  sendError(field, error) {\n    log.debug('App - sendError()', field, error);\n\n    this.cleanErrors();\n    this.errorMsg.html(error);\n    this.errorMsg.show();\n\n    if (!field) {\n      return;\n    }\n\n    field.addClass('field-error').select();\n    field.bind('keypress', (event) => {\n      field.removeClass('field-error');\n      $('.validation-error').remove();\n      $(this).unbind(event);\n    });\n  }\n\n  /**\n   * Clean up any current form validation errors\n   * on the active form's input fields\n   */\n  cleanErrors() {\n    log.debug('App - cleanErrors()');\n\n    const activeForm = this.getActiveForm();\n    const fields = activeForm === 'loadCharacter'\n      ? this.loginFields\n      : this.registerFields;\n\n    for (let i = 0; i < fields.length; i += 1) {\n      fields[i].removeClass('field-error');\n    }\n\n    $('.validation-error').remove();\n    $('.status').remove();\n  }\n\n  /**\n   * Return the active form from the top wrapper's class name\n   * @return {String} active form's ID\n   */\n  getActiveForm() {\n    log.debug('App - getActiveForm()');\n\n    return this.wrapper && this.wrapper[0] && this.wrapper[0].className;\n  }\n\n  /**\n   * Returns true if the join form is displayed\n   * @return {Boolean} true if on the join form\n   */\n  isRegistering() {\n    log.debug('App - isRegistering()');\n\n    return this.getActiveForm() === 'createCharacter';\n  }\n\n  /**\n   * Returns true if this player is playing as a guest\n   * @return {Boolean} true if player is a guest\n   */\n  isGuest() {\n    log.debug('App - isGuest()');\n\n    return this.guestLogin;\n  }\n\n  /**\n   * Call the game's resizer function\n   */\n  resize() {\n    log.debug('App - resize()');\n\n    if (this.game) {\n      this.game.resize();\n    }\n  }\n\n  /**\n   * Set the app to use a new instance of the game\n   */\n  setGame(game) {\n    log.debug('App - setGame()', game);\n\n    this.game = game;\n    window.wtf = this;\n  }\n\n  /**\n   * Checks to see if the window has a web worker\n   * @return {Boolean} returns true if the window has an active web worker\n   */\n  hasWorker() {\n    log.debug('App - hasWorker()');\n\n    return !!this.window.Worker;\n  }\n\n  /**\n   * Figures out the current scale factor to use\n   * for assets\n   * @return {Number} 1 = mobile, 2 = desktop and 3 = tablet\n   */\n  getScaleFactor() {\n    const mobile = 1;\n    const tablet = 2;\n    const desktop = 3;\n    const tabletOrDesktop = this.width <= 1500 || this.height <= 870\n      ? tablet\n      : desktop;\n\n    /**\n     * These are raw scales, we can adjust\n     * for up-scaled rendering in the actual\n     * rendering file.\n     */\n    return this.width <= 1000\n      ? mobile\n      : tabletOrDesktop;\n  }\n\n  /**\n   * Revert the loader message to it's default state\n   * of 'Connecting to server...'\n   */\n  revertLoader() {\n    log.debug('App - revertLoader()');\n\n    this.updateLoader('Connecting to server...');\n  }\n\n  /**\n   * Update the loader to show a specific message\n   * @param  {String} message the loader message to display\n   */\n  updateLoader(message) {\n    log.debug('App - updateLoader()', message);\n\n    if (!message) {\n      this.loading.hide();\n      this.loadingMsg.html('');\n      return;\n    }\n\n    this.loading.show();\n    this.loadingMsg.html(message);\n  }\n\n  /**\n   * Toggle displaying the login form\n   * @param  {Boolean} toggle true to hide, false to show\n   */\n  toggleLogin(toggle) {\n    log.debug('App - toggleLogin()', toggle);\n\n    this.revertLoader();\n    this.toggleTyping(toggle);\n    this.loggingIn = toggle;\n\n    if (toggle) {\n      this.loading.hide();\n      this.loginButton.addClass('disabled');\n      this.registerButton.addClass('disabled');\n    } else {\n      this.loading.hide();\n      this.loginButton.removeClass('disabled');\n      this.registerButton.removeClass('disabled');\n    }\n  }\n\n  /**\n   * Toggle the read only attribute on the login fields\n   * and form registration fields\n   * @param  {String} state the state to update the fields to\n   */\n  toggleTyping(state) {\n    log.debug('App - toggleTyping()', state);\n\n    if (this.loginFields) {\n      _.each(this.loginFields, (field) => {\n        field.prop('readonly', state);\n      });\n    }\n\n    if (this.registerFields) {\n      _.each(this.registerFields, (field) => {\n        field.prop('readOnly', state);\n      });\n    }\n  }\n\n  /**\n   * Update the range of and object\n   * using a linear gradient on the background color\n   */\n  updateRange(field) {\n    log.debug('App - updateRange()', field);\n\n    const obj = $(field);\n    const val = (obj.val() - obj.attr('min')) / (obj.attr('max') - obj.attr('min'));\n\n    obj.css(\n      'background-image',\n      `-webkit-gradient(linear, left top, right top, color-stop(${val}, #4d4d4d), color-stop(${val}, #C5C5C5)`,\n    );\n  }\n\n  /**\n   * Updates the orientation of the application\n   * to match the orientation of the device the\n   * player is using\n   */\n  updateOrientation() {\n    log.debug('App - updateOrientation()');\n\n    // this.zoom();\n    this.orientation = this.getOrientation();\n  }\n\n  /**\n   * Returns the orientation of the device the user is on\n   * @return {String} portrait|landscape\n   */\n  getOrientation() {\n    log.debug('App - getOrientation()');\n\n    return this.height > this.width ? 'portrait' : 'landscape';\n  }\n\n  /**\n   * Returns the zoom factor\n   * @return {Number} a value from 0 to 1\n   */\n  getZoom() {\n    // log.debug('App - getZoom()');\n\n    return this.zoomFactor;\n  }\n\n  /**\n   * The callback function when this app class is ready\n   * and done loading\n   * @param {Function} callback the callback function when\n   * this application class is done loading\n   */\n  onReady(callback) {\n    log.debug('App - onReady()', callback);\n\n    this.readyCallback = callback;\n  }\n\n  /**\n   * Check if the player is using a phone\n   * @return {Boolean} true if a phone\n   */\n  isMobile() {\n    log.debug('App - isMobile()');\n\n    return this.getScaleFactor() < 2;\n  }\n\n  /**\n   * Check if the player is using a tablet\n   * @return {Boolean} true if a tablet\n   */\n  isTablet() {\n    log.debug('App - isTablet()');\n\n    return Detect.isIpad() || (Detect.isAndroid() && this.getScaleFactor() > 1);\n  }\n}\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/app.js",
     "access": "public",
@@ -1631,7 +1631,11 @@
         "description": "the new screen to show"
       }
     ],
-    "return": null
+    "return": {
+      "types": [
+        "boolean"
+      ]
+    }
   },
   {
     "__docId__": 108,
@@ -1644,7 +1648,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#displayScroll",
     "access": "public",
     "description": "Display the given screen",
-    "lineNumber": 566,
+    "lineNumber": 567,
     "params": [
       {
         "nullable": null,
@@ -1670,7 +1674,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#verifyForm",
     "access": "public",
     "description": "Verify the active form",
-    "lineNumber": 590,
+    "lineNumber": 591,
     "params": [],
     "return": {
       "types": [
@@ -1689,7 +1693,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#verifyJoinForm",
     "access": "public",
     "description": "Verify the input fields on the join form",
-    "lineNumber": 612,
+    "lineNumber": 613,
     "return": {
       "nullable": null,
       "types": [
@@ -1711,7 +1715,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#verifyLoginForm",
     "access": "public",
     "description": "Check to see if the player has entered a valid username and password\nbefore attempting to login",
-    "lineNumber": 660,
+    "lineNumber": 661,
     "return": {
       "nullable": null,
       "types": [
@@ -1733,7 +1737,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#verifyEmail",
     "access": "public",
     "description": "Verify this is a valid email address",
-    "lineNumber": 689,
+    "lineNumber": 690,
     "params": [
       {
         "nullable": null,
@@ -1766,7 +1770,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#sendStatus",
     "access": "public",
     "description": "Display a status message to the client",
-    "lineNumber": 702,
+    "lineNumber": 703,
     "params": [
       {
         "nullable": null,
@@ -1792,7 +1796,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#sendError",
     "access": "public",
     "description": "Set this input field as having an error",
-    "lineNumber": 725,
+    "lineNumber": 726,
     "params": [
       {
         "nullable": null,
@@ -1828,7 +1832,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#cleanErrors",
     "access": "public",
     "description": "Clean up any current form validation errors\non the active form's input fields",
-    "lineNumber": 748,
+    "lineNumber": 749,
     "params": [],
     "return": null
   },
@@ -1843,7 +1847,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#getActiveForm",
     "access": "public",
     "description": "Return the active form from the top wrapper's class name",
-    "lineNumber": 768,
+    "lineNumber": 769,
     "return": {
       "nullable": null,
       "types": [
@@ -1865,7 +1869,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#isRegistering",
     "access": "public",
     "description": "Returns true if the join form is displayed",
-    "lineNumber": 778,
+    "lineNumber": 779,
     "return": {
       "nullable": null,
       "types": [
@@ -1887,7 +1891,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#isGuest",
     "access": "public",
     "description": "Returns true if this player is playing as a guest",
-    "lineNumber": 788,
+    "lineNumber": 789,
     "return": {
       "nullable": null,
       "types": [
@@ -1909,7 +1913,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#resize",
     "access": "public",
     "description": "Call the game's resizer function",
-    "lineNumber": 797,
+    "lineNumber": 798,
     "params": [],
     "return": null
   },
@@ -1924,7 +1928,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#setGame",
     "access": "public",
     "description": "Set the app to use a new instance of the game",
-    "lineNumber": 808,
+    "lineNumber": 809,
     "params": [
       {
         "name": "game",
@@ -1946,7 +1950,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#hasWorker",
     "access": "public",
     "description": "Checks to see if the window has a web worker",
-    "lineNumber": 819,
+    "lineNumber": 820,
     "return": {
       "nullable": null,
       "types": [
@@ -1968,7 +1972,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#getScaleFactor",
     "access": "public",
     "description": "Figures out the current scale factor to use\nfor assets",
-    "lineNumber": 830,
+    "lineNumber": 831,
     "return": {
       "nullable": null,
       "types": [
@@ -1990,7 +1994,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#revertLoader",
     "access": "public",
     "description": "Revert the loader message to it's default state\nof 'Connecting to server...'",
-    "lineNumber": 852,
+    "lineNumber": 853,
     "params": [],
     "return": null
   },
@@ -2005,7 +2009,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#updateLoader",
     "access": "public",
     "description": "Update the loader to show a specific message",
-    "lineNumber": 862,
+    "lineNumber": 863,
     "params": [
       {
         "nullable": null,
@@ -2031,7 +2035,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#toggleLogin",
     "access": "public",
     "description": "Toggle displaying the login form",
-    "lineNumber": 879,
+    "lineNumber": 880,
     "params": [
       {
         "nullable": null,
@@ -2057,7 +2061,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#toggleTyping",
     "access": "public",
     "description": "Toggle the read only attribute on the login fields\nand form registration fields",
-    "lineNumber": 902,
+    "lineNumber": 903,
     "params": [
       {
         "nullable": null,
@@ -2083,7 +2087,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#updateRange",
     "access": "public",
     "description": "Update the range of and object\nusing a linear gradient on the background color",
-    "lineNumber": 922,
+    "lineNumber": 923,
     "params": [
       {
         "name": "field",
@@ -2105,7 +2109,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#updateOrientation",
     "access": "public",
     "description": "Updates the orientation of the application\nto match the orientation of the device the\nplayer is using",
-    "lineNumber": 939,
+    "lineNumber": 940,
     "params": [],
     "return": null
   },
@@ -2120,7 +2124,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#getOrientation",
     "access": "public",
     "description": "Returns the orientation of the device the user is on",
-    "lineNumber": 950,
+    "lineNumber": 951,
     "return": {
       "nullable": null,
       "types": [
@@ -2142,7 +2146,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#getZoom",
     "access": "public",
     "description": "Returns the zoom factor",
-    "lineNumber": 960,
+    "lineNumber": 961,
     "return": {
       "nullable": null,
       "types": [
@@ -2164,7 +2168,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#onReady",
     "access": "public",
     "description": "The callback function when this app class is ready\nand done loading",
-    "lineNumber": 972,
+    "lineNumber": 973,
     "params": [
       {
         "nullable": null,
@@ -2190,7 +2194,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#isMobile",
     "access": "public",
     "description": "Check if the player is using a phone",
-    "lineNumber": 982,
+    "lineNumber": 983,
     "return": {
       "nullable": null,
       "types": [
@@ -2212,7 +2216,7 @@
     "longname": "WTF-Adventure/src/client/js/app.js~App#isTablet",
     "access": "public",
     "description": "Check if the player is using a tablet",
-    "lineNumber": 992,
+    "lineNumber": 993,
     "return": {
       "nullable": null,
       "types": [
@@ -62768,7 +62772,7 @@
     "__docId__": 3640,
     "kind": "testFile",
     "name": "WTF-Adventure/src/client/js/__tests__/app.test.js",
-    "content": "/* global document, Event */\nimport App from '../app';\n\n/**\n * @test {App}\n */\ndescribe('App', () => {\n  const instance = new App();\n\n  /**\n   * @test {App#constructor}\n   */\n  it('.constructor()', () => {\n    expect(instance).toBeDefined();\n  });\n\n  /**\n   * @test {App#load}\n   */\n  it('.load()', () => {\n    instance.readyCallback = jest.fn();\n    instance.load();\n    expect(instance.loginButton.click).toBeDefined();\n    expect(instance.createButton.click).toBeDefined();\n    expect(instance.wrapper.click).toBeDefined();\n    expect(instance.yes.click).toBeDefined();\n    expect(instance.no.click).toBeDefined();\n    expect(instance.rememberMe.click).toBeDefined();\n    expect(instance.guest.click).toBeDefined();\n    expect(instance.registerButton.click).toBeDefined();\n    expect(instance.cancelButton.click).toBeDefined();\n    expect(instance.about.click).toBeDefined();\n    expect(instance.credits.click).toBeDefined();\n    expect(instance.git.click).toBeDefined();\n    expect(instance.respawn.click).toBeDefined();\n    expect(instance.canvas.click).toBeDefined();\n  });\n\n  /**\n   * @test {App#welcomeContinue}\n   */\n  it('.welcomeContinue()', () => {\n    expect(instance.welcomeContinue()).toEqual(false);\n    instance.game = {\n      storage: {\n        data: {},\n        save: jest.fn(),\n      },\n    };\n    instance.body.addClass('welcomeMessage');\n    expect(instance.game.storage.data.welcome).toEqual(undefined);\n    expect(instance.body[0].className).toEqual('welcomeMessage');\n\n    expect(instance.welcomeContinue()).toEqual(true);\n    expect(instance.game.storage.data.welcome).toEqual(false);\n    expect(instance.body[0].className).toEqual('');\n  });\n\n  /**\n   * @test {App#login}\n   */\n  it('.login()', () => {\n    expect(instance.login()).toEqual(false);\n\n    instance.logginIn = false;\n    expect(instance.logginIn).toEqual(false);\n\n    instance.game = {\n      loaded: true,\n      connect: jest.fn(),\n    };\n\n    expect(instance.statusMessage).toEqual('You should turn back now...');\n    instance.statusMessage = null;\n\n    expect(instance.login()).toEqual(true);\n  });\n\n  /**\n   * @test {App#loginAsGuest}\n   */\n  it('.loginAsGuest()', () => {\n    instance.game = null;\n    expect(instance.loginAsGuest()).toEqual(false);\n    instance.game = {};\n    expect(instance.loginAsGuest()).toEqual(true);\n  });\n\n  /**\n   * @test {App#loadCharacter}\n   */\n  it('.loadCharacter()', () => {\n    expect(instance.loadCharacter()).toEqual(false);\n  });\n\n  /**\n   * @test {App#rememberMe}\n   */\n  it('.rememberMe()', () => {\n    expect(instance.rememberLogin()).toEqual(false);\n    instance.game = {\n      storage: {\n        toggleRemember: jest.fn(),\n      },\n    };\n    expect(instance.rememberLogin()).toEqual(true);\n  });\n\n  /**\n   * @test {App#respawnPlayer}\n   */\n  it('.respawn()', () => {\n    expect(instance.respawnPlayer()).toEqual(false);\n    instance.game = {\n      player: {\n        dead: true,\n      },\n      respawn: jest.fn(),\n    };\n    expect(instance.respawnPlayer()).toEqual(true);\n  });\n\n  /**\n   * @test {App#keydownEventListener}\n   */\n  it('.keydownEventListener()', () => {\n    instance.game = false;\n    expect(instance.keydownEventListener(new Event('keydown'))).toEqual(false);\n    instance.game = {};\n    expect(instance.keydownEventListener(new Event('keydown'))).toEqual(true);\n  });\n\n  /**\n   * @test {App#keyupEventListener}\n   */\n  it('.keyupEventListener()', () => {\n    expect(instance.keyupEventListener(new Event('keyup'))).toEqual(false);\n    instance.game = {\n      started: true,\n      input: {\n        keyUp: jest.fn(),\n      },\n    };\n    expect(instance.keyupEventListener(new Event('keyup'))).toEqual(true);\n  });\n\n  /**\n   * @test {App#keyupEventListener}\n   */\n  it('.keyupEventListener()', () => {\n    instance.game = null;\n    expect(instance.mousemoveEventListener(new Event('mousemove'))).toEqual(false);\n\n    const setCoords = jest.fn();\n    const moveCursor = jest.fn();\n    instance.game = {\n      started: true,\n      input: {\n        setCoords,\n        moveCursor,\n      },\n    };\n\n    expect(instance.mousemoveEventListener(new Event('mousemove'))).toEqual(true);\n    expect(moveCursor).toBeCalled();\n    expect(setCoords).toBeCalled();\n  });\n\n  /**\n   * @test {App#canvasClickEventListener}\n   */\n  it('.canvasClickEventListener()', () => {\n    const event = {\n      button: 0,\n    };\n\n    instance.game = null;\n    expect(instance.canvasClickEventListener(event)).toEqual(false);\n\n    instance.game = {\n      started: true,\n      input: {\n        handle: jest.fn(),\n      },\n    };\n\n    expect(instance.canvasClickEventListener(event)).toEqual(true);\n  });\n\n  /**\n   * @test {App#cleanErrors}\n   */\n  it('.cleanErrors()', () => {\n    expect(instance.loginFields).toBeDefined();\n    expect(instance.registerFields).toBeDefined();\n    instance.cleanErrors();\n\n    expect(document.querySelectorAll('.field-error').length).toEqual(0);\n    expect(document.querySelectorAll('.validation-error').length).toEqual(0);\n    expect(document.querySelectorAll('.status').length).toEqual(0);\n  });\n\n  /**\n   * @test {App#displayScreen}\n   */\n  it('.displayScreen()', () => {\n    expect(instance.displayScreen()).toEqual(undefined);\n  });\n});\n",
+    "content": "/* global document, Event */\nimport $ from 'jquery';\nimport App from '../app';\nimport Game from '../game';\n\n/**\n * @test {App}\n */\ndescribe('App', () => {\n  const instance = new App();\n\n  /**\n   * @test {App#constructor}\n   */\n  it('.constructor()', () => {\n    expect(instance).toBeDefined();\n  });\n\n  /**\n   * @test {App#load}\n   */\n  it('.load()', () => {\n    instance.readyCallback = jest.fn();\n    instance.load();\n    expect(instance.loginButton.click).toBeDefined();\n    expect(instance.createButton.click).toBeDefined();\n    expect(instance.wrapper.click).toBeDefined();\n    expect(instance.yes.click).toBeDefined();\n    expect(instance.no.click).toBeDefined();\n    expect(instance.rememberMe.click).toBeDefined();\n    expect(instance.guest.click).toBeDefined();\n    expect(instance.registerButton.click).toBeDefined();\n    expect(instance.cancelButton.click).toBeDefined();\n    expect(instance.about.click).toBeDefined();\n    expect(instance.credits.click).toBeDefined();\n    expect(instance.git.click).toBeDefined();\n    expect(instance.respawn.click).toBeDefined();\n    expect(instance.canvas.click).toBeDefined();\n  });\n\n  /**\n   * @test {App#welcomeContinue}\n   */\n  it('.welcomeContinue()', () => {\n    expect(instance.welcomeContinue()).toEqual(false);\n    instance.game = {\n      storage: {\n        data: {},\n        save: jest.fn(),\n      },\n    };\n    instance.body.addClass('welcomeMessage');\n    expect(instance.game.storage.data.welcome).toEqual(undefined);\n    expect(instance.body[0].className).toEqual('welcomeMessage');\n\n    expect(instance.welcomeContinue()).toEqual(true);\n    expect(instance.game.storage.data.welcome).toEqual(false);\n    expect(instance.body[0].className).toEqual('');\n  });\n\n  /**\n   * @test {App#login}\n   */\n  it('.login()', () => {\n    expect(instance.login()).toEqual(false);\n\n    instance.logginIn = false;\n    expect(instance.logginIn).toEqual(false);\n\n    instance.game = {\n      loaded: true,\n      connect: jest.fn(),\n    };\n\n    expect(instance.statusMessage).toEqual('You should turn back now...');\n    instance.statusMessage = null;\n\n    expect(instance.login()).toEqual(true);\n  });\n\n  /**\n   * @test {App#loginAsGuest}\n   */\n  it('.loginAsGuest()', () => {\n    instance.game = null;\n    expect(instance.loginAsGuest()).toEqual(false);\n    instance.game = {};\n    expect(instance.loginAsGuest()).toEqual(true);\n  });\n\n  /**\n   * @test {App#loadCharacter}\n   */\n  it('.loadCharacter()', () => {\n    expect(instance.loadCharacter()).toEqual(false);\n  });\n\n  /**\n   * @test {App#rememberMe}\n   */\n  it('.rememberMe()', () => {\n    expect(instance.rememberLogin()).toEqual(false);\n    instance.game = {\n      storage: {\n        toggleRemember: jest.fn(),\n      },\n    };\n    expect(instance.rememberLogin()).toEqual(true);\n  });\n\n  /**\n   * @test {App#respawnPlayer}\n   */\n  it('.respawn()', () => {\n    expect(instance.respawnPlayer()).toEqual(false);\n    instance.game = {\n      player: {\n        dead: true,\n      },\n      respawn: jest.fn(),\n    };\n    expect(instance.respawnPlayer()).toEqual(true);\n  });\n\n  /**\n   * @test {App#keydownEventListener}\n   */\n  it('.keydownEventListener()', () => {\n    instance.game = false;\n    expect(instance.keydownEventListener(new Event('keydown'))).toEqual(false);\n    instance.game = {};\n    expect(instance.keydownEventListener(new Event('keydown'))).toEqual(true);\n  });\n\n  /**\n   * @test {App#keyupEventListener}\n   */\n  it('.keyupEventListener()', () => {\n    expect(instance.keyupEventListener(new Event('keyup'))).toEqual(false);\n    instance.game = {\n      started: true,\n      input: {\n        keyUp: jest.fn(),\n      },\n    };\n    expect(instance.keyupEventListener(new Event('keyup'))).toEqual(true);\n  });\n\n  /**\n   * @test {App#keyupEventListener}\n   */\n  it('.keyupEventListener()', () => {\n    instance.game = null;\n    expect(instance.mousemoveEventListener(new Event('mousemove'))).toEqual(false);\n\n    const setCoords = jest.fn();\n    const moveCursor = jest.fn();\n    instance.game = {\n      started: true,\n      input: {\n        setCoords,\n        moveCursor,\n      },\n    };\n\n    expect(instance.mousemoveEventListener(new Event('mousemove'))).toEqual(true);\n    expect(moveCursor).toBeCalled();\n    expect(setCoords).toBeCalled();\n  });\n\n  /**\n   * @test {App#canvasClickEventListener}\n   */\n  it('.canvasClickEventListener()', () => {\n    const event = {\n      button: 0,\n    };\n\n    instance.game = null;\n    expect(instance.canvasClickEventListener(event)).toEqual(false);\n\n    instance.game = {\n      started: true,\n      input: {\n        handle: jest.fn(),\n      },\n    };\n\n    expect(instance.canvasClickEventListener(event)).toEqual(true);\n  });\n\n  /**\n   * @test {App#cleanErrors}\n   */\n  it('.cleanErrors()', () => {\n    expect(instance.loginFields).toBeDefined();\n    expect(instance.registerFields).toBeDefined();\n    instance.cleanErrors();\n\n    expect(document.querySelectorAll('.field-error').length).toEqual(0);\n    expect(document.querySelectorAll('.validation-error').length).toEqual(0);\n    expect(document.querySelectorAll('.status').length).toEqual(0);\n  });\n\n  /**\n   * @test {App#displayScreen}\n   */\n  it('.displayScreen()', () => {\n    expect(instance.displayScreen()).toEqual(false);\n\n    instance.loggingIn = true;\n    expect(instance.displayScreen('logging in fail')).toEqual(false);\n    instance.loggingIn = false;\n\n    // make our DOM elments since this is headless...\n    const loadCharacter = document.createElement('div');\n    loadCharacter.setAttribute('id', 'loadCharacter');\n    document.body.appendChild(loadCharacter);\n\n    const createCharacter = document.createElement('div');\n    createCharacter.setAttribute('id', 'createCharacter');\n    document.body.appendChild(createCharacter);\n\n    // toggle off loading character\n    expect(instance.displayScreen('loadCharacter', 'createCharacter')).toEqual(true);\n    expect(loadCharacter.style.display).toEqual('none');\n    expect(createCharacter.style.display).toEqual('block');\n\n    // toggle off creating character\n    expect(instance.displayScreen('createCharacter', 'loadCharacter')).toEqual(true);\n    expect(loadCharacter.style.display).toEqual('block');\n    expect(createCharacter.style.display).toEqual('none');\n  });\n\n  /**\n   * @test {App#displayScroll}\n   */\n  it('.displayScroll()', () => {\n    // mock the displayScreen function\n    const displayScreen = jest.spyOn(instance, 'displayScreen');\n\n    // make sure the wrapper has a valid DOM element\n    const mockWrapper = document.createElement('div');\n    mockWrapper.setAttribute('id', 'wrapper');\n    document.body.appendChild(mockWrapper);\n    instance.wrapper = $(mockWrapper);\n\n    // make sure the wrapper has a valid DOM element\n    const mockHelpButton = document.createElement('button');\n    mockHelpButton.setAttribute('id', 'helpButton');\n    document.body.appendChild(mockHelpButton);\n    instance.helpButton = $(mockHelpButton);\n\n    // game is not started\n    instance.game.started = false;\n\n    // state is not set\n    expect(instance.wrapper.attr('class')).not.toEqual('animate');\n\n    instance.displayScroll('createCharacter');\n    expect(displayScreen).toHaveBeenCalled();\n    expect(displayScreen.mock.calls[0]).toEqual([undefined, 'createCharacter']);\n\n    // state is set to animate\n    instance.wrapper.removeClass().addClass('animate');\n    expect(instance.wrapper.attr('class')).toEqual('animate');\n\n    instance.displayScroll('createCharacter');\n    expect(displayScreen).toHaveBeenCalled();\n    expect(displayScreen.mock.calls[0]).toEqual([undefined, 'createCharacter']);\n\n    // game has started\n    instance.game.started = true;\n\n    // expect the body to have no class\n    expect(instance.body.attr('class')).toEqual('');\n\n    // help button should have an active class\n    instance.helpButton.addClass('active');\n    expect(instance.helpButton.attr('class')).toEqual('active');\n\n    instance.displayScroll('createCharacter');\n    expect(displayScreen).toHaveBeenCalled();\n    expect(displayScreen.mock.calls[0]).toEqual([undefined, 'createCharacter']);\n\n    // help button should have no active class\n    expect(instance.helpButton.attr('class')).toEqual('');\n\n    // the game has a player\n    instance.game.player = {};\n    instance.displayScroll('createCharacter');\n    expect(displayScreen).toHaveBeenCalled();\n    expect(displayScreen.mock.calls[0]).toEqual([undefined, 'createCharacter']);\n\n    // expect the body to have the player death class\n    expect(instance.body.attr('class')).toEqual('death');\n  });\n});\n",
     "static": true,
     "longname": "/Applications/MAMP/htdocs/WTF-Adventure/src/client/js/__tests__/app.test.js",
     "access": null,
@@ -62786,7 +62790,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0",
     "access": null,
     "description": "App",
-    "lineNumber": 7,
+    "lineNumber": 9,
     "testTargets": [
       "App"
     ]
@@ -62802,7 +62806,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it1",
     "access": null,
     "description": ".constructor()",
-    "lineNumber": 13,
+    "lineNumber": 15,
     "testTargets": [
       "App#constructor"
     ]
@@ -62818,7 +62822,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it2",
     "access": null,
     "description": ".load()",
-    "lineNumber": 20,
+    "lineNumber": 22,
     "testTargets": [
       "App#load"
     ]
@@ -62834,7 +62838,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it3",
     "access": null,
     "description": ".welcomeContinue()",
-    "lineNumber": 42,
+    "lineNumber": 44,
     "testTargets": [
       "App#welcomeContinue"
     ]
@@ -62850,7 +62854,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it4",
     "access": null,
     "description": ".login()",
-    "lineNumber": 62,
+    "lineNumber": 64,
     "testTargets": [
       "App#login"
     ]
@@ -62866,7 +62870,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it5",
     "access": null,
     "description": ".loginAsGuest()",
-    "lineNumber": 82,
+    "lineNumber": 84,
     "testTargets": [
       "App#loginAsGuest"
     ]
@@ -62882,7 +62886,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it6",
     "access": null,
     "description": ".loadCharacter()",
-    "lineNumber": 92,
+    "lineNumber": 94,
     "testTargets": [
       "App#loadCharacter"
     ]
@@ -62898,7 +62902,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it7",
     "access": null,
     "description": ".rememberMe()",
-    "lineNumber": 99,
+    "lineNumber": 101,
     "testTargets": [
       "App#rememberMe"
     ]
@@ -62914,7 +62918,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it8",
     "access": null,
     "description": ".respawn()",
-    "lineNumber": 112,
+    "lineNumber": 114,
     "testTargets": [
       "App#respawnPlayer"
     ]
@@ -62930,7 +62934,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it9",
     "access": null,
     "description": ".keydownEventListener()",
-    "lineNumber": 126,
+    "lineNumber": 128,
     "testTargets": [
       "App#keydownEventListener"
     ]
@@ -62946,7 +62950,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it10",
     "access": null,
     "description": ".keyupEventListener()",
-    "lineNumber": 136,
+    "lineNumber": 138,
     "testTargets": [
       "App#keyupEventListener"
     ]
@@ -62962,7 +62966,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it11",
     "access": null,
     "description": ".keyupEventListener()",
-    "lineNumber": 150,
+    "lineNumber": 152,
     "testTargets": [
       "App#keyupEventListener"
     ]
@@ -62978,7 +62982,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it12",
     "access": null,
     "description": ".canvasClickEventListener()",
-    "lineNumber": 172,
+    "lineNumber": 174,
     "testTargets": [
       "App#canvasClickEventListener"
     ]
@@ -62994,7 +62998,7 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it13",
     "access": null,
     "description": ".cleanErrors()",
-    "lineNumber": 193,
+    "lineNumber": 195,
     "testTargets": [
       "App#cleanErrors"
     ]
@@ -63010,13 +63014,29 @@
     "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it14",
     "access": null,
     "description": ".displayScreen()",
-    "lineNumber": 206,
+    "lineNumber": 208,
     "testTargets": [
       "App#displayScreen"
     ]
   },
   {
     "__docId__": 3656,
+    "kind": "test",
+    "name": "it15",
+    "testId": 15,
+    "memberof": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "WTF-Adventure/src/client/js/__tests__/app.test.js~describe0.it15",
+    "access": null,
+    "description": ".displayScroll()",
+    "lineNumber": 238,
+    "testTargets": [
+      "App#displayScroll"
+    ]
+  },
+  {
+    "__docId__": 3657,
     "kind": "testFile",
     "name": "WTF-Adventure/src/client/js/__tests__/main.test.js",
     "content": "/* global document, window, Event */\nimport WTF from '../main';\n\n// mock the Detect import\njest.mock('../utils/detect');\n\n/**\n * @test {WTF}\n */\ndescribe('WTF', () => {\n  const instance = new WTF();\n\n  /**\n   * @test {WTF#constructor}\n   */\n  it('.constructor()', () => {\n    expect(WTF).toBeDefined();\n  });\n\n  /**\n   * @test {WTF#load}\n   */\n  it('.load()', () => {\n    expect(instance.app).toEqual(null);\n    instance.load();\n    expect(instance.app).toBeDefined();\n    expect(instance.body).toBeDefined();\n    expect(instance.chatInput).toBeDefined();\n  });\n\n  /**\n   * @test {WTF#documentReady}\n   */\n  it('.documentReady()', () => {\n    expect(instance.app).toEqual(null);\n    instance.documentReady();\n    expect(instance.app).toBeDefined();\n    expect(instance.body).toBeDefined();\n    expect(instance.chatInput).toBeDefined();\n  });\n\n  /**\n   * @test {WTF#addClasses}\n   */\n  it('.addClasses()', () => {\n    instance.documentReady();\n    instance.addClasses();\n    expect(instance.chatInput).toBeDefined();\n    expect(instance.body[0].className).toEqual('windows opera');\n  });\n\n  /**\n   * @test {WTF#addResizeListeners}\n   */\n  it('.addResizeListeners()', () => {\n    instance.documentReady();\n    const map = {};\n    document.addEventListener = jest.fn((event, callback) => {\n      map[event] = callback;\n    });\n\n    instance.addResizeListeners();\n    expect(map.touchstart).toBeDefined();\n    expect(map.touchmove).toBeDefined();\n    expect(map.touchmove(new Event('test'))).toEqual(false);\n\n    // check window orientation changes\n    const updateOrientationMock = jest.spyOn(instance.app, 'updateOrientation');\n    window.dispatchEvent(new Event('orientationchange'));\n    expect(updateOrientationMock).toHaveBeenCalled();\n  });\n\n  /**\n   * @test {WTF#initGame}\n   */\n  it('.initGame()', () => {\n    const wtf = new WTF();\n    expect(wtf.app).toEqual(null);\n    wtf.documentReady();\n    wtf.initGame();\n    expect(wtf.app.readyCallback).toBeDefined();\n  });\n});\n",
@@ -63027,14 +63047,14 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 3657,
+    "__docId__": 3658,
     "kind": "test",
-    "name": "describe15",
-    "testId": 15,
+    "name": "describe16",
+    "testId": 16,
     "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js",
     "testDepth": 0,
     "static": true,
-    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15",
+    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16",
     "access": null,
     "description": "WTF",
     "lineNumber": 10,
@@ -63043,14 +63063,14 @@
     ]
   },
   {
-    "__docId__": 3658,
+    "__docId__": 3659,
     "kind": "test",
-    "name": "it16",
-    "testId": 16,
-    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15",
+    "name": "it17",
+    "testId": 17,
+    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16",
     "testDepth": 1,
     "static": true,
-    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15.it16",
+    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16.it17",
     "access": null,
     "description": ".constructor()",
     "lineNumber": 16,
@@ -63059,14 +63079,14 @@
     ]
   },
   {
-    "__docId__": 3659,
+    "__docId__": 3660,
     "kind": "test",
-    "name": "it17",
-    "testId": 17,
-    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15",
+    "name": "it18",
+    "testId": 18,
+    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16",
     "testDepth": 1,
     "static": true,
-    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15.it17",
+    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16.it18",
     "access": null,
     "description": ".load()",
     "lineNumber": 23,
@@ -63075,14 +63095,14 @@
     ]
   },
   {
-    "__docId__": 3660,
+    "__docId__": 3661,
     "kind": "test",
-    "name": "it18",
-    "testId": 18,
-    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15",
+    "name": "it19",
+    "testId": 19,
+    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16",
     "testDepth": 1,
     "static": true,
-    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15.it18",
+    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16.it19",
     "access": null,
     "description": ".documentReady()",
     "lineNumber": 34,
@@ -63091,14 +63111,14 @@
     ]
   },
   {
-    "__docId__": 3661,
+    "__docId__": 3662,
     "kind": "test",
-    "name": "it19",
-    "testId": 19,
-    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15",
+    "name": "it20",
+    "testId": 20,
+    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16",
     "testDepth": 1,
     "static": true,
-    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15.it19",
+    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16.it20",
     "access": null,
     "description": ".addClasses()",
     "lineNumber": 45,
@@ -63107,14 +63127,14 @@
     ]
   },
   {
-    "__docId__": 3662,
+    "__docId__": 3663,
     "kind": "test",
-    "name": "it20",
-    "testId": 20,
-    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15",
+    "name": "it21",
+    "testId": 21,
+    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16",
     "testDepth": 1,
     "static": true,
-    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15.it20",
+    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16.it21",
     "access": null,
     "description": ".addResizeListeners()",
     "lineNumber": 55,
@@ -63123,14 +63143,14 @@
     ]
   },
   {
-    "__docId__": 3663,
+    "__docId__": 3664,
     "kind": "test",
-    "name": "it21",
-    "testId": 21,
-    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15",
+    "name": "it22",
+    "testId": 22,
+    "memberof": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16",
     "testDepth": 1,
     "static": true,
-    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe15.it21",
+    "longname": "WTF-Adventure/src/client/js/__tests__/main.test.js~describe16.it22",
     "access": null,
     "description": ".initGame()",
     "lineNumber": 76,

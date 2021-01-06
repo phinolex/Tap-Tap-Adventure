@@ -1,5 +1,7 @@
 /* global document, Event */
+import $ from 'jquery';
 import App from '../app';
+import Game from '../game';
 
 /**
  * @test {App}
@@ -228,5 +230,69 @@ describe('App', () => {
     expect(instance.displayScreen('createCharacter', 'loadCharacter')).toEqual(true);
     expect(loadCharacter.style.display).toEqual('block');
     expect(createCharacter.style.display).toEqual('none');
+  });
+
+  /**
+   * @test {App#displayScroll}
+   */
+  it('.displayScroll()', () => {
+    // mock the displayScreen function
+    const displayScreen = jest.spyOn(instance, 'displayScreen');
+
+    // make sure the wrapper has a valid DOM element
+    const mockWrapper = document.createElement('div');
+    mockWrapper.setAttribute('id', 'wrapper');
+    document.body.appendChild(mockWrapper);
+    instance.wrapper = $(mockWrapper);
+
+    // make sure the wrapper has a valid DOM element
+    const mockHelpButton = document.createElement('button');
+    mockHelpButton.setAttribute('id', 'helpButton');
+    document.body.appendChild(mockHelpButton);
+    instance.helpButton = $(mockHelpButton);
+
+    // game is not started
+    instance.game.started = false;
+
+    // state is not set
+    expect(instance.wrapper.attr('class')).not.toEqual('animate');
+
+    instance.displayScroll('createCharacter');
+    expect(displayScreen).toHaveBeenCalled();
+    expect(displayScreen.mock.calls[0]).toEqual([undefined, 'createCharacter']);
+
+    // state is set to animate
+    instance.wrapper.removeClass().addClass('animate');
+    expect(instance.wrapper.attr('class')).toEqual('animate');
+
+    instance.displayScroll('createCharacter');
+    expect(displayScreen).toHaveBeenCalled();
+    expect(displayScreen.mock.calls[0]).toEqual([undefined, 'createCharacter']);
+
+    // game has started
+    instance.game.started = true;
+
+    // expect the body to have no class
+    expect(instance.body.attr('class')).toEqual('');
+
+    // help button should have an active class
+    instance.helpButton.addClass('active');
+    expect(instance.helpButton.attr('class')).toEqual('active');
+
+    instance.displayScroll('createCharacter');
+    expect(displayScreen).toHaveBeenCalled();
+    expect(displayScreen.mock.calls[0]).toEqual([undefined, 'createCharacter']);
+
+    // help button should have no active class
+    expect(instance.helpButton.attr('class')).toEqual('');
+
+    // the game has a player
+    instance.game.player = {};
+    instance.displayScroll('createCharacter');
+    expect(displayScreen).toHaveBeenCalled();
+    expect(displayScreen.mock.calls[0]).toEqual([undefined, 'createCharacter']);
+
+    // expect the body to have the player death class
+    expect(instance.body.attr('class')).toEqual('death');
   });
 });
