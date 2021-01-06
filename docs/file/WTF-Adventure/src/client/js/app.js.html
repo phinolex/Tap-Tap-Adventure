@@ -734,13 +734,14 @@ export default class App {
     log.debug(&apos;App - displayScreen()&apos;, origin, destination);
 
     if (!destination || this.loggingIn) {
-      return;
+      return false;
     }
 
     this.cleanErrors();
     // this.wrapper.removeClass(origin).addClass(destination);
     $(`#${origin}`).css(&apos;display&apos;, &apos;none&apos;);
     $(`#${destination}`).css(&apos;display&apos;, &apos;block&apos;);
+    return true;
   }
 
   /**

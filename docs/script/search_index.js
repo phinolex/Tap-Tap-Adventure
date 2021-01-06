@@ -889,91 +889,97 @@ window.esdocSearchIndex = [
   ],
   [
     "app wtf-adventure/src/client/js/app.js~app,app",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber7",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber9",
     "App",
     "test"
   ],
   [
     "app#canvasclickeventlistener wtf-adventure/src/client/js/app.js~app#canvasclickeventlistener,app#canvasclickeventlistener",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber172",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber174",
     "App .canvasClickEventListener()",
     "test"
   ],
   [
     "app#cleanerrors wtf-adventure/src/client/js/app.js~app#cleanerrors,app#cleanerrors",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber193",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber195",
     "App .cleanErrors()",
     "test"
   ],
   [
     "app#constructor wtf-adventure/src/client/js/app.js~app#constructor,app#constructor",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber13",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber15",
     "App .constructor()",
     "test"
   ],
   [
     "app#displayscreen wtf-adventure/src/client/js/app.js~app#displayscreen,app#displayscreen",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber206",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber208",
     "App .displayScreen()",
     "test"
   ],
   [
+    "app#displayscroll wtf-adventure/src/client/js/app.js~app#displayscroll,app#displayscroll",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber238",
+    "App .displayScroll()",
+    "test"
+  ],
+  [
     "app#keydowneventlistener wtf-adventure/src/client/js/app.js~app#keydowneventlistener,app#keydowneventlistener",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber126",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber128",
     "App .keydownEventListener()",
     "test"
   ],
   [
     "app#keyupeventlistener wtf-adventure/src/client/js/app.js~app#keyupeventlistener,app#keyupeventlistener",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber136",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber138",
     "App .keyupEventListener()",
     "test"
   ],
   [
     "app#keyupeventlistener wtf-adventure/src/client/js/app.js~app#keyupeventlistener,app#keyupeventlistener",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber150",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber152",
     "App .keyupEventListener()",
     "test"
   ],
   [
     "app#load wtf-adventure/src/client/js/app.js~app#load,app#load",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber20",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber22",
     "App .load()",
     "test"
   ],
   [
     "app#loadcharacter wtf-adventure/src/client/js/app.js~app#loadcharacter,app#loadcharacter",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber92",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber94",
     "App .loadCharacter()",
     "test"
   ],
   [
     "app#login wtf-adventure/src/client/js/app.js~app#login,app#login",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber62",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber64",
     "App .login()",
     "test"
   ],
   [
     "app#loginasguest wtf-adventure/src/client/js/app.js~app#loginasguest,app#loginasguest",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber82",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber84",
     "App .loginAsGuest()",
     "test"
   ],
   [
     "app#rememberme wtf-adventure/src/client/js/app.js~app#rememberme,app#rememberme",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber99",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber101",
     "App .rememberMe()",
     "test"
   ],
   [
     "app#respawnplayer wtf-adventure/src/client/js/app.js~app#respawnplayer,app#respawnplayer",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber112",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber114",
     "App .respawn()",
     "test"
   ],
   [
     "app#welcomecontinue wtf-adventure/src/client/js/app.js~app#welcomecontinue,app#welcomecontinue",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber42",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber44",
     "App .welcomeContinue()",
     "test"
   ],
