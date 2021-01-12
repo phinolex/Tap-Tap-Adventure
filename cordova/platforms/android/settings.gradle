@@ -1,5 +1,0 @@
-// GENERATED FILE - DO NOT EDIT
-include ":"
-include ":CordovaLib"
-include ":cordova-plugin-ad-unityads-sdk:android"
-project(":cordova-plugin-ad-unityads-sdk:android").projectDir = new File("cordova-plugin-ad-unityads-sdk/TTA-android")

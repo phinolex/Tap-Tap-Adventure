@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for server/js/game/formulas.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">server/js/game</a> formulas.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/74</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/67</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/71</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import Utils from '../util/utils';</span>
+&nbsp;
+const LevelExp = <span class="cstat-no" title="statement not covered" >[];</span>
+&nbsp;
+const <span class="fstat-no" title="function not covered" >getMaxDamage = <span class="cstat-no" title="statement not covered" >(</span>attacker, target) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  if (!attacker || !target) {</span>
+<span class="cstat-no" title="statement not covered" >    return 0;</span>
+  }
+&nbsp;
+  let damageDealt;
+  let damageAbsorbed;
+  let damageAmplifier = <span class="cstat-no" title="statement not covered" >1;</span>
+  let absorptionAmplifier = <span class="cstat-no" title="statement not covered" >1;</span>
+&nbsp;
+  const usingRange = <span class="cstat-no" title="statement not covered" >attacker.weapon</span>
+    ? attacker.weapon.isRanged()
+    : attacker.isRanged();
+&nbsp;
+  const weaponLevel = <span class="cstat-no" title="statement not covered" >attacker.weapon</span>
+    ? attacker.weapon.getLevel()
+    : attacker.weaponLevel;
+&nbsp;
+  const armourLevel = <span class="cstat-no" title="statement not covered" >attacker.armour</span>
+    ? attacker.armour.getDefense()
+    : attacker.armourLevel;
+&nbsp;
+  const pendant = <span class="cstat-no" title="statement not covered" >attacker.pendant ? attacker.pendant : null;</span>
+  const ring = <span class="cstat-no" title="statement not covered" >attacker.ring ? attacker.ring : null;</span>
+  const boots = <span class="cstat-no" title="statement not covered" >attacker.boots ? attacker.boots : null;</span>
+&nbsp;
+  const targetArmour = <span class="cstat-no" title="statement not covered" >target.armour</span>
+    ? target.armour.getDefense()
+    : target.armourLevel;
+&nbsp;
+  const targetPendant = <span class="cstat-no" title="statement not covered" >target.pendant ? target.pendant : null;</span>
+  const targetRing = <span class="cstat-no" title="statement not covered" >target.ring ? target.ring : null;</span>
+  const targetBoots = <span class="cstat-no" title="statement not covered" >target.boots ? target.boots : null;</span>
+  const isPlayer = <span class="cstat-no" title="statement not covered" >attacker.type === 'player';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  damageDealt = (isPlayer ? 10 : 0)</span>
+    + attacker.level
+    + (attacker.level * weaponLevel) / 4
+    + (attacker.level + weaponLevel * armourLevel) / 8;
+&nbsp;
+  /**
+   * Apply ranged damage deficit
+   */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (usingRange) {</span>
+<span class="cstat-no" title="statement not covered" >    damageDealt /= 1.275;</span>
+  }
+&nbsp;
+  /**
+   * Apply special amulets
+   */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (pendant &amp;&amp; pendant.pendantLevel &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >    damageAmplifier *= pendant.getBaseAmplifier();</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (ring &amp;&amp; ring.ringLevel &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >    damageAmplifier *= ring.getBaseAmplifier();</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (boots &amp;&amp; boots.bootsLevel &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >    damageAmplifier *= boots.getBaseAmplifier();</span>
+  }
+&nbsp;
+  /**
+   * Just so amplifiers don't get out of hand.
+   */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (damageAmplifier &gt; 1.6) {</span>
+<span class="cstat-no" title="statement not covered" >    damageAmplifier = 1.6;</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  damageDealt *= damageAmplifier;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  damageAbsorbed = target.level + targetArmour / 2;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (targetPendant) {</span>
+<span class="cstat-no" title="statement not covered" >    absorptionAmplifier *= targetPendant.getBaseAmplifier();</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (targetRing) {</span>
+<span class="cstat-no" title="statement not covered" >    absorptionAmplifier *= targetRing.getBaseAmplifier();</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (targetBoots) {</span>
+<span class="cstat-no" title="statement not covered" >    absorptionAmplifier *= targetBoots.getBaseAmplifier();</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  damageAbsorbed *= absorptionAmplifier;</span>
+&nbsp;
+  let damage = <span class="cstat-no" title="statement not covered" >damageDealt - damageAbsorbed;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  damage = Math.ceil(damage);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (isNaN(damage) || !damage || damage &lt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >    damage = 0;</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return damage;</span>
+};
+&nbsp;
+const <span class="fstat-no" title="function not covered" >getDamage = <span class="cstat-no" title="statement not covered" >(</span>attacker, target, special) =&gt; {</span>
+  const maxDamage = <span class="cstat-no" title="statement not covered" >getMaxDamage(attacker, target, special);</span>
+  const accuracy = <span class="cstat-no" title="statement not covered" >Utils.randomInt(0, attacker.level);</span>
+<span class="cstat-no" title="statement not covered" >  return Utils.randomInt(accuracy, maxDamage);</span>
+};
+&nbsp;
+/**
+ * The critical is the player's max hit plus *= critical multiplier of the weapon
+ */
+const <span class="fstat-no" title="function not covered" >getCritical = <span class="cstat-no" title="statement not covered" >(</span>attacker, target) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  if (!attacker || !target) {</span>
+<span class="cstat-no" title="statement not covered" >    return 0;</span>
+  }
+&nbsp;
+  let damage = <span class="cstat-no" title="statement not covered" >getDamage(attacker, target);</span>
+  const multiplier = <span class="cstat-no" title="statement not covered" >attacker.weapon.abilityLevel / 10;</span>
+<span class="cstat-no" title="statement not covered" >  damage *= multiplier;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return damage;</span>
+};
+&nbsp;
+const <span class="fstat-no" title="function not covered" >getWeaponBreak = <span class="cstat-no" title="statement not covered" >(</span>attacker, target) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  if (!attacker || !target) {</span>
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
+  const targetArmour = <span class="cstat-no" title="statement not covered" >target.getArmourLevel();</span>
+  const breakOnArmour = <span class="cstat-no" title="statement not covered" >100 - (targetArmour * 10);</span>
+&nbsp;
+  /**
+   * The chance a weapon will break ....
+   * based upon the 100 - (armourLevel * 10)
+   * this will never be lower than 35
+   */
+  const breakChance = <span class="cstat-no" title="statement not covered" >Utils.randomRange(1, (breakOnArmour &gt; 35 || 35));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return breakChance &lt; 25;</span>
+};
+&nbsp;
+/**
+ * Preliminary setup until this function is expanded
+ * and fits in the necessary algorithms.
+ */
+const <span class="fstat-no" title="function not covered" >getAoEDamage = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >(</span>attacker, target) =&gt; getDamage(attacker, target);</span></span>
+&nbsp;
+const <span class="fstat-no" title="function not covered" >expToLevel = <span class="cstat-no" title="statement not covered" >(</span>experience) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  if (experience &lt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >    return -1;</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  for (let i = 1; i &lt; LevelExp.length; i += 1) {</span>
+<span class="cstat-no" title="statement not covered" >    if (experience &lt; LevelExp[i]) {</span>
+<span class="cstat-no" title="statement not covered" >      return i;</span>
+    }
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return -1;</span>
+};
+&nbsp;
+const <span class="fstat-no" title="function not covered" >getMaxHitPoints = <span class="cstat-no" title="statement not covered" >l</span>evel<span class="cstat-no" title="statement not covered" > =&gt; 100 + level * 30;</span></span>
+&nbsp;
+const <span class="fstat-no" title="function not covered" >getMaxMana = <span class="cstat-no" title="statement not covered" >l</span>evel<span class="cstat-no" title="statement not covered" > =&gt; 10 + level * 8;</span></span>
+&nbsp;
+export default {
+  LevelExp,
+  getDamage,
+  getMaxDamage,
+  getCritical,
+  getWeaponBreak,
+  getMaxHitPoints,
+  getMaxMana,
+  expToLevel,
+  getAoEDamage,
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 20:08:13 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

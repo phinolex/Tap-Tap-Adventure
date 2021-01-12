@@ -1,81 +1,97 @@
-# Tap Tap Adventure
-
-A massively multiplayer online experience based on Little Workshop's 2012 experimental HTML5 game - BrowserQuest. Initially, making use of WebSockets, the game has been revamped with more modern approaches such as Socket.io to ensure maximum networking performance in the comfort of your browser.
-
-Since BrowserQuest, we have improved tons of things, rewriting the backend nearly entirely at this point, updates such as:
-
-* Centered Camera Rendering & Side-Scroller mode
-* Over a thousand new sprites (items, mobs, areas, etc.)
-* API Registration and Login w/ Anti-Bruteforce protection
-* Skills and Abilities
-* Inventory System
-* Changes towards the UI
-* Questing Handler (allowing full control over a quest)
-* Minigame Handler (anyone can create minigames)
-* Party System -> (To be transformed into guilds)
-* Levelling sytem
-* Proper arrangement of internal server files
-* Complete refactoring of major files
-* Improvements to the packet system
-* Tons of exploits fixed due to accessible client files
-* Banking, Enchanting, Shop, Crafting Systems
-* Projectiles
-* Archery Class
-
-Though those changes give the game a greater purpose, there is much to be done, the following are examples:
-
-* Improve the rendering to offer maximum performance on all devices
-* Create a storyline for the game to follow 
-* Smoothen out the interfaces to properly fit the game
-* Add various activities (cutting wood, making fire, fishing, etc.)
-* Proper interfaces for Achievements and Quests
-* Re-arrange the map to fit in more content
-* Add tutorials for new players
-* Change or completely redo the interface
-* Trading System amongst players
-* Create a form of economy through the shops (player sells, player buys)
-* Ranking system to players (promoting PVP)
-* Add multiple world support (easy and not important right now)
-* Inventory interface needs to be updated
-
-The intent behind Tap Tap Adventure is to provide a cross-platform experience to everyone, being able to continue your progress at any time while utilizing minimal amounts of data, RAM and CPU. At the same time, we would like to invite everyone to contribute towards the development of the game. All updates posted on GitHub will be voted by other players and included in the game, or adversely, refused.
+![WTF?! Adventure](https://github.com/design1online/WTF-Adventure/blob/main/assets/img/wtfadventure.png?raw=true "WTF?! Adventure")
 
 
-## Running the Repo
+![Node CI](https://github.com/design1online/WTF-Adventure/workflows/Node%20CI/badge.svg) ![Jest Code Coverage](https://raw.githubusercontent.com/design1online/WTF-Adventure/main/coverage/badge.svg) ![Esdoc Coverage](https://raw.githubusercontent.com/design1online/WTF-Adventure/main/docs/badge.svg?sanitize=true) ![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)
 
-To run your own TTA server, you must `clone` the repository. You will need the latest version of NodeJS for optimal performance.
+WTF?! Adventure is a massively multi-player online open-source project based on Little Workshop's 2012 demonstration for HTML5 WebSockets - [BrowserQuest (BQ)](https://github.com/browserquest/BrowserQuest) and a subsequent fork called [Tap Tap Adventure (TTA)](https://github.com/phinolex/Tap-Tap-Adventure).
+WTF?! Adventure is completely open-source, allowing its community to collaborate and aid in the perfection of the game. Anyone is free to create their own derivative of WTF?! Adventure, with no strings attached.
 
-Step 1: Install Dependencies
+### Features & Functionality
 
-`$ sudo npm install -d`
+- **Webpack:** Dev and prod config files and now utilizes browserSync for easier client side development. A new build folder is created that contains minified versions of the client side resources.
 
-Step 2: Install Redis Server - https://redis.io
+- **NodeJS:** Server has been updated to use nodemon for easier restarting and server development
 
-Step 3: Install Http-Server
+- **Babel ES6:** All files updated to take advantage of newer JS functionality and class format
 
-`$ sudo npm install -g http-server`
+- **Testing:** Updated to use eslinter using airBnB standards
 
-Step 3.5 (Optional): Install `nodemon`
+- **Styles:** Converted to allow the use of SASS
 
-If you're planning on developing TTA, `nodemon` is a neat tool that automatically restarts the server upon detecting a change.
+- **Dependencies:** All dependencies are now pulling from npm packages in package.json
 
-`$ sudo npm install -g nodemon`
+- **Rendering:** Has been completely redone to only draw frames whenever necessary. This in turns boosts the performance on browsers such as Safari & Firefox.
 
-Step 4: Run redis, the server and the client
+- **Networking & Packets:** Previously, everything regarding networking was crammed into a singular class, now it has all been laid out properly with every class pertaining necessary functions.
 
-You will need a separate terminal window for each of the following (ensure you are in the server directory):
+- **Client Rework:** The stress put on the client previously was unbelievable, the client not only had to receive packet data, it was responsible for parsing music, achievements, quests, item data, and many other nonsense. This has all been moved to the server side, the client received information about whatever it needs from the server, removing upwards of 20MB of unnecessary data.
 
-`$ redis-server`
+- **Source Structure:** Since everything has been rewritten from scratch, the code itself is located in designated files following a logical structure, as opposed to random scattered code throughout the source. As an extra, the convention remains unanimous throughout the source, ensuring maximum readability is achieved all throughout.
 
-`$ node server/js/main` or if you're using nodemon `$ nodemon server/js/main.js`
+- **Database Loading:** Now uses MySQL as opposed to Redis. This is because MySQL is far more reliable. With this, the source is able to generate its own database structure regardless of the chosen MySQL server. Everything is stored in its according type and retrieved upon logging in.
 
-`$ http-server`
+- **Data Parser:** Located in `server/js/util/` the parser loads all data regarding NPCs, Mobs, Items and so on right when the server starts. It is then able to use it throughout the source statically.
 
-Done! You can connect to the game using http://127.0.0.1:8080/client
+- **Map Loading:** The client-sided map has been brought down to the bare minimum, it is only responsible for its fair share of collisions (checked both client and server sided) and determining tiles and what gets drawn where. While the server-side map loading ensures the location of objects, NPCs, areas and so on. The client receives information depending on the actions taken by the player (i.e. a player walks into a new zone and must receive new music)
+
+- **Combat System:** Completely rewritten and much more controlled, the combat system accounts for both single, multi, ranged or melee combat. It can easily be expanded to include special mobs (e.g. bosses). It is all done in the server-side, greatly reducing the chance of any exploit.
+
+- **Controllers:** Both the client and the server side contain a folder named `controllers`. The name is pretty self explanatory, this controls important functions of the game.
+
+- **Quest System:** The quest controller encompasses both achievements and quests, both have been created in a plugin format and allow for manipulation of server events. Achievements are far more simplistic in nature, consisting of minor tasks and small rewards.
+
+- **Plugin System:** Expands upon the controllers and combat and allows direct control over individual items.
+
+- **Crypto:** removed this functionality
+
+- **Graphics:** entirely new UI graphics
+
+- **Doors:** enhanced to make going in and out of doors easier with mouse click functionality
 
 
-## Copyright
+## Todo List
 
-Because TTA is released under the MPL 2.0 license, everyone must provide the updated source code in one way or another if they choose to start their own version of the game. Images, music and any other form of arts that do not go under this license are exempt from this.
+- Better tutorial
+- Advertisements
+- Private Messages
+- Passive Companions
+- Active Companions
+- Add Guilds and Parties
+- Implement trading amongst player
+- Abilities
+- Finalize all bosses
+- More quests and achievements
 
-If you are to provide new sprites to this repository, you must have proper permissions from the author or be under CC-BY-SA 3.0. In both instances, you must provide proof of this in your pull requests, and any other information regarding copyright.
+
+## Running WTF?! Adventure
+
+Running the server is fairly straightforward, for the most part. If you already have everything installed and configured you can skip directly to step 3.
+
+##### Step 1 - Install the dependencies
+
+In the command line run: `npm install`
+
+##### Step 2 - Setting the config files
+
+Convert the server configuration for local usage, go in both `src/server/config.json` and `src/client/config.json` and update the ports and settings to meet your needs.
+
+##### Step 3 - Make sure MySQL is up and running
+
+If you are running this project locally then you will need something like [XAMP](https://www.apachefriends.org/index.html) or [MAMP](https://www.mamp.info/en/) that you can turn on and use to run MySQL locally.
+
+If you are running this project on a server then you will need to make sure you have a mysqld instance running.
+
+Make sure you have the proper config for the MySQL server in your `src/server/config.json` file, often times connection issues with WTFServer will be due to connection or authentication errors when trying to connect to your MySQL database.
+
+
+##### Step 4 - Run the NodeJS server
+
+In the command line type: `npm run wtfserver`
+
+##### Step 5 - Run the HTML5 Client Webpack
+
+Open another terminal and then type: `npm start`
+
+##### Step 6 - View in Browser
+
+Now open your browser and navigate to `http://{ip}:{port}/` as defined in your configuration files. Typically this will be `http://localhost:3000` if you use the default webpack and client configuration settings provided.

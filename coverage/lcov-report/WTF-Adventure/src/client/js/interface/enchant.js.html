@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for WTF-Adventure/src/client/js/interface/enchant.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../../index.html">All files</a> / <a href="index.html">WTF-Adventure/src/client/js/interface</a> enchant.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/70</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/68</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import $ from 'jquery';
+import Packets from '../network/packets';
+&nbsp;
+export default class Enchant {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(game, intrface) {
+<span class="cstat-no" title="statement not covered" >    this.game = game;</span>
+<span class="cstat-no" title="statement not covered" >    this.interface = intrface;</span>
+<span class="cstat-no" title="statement not covered" >    this.body = $('#enchant');</span>
+<span class="cstat-no" title="statement not covered" >    this.container = $('#enchantContainer');</span>
+<span class="cstat-no" title="statement not covered" >    this.enchantSlots = $('#enchantInventorySlots');</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedItem = $('#enchantSelectedItem');</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedShards = $('#enchantShards');</span>
+<span class="cstat-no" title="statement not covered" >    this.confirm = $('#confirmEnchant');</span>
+<span class="cstat-no" title="statement not covered" >    this.shardsCount = $('#shardsCount');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.confirm.css({</span>
+      left: '70%',
+      top: '80%',
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $('#closeEnchant').click(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.hide();</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.confirm.click(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.enchant();</span>
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ad</span>d(type, index) {
+    const self = <span class="cstat-no" title="statement not covered" >this;</span>
+&nbsp;
+&nbsp;
+    const image = <span class="cstat-no" title="statement not covered" >this.getSlot(index).find(`#inventoryImage${index}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    switch (type) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'item':
+<span class="cstat-no" title="statement not covered" >        this.selectedItem.css(</span>
+          'background-image',
+          image.css('background-image'),
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'shards':
+<span class="cstat-no" title="statement not covered" >        this.selectedShards.css(</span>
+          'background-image',
+          image.css('background-image'),
+        );
+&nbsp;
+        const { // eslint-disable-line
+          count,
+        } = <span class="cstat-no" title="statement not covered" >this.getItemSlot(index);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (count &gt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >          this.shardsCount.text(count);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    image.css('background-image', '');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    self</span>
+      .getSlot(index)
+      .find(`#inventoryItemCount${index}`)
+      .text('');
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  mo</span>veBack(type, index) {
+    const image = <span class="cstat-no" title="statement not covered" >this.getSlot(index).find(`#inventoryImage${index}`);</span>
+    const itemCount = <span class="cstat-no" title="statement not covered" >this.getSlot(index).find(`#inventoryItemCount${index}`);</span>
+    const {
+      count,
+    } = <span class="cstat-no" title="statement not covered" >this.getItemSlot(index);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    switch (type) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'item':
+<span class="cstat-no" title="statement not covered" >        image.css(</span>
+          'background-image',
+          this.selectedItem.css('background-image'),
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (count &gt; 1) <span class="cstat-no" title="statement not covered" >itemCount.text(count);</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.selectedItem.css('background-image', '');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'shards':
+<span class="cstat-no" title="statement not covered" >        image.css(</span>
+          'background-image',
+          this.selectedShards.css('background-image'),
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (count &gt; 1) <span class="cstat-no" title="statement not covered" >itemCount.text(count);</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.selectedShards.css('background-image', '');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.shardsCount.text('');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  lo</span>ad() {
+    const list = <span class="cstat-no" title="statement not covered" >this.getSlots();</span>
+    const inventoryList = <span class="cstat-no" title="statement not covered" >this.interface.bank.getInventoryList();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    list.empty();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; this.getInventorySize(); i += 1) {</span>
+      const item = <span class="cstat-no" title="statement not covered" >$(inventoryList[i]).clone();</span>
+      const slot = <span class="cstat-no" title="statement not covered" >item.find(`#bankInventorySlot${i}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      slot.click(<span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        this.select(event);</span>
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      list.append(item);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.selectedItem.click(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.remove('item');</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.selectedShards.click(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.remove('shards');</span>
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  en</span>chant() {
+<span class="cstat-no" title="statement not covered" >    this.game.socket.send(Packets.Enchant, [Packets.EnchantOpcode.Enchant]);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>lect(event) {
+<span class="cstat-no" title="statement not covered" >    this.game.socket.send(Packets.Enchant, [</span>
+      Packets.EnchantOpcode.Select,
+      event.currentTarget.id.substring(17),
+    ]);
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>move(type) {
+<span class="cstat-no" title="statement not covered" >    this.game.socket.send(Packets.Enchant, [</span>
+      Packets.EnchantOpcode.Remove,
+      type,
+    ]);
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tInventorySize() {
+<span class="cstat-no" title="statement not covered" >    return this.interface.inventory.getSize();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tItemSlot(index) {
+<span class="cstat-no" title="statement not covered" >    return this.interface.inventory.container.slots[index];</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  di</span>splay() {
+<span class="cstat-no" title="statement not covered" >    this.body.fadeIn('fast');</span>
+<span class="cstat-no" title="statement not covered" >    this.load();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  hi</span>de() {
+<span class="cstat-no" title="statement not covered" >    this.selectedItem.css('background-image', '');</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedShards.css('background-image', '');</span>
+<span class="cstat-no" title="statement not covered" >    this.body.fadeOut('fast');</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ha</span>sImage(image) {
+<span class="cstat-no" title="statement not covered" >    return image.css('background-image') !== 'none';</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tSlot(index) {
+<span class="cstat-no" title="statement not covered" >    return $(this.getSlots().find('li')[index]);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tSlots() {
+<span class="cstat-no" title="statement not covered" >    return this.enchantSlots.find('ul');</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  is</span>Visible() {
+<span class="cstat-no" title="statement not covered" >    return this.body.css('display') === 'block';</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 25 2019 21:03:04 GMT-0400 (Eastern Daylight Time)
+</div>
+</div>
+<script src="../../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../../sorter.js"></script>
+</body>
+</html>

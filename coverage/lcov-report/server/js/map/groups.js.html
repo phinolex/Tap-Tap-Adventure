@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for server/js/map/groups.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">server/js/map</a> groups.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/46</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/42</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import _ from 'underscore';</span>
+<span class="cstat-no" title="statement not covered" >import map from '../../data/map/world_server.json';</span>
+&nbsp;
+export default class Groups {
+<span class="fstat-no" title="function not covered" >  constructor(</span>mapData) <span class="cstat-no" title="statement not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    this.map = mapData || map;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.width = this.map.width;</span>
+<span class="cstat-no" title="statement not covered" >    this.height = this.map.height;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.zoneWidth = this.map.zoneWidth;</span>
+<span class="cstat-no" title="statement not covered" >    this.zoneHeight = this.map.zoneHeight;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.groupWidth = this.map.groupWidth;</span>
+<span class="cstat-no" title="statement not covered" >    this.groupHeight = this.map.groupHeight;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.linkedGroups = {};</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.loadDoors();</span>
+  }
+&nbsp;
+  loadDoors() <span class="cstat-no" title="statement not covered" >{</span>
+    const {
+      doors,
+    } = <span class="cstat-no" title="statement not covered" >map;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    _.each(doors, <span class="fstat-no" title="function not covered" >(</span>door) =&gt; {</span>
+      const groupId = <span class="cstat-no" title="statement not covered" >this.groupIdFromPosition(door.x, door.y);</span>
+      const linkedGroupId = <span class="cstat-no" title="statement not covered" >this.groupIdFromPosition(door.tx, door.ty);</span>
+      const linkedGroupPosition = <span class="cstat-no" title="statement not covered" >this.groupIdToPosition(linkedGroupId);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (groupId in this.linkedGroups) {</span>
+<span class="cstat-no" title="statement not covered" >        this.linkedGroups[groupId].push(linkedGroupPosition);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        this.linkedGroups[groupId] = [linkedGroupPosition];</span>
+      }
+    });
+  }
+&nbsp;
+  getAdjacentGroups(id) <span class="cstat-no" title="statement not covered" >{</span>
+    const position = <span class="cstat-no" title="statement not covered" >this.groupIdToPosition(id);</span>
+    const {
+      x,
+      y,
+    } = <span class="cstat-no" title="statement not covered" >position;</span>
+    const list = <span class="cstat-no" title="statement not covered" >[];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = -1; i &lt;= 1; i += 1) {</span>
+<span class="cstat-no" title="statement not covered" >      for (let j = -1; j &lt;= 1; j += 1) {</span>
+<span class="cstat-no" title="statement not covered" >        list.push({</span>
+          x: x + j,
+          y: y + i,
+        });
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    _.each(this.linkedGroups[id], <span class="fstat-no" title="function not covered" >(</span>groupPosition) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (!_.any(list, <span class="fstat-no" title="function not covered" >pos<span class="cstat-no" title="statement not covered" > =&gt; pos.x === x &amp;&amp; pos.y === y)) {</span></span></span>
+<span class="cstat-no" title="statement not covered" >        list.push(groupPosition);</span>
+      }
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return _.reject(list, <span class="fstat-no" title="function not covered" >(</span>groupPosition) =&gt; {</span>
+      const gX = <span class="cstat-no" title="statement not covered" >groupPosition.x;</span>
+      const gY = <span class="cstat-no" title="statement not covered" >groupPosition.y;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return (</span>
+        gX &lt; 0 || gY &lt; 0 || gX &gt;= this.groupWidth || gY &gt;= this.groupHeight
+      );
+    });
+  }
+&nbsp;
+  forEachGroup(callback) {
+<span class="cstat-no" title="statement not covered" >    for (let x = 0; x &lt; this.groupWidth; x += 1) <span class="cstat-no" title="statement not covered" >for (let y = 0; y &lt; this.groupHeight; y += 1) <span class="cstat-no" title="statement not covered" >callback(`${x}-${y}`);</span></span></span>
+  }
+&nbsp;
+  forEachAdjacentGroup(groupId, callback) {
+<span class="cstat-no" title="statement not covered" >    if (!groupId) <span class="cstat-no" title="statement not covered" >r</span>eturn;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    _.each(this.getAdjacentGroups(groupId), <span class="fstat-no" title="function not covered" >(</span>position) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      callback(`${position.x}-${position.y}`);</span>
+    });
+  }
+&nbsp;
+  groupIdFromPosition(x, y) {
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      `${Math.floor(x / this.zoneWidth)}-${Math.floor(y / this.zoneHeight)}`
+    );
+  }
+&nbsp;
+  groupIdToPosition(id) {
+    const position = <span class="cstat-no" title="statement not covered" >id.split('-');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      x: parseInt(position[0], 10),
+      y: parseInt(position[1], 10),
+    };
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 20:08:13 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

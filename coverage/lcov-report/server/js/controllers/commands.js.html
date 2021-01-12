@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for server/js/controllers/commands.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">server/js/controllers</a> commands.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/117</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/67</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/107</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import _ from 'underscore';</span>
+<span class="cstat-no" title="statement not covered" >import log from '../util/log';</span>
+<span class="cstat-no" title="statement not covered" >import Messages from '../network/messages';</span>
+<span class="cstat-no" title="statement not covered" >import Packets from '../network/packets';</span>
+&nbsp;
+export default class Commands {
+<span class="fstat-no" title="function not covered" >  constructor(</span>player) <span class="cstat-no" title="statement not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    this.world = player.world;</span>
+<span class="cstat-no" title="statement not covered" >    this.player = player;</span>
+  }
+&nbsp;
+  parse(rawText) {
+    const blocks = <span class="cstat-no" title="statement not covered" >rawText.substring(1).split(' ');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (blocks.length &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+    const command = <span class="cstat-no" title="statement not covered" >blocks.shift();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.handlePlayerCommands(command, blocks);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.player.rights &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      this.handleModeratorCommands(command, blocks);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.player.rights &gt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >      this.handleAdminCommands(command, blocks);</span>
+    }
+  }
+&nbsp;
+  handlePlayerCommands(command, blocks) {
+<span class="cstat-no" title="statement not covered" >    switch (command) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'players':
+<span class="cstat-no" title="statement not covered" >        this.player.send(</span>
+          new Messages.Notification(
+            Packets.NotificationOpcode.Text,
+            `There are currently ${this.world.getPopulation()} online.`,
+          ),
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'tutstage':
+<span class="cstat-no" title="statement not covered" >        log.info('tutorial stage', this.player.getTutorial());</span>
+<span class="cstat-no" title="statement not covered" >        log.info(this.player.getTutorial().stage);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'coords':
+<span class="cstat-no" title="statement not covered" >        this.player.send(</span>
+          new Messages.Notification(
+            Packets.NotificationOpcode.Text,
+            `x: ${this.player.x} y: ${this.player.y}`,
+          ),
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'progress':
+        const tutorialQuest = <span class="cstat-no" title="statement not covered" >this.player.getTutorial(); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.player.send(</span>
+          new Messages.Quest(Packets.QuestOpcode.Progress, {
+            id: tutorialQuest.id,
+            stage: tutorialQuest.stage,
+          }),
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'global':
+<span class="cstat-no" title="statement not covered" >        this.world.pushBroadcast(</span>
+          new Messages.Chat({
+            name: this.player.username,
+            text: blocks.join(' '),
+            isGlobal: true,
+            withBubble: false,
+            colour: 'rgba(191, 191, 63, 1.0)',
+          }),
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+&nbsp;
+  handleModeratorCommands(command, blocks) {
+<span class="cstat-no" title="statement not covered" >    switch (command) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'mute':
+      case 'ban':
+        let duration = <span class="cstat-no" title="statement not covered" >blocks.shift(); // eslint-disable-line</span>
+        const targetName = <span class="cstat-no" title="statement not covered" >blocks.join(' '); // eslint-disable-line</span>
+        const user = <span class="cstat-no" title="statement not covered" >this.world.getPlayerByName(targetName); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!user) <span class="cstat-no" title="statement not covered" >r</span>eturn;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!duration) {</span>
+<span class="cstat-no" title="statement not covered" >          duration = 24;</span>
+        }
+&nbsp;
+        const timeFrame = <span class="cstat-no" title="statement not covered" >new Date().getTime() + duration * 60 * 60; // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (command === 'mute') <span class="cstat-no" title="statement not covered" >user.mute = timeFrame;</span></span>
+        else <span class="cstat-no" title="statement not covered" >if (command === 'ban') {</span>
+<span class="cstat-no" title="statement not covered" >          user.ban = timeFrame;</span>
+<span class="cstat-no" title="statement not covered" >          user.save();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          user.sendUTF8('ban');</span>
+<span class="cstat-no" title="statement not covered" >          user.connection.close('banned');</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        user.save();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'unmute':
+        const uTargetName = <span class="cstat-no" title="statement not covered" >blocks.join(' '); // eslint-disable-line</span>
+        const uUser = <span class="cstat-no" title="statement not covered" >this.world.getPlayerByName(uTargetName); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!uTargetName) <span class="cstat-no" title="statement not covered" >r</span>eturn;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        uUser.mute = new Date().getTime() - 3600;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        uUser.save();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+&nbsp;
+  handleAdminCommands(command, blocks) <span class="cstat-no" title="statement not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    switch (command) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'spawn':
+        const spawnId = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+        const count = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+        const ability = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift(), 10); // eslint-disable-line</span>
+        const abilityLevel = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!spawnId || !count) <span class="cstat-no" title="statement not covered" >r</span>eturn;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.player.inventory.add({</span>
+          id: spawnId,
+          count,
+          ability: ability || -1,
+          abilityLevel: abilityLevel || -1,
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return;</span>
+&nbsp;
+      case 'maxhealth':
+<span class="cstat-no" title="statement not covered" >        this.player.notify(</span>
+          `Max health is ${this.player.hitPoints.getMaxHitPoints()}`,
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'ipban':
+<span class="cstat-no" title="statement not covered" >        return;</span>
+&nbsp;
+      case 'drop':
+        const id = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift(), 10); // eslint-disable-line</span>
+        let dCount = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!id) <span class="cstat-no" title="statement not covered" >r</span>eturn;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!dCount) <span class="cstat-no" title="statement not covered" >d</span>Count = 1;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.world.dropItem(id, dCount, this.player.x, this.player.y);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return;</span>
+&nbsp;
+      case 'ghost':
+<span class="cstat-no" title="statement not covered" >        this.player.equip('ghost', 1, -1, -1);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return;</span>
+&nbsp;
+      case 'notify':
+<span class="cstat-no" title="statement not covered" >        this.player.notify('Hello!!!');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'teleport':
+        const x = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+        const y = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (x &amp;&amp; y) <span class="cstat-no" title="statement not covered" >t</span>his.player.teleport(x, y);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'teletome':
+        const username = <span class="cstat-no" title="statement not covered" >blocks.join(' '); // eslint-disable-line</span>
+        const player = <span class="cstat-no" title="statement not covered" >this.world.getPlayerByName(username); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (player) {</span>
+<span class="cstat-no" title="statement not covered" >          player.teleport(this.player.x, this.player.y);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'nohit':
+<span class="cstat-no" title="statement not covered" >        log.info('invincinil');</span>
+<span class="cstat-no" title="statement not covered" >        this.player.invincible = !this.player.invincible;</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'mob':
+        const npcId = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.world.spawnMob(npcId, this.player.x, this.player.y);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'pointer':
+        const posX = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+        const posY = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!posX || !posY) <span class="cstat-no" title="statement not covered" >r</span>eturn;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.player.send(</span>
+          new Messages.Pointer(Packets.PointerOpcode.Location, {
+            id: this.player.instance,
+            x: posX,
+            y: posY,
+          }),
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'teleall':
+<span class="cstat-no" title="statement not covered" >        _.each(this.world.players, <span class="fstat-no" title="function not covered" >(</span>character) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >          character.teleport(this.character.x, this.character.y);</span>
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'attackaoe':
+        let radius = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!radius) <span class="cstat-no" title="statement not covered" >r</span>adius = 1;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.player.combat.dealAoE(radius);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'addexp':
+        const exp = <span class="cstat-no" title="statement not covered" >parseInt(blocks.shift()); // eslint-disable-line</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!exp) <span class="cstat-no" title="statement not covered" >r</span>eturn;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.player.addExperience(exp);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 20:08:13 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

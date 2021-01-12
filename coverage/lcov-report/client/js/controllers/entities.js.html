@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for client/js/controllers/entities.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">client/js/controllers</a> entities.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/150</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/75</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/139</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'underscore';
+import Grids from '../renderer/grids';
+import Chest from '../entity/objects/chest';
+import Player from '../entity/character/player/player';
+import Item from '../entity/objects/item';
+import Sprites from './sprites';
+import Mob from '../entity/character/mob/mob';
+import NPC from '../entity/character/npc/npc';
+import Projectile from '../entity/objects/projectile';
+import Modules from '../utils/modules';
+import Packets from '../network/packets';
+&nbsp;
+export default class Entities {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(game) {
+<span class="cstat-no" title="statement not covered" >    this.game = game;</span>
+<span class="cstat-no" title="statement not covered" >    this.renderer = game.renderer;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.grids = null;</span>
+<span class="cstat-no" title="statement not covered" >    this.sprites = null;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.entities = {};</span>
+<span class="cstat-no" title="statement not covered" >    this.decrepit = {};</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  lo</span>ad() {
+<span class="cstat-no" title="statement not covered" >    this.game.app.sendStatus('Lots of monsters ahead...');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this.sprites) {</span>
+<span class="cstat-no" title="statement not covered" >      this.sprites = new Sprites(this.game.renderer);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.sprites.onLoadedSprites(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        this.game.input.loadCursors();</span>
+      });
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.game.app.sendStatus('Yes, you are also a monster...');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this.grids) {</span>
+<span class="cstat-no" title="statement not covered" >      this.grids = new Grids(this.game.map);</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  up</span>date() {
+<span class="cstat-no" title="statement not covered" >    if (this.sprites) <span class="cstat-no" title="statement not covered" >this.sprites.updateSprites();</span></span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cr</span>eate(info) {
+    let entity;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.isPlayer(info.id)) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    switch (info.type) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'chest':
+        /**
+         * Here we will parse the different types of chests..
+         * We can go Dark Souls style and implement mimics
+         * the proper way -ahem- TTA V1.0
+         */
+&nbsp;
+        const chest = <span class="cstat-no" title="statement not covered" >new Chest(info.id, info.string);</span> // eslint-disable-line
+<span class="cstat-no" title="statement not covered" >        entity = chest;</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'npc':
+        const npc = <span class="cstat-no" title="statement not covered" >new NPC(info.id, info.string);</span> // eslint-disable-line
+<span class="cstat-no" title="statement not covered" >        entity = npc;</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'item':
+        const item = <span class="cstat-no" title="statement not covered" >new Item( // eslint-disable-line</span>
+          info.id,
+          info.string,
+          info.count,
+          info.ability,
+          info.abilityLevel,
+        );
+<span class="cstat-no" title="statement not covered" >        entity = item;</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'mob':
+        const mob = <span class="cstat-no" title="statement not covered" >new Mob(info.id, info.string);</span> // eslint-disable-line
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        mob.setHitPoints(info.hitPoints);</span>
+<span class="cstat-no" title="statement not covered" >        mob.setMaxHitPoints(info.maxHitPoints);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        mob.attackRange = info.attackRange;</span>
+<span class="cstat-no" title="statement not covered" >        mob.level = info.level;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        entity = mob;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'projectile':
+        const attacker = <span class="cstat-no" title="statement not covered" >this.get(info.characterId);</span> // eslint-disable-line
+        const target = <span class="cstat-no" title="statement not covered" >this.get(info.targetId);</span> // eslint-disable-line
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!attacker || !target) {</span>
+<span class="cstat-no" title="statement not covered" >          return;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        attacker.lookAt(target);</span>
+&nbsp;
+        const projectile = <span class="cstat-no" title="statement not covered" >new Projectile( // eslint-disable-line</span>
+          info.id,
+          info.projectileType,
+          attacker,
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        projectile.name = info.name;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        projectile.setStart(attacker.x, attacker.y);</span>
+<span class="cstat-no" title="statement not covered" >        projectile.setTarget(target);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        projectile.setSprite(this.getSprite(projectile.name));</span>
+<span class="cstat-no" title="statement not covered" >        projectile.setAnimation('travel', projectile.getSpeed());</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        projectile.angled = true;</span>
+<span class="cstat-no" title="statement not covered" >        projectile.type = info.type;</span>
+&nbsp;
+        /**
+         * Move this into the external overall function
+         */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        projectile.onImpact(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+          /**
+           * The data in the projectile is only for rendering purposes
+           * there is nothing you can change for the actual damage output here.
+           */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (this.isPlayer(projectile.owner.id) || this.isPlayer(target.id)) {</span>
+<span class="cstat-no" title="statement not covered" >            this.game.socket.send(Packets.Projectile, [</span>
+              Packets.ProjectileOpcode.Impact,
+              info.id,
+              target.id,
+            ]);
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (info.hitType === Modules.Hits.Explosive) <span class="cstat-no" title="statement not covered" >target.explosion = true;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          this.game.info.create(</span>
+            Modules.Hits.Damage,
+            [info.damage, this.isPlayer(target.id)],
+            target.x,
+            target.y,
+          );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          target.triggerHealthBar();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          this.unregisterPosition(projectile);</span>
+<span class="cstat-no" title="statement not covered" >          delete this.entities[projectile.getId()];</span>
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.addEntity(projectile);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        attacker.performAction(attacker.orientation, Modules.Actions.Attack);</span>
+<span class="cstat-no" title="statement not covered" >        attacker.triggerHealthBar();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return;</span>
+&nbsp;
+      case 'player':
+        const player = <span class="cstat-no" title="statement not covered" >new Player();</span> // eslint-disable-line
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        player.setId(info.id);</span>
+<span class="cstat-no" title="statement not covered" >        player.setName(info.name);</span>
+<span class="cstat-no" title="statement not covered" >        player.setGridPosition(info.x, info.y);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        player.rights = info.rights;</span>
+<span class="cstat-no" title="statement not covered" >        player.level = info.level;</span>
+<span class="cstat-no" title="statement not covered" >        player.pvp = info.pvp;</span>
+<span class="cstat-no" title="statement not covered" >        player.pvpKills = info.pvpKills;</span>
+<span class="cstat-no" title="statement not covered" >        player.pvpDeaths = info.pvpDeaths;</span>
+<span class="cstat-no" title="statement not covered" >        player.type = info.type;</span>
+&nbsp;
+        const hitPointsData = <span class="cstat-no" title="statement not covered" >info.hitPoints;</span> // eslint-disable-line
+        const manaData = <span class="cstat-no" title="statement not covered" >info.mana;</span> // eslint-disable-line
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        player.setHitPoints(hitPointsData[0]);</span>
+<span class="cstat-no" title="statement not covered" >        player.setMaxHitPoints(hitPointsData[1]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        player.setMana(manaData[0]);</span>
+<span class="cstat-no" title="statement not covered" >        player.setMaxMana(manaData[1]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        player.setSprite(this.getSprite(info.armour[1]));</span>
+<span class="cstat-no" title="statement not covered" >        player.idle();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        player.setEquipment(Modules.Equipment.Armour, info.armour);</span>
+<span class="cstat-no" title="statement not covered" >        player.setEquipment(Modules.Equipment.Weapon, info.weapon);</span>
+<span class="cstat-no" title="statement not covered" >        player.setEquipment(Modules.Equipment.Pendant, info.pendant);</span>
+<span class="cstat-no" title="statement not covered" >        player.setEquipment(Modules.Equipment.Ring, info.ring);</span>
+<span class="cstat-no" title="statement not covered" >        player.setEquipment(Modules.Equipment.Boots, info.boots);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        player.loadHandler(this.game);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.addEntity(player);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!entity) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    entity.setGridPosition(info.x, info.y);</span>
+<span class="cstat-no" title="statement not covered" >    entity.setName(info.name);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    entity.setSprite(</span>
+      this.getSprite(
+        info.type === 'item' ? `item-${info.string}` : info.string,
+      ),
+    );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    entity.idle();</span>
+<span class="cstat-no" title="statement not covered" >    entity.type = info.type;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.addEntity(entity);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (info.type !== 'item' &amp;&amp; entity.handler) {</span>
+<span class="cstat-no" title="statement not covered" >      entity.handler.setGame(this.game);</span>
+<span class="cstat-no" title="statement not covered" >      entity.handler.load();</span>
+    }
+&nbsp;
+    /**
+     * Get ready for errors!
+     */
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  is</span>Player(id) {
+<span class="cstat-no" title="statement not covered" >    return this.game.player.id === id;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>t(id) {
+<span class="cstat-no" title="statement not covered" >    if (id in this.entities) <span class="cstat-no" title="statement not covered" >return this.entities[id];</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ex</span>ists(id) {
+<span class="cstat-no" title="statement not covered" >    return id in this.entities;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cl</span>earPlayers(exception) {
+<span class="cstat-no" title="statement not covered" >    _.each(this.entities, <span class="fstat-no" title="function not covered" >(e</span>ntity) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (entity.id !== exception.id &amp;&amp; entity.type === 'player') {</span>
+<span class="cstat-no" title="statement not covered" >        this.grids.removeFromRenderingGrid(</span>
+          entity,
+          entity.gridX,
+          entity.gridY,
+        );
+<span class="cstat-no" title="statement not covered" >        this.grids.removeFromPathingGrid(entity.gridX, entity.gridY);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        delete this.entities[entity.id];</span>
+      }
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.grids.resetPathingGrid();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ad</span>dEntity(entity) {
+<span class="cstat-no" title="statement not covered" >    if (this.entities[entity.id]) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.entities[entity.id] = entity;</span>
+<span class="cstat-no" title="statement not covered" >    this.registerPosition(entity);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (</span>
+      !(entity instanceof Item &amp;&amp; entity.dropped)
+      &amp;&amp; !this.renderer.isPortableDevice()
+    ) <span class="cstat-no" title="statement not covered" >entity.fadeIn(this.game.time);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>moveItem(item) {
+<span class="cstat-no" title="statement not covered" >    if (!item) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.grids.removeFromItemGrid(item, item.gridX, item.gridY);</span>
+<span class="cstat-no" title="statement not covered" >    this.grids.removeFromRenderingGrid(item, item.gridX, item.gridY);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    delete this.entities[item.id];</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>gisterPosition(entity) {
+<span class="cstat-no" title="statement not covered" >    if (!entity) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (</span>
+      entity.type === 'player'
+      || entity.type === 'mob'
+      || entity.type === 'npc'
+      || entity.type === 'chest'
+    ) {
+<span class="cstat-no" title="statement not covered" >      this.grids.addToEntityGrid(entity, entity.gridX, entity.gridY);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (entity.type !== 'player' || entity.nonPathable) <span class="cstat-no" title="statement not covered" >this.grids.addToPathingGrid(entity.gridX, entity.gridY);</span></span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (entity.type === 'item') <span class="cstat-no" title="statement not covered" >this.grids.addToItemGrid(entity, entity.gridX, entity.gridY);</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>gisterDuality(entity) {
+<span class="cstat-no" title="statement not covered" >    if (!entity) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.grids.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.grids.addToRenderingGrid(entity, entity.gridX, entity.gridY);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (entity.nextGridX &gt; -1 &amp;&amp; entity.nextGridY &gt; -1) {</span>
+<span class="cstat-no" title="statement not covered" >      this.grids.entityGrid[entity.nextGridY][entity.nextGridX][</span>
+        entity.id
+      ] = entity;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (!(entity instanceof Player)) {</span>
+<span class="cstat-no" title="statement not covered" >        this.grids.pathingGrid[entity.nextGridY][entity.nextGridX] = 1;</span>
+      }
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  un</span>registerPosition(entity) {
+<span class="cstat-no" title="statement not covered" >    if (!entity) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.grids.removeEntity(entity);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tSprite(name) {
+<span class="cstat-no" title="statement not covered" >    return this.sprites.sprites[name];</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tAll() {
+<span class="cstat-no" title="statement not covered" >    return this.entities;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  fo</span>rEachEntity(callback) {
+<span class="cstat-no" title="statement not covered" >    _.each(this.entities, <span class="fstat-no" title="function not covered" >(e</span>ntity) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      callback(entity);</span>
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  fo</span>rEachEntityAround(x, y, radius, callback) {
+<span class="cstat-no" title="statement not covered" >    for (let i = x - radius, maxI = x + radius; i &lt;= maxI; i += 1) {</span>
+<span class="cstat-no" title="statement not covered" >      for (let j = y - radius, maxJ = y + radius; j &lt;= maxJ; j += 1) {</span>
+<span class="cstat-no" title="statement not covered" >        if (!this.map.isOutOfBounds(i, j)) {</span>
+<span class="cstat-no" title="statement not covered" >          _.each(this.grids.renderingGrid[j][i], <span class="fstat-no" title="function not covered" >(e</span>ntity) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            callback(entity);</span>
+          });
+        }
+      }
+    }
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 20:08:13 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

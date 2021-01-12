@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for WTF-Adventure/src/client/js/controllers/bubble.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../../index.html">All files</a> / <a href="index.html">WTF-Adventure/src/client/js/controllers</a> bubble.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/40</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/40</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'underscore';
+import $ from 'jquery';
+import Blob from '../renderer/bubbles/blob';
+&nbsp;
+/**
+ * Creates player speach bubbles
+ * @class
+ */
+export default class Bubble {
+  /**
+   * Default constructor
+   * @param {Game} game instance of the game class
+   */
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(game) {
+    /**
+     * Instance of the game object
+     * @type {Game}
+     */
+<span class="cstat-no" title="statement not covered" >    this.game = game;</span>
+&nbsp;
+    /**
+     * An object with all of the bubbles to display
+     * @type {Object&lt;Blob&gt;}
+     */
+<span class="cstat-no" title="statement not covered" >    this.bubbles = {};</span>
+&nbsp;
+    /**
+     * The DOM element that will display bubble text messages
+     * @type {Object}
+     */
+<span class="cstat-no" title="statement not covered" >    this.container = $('#bubbles');</span>
+  }
+&nbsp;
+  /**
+   * Create a bubble message
+   * @param  {Number} id       the id of the bubble message
+   * @param  {String} message  contents of the bubble
+   * @param  {Number} time     when the bubble will reset
+   * @param  {Number} [duration=5000] duration set on the Blob's internal Timer
+   * @return {Blob} an instance of the bubble message
+   */
+<span class="fstat-no" title="function not covered" >  cr</span>eate(id, message, time, duration) {
+<span class="cstat-no" title="statement not covered" >    if (this.bubbles[id]) {</span>
+<span class="cstat-no" title="statement not covered" >      this.bubbles[id].reset(time);</span>
+<span class="cstat-no" title="statement not covered" >      $(`#${id} p`).html(message);</span>
+    } else {
+      const element = <span class="cstat-no" title="statement not covered" >$(</span>
+        `&lt;div id='${id}' class='bubble'&gt;
+          &lt;p&gt;${message}&lt;/p&gt;
+          &lt;div class='bubbleTip'&gt;&lt;/div&gt;
+        &lt;/div&gt;`,
+      );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      $(element).appendTo(this.container);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.bubbles[id] = new Blob(id, time, element, duration);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return this.bubbles[id];</span>
+  }
+&nbsp;
+  /**
+   * Set a speech bubble to a specific entity
+   * @param  {Entity} entity   an entity in the game
+   * @return null, speech bubble shows in the location of the entity
+   */
+<span class="fstat-no" title="function not covered" >  se</span>tTo(entity) {
+    const bubble = <span class="cstat-no" title="statement not covered" >this.get(entity.id);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!bubble || !entity) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+    const scale = <span class="cstat-no" title="statement not covered" >this.game.renderer.getDrawingScale();</span>
+    const tileSize = <span class="cstat-no" title="statement not covered" >16 * scale;</span>
+    const x = <span class="cstat-no" title="statement not covered" >(entity.x - this.game.getCamera().x) * scale;</span>
+    const width = <span class="cstat-no" title="statement not covered" >parseInt(bubble.element.css('width'), 10) + 24;</span>
+    const offset = <span class="cstat-no" title="statement not covered" >width / 2 - tileSize / 2;</span>
+    const offsetY = <span class="cstat-no" title="statement not covered" >10;</span>
+    const y = <span class="cstat-no" title="statement not covered" >(entity.y - this.game.getCamera().y) * scale - tileSize * 2 - offsetY;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    bubble.element.css(</span>
+      'left',
+      `${x - offset + (2 + this.game.renderer.scale)}px`,
+    );
+<span class="cstat-no" title="statement not covered" >    bubble.element.css('top', `${y}px`);</span>
+  }
+&nbsp;
+  /**
+   * Update the display of the bubbles (automatically disappear over time)
+   * @param  {Number} time the current timestamp
+   * @return null, deletes expired speech bubbles
+   */
+<span class="fstat-no" title="function not covered" >  up</span>date(time) {
+<span class="cstat-no" title="statement not covered" >    _.each(this.bubbles, <span class="fstat-no" title="function not covered" >(b</span>ubble) =&gt; {</span>
+      const entity = <span class="cstat-no" title="statement not covered" >this.game.entities.get(bubble.id);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (entity) {</span>
+<span class="cstat-no" title="statement not covered" >        this.setTo(entity);</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (bubble.isOver(time)) {</span>
+<span class="cstat-no" title="statement not covered" >        bubble.destroy();</span>
+<span class="cstat-no" title="statement not covered" >        delete this.bubbles[bubble.id];</span>
+      }
+    });
+  }
+&nbsp;
+  /**
+   * Fetch a specific bubble
+   * @param  {Number} id       the id of the bubble message
+   * @return {Bubble} an instance of the bubble message
+   */
+<span class="fstat-no" title="function not covered" >  ge</span>t(id) {
+<span class="cstat-no" title="statement not covered" >    if (id in this.bubbles) {</span>
+<span class="cstat-no" title="statement not covered" >      return this.bubbles[id];</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  }
+&nbsp;
+  /**
+   * Destroy all the active bubbles
+   * @return null, empty array of bubbles
+   */
+<span class="fstat-no" title="function not covered" >  cl</span>ean() {
+<span class="cstat-no" title="statement not covered" >    _.each(this.bubbles, <span class="fstat-no" title="function not covered" >(b</span>ubble) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      bubble.destroy();</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.bubbles = {};</span>
+  }
+&nbsp;
+  /**
+   * Delete a specific bubble
+   * @param  {Number} id the id of the bubble message
+   * @return null, the bubble is removed from the array
+   */
+<span class="fstat-no" title="function not covered" >  de</span>stroy(id) {
+    const bubble = <span class="cstat-no" title="statement not covered" >this.get(id);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!bubble) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    bubble.destroy();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    delete this.bubbles[id];</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 25 2019 21:03:04 GMT-0400 (Eastern Daylight Time)
+</div>
+</div>
+<script src="../../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for WTF-Adventure/src/client/js/lib/log.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../../index.html">All files</a> / <a href="index.html">WTF-Adventure/src/client/js/lib</a> log.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">68.75% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>33/48</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">34.29% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>12/35</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">68.09% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>32/47</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">156x</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* global window, printStackTrace */
+/* eslint-disable */
+class Logger {
+&nbsp;
+  /**
+   * Default constructor
+   * @param {String|null} level debug|info|error
+   */
+  constructor(level) {
+    this.level = level;
+    this.classMap = {};
+&nbsp;
+    console.log("%c    ", "background-image:url('https://raw.githubusercontent.com/design1online/WTF-Adventure/master/assets/img/wtflogo.png');background-repeat:no-repeat;background-position:center center;line-height:.85em;background-size:100% 100%;font-size:200px")
+  }
+&nbsp;
+  /**
+   * Generate a random color within the acceptable 256 color range
+   * @return {String} hexcode with a # prepended on it
+   */
+  randomColor() {
+    let color = (Math.floor(Math.random() * 16777215)).toString(16);
+    return `#${this.padEnd(color, 6, '0')}`;
+  }
+&nbsp;
+  /**
+   * Pads the end of a string with the value if the String.prototype doesn't exist
+   * This is particularly for CircleCI which keeps failing :( and always uses the
+   * proptotype if it exists
+   * @param  {String} str          a string (will be cast to be sure)
+   * @param  {Number} targetLength how long the final string should be
+   * @param  {String} val          what to pad the string with, defaults to space
+   * @return {String}              returns the string at targetLength with val padded on the end
+   */
+  padEnd(str, targetLength, val = <span class="branch-0 cbranch-no" title="branch not covered" >' ')</span> {
+   str = String(str);
+   targetLength = parseInt(targetLength, 10) || <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
+&nbsp;
+   <span class="missing-if-branch" title="else path not taken" >E</span>if (str.length &gt;= targetLength) {
+     return str;
+   }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >   if (String.prototype.padEnd) {</span>
+<span class="cstat-no" title="statement not covered" >     return str.padEnd(targetLength);</span>
+   }
+<span class="cstat-no" title="statement not covered" >   targetLength -= str.length;</span>
+<span class="cstat-no" title="statement not covered" >   return str + val.repeat(targetLength);</span>
+ }
+&nbsp;
+  /**
+   * Figure out whether to return white or black text color for the
+   * given background colorMatch
+   * @param  {String} color the hexcode color without a # mark in front of it
+   * @return {String} #000 for light colors and #fff for dark colors
+   */
+  lightOrDark(color) {
+&nbsp;
+    let r;
+    let g;
+    let b;
+    let hsp;
+    let colorMatch;
+&nbsp;
+    // Check the format of the color, HEX or RGB?
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (color.match(/^rgb/)) {
+      // If HEX --&gt; store the red, green, blue values in separate variables
+<span class="cstat-no" title="statement not covered" >      colorMatch = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);</span>
+<span class="cstat-no" title="statement not covered" >      [r, b, g] = colorMatch;</span>
+    } else {
+      // If RGB --&gt; Convert it to HEX: http://gist.github.com/983661
+      color = +(`0x${color.slice(1).replace(
+        color.length &lt; 5 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >/./g,</span> '$&amp;$&amp;',
+      )}`);
+&nbsp;
+      r = color &gt;&gt; 16;
+      g = color &gt;&gt; 8 &amp; 255;
+      b = color &amp; 255;
+    }
+&nbsp;
+    // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+    hsp = Math.sqrt(
+      0.299 * (r * r)
+    + 0.587 * (g * g)
+    + 0.114 * (b * b),
+    );
+&nbsp;
+    // Using the HSP value, determine whether the color is light or dark
+    if (hsp &gt; 150) {
+      return '#000';
+    }
+&nbsp;
+    return '#fff';
+  }
+&nbsp;
+  /**
+   * Given the name of the class this is for return
+   * the previously associated color or associate a random
+   * color to this class name
+   * @param  {String} className the name of the class this log message is for
+   * @return {{bgcolor:String, textcolor:String}} the background and text color for this
+   *  class name
+   */
+  getColors(className) {
+    let bgcolor;
+    let textcolor;
+&nbsp;
+    if (bgcolor = this.classMap[className]) {
+      textcolor = this.lightOrDark(bgcolor.replace('#', ''));
+    } else {
+      bgcolor = this.randomColor();
+      textcolor = this.lightOrDark(bgcolor.replace('#', ''));
+&nbsp;
+      // set the color in the classMap
+      this.classMap[className] = bgcolor;
+    }
+&nbsp;
+    return { bgcolor, textcolor };
+  }
+&nbsp;
+  /**
+   * Helpter function format the console.log message
+   * @param  {String} message the first variable passed to the console.log, generally a message
+   *  formatted as `ClassName - propertyFunction() - optional additional message`
+   * @param  {Object} rest an array of the rest of the variables passed to the console.log, typically class
+   *  instances or variables in the file used for debugging
+   */
+  consoleLog(message, rest) {
+    const [className, ...msg] = message.split('-').map(value =&gt; value.trim());
+    const { bgcolor, textcolor } = this.getColors(className);
+&nbsp;
+    if (rest.length) {
+      console.info(`%c${className}`, `padding:5px;background-color:${bgcolor};color:${textcolor};font-weight:bold;`, '-', ...msg, rest); //eslint-disable-line
+    } else {
+      console.info(`%c${className}`, `padding:5px;background-color:${bgcolor};color:${textcolor};font-weight:bold;`, '-', ...msg); //eslint-disable-line
+    }
+  }
+&nbsp;
+  /**
+   * Put a information level message into the developer console, will only show up in debug or info level
+   * @param  {String} message the first variable passed to the console.log, generally a message
+   *  formatted as `ClassName - propertyFunction() - optional additional message`
+   * @param  {Object} rest an array of the rest of the variables passed to the console.log, typically class
+   *  instances or variables in the file used for debugging
+   */
+<span class="fstat-no" title="function not covered" >  in</span>fo(message, ...rest) {
+<span class="cstat-no" title="statement not covered" >    if (this.level === 'debug' || this.level === 'info') {</span>
+<span class="cstat-no" title="statement not covered" >      if (window.console) {</span>
+<span class="cstat-no" title="statement not covered" >        this.consoleLog(message, rest);</span>
+      }
+    }
+  }
+&nbsp;
+  /**
+   * Put a debug level message into the developer console, will only show up in debug level
+   * @param  {String} message the first variable passed to the console.log, generally a message
+   *  formatted as `ClassName - propertyFunction() - optional additional message`
+   * @param  {Object} rest an array of the rest of the variables passed to the console.log, typically class
+   *  instances or variables in the file used for debugging
+   */
+  debug(message, ...rest) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this.level === 'debug') {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (window.console) {
+        this.consoleLog(message, rest);
+      }
+    }
+  }
+&nbsp;
+  /**
+   * Put an error level message into the developer console, will only show up if there is some level specified
+   * @param  {String} message the first variable passed to the console.log, generally a message
+   *  formatted as `ClassName - propertyFunction() - optional additional message`
+   * @param  {Object} stacktrace the error stack trace
+   * @param  {Object} rest an array of the rest of the variables passed to the console.log, typically class
+   *  instances or variables in the file used for debugging
+   */
+<span class="fstat-no" title="function not covered" >  er</span>ror(message, stacktrace, ...rest) {
+<span class="cstat-no" title="statement not covered" >    if (window.console &amp;&amp; this.level) {</span>
+<span class="cstat-no" title="statement not covered" >      console.error(message, rest); </span>// eslint-disable-line
+<span class="cstat-no" title="statement not covered" >      if (stacktrace !== undefined &amp;&amp; stacktrace === true) {</span>
+        const trace = <span class="cstat-no" title="statement not covered" >printStackTrace();</span>
+<span class="cstat-no" title="statement not covered" >        console.error(trace.join('\n\n')); </span>//eslint-disable-line
+<span class="cstat-no" title="statement not covered" >        console.error('-----------------------------'); </span>//eslint-disable-line
+      }
+    }
+  }
+}
+&nbsp;
+export default new Logger('debug');
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 25 2019 21:03:04 GMT-0400 (Eastern Daylight Time)
+</div>
+</div>
+<script src="../../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../../sorter.js"></script>
+</body>
+</html>

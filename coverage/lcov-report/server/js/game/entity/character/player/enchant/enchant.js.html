@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for server/js/game/entity/character/player/enchant/enchant.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../../../../index.html">All files</a> / <a href="index.html">server/js/game/entity/character/player/enchant</a> enchant.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/74</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/56</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/1</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/71</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import Items from '../../../../../util/items';</span>
+<span class="cstat-no" title="statement not covered" >import Messages from '../../../../../network/messages';</span>
+<span class="cstat-no" title="statement not covered" >import Packets from '../../../../../network/packets';</span>
+<span class="cstat-no" title="statement not covered" >import Utils from '../../../../../util/utils';</span>
+&nbsp;
+/**
+ * Tier 1 - Damage/Armour boost (1-5%)
+ * Tier 2 - Damage boost (1-10% &amp; 10% for special ability or special ability level up)
+ * Tier 3 - Damage boost (1-15% &amp; 15% for special ability or special ability level up)
+ * Tier 4 - Damage boost (1-20% &amp; 20% for special ability or special ability level up)
+ * Tier 5 - Damage boost (1-40% &amp; 25% for special ability or special ability level up)
+ */
+export default class Enchant {
+<span class="fstat-no" title="function not covered" >  constructor(</span>player) <span class="cstat-no" title="statement not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    this.player = player;</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedItem = null;</span>
+<span class="cstat-no" title="statement not covered" >    this.selectedShards = null;</span>
+  }
+&nbsp;
+  convert(shard) {
+<span class="cstat-no" title="statement not covered" >    if (!Items.isShard(shard.id) || !this.player.inventory.hasSpace()) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+    const tier = <span class="cstat-no" title="statement not covered" >Items.getShardTier(shard.id);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (shard.count &lt; 11 &amp;&amp; tier &gt; 5) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; shard.count; i += 10) {</span>
+<span class="cstat-no" title="statement not covered" >      this.player.inventory.remove(shard.id, 10, shard.index);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.player.inventory.add({</span>
+        id: shard.id + 1,
+        count: 1,
+        ability: -1,
+        abilityLevel: -1,
+      });
+    }
+  }
+&nbsp;
+  enchant() {
+<span class="cstat-no" title="statement not covered" >    if (!this.selectedItem) {</span>
+<span class="cstat-no" title="statement not covered" >      this.player.notify('You have not selected an item to enchant.');</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this.selectedShards) {</span>
+<span class="cstat-no" title="statement not covered" >      this.player.notify('You have to select shards to infuse.');</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this.verify()) {</span>
+<span class="cstat-no" title="statement not covered" >      this.player.notify('This item cannot be enchanted.');</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.selectedShards.count &lt; 10) {</span>
+<span class="cstat-no" title="statement not covered" >      this.player.notify('You must have a minimum of 10 shards to enchant.');</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+    /**
+     * Implement probabilities here based on the number of shards
+     * and reason them out.
+     */
+&nbsp;
+    const {
+      tier,
+    } = <span class="cstat-no" title="statement not covered" >this.selectedItem;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.selectedItem.count = Utils.randomInt(1, tier === 5 ? 40 : 5 * tier);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (tier &lt; 2) <span class="cstat-no" title="statement not covered" >r</span>eturn;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.hasAbility(this.selectedItem)) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.selectedItem.abilityLevel &lt; 5) <span class="cstat-no" title="statement not covered" >this.selectedItem.abilityLevel += 1;</span></span>
+      else <span class="cstat-no" title="statement not covered" >this.generateAbility();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.player.inventory.remove(</span>
+      this.selectedShards.id,
+      10,
+      this.selectedShards.index,
+    );
+<span class="cstat-no" title="statement not covered" >    this.player.sync();</span>
+  }
+&nbsp;
+  generateAbility() {
+    const
+      type = <span class="cstat-no" title="statement not covered" >Items.getType(this.selectedItem.id);</span>
+&nbsp;
+&nbsp;
+    const probability = <span class="cstat-no" title="statement not covered" >Utils.randomInt(0, 100);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (probability &gt; 5 + 5 * this.selectedShards.tier) <span class="cstat-no" title="statement not covered" >r</span>eturn;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    switch (type) {</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'armor':
+      case 'armorarcher':
+<span class="cstat-no" title="statement not covered" >        this.selectedItem.ability = Utils.randomInt(2, 3);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'weapon':
+<span class="cstat-no" title="statement not covered" >        this.selectedItem.ability = Utils.randomInt(0, 1);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'weaponarcher':
+<span class="cstat-no" title="statement not covered" >        this.selectedItem.ability = Utils.randomInt(4, 5);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'pendant':
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'ring':
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case 'boots':
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+&nbsp;
+  verify() {
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      Items.isEnchantable(this.selectedItem.id)
+      &amp;&amp; Items.isShard(this.selectedShards.id)
+    );
+  }
+&nbsp;
+  add(type, item) {
+    const isItem = <span class="cstat-no" title="statement not covered" >item === 'item';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (isItem &amp;&amp; !Items.isEnchantable(item.id)) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (type === 'item') {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.selectedItem) {</span>
+<span class="cstat-no" title="statement not covered" >        this.remove('item');</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.selectedItem = item;</span>
+    } else <span class="cstat-no" title="statement not covered" >if (type === 'shards') {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.selectedShards) {</span>
+<span class="cstat-no" title="statement not covered" >        this.remove('shards');</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.selectedShards = item;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.player.send(</span>
+      new Messages.Enchant(Packets.EnchantOpcode.Select, {
+        type,
+        index: item.index,
+      }),
+    );
+  }
+&nbsp;
+  remove(type) {
+    let index;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (type === 'item' &amp;&amp; this.selectedItem) {</span>
+<span class="cstat-no" title="statement not covered" >      index = this.selectedItem.index;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.selectedItem = null;</span>
+    } else <span class="cstat-no" title="statement not covered" >if (type === 'shards' &amp;&amp; this.selectedShards) {</span>
+<span class="cstat-no" title="statement not covered" >      index = this.selectedShards.index;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.selectedShards = null;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.player.send(</span>
+      new Messages.Enchant(Packets.EnchantOpcode.Remove, {
+        type,
+        index,
+      }),
+    );
+  }
+&nbsp;
+  hasAbility(item) {
+<span class="cstat-no" title="statement not covered" >    return item.ability !== -1;</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 09 2019 20:08:13 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../../../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../../../../sorter.js"></script>
+</body>
+</html>
