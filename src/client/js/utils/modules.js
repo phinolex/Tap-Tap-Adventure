@@ -1,4 +1,4 @@
-export default {
+export const Modules = {
   Orientation: {
     Up: 0,
     Down: 1,
@@ -134,3 +134,5 @@ export default {
     Relative: 2,
   },
 };
+
+export default Modules;

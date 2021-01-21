@@ -11,42 +11,224 @@ import Modules from '../../../utils/modules';
  * @class
  */
 export default class Player extends Character {
+  /**
+   * Default constructor
+   */
   constructor() {
     super(-1, Modules.Types.Player);
 
+    /**
+     * Player's username
+     * @type {String}
+     */
     this.username = '';
+
+    /**
+     * Player's password
+     * @type {String}
+     */
     this.password = '';
+
+    /**
+     * Player's email
+     * @type {String}
+     */
     this.email = '';
 
+    /**
+     * Player's avatar
+     * @type {[type]}
+     */
     this.avatar = null;
 
+    /**
+     * Player = 0, moderator = 1, or admin >= 2
+     * @type {Number}
+     */
     this.rights = 0;
+
+    /**
+     * Not sure what this is.... changes player name label text to red
+     * @type {Boolean}
+     */
     this.wanted = false;
+
+    /**
+     * How many experience the player has
+     * @type {Number}
+     */
     this.experience = -1;
+
+    /**
+     * Level of the player
+     * @type {Number}
+     */
     this.level = -1;
+
+    /**
+     * How many PVP kills they've had
+     * @type {Number}
+     */
     this.pvpKills = -1;
+
+    /**
+     * How many PVP death's they've had
+     * @type {Number}
+     */
     this.pvpDeaths = -1;
 
+    /**
+     * Current health points
+     * @type {Number}
+     */
     this.hitPoints = -1;
+
+    /**
+     * Maximum health points
+     * @type {Number}
+     */
     this.maxHitPoints = -1;
+
+    /**
+     * Current magic points
+     * @type {Number}
+     */
     this.mana = -1;
+
+    /**
+     * Maximum magic points
+     * @type {Number}
+     */
     this.maxMana = -1;
 
+    /**
+     * Previous grid X position
+     * @type {Number}
+     */
     this.prevX = 0;
+
+    /**
+     * Previous grid Y position
+     * @type {Number}
+     */
     this.prevY = 0;
 
+    /**
+     * Direction they are facing
+     * @type {Number}
+     */
     this.direction = null;
+
+    /**
+     * Player that is currently attacking them
+     * @type {Boolean|Entity}
+     */
     this.pvp = false;
 
+    /**
+     * Keyboard moving left
+     * @type {Boolean}
+     */
     this.moveLeft = false;
+
+    /**
+     * Keyboard moving right
+     * @type {Boolean}
+     */
     this.moveRight = false;
+
+    /**
+     * Keyboard moving up
+     * @type {Boolean}
+     */
     this.moveUp = false;
+
+    /**
+     * Keyboard moving down
+     * @type {Boolean}
+     */
     this.moveDown = false;
+
+    /**
+     * The player's ID number
+     * @type {Number}
+     */
+    this.id = null;
+
+    /**
+     * The player's name??? not sure
+     * @TODO look into this one...
+     * @type {[type]}
+     */
+    this.name = null;
+
+    /**
+     * The player's last login
+     * @type {String}
+     */
+    this.lastLogin = null;
+
+    /**
+     * The type of entity this is
+     * @type {String}
+     */
+    this.type = 'player';
+
+    /**
+     * The player's armor
+     * @type {Armour}
+     */
+    this.armour = null;
+
+    /**
+     * The player's weapon
+     * @type {Weapon}
+     */
+    this.weapon = null;
+
+    /**
+     * The player's pendant
+     * @type {Pendant}
+     */
+    this.pendant = null;
+
+    /**
+     * The player's ring
+     * @type {Ring}
+     */
+    this.ring = null;
+
+    /**
+     * The player's boots
+     * @type {Boots}
+     */
+    this.boots = null;
+
+    /**
+     * Are their actions disabled
+     * @type {Boolean}
+     */
     this.disableAction = false;
 
+    // load all of their equipment
     this.loadEquipment();
   }
 
+  /**
+   * Load equipment for this player given the data response from the server
+   * @param {Object} data player equipment and info from the server
+   * @param {Number} data.instance ID of the player
+   * @param {Number} data.x grid X position
+   * @param {Number} data.y grid Y position
+   * @param {Number} data.hitPoints current hit points
+   * @param {Number} data.mana current mana points
+   * @param {String} data.username the name of the player
+   * @param {Number} data.experience the player experience points
+   * @param {Number} data.level the player's level
+   * @param {String} data.lastLogin the last login date
+   * @param {Number} data.pvpKills the total pvp kills
+   * @param {Number} data.pvpDeaths the total pvp deaths
+   */
   load(data) {
     this.setId(data.instance);
     this.setGridPosition(data.x, data.y);
@@ -55,30 +237,39 @@ export default class Player extends Character {
     this.username = data.username;
     this.experience = data.experience;
     this.level = data.level;
-
     this.lastLogin = data.lastLogin;
     this.pvpKills = data.pvpKills;
     this.pvpDeaths = data.pvpDeaths;
-
-    this.type = 'player';
   }
 
   /**
    * This is for other player characters
+   * @param {Game} game an instance of the game
    */
   loadHandler(game) {
     this.handler.setGame(game);
     this.handler.load();
   }
 
+  /**
+   * Returns true if there was keyboard movememnt
+   * @return {Boolean}
+   */
   hasKeyboardMovement() {
     return this.moveLeft || this.moveRight || this.moveUp || this.moveDown;
   }
 
+  /**
+   * Sets the ID of the player
+   * @param {Number} id player ID
+   */
   setId(id) {
     this.id = id;
   }
 
+  /**
+   * Loads the player's default (empty) equipment
+   */
   loadEquipment() {
     this.armour = null;
     this.weapon = null;
@@ -87,41 +278,81 @@ export default class Player extends Character {
     this.boots = null;
   }
 
+  /**
+   * Returns true if the has a ranged weapon
+   * @return {Boolean}
+   */
   isRanged() {
+    // @TODO try changing to // this.weapon && this.weapon.exists() && this.weapon.ranged;
     return this.weapon && this.weapon.ranged;
   }
 
+  /**
+   * Returns true if the player has a weapon
+   * @return {Boolean}
+   */
   hasWeapon() {
     return this.weapon ? this.weapon.exists() : false;
   }
 
+  /**
+   * Sets the name and username of the player
+   * @param {String} name username of the player
+   */
   setName(name) {
+    // @TODO why do we need both of these??
     this.username = name;
     this.name = name;
   }
 
+  /**
+   * Gets the name of the sprite depending on their equipped armor
+   * defaults to `clotharmor` if they don't have anything equipped
+   * @return {String} sprite name for the character's armor
+   */
   getSpriteName() {
     return this.armour
       ? this.armour.name
       : 'clotharmor';
   }
 
+  /**
+   * Set the player's current mana
+   * @param {Number} mana amount
+   */
   setMana(mana) {
     this.mana = mana;
   }
 
+  /**
+   * Set the player's maximum mana amount
+   * @param {[type]} maxMana amount
+   */
   setMaxMana(maxMana) {
     this.maxMana = maxMana;
   }
 
+  /**
+   * Get the player's grid X position
+   * @return {Number} grid X position
+   */
   getX() {
     return this.gridX;
   }
 
+  /**
+   * Get the player's grid Y position
+   * @return {Number} grid Y position
+   */
   getY() {
     return this.gridY;
   }
 
+  /**
+   * Set the player's health and mana from the server data
+   * @param {Array} hitPointsData in the format of [ id, hitPoints, maxHitPoints ]
+   * @param {Array} manaData      in the format of [ id, mana, maxMana ]
+   */
   setPointsData(hitPointsData, manaData) {
     const hitPoints = hitPointsData.shift();
     const maxHitPoints = hitPointsData.shift();
@@ -135,6 +366,11 @@ export default class Player extends Character {
     this.setMaxMana(maxMana);
   }
 
+  /**
+   * Set the player's equipment from the server
+   * @param {Modules} type values from Modules.Equipment
+   * @param {Array} info in the format of [ id, name, string, count, ability, abilityLevel ]
+   */
   setEquipment(type, info) {
     const name = info.shift();
     const string = info.shift();

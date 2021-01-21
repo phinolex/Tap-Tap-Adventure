@@ -462,6 +462,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "wtf-adventure/wtf-adventure/src/client/js/utils/modules.js~modules",
+    "variable/index.html#static-variable-Modules",
+    "<span>Modules</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/client/js/utils/modules.js</span>",
+    "variable"
+  ],
+  [
     "wtf-adventure/wtf-adventure/src/server/js/map/areas/musicareas.js~musicareas",
     "class/WTF-Adventure/src/server/js/map/areas/musicareas.js~MusicAreas.html",
     "<span>MusicAreas</span> <span class=\"search-result-import-path\">WTF-Adventure/WTF-Adventure/src/server/js/map/areas/musicareas.js</span>",

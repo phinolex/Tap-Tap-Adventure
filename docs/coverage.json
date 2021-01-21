@@ -1,7 +1,7 @@
 {
-  "coverage": "22.28%",
-  "expectCount": 2948,
-  "actualCount": 657,
+  "coverage": "23.87%",
+  "expectCount": 2949,
+  "actualCount": 704,
   "files": {
     "WTF-Adventure/src/client/js/app.js": {
       "expectCount": 78,
@@ -120,60 +120,13 @@
     },
     "WTF-Adventure/src/client/js/entity/character/player/player.js": {
       "expectCount": 54,
-      "actualCount": 2,
+      "actualCount": 49,
       "undocumentLines": [
-        14,
-        17,
-        18,
-        19,
-        21,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        30,
-        31,
-        32,
-        33,
-        35,
-        36,
-        38,
-        39,
-        41,
-        42,
-        43,
-        44,
-        45,
-        50,
-        59,
-        63,
-        74,
-        78,
-        79,
-        82,
-        83,
-        84,
-        85,
-        86,
-        87,
-        90,
-        94,
-        98,
-        100,
-        103,
-        109,
-        113,
-        117,
-        121,
-        125,
-        138,
-        219,
-        245,
-        249,
-        255,
-        256
+        455,
+        481,
+        485,
+        491,
+        492
       ]
     },
     "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js": {
@@ -1225,6 +1178,13 @@
       "actualCount": 0,
       "undocumentLines": [
         3
+      ]
+    },
+    "WTF-Adventure/src/client/js/utils/modules.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        1
       ]
     },
     "WTF-Adventure/src/client/js/utils/pathfinder.js": {
