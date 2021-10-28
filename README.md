@@ -75,23 +75,52 @@ In the command line run: `npm install`
 
 Convert the server configuration for local usage, go in both `src/server/config.json` and `src/client/config.json` and update the ports and settings to meet your needs.
 
-##### Step 3 - Make sure MySQL is up and running
+In `src/server/config.json` the **secretKey** should be a strong password that has been [base62 encoded](http://encode-base62.nichabi.com/).
 
-If you are running this project locally then you will need something like [XAMP](https://www.apachefriends.org/index.html) or [MAMP](https://www.mamp.info/en/) that you can turn on and use to run MySQL locally.
+##### Step 3 - Install MySQL
 
-If you are running this project on a server then you will need to make sure you have a mysqld instance running.
+*Skip this step if you already have MySQL installed.*
 
-Make sure you have the proper config for the MySQL server in your `src/server/config.json` file, often times connection issues with WTFServer will be due to connection or authentication errors when trying to connect to your MySQL database.
+**Windows**: Use [XAMP](https://www.apachefriends.org/index.html) or install [MySQL Shell](https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-install-windows-quick.html).
 
+**Mac**: Install [MAMP](https://www.mamp.info/en/) for a graphical user interface. Install [Homebrew](https://brew.sh/) then you can run the commands `npm run mac-install-mysql`
 
-##### Step 4 - Run the NodeJS server
+***nix**: Install using Apt `npm run apt-install-mysql` or Yum `npm run yum-install-mysql` or dnf `npm run dnf-install-mysql`
+
+##### Step 4 - Make sure MySQL is up and running
+
+Start MySQL and make sure it's running.
+
+**Windows**: Run XAMP or MySQL Shell.
+
+**Mac**: Run MAMP or if you installed using Homebrew run `npm run mac-mysql-start`
+
+***nix**: Use `npm run nix-mysql-start`.
+
+##### Step 5 - Run the NodeJS server
 
 In the command line type: `npm run wtfserver`
 
-##### Step 5 - Run the HTML5 Client Webpack
+##### Step 6 - Run the HTML5 Client Webpack
 
 Open another terminal and then type: `npm start`
 
-##### Step 6 - View in Browser
+##### Step 7 - View in Browser
 
-Now open your browser and navigate to `http://{ip}:{port}/` as defined in your configuration files. Typically this will be `http://localhost:3000` if you use the default webpack and client configuration settings provided.
+Now open your browser and navigate to `http://{ip}:{port}/` as defined in your client configuration file. Typically this will be `http://localhost:3000` if you use the default webpack and client configuration settings provided.
+
+## Troubleshooting
+
+* Typically errors with WTF Adventure are due to mysql connection or authentication issues in `src/server/config.json`.
+ - If you are using XAMPP or MAMP the correct default values are already configured for you
+ - Check that MySQL is running
+ - Check that your hostname, port number, user name, password and database are correct
+ - Check that your secretKey is base62 encoded
+
+* Make sure you are running the correct IP and port in the client window in `src/client/config.json`
+ - If you are using MAMP or XAMPP the correct default values are already configured for you
+
+* Errors installing dependencies
+ - When this happens you will need to look at the specific error you are getting from the dependency and try to resolve the issue
+ - Sometimes these can be fixed by upgrading to the latest version or bumping back to a previous version
+ - Try searching on Stack Overflow or in the GitHub repo click on the issues tab for the NPM package causing the issue to see if there is a possible solution
