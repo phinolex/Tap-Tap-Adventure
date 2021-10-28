@@ -1,7 +1,7 @@
 {
-  "coverage": "23.87%",
+  "coverage": "24.24%",
   "expectCount": 2949,
-  "actualCount": 704,
+  "actualCount": 715,
   "files": {
     "WTF-Adventure/src/client/js/app.js": {
       "expectCount": 78,
@@ -872,20 +872,8 @@
     },
     "WTF-Adventure/src/client/js/network/socket.js": {
       "expectCount": 11,
-      "actualCount": 0,
-      "undocumentLines": [
-        5,
-        6,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        17,
-        68,
-        88
-      ]
+      "actualCount": 11,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/renderer/bubbles/blob.js": {
       "expectCount": 11,
