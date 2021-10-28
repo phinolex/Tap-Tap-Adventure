@@ -67,15 +67,15 @@ WTF?! Adventure is completely open-source, allowing its community to collaborate
 
 Running the server is fairly straightforward, for the most part. If you already have everything installed and configured you can skip directly to step 3.
 
-##### Step 1 - Install the dependencies
+### Step 1 - Install the dependencies
 
 In the command line run: `npm install`
 
-##### Step 2 - Setting the config files
+### Step 2 - Setting the config files
 
 Convert the server configuration for local usage, go in both `src/server/config.json` and `src/client/config.json` and update the ports and settings to meet your needs.
 
-##### Step 3 - Make sure MySQL is up and running
+### Step 3 - Make sure MySQL is up and running
 
 If you are running this project locally then you will need something like [XAMP](https://www.apachefriends.org/index.html) or [MAMP](https://www.mamp.info/en/) that you can turn on and use to run MySQL locally.
 
@@ -83,15 +83,27 @@ If you are running this project on a server then you will need to make sure you 
 
 Make sure you have the proper config for the MySQL server in your `src/server/config.json` file, often times connection issues with WTFServer will be due to connection or authentication errors when trying to connect to your MySQL database.
 
-
-##### Step 4 - Run the NodeJS server
+### Step 4 - Run the NodeJS server
 
 In the command line type: `npm run wtfserver`
 
-##### Step 5 - Run the HTML5 Client Webpack
+### Step 5 - Run the HTML5 Client Webpack
 
 Open another terminal and then type: `npm start`
 
-##### Step 6 - View in Browser
+### Step 6 - View in Browser
 
 Now open your browser and navigate to `http://{ip}:{port}/` as defined in your configuration files. Typically this will be `http://localhost:3000` if you use the default webpack and client configuration settings provided.
+
+## Troubleshooting
+* Typically errors with WTF Adventure are due to mysql connection or authentication issues in `src/server/config.json`.
+  * If you are using XAMPP or MAMP the correct default values are already configured for you
+  * Check that MySQL is running
+  * Check that your hostname, port number, user name, password and database are correct
+  * Check that your secretKey is base62 encoded
+* Make sure you are running the correct IP and port in the client window in `src/client/config.json`
+  * If you are using MAMP or XAMPP the correct default values are already configured for you
+* Errors installing dependencies
+  * When this happens you will need to look at the specific error you are getting from the dependency and try to resolve the issue
+  * Sometimes these can be fixed by upgrading to the latest version or bumping back to a previous version
+  * Try searching on Stack Overflow or in the GitHub repo click on the issues tab for the NPM package causing the issue to see if there is a possible solution
