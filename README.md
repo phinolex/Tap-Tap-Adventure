@@ -97,13 +97,13 @@ Now open your browser and navigate to `http://{ip}:{port}/` as defined in your c
 
 ## Troubleshooting
 * Typically errors with WTF Adventure are due to mysql connection or authentication issues in `src/server/config.json`.
- - If you are using XAMPP or MAMP the correct default values are already configured for you
- - Check that MySQL is running
- - Check that your hostname, port number, user name, password and database are correct
- - Check that your secretKey is base62 encoded
+ * If you are using XAMPP or MAMP the correct default values are already configured for you
+ * Check that MySQL is running
+ * Check that your hostname, port number, user name, password and database are correct
+ * Check that your secretKey is base62 encoded
 * Make sure you are running the correct IP and port in the client window in `src/client/config.json`
- - If you are using MAMP or XAMPP the correct default values are already configured for you
+ * If you are using MAMP or XAMPP the correct default values are already configured for you
 * Errors installing dependencies
- - When this happens you will need to look at the specific error you are getting from the dependency and try to resolve the issue
- - Sometimes these can be fixed by upgrading to the latest version or bumping back to a previous version
- - Try searching on Stack Overflow or in the GitHub repo click on the issues tab for the NPM package causing the issue to see if there is a possible solution
+ * When this happens you will need to look at the specific error you are getting from the dependency and try to resolve the issue
+ * Sometimes these can be fixed by upgrading to the latest version or bumping back to a previous version
+ * Try searching on Stack Overflow or in the GitHub repo click on the issues tab for the NPM package causing the issue to see if there is a possible solution
