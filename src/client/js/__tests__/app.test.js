@@ -1,7 +1,7 @@
 /* global document, Event */
 import $ from 'jquery';
 import App from '../app';
-import Game from '../game';
+// import Game from '../game';
 
 /**
  * @test {App}
@@ -294,5 +294,22 @@ describe('App', () => {
 
     // expect the body to have the player death class
     expect(instance.body.attr('class')).toEqual('death');
+  });
+
+  /**
+   * @test {App#updateRange}
+   */
+  it('updates range', () => {
+    instance.updateRange('test');
+    expect(instance.rangeField).toEqual('test');
+  });
+
+  /**
+   * @test {App#updateOrientation}
+   */
+  it('updates orientation', () => {
+    instance.orientation = 'mobile';
+    instance.updateOrientation();
+    expect(instance.orientation).toEqual('landscape');
   });
 });

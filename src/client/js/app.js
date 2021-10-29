@@ -1,7 +1,7 @@
 /* global document, window */
 import $ from 'jquery';
 import _ from 'underscore';
-import Modules from './utils/modules';
+import Module from './utils/modules';
 import log from './lib/log';
 import Detect from './utils/detect';
 
@@ -229,6 +229,12 @@ export default class App {
      */
     this.statusMessage = null;
 
+    /**
+     * The field whose range is being updated
+     * @type {Object}
+     */
+    this.rangeField = null;
+
     // auto-binding
     this.keydownEventListener = this.keydownEventListener.bind(this);
     this.keyupEventListener = this.keyupEventListener.bind(this);
@@ -420,13 +426,13 @@ export default class App {
 
     this.body.focus();
 
-    if (key === Modules.Keys.Enter && !this.game.started) {
+    if (key === Module.Keys.Enter && !this.game.started) {
       this.login();
       return false;
     }
 
     if (this.game.started) {
-      this.game.onInput(Modules.InputType.Key, key);
+      this.game.onInput(Module.InputType.Key, key);
     }
 
     return true;
@@ -480,7 +486,7 @@ export default class App {
     }
 
     window.scrollTo(0, 1);
-    this.game.input.handle(Modules.InputType.LeftClick, event);
+    this.game.input.handle(Module.InputType.LeftClick, event);
 
     return true;
   }
@@ -492,19 +498,19 @@ export default class App {
   zoom() {
     log.debug('App - zoom()');
 
-    const containerWidth = this.container.width();
-    const containerHeight = this.container.height();
-    const windowWidth = this.window.width();
-    const windowHeight = this.window.height();
-    let zoomFactor = windowWidth / containerWidth;
-
-    if (containerHeight + 50 >= windowHeight) {
-      zoomFactor = windowHeight / (containerHeight + 50);
-    }
-
-    if (this.getScaleFactor() === 3) {
-      zoomFactor -= 0.1;
-    }
+    // const containerWidth = this.container.width();
+    // const containerHeight = this.container.height();
+    // const windowWidth = this.window.width();
+    // const windowHeight = this.window.height();
+    // let zoomFactor = windowWidth / containerWidth;
+    //
+    // if (containerHeight + 50 >= windowHeight) {
+    //   zoomFactor = windowHeight / (containerHeight + 50);
+    // }
+    //
+    // if (this.getScaleFactor() === 3) {
+    //   zoomFactor -= 0.1;
+    // }
 
     // this.body.css({
     //   zoom: zoomFactor,
@@ -930,6 +936,8 @@ export default class App {
       'background-image',
       `-webkit-gradient(linear, left top, right top, color-stop(${val}, #4d4d4d), color-stop(${val}, #C5C5C5)`,
     );
+
+    this.rangeField = field;
   }
 
   /**

@@ -1,10 +1,10 @@
 /* global document */
 import _ from 'underscore';
 import log from '../lib/log';
-import Modules from '../utils/modules';
+import Module from '../utils/modules';
 
 /**
- * Contorls audio and sfx in the game
+ * Controls audio and sfx in the game
  * @class
  */
 export default class Audio {
@@ -155,7 +155,7 @@ export default class Audio {
 
   /**
    * Play a specific audio file
-   * @param {String} type Modules.AudioTypes.Music|Modules.AudioTypes.SFX
+   * @param {String} type Module.AudioTypes.Music|Module.AudioTypes.SFX
    * @param {String} name the name of the audio file
    * @return {Boolean}
    */
@@ -168,7 +168,7 @@ export default class Audio {
     this.song = this.get(name);
 
     switch (type) {
-      case Modules.AudioTypes.Music:
+      case Module.AudioTypes.Music:
         this.fadeOut(() => {
           this.reset(this.song);
         });
@@ -182,7 +182,7 @@ export default class Audio {
         this.song.play();
         this.fadeIn();
         break;
-      case Modules.AudioTypes.SFX:
+      case Module.AudioTypes.SFX:
         if (!this.sfx[name]) {
           this.parse('assets/audio/sfx/', name, 4);
         }
@@ -238,7 +238,7 @@ export default class Audio {
         );
       }
 
-      this.play(Modules.AudioTypes.Music, song.name);
+      this.play(Module.AudioTypes.Music, song.name);
     } else if (this.game.renderer.mobile) {
       this.reset(this.song);
     } else {
