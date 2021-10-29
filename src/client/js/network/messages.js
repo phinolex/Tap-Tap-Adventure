@@ -15,44 +15,57 @@ import log from '../lib/log';
 export default class Messages {
   constructor(app) {
     log.debug('Messages - constructor()', app);
+
     this.app = app;
     this.messages = [];
-    this.messages[Packets.Handshake] = this.receiveHandshake;
-    this.messages[Packets.Welcome] = this.receiveWelcome;
-    this.messages[Packets.Spawn] = this.receiveSpawn;
-    this.messages[Packets.Equipment] = this.receiveEquipment;
-    this.messages[Packets.List] = this.receiveEntityList;
-    this.messages[Packets.Sync] = this.receiveSync;
-    this.messages[Packets.Movement] = this.receiveMovement;
-    this.messages[Packets.Teleport] = this.receiveTeleport;
-    this.messages[Packets.Despawn] = this.receiveDespawn;
-    this.messages[Packets.Combat] = this.receiveCombat;
-    this.messages[Packets.Animation] = this.receiveAnimation;
-    this.messages[Packets.Projectile] = this.receiveProjectile;
-    this.messages[Packets.Population] = this.receivePopulation;
-    this.messages[Packets.Points] = this.receivePoints;
-    this.messages[Packets.Network] = this.receiveNetwork;
-    this.messages[Packets.Chat] = this.receiveChat;
-    this.messages[Packets.Command] = this.receiveCommand;
-    this.messages[Packets.Inventory] = this.receiveInventory;
-    this.messages[Packets.Bank] = this.receiveBank;
-    this.messages[Packets.Ability] = this.receiveAbility;
-    this.messages[Packets.Quest] = this.receiveQuest;
-    this.messages[Packets.Notification] = this.receiveNotification;
-    this.messages[Packets.Blink] = this.receiveBlink;
-    this.messages[Packets.Heal] = this.receiveHeal;
-    this.messages[Packets.Experience] = this.receiveExperience;
-    this.messages[Packets.Death] = this.receiveDeath;
-    this.messages[Packets.Audio] = this.receiveAudio;
-    this.messages[Packets.NPC] = this.receiveNPC;
-    this.messages[Packets.Respawn] = this.receiveRespawn;
-    this.messages[Packets.Enchant] = this.receiveEnchant;
-    this.messages[Packets.Guild] = this.receiveGuild;
-    this.messages[Packets.Pointer] = this.receivePointer;
-    this.messages[Packets.PVP] = this.receivePVP;
-    this.messages[Packets.Shop] = this.receiveShop;
+    this.messages[Packets.Handshake] = this.receiveHandshake; // 0
+    this.messages[Packets.Intro] = null; // 1
+    this.messages[Packets.Welcome] = this.receiveWelcome; // 2
+    this.messages[Packets.Spawn] = this.receiveSpawn; // 3
+    this.messages[Packets.List] = this.receiveEntityList; // 4
+    this.messages[Packets.Who] = null; // 5
+    this.messages[Packets.Equipment] = this.receiveEquipment; // 6
+    this.messages[Packets.Ready] = null; // 7
+    this.messages[Packets.Sync] = this.receiveSync; // 8
+    this.messages[Packets.Movement] = this.receiveMovement; // 9
+    this.messages[Packets.Teleport] = this.receiveTeleport; // 10
+    this.messages[Packets.Request] = null; // 11
+    this.messages[Packets.Despawn] = this.receiveDespawn; // 12
+    this.messages[Packets.Target] = null; // 13
+    this.messages[Packets.Combat] = this.receiveCombat; // 14
+    this.messages[Packets.Animation] = this.receiveAnimation; // 15
+    this.messages[Packets.Projectile] = this.receiveProjectile; // 16
+    this.messages[Packets.Population] = this.receivePopulation; // 17
+    this.messages[Packets.Points] = this.receivePoints; // 18
+    this.messages[Packets.Network] = this.receiveNetwork; // 19
+    this.messages[Packets.Chat] = this.receiveChat; // 20
+    this.messages[Packets.Command] = this.receiveCommand; // 21
+    this.messages[Packets.Inventory] = this.receiveInventory; // 22
+    this.messages[Packets.Bank] = this.receiveBank; // 23
+    this.messages[Packets.Ability] = this.receiveAbility; // 24
+    this.messages[Packets.Quest] = this.receiveQuest; // 25
+    this.messages[Packets.Notification] = this.receiveNotification; // 26
+    this.messages[Packets.Blink] = this.receiveBlink; // 27
+    this.messages[Packets.Heal] = this.receiveHeal; // 28
+    this.messages[Packets.Experience] = this.receiveExperience; // 29
+    this.messages[Packets.Death] = this.receiveDeath; // 30
+    this.messages[Packets.Audio] = this.receiveAudio; // 31
+    this.messages[Packets.NPC] = this.receiveNPC; // 32
+    this.messages[Packets.Respawn] = this.receiveRespawn; // 33
+    this.messages[Packets.Trade] = null;
+    this.messages[Packets.Enchant] = this.receiveEnchant; // 35
+    this.messages[Packets.Guild] = this.receiveGuild; // 36
+    this.messages[Packets.Pointer] = this.receivePointer; // 37
+    this.messages[Packets.PVP] = this.receivePVP; // 38
+    this.messages[Packets.Click] = null; // 39
+    this.messages[Packets.Warp] = null; // 40
+    this.messages[Packets.Shop] = this.receiveShop; // 41
   }
 
+  /**
+   * Handle a message from the server
+   * @param  {String} data the packet number and data
+   */
   handleData(data) {
     log.debug('Messages - handleData()', data);
 
@@ -63,6 +76,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Handle bulk data messages, calls handleData() on each one in the array
+   * @param  {Array[String]} data Handle a list of messages
+   */
   handleBulkData(data) {
     log.debug('Messages - handleBulkData()', data);
 
@@ -71,6 +88,11 @@ export default class Messages {
     });
   }
 
+  /**
+   * Handle a UTF8 message, not a server packet message
+   * Displays the error message on the client
+   * @param  {String} message the message
+   */
   handleUTF8(message) {
     log.debug('Messages - handleUTF8()', message);
 
@@ -164,9 +186,9 @@ export default class Messages {
   }
 
   /**
-   * Data Receivers
+   * Recieve the server handshake
+   * @param  {String} data Packet and data message
    */
-
   receiveHandshake(data) {
     log.debug('Messages - receiveHandshake()', data);
 
@@ -175,6 +197,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server welcome
+   * @param  {String} data Packet and data message
+   */
   receiveWelcome(data) {
     log.debug('Messages - receiveWelcome()', data);
 
@@ -185,6 +211,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve server spawn
+   * @param  {String} data Packet and data message
+   */
   receiveSpawn(data) {
     log.debug('Messages - receiveSpawn()', data);
 
@@ -193,6 +223,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve equipment change
+   * @param  {String} data Packet, equipment type, and equipment info message
+   */
   receiveEquipment(data) {
     log.debug('Messages - receiveEquipment()', data);
 
@@ -204,6 +238,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server list of game entities
+   * @param  {String} data Packet and data message
+   */
   receiveEntityList(data) {
     log.debug('Messages - receiveEntityList()', data);
 
@@ -212,6 +250,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server sync
+   * @param  {String} data Packet and data message
+   */
   receiveSync(data) {
     log.debug('Messages - receiveSync()', data);
 
@@ -220,6 +262,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server entity movement
+   * @param  {String} data Packet and data message
+   */
   receiveMovement(data) {
     log.debug('Messages - receiveMovement()', data);
 
@@ -229,6 +275,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server teleport
+   * @param  {String} data Packet and data message
+   */
   receiveTeleport(data) {
     log.debug('Messages - receiveTeleport()', data);
 
@@ -239,8 +289,12 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server despawn
+   * @param  {String} data Packet and data message
+   */
   receiveDespawn(data) {
-    log.debug('Messages - receiveTeleport()', data);
+    log.debug('Messages - receiveDespawn()', data);
 
     const id = data.shift();
 
@@ -249,6 +303,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server combat
+   * @param  {String} data Packet and data message
+   */
   receiveCombat(data) {
     log.debug('Messages - receiveCombat()', data);
 
@@ -259,6 +317,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server animation
+   * @param  {String} data Packet, id and info
+   */
   receiveAnimation(data) {
     log.debug('Messages - receiveAnimation()', data);
 
@@ -270,6 +332,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server projectile
+   * @param  {String} data Packet, type and info
+   */
   receiveProjectile(data) {
     log.debug('Messages - receiveProjectile()', data);
 
@@ -281,6 +347,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server population
+   * @param  {String} data Packet and data message
+   */
   receivePopulation(data) {
     log.debug('Messages - receivePopulation()', data);
 
@@ -289,6 +359,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server points
+   * @param  {String} data Packet and data message
+   */
   receivePoints(data) {
     log.debug('Messages - receivePoints()', data);
 
@@ -299,6 +373,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server network change
+   * @param  {String} data Packet and opcode data message
+   */
   receiveNetwork(data) {
     log.debug('Messages - receiveNetwork()', data);
 
@@ -309,6 +387,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server chat message
+   * @param  {String} data Packet and data message
+   */
   receiveChat(data) {
     log.debug('Messages - receiveChat()', data);
 
@@ -319,6 +401,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server command
+   * @param  {String} data Packet and data message
+   */
   receiveCommand(data) {
     log.debug('Messages - receiveCommand()', data);
 
@@ -329,6 +415,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server inventory
+   * @param  {String} data Packet, opcode and data message
+   */
   receiveInventory(data) {
     log.debug('Messages - receiveInventory()', data);
 
@@ -340,6 +430,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server bank callback
+   * @param  {String} data Packet, opcode and info message
+   */
   receiveBank(data) {
     log.debug('Messages - receiveBank()', data);
 
@@ -351,6 +445,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server ability
+   * @param  {String} data Packet, opcode and info message
+   */
   receiveAbility(data) {
     log.debug('Messages - receiveAbility()', data);
 
@@ -362,6 +460,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server quest
+   * @param  {String} data Packet, opcode and info message
+   */
   receiveQuest(data) {
     log.debug('Messages - receiveQuest()', data);
 
@@ -373,6 +475,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server notification
+   * @param  {String} data Packet, opcode and message
+   */
   receiveNotification(data) {
     log.debug('Messages - receiveNotification()', data);
 
@@ -384,6 +490,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server blink
+   * @param  {String} data Packet and data message
+   */
   receiveBlink(data) {
     log.debug('Messages - receiveBlink()', data);
 
@@ -394,6 +504,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server heal
+   * @param  {String} data Packet and data message
+   */
   receiveHeal(data) {
     log.debug('Messages - receiveHeal()', data);
 
@@ -402,6 +516,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server experience
+   * @param  {String} data Packet and data message
+   */
   receiveExperience(data) {
     log.debug('Messages - receiveExperience()', data);
 
@@ -410,6 +528,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server death
+   * @param  {String} data Packet and data message
+   */
   receiveDeath(data) {
     log.debug('Messages - receiveDeath()', data);
 
@@ -418,12 +540,20 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server audio
+   * @param  {String} data Packet and data message
+   */
   receiveAudio(data) {
     if (this.audioCallback) {
       this.audioCallback(data.shift());
     }
   }
 
+  /**
+   * Recieve the server NPC
+   * @param  {String} data Opcode and info message
+   */
   receiveNPC(data) {
     const opcode = data.shift();
     const info = data.shift();
@@ -433,6 +563,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server respawn
+   * @param  {String} data id, x, and y coordinates
+   */
   receiveRespawn(data) {
     const id = data.shift();
     const x = data.shift();
@@ -443,6 +577,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server enchant
+   * @param  {String} data Opcode and info message
+   */
   receiveEnchant(data) {
     const opcode = data.shift();
     const info = data.shift();
@@ -452,6 +590,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server guild
+   * @param  {String} data Opcode and info message
+   */
   receiveGuild(data) {
     const opcode = data.shift();
     const info = data.shift();
@@ -461,6 +603,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server pointer
+   * @param  {String} data Opcode and info message
+   */
   receivePointer(data) {
     const opcode = data.shift();
     const info = data.shift();
@@ -470,6 +616,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server player vs player (PVP)
+   * @param  {String} data id and PVP id
+   */
   receivePVP(data) {
     const id = data.shift();
     const pvp = data.shift();
@@ -479,6 +629,10 @@ export default class Messages {
     }
   }
 
+  /**
+   * Recieve the server shop
+   * @param  {String} data Opcode and info message
+   */
   receiveShop(data) {
     const opcode = data.shift();
     const info = data.shift();
@@ -489,141 +643,273 @@ export default class Messages {
   }
 
   /**
-   * Universal Callbacks
+   * Universal callback for onHandshake
+   * @param {Function} callback
    */
-
   onHandshake(callback) {
     this.handshakeCallback = callback;
   }
 
+  /**
+   * Universal callback for onWelcome
+   * @param {Function} callback
+   */
   onWelcome(callback) {
     this.welcomeCallback = callback;
   }
 
+  /**
+   * Universal callback for onSpawn
+   * @param {Function} callback
+   */
   onSpawn(callback) {
     this.spawnCallback = callback;
   }
 
+  /**
+   * Universal callback for onEquipment
+   * @param {Function} callback
+   */
   onEquipment(callback) {
     this.equipmentCallback = callback;
   }
 
+  /**
+   * Universal callback for onEntityList
+   * @param {Function} callback
+   */
   onEntityList(callback) {
     this.entityListCallback = callback;
   }
 
+  /**
+   * Universal callback for onSync
+   * @param {Function} callback
+   */
   onSync(callback) {
     this.syncCallback = callback;
   }
 
+  /**
+   * Universal callback for onMovement
+   * @param {Function} callback
+   */
   onMovement(callback) {
     this.movementCallback = callback;
   }
 
+  /**
+   * Universal callback for onTeleport
+   * @param {Function} callback
+   */
   onTeleport(callback) {
     this.teleportCallback = callback;
   }
 
+  /**
+   * Universal callback for onDespawn
+   * @param {Function} callback
+   */
   onDespawn(callback) {
     this.despawnCallback = callback;
   }
 
+  /**
+   * Universal callback for onCombat
+   * @param {Function} callback
+   */
   onCombat(callback) {
     this.combatCallback = callback;
   }
 
+  /**
+   * Universal callback for onAnimation
+   * @param {Function} callback
+   */
   onAnimation(callback) {
     this.animationCallback = callback;
   }
 
+  /**
+   * Universal callback for onProjectile
+   * @param {Function} callback
+   */
   onProjectile(callback) {
     this.projectileCallback = callback;
   }
 
+  /**
+   * Universal callback for onPopulation
+   * @param {Function} callback
+   */
   onPopulation(callback) {
     this.populationCallback = callback;
   }
 
+  /**
+   * Universal callback for onPoints
+   * @param {Function} callback
+   */
   onPoints(callback) {
     this.pointsCallback = callback;
   }
 
+  /**
+   * Universal callback for onNetwork
+   * @param {Function} callback
+   */
   onNetwork(callback) {
     this.networkCallback = callback;
   }
 
+  /**
+   * Universal callback for onChat
+   * @param {Function} callback
+   */
   onChat(callback) {
     this.chatCallback = callback;
   }
 
+  /**
+   * Universal callback for onCommand
+   * @param {Function} callback
+   */
   onCommand(callback) {
     this.commandCallback = callback;
   }
 
+  /**
+   * Universal callback for onInventory
+   * @param {Function} callback
+   */
   onInventory(callback) {
     this.inventoryCallback = callback;
   }
 
+  /**
+   * Universal callback for onBank
+   * @param {Function} callback
+   */
   onBank(callback) {
     this.bankCallback = callback;
   }
 
+  /**
+   * Universal callback for onAbility
+   * @param {Function} callback
+   */
   onAbility(callback) {
     this.abilityCallback = callback;
   }
 
+  /**
+   * Universal callback for onQuest
+   * @param {Function} callback
+   */
   onQuest(callback) {
     this.questCallback = callback;
   }
 
+  /**
+   * Universal callback for onNotification
+   * @param {Function} callback
+   */
   onNotification(callback) {
     this.notificationCallback = callback;
   }
 
+  /**
+   * Universal callback for onBlink
+   * @param {Function} callback
+   */
   onBlink(callback) {
     this.blinkCallback = callback;
   }
 
+  /**
+   * Universal callback for onHeal
+   * @param {Function} callback
+   */
   onHeal(callback) {
     this.healCallback = callback;
   }
 
+  /**
+   * Universal callback for onExperience
+   * @param {Function} callback
+   */
   onExperience(callback) {
     this.experienceCallback = callback;
   }
 
+  /**
+   * Universal callback for onDeath
+   * @param {Function} callback
+   */
   onDeath(callback) {
     this.deathCallback = callback;
   }
 
+  /**
+   * Universal callback for onAudio
+   * @param {Function} callback
+   */
   onAudio(callback) {
     this.audioCallback = callback;
   }
 
+  /**
+   * Universal callback for onNPC
+   * @param {Function} callback
+   */
   onNPC(callback) {
     this.npcCallback = callback;
   }
 
+  /**
+   * Universal callback for onRespawn
+   * @param {Function} callback
+   */
   onRespawn(callback) {
     this.respawnCallback = callback;
   }
 
+  /**
+   * Universal callback for onEnchant
+   * @param {Function} callback
+   */
   onEnchant(callback) {
     this.enchantCallback = callback;
   }
 
+  /**
+   * Universal callback for onGuild
+   * @param {Function} callback
+   */
   onGuild(callback) {
     this.guildCallback = callback;
   }
 
+  /**
+   * Universal callback for onPointer
+   * @param {Function} callback
+   */
   onPointer(callback) {
     this.pointerCallback = callback;
   }
 
+  /**
+   * Universal callback for onPVP
+   * @param {Function} callback
+   */
   onPVP(callback) {
     this.pvpCallback = callback;
   }
 
+  /**
+   * Universal callback for onShop
+   * @param {Function} callback
+   */
   onShop(callback) {
     this.shopCallback = callback;
   }
