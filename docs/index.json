@@ -25796,7 +25796,7 @@
     "__docId__": 1504,
     "kind": "file",
     "name": "WTF-Adventure/src/client/js/network/messages.js",
-    "content": "import _ from 'underscore';\nimport Packets from './packets';\nimport log from '../lib/log';\n\n/**\n * Do not clutter up the Socket class with callbacks,\n * have this class here until a better method arises in my head.\n *\n * This class should not have any complex functionality, its main\n * role is to provide organization for packets and increase readability\n *\n * Please respect the order of the Packets Enum and arrange functions\n * accordingly.\n */\nexport default class Messages {\n  constructor(app) {\n    log.debug('Messages - constructor()', app);\n    this.app = app;\n    this.messages = [];\n    this.messages[Packets.Handshake] = this.receiveHandshake;\n    this.messages[Packets.Welcome] = this.receiveWelcome;\n    this.messages[Packets.Spawn] = this.receiveSpawn;\n    this.messages[Packets.Equipment] = this.receiveEquipment;\n    this.messages[Packets.List] = this.receiveEntityList;\n    this.messages[Packets.Sync] = this.receiveSync;\n    this.messages[Packets.Movement] = this.receiveMovement;\n    this.messages[Packets.Teleport] = this.receiveTeleport;\n    this.messages[Packets.Despawn] = this.receiveDespawn;\n    this.messages[Packets.Combat] = this.receiveCombat;\n    this.messages[Packets.Animation] = this.receiveAnimation;\n    this.messages[Packets.Projectile] = this.receiveProjectile;\n    this.messages[Packets.Population] = this.receivePopulation;\n    this.messages[Packets.Points] = this.receivePoints;\n    this.messages[Packets.Network] = this.receiveNetwork;\n    this.messages[Packets.Chat] = this.receiveChat;\n    this.messages[Packets.Command] = this.receiveCommand;\n    this.messages[Packets.Inventory] = this.receiveInventory;\n    this.messages[Packets.Bank] = this.receiveBank;\n    this.messages[Packets.Ability] = this.receiveAbility;\n    this.messages[Packets.Quest] = this.receiveQuest;\n    this.messages[Packets.Notification] = this.receiveNotification;\n    this.messages[Packets.Blink] = this.receiveBlink;\n    this.messages[Packets.Heal] = this.receiveHeal;\n    this.messages[Packets.Experience] = this.receiveExperience;\n    this.messages[Packets.Death] = this.receiveDeath;\n    this.messages[Packets.Audio] = this.receiveAudio;\n    this.messages[Packets.NPC] = this.receiveNPC;\n    this.messages[Packets.Respawn] = this.receiveRespawn;\n    this.messages[Packets.Enchant] = this.receiveEnchant;\n    this.messages[Packets.Guild] = this.receiveGuild;\n    this.messages[Packets.Pointer] = this.receivePointer;\n    this.messages[Packets.PVP] = this.receivePVP;\n    this.messages[Packets.Shop] = this.receiveShop;\n  }\n\n  handleData(data) {\n    log.debug('Messages - handleData()', data);\n\n    const packet = data.shift();\n\n    if (this.messages[packet] && _.isFunction(this.messages[packet])) {\n      this.messages[packet].call(this, data);\n    }\n  }\n\n  handleBulkData(data) {\n    log.debug('Messages - handleBulkData()', data);\n\n    _.each(data, (message) => {\n      this.handleData(message);\n    });\n  }\n\n  handleUTF8(message) {\n    log.debug('Messages - handleUTF8()', message);\n\n    this.app.toggleLogin(false);\n\n    switch (message) {\n      case 'updated':\n        this.app.sendError(null, 'The client has been updated!');\n        break;\n\n      case 'full':\n        this.app.sendError(null, 'The servers are currently full!');\n        break;\n\n      case 'error':\n        this.app.sendError(null, 'The server has responded with an error!');\n        break;\n\n      case 'development':\n        this.app.sendError(\n          null,\n          'The game is currently in development mode.',\n        );\n        break;\n\n      case 'disallowed':\n        this.app.sendError(\n          null,\n          'The server is currently not accepting connections!',\n        );\n        break;\n\n      case 'maintenance':\n        this.app.sendError(\n          null,\n          'WTF?! Adventure is currently under construction.',\n        );\n        break;\n\n      case 'userexists':\n        this.app.sendError(\n          null,\n          'The username you have chosen already exists.',\n        );\n        break;\n\n      case 'emailexists':\n        this.app.sendError(\n          null,\n          'The email you have chosen is not available.',\n        );\n        break;\n\n      case 'loggedin':\n        this.app.sendError(null, 'The player is already logged in!');\n        break;\n\n      case 'invalidlogin':\n        this.app.sendError(\n          null,\n          'You have entered the wrong username or password.',\n        );\n        break;\n\n      case 'toofast':\n        this.app.sendError(\n          null,\n          'You are trying to log in too fast from the same connection.',\n        );\n        break;\n\n      case 'malform':\n        this.app.game.handleDisconnection(true);\n        this.app.sendError(null, 'Client has experienced a malfunction.');\n        break;\n\n      case 'timeout':\n        this.app.sendError(\n          null,\n          'You have been disconnected for being inactive for too long.',\n        );\n        break;\n\n      case 'validatingLogin':\n        this.app.sendError(null, 'Validating login...');\n        break;\n      default:\n        this.app.sendError(null, `An unknown error has occurred: ${message}`);\n        break;\n    }\n  }\n\n  /**\n   * Data Receivers\n   */\n\n  receiveHandshake(data) {\n    log.debug('Messages - receiveHandshake()', data);\n\n    if (this.handshakeCallback) {\n      this.handshakeCallback(data.shift());\n    }\n  }\n\n  receiveWelcome(data) {\n    log.debug('Messages - receiveWelcome()', data);\n\n    const playerData = data.shift();\n\n    if (this.welcomeCallback) {\n      this.welcomeCallback(playerData);\n    }\n  }\n\n  receiveSpawn(data) {\n    log.debug('Messages - receiveSpawn()', data);\n\n    if (this.spawnCallback) {\n      this.spawnCallback(data);\n    }\n  }\n\n  receiveEquipment(data) {\n    log.debug('Messages - receiveEquipment()', data);\n\n    const equipType = data.shift();\n    const equipInfo = data.shift();\n\n    if (this.equipmentCallback) {\n      this.equipmentCallback(equipType, equipInfo);\n    }\n  }\n\n  receiveEntityList(data) {\n    log.debug('Messages - receiveEntityList()', data);\n\n    if (this.entityListCallback) {\n      this.entityListCallback(data);\n    }\n  }\n\n  receiveSync(data) {\n    log.debug('Messages - receiveSync()', data);\n\n    if (this.syncCallback) {\n      this.syncCallback(data.shift());\n    }\n  }\n\n  receiveMovement(data) {\n    log.debug('Messages - receiveMovement()', data);\n\n    const movementData = data.shift();\n    if (this.movementCallback) {\n      this.movementCallback(movementData);\n    }\n  }\n\n  receiveTeleport(data) {\n    log.debug('Messages - receiveTeleport()', data);\n\n    const teleportData = data.shift();\n\n    if (this.teleportCallback) {\n      this.teleportCallback(teleportData);\n    }\n  }\n\n  receiveDespawn(data) {\n    log.debug('Messages - receiveTeleport()', data);\n\n    const id = data.shift();\n\n    if (this.despawnCallback) {\n      this.despawnCallback(id);\n    }\n  }\n\n  receiveCombat(data) {\n    log.debug('Messages - receiveCombat()', data);\n\n    const combatData = data.shift();\n\n    if (this.combatCallback) {\n      this.combatCallback(combatData);\n    }\n  }\n\n  receiveAnimation(data) {\n    log.debug('Messages - receiveAnimation()', data);\n\n    const id = data.shift();\n    const info = data.shift();\n\n    if (this.animationCallback) {\n      this.animationCallback(id, info);\n    }\n  }\n\n  receiveProjectile(data) {\n    log.debug('Messages - receiveProjectile()', data);\n\n    const type = data.shift();\n    const info = data.shift();\n\n    if (this.projectileCallback) {\n      this.projectileCallback(type, info);\n    }\n  }\n\n  receivePopulation(data) {\n    log.debug('Messages - receivePopulation()', data);\n\n    if (this.populationCallback) {\n      this.populationCallback(data.shift());\n    }\n  }\n\n  receivePoints(data) {\n    log.debug('Messages - receivePoints()', data);\n\n    const pointsData = data.shift();\n\n    if (this.pointsCallback) {\n      this.pointsCallback(pointsData);\n    }\n  }\n\n  receiveNetwork(data) {\n    log.debug('Messages - receiveNetwork()', data);\n\n    const opcode = data.shift();\n\n    if (this.networkCallback) {\n      this.networkCallback(opcode);\n    }\n  }\n\n  receiveChat(data) {\n    log.debug('Messages - receiveChat()', data);\n\n    const info = data.shift();\n\n    if (this.chatCallback) {\n      this.chatCallback(info);\n    }\n  }\n\n  receiveCommand(data) {\n    log.debug('Messages - receiveCommand()', data);\n\n    const info = data.shift();\n\n    if (this.commandCallback) {\n      this.commandCallback(info);\n    }\n  }\n\n  receiveInventory(data) {\n    log.debug('Messages - receiveInventory()', data);\n\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.inventoryCallback) {\n      this.inventoryCallback(opcode, info);\n    }\n  }\n\n  receiveBank(data) {\n    log.debug('Messages - receiveBank()', data);\n\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.bankCallback) {\n      this.bankCallback(opcode, info);\n    }\n  }\n\n  receiveAbility(data) {\n    log.debug('Messages - receiveAbility()', data);\n\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.abilityCallback) {\n      this.abilityCallback(opcode, info);\n    }\n  }\n\n  receiveQuest(data) {\n    log.debug('Messages - receiveQuest()', data);\n\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.questCallback) {\n      this.questCallback(opcode, info);\n    }\n  }\n\n  receiveNotification(data) {\n    log.debug('Messages - receiveNotification()', data);\n\n    const opcode = data.shift();\n    const message = data.shift();\n\n    if (this.notificationCallback) {\n      this.notificationCallback(opcode, message);\n    }\n  }\n\n  receiveBlink(data) {\n    log.debug('Messages - receiveBlink()', data);\n\n    const instance = data.shift();\n\n    if (this.blinkCallback) {\n      this.blinkCallback(instance);\n    }\n  }\n\n  receiveHeal(data) {\n    log.debug('Messages - receiveHeal()', data);\n\n    if (this.healCallback) {\n      this.healCallback(data.shift());\n    }\n  }\n\n  receiveExperience(data) {\n    log.debug('Messages - receiveExperience()', data);\n\n    if (this.experienceCallback) {\n      this.experienceCallback(data.shift());\n    }\n  }\n\n  receiveDeath(data) {\n    log.debug('Messages - receiveDeath()', data);\n\n    if (this.deathCallback) {\n      this.deathCallback(data.shift());\n    }\n  }\n\n  receiveAudio(data) {\n    if (this.audioCallback) {\n      this.audioCallback(data.shift());\n    }\n  }\n\n  receiveNPC(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.npcCallback) {\n      this.npcCallback(opcode, info);\n    }\n  }\n\n  receiveRespawn(data) {\n    const id = data.shift();\n    const x = data.shift();\n    const y = data.shift();\n\n    if (this.respawnCallback) {\n      this.respawnCallback(id, x, y);\n    }\n  }\n\n  receiveEnchant(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.enchantCallback) {\n      this.enchantCallback(opcode, info);\n    }\n  }\n\n  receiveGuild(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.guildCallback) {\n      this.guildCallback(opcode, info);\n    }\n  }\n\n  receivePointer(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.pointerCallback) {\n      this.pointerCallback(opcode, info);\n    }\n  }\n\n  receivePVP(data) {\n    const id = data.shift();\n    const pvp = data.shift();\n\n    if (this.pvpCallback) {\n      this.pvpCallback(id, pvp);\n    }\n  }\n\n  receiveShop(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.shopCallback) {\n      this.shopCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Universal Callbacks\n   */\n\n  onHandshake(callback) {\n    this.handshakeCallback = callback;\n  }\n\n  onWelcome(callback) {\n    this.welcomeCallback = callback;\n  }\n\n  onSpawn(callback) {\n    this.spawnCallback = callback;\n  }\n\n  onEquipment(callback) {\n    this.equipmentCallback = callback;\n  }\n\n  onEntityList(callback) {\n    this.entityListCallback = callback;\n  }\n\n  onSync(callback) {\n    this.syncCallback = callback;\n  }\n\n  onMovement(callback) {\n    this.movementCallback = callback;\n  }\n\n  onTeleport(callback) {\n    this.teleportCallback = callback;\n  }\n\n  onDespawn(callback) {\n    this.despawnCallback = callback;\n  }\n\n  onCombat(callback) {\n    this.combatCallback = callback;\n  }\n\n  onAnimation(callback) {\n    this.animationCallback = callback;\n  }\n\n  onProjectile(callback) {\n    this.projectileCallback = callback;\n  }\n\n  onPopulation(callback) {\n    this.populationCallback = callback;\n  }\n\n  onPoints(callback) {\n    this.pointsCallback = callback;\n  }\n\n  onNetwork(callback) {\n    this.networkCallback = callback;\n  }\n\n  onChat(callback) {\n    this.chatCallback = callback;\n  }\n\n  onCommand(callback) {\n    this.commandCallback = callback;\n  }\n\n  onInventory(callback) {\n    this.inventoryCallback = callback;\n  }\n\n  onBank(callback) {\n    this.bankCallback = callback;\n  }\n\n  onAbility(callback) {\n    this.abilityCallback = callback;\n  }\n\n  onQuest(callback) {\n    this.questCallback = callback;\n  }\n\n  onNotification(callback) {\n    this.notificationCallback = callback;\n  }\n\n  onBlink(callback) {\n    this.blinkCallback = callback;\n  }\n\n  onHeal(callback) {\n    this.healCallback = callback;\n  }\n\n  onExperience(callback) {\n    this.experienceCallback = callback;\n  }\n\n  onDeath(callback) {\n    this.deathCallback = callback;\n  }\n\n  onAudio(callback) {\n    this.audioCallback = callback;\n  }\n\n  onNPC(callback) {\n    this.npcCallback = callback;\n  }\n\n  onRespawn(callback) {\n    this.respawnCallback = callback;\n  }\n\n  onEnchant(callback) {\n    this.enchantCallback = callback;\n  }\n\n  onGuild(callback) {\n    this.guildCallback = callback;\n  }\n\n  onPointer(callback) {\n    this.pointerCallback = callback;\n  }\n\n  onPVP(callback) {\n    this.pvpCallback = callback;\n  }\n\n  onShop(callback) {\n    this.shopCallback = callback;\n  }\n}\n",
+    "content": "import _ from 'underscore';\nimport Packets from './packets';\nimport log from '../lib/log';\n\n/**\n * Do not clutter up the Socket class with callbacks,\n * have this class here until a better method arises in my head.\n *\n * This class should not have any complex functionality, its main\n * role is to provide organization for packets and increase readability\n *\n * Please respect the order of the Packets Enum and arrange functions\n * accordingly.\n */\nexport default class Messages {\n  constructor(app) {\n    log.debug('Messages - constructor()', app);\n\n    this.app = app;\n    this.messages = [];\n    this.messages[Packets.Handshake] = this.receiveHandshake; // 0\n    this.messages[Packets.Intro] = null; // 1\n    this.messages[Packets.Welcome] = this.receiveWelcome; // 2\n    this.messages[Packets.Spawn] = this.receiveSpawn; // 3\n    this.messages[Packets.List] = this.receiveEntityList; // 4\n    this.messages[Packets.Who] = null; // 5\n    this.messages[Packets.Equipment] = this.receiveEquipment; // 6\n    this.messages[Packets.Ready] = null; // 7\n    this.messages[Packets.Sync] = this.receiveSync; // 8\n    this.messages[Packets.Movement] = this.receiveMovement; // 9\n    this.messages[Packets.Teleport] = this.receiveTeleport; // 10\n    this.messages[Packets.Request] = null; // 11\n    this.messages[Packets.Despawn] = this.receiveDespawn; // 12\n    this.messages[Packets.Target] = null; // 13\n    this.messages[Packets.Combat] = this.receiveCombat; // 14\n    this.messages[Packets.Animation] = this.receiveAnimation; // 15\n    this.messages[Packets.Projectile] = this.receiveProjectile; // 16\n    this.messages[Packets.Population] = this.receivePopulation; // 17\n    this.messages[Packets.Points] = this.receivePoints; // 18\n    this.messages[Packets.Network] = this.receiveNetwork; // 19\n    this.messages[Packets.Chat] = this.receiveChat; // 20\n    this.messages[Packets.Command] = this.receiveCommand; // 21\n    this.messages[Packets.Inventory] = this.receiveInventory; // 22\n    this.messages[Packets.Bank] = this.receiveBank; // 23\n    this.messages[Packets.Ability] = this.receiveAbility; // 24\n    this.messages[Packets.Quest] = this.receiveQuest; // 25\n    this.messages[Packets.Notification] = this.receiveNotification; // 26\n    this.messages[Packets.Blink] = this.receiveBlink; // 27\n    this.messages[Packets.Heal] = this.receiveHeal; // 28\n    this.messages[Packets.Experience] = this.receiveExperience; // 29\n    this.messages[Packets.Death] = this.receiveDeath; // 30\n    this.messages[Packets.Audio] = this.receiveAudio; // 31\n    this.messages[Packets.NPC] = this.receiveNPC; // 32\n    this.messages[Packets.Respawn] = this.receiveRespawn; // 33\n    this.messages[Packets.Trade] = null;\n    this.messages[Packets.Enchant] = this.receiveEnchant; // 35\n    this.messages[Packets.Guild] = this.receiveGuild; // 36\n    this.messages[Packets.Pointer] = this.receivePointer; // 37\n    this.messages[Packets.PVP] = this.receivePVP; // 38\n    this.messages[Packets.Click] = null; // 39\n    this.messages[Packets.Warp] = null; // 40\n    this.messages[Packets.Shop] = this.receiveShop; // 41\n  }\n\n  /**\n   * Handle a message from the server\n   * @param  {String} data the packet number and data\n   */\n  handleData(data) {\n    log.debug('Messages - handleData()', data);\n\n    const packet = data.shift();\n\n    if (this.messages[packet] && _.isFunction(this.messages[packet])) {\n      this.messages[packet].call(this, data);\n    }\n  }\n\n  /**\n   * Handle bulk data messages, calls handleData() on each one in the array\n   * @param  {Array[String]} data Handle a list of messages\n   */\n  handleBulkData(data) {\n    log.debug('Messages - handleBulkData()', data);\n\n    _.each(data, (message) => {\n      this.handleData(message);\n    });\n  }\n\n  /**\n   * Handle a UTF8 message, not a server packet message\n   * Displays the error message on the client\n   * @param  {String} message the message\n   */\n  handleUTF8(message) {\n    log.debug('Messages - handleUTF8()', message);\n\n    this.app.toggleLogin(false);\n\n    switch (message) {\n      case 'updated':\n        this.app.sendError(null, 'The client has been updated!');\n        break;\n\n      case 'full':\n        this.app.sendError(null, 'The servers are currently full!');\n        break;\n\n      case 'error':\n        this.app.sendError(null, 'The server has responded with an error!');\n        break;\n\n      case 'development':\n        this.app.sendError(\n          null,\n          'The game is currently in development mode.',\n        );\n        break;\n\n      case 'disallowed':\n        this.app.sendError(\n          null,\n          'The server is currently not accepting connections!',\n        );\n        break;\n\n      case 'maintenance':\n        this.app.sendError(\n          null,\n          'WTF?! Adventure is currently under construction.',\n        );\n        break;\n\n      case 'userexists':\n        this.app.sendError(\n          null,\n          'The username you have chosen already exists.',\n        );\n        break;\n\n      case 'emailexists':\n        this.app.sendError(\n          null,\n          'The email you have chosen is not available.',\n        );\n        break;\n\n      case 'loggedin':\n        this.app.sendError(null, 'The player is already logged in!');\n        break;\n\n      case 'invalidlogin':\n        this.app.sendError(\n          null,\n          'You have entered the wrong username or password.',\n        );\n        break;\n\n      case 'toofast':\n        this.app.sendError(\n          null,\n          'You are trying to log in too fast from the same connection.',\n        );\n        break;\n\n      case 'malform':\n        this.app.game.handleDisconnection(true);\n        this.app.sendError(null, 'Client has experienced a malfunction.');\n        break;\n\n      case 'timeout':\n        this.app.sendError(\n          null,\n          'You have been disconnected for being inactive for too long.',\n        );\n        break;\n\n      case 'validatingLogin':\n        this.app.sendError(null, 'Validating login...');\n        break;\n      default:\n        this.app.sendError(null, `An unknown error has occurred: ${message}`);\n        break;\n    }\n  }\n\n  /**\n   * Recieve the server handshake\n   * @param  {String} data Packet and data message\n   */\n  receiveHandshake(data) {\n    log.debug('Messages - receiveHandshake()', data);\n\n    if (this.handshakeCallback) {\n      this.handshakeCallback(data.shift());\n    }\n  }\n\n  /**\n   * Recieve the server welcome\n   * @param  {String} data Packet and data message\n   */\n  receiveWelcome(data) {\n    log.debug('Messages - receiveWelcome()', data);\n\n    const playerData = data.shift();\n\n    if (this.welcomeCallback) {\n      this.welcomeCallback(playerData);\n    }\n  }\n\n  /**\n   * Recieve server spawn\n   * @param  {String} data Packet and data message\n   */\n  receiveSpawn(data) {\n    log.debug('Messages - receiveSpawn()', data);\n\n    if (this.spawnCallback) {\n      this.spawnCallback(data);\n    }\n  }\n\n  /**\n   * Recieve equipment change\n   * @param  {String} data Packet, equipment type, and equipment info message\n   */\n  receiveEquipment(data) {\n    log.debug('Messages - receiveEquipment()', data);\n\n    const equipType = data.shift();\n    const equipInfo = data.shift();\n\n    if (this.equipmentCallback) {\n      this.equipmentCallback(equipType, equipInfo);\n    }\n  }\n\n  /**\n   * Recieve the server list of game entities\n   * @param  {String} data Packet and data message\n   */\n  receiveEntityList(data) {\n    log.debug('Messages - receiveEntityList()', data);\n\n    if (this.entityListCallback) {\n      this.entityListCallback(data);\n    }\n  }\n\n  /**\n   * Recieve the server sync\n   * @param  {String} data Packet and data message\n   */\n  receiveSync(data) {\n    log.debug('Messages - receiveSync()', data);\n\n    if (this.syncCallback) {\n      this.syncCallback(data.shift());\n    }\n  }\n\n  /**\n   * Recieve the server entity movement\n   * @param  {String} data Packet and data message\n   */\n  receiveMovement(data) {\n    log.debug('Messages - receiveMovement()', data);\n\n    const movementData = data.shift();\n    if (this.movementCallback) {\n      this.movementCallback(movementData);\n    }\n  }\n\n  /**\n   * Recieve the server teleport\n   * @param  {String} data Packet and data message\n   */\n  receiveTeleport(data) {\n    log.debug('Messages - receiveTeleport()', data);\n\n    const teleportData = data.shift();\n\n    if (this.teleportCallback) {\n      this.teleportCallback(teleportData);\n    }\n  }\n\n  /**\n   * Recieve the server despawn\n   * @param  {String} data Packet and data message\n   */\n  receiveDespawn(data) {\n    log.debug('Messages - receiveDespawn()', data);\n\n    const id = data.shift();\n\n    if (this.despawnCallback) {\n      this.despawnCallback(id);\n    }\n  }\n\n  /**\n   * Recieve the server combat\n   * @param  {String} data Packet and data message\n   */\n  receiveCombat(data) {\n    log.debug('Messages - receiveCombat()', data);\n\n    const combatData = data.shift();\n\n    if (this.combatCallback) {\n      this.combatCallback(combatData);\n    }\n  }\n\n  /**\n   * Recieve the server animation\n   * @param  {String} data Packet, id and info\n   */\n  receiveAnimation(data) {\n    log.debug('Messages - receiveAnimation()', data);\n\n    const id = data.shift();\n    const info = data.shift();\n\n    if (this.animationCallback) {\n      this.animationCallback(id, info);\n    }\n  }\n\n  /**\n   * Recieve the server projectile\n   * @param  {String} data Packet, type and info\n   */\n  receiveProjectile(data) {\n    log.debug('Messages - receiveProjectile()', data);\n\n    const type = data.shift();\n    const info = data.shift();\n\n    if (this.projectileCallback) {\n      this.projectileCallback(type, info);\n    }\n  }\n\n  /**\n   * Recieve the server population\n   * @param  {String} data Packet and data message\n   */\n  receivePopulation(data) {\n    log.debug('Messages - receivePopulation()', data);\n\n    if (this.populationCallback) {\n      this.populationCallback(data.shift());\n    }\n  }\n\n  /**\n   * Recieve the server points\n   * @param  {String} data Packet and data message\n   */\n  receivePoints(data) {\n    log.debug('Messages - receivePoints()', data);\n\n    const pointsData = data.shift();\n\n    if (this.pointsCallback) {\n      this.pointsCallback(pointsData);\n    }\n  }\n\n  /**\n   * Recieve the server network change\n   * @param  {String} data Packet and opcode data message\n   */\n  receiveNetwork(data) {\n    log.debug('Messages - receiveNetwork()', data);\n\n    const opcode = data.shift();\n\n    if (this.networkCallback) {\n      this.networkCallback(opcode);\n    }\n  }\n\n  /**\n   * Recieve the server chat message\n   * @param  {String} data Packet and data message\n   */\n  receiveChat(data) {\n    log.debug('Messages - receiveChat()', data);\n\n    const info = data.shift();\n\n    if (this.chatCallback) {\n      this.chatCallback(info);\n    }\n  }\n\n  /**\n   * Recieve the server command\n   * @param  {String} data Packet and data message\n   */\n  receiveCommand(data) {\n    log.debug('Messages - receiveCommand()', data);\n\n    const info = data.shift();\n\n    if (this.commandCallback) {\n      this.commandCallback(info);\n    }\n  }\n\n  /**\n   * Recieve the server inventory\n   * @param  {String} data Packet, opcode and data message\n   */\n  receiveInventory(data) {\n    log.debug('Messages - receiveInventory()', data);\n\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.inventoryCallback) {\n      this.inventoryCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Recieve the server bank callback\n   * @param  {String} data Packet, opcode and info message\n   */\n  receiveBank(data) {\n    log.debug('Messages - receiveBank()', data);\n\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.bankCallback) {\n      this.bankCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Recieve the server ability\n   * @param  {String} data Packet, opcode and info message\n   */\n  receiveAbility(data) {\n    log.debug('Messages - receiveAbility()', data);\n\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.abilityCallback) {\n      this.abilityCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Recieve the server quest\n   * @param  {String} data Packet, opcode and info message\n   */\n  receiveQuest(data) {\n    log.debug('Messages - receiveQuest()', data);\n\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.questCallback) {\n      this.questCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Recieve the server notification\n   * @param  {String} data Packet, opcode and message\n   */\n  receiveNotification(data) {\n    log.debug('Messages - receiveNotification()', data);\n\n    const opcode = data.shift();\n    const message = data.shift();\n\n    if (this.notificationCallback) {\n      this.notificationCallback(opcode, message);\n    }\n  }\n\n  /**\n   * Recieve the server blink\n   * @param  {String} data Packet and data message\n   */\n  receiveBlink(data) {\n    log.debug('Messages - receiveBlink()', data);\n\n    const instance = data.shift();\n\n    if (this.blinkCallback) {\n      this.blinkCallback(instance);\n    }\n  }\n\n  /**\n   * Recieve the server heal\n   * @param  {String} data Packet and data message\n   */\n  receiveHeal(data) {\n    log.debug('Messages - receiveHeal()', data);\n\n    if (this.healCallback) {\n      this.healCallback(data.shift());\n    }\n  }\n\n  /**\n   * Recieve the server experience\n   * @param  {String} data Packet and data message\n   */\n  receiveExperience(data) {\n    log.debug('Messages - receiveExperience()', data);\n\n    if (this.experienceCallback) {\n      this.experienceCallback(data.shift());\n    }\n  }\n\n  /**\n   * Recieve the server death\n   * @param  {String} data Packet and data message\n   */\n  receiveDeath(data) {\n    log.debug('Messages - receiveDeath()', data);\n\n    if (this.deathCallback) {\n      this.deathCallback(data.shift());\n    }\n  }\n\n  /**\n   * Recieve the server audio\n   * @param  {String} data Packet and data message\n   */\n  receiveAudio(data) {\n    if (this.audioCallback) {\n      this.audioCallback(data.shift());\n    }\n  }\n\n  /**\n   * Recieve the server NPC\n   * @param  {String} data Opcode and info message\n   */\n  receiveNPC(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.npcCallback) {\n      this.npcCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Recieve the server respawn\n   * @param  {String} data id, x, and y coordinates\n   */\n  receiveRespawn(data) {\n    const id = data.shift();\n    const x = data.shift();\n    const y = data.shift();\n\n    if (this.respawnCallback) {\n      this.respawnCallback(id, x, y);\n    }\n  }\n\n  /**\n   * Recieve the server enchant\n   * @param  {String} data Opcode and info message\n   */\n  receiveEnchant(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.enchantCallback) {\n      this.enchantCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Recieve the server guild\n   * @param  {String} data Opcode and info message\n   */\n  receiveGuild(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.guildCallback) {\n      this.guildCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Recieve the server pointer\n   * @param  {String} data Opcode and info message\n   */\n  receivePointer(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.pointerCallback) {\n      this.pointerCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Recieve the server player vs player (PVP)\n   * @param  {String} data id and PVP id\n   */\n  receivePVP(data) {\n    const id = data.shift();\n    const pvp = data.shift();\n\n    if (this.pvpCallback) {\n      this.pvpCallback(id, pvp);\n    }\n  }\n\n  /**\n   * Recieve the server shop\n   * @param  {String} data Opcode and info message\n   */\n  receiveShop(data) {\n    const opcode = data.shift();\n    const info = data.shift();\n\n    if (this.shopCallback) {\n      this.shopCallback(opcode, info);\n    }\n  }\n\n  /**\n   * Universal callback for onHandshake\n   * @param {Function} callback\n   */\n  onHandshake(callback) {\n    this.handshakeCallback = callback;\n  }\n\n  /**\n   * Universal callback for onWelcome\n   * @param {Function} callback\n   */\n  onWelcome(callback) {\n    this.welcomeCallback = callback;\n  }\n\n  /**\n   * Universal callback for onSpawn\n   * @param {Function} callback\n   */\n  onSpawn(callback) {\n    this.spawnCallback = callback;\n  }\n\n  /**\n   * Universal callback for onEquipment\n   * @param {Function} callback\n   */\n  onEquipment(callback) {\n    this.equipmentCallback = callback;\n  }\n\n  /**\n   * Universal callback for onEntityList\n   * @param {Function} callback\n   */\n  onEntityList(callback) {\n    this.entityListCallback = callback;\n  }\n\n  /**\n   * Universal callback for onSync\n   * @param {Function} callback\n   */\n  onSync(callback) {\n    this.syncCallback = callback;\n  }\n\n  /**\n   * Universal callback for onMovement\n   * @param {Function} callback\n   */\n  onMovement(callback) {\n    this.movementCallback = callback;\n  }\n\n  /**\n   * Universal callback for onTeleport\n   * @param {Function} callback\n   */\n  onTeleport(callback) {\n    this.teleportCallback = callback;\n  }\n\n  /**\n   * Universal callback for onDespawn\n   * @param {Function} callback\n   */\n  onDespawn(callback) {\n    this.despawnCallback = callback;\n  }\n\n  /**\n   * Universal callback for onCombat\n   * @param {Function} callback\n   */\n  onCombat(callback) {\n    this.combatCallback = callback;\n  }\n\n  /**\n   * Universal callback for onAnimation\n   * @param {Function} callback\n   */\n  onAnimation(callback) {\n    this.animationCallback = callback;\n  }\n\n  /**\n   * Universal callback for onProjectile\n   * @param {Function} callback\n   */\n  onProjectile(callback) {\n    this.projectileCallback = callback;\n  }\n\n  /**\n   * Universal callback for onPopulation\n   * @param {Function} callback\n   */\n  onPopulation(callback) {\n    this.populationCallback = callback;\n  }\n\n  /**\n   * Universal callback for onPoints\n   * @param {Function} callback\n   */\n  onPoints(callback) {\n    this.pointsCallback = callback;\n  }\n\n  /**\n   * Universal callback for onNetwork\n   * @param {Function} callback\n   */\n  onNetwork(callback) {\n    this.networkCallback = callback;\n  }\n\n  /**\n   * Universal callback for onChat\n   * @param {Function} callback\n   */\n  onChat(callback) {\n    this.chatCallback = callback;\n  }\n\n  /**\n   * Universal callback for onCommand\n   * @param {Function} callback\n   */\n  onCommand(callback) {\n    this.commandCallback = callback;\n  }\n\n  /**\n   * Universal callback for onInventory\n   * @param {Function} callback\n   */\n  onInventory(callback) {\n    this.inventoryCallback = callback;\n  }\n\n  /**\n   * Universal callback for onBank\n   * @param {Function} callback\n   */\n  onBank(callback) {\n    this.bankCallback = callback;\n  }\n\n  /**\n   * Universal callback for onAbility\n   * @param {Function} callback\n   */\n  onAbility(callback) {\n    this.abilityCallback = callback;\n  }\n\n  /**\n   * Universal callback for onQuest\n   * @param {Function} callback\n   */\n  onQuest(callback) {\n    this.questCallback = callback;\n  }\n\n  /**\n   * Universal callback for onNotification\n   * @param {Function} callback\n   */\n  onNotification(callback) {\n    this.notificationCallback = callback;\n  }\n\n  /**\n   * Universal callback for onBlink\n   * @param {Function} callback\n   */\n  onBlink(callback) {\n    this.blinkCallback = callback;\n  }\n\n  /**\n   * Universal callback for onHeal\n   * @param {Function} callback\n   */\n  onHeal(callback) {\n    this.healCallback = callback;\n  }\n\n  /**\n   * Universal callback for onExperience\n   * @param {Function} callback\n   */\n  onExperience(callback) {\n    this.experienceCallback = callback;\n  }\n\n  /**\n   * Universal callback for onDeath\n   * @param {Function} callback\n   */\n  onDeath(callback) {\n    this.deathCallback = callback;\n  }\n\n  /**\n   * Universal callback for onAudio\n   * @param {Function} callback\n   */\n  onAudio(callback) {\n    this.audioCallback = callback;\n  }\n\n  /**\n   * Universal callback for onNPC\n   * @param {Function} callback\n   */\n  onNPC(callback) {\n    this.npcCallback = callback;\n  }\n\n  /**\n   * Universal callback for onRespawn\n   * @param {Function} callback\n   */\n  onRespawn(callback) {\n    this.respawnCallback = callback;\n  }\n\n  /**\n   * Universal callback for onEnchant\n   * @param {Function} callback\n   */\n  onEnchant(callback) {\n    this.enchantCallback = callback;\n  }\n\n  /**\n   * Universal callback for onGuild\n   * @param {Function} callback\n   */\n  onGuild(callback) {\n    this.guildCallback = callback;\n  }\n\n  /**\n   * Universal callback for onPointer\n   * @param {Function} callback\n   */\n  onPointer(callback) {\n    this.pointerCallback = callback;\n  }\n\n  /**\n   * Universal callback for onPVP\n   * @param {Function} callback\n   */\n  onPVP(callback) {\n    this.pvpCallback = callback;\n  }\n\n  /**\n   * Universal callback for onShop\n   * @param {Function} callback\n   */\n  onShop(callback) {\n    this.shopCallback = callback;\n  }\n}\n",
     "static": true,
     "longname": "/Users/krafsigg/Repos/WTF-Adventure/src/client/js/network/messages.js",
     "access": "public",
@@ -25841,7 +25841,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#app",
     "access": "public",
     "description": null,
-    "lineNumber": 18,
+    "lineNumber": 19,
     "undocument": true,
     "type": {
       "types": [
@@ -25858,7 +25858,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#messages",
     "access": "public",
     "description": null,
-    "lineNumber": 19,
+    "lineNumber": 20,
     "undocument": true,
     "type": {
       "types": [
@@ -25876,15 +25876,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#handleData",
     "access": "public",
-    "description": null,
-    "lineNumber": 56,
-    "undocument": true,
+    "description": "Handle a message from the server",
+    "lineNumber": 69,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "the packet number and data"
       }
     ],
     "return": null
@@ -25899,15 +25902,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#handleBulkData",
     "access": "public",
-    "description": null,
-    "lineNumber": 66,
-    "undocument": true,
+    "description": "Handle bulk data messages, calls handleData() on each one in the array",
+    "lineNumber": 83,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Array[String]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Handle a list of messages"
       }
     ],
     "return": null
@@ -25922,15 +25928,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#handleUTF8",
     "access": "public",
-    "description": null,
-    "lineNumber": 74,
-    "undocument": true,
+    "description": "Handle a UTF8 message, not a server packet message\nDisplays the error message on the client",
+    "lineNumber": 96,
     "params": [
       {
-        "name": "message",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "the message"
       }
     ],
     "return": null
@@ -25945,14 +25954,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveHandshake",
     "access": "public",
-    "description": "Data Receivers",
-    "lineNumber": 170,
+    "description": "Recieve the server handshake",
+    "lineNumber": 192,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -25967,15 +25980,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveWelcome",
     "access": "public",
-    "description": null,
-    "lineNumber": 178,
-    "undocument": true,
+    "description": "Recieve the server welcome",
+    "lineNumber": 204,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -25990,15 +26006,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveSpawn",
     "access": "public",
-    "description": null,
-    "lineNumber": 188,
-    "undocument": true,
+    "description": "Recieve server spawn",
+    "lineNumber": 218,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26013,15 +26032,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveEquipment",
     "access": "public",
-    "description": null,
-    "lineNumber": 196,
-    "undocument": true,
+    "description": "Recieve equipment change",
+    "lineNumber": 230,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet, equipment type, and equipment info message"
       }
     ],
     "return": null
@@ -26036,15 +26058,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveEntityList",
     "access": "public",
-    "description": null,
-    "lineNumber": 207,
-    "undocument": true,
+    "description": "Recieve the server list of game entities",
+    "lineNumber": 245,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26059,15 +26084,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveSync",
     "access": "public",
-    "description": null,
-    "lineNumber": 215,
-    "undocument": true,
+    "description": "Recieve the server sync",
+    "lineNumber": 257,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26082,15 +26110,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveMovement",
     "access": "public",
-    "description": null,
-    "lineNumber": 223,
-    "undocument": true,
+    "description": "Recieve the server entity movement",
+    "lineNumber": 269,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26105,15 +26136,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveTeleport",
     "access": "public",
-    "description": null,
-    "lineNumber": 232,
-    "undocument": true,
+    "description": "Recieve the server teleport",
+    "lineNumber": 282,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26128,15 +26162,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveDespawn",
     "access": "public",
-    "description": null,
-    "lineNumber": 242,
-    "undocument": true,
+    "description": "Recieve the server despawn",
+    "lineNumber": 296,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26151,15 +26188,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveCombat",
     "access": "public",
-    "description": null,
-    "lineNumber": 252,
-    "undocument": true,
+    "description": "Recieve the server combat",
+    "lineNumber": 310,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26174,15 +26214,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveAnimation",
     "access": "public",
-    "description": null,
-    "lineNumber": 262,
-    "undocument": true,
+    "description": "Recieve the server animation",
+    "lineNumber": 324,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet, id and info"
       }
     ],
     "return": null
@@ -26197,15 +26240,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveProjectile",
     "access": "public",
-    "description": null,
-    "lineNumber": 273,
-    "undocument": true,
+    "description": "Recieve the server projectile",
+    "lineNumber": 339,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet, type and info"
       }
     ],
     "return": null
@@ -26220,15 +26266,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receivePopulation",
     "access": "public",
-    "description": null,
-    "lineNumber": 284,
-    "undocument": true,
+    "description": "Recieve the server population",
+    "lineNumber": 354,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26243,15 +26292,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receivePoints",
     "access": "public",
-    "description": null,
-    "lineNumber": 292,
-    "undocument": true,
+    "description": "Recieve the server points",
+    "lineNumber": 366,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26266,15 +26318,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveNetwork",
     "access": "public",
-    "description": null,
-    "lineNumber": 302,
-    "undocument": true,
+    "description": "Recieve the server network change",
+    "lineNumber": 380,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and opcode data message"
       }
     ],
     "return": null
@@ -26289,15 +26344,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveChat",
     "access": "public",
-    "description": null,
-    "lineNumber": 312,
-    "undocument": true,
+    "description": "Recieve the server chat message",
+    "lineNumber": 394,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26312,15 +26370,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveCommand",
     "access": "public",
-    "description": null,
-    "lineNumber": 322,
-    "undocument": true,
+    "description": "Recieve the server command",
+    "lineNumber": 408,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26335,15 +26396,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveInventory",
     "access": "public",
-    "description": null,
-    "lineNumber": 332,
-    "undocument": true,
+    "description": "Recieve the server inventory",
+    "lineNumber": 422,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet, opcode and data message"
       }
     ],
     "return": null
@@ -26358,15 +26422,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveBank",
     "access": "public",
-    "description": null,
-    "lineNumber": 343,
-    "undocument": true,
+    "description": "Recieve the server bank callback",
+    "lineNumber": 437,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet, opcode and info message"
       }
     ],
     "return": null
@@ -26381,15 +26448,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveAbility",
     "access": "public",
-    "description": null,
-    "lineNumber": 354,
-    "undocument": true,
+    "description": "Recieve the server ability",
+    "lineNumber": 452,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet, opcode and info message"
       }
     ],
     "return": null
@@ -26404,15 +26474,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveQuest",
     "access": "public",
-    "description": null,
-    "lineNumber": 365,
-    "undocument": true,
+    "description": "Recieve the server quest",
+    "lineNumber": 467,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet, opcode and info message"
       }
     ],
     "return": null
@@ -26427,15 +26500,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveNotification",
     "access": "public",
-    "description": null,
-    "lineNumber": 376,
-    "undocument": true,
+    "description": "Recieve the server notification",
+    "lineNumber": 482,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet, opcode and message"
       }
     ],
     "return": null
@@ -26450,15 +26526,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveBlink",
     "access": "public",
-    "description": null,
-    "lineNumber": 387,
-    "undocument": true,
+    "description": "Recieve the server blink",
+    "lineNumber": 497,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26473,15 +26552,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveHeal",
     "access": "public",
-    "description": null,
-    "lineNumber": 397,
-    "undocument": true,
+    "description": "Recieve the server heal",
+    "lineNumber": 511,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26496,15 +26578,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveExperience",
     "access": "public",
-    "description": null,
-    "lineNumber": 405,
-    "undocument": true,
+    "description": "Recieve the server experience",
+    "lineNumber": 523,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26519,15 +26604,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveDeath",
     "access": "public",
-    "description": null,
-    "lineNumber": 413,
-    "undocument": true,
+    "description": "Recieve the server death",
+    "lineNumber": 535,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26542,15 +26630,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveAudio",
     "access": "public",
-    "description": null,
-    "lineNumber": 421,
-    "undocument": true,
+    "description": "Recieve the server audio",
+    "lineNumber": 547,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Packet and data message"
       }
     ],
     "return": null
@@ -26565,15 +26656,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveNPC",
     "access": "public",
-    "description": null,
-    "lineNumber": 427,
-    "undocument": true,
+    "description": "Recieve the server NPC",
+    "lineNumber": 557,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Opcode and info message"
       }
     ],
     "return": null
@@ -26588,15 +26682,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveRespawn",
     "access": "public",
-    "description": null,
-    "lineNumber": 436,
-    "undocument": true,
+    "description": "Recieve the server respawn",
+    "lineNumber": 570,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "id, x, and y coordinates"
       }
     ],
     "return": null
@@ -26611,15 +26708,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveEnchant",
     "access": "public",
-    "description": null,
-    "lineNumber": 446,
-    "undocument": true,
+    "description": "Recieve the server enchant",
+    "lineNumber": 584,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Opcode and info message"
       }
     ],
     "return": null
@@ -26634,15 +26734,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveGuild",
     "access": "public",
-    "description": null,
-    "lineNumber": 455,
-    "undocument": true,
+    "description": "Recieve the server guild",
+    "lineNumber": 597,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Opcode and info message"
       }
     ],
     "return": null
@@ -26657,15 +26760,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receivePointer",
     "access": "public",
-    "description": null,
-    "lineNumber": 464,
-    "undocument": true,
+    "description": "Recieve the server pointer",
+    "lineNumber": 610,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Opcode and info message"
       }
     ],
     "return": null
@@ -26680,15 +26786,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receivePVP",
     "access": "public",
-    "description": null,
-    "lineNumber": 473,
-    "undocument": true,
+    "description": "Recieve the server player vs player (PVP)",
+    "lineNumber": 623,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "id and PVP id"
       }
     ],
     "return": null
@@ -26703,15 +26812,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#receiveShop",
     "access": "public",
-    "description": null,
-    "lineNumber": 482,
-    "undocument": true,
+    "description": "Recieve the server shop",
+    "lineNumber": 636,
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Opcode and info message"
       }
     ],
     "return": null
@@ -26726,14 +26838,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onHandshake",
     "access": "public",
-    "description": "Universal Callbacks",
-    "lineNumber": 495,
+    "description": "Universal callback for onHandshake",
+    "lineNumber": 649,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -26747,7 +26863,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#handshakeCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 496,
+    "lineNumber": 650,
     "undocument": true,
     "type": {
       "types": [
@@ -26765,15 +26881,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onWelcome",
     "access": "public",
-    "description": null,
-    "lineNumber": 499,
-    "undocument": true,
+    "description": "Universal callback for onWelcome",
+    "lineNumber": 657,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -26787,7 +26906,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#welcomeCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 500,
+    "lineNumber": 658,
     "undocument": true,
     "type": {
       "types": [
@@ -26805,15 +26924,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onSpawn",
     "access": "public",
-    "description": null,
-    "lineNumber": 503,
-    "undocument": true,
+    "description": "Universal callback for onSpawn",
+    "lineNumber": 665,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -26827,7 +26949,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#spawnCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 504,
+    "lineNumber": 666,
     "undocument": true,
     "type": {
       "types": [
@@ -26845,15 +26967,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onEquipment",
     "access": "public",
-    "description": null,
-    "lineNumber": 507,
-    "undocument": true,
+    "description": "Universal callback for onEquipment",
+    "lineNumber": 673,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -26867,7 +26992,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#equipmentCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 508,
+    "lineNumber": 674,
     "undocument": true,
     "type": {
       "types": [
@@ -26885,15 +27010,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onEntityList",
     "access": "public",
-    "description": null,
-    "lineNumber": 511,
-    "undocument": true,
+    "description": "Universal callback for onEntityList",
+    "lineNumber": 681,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -26907,7 +27035,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#entityListCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 512,
+    "lineNumber": 682,
     "undocument": true,
     "type": {
       "types": [
@@ -26925,15 +27053,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onSync",
     "access": "public",
-    "description": null,
-    "lineNumber": 515,
-    "undocument": true,
+    "description": "Universal callback for onSync",
+    "lineNumber": 689,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -26947,7 +27078,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#syncCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 516,
+    "lineNumber": 690,
     "undocument": true,
     "type": {
       "types": [
@@ -26965,15 +27096,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onMovement",
     "access": "public",
-    "description": null,
-    "lineNumber": 519,
-    "undocument": true,
+    "description": "Universal callback for onMovement",
+    "lineNumber": 697,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -26987,7 +27121,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#movementCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 520,
+    "lineNumber": 698,
     "undocument": true,
     "type": {
       "types": [
@@ -27005,15 +27139,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onTeleport",
     "access": "public",
-    "description": null,
-    "lineNumber": 523,
-    "undocument": true,
+    "description": "Universal callback for onTeleport",
+    "lineNumber": 705,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27027,7 +27164,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#teleportCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 524,
+    "lineNumber": 706,
     "undocument": true,
     "type": {
       "types": [
@@ -27045,15 +27182,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onDespawn",
     "access": "public",
-    "description": null,
-    "lineNumber": 527,
-    "undocument": true,
+    "description": "Universal callback for onDespawn",
+    "lineNumber": 713,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27067,7 +27207,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#despawnCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 528,
+    "lineNumber": 714,
     "undocument": true,
     "type": {
       "types": [
@@ -27085,15 +27225,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onCombat",
     "access": "public",
-    "description": null,
-    "lineNumber": 531,
-    "undocument": true,
+    "description": "Universal callback for onCombat",
+    "lineNumber": 721,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27107,7 +27250,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#combatCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 532,
+    "lineNumber": 722,
     "undocument": true,
     "type": {
       "types": [
@@ -27125,15 +27268,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onAnimation",
     "access": "public",
-    "description": null,
-    "lineNumber": 535,
-    "undocument": true,
+    "description": "Universal callback for onAnimation",
+    "lineNumber": 729,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27147,7 +27293,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#animationCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 536,
+    "lineNumber": 730,
     "undocument": true,
     "type": {
       "types": [
@@ -27165,15 +27311,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onProjectile",
     "access": "public",
-    "description": null,
-    "lineNumber": 539,
-    "undocument": true,
+    "description": "Universal callback for onProjectile",
+    "lineNumber": 737,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27187,7 +27336,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#projectileCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 540,
+    "lineNumber": 738,
     "undocument": true,
     "type": {
       "types": [
@@ -27205,15 +27354,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onPopulation",
     "access": "public",
-    "description": null,
-    "lineNumber": 543,
-    "undocument": true,
+    "description": "Universal callback for onPopulation",
+    "lineNumber": 745,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27227,7 +27379,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#populationCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 544,
+    "lineNumber": 746,
     "undocument": true,
     "type": {
       "types": [
@@ -27245,15 +27397,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onPoints",
     "access": "public",
-    "description": null,
-    "lineNumber": 547,
-    "undocument": true,
+    "description": "Universal callback for onPoints",
+    "lineNumber": 753,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27267,7 +27422,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#pointsCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 548,
+    "lineNumber": 754,
     "undocument": true,
     "type": {
       "types": [
@@ -27285,15 +27440,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onNetwork",
     "access": "public",
-    "description": null,
-    "lineNumber": 551,
-    "undocument": true,
+    "description": "Universal callback for onNetwork",
+    "lineNumber": 761,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27307,7 +27465,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#networkCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 552,
+    "lineNumber": 762,
     "undocument": true,
     "type": {
       "types": [
@@ -27325,15 +27483,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onChat",
     "access": "public",
-    "description": null,
-    "lineNumber": 555,
-    "undocument": true,
+    "description": "Universal callback for onChat",
+    "lineNumber": 769,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27347,7 +27508,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#chatCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 556,
+    "lineNumber": 770,
     "undocument": true,
     "type": {
       "types": [
@@ -27365,15 +27526,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onCommand",
     "access": "public",
-    "description": null,
-    "lineNumber": 559,
-    "undocument": true,
+    "description": "Universal callback for onCommand",
+    "lineNumber": 777,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27387,7 +27551,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#commandCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 560,
+    "lineNumber": 778,
     "undocument": true,
     "type": {
       "types": [
@@ -27405,15 +27569,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onInventory",
     "access": "public",
-    "description": null,
-    "lineNumber": 563,
-    "undocument": true,
+    "description": "Universal callback for onInventory",
+    "lineNumber": 785,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27427,7 +27594,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#inventoryCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 564,
+    "lineNumber": 786,
     "undocument": true,
     "type": {
       "types": [
@@ -27445,15 +27612,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onBank",
     "access": "public",
-    "description": null,
-    "lineNumber": 567,
-    "undocument": true,
+    "description": "Universal callback for onBank",
+    "lineNumber": 793,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27467,7 +27637,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#bankCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 568,
+    "lineNumber": 794,
     "undocument": true,
     "type": {
       "types": [
@@ -27485,15 +27655,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onAbility",
     "access": "public",
-    "description": null,
-    "lineNumber": 571,
-    "undocument": true,
+    "description": "Universal callback for onAbility",
+    "lineNumber": 801,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27507,7 +27680,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#abilityCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 572,
+    "lineNumber": 802,
     "undocument": true,
     "type": {
       "types": [
@@ -27525,15 +27698,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onQuest",
     "access": "public",
-    "description": null,
-    "lineNumber": 575,
-    "undocument": true,
+    "description": "Universal callback for onQuest",
+    "lineNumber": 809,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27547,7 +27723,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#questCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 576,
+    "lineNumber": 810,
     "undocument": true,
     "type": {
       "types": [
@@ -27565,15 +27741,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onNotification",
     "access": "public",
-    "description": null,
-    "lineNumber": 579,
-    "undocument": true,
+    "description": "Universal callback for onNotification",
+    "lineNumber": 817,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27587,7 +27766,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#notificationCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 580,
+    "lineNumber": 818,
     "undocument": true,
     "type": {
       "types": [
@@ -27605,15 +27784,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onBlink",
     "access": "public",
-    "description": null,
-    "lineNumber": 583,
-    "undocument": true,
+    "description": "Universal callback for onBlink",
+    "lineNumber": 825,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27627,7 +27809,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#blinkCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 584,
+    "lineNumber": 826,
     "undocument": true,
     "type": {
       "types": [
@@ -27645,15 +27827,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onHeal",
     "access": "public",
-    "description": null,
-    "lineNumber": 587,
-    "undocument": true,
+    "description": "Universal callback for onHeal",
+    "lineNumber": 833,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27667,7 +27852,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#healCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 588,
+    "lineNumber": 834,
     "undocument": true,
     "type": {
       "types": [
@@ -27685,15 +27870,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onExperience",
     "access": "public",
-    "description": null,
-    "lineNumber": 591,
-    "undocument": true,
+    "description": "Universal callback for onExperience",
+    "lineNumber": 841,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27707,7 +27895,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#experienceCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 592,
+    "lineNumber": 842,
     "undocument": true,
     "type": {
       "types": [
@@ -27725,15 +27913,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onDeath",
     "access": "public",
-    "description": null,
-    "lineNumber": 595,
-    "undocument": true,
+    "description": "Universal callback for onDeath",
+    "lineNumber": 849,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27747,7 +27938,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#deathCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 596,
+    "lineNumber": 850,
     "undocument": true,
     "type": {
       "types": [
@@ -27765,15 +27956,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onAudio",
     "access": "public",
-    "description": null,
-    "lineNumber": 599,
-    "undocument": true,
+    "description": "Universal callback for onAudio",
+    "lineNumber": 857,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27787,7 +27981,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#audioCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 600,
+    "lineNumber": 858,
     "undocument": true,
     "type": {
       "types": [
@@ -27805,15 +27999,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onNPC",
     "access": "public",
-    "description": null,
-    "lineNumber": 603,
-    "undocument": true,
+    "description": "Universal callback for onNPC",
+    "lineNumber": 865,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27827,7 +28024,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#npcCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 604,
+    "lineNumber": 866,
     "undocument": true,
     "type": {
       "types": [
@@ -27845,15 +28042,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onRespawn",
     "access": "public",
-    "description": null,
-    "lineNumber": 607,
-    "undocument": true,
+    "description": "Universal callback for onRespawn",
+    "lineNumber": 873,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27867,7 +28067,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#respawnCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 608,
+    "lineNumber": 874,
     "undocument": true,
     "type": {
       "types": [
@@ -27885,15 +28085,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onEnchant",
     "access": "public",
-    "description": null,
-    "lineNumber": 611,
-    "undocument": true,
+    "description": "Universal callback for onEnchant",
+    "lineNumber": 881,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27907,7 +28110,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#enchantCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 612,
+    "lineNumber": 882,
     "undocument": true,
     "type": {
       "types": [
@@ -27925,15 +28128,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onGuild",
     "access": "public",
-    "description": null,
-    "lineNumber": 615,
-    "undocument": true,
+    "description": "Universal callback for onGuild",
+    "lineNumber": 889,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27947,7 +28153,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#guildCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 616,
+    "lineNumber": 890,
     "undocument": true,
     "type": {
       "types": [
@@ -27965,15 +28171,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onPointer",
     "access": "public",
-    "description": null,
-    "lineNumber": 619,
-    "undocument": true,
+    "description": "Universal callback for onPointer",
+    "lineNumber": 897,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -27987,7 +28196,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#pointerCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 620,
+    "lineNumber": 898,
     "undocument": true,
     "type": {
       "types": [
@@ -28005,15 +28214,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onPVP",
     "access": "public",
-    "description": null,
-    "lineNumber": 623,
-    "undocument": true,
+    "description": "Universal callback for onPVP",
+    "lineNumber": 905,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -28027,7 +28239,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#pvpCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 624,
+    "lineNumber": 906,
     "undocument": true,
     "type": {
       "types": [
@@ -28045,15 +28257,18 @@
     "static": false,
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#onShop",
     "access": "public",
-    "description": null,
-    "lineNumber": 627,
-    "undocument": true,
+    "description": "Universal callback for onShop",
+    "lineNumber": 913,
     "params": [
       {
-        "name": "callback",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": ""
       }
     ],
     "return": null
@@ -28067,7 +28282,7 @@
     "longname": "WTF-Adventure/src/client/js/network/messages.js~Messages#shopCallback",
     "access": "public",
     "description": null,
-    "lineNumber": 628,
+    "lineNumber": 914,
     "undocument": true,
     "type": {
       "types": [
