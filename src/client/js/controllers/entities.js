@@ -7,7 +7,7 @@ import Sprites from './sprites';
 import Mob from '../entity/character/mob/mob';
 import NPC from '../entity/character/npc/npc';
 import Projectile from '../entity/objects/projectile';
-import Modules from '../utils/modules';
+import Module from '../utils/modules';
 import Packets from '../network/packets';
 import log from '../lib/log';
 
@@ -210,12 +210,12 @@ export default class Entities {
             ]);
           }
 
-          if (info.hitType === Modules.Hits.Explosive) {
+          if (info.hitType === Module.Hits.Explosive) {
             target.explosion = true;
           }
 
           this.game.info.create(
-            Modules.Hits.Damage,
+            Module.Hits.Damage,
             [info.damage, this.isPlayer(target.id)],
             target.x,
             target.y,
@@ -229,7 +229,7 @@ export default class Entities {
 
         this.addEntity(projectile);
 
-        attacker.performAction(attacker.orientation, Modules.Actions.Attack);
+        attacker.performAction(attacker.orientation, Module.Actions.Attack);
         attacker.triggerHealthBar();
         return;
 
@@ -259,11 +259,11 @@ export default class Entities {
         player.setSprite(this.getSprite(info.armour[1]));
         player.idle();
 
-        player.setEquipment(Modules.Equipment.Armour, info.armour);
-        player.setEquipment(Modules.Equipment.Weapon, info.weapon);
-        player.setEquipment(Modules.Equipment.Pendant, info.pendant);
-        player.setEquipment(Modules.Equipment.Ring, info.ring);
-        player.setEquipment(Modules.Equipment.Boots, info.boots);
+        player.setEquipment(Module.Equipment.Armour, info.armour);
+        player.setEquipment(Module.Equipment.Weapon, info.weapon);
+        player.setEquipment(Module.Equipment.Pendant, info.pendant);
+        player.setEquipment(Module.Equipment.Ring, info.ring);
+        player.setEquipment(Module.Equipment.Boots, info.boots);
 
         player.loadHandler(this.game);
 

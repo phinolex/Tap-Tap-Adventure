@@ -900,6 +900,12 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
+    "",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber204",
+    "App #test {App#fadeMenu}",
+    "test"
+  ],
+  [
     "app#canvasclickeventlistener wtf-adventure/src/client/js/app.js~app#canvasclickeventlistener,app#canvasclickeventlistener",
     "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber174",
     "App .canvasClickEventListener()",
@@ -907,7 +913,7 @@ window.esdocSearchIndex = [
   ],
   [
     "app#cleanerrors wtf-adventure/src/client/js/app.js~app#cleanerrors,app#cleanerrors",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber195",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber349",
     "App .cleanErrors()",
     "test"
   ],
@@ -919,13 +925,13 @@ window.esdocSearchIndex = [
   ],
   [
     "app#displayscreen wtf-adventure/src/client/js/app.js~app#displayscreen,app#displayscreen",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber208",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber225",
     "App .displayScreen()",
     "test"
   ],
   [
     "app#displayscroll wtf-adventure/src/client/js/app.js~app#displayscroll,app#displayscroll",
-    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber238",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber255",
     "App .displayScroll()",
     "test"
   ],
@@ -942,7 +948,7 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
-    "app#keyupeventlistener wtf-adventure/src/client/js/app.js~app#keyupeventlistener,app#keyupeventlistener",
+    "app#mousemoveeventlistener wtf-adventure/src/client/js/app.js~app#mousemoveeventlistener,app#mousemoveeventlistener",
     "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber152",
     "App .keyupEventListener()",
     "test"
@@ -972,7 +978,7 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
-    "app#rememberme wtf-adventure/src/client/js/app.js~app#rememberme,app#rememberme",
+    "app#rememberlogin wtf-adventure/src/client/js/app.js~app#rememberlogin,app#rememberlogin",
     "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber101",
     "App .rememberMe()",
     "test"
@@ -984,9 +990,51 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
+    "app#showmenu wtf-adventure/src/client/js/app.js~app#showmenu,app#showmenu",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber213",
+    "App .showMenu()",
+    "test"
+  ],
+  [
+    "app#updateorientation wtf-adventure/src/client/js/app.js~app#updateorientation,app#updateorientation",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber371",
+    "App .updateOrientation()",
+    "test"
+  ],
+  [
+    "app#updaterange wtf-adventure/src/client/js/app.js~app#updaterange,app#updaterange",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber363",
+    "App .updateRange()",
+    "test"
+  ],
+  [
+    "app#verifyform wtf-adventure/src/client/js/app.js~app#verifyform,app#verifyform",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber319",
+    "App .verifyForm()",
+    "test"
+  ],
+  [
+    "app#verifyjoinform wtf-adventure/src/client/js/app.js~app#verifyjoinform,app#verifyjoinform",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber327",
+    "App .verifyJoinForm",
+    "test"
+  ],
+  [
+    "app#verifyloginform wtf-adventure/src/client/js/app.js~app#verifyloginform,app#verifyloginform",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber336",
+    "App .verifyLoginForm",
+    "test"
+  ],
+  [
     "app#welcomecontinue wtf-adventure/src/client/js/app.js~app#welcomecontinue,app#welcomecontinue",
     "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber44",
     "App .welcomeContinue()",
+    "test"
+  ],
+  [
+    "app#zoom wtf-adventure/src/client/js/app.js~app#zoom,app#zoom",
+    "test-file/WTF-Adventure/src/client/js/__tests__/app.test.js.html#lineNumber195",
+    "App .zoom()",
     "test"
   ],
   [
@@ -1611,6 +1659,12 @@ window.esdocSearchIndex = [
     "wtf-adventure/src/client/js/app.js~app#orientation",
     "class/WTF-Adventure/src/client/js/app.js~App.html#instance-member-orientation",
     "WTF-Adventure/src/client/js/app.js~App#orientation",
+    "member"
+  ],
+  [
+    "wtf-adventure/src/client/js/app.js~app#rangefield",
+    "class/WTF-Adventure/src/client/js/app.js~App.html#instance-member-rangeField",
+    "WTF-Adventure/src/client/js/app.js~App#rangeField",
     "member"
   ],
   [
@@ -4864,12 +4918,6 @@ window.esdocSearchIndex = [
     "class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html#instance-method-hasWeapon",
     "WTF-Adventure/src/client/js/entity/entity.js~Entity#hasWeapon",
     "method"
-  ],
-  [
-    "wtf-adventure/src/client/js/entity/entity.js~entity#hidden",
-    "class/WTF-Adventure/src/client/js/entity/entity.js~Entity.html#instance-member-hidden",
-    "WTF-Adventure/src/client/js/entity/entity.js~Entity#hidden",
-    "member"
   ],
   [
     "wtf-adventure/src/client/js/entity/entity.js~entity#hurtsprite",

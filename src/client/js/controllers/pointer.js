@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import _ from 'underscore';
 import Pointer from '../renderer/pointers/pointer';
-import Modules from '../utils/modules';
+import Module from '../utils/modules';
 import log from '../lib/log';
 
 /**
@@ -71,7 +71,7 @@ export default class Cursor {
   resize() {
     _.each(this.pointers, (pointer) => {
       switch (pointer.type) {
-        case Modules.Pointers.Relative:
+        case Module.Pointers.Relative:
           const scale = this.getScale(); // eslint-disable-line
           const x = pointer.x; // eslint-disable-line
           const y = pointer.y; // eslint-disable-line
@@ -224,7 +224,7 @@ export default class Cursor {
   update() {
     _.each(this.pointers, (pointer) => {
       switch (pointer.type) {
-        case Modules.Pointers.Entity:
+        case Module.Pointers.Entity:
           const entity = this.game.entities.get(pointer.id); // eslint-disable-line
 
           if (entity) {
@@ -233,7 +233,7 @@ export default class Cursor {
             this.destroy(pointer);
           }
           break;
-        case Modules.Pointers.Position:
+        case Module.Pointers.Position:
           if (pointer.x !== -1 && pointer.y !== -1) {
             this.set(pointer, pointer.x, pointer.y);
           }

@@ -186,7 +186,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global document, window */
 import $ from &apos;jquery&apos;;
 import _ from &apos;underscore&apos;;
-import Modules from &apos;./utils/modules&apos;;
+import Module from &apos;./utils/modules&apos;;
 import log from &apos;./lib/log&apos;;
 import Detect from &apos;./utils/detect&apos;;
 
@@ -414,6 +414,12 @@ export default class App {
      */
     this.statusMessage = null;
 
+    /**
+     * The field whose range is being updated
+     * @type {Object}
+     */
+    this.rangeField = null;
+
     // auto-binding
     this.keydownEventListener = this.keydownEventListener.bind(this);
     this.keyupEventListener = this.keyupEventListener.bind(this);
@@ -605,13 +611,13 @@ export default class App {
 
     this.body.focus();
 
-    if (key === Modules.Keys.Enter &amp;&amp; !this.game.started) {
+    if (key === Module.Keys.Enter &amp;&amp; !this.game.started) {
       this.login();
       return false;
     }
 
     if (this.game.started) {
-      this.game.onInput(Modules.InputType.Key, key);
+      this.game.onInput(Module.InputType.Key, key);
     }
 
     return true;
@@ -665,7 +671,7 @@ export default class App {
     }
 
     window.scrollTo(0, 1);
-    this.game.input.handle(Modules.InputType.LeftClick, event);
+    this.game.input.handle(Module.InputType.LeftClick, event);
 
     return true;
   }
@@ -677,19 +683,19 @@ export default class App {
   zoom() {
     log.debug(&apos;App - zoom()&apos;);
 
-    const containerWidth = this.container.width();
-    const containerHeight = this.container.height();
-    const windowWidth = this.window.width();
-    const windowHeight = this.window.height();
-    let zoomFactor = windowWidth / containerWidth;
-
-    if (containerHeight + 50 &gt;= windowHeight) {
-      zoomFactor = windowHeight / (containerHeight + 50);
-    }
-
-    if (this.getScaleFactor() === 3) {
-      zoomFactor -= 0.1;
-    }
+    // const containerWidth = this.container.width();
+    // const containerHeight = this.container.height();
+    // const windowWidth = this.window.width();
+    // const windowHeight = this.window.height();
+    // let zoomFactor = windowWidth / containerWidth;
+    //
+    // if (containerHeight + 50 &gt;= windowHeight) {
+    //   zoomFactor = windowHeight / (containerHeight + 50);
+    // }
+    //
+    // if (this.getScaleFactor() === 3) {
+    //   zoomFactor -= 0.1;
+    // }
 
     // this.body.css({
     //   zoom: zoomFactor,
@@ -1115,6 +1121,8 @@ export default class App {
       &apos;background-image&apos;,
       `-webkit-gradient(linear, left top, right top, color-stop(${val}, #4d4d4d), color-stop(${val}, #C5C5C5)`,
     );
+
+    this.rangeField = field;
   }
 
   /**

@@ -4,7 +4,7 @@ import Weapon from './equipment/weapon';
 import Pendant from './equipment/pendant';
 import Boots from './equipment/boots';
 import Ring from './equipment/ring';
-import Modules from '../../../utils/modules';
+import Module from '../../../utils/modules';
 
 /**
  * A member's playable {@link Character} in the game
@@ -15,7 +15,7 @@ export default class Player extends Character {
    * Default constructor
    */
   constructor() {
-    super(-1, Modules.Types.Player);
+    super(-1, Module.Types.Player);
 
     /**
      * Player's username
@@ -210,6 +210,18 @@ export default class Player extends Character {
      */
     this.disableAction = false;
 
+    /**
+     * Timeout for temporary blinking
+     * @type {Function}
+     */
+    this.tempBlinkTimeout = null;
+
+    /**
+     * Callback for armor updates
+     * @type {Function}
+     */
+    this.updateArmourCallback = null;
+
     // load all of their equipment
     this.loadEquipment();
   }
@@ -379,7 +391,7 @@ export default class Player extends Character {
     const abilityLevel = info.shift();
 
     switch (type) {
-      case Modules.Equipment.Armour:
+      case Module.Equipment.Armour:
         if (!this.armour) {
           this.armour = new Armour(
             name,
@@ -398,7 +410,7 @@ export default class Player extends Character {
 
         break;
 
-      case Modules.Equipment.Weapon:
+      case Module.Equipment.Weapon:
         if (!this.weapon) {
           this.weapon = new Weapon(
             name,
@@ -415,7 +427,7 @@ export default class Player extends Character {
 
         break;
 
-      case Modules.Equipment.Pendant:
+      case Module.Equipment.Pendant:
         if (!this.pendant) {
           this.pendant = new Pendant(
             name,
@@ -430,7 +442,7 @@ export default class Player extends Character {
 
         break;
 
-      case Modules.Equipment.Ring:
+      case Module.Equipment.Ring:
         if (!this.ring) {
           this.ring = new Ring(name, string, count, ability, abilityLevel);
         } else {
@@ -439,7 +451,7 @@ export default class Player extends Character {
 
         break;
 
-      case Modules.Equipment.Boots:
+      case Module.Equipment.Boots:
         if (!this.boots) {
           this.boots = new Boots(name, string, count, ability, abilityLevel);
         } else {
@@ -452,6 +464,10 @@ export default class Player extends Character {
     }
   }
 
+  /**
+   * Unequip an item
+   * @param  {String} type  type of equipment to remove
+   */
   unequip(type) {
     switch (type) {
       case 'armour':
@@ -478,6 +494,9 @@ export default class Player extends Character {
     }
   }
 
+  /**
+   * Temporary blink the entity
+   */
   tempBlink() {
     this.blink(90);
 
@@ -488,6 +507,10 @@ export default class Player extends Character {
     }
   }
 
+  /**
+   * Set the callback for updating armour
+   * @param  {Function} callback function to reset armor
+   */
   onUpdateArmour(callback) {
     this.updateArmourCallback = callback;
   }

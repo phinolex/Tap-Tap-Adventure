@@ -7,15 +7,40 @@ import log from '../lib/log';
 * @class
 */
 export default class EntityHandler {
+  /**
+   * Default constructor
+   * @param {Entity} entity that will be handled
+   */
   constructor(entity) {
     log.debug('Entity Handler - constructor()', entity);
+
+    /**
+     * Instance of the entity
+     * @type {Entity}
+     */
     this.entity = entity;
+
+    /**
+     * Instance of the game
+     * @type {Game}
+     */
     this.game = null;
+
+    /**
+     * An array of nearby entities
+     * @type {Entities[]}
+     */
     this.entities = null;
   }
 
+  /**
+   * Load the entity
+   * @return {Boolean} false if no entity or game
+   */
   load() {
-    if (!this.entity || !this.game) return;
+    if (!this.entity || !this.game) {
+      return false;
+    }
 
     if (this.isCharacter()) {
       this.entity.onRequestPath((x, y) => {
@@ -67,8 +92,14 @@ export default class EntityHandler {
         this.entities.registerPosition(this.entity);
       });
     }
+
+    return true;
   }
 
+  /**
+   * Check if this is a character
+   * @return {Boolean}
+   */
   isCharacter() {
     return (
       this.entity.type
@@ -78,13 +109,25 @@ export default class EntityHandler {
     );
   }
 
+  /**
+   * Set the game instance
+   * @param {Game} game instance of the game
+   */
   setGame(game) {
-    if (!this.game) this.game = game;
+    if (!this.game) {
+      this.game = game;
+    }
 
     this.setEntities(this.game.entities);
   }
 
+  /**
+   * Set the entities list
+   * @param {Entities[]} entities array of Entity objects
+   */
   setEntities(entities) {
-    if (!this.entities) this.entities = entities;
+    if (!this.entities) {
+      this.entities = entities;
+    }
   }
 }

@@ -2,7 +2,7 @@ import _ from 'underscore';
 import Entity from '../entity';
 import Transition from '../../utils/transition';
 import Animation from '../animation';
-import Modules from '../../utils/modules';
+import Module from '../../utils/modules';
 
 /**
  * A specific type of {@link Entity}. The base class for a
@@ -47,7 +47,7 @@ export default class Character extends Entity {
      * The direction they are pointing
      * @type {Orientation}
      */
-    this.orientation = Modules.Orientation.Down;
+    this.orientation = Module.Orientation.Down;
 
     /**
      * How many hit points they have left
@@ -381,12 +381,12 @@ export default class Character extends Entity {
     this.spriteFlipY = false;
 
     if (orientationOptions.indexOf(animation) > -1) {
-      const characterOrientation = this.orientation === Modules.Orientation.Left
+      const characterOrientation = this.orientation === Module.Orientation.Left
         ? 'right'
-        : Modules.Orientation.toString(this.orientation);
+        : Module.Orientation.toString(this.orientation);
 
       updatedPosition = `${animation}_${characterOrientation}`;
-      this.spriteFlipX = this.orientation === Modules.Orientation.Left;
+      this.spriteFlipX = this.orientation === Module.Orientation.Left;
     }
 
     this.setAnimation((updatedPosition || animation), speed, count, onEndCount);
@@ -398,13 +398,13 @@ export default class Character extends Entity {
    */
   lookAt(character) {
     if (character.gridX > this.gridX) {
-      this.setOrientation(Modules.Orientation.Right);
+      this.setOrientation(Module.Orientation.Right);
     } else if (character.gridX < this.gridX) {
-      this.setOrientation(Modules.Orientation.Left);
+      this.setOrientation(Module.Orientation.Left);
     } else if (character.gridY > this.gridY) {
-      this.setOrientation(Modules.Orientation.Down);
+      this.setOrientation(Module.Orientation.Down);
     } else if (character.gridY < this.gridY) {
-      this.setOrientation(Modules.Orientation.Up);
+      this.setOrientation(Module.Orientation.Up);
     }
 
     this.idle();
@@ -493,15 +493,15 @@ export default class Character extends Entity {
     this.setOrientation(orientation);
 
     switch (action) {
-      case Modules.Actions.Idle:
+      case Module.Actions.Idle:
         this.animate('idle', this.idleSpeed);
         break;
 
-      case Modules.Actions.Attack:
+      case Module.Actions.Attack:
         this.animate('atk', this.attackAnimationSpeed, 1);
         break;
 
-      case Modules.Actions.Walk:
+      case Module.Actions.Walk:
         this.animate('walk', this.walkAnimationSpeed);
         break;
       default:
@@ -516,7 +516,7 @@ export default class Character extends Entity {
   idle(direction) {
     const orientation = direction || this.orientation;
 
-    this.performAction(orientation, Modules.Actions.Idle);
+    this.performAction(orientation, Module.Actions.Idle);
   }
 
   /**
@@ -642,19 +642,19 @@ export default class Character extends Entity {
     const { step, path } = this;
 
     if (path[step][0] < path[step - 1][0]) {
-      this.performAction(Modules.Orientation.Left, Modules.Actions.Walk);
+      this.performAction(Module.Orientation.Left, Module.Actions.Walk);
     }
 
     if (path[step][0] > path[step - 1][0]) {
-      this.performAction(Modules.Orientation.Right, Modules.Actions.Walk);
+      this.performAction(Module.Orientation.Right, Module.Actions.Walk);
     }
 
     if (path[step][1] < path[step - 1][1]) {
-      this.performAction(Modules.Orientation.Up, Modules.Actions.Walk);
+      this.performAction(Module.Orientation.Up, Module.Actions.Walk);
     }
 
     if (path[step][1] > path[step - 1][1]) {
-      this.performAction(Modules.Orientation.Down, Modules.Actions.Walk);
+      this.performAction(Module.Orientation.Down, Module.Actions.Walk);
     }
   }
 
@@ -716,7 +716,7 @@ export default class Character extends Entity {
       this.path = null;
       this.newDestination = null;
       this.movement = new Transition();
-      this.performAction(this.orientation, Modules.Actions.Idle);
+      this.performAction(this.orientation, Module.Actions.Idle);
       this.nextGridX = this.gridX;
       this.nextGridY = this.gridY;
     }

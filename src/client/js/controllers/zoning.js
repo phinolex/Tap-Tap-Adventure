@@ -1,4 +1,4 @@
-import Modules from '../utils/modules';
+import Module from '../utils/modules';
 
 /**
  * Keeps track of the {@link Entity} direction
@@ -52,28 +52,28 @@ export default class Zone {
    * Set the direction to up
    */
   setUp() {
-    this.direction = Modules.Orientation.Up;
+    this.direction = Module.Orientation.Up;
   }
 
   /**
    * Set the direction to down
    */
   setDown() {
-    this.direction = Modules.Orientation.Down;
+    this.direction = Module.Orientation.Down;
   }
 
   /**
    * Set the direction to right
    */
   setRight() {
-    this.direction = Modules.Orientation.Right;
+    this.direction = Module.Orientation.Right;
   }
 
   /**
    * Set the direction to right
    */
   setLeft() {
-    this.direction = Modules.Orientation.Left;
+    this.direction = Module.Orientation.Left;
   }
 
   /**
