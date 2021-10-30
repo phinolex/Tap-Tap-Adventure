@@ -203,52 +203,229 @@ export default class Entity {
    * Constructor to initialize a new entity
    * @param {Number} id the entity id
    * @param {String} kind the type of entity this is
+   * @param {String} label a name for the entity this is
    */
   constructor(id, kind, label) {
     log.debug(&apos;Entity - constructor()&apos;, id, kind, label);
+
+    /**
+     * Entity id
+     * @type {Number}
+     */
     this.id = id;
+
+    /**
+     * Name of the entity
+     * @type {String}
+     */
     this.name = kind;
+
+    /**
+     * Label for the entity
+     * @type {String}
+     */
     this.label = label;
 
+    /**
+     * X coordinate
+     * @type {Number}
+     */
     this.x = 0;
+
+    /**
+     * Y coordinate
+     * @type {Number}
+     */
     this.y = 0;
+
+    /**
+     * Grid X position
+     * @type {Number}
+     */
     this.gridX = 0;
+
+    /**
+     * Grid Y position
+     * @type {Number}
+     */
     this.gridY = 0;
 
+    /**
+     * Sprite
+     * @type {Sprite}
+     */
     this.sprite = null;
+
+    /**
+     * Whether or not to flip the sprite on the X axis
+     * @type {Boolean}
+     */
     this.spriteFlipX = false;
+
+    /**
+     * Whether or not to flip the sprite on the Y axis
+     * @type {Boolean}
+     */
     this.spriteFlipY = false;
 
+    /**
+     * Animations for the sprite
+     * @type {Animation}
+     */
     this.animations = null;
+
+    /**
+     * Current animation the sprite should be playing
+     * @type {String}
+     */
     this.currentAnimation = null;
 
+    /**
+     * Offset for the shadow on the Y axis
+     * @type {Number}
+     */
     this.shadowOffsetY = 0;
-    this.hidden = false;
 
+    /**
+     * Whether or not the sprite has been loaded
+     * @type {Boolean}
+     */
     this.spriteLoaded = false;
+
+    /**
+     * Wehther or not this entity is visible
+     * @type {Boolean}
+     */
     this.visible = true;
+
+    /**
+     * Whether or not this is fading
+     * @type {Boolean}
+     */
     this.fading = false;
+
+    /**
+     * Handler for the entity
+     * @type {EntityHandler}
+     */
     this.handler = new EntityHandler(this);
 
+    /**
+     * [angled description]
+     * @type {Boolean}
+     */
     this.angled = false;
+
+    /**
+     * Angle of the entity
+     * @type {Number}
+     */
     this.angle = 0;
 
+    /**
+     * Critical health
+     * @type {Boolean}
+     */
     this.critical = false;
+
+    /**
+     * Stunned status
+     * @type {Boolean}
+     */
     this.stunned = false;
+
+    /**
+     * Terror status
+     * @type {Boolean}
+     */
     this.terror = false;
 
+    /**
+     * Non pathable
+     * @type {Boolean}
+     */
     this.nonPathable = false;
+
+    /**
+     * Has a counter
+     * @type {Boolean}
+     */
     this.hasCounter = false;
 
+    /**
+     * Count down time
+     * @type {Number}
+     */
     this.countdownTime = 0;
+
+    /**
+     * Current counter
+     * @type {Number}
+     */
     this.counter = 0;
+
+    /**
+     * Has a shadow
+     * @type {Boolean}
+     */
     this.shadow = false;
+
+    /**
+     * Path
+     * @type {Boolean}
+     */
     this.path = false;
 
+    /**
+     * Rendering data
+     * @type {Object}
+     */
     this.renderingData = {
       scale: -1,
       angle: 0,
     };
+
+    /**
+     * Set if the entity is dirty
+     * @type {Boolean}
+     */
+    this.dirty = false;
+
+    /**
+     * Fading time
+     * @type {Number}
+     */
+    this.fadingTime = 0;
+
+    /**
+     * Timeout function for blinking
+     * @type {Function}
+     */
+    this.blinking = null;
+
+    /**
+     * Normal sprite name
+     * @type {String}
+     */
+    this.normalSprite = null;
+
+    /**
+     * Hurt sprite name
+     * @type {String}
+     */
+    this.hurtSprite = null;
+
+    /**
+     * CAllback function when the entity is ready
+     * @type {Function}
+     */
+    this.readyCallback = null;
+
+    /**
+     * Callback for when the entity is dirty
+     * @type {Function}
+     */
+    this.dirtyCallback = null;
 
     this.loadDirty();
   }

@@ -186,7 +186,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* global document, Event */
 import $ from &apos;jquery&apos;;
 import App from &apos;../app&apos;;
-import Game from &apos;../game&apos;;
+// import Game from &apos;../game&apos;;
 
 /**
  * @test {App}
@@ -281,7 +281,7 @@ describe(&apos;App&apos;, () =&gt; {
   });
 
   /**
-   * @test {App#rememberMe}
+   * @test {App#rememberLogin}
    */
   it(&apos;.rememberMe()&apos;, () =&gt; {
     expect(instance.rememberLogin()).toEqual(false);
@@ -332,7 +332,7 @@ describe(&apos;App&apos;, () =&gt; {
   });
 
   /**
-   * @test {App#keyupEventListener}
+   * @test {App#mousemoveEventListener}
    */
   it(&apos;.keyupEventListener()&apos;, () =&gt; {
     instance.game = null;
@@ -375,16 +375,33 @@ describe(&apos;App&apos;, () =&gt; {
   });
 
   /**
-   * @test {App#cleanErrors}
+   * @test {App#zoom}
    */
-  it(&apos;.cleanErrors()&apos;, () =&gt; {
-    expect(instance.loginFields).toBeDefined();
-    expect(instance.registerFields).toBeDefined();
-    instance.cleanErrors();
+  it(&apos;.zoom()&apos;, () =&gt; {
+    instance.border.css = jest.fn();
+    instance.zoom();
+    expect(instance.border.css).toHaveBeenCalled();
+  });
 
-    expect(document.querySelectorAll(&apos;.field-error&apos;).length).toEqual(0);
-    expect(document.querySelectorAll(&apos;.validation-error&apos;).length).toEqual(0);
-    expect(document.querySelectorAll(&apos;.status&apos;).length).toEqual(0);
+  /**
+   * #test {App#fadeMenu}
+   */
+  it(&apos;.fadeMenu()&apos;, () =&gt; {
+    instance.updateLoader = jest.fn();
+    instance.fadeMenu();
+    expect(instance.updateLoader).toHaveBeenCalled();
+  });
+
+  /**
+   * @test {App#showMenu}
+   */
+  it(&apos;.showMenu()&apos;, () =&gt; {
+    const addClass = jest.spyOn(instance.body, &apos;addClass&apos;);
+    const removeClass = jest.spyOn(instance.body, &apos;removeClass&apos;);
+
+    instance.showMenu();
+    expect(removeClass).toHaveBeenCalled();
+    expect(addClass).toHaveBeenCalled();
   });
 
   /**
@@ -458,7 +475,7 @@ describe(&apos;App&apos;, () =&gt; {
     instance.game.started = true;
 
     // expect the body to have no class
-    expect(instance.body.attr(&apos;class&apos;)).toEqual(&apos;&apos;);
+    expect(instance.body.attr(&apos;class&apos;)).toEqual(&apos;intro&apos;);
 
     // help button should have an active class
     instance.helpButton.addClass(&apos;active&apos;);
@@ -478,7 +495,68 @@ describe(&apos;App&apos;, () =&gt; {
     expect(displayScreen.mock.calls[0]).toEqual([undefined, &apos;createCharacter&apos;]);
 
     // expect the body to have the player death class
-    expect(instance.body.attr(&apos;class&apos;)).toEqual(&apos;death&apos;);
+    expect(instance.body.attr(&apos;class&apos;)).toEqual(&apos;intro death&apos;);
+  });
+
+  /**
+   * @test {App#verifyForm}
+   */
+  it(&apos;.verifyForm()&apos;, () =&gt; {
+    instance.getActiveForm = jest.fn().mockReturnValue(&apos;null&apos;);
+    expect(instance.verifyForm()).toEqual(true);
+  });
+
+  /**
+   * @test {App#verifyJoinForm}
+   */
+  it(&apos;.verifyJoinForm&apos;, () =&gt; {
+    const sendError = jest.spyOn(instance, &apos;sendError&apos;);
+    expect(instance.verifyJoinForm()).toEqual(false);
+    expect(sendError).toHaveBeenCalledWith({}, &apos;A username is necessary you silly.&apos;);
+  });
+
+  /**
+   * @test {App#verifyLoginForm}
+   */
+  it(&apos;.verifyLoginForm&apos;, () =&gt; {
+    const sendError = jest.spyOn(instance, &apos;sendError&apos;);
+    instance.isGuest = jest.fn().mockReturnValue(true);
+    expect(instance.verifyLoginForm()).toEqual(true);
+
+    instance.isGuest = jest.fn().mockReturnValue(false);
+    expect(instance.verifyLoginForm()).toEqual(false);
+    expect(sendError).toHaveBeenCalledWith({}, &apos;Please enter a username.&apos;);
+  });
+
+  /**
+   * @test {App#cleanErrors}
+   */
+  it(&apos;.cleanErrors()&apos;, () =&gt; {
+    expect(instance.loginFields).toBeDefined();
+    expect(instance.registerFields).toBeDefined();
+    instance.cleanErrors();
+
+    expect(document.querySelectorAll(&apos;.field-error&apos;).length).toEqual(0);
+    expect(document.querySelectorAll(&apos;.validation-error&apos;).length).toEqual(0);
+    expect(document.querySelectorAll(&apos;.status&apos;).length).toEqual(0);
+  });
+
+
+  /**
+   * @test {App#updateRange}
+   */
+  it(&apos;.updateRange()&apos;, () =&gt; {
+    instance.updateRange(&apos;test&apos;);
+    expect(instance.rangeField).toEqual(&apos;test&apos;);
+  });
+
+  /**
+   * @test {App#updateOrientation}
+   */
+  it(&apos;.updateOrientation()&apos;, () =&gt; {
+    instance.orientation = &apos;mobile&apos;;
+    instance.updateOrientation();
+    expect(instance.orientation).toEqual(&apos;landscape&apos;);
   });
 });
 </code></pre>

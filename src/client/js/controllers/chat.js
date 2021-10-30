@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Modules from '../utils/modules';
+import Module from '../utils/modules';
 import Packets from '../network/packets';
 
 /**
@@ -113,7 +113,7 @@ export default class Chat {
   */
   key(keyCode) {
     switch (keyCode) {
-      case Modules.Keys.Enter:
+      case Module.Keys.Enter:
         if (this.input.val() === '') {
           this.toggle();
         } else {

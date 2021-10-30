@@ -1,9 +1,8 @@
-import $ from 'jquery';
 import Animation from '../entity/animation';
 import Chat from './chat';
 import Overlay from './overlay';
 import log from '../lib/log';
-import Modules from '../utils/modules';
+import Module from '../utils/modules';
 import Packets from '../network/packets';
 import Detect from '../utils/detect';
 
@@ -194,7 +193,7 @@ export default class Input {
         break;
 
       // WASD and arrow key press movement
-      case Modules.InputType.Key:
+      case Module.InputType.Key:
         console.log('canvas input type key');
         if (this.chatHandler.isActive()) {
           this.chatHandler.key(data);
@@ -204,30 +203,30 @@ export default class Input {
         switch (data) {
           default:
             break;
-          case Modules.Keys.Up:
-          case Modules.Keys.W:
+          case Module.Keys.Up:
+          case Module.Keys.W:
             this.getPlayer().moveUp = true;
             break;
-          case Modules.Keys.A:
-          case Modules.Keys.Left:
+          case Module.Keys.A:
+          case Module.Keys.Left:
             this.getPlayer().moveLeft = true;
             break;
-          case Modules.Keys.S:
-          case Modules.Keys.Down:
+          case Module.Keys.S:
+          case Module.Keys.Down:
             this.getPlayer().moveDown = true;
             break;
-          case Modules.Keys.D:
-          case Modules.Keys.Right:
+          case Module.Keys.D:
+          case Module.Keys.Right:
             this.getPlayer().moveRight = true;
             break;
-          case Modules.Keys.Enter:
+          case Module.Keys.Enter:
             this.chatHandler.toggle();
             break;
         }
         break;
 
       // mouse click movement and interactions
-      case Modules.InputType.LeftClick:
+      case Module.InputType.LeftClick:
         console.log('canvas input type click');
         this.getPlayer().disableAction = false;
         this.setCoords(data);
@@ -248,20 +247,20 @@ export default class Input {
     switch (key) {
       default:
         break;
-      case Modules.Keys.W:
-      case Modules.Keys.Up:
+      case Module.Keys.W:
+      case Module.Keys.Up:
         player.moveUp = false;
         break;
-      case Modules.Keys.A:
-      case Modules.Keys.Left:
+      case Module.Keys.A:
+      case Module.Keys.Left:
         player.moveLeft = false;
         break;
-      case Modules.Keys.S:
-      case Modules.Keys.Down:
+      case Module.Keys.S:
+      case Module.Keys.Down:
         player.moveDown = false;
         break;
-      case Modules.Keys.D:
-      case Modules.Keys.Right:
+      case Module.Keys.D:
+      case Module.Keys.Right:
         player.moveRight = false;
         break;
     }
@@ -433,11 +432,11 @@ export default class Input {
         case 'item':
         case 'chest':
           this.setCursor(this.cursors.loot);
-          this.hovering = Modules.Hovering.Item;
+          this.hovering = Module.Hovering.Item;
           break;
         case 'mob':
           this.setCursor(this.getAttackCursor());
-          this.hovering = Modules.Hovering.Mob;
+          this.hovering = Module.Hovering.Mob;
           break;
         case 'player':
           this.setCursor(
@@ -445,12 +444,12 @@ export default class Input {
               ? this.getAttackCursor()
               : this.cursors.hand,
           );
-          this.hovering = Modules.Hovering.Player;
+          this.hovering = Module.Hovering.Player;
           break;
 
         case 'npc':
           this.setCursor(this.cursors.talk);
-          this.hovering = Modules.Hovering.NPC;
+          this.hovering = Module.Hovering.NPC;
           break;
       }
     }

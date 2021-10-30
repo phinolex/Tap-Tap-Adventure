@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import Queue from '../utils/queue';
 import Splat from '../renderer/infos/splat';
-import Modules from '../utils/modules';
+import Module from '../utils/modules';
 import {
   isInt,
 } from '../utils/util';
@@ -46,17 +46,17 @@ export default class Info {
    */
   create(type, data, x, y) {
     switch (type) {
-      case Modules.Hits.Damage:
-      case Modules.Hits.Stun:
-      case Modules.Hits.Critical:
+      case Module.Hits.Damage:
+      case Module.Hits.Stun:
+      case Module.Hits.Critical:
         this.hit(type, data, x, y);
         break;
-      case Modules.Hits.Heal:
-      case Modules.Hits.Mana:
-      case Modules.Hits.Experience:
+      case Module.Hits.Heal:
+      case Module.Hits.Mana:
+      case Module.Hits.Experience:
         this.regenerate(type, data, x, y);
         break;
-      case Modules.Hits.LevelUp:
+      case Module.Hits.LevelUp:
         this.levelup(type, x, y);
         break;
       default:
@@ -83,8 +83,8 @@ export default class Info {
     const hitSplat = new Splat(dId, type, damage, x, y, false);
 
     const dColour = isTarget
-      ? Modules.DamageColours.received
-      : Modules.DamageColours.inflicted;
+      ? Module.DamageColours.received
+      : Module.DamageColours.inflicted;
 
     hitSplat.setColours(dColour.fill, dColour.stroke);
 
@@ -108,18 +108,18 @@ export default class Info {
       return;
     }
 
-    if (type !== Modules.Hits.Experience) {
+    if (type !== Module.Hits.Experience) {
       text = '++';
     }
 
     const splat = new Splat(id, type, text + amount, x, y, false);
 
-    if (type === Modules.Hits.Heal) {
-      colour = Modules.DamageColours.healed;
-    } else if (type === Modules.Hits.Mana) {
-      colour = Modules.DamageColours.mana;
-    } else if (type === Modules.Hits.Experience) {
-      colour = Modules.DamageColours.exp;
+    if (type === Module.Hits.Heal) {
+      colour = Module.DamageColours.healed;
+    } else if (type === Module.Hits.Mana) {
+      colour = Module.DamageColours.mana;
+    } else if (type === Module.Hits.Experience) {
+      colour = Module.DamageColours.exp;
     }
 
     splat.setColours(colour.fill, colour.stroke);
@@ -135,7 +135,7 @@ export default class Info {
   levelup(type, x, y) {
     const lId = this.generateId('-1', x, y);
     const levelSplat = new Splat(lId, type, 'Level Up!', x, y, false);
-    const lColour = Modules.DamageColours.exp;
+    const lColour = Module.DamageColours.exp;
 
     levelSplat.setColours(lColour.fill, lColour.stroke);
     this.addInfo(levelSplat);

@@ -184,7 +184,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">WTF-Adventure/src/client/js/controllers/chat.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
-import Modules from &apos;../utils/modules&apos;;
+import Module from &apos;../utils/modules&apos;;
 import Packets from &apos;../network/packets&apos;;
 
 /**
@@ -298,7 +298,7 @@ export default class Chat {
   */
   key(keyCode) {
     switch (keyCode) {
-      case Modules.Keys.Enter:
+      case Module.Keys.Enter:
         if (this.input.val() === &apos;&apos;) {
           this.toggle();
         } else {

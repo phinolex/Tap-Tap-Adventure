@@ -1,11 +1,11 @@
 {
-  "coverage": "26.58%",
+  "coverage": "29.67%",
   "expectCount": 2949,
-  "actualCount": 784,
+  "actualCount": 875,
   "files": {
     "WTF-Adventure/src/client/js/app.js": {
-      "expectCount": 78,
-      "actualCount": 78,
+      "expectCount": 79,
+      "actualCount": 79,
       "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/controllers/audio.js": {
@@ -120,14 +120,8 @@
     },
     "WTF-Adventure/src/client/js/entity/character/player/player.js": {
       "expectCount": 54,
-      "actualCount": 49,
-      "undocumentLines": [
-        455,
-        481,
-        485,
-        491,
-        492
-      ]
+      "actualCount": 54,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/character/player/playerhandler.js": {
       "expectCount": 12,
@@ -135,120 +129,29 @@
       "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/entity.js": {
-      "expectCount": 64,
-      "actualCount": 27,
-      "undocumentLines": [
-        24,
-        25,
-        26,
-        28,
-        29,
-        30,
-        31,
-        33,
-        34,
-        35,
-        37,
-        38,
-        40,
-        41,
-        43,
-        44,
-        45,
-        46,
-        48,
-        49,
-        51,
-        52,
-        53,
-        55,
-        56,
-        58,
-        59,
-        60,
-        61,
-        63,
-        131,
-        144,
-        152,
-        193,
-        194,
-        401,
-        409
-      ]
+      "expectCount": 63,
+      "actualCount": 63,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/entityhandler.js": {
       "expectCount": 9,
-      "actualCount": 1,
-      "undocumentLines": [
-        10,
-        12,
-        13,
-        14,
-        17,
-        72,
-        81,
-        87
-      ]
+      "actualCount": 9,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/objects/chest.js": {
       "expectCount": 5,
-      "actualCount": 0,
-      "undocumentLines": [
-        3,
-        4,
-        7,
-        10,
-        14
-      ]
+      "actualCount": 5,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/objects/item.js": {
       "expectCount": 11,
-      "actualCount": 0,
-      "undocumentLines": [
-        3,
-        4,
-        7,
-        8,
-        9,
-        11,
-        12,
-        14,
-        15,
-        18,
-        22
-      ]
+      "actualCount": 11,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/objects/projectile.js": {
       "expectCount": 25,
-      "actualCount": 0,
-      "undocumentLines": [
-        3,
-        4,
-        7,
-        9,
-        11,
-        12,
-        14,
-        15,
-        17,
-        18,
-        20,
-        21,
-        25,
-        26,
-        29,
-        33,
-        39,
-        46,
-        55,
-        79,
-        83,
-        88,
-        92,
-        97,
-        98
-      ]
+      "actualCount": 25,
+      "undocumentLines": []
     },
     "WTF-Adventure/src/client/js/entity/sprite.js": {
       "expectCount": 24,
