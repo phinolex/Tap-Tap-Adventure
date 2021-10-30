@@ -1,7 +1,7 @@
 /* global document, Event */
 import $ from 'jquery';
 import App from '../app';
-import Game from '../game';
+// import Game from '../game';
 
 /**
  * @test {App}
@@ -96,7 +96,7 @@ describe('App', () => {
   });
 
   /**
-   * @test {App#rememberMe}
+   * @test {App#rememberLogin}
    */
   it('.rememberMe()', () => {
     expect(instance.rememberLogin()).toEqual(false);
@@ -147,7 +147,7 @@ describe('App', () => {
   });
 
   /**
-   * @test {App#keyupEventListener}
+   * @test {App#mousemoveEventListener}
    */
   it('.keyupEventListener()', () => {
     instance.game = null;
@@ -190,16 +190,33 @@ describe('App', () => {
   });
 
   /**
-   * @test {App#cleanErrors}
+   * @test {App#zoom}
    */
-  it('.cleanErrors()', () => {
-    expect(instance.loginFields).toBeDefined();
-    expect(instance.registerFields).toBeDefined();
-    instance.cleanErrors();
+  it('.zoom()', () => {
+    instance.border.css = jest.fn();
+    instance.zoom();
+    expect(instance.border.css).toHaveBeenCalled();
+  });
 
-    expect(document.querySelectorAll('.field-error').length).toEqual(0);
-    expect(document.querySelectorAll('.validation-error').length).toEqual(0);
-    expect(document.querySelectorAll('.status').length).toEqual(0);
+  /**
+   * #test {App#fadeMenu}
+   */
+  it('.fadeMenu()', () => {
+    instance.updateLoader = jest.fn();
+    instance.fadeMenu();
+    expect(instance.updateLoader).toHaveBeenCalled();
+  });
+
+  /**
+   * @test {App#showMenu}
+   */
+  it('.showMenu()', () => {
+    const addClass = jest.spyOn(instance.body, 'addClass');
+    const removeClass = jest.spyOn(instance.body, 'removeClass');
+
+    instance.showMenu();
+    expect(removeClass).toHaveBeenCalled();
+    expect(addClass).toHaveBeenCalled();
   });
 
   /**
@@ -273,7 +290,7 @@ describe('App', () => {
     instance.game.started = true;
 
     // expect the body to have no class
-    expect(instance.body.attr('class')).toEqual('');
+    expect(instance.body.attr('class')).toEqual('intro');
 
     // help button should have an active class
     instance.helpButton.addClass('active');
@@ -293,6 +310,67 @@ describe('App', () => {
     expect(displayScreen.mock.calls[0]).toEqual([undefined, 'createCharacter']);
 
     // expect the body to have the player death class
-    expect(instance.body.attr('class')).toEqual('death');
+    expect(instance.body.attr('class')).toEqual('intro death');
+  });
+
+  /**
+   * @test {App#verifyForm}
+   */
+  it('.verifyForm()', () => {
+    instance.getActiveForm = jest.fn().mockReturnValue('null');
+    expect(instance.verifyForm()).toEqual(true);
+  });
+
+  /**
+   * @test {App#verifyJoinForm}
+   */
+  it('.verifyJoinForm', () => {
+    const sendError = jest.spyOn(instance, 'sendError');
+    expect(instance.verifyJoinForm()).toEqual(false);
+    expect(sendError).toHaveBeenCalledWith({}, 'A username is necessary you silly.');
+  });
+
+  /**
+   * @test {App#verifyLoginForm}
+   */
+  it('.verifyLoginForm', () => {
+    const sendError = jest.spyOn(instance, 'sendError');
+    instance.isGuest = jest.fn().mockReturnValue(true);
+    expect(instance.verifyLoginForm()).toEqual(true);
+
+    instance.isGuest = jest.fn().mockReturnValue(false);
+    expect(instance.verifyLoginForm()).toEqual(false);
+    expect(sendError).toHaveBeenCalledWith({}, 'Please enter a username.');
+  });
+
+  /**
+   * @test {App#cleanErrors}
+   */
+  it('.cleanErrors()', () => {
+    expect(instance.loginFields).toBeDefined();
+    expect(instance.registerFields).toBeDefined();
+    instance.cleanErrors();
+
+    expect(document.querySelectorAll('.field-error').length).toEqual(0);
+    expect(document.querySelectorAll('.validation-error').length).toEqual(0);
+    expect(document.querySelectorAll('.status').length).toEqual(0);
+  });
+
+
+  /**
+   * @test {App#updateRange}
+   */
+  it('.updateRange()', () => {
+    instance.updateRange('test');
+    expect(instance.rangeField).toEqual('test');
+  });
+
+  /**
+   * @test {App#updateOrientation}
+   */
+  it('.updateOrientation()', () => {
+    instance.orientation = 'mobile';
+    instance.updateOrientation();
+    expect(instance.orientation).toEqual('landscape');
   });
 });
