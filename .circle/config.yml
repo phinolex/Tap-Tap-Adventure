@@ -25,4 +25,4 @@ jobs:
             sudo docker-php-ext-enable xdebug
             ./cc-test-reporter before-build
             sudo npm run test
-            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+            ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $?
