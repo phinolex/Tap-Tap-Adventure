@@ -1,40 +1,28 @@
 version: 2.1
-orbs:
-  node: circleci/node@4.7.0
-  heroku: circleci/heroku@1.2.6
 
 jobs:
-  run-tests:
+  build:
     docker:
-      - image: cimg/node:17.2.0
+      - image: circleci/node:10.16.2-browsers
+    working_directory: ~/repo
     steps:
       - checkout
-      # - node/install-packages:
-      #     pkg-manager: yarn
+      - restore_cache:
+          keys:
+            - deps-{{ checksum "package.json" }}-{{ checksum
+              "package-lock.json"}}
+            - deps-{{ checksum "package.json" }}-
+            - deps-
+      # - run: sh circle_build_npmrc.sh
       - run:
-          command: npm install
           name: Install dependencies
-      - run:
-          command: npm test
-          name: Run tests
-      - persist_to_workspace:
-          root: ~/project
+          command: npm install
+      - save_cache:
+          key:
+            deps-{{ checksum "package.json" }}-{{ checksum "package-lock.json"}}
           paths:
-            - .
-
-  deploy: # this can be any name you choose
-    docker:
-      - image: cimg/node:17.2.0
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - heroku/deploy-via-git:
-          force: true # force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
-
-workflows:
-  test_my_app:
-    jobs:
-      - run-tests
-      - deploy:
-          requires:
-            - run-tests # only deploy if the run-tests job has completed
+            - ~/.npm
+            - ~/.cache
+      - run:
+          name: Run tests
+          command: npm run test
