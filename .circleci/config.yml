@@ -4,19 +4,16 @@ orbs:
   heroku: circleci/heroku@1.2.6
 
 jobs:
-  build_and_test:
+  run-tests:
     docker:
       - image: cimg/node:17.2.0
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      # - node/install-packages:
+      #     pkg-manager: yarn
       - run:
-          command: yarn test
+          command: npm test
           name: Run tests
-      - run:
-          command: yarn build
-          name: Build app
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -34,7 +31,7 @@ jobs:
 workflows:
   test_my_app:
     jobs:
-      - build_and_test
+      - run-tests
       - deploy:
           requires:
-            - build_and_test # only deploy if the build_and_test job has completed
+            - run-tests # only deploy if the run-tests job has completed
