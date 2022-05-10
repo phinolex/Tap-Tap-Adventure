@@ -38,7 +38,3 @@ workflows:
       - deploy:
           requires:
             - build_and_test # only deploy if the build_and_test job has completed
-          filters:
-            branches:
-              - main
-              - dev
