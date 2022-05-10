@@ -12,7 +12,9 @@ jobs:
       # - node/install-packages:
       #     pkg-manager: yarn
       - run:
-          command: npm test
+          command:
+            - npm install
+            - npm test
           name: Run tests
       - persist_to_workspace:
           root: ~/project
