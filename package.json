@@ -70,9 +70,13 @@
   "engineStrict": true,
   "jest": {
     "transform": {
-      "^.+\\.js?$": "babel-jest",
-      "^.+\\.ts?$": "babel-jest",
-      "^.+\\.tsx?$": "babel-jest"
+      "\\.[jt]sx?$": ["babel-jest", {
+        "presets": [
+          "next/babel",
+          "@babel/preset-typescript",
+          "@babel/preset-env"
+        ]
+      }]
     },
     "testEnvironment": "jsdom",
     "coverageDirectory": "./coverage/",
@@ -105,6 +109,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.2",
     "@babel/eslint-parser": "^7.22.15",
+    "@babel/plugin-syntax-import-assertions": "^7.22.5",
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-typescript": "^7.23.2",
     "@types/jquery": "^3.5.22",
